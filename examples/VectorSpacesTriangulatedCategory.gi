@@ -58,13 +58,11 @@ InstallMethod( Brad,
     
 end );
 
-
 ####################################
 ##
 ## Add some Methods to the category
 ##
 ####################################
-
 
 AddTestFunction2( BradsCategory, 
 
