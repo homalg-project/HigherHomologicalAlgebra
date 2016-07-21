@@ -3,4 +3,4 @@
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "TriangulatedCategoriesForCAP", "gap/TriangulatedCategoriesForCAP.gi");
+ReadPackage( "TriangulatedCategoriesForCAP", "gap/TriangulatedCategories.gi");
