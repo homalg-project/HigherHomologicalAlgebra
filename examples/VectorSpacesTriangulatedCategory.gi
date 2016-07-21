@@ -5,9 +5,7 @@
 ##############################
 
 
-LoadPackage( "CAP" );
-
-LoadPackage( "MatricesForHomalg" );
+LoadPackage( "TriangulatedCategoriesForCap" );
 
 DeclareRepresentation( "IsBradRep",
                         IsCapCategoryObjectRep,
@@ -38,7 +36,7 @@ DeclareOperation( "BradMorphism",
 ##
 ##########################
 
-BindGlobal( "BradsCategories", CreateCapCategory( "BradsCategories" ) );
+BindGlobal( "BradsCategory", CreateCapCategory( "Category of brads" ) );
 
 ##########################
 ##
@@ -54,7 +52,7 @@ InstallMethod( Brad,
     
     t := rec( ob:= m );
     ObjectifyWithAttributes( t, TheTypeOfBrad );
-    Add( BradsCategories, t );
+    Add( BradsCategory, t );
     
     return t;
     
@@ -68,7 +66,7 @@ end );
 ####################################
 
 
-AddTestFunction2( BradsCategories, 
+AddTestFunction2( BradsCategory, 
 
  function( M, N )
  
