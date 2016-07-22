@@ -1,6 +1,36 @@
 
 
 
+###############################
+##
+##  Representations
+##
+###############################
+
+DeclareRepresentation( "IsCapCategoryExactTriangleRep",
+                        IsCapCategoryExactTriangle and IsAttributeStoringRep,
+                        [ ] );
+                        
+##############################
+##
+## Family and type 
+##
+##############################
+
+BindGlobal( "CapCategoryExactTrianglesFamily",
+  NewFamily( "CapCategoryExactTrianglesFamily", IsCapCategoryCell ) );
+
+  
+
+BindGlobal( "TheTypeCapCategoryExactTriangle", 
+  NewType( CapCategoryExactTrianglesFamily, 
+                      IsCapCategoryExactTriangleRep ) );
+
+###############################
+##
+##  
+##
+###############################
 
 InstallValue( CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS, rec( ) );
 

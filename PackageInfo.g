@@ -1,5 +1,5 @@
 #
-# TriangulatedCategoriesForCAP: frame work for triangulated categories
+# TriangulatedCategoriesForCAP: framework for triangulated categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategoriesForCAP",
-Subtitle := "frame work for triangulated categories",
+Subtitle := "framework for triangulated categories",
 Version := "0.1",
 Date := "21/07/2016", # dd/mm/yyyy format
 
@@ -58,7 +58,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "frame work for triangulated categories",
+  LongTitle := "framework for triangulated categories",
 ),
 
 Dependencies := rec(

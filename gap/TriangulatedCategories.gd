@@ -1,10 +1,16 @@
 
 
-
+#################################
+##
+##  Declarations
+##
+#################################
 
 DeclareGlobalVariable( "CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS" );
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
+
+DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
 
 #################################
 ##
@@ -37,7 +43,7 @@ DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 
 #################################
 ##
-##  Declarations
+##  Methods Declarations
 ##
 #################################
 

@@ -1,78 +1,141 @@
-##############################
-##
-## bla bla
-##
-##############################
+###################################################################################
+##                                                                               ##
+## Giving rational vector spaces category a structure of a triangulated category ##
+##                                                                               ##
+###################################################################################
 
+############################
+##
+## Declarations
+##
+###########################
+
+LoadPackage( "MatricesForHomalg" );
 
 LoadPackage( "TriangulatedCategoriesForCap" );
 
-DeclareRepresentation( "IsBradRep",
+
+DeclareRepresentation( "IsHomalgRationalVectorSpaceRep",
                         IsCapCategoryObjectRep,
                         [ ] );
                         
-BindGlobal( "TheTypeOfBrad",
-       NewType( TheFamilyOfCapCategoryObjects,
-               IsBradRep ) );
+BindGlobal( "TheTypeOfHomalgRationalVectorSpaces",
+        NewType( TheFamilyOfCapCategoryObjects,
+                IsHomalgRationalVectorSpaceRep ) );
+
+DeclareRepresentation( "IsHomalgRationalVectorSpaceMorphismRep",
+                       IsCapCategoryMorphismRep,
+                       [ ] );
+
+BindGlobal( "TheTypeOfHomalgRationalVectorSpaceMorphism",
+        NewType( TheFamilyOfCapCategoryMorphisms,
+                IsHomalgRationalVectorSpaceMorphismRep ) );
+
+DeclareAttribute( "Dimension",
+                  IsHomalgRationalVectorSpaceRep );
+
+DeclareOperation( "QVectorSpace",
+                  [ IsInt ] );
+
+DeclareOperation( "VectorSpaceMorphism",
+                  [ IsHomalgRationalVectorSpaceRep, IsObject, IsHomalgRationalVectorSpaceRep ] );
+
+#################################
+##
+## Creation of category
+##
+#################################
+ 
+BindGlobal( "vecspaces", CreateCapCategory( "VectorSpaces" ) );
+
+# SetIsAbelianCategory( vecspaces, true );
+
+BindGlobal( "VECTORSPACES_FIELD", HomalgFieldOfRationals( ) );
+
+###########################################
+##
+## Constructors for objects and morphisms 
+##
+###########################################
+
+InstallMethod( QVectorSpace,
+               [ IsInt ],
                
-DeclareRepresentation( "IsBradMorphismRep",
-                        IsCapCategoryMorphismRep,
-                        [ ] );
-                        
-BindGlobal( "TheTypeOfBradMorphism",
-       NewType( TheFamilyOfCapCategoryMorphisms,
-               IsBradMorphismRep ) );
-               
-
-DeclareOperation( "Brad",
-                   [ IsInt ] );
-
-DeclareOperation( "BradMorphism", 
-                   [ IsBradRep, IsString, IsBradRep ] );
-
-##########################
-##
-##   Creating a category 
-##
-##########################
-
-BindGlobal( "BradsCategory", CreateCapCategory( "Category of brads" ) );
-
-##########################
-##
-## Constructors of Brad
-##
-##########################
-
-InstallMethod( Brad, 
-               [ IsInt ], 
-               
-    function( m )
-    local t;
+  function( dim )
+    local space;
     
-    t := rec( ob:= m );
-    ObjectifyWithAttributes( t, TheTypeOfBrad );
-    Add( BradsCategory, t );
+    space := rec( );
     
-    return t;
+    ObjectifyWithAttributes( space, TheTypeOfHomalgRationalVectorSpaces,
+                             Dimension, dim 
+    );
+    
+    Add( vecspaces, space );
+    
+    return space;
     
 end );
 
-####################################
-##
-## Add some Methods to the category
-##
-####################################
+InstallMethod( VectorSpaceMorphism,
+                  [ IsHomalgRationalVectorSpaceRep, IsObject, IsHomalgRationalVectorSpaceRep ],
+                  
+  function( source, matrix, range )
+    local morphism;
 
-AddTestFunction2( BradsCategory, 
+    if not IsHomalgMatrix( matrix ) then
+    
+      morphism := HomalgMatrix( matrix, Dimension( source ), Dimension( range ), VECTORSPACES_FIELD );
 
- function( M, N )
- 
- return M;
- 
- end );
- 
- 
- 
- 
+    else
+
+      morphism := matrix;
+
+    fi;
+
+    if NrRows( morphism ) <> Dimension( source ) or NrColumns( morphism ) <> Dimension( range ) then 
+                             
+      Error( "The inputs are not compatible" );
+    
+    fi;
+    
+    morphism := rec( morphism := morphism );
+    
+    ObjectifyWithAttributes( morphism, TheTypeOfHomalgRationalVectorSpaceMorphism,
+                             Source, source,
+                             Range, range 
+    );
+
+    Add( vecspaces, morphism );
+    
+    return morphism;
+    
+end );
+
+#################################
+##
+## View
+##
+#################################
+
+InstallMethod( ViewObj,
+               [ IsHomalgRationalVectorSpaceRep ],
+
+  function( obj )
+
+    Print( "<A rational vector space of dimension ", 
+    String( Dimension( obj ) )," as an object in ",vecspaces, ">" );
+
+end );
+
+InstallMethod( ViewObj,
+               [ IsHomalgRationalVectorSpaceMorphismRep ],
+
+  function( obj )
+
+    Print( "A rational vector space homomorphism with matrix: \n" );
+  
+    Display( obj!.morphism );
+
+end );
+
 
