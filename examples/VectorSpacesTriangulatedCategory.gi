@@ -139,3 +139,72 @@ InstallMethod( ViewObj,
 end );
 
 
+########################################
+##
+## Adding triangulation Methods
+##
+########################################
+
+
+## Here we define additive equivalence ...
+## shifting( V ) = V \sum V
+## shifting( alpha )= ( alpha, 0     )
+##                            (  0   , alpha ).
+# shifting_functor:= CapFunctor( "Shifting in vecspaces", vecspaces, vecspaces );
+# 
+# AddObjectFunction( shifting_functor, 
+#  
+#  function( obj )
+# 
+#  return QVectorSpace( 2 * Dimension( obj ) );
+# 
+# end );
+# 
+# AddMorphismFunction( shifting_functor,
+# 
+# function( new_source, mor, new_range )
+# local matr, matr1;
+# 
+#  matr := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+# 
+#  matr := Concatenation( List( matr, i -> Concatenation( i, ListWithIdenticalEntries( Length( i ), 0 ) ) ),
+# 
+#  List( matr, i -> Concatenation( ListWithIdenticalEntries( Length( i ), 0 ), i ) ) );
+# 
+#  return VectorSpaceMorphism( new_source, matr, new_range );
+# 
+# end );
+
+##
+shifting_objects:= 
+
+function( obj )
+ 
+  return QVectorSpace( 2 * Dimension( obj ) );
+ 
+end;
+
+AddShiftObject( vecspaces, shifting_objects );
+
+##
+shifting_morphisms:=  
+
+function( mor )
+ local matr, new_source, new_range;
+
+   matr := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+
+   matr := Concatenation( List( matr, i -> Concatenation( i, ListWithIdenticalEntries( Length( i ), 0 ) ) ),
+ 
+   List( matr, i -> Concatenation( ListWithIdenticalEntries( Length( i ), 0 ), i ) ) );
+ 
+   new_source:= shifting_objects( Source( mor ) );
+   
+   new_range:= shifting_objects( Range( mor ) );
+   
+   return VectorSpaceMorphism( new_source, matr, new_range );
+
+end;
+   
+AddShiftMorphism( vecspaces, shifting_morphisms );
+

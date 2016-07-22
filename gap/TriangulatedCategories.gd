@@ -47,9 +47,11 @@ DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
 ##
 #################################
 
- DeclareOperation( "TestFunction1", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "TestFunction1" );
+ DeclareOperationWithCache( "ShiftObject", [ IsCapCategoryObject ] );
+ DoDeclarationStuff( "ShiftObject" );
 
  
- DeclareOperationWithCache( "TestFunction2", [ IsCapCategoryObject, IsCapCategoryObject ] );
- DoDeclarationStuff( "TestFunction2" );
+ DeclareOperationWithCache( "ShiftMorphism", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "ShiftMorphism" );
+
+ 

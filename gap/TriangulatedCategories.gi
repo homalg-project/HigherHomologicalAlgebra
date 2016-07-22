@@ -36,20 +36,20 @@ InstallValue( CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS, rec( ) );
 
 InstallValue( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, rec( 
 
-TestFunction1:= rec( 
+ShiftObject:= rec( 
 
-installation_name := "TestFunction1", 
+installation_name := "ShiftObject", 
 filter_list := [ "object" ],
-cache_name := "TestFunction1",
+cache_name := "ShiftObject",
 return_type := "object" ),
 
 
-TestFunction2:= rec( 
+ShiftMorphism:= rec( 
 
-installation_name := "TestFunction2", 
-filter_list := [ "object", "object" ],
-cache_name := "TestFunction2",
-return_type := "object" ),
+installation_name := "ShiftMorphism", 
+filter_list := [ "morphism" ],
+cache_name := "ShiftMorphism",
+return_type := "morphism" ),
 
 ) );
 
