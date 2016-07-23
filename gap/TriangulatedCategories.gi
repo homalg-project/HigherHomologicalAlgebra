@@ -51,19 +51,19 @@ filter_list := [ "morphism" ],
 cache_name := "ShiftOfMorphism",
 return_type := "morphism" ),
 
-BackwardShiftOfObject:= rec( 
+ReverseShiftOfObject:= rec( 
 
-installation_name := "BackwardShiftOfObject", 
+installation_name := "ReverseShiftOfObject", 
 filter_list := [ "object" ],
-cache_name := "BackwardShiftOfObject",
+cache_name := "ReverseShiftOfObject",
 return_type := "object" ),
 
 
-BackwardShiftOfMorphism:= rec( 
+ReverseShiftOfMorphism:= rec( 
 
-installation_name := "BackwardShiftOfMorphism", 
+installation_name := "ReverseShiftOfMorphism", 
 filter_list := [ "morphism" ],
-cache_name := "BackwardShiftOfMorphism",
+cache_name := "ReverseShiftOfMorphism",
 return_type := "morphism" ),
 
 ) );
@@ -89,7 +89,7 @@ InstallMethodWithCache( ApplyShift,
     
   elif n<0 then
   
-    return BackwardShiftOfObject( ApplyShift( obj, n+1 ) );
+    return ReverseShiftOfObject( ApplyShift( obj, n+1 ) );
     
   else 
   
@@ -109,7 +109,7 @@ InstallMethodWithCache( ApplyShift,
     
   elif n<0 then
   
-    return BackwardShiftOfMorphism( ApplyShift( mor, n+1 ) );
+    return ReverseShiftOfMorphism( ApplyShift( mor, n+1 ) );
     
   else 
   

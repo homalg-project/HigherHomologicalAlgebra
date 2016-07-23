@@ -187,7 +187,7 @@ end );
 # AddShiftOfObject( vecspaces, shifting_objects );
 
 AddShiftOfObject( vecspaces, IdFunc );
-AddBackwardShiftOfObject( vecspaces, IdFunc );
+AddReverseShiftOfObject( vecspaces, IdFunc );
 
 
 ##
@@ -211,5 +211,5 @@ AddBackwardShiftOfObject( vecspaces, IdFunc );
 # end;
    
 AddShiftOfMorphism( vecspaces, IdFunc );
-AddBackwardShiftOfMorphism( vecspaces, IdFunc );
+AddReverseShiftOfMorphism( vecspaces, IdFunc );
 

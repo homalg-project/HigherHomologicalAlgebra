@@ -54,11 +54,11 @@ DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
  DeclareOperationWithCache( "ShiftOfMorphism", [ IsCapCategoryMorphism ] );
  DoDeclarationStuff( "ShiftOfMorphism" );
 
- DeclareOperationWithCache( "BackwardShiftOfObject", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "BackwardShiftOfObject" );
+ DeclareOperationWithCache( "ReverseShiftOfObject", [ IsCapCategoryObject ] );
+ DoDeclarationStuff( "ReverseShiftOfObject" );
  
- DeclareOperationWithCache( "BackwardShiftOfMorphism", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "BackwardShiftOfMorphism" );
+ DeclareOperationWithCache( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "ReverseShiftOfMorphism" );
  
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject, IsInt ] );
   DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
