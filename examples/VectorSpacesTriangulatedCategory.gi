@@ -176,35 +176,40 @@ end );
 # end );
 
 ##
-shifting_objects:= 
+# shifting_objects:= 
+# 
+# function( obj )
+#  
+#   return QVectorSpace( 2 * Dimension( obj ) );
+#  
+# end;
+# 
+# AddShiftOfObject( vecspaces, shifting_objects );
 
-function( obj )
- 
-  return QVectorSpace( 2 * Dimension( obj ) );
- 
-end;
+AddShiftOfObject( vecspaces, IdFunc );
+AddBackwardShiftOfObject( vecspaces, IdFunc );
 
-AddShiftObject( vecspaces, shifting_objects );
 
 ##
-shifting_morphisms:=  
-
-function( mor )
- local matr, new_source, new_range;
-
-   matr := EntriesOfHomalgMatrixAsListList( mor!.morphism );
-
-   matr := Concatenation( List( matr, i -> Concatenation( i, ListWithIdenticalEntries( Length( i ), 0 ) ) ),
- 
-   List( matr, i -> Concatenation( ListWithIdenticalEntries( Length( i ), 0 ), i ) ) );
- 
-   new_source:= shifting_objects( Source( mor ) );
+# shifting_morphisms:=  
+# 
+# function( mor )
+#  local matr, new_source, new_range;
+# 
+#    matr := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+# 
+#    matr := Concatenation( List( matr, i -> Concatenation( i, ListWithIdenticalEntries( Length( i ), 0 ) ) ),
+#  
+#    List( matr, i -> Concatenation( ListWithIdenticalEntries( Length( i ), 0 ), i ) ) );
+#  
+#    new_source:= shifting_objects( Source( mor ) );
+#    
+#    new_range:= shifting_objects( Range( mor ) );
+#    
+#    return VectorSpaceMorphism( new_source, matr, new_range );
+# 
+# end;
    
-   new_range:= shifting_objects( Range( mor ) );
-   
-   return VectorSpaceMorphism( new_source, matr, new_range );
-
-end;
-   
-AddShiftMorphism( vecspaces, shifting_morphisms );
+AddShiftOfMorphism( vecspaces, IdFunc );
+AddBackwardShiftOfMorphism( vecspaces, IdFunc );
 
