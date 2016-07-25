@@ -12,6 +12,8 @@ DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 
 DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
 
+DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryCell );
+
 #################################
 ##
 ##  Saving time for declarations 
@@ -60,5 +62,16 @@ DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
  DeclareOperationWithCache( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
  DoDeclarationStuff( "ReverseShiftOfMorphism" );
  
- DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject, IsInt ] );
-  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
+ DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject,   IsInt ] );
+ DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
+ 
+ DeclareOperation( "CreateTriangle", 
+                    [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
+ ###############################
+ ##
+ ##
+ ##
+ ###############################
+ 
+ 
+ 

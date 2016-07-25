@@ -213,3 +213,16 @@ AddReverseShiftOfObject( vecspaces, IdFunc );
 AddShiftOfMorphism( vecspaces, IdFunc );
 AddReverseShiftOfMorphism( vecspaces, IdFunc );
 
+
+### some computations to see how everything works
+
+
+ U:= QVectorSpace(1 );
+ V:= QVectorSpace( 2 );
+ W:= QVectorSpace( 1 );
+ 
+ alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
+ betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
+ gamma:= VectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
+ 
+ 

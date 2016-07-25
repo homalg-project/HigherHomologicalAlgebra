@@ -10,6 +10,10 @@
 DeclareRepresentation( "IsCapCategoryExactTriangleRep",
                         IsCapCategoryExactTriangle and IsAttributeStoringRep,
                         [ ] );
+
+DeclareRepresentation( "IsCapCategoryTriangleRep",
+                        IsCapCategoryTriangle and IsAttributeStoringRep,
+                        [ ] );
                         
 ##############################
 ##
@@ -20,12 +24,19 @@ DeclareRepresentation( "IsCapCategoryExactTriangleRep",
 BindGlobal( "CapCategoryExactTrianglesFamily",
   NewFamily( "CapCategoryExactTrianglesFamily", IsCapCategoryCell ) );
 
+BindGlobal( "CapCategoryTrianglesFamily",
+  NewFamily( "CapCategoryTrianglesFamily", IsCapCategoryCell ) );
   
 
 BindGlobal( "TheTypeCapCategoryExactTriangle", 
   NewType( CapCategoryExactTrianglesFamily, 
                       IsCapCategoryExactTriangleRep ) );
+                      
+BindGlobal( "TheTypeCapCategoryTriangle", 
+  NewType( CapCategoryTrianglesFamily, 
+                      IsCapCategoryTriangleRep ) );
 
+                      
 ###############################
 ##
 ##  
@@ -119,4 +130,33 @@ InstallMethodWithCache( ApplyShift,
   
 end );
 
+
+####################################
+##
+## Constructors
+##
+####################################
+
+
+InstallMethodWithCache( CreateTriangle, 
+               [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+  
+                      
+function( mor1, mor2, mor3 )
+   local  triangle;
+   
+   triangle:= rec( object1:= Source( mor1 ),
+                   morphism12:= mor1,
+                   object2:= Source( mor2 ),
+                   morphism23:= mor2,
+                   object3:= Source( mor3 ),
+                   morphism34:= mor3,
+                   object4:=  Range( mor3 ) );
+                   
+   ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle );
+   
+   return triangle;
+   
+end );
+   
 
