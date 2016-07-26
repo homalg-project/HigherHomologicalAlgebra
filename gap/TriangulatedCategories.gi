@@ -173,10 +173,21 @@ function( mor1, mor2, mor3 )
    fi;
    
    
-   if not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
-      not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) then 
+   if CanCompute( CapCategory( mor1 ), "IsEqualForObjects" ) then 
+   
       
-      Error( "Morphisms are not compatible" );
+       if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
+              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) then 
+      
+        Error( "Morphisms are not compatible" );
+      
+       fi;
+   
+   
+   elif not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
+            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) then 
+      
+       Error( "Morphisms are not compatible." );
       
    fi;
      
