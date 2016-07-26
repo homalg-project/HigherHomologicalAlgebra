@@ -4,6 +4,8 @@
 ##                                                                               ##
 ###################################################################################
 
+## ReadPackage( "TriangulatedCategoriesForCAP", "examples/VectorSpacesTriangulatedCategory.gi" );
+
 ############################
 ##
 ## Declarations
@@ -137,6 +139,28 @@ InstallMethod( ViewObj,
     Display( obj!.morphism );
 
 end );
+
+########################################
+##
+## Adding additive methods
+##
+########################################
+
+is_equal_for_objects:= function( obj1, obj2)
+  
+  if Dimension( obj1 ) = Dimension( obj2 ) then 
+  
+     return true;
+     
+  else 
+  
+     return false;
+  
+  fi;
+  
+end;
+
+AddIsEqualForObjects( vecspaces, is_equal_for_objects );
 
 
 ########################################

@@ -10,9 +10,10 @@ DeclareGlobalVariable( "CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS" )
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 
-DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryCell );
+DeclareCategory( "IsCapCategoryTriangle", IsObject );
 
-DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryCell );
+DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
+
 
 #################################
 ##
@@ -43,11 +44,11 @@ DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryCell );
  end );
  
 
-#################################
+####################################
 ##
-##  Methods Declarations
+##  Methods Declarations in Records
 ##
-#################################
+####################################
 
  DeclareOperationWithCache( "ShiftOfObject", [ IsCapCategoryObject ] );
  DoDeclarationStuff( "ShiftOfObject" );
@@ -62,16 +63,48 @@ DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryCell );
  DeclareOperationWithCache( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
  DoDeclarationStuff( "ReverseShiftOfMorphism" );
  
+ DeclareOperationWithCache( "IsExactForTriangles", [ IsCapCategoryTriangle ] );
+ DoDeclarationStuff( "IsExactForTriangles" );
+ 
+ ###################################
+ ##
+ ## General Methods declaration
+ ##
+ ##################################
+ 
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject,   IsInt ] );
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
  
  DeclareOperation( "CreateTriangle", 
                     [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
+ 
+ DeclareOperation( "CreateExactTriangle", 
+                    [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
+ 
+ DeclareOperation( "CreateExactTriangle", 
+                    [ IsCapCategoryTriangle ]); 
+ 
  ###############################
  ##
- ##
+ ## Attributes
  ##
  ###############################
+ 
+ DeclareAttribute( "CapCategory", IsCapCategoryTriangle );
+ 
+ ##############################
+ ##
+ ## Properties
+ ##
+ ##############################
+ 
+ DeclareProperty( "IsExactTriangle", IsCapCategoryTriangle );
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
