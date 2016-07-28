@@ -193,11 +193,11 @@ function( mor1, mor2, mor3 )
        fi;
    
    
-   elif not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
-            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) or
-                  not IsIdenticalObj( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
-      
-       Error( "Morphisms are not compatible." );
+   else 
+   
+       Print( "'IsEqualForObjects' is not yet added." );
+   
+       return fail;
       
    fi;
      
@@ -228,34 +228,29 @@ function( mor1, mor2, mor3 )
    
    if not CanCompute( CapCategory( mor1 ), "ShiftOfObject" ) then 
    
-      return Error( "creating a triangle needs a shift functor" );
+      Error( "creating a triangle needs a shift functor" );
+      
       
    fi;
    
+   if not CanCompute( CapCategory( mor1 ), "IsEqualForObjects" ) then 
+     
+      Error( "'IsEqualForObjects' is not yet added.\n" );
+   
+   fi;
+      
    if CapCategory( mor1 ) <> CapCategory( mor2) or CapCategory( mor2 ) <> CapCategory( mor3 ) then 
    
       return Error( "Morphisms are not in the same Category" );
       
    fi;
    
-   
-   if CanCompute( CapCategory( mor1 ), "IsEqualForObjects" ) then 
-   
       
-       if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
+   if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
               not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) or
                   not IsEqualForObjects( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
-      
-        Error( "Morphisms are not compatible" );
-      
-       fi;
    
-   
-   elif not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
-            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) or
-                  not IsIdenticalObj( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
-      
-       Error( "Morphisms are not compatible." );
+      Error( "Morphisms are not compatible" );
       
    fi;
    
@@ -301,16 +296,25 @@ end );
   category := CapCategory( triangle1 );
   
   # Are all inputs in the same category?
-  if not ForAll( [ triangle2, morphism11, morphism22, morphism33 ], 
+     if not ForAll( [ triangle2, morphism11, morphism22, morphism33 ], 
                  i-> CapCategory( i ) = category ) then 
                  
         Error( "Some inputs are not in the same category" );
       
-  fi;
+     fi;
+  
+  # Are required methods are defined
+  
+     if not ForAll( [ "PreCompose", "IsEqualForObjects", "IsEqualForMorphisms" ], 
+                    s-> CanCompute( category, s ) ) then 
+                    
+         Error( "'PreCompose', 'IsEqualForObjects' or 'IsEqualForMorphisms' is not yet Added" );
+        
+     fi;
   
   # Are Source and Range of all morphisms compatible?
   
-  if CanCompute( category, "IsEqualForObjects" ) then 
+   
   
      if not IsEqualForObjects( Source( morphism11 ), triangle1!.object1 ) or 
         not IsEqualForObjects( Range( morphism11 ), triangle2!.object1 )  then 
@@ -332,43 +336,10 @@ end );
         Error( "The 5'th input is not compatible with the triangles" );
      
      fi;
-     
-  else 
-     
-     Print( "Since 'IsEqualForObjects' is not yet added, we will use 'IsIdenticalObj' to compare objects.\n" );
-     
-     if not IsIdenticalObj( Source( morphism11 ), triangle1!.object1 ) or 
-        not IsIdenticalObj( Range( morphism11 ), triangle2!.object1 )  then 
-        
-        Error( "The third input is not compatible with the triangles" );
-        
-     fi;
-     
-     if not IsIdenticalObj( Source( morphism22 ), triangle1!.object2 ) or 
-        not IsIdenticalObj( Range( morphism22 ), triangle2!.object2 )  then 
-        
-        Error( "The 4'th input is not compatible with the triangles" );
-     
-     fi;
-     
-     if not IsIdenticalObj( Source( morphism33 ), triangle1!.object3 ) or 
-        not IsIdenticalObj( Range( morphism33 ), triangle2!.object3 )  then 
-        
-        Error( "The 5'th input is not compatible with the triangles" );
-     
-     fi;
-     
-  fi;
   
   
   # Is the diagram commutative?
-  
-  if not CanCompute( category, "IsEqualForMorphisms" ) or 
-     not CanCompute( category, "PreCompose" ) then 
-     
-     Error( "It can not be determined if the diagram is commutative or not, since either PreCompose or IsEqualForMorphisms is not yet 'Add'ed." );
-     
-  else 
+
   
      if not IsEqualForMorphisms( PreCompose( triangle1!.morphism1, morphism22 ), PreCompose( morphism11, triangle2!.morphism1 ) ) then
      
@@ -389,9 +360,7 @@ end );
         
      fi;
      
-     
-  fi;
-  
+
   morphism := rec( triangle1:= triangle1,
                    
                    triangle2:= triangle2,
@@ -419,7 +388,7 @@ end );
 ##
 ##############################
  
- InstallMethodWithCache( PreCompose, 
+InstallMethodWithCache( PreCompose, 
  
                  [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
                  
@@ -453,7 +422,7 @@ InstallMethodWithCache( PostCompose,
  
                  [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
                  
- function( mor1, mor2 )
+ function( mor2, mor1 )
  local category;
  
  category:= CapCategory( mor1 );
@@ -501,42 +470,35 @@ InstallMethodWithCache( IsEqualForTriangles,
             IsEqualForMorphisms( trian1!.morphism2, trian2!.morphism2 ) and 
             IsEqualForMorphisms( trian1!.morphism3, trian2!.morphism3 );
             
-  elif CanCompute( category, "IsEqualForObjects" ) and not CanCompute( category, "IsEqualForMorphisms" ) then
+  else
      
-     Print( "Since 'IsEqualForMorphisms' is not yet added, we will use 'IsIdenticalObj' to compare morphisms.\n" );
-     
-     return IsEqualForObjects( trian1!.object1, trian2!.object1 ) and 
-            IsEqualForObjects( trian1!.object2, trian2!.object2 ) and 
-            IsEqualForObjects( trian1!.object3, trian2!.object3 ) and 
-            IsIdenticalObj( trian1!.morphism1, trian2!.morphism1 ) and 
-            IsIdenticalObj( trian1!.morphism2, trian2!.morphism2 ) and 
-            IsIdenticalObj( trian1!.morphism3, trian2!.morphism3 ); 
-            
-   elif not CanCompute( category, "IsEqualForObjects" ) and CanCompute( category, "IsEqualForMorphisms" ) then
-  
-    Print( "Since 'IsEqualForObjects' is not yet added, we will use 'IsIdenticalObj' to compare objects.\n" );  
-  
-     return IsIdenticalObj( trian1!.object1, trian2!.object1 ) and 
-            IsIdenticalObj( trian1!.object2, trian2!.object2 ) and 
-            IsIdenticalObj( trian1!.object3, trian2!.object3 ) and 
-            IsEqualForMorphisms( trian1!.morphism1, trian2!.morphism1 ) and 
-            IsEqualForMorphisms( trian1!.morphism2, trian2!.morphism2 ) and 
-            IsEqualForMorphisms( trian1!.morphism3, trian2!.morphism3 );
-            
-   else 
-     
-    Print( "Since 'IsEqualForObjects' and 'IsEqualForMorphisms' are not yet added, we will use 'IsIdenticalObj' to compare objects/morphisms.\n" );
-    
-     return IsIdenticalObj( trian1!.object1, trian2!.object1 ) and 
-            IsIdenticalObj( trian1!.object2, trian2!.object2 ) and 
-            IsIdenticalObj( trian1!.object3, trian2!.object3 ) and 
-            IsIdenticalObj( trian1!.morphism1, trian2!.morphism1 ) and 
-            IsIdenticalObj( trian1!.morphism2, trian2!.morphism2 ) and 
-            IsIdenticalObj( trian1!.morphism3, trian2!.morphism3 );
-            
-   fi;
+    Error( "Either 'IsEqualForObjects' or 'IsEqualForMorphisms' is not yet added.\n" );
+           
+  fi;
  
 end );
+
+InstallMethod( IsIsomorphism, 
+       
+               [ IsCapCategoryTrianglesMorphism ], 
+               
+  function( mor )
+  
+  if not CanCompute( CapCategory( mor ), "IsIsomorphism" ) then 
+  
+    Error( "'IsIsomorphism' for category morphisms is not yet 'Add'ed" );
+    
+  else 
+  
+    return IsIsomorphism( mor!.morphism11 ) and 
+           IsIsomorphism( mor!.morphism22 ) and 
+           IsIsomorphism( mor!.morphism33 );
+           
+  fi;
+  
+end );
+  
+  
 
 ##############################
 ##
