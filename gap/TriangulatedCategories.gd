@@ -14,6 +14,7 @@ DeclareCategory( "IsCapCategoryTriangle", IsObject );
 
 DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
 
+DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
 
 #################################
 ##
@@ -82,7 +83,12 @@ DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
                     [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
  
  DeclareOperation( "CreateExactTriangle", 
-                    [ IsCapCategoryTriangle ]); 
+                    [ IsCapCategoryTriangle ] );
+                    
+ DeclareOperation( "CreateMorphismOfTriangles", 
+                    [ IsCapCategoryTriangle, IsCapCategoryTriangle,
+                      IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                      IsCapCategoryMorphism ] ); 
  
  ###############################
  ##
@@ -91,6 +97,12 @@ DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
  ###############################
  
  DeclareAttribute( "CapCategory", IsCapCategoryTriangle );
+ 
+ DeclareAttribute( "CapCategory", IsCapCategoryTrianglesMorphism );
+ 
+ DeclareAttribute( "Source", IsCapCategoryTrianglesMorphism );
+ 
+ DeclareAttribute( "Range", IsCapCategoryTrianglesMorphism );
  
  ##############################
  ##

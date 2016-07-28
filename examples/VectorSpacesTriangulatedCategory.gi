@@ -146,23 +146,47 @@ end );
 ##
 ########################################
 
-is_equal_for_objects:= function( obj1, obj2)
-  
-  if Dimension( obj1 ) = Dimension( obj2 ) then 
-  
-     return true;
-     
-  else 
-  
-     return false;
-  
-  fi;
-  
+##
+identity_morphism := function( obj )
+
+    return VectorSpaceMorphism( obj, HomalgIdentityMatrix( Dimension( obj ), VECTORSPACES_FIELD ), obj );
+    
+end;
+
+AddIdentityMorphism( vecspaces, identity_morphism );
+
+##
+pre_compose := function( mor_left, mor_right )
+    local composition;
+
+    composition := mor_left!.morphism * mor_right!.morphism;
+
+    return VectorSpaceMorphism( Source( mor_left ), composition, Range( mor_right ) );
+
+end;
+
+AddPreCompose( vecspaces, pre_compose );
+
+##
+is_equal_for_objects := function( vecspace_1, vecspace_2 )
+    
+    return Dimension( vecspace_1 ) = Dimension( vecspace_2 );
+    
 end;
 
 AddIsEqualForObjects( vecspaces, is_equal_for_objects );
 
+##
+is_equal_for_morphisms := function( a, b )
+  
+    return a!.morphism = b!.morphism;
+  
+end;
 
+AddIsEqualForMorphisms( vecspaces, is_equal_for_morphisms );
+
+
+# Finalize( vecspaces );
 ########################################
 ##
 ## Adding triangulation Methods
@@ -200,18 +224,16 @@ AddIsEqualForObjects( vecspaces, is_equal_for_objects );
 # end );
 
 ##
-# shifting_objects:= 
-# 
-# function( obj )
-#  
-#   return QVectorSpace( 2 * Dimension( obj ) );
-#  
-# end;
-# 
-# AddShiftOfObject( vecspaces, shifting_objects );
-
-AddShiftOfObject( vecspaces, IdFunc );
-AddReverseShiftOfObject( vecspaces, IdFunc );
+shifting_objects:= 
+ 
+function( obj )
+  
+   return obj;
+  
+end;
+ 
+AddShiftOfObject( vecspaces, shifting_objects );
+AddReverseShiftOfObject( vecspaces, shifting_objects );
 
 
 ##
@@ -233,9 +255,36 @@ AddReverseShiftOfObject( vecspaces, IdFunc );
 #    return VectorSpaceMorphism( new_source, matr, new_range );
 # 
 # end;
-   
-AddShiftOfMorphism( vecspaces, IdFunc );
-AddReverseShiftOfMorphism( vecspaces, IdFunc );
+
+shifting_morphisms := 
+
+function( mor )
+local matrix;
+
+matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+
+matrix := -1*matrix;
+
+return VectorSpaceMorphism( ShiftOfObject( Source( mor ) ), matrix, ShiftOfObject( Range( mor ) ) );
+
+end;
+
+
+reverse_shifting_morphisms := 
+
+function( mor )
+local matrix;
+
+matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+
+matrix := -1*matrix;
+
+return VectorSpaceMorphism( ReverseShiftOfObject( Source( mor ) ), matrix, ReverseShiftOfObject( Range( mor ) ) );
+
+end;
+
+AddShiftOfMorphism( vecspaces, shifting_morphisms );
+AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
 
 
 ### some computations to see how everything works
@@ -248,5 +297,6 @@ AddReverseShiftOfMorphism( vecspaces, IdFunc );
  alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
  betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
  gamma:= VectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
+ delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
  
  

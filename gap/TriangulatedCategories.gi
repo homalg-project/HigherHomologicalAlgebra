@@ -16,6 +16,10 @@ DeclareRepresentation( "IsCapCategoryExactTriangleRep",
                         IsCapCategoryExactTriangle and IsAttributeStoringRep,
                         [ ] );
 
+DeclareRepresentation( "IsCapCategoryTrianglesMorphismRep",
+
+                        IsCapCategoryTrianglesMorphism and IsAttributeStoringRep, 
+                        [ ] );
 
 ##############################
 ##
@@ -29,6 +33,8 @@ BindGlobal( "CapCategoryTrianglesFamily",
 BindGlobal( "CapCategoryExactTrianglesFamily",
   NewFamily( "CapCategoryExactTrianglesFamily", IsCapCategoryTriangle ) );
 
+BindGlobal( "CapCategoryTrianglesMorphismsFamily",
+  NewFamily( "CapCategoryTrianglesMorphismsFamily", IsObject ) );
   
 BindGlobal( "TheTypeCapCategoryTriangle", 
   NewType( CapCategoryTrianglesFamily, 
@@ -38,7 +44,9 @@ BindGlobal( "TheTypeCapCategoryExactTriangle",
   NewType( CapCategoryExactTrianglesFamily, 
                       IsCapCategoryExactTriangleRep ) );
                       
-
+BindGlobal( "TheTypeCapCategoryTrianglesMorphism", 
+  NewType( CapCategoryTrianglesMorphismsFamily, 
+                      IsCapCategoryTrianglesMorphismRep ) );
                       
 ###############################
 ##
@@ -177,7 +185,8 @@ function( mor1, mor2, mor3 )
    
       
        if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
-              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) then 
+              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) or
+                  not IsEqualForObjects( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
       
         Error( "Morphisms are not compatible" );
       
@@ -185,18 +194,19 @@ function( mor1, mor2, mor3 )
    
    
    elif not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
-            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) then 
+            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) or
+                  not IsIdenticalObj( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
       
        Error( "Morphisms are not compatible." );
       
    fi;
      
    triangle:= rec( object1:= Source( mor1 ),
-                   morphism12:= mor1,
+                   morphism1:= mor1,
                    object2:= Source( mor2 ),
-                   morphism23:= mor2,
+                   morphism2:= mor2,
                    object3:= Source( mor3 ),
-                   morphism34:= mor3,
+                   morphism3:= mor3,
                    object4:=  Range( mor3 ) );
                    
    ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle, 
@@ -233,7 +243,8 @@ function( mor1, mor2, mor3 )
    
       
        if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
-              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) then 
+              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) or
+                  not IsEqualForObjects( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
       
         Error( "Morphisms are not compatible" );
       
@@ -241,19 +252,22 @@ function( mor1, mor2, mor3 )
    
    
    elif not IsIdenticalObj( Range( mor1 ), Source( mor2 ) ) or
-            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) then 
+            not IsIdenticalObj( Range( mor2 ), Source( mor3 ) ) or
+                  not IsIdenticalObj( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
       
        Error( "Morphisms are not compatible." );
       
    fi;
    
    triangle:= rec( object1:= Source( mor1 ),
-                   morphism12:= mor1,
+                   morphism1:= mor1,
                    object2:= Source( mor2 ),
-                   morphism23:= mor2,
+                   morphism2:= mor2,
                    object3:= Source( mor3 ),
-                   morphism34:= mor3,
-                   object4:=  Range( mor3 ) );
+                   morphism3:= mor3,
+                   object4:=  Range( mor3 ) 
+                   
+                 );
                    
    ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle,
                             CapCategory, CapCategory( mor1 ) 
@@ -273,6 +287,132 @@ InstallMethodWithCache( CreateExactTriangle,
   return CreateExactTriangle( triangle!.morphism12, triangle!.morphism23, triangle!.morphism34 );
   
 end );
+
+
+ InstallMethod( CreateMorphismOfTriangles, 
+ 
+              [ IsCapCategoryExactTriangle, IsCapCategoryTriangle,
+              IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                      IsCapCategoryMorphism ], 
+              
+  function( triangle1, triangle2, morphism11, morphism22, morphism33 )
+  local category, morphism;
+  
+  category := CapCategory( triangle1 );
+  
+  # Are all inputs in the same category?
+  if not ForAll( [ triangle2, morphism11, morphism22, morphism33 ], 
+                 i-> CapCategory( i ) = category ) then 
+                 
+        Error( "Some inputs are not in the same category" );
+      
+  fi;
+  
+  # Are Source and Range of all morphisms compatible?
+  
+  if CanCompute( category, "IsEqualForObjects" ) then 
+  
+     if not IsEqualForObjects( Source( morphism11 ), triangle1!.object1 ) or 
+        not IsEqualForObjects( Range( morphism11 ), triangle2!.object1 )  then 
+        
+        Error( "The third input is not compatible with the triangles" );
+        
+     fi;
+     
+     if not IsEqualForObjects( Source( morphism22 ), triangle1!.object2 ) or 
+        not IsEqualForObjects( Range( morphism22 ), triangle2!.object2 )  then 
+        
+        Error( "The 4'th input is not compatible with the triangles" );
+     
+     fi;
+     
+     if not IsEqualForObjects( Source( morphism33 ), triangle1!.object3 ) or 
+        not IsEqualForObjects( Range( morphism33 ), triangle2!.object3 )  then 
+        
+        Error( "The 5'th input is not compatible with the triangles" );
+     
+     fi;
+     
+  else 
+     
+     if not IsIdenticalObj( Source( morphism11 ), triangle1!.object1 ) or 
+        not IsIdenticalObj( Range( morphism11 ), triangle2!.object1 )  then 
+        
+        Error( "The third input is not compatible with the triangles" );
+        
+     fi;
+     
+     if not IsIdenticalObj( Source( morphism22 ), triangle1!.object2 ) or 
+        not IsIdenticalObj( Range( morphism22 ), triangle2!.object2 )  then 
+        
+        Error( "The 4'th input is not compatible with the triangles" );
+     
+     fi;
+     
+     if not IsIdenticalObj( Source( morphism33 ), triangle1!.object3 ) or 
+        not IsIdenticalObj( Range( morphism33 ), triangle2!.object3 )  then 
+        
+        Error( "The 5'th input is not compatible with the triangles" );
+     
+     fi;
+     
+  fi;
+  
+  
+  # Is the diagram commutative?
+  
+  if not CanCompute( category, "IsEqualForMorphisms" ) or 
+     not CanCompute( category, "PreCompose" ) then 
+     
+     Error( "It can not be determined if the diagram is commutative or not, since either PreCompose or IsEqualForMorphisms is not yet 'Add'ed." );
+     
+  else 
+  
+     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism1, morphism22 ), PreCompose( morphism11, triangle2!.morphism1 ) ) then
+     
+        Error( "The first squar is not commutative" );
+        
+     fi;
+     
+     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism2, morphism33 ), PreCompose( morphism22, triangle2!.morphism2 ) ) then
+     
+        Error( "The second squar is not commutative" );
+        
+     fi;
+     
+     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism3, ShiftOfMorphism( morphism11) ), 
+                                 PreCompose( morphism33, triangle2!.morphism3 ) ) then
+     
+        Error( "The third squar is not commutative" );
+        
+     fi;
+     
+     
+  fi;
+  
+  morphism := rec( triangle1:= triangle1,
+                   
+                   triangle2:= triangle2,
+                   
+                   morphism11:= morphism11,
+                   
+                   morphism22:= morphism22,
+                   
+                   morphism33:= morphism33 
+                   
+                 );
+                 
+  ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
+                           Source, triangle1,
+                           Range, triangle2,
+                           CapCategory, category
+                         );
+  
+  return morphism;
+  
+  end );
+ 
+ 
   
 ##############################
 ##
@@ -300,7 +440,90 @@ InstallMethod( ViewObj,
 
 end );
   
+InstallMethod( ViewObj, 
+
+               [ IsCapCategoryTrianglesMorphism ], 
+               
+  function( morphism )
+  
+  Print( "< A morphism of triangles in ", CapCategory( morphism ), " >" );
+  
+end );
+  
+##############################
+##
+## Display
+##
+##############################
+
+
+InstallMethod( Display, 
+
+        [ IsCapCategoryTriangle ],
+        
+  function( triangle )
+    
+  Print( "object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )\n" );
+  
+  Print( "\nobject1 is\n" ); Display( triangle!.object1 );
+  
+  Print( "\nmorphism1 is \n");Display( triangle!.morphism1 );
+  
+  Print( "\nobject2 is\n" );Display( triangle!.object2 );
+  
+  Print( "\nmorphism2 is \n");Display( triangle!.morphism2 );
+  
+  Print( "\nobject3 is\n" );Display( triangle!.object3 );
+  
+  Print( "\nmorphism3 is \n");Display( triangle!.morphism3 );
+  
+  Print( "\nShiftOfObject( object1 ) is \n" ); Display( ShiftOfObject( triangle!.object1 ) );
+  
+end );
+
+InstallMethod( Display, 
+
+       [ IsCapCategoryTrianglesMorphism ],
+   
+  function( morphism )
+  
+  Print( "A morphism of triangles:\n");
+
+  Print( "Triangle1: object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 ) \n" );
+  Print( "              |                        |                        |                              |               \n" );
+  Print( "              |                        |                        |                              |               \n" );
+  Print( "          morphism11               morphism22               morphism33            ShiftOfMorphism( morphism11 )\n" );
+  Print( "              |                        |                        |                              |               \n" );
+  Print( "              |                        |                        |                              |               \n" );
+  Print( "              V                        V                        V                              V               \n" );
+  Print( "Triangle2: object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 ) \n" );
+  Print( "\n--------------------------------\n" );
+  Print( "Triangle1 is \n" );
+  Display( morphism!.triangle1 );
+  Print( "--------------------------------" );
+  Print( "\nTriangle2 is \n" );
+  Display( morphism!.triangle2 );
+  Print( "--------------------------------" );
+  Print( "\nMorphism11\n" );
+  Display( morphism!.morphism11 );
+  Print( "--------------------------------" );
+  Print( "\nMorphism22\n" );
+  Display( morphism!.morphism22 );
+  Print( "--------------------------------" );
+  Print( "\nMorphism33\n" );
+  Display( morphism!.morphism33 );
+  Print( "--------------------------------" );
+  Print( "\nShiftOfMorphism( morphism11 )\n" );
+  Display( ShiftOfMorphism( morphism!.morphism11 ) );
+  Print( "--------------------------------" );
+  
+end );
   
   
+  
+       
+       
+       
+       
 
 
