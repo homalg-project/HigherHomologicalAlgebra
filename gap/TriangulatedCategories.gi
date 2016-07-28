@@ -207,7 +207,10 @@ function( mor1, mor2, mor3 )
                    morphism2:= mor2,
                    object3:= Source( mor3 ),
                    morphism3:= mor3,
-                   object4:=  Range( mor3 ) );
+                   object4:=  Range( mor3 ), 
+                   iso_class:= [ ] 
+                   
+                 );
                    
    ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle, 
                             CapCategory, CapCategory( mor1 )
@@ -260,8 +263,7 @@ function( mor1, mor2, mor3 )
                    morphism2:= mor2,
                    object3:= Source( mor3 ),
                    morphism3:= mor3,
-                   object4:=  Range( mor3 ) 
-                   
+                   object4:=  Range( mor3 ),
                  );
                    
    ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle,
@@ -488,12 +490,28 @@ InstallMethod( IsIsomorphism,
   
     Error( "'IsIsomorphism' for category morphisms is not yet 'Add'ed" );
     
+  elif  IsIsomorphism( mor!.morphism11 ) and 
+          IsIsomorphism( mor!.morphism22 ) and 
+             IsIsomorphism( mor!.morphism33 ) then 
+                
+      if not IsCapCategoryExactTriangle( mor!.triangle1 ) then 
+      
+          Add( mor!.triangle1!.iso_class, mor!.triangle2 );
+          
+      fi;
+      
+      if not IsCapCategoryExactTriangle( mor!.triangle2 ) then 
+      
+          Add( mor!.triangle2!.iso_class, mor!.triangle1 );
+          
+      fi;
+      
+      return true;
+           
   else 
   
-    return IsIsomorphism( mor!.morphism11 ) and 
-           IsIsomorphism( mor!.morphism22 ) and 
-           IsIsomorphism( mor!.morphism33 );
-           
+      return false;
+      
   fi;
   
 end );
