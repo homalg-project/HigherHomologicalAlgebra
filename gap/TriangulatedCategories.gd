@@ -76,19 +76,28 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject,   IsInt ] );
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
  
- DeclareOperation( "CreateTriangle", 
+ DeclareOperationWithCache( "CreateTriangle", 
                     [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
  
- DeclareOperation( "CreateExactTriangle", 
+ DeclareOperationWithCache( "CreateExactTriangle", 
                     [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
  
- DeclareOperation( "CreateExactTriangle", 
+ DeclareOperationWithCache( "CreateExactTriangle", 
                     [ IsCapCategoryTriangle ] );
-                    
- DeclareOperation( "CreateMorphismOfTriangles", 
+ 
+ DeclareOperationWithCache( "IsEqualForTriangles", 
+                    [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
+   
+ DeclareOperationWithCache( "CreateMorphismOfTriangles", 
                     [ IsCapCategoryTriangle, IsCapCategoryTriangle,
                       IsCapCategoryMorphism, IsCapCategoryMorphism, 
                       IsCapCategoryMorphism ] ); 
+ 
+ DeclareOperationWithCache( "PreCompose", 
+                            [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
+ 
+ DeclareOperationWithCache( "PostCompose", 
+                            [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
  
  ###############################
  ##

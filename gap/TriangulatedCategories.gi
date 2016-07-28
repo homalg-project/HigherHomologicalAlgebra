@@ -289,7 +289,7 @@ InstallMethodWithCache( CreateExactTriangle,
 end );
 
 
- InstallMethod( CreateMorphismOfTriangles, 
+ InstallMethodWithCache( CreateMorphismOfTriangles, 
  
               [ IsCapCategoryExactTriangle, IsCapCategoryTriangle,
               IsCapCategoryMorphism, IsCapCategoryMorphism, 
@@ -334,6 +334,8 @@ end );
      fi;
      
   else 
+     
+     Print( "Since 'IsEqualForObjects' is not yet added, we will use 'IsIdenticalObj' to compare objects.\n" );
      
      if not IsIdenticalObj( Source( morphism11 ), triangle1!.object1 ) or 
         not IsIdenticalObj( Range( morphism11 ), triangle2!.object1 )  then 
@@ -411,9 +413,131 @@ end );
   return morphism;
   
   end );
+##############################
+##
+## Methods
+##
+##############################
  
+ InstallMethodWithCache( PreCompose, 
  
+                 [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
+                 
+ function( mor1, mor2 )
+ local category;
+ 
+ category:= CapCategory( mor1 );
+ 
+ if not  category = CapCategory( mor2 ) then 
+ 
+    Error( "The morphisms are not in the same category" );
+    
+ fi;
+ 
+ if not CanCompute( category , "PreCompose" ) then 
+ 
+    Error( "'PreCompose' for morphisms in ",category, " is not yet 'Add'ed." );
+    
+ fi;
+ 
+ return CreateMorphismOfTriangles( Source( mor1), Range( mor2 ), PreCompose( mor1!.morphism11, mor2!.morphism11 ),
+                                       PreCompose( mor1!.morphism22, mor2!.morphism22 ),
+                                       PreCompose( mor1!.morphism33, mor2!.morphism33 )
+                                 );
+
+end );
+ 
+
+## 
+InstallMethodWithCache( PostCompose, 
+ 
+                 [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
+                 
+ function( mor1, mor2 )
+ local category;
+ 
+ category:= CapCategory( mor1 );
+ 
+ if not  category = CapCategory( mor2 ) then 
+ 
+    Error( "The morphisms are not in the same category" );
+    
+ fi;
+ 
+ if not CanCompute( category , "PostCompose" ) then 
+ 
+    Error( "'PostCompose' for morphisms in ",category, " is not yet 'Add'ed." );
+    
+ fi;
+ 
+ return CreateMorphismOfTriangles( Source( mor1), Range( mor2 ), PostCompose( mor2!.morphism11, mor1!.morphism11 ),
+                                       PostCompose( mor2!.morphism22, mor1!.morphism22 ),
+                                       PostCompose( mor2!.morphism33, mor1!.morphism33 )
+                                 );
+
+end );
+
+InstallMethodWithCache( IsEqualForTriangles,
+
+                        [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
+                        
+  function( trian1, trian2 )
+  local category;
+
+  category := CapCategory( trian1 );
   
+  if category <> CapCategory( trian2 ) then 
+  
+    return false;
+    
+  fi;
+   
+  if CanCompute( category, "IsEqualForObjects" ) and CanCompute( category, "IsEqualForMorphisms" ) then
+  
+     return IsEqualForObjects( trian1!.object1, trian2!.object1 ) and 
+            IsEqualForObjects( trian1!.object2, trian2!.object2 ) and 
+            IsEqualForObjects( trian1!.object3, trian2!.object3 ) and 
+            IsEqualForMorphisms( trian1!.morphism1, trian2!.morphism1 ) and 
+            IsEqualForMorphisms( trian1!.morphism2, trian2!.morphism2 ) and 
+            IsEqualForMorphisms( trian1!.morphism3, trian2!.morphism3 );
+            
+  elif CanCompute( category, "IsEqualForObjects" ) and not CanCompute( category, "IsEqualForMorphisms" ) then
+     
+     Print( "Since 'IsEqualForMorphisms' is not yet added, we will use 'IsIdenticalObj' to compare morphisms.\n" );
+     
+     return IsEqualForObjects( trian1!.object1, trian2!.object1 ) and 
+            IsEqualForObjects( trian1!.object2, trian2!.object2 ) and 
+            IsEqualForObjects( trian1!.object3, trian2!.object3 ) and 
+            IsIdenticalObj( trian1!.morphism1, trian2!.morphism1 ) and 
+            IsIdenticalObj( trian1!.morphism2, trian2!.morphism2 ) and 
+            IsIdenticalObj( trian1!.morphism3, trian2!.morphism3 ); 
+            
+   elif not CanCompute( category, "IsEqualForObjects" ) and CanCompute( category, "IsEqualForMorphisms" ) then
+  
+    Print( "Since 'IsEqualForObjects' is not yet added, we will use 'IsIdenticalObj' to compare objects.\n" );  
+  
+     return IsIdenticalObj( trian1!.object1, trian2!.object1 ) and 
+            IsIdenticalObj( trian1!.object2, trian2!.object2 ) and 
+            IsIdenticalObj( trian1!.object3, trian2!.object3 ) and 
+            IsEqualForMorphisms( trian1!.morphism1, trian2!.morphism1 ) and 
+            IsEqualForMorphisms( trian1!.morphism2, trian2!.morphism2 ) and 
+            IsEqualForMorphisms( trian1!.morphism3, trian2!.morphism3 );
+            
+   else 
+     
+    Print( "Since 'IsEqualForObjects' and 'IsEqualForMorphisms' are not yet added, we will use 'IsIdenticalObj' to compare objects/morphisms.\n" );
+    
+     return IsIdenticalObj( trian1!.object1, trian2!.object1 ) and 
+            IsIdenticalObj( trian1!.object2, trian2!.object2 ) and 
+            IsIdenticalObj( trian1!.object3, trian2!.object3 ) and 
+            IsIdenticalObj( trian1!.morphism1, trian2!.morphism1 ) and 
+            IsIdenticalObj( trian1!.morphism2, trian2!.morphism2 ) and 
+            IsIdenticalObj( trian1!.morphism3, trian2!.morphism3 );
+            
+   fi;
+ 
+end );
+
 ##############################
 ##
 ## View
@@ -465,19 +589,19 @@ InstallMethod( Display,
     
   Print( "object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )\n" );
   
-  Print( "\nobject1 is\n" ); Display( triangle!.object1 );
+  Print( "\n\nobject1 is\n" ); Display( triangle!.object1 );
   
-  Print( "\nmorphism1 is \n");Display( triangle!.morphism1 );
+  Print( "\n\nmorphism1 is \n");Display( triangle!.morphism1 );
   
-  Print( "\nobject2 is\n" );Display( triangle!.object2 );
+  Print( "\n\nobject2 is\n" );Display( triangle!.object2 );
   
-  Print( "\nmorphism2 is \n");Display( triangle!.morphism2 );
+  Print( "\n\nmorphism2 is \n");Display( triangle!.morphism2 );
   
-  Print( "\nobject3 is\n" );Display( triangle!.object3 );
+  Print( "\n\nobject3 is\n" );Display( triangle!.object3 );
   
-  Print( "\nmorphism3 is \n");Display( triangle!.morphism3 );
+  Print( "\n\nmorphism3 is \n");Display( triangle!.morphism3 );
   
-  Print( "\nShiftOfObject( object1 ) is \n" ); Display( ShiftOfObject( triangle!.object1 ) );
+  Print( "\n\nShiftOfObject( object1 ) is \n" ); Display( ShiftOfObject( triangle!.object1 ) );
   
 end );
 
@@ -500,10 +624,10 @@ InstallMethod( Display,
   Print( "\n--------------------------------\n" );
   Print( "Triangle1 is \n" );
   Display( morphism!.triangle1 );
-  Print( "--------------------------------" );
+  Print( "\n--------------------------------" );
   Print( "\nTriangle2 is \n" );
   Display( morphism!.triangle2 );
-  Print( "--------------------------------" );
+  Print( "\n--------------------------------" );
   Print( "\nMorphism11\n" );
   Display( morphism!.morphism11 );
   Print( "--------------------------------" );

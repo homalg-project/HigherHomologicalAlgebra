@@ -140,6 +140,39 @@ InstallMethod( ViewObj,
 
 end );
 
+##################################
+##
+##  Display
+##
+##################################
+
+InstallMethod( Display,
+               [ IsHomalgRationalVectorSpaceRep ],
+
+  function( obj )
+
+    Print( "k^(1 X ", String( Dimension( obj ) ),") as an object in ",vecspaces );
+
+end );
+
+InstallMethod( Display,
+               [ IsHomalgRationalVectorSpaceMorphismRep ],
+
+  function( mor )
+
+    
+    Print( "A rational vector space homomorphism ",
+    "k^(1 X ", String( Dimension( Source( mor ) ) ), ") --> ",
+    "k^(1 X ", String( Dimension( Range( mor ) ) ),
+    
+    ") with matrix: \n" );
+  
+    Display( mor!.morphism );
+
+end );
+
+
+
 ########################################
 ##
 ## Adding additive methods
@@ -263,7 +296,7 @@ local matrix;
 
 matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
 
-matrix := -1*matrix;
+# matrix := -1*matrix;
 
 return VectorSpaceMorphism( ShiftOfObject( Source( mor ) ), matrix, ShiftOfObject( Range( mor ) ) );
 
@@ -277,7 +310,7 @@ local matrix;
 
 matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
 
-matrix := -1*matrix;
+# matrix := -1*matrix;
 
 return VectorSpaceMorphism( ReverseShiftOfObject( Source( mor ) ), matrix, ReverseShiftOfObject( Range( mor ) ) );
 
@@ -293,6 +326,35 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  U:= QVectorSpace(1 );
  V:= QVectorSpace( 2 );
  W:= QVectorSpace( 1 );
+ 
+ A:= QVectorSpace( 2 ); 
+ B:= QVectorSpace( 2 ); 
+ C:= QVectorSpace( 1 );
+ 
+ XX:= QVectorSpace( 1 );
+ YY:= QVectorSpace( 1 );
+ ZZ:= QVectorSpace( 1 );
+ 
+ UV:= VectorSpaceMorphism( U, [ [ 1, 1 ] ], V ); 
+ VW:= VectorSpaceMorphism( V, [ [ 1/2 ], [ 0 ] ], W );
+ WTU:= VectorSpaceMorphism(W, [ [ -4 ] ], ShiftOfObject( U ) );
+ 
+ AB:= VectorSpaceMorphism( A, [ [1,1], [0,1] ], B );
+ BC:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], C );
+ CTA := VectorSpaceMorphism( C, [  [ -1, -1 ] ], ShiftOfObject( A ) );
+ 
+ XXYY:= VectorSpaceMorphism( XX, [ [ 1 ] ], YY );
+ YYZZ:= VectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
+ ZZTXX:= VectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
+ 
+ UA:= VectorSpaceMorphism( U, [ [1,1] ], A );
+ VB:= VectorSpaceMorphism( V,  [ [1,2], [0,0 ] ], B );
+ WC:= VectorSpaceMorphism( W, [ [ 4 ] ], C );
+ WC_:= VectorSpaceMorphism( W, [ [ 3 ] ], C );
+ 
+ AXX:= VectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
+ BYY:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], YY );
+ CZZ:= VectorSpaceMorphism( C, [ [ 1 ] ] ,ZZ );
  
  alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
  betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
