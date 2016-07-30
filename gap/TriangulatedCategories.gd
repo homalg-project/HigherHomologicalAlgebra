@@ -99,7 +99,7 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareOperationWithCache( "PostCompose", 
                             [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
                             
- 
+ DeclareOperation( "IsExactTriangleByAxioms", [ IsCapCategoryTriangle ] );
  ###############################
  ##
  ## Attributes

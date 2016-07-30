@@ -288,7 +288,7 @@ end );
 
  InstallMethodWithCache( CreateMorphismOfTriangles, 
  
-              [ IsCapCategoryExactTriangle, IsCapCategoryTriangle,
+              [ IsCapCategoryTriangle, IsCapCategoryTriangle,
               IsCapCategoryMorphism, IsCapCategoryMorphism, 
                       IsCapCategoryMorphism ], 
               
@@ -485,8 +485,37 @@ InstallMethod( IsIsomorphism,
                [ IsCapCategoryTrianglesMorphism ], 
                
   function( mor )
+  local t;
   
-  if not CanCompute( CapCategory( mor ), "IsIsomorphism" ) then 
+  if HasIsIsomorphism( mor!.morphism11 ) and 
+          HasIsIsomorphism( mor!.morphism22 ) and 
+             HasIsIsomorphism( mor!.morphism33 ) then 
+             
+       t:= IsIsomorphism( mor!.morphism11 ) and 
+          IsIsomorphism( mor!.morphism22 ) and 
+             IsIsomorphism( mor!.morphism33 );
+             
+       if t= true then 
+             
+              if not IsCapCategoryExactTriangle( mor!.triangle1 ) then 
+      
+                  Add( mor!.triangle1!.iso_class, mor!.triangle2 );
+          
+              fi;
+      
+              if not IsCapCategoryExactTriangle( mor!.triangle2 ) then 
+      
+                  Add( mor!.triangle2!.iso_class, mor!.triangle1 );
+          
+              fi;
+            
+        fi;
+        
+              return t; 
+             
+  elif
+  
+    not CanCompute( CapCategory( mor ), "IsIsomorphism" ) then 
   
     Error( "'IsIsomorphism' for category morphisms is not yet 'Add'ed" );
     
@@ -516,7 +545,27 @@ InstallMethod( IsIsomorphism,
   
 end );
   
+##
+InstallMethod( IsExactTriangleByAxioms, 
+               [ IsCapCategoryTriangle ], 
+               
+ function( triangle )
+ 
+ if IsCapCategoryExactTriangle( triangle ) then 
+ 
+    return true;
+    
+ elif HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
+ 
+    return true;
+    
+ else
   
+    return not ForAll( triangle!.iso_class, T-> not IsExactTriangleByAxioms( T ) );
+ 
+ fi;
+ 
+ end );
 
 ##############################
 ##
