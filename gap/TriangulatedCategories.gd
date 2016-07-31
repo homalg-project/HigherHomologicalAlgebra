@@ -100,6 +100,11 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
                             [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
                             
  DeclareOperation( "IsExactTriangleByAxioms", [ IsCapCategoryTriangle ] );
+ 
+ DeclareOperation( "Iso_Triangles", [ IsCapCategoryTriangle, IsList ] );
+ 
+ DeclareOperation( "CurrentIsoClassOfTriangle", [ IsCapCategoryTriangle ] );
+
  ###############################
  ##
  ## Attributes

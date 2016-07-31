@@ -339,9 +339,26 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  VW:= VectorSpaceMorphism( V, [ [ 1/2 ], [ 0 ] ], W );
  WTU:= VectorSpaceMorphism(W, [ [ -4 ] ], ShiftOfObject( U ) );
  
+ UV1:= VectorSpaceMorphism( U, [ [ 12, 1 ] ], V ); 
+ VW1:= VectorSpaceMorphism( V, [ [ 1/21 ], [ 0 ] ], W );
+ WTU1:= VectorSpaceMorphism(W, [ [ -41 ] ], ShiftOfObject( U ) );
+ 
+ UV2:= VectorSpaceMorphism( U, [ [ 1, 11 ] ], V ); 
+ VW2:= VectorSpaceMorphism( V, [ [ 1/21 ], [ 0 ] ], W );
+ WTU2:= VectorSpaceMorphism(W, [ [ -411 ] ], ShiftOfObject( U ) );
+ 
+ 
  AB:= VectorSpaceMorphism( A, [ [1,1], [0,1] ], B );
  BC:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], C );
  CTA := VectorSpaceMorphism( C, [  [ -1, -1 ] ], ShiftOfObject( A ) );
+ 
+ AB1:= VectorSpaceMorphism( A, [ [21,1], [0,1] ], B );
+ BC1:= VectorSpaceMorphism( B, [ [ 20 ], [ 1 ] ], C );
+ CTA1 := VectorSpaceMorphism( C, [  [ -21, -1 ] ], ShiftOfObject( A ) );
+ 
+ AB2:= VectorSpaceMorphism( A, [ [1,1], [20,1] ], B );
+ BC2:= VectorSpaceMorphism( B, [ [ 0 ], [ 21 ] ], C );
+ CTA2 := VectorSpaceMorphism( C, [  [ -1, -21 ] ], ShiftOfObject( A ) );
  
  XXYY:= VectorSpaceMorphism( XX, [ [ 1 ] ], YY );
  YYZZ:= VectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
@@ -362,3 +379,36 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
  
  
+ T:= CreateExactTriangle( alpha, betta, gamma );
+ S:= CreateTriangle( AB, BC, CTA );
+ S1:= CreateTriangle( AB1, BC1, CTA1 );
+ S2:= CreateTriangle( AB2, BC2, CTA2 );
+ M:= CreateTriangle( UV, VW, WTU );
+ M1:= CreateTriangle( UV1, VW1, WTU1 );
+ M2:= CreateTriangle( UV2, VW2, WTU2 );
+ Add( S!.iso_class, T );
+ Add( T!.iso_class, S );
+ Add( S!.iso_class, M );
+ Add( M!.iso_class, S );
+ Add( M!.iso_class, T );
+ Add( T!.iso_class, M );
+ Add( T!.iso_class, M2);
+ Add( M2!.iso_class, T);
+ Add( T!.iso_class, S2);
+ Add( S2!.iso_class, S1);
+ 
+ 
+
+#  T:= CreateExactTriangle( UV, VW, WTU );
+#  S:= CreateTriangle( AB, BC, CTA );
+#  m_T_S := CreateMorphismOfTriangles( T, S, UA, VB, WC );
+#  
+# SetIsIsomorphism( UA, true );
+# SetIsIsomorphism( VB, true );
+# SetIsIsomorphism( WC, true );
+# IsIsomorphism( m_T_S );
+
+
+
+
+

@@ -264,6 +264,7 @@ function( mor1, mor2, mor3 )
                    object3:= Source( mor3 ),
                    morphism3:= mor3,
                    object4:=  Range( mor3 ),
+                   iso_class:= [ ]
                  );
                    
    ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle,
@@ -480,6 +481,30 @@ InstallMethodWithCache( IsEqualForTriangles,
  
 end );
 
+DeclareOperation( "In", [ IsCapCategoryTriangle, IsList ] );
+
+InstallMethod( In,
+               [ IsCapCategoryTriangle, IsList ], 
+               
+  function( triangle, l )
+  local t;
+  
+  for t in l do 
+  
+     if IsEqualForTriangles( triangle, t ) then 
+     
+        return true;
+        
+     fi;
+     
+  od;
+  
+  return false;
+   
+   
+end );
+
+
 InstallMethod( IsIsomorphism, 
        
                [ IsCapCategoryTrianglesMorphism ], 
@@ -496,23 +521,15 @@ InstallMethod( IsIsomorphism,
              IsIsomorphism( mor!.morphism33 );
              
        if t= true then 
-             
-              if not IsCapCategoryExactTriangle( mor!.triangle1 ) then 
-      
+                  
                   Add( mor!.triangle1!.iso_class, mor!.triangle2 );
-          
-              fi;
+                  
+                  Add( mor!.triangle2!.iso_class, mor!.triangle1 );       
+                  
+       fi;
+       
+       return t;
       
-              if not IsCapCategoryExactTriangle( mor!.triangle2 ) then 
-      
-                  Add( mor!.triangle2!.iso_class, mor!.triangle1 );
-          
-              fi;
-            
-        fi;
-        
-              return t; 
-             
   elif
   
     not CanCompute( CapCategory( mor ), "IsIsomorphism" ) then 
@@ -523,17 +540,9 @@ InstallMethod( IsIsomorphism,
           IsIsomorphism( mor!.morphism22 ) and 
              IsIsomorphism( mor!.morphism33 ) then 
                 
-      if not IsCapCategoryExactTriangle( mor!.triangle1 ) then 
+      Add( mor!.triangle1!.iso_class, mor!.triangle2 );
       
-          Add( mor!.triangle1!.iso_class, mor!.triangle2 );
-          
-      fi;
-      
-      if not IsCapCategoryExactTriangle( mor!.triangle2 ) then 
-      
-          Add( mor!.triangle2!.iso_class, mor!.triangle1 );
-          
-      fi;
+      Add( mor!.triangle2!.iso_class, mor!.triangle1 );
       
       return true;
            
@@ -550,6 +559,7 @@ InstallMethod( IsExactTriangleByAxioms,
                [ IsCapCategoryTriangle ], 
                
  function( triangle )
+ local T, current_iso_class, iso_class;
  
  if IsCapCategoryExactTriangle( triangle ) then 
  
@@ -559,14 +569,117 @@ InstallMethod( IsExactTriangleByAxioms,
  
     return true;
     
- else
-  
-    return not ForAll( triangle!.iso_class, T-> not IsExactTriangleByAxioms( T ) );
+ else 
  
- fi;
+   iso_class:= triangle!.iso_class;
+  
+   for T in iso_class do 
+   
+     if HasIsExactTriangle( T )  then 
+      
+         return IsExactTriangle( T );
+         
+     fi;
+
+   od;
+   
+ fi; 
+ 
+ current_iso_class:= CurrentIsoClassOfTriangle( triangle );
+    
+ for T in current_iso_class do
+    
+    if HasIsExactTriangle( T )  then 
+      
+         return IsExactTriangle( T );
+         
+    fi;
+      
+ od;
+ 
+ return fail;
  
  end );
+ 
 
+ InstallMethod( Iso_Triangles,
+                 [ IsCapCategoryTriangle, IsList ], 
+                 
+  function( triangle, l )
+  local dynamik_list, current_iso_class, T;
+  
+  dynamik_list := StructuralCopy( l );
+  
+  current_iso_class:= triangle!.iso_class;
+  
+     for T in current_iso_class do 
+     
+        if not In( T, dynamik_list ) then
+        
+           Add( dynamik_list, T );
+           
+        fi;
+        
+     od;
+   
+  return dynamik_list;
+  
+end );
+
+  
+ 
+ InstallMethod( CurrentIsoClassOfTriangle,
+                 [ IsCapCategoryTriangle ], 
+                 
+ function( triangle )
+ local dyn, new_dyn, T, old_length;
+ 
+ dyn:= [ triangle ];
+ 
+ while 1=1 do
+ 
+   old_length := Length( dyn );
+   
+   new_dyn:= StructuralCopy( dyn );
+   
+   for T in new_dyn do 
+   
+       new_dyn := Iso_Triangles( T, new_dyn );
+       
+   od;
+   
+   if Length( new_dyn )= old_length then 
+   
+     for T in new_dyn do 
+     
+        T!.iso_class := new_dyn;
+        
+     od;
+     
+     return new_dyn;
+     
+   else 
+   
+     dyn:= new_dyn;
+   
+   fi;
+   
+od;
+
+end );
+
+
+ 
+   
+   
+ 
+     
+ 
+ 
+ 
+ 
+  
+                
 ##############################
 ##
 ## View
