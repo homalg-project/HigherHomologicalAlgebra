@@ -218,6 +218,12 @@ end;
 
 AddIsEqualForMorphisms( vecspaces, is_equal_for_morphisms );
 
+is_zero_for_obj := function( obj )
+
+return Dimension( obj )=0;
+end;
+
+AddIsZeroForObjects( vecspaces, is_zero_for_obj );
 
 # Finalize( vecspaces );
 ########################################
@@ -379,7 +385,7 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
  
  
- T:= CreateExactTriangle( alpha, betta, gamma );
+ T:= CreateTriangle( alpha, betta, gamma );
  S:= CreateTriangle( AB, BC, CTA );
  S1:= CreateTriangle( AB1, BC1, CTA1 );
  S2:= CreateTriangle( AB2, BC2, CTA2 );
@@ -399,14 +405,14 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  
  
 
-#  T:= CreateExactTriangle( UV, VW, WTU );
-#  S:= CreateTriangle( AB, BC, CTA );
-#  m_T_S := CreateMorphismOfTriangles( T, S, UA, VB, WC );
-#  
-# SetIsIsomorphism( UA, true );
-# SetIsIsomorphism( VB, true );
-# SetIsIsomorphism( WC, true );
-# IsIsomorphism( m_T_S );
+  _T:= CreateExactTriangle( UV, VW, WTU );
+  _S:= CreateTriangle( AB, BC, CTA );
+  m_T_S := CreateMorphismOfTriangles( _T, _S, UA, VB, WC );
+  
+ SetIsIsomorphism( UA, true );
+ SetIsIsomorphism( VB, true );
+ SetIsIsomorphism( WC, true );
+ IsIsomorphism( m_T_S );
 
 
 

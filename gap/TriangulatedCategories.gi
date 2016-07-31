@@ -571,6 +571,7 @@ InstallMethod( IsExactTriangleByAxioms,
     
  else 
  
+ ## TR1 --- 2
    iso_class:= triangle!.iso_class;
   
    for T in iso_class do 
@@ -585,6 +586,17 @@ InstallMethod( IsExactTriangleByAxioms,
    
  fi; 
  
+ 
+ ## TR1 --- 1
+ if ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( CapCategory( triangle ), i ) ) and
+ 
+       IsZeroForObjects( triangle!.object3 ) and IsIdenticalToIdentityMorphism( triangle!.morphism1 ) then 
+       
+       return true;
+       
+ fi;
+ 
+ ## TR1 --- 2
  current_iso_class:= CurrentIsoClassOfTriangle( triangle );
     
  for T in current_iso_class do
