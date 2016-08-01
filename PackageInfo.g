@@ -31,7 +31,7 @@ Persons := [
 #IssueTrackerURL := "TODO",
 #SupportEmail := "TODO",
 
-PackageWWWHome := "http://TODO/",
+PackageWWWHome := "https://github.com/kamalsaleh/TriangulatedCategoriesForCAP",
 
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
