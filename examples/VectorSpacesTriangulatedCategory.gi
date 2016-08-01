@@ -225,6 +225,17 @@ end;
 
 AddIsZeroForObjects( vecspaces, is_zero_for_obj );
 
+
+is_zero_for_mors := function( mor )
+
+return IsZero( EntriesOfHomalgMatrixAsListList( mor!.morphism ) );
+
+end;
+
+AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
+
+
+
 # Finalize( vecspaces );
 ########################################
 ##
@@ -326,6 +337,23 @@ AddShiftOfMorphism( vecspaces, shifting_morphisms );
 AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
 
 
+additive_inverse_for_morphisms := 
+
+function( mor )
+local matrix;
+
+matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
+
+matrix := -1*matrix;
+
+return VectorSpaceMorphism( Source( mor ) , matrix,  Range( mor )  );
+
+end;
+
+AddAdditiveInverseForMorphisms( vecspaces, additive_inverse_for_morphisms );
+
+
+
 ### some computations to see how everything works
 
 
@@ -336,7 +364,6 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  A:= QVectorSpace( 2 ); 
  B:= QVectorSpace( 2 ); 
  C:= QVectorSpace( 1 );
- 
  XX:= QVectorSpace( 1 );
  YY:= QVectorSpace( 1 );
  ZZ:= QVectorSpace( 1 );

@@ -497,6 +497,12 @@ InstallMethod( IsIsomorphicTriangles,
      
   fi;
   
+  if In( triangle2, triangle1!.iso_class ) or In( triangle2, CurrentIsoClassOfTriangle( triangle1 ) ) then 
+  
+     return true;
+     
+  fi;
+  
   return fail;
   
 end );
@@ -517,6 +523,26 @@ InstallMethod( SetIsIsomorphicTriangles,
     Add( triangle1!.iso_class, triangle2 );
     
  fi;
+ 
+ if   HasIsExactTriangle( triangle1 ) and not HasIsExactTriangle( triangle2 ) then 
+ 
+      SetIsExactTriangle( triangle2, IsExactTriangle( triangle1 ) );
+   
+ elif HasIsExactTriangle( triangle2 ) and not HasIsExactTriangle( triangle1 ) then 
+ 
+      SetIsExactTriangle( triangle1, IsExactTriangle( triangle2 ) );
+      
+ elif HasIsExactTriangle( triangle1 ) and HasIsExactTriangle( triangle2 ) then 
+ 
+      if IsExactTriangle( triangle1 ) <> IsExactTriangle( triangle2 ) then 
+      
+         Error( "It has been tried to set two triangles to be isomorphic, but this can not be true because one of them is exact and the other ist not!" );
+         
+      fi;
+      
+ fi;
+   
+   
 
 end );
 
@@ -586,24 +612,81 @@ InstallMethod( IsIsomorphism,
   fi;
   
 end );
+
+
+InstallMethod( IsExactTriangleByTR2Forward, 
+               [ IsCapCategoryTriangle ], 
+  function( triangle )
   
+  if HasIsExactTriangle( triangle ) then 
+  
+      return IsExactTriangle( triangle );
+      
+  fi;
+  
+  if HasCreateTriangleByTR2Forward( triangle ) then 
+  
+     return IsExactTriangleByTR2Forward( CreateTriangleByTR2Forward( triangle ) );
+     
+  fi;
+  
+  
+  return fail;
+  
+  
+end );
+
+InstallMethod( IsExactTriangleByTR2Backward, 
+               [ IsCapCategoryTriangle ], 
+  function( triangle )
+  
+  if HasIsExactTriangle( triangle ) then 
+  
+      return IsExactTriangle( triangle );
+      
+  fi;
+  
+  if HasCreateTriangleByTR2Backward( triangle ) then 
+  
+     return IsExactTriangleByTR2Forward( CreateTriangleByTR2Forward( triangle ) );
+     
+  fi;
+  
+  
+  return fail;
+  
+  
+end );
+
+
 ##
 InstallMethod( IsExactTriangleByAxioms, 
                [ IsCapCategoryTriangle ], 
                
  function( triangle )
- local T, current_iso_class, iso_class;
+ local T, current_iso_class, iso_class, category;
+ 
+ category := CapCategory( triangle );
  
  if IsCapCategoryExactTriangle( triangle ) then 
  
     return true;
     
- elif HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
+ elif HasIsExactTriangle( triangle ) then 
  
-    return true;
+    return IsExactTriangle( triangle );
     
- else 
+ elif CanCompute( category, "IsZeroForMorphisms" ) and CanCompute( category, "PreCompose" ) then 
  
+      if not IsZeroForMorphisms(PreCompose( triangle!.morphism1, triangle!.morphism2 ) ) or
+           not IsZeroForMorphisms(PreCompose( triangle!.morphism2, triangle!.morphism3 ) ) then 
+           
+           return false;
+           
+      fi;
+      
+ else
+      
  ## TR1 --- 2
    iso_class:= triangle!.iso_class;
   
@@ -619,27 +702,37 @@ InstallMethod( IsExactTriangleByAxioms,
    
  fi; 
  
- 
- ## TR1 --- 1
- if ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( CapCategory( triangle ), i ) ) and
- 
-       IsZeroForObjects( triangle!.object3 ) and IsIdenticalToIdentityMorphism( triangle!.morphism1 ) then 
-       
-       return true;
-       
- fi;
- 
- ## TR1 --- 2
  current_iso_class:= CurrentIsoClassOfTriangle( triangle );
-    
+  
  for T in current_iso_class do
-    
+ 
+    ## By TR1 --- 2
     if HasIsExactTriangle( T )  then 
       
          return IsExactTriangle( T );
          
     fi;
+    
+    ## By TR1 --- 1
+    if ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( category, i ) ) and
+ 
+       IsZeroForObjects( T!.object3 ) and IsIdenticalToIdentityMorphism( T!.morphism1 ) then 
+       
+       return true;
+       
+    fi;
       
+    ## By TR2
+    if not IsExactTriangleByTR2Forward( T )= fail then 
+ 
+       return IsExactTriangleByTR2Forward( T );
+    
+    elif not IsExactTriangleByTR2Backward( T )= fail then 
+ 
+       return IsExactTriangleByTR2Backward( T );
+ 
+   fi;    
+ 
  od;
  
  return fail;
@@ -717,11 +810,92 @@ end );
  
    
    
- 
+#############################
+##
+##  Attributes
+##
+#############################
+
+InstallMethod( CreateTriangleByTR2Forward,
+                  [ IsCapCategoryTriangle ], 
+                  
+  function( triangle )
+  
+  local new_morphism, new_triangle;
+  
+  
+  new_morphism :=  AdditiveInverseForMorphisms( ShiftOfMorphism( triangle!.morphism1 ) );
+  
+  if HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
+  
+     new_triangle:= CreateExactTriangle( triangle!.morphism2, triangle!.morphism3, new_morphism );
      
+     SetCreateTriangleByTR2Backward( new_triangle, triangle );
+     
+     return new_triangle;
+     
+  else 
+  
+     new_triangle:= CreateTriangle( triangle!.morphism2, triangle!.morphism3, new_morphism );
+     
+     SetCreateTriangleByTR2Backward( new_triangle, triangle );
+     
+     return new_triangle;
+     
+  fi;
+  
+end );
+     
+
+InstallMethod( CreateTriangleByTR2Backward,
+                  [ IsCapCategoryTriangle ], 
+                  
+  function( triangle )
+  
+  local new_morphism, new_triangle;
+  
+  
+  new_morphism :=  AdditiveInverseForMorphisms( ReverseShiftOfMorphism( triangle!.morphism3 ) );
+  
+  if HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
+  
+     new_triangle:= CreateExactTriangle( new_morphism, triangle!.morphism1, triangle!.morphism2  );
+     
+     SetCreateTriangleByTR2Forward( new_triangle, triangle );
+     
+     return new_triangle;
+     
+  else 
+  
+     new_triangle:= CreateTriangle( new_morphism, triangle!.morphism1, triangle!.morphism2 );
+     
+     SetCreateTriangleByTR2Forward( new_triangle, triangle );
+     
+     return new_triangle;
+     
+  fi;
+  
+end );
  
- 
- 
+InstallMethodWithCache( ApplyCreationTrianglesByTR2,
+                        [ IsCapCategoryTriangle, IsInt ],
+  function( t, n )
+  
+  if n=0 then 
+  
+    return t;
+    
+  elif n<0 then
+  
+    return CreateTriangleByTR2Backward( ApplyCreationTrianglesByTR2( t, n+1 ) );
+    
+  else 
+  
+    return CreateTriangleByTR2Forward( ApplyCreationTrianglesByTR2( t, n-1 ) );
+    
+  fi;
+  
+end );
  
   
                 

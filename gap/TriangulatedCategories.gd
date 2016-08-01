@@ -74,7 +74,10 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  ##################################
  
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject,   IsInt ] );
+ 
  DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
+ 
+ DeclareOperationWithCache( "ApplyCreationTrianglesByTR2", [ IsCapCategoryTriangle, IsInt ] );
  
  DeclareOperationWithCache( "CreateTriangle", 
                     [ IsCapCategoryMorphism,IsCapCategoryMorphism,IsCapCategoryMorphism ]); 
@@ -101,6 +104,10 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
                             
  DeclareOperation( "IsExactTriangleByAxioms", [ IsCapCategoryTriangle ] );
  
+ DeclareOperation( "IsExactTriangleByTR2Backward", [ IsCapCategoryTriangle ] );
+ 
+ DeclareOperation( "IsExactTriangleByTR2Forward", [ IsCapCategoryTriangle ] );
+ 
  DeclareOperation( "Iso_Triangles", [ IsCapCategoryTriangle, IsList ] );
  
  DeclareOperation( "CurrentIsoClassOfTriangle", [ IsCapCategoryTriangle ] );
@@ -122,6 +129,10 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareAttribute( "CapCategory", IsCapCategoryTriangle );
  
  DeclareAttribute( "CapCategory", IsCapCategoryTrianglesMorphism );
+ 
+ DeclareAttribute( "CreateTriangleByTR2Forward", IsCapCategoryTriangle );
+ 
+ DeclareAttribute( "CreateTriangleByTR2Backward", IsCapCategoryTriangle );
  
  DeclareAttribute( "Source", IsCapCategoryTrianglesMorphism );
  
