@@ -370,8 +370,8 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  YYZZ:= VectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
  ZZTXX:= VectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
  
- UA:= VectorSpaceMorphism( U, [ [1,1] ], A );
- VB:= VectorSpaceMorphism( V,  [ [1,2], [0,0 ] ], B );
+ UA:= VectorSpaceMorphism( U, [ [ 1, 1 ] ], A );
+ VB:= VectorSpaceMorphism( V,  [ [ 1, 2 ], [ 0,0 ] ], B );
  WC:= VectorSpaceMorphism( W, [ [ 4 ] ], C );
  WC_:= VectorSpaceMorphism( W, [ [ 3 ] ], C );
  
@@ -392,18 +392,6 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  M:= CreateTriangle( UV, VW, WTU );
  M1:= CreateTriangle( UV1, VW1, WTU1 );
  M2:= CreateTriangle( UV2, VW2, WTU2 );
- Add( S!.iso_class, T );
- Add( T!.iso_class, S );
- Add( S!.iso_class, M );
- Add( M!.iso_class, S );
- Add( M!.iso_class, T );
- Add( T!.iso_class, M );
- Add( T!.iso_class, M2);
- Add( M2!.iso_class, T);
- Add( T!.iso_class, S2);
- Add( S2!.iso_class, S1);
- 
- 
 
   _T:= CreateExactTriangle( UV, VW, WTU );
   _S:= CreateTriangle( AB, BC, CTA );
@@ -412,7 +400,7 @@ AddReverseShiftOfMorphism( vecspaces, reverse_shifting_morphisms );
  SetIsIsomorphism( UA, true );
  SetIsIsomorphism( VB, true );
  SetIsIsomorphism( WC, true );
- IsIsomorphism( m_T_S );
+#  IsIsomorphism( m_T_S );
 
 
 

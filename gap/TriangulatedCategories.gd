@@ -104,6 +104,14 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareOperation( "Iso_Triangles", [ IsCapCategoryTriangle, IsList ] );
  
  DeclareOperation( "CurrentIsoClassOfTriangle", [ IsCapCategoryTriangle ] );
+ 
+ DeclareOperation( "SetIsIsomorphicTriangles", 
+                  [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
+ 
+ DeclareOperation( "In", [ IsCapCategoryTriangle, IsList ] );
+ 
+ DeclareOperation( "IsIsomorphicTriangles", 
+               [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
 
  ###############################
  ##

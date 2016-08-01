@@ -216,6 +216,8 @@ function( mor1, mor2, mor3 )
                             CapCategory, CapCategory( mor1 )
    );
    
+   Add( triangle!.iso_class, triangle );
+   
    return triangle;
    
 end );
@@ -272,6 +274,8 @@ function( mor1, mor2, mor3 )
    );
    
    SetIsExactTriangle( triangle, true );
+   
+   Add( triangle!.iso_class, triangle );
    
    return triangle;
    
@@ -385,6 +389,7 @@ end );
   return morphism;
   
   end );
+  
 ##############################
 ##
 ## Methods
@@ -481,7 +486,39 @@ InstallMethodWithCache( IsEqualForTriangles,
  
 end );
 
-DeclareOperation( "In", [ IsCapCategoryTriangle, IsList ] );
+InstallMethod( IsIsomorphicTriangles, 
+               [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
+               
+  function( triangle1, triangle2 )
+  
+  if In( triangle1, triangle2!.iso_class ) or In( triangle1, CurrentIsoClassOfTriangle( triangle2 ) ) then 
+  
+     return true;
+     
+  fi;
+  
+  return fail;
+  
+end );
+
+InstallMethod( SetIsIsomorphicTriangles, 
+               [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
+               
+ function( triangle1, triangle2 )
+ 
+ if not In( triangle1, triangle2!.iso_class ) then 
+ 
+    Add( triangle2!.iso_class, triangle1 );
+    
+ fi;
+
+ if not In( triangle2, triangle1!.iso_class ) then 
+ 
+    Add( triangle1!.iso_class, triangle2 );
+    
+ fi;
+
+end );
 
 InstallMethod( In,
                [ IsCapCategoryTriangle, IsList ], 
@@ -522,9 +559,7 @@ InstallMethod( IsIsomorphism,
              
        if t= true then 
                   
-                  Add( mor!.triangle1!.iso_class, mor!.triangle2 );
-                  
-                  Add( mor!.triangle2!.iso_class, mor!.triangle1 );       
+          SetIsIsomorphicTriangles( mor!.triangle1, mor!.triangle2 );
                   
        fi;
        
@@ -540,15 +575,13 @@ InstallMethod( IsIsomorphism,
           IsIsomorphism( mor!.morphism22 ) and 
              IsIsomorphism( mor!.morphism33 ) then 
                 
-      Add( mor!.triangle1!.iso_class, mor!.triangle2 );
+        SetIsIsomorphicTriangles( mor!.triangle1, mor!.triangle2 );
       
-      Add( mor!.triangle2!.iso_class, mor!.triangle1 );
-      
-      return true;
+        return true;
            
   else 
   
-      return false;
+        return false;
       
   fi;
   
