@@ -234,7 +234,11 @@ end;
 
 AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
 
+return_fail := function( obj )
+return fail;
+end;
 
+AddIsExactForTriangles( vecspaces, return_fail );
 
 # Finalize( vecspaces );
 ########################################

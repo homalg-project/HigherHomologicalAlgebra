@@ -95,6 +95,13 @@ filter_list := [ IsCapCategoryTriangle ],
 cache_name := "IsExactForTriangles",
 return_type := "bool" ),
 
+ConeAndMorphisms:= rec(
+
+installation_name := "ConeAndMorphisms", 
+filter_list := [ "morphism" ],
+cache_name := "ConeAndMorphisms",
+return_type := [ "morphism", "object", "morphism" ] ),
+
 
 ) );
 
@@ -151,8 +158,19 @@ end );
 
 InstallMethod( IsExactTriangle, 
                [ IsCapCategoryTriangle ], 
-               
-IsExactForTriangles );
+function( triangle )
+
+if not IsExactTriangleByAxioms( triangle )=fail then 
+
+    return IsExactTriangleByAxioms( triangle );
+    
+else 
+
+    return IsExactForTriangles( triangle );
+    
+fi;
+
+end );
 
 ####################################
 ##
@@ -286,7 +304,28 @@ InstallMethodWithCache( CreateExactTriangle,
                         
   function( triangle )
   
-  return CreateExactTriangle( triangle!.morphism12, triangle!.morphism23, triangle!.morphism34 );
+  if HasIsExactTriangle( triangle ) then 
+  
+     if IsExactTriangle( triangle ) then 
+     
+         ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle );
+         
+     else 
+     
+         Error( "The given triangle is not exact!" );
+         
+     fi;
+     
+  else
+  
+     SetIsExactTriangle( triangle, true );
+     
+     ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle );
+         
+         
+  fi;
+  
+  return triangle;
   
 end );
 
@@ -909,22 +948,28 @@ end );
 
 InstallMethod( ViewObj,
                
-               [ IsCapCategoryExactTriangle ], 
-               
-  function( triangle )
-  
-  Print( "< An Exact triangle in ", CapCategory( triangle ), " >" );
-
-end );
-  
-InstallMethod( ViewObj,
-               
                [ IsCapCategoryTriangle ], 
                
   function( triangle )
   
-  Print( "< An triangle in ", CapCategory( triangle ), " >" );
+  if HasIsExactTriangle( triangle ) then 
+  
+     if not IsExactTriangle( triangle ) then 
+  
+        Print( "< A not exact triangle in ", CapCategory( triangle ), " >" );
 
+     else 
+     
+        Print( "< An exact triangle in ", CapCategory( triangle ), " >" );
+ 
+     fi;
+     
+  else 
+  
+     Print( "< A triangle in ", CapCategory( triangle ), " >" );
+
+  fi;
+  
 end );
   
 InstallMethod( ViewObj, 
