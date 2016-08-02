@@ -678,12 +678,12 @@ InstallMethod( IsExactTriangleByAxioms,
     
  elif CanCompute( category, "IsZeroForMorphisms" ) and CanCompute( category, "PreCompose" ) then 
  
-      if not IsZeroForMorphisms(PreCompose( triangle!.morphism1, triangle!.morphism2 ) ) or
-           not IsZeroForMorphisms(PreCompose( triangle!.morphism2, triangle!.morphism3 ) ) then 
+       if not IsZeroForMorphisms(PreCompose( triangle!.morphism1, triangle!.morphism2 ) ) or
+            not IsZeroForMorphisms(PreCompose( triangle!.morphism2, triangle!.morphism3 ) ) then 
            
-           return false;
+            return false;
            
-      fi;
+       fi;
       
  else
       
@@ -711,23 +711,29 @@ InstallMethod( IsExactTriangleByAxioms,
       
          return IsExactTriangle( T );
          
-    fi;
-    
+    elif CanCompute( category, "IsZeroForMorphisms" ) and CanCompute( category, "PreCompose" ) then 
+ 
+       if not IsZeroForMorphisms(PreCompose( T!.morphism1, T!.morphism2 ) ) or
+            not IsZeroForMorphisms(PreCompose( T!.morphism2, T!.morphism3 ) ) then 
+           
+            return false;
+           
+       fi;
+       
+     
     ## By TR1 --- 1
-    if ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( category, i ) ) and
+    elif ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( category, i ) ) and
  
        IsZeroForObjects( T!.object3 ) and IsIdenticalToIdentityMorphism( T!.morphism1 ) then 
        
        return true;
-       
-    fi;
       
-    ## By TR2
-    if not IsExactTriangleByTR2Forward( T )= fail then 
+   ## By TR2
+   elif not IsExactTriangleByTR2Forward( T )= fail then 
  
        return IsExactTriangleByTR2Forward( T );
     
-    elif not IsExactTriangleByTR2Backward( T )= fail then 
+   elif not IsExactTriangleByTR2Backward( T )= fail then 
  
        return IsExactTriangleByTR2Backward( T );
  
@@ -805,10 +811,6 @@ end );
 od;
 
 end );
-
-
- 
-   
    
 #############################
 ##
