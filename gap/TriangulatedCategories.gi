@@ -299,6 +299,34 @@ function( mor1, mor2, mor3 )
    
 end );
 
+##
+InstallMethodWithCache( CompleteMorphismToTriangle,
+                       
+                       [  IsCapCategoryMorphism ], 
+                        
+  function( mor )
+  local cone;
+  
+  cone:= ConeAndMorphisms( mor );
+  
+  return CreateExactTriangle( mor, cone[ 1 ], cone[ 3 ] );
+  
+end );
+
+InstallMethodWithCache( ConeObject,
+                       
+                       [  IsCapCategoryMorphism ], 
+                        
+  function( mor )
+  local cone;
+  
+  cone:= ConeAndMorphisms( mor );
+  
+  return cone[ 2 ];
+  
+end );
+
+##
 InstallMethodWithCache( CreateExactTriangle,
                         [  IsCapCategoryTriangle ], 
                         
@@ -328,6 +356,7 @@ InstallMethodWithCache( CreateExactTriangle,
   return triangle;
   
 end );
+
 
 
  InstallMethodWithCache( CreateMorphismOfTriangles, 

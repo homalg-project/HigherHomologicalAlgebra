@@ -234,12 +234,51 @@ end;
 
 AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
 
-return_fail := function( obj )
-return fail;
+is_exact_for_triangles:= function( trian )
+                         local f,g,h;
+                         
+                         if not IsZeroForMorphisms( PreCompose( f, g ) ) or 
+                            not IsZeroForMorphisms( PreCompose( g, h ) ) or 
+                            not IsZeroForMorphisms( PreCompose( h, f ) ) then 
+                            
+                            return false;
+                            
+                        fi;
+                        
+                        
+#                         if not Dimension( KenelObject
+                            
+                         
+
+                         
 end;
+                         
+AddIsExactForTriangles( vecspaces, is_exact_for_triangles );                       
 
-AddIsExactForTriangles( vecspaces, return_fail );
+AddConeAndMorphisms( vecspaces, function( mor )
 
+                               return [ mor, Source( mor ), mor ];
+                               
+                               end );
+
+HelperByWritingMorphisms:= function( m, n, t )
+                           local l;
+
+l:= List( [ 1 .. m+n ], i-> List( [ 1 .. n+t], function( j )
+    
+                                                if i<= m then return 0;
+                                                
+                                                elif j> n then return 0;
+                                                
+                                                else return Random( [ -100 .. 100 ] );
+                                                
+                                                fi;
+                                                
+                                                end ) );
+
+return l;
+
+end;
 # Finalize( vecspaces );
 ########################################
 ##
@@ -365,73 +404,75 @@ AddAdditiveInverseForMorphisms( vecspaces, additive_inverse_for_morphisms );
  V:= QVectorSpace( 2 );
  W:= QVectorSpace( 1 );
  
- A:= QVectorSpace( 2 ); 
- B:= QVectorSpace( 2 ); 
- C:= QVectorSpace( 1 );
+ A:= QVectorSpace( 5 ); 
+ B:= QVectorSpace( 7 ); 
+ C:= QVectorSpace( 6 );
+ 
  XX:= QVectorSpace( 1 );
  YY:= QVectorSpace( 1 );
  ZZ:= QVectorSpace( 1 );
  
- UV:= VectorSpaceMorphism( U, [ [ 1, 1 ] ], V ); 
- VW:= VectorSpaceMorphism( V, [ [ 1/2 ], [ 0 ] ], W );
- WTU:= VectorSpaceMorphism(W, [ [ -4 ] ], ShiftOfObject( U ) );
+ UV:= VectorSpaceMorphism( U, [ [ 5, 0 ] ], V ); 
+ VW:= VectorSpaceMorphism( V, [ [ 0 ], [ 6 ] ], W );
+ WTU:= VectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
  
- UV1:= VectorSpaceMorphism( U, [ [ 12, 1 ] ], V ); 
- VW1:= VectorSpaceMorphism( V, [ [ 1/21 ], [ 0 ] ], W );
- WTU1:= VectorSpaceMorphism(W, [ [ -41 ] ], ShiftOfObject( U ) );
+ UV1:= VectorSpaceMorphism( U, [ [ 13, 1 ] ], V ); 
+ VW1:= VectorSpaceMorphism( V, [ [ 0 ], [ 20 ] ], W );
+ WTU1:= VectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
  
- UV2:= VectorSpaceMorphism( U, [ [ 1, 11 ] ], V ); 
- VW2:= VectorSpaceMorphism( V, [ [ 1/21 ], [ 0 ] ], W );
- WTU2:= VectorSpaceMorphism(W, [ [ -411 ] ], ShiftOfObject( U ) );
+ UV2:= VectorSpaceMorphism( U, [ [ 12, 0 ] ], V ); 
+ VW2:= VectorSpaceMorphism( V, [ [ 0 ], [ 0 ] ], W );
+ WTU2:= VectorSpaceMorphism(W, [ [ 2 ] ], ShiftOfObject( U ) );
  
  
- AB:= VectorSpaceMorphism( A, [ [1,1], [0,1] ], B );
- BC:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], C );
- CTA := VectorSpaceMorphism( C, [  [ -1, -1 ] ], ShiftOfObject( A ) );
+ AB:= VectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ],
+ [ -5, 2, -93, 0, 0, 0, 0 ], [ -37, 85, -65, 0, 0, 0, 0 ], [ -76, 8, 86, 0, 0, 0, 0 ] ], B );
+ BC:= VectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], 
+ [ -4, -17, 97, -9, 0, 0 ], [ -32, 67, 2, 57, 0, 0 ], [ 58, -87, 69, 5, 0, 0 ], 
+  [ 76, 39, 57, -48, 0, 0 ] ], C );
+ CTA := VectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], 
+ [ 66, 97, 0, 0, 0 ], [ -84, 44, 0, 0, 0 ] ], ShiftOfObject( A ) );
  
- AB1:= VectorSpaceMorphism( A, [ [21,1], [0,1] ], B );
- BC1:= VectorSpaceMorphism( B, [ [ 20 ], [ 1 ] ], C );
- CTA1 := VectorSpaceMorphism( C, [  [ -21, -1 ] ], ShiftOfObject( A ) );
- 
- AB2:= VectorSpaceMorphism( A, [ [1,1], [20,1] ], B );
- BC2:= VectorSpaceMorphism( B, [ [ 0 ], [ 21 ] ], C );
- CTA2 := VectorSpaceMorphism( C, [  [ -1, -21 ] ], ShiftOfObject( A ) );
+ AB1:= VectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ], [ -35, 38, 52, 0, 0, 0, 0 ], [ 36, -19, -66, 0, 0, 0, 0 ], [ 24, -44, -17, 0, 0, 0, 0 ] ], B );
+ BC1:= VectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ -35, 49, 11, 56, 0, 0 ], [ 25, 77, 79, 27, 0, 0 ], [ 95, -3, -32, 98, 0, 0 ], 
+  [ 76, 40, -95, 38, 0, 0 ] ], C );
+ CTA1 := VectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ -62, -98, 0, 0, 0 ], [ -49, -79, 0, 0, 0 ] ], ShiftOfObject( A ) );
  
  XXYY:= VectorSpaceMorphism( XX, [ [ 1 ] ], YY );
  YYZZ:= VectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
  ZZTXX:= VectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
  
- UA:= VectorSpaceMorphism( U, [ [ 1, 1 ] ], A );
- VB:= VectorSpaceMorphism( V,  [ [ 1, 2 ], [ 0,0 ] ], B );
- WC:= VectorSpaceMorphism( W, [ [ 4 ] ], C );
- WC_:= VectorSpaceMorphism( W, [ [ 3 ] ], C );
- 
- AXX:= VectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
- BYY:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], YY );
- CZZ:= VectorSpaceMorphism( C, [ [ 1 ] ] ,ZZ );
- 
- alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
- betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
- gamma:= VectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
- delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
- 
- 
- T:= CreateTriangle( alpha, betta, gamma );
- S:= CreateTriangle( AB, BC, CTA );
- S1:= CreateTriangle( AB1, BC1, CTA1 );
- S2:= CreateTriangle( AB2, BC2, CTA2 );
- M:= CreateTriangle( UV, VW, WTU );
- M1:= CreateTriangle( UV1, VW1, WTU1 );
- M2:= CreateTriangle( UV2, VW2, WTU2 );
-
-  _T:= CreateExactTriangle( UV, VW, WTU );
-  _S:= CreateTriangle( AB, BC, CTA );
-  m_T_S := CreateMorphismOfTriangles( _T, _S, UA, VB, WC );
-  
- SetIsIsomorphism( UA, true );
- SetIsIsomorphism( VB, true );
- SetIsIsomorphism( WC, true );
-#  IsIsomorphism( m_T_S );
+  UA:= VectorSpaceMorphism( U, [ [ 6,5,0,0,0 ] ], A );
+  VB:= VectorSpaceMorphism( V,  [ [ 0,0,0,0,0,0,0 ], [ 3,1,2,3,4,5,6 ] ], B );
+  WC:= VectorSpaceMorphism( W, [ [ 101, 8/3, 493/3, -31/3, 0, 0 ] ], C );
+#  WC_:= VectorSpaceMorphism( W, [ [ 3 ] ], C );
+#  
+#  AXX:= VectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
+#  BYY:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], YY );
+#  CZZ:= VectorSpaceMorphism( C, [ [ 1 ] ] ,ZZ );
+#  
+#  alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
+#  betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
+#  gamma:= VectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
+#  delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
+#  
+#  
+#  T:= CreateTriangle( alpha, betta, gamma );
+#  S:= CreateTriangle( AB, BC, CTA );
+#  S1:= CreateTriangle( AB1, BC1, CTA1 );
+#  S2:= CreateTriangle( AB2, BC2, CTA2 );
+#  M:= CreateTriangle( UV, VW, WTU );
+#  M1:= CreateTriangle( UV1, VW1, WTU1 );
+#  M2:= CreateTriangle( UV2, VW2, WTU2 );
+# 
+#   _T:= CreateExactTriangle( UV, VW, WTU );
+#   _S:= CreateTriangle( AB, BC, CTA );
+# #   m_T_S := CreateMorphismOfTriangles( _T, _S, UA, VB, WC );
+#   
+#  SetIsIsomorphism( UA, true );
+#  SetIsIsomorphism( VB, true );
+#  SetIsIsomorphism( WC, true );
+# #  IsIsomorphism( m_T_S );
 
 
 

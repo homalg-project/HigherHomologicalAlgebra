@@ -107,6 +107,8 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  
  DeclareOperationWithCache( "CompleteMorphismToTriangle", [ IsCapCategoryMorphism ] );
  
+ DeclareOperationWithCache( "ConeObject", [ IsCapCategoryMorphism ] );
+ 
  DeclareOperation( "IsExactTriangleByAxioms", [ IsCapCategoryTriangle ] );
  
  DeclareOperation( "IsExactTriangleByTR2Backward", [ IsCapCategoryTriangle ] );
