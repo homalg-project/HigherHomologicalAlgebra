@@ -14,16 +14,16 @@
 
 ##
 
-AddDerivationToCAP( CompleteMorphismToExactTriangle, 
+AddDerivationToCAP( CompleteMorphismToExactTriangleByTR1, 
                    
-                   [ [ ConeAndMorphisms, 1 ] ], 
+                   [ [ TR1, 1 ] ], 
                    
    function( mor )
    local mor2,mor3;
    
-   mor2 := ConeAndMorphisms( mor )[ 1 ];
+   mor2 := TR1( mor )[ 1 ];
    
-   mor3 := ConeAndMorphisms( mor )[ 3 ];
+   mor3 := TR1( mor )[ 3 ];
    
    return CreateExactTriangle( mor, mor2, mor3 );
    

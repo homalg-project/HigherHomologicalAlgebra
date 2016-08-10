@@ -67,11 +67,15 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareOperationWithCache( "IsExactForTriangles", [ IsCapCategoryTriangle ] );
  DoDeclarationStuff( "IsExactForTriangles" );
  
- DeclareOperationWithCache( "ConeAndMorphisms", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "ConeAndMorphisms" );
+ DeclareOperationWithCache( "TR1", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "TR1" );
  
- DeclareOperationWithCache( "CompleteMorphismToExactTriangle", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "CompleteMorphismToExactTriangle" );
+ DeclareOperationWithCache( "CompleteMorphismToExactTriangleByTR1", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "CompleteMorphismToExactTriangleByTR1" );
+ 
+ DeclareOperationWithCache( "TR3",
+             [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "TR3" );
  
  ###################################
  ##

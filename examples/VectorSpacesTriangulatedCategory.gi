@@ -6,15 +6,27 @@
 
 ## ReadPackage( "TriangulatedCategoriesForCAP", "examples/VectorSpacesTriangulatedCategory.gi" );
 
-############################
+######################################
 ##
-## Declarations
+##  Loading needed packages
 ##
-###########################
+######################################
 
 LoadPackage( "MatricesForHomalg" );
 
+LoadPackage( "Gauss" );
+
+LoadPackage( "GaussForHomalg" );
+
+LoadPackage( "LinearAlgebraForCap" );
+
 LoadPackage( "TriangulatedCategoriesForCap" );
+
+########################################
+##
+## Declarations, Representations ...
+##
+########################################
 
 
 DeclareRepresentation( "IsHomalgRationalVectorSpaceRep",
@@ -33,14 +45,31 @@ BindGlobal( "TheTypeOfHomalgRationalVectorSpaceMorphism",
         NewType( TheFamilyOfCapCategoryMorphisms,
                 IsHomalgRationalVectorSpaceMorphismRep ) );
 
+## Attributes 
+
+
 DeclareAttribute( "Dimension",
                   IsHomalgRationalVectorSpaceRep );
+ 
+DeclareAttribute( "AsSpaceInMatrixCategory", IsHomalgRationalVectorSpaceRep ); 
+
+DeclareAttribute( "AsMorphismInMatrixCategory", IsHomalgRationalVectorSpaceMorphismRep );
+
+
+##  Methods
 
 DeclareOperation( "QVectorSpace",
                   [ IsInt ] );
+ 
+DeclareOperation( "QVectorSpace",
+                  [ IsVectorSpaceObject ] );
 
-DeclareOperation( "VectorSpaceMorphism",
+
+DeclareOperation( "QVectorSpaceMorphism",
                   [ IsHomalgRationalVectorSpaceRep, IsObject, IsHomalgRationalVectorSpaceRep ] );
+                  
+DeclareOperation( "QVectorSpaceMorphism",
+                  [ IsVectorSpaceMorphism ] );
 
 #################################
 ##
@@ -52,7 +81,7 @@ BindGlobal( "vecspaces", CreateCapCategory( "VectorSpaces" ) );
 
 # SetIsAbelianCategory( vecspaces, true );
 
-BindGlobal( "VECTORSPACES_FIELD", HomalgFieldOfRationals( ) );
+BindGlobal( "Q", HomalgFieldOfRationals( ) );
 
 ###########################################
 ##
@@ -69,7 +98,8 @@ InstallMethod( QVectorSpace,
     space := rec( );
     
     ObjectifyWithAttributes( space, TheTypeOfHomalgRationalVectorSpaces,
-                             Dimension, dim 
+                             Dimension, dim,
+                             AsSpaceInMatrixCategory, VectorSpaceObject( dim, Q )
     );
     
     Add( vecspaces, space );
@@ -78,39 +108,58 @@ InstallMethod( QVectorSpace,
     
 end );
 
-InstallMethod( VectorSpaceMorphism,
+InstallMethod( QVectorSpace, 
+              [ IsVectorSpaceObject ], 
+         
+   function( space )
+   
+    return QVectorSpace( Dimension( space ) );
+    
+end );
+
+InstallMethod( QVectorSpaceMorphism,
                   [ IsHomalgRationalVectorSpaceRep, IsObject, IsHomalgRationalVectorSpaceRep ],
                   
   function( source, matrix, range )
-    local morphism;
+    local morphism, homalg_matrix;
 
     if not IsHomalgMatrix( matrix ) then
     
-      morphism := HomalgMatrix( matrix, Dimension( source ), Dimension( range ), VECTORSPACES_FIELD );
+      homalg_matrix := HomalgMatrix( matrix, Dimension( source ), Dimension( range ), Q );
 
     else
 
-      morphism := matrix;
+      homalg_matrix := matrix;
 
     fi;
 
-    if NrRows( morphism ) <> Dimension( source ) or NrColumns( morphism ) <> Dimension( range ) then 
+    if NrRows( homalg_matrix ) <> Dimension( source ) or NrColumns( homalg_matrix ) <> Dimension( range ) then 
                              
       Error( "The inputs are not compatible" );
     
     fi;
     
-    morphism := rec( morphism := morphism );
+    morphism := rec( morphism := homalg_matrix );
     
     ObjectifyWithAttributes( morphism, TheTypeOfHomalgRationalVectorSpaceMorphism,
-                             Source, source,
-                             Range, range 
+                      Source, source,
+                      Range, range,
+                      AsMorphismInMatrixCategory, VectorSpaceMorphism(  AsSpaceInMatrixCategory( source ), homalg_matrix, AsSpaceInMatrixCategory( range ) )
     );
 
     Add( vecspaces, morphism );
     
     return morphism;
     
+end );
+
+InstallMethod( QVectorSpaceMorphism,
+               [ IsVectorSpaceMorphism ], 
+               
+ function( morphism )
+ 
+ return QVectorSpaceMorphism( QVectorSpace( Source( morphism ) ), morphism!.UnderlyingMatrix, QVectorSpace( Range( morphism ) ) );
+              
 end );
 
 #################################
@@ -151,7 +200,7 @@ InstallMethod( Display,
 
   function( obj )
 
-    Print( "k^(1 X ", String( Dimension( obj ) ),") as an object in ",vecspaces );
+    Print( "Q^(1 X ", String( Dimension( obj ) ),") as an object in ",vecspaces );
 
 end );
 
@@ -162,8 +211,8 @@ InstallMethod( Display,
 
     
     Print( "A rational vector space homomorphism ",
-    "k^(1 X ", String( Dimension( Source( mor ) ) ), ") --> ",
-    "k^(1 X ", String( Dimension( Range( mor ) ) ),
+    "Q^(1 X ", String( Dimension( Source( mor ) ) ), ") --> ",
+    "Q^(1 X ", String( Dimension( Range( mor ) ) ),
     
     ") with matrix: \n" );
   
@@ -182,7 +231,7 @@ end );
 ##
 identity_morphism := function( obj )
 
-    return VectorSpaceMorphism( obj, HomalgIdentityMatrix( Dimension( obj ), VECTORSPACES_FIELD ), obj );
+    return QVectorSpaceMorphism( obj, HomalgIdentityMatrix( Dimension( obj ), Q ), obj );
     
 end;
 
@@ -194,7 +243,7 @@ pre_compose := function( mor_left, mor_right )
 
     composition := mor_left!.morphism * mor_right!.morphism;
 
-    return VectorSpaceMorphism( Source( mor_left ), composition, Range( mor_right ) );
+    return QVectorSpaceMorphism( Source( mor_left ), composition, Range( mor_right ) );
 
 end;
 
@@ -237,6 +286,16 @@ AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
 is_exact_for_triangles:= function( trian )
                          local f,g,h;
                          
+                         if not IsEvenInt( Dimension( trian!.object1 ) + Dimension( trian!.object2 ) - Dimension( trian!.object3 ) ) then 
+                         
+                             return false;
+                             
+                         fi;
+                         
+                         f:= AsMorphismInMatrixCategory( trian!.morphism1 );
+                         g:= AsMorphismInMatrixCategory( trian!.morphism2 );
+                         h:= AsMorphismInMatrixCategory( trian!.morphism3 );
+                         
                          if not IsZeroForMorphisms( PreCompose( f, g ) ) or 
                             not IsZeroForMorphisms( PreCompose( g, h ) ) or 
                             not IsZeroForMorphisms( PreCompose( h, f ) ) then 
@@ -245,21 +304,60 @@ is_exact_for_triangles:= function( trian )
                             
                         fi;
                         
+                        ## in abelian categories, for f:A ---> B we have
+                        ## im( f )   = ker( coker( f ) )
+                        ## coim( f ) = coker( ker( f ) )
                         
-#                         if not Dimension( KenelObject
-                            
-                         
-
-                         
+                        if not Dimension( KernelObject( g ) ) = Dimension( KernelObject( CokernelProjection( f ) ) ) or
+                           not Dimension( KernelObject( h ) ) = Dimension( KernelObject( CokernelProjection( g ) ) ) or
+                           not Dimension( KernelObject( f ) ) = Dimension( KernelObject( CokernelProjection( h ) ) ) then
+                           
+                           return false;
+                           
+                        fi;
+                        
+                        return true;                        
 end;
                          
 AddIsExactForTriangles( vecspaces, is_exact_for_triangles );                       
 
-AddConeAndMorphisms( vecspaces, function( mor )
 
-                               return [ mor, Source( mor ), mor ];
-                               
-                               end );
+tr1 := function( mor )
+       local f,ker_f, m, f1,n,f2,g1,t,C,G2,g2,g,h1,h;
+       
+       f := AsMorphismInMatrixCategory( mor );
+       
+       ker_f:= KernelEmbedding( f );
+       m := Dimension( KernelObject( f ) );
+       
+       f1:= CokernelProjection( ker_f );
+       n:= Dimension( CokernelObject ( ker_f ) );
+       
+       f2:= CokernelColift( ker_f, f );
+       
+       g1:= CokernelProjection( f );
+       t:= Dimension( CokernelObject( f ) );
+       
+       C :=  VectorSpaceObject( t+m, Q );
+       
+       G2 := TransposedMat( Concatenation( IdentityMat( t ), NullMat( m, t ) ) );
+       G2 := HomalgMatrix( G2, t, m+t, Q );
+       
+       g2:= VectorSpaceMorphism( Range( g1 ), G2, C );
+       g := PreCompose( g1, g2 );
+       
+       h1 := CokernelProjection( g );
+       h := PreCompose( h1, ker_f );
+       
+       return [ QVectorSpaceMorphism( g ), QVectorSpace( C ), QVectorSpaceMorphism( h ) ];
+       
+       end;
+       
+AddTR1( vecspaces, tr1 );
+
+AddTR3( vecspaces, function( t1,t2, a, b )
+                   return a;
+                   end );
 
 HelperByWritingMorphisms:= function( m, n, t )
                            local l;
@@ -312,7 +410,7 @@ end;
 # 
 #  List( matr, i -> Concatenation( ListWithIdenticalEntries( Length( i ), 0 ), i ) ) );
 # 
-#  return VectorSpaceMorphism( new_source, matr, new_range );
+#  return QVectorSpaceMorphism( new_source, matr, new_range );
 # 
 # end );
 
@@ -345,7 +443,7 @@ AddReverseShiftOfObject( vecspaces, shifting_objects );
 #    
 #    new_range:= shifting_objects( Range( mor ) );
 #    
-#    return VectorSpaceMorphism( new_source, matr, new_range );
+#    return QVectorSpaceMorphism( new_source, matr, new_range );
 # 
 # end;
 
@@ -358,7 +456,7 @@ matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
 
 # matrix := -1*matrix;
 
-return VectorSpaceMorphism( ShiftOfObject( Source( mor ) ), matrix, ShiftOfObject( Range( mor ) ) );
+return QVectorSpaceMorphism( ShiftOfObject( Source( mor ) ), matrix, ShiftOfObject( Range( mor ) ) );
 
 end;
 
@@ -372,7 +470,7 @@ matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
 
 # matrix := -1*matrix;
 
-return VectorSpaceMorphism( ReverseShiftOfObject( Source( mor ) ), matrix, ReverseShiftOfObject( Range( mor ) ) );
+return QVectorSpaceMorphism( ReverseShiftOfObject( Source( mor ) ), matrix, ReverseShiftOfObject( Range( mor ) ) );
 
 end;
 
@@ -389,7 +487,7 @@ matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
 
 matrix := -1*matrix;
 
-return VectorSpaceMorphism( Source( mor ) , matrix,  Range( mor )  );
+return QVectorSpaceMorphism( Source( mor ) , matrix,  Range( mor )  );
 
 end;
 
@@ -412,49 +510,49 @@ AddAdditiveInverseForMorphisms( vecspaces, additive_inverse_for_morphisms );
  YY:= QVectorSpace( 1 );
  ZZ:= QVectorSpace( 1 );
  
- UV:= VectorSpaceMorphism( U, [ [ 5, 0 ] ], V ); 
- VW:= VectorSpaceMorphism( V, [ [ 0 ], [ 6 ] ], W );
- WTU:= VectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
+ UV:= QVectorSpaceMorphism( U, [ [ 5, 0 ] ], V ); 
+ VW:= QVectorSpaceMorphism( V, [ [ 0 ], [ 6 ] ], W );
+ WTU:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
  
- UV1:= VectorSpaceMorphism( U, [ [ 13, 1 ] ], V ); 
- VW1:= VectorSpaceMorphism( V, [ [ 0 ], [ 20 ] ], W );
- WTU1:= VectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
+ UV1:= QVectorSpaceMorphism( U, [ [ 13, 1 ] ], V ); 
+ VW1:= QVectorSpaceMorphism( V, [ [ 0 ], [ 20 ] ], W );
+ WTU1:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
  
- UV2:= VectorSpaceMorphism( U, [ [ 12, 0 ] ], V ); 
- VW2:= VectorSpaceMorphism( V, [ [ 0 ], [ 0 ] ], W );
- WTU2:= VectorSpaceMorphism(W, [ [ 2 ] ], ShiftOfObject( U ) );
+ UV2:= QVectorSpaceMorphism( U, [ [ 12, 0 ] ], V ); 
+ VW2:= QVectorSpaceMorphism( V, [ [ 0 ], [ 0 ] ], W );
+ WTU2:= QVectorSpaceMorphism(W, [ [ 2 ] ], ShiftOfObject( U ) );
  
  
- AB:= VectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ],
+ AB:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ],
  [ -5, 2, -93, 0, 0, 0, 0 ], [ -37, 85, -65, 0, 0, 0, 0 ], [ -76, 8, 86, 0, 0, 0, 0 ] ], B );
- BC:= VectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], 
+ BC:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], 
  [ -4, -17, 97, -9, 0, 0 ], [ -32, 67, 2, 57, 0, 0 ], [ 58, -87, 69, 5, 0, 0 ], 
   [ 76, 39, 57, -48, 0, 0 ] ], C );
- CTA := VectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], 
+ CTA := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], 
  [ 66, 97, 0, 0, 0 ], [ -84, 44, 0, 0, 0 ] ], ShiftOfObject( A ) );
  
- AB1:= VectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ], [ -35, 38, 52, 0, 0, 0, 0 ], [ 36, -19, -66, 0, 0, 0, 0 ], [ 24, -44, -17, 0, 0, 0, 0 ] ], B );
- BC1:= VectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ -35, 49, 11, 56, 0, 0 ], [ 25, 77, 79, 27, 0, 0 ], [ 95, -3, -32, 98, 0, 0 ], 
+ AB1:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ], [ -35, 38, 52, 0, 0, 0, 0 ], [ 36, -19, -66, 0, 0, 0, 0 ], [ 24, -44, -17, 0, 0, 0, 0 ] ], B );
+ BC1:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ -35, 49, 11, 56, 0, 0 ], [ 25, 77, 79, 27, 0, 0 ], [ 95, -3, -32, 98, 0, 0 ], 
   [ 76, 40, -95, 38, 0, 0 ] ], C );
- CTA1 := VectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ -62, -98, 0, 0, 0 ], [ -49, -79, 0, 0, 0 ] ], ShiftOfObject( A ) );
+ CTA1 := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ -62, -98, 0, 0, 0 ], [ -49, -79, 0, 0, 0 ] ], ShiftOfObject( A ) );
  
- XXYY:= VectorSpaceMorphism( XX, [ [ 1 ] ], YY );
- YYZZ:= VectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
- ZZTXX:= VectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
+ XXYY:= QVectorSpaceMorphism( XX, [ [ 1 ] ], YY );
+ YYZZ:= QVectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
+ ZZTXX:= QVectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
  
-  UA:= VectorSpaceMorphism( U, [ [ 6,5,0,0,0 ] ], A );
-  VB:= VectorSpaceMorphism( V,  [ [ 0,0,0,0,0,0,0 ], [ 3,1,2,3,4,5,6 ] ], B );
-  WC:= VectorSpaceMorphism( W, [ [ 101, 8/3, 493/3, -31/3, 0, 0 ] ], C );
-#  WC_:= VectorSpaceMorphism( W, [ [ 3 ] ], C );
+  UA:= QVectorSpaceMorphism( U, [ [ 6,5,0,0,0 ] ], A );
+  VB:= QVectorSpaceMorphism( V,  [ [ 0,0,0,0,0,0,0 ], [ 3,1,2,3,4,5,6 ] ], B );
+  WC:= QVectorSpaceMorphism( W, [ [ 101, 8/3, 493/3, -31/3, 0, 0 ] ], C );
+#  WC_:= QVectorSpaceMorphism( W, [ [ 3 ] ], C );
 #  
-#  AXX:= VectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
-#  BYY:= VectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], YY );
-#  CZZ:= VectorSpaceMorphism( C, [ [ 1 ] ] ,ZZ );
+#  AXX:= QVectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
+#  BYY:= QVectorSpaceMorphism( B, [ [ 0 ], [ 1 ] ], YY );
+#  CZZ:= QVectorSpaceMorphism( C, [ [ 1 ] ] ,ZZ );
 #  
-#  alpha:= VectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
-#  betta:= VectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
-#  gamma:= VectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
-#  delta:= VectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
+#  alpha:= QVectorSpaceMorphism( U, [ [ 3, 4 ] ], V );
+#  betta:= QVectorSpaceMorphism( V, [ [ 7 ], [ 9 ] ], W );
+#  gamma:= QVectorSpaceMorphism( W, [ [ 12 ] ], ShiftOfObject( U ) );
+#  delta:= QVectorSpaceMorphism( W, [ [ -12 ] ], ShiftOfObject( U ) );
 #  
 #  
 #  T:= CreateTriangle( alpha, betta, gamma );

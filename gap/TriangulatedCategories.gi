@@ -95,19 +95,90 @@ filter_list := [ IsCapCategoryTriangle ],
 cache_name := "IsExactForTriangles",
 return_type := "bool" ),
 
-ConeAndMorphisms:= rec(
+TR1:= rec(
 
-installation_name := "ConeAndMorphisms", 
+installation_name := "TR1", 
 filter_list := [ "morphism" ],
-cache_name := "ConeAndMorphisms",
+cache_name := "TR1",
 return_type := [ "morphism", "object", "morphism" ] ),
 
-CompleteMorphismToExactTriangle:= rec(
+CompleteMorphismToExactTriangleByTR1:= rec(
 
-installation_name := "CompleteMorphismToExactTriangle", 
+installation_name := "CompleteMorphismToExactTriangleByTR1", 
 filter_list := [ "morphism" ],
-cache_name := "CompleteMorphismToExactTriangle",
+cache_name := "CompleteMorphismToExactTriangleByTR1",
 return_type := [ IsCapCategoryExactTriangle ] ),
+
+TR3:= rec(
+
+ installation_name := "TR3", 
+ filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism" ],
+ cache_name := "TR3",
+
+   pre_function:= function( T1, T2, alpha, betta )
+                 local mor1, mor2, is_equal_for_morphisms;
+                 
+                 mor1 := PreCompose( T1!.morphism1, betta );
+                 mor2 := PreCompose( alpha, T2!.morphism1 );
+                 
+                 is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+                 
+                 if is_equal_for_morphisms = fail then
+      
+                     return [ false, "cannot decide whether the first squar is commutative" ];
+      
+                 elif is_equal_for_morphisms = false then
+        
+                     return [ false, "The first squar is not commutative" ];
+        
+                fi;
+    
+                return [ true ];
+               
+                end,
+  
+ return_type := "morphism",
+   post_function := function( T1, T2, alpha, betta, return_value )
+                   local mor1, mor2, is_equal_for_morphisms;
+                   
+                   if not IsCapCategoryMorphism( return_value ) then 
+                   
+                      Error( "The function used by defining TR3 should return a morphism" );
+                      
+                   fi;
+                   
+                   mor1 := PreCompose( T1!.morphism2, return_value );
+                   mor2 := PreCompose( betta, T2!.morphism2 );
+                 
+                  is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+                 
+                  if is_equal_for_morphisms = fail then
+      
+                     Error( "cannot decide whether the second squar is commutative" );
+      
+                  elif is_equal_for_morphisms = false then
+        
+                     Error( "The second squar is not commutative" );
+        
+                  fi;
+      
+                  mor1 := PreCompose( T1!.morphism3, ShiftOfMorphism( alpha ) );
+                  mor2 := PreCompose( return_value, T2!.morphism3 );
+                 
+                  is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+                 
+                  if is_equal_for_morphisms = fail then
+      
+                     Error( "cannot decide whether the third squar is commutative" );
+      
+                  elif is_equal_for_morphisms = false then
+        
+                     Error( "The third squar is not commutative" );
+        
+                  fi;
+      
+      
+                  end ),
 
 ) );
 
@@ -313,7 +384,7 @@ InstallMethodWithCache( ConeObject,
   function( mor )
   local cone;
   
-  cone:= ConeAndMorphisms( mor );
+  cone:= TR1( mor );
   
   return cone[ 2 ];
   
