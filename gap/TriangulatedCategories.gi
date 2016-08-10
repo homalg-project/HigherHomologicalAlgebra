@@ -102,6 +102,12 @@ filter_list := [ "morphism" ],
 cache_name := "ConeAndMorphisms",
 return_type := [ "morphism", "object", "morphism" ] ),
 
+CompleteMorphismToExactTriangle:= rec(
+
+installation_name := "CompleteMorphismToExactTriangle", 
+filter_list := [ "morphism" ],
+cache_name := "CompleteMorphismToExactTriangle",
+return_type := [ IsCapCategoryExactTriangle ] ),
 
 ) );
 
@@ -299,19 +305,6 @@ function( mor1, mor2, mor3 )
    
 end );
 
-##
-InstallMethodWithCache( CompleteMorphismToTriangle,
-                       
-                       [  IsCapCategoryMorphism ], 
-                        
-  function( mor )
-  local cone;
-  
-  cone:= ConeAndMorphisms( mor );
-  
-  return CreateExactTriangle( mor, cone[ 1 ], cone[ 3 ] );
-  
-end );
 
 InstallMethodWithCache( ConeObject,
                        

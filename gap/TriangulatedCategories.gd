@@ -70,6 +70,9 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  DeclareOperationWithCache( "ConeAndMorphisms", [ IsCapCategoryMorphism ] );
  DoDeclarationStuff( "ConeAndMorphisms" );
  
+ DeclareOperationWithCache( "CompleteMorphismToExactTriangle", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "CompleteMorphismToExactTriangle" );
+ 
  ###################################
  ##
  ## General Methods declaration
@@ -104,8 +107,6 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
  
  DeclareOperationWithCache( "PostCompose", 
                             [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
- 
- DeclareOperationWithCache( "CompleteMorphismToTriangle", [ IsCapCategoryMorphism ] );
  
  DeclareOperationWithCache( "ConeObject", [ IsCapCategoryMorphism ] );
  
