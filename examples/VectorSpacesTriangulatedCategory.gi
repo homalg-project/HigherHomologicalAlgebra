@@ -355,9 +355,54 @@ tr1 := function( mor )
        
 AddTR1( vecspaces, tr1 );
 
-AddTR3( vecspaces, function( t1,t2, a, b )
-                   return a;
-                   end );
+
+tr3:= function( t1, t2, u_, v_ )
+      local f,g,h,h2,h1,f_,g_,h_,h_2,h_1, beta,u,v, bar_H_1, bar_h_1,g1,g2, bar_G2, bar_g2, g_1,g_2, alpha, part1, part2, w; 
+      
+      f:= AsMorphismInMatrixCategory( t1!.morphism1 );
+      g:= AsMorphismInMatrixCategory( t1!.morphism2 );
+      h:= AsMorphismInMatrixCategory( t1!.morphism3 );
+      
+      h2:= KernelEmbedding( f );
+      h1:= KernelLift( f, h );     
+      
+      f_:= AsMorphismInMatrixCategory( t2!.morphism1 );
+      g_:= AsMorphismInMatrixCategory( t2!.morphism2 );
+      h_:= AsMorphismInMatrixCategory( t2!.morphism3 );
+      
+      h_2:= KernelEmbedding( f_ );
+      h_1:= KernelLift( f_, h_ );     
+      
+      u:= AsMorphismInMatrixCategory( u_ );
+      v:= AsMorphismInMatrixCategory( v_ );
+      
+      beta := KernelLift( f_, PreCompose( h2, u ) );
+      bar_H_1 := RightDivide( HomalgIdentityMatrix( Dimension( Range( h_1 ) ), Q ), h_1!.UnderlyingMatrix );
+      bar_h_1 := VectorSpaceMorphism( Range( h_1 ), bar_H_1, Source( h_1 ) );
+      
+      g1:= CokernelProjection( f );
+      g2:= CokernelColift( f, g );
+      
+      bar_G2 := LeftDivide( g2!.UnderlyingMatrix, HomalgIdentityMatrix( Dimension( Source( g2 ) ), Q ) );
+      bar_g2 := VectorSpaceMorphism( Range( g2 ), bar_G2, Source( g2 ) );
+      
+      g_1:= CokernelProjection( f_ );
+      g_2:= CokernelColift( f_, g_ );
+      
+      alpha := CokernelColift( f, PreCompose( v, g_1 ) );
+      
+      part1:= PreCompose( PreCompose( bar_g2, alpha ), g_2 );
+      part2:= PreCompose( PreCompose( h1, beta ), bar_h_1 );
+      
+      w:= part1+part2;
+      
+#       return [ h2, h1, h_2, h_1, beta, bar_h_1, g1, g2, bar_g2, g_1,g_2, alpha, w ];
+
+      return QVectorSpaceMorphism( w );
+      
+end;
+
+AddTR3( vecspaces, tr3 );
 
 HelperByWritingMorphisms:= function( m, n, t )
                            local l;
@@ -497,52 +542,69 @@ AddAdditiveInverseForMorphisms( vecspaces, additive_inverse_for_morphisms );
 
 ### some computations to see how everything works
 
+A:= QVectorSpace( 3 );
+B:= QVectorSpace( 4 );
+f := QVectorSpaceMorphism( A, [ [2,3,4,0], [ 2,0,0,1 ], [ 0, 3, 4, -1 ] ], B );
 
- U:= QVectorSpace(1 );
- V:= QVectorSpace( 2 );
- W:= QVectorSpace( 1 );
- 
- A:= QVectorSpace( 5 ); 
- B:= QVectorSpace( 7 ); 
- C:= QVectorSpace( 6 );
- 
- XX:= QVectorSpace( 1 );
- YY:= QVectorSpace( 1 );
- ZZ:= QVectorSpace( 1 );
- 
- UV:= QVectorSpaceMorphism( U, [ [ 5, 0 ] ], V ); 
- VW:= QVectorSpaceMorphism( V, [ [ 0 ], [ 6 ] ], W );
- WTU:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
- 
- UV1:= QVectorSpaceMorphism( U, [ [ 13, 1 ] ], V ); 
- VW1:= QVectorSpaceMorphism( V, [ [ 0 ], [ 20 ] ], W );
- WTU1:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
- 
- UV2:= QVectorSpaceMorphism( U, [ [ 12, 0 ] ], V ); 
- VW2:= QVectorSpaceMorphism( V, [ [ 0 ], [ 0 ] ], W );
- WTU2:= QVectorSpaceMorphism(W, [ [ 2 ] ], ShiftOfObject( U ) );
- 
- 
- AB:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ],
- [ -5, 2, -93, 0, 0, 0, 0 ], [ -37, 85, -65, 0, 0, 0, 0 ], [ -76, 8, 86, 0, 0, 0, 0 ] ], B );
- BC:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], 
- [ -4, -17, 97, -9, 0, 0 ], [ -32, 67, 2, 57, 0, 0 ], [ 58, -87, 69, 5, 0, 0 ], 
-  [ 76, 39, 57, -48, 0, 0 ] ], C );
- CTA := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], 
- [ 66, 97, 0, 0, 0 ], [ -84, 44, 0, 0, 0 ] ], ShiftOfObject( A ) );
- 
- AB1:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ], [ -35, 38, 52, 0, 0, 0, 0 ], [ 36, -19, -66, 0, 0, 0, 0 ], [ 24, -44, -17, 0, 0, 0, 0 ] ], B );
- BC1:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ -35, 49, 11, 56, 0, 0 ], [ 25, 77, 79, 27, 0, 0 ], [ 95, -3, -32, 98, 0, 0 ], 
-  [ 76, 40, -95, 38, 0, 0 ] ], C );
- CTA1 := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ -62, -98, 0, 0, 0 ], [ -49, -79, 0, 0, 0 ] ], ShiftOfObject( A ) );
- 
- XXYY:= QVectorSpaceMorphism( XX, [ [ 1 ] ], YY );
- YYZZ:= QVectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
- ZZTXX:= QVectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
- 
-  UA:= QVectorSpaceMorphism( U, [ [ 6,5,0,0,0 ] ], A );
-  VB:= QVectorSpaceMorphism( V,  [ [ 0,0,0,0,0,0,0 ], [ 3,1,2,3,4,5,6 ] ], B );
-  WC:= QVectorSpaceMorphism( W, [ [ 101, 8/3, 493/3, -31/3, 0, 0 ] ], C );
+A_ := QVectorSpace( 4 );
+B_ := QVectorSpace( 2 );
+
+f_ := QVectorSpaceMorphism( A_, [ [2,1], [ 4,2 ], [ 2,1 ], [ 2,1] ], B_ );
+
+AA_ := QVectorSpaceMorphism( A, 2*[ [2,3,4,0], [ 2,0,0,1 ], [ 0, 3, 4, -1 ] ], A_ );
+BB_ := QVectorSpaceMorphism( B, 2*[ [2,1], [ 4,2 ], [ 2,1 ], [ 2,1] ], B_ );
+
+T:= CompleteMorphismToExactTriangleByTR1( f );
+T_ := CompleteMorphismToExactTriangleByTR1( f_ );
+pppp:= tr3( T, T_, AA_, BB_ );
+
+
+# 
+#  U:= QVectorSpace(1 );
+#  V:= QVectorSpace( 2 );
+#  W:= QVectorSpace( 1 );
+#  
+#  A:= QVectorSpace( 5 ); 
+#  B:= QVectorSpace( 7 ); 
+#  C:= QVectorSpace( 6 );
+#  
+#  XX:= QVectorSpace( 1 );
+#  YY:= QVectorSpace( 1 );
+#  ZZ:= QVectorSpace( 1 );
+#  
+#  UV:= QVectorSpaceMorphism( U, [ [ 5, 0 ] ], V ); 
+#  VW:= QVectorSpaceMorphism( V, [ [ 0 ], [ 6 ] ], W );
+#  WTU:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
+#  
+#  UV1:= QVectorSpaceMorphism( U, [ [ 13, 1 ] ], V ); 
+#  VW1:= QVectorSpaceMorphism( V, [ [ 0 ], [ 20 ] ], W );
+#  WTU1:= QVectorSpaceMorphism(W, [ [ 0 ] ], ShiftOfObject( U ) );
+#  
+#  UV2:= QVectorSpaceMorphism( U, [ [ 12, 0 ] ], V ); 
+#  VW2:= QVectorSpaceMorphism( V, [ [ 0 ], [ 0 ] ], W );
+#  WTU2:= QVectorSpaceMorphism(W, [ [ 2 ] ], ShiftOfObject( U ) );
+#  
+#  
+#  AB:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ],
+#  [ -5, 2, -93, 0, 0, 0, 0 ], [ -37, 85, -65, 0, 0, 0, 0 ], [ -76, 8, 86, 0, 0, 0, 0 ] ], B );
+#  BC:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], 
+#  [ -4, -17, 97, -9, 0, 0 ], [ -32, 67, 2, 57, 0, 0 ], [ 58, -87, 69, 5, 0, 0 ], 
+#   [ 76, 39, 57, -48, 0, 0 ] ], C );
+#  CTA := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], 
+#  [ 66, 97, 0, 0, 0 ], [ -84, 44, 0, 0, 0 ] ], ShiftOfObject( A ) );
+#  
+#  AB1:= QVectorSpaceMorphism( A, [ [ 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0 ], [ -35, 38, 52, 0, 0, 0, 0 ], [ 36, -19, -66, 0, 0, 0, 0 ], [ 24, -44, -17, 0, 0, 0, 0 ] ], B );
+#  BC1:= QVectorSpaceMorphism( B, [ [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [ -35, 49, 11, 56, 0, 0 ], [ 25, 77, 79, 27, 0, 0 ], [ 95, -3, -32, 98, 0, 0 ], 
+#   [ 76, 40, -95, 38, 0, 0 ] ], C );
+#  CTA1 := QVectorSpaceMorphism( C, [ [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0 ], [ -62, -98, 0, 0, 0 ], [ -49, -79, 0, 0, 0 ] ], ShiftOfObject( A ) );
+#  
+#  XXYY:= QVectorSpaceMorphism( XX, [ [ 1 ] ], YY );
+#  YYZZ:= QVectorSpaceMorphism( YY, [ [ 1 ] ], ZZ );
+#  ZZTXX:= QVectorSpaceMorphism( ZZ, [ [ -2 ] ], ShiftOfObject( XX ) );
+#  
+#   UA:= QVectorSpaceMorphism( U, [ [ 6,5,0,0,0 ] ], A );
+#   VB:= QVectorSpaceMorphism( V,  [ [ 0,0,0,0,0,0,0 ], [ 3,1,2,3,4,5,6 ] ], B );
+#   WC:= QVectorSpaceMorphism( W, [ [ 101, 8/3, 493/3, -31/3, 0, 0 ] ], C );
 #  WC_:= QVectorSpaceMorphism( W, [ [ 3 ] ], C );
 #  
 #  AXX:= QVectorSpaceMorphism( A, [ [ 1 ], [ 1 ] ], XX );
