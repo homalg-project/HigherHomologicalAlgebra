@@ -217,7 +217,7 @@ post_function := function( alpha, betta, return_value )
                  
                  m:= return_value[ 3 ]!.morphism2;
                  
-                 if not IsEqualForMorphisms( l, PreCompose( v, m ) ) then 
+                 if not IsEqualForMorphisms( l, PreCompose( m, v ) ) then 
                  
                     Error( "Construction of TR4 can not be true." );
                  
@@ -230,7 +230,7 @@ post_function := function( alpha, betta, return_value )
                  
                  u:= return_value[ 4 ]!.morphism1;
  
-                 if not IsEqualForMorphisms( k, PreCompose( n, u ) ) then 
+                 if not IsEqualForMorphisms( k, PreCompose( u, n ) ) then 
                  
                     Error( "Construction of TR4 can not be true.." );
                  
@@ -242,19 +242,19 @@ post_function := function( alpha, betta, return_value )
                  
                  i:= return_value[ 2 ]!.morphism3;
                  
-                 if not IsEqualForMorphisms( w, PreCompose( ShiftOfMorphism( j ), i ) ) then 
+                 if not IsEqualForMorphisms( w, PreCompose( i, ShiftOfMorphism( j ) ) ) then 
                  
                     Error( "Construction of TR4 can not be true..." );
                  
                  fi;
                  
-                 if not IsEqualForMorphisms( PreCompose( i, v ), PreCompose( ShiftOfMorphism( alpha ), n ) ) then 
+                 if not IsEqualForMorphisms( PreCompose( v, i ), PreCompose( n, ShiftOfMorphism( alpha ) ) ) then 
                  
                     Error( "Construction of TR4 can not be true...." );
                  
                  fi;
                  
-                 if not IsEqualForMorphisms( PreCompose( u, j ), PreCompose( m, betta ) ) then 
+                 if not IsEqualForMorphisms( PreCompose( j, u ), PreCompose( betta, m ) ) then 
                  
                     Error( "Construction of TR4 can not be true....." );
                  
