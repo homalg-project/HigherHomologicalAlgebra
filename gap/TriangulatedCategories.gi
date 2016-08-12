@@ -179,7 +179,7 @@ TR3:= rec(
       
       
                   end ),
-
+## pre and post functions to be added ...
 CompleteToMorphismOfExactTrianglesByTR3:= rec(
 
 installation_name := "CompleteToMorphismOfExactTrianglesByTR3", 
@@ -187,7 +187,14 @@ filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphi
 cache_name := "CompleteToMorphismOfExactTrianglesByTR3",
 return_type := [ IsCapCategoryTrianglesMorphism ] ),
                 
-                  
+TR4:= rec(
+
+installation_name := "TR4", 
+filter_list := [ "morphism", "morphism" ],
+cache_name := "TR4",
+return_type := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryExactTriangle ] ),
+
+                
 ) );
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD );
