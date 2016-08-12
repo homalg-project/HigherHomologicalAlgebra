@@ -77,6 +77,11 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
              [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
  DoDeclarationStuff( "TR3" );
  
+ DeclareOperationWithCache( "CompleteToMorphismOfExactTrianglesByTR3",
+             [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
+ DoDeclarationStuff( "CompleteToMorphismOfExactTrianglesByTR3" );
+ 
+ 
  ###################################
  ##
  ## General Methods declaration
