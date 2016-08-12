@@ -404,6 +404,33 @@ end;
 
 AddTR3( vecspaces, tr3 );
 
+
+tr4:= function( f, g )
+      local i,j,T, S, W, N, u,v, w;
+      
+      T := CompleteMorphismToExactTriangleByTR1( f );
+      
+      S := CompleteMorphismToExactTriangleByTR1( PreCompose( f, g ) );
+      
+      u := TR3( T, S, IdentityMorphism( Source( f ) ), g );
+      
+      W := CompleteMorphismToExactTriangleByTR1( g );
+      
+      v := TR3( S, W, f, IdentityMorphism( Range( g ) ) );
+      
+      j:= T!.morphism2;
+      i:= W!.morphism3;
+      
+      w:= PreCompose( i, ShiftOfMorphism( j ) );
+      
+      return [T, S, W, CreateExactTriangle( u, v, w ) ];
+      
+      end;
+      
+      
+      
+
+
 HelperByWritingMorphisms:= function( m, n, t )
                            local l;
 
