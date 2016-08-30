@@ -22,6 +22,8 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
 ##
 #################################
 
+if not IsPackageMarkedForLoading( "FrobeniusCategoriesForCAP", ">0.1" ) then
+
 ##
  DeclareOperation( "DoDeclarationStuff", [ IsString ] );
  
@@ -44,6 +46,7 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
                    [ IsCapCategory, IsList ] );
  end );
  
+fi;
 
 ####################################
 ##
