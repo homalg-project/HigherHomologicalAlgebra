@@ -311,11 +311,7 @@ AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
 ##
 ###############################################
 
-AddShiftOfObject( vecspaces, function( obj )
-  
-                             return obj;
-  
-                             end );
+AddShiftOfObject( vecspaces, IdFunc );
 
 AddReverseShiftOfObject( vecspaces, function( obj )
     
