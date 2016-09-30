@@ -27,6 +27,8 @@ DeclareCategory( "IsStableCategoryObject",
 DeclareCategory( "IsStableCategoryMorphism",
                  IsCapCategoryMorphism );
 
+DeclareFilter( "WasCreatedAsStableCategory" );
+
 #! @Section General operations
 #! @Description
 #!  Creates a stable category <A>S</A> with name <A>name</A> out of an Abelian category <A>A</A>.

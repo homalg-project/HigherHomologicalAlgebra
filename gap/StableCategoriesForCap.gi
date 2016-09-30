@@ -59,12 +59,12 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
           
        function( obj1, obj2 )
        
-         return IsEqualForObjects(UnderlyingObject( obj1 ), UnderlyingObject( obj1 ) );
+         return IsEqualForObjects( UnderlyingObject( obj1 ), UnderlyingObject( obj1 ) );
        
     end );
     
     # TO DO AddIsCongruentForMorphisms
-    # To DO Is Zero
+    # TO DO Is Zero
     
      ## PreCompose
     
@@ -113,7 +113,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
 #
 ########################
 
-InstallMethodWithCacheFromObject( StableCategory,
+InstallMethod( StableCategory,
                                   [ IsCapCategory, IsFunction, IsString ],
                                   
   function( category, test_function, function_name )
@@ -158,20 +158,84 @@ InstallMethodWithCacheFromObject( StableCategory,
     
     stable_category := CreateCapCategory( name );
     
-#     SetFilterObj( serre_category, WasCreatedAsSerreQuotientCategoryByCospans );
+    SetFilterObj( stable_category, WasCreatedAsStableCategory );
     
-#     SetUnderlyingHonestCategory( serre_category, category );
+    SetUnderlyingCategory( stable_category, category );
     
-#     SetUnderlyingGeneralizedMorphismCategory( serre_category, GeneralizedMorphismCategoryByCospans( category ) );
+    SetTestFunctionForStableCategories( stable_category, test_function );
     
-#     SetSubcategoryMembershipTestFunctionForSerreQuotient( serre_category, test_function );
+    SetIsAdditiveCategory( stable_category, true );
+     
+    CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY( stable_category );
     
-#     SetIsAbelianCategory( serre_category, true );
-#     
-#     CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_COSPANS( serre_category );
+    Finalize( stable_category );
     
-#     Finalize( serre_category );
-    
-#     return serre_category;
+    return stable_category;
     
 end );
+
+##
+InstallMethodWithCache( StableCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryMorphism ],
+               
+    function( category, mor )
+    local underlying_category, stable_morphism;
+    underlying_category := UnderlyingCategory( category );
+    
+    if not IsIdenticalObj( underlying_category, CapCategory( mor ) ) then 
+    
+       Error( "The morphism does not belong to the underlying category of the stable category" );
+       
+    fi;
+    
+    stable_morphism := rec( );
+    
+    ObjectifyWithAttributes( stable_morphism, TheTypeOfStableCategoryMorphism,
+                             Source, StableCategoryObject( category, Source( mor ) ),
+                             Range,  StableCategoryObject( category, Range( mor ) )
+                             );
+    
+    SetUnderlyingMorphism( stable_morphism, mor );
+    
+    ## here we should add to do list... 
+    
+    AddMorphism( category, stable_morphism );
+    
+    return stable_morphism;
+    
+end );
+    
+    
+##
+InstallMethodWithCache( StableCategoryObject,
+               [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryObject ],
+               
+    function( category, obj )
+    local underlying_category, stable_obj;
+    underlying_category := UnderlyingCategory( category );
+    
+    if not IsIdenticalObj( underlying_category, CapCategory( obj ) ) then 
+    
+       Error( "The object does not belong to the underlying category of the stable category" );
+       
+    fi;
+    
+    stable_obj := rec( );
+    
+    ObjectifyWithAttributes( stable_obj, TheTypeOfStableCategoryObject );
+    
+    SetUnderlyingObject( stable_obj, obj );
+    
+    ## here we should add to do list... 
+    
+    AddObject( category, stable_obj );
+    
+    return stable_obj;
+    
+end );
+    
+    
+    
+    
+    
+               
