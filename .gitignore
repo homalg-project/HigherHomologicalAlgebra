@@ -23,6 +23,7 @@
 .dirstamp
 .libs/
 
+/doc/
 /aclocal.m4
 /autom4te.cache/
 /bin/
