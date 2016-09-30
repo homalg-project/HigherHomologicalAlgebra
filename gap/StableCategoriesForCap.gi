@@ -104,7 +104,14 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         
     end );
     
-      ## Addition for morphisms
+    ## TO DO IsZeroForMorphisms
+    
+    
+    
+    
+    
+    
+    ## Additive inverse for morphisms
     
     AddAdditiveInverseForMorphisms( category,
       
@@ -114,6 +121,32 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         new_mor := AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) );
         
         return AsStableCategoryMorphism( category, new_mor );
+        
+    end );
+    
+    ## Zero morphism
+    
+    AddZeroMorphism( category,
+      
+      function( source, range )
+        local zero_mor;
+        
+        zero_mor := ZeroMorphism( UnderlyingObject( source ), UnderlyingObject( range ) );
+        
+        return AsStableCategoryMorphism( category, zero_mor );
+        
+    end );
+    
+    ## Zero object
+    
+    AddZeroObject( category,
+      
+      function( )
+        local zero_obj;
+        
+        zero_obj := ZeroObject( UnderlyingCategory( category ) );
+        
+        return AsStableCategoryObject( category, zero_obj );
         
     end );
     
