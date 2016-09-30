@@ -47,7 +47,7 @@ DeclareOperation( "StableCategory",
 #! corresponding morphism in the stable category.
 #! @Arguments S, phi
 #! @Returns a morphism
-DeclareOperation( "StableCategoryMorphism", 
+DeclareOperation( "AsStableCategoryMorphism", 
                    [ IsCapCategory, IsCapCategoryMorphism ] );
 
 #! @Description
@@ -56,7 +56,7 @@ DeclareOperation( "StableCategoryMorphism",
 #! corresponding object in the stable category.
 #! @Arguments S, obj
 #! @Returns an object
-DeclareOperation( "StableCategoryObject", 
+DeclareOperation( "AsStableCategoryObject", 
                    [ IsCapCategory, IsCapCategoryObject ] );
 
 #! @Section Attributesss

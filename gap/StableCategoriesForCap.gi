@@ -76,7 +76,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         composition := PreCompose( UnderlyingMorphism( morphism1 ),
                                    UnderlyingMorphism( morphism2 ) );
         
-        return StableCategoryMorphism( category, composition );
+        return AsStableCategoryMorphism( category, composition );
         
     end );
     
@@ -86,7 +86,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       
       function( object )
         
-        return StableCategoryMorphism( category, IdentityMorphism( UnderlyingObject( object ) ) );
+        return AsStableCategoryMorphism( category, IdentityMorphism( UnderlyingObject( object ) ) );
         
     end );
     
@@ -100,7 +100,20 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         sum := AdditionForMorphisms( UnderlyingMorphism( morphism1 ),
                                      UnderlyingMorphism( morphism2 ) );
         
-        return StableCategoryMorphism( category, sum );
+        return AsStableCategoryMorphism( category, sum );
+        
+    end );
+    
+      ## Addition for morphisms
+    
+    AddAdditiveInverseForMorphisms( category,
+      
+      function( morphism )
+        local new_mor;
+        
+        new_mor := AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) );
+        
+        return AsStableCategoryMorphism( category, new_mor );
         
     end );
     
@@ -175,7 +188,7 @@ InstallMethod( StableCategory,
 end );
 
 ##
-InstallMethodWithCache( StableCategoryMorphism,
+InstallMethodWithCache( AsStableCategoryMorphism,
                [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryMorphism ],
                
     function( category, mor )
@@ -191,8 +204,8 @@ InstallMethodWithCache( StableCategoryMorphism,
     stable_morphism := rec( );
     
     ObjectifyWithAttributes( stable_morphism, TheTypeOfStableCategoryMorphism,
-                             Source, StableCategoryObject( category, Source( mor ) ),
-                             Range,  StableCategoryObject( category, Range( mor ) )
+                             Source, AsStableCategoryObject( category, Source( mor ) ),
+                             Range,  AsStableCategoryObject( category, Range( mor ) )
                              );
     
     SetUnderlyingMorphism( stable_morphism, mor );
@@ -207,7 +220,7 @@ end );
     
     
 ##
-InstallMethodWithCache( StableCategoryObject,
+InstallMethodWithCache( AsStableCategoryObject,
                [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryObject ],
                
     function( category, obj )
