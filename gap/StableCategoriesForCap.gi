@@ -64,9 +64,8 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     end );
     
     # TO DO AddIsCongruentForMorphisms
-    # TO DO Is Zero
     
-     ## PreCompose
+    ## PreCompose
     
     AddPreCompose( category,
       
@@ -104,11 +103,45 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         
     end );
     
-    ## TO DO IsZeroForMorphisms
+    ## IsZeroForMorphisms
+    AddIsZeroForMorphisms( category, 
     
+       function( morphism )
+       local underlying_mor;
+       
+       underlying_mor := UnderlyingMorphism( morphism );
+       
+       if HasIsZero( underlying_mor ) and IsZero( underlying_mor ) then
+        
+          return true;
+          
+       else 
+       
+          return test_function( morphism );
+          
+       fi;
+       
+    end );
     
+    ## IsZeroForObjects
+    AddIsZeroForObjects( category, 
     
-    
+    function( obj )
+    local underlying_obj;
+       
+       underlying_obj := UnderlyingObject( obj );
+       
+       if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
+        
+          return true;
+          
+       else 
+       
+          return IsZero( IdentityMorphism( obj ) );
+       
+       fi;
+       
+    end );
     
     
     ## Additive inverse for morphisms
@@ -150,8 +183,23 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         
     end );
     
+    ## direct sum
+    
+    AddDirectSum( category,
+      
+      function( obj_list )
+        local underlying_list, underlying_sum;
+        
+        underlying_list := List( obj_list, UnderlyingObject );
+        
+        underlying_sum := CallFuncList( DirectSum, underlying_list );
+        
+        return AsStableCategoryObject( category, underlying_sum );
+        
     end );
     
+    
+    end );
     
 #########################
 #
