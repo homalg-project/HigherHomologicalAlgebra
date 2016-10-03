@@ -211,7 +211,8 @@ InstallMethod( StableCategory,
                                   [ IsCapCategory, IsFunction, IsString ],
                                   
   function( category, test_function, function_name )
-    local stable_category, gen_category, name, preconditions, category_weight_list, i;
+    local stable_category, gen_category, name, preconditions,
+          category_weight_list, i, to_be_finalized;
     
     if not HasIsFinalized( category ) or not IsFinalized( category ) then
         
@@ -262,11 +263,19 @@ InstallMethod( StableCategory,
      
     CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY( stable_category );
     
-    Finalize( stable_category );
-    
+       to_be_finalized := ValueOption( "FinalizeStableCategory" );
+   
+    if to_be_finalized = true then
+      
+       Finalize( stable_category );
+      
+    fi;
+   
     return stable_category;
-    
+   
 end );
+
+# StableCategory( category, funk, "f" : FinalizeStableCategory := false );
 
 ##
 InstallMethodWithCache( AsStableCategoryMorphism,
@@ -327,9 +336,3 @@ InstallMethodWithCache( AsStableCategoryObject,
     return stable_obj;
     
 end );
-    
-    
-    
-    
-    
-               
