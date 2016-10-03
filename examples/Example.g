@@ -9,7 +9,7 @@ A := VectorSpaceObject( 2, Q );
 B := VectorSpaceObject( 1, Q );
 f := VectorSpaceMorphism( B, HomalgMatrix( [ [ 3,4 ] ], 1,2, Q ), A );
 g := 4*f;
-Stable_Mat := StableCategory( Mat, func, "func" );
+Stable_Mat := StableCategory( Mat, func, "func": FinalizeStableCategory := false  );
 
 A_ := AsStableCategoryObject( Stable_Mat, A );
 B_ := AsStableCategoryObject( Stable_Mat, B );
