@@ -66,6 +66,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "CAP", ">= 1.0" ],
+                           [ "ModulePresentationsForCap", ">=1.0" ],
                            [ "GAPDoc", ">= 1.5" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
