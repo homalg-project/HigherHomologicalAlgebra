@@ -6,6 +6,7 @@
 #! @Chapter StableCategoriesForCap
 ##
 #############################################################################
+
 #! Objects of the stable category are the same of the original but morphisms ...
 
 #! @Section Filters
@@ -83,13 +84,13 @@ DeclareAttribute( "UnderlyingCategory" ,IsStableCategory  );
 #! bla bla
 #! @Arguments f
 #! @Returns <A>g</A>
-DeclareAttribute( "UnderlyingMorphism" ,IsStableCategoryMorphism  );
+DeclareAttribute( "UnderlyingMorphismOfTheStableMorphism" ,IsStableCategoryMorphism  );
 
 #! @Description
 #! bla bla
 #! @Arguments obj
 #! @Returns <A>obj</A>
-DeclareAttribute( "UnderlyingObject" ,IsStableCategoryObject  );
+DeclareAttribute( "UnderlyingObjectOfTheStableObject" ,IsStableCategoryObject  );
 
 
 #####################

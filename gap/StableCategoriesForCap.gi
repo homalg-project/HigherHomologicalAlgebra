@@ -6,9 +6,6 @@
 #
 #####################################################################
 
-
-
-
 ########################
 ##
 ## Declarations
@@ -59,7 +56,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
           
        function( obj1, obj2 )
        
-         return IsEqualForObjects( UnderlyingObject( obj1 ), UnderlyingObject( obj1 ) );
+         return IsEqualForObjects( UnderlyingObjectOfTheStableObject( obj1 ), UnderlyingObjectOfTheStableObject( obj1 ) );
        
     end );
     
@@ -72,8 +69,8 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       function( morphism1, morphism2 )
         local composition;
         
-        composition := PreCompose( UnderlyingMorphism( morphism1 ),
-                                   UnderlyingMorphism( morphism2 ) );
+        composition := PreCompose( UnderlyingMorphismOfTheStableMorphism( morphism1 ),
+                                   UnderlyingMorphismOfTheStableMorphism( morphism2 ) );
         
         return AsStableCategoryMorphism( category, composition );
         
@@ -85,7 +82,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       
       function( object )
         
-        return AsStableCategoryMorphism( category, IdentityMorphism( UnderlyingObject( object ) ) );
+        return AsStableCategoryMorphism( category, IdentityMorphism( UnderlyingObjectOfTheStableObject( object ) ) );
         
     end );
     
@@ -96,8 +93,8 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       function( morphism1, morphism2 )
         local sum;
         
-        sum := AdditionForMorphisms( UnderlyingMorphism( morphism1 ),
-                                     UnderlyingMorphism( morphism2 ) );
+        sum := AdditionForMorphisms( UnderlyingMorphismOfTheStableMorphism( morphism1 ),
+                                     UnderlyingMorphismOfTheStableMorphism( morphism2 ) );
         
         return AsStableCategoryMorphism( category, sum );
         
@@ -109,7 +106,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
        function( morphism )
        local underlying_mor;
        
-       underlying_mor := UnderlyingMorphism( morphism );
+       underlying_mor := UnderlyingMorphismOfTheStableMorphism( morphism );
        
        if HasIsZero( underlying_mor ) and IsZero( underlying_mor ) then
         
@@ -129,7 +126,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     function( obj )
     local underlying_obj;
        
-       underlying_obj := UnderlyingObject( obj );
+       underlying_obj := UnderlyingObjectOfTheStableObject( obj );
        
        if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
         
@@ -151,7 +148,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       function( morphism )
         local new_mor;
         
-        new_mor := AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) );
+        new_mor := AdditiveInverseForMorphisms( UnderlyingMorphismOfTheStableMorphism( morphism ) );
         
         return AsStableCategoryMorphism( category, new_mor );
         
@@ -164,7 +161,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       function( source, range )
         local zero_mor;
         
-        zero_mor := ZeroMorphism( UnderlyingObject( source ), UnderlyingObject( range ) );
+        zero_mor := ZeroMorphism( UnderlyingObjectOfTheStableObject( source ), UnderlyingObjectOfTheStableObject( range ) );
         
         return AsStableCategoryMorphism( category, zero_mor );
         
@@ -190,7 +187,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
       function( obj_list )
         local underlying_list, underlying_sum;
         
-        underlying_list := List( obj_list, UnderlyingObject );
+        underlying_list := List( obj_list, UnderlyingObjectOfTheStableObject );
         
         underlying_sum := CallFuncList( DirectSum, underlying_list );
         
@@ -249,7 +246,7 @@ InstallMethod( StableCategory,
     
     name := Name( category );
     
-    name := Concatenation( "The stable category of ", name, " by ", function_name );
+    name := Concatenation( "the stable category of ", name, " by ", function_name );
     
     stable_category := CreateCapCategory( name );
     
@@ -298,7 +295,7 @@ InstallMethodWithCache( AsStableCategoryMorphism,
                              Range,  AsStableCategoryObject( category, Range( mor ) )
                              );
     
-    SetUnderlyingMorphism( stable_morphism, mor );
+    SetUnderlyingMorphismOfTheStableMorphism( stable_morphism, mor );
     
     ## here we should add to do list... 
     
@@ -327,7 +324,7 @@ InstallMethodWithCache( AsStableCategoryObject,
     
     ObjectifyWithAttributes( stable_obj, TheTypeOfStableCategoryObject );
     
-    SetUnderlyingObject( stable_obj, obj );
+    SetUnderlyingObjectOfTheStableObject( stable_obj, obj );
     
     ## here we should add to do list... 
     
