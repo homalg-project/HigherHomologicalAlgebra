@@ -5,3 +5,5 @@
 #
 
 ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesForCap.gd");
+ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesOfModulePresentationsOverExteriorAlgebra.gd");
+
