@@ -297,6 +297,12 @@ InstallMethodWithCache( AsStableCategoryMorphism,
     
     SetUnderlyingMorphismOfTheStableMorphism( stable_morphism, mor );
     
+    if HasUnderlyingMatrix( mor ) then 
+    
+    SetUnderlyingMatrix( stable_morphism, UnderlyingMatrix( mor ) );
+
+    fi;
+    
     ## here we should add to do list... 
     
     AddMorphism( category, stable_morphism );
@@ -325,6 +331,12 @@ InstallMethodWithCache( AsStableCategoryObject,
     ObjectifyWithAttributes( stable_obj, TheTypeOfStableCategoryObject );
     
     SetUnderlyingObjectOfTheStableObject( stable_obj, obj );
+    
+    if HasUnderlyingMatrix( obj ) then 
+    
+      SetUnderlyingMatrix( stable_obj, UnderlyingMatrix( obj ) );
+    
+    fi;
     
     ## here we should add to do list... 
     

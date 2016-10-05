@@ -88,9 +88,21 @@ DeclareAttribute( "UnderlyingMorphismOfTheStableMorphism" ,IsStableCategoryMorph
 
 #! @Description
 #! bla bla
+#! @Arguments f
+#! @Returns <A>g</A>
+DeclareAttribute( "UnderlyingMatrix" ,IsStableCategoryMorphism  );
+
+#! @Description
+#! bla bla
 #! @Arguments obj
 #! @Returns <A>obj</A>
 DeclareAttribute( "UnderlyingObjectOfTheStableObject" ,IsStableCategoryObject  );
+
+#! @Description
+#! bla bla
+#! @Arguments obj
+#! @Returns <A>obj</A>
+DeclareAttribute( "UnderlyingMatrix" ,IsStableCategoryObject  );
 
 
 #####################
