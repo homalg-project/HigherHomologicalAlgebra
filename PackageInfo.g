@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "StableCategoriesForCap",
-Subtitle := "Gap packge for constructing stable category of a given Cap category",
+Subtitle := "Gap package for constructing stable category of a given Cap category",
 Version := "0.1",
 Date := "29/09/2016", # dd/mm/yyyy format
 
@@ -60,7 +60,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Gap packge for constructing stable category of a given Cap category",
+  LongTitle := "Gap package for constructing stable category of a given Cap category",
 ),
 
 Dependencies := rec(
