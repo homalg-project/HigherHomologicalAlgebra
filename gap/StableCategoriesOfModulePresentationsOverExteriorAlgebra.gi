@@ -113,8 +113,6 @@ BindGlobal( "INSTALL_EXTRA_OPERATIONS_FOR_STABLE_CATEGORIES_OF_MODULE_PRESENTATI
 ##
 ##################################
 
-DeclareOperation( "StableCategoryOfLeftPresentationsOverExteriorAlgebra", [ IsHomalgRing ] );
-
 InstallMethod( StableCategoryOfLeftPresentationsOverExteriorAlgebra,
                [ IsHomalgRing ],
    function( R )
@@ -168,8 +166,43 @@ InstallMethod( StableCategoryOfLeftPresentationsOverExteriorAlgebra,
    return stable_cat;
    
 end );
+
+
+###############################
+##
+## Constructor
+##
+###############################
    
-        
+InstallMethod( AsLeftPresentationInStableCategory, 
+                      [ IsHomalgMatrix ], 
+   function( H )
+   local R, cat; 
+   
+   R := H!.ring;
+   
+   cat :=  StableCategoryOfLeftPresentationsOverExteriorAlgebra( R );
+   
+   return AsStableCategoryObject( cat, AsLeftPresentation( H ) );
+   
+end );
+
+InstallMethod( PresentationMorphismInStableCategory, 
+                 [ IsStableCategoryObject, IsHomalgMatrix, IsStableCategoryObject ],
+   function( M, H, N )
+   local underlying_mor, R, cat; 
+   
+   R := H!.ring;
+   
+   cat :=  StableCategoryOfLeftPresentationsOverExteriorAlgebra( R );
+   
+   underlying_mor := PresentationMorphism( UnderlyingObjectOfTheStableObject( M ), H, UnderlyingObjectOfTheStableObject( N ) );
+   
+   return AsStableCategoryMorphism( cat, underlying_mor );
+   
+end );
+
+   
    
    
    
