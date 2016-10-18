@@ -60,7 +60,7 @@ DeclareOperation( "AsStableCategoryMorphism",
 DeclareOperation( "AsStableCategoryObject", 
                    [ IsCapCategory, IsCapCategoryObject ] );
 
-#! @Section Attributesss
+#! @Section Attributes
 
 #####################
 ##

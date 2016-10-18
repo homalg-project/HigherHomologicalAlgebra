@@ -60,7 +60,23 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
        
     end );
     
-    # TO DO AddIsCongruentForMorphisms
+    AddIsEqualForMorphisms( category, 
+    
+       function( morphism1, morphism2 )
+       
+       return IsEqualForMorphisms( UnderlyingMorphismOfTheStableMorphism( morphism1 ), 
+                                    UnderlyingMorphismOfTheStableMorphism( morphism2 ) );
+    end );
+    
+    # AddIsCongruentForMorphisms
+    
+    AddIsCongruentForMorphisms( category, 
+    
+      function( morphism1, morphism2 )
+      
+        return test_function( morphism1 - morphism2 );
+        
+    end );
     
     ## PreCompose
     
@@ -196,7 +212,32 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     end );
     
     
+    ## kernel ....
+    AddKernelEmbedding( category, 
+    
+      function( morphism )
+      local underlying_kernel_embedding;
+      
+      underlying_kernel_embedding := KernelEmbedding( UnderlyingMorphismOfTheStableMorphism( morphism ) );
+      
+      return AsStableCategoryMorphism( category, underlying_kernel_embedding );
+      
     end );
+    
+    ## cokernel
+    
+    AddCokernelProjection( category, 
+    
+      function( morphism )
+      local underlying_cokernel_projection;
+      
+      underlying_cokernel_projection := CokernelProjection( UnderlyingMorphismOfTheStableMorphism( morphism ) );
+      
+      return AsStableCategoryMorphism( category, underlying_cokernel_projection );
+      
+    end );
+
+end );
     
 #########################
 #
@@ -246,7 +287,7 @@ InstallMethod( StableCategory,
     
     name := Name( category );
     
-    name := Concatenation( "the stable category of ", name, " by ", function_name );
+    name := Concatenation( "the stable category of ", name ); # , " by ", function_name
     
     stable_category := CreateCapCategory( name );
     
