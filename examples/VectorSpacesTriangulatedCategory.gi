@@ -909,7 +909,7 @@ AddTR4( vecspaces, function( f, g )
       
                    w:= PreCompose( i, ShiftOfMorphism( j ) );
       
-                   return [T, W, S, CreateExactTriangle( u, v, w ) ];
+                   return [ T, W, S, CreateExactTriangle( u, v, w ) ];
       
                    end );
 ## Demo 
