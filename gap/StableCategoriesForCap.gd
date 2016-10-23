@@ -39,7 +39,7 @@ DeclareFilter( "WasCreatedAsStableCategory" );
 #! @Arguments A,func[,name]
 #! @Returns a CAP category
 DeclareOperation( "StableCategory",
-                  [ IsCapCategory, IsFunction, IsString ] );
+                  [ IsCapCategory, IsFunction ] );
 
 
 #! @Description

@@ -210,32 +210,6 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
         return AsStableCategoryObject( category, underlying_sum );
         
     end );
-    
-    
-    ## kernel ....
-    AddKernelEmbedding( category, 
-    
-      function( morphism )
-      local underlying_kernel_embedding;
-      
-      underlying_kernel_embedding := KernelEmbedding( UnderlyingMorphismOfTheStableMorphism( morphism ) );
-      
-      return AsStableCategoryMorphism( category, underlying_kernel_embedding );
-      
-    end );
-    
-    ## cokernel
-    
-    AddCokernelProjection( category, 
-    
-      function( morphism )
-      local underlying_cokernel_projection;
-      
-      underlying_cokernel_projection := CokernelProjection( UnderlyingMorphismOfTheStableMorphism( morphism ) );
-      
-      return AsStableCategoryMorphism( category, underlying_cokernel_projection );
-      
-    end );
 
 end );
     
@@ -246,9 +220,9 @@ end );
 ########################
 
 InstallMethod( StableCategory,
-                                  [ IsCapCategory, IsFunction, IsString ],
+                 [ IsCapCategory, IsFunction ],
                                   
-  function( category, test_function, function_name )
+  function( category, test_function )
     local stable_category, gen_category, name, preconditions,
           category_weight_list, i, to_be_finalized;
     
@@ -287,7 +261,7 @@ InstallMethod( StableCategory,
     
     name := Name( category );
     
-    name := Concatenation( "the stable category of ", name ); # , " by ", function_name
+    name := Concatenation( "The stable category of ", name ); # , " by ", function_name
     
     stable_category := CreateCapCategory( name );
     
@@ -313,7 +287,7 @@ InstallMethod( StableCategory,
    
 end );
 
-# StableCategory( category, funk, "f" : FinalizeStableCategory := false );
+# StableCategory( category, funk: FinalizeStableCategory := false );
 
 ##
 InstallMethodWithCache( AsStableCategoryMorphism,

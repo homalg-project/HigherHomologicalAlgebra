@@ -159,7 +159,7 @@ InstallMethod( StableCategoryOfLeftPresentationsOverExteriorAlgebra,
        
        end;
        
-   stable_cat := StableCategory( LeftPresentations( R ), f, "f":FinalizeStableCategory := false );
+   stable_cat := StableCategory( LeftPresentations( R ), f :FinalizeStableCategory := false );
    
    INSTALL_EXTRA_OPERATIONS_FOR_STABLE_CATEGORIES_OF_MODULE_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_cat );
    
