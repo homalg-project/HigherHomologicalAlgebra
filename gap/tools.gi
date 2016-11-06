@@ -262,7 +262,7 @@ InstallGlobalFunction( F2,
  BB := FRight( sigma, B );
  
  Is_Kronecker_AA :=  KroneckerMat( HomalgIdentityMatrix( s, R ), AA );
- BB_Kronecker_Ir :=  KroneckerMat( HomalgTransposedMat( BB ), HomalgIdentityMatrix( r, R ) );
+ BB_Kronecker_Ir :=  KroneckerMat( Involution( BB ), HomalgIdentityMatrix( r, R ) );
  
  return UnionOfColumns( Is_Kronecker_AA, BB_Kronecker_Ir );
  
@@ -289,6 +289,16 @@ InstallGlobalFunction( SolveTwoSidedEquationOverExteriorAlgebra,
 
 function( A, B, C )
 local C_deco, C_deco_list, C_deco_list_vec, C_vec, N, sol, Q, R, l, m, s, r, n, XX, YY, XX_, YY_, X_, Y_, basis_indices;
+
+if NrRows( A )= 0 or NrColumns( A ) = 0 then 
+
+   return [ "optional", RightDivide( C, B ) ];
+   
+elif NrRows( B )= 0 or NrColumns( B ) = 0 then 
+
+   return [ LeftDivide( A, C ), "optional" ];
+   
+fi;
 
 R := A!.ring;
 
