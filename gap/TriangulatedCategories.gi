@@ -88,6 +88,46 @@ filter_list := [ "morphism" ],
 cache_name := "ReverseShiftOfMorphism",
 return_type := "morphism" ),
 
+IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject := rec( 
+
+installation_name := "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject",
+filter_list := [ "object" ],
+cache_name := "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject",
+return_type := "morphism",
+post_function := function( obj, return_value )
+                 
+                 if not IsEqualForObjects( obj, Source( return_value ) ) then 
+                 
+                    Error( "the source of the morphism computed by the given method does not equal the input object" );
+                    
+                 elif not IsEqualForObjects( ShiftOfObject( ReverseShiftOfObject( obj ) ), Range( return_value ) ) then
+                 
+                    Error( "the range of the morphism computed by the given method does not equal ShiftOfObject( ReverseShiftOfObject( input ) )" );
+                 
+                 fi;
+                 
+                 end ),
+
+IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject := rec( 
+
+installation_name := "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject",
+filter_list := [ "object" ],
+cache_name := "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject",
+return_type := "morphism",
+post_function := function( obj, return_value )
+                 
+                 if not IsEqualForObjects( obj, Source( return_value ) ) then 
+                 
+                    Error( "the source of the morphism computed by the given method does not equal the input object" );
+                    
+                 elif not IsEqualForObjects( ReverseShiftOfObject( ShiftOfObject( obj ) ), Range( return_value ) ) then
+                 
+                    Error( "the range of the morphism computed by the given method does not equal ReverseShiftOfObject( ShiftOfObject( input ) )" );
+                 
+                 fi;
+                 
+                 end ),
+
 IsExactForTriangles:= rec( 
 
 installation_name := "IsExactForTriangles", 
@@ -137,48 +177,51 @@ TR3:= rec(
                
                 end,
   
- return_type := "morphism",
-   post_function := function( T1, T2, alpha, betta, return_value )
-                   local mor1, mor2, is_equal_for_morphisms;
-                   
-                   if not IsCapCategoryMorphism( return_value ) then 
-                   
-                      Error( "The function used by defining TR3 should return a morphism" );
-                      
-                   fi;
-                   
-                   mor1 := PreCompose( T1!.morphism2, return_value );
-                   mor2 := PreCompose( betta, T2!.morphism2 );
-                 
-                  is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
-                 
-                  if is_equal_for_morphisms = fail then
-      
-                     Error( "cannot decide whether the second squar is commutative" );
-      
-                  elif is_equal_for_morphisms = false then
-        
-                     Error( "The second squar is not commutative" );
-        
-                  fi;
-      
-                  mor1 := PreCompose( T1!.morphism3, ShiftOfMorphism( alpha ) );
-                  mor2 := PreCompose( return_value, T2!.morphism3 );
-                 
-                  is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
-                 
-                  if is_equal_for_morphisms = fail then
-      
-                     Error( "cannot decide whether the third squar is commutative" );
-      
-                  elif is_equal_for_morphisms = false then
-        
-                     Error( "The third squar is not commutative" );
-        
-                  fi;
-      
-      
-                  end ),
+ return_type := "morphism"
+#  ,
+#    post_function := function( T1, T2, alpha, betta, return_value )
+#                    local mor1, mor2, is_equal_for_morphisms;
+#                    
+#                    if not IsCapCategoryMorphism( return_value ) then 
+#                    
+#                       Error( "The function used by defining TR3 should return a morphism" );
+#                       
+#                    fi;
+#                    
+#                    mor1 := PreCompose( T1!.morphism2, return_value );
+#                    mor2 := PreCompose( betta, T2!.morphism2 );
+#                  
+#                   is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+#                  
+#                   if is_equal_for_morphisms = fail then
+#       
+#                      Error( "cannot decide whether the second squar is commutative" );
+#       
+#                   elif is_equal_for_morphisms = false then
+#         
+#                      Error( "The second squar is not commutative" );
+#         
+#                   fi;
+#       
+#                   mor1 := PreCompose( T1!.morphism3, ShiftOfMorphism( alpha ) );
+#                   mor2 := PreCompose( return_value, T2!.morphism3 );
+#                  
+#                   is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+#                  
+#                   if is_equal_for_morphisms = fail then
+#       
+#                      Error( "cannot decide whether the third squar is commutative" );
+#       
+#                   elif is_equal_for_morphisms = false then
+#         
+#                      Error( "The third squar is not commutative" );
+#         
+#                   fi;
+#       
+#       
+#                   end 
+                    ),
+
 ## pre and post functions to be added ...
 CompleteToMorphismOfExactTrianglesByTR3:= rec(
 
@@ -606,6 +649,143 @@ end );
   
   end );
   
+InstallMethod( ShiftFunctor,
+                 [ IsCapCategory and IsTriangulatedCategory ],
+                 
+    function( category )
+    local name, functor;
+    
+    name := Concatenation( "Shift functor in ", Name( category ) );
+    
+    functor := CapFunctor( name, category, category );
+    
+    if not CanCompute( category, "ShiftOfObject" ) or not CanCompute( category, "ShiftOfMorphism" ) then
+    
+       Error( "ShiftOfObject and ShiftOfMorphism should be added to the category" );
+       
+    fi;
+    
+    AddObjectFunction( functor, 
+    
+          function( obj )
+          
+          return ShiftOfObject( obj );
+          
+          end );
+          
+    AddMorphismFunction( functor, 
+    
+          function( new_source, mor, new_range )
+          
+          return ShiftOfMorphism( mor );
+          
+          end );
+          
+    return functor;
+ 
+end );
+    
+##
+InstallMethod( ReverseShiftFunctor,
+                 [ IsCapCategory and IsTriangulatedCategory ],
+                 
+    function( category )
+    local name, functor;
+    
+    name := Concatenation( "Reverse Shift functor in ", Name( category ) );
+    
+    functor := CapFunctor( name, category, category );
+    
+    if not CanCompute( category, "ReverseShiftOfObject" ) or not CanCompute( category, "ReverseShiftOfMorphism" ) then
+    
+       Error( "ReverseShiftOfObject and ReverseShiftOfMorphism should be added to the category" );
+       
+    fi;
+    
+    AddObjectFunction( functor, 
+    
+          function( obj )
+          
+          return ReverseShiftOfObject( obj );
+          
+          end );
+          
+    AddMorphismFunction( functor, 
+    
+          function( new_source, mor, new_range )
+          
+          return ReverseShiftOfMorphism( mor );
+          
+          end );
+          
+    return functor;
+ 
+end );
+
+InstallMethod( AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor, 
+                     [ IsCapCategory and IsTriangulatedCategory ],
+                     
+       function( category )
+       local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
+       
+       id := IdentityMorphism( AsCatObject( category ) );
+       
+       shift := ShiftFunctor( category );
+       
+       reverse_shift := ReverseShiftFunctor( category );
+       
+       shift_after_reverse_shift := PreCompose( reverse_shift, shift );
+       
+       name := "Autoequivalence from identity functor to Shift after ReverseShift functor in ";
+       
+       name := Concatenation( name, Name( category ) );
+       
+       nat := NaturalTransformation( name, id, shift_after_reverse_shift );
+       
+       AddNaturalTransformationFunction( nat, 
+        
+          function( Id_of_object, object, shift_after_reverse_shift_of_object )
+             
+             return IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject( object );
+             
+          end );
+        
+       return nat;
+       
+end );
+
+InstallMethod( AutoequivalenceFromIdentityToReverseShiftAfterShiftFunctor, 
+                     [ IsCapCategory and IsTriangulatedCategory ],
+                     
+       function( category )
+       local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
+       
+       id := IdentityMorphism( AsCatObject( category ) );
+       
+       shift := ShiftFunctor( category );
+       
+       reverse_shift := ReverseShiftFunctor( category );
+       
+       reverse_shift_after_shift := PreCompose( shift, reverse_shift);
+       
+       name := "Autoequivalence from identity functor to ReverseShift after Shift functor in ";
+       
+       name := Concatenation( name, Name( category ) );
+       
+       nat := NaturalTransformation( name, id, reverse_shift_after_shift );
+       
+       AddNaturalTransformationFunction( nat, 
+        
+          function( Id_of_object, object, reverse_shift_after_shift_of_object )
+             
+             return IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject( object );
+             
+          end );
+        
+       return nat;
+       
+end );
+
 ##############################
 ##
 ## Methods

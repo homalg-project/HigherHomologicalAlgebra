@@ -84,6 +84,12 @@ fi;
              [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
  DoDeclarationStuff( "CompleteToMorphismOfExactTrianglesByTR3" );
  
+ DeclareOperationWithCache( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject", [ IsCapCategoryObject ] );
+ DoDeclarationStuff( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject" );
+ 
+ DeclareOperationWithCache( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject", [ IsCapCategoryObject ] );
+ DoDeclarationStuff( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject" );
+ 
  DeclareOperationWithCache( "TR4", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
  DoDeclarationStuff( "TR4" );
  
@@ -157,6 +163,14 @@ fi;
  
  DeclareAttribute( "CreateTriangleByTR2Backward", IsCapCategoryTriangle );
  
+ DeclareAttribute( "ShiftFunctor", IsCapCategory );
+ 
+ DeclareAttribute( "ReverseShiftFunctor", IsCapCategory );
+ 
+ DeclareAttribute( "AutoequivalenceFromIdentityToReverseShiftAfterShiftFunctor", IsCapCategory );
+ 
+ DeclareAttribute( "AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor", IsCapCategory );
+ 
  DeclareAttribute( "Source", IsCapCategoryTrianglesMorphism );
  
  DeclareAttribute( "Range", IsCapCategoryTrianglesMorphism );
@@ -171,9 +185,4 @@ fi;
  
  DeclareProperty( "IsIsomorphism", IsCapCategoryTrianglesMorphism );
  
- 
- 
- 
- 
- 
- 
+ DeclareProperty( "IsTriangulatedCategory", IsCapCategory );
