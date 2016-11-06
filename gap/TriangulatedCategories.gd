@@ -67,31 +67,27 @@ fi;
  DeclareOperationWithCache( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
  DoDeclarationStuff( "ReverseShiftOfMorphism" );
  
- DeclareOperationWithCache( "IsExactForTriangles", [ IsCapCategoryTriangle ] );
- DoDeclarationStuff( "IsExactForTriangles" );
- 
- DeclareOperationWithCache( "TR1", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "TR1" );
- 
- DeclareOperationWithCache( "CompleteMorphismToExactTriangleByTR1", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "CompleteMorphismToExactTriangleByTR1" );
- 
- DeclareOperationWithCache( "TR3",
-             [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
- DoDeclarationStuff( "TR3" );
- 
- DeclareOperationWithCache( "CompleteToMorphismOfExactTrianglesByTR3",
-             [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
- DoDeclarationStuff( "CompleteToMorphismOfExactTrianglesByTR3" );
- 
  DeclareOperationWithCache( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject", [ IsCapCategoryObject ] );
  DoDeclarationStuff( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject" );
  
  DeclareOperationWithCache( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject", [ IsCapCategoryObject ] );
  DoDeclarationStuff( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject" );
  
- DeclareOperationWithCache( "TR4", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
- DoDeclarationStuff( "TR4" );
+ DeclareOperationWithCache( "IsExactForTriangles", [ IsCapCategoryTriangle ] );
+ DoDeclarationStuff( "IsExactForTriangles" );
+ 
+ DeclareOperationWithCache( "CompleteMorphismToExactTriangle", [ IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "CompleteMorphismToExactTriangle" );
+ 
+ DeclareOperationWithCache( "CompleteToMorphismOfExactTriangles",
+             [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+ 
+#  DeclareOperationWithCache( "CompleteToMorphismOfExactTriangles",
+#              [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
+ DoDeclarationStuff( "CompleteToMorphismOfExactTriangles" );
+ 
+ DeclareOperationWithCache( "OctohedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+ DoDeclarationStuff( "OctohedralAxiom" );
  
  
  ###################################

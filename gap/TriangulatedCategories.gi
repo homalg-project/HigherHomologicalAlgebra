@@ -135,47 +135,40 @@ filter_list := [ IsCapCategoryTriangle ],
 cache_name := "IsExactForTriangles",
 return_type := "bool" ),
 
-TR1:= rec(
+CompleteMorphismToExactTriangle:= rec(
 
-installation_name := "TR1", 
+installation_name := "CompleteMorphismToExactTriangle", 
 filter_list := [ "morphism" ],
-cache_name := "TR1",
-return_type := [ "morphism", "object", "morphism" ] ),
-
-CompleteMorphismToExactTriangleByTR1:= rec(
-
-installation_name := "CompleteMorphismToExactTriangleByTR1", 
-filter_list := [ "morphism" ],
-cache_name := "CompleteMorphismToExactTriangleByTR1",
+cache_name := "CompleteMorphismToExactTriangle",
 return_type := [ IsCapCategoryExactTriangle ] ),
 
-TR3:= rec(
+CompleteToMorphismOfExactTriangles:= rec(
 
- installation_name := "TR3", 
+ installation_name := "CompleteToMorphismOfExactTriangles", 
  filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism" ],
- cache_name := "TR3",
-
-   pre_function:= function( T1, T2, alpha, betta )
-                 local mor1, mor2, is_equal_for_morphisms;
-                 
-                 mor1 := PreCompose( T1!.morphism1, betta );
-                 mor2 := PreCompose( alpha, T2!.morphism1 );
-                 
-                 is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
-                 
-                 if is_equal_for_morphisms = fail then
-      
-                     return [ false, "cannot decide whether the first squar is commutative" ];
-      
-                 elif is_equal_for_morphisms = false then
-        
-                     return [ false, "The first squar is not commutative" ];
-        
-                fi;
-    
-                return [ true ];
-               
-                end,
+ cache_name := "CompleteToMorphismOfExactTriangles",
+# 
+#    pre_function:= function( T1, T2, alpha, betta )
+#                  local mor1, mor2, is_equal_for_morphisms;
+#                  
+#                  mor1 := PreCompose( T1!.morphism1, betta );
+#                  mor2 := PreCompose( alpha, T2!.morphism1 );
+#                  
+#                  is_equal_for_morphisms := IsEqualForMorphisms( mor1, mor2 );
+#                  
+#                  if is_equal_for_morphisms = fail then
+#       
+#                      return [ false, "cannot decide whether the first squar is commutative" ];
+#       
+#                  elif is_equal_for_morphisms = false then
+#         
+#                      return [ false, "The first squar is not commutative" ];
+#         
+#                 fi;
+#     
+#                 return [ true ];
+#                
+#                 end,
   
  return_type := "morphism"
 #  ,
@@ -223,18 +216,18 @@ TR3:= rec(
                     ),
 
 ## pre and post functions to be added ...
-CompleteToMorphismOfExactTrianglesByTR3:= rec(
+# CompleteToMorphismOfExactTriangles:= rec(
+# 
+# installation_name := "CompleteToMorphismOfExactTriangles", 
+# filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism", IsList ],
+# cache_name := "CompleteToMorphismOfExactTriangles",
+# return_type := [ IsCapCategoryTrianglesMorphism ] ),
+#                 
+OctohedralAxiom:= rec(
 
-installation_name := "CompleteToMorphismOfExactTrianglesByTR3", 
-filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism", IsList ],
-cache_name := "CompleteToMorphismOfExactTrianglesByTR3",
-return_type := [ IsCapCategoryTrianglesMorphism ] ),
-                
-TR4:= rec(
-
-installation_name := "TR4", 
+installation_name := "OctohedralAxiom", 
 filter_list := [ "morphism", "morphism" ],
-cache_name := "TR4",
+cache_name := "OctohedralAxiom",
 
 pre_function := function( alpha, betta )
 
@@ -250,60 +243,61 @@ pre_function := function( alpha, betta )
                 end,
                 
 return_type := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryExactTriangle ], 
-
-post_function := function( alpha, betta, return_value )
-                 local j,k,l,i,m,n,u,v,w;
-                 
-                 l:= return_value[ 2 ]!.morphism2;
-                 
-                 v:= return_value[ 4 ]!.morphism2;
-                 
-                 m:= return_value[ 3 ]!.morphism2;
-                 
-                 if not IsEqualForMorphisms( l, PreCompose( m, v ) ) then 
-                 
-                    Error( "Construction of TR4 can not be true." );
-                 
-                 fi;
-                 
-                 
-                 k:= return_value[ 1 ]!.morphism3;
-                 
-                 n:= return_value[ 3 ]!.morphism3;
-                 
-                 u:= return_value[ 4 ]!.morphism1;
- 
-                 if not IsEqualForMorphisms( k, PreCompose( u, n ) ) then 
-                 
-                    Error( "Construction of TR4 can not be true.." );
-                 
-                 fi;
-                 
-                 w:= return_value[ 4 ]!.morphism3;
-                 
-                 j:= return_value[ 1 ]!.morphism2;
-                 
-                 i:= return_value[ 2 ]!.morphism3;
-                 
-                 if not IsEqualForMorphisms( w, PreCompose( i, ShiftOfMorphism( j ) ) ) then 
-                 
-                    Error( "Construction of TR4 can not be true..." );
-                 
-                 fi;
-                 
-                 if not IsEqualForMorphisms( PreCompose( v, i ), PreCompose( n, ShiftOfMorphism( alpha ) ) ) then 
-                 
-                    Error( "Construction of TR4 can not be true...." );
-                 
-                 fi;
-                 
-                 if not IsEqualForMorphisms( PreCompose( j, u ), PreCompose( betta, m ) ) then 
-                 
-                    Error( "Construction of TR4 can not be true....." );
-                 
-                 fi;
-                 
-end ),
+# 
+# post_function := function( alpha, betta, return_value )
+#                  local j,k,l,i,m,n,u,v,w;
+#                  
+#                  l:= return_value[ 2 ]!.morphism2;
+#                  
+#                  v:= return_value[ 4 ]!.morphism2;
+#                  
+#                  m:= return_value[ 3 ]!.morphism2;
+#                  
+#                  if not IsEqualForMorphisms( l, PreCompose( m, v ) ) then 
+#                  
+#                     Error( "Construction of TR4 can not be true." );
+#                  
+#                  fi;
+#                  
+#                  
+#                  k:= return_value[ 1 ]!.morphism3;
+#                  
+#                  n:= return_value[ 3 ]!.morphism3;
+#                  
+#                  u:= return_value[ 4 ]!.morphism1;
+#  
+#                  if not IsEqualForMorphisms( k, PreCompose( u, n ) ) then 
+#                  
+#                     Error( "Construction of TR4 can not be true.." );
+#                  
+#                  fi;
+#                  
+#                  w:= return_value[ 4 ]!.morphism3;
+#                  
+#                  j:= return_value[ 1 ]!.morphism2;
+#                  
+#                  i:= return_value[ 2 ]!.morphism3;
+#                  
+#                  if not IsEqualForMorphisms( w, PreCompose( i, ShiftOfMorphism( j ) ) ) then 
+#                  
+#                     Error( "Construction of TR4 can not be true..." );
+#                  
+#                  fi;
+#                  
+#                  if not IsEqualForMorphisms( PreCompose( v, i ), PreCompose( n, ShiftOfMorphism( alpha ) ) ) then 
+#                  
+#                     Error( "Construction of TR4 can not be true...." );
+#                  
+#                  fi;
+#                  
+#                  if not IsEqualForMorphisms( PreCompose( j, u ), PreCompose( betta, m ) ) then 
+#                  
+#                     Error( "Construction of TR4 can not be true....." );
+#                  
+#                  fi;
+#                  
+#                  end 
+),
 
 
                 
@@ -511,9 +505,9 @@ InstallMethodWithCache( ConeObject,
   function( mor )
   local cone;
   
-  cone:= TR1( mor );
+  cone:= CompleteMorphismToExactTriangle( mor );
   
-  return cone[ 2 ];
+  return cone!.object3;
   
 end );
 
