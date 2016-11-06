@@ -78,7 +78,7 @@ DeclareOperation( "QVectorSpaceMorphism",
 ##
 #################################
  
-BindGlobal( "vecspaces", CreateCapCategory( "VectorSpaces" ) );
+BindGlobal( "vecspaces", CreateCapCategory( "category of rational vector spaces" ) );
 
 # SetIsAbelianCategory( vecspaces, true );
 
@@ -305,41 +305,6 @@ end;
 
 AddIsZeroForMorphisms( vecspaces, is_zero_for_mors );
 
-###############################################
-##
-## Adding triangulation structure
-##
-###############################################
-
-AddShiftOfObject( vecspaces, IdFunc );
-
-AddReverseShiftOfObject( vecspaces, function( obj )
-    
-                                    return obj;
-  
-                                    end );
-
-AddShiftOfMorphism( vecspaces, function( mor )
-                               local matrix;
-
-                               matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
-
-                               return QVectorSpaceMorphism( ShiftOfObject( Source( mor ) ), matrix, ShiftOfObject( Range( mor ) ) );
-
-                               end );
-
-AddReverseShiftOfMorphism( vecspaces, function( mor )
-                                      local matrix;
-
-                                      matrix := EntriesOfHomalgMatrixAsListList( mor!.morphism );
-
-                                      return QVectorSpaceMorphism( ReverseShiftOfObject( Source( mor ) ), matrix, ReverseShiftOfObject( Range( mor ) ) );
-
-                                      end );
-
-
-
-
 AddAdditiveInverseForMorphisms( vecspaces, function( mor )
                                            local matrix;
 
@@ -350,49 +315,69 @@ AddAdditiveInverseForMorphisms( vecspaces, function( mor )
                                            return QVectorSpaceMorphism( Source( mor ) , matrix,  Range( mor )  );
 
                                            end );
-                         
+
+###############################################
+##
+## Adding triangulation structure
+##
+###############################################
+
+AddShiftOfObject( vecspaces, IdFunc );
+
+AddReverseShiftOfObject( vecspaces, IdFunc );
+
+AddShiftOfMorphism( vecspaces, IdFunc );
+
+AddReverseShiftOfMorphism( vecspaces, IdFunc );
+
+AddIsomorphismFromObjectToReverseShiftAfterShiftOfTheObject( vecspaces, function( obj )
+                                                                        
+                                                                        return IdentityMorphism( obj );
+                                                                        
+                                                                        end );
+                                                                        
+AddIsomorphismFromObjectToShiftAfterReverseShiftOfTheObject( vecspaces, function( obj )
+                                                                        
+                                                                        return IdentityMorphism( obj );
+                                                                        
+                                                                        end );
+                                                                       
 AddIsExactForTriangles( vecspaces, function( trian )
                                    local f,g,h;
-                         
+                                  
                               if not IsEvenInt( Dimension( trian!.object1 ) + Dimension( trian!.object2 ) - Dimension( trian!.object3 ) ) then 
-                         
+                                
                                  return false;
-                             
+                                
                               fi;
-                         
+                              
                               f:= AsMorphismInMatrixCategory( trian!.morphism1 );
                               g:= AsMorphismInMatrixCategory( trian!.morphism2 );
                               h:= AsMorphismInMatrixCategory( trian!.morphism3 );
-                         
+                              
                               if not IsZeroForMorphisms( PreCompose( f, g ) ) or 
                                   not IsZeroForMorphisms( PreCompose( g, h ) ) or 
                                   not IsZeroForMorphisms( PreCompose( h, f ) ) then 
-                            
+                                
                               return false;
-                            
+                              
                               fi;
-                        
-                        ## in abelian categories, for f:A ---> B we have
-                        ## im( f )   = ker( coker( f ) )
-                        ## coim( f ) = coker( ker( f ) )
-                        
+                              
+                              ## in abelian categories, for f:A ---> B we have
+                              ## im( f )   = ker( coker( f ) )
+                              ## coim( f ) = coker( ker( f ) )
+                             
                               if not Dimension( KernelObject( g ) ) = Dimension( KernelObject( CokernelProjection( f ) ) ) or
                                    not Dimension( KernelObject( h ) ) = Dimension( KernelObject( CokernelProjection( g ) ) ) or
                                      not Dimension( KernelObject( f ) ) = Dimension( KernelObject( CokernelProjection( h ) ) ) then
-                           
+                              
                               return false;
-                           
+                              
                               fi;
-                        
-                              return true;                        
-                              end );                       
-
-## TR1 Any morphism f : A --> B can be  completed to an exact triangle 
-##    A ------> B -----> C -----> A[ 1 ]
-##         f        g        h
+                              
+                              return true;
+                              end );
 ##
-## the function TR1 returns the list [ g, C, h ]
-       
 AddCompleteMorphismToExactTriangle( vecspaces, function( mor )
        local f,ker_f, m, f1,n,f2,g1,t,C,G2,g2,g,h1,h;
        
@@ -424,27 +409,121 @@ AddCompleteMorphismToExactTriangle( vecspaces, function( mor )
        
        end );
 
-### demo
-# f := QVectorSpaceMorphism( [ [ 2,3,4,5,2], [ 0,0,1,0,1 ] ] );
+## Input is two triangles T1, T2 and two morphisms u, v such that vf1 = g1u.
+##
+##             f1          f2              f3
+##  T1:  A ---------> B ----------> C ------------> A[ 1 ]
+##       |            |             |                |
+##     u |          v |             | ?              | u[ 1 ]
+##       V            V             V                V
+##  T2:  A' --------> B'----------> C'------------> A'[ 1 ]
+##             g1            g2            g3
+##
+## Output is w: C ---> C' such that the diagram is commutative
+##
+AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
+                   local f,g,h,h2,h1,f_,g_,h_,h_2,h_1, beta,u,v, bar_H_1, bar_h_1,g1,g2, bar_G2, bar_g2, g_1,g_2, alpha, part1, part2, w; 
+                   
+                   f:= AsMorphismInMatrixCategory( t1!.morphism1 );
+                   g:= AsMorphismInMatrixCategory( t1!.morphism2 );
+                   h:= AsMorphismInMatrixCategory( t1!.morphism3 );
+                   
+                   h2:= KernelEmbedding( f );
+                   h1:= KernelLift( f, h );     
+                   
+                   f_:= AsMorphismInMatrixCategory( t2!.morphism1 );
+                   g_:= AsMorphismInMatrixCategory( t2!.morphism2 );
+                   h_:= AsMorphismInMatrixCategory( t2!.morphism3 );
+                   
+                   h_2:= KernelEmbedding( f_ );
+                   h_1:= KernelLift( f_, h_ );     
+                   
+                   u:= AsMorphismInMatrixCategory( u_ );
+                   v:= AsMorphismInMatrixCategory( v_ );
+                   
+                   beta := KernelLift( f_, PreCompose( h2, u ) );
+                   bar_H_1 := RightDivide( HomalgIdentityMatrix( Dimension( Range( h_1 ) ), Q ), h_1!.UnderlyingMatrix );
+                   bar_h_1 := VectorSpaceMorphism( Range( h_1 ), bar_H_1, Source( h_1 ) );
+                   
+                   g1:= CokernelProjection( f );
+                   g2:= CokernelColift( f, g );
+                   
+                   bar_G2 := LeftDivide( g2!.UnderlyingMatrix, HomalgIdentityMatrix( Dimension( Source( g2 ) ), Q ) );
+                   bar_g2 := VectorSpaceMorphism( Range( g2 ), bar_G2, Source( g2 ) );
+                   
+                   g_1:= CokernelProjection( f_ );
+                   g_2:= CokernelColift( f_, g_ );
+                   
+                   alpha := CokernelColift( f, PreCompose( v, g_1 ) );
+                   
+                   part1:= PreCompose( PreCompose( bar_g2, alpha ), g_2 );
+                   part2:= PreCompose( PreCompose( h1, beta ), bar_h_1 );
+                   
+                   w:= part1+part2;
+                   
+                   return QVectorSpaceMorphism( w );
+                   
+                   end );
+##
+AddOctohedralAxiom( vecspaces, function( f, g )
+                   local i,j,T, S, W, N, u,v, w;
+                   
+                   T := CompleteMorphismToExactTriangle( f );
+                   
+                   S := CompleteMorphismToExactTriangle( PreCompose( f, g ) );
+                   
+                   u := CompleteToMorphismOfExactTriangles( T, S, IdentityMorphism( Source( f ) ), g );
+                   
+                   W := CompleteMorphismToExactTriangle( g );
+                   
+                   v := CompleteToMorphismOfExactTriangles( S, W, f, IdentityMorphism( Range( g ) ) );
+                   
+                   j:= T!.morphism2;
+                   i:= W!.morphism3;
+                   
+                   w:= PreCompose( i, ShiftOfMorphism( j ) );
+                   
+                   return [ T, W, S, CreateExactTriangle( u, v, w ) ];
+                   
+                   end );
+                  
+SetIsTriangulatedCategory( vecspaces, true );
+
+Finalize( vecspaces );
+
+## Demo
+
+T := ShiftFunctor( vecspaces );
+#! Shift functor in category of rational vector spaces
+S := ReverseShiftFunctor( vecspaces );
+#! Reverse Shift functor in category of rational vector spaces
+Id_TS := AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor( vecspaces );
+# Autoequivalence from identity functor to Shift after ReverseShift functor in category of rational vector spaces
+Id_ST := AutoequivalenceFromIdentityToReverseShiftAfterShiftFunctor( vecspaces );
+# Autoequivalence from identity functor to ReverseShift after Shift functor in category of rational vector spaces
+A := QVectorSpace( 3 );
+# <A rational vector space of dimension 2 as an object in category of rational vector spaces>
+ApplyFunctor( T, A );
+# <A rational vector space of dimension 2 as an object in category of rational vector spaces>
+f := QVectorSpaceMorphism( [ [ 2,3,4,5,2], [ 0,0,1,0,1 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [  2,  3,  4,  5,  2 ],
 #!   [  0,  0,  1,  0,  1 ] ]
 #!
 #
-# Source( f );
-#! <A rational vector space of dimension 2 as an object in VectorSpaces>
+A := Source( f );
+#! <A rational vector space of dimension 2 as an object in category of rational vector spaces>
 #
-# Range( f );
-#! <A rational vector space of dimension 5 as an object in VectorSpaces>
-
-# CompleteMorphismToExactTriangle( f );
-#! < An exact triangle in VectorSpaces >
-# Display( last );
+B := Range( f );
+#! <A rational vector space of dimension 5 as an object in category of rational vector spaces>
+T := CompleteMorphismToExactTriangle( f );
+#! < An exact triangle in category of rational vector spaces >
+Display( T );
 #! object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 #! 
 #! 
 #! object1 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism1 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 5) with matrix: 
@@ -453,7 +532,7 @@ AddCompleteMorphismToExactTriangle( vecspaces, function( mor )
 #! 
 #! 
 #! object2 is
-#! Q^(1 X 5) as an object in VectorSpaces
+#! Q^(1 X 5) as an object in category of rational vector spaces
 #! 
 #! morphism2 is 
 #! A rational vector space homomorphism Q^(1 X 5) --> Q^(1 X 3) with matrix: 
@@ -465,7 +544,7 @@ AddCompleteMorphismToExactTriangle( vecspaces, function( mor )
 #! 
 #! 
 #! object3 is
-#! Q^(1 X 3) as an object in VectorSpaces
+#! Q^(1 X 3) as an object in category of rational vector spaces
 #! 
 #! morphism3 is 
 #! A rational vector space homomorphism Q^(1 X 3) --> Q^(1 X 2) with matrix: 
@@ -475,65 +554,7 @@ AddCompleteMorphismToExactTriangle( vecspaces, function( mor )
 #! 
 #! 
 #! ShiftOfObject( object1 ) is 
-#! Q^(1 X 2) as an object in VectorSpaces
-
-## Adding TR3
-## Input is two triangles t1, t2 and two morphisms u, v such that vf1 = g1u.
-##
-##             f1          f2              f3
-##  t1:  A ---------> B ----------> C ------------> A[ 1 ]
-##       |            |             |                |
-##     u |          v |             | ?              | u[ 1 ]
-##       V            V             V                V
-##  t2:  A' --------> B'----------> C'------------> A'[ 1 ]
-##             g1            g2            g3
-##
-## Output is w: C ---> C' such that the diagram is commutative
-
-
-AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
-                   local f,g,h,h2,h1,f_,g_,h_,h_2,h_1, beta,u,v, bar_H_1, bar_h_1,g1,g2, bar_G2, bar_g2, g_1,g_2, alpha, part1, part2, w; 
-      
-                   f:= AsMorphismInMatrixCategory( t1!.morphism1 );
-                   g:= AsMorphismInMatrixCategory( t1!.morphism2 );
-                   h:= AsMorphismInMatrixCategory( t1!.morphism3 );
-      
-                   h2:= KernelEmbedding( f );
-                   h1:= KernelLift( f, h );     
-      
-                   f_:= AsMorphismInMatrixCategory( t2!.morphism1 );
-                   g_:= AsMorphismInMatrixCategory( t2!.morphism2 );
-                   h_:= AsMorphismInMatrixCategory( t2!.morphism3 );
-      
-                   h_2:= KernelEmbedding( f_ );
-                   h_1:= KernelLift( f_, h_ );     
-      
-                   u:= AsMorphismInMatrixCategory( u_ );
-                   v:= AsMorphismInMatrixCategory( v_ );
-      
-                   beta := KernelLift( f_, PreCompose( h2, u ) );
-                   bar_H_1 := RightDivide( HomalgIdentityMatrix( Dimension( Range( h_1 ) ), Q ), h_1!.UnderlyingMatrix );
-                   bar_h_1 := VectorSpaceMorphism( Range( h_1 ), bar_H_1, Source( h_1 ) );
-      
-                   g1:= CokernelProjection( f );
-                   g2:= CokernelColift( f, g );
-      
-                   bar_G2 := LeftDivide( g2!.UnderlyingMatrix, HomalgIdentityMatrix( Dimension( Source( g2 ) ), Q ) );
-                   bar_g2 := VectorSpaceMorphism( Range( g2 ), bar_G2, Source( g2 ) );
-      
-                   g_1:= CokernelProjection( f_ );
-                   g_2:= CokernelColift( f_, g_ );
-      
-                   alpha := CokernelColift( f, PreCompose( v, g_1 ) );
-      
-                   part1:= PreCompose( PreCompose( bar_g2, alpha ), g_2 );
-                   part2:= PreCompose( PreCompose( h1, beta ), bar_h_1 );
-      
-                   w:= part1+part2;
-      
-                   return QVectorSpaceMorphism( w );
-      
-                   end );
+#! Q^(1 X 2) as an object in category of rational vector spaces
 
 ## Demo
 #                   f1:= [ [ 2, 1 ],        f2:=[ [ -1/2, 0 ],         f3:=[ [  0, 0 ],
@@ -547,31 +568,29 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #                  Q^2 ------------------> Q^2 -----------------> Q^2 --------------------> Q^2
 #                       g1:=[ [ 4, 0 ],        g2:=[ [  0, 0 ],      g3:=[ [  0  , 0 ],
 #                             [ 2, 0 ] ]             [  1, 0 ] ]           [ -1/2, 1 ] ]
-
-
-# f1 := QVectorSpaceMorphism( [ [ 2,1 ], [ 4,2 ] ] );
+f1 := QVectorSpaceMorphism( [ [ 2,1 ], [ 4,2 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [  2,  1 ],
 #!   [  4,  2 ] ]
 #! 
-# f2:= QVectorSpaceMorphism( [ [-1/2, 0 ], [ 1, 0 ] ] );
+f2:= QVectorSpaceMorphism( [ [-1/2, 0 ], [ 1, 0 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [  -1/2,     0 ],
 #!   [     1,     0 ] ]
 #! 
-# f3 := QVectorSpaceMorphism( [ [ 0, 0 ], [ -2,1 ] ] );
+f3 := QVectorSpaceMorphism( [ [ 0, 0 ], [ -2,1 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [   0,   0 ],
 #!   [  -2,   1 ] ]
 #! 
-# T:= CreateExactTriangle( f1, f2, f3 );
-#! < An exact triangle in VectorSpaces >
-# Display( T );
+T:= CreateExactTriangle( f1, f2, f3 );
+#! < An exact triangle in category of rational vector spaces >
+Display( T );
 #! object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 #! 
 #! 
 #! object1 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism1 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -580,7 +599,7 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! object2 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism2 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -589,7 +608,7 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! object3 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism3 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -598,30 +617,30 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! ShiftOfObject( object1 ) is 
-#! Q^(1 X 2) as an object in VectorSpaces
-# g1 := QVectorSpaceMorphism( [ [ 4,0 ], [ 2,0 ] ] );   
+#! Q^(1 X 2) as an object in category of rational vector spaces
+g1 := QVectorSpaceMorphism( [ [ 4,0 ], [ 2,0 ] ] );   
 #! A rational vector space homomorphism with matrix: 
 #! [ [  4,  0 ],
 #!   [  2,  0 ] ]
 #! 
-# g2:= QVectorSpaceMorphism( [ [ 0, 0 ], [ 1, 0 ] ] );   
+g2:= QVectorSpaceMorphism( [ [ 0, 0 ], [ 1, 0 ] ] );   
 #! A rational vector space homomorphism with matrix: 
 #! [ [  0,  0 ],
 #!   [  1,  0 ] ]
 #! 
-# g3 := QVectorSpaceMorphism( [ [ 0, 0 ], [ -1/2,1 ] ] );
+g3 := QVectorSpaceMorphism( [ [ 0, 0 ], [ -1/2,1 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [     0,     0 ],
 #!   [  -1/2,     1 ] ]
 #! 
-# S := CreateExactTriangle( g1, g2, g3 );
-#! < An exact triangle in VectorSpaces >
-# Display( S );
+S := CreateExactTriangle( g1, g2, g3 );
+#! < An exact triangle in category of rational vector spaces >
+Display( S );
 #! object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 #! 
 #! 
 #! object1 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism1 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -630,7 +649,7 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! object2 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism2 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -639,7 +658,7 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! object3 is
-#! Q^(1 X 2) as an object in VectorSpaces
+#! Q^(1 X 2) as an object in category of rational vector spaces
 #! 
 #! morphism3 is 
 #! A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -648,65 +667,42 @@ AddCompleteToMorphismOfExactTriangles( vecspaces, function( t1, t2, u_, v_ )
 #! 
 #! 
 #! ShiftOfObject( object1 ) is 
-#! Q^(1 X 2) as an object in VectorSpaces
-# u := QVectorSpaceMorphism( [ [ 1, 1/2 ], [ 2,1 ] ] );
+#! Q^(1 X 2) as an object in category of rational vector spaces
+u := QVectorSpaceMorphism( [ [ 1, 1/2 ], [ 2,1 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [    1,  1/2 ],
 #!   [    2,    1 ] ]
 #! 
-# v := QVectorSpaceMorphism( [ [2,0 ], [ 1, 0 ] ] );
+v := QVectorSpaceMorphism( [ [2,0 ], [ 1, 0 ] ] );
 #! A rational vector space homomorphism with matrix: 
 #! [ [  2,  0 ],
 #!   [  1,  0 ] ]
 #! 
-# CompleteToMorphismOfExactTriangles( T, S, u, v );
+CompleteToMorphismOfExactTriangles( T, S, u, v );
 #! A rational vector space homomorphism with matrix: 
 #! [ [  0,  0 ],
 #!   [  0,  0 ] ]
 #! 
 
-## TR4 
-AddOctohedralAxiom( vecspaces, function( f, g )
-                   local i,j,T, S, W, N, u,v, w;
-      
-                   T := CompleteMorphismToExactTriangle( f );
-      
-                   S := CompleteMorphismToExactTriangle( PreCompose( f, g ) );
-      
-                   u := CompleteToMorphismOfExactTriangles( T, S, IdentityMorphism( Source( f ) ), g );
-      
-                   W := CompleteMorphismToExactTriangle( g );
-      
-                   v := CompleteToMorphismOfExactTriangles( S, W, f, IdentityMorphism( Range( g ) ) );
-      
-                   j:= T!.morphism2;
-                   i:= W!.morphism3;
-      
-                   w:= PreCompose( i, ShiftOfMorphism( j ) );
-      
-                   return [ T, W, S, CreateExactTriangle( u, v, w ) ];
-      
-                   end );
-## Demo 
-#
-# f := QVectorSpaceMorphism( [ [ 1, 2 ], [ 2, 4 ] ] );
+
+f := QVectorSpaceMorphism( [ [ 1, 2 ], [ 2, 4 ] ] );
 # A rational vector space homomorphism with matrix: 
 # [ [  1,  2 ],
 #   [  2,  4 ] ]
 
-# g := QVectorSpaceMorphism( [ [ 1 ], [ 0 ] ] );
+g := QVectorSpaceMorphism( [ [ 1 ], [ 0 ] ] );
 # A rational vector space homomorphism with matrix: 
 # [ [  1 ],
 #   [  0 ] ]
 
-# t := OctohedralAxiom( f, g );
-# [ < An exact triangle in VectorSpaces >, < An exact triangle in VectorSpaces >, < An exact triangle in VectorSpaces >, < An exact triangle in VectorSpaces > ]
-# Display( t[ 1 ] );
+t := OctohedralAxiom( f, g );
+# [ < An exact triangle in category of rational vector spaces >, < An exact triangle in category of rational vector spaces >, < An exact triangle in category of rational vector spaces >, < An exact triangle in category of rational vector spaces > ]
+Display( t[ 1 ] );
 # object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 # 
 # 
 # object1 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism1 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -715,7 +711,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object2 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism2 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -724,7 +720,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object3 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism3 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 2) with matrix: 
@@ -733,13 +729,13 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # ShiftOfObject( object1 ) is 
-# Q^(1 X 2) as an object in VectorSpaces
-# Display( t[ 2 ] );
+# Q^(1 X 2) as an object in category of rational vector spaces
+Display( t[ 2 ] );
 # object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 # 
 # 
 # object1 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism1 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 1) with matrix: 
@@ -748,7 +744,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object2 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism2 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 1) with matrix: 
@@ -756,7 +752,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object3 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism3 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 2) with matrix: 
@@ -764,13 +760,14 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # ShiftOfObject( object1 ) is 
-# Q^(1 X 2) as an object in VectorSpaces
-# Display( t[ 3 ] );
+# Q^(1 X 2) as an object in category of rational vector spaces
+
+Display( t[ 3 ] );
 # object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 # 
 # 
 # object1 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism1 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 1) with matrix: 
@@ -779,7 +776,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object2 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism2 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 1) with matrix: 
@@ -787,7 +784,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object3 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism3 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 2) with matrix: 
@@ -795,13 +792,14 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # ShiftOfObject( object1 ) is 
-# Q^(1 X 2) as an object in VectorSpaces
-# Display( t[ 4 ] );
+# Q^(1 X 2) as an object in category of rational vector spaces
+
+Display( t[ 4 ] );
 # object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )
 # 
 # 
 # object1 is
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 # 
 # morphism1 is 
 # A rational vector space homomorphism Q^(1 X 2) --> Q^(1 X 1) with matrix: 
@@ -810,7 +808,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object2 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism2 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 1) with matrix: 
@@ -818,7 +816,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # object3 is
-# Q^(1 X 1) as an object in VectorSpaces
+# Q^(1 X 1) as an object in category of rational vector spaces
 # 
 # morphism3 is 
 # A rational vector space homomorphism Q^(1 X 1) --> Q^(1 X 2) with matrix: 
@@ -826,7 +824,7 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 # 
 # 
 # ShiftOfObject( object1 ) is 
-# Q^(1 X 2) as an object in VectorSpaces
+# Q^(1 X 2) as an object in category of rational vector spaces
 
 ##           f:= [ [ 1, 2 ],                      [ [-2, 0 ],                   [ [  0, 0 ],
 ##                 [ 2, 4 ] ]                       [ 1, 0 ] ]                    [ -2, 1 ] ]
@@ -854,5 +852,4 @@ AddOctohedralAxiom( vecspaces, function( f, g )
 ##                  [ 1 ] ]
 ##
 
-# Finalize( vecspaces );
 
