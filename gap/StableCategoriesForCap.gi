@@ -56,7 +56,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
           
        function( obj1, obj2 )
        
-         return IsEqualForObjects( UnderlyingObjectOfTheStableObject( obj1 ), UnderlyingObjectOfTheStableObject( obj1 ) );
+         return IsEqualForObjects( UnderlyingObjectOfTheStableObject( obj1 ), UnderlyingObjectOfTheStableObject( obj2 ) );
        
     end );
     
@@ -97,7 +97,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     AddIdentityMorphism( category,
       
       function( object )
-        
+      
         return AsStableCategoryMorphism( category, IdentityMorphism( UnderlyingObjectOfTheStableObject( object ) ) );
         
     end );
@@ -290,7 +290,7 @@ end );
 # StableCategory( category, funk: FinalizeStableCategory := false );
 
 ##
-InstallMethodWithCache( AsStableCategoryMorphism,
+InstallMethod( AsStableCategoryMorphism,
                [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryMorphism ],
                
     function( category, mor )
@@ -328,7 +328,7 @@ end );
     
     
 ##
-InstallMethodWithCache( AsStableCategoryObject,
+InstallMethod( AsStableCategoryObject,
                [ IsCapCategory and WasCreatedAsStableCategory, IsCapCategoryObject ],
                
     function( category, obj )
@@ -360,3 +360,44 @@ InstallMethodWithCache( AsStableCategoryObject,
     return stable_obj;
     
 end );
+###########################
+##
+##  View and Display
+##
+###########################
+
+InstallMethod( ViewObj,
+      [ IsStableCategoryObject ], 
+    function( obj )
+    
+    Print( "<An object in the stable category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
+    
+    end );
+      
+
+InstallMethod( ViewObj,
+      [ IsStableCategoryMorphism ], 
+    function( mor )
+    
+    Print( "<A morphism in the stable category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
+    
+    end );
+    
+InstallMethod( Display,
+      [ IsStableCategoryObject ], 
+    function( obj )
+    
+    Print( "An object in the stable category of ", UnderlyingCategory( CapCategory( obj ) ), " with underlying object\n" );
+    Display( UnderlyingObjectOfTheStableObject( obj ) );
+    
+    end );
+      
+
+InstallMethod( Display,
+      [ IsStableCategoryMorphism ], 
+    function( mor )
+    
+    Print( "A morphism in the stable category of ", UnderlyingCategory( CapCategory( mor ) ), " with underlying morphism\n" );
+    Display( UnderlyingMorphismOfTheStableMorphism( mor ) );
+    
+    end );
