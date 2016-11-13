@@ -1,4 +1,10 @@
-
+#############################################################################
+##
+##  TriangulatedCategories.gi             TriangulatedCategories package
+##
+##  Copyright 2016,                       Kamal Saleh, RWTH Aachen University
+##
+#############################################################################
 
 
 ###############################
@@ -716,7 +722,7 @@ InstallMethod( ReverseShiftFunctor,
  
 end );
 
-InstallMethod( AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor, 
+InstallMethod( NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor, 
                      [ IsCapCategory and IsTriangulatedCategory ],
                      
        function( category )
@@ -748,7 +754,7 @@ InstallMethod( AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor,
        
 end );
 
-InstallMethod( AutoequivalenceFromIdentityToReverseShiftAfterShiftFunctor, 
+InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftAfterShiftFunctor, 
                      [ IsCapCategory and IsTriangulatedCategory ],
                      
        function( category )
