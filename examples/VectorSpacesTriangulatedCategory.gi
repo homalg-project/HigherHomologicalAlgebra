@@ -316,6 +316,12 @@ AddAdditiveInverseForMorphisms( vecspaces, function( mor )
 
                                            end );
 
+AddZeroObject( vecspaces, function( )
+                          
+                          return QVectorSpace( 0 );
+                          
+                          end );
+
 ###############################################
 ##
 ## Adding triangulation structure
@@ -497,9 +503,9 @@ T := ShiftFunctor( vecspaces );
 #! Shift functor in category of rational vector spaces
 S := ReverseShiftFunctor( vecspaces );
 #! Reverse Shift functor in category of rational vector spaces
-Id_TS := AutoequivalenceFromIdentityToShiftAfterReverseShiftFunctor( vecspaces );
+Id_TS := NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor( vecspaces );
 # Autoequivalence from identity functor to Shift after ReverseShift functor in category of rational vector spaces
-Id_ST := AutoequivalenceFromIdentityToReverseShiftAfterShiftFunctor( vecspaces );
+Id_ST := NaturalIsomorphismFromIdentityToReverseShiftAfterShiftFunctor( vecspaces );
 # Autoequivalence from identity functor to ReverseShift after Shift functor in category of rational vector spaces
 A := QVectorSpace( 3 );
 # <A rational vector space of dimension 2 as an object in category of rational vector spaces>
