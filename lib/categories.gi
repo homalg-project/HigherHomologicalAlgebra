@@ -4,6 +4,7 @@
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
+  local name, complex_cat, complex_constructor;
 
   if shift_index = -1 then 
 
@@ -13,7 +14,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
      SetFilterObj( complex_cat, IsChainComplexCategory );
 
-     complex_constructor := ChainComplexByDifferentialList;
+     complex_constructor := ChainComplex;
 
 #     maps_constructor := ChainMapByMorphismList;
 
