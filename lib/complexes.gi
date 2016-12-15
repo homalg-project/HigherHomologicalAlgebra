@@ -44,8 +44,6 @@ function( cat, diffs, make_assertions, type )
 
      ObjectifyWithAttributes( C, ValueGlobal( type ),
 
-                           CatOfComplex, cat,
-
                            Differentials, diffs );
 
      if make_assertions then
@@ -67,8 +65,6 @@ function( cat, diffs, make_assertions, type )
   elif type = "TheTypeOfCochainComplexes" then
 
      ObjectifyWithAttributes( C, ValueGlobal( type ),
-
-                              CatOfComplex, cat,
 
                               Differentials, diffs );
 
