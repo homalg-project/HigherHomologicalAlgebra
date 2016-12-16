@@ -43,7 +43,7 @@ function( cat, diffs, make_assertions, type )
   if type = "TheTypeOfChainComplexes" then
 
      ObjectifyWithAttributes( C, ValueGlobal( type ),
-
+                           CatOfComplex, cat,
                            Differentials, diffs );
 
      if make_assertions then
@@ -65,7 +65,7 @@ function( cat, diffs, make_assertions, type )
   elif type = "TheTypeOfCochainComplexes" then
 
      ObjectifyWithAttributes( C, ValueGlobal( type ),
-
+                              CatOfComplex, cat,
                               Differentials, diffs );
 
      if make_assertions then
@@ -631,28 +631,22 @@ end );
 ##
 InstallMethod( CertainCycle, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
-  local cat;
 
-  cat := CatOfComplex( C );
-
-  return KernelEmbedding( DifferentialOfComplex( C, i ) );
+  return KernelEmbedding( C^i );
 
 end );
 
 ##
 InstallMethod( CertainBoundary, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
-  local cat;
-
-  cat := CatOfComplex( C );
 
   if IsChainComplex( C ) then
 
-     return ImageEmbedding( DifferentialOfComplex( C, i + 1 ) );
+     return ImageEmbedding( C^( i + 1 )  );
 
   else
 
-     return ImageEmbedding( DifferentialOfComplex( C, i - 1 ) );
+     return ImageEmbedding( C^( i - 1 )  );
 
   fi;
 
@@ -661,15 +655,11 @@ end );
 ##
 BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
-  local cat, im, d, inc;
-
-  cat := CatOfComplex( C );
+  local im, inc;
 
   im := CertainBoundary( C, i );
 
-  d := DifferentialOfComplex( C, i );
-
-  inc := KernelLift( d, im );
+  inc := KernelLift( C^i, im );
 
   return CokernelObject( inc );
 
@@ -737,3 +727,90 @@ InstallMethod( IsExactInIndex,
   return IsZeroForObjects( DefectOfExactness( C, n ) );
 
 end );
+
+######################################
+#
+# Shift using lazy methods
+#
+######################################
+
+##
+InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
+  function( C, i )
+  local newDifferentials, complex;
+
+  newDifferentials := ShiftLazy( Differentials( C ), i );
+
+  if i mod 2 = 1 then
+
+    newDifferentials := MapLazy( newDifferentials, d -> -d );
+
+  fi;
+  
+  if IsChainComplex( C ) then
+
+     complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
+
+  else
+
+     complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
+
+  fi;
+  
+  if HasActiveUpperBound( C ) then 
+
+     SetUpperBound( complex, ActiveUpperBound( C ) - i );
+
+  fi;
+  
+  if HasActiveLowerBound( C ) then 
+
+     SetLowerBound( complex, ActiveLowerBound( C ) - i );
+
+  fi;
+  
+  complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, (-1)^i*l[ 2 ] ] );
+
+  complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+  
+  return complex;
+
+end );
+
+##
+InstallMethod( ShiftUnsignedLazy, [ IsChainOrCochainComplex, IsInt ],
+  function( C, i )
+  local newDifferentials, complex;
+
+  newDifferentials := ShiftLazy( Differentials( C ), i );
+  
+  if IsChainComplex( C ) then 
+
+     complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
+
+  else
+
+     complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
+
+  fi;
+
+  if HasActiveUpperBound( C ) then 
+
+     SetUpperBound( complex, ActiveUpperBound( C ) - i );
+
+  fi;
+  
+  if HasActiveLowerBound( C ) then 
+
+     SetLowerBound( complex, ActiveLowerBound( C ) - i );
+
+  fi;
+  
+  complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+
+  complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+  
+  return complex;
+
+end );
+

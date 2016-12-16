@@ -32,6 +32,8 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   fi;
 
+SetUnderlyingCategory( complex_cat, cat );
+
 return complex_cat;
 
 end );

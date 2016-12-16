@@ -66,10 +66,11 @@ DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsCapCategoryMorp
 #
 #########################################
 
-
 DeclareAttribute( "Differentials", IsChainOrCochainComplex );
 
 DeclareAttribute( "Objects", IsChainOrCochainComplex );
+
+DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
 
 #########################################
 #
@@ -110,4 +111,9 @@ DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainComplex ] );
 DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainComplex ] );
 
 DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+
+DeclareOperation( "ShiftLazy", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "ShiftUnsignedLazy", [ IsChainOrCochainComplex, IsInt ] );
+
 
