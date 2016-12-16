@@ -746,7 +746,7 @@ InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
     newDifferentials := MapLazy( newDifferentials, d -> -d );
 
   fi;
-  
+
   if IsChainComplex( C ) then
 
      complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
@@ -756,23 +756,23 @@ InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
      complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
 
   fi;
-  
-  if HasActiveUpperBound( C ) then 
+
+  if HasActiveUpperBound( C ) then
 
      SetUpperBound( complex, ActiveUpperBound( C ) - i );
 
   fi;
-  
-  if HasActiveLowerBound( C ) then 
+
+  if HasActiveLowerBound( C ) then
 
      SetLowerBound( complex, ActiveLowerBound( C ) - i );
 
   fi;
-  
+
   complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, (-1)^i*l[ 2 ] ] );
 
   complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
-  
+
   return complex;
 
 end );
@@ -783,7 +783,7 @@ InstallMethod( ShiftUnsignedLazy, [ IsChainOrCochainComplex, IsInt ],
   local newDifferentials, complex;
 
   newDifferentials := ShiftLazy( Differentials( C ), i );
-  
+
   if IsChainComplex( C ) then 
 
      complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
@@ -799,18 +799,17 @@ InstallMethod( ShiftUnsignedLazy, [ IsChainOrCochainComplex, IsInt ],
      SetUpperBound( complex, ActiveUpperBound( C ) - i );
 
   fi;
-  
+
   if HasActiveLowerBound( C ) then 
 
      SetLowerBound( complex, ActiveLowerBound( C ) - i );
 
   fi;
-  
+
   complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, l[ 2 ] ] );
 
   complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
-  
+
   return complex;
 
 end );
-
