@@ -374,3 +374,96 @@ InstallMethod( HasActiveLowerBound,
 
 end );
 
+#########################################
+#
+# Components of a (co)chain complexes
+#
+#########################################
+
+InstallMethod( Display, 
+               [ IsChainOrCochainComplex, IsInt, IsInt ], 
+   function( C, m, n )
+
+   local i;
+
+   for i in [ m .. n ] do
+
+   Print( "-----------------------------------------------------------------\n" );
+
+   Print( "In index ", String( i ) );
+
+   Print( "\n\nObject is\n" );
+
+   Display( C[ i ] );
+
+   Print( "\nDifferential is\n" );
+
+   Display( C^i );
+
+   od;
+
+end );
+
+#########################################
+#
+# Attributes of a (co)chain complexes
+#
+#########################################
+
+##
+InstallMethod( Objects, 
+               [ IsChainOrCochainComplex ],
+  function( C )
+  
+    return MapLazy( Differentials( C ), Source );
+
+end );
+
+##
+InstallMethod( \^, 
+               [ IsChainOrCochainComplex, IsInt ],
+  function( C, i )
+  local l, L;
+  
+  l := C!.ListOfComputedDifferentials;
+
+  L :=  List( l, i->i[ 1 ] ); 
+
+  if i in L then 
+
+     return l[ Position( L, i ) ][ 2 ];
+
+  fi;
+  
+  l := Differentials( C )[ i ];
+
+  Add( C!.ListOfComputedDifferentials, [ i, l ] );
+
+  return l;
+
+end );
+
+##
+InstallMethod( \[\], 
+               [ IsChainOrCochainComplex, IsInt ],
+function( C, i )
+  local l, L;
+  
+  l := C!.ListOfComputedObjects;
+
+  L :=  List( l, i->i[ 1 ] ); 
+
+  if i in L then 
+
+     return l[ Position( L, i ) ][ 2 ];
+
+  fi;
+
+  l := Objects( C )[ i ];
+  
+  Add( C!.ListOfComputedObjects, [ i, l ] );
+
+  return l;
+
+end );
+
