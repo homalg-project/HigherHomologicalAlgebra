@@ -75,7 +75,11 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
 
+DeclareOperation( "CertainObject", [ IsChainOrCochainComplex, IsInt ] );
+
 DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "CertainDifferential", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "DefectOfExactness", [ IsChainOrCochainComplex, IsInt ] );
 

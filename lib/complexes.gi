@@ -128,6 +128,7 @@ end );
 #
 ################################################
 
+##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
   function( d0, negative_part_function, positive_part_function, string )
   local complex_constructor, negative_part, positive_part, cat, diffs;
@@ -158,7 +159,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
 
 end );
 
-
+##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE",
   function( d0, negative_part_function, string )
   local complex_constructor, negative_part, positive_part, cat, diffs, d1, zero_part, complex, upper_bound;
@@ -202,9 +203,8 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE",
   return complex;
   
 end );
-##
 
-#n
+##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE",
   function( d0, positive_part_function, string )
   local complex_constructor, negative_part, positive_part, cat, diffs, d_minus_1, zero_part, complex, lower_bound;
@@ -249,36 +249,42 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE",
 
 end );
 
+##
 InstallMethod( ChainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
    function( d0, negative_part_function, positive_part_function )
    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( d0, negative_part_function, positive_part_function, "chain" );
 end );
 
+##
 InstallMethod( CochainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
    function( d0, negative_part_function, positive_part_function )
    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( d0, negative_part_function, positive_part_function, "cochain" );
 end );
 
+##
 InstallMethod( ChainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
    function( d0, negative_part_function )
    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "chain" );
    end );
 
+##
 InstallMethod( ChainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
    function( d0, positive_part_function )
    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "chain" );
 end );
 
+##
 InstallMethod( CochainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
    function( d0, negative_part_function )
    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "cochain" );
    end );
 
+##
 InstallMethod( CochainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
    function( d0, positive_part_function )
@@ -296,7 +302,7 @@ InstallMethod( SetUpperBound,
               [ IsChainOrCochainComplex, IsInt ], 
    function( C, upper_bound )
 
-   if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then 
+   if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
 
       Error( "The input is bigger than the one that already exists!" );
 
@@ -312,7 +318,7 @@ InstallMethod( SetLowerBound,
               [ IsChainOrCochainComplex, IsInt ], 
    function( C, lower_bound )
 
-   if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then 
+   if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
 
       Error( "The input is smaller than the one that already exists!" );
 
@@ -326,11 +332,11 @@ end );
 InstallMethod( ActiveUpperBound,
                [ IsChainOrCochainComplex ],
   function( C )
-  
+
   if not IsBound( C!.UpperBound ) then
 
      Error( "The complex does not have yet an upper bound" );
-  
+
   else
 
      return C!.UpperBound;
@@ -380,8 +386,9 @@ end );
 #
 #########################################
 
+##
 InstallMethod( Display, 
-               [ IsChainOrCochainComplex, IsInt, IsInt ], 
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
    function( C, m, n )
 
    local i;
@@ -414,7 +421,7 @@ end );
 InstallMethod( Objects, 
                [ IsChainOrCochainComplex ],
   function( C )
-  
+
     return MapLazy( Differentials( C ), Source );
 
 end );
@@ -424,7 +431,7 @@ InstallMethod( \^,
                [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
   local l, L;
-  
+
   l := C!.ListOfComputedDifferentials;
 
   L :=  List( l, i->i[ 1 ] ); 
@@ -434,7 +441,7 @@ InstallMethod( \^,
      return l[ Position( L, i ) ][ 2 ];
 
   fi;
-  
+
   l := Differentials( C )[ i ];
 
   Add( C!.ListOfComputedDifferentials, [ i, l ] );
@@ -443,12 +450,14 @@ InstallMethod( \^,
 
 end );
 
+InstallMethod( CertainDifferential, [ IsChainOrCochainComplex, IsInt], \^ );
+
 ##
 InstallMethod( \[\], 
                [ IsChainOrCochainComplex, IsInt ],
 function( C, i )
   local l, L;
-  
+
   l := C!.ListOfComputedObjects;
 
   L :=  List( l, i->i[ 1 ] ); 
@@ -460,10 +469,156 @@ function( C, i )
   fi;
 
   l := Objects( C )[ i ];
-  
+
   Add( C!.ListOfComputedObjects, [ i, l ] );
 
   return l;
+
+end );
+
+##
+DeclareOperation( "CertainObject", [ IsChainOrCochainComplex, IsInt ] );
+
+
+################################################
+#
+#  Constructors of finite (co)chain complexes
+#
+################################################
+
+##
+BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
+   function( cat, list, index, string )
+  local zero, zero_map, zero_part, n, diffs, new_list, complex, upper_bound, lower_bound;
+
+  zero := ZeroObject( cat );
+
+  zero_map := ZeroMorphism( zero, zero );
+
+  zero_part := RepeatListN( [ zero_map ] );
+
+  n := Length( list );
+
+  if not ForAll( list, mor -> cat = CapCategory( mor ) ) then
+
+     Error( "All morphisms in the list should live in the same category" );
+
+  fi;
+
+  if string = "chain" then
+
+        new_list := Concatenation( [ ZeroMorphism( Range( list[ 1 ] ), zero ) ], list, [ ZeroMorphism( zero, Source( list[ n ] ) ) ] );
+
+        diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
+
+        complex := ChainComplex( cat, diffs );
+
+        SetFilterObj( complex, IsFiniteChainComplex );
+
+        lower_bound := index - 2;
+
+        upper_bound := index + Length( list );
+
+  else
+
+        new_list := Concatenation( [ ZeroMorphism( zero, Source( list[ 1 ] ) ) ], list, [ ZeroMorphism( Range( list[ n ] ), zero ) ] );
+
+        diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
+
+        complex := CochainComplex( cat, diffs );
+
+        SetFilterObj( complex, IsFiniteCochainComplex );
+
+        lower_bound := index - 1;
+
+        upper_bound := index + Length( list ) + 1;
+
+  fi;
+
+  SetLowerBound( complex, lower_bound );
+
+  SetUpperBound( complex, upper_bound );
+
+  return complex;
+
+end );
+
+
+#n
+InstallMethod( FiniteChainComplex,
+                   [ IsDenseList, IsInt ],
+  function( diffs, n )
+  local cat;
+
+  cat := CapCategory( diffs[ 1 ] );
+
+  return FINITE_CHAIN_OR_COCHAIN_COMPLEX( cat, diffs, n, "chain" );
+
+end );
+
+InstallMethod( FiniteCochainComplex,
+                   [ IsDenseList, IsInt ],
+
+  function( diffs, n )
+  local cat;
+
+  cat := CapCategory( diffs[ 1 ] );
+
+  return FINITE_CHAIN_OR_COCHAIN_COMPLEX( cat, diffs, n, "cochain" );
+
+end );
+
+##
+InstallMethod( FiniteChainComplex,
+                   [ IsDenseList ],
+  function( diffs )
+
+  return FiniteChainComplex( diffs, 0 );
+
+end );
+
+##
+InstallMethod( FiniteCochainComplex,
+                   [ IsDenseList ],
+   function( diffs )
+
+   return FiniteCochainComplex( diffs, 0 );
+
+end );
+
+##
+InstallMethod( StalkChainComplex,
+                   [ IsCapCategoryObject ],
+  function( obj )
+  local zero, diffs, complex;
+
+  zero := ZeroObject( CapCategory( obj ) );
+
+  diffs := [ ZeroMorphism( obj, zero ) ];
+
+  complex := FiniteChainComplex( diffs );
+
+  SetLowerBound( complex, -1 );
+
+  return complex;
+
+end );
+
+##
+InstallMethod( StalkCochainComplex,
+                   [ IsCapCategoryObject ],
+  function( obj )
+  local zero, diffs, complex;
+
+  zero := ZeroObject( CapCategory( obj ) );
+
+  diffs := [ ZeroMorphism( obj, zero ) ];
+
+  complex := FiniteCochainComplex( diffs );
+
+  SetUpperBound( complex, 1 );
+
+  return complex;
 
 end );
 
