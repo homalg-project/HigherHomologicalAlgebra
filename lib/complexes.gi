@@ -622,3 +622,118 @@ InstallMethod( StalkCochainComplex,
 
 end );
 
+#############################################
+##
+## Homology and Cohomology computations
+##
+#############################################
+
+##
+InstallMethod( CertainCycle, [ IsChainOrCochainComplex, IsInt ],
+  function( C, i )
+  local cat;
+
+  cat := CatOfComplex( C );
+
+  return KernelEmbedding( DifferentialOfComplex( C, i ) );
+
+end );
+
+##
+InstallMethod( CertainBoundary, [ IsChainOrCochainComplex, IsInt ],
+  function( C, i )
+  local cat;
+
+  cat := CatOfComplex( C );
+
+  if IsChainComplex( C ) then
+
+     return ImageEmbedding( DifferentialOfComplex( C, i + 1 ) );
+
+  else
+
+     return ImageEmbedding( DifferentialOfComplex( C, i - 1 ) );
+
+  fi;
+
+end );
+
+##
+BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
+  function( C, i )
+  local cat, im, d, inc;
+
+  cat := CatOfComplex( C );
+
+  im := CertainBoundary( C, i );
+
+  d := DifferentialOfComplex( C, i );
+
+  inc := KernelLift( d, im );
+
+  return CokernelObject( inc );
+
+end );
+
+##
+# BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
+#  function( map, i )
+#  local C1, C2, im1, d1, inc1, im2, d2, inc2, cycle1, map_i, ker1_to_ker2;
+
+#  C1 := Source( map );
+
+#  C2 := Range( map );
+
+#  im1 := CertainBoundary( C1, i );
+
+#  d1 := DifferentialOfComplex( C1, i );
+
+#  inc1 := KernelLift( d1, im1 );
+
+#  im2 := CertainBoundary( C2, i );
+
+#  d2 := DifferentialOfComplex( C2, i );
+
+#  inc2 := KernelLift( d2, im2 );
+
+#  cycle1 := CertainCycle( C1, i );
+
+#  map_i := MorphismOfMap( map, i );
+
+#  ker1_to_ker2 := KernelLift( d2, PreCompose( cycle1, map_i ) );
+
+#  return CokernelColift( inc1, PreCompose( ker1_to_ker2, CokernelProjection( inc2 ) ) );
+
+# end );
+
+##
+InstallMethod( CertainHomology, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
+##
+InstallMethod( CertainCohomology, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
+##
+InstallMethod( DefectOfExactness, 
+               [ IsChainOrCochainComplex, IsInt ],
+  function( C, n )
+
+  if IsChainComplex( C ) then 
+
+     return CertainHomology( C, n );
+
+  else
+
+     return CertainCohomology( C, n );
+
+  fi;
+
+end );
+
+##
+InstallMethod( IsExactInIndex, 
+               [ IsChainOrCochainComplex, IsInt ],
+  function( C, n )
+
+  return IsZeroForObjects( DefectOfExactness( C, n ) );
+
+end );

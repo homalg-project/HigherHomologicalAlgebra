@@ -38,7 +38,11 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
 
 DeclareOperation( "FiniteChainComplex", [ IsDenseList, IsInt ] );
 
+DeclareOperation( "FiniteChainComplex", [ IsDenseList ] );
+
 DeclareOperation( "FiniteCochainComplex", [ IsDenseList, IsInt ] );
+
+DeclareOperation( "FiniteCochainComplex", [ IsDenseList ] );
 
 DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject ] );
 
@@ -81,6 +85,14 @@ DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "CertainDifferential", [ IsChainOrCochainComplex, IsInt ] );
 
+DeclareOperation( "CertainCycle", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "CertainBoundary", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "CertainHomology", [ IsChainComplex, IsInt ] );
+
+DeclareOperation( "CertainCohomology", [ IsCochainComplex, IsInt ] );
+
 DeclareOperation( "DefectOfExactness", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "IsExactInIndex", [ IsChainOrCochainComplex, IsInt ] );
@@ -98,5 +110,4 @@ DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainComplex ] );
 DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainComplex ] );
 
 DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
-
 
