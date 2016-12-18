@@ -61,4 +61,11 @@ DeclareOperation( "FiniteCochainMorphism",
 DeclareOperation( "FiniteChainMorphism",
 		   [ IsChainComplex, IsChainComplex, IsInt, IsDenseList ] );
 
+######################################
+#
+#  Attribtes, Operations ..
+#
+######################################
+
+DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
