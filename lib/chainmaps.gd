@@ -51,3 +51,5 @@ DeclareOperation( "FiniteCochainMorphism",
 
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
+DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+

@@ -232,3 +232,29 @@ InstallMethod( \[\],
 
 end );
 
+#################################
+#
+# Display and View
+#
+#################################
+
+InstallMethod( Display, 
+               [ IsChainOrCochainMorphism, IsInt, IsInt ], 
+   function( map, m, n )
+   local i;
+
+   for i in [ m .. n ] do
+
+     Print( "\n-----------------------------------------------------------------\n" );
+
+     Print( "In index ", String( i ) );
+
+     Print( "\n\nMorphism is\n" );
+
+     Display( map[ i ] );
+
+     od;
+
+end );
+
+
