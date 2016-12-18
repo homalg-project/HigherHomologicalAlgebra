@@ -201,3 +201,34 @@ InstallMethod( FiniteCochainMorphism,
    function( c1, m1, c2, m2, maps, n )
    return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "cochain_map" );
 end );
+
+#################################
+#
+# Operations
+#
+#################################
+
+InstallMethod( \[\], 
+          [ IsChainOrCochainMorphism, IsInt ], 
+
+  function( map, i )
+     local l, L;
+
+     l := map!.ListOfComputedMorphisms;
+
+     L := List( l, i->i[ 1 ] );
+
+     if i in L then 
+
+        return l[ Position( L, i ) ][ 2 ];
+
+     fi;
+
+     l := Morphisms( map )[ i ];
+
+     Add( map!.ListOfComputedMorphisms, [ i, l ] );
+
+     return l;
+
+end );
+
