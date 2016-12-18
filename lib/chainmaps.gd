@@ -31,35 +31,17 @@ DeclareOperation( "ChainMorphism",
 DeclareOperation( "CochainMorphism",
 		   [ IsCochainComplex, IsCochainComplex, IsZList ] );
 
+DeclareOperation( "ChainMorphism",
+                  [ IsChainComplex, IsChainComplex, IsDenseList, IsInt ] );
+
+DeclareOperation( "CochainMorphism",
+                  [ IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ] );
+
 DeclareOperation( "FiniteChainMorphism",
                    [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
-DeclareOperation( "FiniteChainMorphism",
-		   [ IsDenseList, IsDenseList, IsDenseList ] );
-
-DeclareOperation( "FiniteChainMorphism",
-                  [ IsChainComplex, IsChainComplex, IsDenseList, IsInt ] );
-
-DeclareOperation( "FiniteChainMorphism",
-                  [ IsChainComplex, IsChainComplex, IsDenseList ] );
-
 DeclareOperation( "FiniteCochainMorphism",
-		   [ IsCochainComplex, IsCochainComplex, IsInt, IsDenseList ] );
-
-DeclareOperation( "FiniteCochainMorphism",
-                  [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
-
-DeclareOperation( "FiniteCochainMorphism",
-		   [ IsDenseList, IsDenseList, IsDenseList ] );
-
-DeclareOperation( "FiniteCochainMorphism",
-                  [ IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ] );
-
-DeclareOperation( "FiniteCochainMorphism",
-                  [ IsCochainComplex, IsCochainComplex, IsDenseList ] );
-
-DeclareOperation( "FiniteChainMorphism",
-		   [ IsChainComplex, IsChainComplex, IsInt, IsDenseList ] );
+                   [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
 ######################################
 #
