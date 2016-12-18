@@ -11,13 +11,13 @@ DeclareCategory( "IsChainMorphism", IsChainOrCochainMorphism );
 
 DeclareCategory( "IsFiniteChainMorphism", IsChainMorphism );
 
-DeclareCategoryFamily( "IsChainMorphisms" );
+DeclareCategoryFamily( "IsChainMorphism" );
 
 DeclareCategory( "IsCochainMorphism", IsChainOrCochainMorphism );
 
 DeclareCategory( "IsFiniteCochainMorphism" , IsCochainMorphism );
 
-DeclareCategoryFamily( "IsCochainMorphisms" );
+DeclareCategoryFamily( "IsCochainMorphism" );
 
 ######################################
 #
