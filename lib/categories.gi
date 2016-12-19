@@ -84,6 +84,23 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                               end );
 
+     AddLiftAlongMonomorphism( complex_cat, function( mono, test )
+                                            local morphisms;
+
+                                            morphisms := MapLazy( [ Morphisms( mono ), Morphisms( test ) ], LiftAlongMonomorphism );
+
+                                            return morphism_constructor( Source( test ), Source( mono ), morphisms );
+
+                                            end );
+
+     AddColiftAlongEpimorphism( complex_cat, function( epi, test )
+                                             local morphisms;
+
+                                             morphisms := MapLazy( [ Morphisms( epi ), Morphisms( test ) ], ColiftAlongEpimorphism );
+
+                                             return morphism_constructor( Range( epi ), Range( test ), morphisms );
+
+                                             end );
 
   fi;
 
