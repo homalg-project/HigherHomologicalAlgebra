@@ -4,7 +4,7 @@
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
-  local name, complex_cat, complex_constructor, morphism_constructor, finite_com_constructor, addition_for_morphisms;
+  local name, complex_cat, complex_constructor, morphism_constructor, finite_com_constructor;
   if shift_index = -1 then 
 
      name := Concatenation( "Chain complexes category over ", Name( cat ) );
@@ -54,13 +54,36 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                    end );
 
-     addition_for_morphisms := function( m1, m2 )
+     AddAdditionForMorphisms( complex_cat, function( m1, m2 )
 
-                                 return morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms ) );
+                                           return morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms ) );
 
-                               end;
+                                           end );
 
-     AddAdditionForMorphisms( complex_cat, addition_for_morphisms );
+     AddAdditiveInverseForMorphisms( complex_cat, function( m )
+
+                                      return morphism_constructor( Source( m ), Range( m ), MapLazy( Morphisms( m ), AdditiveInverseForMorphisms ) );
+
+                                      end );
+
+     AddPreCompose( complex_cat, function( m1, m2 )
+
+                                 return morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose ) );
+
+                                 end );
+   
+     AddIdentityMorphism( complex_cat, function( C )
+
+                                       return morphism_constructor( C, C, MapLazy( Objects( C ), IdentityMorphism ) );
+
+                                       end );
+
+     AddInverse( complex_cat, function( m )
+
+                              return morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse ) );
+
+                              end );
+
 
   fi;
 
@@ -70,7 +93,10 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   fi;
 
+
 SetUnderlyingCategory( complex_cat, cat );
+
+Finalize( complex_cat );
 
 return complex_cat;
 
@@ -93,3 +119,5 @@ InstallMethod( CochainComplexCategory,
   function( cat )
   return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, 1 );
 end );
+
+
