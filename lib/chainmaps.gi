@@ -257,4 +257,185 @@ InstallMethod( Display,
 
 end );
 
+#################################
+#
+# Operations
+#
+#################################
+
+InstallMethod( HasActiveLowerBound,
+               [ IsChainOrCochainMorphism ],
+
+  function( phi )
+
+  if HasActiveLowerBound( Source( phi ) ) or HasActiveLowerBound( Range( phi ) ) then
+
+     return true;
+
+  fi;
+
+  if IsBound( phi!.LowerBound ) then
+
+     return true;
+
+  fi;
+
+  return false;
+
+end );
+
+InstallMethod( HasActiveUpperBound,
+               [ IsChainOrCochainMorphism ],
+
+  function( phi )
+
+  if HasActiveUpperBound( Source( phi ) ) or HasActiveUpperBound( Range( phi ) ) then
+
+     return true;
+
+  fi;
+
+  if IsBound( phi!.UpperBound ) then
+
+     return true;
+
+  fi;
+
+  return false;
+
+end );
+
+##
+InstallMethod( SetUpperBound,
+
+              [ IsChainOrCochainMorphism, IsInt ],
+
+   function( phi, upper_bound )
+
+   if IsBound( phi!.UpperBound ) and phi!.UpperBound < upper_bound then
+
+      Error( "There is already a smaller upper bound!" );
+
+   fi;
+
+   phi!.UpperBound := upper_bound;
+
+end );
+
+##
+InstallMethod( SetLowerBound,
+
+              [ IsChainOrCochainMorphism, IsInt ],
+
+   function( phi, lower_bound )
+
+   if IsBound( phi!.LowerBound ) and phi!.LowerBound > lower_bound then
+
+      Error( "There is already a greater lower bound!" );
+
+   fi;
+
+   phi!.LowerBound := lower_bound;
+
+end );
+
+InstallMethod( ActiveLowerBound,
+               [ IsChainOrCochainMorphism ],
+
+  function( phi )
+  local l;
+
+  if not HasActiveLowerBound( phi ) then
+
+     Error( "" );
+
+  fi;
+
+  if HasActiveLowerBound( Source( phi ) ) then
+
+     if HasActiveLowerBound( Range( phi ) ) then
+
+        l := Maximum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
+
+     else
+
+        l := ActiveLowerBound( Source( phi ) );
+
+     fi;
+
+  else
+
+     l := ActiveLowerBound( Range( phi ) );
+
+  fi;
+
+  if IsBound( phi!.LowerBound ) then
+
+     SetLowerBound( phi, Maximum( l, phi!.LowerBound ) );
+
+  else
+
+     SetLowerBound( phi, l );
+
+  fi;
+
+  if IsBound( phi!.UpperBound ) and phi!.LowerBound > phi!.UpperBound then
+
+        phi!.LowerBound := phi!.UpperBound;
+
+  fi;
+
+  return phi!.LowerBound;
+
+end );
+
+InstallMethod( ActiveUpperBound,
+               [ IsChainOrCochainMorphism ],
+
+  function( phi )
+  local l;
+
+  if not HasActiveUpperBound( phi ) then
+
+     Error( "" );
+
+  fi;
+
+  if HasActiveUpperBound( Source( phi ) ) then
+
+     if HasActiveUpperBound( Range( phi ) ) then
+
+        l := Minimum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
+
+     else
+
+        l := ActiveUpperBound( Source( phi ) );
+
+     fi;
+
+  else
+
+     l := ActiveUpperBound( Range( phi ) );
+
+  fi;
+
+  if IsBound( phi!.UpperBound ) then
+
+     SetUpperBound( phi, Minimum( l, phi!.UpperBound ) );
+
+  else
+
+     SetUpperBound( phi, l );
+
+  fi;
+
+  if IsBound( phi!.LowerBound ) and phi!.UpperBound < phi!.LowerBound then
+
+        phi!.UpperBound := phi!.LowerBound;
+
+  fi;
+
+  return phi!.UpperBound;
+
+end );
 

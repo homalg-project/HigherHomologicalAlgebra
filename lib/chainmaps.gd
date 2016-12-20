@@ -53,3 +53,15 @@ DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
+DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
+
+DeclareOperation( "HasActiveUpperBound", [ IsChainOrCochainMorphism ] );
+
+DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
+
+DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
+
+DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
+
+DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
+
