@@ -14,7 +14,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
      SetFilterObj( complex_cat, IsChainComplexCategory );
 
      complex_constructor := ChainComplex;
-     
+
      finite_com_constructor := FiniteChainComplex;
 
      morphism_constructor := ChainMorphism;
@@ -172,7 +172,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                  return morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose, 2 ) );
 
                                  end );
-   
+
      AddIdentityMorphism( complex_cat, function( C )
 
                                        return morphism_constructor( C, C, MapLazy( Objects( C ), IdentityMorphism, 1 ) );
@@ -285,7 +285,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
      AddKernelEmbedding( complex_cat, function( phi )
                                       local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
-                                      
+
                                       embeddings := MapLazy( Morphisms( phi ), KernelEmbedding, 1 );
 
                                       kernel_to_next_source := MapLazy( [ embeddings, Differentials( Source( phi ) ) ], PreCompose, 2 );
