@@ -101,7 +101,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
                           
                                               fi;
 
-                                           end );
+                                           end, 1 );
 
   return CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
 

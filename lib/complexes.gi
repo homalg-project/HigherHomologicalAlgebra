@@ -422,7 +422,7 @@ InstallMethod( Objects,
                [ IsChainOrCochainComplex ],
   function( C )
 
-    return MapLazy( Differentials( C ), Source );
+    return MapLazy( Differentials( C ), Source, 1 );
 
 end );
 
@@ -743,7 +743,7 @@ InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
 
   if i mod 2 = 1 then
 
-    newDifferentials := MapLazy( newDifferentials, d -> -d );
+    newDifferentials := MapLazy( newDifferentials, d -> -d, 1 );
 
   fi;
 
