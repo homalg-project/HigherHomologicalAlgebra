@@ -103,7 +103,13 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
 
                                            end, 1 );
 
-  return CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
+  all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
+
+  SetLowerBound( all_morphisms, n - 1 );
+
+  SetUpperBound( all_morphisms, n + Length( mor ) );
+
+  return all_morphisms;
 
 end );
 
@@ -363,9 +369,13 @@ InstallMethod( ActiveLowerBound,
 
      fi;
 
-  else
+  elif HasActiveLowerBound( Range( phi ) ) then 
 
      l := ActiveLowerBound( Range( phi ) );
+
+  else 
+
+     l := NegativeInfinity;
 
   fi;
 
@@ -413,9 +423,13 @@ InstallMethod( ActiveUpperBound,
 
      fi;
 
-  else
+  elif HasActiveUpperBound( Range( phi ) )  then
 
      l := ActiveUpperBound( Range( phi ) );
+
+  else 
+
+     l := PositiveInfinity;
 
   fi;
 
