@@ -40,10 +40,64 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
      SetIsAdditiveCategory( complex_cat, true );
 
      AddZeroObject( complex_cat, function( )
+                                 local C;
 
-                                 return finite_com_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+                                 C := finite_com_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+
+                                 SetUpperBound( C, 0 );
+
+                                 SetLowerBound( C, 0 );
+
+                                 return C;
 
                                  end );
+
+     AddIsZeroForObjects( complex_cat, function( C )
+                                       local obj, i;
+
+                                       if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then 
+
+                                          Error( "The complex must have lower and upper bounds" );
+
+                                       fi;
+
+                                       for obj in C!.ListOfComputedObjects do
+
+                                           if HasIsZero( obj ) and not IsZero( obj ) then 
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       for obj in C!.ListOfComputedObjects do
+
+                                           if not IsZero( obj[ 2 ] ) then
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       for i in [ ActiveLowerBound( C ) + 1, ActiveUpperBound( C ) - 1 ] do
+
+                                           if not IsZero( C[ i ] ) then 
+
+                                              SetLowerBound( C, i - 1 );
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       return true;
+
+                                       end );
+
+
 
      AddZeroMorphism( complex_cat, function( C1, C2 )
                                    local morphisms;
@@ -123,12 +177,99 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                           return morphism_constructor( L[ n ], DirectSum( L ), morphisms );
 
                                           end );
+
+     AddProjectionInFactorOfDirectSum( complex_cat, function( L, n )
+                                          local objects, list, morphisms;
+
+                                          objects := CombineZLazy( List( L, Objects ) );
+
+                                          morphisms := MapLazy( objects, function( l )
+                                                                         return ProjectionInFactorOfDirectSum( l, n );
+                                                                         end, 1 );
+
+                                          return morphism_constructor( DirectSum( L ), L[ n ], morphisms );
+
+                                          end );
+
+     AddTerminalObject( complex_cat, function( )
+
+                                     return complex_constructor( cat, RepeatListZ( [ TerminalObjectFunctorial( cat ) ] ) );
+
+                                     end );
+
+     AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( complex_cat, function( complex, terminal_object )
+
+                                                                    local objects, universal_maps;
+
+                                                                    objects := Objects( complex );
+
+                                                                    universal_maps := MapLazy( objects,  UniversalMorphismIntoTerminalObject, 1 );
+
+                                                                    return morphism_constructor( complex, terminal_object, universal_maps );
+
+                                                                    end );
+
+
+
+     AddInitialObject( complex_cat, function( )
+
+                                return complex_constructor( cat, RepeatListZ( [ InitialObjectFunctorial( cat ) ] ) );
+
+                                end );
+
+     AddUniversalMorphismFromInitialObjectWithGivenInitialObject( complex_cat, function( complex, initial_object )
+
+                                                                  local objects, universal_maps;
+
+                                                                  objects := Objects( complex );
+
+                                                                  universal_maps := MapLazy( objects,  UniversalMorphismFromInitialObject, 1 );
+
+                                                                  return morphism_constructor( initial_object, complex, universal_maps );
+
+                                                                  end );
+
+
   fi;
 
   if IsAbelianCategory( cat ) then
 
      SetIsAbelianCategory( complex_cat, true );
 
+     AddKernelEmbedding( complex_cat, function( phi )
+                                      local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
+                                      
+                                      embeddings := MapLazy( Morphisms( phi ), KernelEmbedding, 1 );
+
+                                      kernel_to_next_source := MapLazy( [ embeddings, Differentials( Source( phi ) ) ], PreCompose, 2 );
+
+                                      diffs := MapLazy( [ ShiftLazy( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift, 2 );
+
+                                      kernel_complex := complex_constructor( cat, diffs );
+
+                                      kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
+
+                                      return kernel_emb;
+
+                                      end );
+
+
+     AddCokernelProjection( complex_cat, function( phi )
+                                         local   projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
+
+                                         projections := MapLazy( Morphisms( phi ), CokernelProjection, 1 );
+
+                                         range_to_next_cokernel := MapLazy( [ Differentials( Range( phi ) ), ShiftLazy( projections, shift_index ) ], PreCompose, 2 );
+
+                                         diffs := MapLazy( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift, 2 );
+
+                                         cokernel_complex := complex_constructor( cat, diffs );
+
+                                         cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
+
+                                         return cokernel_proj;
+
+                                         end );
   fi;
 
 
