@@ -81,13 +81,15 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        od;
 
-                                       for i in [ ActiveLowerBound( C ) + 1, ActiveUpperBound( C ) - 1 ] do
+                                       for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do
 
                                            if not IsZero( C[ i ] ) then 
 
                                               SetLowerBound( C, i - 1 );
 
                                               return false;
+
+                                              Print( i - 1 );
 
                                            fi;
 
@@ -107,6 +109,51 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                    return morphism_constructor( C1, C2, morphisms );
 
                                    end );
+
+     AddIsZeroForMorphisms( complex_cat, function( phi )
+                                         local mor, i;
+
+                                       if not HasActiveLowerBound( phi ) or not HasActiveUpperBound( phi ) then
+
+                                          Error( "The morphism must have lower and upper bounds" );
+
+                                       fi;
+
+                                       for mor in phi!.ListOfComputedMorphisms do
+
+                                           if HasIsZero( mor[ 2 ] ) and not IsZero( mor[ 2 ] ) then
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       for mor in phi!.ListOfComputedMorphisms do
+
+                                           if not IsZero( mor[ 2 ] ) then
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
+
+                                           if not IsZero( phi[ i ] ) then
+
+                                              SetLowerBound( phi, i - 1 );
+
+                                              return false;
+
+                                           fi;
+
+                                       od;
+
+                                       return true;
+
+                                       end );
 
      AddAdditionForMorphisms( complex_cat, function( m1, m2 )
 
