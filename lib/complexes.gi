@@ -666,35 +666,35 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
 end );
 
 ##
-# BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
-#  function( map, i )
-#  local C1, C2, im1, d1, inc1, im2, d2, inc2, cycle1, map_i, ker1_to_ker2;
+BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
+  function( map, i )
+  local C1, C2, im1, d1, inc1, im2, d2, inc2, cycle1, map_i, ker1_to_ker2;
 
-#  C1 := Source( map );
+  C1 := Source( map );
 
-#  C2 := Range( map );
+  C2 := Range( map );
 
-#  im1 := CertainBoundary( C1, i );
+  im1 := CertainBoundary( C1, i );
 
-#  d1 := DifferentialOfComplex( C1, i );
+  d1 := C1^i;
 
-#  inc1 := KernelLift( d1, im1 );
+  inc1 := KernelLift( d1, im1 );
 
-#  im2 := CertainBoundary( C2, i );
+  im2 := CertainBoundary( C2, i );
 
-#  d2 := DifferentialOfComplex( C2, i );
+  d2 := C2^i;
 
-#  inc2 := KernelLift( d2, im2 );
+  inc2 := KernelLift( d2, im2 );
 
-#  cycle1 := CertainCycle( C1, i );
+  cycle1 := CertainCycle( C1, i );
 
-#  map_i := MorphismOfMap( map, i );
+  map_i := map[ i ];
 
-#  ker1_to_ker2 := KernelLift( d2, PreCompose( cycle1, map_i ) );
+  ker1_to_ker2 := KernelLift( d2, PreCompose( cycle1, map_i ) );
 
-#  return CokernelColift( inc1, PreCompose( ker1_to_ker2, CokernelProjection( inc2 ) ) );
+  return CokernelColift( inc1, PreCompose( ker1_to_ker2, CokernelProjection( inc2 ) ) );
 
-# end );
+end );
 
 ##
 InstallMethod( CertainHomology, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
