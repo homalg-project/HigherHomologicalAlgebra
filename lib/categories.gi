@@ -300,6 +300,36 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                       end );
 
+     AddKernelLift( complex_cat,  function( phi, tau )
+                                  local morphisms, K;
+
+                                  K := KernelObject( phi );
+
+                                  morphisms := MapLazy( IntegersList, function( i )
+
+                                                                      return KernelLift( phi[ i ], tau[ i ] );
+
+                                                                      end, 1 );
+
+                                  return morphism_constructor( Source( tau ), K, morphisms );
+
+                                  end );
+
+     AddKernelLiftWithGivenKernelObject( complex_cat, function( phi, tau, K )
+
+                                                      local morphisms;
+
+                                                      morphisms := MapLazy( IntegersList, function( i )
+
+                                                           return KernelLift( phi[ i ], tau[ i ] );
+
+                                                      end, 1 );
+
+                                                      return morphism_constructor( Source( tau ), K, morphisms );
+
+                                                      end );
+
+
 
      AddCokernelProjection( complex_cat, function( phi )
                                          local   projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
@@ -317,6 +347,37 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                          return cokernel_proj;
 
                                          end );
+
+
+     AddCokernelColift( complex_cat,  function( phi, tau )
+                                  local morphisms, K;
+
+                                  K := CokernelObject( phi );
+
+                                  morphisms := MapLazy( IntegersList, function( i )
+
+                                                                      return CokernelColift( phi[ i ], tau[ i ] );
+
+                                                                      end, 1 );
+
+                                  return morphism_constructor( K, Range( tau ), morphisms );
+
+                                  end );
+
+     AddCokernelColiftWithGivenCokernelObject( complex_cat, function( phi, tau, K )
+
+                                                      local morphisms;
+
+                                                      morphisms := MapLazy( IntegersList, function( i )
+
+                                                           return CokernelColift( phi[ i ], tau[ i ] );
+
+                                                      end, 1 );
+
+                                                      return morphism_constructor( K, Range( tau ), morphisms );
+
+                                                      end );
+
   fi;
 
 
