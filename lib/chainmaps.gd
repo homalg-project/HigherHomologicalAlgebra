@@ -51,6 +51,12 @@ DeclareOperation( "FiniteCochainMorphism",
 
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
+DeclareAttribute( "MappingCone", IsChainOrCochainMorphism );
+
+DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
+
+DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
+
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
 DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
@@ -65,3 +71,8 @@ DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
 
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
 
+#####################################
+#
+#
+#
+#####################################
