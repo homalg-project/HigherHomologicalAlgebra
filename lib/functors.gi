@@ -174,6 +174,65 @@ BindGlobal( "UNSIGNED_SHIFT_AS_FUNCTOR",
 
 end );
 
+BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
+   function( cat, string )
+
+   local chain_complexes, cochain_complexes, complex_constructor, name, functor, morphism_constructor; 
+
+   chain_complexes := ChainComplexCategory( cat );
+
+   cochain_complexes := CochainComplexCategory( cat );
+
+   if string = "chain_to_cochain" then
+
+      name := Concatenation("Chain to Cochain complex functor over ", Name( cat ) );
+
+      functor := CapFunctor( name, chain_complexes, cochain_complexes );
+
+      complex_constructor := CochainComplex;
+
+      morphism_constructor := CochainMorphism;
+
+   elif string = "cochain_to_chain" then 
+
+      name := Concatenation("Cochain to chain complex functor over ", Name( cat ) );
+
+      functor := CapFunctor( name, cochain_complexes, chain_complexes );
+
+      complex_constructor := ChainComplex;
+
+      morphism_constructor := ChainMorphism;
+
+   else 
+
+      Error( "string should be either chain_to_cochain or cochain_to_chain" );
+
+   fi;
+
+   AddObjectFunction( functor,
+     function( C )
+     local diffs;
+
+       diffs := Reflection( Differentials( C ) );
+
+       return complex_constructor( cat, diffs );
+
+     end );
+
+   AddMorphismFunction( functor, 
+     function( new_source, map, new_range )
+     local morphisms;
+
+        morphisms := Reflection( Morphisms( map ) );
+
+        return morphism_constructor( new_source, new_range, morphisms );
+
+     end );
+
+   return functor;
+
+end );
+
 BindGlobal( "FUNCTORS_INSTALLER",
    function( )
 
@@ -209,11 +268,113 @@ InstallMethod( UnsignedShiftFunctor,
 
 end );
 
+InstallMethod( ChainToCochainComplexAsFunctor, 
+               [ IsCapCategory ], 
+   function( cat )
 
-# InstallMethod( UnsignedShiftAsFunctor, [ IsCapCategory, IsInt ], UNSIGNED_SHIFT_AS_FUNCTOR );
+   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( cat, "chain_to_cochain" );
 
+   end );
 
+InstallMethod( CochainToChainComplexAsFunctor, 
+               [ IsCapCategory ], 
+   function( cat )
+
+   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( cat, "cochain_to_chain" );
+
+end );
+
+InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
+               [ IsCapFunctor ],
+   function( F )
+   local S, T, functor, name;
+
+   S := ChainComplexCategory( AsCapCategory( Source( F ) ) );
+
+   T := ChainComplexCategory( AsCapCategory(  Range( F ) ) );
+
+   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+
+   functor := CapFunctor( name, S, T );
+
+   AddObjectFunction( functor,
+     function( C )
+     local diffs;
+
+     diffs := MapLazy( Differentials( C ), function( d )
+
+                                           return ApplyFunctor( F, d );
+
+                                           end, 1 );
+
+     return ChainComplex( AsCapCategory( Range( F ) ), diffs );
+
+     end );
+
+   AddMorphismFunction( functor, 
+     function( new_source, phi, new_range )
+     local morphisms;
+
+       morphisms := MapLazy( Morphisms( phi ), function( psi )
+
+                                               return ApplyFunctor( F, psi );
+
+                                               end, 1 );
+
+       return ChainMorphism( new_source, new_range, morphisms );
+
+     end );
+
+   return functor;
+
+end );
+
+InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
+               [ IsCapFunctor ],
+   function( F )
+   local S, T, functor, name;
+
+   S := CochainComplexCategory( AsCapCategory( Source( F ) ) );
+
+   T := CochainComplexCategory( AsCapCategory(  Range( F ) ) );
+
+   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+
+   functor := CapFunctor( name, S, T );
+
+   AddObjectFunction( functor,
+     function( C )
+     local diffs;
+
+     diffs := MapLazy( Differentials( C ), function( d )
+
+                                           return ApplyFunctor( F, d );
+
+                                           end, 1 );
+
+     return CochainComplex( AsCapCategory( Range( F ) ), diffs );
+
+     end );
+
+   AddMorphismFunction( functor, 
+     function( new_source, phi, new_range )
+     local morphisms;
+
+       morphisms := MapLazy( Morphisms( phi ), function( psi )
+
+                                               return ApplyFunctor( F, psi );
+
+                                               end, 1 );
+
+       return CochainMorphism( new_source, new_range, morphisms );
+
+     end );
+
+   return functor;
+
+end );
 
 end );
 
 FUNCTORS_INSTALLER( );
+

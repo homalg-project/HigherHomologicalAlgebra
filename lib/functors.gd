@@ -8,7 +8,12 @@ DeclareOperation( "ShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
 
 DeclareOperation( "UnsignedShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
 
-DeclareOperation( "ChainToCochainComplexAsFunctor", [ IsChainComplexCategory, IsCochainComplexCategory ] );
+DeclareOperation( "ChainToCochainComplexAsFunctor", [ IsCapCategory ] );
 
-DeclareOperation( "CochainToChainComplexAsFunctor", [ IsCochainComplexCategory, IsChainComplexCategory ] );
+DeclareOperation( "CochainToChainComplexAsFunctor", [ IsCapCategory ] );
+
+DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ] );
+
+DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor ] );
+
 
