@@ -30,6 +30,16 @@ BindGlobal( "TheTypeOfCochainComplexes",
 
 ###########################################
 #
+#  True Methods
+#
+###########################################
+
+InstallTrueMethod( IsBoundedChainComplex, IsBoundedBellowChainComplex and IsBoundedAboveChainComplex );
+
+InstallTrueMethod( IsBoundedCochainComplex, IsBoundedBellowCochainComplex and IsBoundedAboveCochainComplex );
+
+###########################################
+#
 # Constructors of (Co)chain complexes
 #
 ###########################################

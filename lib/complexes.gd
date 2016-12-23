@@ -12,12 +12,36 @@
 #
 #########################################
 
+##
 DeclareCategory( "IsChainOrCochainComplex", IsCapCategoryObject );
 
 DeclareCategory( "IsChainComplex", IsChainOrCochainComplex );
 
 DeclareCategory( "IsCochainComplex", IsChainOrCochainComplex );
 
+##
+DeclareCategory( "IsBoundedBellowChainOrCochainComplex", IsChainOrCochainComplex );
+
+DeclareCategory( "IsBoundedAboveChainOrCochainComplex", IsChainOrCochainComplex );
+
+DeclareCategory( "IsBoundedChainOrCochainComplex", IsBoundedBellowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
+
+##
+DeclareCategory( "IsBoundedBellowChainComplex", IsBoundedBellowChainOrCochainComplex and IsChainComplex ); 
+
+DeclareCategory( "IsBoundedBellowCochainComplex", IsBoundedBellowChainOrCochainComplex and IsCochainComplex ); 
+
+##
+DeclareCategory( "IsBoundedAboveChainComplex", IsBoundedAboveChainOrCochainComplex and IsChainComplex ); 
+
+DeclareCategory( "IsBoundedAboveCochainComplex", IsBoundedAboveChainOrCochainComplex and IsCochainComplex ); 
+
+##
+DeclareCategory( "IsBoundedChainComplex", IsBoundedChainOrCochainComplex and IsBoundedAboveChainComplex and IsBoundedBellowChainComplex ); 
+
+DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and IsBoundedAboveCochainComplex and IsBoundedBellowCochainComplex ); 
+
+##
 DeclareCategory( "IsFiniteChainComplex", IsChainComplex );
 
 DeclareCategory( "IsFiniteCochainComplex", IsCochainComplex );
