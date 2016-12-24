@@ -96,6 +96,16 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
 
+# These two attributes and properties will be used to activate to do lists.
+# FAU_BOUND means first active upper bound. FAL_BOUND is for lower bound.
+DeclareAttribute( "FAU_BOUND", IsChainOrCochainComplex );
+
+DeclareAttribute( "FAL_BOUND", IsChainOrCochainComplex );
+
+DeclareProperty( "HAS_FAU_BOUND", IsChainOrCochainComplex );
+
+DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainComplex );
+
 #########################################
 #
 # operations derived from Attributes
@@ -139,5 +149,11 @@ DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 DeclareOperation( "ShiftLazy", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "ShiftUnsignedLazy", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "ToDoListToPushFirstUpperBound", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
+
+DeclareOperation( "ToDoListToPushFirstLowerBound", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
+
+DeclareOperation( "ToDoListToPushBounds", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
 
 

@@ -823,3 +823,41 @@ InstallMethod( ShiftUnsignedLazy, [ IsChainOrCochainComplex, IsInt ],
   return complex;
 
 end );
+
+
+#####################################
+#
+# To Do Lists operations
+#
+#####################################
+
+##
+InstallMethod( ToDoListToPushFirstUpperBound,
+               [ IsChainOrCochainComplex, IsChainOrCochainComplex ], 
+
+  function( C1, C2 )
+
+  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAU_BOUND", true ] ], function( ) SetFAU_BOUND( C2, FAU_BOUND( C1 ) ); SetHAS_FAU_BOUND( C2, true ); end ) );
+
+end );
+
+##
+InstallMethod( ToDoListToPushFirstLowerBound,
+               [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
+
+  function( C1, C2 )
+
+  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAL_BOUND", true ] ], function( ) SetFAL_BOUND( C2, FAL_BOUND( C1 ) ); SetHAS_FAL_BOUND( C2, true ); end ) );
+
+end );
+
+InstallMethod( ToDoListToPushBounds,
+               [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
+  function( C1, C2 )
+
+  ToDoListToPushFirstUpperBound( C1, C2 );
+
+  ToDoListToPushFirstLowerBound( C1, C2 );
+
+end );
+
