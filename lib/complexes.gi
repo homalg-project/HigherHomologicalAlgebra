@@ -520,8 +520,6 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
 
         complex := ChainComplex( cat, diffs );
 
-        SetFilterObj( complex, IsFiniteChainComplex );
-
         lower_bound := index - 2;
 
         upper_bound := index + Length( list );
@@ -533,8 +531,6 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
         diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
 
         complex := CochainComplex( cat, diffs );
-
-        SetFilterObj( complex, IsFiniteCochainComplex );
 
         lower_bound := index - 1;
 
@@ -553,7 +549,7 @@ end );
 
 #n
 InstallMethod( FiniteChainComplex,
-                   [ IsDenseList, IsInt ],
+               [ IsDenseList, IsInt ],
   function( diffs, n )
   local cat;
 
@@ -564,7 +560,7 @@ InstallMethod( FiniteChainComplex,
 end );
 
 InstallMethod( FiniteCochainComplex,
-                   [ IsDenseList, IsInt ],
+               [ IsDenseList, IsInt ],
 
   function( diffs, n )
   local cat;
@@ -577,7 +573,7 @@ end );
 
 ##
 InstallMethod( FiniteChainComplex,
-                   [ IsDenseList ],
+               [ IsDenseList ],
   function( diffs )
 
   return FiniteChainComplex( diffs, 0 );
@@ -586,7 +582,7 @@ end );
 
 ##
 InstallMethod( FiniteCochainComplex,
-                   [ IsDenseList ],
+               [ IsDenseList ],
    function( diffs )
 
    return FiniteCochainComplex( diffs, 0 );
@@ -595,7 +591,7 @@ end );
 
 ##
 InstallMethod( StalkChainComplex,
-                   [ IsCapCategoryObject ],
+               [ IsCapCategoryObject ],
   function( obj )
   local zero, diffs, complex;
 
@@ -613,7 +609,7 @@ end );
 
 ##
 InstallMethod( StalkCochainComplex,
-                   [ IsCapCategoryObject ],
+                    [ IsCapCategoryObject ],
   function( obj )
   local zero, diffs, complex;
 
@@ -764,21 +760,45 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
-  if HasActiveUpperBound( C ) then
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
-     SetUpperBound( complex, ActiveUpperBound( C ) - i );
+                                                                   if not HasFAU_BOUND( complex ) then
 
-  fi;
+                                                                      SetUpperBound( complex, FAU_BOUND( C ) - i );
 
-  if HasActiveLowerBound( C ) then
+                                                                   fi;
 
-     SetLowerBound( complex, ActiveLowerBound( C ) - i );
+                                                                   end ) );
 
-  fi;
+  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function( )
 
-  complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, (-1)^i*l[ 2 ] ] );
+                                                                   if not HasFAU_BOUND( C ) then
 
-  complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+                                                                      SetUpperBound( C, FAU_BOUND( complex ) + i );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( complex ) then
+
+                                                                      SetLowerBound( complex, FAL_BOUND( C ) - i );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( C ) then
+
+                                                                      SetLowerBound( C, FAL_BOUND( complex ) + i );
+
+                                                                   fi;
+
+                                                                   end ) );
 
   return complex;
 
@@ -801,21 +821,45 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
-  if HasActiveUpperBound( C ) then 
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
-     SetUpperBound( complex, ActiveUpperBound( C ) - i );
+                                                                   if not HasFAU_BOUND( complex ) then
 
-  fi;
+                                                                      SetUpperBound( complex, FAU_BOUND( C ) - i );
 
-  if HasActiveLowerBound( C ) then 
+                                                                   fi;
 
-     SetLowerBound( complex, ActiveLowerBound( C ) - i );
+                                                                   end ) );
 
-  fi;
+  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function( )
 
-  complex!.ListOfComputedDifferentials := List( C!.ListOfComputedDifferentials, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+                                                                   if not HasFAU_BOUND( C ) then
 
-  complex!.ListOfComputedObjects := List( C!.ListOfComputedObjects, l -> [ l[ 1 ] - i, l[ 2 ] ] );
+                                                                      SetUpperBound( C, FAU_BOUND( complex ) + i );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( complex ) then
+
+                                                                      SetLowerBound( complex, FAL_BOUND( C ) - i );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( C ) then
+
+                                                                      SetLowerBound( C, FAL_BOUND( complex ) + i );
+
+                                                                   fi;
+
+                                                                   end ) );
 
   return complex;
 
