@@ -111,26 +111,29 @@ DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainComplex );
 # operations derived from Attributes
 #
 #########################################
+KeyDependentOperation( "CertainObject", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
 
-DeclareOperation( "CertainObject", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "CertainDifferential", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
 
-DeclareOperation( "CertainDifferential", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "CertainCycle", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "CertainCycle", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "CertainBoundary", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "CertainBoundary", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "CertainHomology", IsChainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "CertainHomology", [ IsChainComplex, IsInt ] );
+KeyDependentOperation( "CertainCohomology", IsCochainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "CertainCohomology", [ IsCochainComplex, IsInt ] );
+KeyDependentOperation( "DefectOfExactness", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "DefectOfExactness", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "IsExactInIndex", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-DeclareOperation( "IsExactInIndex", [ IsChainOrCochainComplex, IsInt ] );
+KeyDependentOperation( "ShiftLazy", IsChainOrCochainComplex, IsInt, ReturnTrue );
+
+KeyDependentOperation( "ShiftUnsignedLazy", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainComplex, IsInt ] );
 
@@ -146,9 +149,11 @@ DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainComplex ] );
 
 DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
-DeclareOperation( "ShiftLazy", [ IsChainOrCochainComplex, IsInt ] );
-
-DeclareOperation( "ShiftUnsignedLazy", [ IsChainOrCochainComplex, IsInt ] );
+##############################################
+#
+# Methods to maintain upper and lower bounds
+#
+##############################################
 
 DeclareOperation( "ToDoListToPushFirstUpperBound", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
 

@@ -437,7 +437,7 @@ InstallMethod( Objects,
 end );
 
 ##
-InstallMethod( \^, 
+InstallMethod( CertainDifferentialOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
   local l, L;
@@ -460,10 +460,10 @@ InstallMethod( \^,
 
 end );
 
-InstallMethod( CertainDifferential, [ IsChainOrCochainComplex, IsInt], \^ );
+InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], CertainDifferential );
 
 ##
-InstallMethod( \[\], 
+InstallMethod( CertainObjectOp, 
                [ IsChainOrCochainComplex, IsInt ],
 function( C, i )
   local l, L;
@@ -486,9 +486,7 @@ function( C, i )
 
 end );
 
-##
-DeclareOperation( "CertainObject", [ IsChainOrCochainComplex, IsInt ] );
-
+InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], CertainObject );
 
 ################################################
 #
@@ -639,7 +637,7 @@ end );
 #############################################
 
 ##
-InstallMethod( CertainCycle, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( CertainCycleOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
 
   return KernelEmbedding( C^i );
@@ -647,7 +645,7 @@ InstallMethod( CertainCycle, [ IsChainOrCochainComplex, IsInt ],
 end );
 
 ##
-InstallMethod( CertainBoundary, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( CertainBoundaryOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
 
   if IsChainComplex( C ) then
@@ -707,13 +705,13 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
 end );
 
 ##
-InstallMethod( CertainHomology, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( CertainHomologyOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( CertainCohomology, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( CertainCohomologyOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( DefectOfExactness, 
+InstallMethod( DefectOfExactnessOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
 
@@ -730,7 +728,7 @@ InstallMethod( DefectOfExactness,
 end );
 
 ##
-InstallMethod( IsExactInIndex, 
+InstallMethod( IsExactInIndexOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
 
@@ -745,7 +743,7 @@ end );
 ######################################
 
 ##
-InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
   local newDifferentials, complex;
 
@@ -788,7 +786,7 @@ InstallMethod( ShiftLazy, [ IsChainOrCochainComplex, IsInt ],
 end );
 
 ##
-InstallMethod( ShiftUnsignedLazy, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
   local newDifferentials, complex;
 
