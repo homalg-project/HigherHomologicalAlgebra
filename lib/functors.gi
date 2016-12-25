@@ -211,11 +211,53 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
 
    AddObjectFunction( functor,
      function( C )
-     local diffs;
+     local diffs, complex;
 
        diffs := Reflection( Differentials( C ) );
 
-       return complex_constructor( cat, diffs );
+       complex := complex_constructor( cat, diffs );
+
+       AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( complex ) then
+
+                                                                      SetLowerBound( complex, -FAU_BOUND( C ) );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+       AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( C ) then
+
+                                                                      SetLowerBound( C, -FAU_BOUND( complex ) );
+
+                                                                   fi;
+
+                                                                   end ) );
+  
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAU_BOUND( complex ) then
+  
+                                                                      SetUpperBound( complex, -FAL_BOUND( C ) );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+      AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAU_BOUND( C ) then
+
+                                                                      SetUpperBound( C, -FAL_BOUND( complex ) );
+
+                                                                   fi;
+
+                                                                   end ) );
+
+     return complex;
 
      end );
 
@@ -268,7 +310,7 @@ InstallMethod( UnsignedShiftFunctor,
 
 end );
 
-InstallMethod( ChainToCochainComplexAsFunctor, 
+InstallMethod( ChainToCochainComplexFunctor, 
                [ IsCapCategory ], 
    function( cat )
 
@@ -276,7 +318,7 @@ InstallMethod( ChainToCochainComplexAsFunctor,
 
    end );
 
-InstallMethod( CochainToChainComplexAsFunctor, 
+InstallMethod( CochainToChainComplexFunctor, 
                [ IsCapCategory ], 
    function( cat )
 

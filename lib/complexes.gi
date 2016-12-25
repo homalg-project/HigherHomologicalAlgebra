@@ -591,17 +591,21 @@ end );
 
 ##
 InstallMethod( StalkChainComplex,
-               [ IsCapCategoryObject ],
-  function( obj )
-  local zero, diffs, complex;
+               [ IsCapCategoryObject, IsInt ],
+  function( obj, n )
+  local zero_obj, zero, diffs, complex;
 
-  zero := ZeroObject( CapCategory( obj ) );
+  zero_obj := ZeroObject( CapCategory( obj ) );
 
-  diffs := [ ZeroMorphism( obj, zero ) ];
+  zero := RepeatListN( [ ZeroMorphism( zero_obj, zero_obj ) ] );
 
-  complex := FiniteChainComplex( diffs );
+  diffs := Concatenate( zero, n, [ ZeroMorphism( obj, zero_obj ), ZeroMorphism( zero_obj, obj ) ], zero );
 
-  SetLowerBound( complex, -1 );
+  complex := ChainComplex( CapCategory( obj ), diffs );
+
+  SetLowerBound( complex, n - 1 );
+
+  SetUpperBound( complex, n + 1 );
 
   return complex;
 
@@ -609,17 +613,21 @@ end );
 
 ##
 InstallMethod( StalkCochainComplex,
-                    [ IsCapCategoryObject ],
-  function( obj )
-  local zero, diffs, complex;
+                    [ IsCapCategoryObject, IsInt ],
+  function( obj, n )
+  local zero_obj, zero, diffs, complex;
 
-  zero := ZeroObject( CapCategory( obj ) );
+  zero_obj := ZeroObject( CapCategory( obj ) );
 
-  diffs := [ ZeroMorphism( obj, zero ) ];
+  zero := RepeatListN( [ ZeroMorphism( zero_obj, zero_obj ) ] );
 
-  complex := FiniteCochainComplex( diffs );
+  diffs := Concatenate( zero, n - 1, [ ZeroMorphism( zero_obj, obj ), ZeroMorphism( obj, zero_obj ) ], zero );
 
-  SetUpperBound( complex, 1 );
+  complex := ChainComplex( CapCategory( obj ), diffs );
+
+  SetLowerBound( complex, n - 1 );
+
+  SetUpperBound( complex, n + 1 );
 
   return complex;
 
@@ -864,7 +872,6 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
   return complex;
 
 end );
-
 
 #####################################
 #

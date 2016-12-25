@@ -68,9 +68,9 @@ DeclareOperation( "FiniteCochainComplex", [ IsDenseList, IsInt ] );
 
 DeclareOperation( "FiniteCochainComplex", [ IsDenseList ] );
 
-DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject ] );
+DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject, IsInt ] );
 
-DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject ] );
+DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject, IsInt ] );
 
 DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
 
