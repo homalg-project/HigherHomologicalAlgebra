@@ -469,19 +469,46 @@ end );
 InstallMethod( CertainDifferentialOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
+  local d;
 
-  return Differentials( C )[ i ];
+  d := Differentials( C )[ i ];
+
+  AddToToDoList( ToDoListEntry( [ [ d, "IsZero", false ] ], function( )
+
+                                                            if not HasIsZero( C ) then
+
+                                                               SetIsZero( C, false );
+
+                                                            fi;
+  
+                                                            end ) );
+
+  return d;
 
 end );
 
+##
 InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], CertainDifferential );
 
 ##
 InstallMethod( CertainObjectOp, 
                [ IsChainOrCochainComplex, IsInt ],
 function( C, i )
+local Obj;
 
-  return Objects( C )[ i ];
+  Obj := Objects( C )[ i ];
+
+  AddToToDoList( ToDoListEntry( [ [ Obj, "IsZero", false ] ], function( )
+
+                                                              if not HasIsZero( C ) then
+
+                                                                 SetIsZero( C, false );
+
+                                                              fi;
+  
+                                                              end ) );
+
+  return Obj;
 
 end );
 
@@ -768,9 +795,13 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
+  SetComputedCertainObjects( complex, List( ComputedCertainObjects( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+
+  SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
+
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
-                                                                   if not HasFAU_BOUND( complex ) then
+                                                                    if not HasFAU_BOUND( complex ) then
 
                                                                       SetUpperBound( complex, FAU_BOUND( C ) - i );
 
@@ -809,7 +840,7 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
                                                                    end ) );
 
   return complex;
-
+ 
 end );
 
 ##
@@ -828,6 +859,10 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
      complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
 
   fi;
+
+  SetComputedCertainObjects( complex, List( ComputedCertainObjects( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+
+  SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
@@ -928,7 +963,7 @@ end );
 
 ##
 InstallMethod( ToDoListToPushBounds,
-               [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
+                [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
   function( C1, C2 )
 
   ToDoListToPushFirstUpperBound( C1, C2 );
