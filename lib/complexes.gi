@@ -34,9 +34,19 @@ BindGlobal( "TheTypeOfCochainComplexes",
 #
 ###########################################
 
-InstallTrueMethod( IsBoundedChainComplex, IsBoundedBellowChainComplex and IsBoundedAboveChainComplex );
+InstallTrueMethod( IsBoundedChainOrCochainComplex, IsBoundedBellowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
 
-InstallTrueMethod( IsBoundedCochainComplex, IsBoundedBellowCochainComplex and IsBoundedAboveCochainComplex );
+InstallTrueMethod( IsBoundedBellowChainComplex, IsBoundedBellowChainOrCochainComplex and IsChainComplex );
+
+InstallTrueMethod( IsBoundedBellowCochainComplex, IsBoundedBellowChainOrCochainComplex and IsCochainComplex );
+
+InstallTrueMethod( IsBoundedAboveChainComplex, IsBoundedAboveChainOrCochainComplex and IsChainComplex );
+
+InstallTrueMethod( IsBoundedAboveCochainComplex, IsBoundedAboveChainOrCochainComplex and IsCochainComplex );
+
+InstallTrueMethod( IsBoundedChainComplex, IsBoundedChainOrCochainComplex and IsChainComplex );
+
+InstallTrueMethod( IsBoundedCochainComplex, IsBoundedChainOrCochainComplex and IsCochainComplex );
 
 ###########################################
 #
@@ -44,6 +54,7 @@ InstallTrueMethod( IsBoundedCochainComplex, IsBoundedBellowCochainComplex and Is
 #
 ###########################################
 
+##
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
 function( cat, diffs, make_assertions, type )
   local C, assertion, f, msg;
@@ -96,14 +107,13 @@ function( cat, diffs, make_assertions, type )
 
   fi;
 
-  C!.ListOfComputedDifferentials := [ ];
-
-  C!.ListOfComputedObjects := [ ];
+  ToDoListToChangeFiltersWhenNeeded( C );
 
   return C;
 
 end );
 
+##
 InstallMethod( ChainComplex, [ IsCapCategory, IsZList, IsBool ],
   function( cat, diffs, make_assertions )
 
@@ -111,6 +121,7 @@ InstallMethod( ChainComplex, [ IsCapCategory, IsZList, IsBool ],
 
 end );
 
+##
 InstallMethod( ChainComplex, [ IsCapCategory, IsZList ],
   function( cat, diffs )
 
@@ -118,6 +129,7 @@ InstallMethod( ChainComplex, [ IsCapCategory, IsZList ],
 
 end );
 
+##
 InstallMethod( CochainComplex, [ IsCapCategory, IsZList, IsBool ],
   function( cat, diffs, make_assertions )
 
@@ -125,6 +137,7 @@ InstallMethod( CochainComplex, [ IsCapCategory, IsZList, IsBool ],
 
 end );
 
+##
 InstallMethod( CochainComplex, [ IsCapCategory, IsZList ],
   function( cat, diffs )
 
@@ -440,23 +453,8 @@ end );
 InstallMethod( CertainDifferentialOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
-  local l, L;
 
-  l := C!.ListOfComputedDifferentials;
-
-  L :=  List( l, i->i[ 1 ] ); 
-
-  if i in L then 
-
-     return l[ Position( L, i ) ][ 2 ];
-
-  fi;
-
-  l := Differentials( C )[ i ];
-
-  Add( C!.ListOfComputedDifferentials, [ i, l ] );
-
-  return l;
+  return Differentials( C )[ i ];
 
 end );
 
@@ -466,23 +464,8 @@ InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], CertainDifferential );
 InstallMethod( CertainObjectOp, 
                [ IsChainOrCochainComplex, IsInt ],
 function( C, i )
-  local l, L;
 
-  l := C!.ListOfComputedObjects;
-
-  L :=  List( l, i->i[ 1 ] ); 
-
-  if i in L then 
-
-     return l[ Position( L, i ) ][ 2 ];
-
-  fi;
-
-  l := Objects( C )[ i ];
-
-  Add( C!.ListOfComputedObjects, [ i, l ] );
-
-  return l;
+  return Objects( C )[ i ];
 
 end );
 
@@ -830,12 +813,29 @@ end );
 #####################################
 
 ##
+InstallMethod( ToDoListToChangeFiltersWhenNeeded,
+               [ IsChainOrCochainComplex ],
+  function( C )
+
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBellowChainOrCochainComplex ); end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function() SetFilterObj( C, IsBoundedAboveChainOrCochainComplex ); end ) );
+
+end );
+
+##
 InstallMethod( ToDoListToPushFirstUpperBound,
                [ IsChainOrCochainComplex, IsChainOrCochainComplex ], 
 
   function( C1, C2 )
 
-  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAU_BOUND", true ] ], function( ) SetFAU_BOUND( C2, FAU_BOUND( C1 ) ); SetHAS_FAU_BOUND( C2, true ); end ) );
+  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAU_BOUND", true ] ], function( )
+
+                                                                   if not HasFAU_BOUND( C2 ) then SetFAU_BOUND( C2, FAU_BOUND( C1 ) ); fi; 
+
+                                                                   if not HasHAS_FAU_BOUND( C2 ) then SetHAS_FAU_BOUND( C2, true ); fi; 
+
+                                                                   end ) );
 
 end );
 
@@ -845,10 +845,17 @@ InstallMethod( ToDoListToPushFirstLowerBound,
 
   function( C1, C2 )
 
-  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAL_BOUND", true ] ], function( ) SetFAL_BOUND( C2, FAL_BOUND( C1 ) ); SetHAS_FAL_BOUND( C2, true ); end ) );
+  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                   if not HasFAL_BOUND( C2 ) then SetFAL_BOUND( C2, FAL_BOUND( C1 ) ); fi; 
+
+                                                                   if not HasHAS_FAL_BOUND( C2 ) then SetHAS_FAL_BOUND( C2, true ); fi;
+
+                                                                   end ) );
 
 end );
 
+##
 InstallMethod( ToDoListToPushBounds,
                [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
   function( C1, C2 )

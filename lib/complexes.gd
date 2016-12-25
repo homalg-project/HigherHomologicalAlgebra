@@ -37,9 +37,9 @@ DeclareCategory( "IsBoundedAboveChainComplex", IsBoundedAboveChainOrCochainCompl
 DeclareCategory( "IsBoundedAboveCochainComplex", IsBoundedAboveChainOrCochainComplex and IsCochainComplex ); 
 
 ##
-DeclareCategory( "IsBoundedChainComplex", IsBoundedChainOrCochainComplex and IsBoundedAboveChainComplex and IsBoundedBellowChainComplex ); 
+DeclareCategory( "IsBoundedChainComplex", IsBoundedChainOrCochainComplex and IsChainComplex ); 
 
-DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and IsBoundedAboveCochainComplex and IsBoundedBellowCochainComplex ); 
+DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and IsCochainComplex ); 
 
 ##
 DeclareCategory( "IsFiniteChainComplex", IsChainComplex );
@@ -161,4 +161,4 @@ DeclareOperation( "ToDoListToPushFirstLowerBound", [ IsChainOrCochainComplex, Is
 
 DeclareOperation( "ToDoListToPushBounds", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
 
-
+DeclareOperation( "ToDoListToChangeFiltersWhenNeeded", [ IsChainOrCochainComplex ] );
