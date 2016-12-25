@@ -325,9 +325,17 @@ InstallMethod( SetUpperBound,
               [ IsChainOrCochainComplex, IsInt ], 
    function( C, upper_bound )
 
+   if not HasFAU_BOUND( C ) then 
+
+      SetFAU_BOUND( C, upper_bound );
+
+      SetHAS_FAU_BOUND( C, true );
+
+   fi;
+
    if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
 
-      Error( "The input is bigger than the one that already exists!" );
+      Info( InfoWarning, 1, "Please notice that the input is greater than the already existing active upper bound!" );
 
    fi;
 
@@ -341,14 +349,22 @@ InstallMethod( SetLowerBound,
               [ IsChainOrCochainComplex, IsInt ], 
    function( C, lower_bound )
 
-   if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
+   if not HasFAL_BOUND( C ) then
 
-      Error( "The input is smaller than the one that already exists!" );
+      SetFAL_BOUND( C, lower_bound );
+
+      SetHAS_FAL_BOUND( C, true );
 
    fi;
 
-   C!.LowerBound := lower_bound;
+   if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
 
+      Info( InfoWarning, 1, "Please notice that the input is smaller than the already existing active lower bound!" );
+   
+   fi;
+
+   C!.LowerBound := lower_bound;
+ 
 end );
 
 ##
@@ -831,9 +847,11 @@ InstallMethod( ToDoListToPushFirstUpperBound,
 
   AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAU_BOUND", true ] ], function( )
 
-                                                                   if not HasFAU_BOUND( C2 ) then SetFAU_BOUND( C2, FAU_BOUND( C1 ) ); fi; 
+                                                                   if not HasFAU_BOUND( C2 ) then 
 
-                                                                   if not HasHAS_FAU_BOUND( C2 ) then SetHAS_FAU_BOUND( C2, true ); fi; 
+                                                                      SetUpperBound( C2, FAU_BOUND( C1 ) );
+
+                                                                   fi; 
 
                                                                    end ) );
 
@@ -847,9 +865,11 @@ InstallMethod( ToDoListToPushFirstLowerBound,
 
   AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAL_BOUND", true ] ], function( )
 
-                                                                   if not HasFAL_BOUND( C2 ) then SetFAL_BOUND( C2, FAL_BOUND( C1 ) ); fi; 
+                                                                   if not HasFAL_BOUND( C2 ) then 
 
-                                                                   if not HasHAS_FAL_BOUND( C2 ) then SetHAS_FAL_BOUND( C2, true ); fi;
+                                                                      SetLowerBound( C2, FAL_BOUND( C1 ) );
+
+                                                                   fi;
 
                                                                    end ) );
 
