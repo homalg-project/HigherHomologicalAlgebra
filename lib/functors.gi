@@ -51,7 +51,7 @@ end );
 
 
 BindGlobal( "SHIFT_AS_FUNCTOR",
-   function( complex_cat, n )
+    function( complex_cat, n )
    local name, shift, morphism_constructor;
    
    if IsChainComplexCategory( complex_cat ) then 
@@ -91,10 +91,10 @@ BindGlobal( "SHIFT_AS_FUNCTOR",
        return ShiftLazy( complex, n );
 
      end );
-
+ 
    AddMorphismFunction( shift, 
 
-     function( new_source, map, new_range )
+      function( new_source, map, new_range )
 
      local morphisms;
 
@@ -103,6 +103,8 @@ BindGlobal( "SHIFT_AS_FUNCTOR",
      morphisms := ShiftLazy( morphisms, n );
 
      morphisms := morphism_constructor( new_source, new_range, morphisms );
+
+     INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS( map, morphisms );
 
      return morphisms;
 
@@ -166,6 +168,8 @@ BindGlobal( "UNSIGNED_SHIFT_AS_FUNCTOR",
 
      morphisms := morphism_constructor( new_source, new_range, morphisms );
 
+     INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS( map, morphisms );
+
      return morphisms;
 
      end );
@@ -217,6 +221,8 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
 
        complex := complex_constructor( cat, diffs );
 
+       AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
+
        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
                                                                    if not HasFAL_BOUND( complex ) then
@@ -260,26 +266,30 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
      return complex;
 
      end );
-
+ 
    AddMorphismFunction( functor, 
-     function( new_source, map, new_range )
+      function( new_source, map, new_range )
      local morphisms;
 
         morphisms := Reflection( Morphisms( map ) );
 
-        return morphism_constructor( new_source, new_range, morphisms );
+        morphisms := morphism_constructor( new_source, new_range, morphisms );
+
+        INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS( map, morphisms );
+
+        return morphisms;
 
      end );
 
    return functor;
-
+ 
 end );
 
 BindGlobal( "FUNCTORS_INSTALLER",
    function( )
 
 InstallMethod( HomologyFunctor, 
-               [ IsChainComplexCategory, IsCapCategory, IsInt ], 
+               [ IsChainComplexCategory, IsCapCategory, IsInt ],
   function( complex_cat, cat, i )
 
   return HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR( cat, i, "Homology" );
@@ -303,7 +313,7 @@ InstallMethod( ShiftFunctor,
 end );
 
 InstallMethod( UnsignedShiftFunctor, 
-                [ IsChainOrCochainComplexCategory, IsInt ], 
+                [ IsChainOrCochainComplexCategory, IsInt ],
   function( complex_cat, n )
 
   return UNSIGNED_SHIFT_AS_FUNCTOR( complex_cat, n );
@@ -341,7 +351,7 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
    AddObjectFunction( functor,
      function( C )
-     local diffs;
+     local diffs, functor_C;
 
      diffs := MapLazy( Differentials( C ), function( d )
 
@@ -349,21 +359,47 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
                                            end, 1 );
 
-     return ChainComplex( AsCapCategory( Range( F ) ), diffs );
+     functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
+
+     ToDoListToPushBounds( C, functor_C );
+
+     AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                              if not HasIsZero( functor_C ) then 
+
+                                                                 SetIsZero( functor_C, true );
+
+                                                              fi;
+
+                                                              end ) );
+
+     return functor_C;
 
      end );
 
    AddMorphismFunction( functor, 
-     function( new_source, phi, new_range )
-     local morphisms;
+     function( new_source, phi, new_range ) 
+     local morphisms, functor_phi;
 
        morphisms := MapLazy( Morphisms( phi ), function( psi )
 
-                                               return ApplyFunctor( F, psi );
+                                                return ApplyFunctor( F, psi );
 
                                                end, 1 );
 
-       return ChainMorphism( new_source, new_range, morphisms );
+       functor_phi := ChainMorphism( new_source, new_range, morphisms );
+
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+
+                                                                  if not HasIsZero( functor_phi ) then
+
+                                                                     SetIsZero( functor_phi, true );
+
+                                                                  fi; 
+
+                                                                  end ) );
+
+       return functor_phi;
 
      end );
 
@@ -386,29 +422,55 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
 
    AddObjectFunction( functor,
      function( C )
-     local diffs;
+     local diffs, functor_C;
 
      diffs := MapLazy( Differentials( C ), function( d )
 
                                            return ApplyFunctor( F, d );
 
                                            end, 1 );
+ 
+     functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
 
-     return CochainComplex( AsCapCategory( Range( F ) ), diffs );
+     ToDoListToPushBounds( C, functor_C );
+
+     AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                              if not HasIsZero( functor_C ) then
+
+                                                                 SetIsZero( functor_C, true );
+
+                                                              fi;
+
+                                                              end ) );
+     return functor_C;
 
      end );
 
    AddMorphismFunction( functor, 
-     function( new_source, phi, new_range )
-     local morphisms;
+     function( new_source, phi, new_range ) 
+     local morphisms, functor_phi;
 
        morphisms := MapLazy( Morphisms( phi ), function( psi )
 
-                                               return ApplyFunctor( F, psi );
+                                                return ApplyFunctor( F, psi );
 
                                                end, 1 );
 
-       return CochainMorphism( new_source, new_range, morphisms );
+       functor_phi := CochainMorphism( new_source, new_range, morphisms );
+
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+
+                                                                  if not HasIsZero( functor_phi ) then
+
+                                                                     SetIsZero( functor_phi, true );
+
+                                                                  fi;
+
+                                                                  end ) );
+
+       return functor_phi;
+
 
      end );
 

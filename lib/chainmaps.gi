@@ -27,6 +27,37 @@ BindGlobal( "TheTypeOfCochainMorphism",
             NewType( FamilyOfCochainMorphisms, 
                      IsCochainMorphism and IsCochainMorphismRep ) );
 
+####################################
+#
+# global variables:
+#
+####################################
+
+InstallValue( PROPAGATION_LIST_FOR_CO_CHAIN_MORPHISMS,
+        [
+         "IsMonomorphism",
+         "IsEpimorphism",
+         "IsIsomorphism",
+         "IsSplitMonomorphism",
+         "IsSplitEpimorphism",
+         "IsZero",
+         # ..
+         ]
+        );
+
+##
+InstallGlobalFunction( INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS,
+  function( phi, psi )
+    local i;
+
+    for i in PROPAGATION_LIST_FOR_CO_CHAIN_MORPHISMS do
+
+        AddToToDoList( ToDoListEntryForEqualAttributes( phi, i, psi, i ) );
+
+    od;
+
+end );
+
 #########################################
 #
 # (Co)chain morphisms constructors 
@@ -48,9 +79,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
                            Range, C2,
 
                            Morphisms, morphisms );
-        
+
            if ForAll( [ C1, C2 ], IsFiniteChainComplex ) then 
-          
+
               SetFilterObj( map, IsFiniteChainMorphism );
 
            fi;
@@ -66,7 +97,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
                            Morphisms, morphisms );
 
         if ForAll( [ C1, C2 ], IsFiniteCochainComplex ) then 
-          
+
            SetFilterObj( map, IsFiniteCochainMorphism );
 
         fi;
@@ -80,7 +111,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
      Add( CapCategory( C1 ), map );
 
      map!.ListOfComputedMorphisms := [ ];
-     
+
      return map;
 
 end );
@@ -88,17 +119,17 @@ end );
 BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
   function( C1, C2, mor, n )
   local all_morphisms;
-  
+
   all_morphisms := MapLazy( IntegersList, function( i )
-                                           
+
                                               if i >= n and i <= n + Length( mor ) - 1 then 
-           
+
                                                  return mor[ i - n + 1 ];
-            
+
                                               else
-  
+
                                                  return ZeroMorphism( C1[ i ], C2[ i ] );
-                          
+
                                               fi;
 
                                            end, 1 );
@@ -166,9 +197,9 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
    map := map_constructor( C1, C2, all_maps );
 
    if n > base_list[ Length( base_list ) ] then SetIsZero( map, true );fi;
-   
+
    if n + Length( mor ) -1 < base_list[ 1 ] then SetIsZero( map, true ); fi;
-   
+
    return map;
 
 end );
@@ -208,35 +239,35 @@ InstallMethod( FiniteCochainMorphism,
    return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "cochain_map" );
 end );
 
-#################################
+###################################
 #
-# Operations
+# Components of co-chain morphisms
 #
-#################################
+###################################
 
-InstallMethod( \[\], 
+InstallMethod( CertainMorphismOp, 
           [ IsChainOrCochainMorphism, IsInt ], 
 
-  function( map, i )
-     local l, L;
+  function( phi, i )
+     local m;
 
-     l := map!.ListOfComputedMorphisms;
+     m := Morphisms( phi )[ i ];
 
-     L := List( l, i->i[ 1 ] );
+     AddToToDoList( ToDoListEntry( [ [ m, "IsZero", false ] ], function( )
 
-     if i in L then 
+                                                               if not HasIsZero( phi ) then
+  
+                                                                 SetIsZero( phi, false );
 
-        return l[ Position( L, i ) ][ 2 ];
+                                                               fi;
 
-     fi;
+                                                               end ) );
 
-     l := Morphisms( map )[ i ];
-
-     Add( map!.ListOfComputedMorphisms, [ i, l ] );
-
-     return l;
+     return m;
 
 end );
+
+InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], CertainMorphism );
 
 #################################
 #

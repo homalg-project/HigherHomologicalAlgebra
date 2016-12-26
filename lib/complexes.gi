@@ -224,7 +224,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE",
   SetUpperBound( complex, upper_bound );
 
   return complex;
-  
+
 end );
 
 ##
@@ -360,11 +360,11 @@ InstallMethod( SetLowerBound,
    if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
 
       Info( InfoWarning, 1, "Please notice that the input is smaller than the already existing active lower bound!" );
-   
+
    fi;
 
    C!.LowerBound := lower_bound;
- 
+
 end );
 
 ##
@@ -392,7 +392,7 @@ InstallMethod( ActiveLowerBound,
   if not IsBound( C!.LowerBound ) then
 
      Error( "The complex does not have yet an lower bound" );
-   
+
   else
 
      return C!.LowerBound;
@@ -480,7 +480,7 @@ InstallMethod( CertainDifferentialOp,
                                                                SetIsZero( C, false );
 
                                                             fi;
-  
+
                                                             end ) );
 
   return d;
@@ -505,7 +505,7 @@ local Obj;
                                                                  SetIsZero( C, false );
 
                                                               fi;
-  
+
                                                               end ) );
 
   return Obj;
@@ -799,6 +799,8 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
 
+  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
+
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
                                                                     if not HasFAU_BOUND( complex ) then
@@ -863,6 +865,8 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
   SetComputedCertainObjects( complex, List( ComputedCertainObjects( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
   SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+
+  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 

@@ -71,8 +71,14 @@ DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
 
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
 
-#####################################
+KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+
+#######################################
 #
+#  Global functions and variables
 #
-#
-#####################################
+#######################################
+
+DeclareGlobalVariable( "PROPAGATION_LIST_FOR_CO_CHAIN_MORPHISMS" );
+
+DeclareGlobalFunction( "INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS" );
