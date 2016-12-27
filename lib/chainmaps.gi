@@ -208,9 +208,9 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
    map := map_constructor( C1, C2, all_maps );
 
-   if n > base_list[ Length( base_list ) ] then SetIsZero( map, true );fi;
+   if n > base_list[ Length( base_list ) ] and not HasIsZero( map ) then SetIsZero( map, true );fi;
 
-   if n + Length( mor ) -1 < base_list[ 1 ] then SetIsZero( map, true ); fi;
+   if n + Length( mor ) -1 < base_list[ 1 ] and not HasIsZero( map ) then SetIsZero( map, true ); fi;
 
    return map;
 
@@ -274,6 +274,16 @@ InstallMethod( CertainMorphismOp,
                                                                fi;
 
                                                                end ) );
+
+     AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+
+                                                                if not HasIsZero( m ) then
+     
+                                                                   SetIsZero( m, true );
+
+                                                                fi;
+
+                                                                end ) );
 
      return m;
 
@@ -369,12 +379,22 @@ InstallMethod( SetUpperBound,
       
    if IsBound( phi!.UpperBound ) and phi!.UpperBound < upper_bound then
    
-      Info( InfoWarning, 1, "Please notice that the input is greater than the already existing active upper bound!" );
-   
+      return;
+
    fi;
 
-   phi!.UpperBound := upper_bound;
+   if IsBound( phi!.LowerBound ) and phi!.LowerBound > upper_bound then
+ 
+      phi!.UpperBound := phi!.LowerBound; 
 
+      if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+
+   else
+
+      phi!.UpperBound := upper_bound;
+
+   fi;
+ 
 end );
 
 
@@ -393,12 +413,22 @@ InstallMethod( SetLowerBound,
       
    if IsBound( phi!.LowerBound ) and phi!.LowerBound > lower_bound then
 
-      Info( InfoWarning, 1, "Please notice that the input is smaller than the already existing active lower bound!" );
-   
+      return;
+ 
    fi;
 
-   phi!.LowerBound := lower_bound;
+   if IsBound( phi!.UpperBound ) and phi!.UpperBound < lower_bound then
 
+      phi!.LowerBound := phi!.UpperBound;
+
+      if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+ 
+   else
+
+      phi!.LowerBound := lower_bound;
+
+   fi;
+ 
 end );
 
 
@@ -410,7 +440,7 @@ InstallMethod( ActiveLowerBound,
 
   if not HasActiveLowerBound( phi ) then
 
-     Error( "" );
+     Error( "The morphism has no active lower bounds" );
 
   fi;
 
@@ -450,6 +480,8 @@ InstallMethod( ActiveLowerBound,
 
         phi!.LowerBound := phi!.UpperBound;
 
+        if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+
   fi;
 
   return phi!.LowerBound;
@@ -464,13 +496,13 @@ InstallMethod( ActiveUpperBound,
 
   if not HasActiveUpperBound( phi ) then
 
-     Error( "" );
+     Error( "The morphism has no active lower bounds" );
 
   fi;
 
   if HasActiveUpperBound( Source( phi ) ) then
 
-     if HasActiveUpperBound( Range( phi ) ) then
+      if HasActiveUpperBound( Range( phi ) ) then
 
         l := Minimum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
 
@@ -504,10 +536,12 @@ InstallMethod( ActiveUpperBound,
 
         phi!.UpperBound := phi!.LowerBound;
 
+        if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+
   fi;
 
   return phi!.UpperBound;
-
+ 
 end );
 
 ########################################

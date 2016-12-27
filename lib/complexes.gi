@@ -321,11 +321,11 @@ end );
 ########################################
 
 ##
-InstallMethod( SetUpperBound, 
-              [ IsChainOrCochainComplex, IsInt ], 
+InstallMethod( SetUpperBound,
+              [ IsChainOrCochainComplex, IsInt ],
    function( C, upper_bound )
 
-   if not HasFAU_BOUND( C ) then 
+   if not HasFAU_BOUND( C ) then
 
       SetFAU_BOUND( C, upper_bound );
 
@@ -335,18 +335,25 @@ InstallMethod( SetUpperBound,
 
    if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
 
-      Info( InfoWarning, 1, "Please notice that the input is greater than the already existing active upper bound!" );
+      return;
+
+   elif IsBound( C!.LowerBound ) and C!.LowerBound > upper_bound then
+
+      C!.UpperBound := C!.LowerBound;
+
+      if not HasIsZero( C ) then SetIsZero( C, true ); fi;
+
+   else
+
+      C!.UpperBound := upper_bound;
 
    fi;
 
-   C!.UpperBound := upper_bound;
-
 end );
 
-
 ##
-InstallMethod( SetLowerBound, 
-              [ IsChainOrCochainComplex, IsInt ], 
+InstallMethod( SetLowerBound,
+              [ IsChainOrCochainComplex, IsInt ],
    function( C, lower_bound )
 
    if not HasFAL_BOUND( C ) then
@@ -359,13 +366,24 @@ InstallMethod( SetLowerBound,
 
    if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
 
-      Info( InfoWarning, 1, "Please notice that the input is smaller than the already existing active lower bound!" );
+      return;
 
    fi;
 
-   C!.LowerBound := lower_bound;
+   if IsBound( C!.UpperBound ) and C!.UpperBound < lower_bound then
 
+      C!.LowerBound := C!.UpperBound;
+
+      if not HasIsZero( C ) then SetIsZero( C, true ); fi;
+
+   else
+
+      C!.LowerBound := lower_bound;
+
+   fi;
+ 
 end );
+
 
 ##
 InstallMethod( ActiveUpperBound,
@@ -467,7 +485,7 @@ end );
 
 ##
 InstallMethod( CertainDifferentialOp, 
-               [ IsChainOrCochainComplex, IsInt ],
+               [ IsChainOrCochainComplex, IsInt ], 
   function( C, i )
   local d;
 
@@ -482,6 +500,16 @@ InstallMethod( CertainDifferentialOp,
                                                             fi;
 
                                                             end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                            if not HasIsZero( d ) then
+
+                                                              SetIsZero( d, true );
+     
+                                                           fi;
+
+                                                           end ) );
 
   return d;
 
@@ -508,6 +536,15 @@ local Obj;
 
                                                               end ) );
 
+  AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                           if not HasIsZero( Obj ) then
+
+                                                              SetIsZero( Obj, true );
+   
+                                                           fi;
+
+                                                           end ) );
   return Obj;
 
 end );
@@ -650,7 +687,7 @@ InstallMethod( StalkCochainComplex,
 
   diffs := Concatenate( zero, n - 1, [ ZeroMorphism( zero_obj, obj ), ZeroMorphism( obj, zero_obj ) ], zero );
 
-  complex := ChainComplex( CapCategory( obj ), diffs );
+  complex := CochainComplex( CapCategory( obj ), diffs );
 
   SetLowerBound( complex, n - 1 );
 
