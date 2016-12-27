@@ -361,7 +361,7 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
      functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
 
-     ToDoListToPushBounds( C, functor_C );
+     TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
 
      AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
 
@@ -432,7 +432,7 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
  
      functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
 
-     ToDoListToPushBounds( C, functor_C );
+     TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
 
      AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
 

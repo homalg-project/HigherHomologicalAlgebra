@@ -4,19 +4,40 @@
 #
 ################################################
 
-
+##
 DeclareCategory( "IsChainOrCochainMorphism", IsCapCategoryMorphism );
 
+DeclareCategory( "IsBoundedBellowChainOrCochainMorphism", IsChainOrCochainMorphism );
+
+DeclareCategory( "IsBoundedAboveChainOrCochainMorphism", IsChainOrCochainMorphism );
+
+DeclareCategory( "IsBoundedChainOrCochainMorphism", IsBoundedBellowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
+
+##
 DeclareCategory( "IsChainMorphism", IsChainOrCochainMorphism );
 
-DeclareCategory( "IsFiniteChainMorphism", IsChainMorphism );
+DeclareCategory( "IsBoundedBellowChainMorphism", IsBoundedBellowChainOrCochainMorphism and IsChainMorphism );
 
-DeclareCategoryFamily( "IsChainMorphism" );
+DeclareCategory( "IsBoundedAboveChainMorphism", IsBoundedAboveChainOrCochainMorphism and IsChainMorphism );
 
+DeclareCategory( "IsBoundedChainMorphism", IsBoundedChainOrCochainMorphism and IsChainMorphism );
+
+##
 DeclareCategory( "IsCochainMorphism", IsChainOrCochainMorphism );
 
+DeclareCategory( "IsBoundedBellowCochainMorphism", IsBoundedBellowChainOrCochainMorphism and IsCochainMorphism );
+
+DeclareCategory( "IsBoundedAboveCochainMorphism", IsBoundedAboveChainOrCochainMorphism and IsCochainMorphism );
+
+DeclareCategory( "IsBoundedCochainMorphism", IsBoundedChainOrCochainMorphism and IsCochainMorphism );
+
+
+## to remove later
+DeclareCategory( "IsFiniteChainMorphism", IsChainMorphism );
 DeclareCategory( "IsFiniteCochainMorphism" , IsCochainMorphism );
 
+
+DeclareCategoryFamily( "IsChainMorphism" );
 DeclareCategoryFamily( "IsCochainMorphism" );
 
 ######################################
@@ -82,3 +103,15 @@ KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, Retur
 DeclareGlobalVariable( "PROPAGATION_LIST_FOR_CO_CHAIN_MORPHISMS" );
 
 DeclareGlobalFunction( "INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS" );
+
+DeclareGlobalFunction( "TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED" );
+
+DeclareAttribute( "FAL_BOUND", IsChainOrCochainMorphism );
+
+DeclareAttribute( "FAL_BOUND", IsChainOrCochainMorphism );
+
+DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
+
+DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
+
+

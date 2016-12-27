@@ -107,7 +107,7 @@ function( cat, diffs, make_assertions, type )
 
   fi;
 
-  ToDoListToChangeFiltersWhenNeeded( C );
+  TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( C );
 
   return C;
 
@@ -919,8 +919,8 @@ end );
 #####################################
 
 ##
-InstallMethod( ToDoListToChangeFiltersWhenNeeded,
-               [ IsChainOrCochainComplex ],
+InstallGlobalFunction( TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED,
+              
   function( C )
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBellowChainOrCochainComplex ); end ) );
@@ -930,49 +930,47 @@ InstallMethod( ToDoListToChangeFiltersWhenNeeded,
 end );
 
 ##
-InstallMethod( ToDoListToPushFirstUpperBound,
-               [ IsChainOrCochainComplex, IsChainOrCochainComplex ], 
+InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND,
 
-  function( C1, C2 )
+  function( arg1, arg2 )
 
-  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAU_BOUND", true ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAU_BOUND", true ] ], function( )
 
-                                                                   if not HasFAU_BOUND( C2 ) then 
+                                                                     if not HasFAU_BOUND( arg2 ) then 
 
-                                                                      SetUpperBound( C2, FAU_BOUND( C1 ) );
+                                                                        SetUpperBound( arg2, FAU_BOUND( arg1 ) );
 
-                                                                   fi; 
+                                                                     fi; 
 
-                                                                   end ) );
-
-end );
-
-##
-InstallMethod( ToDoListToPushFirstLowerBound,
-               [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
-
-  function( C1, C2 )
-
-  AddToToDoList( ToDoListEntry( [ [ C1, "HAS_FAL_BOUND", true ] ], function( )
-
-                                                                   if not HasFAL_BOUND( C2 ) then 
-
-                                                                      SetLowerBound( C2, FAL_BOUND( C1 ) );
-
-                                                                   fi;
-
-                                                                   end ) );
+                                                                     end ) );
 
 end );
 
 ##
-InstallMethod( ToDoListToPushBounds,
-                [ IsChainOrCochainComplex, IsChainOrCochainComplex ],
-  function( C1, C2 )
+InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND,
 
-  ToDoListToPushFirstUpperBound( C1, C2 );
+  function( arg1, arg2 )
 
-  ToDoListToPushFirstLowerBound( C1, C2 );
+  AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                     if not HasFAL_BOUND( arg2 ) then 
+
+                                                                        SetLowerBound( arg2, FAL_BOUND( arg1 ) );
+
+                                                                     fi;
+
+                                                                     end ) );
+
+end );
+
+##
+InstallGlobalFunction( TODO_LIST_TO_PUSH_BOUNDS,
+  
+  function( arg1, arg2 )
+
+  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg1, arg2 );
+
+  TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg1, arg2 );
 
 end );
 

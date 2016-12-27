@@ -155,10 +155,10 @@ DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 #
 ##############################################
 
-DeclareOperation( "ToDoListToPushFirstUpperBound", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND" );
 
-DeclareOperation( "ToDoListToPushFirstLowerBound", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND" );
 
-DeclareOperation( "ToDoListToPushBounds", [ IsChainOrCochainComplex, IsChainOrCochainComplex ] );
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_BOUNDS" );
 
-DeclareOperation( "ToDoListToChangeFiltersWhenNeeded", [ IsChainOrCochainComplex ] );
+DeclareGlobalFunction( "TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED" );

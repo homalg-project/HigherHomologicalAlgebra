@@ -27,6 +27,26 @@ BindGlobal( "TheTypeOfCochainMorphism",
             NewType( FamilyOfCochainMorphisms, 
                      IsCochainMorphism and IsCochainMorphismRep ) );
 
+###########################################
+#
+#  True Methods
+#
+###########################################
+
+InstallTrueMethod( IsBoundedChainOrCochainMorphism, IsBoundedBellowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
+
+InstallTrueMethod( IsBoundedBellowChainMorphism, IsBoundedBellowChainOrCochainMorphism and IsChainMorphism );
+
+InstallTrueMethod( IsBoundedBellowCochainMorphism, IsBoundedBellowChainOrCochainMorphism and IsCochainMorphism );
+
+InstallTrueMethod( IsBoundedAboveChainMorphism, IsBoundedAboveChainOrCochainMorphism and IsChainMorphism );
+
+InstallTrueMethod( IsBoundedAboveCochainMorphism, IsBoundedAboveChainOrCochainMorphism and IsCochainMorphism );
+
+InstallTrueMethod( IsBoundedChainMorphism, IsBoundedChainOrCochainMorphism and IsChainMorphism );
+
+InstallTrueMethod( IsBoundedCochainMorphism, IsBoundedChainOrCochainMorphism and IsCochainMorphism );
+
 ####################################
 #
 # global variables:
@@ -66,41 +86,29 @@ end );
 
 BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
      function( C1, C2, morphisms )
-     local map;
+     local phi;
 
-     map := rec( );
+     phi := rec( );
 
      if ForAll( [ C1, C2 ], IsChainComplex ) then 
 
-           ObjectifyWithAttributes( map, TheTypeOfChainMorphism,
+           ObjectifyWithAttributes( phi, TheTypeOfChainMorphism,
 
                            Source, C1,
 
                            Range, C2,
 
                            Morphisms, morphisms );
-
-           if ForAll( [ C1, C2 ], IsFiniteChainComplex ) then 
-
-              SetFilterObj( map, IsFiniteChainMorphism );
-
-           fi;
 
      elif ForAll( [ C1, C2 ], IsCochainComplex ) then 
 
-        ObjectifyWithAttributes( map, TheTypeOfCochainMorphism,
+           ObjectifyWithAttributes( phi, TheTypeOfCochainMorphism,
 
                            Source, C1,
 
                            Range, C2,
 
                            Morphisms, morphisms );
-
-        if ForAll( [ C1, C2 ], IsFiniteCochainComplex ) then 
-
-           SetFilterObj( map, IsFiniteCochainMorphism );
-
-        fi;
 
      else
 
@@ -108,11 +116,15 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
 
      fi;
 
-     Add( CapCategory( C1 ), map );
+     Add( CapCategory( C1 ), phi );
 
-     map!.ListOfComputedMorphisms := [ ];
+     TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED( phi );
 
-     return map;
+     TODO_LIST_TO_PUSH_BOUNDS( C1, phi );
+
+     TODO_LIST_TO_PUSH_BOUNDS( C2, phi );
+     
+     return phi;
 
 end );
 
@@ -344,37 +356,51 @@ end );
 
 ##
 InstallMethod( SetUpperBound,
-
               [ IsChainOrCochainMorphism, IsInt ],
-
    function( phi, upper_bound )
 
+   if not HasFAU_BOUND( phi ) then
+
+      SetFAU_BOUND( phi, upper_bound ); 
+   
+      SetHAS_FAU_BOUND( phi, true );
+
+   fi;
+      
    if IsBound( phi!.UpperBound ) and phi!.UpperBound < upper_bound then
-
-      Error( "There is already a smaller upper bound!" );
-
+   
+      Info( InfoWarning, 1, "Please notice that the input is greater than the already existing active upper bound!" );
+   
    fi;
 
    phi!.UpperBound := upper_bound;
 
 end );
 
+
 ##
 InstallMethod( SetLowerBound,
-
-              [ IsChainOrCochainMorphism, IsInt ],
-
+              [ IsChainOrCochainMorphism, IsInt ], 
    function( phi, lower_bound )
 
+   if not HasFAL_BOUND( phi ) then
+
+      SetFAL_BOUND( phi, lower_bound );
+   
+      SetHAS_FAL_BOUND( phi, true );
+   
+   fi;
+      
    if IsBound( phi!.LowerBound ) and phi!.LowerBound > lower_bound then
 
-      Error( "There is already a greater lower bound!" );
-
+      Info( InfoWarning, 1, "Please notice that the input is smaller than the already existing active lower bound!" );
+   
    fi;
 
    phi!.LowerBound := lower_bound;
 
 end );
+
 
 InstallMethod( ActiveLowerBound,
                [ IsChainOrCochainMorphism ],
@@ -590,6 +616,22 @@ InstallMethod( NaturalProjectionFromMappingCone, [ IsChainOrCochainMorphism ],
    mapping_cone := MappingCone( phi );
 
    return NaturalProjectionFromMappingCone( phi );
+
+end );
+
+#####################################
+#
+# To Do Lists operations
+#
+#####################################
+
+##
+InstallGlobalFunction( TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED,
+  function( phi )
+
+  AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( phi, IsBoundedBellowChainOrCochainMorphism ); end ) );
+
+  AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAU_BOUND", true ] ], function() SetFilterObj( phi, IsBoundedAboveChainOrCochainMorphism ); end ) );
 
 end );
 
