@@ -34,11 +34,11 @@ BindGlobal( "TheTypeOfCochainComplexes",
 #
 ###########################################
 
-InstallTrueMethod( IsBoundedChainOrCochainComplex, IsBoundedBellowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
+InstallTrueMethod( IsBoundedChainOrCochainComplex, IsBoundedBelowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
 
-InstallTrueMethod( IsBoundedBellowChainComplex, IsBoundedBellowChainOrCochainComplex and IsChainComplex );
+InstallTrueMethod( IsBoundedBelowChainComplex, IsBoundedBelowChainOrCochainComplex and IsChainComplex );
 
-InstallTrueMethod( IsBoundedBellowCochainComplex, IsBoundedBellowChainOrCochainComplex and IsCochainComplex );
+InstallTrueMethod( IsBoundedBelowCochainComplex, IsBoundedBelowChainOrCochainComplex and IsCochainComplex );
 
 InstallTrueMethod( IsBoundedAboveChainComplex, IsBoundedAboveChainOrCochainComplex and IsChainComplex );
 
@@ -476,7 +476,7 @@ InstallMethod( ViewObj,
 
      Print( "<A bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ".>" );
 
-  elif IsBoundedBellowChainOrCochainComplex( C ) then 
+  elif IsBoundedBelowChainOrCochainComplex( C ) then 
 
      Print( "<A bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ".>" );
 
@@ -998,6 +998,139 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
 end );
 
+
+#####################################
+#
+# Truncations of complexes
+#
+#####################################
+
+##                                
+InstallMethod( GoodTruncationBelow,
+               [ IsChainComplex, IsInt ],  
+
+  function( C, n )
+  local zero, diffs, tr_C;
+
+  zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
+
+  diffs := Differentials( C );
+
+  diffs := MapLazy( IntegersList, function( i )
+                                  if i < n  then 
+                                     return ZeroMorphism( zero, zero );
+                                  elif i = n then
+                                     return ZeroMorphism( KernelObject( C^n ), zero );
+                                  elif i = n+1 then
+                                     return KernelLift( C^n, C^( n + 1 ) );
+                                  else
+                                     return C^i;
+                                  fi;
+                                  end, 1 );
+
+ tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
+
+ SetLowerBound( tr_C, n - 1 );
+
+ return tr_C;
+
+end );
+
+##
+InstallMethod( GoodTruncationBelow,
+               [ IsCochainComplex, IsInt ],
+
+  function( C, n )
+  local zero, diffs, tr_C;
+
+  zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
+
+  diffs := Differentials( C );
+
+  diffs := MapLazy( IntegersList, function( i )
+                                  if i < n - 1 then 
+                                     return ZeroMorphism( zero, zero );
+                                  elif i = n - 1 then
+                                     return ZeroMorphism( zero, CokernelObject( C^( n - 1 ) ) );
+                                  elif i = n then
+                                     return CokernelColift( C^(n-1), C^n );
+                                  else
+                                     return C^i;
+                                  fi;
+                                  end, 1 );
+
+ tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
+
+ SetLowerBound( tr_C, n - 1 );
+
+ return tr_C;
+
+end );
+
+##                                
+InstallMethod( GoodTruncationAbove,
+               [ IsChainComplex, IsInt ],
+
+  function( C, n )
+  local zero, diffs, tr_C;
+
+  zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
+
+  diffs := Differentials( C );
+
+  diffs := MapLazy( IntegersList, function( i )
+                                  if i > n + 1  then
+                                     return ZeroMorphism( zero, zero );
+                                  elif i = n + 1 then
+                                     return ZeroMorphism( zero, CokernelObject( C^( n + 1 ) ) );
+                                  elif i = n then
+                                     return CokernelColift( C^( n + 1 ), C^n  );
+                                  else
+                                     return C^i;
+                                  fi;
+                                  end, 1 );
+
+ tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
+
+ SetUpperBound( tr_C, n + 1 );
+
+ return tr_C;                     
+
+end );
+
+##                                
+InstallMethod( GoodTruncationAbove,
+               [ IsCochainComplex, IsInt ],
+
+  function( C, n )
+  local zero, diffs, tr_C;
+
+  zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
+
+  diffs := Differentials( C );
+
+  diffs := MapLazy( IntegersList, function( i )
+                                  if i > n  then
+                                     return ZeroMorphism( zero, zero );
+                                  elif i = n then
+                                     return ZeroMorphism( KernelObject( C^n ), zero );
+                                  elif i = n -1 then
+                                     return KernelLift( C^n, C^(n-1)  );
+                                  else
+                                     return C^i;
+                                  fi;
+                                  end, 1 );
+ 
+ tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
+
+ SetUpperBound( tr_C, n + 1 );
+
+ return tr_C;
+ 
+end );
+
+
+
 #####################################
 #
 # To Do Lists operations
@@ -1009,7 +1142,7 @@ InstallGlobalFunction( TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED,
               
   function( C )
 
-  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBellowChainOrCochainComplex ); end ) );
+  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBelowChainOrCochainComplex ); end ) );
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function() SetFilterObj( C, IsBoundedAboveChainOrCochainComplex ); end ) );
 

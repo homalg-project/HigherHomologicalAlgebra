@@ -33,11 +33,11 @@ BindGlobal( "TheTypeOfCochainMorphism",
 #
 ###########################################
 
-InstallTrueMethod( IsBoundedChainOrCochainMorphism, IsBoundedBellowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
+InstallTrueMethod( IsBoundedChainOrCochainMorphism, IsBoundedBelowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
 
-InstallTrueMethod( IsBoundedBellowChainMorphism, IsBoundedBellowChainOrCochainMorphism and IsChainMorphism );
+InstallTrueMethod( IsBoundedBelowChainMorphism, IsBoundedBelowChainOrCochainMorphism and IsChainMorphism );
 
-InstallTrueMethod( IsBoundedBellowCochainMorphism, IsBoundedBellowChainOrCochainMorphism and IsCochainMorphism );
+InstallTrueMethod( IsBoundedBelowCochainMorphism, IsBoundedBelowChainOrCochainMorphism and IsCochainMorphism );
 
 InstallTrueMethod( IsBoundedAboveChainMorphism, IsBoundedAboveChainOrCochainMorphism and IsChainMorphism );
 
@@ -307,7 +307,7 @@ InstallMethod( ViewObj,
 
      Print( "<A bounded morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), " and active upper bound ", ActiveUpperBound( phi ), ".>" );
 
-  elif IsBoundedBellowChainOrCochainMorphism( phi ) then
+  elif IsBoundedBelowChainOrCochainMorphism( phi ) then
 
      Print( "<A bounded from below morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), ".>" );
 
@@ -717,7 +717,7 @@ end );
 InstallGlobalFunction( TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED,
   function( phi )
 
-  AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( phi, IsBoundedBellowChainOrCochainMorphism ); end ) );
+  AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( phi, IsBoundedBelowChainOrCochainMorphism ); end ) );
 
   AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAU_BOUND", true ] ], function() SetFilterObj( phi, IsBoundedAboveChainOrCochainMorphism ); end ) );
 

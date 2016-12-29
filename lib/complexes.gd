@@ -20,16 +20,16 @@ DeclareCategory( "IsChainComplex", IsChainOrCochainComplex );
 DeclareCategory( "IsCochainComplex", IsChainOrCochainComplex );
 
 ##
-DeclareCategory( "IsBoundedBellowChainOrCochainComplex", IsChainOrCochainComplex );
+DeclareCategory( "IsBoundedBelowChainOrCochainComplex", IsChainOrCochainComplex );
 
 DeclareCategory( "IsBoundedAboveChainOrCochainComplex", IsChainOrCochainComplex );
 
-DeclareCategory( "IsBoundedChainOrCochainComplex", IsBoundedBellowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
+DeclareCategory( "IsBoundedChainOrCochainComplex", IsBoundedBelowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
 
 ##
-DeclareCategory( "IsBoundedBellowChainComplex", IsBoundedBellowChainOrCochainComplex and IsChainComplex ); 
+DeclareCategory( "IsBoundedBelowChainComplex", IsBoundedBelowChainOrCochainComplex and IsChainComplex ); 
 
-DeclareCategory( "IsBoundedBellowCochainComplex", IsBoundedBellowChainOrCochainComplex and IsCochainComplex ); 
+DeclareCategory( "IsBoundedBelowCochainComplex", IsBoundedBelowChainOrCochainComplex and IsCochainComplex ); 
 
 ##
 DeclareCategory( "IsBoundedAboveChainComplex", IsBoundedAboveChainOrCochainComplex and IsChainComplex ); 
@@ -129,6 +129,10 @@ KeyDependentOperation( "IsExactInIndex", IsChainOrCochainComplex, IsInt, ReturnT
 KeyDependentOperation( "ShiftLazy", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 KeyDependentOperation( "ShiftUnsignedLazy", IsChainOrCochainComplex, IsInt, ReturnTrue );
+
+DeclareOperation( "GoodTruncationAbove", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "GoodTruncationBelow", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainComplex, IsInt ] );
 

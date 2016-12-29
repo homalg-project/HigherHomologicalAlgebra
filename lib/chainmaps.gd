@@ -7,16 +7,16 @@
 ##
 DeclareCategory( "IsChainOrCochainMorphism", IsCapCategoryMorphism );
 
-DeclareCategory( "IsBoundedBellowChainOrCochainMorphism", IsChainOrCochainMorphism );
+DeclareCategory( "IsBoundedBelowChainOrCochainMorphism", IsChainOrCochainMorphism );
 
 DeclareCategory( "IsBoundedAboveChainOrCochainMorphism", IsChainOrCochainMorphism );
 
-DeclareCategory( "IsBoundedChainOrCochainMorphism", IsBoundedBellowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
+DeclareCategory( "IsBoundedChainOrCochainMorphism", IsBoundedBelowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
 
 ##
 DeclareCategory( "IsChainMorphism", IsChainOrCochainMorphism );
 
-DeclareCategory( "IsBoundedBellowChainMorphism", IsBoundedBellowChainOrCochainMorphism and IsChainMorphism );
+DeclareCategory( "IsBoundedBelowChainMorphism", IsBoundedBelowChainOrCochainMorphism and IsChainMorphism );
 
 DeclareCategory( "IsBoundedAboveChainMorphism", IsBoundedAboveChainOrCochainMorphism and IsChainMorphism );
 
@@ -25,7 +25,7 @@ DeclareCategory( "IsBoundedChainMorphism", IsBoundedChainOrCochainMorphism and I
 ##
 DeclareCategory( "IsCochainMorphism", IsChainOrCochainMorphism );
 
-DeclareCategory( "IsBoundedBellowCochainMorphism", IsBoundedBellowChainOrCochainMorphism and IsCochainMorphism );
+DeclareCategory( "IsBoundedBelowCochainMorphism", IsBoundedBelowChainOrCochainMorphism and IsCochainMorphism );
 
 DeclareCategory( "IsBoundedAboveCochainMorphism", IsBoundedAboveChainOrCochainMorphism and IsCochainMorphism );
 
