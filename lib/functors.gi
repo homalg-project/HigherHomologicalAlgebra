@@ -17,13 +17,13 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR",
      
      complex_cat := ChainComplexCategory( cat );
      
-     name := Concatenation( String( i ), "-th homology functor in ", Name( cat ) );
+     name := Concatenation( String( i ), "-th homology functor in ", Big_to_Small( Name( cat ) ) );
      
      else
      
      complex_cat := CochainComplexCategory( cat );
      
-     name := Concatenation( String( i ), "-th cohomology functor in ", Name( cat ) );
+     name := Concatenation( String( i ), "-th cohomology functor in ", Big_to_Small( Name( cat ) ) );
      
      fi;
      
@@ -74,11 +74,11 @@ BindGlobal( "SHIFT_AS_FUNCTOR",
 
    elif n>0 then 
 
-      name := Concatenation( "Shift (", String( n ), " times to the left) functor in ", Name( complex_cat ) );
+      name := Concatenation( "Shift (", String( n ), " times to the left) functor in ", Big_to_Small( Name( complex_cat ) ) );
 
    else
 
-      name := Concatenation( "Shift (", String( -n ), " times to the right) functor in ", Name( complex_cat ) );
+      name := Concatenation( "Shift (", String( -n ), " times to the right) functor in ", Big_to_Small( Name( complex_cat ) ) );
 
    fi;
    
@@ -138,11 +138,11 @@ BindGlobal( "UNSIGNED_SHIFT_AS_FUNCTOR",
 
    elif n>0 then 
 
-      name := Concatenation( "Unsigned shift (", String( n ), " times to the left) functor in ", Name( complex_cat ) );
+      name := Concatenation( "Unsigned shift (", String( n ), " times to the left) functor in ", Big_to_Small( Name( complex_cat ) ) );
 
    else
 
-      name := Concatenation( "Unsigned shift (", String( -n ), " times to the right) functor in ", Name( complex_cat ) );
+      name := Concatenation( "Unsigned shift (", String( -n ), " times to the right) functor in ", Big_to_Small( Name( complex_cat ) ) );
 
    fi;
    
@@ -189,7 +189,7 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
 
    if string = "chain_to_cochain" then
 
-      name := Concatenation("Chain to Cochain complex functor over ", Name( cat ) );
+      name := Concatenation("Chain to Cochain complex functor over ", Big_to_Small( Name( cat ) ) );
 
       functor := CapFunctor( name, chain_complexes, cochain_complexes );
 
@@ -345,7 +345,7 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
    T := ChainComplexCategory( AsCapCategory(  Range( F ) ) );
 
-   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
 
    functor := CapFunctor( name, S, T );
 
@@ -416,7 +416,7 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
 
    T := CochainComplexCategory( AsCapCategory(  Range( F ) ) );
 
-   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
 
    functor := CapFunctor( name, S, T );
 

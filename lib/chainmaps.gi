@@ -166,7 +166,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
       complex_category := ChainComplexCategory( cat );
 
-      complex_constructor := FiniteChainComplex;
+      complex_constructor := ChainComplex;
 
       map_constructor := ChainMorphism;
 
@@ -174,7 +174,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
       complex_category := CochainComplexCategory( cat );
 
-      complex_constructor := FiniteCochainComplex;
+      complex_constructor := CochainComplex;
 
       map_constructor := CochainMorphism;
 
@@ -238,14 +238,14 @@ InstallMethod( CochainMorphism,
 CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST );
 
 ##
-InstallMethod( FiniteChainMorphism,
+InstallMethod( ChainMorphism,
                [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ],
    function( c1, m1, c2, m2, maps, n )
    return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "chain_map" );
 end );
 
 ##
-InstallMethod( FiniteCochainMorphism,
+InstallMethod( CochainMorphism,
                [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ],
    function( c1, m1, c2, m2, maps, n )
    return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "cochain_map" );
@@ -297,6 +297,34 @@ InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], CertainMorphism );
 #
 #################################
 
+##
+InstallMethod( ViewObj,
+        [ IsChainOrCochainMorphism ],
+
+  function( phi )
+
+  if IsBoundedChainOrCochainMorphism( phi ) then
+
+     Print( "<A bounded morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), " and active upper bound ", ActiveUpperBound( phi ), ".>" );
+
+  elif IsBoundedBellowChainOrCochainMorphism( phi ) then
+
+     Print( "<A bounded from below morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), ".>" );
+
+  elif IsBoundedAboveChainOrCochainMorphism( phi ) then
+
+     Print( "<A bounded from above morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active upper bound ", ActiveUpperBound( phi ), ".>" );
+
+  else
+
+     TryNextMethod( );
+
+  fi;
+
+end );
+
+
+##
 InstallMethod( Display, 
                [ IsChainOrCochainMorphism, IsInt, IsInt ], 
    function( map, m, n )
@@ -552,14 +580,14 @@ end );
 
 ##
 BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP", 
-    function( map )
+    function( phi )
     local complex_cat, shift, complex_constructor, morphism_constructor, A, B, C, A_shifted, C_shifted, map1, map2, 
           map_C_to_A_shifted, map_B_to_C, map_B_shifted_to_C_shifted, map_A_shifted_to_B_shifted, diffs_C, injection, 
           projection, complex, u;
 
-    complex_cat := CapCategory( map );
+    complex_cat := CapCategory( phi );
     
-    if IsChainMorphism( map ) then 
+    if IsChainMorphism( phi ) then 
 
        shift := ShiftFunctor( complex_cat, -1 );
 
@@ -581,9 +609,9 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
 
     fi;
 
-    A := Source( map );
+    A := Source( phi );
 
-    B := Range( map );
+    B := Range( phi );
     
     A_shifted := ApplyFunctor( shift, A );
     
@@ -597,7 +625,7 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
 
     map_C_to_A_shifted := ProjectionInFactorOfDirectSum( [ A_shifted, B ], 1 );
 
-    map_A_shifted_to_B_shifted := ApplyFunctor( shift, map );
+    map_A_shifted_to_B_shifted := ApplyFunctor( shift, phi );
 
     map_B_to_C := InjectionOfCofactorOfDirectSum( [ A_shifted, B ], 2 );
 
@@ -615,9 +643,35 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
 
     projection := morphism_constructor( complex, A_shifted, projection );
 
-    SetNaturalInjectionInMappingCone( map, injection );
+    SetNaturalInjectionInMappingCone( phi, injection );
 
-    SetNaturalProjectionFromMappingCone( map, projection );
+    SetNaturalProjectionFromMappingCone( phi, projection );
+
+    AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAL_BOUND", true ], [ B, "HAS_FAL_BOUND", true ] ], 
+
+                                  function( ) 
+
+                                  if not HasFAL_BOUND( complex ) then
+
+                                     SetLowerBound( complex, Minimum( FAL_BOUND( A_shifted ), FAL_BOUND( B ) ) );
+
+                                  fi;
+
+                                  end ) );
+
+    AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAU_BOUND", true ], [ B, "HAS_FAU_BOUND", true ] ],
+
+                                  function( )
+                                  
+                                  if not HasFAU_BOUND( complex ) then
+
+                                     SetUpperBound( complex, Maximum( FAU_BOUND( A_shifted ), FAU_BOUND( B ) ) );
+
+                                  fi;
+
+                                  end ) );
+
+
 
     return [ complex, injection, projection ];
 
@@ -625,9 +679,9 @@ end );
 
 ##
 InstallMethod( MappingCone, [ IsChainOrCochainMorphism ],
-   function( map )
+   function( phi )
 
-   return MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP( map )[ 1 ]; 
+   return MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP( phi )[ 1 ]; 
 
 end );
 

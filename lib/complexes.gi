@@ -439,9 +439,58 @@ end );
 
 #########################################
 #
-# Components of a (co)chain complexes
+# Dispaying, viewing (co)chain complexes
 #
 #########################################
+
+##
+BindGlobal( "Big_to_Small",
+  function( name )
+  local s, new_name, l, i;
+
+  s := name[ 1 ];
+
+  new_name := ShallowCopy( name );
+
+  l := [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ];
+
+  i := Position( [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ], s );
+
+  if i=fail then return name; fi;
+
+  Remove( new_name, 1 );
+
+  Add( new_name, l[ i ], 1 );
+
+  return new_name;
+
+end );
+
+##
+InstallMethod( ViewObj, 
+        [ IsChainOrCochainComplex ],
+
+  function( C )
+
+  if IsBoundedChainOrCochainComplex( C ) then 
+
+     Print( "<A bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ".>" );
+
+  elif IsBoundedBellowChainOrCochainComplex( C ) then 
+
+     Print( "<A bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ".>" );
+
+  elif IsBoundedAboveChainOrCochainComplex( C ) then
+
+     Print( "<A bounded from above object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active upper bound ", ActiveUpperBound( C ), ".>" );
+
+  else
+
+     TryNextMethod( );
+
+  fi;
+
+end );
 
 ##
 InstallMethod( Display, 
@@ -612,7 +661,7 @@ end );
 
 
 #n
-InstallMethod( FiniteChainComplex,
+InstallMethod( ChainComplex,
                [ IsDenseList, IsInt ],
   function( diffs, n )
   local cat;
@@ -623,7 +672,7 @@ InstallMethod( FiniteChainComplex,
 
 end );
 
-InstallMethod( FiniteCochainComplex,
+InstallMethod( CochainComplex,
                [ IsDenseList, IsInt ],
 
   function( diffs, n )
@@ -636,20 +685,20 @@ InstallMethod( FiniteCochainComplex,
 end );
 
 ##
-InstallMethod( FiniteChainComplex,
+InstallMethod( ChainComplex,
                [ IsDenseList ],
   function( diffs )
 
-  return FiniteChainComplex( diffs, 0 );
+  return ChainComplex( diffs, 0 );
 
 end );
 
 ##
-InstallMethod( FiniteCochainComplex,
+InstallMethod( CochainComplex,
                [ IsDenseList ],
    function( diffs )
 
-   return FiniteCochainComplex( diffs, 0 );
+   return CochainComplex( diffs, 0 );
 
 end );
 

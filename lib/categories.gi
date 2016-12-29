@@ -4,10 +4,10 @@
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
-  local name, complex_cat, complex_constructor, morphism_constructor, finite_com_constructor;
+  local name, complex_cat, complex_constructor, morphism_constructor;
   if shift_index = -1 then 
 
-     name := Concatenation( "Chain complexes category over ", Name( cat ) );
+     name := Concatenation( "Chain complex es category over ", Big_to_Small( Name( cat ) ) );
 
      complex_cat := CreateCapCategory( name );
 
@@ -15,21 +15,17 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
      complex_constructor := ChainComplex;
 
-     finite_com_constructor := FiniteChainComplex;
-
      morphism_constructor := ChainMorphism;
 
   elif shift_index = 1 then
 
-     name := Concatenation( "Cochain complexes category over ", Name( cat ) );
+     name := Concatenation( "Cochain complexes category over ", Big_to_Small( Name( cat ) ) );
 
      complex_cat := CreateCapCategory( name );
 
      SetFilterObj( complex_cat, IsCochainComplexCategory );
 
      complex_constructor := CochainComplex;
-
-     finite_com_constructor := FiniteCochainComplex;
 
      morphism_constructor := CochainMorphism;
 
@@ -42,7 +38,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
      AddZeroObject( complex_cat, function( )
                                  local C;
 
-                                 C := finite_com_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+                                 C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
 
                                  SetUpperBound( C, 0 );
 

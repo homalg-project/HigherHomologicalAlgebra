@@ -41,11 +41,6 @@ DeclareCategory( "IsBoundedChainComplex", IsBoundedChainOrCochainComplex and IsC
 
 DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and IsCochainComplex ); 
 
-##
-DeclareCategory( "IsFiniteChainComplex", IsChainComplex );
-
-DeclareCategory( "IsFiniteCochainComplex", IsCochainComplex );
-
 #########################################
 #
 #  Constructors of (Co)chain complexes 
@@ -60,13 +55,13 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList, IsBool ] );
 
 DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
 
-DeclareOperation( "FiniteChainComplex", [ IsDenseList, IsInt ] );
+DeclareOperation( "ChainComplex", [ IsDenseList, IsInt ] );
 
-DeclareOperation( "FiniteChainComplex", [ IsDenseList ] );
+DeclareOperation( "ChainComplex", [ IsDenseList ] );
 
-DeclareOperation( "FiniteCochainComplex", [ IsDenseList, IsInt ] );
+DeclareOperation( "CochainComplex", [ IsDenseList, IsInt ] );
 
-DeclareOperation( "FiniteCochainComplex", [ IsDenseList ] );
+DeclareOperation( "CochainComplex", [ IsDenseList ] );
 
 DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject, IsInt ] );
 

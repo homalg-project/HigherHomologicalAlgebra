@@ -31,12 +31,6 @@ DeclareCategory( "IsBoundedAboveCochainMorphism", IsBoundedAboveChainOrCochainMo
 
 DeclareCategory( "IsBoundedCochainMorphism", IsBoundedChainOrCochainMorphism and IsCochainMorphism );
 
-
-## to remove later
-DeclareCategory( "IsFiniteChainMorphism", IsChainMorphism );
-DeclareCategory( "IsFiniteCochainMorphism" , IsCochainMorphism );
-
-
 DeclareCategoryFamily( "IsChainMorphism" );
 DeclareCategoryFamily( "IsCochainMorphism" );
 
@@ -58,10 +52,10 @@ DeclareOperation( "ChainMorphism",
 DeclareOperation( "CochainMorphism",
                   [ IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ] );
 
-DeclareOperation( "FiniteChainMorphism",
+DeclareOperation( "ChainMorphism",
                    [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
-DeclareOperation( "FiniteCochainMorphism",
+DeclareOperation( "CochainMorphism",
                    [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
 ######################################
