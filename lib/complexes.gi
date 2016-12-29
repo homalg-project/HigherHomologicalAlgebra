@@ -1051,9 +1051,9 @@ InstallMethod( GoodTruncationBelow,
                                   if i < n - 1 then 
                                      return ZeroMorphism( zero, zero );
                                   elif i = n - 1 then
-                                     return ZeroMorphism( zero, CokernelObject( C^( n - 1 ) ) );
+                                     return ZeroMorphism( zero, CokernelObject( KernelEmbedding( C^n ) ) );
                                   elif i = n then
-                                     return CokernelColift( C^(n-1), C^n );
+                                     return CokernelColift( KernelEmbedding( C^n ), C^n );
                                   else
                                      return C^i;
                                   fi;
@@ -1082,9 +1082,9 @@ InstallMethod( GoodTruncationAbove,
                                   if i > n + 1  then
                                      return ZeroMorphism( zero, zero );
                                   elif i = n + 1 then
-                                     return ZeroMorphism( zero, CokernelObject( C^( n + 1 ) ) );
+                                     return ZeroMorphism( zero, CokernelObject( KernelEmbedding( C^n ) ) );
                                   elif i = n then
-                                     return CokernelColift( C^( n + 1 ), C^n  );
+                                     return CokernelColift( KernelEmbedding( C^n ), C^n  );
                                   else
                                      return C^i;
                                   fi;
