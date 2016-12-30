@@ -7,7 +7,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
   local name, complex_cat, complex_constructor, morphism_constructor;
   if shift_index = -1 then 
 
-     name := Concatenation( "Chain complex es category over ", Big_to_Small( Name( cat ) ) );
+     name := Concatenation( "Chain complexes category over ", Big_to_Small( Name( cat ) ) );
 
      complex_cat := CreateCapCategory( name );
 
@@ -28,7 +28,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
      complex_constructor := CochainComplex;
 
      morphism_constructor := CochainMorphism;
-
+ 
   fi;
 
   if IsAdditiveCategory( cat ) then 
