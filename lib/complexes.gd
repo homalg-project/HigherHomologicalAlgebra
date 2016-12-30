@@ -134,6 +134,10 @@ DeclareOperation( "GoodTruncationAbove", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "GoodTruncationBelow", [ IsChainOrCochainComplex, IsInt ] );
 
+DeclareOperation( "BrutalTruncationBelow", [ IsChainOrCochainComplex, IsInt ] );
+
+DeclareOperation( "BrutalTruncationAbove", [ IsChainOrCochainComplex, IsInt ] );
+
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainComplex, IsInt ] );
 
 DeclareOperation( "SetLowerBound", [ IsChainOrCochainComplex, IsInt ] );
@@ -159,5 +163,11 @@ DeclareGlobalFunction( "TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND" );
 DeclareGlobalFunction( "TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND" );
 
 DeclareGlobalFunction( "TODO_LIST_TO_PUSH_BOUNDS" );
+
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND" );
+
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND" );
+
+DeclareGlobalFunction( "TODO_LIST_TO_PUSH_PULL_BOUNDS" );
 
 DeclareGlobalFunction( "TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED" );
