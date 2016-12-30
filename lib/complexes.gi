@@ -555,7 +555,7 @@ InstallMethod( CertainDifferentialOp,
                                                             if not HasIsZero( d ) then
 
                                                               SetIsZero( d, true );
-     
+
                                                            fi;
 
                                                            end ) );
@@ -1005,9 +1005,9 @@ end );
 #
 #####################################
 
-##                                
+##
 InstallMethod( GoodTruncationBelow,
-               [ IsChainComplex, IsInt ],  
+               [ IsChainComplex, IsInt ],
 
   function( C, n )
   local zero, diffs, tr_C;
@@ -1030,9 +1030,11 @@ InstallMethod( GoodTruncationBelow,
 
  tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
 
- SetLowerBound( tr_C, n - 1 );
+ TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
 
  TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
+
+ SetLowerBound( tr_C, n - 1 );
 
  return tr_C;
 
@@ -1063,15 +1065,17 @@ InstallMethod( GoodTruncationBelow,
 
  tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
 
- SetLowerBound( tr_C, n - 1 );
+ TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
 
  TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
+
+ SetLowerBound( tr_C, n - 1 );
 
  return tr_C;
  
 end );
 
-##                                
+##
 InstallMethod( GoodTruncationAbove,
                [ IsChainComplex, IsInt ],
 
@@ -1096,15 +1100,17 @@ InstallMethod( GoodTruncationAbove,
 
   tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
 
-  SetUpperBound( tr_C, n + 1 );
+  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
 
   TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
 
- return tr_C;                     
- 
+  SetUpperBound( tr_C, n + 1 );
+
+ return tr_C;
+
 end );
 
-##                                
+##
 InstallMethod( GoodTruncationAbove,
                [ IsCochainComplex, IsInt ],
 
@@ -1126,15 +1132,17 @@ InstallMethod( GoodTruncationAbove,
                                      return C^i;
                                   fi;
                                   end, 1 );
-   
+
   tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
 
-  SetUpperBound( tr_C, n + 1 );
+  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
 
   TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
 
+  SetUpperBound( tr_C, n + 1 );
+
   return tr_C;
-   
+
 end );
 
 ##  <------ C_i-1 <---- C_i <---- C_i+1 <-----
@@ -1146,7 +1154,7 @@ InstallMethod( BrutalTruncationBelow,
   local zero, diffs, tr_C;
 
   zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-  
+
   diffs := Differentials( C );
 
   diffs := MapLazy( IntegersList, function( i )
@@ -1161,15 +1169,15 @@ InstallMethod( BrutalTruncationBelow,
 
   tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
 
-  #G this.
+  # tr_C may get better lower bound than n - 1.
   TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
- 
+
   TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
 
   SetLowerBound( tr_C, n - 1 );
 
   return tr_C;
- 
+
 end );
 
 ##  <------ C_i-1 <---- C_i <---- C_i+1 <-----
@@ -1178,12 +1186,12 @@ end );
 InstallMethod( BrutalTruncationAbove,
                [ IsChainComplex, IsInt ],
   function( C, n )
-  local zero, diffs, tr_C;           
+  local zero, diffs, tr_C;
 
   zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-  
+
   diffs := Differentials( C );
-  
+
   diffs := MapLazy( IntegersList, function( i )
                                   if i > n + 1  then
                                      return ZeroMorphism( zero, zero );
@@ -1195,12 +1203,12 @@ InstallMethod( BrutalTruncationAbove,
                                   end, 1 );
 
   tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
- 
+
   #G this.
   TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
 
   TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-  
+
   SetUpperBound( tr_C, n + 1 );
 
   return tr_C;
@@ -1248,12 +1256,12 @@ end );
 InstallMethod( BrutalTruncationAbove,
                [ IsCochainComplex, IsInt ],
   function( C, n )
-  local zero, diffs, tr_C;           
+  local zero, diffs, tr_C;
 
   zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-  
+
   diffs := Differentials( C );
-  
+
   diffs := MapLazy( IntegersList, function( i )
                                   if i > n   then
                                      return ZeroMorphism( zero, zero );
@@ -1270,7 +1278,7 @@ InstallMethod( BrutalTruncationAbove,
   TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
 
   TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-  
+
   SetUpperBound( tr_C, n + 1 );
 
   return tr_C;
@@ -1286,7 +1294,7 @@ end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED,
-              
+
   function( C )
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBelowChainOrCochainComplex ); end ) );

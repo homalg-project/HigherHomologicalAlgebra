@@ -612,9 +612,9 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
     A := Source( phi );
 
     B := Range( phi );
-    
+
     A_shifted := ApplyFunctor( shift, A );
-    
+
     C := DirectSum( A_shifted, B );
 
     diffs_C := Differentials( C );
