@@ -57,19 +57,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        fi;
 
-                                       for obj in C!.ListOfComputedObjects do
+                                       for obj in ComputedCertainObjects( C ) do
 
-                                           if HasIsZero( obj ) and not IsZero( obj ) then 
-
-                                              return false;
-
-                                           fi;
-
-                                       od;
-
-                                       for obj in C!.ListOfComputedObjects do
-
-                                           if not IsZero( obj[ 2 ] ) then
+                                           if IsCapCategoryObject( obj ) and not IsZero( obj ) then
 
                                               return false;
 
@@ -84,8 +74,6 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                               SetLowerBound( C, i - 1 );
 
                                               return false;
-
-                                              Print( i - 1 );
 
                                            fi;
 
@@ -102,7 +90,13 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                    morphisms := MapLazy( [ Objects( C1 ), Objects( C2 ) ], ZeroMorphism, 2 );
 
-                                   return morphism_constructor( C1, C2, morphisms );
+                                   morphisms := morphism_constructor( C1, C2, morphisms );
+
+                                   SetUpperBound( morphisms, 0 );
+
+                                   SetLowerBound( morphisms, 0 );
+
+                                   return morphisms;
 
                                    end );
 
@@ -115,19 +109,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        fi;
 
-                                       for mor in phi!.ListOfComputedMorphisms do
+                                       for mor in ComputedCertainMorphisms do
 
-                                           if HasIsZero( mor[ 2 ] ) and not IsZero( mor[ 2 ] ) then
-
-                                              return false;
-
-                                           fi;
-
-                                       od;
-
-                                       for mor in phi!.ListOfComputedMorphisms do
-
-                                           if not IsZero( mor[ 2 ] ) then
+                                            if IsCapCategoryMorphism( phi ) and not IsZero( mor ) then
 
                                               return false;
 
@@ -137,9 +121,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
 
-                                           if not IsZero( phi[ i ] ) then
+                                            if not IsZero( phi[ i ] ) then
 
-                                              SetLowerBound( phi, i - 1 );
+                                               SetLowerBound( phi, i - 1 );
 
                                               return false;
 
@@ -150,7 +134,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                        return true;
 
                                        end );
-
+     # to do list to control bounds
      AddAdditionForMorphisms( complex_cat, function( m1, m2 )
 
                                            return morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms, 2 ) );
