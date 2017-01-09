@@ -109,9 +109,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        fi;
 
-                                       for mor in ComputedCertainMorphisms do
+                                       for mor in ComputedCertainMorphisms( phi ) do
 
-                                            if IsCapCategoryMorphism( phi ) and not IsZero( mor ) then
+                                            if IsCapCategoryMorphism( mor ) and not IsZero( mor ) then
 
                                               return false;
 
@@ -134,22 +134,57 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                        return true;
 
                                        end );
-     # to do list to control bounds
-     AddAdditionForMorphisms( complex_cat, function( m1, m2 )
 
-                                           return morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms, 2 ) );
+     AddAdditionForMorphisms( complex_cat, function( m1, m2 )
+                                           local phi;
+
+                                           phi:= morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms, 2 ));
+
+                                           AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAU_BOUND", true ],  [ m2, "HAS_FAU_BOUND", true ] ], function( )
+
+                                                                         if not HasFAU_BOUND( phi ) then 
+
+                                                                            SetUpperBound( phi, Minimum( FAU_BOUND( m1 ), FAU_BOUND( m2 ) ) );
+
+                                                                         fi;
+
+                                                                     end ) );
+
+                                           AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAL_BOUND", true ],  [ m2, "HAS_FAL_BOUND", true ] ], function( )
+
+                                                                         if not HasFAL_BOUND( phi ) then 
+
+                                                                            SetLowerBound( phi, Maximum( FAL_BOUND( m1 ), FAL_BOUND( m2 ) ) );
+
+                                                                         fi;
+
+                                                                     end ) );
+
+                                           return phi;
 
                                            end );
 
      AddAdditiveInverseForMorphisms( complex_cat, function( m )
+                                                  local phi;
 
-                                      return morphism_constructor( Source( m ), Range( m ), MapLazy( Morphisms( m ), AdditiveInverseForMorphisms, 1 ) );
+                                                  phi := morphism_constructor( Source( m ), Range( m ), MapLazy( Morphisms( m ), AdditiveInverseForMorphisms, 1 ) );
 
-                                      end );
+                                                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+
+                                                  return phi;
+
+                                                  end );
 
      AddPreCompose( complex_cat, function( m1, m2 )
+                                 local phi;
 
-                                 return morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose, 2 ) );
+                                 phi := morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose, 2 ) );
+
+                                 TODO_LIST_TO_PUSH_BOUNDS( m1, phi );
+
+                                 TODO_LIST_TO_PUSH_BOUNDS( m2, phi );
+
+                                 return phi;
 
                                  end );
 
@@ -160,8 +195,11 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                        end );
 
      AddInverse( complex_cat, function( m )
+                              local phi;
 
-                              return morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse, 1 ) );
+                              phi := morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse, 1 ) );
+
+                              TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
 
                               end );
 
@@ -264,7 +302,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
      SetIsAbelianCategory( complex_cat, true );
 
      AddKernelEmbedding( complex_cat, function( phi )
-                                      local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
+                                       local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
 
                                       embeddings := MapLazy( Morphisms( phi ), KernelEmbedding, 1 );
 
@@ -275,6 +313,8 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                       kernel_complex := complex_constructor( cat, diffs );
 
                                       kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
+
+                                      TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
 
                                       return kernel_emb;
 
@@ -301,9 +341,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                                       morphisms := MapLazy( IntegersList, function( i )
 
-                                                           return KernelLift( phi[ i ], tau[ i ] );
+                                                                                          return KernelLift( phi[ i ], tau[ i ] );
 
-                                                      end, 1 );
+                                                                                          end, 1 );
 
                                                       return morphism_constructor( Source( tau ), K, morphisms );
 
@@ -323,6 +363,8 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                          cokernel_complex := complex_constructor( cat, diffs );
 
                                          cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
+
+                                         TODO_LIST_TO_PUSH_BOUNDS( Range( phi ), cokernel_complex );
 
                                          return cokernel_proj;
 
@@ -357,7 +399,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                                       return morphism_constructor( K, Range( tau ), morphisms );
 
                                                       end );
-
+ 
   fi;
 
 
@@ -369,11 +411,11 @@ return complex_cat;
 
 end );
 
-#########################################
+###########################################
 #
 #  Constructors of (Co)complexes category
 #
-#########################################
+###########################################
 
 InstallMethod( ChainComplexCategory, 
                  [ IsCapCategory ],
@@ -386,5 +428,4 @@ InstallMethod( CochainComplexCategory,
   function( cat )
   return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, 1 );
 end );
-
 
