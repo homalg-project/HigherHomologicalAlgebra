@@ -91,6 +91,8 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
 
+DeclareProperty( "IsExact", IsChainOrCochainComplex );
+
 # These two attributes and properties will be used to activate to do lists.
 # FAU_BOUND means first active upper bound. FAL_BOUND is for lower bound.
 DeclareAttribute( "FAU_BOUND", IsChainOrCochainComplex );

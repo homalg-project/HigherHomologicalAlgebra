@@ -456,7 +456,7 @@ BindGlobal( "Big_to_Small",
 
   i := Position( [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ], s );
 
-  if i=fail then return name; fi;
+  if i = fail then return name; fi;
 
   Remove( new_name, 1 );
 
@@ -471,18 +471,37 @@ InstallMethod( ViewObj,
         [ IsChainOrCochainComplex ],
 
   function( C )
+  local is_exact;
 
-  if IsBoundedChainOrCochainComplex( C ) then 
+  if HasIsExact( C ) then
 
-     Print( "<A bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ".>" );
+     if IsExact( C ) then 
 
-  elif IsBoundedBelowChainOrCochainComplex( C ) then 
+        is_exact := " cyclic, ";
 
-     Print( "<A bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ".>" );
+     else
+
+        is_exact := " not cyclic, ";
+
+     fi;
+
+  else
+
+     is_exact := " ";
+
+  fi;
+
+  if IsBoundedChainOrCochainComplex( C ) then
+
+     Print( "<A", is_exact, "bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ".>" );
+
+  elif IsBoundedBelowChainOrCochainComplex( C ) then
+
+     Print( "<A", is_exact, "bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ".>" );
 
   elif IsBoundedAboveChainOrCochainComplex( C ) then
 
-     Print( "<A bounded from above object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active upper bound ", ActiveUpperBound( C ), ".>" );
+     Print( "<A", is_exact, "bounded from above object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active upper bound ", ActiveUpperBound( C ), ".>" );
 
   else
 
@@ -590,7 +609,7 @@ local Obj;
                                                            if not HasIsZero( Obj ) then
 
                                                               SetIsZero( Obj, true );
-   
+
                                                            fi;
 
                                                            end ) );
@@ -847,8 +866,42 @@ end );
 InstallMethod( IsExactInIndexOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
+  local bool;
 
-  return IsZeroForObjects( DefectOfExactness( C, n ) );
+  bool := IsZeroForObjects( DefectOfExactness( C, n ) );
+
+  if bool = false then 
+
+     SetIsExact( C, false );
+
+  fi;
+
+  return bool;
+ 
+end );
+
+InstallMethod( IsExact,
+               [ IsChainOrCochainComplex ], 
+  function( C )
+  local i;
+
+  if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then 
+
+     Error( "The complex must have upper and lower bounds" );
+
+  fi;
+
+  for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do 
+
+      if not IsExactInIndex( C, i ) then 
+
+         return false;
+
+      fi;
+
+  od;
+
+  return true;
 
 end );
 
