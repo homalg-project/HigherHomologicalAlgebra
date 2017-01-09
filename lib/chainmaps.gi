@@ -123,7 +123,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
      TODO_LIST_TO_PUSH_BOUNDS( C1, phi );
 
      TODO_LIST_TO_PUSH_BOUNDS( C2, phi );
-     
+
      return phi;
 
 end );
@@ -268,7 +268,7 @@ InstallMethod( CertainMorphismOp,
      AddToToDoList( ToDoListEntry( [ [ m, "IsZero", false ] ], function( )
 
                                                                if not HasIsZero( phi ) then
-  
+
                                                                  SetIsZero( phi, false );
 
                                                                fi;
@@ -278,7 +278,7 @@ InstallMethod( CertainMorphismOp,
      AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
 
                                                                 if not HasIsZero( m ) then
-     
+
                                                                    SetIsZero( m, true );
 
                                                                 fi;
@@ -400,13 +400,13 @@ InstallMethod( SetUpperBound,
    if not HasFAU_BOUND( phi ) then
 
       SetFAU_BOUND( phi, upper_bound ); 
-   
+
       SetHAS_FAU_BOUND( phi, true );
 
    fi;
-      
+
    if IsBound( phi!.UpperBound ) and phi!.UpperBound < upper_bound then
-   
+
       return;
 
    fi;
@@ -434,15 +434,15 @@ InstallMethod( SetLowerBound,
    if not HasFAL_BOUND( phi ) then
 
       SetFAL_BOUND( phi, lower_bound );
-   
+
       SetHAS_FAL_BOUND( phi, true );
-   
+
    fi;
-      
+
    if IsBound( phi!.LowerBound ) and phi!.LowerBound > lower_bound then
 
       return;
- 
+
    fi;
 
    if IsBound( phi!.UpperBound ) and phi!.UpperBound < lower_bound then
@@ -450,7 +450,7 @@ InstallMethod( SetLowerBound,
       phi!.LowerBound := phi!.UpperBound;
 
       if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
- 
+
    else
 
       phi!.LowerBound := lower_bound;
@@ -586,7 +586,7 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
           projection, complex, u;
 
     complex_cat := CapCategory( phi );
-    
+
     if IsChainMorphism( phi ) then 
 
        shift := ShiftFunctor( complex_cat, -1 );
@@ -649,7 +649,7 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
 
     AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAL_BOUND", true ], [ B, "HAS_FAL_BOUND", true ] ], 
 
-                                  function( ) 
+                                  function( )
 
                                   if not HasFAL_BOUND( complex ) then
 
@@ -662,7 +662,7 @@ BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP",
     AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAU_BOUND", true ], [ B, "HAS_FAU_BOUND", true ] ],
 
                                   function( )
-                                  
+
                                   if not HasFAU_BOUND( complex ) then
 
                                      SetUpperBound( complex, Maximum( FAU_BOUND( A_shifted ), FAU_BOUND( B ) ) );
@@ -681,7 +681,7 @@ end );
 InstallMethod( MappingCone, [ IsChainOrCochainMorphism ],
    function( phi )
 
-   return MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP( phi )[ 1 ]; 
+   return MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP( phi )[ 1 ];
 
 end );
 
@@ -704,6 +704,54 @@ InstallMethod( NaturalProjectionFromMappingCone, [ IsChainOrCochainMorphism ],
    mapping_cone := MappingCone( phi );
 
    return NaturalProjectionFromMappingCone( phi );
+
+end );
+
+##
+InstallMethod( IsQuasiIsomorphism_,
+                  [ IsChainOrCochainMorphism ],
+   function( phi )
+   local min, max, h_functor, functor, i;
+
+   if not HasActiveUpperBound(  Source( phi ) ) or not HasActiveLowerBound(  Source( phi ) ) then
+
+      Error( "The source is not known to be bounded" );
+
+   fi;
+
+   if not HasActiveUpperBound(  Range( phi ) ) or not HasActiveLowerBound(  Range( phi ) ) then
+
+      Error( "The range is not known to be bounded" );
+
+   fi;
+
+   min := Minimum( ActiveLowerBound(  Source( phi ) ), ActiveLowerBound(  Range( phi ) ) ) + 1;
+
+   max := Maximum( ActiveUpperBound(  Source( phi ) ), ActiveUpperBound(  Range( phi ) ) ) - 1;
+
+   if IsChainMap( phi ) then
+
+      h_functor := HomologyFunctor;
+
+   else 
+
+      h_functor := CohomologyFunctor;
+
+   fi;
+
+   for i in [ min .. max ] do
+
+     functor := h_functor( CapCategory( phi ), UnderlyingCategory( CapCategory( phi ) ), i );
+
+     if not IsIsomorphism( ApplyFunctor( functor, phi ) ) then
+
+        return false;
+
+     fi;
+
+   od;
+
+   return true;
 
 end );
 

@@ -72,6 +72,8 @@ DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
 
+DeclareAttribute( "IsQuasiIsomorphism_", IsChainOrCochainMorphism );
+
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
 DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
