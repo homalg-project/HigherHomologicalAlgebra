@@ -1,6 +1,13 @@
+############################################
+#
+# Categories.gi               Kamal Saleh
+#
+# Gap package: complex        2016 
+###########################################
 
 
-# There are still a lot of things to do in this code!
+
+
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
