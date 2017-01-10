@@ -4,3 +4,4 @@
 # Reading the implementation part of the package.
 #
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gi");
+ReadPackage( "HomotopyCategories", "gap/Tools.gi" );
