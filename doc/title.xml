@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    HomotopyCategories
+  </Title>
+  <Subtitle>
+    Package to create homotopy categories of an additive category
+  </Subtitle>
+  <Version>
+    0.1
+  </Version>
+  <Author>
+    Kamal Saleh<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+TODO<Br/>
+</Address>
+<Email>kamal.saleh@rwth-aachen.de</Email>
+<Homepage>Kamal.saleh@rwth-aachen.de</Homepage>
+
+  </Author>
+  <Date>
+    07/11/2016
+  </Date>
+  </TitlePage>

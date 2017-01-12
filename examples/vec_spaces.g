@@ -47,11 +47,5 @@ phi4 := PresentationMorphism( CA[4], HomalgMatrix( "[ [ 0 ] ]", 1,1, Q ), CB[ 4 
 phi := CochainMorphism( CA, CB, [ phi1, phi2, phi3, phi4 ], 1 );
 #! <A bounded morphism in cochain complexes category over category of left presentations of Q with active lower bound 0 and active upper bound 5.>
 t := Compute_Homotopy( phi, 4 );
-#! [ <An unevaluated non-zero 2 x 3 matrix over an internal ring>, <An unevaluated 2 x 1 matrix over an internal ring>, [ "h2", "h3", "h4" ] ]
-t1 := t[ 1 ];
-#! <An unevaluated non-zero 2 x 3 matrix over an internal ring>
-t2 := t[ 2 ];
-#! <An unevaluated 2 x 1 matrix over an internal ring>
-t3 := t[ 3 ]; 
-#! [ "h2", "h3", "h4" ]
+
 
