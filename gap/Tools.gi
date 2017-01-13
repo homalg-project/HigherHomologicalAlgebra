@@ -3,20 +3,20 @@ DeclareGlobalFunction( "Compute_Homotopy" );
 
 InstallGlobalFunction( Compute_Homotopy,
 
-  function( phi, n )
+  function( phi, s, n )
   local A, B, ring, r, mat, j, k, l,i, current_mat, t, b, current_b, list, var, sol, union_of_columns, union_of_rows;
 
   A := Source( phi );
 
   B := Range( phi );
 
-  ring := HomalgRing( UnderlyingMatrix( phi [ 1 ] ) );
+  ring := HomalgRing( UnderlyingMatrix( phi [ s ] ) );
 
   # Here we find which variables should be actually compute. h_i, x_i or y_i.
 
   var := [ ];
 
-  for j in [ 2 .. n ] do 
+  for j in [ s + 1 .. n ] do 
 
     t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j -1 ] ) );
 
@@ -24,7 +24,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   od;
 
-  for k in [ 1 .. n ] do
+  for k in [ s .. n ] do
 
     t := NrRows( UnderlyingMatrix( phi[ k ] ) )* NrRows( UnderlyingMatrix( B[ k ] ) );
 
@@ -32,7 +32,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   od;
 
-  for l in [ 1 .. n - 1 ] do
+  for l in [ s .. n - 1 ] do
 
     t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
 
@@ -58,11 +58,11 @@ InstallGlobalFunction( Compute_Homotopy,
                       return UnionOfRows( new_m, n );
                       end;
 
-  r := NrColumns( UnderlyingMatrix( phi[ 1 ] ) )* NrRows( UnderlyingMatrix( phi[ 1 ] ) );
+  r := NrColumns( UnderlyingMatrix( phi[ s ] ) )* NrRows( UnderlyingMatrix( phi[ s ] ) );
 
   if r<>0 then
 
-  list := List( [ 1 .. NrColumns( UnderlyingMatrix( phi[ 1 ] ) ) ], c -> CertainColumns( UnderlyingMatrix( phi[ 1 ] ), [ c ] ) );
+  list := List( [ 1 .. NrColumns( UnderlyingMatrix( phi[ s ] ) ) ], c -> CertainColumns( UnderlyingMatrix( phi[ s ] ), [ c ] ) );
 
   if Length( list ) = 1 then 
      b := list[ 1 ];
@@ -72,13 +72,13 @@ InstallGlobalFunction( Compute_Homotopy,
 
   mat := HomalgZeroMatrix( r, 0, ring );
 
-  for j in [ 2 .. n ] do
+  for j in [ s + 1 .. n ] do
 
     t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j -1 ] ) );
 
-    if j = 2 and t <>0 then
+    if j = s + 1 and t <>0 then
 
-       mat := union_of_columns( mat, KroneckerMat( HomalgIdentityMatrix( NrColumns( UnderlyingMatrix( phi[ 1 ] ) ), ring ), UnderlyingMatrix( A^1 ) ) );
+       mat := union_of_columns( mat, KroneckerMat( HomalgIdentityMatrix( NrColumns( UnderlyingMatrix( phi[ s ] ) ), ring ), UnderlyingMatrix( A^s ) ) );
 
     elif t <> 0 then 
 
@@ -89,13 +89,13 @@ InstallGlobalFunction( Compute_Homotopy,
   od;
 
 
-  for k in [ 1 .. n ] do 
+  for k in [ s .. n ] do 
 
     t := NrRows( UnderlyingMatrix( phi[ k ] ) )* NrRows( UnderlyingMatrix( B[ k ] ) );
 
-    if k = 1 and t<>0 then 
+    if k = s and t<>0 then 
 
-    mat := union_of_columns( mat, KroneckerMat( Involution( UnderlyingMatrix( B[ 1 ] ) ), HomalgIdentityMatrix( NrRows( UnderlyingMatrix( phi[ 1 ] ) ), ring ) ) );
+    mat := union_of_columns( mat, KroneckerMat( Involution( UnderlyingMatrix( B[ s ] ) ), HomalgIdentityMatrix( NrRows( UnderlyingMatrix( phi[ s ] ) ), ring ) ) );
     elif t<>0 then
 
     mat := union_of_columns( mat, HomalgZeroMatrix( r, t, ring ) );
@@ -103,7 +103,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   od;
 
-  for l in [ 1 .. n - 1 ] do 
+  for l in [ s .. n - 1 ] do 
     t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
     if t<>0 then
     mat := union_of_columns( mat, HomalgZeroMatrix( r, t, ring ) );
@@ -112,7 +112,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   fi;
 
-  for i in [ 2 .. n - 1 ] do
+  for i in [ s + 1 .. n - 1 ] do
 
       r := NrColumns( UnderlyingMatrix( phi[ i ] ) )* NrRows( UnderlyingMatrix( phi[ i ] ) );
 
@@ -127,7 +127,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
       current_mat := HomalgZeroMatrix( r, 0, ring );
 
-      for j in [ 2 .. n ] do
+      for j in [ s + 1 .. n ] do
 
           t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j - 1 ] ) );
 
@@ -140,11 +140,11 @@ InstallGlobalFunction( Compute_Homotopy,
           elif t<>0 then
 
              current_mat := UnionOfColumns( current_mat, HomalgZeroMatrix( r, t, ring ) );
-          fi;
+          fi; 
       od;
 
 
-      for k in [ 1 .. n ] do 
+      for k in [ s .. n ] do 
 
           t := NrRows( UnderlyingMatrix( phi[ k ] ) )* NrRows( UnderlyingMatrix( B[ k ] ) );
 
@@ -158,7 +158,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
       od;
 
-     for l in [ 1 .. n - 1 ] do 
+     for l in [ s .. n - 1 ] do 
          t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
          if t<>0 then
          current_mat := UnionOfColumns( current_mat, HomalgZeroMatrix( r, t, ring ) );
@@ -177,7 +177,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   if r<>0 then 
 
-         list := List( [ 1 .. NrColumns( UnderlyingMatrix( phi[ n ] ) ) ], c -> CertainColumns( UnderlyingMatrix( phi[ n ] ), [ c ] ) );
+         list :=  List( [ 1 .. NrColumns( UnderlyingMatrix( phi[ n ] ) ) ], c -> CertainColumns( UnderlyingMatrix( phi[ n ] ), [ c ] ) );
          if Length( list ) = 1 then 
             current_b := list[ 1 ];
          else
@@ -186,7 +186,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   current_mat := HomalgZeroMatrix( r, 0, ring );
 
-  for j in [ 2 .. n ] do
+  for j in [ s + 1 .. n ] do
 
     t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j -1 ] ) );
 
@@ -201,7 +201,7 @@ InstallGlobalFunction( Compute_Homotopy,
   od;
 
 
-  for k in [ 1 .. n ] do 
+  for k in [ s .. n ] do 
 
     t := NrRows( UnderlyingMatrix( phi[ k ] ) )* NrRows( UnderlyingMatrix( B[ k ] ) );
 
@@ -215,11 +215,11 @@ InstallGlobalFunction( Compute_Homotopy,
 
   od;
 
-  for l in [ 1 .. n - 1 ] do 
+  for l in [ s .. n - 1 ] do 
          t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
          if t<>0 then
          current_mat := UnionOfColumns( current_mat, HomalgZeroMatrix( r, t, ring ) );
-         fi;
+         fi; 
   od;
 
   if not IsZero( current_mat ) then  mat := union_of_rows( mat, current_mat ); b := union_of_rows( b, current_b ); fi;
@@ -228,7 +228,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
   # Now the equations that make sure that the maps h_i's are well defined
 
-  for i in [ 1 .. n - 1 ] do
+  for i in [ s .. n - 1 ] do
 
     r := NrRows( UnderlyingMatrix( A[ i + 1 ] ) ) * NrColumns( UnderlyingMatrix( B[ i ] ) );
 
@@ -236,7 +236,7 @@ InstallGlobalFunction( Compute_Homotopy,
 
     current_mat := HomalgZeroMatrix( r, 0, ring );
 
-    for j in [ 2 .. n ] do 
+    for j in [ s + 1 .. n ] do 
 
       t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j -1 ] ) );
       if j = i + 1 and t<>0 then 
@@ -249,14 +249,14 @@ InstallGlobalFunction( Compute_Homotopy,
 
     od;
 
-    for k in [ 1 .. n ] do 
+    for k in [ s .. n ] do 
     t :=  NrRows( UnderlyingMatrix( phi[ k ] ) )* NrRows( UnderlyingMatrix( B[ k ] ) );
     if t<> 0 then 
     current_mat := UnionOfColumns( current_mat, HomalgZeroMatrix( r, t, ring ) );
     fi;
     od;
 
-    for l in [ 1 .. n - 1 ] do
+    for l in [ s .. n - 1 ] do
         t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
         if l = i and t<>0 then
 
@@ -279,9 +279,9 @@ InstallGlobalFunction( Compute_Homotopy,
 sol := LeftDivide(mat, b);
 
 if sol = fail then 
-   return [ sol, mat, b, var ];
+   return [ false, sol, mat, b, var ];
 else 
-   return [ sol, mat, b, var ]; 
+   return [ true, sol, mat, b, var ]; 
 fi;
 
 end );
@@ -299,20 +299,8 @@ underlying_cat := UnderlyingCategory( cat );
 
 if IsCochainComplexCategory( cat ) then 
 
-   T := UnsignedShiftFunctor( cat, m - 1 );
+   return Compute_Homotopy( phi, m, n );
 
-   psi := ApplyFunctor( T, phi );
-   
-   sol := ShallowCopy( Compute_Homotopy( psi, n - m + 1 ) );
-
-   new_var := sol[ 4 ];
-
-   new_var := List( new_var, i-> [ i[1],i[2] + m - 1, i[3] ] );
-
-   sol[ 4 ] := new_var;
-
-   return sol;
-   
 elif IsChainComplexCategory( cat ) then 
 
    T := ChainToCochainComplexFunctor( underlying_cat  );
@@ -321,11 +309,11 @@ elif IsChainComplexCategory( cat ) then
 
    sol := ShallowCopy( ComputeHomotopy( psi, -n, -m ) );
 
-   new_var := sol[ 4 ];
+   new_var := sol[ 5 ];
 
    new_var := List( new_var, i-> [ i[1],-i[2], i[3] ] );
 
-   sol[ 4 ] := new_var;
+   sol[ 5 ] := new_var;
 
    return sol;
 
