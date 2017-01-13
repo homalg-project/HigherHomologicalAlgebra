@@ -161,7 +161,7 @@ InstallGlobalFunction( Compute_Homotopy,
      for l in [ 1 .. n - 1 ] do 
          t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
          if t<>0 then
-         mat := union_of_columns( mat, HomalgZeroMatrix( r, t, ring ) );
+         current_mat := UnionOfColumns( current_mat, HomalgZeroMatrix( r, t, ring ) );
          fi;
      od;
 
@@ -237,8 +237,8 @@ InstallGlobalFunction( Compute_Homotopy,
     current_mat := HomalgZeroMatrix( r, 0, ring );
 
     for j in [ 2 .. n ] do 
-      t := NrRows( UnderlyingMatrix( A[ i + 1 ] ) ) * NrColumns( UnderlyingMatrix( B[ i ] ) );
 
+      t := NrColumns( UnderlyingMatrix( A[ j ] ) )*NrColumns( UnderlyingMatrix( B[ j -1 ] ) );
       if j = i + 1 and t<>0 then 
 
         current_mat := UnionOfColumns( current_mat, KroneckerMat( HomalgIdentityMatrix( NrColumns( UnderlyingMatrix( B[ i ] ) ), ring ), UnderlyingMatrix( A[ i + 1 ] ) ) );
@@ -257,7 +257,7 @@ InstallGlobalFunction( Compute_Homotopy,
     od;
 
     for l in [ 1 .. n - 1 ] do
-        t := NrRows( UnderlyingMatrix( A[ i + 1 ] ) )*NrRows( UnderlyingMatrix( B[ i ] ) );
+        t := NrRows( UnderlyingMatrix( A[ l + 1 ] ) )*NrRows( UnderlyingMatrix( B[ l ] ) );
         if l = i and t<>0 then
 
            current_mat := UnionOfColumns( current_mat, KroneckerMat( Involution( UnderlyingMatrix( B[ i ] ) ), HomalgIdentityMatrix( NrRows( UnderlyingMatrix( A[ i + 1 ] ) ), ring ) ) );
@@ -281,7 +281,7 @@ sol := LeftDivide(mat, b);
 if sol = fail then 
    return [ sol, mat, b, var ];
 else 
-   return [ sol, var ]; 
+   return [ sol, mat, b, var ]; 
 fi;
 
 end );
@@ -305,11 +305,11 @@ if IsCochainComplexCategory( cat ) then
    
    sol := ShallowCopy( Compute_Homotopy( psi, n - m + 1 ) );
 
-   new_var := sol[ Length( sol ) ];
+   new_var := sol[ 4 ];
 
    new_var := List( new_var, i-> [ i[1],i[2] + m - 1, i[3] ] );
 
-   sol[ Length( sol ) ] := new_var;
+   sol[ 4 ] := new_var;
 
    return sol;
    
@@ -321,11 +321,11 @@ elif IsChainComplexCategory( cat ) then
 
    sol := ShallowCopy( ComputeHomotopy( psi, -n, -m ) );
 
-   new_var := sol[ Length( sol ) ];
+   new_var := sol[ 4 ];
 
    new_var := List( new_var, i-> [ i[1],-i[2], i[3] ] );
 
-   sol[ Length( sol ) ] := new_var;
+   sol[ 4 ] := new_var;
 
    return sol;
 
