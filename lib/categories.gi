@@ -229,12 +229,43 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                              end );
 
      AddDirectSum( complex_cat, function( L )
-                                local diffs;
+                                local diffs, complex;
 
                                 diffs := MapLazy( List( L, Differentials ), DirectSumFunctorial, 1 );
 
-                                return complex_constructor( cat, diffs );
+                                complex := complex_constructor( cat, diffs );
 
+                                if Length( L ) = 2 then 
+                                AddToToDoList( ToDoListEntry( [ [ L[ 1 ], "HAS_FAU_BOUND", true ], 
+                                                                [ L[ 2 ], "HAS_FAU_BOUND", true ]  ], function( )
+                                                                                                      local b;
+
+                                                                                                      if not HasFAU_BOUND( complex ) then
+
+                                                                                                         b := Maximum( FAU_BOUND( L[ 1 ] ), FAU_BOUND( L[ 2 ] ) );
+
+                                                                                                         SetUpperBound( complex, b );
+
+                                                                                                      fi;
+
+                                                                                                      end ) );
+                                AddToToDoList( ToDoListEntry( [ [ L[ 1 ], "HAS_FAL_BOUND", true ], 
+                                                                [ L[ 2 ], "HAS_FAL_BOUND", true ]  ], function( )
+                                                                                                      local b;
+
+                                                                                                      if not HasFAL_BOUND( complex ) then
+
+                                                                                                         b := Minimum( FAL_BOUND( L[ 1 ] ), FAL_BOUND( L[ 2 ] ) );
+
+                                                                                                         SetLowerBound( complex, b );
+
+                                                                                                      fi;
+
+                                                                                                      end ) );
+                                fi;
+
+                                return complex;
+ 
                                 end );
 
      AddInjectionOfCofactorOfDirectSum( complex_cat, function( L, n )
