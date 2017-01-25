@@ -35,7 +35,7 @@ end );
 DeclareGlobalFunction( "C_H" );
 InstallGlobalFunction( C_H, 
   function( phi, m, n )
-  local A, B, var, i, j, Hom_i, Q, V, v, var_list, f_mat_v, current_mat, k, d, mat, vector;
+  local A, B, var, i, j, Hom_i, Q, V, v, var_list, f_mat_v, current_mat, k, d, mat, vector, h, sol;
   A := Source( phi );
   B := Range( phi );
   var_list := [ ];
@@ -115,7 +115,25 @@ InstallGlobalFunction( C_H,
   vector := RowVector( k, ColsOfMatrix( mat[ 1 ] )[ 1 ] );
   mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( mat ) ], i->mat[ i ] ) ) );
 
-return [ vector, mat ];
+  sol := SolutionMat( mat, vector );
+
+  if sol = fail then 
+     return fail;
+  else
+     sol := sol!.entries;
+     mat := [ ];
+     for i in [ m + 1 .. n ] do 
+         h := ZeroMorphism( A[ i ], B[ i - 1 ] );
+         for var in var_list do
+             if var[ 1 ] = i then
+                  h := h + sol[ 1 ]*var[ 2 ];
+                  Remove( sol, 1 );
+             fi;
+         od;
+         Add( mat, h );
+      od;
+  return mat;
+  fi;
 end );
 
 
@@ -177,7 +195,3 @@ phi3 := PreCompose( h3, CB^2 );
 #! <(1,1,1)->(2,2,2)>
 phi := CochainMorphism( CA, CB, [ phi1, phi2, phi3 ], 1 );
 #! <A bounded morphism in cochain complexes category over quiver representations over Rationals * Q1 with active lower bound 0 and active upper bound 4.>
- 
-
-
-
