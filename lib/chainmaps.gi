@@ -729,7 +729,7 @@ InstallMethod( IsQuasiIsomorphism_,
 
    max := Maximum( ActiveUpperBound(  Source( phi ) ), ActiveUpperBound(  Range( phi ) ) ) - 1;
 
-   if IsChainMap( phi ) then
+   if IsChainMorphism( phi ) then
 
       h_functor := HomologyFunctor;
 
