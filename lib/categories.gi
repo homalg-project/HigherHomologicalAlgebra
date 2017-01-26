@@ -229,40 +229,41 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                              end );
 
      AddDirectSum( complex_cat, function( L )
-                                local diffs, complex;
+                                local diffs, complex, u, l;
 
                                 diffs := MapLazy( List( L, Differentials ), DirectSumFunctorial, 1 );
 
                                 complex := complex_constructor( cat, diffs );
 
-                                if Length( L ) = 2 then 
-                                AddToToDoList( ToDoListEntry( [ [ L[ 1 ], "HAS_FAU_BOUND", true ], 
-                                                                [ L[ 2 ], "HAS_FAU_BOUND", true ]  ], function( )
-                                                                                                      local b;
+                                u := List( L, i-> [ i, "HAS_FAU_BOUND", true ] ); 
 
-                                                                                                      if not HasFAU_BOUND( complex ) then
+                                AddToToDoList( ToDoListEntry( u, function( )
+                                                                 local b;
 
-                                                                                                         b := Maximum( FAU_BOUND( L[ 1 ] ), FAU_BOUND( L[ 2 ] ) );
+                                                                 if not HasFAU_BOUND( complex ) then
 
-                                                                                                         SetUpperBound( complex, b );
+                                                                 b := Maximum( List( L, i-> FAU_BOUND( i ) ) );
 
-                                                                                                      fi;
+                                                                 SetUpperBound( complex, b );
 
-                                                                                                      end ) );
-                                AddToToDoList( ToDoListEntry( [ [ L[ 1 ], "HAS_FAL_BOUND", true ], 
-                                                                [ L[ 2 ], "HAS_FAL_BOUND", true ]  ], function( )
-                                                                                                      local b;
+                                                                 fi;
 
-                                                                                                      if not HasFAL_BOUND( complex ) then
+                                                                 end ) );
 
-                                                                                                         b := Minimum( FAL_BOUND( L[ 1 ] ), FAL_BOUND( L[ 2 ] ) );
+                                l := List( L, i-> [ i, "HAS_FAL_BOUND", true ] ); 
 
-                                                                                                         SetLowerBound( complex, b );
+                                AddToToDoList( ToDoListEntry( l, function( )
+                                                                 local b;
 
-                                                                                                      fi;
+                                                                 if not HasFAL_BOUND( complex ) then
 
-                                                                                                      end ) );
-                                fi;
+                                                                 b := Minimum( List( L, i-> FAL_BOUND( i ) ) );
+
+                                                                 SetLowerBound( complex, b );
+
+                                                                 fi;
+
+                                                                 end ) );
 
                                 return complex;
  
