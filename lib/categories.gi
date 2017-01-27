@@ -265,6 +265,29 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                                                  end ) );
 
+                                AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function( )
+												      local i;
+
+                                                                                                      for i in L do
+
+                                                                                                          SetUpperBound( i, FAU_BOUND( complex ) );
+
+                                                                                                      od;
+
+                                                                                                      end ) );
+
+                                AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function( )
+												      local i;
+
+                                                                                                      for i in L do
+
+                                                                                                          SetLowerBound( i, FAL_BOUND( complex ) );
+
+                                                                                                      od;
+
+                                                                                                      end ) );
+ 
+
                                 return complex;
  
                                 end );
