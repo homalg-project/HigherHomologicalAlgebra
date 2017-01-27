@@ -804,7 +804,18 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
 
   inc := KernelLift( C^i, im );
 
-  return CokernelObject( inc );
+  im := CokernelObject( inc );
+
+  AddToToDoList( ToDoListEntry( [ [ im, "IsZero", false ] ], function( )
+
+                                                             if not HasIsExact( C ) then
+
+                                                                SetIsExact( C, false );
+
+                                                             fi;
+
+                                                             end ) );
+  return im;
 
 end );
 
@@ -1059,7 +1070,7 @@ end );
 #####################################
 
 ##
-InstallMethod( GoodTruncationBelow,
+InstallMethod( GoodTruncationBelowOp,
                [ IsChainComplex, IsInt ],
 
   function( C, n )
@@ -1094,7 +1105,7 @@ InstallMethod( GoodTruncationBelow,
 end );
 
 ##
-InstallMethod( GoodTruncationBelow,
+InstallMethod( GoodTruncationBelowOp,
                [ IsCochainComplex, IsInt ],
 
   function( C, n )
@@ -1129,7 +1140,7 @@ InstallMethod( GoodTruncationBelow,
 end );
 
 ##
-InstallMethod( GoodTruncationAbove,
+InstallMethod( GoodTruncationAboveOp,
                [ IsChainComplex, IsInt ],
 
   function( C, n )
@@ -1164,7 +1175,7 @@ InstallMethod( GoodTruncationAbove,
 end );
 
 ##
-InstallMethod( GoodTruncationAbove,
+InstallMethod( GoodTruncationAboveOp,
                [ IsCochainComplex, IsInt ],
 
   function( C, n )
@@ -1198,10 +1209,11 @@ InstallMethod( GoodTruncationAbove,
 
 end );
 
-##  <------ C_i-1 <---- C_i <---- C_i+1 <-----
-##  <------  0    <---- C_i <---- C_i+1 <-----
+## sigma_>= n 
+##  <------ C_n-1 <---- C_n <---- C_n+1 <-----
+##  <------  0    <---- C_n <---- C_n+1 <-----
 
-InstallMethod( BrutalTruncationBelow,
+InstallMethod( BrutalTruncationBelowOp,
                [ IsChainComplex, IsInt ],
   function( C, n )
   local zero, diffs, tr_C;
@@ -1233,10 +1245,11 @@ InstallMethod( BrutalTruncationBelow,
 
 end );
 
-##  <------ C_i-1 <---- C_i <---- C_i+1 <-----
-##  <------ C_i-1 <---- C_i <----   0   <-----
+## sigma_>n =
+##  <------ C_n-1 <---- C_n <---- C_n+1 <-----
+##  <------ C_n-1 <----  0  <----   0   <-----
 
-InstallMethod( BrutalTruncationAbove,
+InstallMethod( BrutalTruncationAboveOp,
                [ IsChainComplex, IsInt ],
   function( C, n )
   local zero, diffs, tr_C;
@@ -1246,10 +1259,10 @@ InstallMethod( BrutalTruncationAbove,
   diffs := Differentials( C );
 
   diffs := MapLazy( IntegersList, function( i )
-                                  if i > n + 1  then
+                                  if i >= n + 1  then
                                      return ZeroMorphism( zero, zero );
-                                  elif i = n + 1 then
-                                     return ZeroMorphism( zero, C[ n ]  );
+                                  elif i = n then
+                                     return ZeroMorphism( zero, C[ n-1 ]  );
                                   else
                                      return C^i;
                                   fi;
@@ -1268,10 +1281,10 @@ InstallMethod( BrutalTruncationAbove,
 
 end );
 
-##  -------> C_i-1 -----> C_i -----> C_i+1 ------>
-##  -------> 0     -----> C_i -----> C_i+1 ------>
+##  -------> C_n-1 -----> C_n -----> C_n+1 ------>
+##  -------> 0     ----->  0 -----> C_n+1 ------>
 
-InstallMethod( BrutalTruncationBelow,
+InstallMethod( BrutalTruncationBelowOp,
                [ IsCochainComplex, IsInt ],
   function( C, n )
   local zero, diffs, tr_C;
@@ -1281,10 +1294,10 @@ InstallMethod( BrutalTruncationBelow,
   diffs := Differentials( C );
 
   diffs := MapLazy( IntegersList, function( i )
-                                  if i < n-1  then
+                                  if i < n  then
                                      return ZeroMorphism( zero, zero ); 
-                                  elif i = n-1 then
-                                     return ZeroMorphism( zero, C[ n ] );
+                                  elif i = n then
+                                     return ZeroMorphism( zero, C[ n + 1 ] );
                                   else
                                      return C^i;
                                   fi;
@@ -1306,7 +1319,7 @@ end );
 ##  ------> C_i-1 -----> C_i -----> C_i+1 ------>
 ##  ------> C_i-1 -----> C_i ----->  0    ------>
 
-InstallMethod( BrutalTruncationAbove,
+InstallMethod( BrutalTruncationAboveOp,
                [ IsCochainComplex, IsInt ],
   function( C, n )
   local zero, diffs, tr_C;
