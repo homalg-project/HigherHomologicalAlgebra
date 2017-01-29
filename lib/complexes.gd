@@ -8,7 +8,7 @@
 
 #! @Chapter Complexes
 
-#! @Section Chain and cochain complex categories
+#! @Section Categories and filters
 
 #########################################
 #
@@ -180,7 +180,7 @@ DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsCapCategoryMorp
 #
 #########################################
 
-#! @Section Attributes and operations on complexes.
+#! @Section Attributes
 
 #! @Description
 #! The command returns the differentials of the chain or cochain complex as an infinite list.
@@ -199,6 +199,7 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 #! @Arguments C
 #! @Returns a Cap category
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
+#! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
 
@@ -219,6 +220,8 @@ DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainComplex );
 #
 #########################################
 KeyDependentOperation( "CertainObject", IsChainOrCochainComplex, IsInt, ReturnTrue );
+
+#! @Section Operations
 
 #! @Description
 #! The command returns the object of the chain or cochain complex in index $i$.

@@ -7,8 +7,8 @@
 #
 ################################################
 
-#! @Chapter complexes morphisms
-#! @Section categories and filters
+#! @Chapter Complexes morphisms
+#! @Section Categories and filters
 
 #! @Description
 #!  bla bla
@@ -166,7 +166,7 @@ DeclareAttribute( "IsQuasiIsomorphism_", IsChainOrCochainMorphism );
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
 
-#! @Section Operations on maps
+#! @Section Operations
 
 #! @Description
 #! The command sets an upper bound to the morphism $\phi$. An upper bound of $\phi$ is an integer $u$
@@ -218,7 +218,7 @@ KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, Retur
 #! @Arguments phi, n
 #! @Returns an integer
 DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
-
+#! @EndSection 
 #######################################
 #
 #  Global functions and variables
