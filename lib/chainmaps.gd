@@ -124,37 +124,100 @@ DeclareOperation( "CochainMorphism",
 DeclareOperation( "CochainMorphism",
                    [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
+#! @EndSection
 ######################################
 #
 #  Attribtes, Operations ..
 #
 ######################################
 
+#! @Section Attributes
+
+#! @Description
+#! The output is morphisms of the chain or cochain morphism as an infinite list.
+#! @Arguments phi
+#! @Returns infinite list
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
+#! @Description
+#! The input a chain ( resp. cochain ) morphism $\phi:C \rightarrow D$. The output is its 
+#! mapping cone chain ( resp. cochain ) complex $\mathrm{Cone}(\phi )$.
+#! @Arguments phi
+#! @Returns complex
 DeclareAttribute( "MappingCone", IsChainOrCochainMorphism );
 
+#! @Description
+#! The input a chain ( resp. cochain ) morphism $\phi:C\rightarrow D$. The output is the natural injection 
+#! $i:D\rightarrow \mathrm{Cone}\phi )$.
+#! @Arguments phi
+#! @Returns chain ( resp. cochain ) morphism
 DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 
+#! @Description
+#! The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural projection
+#! $\pi:\mathrm{Cone}(\phi ) \rightarrow C[u]$ where $u=-1$ if $\phi$ is chain morphism and $u=1$ if $\phi$ is cochain morphism. 
+#! @Arguments phi
+#! @Returns chain ( resp. cochain ) morphism
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
+#! @EndSection
 
 DeclareAttribute( "IsQuasiIsomorphism_", IsChainOrCochainMorphism );
 
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
-DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
 
-DeclareOperation( "HasActiveUpperBound", [ IsChainOrCochainMorphism ] );
+#! @Section Operations on maps
 
-DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
-
-DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
-
-DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
-
+#! @Description
+#! The command sets an upper bound to the morphism $\phi$. An upper bound of $\phi$ is an integer $u$
+#! with $\phi_{i\geq u}= 0$. The integer $u$ will be called **active** upper bound of $\phi$. If $\phi$ already has an
+#! active upper bound, say $u^\prime$, then $u^\prime$ will be replaced by $u$ only if $u\leq u^\prime$.
+#! @Arguments phi, n
+#! @Returns a side effect
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
 
+#! @Description
+#! The command sets an lower bound to the morphism $\phi$. A lower bound of $\phi$ is an integer $l$
+#! with $\phi_{i\leq l}= 0$. The integer $l$ will be called **active** lower bound of $\phi$. If $\phi$ already has an
+#! active lower bound, say $l^\prime$, then $l^\prime$ will be replaced by $l$ only if $l\geq l^\prime$.
+#! @Arguments phi, n
+#! @Returns a side effect
+DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
+
+#! @Description
+#! The input is chain or cochain morphism $\phi$. 
+#! The output is <A>true</A> if an upper bound has been set to $\phi$ and <A>false</A> otherwise.
+#! @Arguments phi
+#! @Returns true or false
+DeclareOperation( "HasActiveUpperBound", [ IsChainOrCochainMorphism ] );
+
+#! @Description
+#! The input is chain or cochain morphism $\phi$. 
+#! The output is <A>true</A> if a lower bound has been set to $\phi$ and <A>false</A> otherwise.
+#! @Arguments phi
+#! @Returns true or false
+DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
+
+#! @Description
+#! The input is chain or cochain morphism. The output is its active upper bound if such has been set to $\phi$. Otherwise we get error.
+#! @Arguments phi
+#! @Returns an integer
+DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
+
+#! @Description
+#! The input is chain or cochain morphism. The output is its active lower bound if such has been set to $\phi$. Otherwise we get error.
+#! @Arguments phi
+#! @Returns an integer
+DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
+
+
 KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+
+#! @Description
+#! The input is chain ( resp. cochain ) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$( resp. $\phi^n$ ).
+#! @Arguments phi, n
+#! @Returns an integer
+DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 
 #######################################
 #
