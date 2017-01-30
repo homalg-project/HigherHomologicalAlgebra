@@ -77,8 +77,8 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList, IsBool ] );
 
 #! @BeginGroup 1
 #! @Description
-#! The input is category <A>A</A> and an infinite list <A>diffs</A>. The output is the chain ( cochain ) complex $M_{\bullet}\in \mathrm{Ch}(A)$
-#! ( $M^{\bullet}\in \mathrm{CoCh}(A)$ ) where $d^M_{i}=\mathrm{diffs}[ i ]$( $d_M^{i}=\mathrm{diffs}[ i ]$ ).
+#! The input is category <A>A</A> and an infinite list <A>diffs</A>. The output is the chain (resp. cochain) complex $M_{\bullet}\in \mathrm{Ch}(A)$
+#! ($M^{\bullet}\in \mathrm{CoCh}(A)$) where $d^M_{i}=\mathrm{diffs}[ i ]$($d_M^{i}=\mathrm{diffs}[ i ]$).
 #! @Arguments A, diffs
 #! @Returns a chain complex
 DeclareOperation( "ChainComplex", [ IsCapCategory, IsZList ] );
@@ -90,9 +90,9 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
 
 #! @BeginGroup 2
 #! @Description
-#! The input is a finite dense list <A>diffs</A> and an integer <A>n</A> . The output is the chain ( resp. cochain ) complex 
-#! $M_{\bullet}\in \mathrm{Ch}(A)$ ( $M^{\bullet}\in \mathrm{CoCh}(A)$ ) where 
-#! $d^M_{n}:= \mathrm{diffs}[ 1 ]( d_M^n :=\mathrm{diffs}[ 1 ] ),d^M_{n+1}=\mathrm{diffs}[ 2 ](d_M^{n+1}:=\mathrm{diffs}[ 2 ])$, etc.
+#! The input is a finite dense list <A>diffs</A> and an integer <A>n</A> . The output is the chain (resp. cochain) complex 
+#! $M_{\bullet}\in \mathrm{Ch}(A)$ ($M^{\bullet}\in \mathrm{CoCh}(A)$) where 
+#! $d^M_{n}:= \mathrm{diffs}[ 1 ](d_M^n :=\mathrm{diffs}[ 1 ]),d^M_{n+1}=\mathrm{diffs}[ 2 ](d_M^{n+1}:=\mathrm{diffs}[ 2 ])$, etc.
 #! @Arguments diffs, n
 #! @Returns a (co)chain complex
 DeclareOperation( "ChainComplex", [ IsDenseList, IsInt ] );
@@ -114,7 +114,7 @@ DeclareOperation( "CochainComplex", [ IsDenseList ] );
 
 #! @BeginGroup 4
 #! @Description
-#! The input is an object $M\in A$. The output is chain ( resp. cochain ) complex $M_{\bullet}\in\mathrm{Ch(A)}( M^{\bullet}\in\mathrm{CoCh(A)})$
+#! The input is an object $M\in A$. The output is chain (resp. cochain) complex $M_{\bullet}\in\mathrm{Ch(A)}(M^{\bullet}\in\mathrm{CoCh(A)})$
 #! where $M_n=M( M^n=M)$ and $M_i=0(M^i=0)$ whenever $i\neq n$.
 #! @Arguments diffs, n
 #! @Returns a (co)chain complex
@@ -128,7 +128,7 @@ DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject, IsInt ] );
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
 #! The output is chain complex $M_{\bullet}\in\mathrm{Ch(A)}$ where $d^{M}_{0}=d$ 
-#! and $d^M_{i}=G^{i}( d )$ for all $i\leq -1$ and $d^M_{i}=F^{i}( d )$ for all $i \geq 1$.
+#! and $d^M_{i}=G^{i}(d)$ for all $i\leq -1$ and $d^M_{i}=F^{i}(d )$ for all $i \geq 1$.
 #! @Arguments d,G,F
 #! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
@@ -136,7 +136,7 @@ DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsF
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
 #! The output is cochain complex $M^{\bullet}\in\mathrm{CoCh(A)}$ where $d_{M}^{0}=d$ 
-#! and $d_M^{i}=G^{i}( d )$ for all $i\leq -1$ and $d_M^{i}=F^{i}( d )$ for all $i \geq 1$.
+#! and $d_M^{i}=G^{i}( d)$ for all $i\leq -1$ and $d_M^{i}=F^{i}( d )$ for all $i \geq 1$.
 #! @Arguments d,G,F
 #! @Returns a cochain complex
 DeclareOperation( "CochainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
@@ -244,7 +244,7 @@ DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
 KeyDependentOperation( "CertainCycle", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain ( resp. cochain ) complex $C$ and an integer $n$. The output is the image embeddin of $i+1$'th ( resp. $i-1$'th ) differential of $C$.
+#! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The output is the image embeddin of $i+1$'th ( resp. $i-1$'th) differential of $C$.
 #! @Arguments C, n
 #! @Returns a morphism
 KeyDependentOperation( "CertainBoundary", IsChainOrCochainComplex, IsInt, ReturnTrue );
@@ -255,7 +255,7 @@ KeyDependentOperation( "CertainHomology", IsChainComplex, IsInt, ReturnTrue );
 KeyDependentOperation( "CertainCohomology", IsCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain ( resp. cochain ) complex $C$ and an integer $n$. The outout is the homology ( resp. cohomology )
+#! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The outout is the homology (resp. cohomology)
 #! object of $C$ in index $n$.
 #! @Arguments C, n
 #! @Returns a object
@@ -272,7 +272,7 @@ KeyDependentOperation( "ShiftLazy", IsChainOrCochainComplex, IsInt, ReturnTrue )
 KeyDependentOperation( "ShiftUnsignedLazy", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The command sets an upper bound $n$ to the chain ( resp. cochain ) complex $C$. 
+#! The command sets an upper bound $n$ to the chain (resp. cochain) complex $C$. 
 #! This means $C_{i\geq n}=0(C^{\geq n}=0)$. This upper bound will be called $\textit{active}$ upper bound of $C$. 
 #! If $C$ already has an active upper bound $m$, then $m$ will be replaced by $n$ only if $n$ is better upper bound 
 #! than $m$, i.e., $n\leq m$. If $C$ has an active lower bound $l$
@@ -282,7 +282,7 @@ KeyDependentOperation( "ShiftUnsignedLazy", IsChainOrCochainComplex, IsInt, Retu
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainComplex, IsInt ] );
 
 #! @Description
-#! The command sets an lower bound $n$ to the chain ( resp. cochain ) complex $C$. 
+#! The command sets an lower bound $n$ to the chain (resp. cochain) complex $C$. 
 #! This means $C_{i\leq n}=0(C^{\leq n}=0)$. This lower bound will be called $\textit{active}$ lower bound of $C$. 
 #! If $C$ already has an active lower bound $m$, then $m$ will be replaced by $n$ only if $n$ is better lower
 #! bound than $m$, i.e., $n\geq m$. If $C$ has an active upper bound $u$
@@ -466,7 +466,8 @@ KeyDependentOperation( "BrutalTruncationBelow", IsCochainComplex, IsInt, ReturnT
 #! @EndSection
 
 #! @Section Examples
-#! @InsertChunk example1
+#! @InsertChunk complexes_example_1
+#! @InsertChunk complexes_example_2
 #! @EndSection
 
 ##############################################
