@@ -140,24 +140,24 @@ DeclareOperation( "CochainMorphism",
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
 #! @Description
-#! The input a chain ( resp. cochain ) morphism $\phi:C \rightarrow D$. The output is its 
-#! mapping cone chain ( resp. cochain ) complex $\mathrm{Cone}(\phi )$.
+#! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
+#! mapping cone chain (resp. cochain) complex $\mathrm{Cone}(\phi )$.
 #! @Arguments phi
 #! @Returns complex
 DeclareAttribute( "MappingCone", IsChainOrCochainMorphism );
 
 #! @Description
-#! The input a chain ( resp. cochain ) morphism $\phi:C\rightarrow D$. The output is the natural injection 
+#! The input a chain (resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural injection 
 #! $i:D\rightarrow \mathrm{Cone}\phi )$.
 #! @Arguments phi
-#! @Returns chain ( resp. cochain ) morphism
+#! @Returns chain (resp. cochain) morphism
 DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 
 #! @Description
 #! The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural projection
 #! $\pi:\mathrm{Cone}(\phi ) \rightarrow C[u]$ where $u=-1$ if $\phi$ is chain morphism and $u=1$ if $\phi$ is cochain morphism. 
 #! @Arguments phi
-#! @Returns chain ( resp. cochain ) morphism
+#! @Returns chain (resp. cochain) morphism
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
 #! @EndSection
 
@@ -214,7 +214,7 @@ DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
 KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is chain ( resp. cochain ) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$( resp. $\phi^n$ ).
+#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #! @Arguments phi, n
 #! @Returns an integer
 DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
