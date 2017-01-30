@@ -951,6 +951,8 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
 
+  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsExact", complex, "IsExact" ) );
+
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
                                                                     if not HasFAU_BOUND( complex ) then
