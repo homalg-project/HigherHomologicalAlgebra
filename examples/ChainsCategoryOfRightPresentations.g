@@ -18,39 +18,7 @@ K := Source( g );;
 h := ZeroMorphism( M, K );;
 l := RepeatListZ( [ h, f, g ] );;
 C := ChainComplex( right_pre_category, l );;
-Display( C, 0, 1 );
-#!
-#! -----------------------------------------------------------------
-#! In index 0
-#!
-#! Object is
-#! e0,e1,e2,
-#! 0, 0, e0 
-#!
-#! An object in Category of right presentations of Q{e0,e1,e2}
-#!
-#! Differential is
-#! 0,0,
-#! 0,0,
-#! 0,0 
-#!
-#! A zero morphism in Category of right presentations of Q{e0,e1,e2}
-#!
-#! -----------------------------------------------------------------
-#! In index 1
-#!
-#! Object is
-#! (an empty 2 x 0 matrix)
-#! 
-#! An object in Category of right presentations of Q{e0,e1,e2}
-#! 
-#! Differential is
-#! e1,0,
-#! 0, 1 
-#! 
-#! A morphism in Category of right presentations of Q{e0,e1,e2}
-#! 
-#! ----------------------------------
+# Display( C, 0, 1 );
 C[ 2 ];;
 C^2;;
 #! @EndExample
