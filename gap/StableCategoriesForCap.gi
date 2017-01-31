@@ -64,18 +64,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     
        function( morphism1, morphism2 )
        
-       return IsEqualForMorphisms( UnderlyingMorphismOfTheStableMorphism( morphism1 ), 
-                                    UnderlyingMorphismOfTheStableMorphism( morphism2 ) );
-    end );
-    
-    # AddIsCongruentForMorphisms
-    
-    AddIsCongruentForMorphisms( category, 
-    
-      function( morphism1, morphism2 )
-      
-        return test_function( morphism1 - morphism2 );
-        
+       return test_function( morphism1 - morphism2 );
     end );
     
     ## PreCompose

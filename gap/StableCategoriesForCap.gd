@@ -34,8 +34,8 @@ DeclareFilter( "WasCreatedAsStableCategory" );
 #! @Description
 #!  Creates a stable category <A>S</A> with name <A>name</A> out of an Abelian category <A>A</A>.
 #!  If <A>name</A> is not given, a generic name is constructed out of the name of <A>A</A>.
-#!  The argument <A>func</A> must be a unary function on the morphisms of <A>A</A> deciding whether 
-#!  the morphism factors through a projective object or not.
+#!  The argument <A>func</A> is the membership function. If <A>func</A> applied on a morphism <A>mor</A>
+#! returns true, then this <A>mor</A> will be zero in the stable category.
 #! @Arguments A,func[,name]
 #! @Returns a CAP category
 DeclareOperation( "StableCategory",
