@@ -5,5 +5,6 @@
 #
 
 ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesForCap.gd");
-ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesOfModulePresentationsOverExteriorAlgebra.gd");
+#ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesOfModulePresentationsOverExteriorAlgebra.gd");
+#ReadPackage( "StableCategoriesForCap", "gap/FrobeniusToTriangulatedStableCategories.gd");
 
