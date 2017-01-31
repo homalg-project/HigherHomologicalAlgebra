@@ -229,9 +229,11 @@ DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 #! The command displays the components of the morphism between $m$ and $n$. 
 #! @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
-
-
 #! @EndSection 
+
+#! @Section Examples
+#! @InsertChunk vec_2
+#! @EndSection
 #######################################
 #
 #  Global functions and variables

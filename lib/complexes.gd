@@ -466,8 +466,8 @@ KeyDependentOperation( "BrutalTruncationBelow", IsCochainComplex, IsInt, ReturnT
 #! @EndSection
 
 #! @Section Examples
-#! @InsertChunk complexes_example_1
-#! @InsertChunk complexes_example_2
+#! @InsertChunk vec_1
+# @InsertChunk complexes_example_2
 #! @EndSection
 
 ##############################################
