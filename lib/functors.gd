@@ -1,7 +1,7 @@
 #
 
 #! @Chapter Functors
-#! @Section basic functors for complex categories.
+#! @Section Basic functors for complex categories.
 
 #! @Group f1
 #! @Description
