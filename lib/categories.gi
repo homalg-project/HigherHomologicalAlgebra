@@ -240,13 +240,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                 AddToToDoList( ToDoListEntry( u, function( )
                                                                  local b;
 
-                                                                 if not HasFAU_BOUND( complex ) then
-
-                                                                 b := Maximum( List( L, i-> FAU_BOUND( i ) ) );
+                                                                 b := Maximum( List( L, i-> ActiveUpperBound( i ) ) );
 
                                                                  SetUpperBound( complex, b );
-
-                                                                 fi;
 
                                                                  end ) );
 
@@ -255,13 +251,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
                                 AddToToDoList( ToDoListEntry( l, function( )
                                                                  local b;
 
-                                                                 if not HasFAL_BOUND( complex ) then
-
-                                                                 b := Minimum( List( L, i-> FAL_BOUND( i ) ) );
+                                                                 b := Minimum( List( L, i-> ActiveLowerBound( i ) ) );
 
                                                                  SetLowerBound( complex, b );
-
-                                                                 fi;
 
                                                                  end ) );
 
@@ -270,7 +262,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                                                                                       for i in L do
 
-                                                                                                          SetUpperBound( i, FAU_BOUND( complex ) );
+                                                                                                          SetUpperBound( i, ActiveUpperBound( complex ) );
 
                                                                                                       od;
 
@@ -281,7 +273,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                                                                                       for i in L do
 
-                                                                                                          SetLowerBound( i, FAL_BOUND( complex ) );
+                                                                                                          SetLowerBound( i, ActiveLowerBound( complex ) );
 
                                                                                                       od;
 
@@ -289,6 +281,66 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
  
 
                                 return complex;
+ 
+                                end );
+
+
+          AddDirectSumFunctorial( complex_cat, function( L )
+                                local source, range, maps, morphism, u, l;
+
+                                maps := MapLazy( List( L, Morphisms ), DirectSumFunctorial, 1 );
+                                source := DirectSum( List( L, Source ) );
+
+                                range  := DirectSum( List( L, Range ) );
+
+                                morphism := morphism_constructor( source, range, maps );
+
+                                u := List( L, i-> [ i, "HAS_FAU_BOUND", true ] ); 
+
+                                AddToToDoList( ToDoListEntry( u, function( )
+                                                                 local b;
+
+                                                                 b := Maximum( List( L, i-> ActiveUpperBound( i ) ) );
+
+                                                                 SetUpperBound( morphism, b );
+
+                                                                 end ) );
+
+                                l := List( L, i-> [ i, "HAS_FAL_BOUND", true ] ); 
+
+                                AddToToDoList( ToDoListEntry( l, function( )
+                                                                 local b;
+
+                                                                 b := Minimum( List( L, i-> ActiveLowerBound( i ) ) );
+
+                                                                 SetLowerBound( morphism, b );
+
+                                                                 end ) );
+
+                                AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAU_BOUND", true ] ], function( )
+                                                                                                      local i;
+
+                                                                                                      for i in L do
+
+                                                                                                          SetUpperBound( i, ActiveUpperBound( morphism ) );
+
+                                                                                                      od;
+
+                                                                                                      end ) );
+
+                                AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAL_BOUND", true ] ], function( )
+                                                                                                      local i;
+
+                                                                                                      for i in L do
+
+                                                                                                          SetLowerBound( i, ActiveLowerBound( morphism ) );
+
+                                                                                                      od;
+
+                                                                                                      end ) );
+ 
+
+                                return morphism;
  
                                 end );
 
