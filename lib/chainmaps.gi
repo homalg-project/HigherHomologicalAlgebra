@@ -332,13 +332,13 @@ InstallMethod( Display,
 
    for i in [ m .. n ] do
 
-     Print( "\n-----------------------------------------------------------------\n" );
-
      Print( "In index ", String( i ) );
 
      Print( "\n\nMorphism is\n" );
 
      Display( map[ i ] );
+
+     Print( "\n-----------------------------------------------------------------\n" );
 
      od;
 
