@@ -1,10 +1,23 @@
 
-LoadPackage( "LinearAlgebraForCap" );;
-LoadPackage( "complex" );;
-#! @Chunk vec_1
+#! @Chunk vec_0
 #! @BeginLatexOnly
 #! Let $\mathbb{Q}$ be the field of rationals and let $\mathrm{Vec}_\mathbb{Q}$ be the category of $\mathbb{Q}$-vector spaces.
-#! In the below example we define the complex
+#! The cochain complex category of $\mathrm{Vec}_\mathbb{Q}$ can be constructed as follows 
+#! @EndLatexOnly
+#! @Example
+LoadPackage( "LinearAlgebraForCap" );;
+LoadPackage( "complex" );;
+Q := HomalgFieldOfRationals( );;
+matrix_category := MatrixCategory( Q );
+#! Category of matrices over Q
+cochain_cat := CochainComplexCategory( matrix_category );
+#! Cochain complexes category over category of matrices over Q
+#! @EndExample
+#! @EndChunk
+
+#! @Chunk vec_1
+#! @BeginLatexOnly
+#! Below we define the complex
 #! \begin{center}
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=1em,column sep=3em,minimum width=2em]
@@ -33,11 +46,6 @@ LoadPackage( "complex" );;
 #! \end{center}
 #! @EndLatexOnly
 #! @Example
-Q := HomalgFieldOfRationals( );;
-matrix_category := MatrixCategory( Q );
-#! Category of matrices over Q
-cochain_cat := CochainComplexCategory( matrix_category );
-#! Cochain complexes category over category of matrices over Q
 A := VectorSpaceObject( 1, Q );
 #! <A vector space object over Q of dimension 1>
 B := VectorSpaceObject( 2, Q );
@@ -338,21 +346,20 @@ p := NaturalProjectionFromMappingCone( psi );
 
 #! @Chunk vec_3
 #! @BeginLatexOnly
-#! The theory tells us that each of the compositions $i\psi$ is null-homotopic. That implies that the morphisms 
+#! The theory tells us that the composition $i\psi$ is null-homotopic. That implies that the morphisms 
 #! induced on cohomologies are all zero.
 #! @EndLatexOnly
 #! @Example
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in cochain complexes category over category of matrices
 #! over Q with active lower bound 4 and active upper bound 6.>
-#! over Q with active lower bound 3 and active upper bound 6.>
 H5 := CohomologyFunctor( cochain_cat, matrix_category, 5 );
 #! 5-th cohomology functor in category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
-#! true
 #! @EndExample
 #! @BeginLatexOnly
+#! 
 #! Next we define a functor $\mathbf{F}:\mathrm{Vec}_\mathbb{Q}\rightarrow \mathrm{Vec}_\mathbb{Q}$ 
 #! that maps every $\mathbb{Q}$-vector space $A$ to $A\oplus A$ and every morphism $f:A\rightarrow B$ to $f\oplus f$. Then we extend it 
 #! to the functor $\mathbf{Coch_F}:\mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})\rightarrow \mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})$
