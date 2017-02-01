@@ -59,5 +59,7 @@ DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ]
 #! @Arguments F
 #! @Returns a functor
 DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor ] );
-
+#! @EndSection
+#! @Section Example
+#! @InsertChunk vec_3
 #! @EndSection
