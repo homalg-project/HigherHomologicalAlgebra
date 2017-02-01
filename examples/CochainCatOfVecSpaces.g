@@ -327,7 +327,7 @@ cone := MappingCone( psi );
 #! Q with active lower bound 1 and active upper bound 6.>
 cone^4;
 #! <A morphism in Category of matrices over Q>
-Display( last );
+Display( cone^4 );
 #! [ [   -2,   -6,  -10 ],
 #!   [    0,    0,    5 ] ]
 #!
@@ -365,5 +365,45 @@ IsZeroForMorphisms( ApplyFunctor( H4, p_o_i ) );
 IsZeroForMorphisms( ApplyFunctor( H5, p_o_i ) );
 #! true
 #! @EndExample
+#! @BeginLatexOnly
+#! Next we define a functor $\mathbf{F}:\mathrm{Vek}_\mathbb{Q}\rightarrow \mathrm{Vek}_\mathbb{Q}$ 
+#! that maps every $\mathbb{Q}$-vector space $A$ to $A\oplus A$ and every morphism $f:A\rightarrow B$ to $f\oplus f$. Then we extend it 
+#! to a functor $\mathbf{Coch_F}:\mathrm{Coch}(\mathrm{Vek}_\mathbb{Q})\rightarrow \mathrm{Coch}(\mathrm{Vek}_\mathbb{Q})$.
+#! 
+#! @EndLatexOnly
+#! @Example
+F := CapFunctor( "double functor", matrix_category, matrix_category );
+#! double functor
+u := function( obj ) return DirectSum( [ obj, obj ] ); end;;
+AddObjectFunction( F, u );
+v := function( s, mor, r ) return DirectSumFunctorial( [ mor, mor ] ); end;;
+AddMorphismFunction( F, v );
+Display( f );
+#! [ [  1,  3 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( ApplyFunctor( F, f ) );
+#! [ [  1,  3,  0,  0 ],
+#!   [  0,  0,  1,  3 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );
+#! Extended version of double functor from cochain complexes category over category 
+#! of matrices over Q to cochain complexes category over category of matrices over Q
+psi;
+#! <A bounded morphism in cochain complexes category over category of matrices 
+#! over Q with active lower bound 4 and active upper bound 6.>
+Coch_F_psi := ApplyFunctor( Coch_F, psi );
+#! <A bounded morphism in cochain complexes category over category of matrices 
+#! over Q with active lower bound 4 and active upper bound 6.>
+Display( psi[ 5 ] );
+#! [ [  10 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( Coch_F_psi[ 5 ] );
+#! [ [  10,   0 ],
+#!   [   0,  10 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! @EndExample
 #! @EndChunk
-
