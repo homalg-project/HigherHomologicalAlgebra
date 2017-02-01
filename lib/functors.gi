@@ -389,6 +389,8 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
        functor_phi := ChainMorphism( new_source, new_range, morphisms );
 
+       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
+
        AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
 
                                                                   if not HasIsZero( functor_phi ) then
@@ -458,6 +460,8 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
                                                end, 1 );
 
        functor_phi := CochainMorphism( new_source, new_range, morphisms );
+
+       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
 
        AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
 

@@ -397,14 +397,6 @@ InstallMethod( SetUpperBound,
               [ IsChainOrCochainMorphism, IsInt ],
    function( phi, upper_bound )
 
-   if not HasFAU_BOUND( phi ) then
-
-      SetFAU_BOUND( phi, upper_bound ); 
-
-      SetHAS_FAU_BOUND( phi, true );
-
-   fi;
-
    if IsBound( phi!.UpperBound ) and phi!.UpperBound < upper_bound then
 
       return;
@@ -422,7 +414,15 @@ InstallMethod( SetUpperBound,
       phi!.UpperBound := upper_bound;
 
    fi;
- 
+
+   if not HasFAU_BOUND( phi ) then
+
+      SetFAU_BOUND( phi, upper_bound ); 
+
+      SetHAS_FAU_BOUND( phi, true );
+
+   fi;
+
 end );
 
 
@@ -430,14 +430,6 @@ end );
 InstallMethod( SetLowerBound,
               [ IsChainOrCochainMorphism, IsInt ], 
    function( phi, lower_bound )
-
-   if not HasFAL_BOUND( phi ) then
-
-      SetFAL_BOUND( phi, lower_bound );
-
-      SetHAS_FAL_BOUND( phi, true );
-
-   fi;
 
    if IsBound( phi!.LowerBound ) and phi!.LowerBound > lower_bound then
 
@@ -456,7 +448,15 @@ InstallMethod( SetLowerBound,
       phi!.LowerBound := lower_bound;
 
    fi;
- 
+
+   if not HasFAL_BOUND( phi ) then
+
+      SetFAL_BOUND( phi, lower_bound );
+
+      SetHAS_FAL_BOUND( phi, true );
+
+   fi;
+
 end );
 
 

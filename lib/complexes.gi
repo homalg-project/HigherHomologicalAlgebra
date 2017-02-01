@@ -325,14 +325,6 @@ InstallMethod( SetUpperBound,
               [ IsChainOrCochainComplex, IsInt ],
    function( C, upper_bound )
 
-   if not HasFAU_BOUND( C ) then
-
-      SetFAU_BOUND( C, upper_bound );
-
-      SetHAS_FAU_BOUND( C, true );
-
-   fi;
-
    if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
 
       return;
@@ -349,20 +341,20 @@ InstallMethod( SetUpperBound,
 
    fi;
 
+   if not HasFAU_BOUND( C ) then
+
+      SetFAU_BOUND( C, upper_bound );
+
+      SetHAS_FAU_BOUND( C, true );
+
+   fi;
+
 end );
 
 ##
 InstallMethod( SetLowerBound,
               [ IsChainOrCochainComplex, IsInt ],
    function( C, lower_bound )
-
-   if not HasFAL_BOUND( C ) then
-
-      SetFAL_BOUND( C, lower_bound );
-
-      SetHAS_FAL_BOUND( C, true );
-
-   fi;
 
    if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
 
@@ -381,7 +373,15 @@ InstallMethod( SetLowerBound,
       C!.LowerBound := lower_bound;
 
    fi;
- 
+
+   if not HasFAL_BOUND( C ) then
+
+      SetFAL_BOUND( C, lower_bound );
+
+      SetHAS_FAL_BOUND( C, true );
+
+   fi;
+
 end );
 
 
@@ -1378,11 +1378,7 @@ InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND,
 
   AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAU_BOUND", true ] ], function( )
 
-                                                                     if not HasFAU_BOUND( arg2 ) then 
-
-                                                                        SetUpperBound( arg2, FAU_BOUND( arg1 ) );
-
-                                                                     fi; 
+                                                                        SetUpperBound( arg2, ActiveUpperBound( arg1 ) );
 
                                                                      end ) );
 
@@ -1405,11 +1401,7 @@ InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND,
 
   AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAL_BOUND", true ] ], function( )
 
-                                                                     if not HasFAL_BOUND( arg2 ) then 
-
-                                                                        SetLowerBound( arg2, FAL_BOUND( arg1 ) );
-
-                                                                     fi;
+                                                                        SetLowerBound( arg2, ActiveLowerBound( arg1 ) );
 
                                                                      end ) );
 
