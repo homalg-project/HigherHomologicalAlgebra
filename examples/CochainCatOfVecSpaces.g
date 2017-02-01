@@ -164,7 +164,7 @@ ActiveUpperBound( P );
 #! @Example
 h := VectorSpaceMorphism( A, HomalgMatrix( [ [ 5 ] ], 1, 1, Q ), A );
 #! <A morphism in Category of matrices over Q>
-phi4 := g;           
+phi4 := g;
 #! <A morphism in Category of matrices over Q>
 phi5 := 2*h;
 #! <A morphism in Category of matrices over Q>
@@ -178,28 +178,192 @@ Display( phi[ 5 ] );
 #! [ [ 10 ] ]
 #! 
 #! A morphism in Category of matrices over Q
-cone := MappingCone( phi );
-#! <A bounded object in cochain complexes category over category of matrices 
-#! over Q with active lower bound 1 and active upper bound 6.>
-Display( cone^4 );
-#! [ [   -2,   -6,  -10 ],
-#!   [    0,    0,    5 ] ]
-#! 
-#! A morphism in Category of matrices over Q
 ActiveLowerBound( phi );
 #! 3
 IsZeroForMorphisms( phi );
 #! false
-phi;
-#! <A bounded morphism in cochain complexes category over category of matrices 
-#! over Q with active lower bound 4 and active upper bound 6.>
-ActiveLowerBound( phi );
-#! 4
 IsExact( D );
 #! true
 IsExact( C );
 #! false
 #! @EndExample
+#! @BeginLatexOnly
+#! Now lets define the previous morphism using the command \texttt{CochainMorphism(c, m, d, n, l, k)}.
+#! @EndLatexOnly
+#! @Example
+psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
+#! <A bounded morphism in cochain complexes category over category of matrices 
+#! over Q with active lower bound 3 and active upper bound 6.>
+#! @EndExample
+#! @BeginLatexOnly
+#! In some cases the morphism can change its lower bound when we apply the function \texttt{ IsZeroForMorphisms }.
+#! @EndLatexOnly
+#! @Example
+IsZeroForMorphisms( psi );
+#! false
+psi;
+#! <A bounded morphism in cochain complexes category over category of matrices 
+#! over Q with active lower bound 4 and active upper bound 6.>
+#! @EndExample
+#! @BeginLatexOnly
+#! In the following we compute the mapping come of $\psi$ and its natural injection and projection.
+#! \begin{center}
+#! \begin{tikzpicture}
+#!   \matrix (m) [matrix of math nodes,row sep=4em,column sep=3.4em,minimum width=2em]
+#!   {
+#!     \cdots\phantom{0}      & 2& 3& 4& 5 & 6 & \phantom{0}\cdots\\
+#!     \phantom{0}C:      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \phantom{0}\cdots\\
+#!     \phantom{0}D:     & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 &\phantom{0}\cdots\\
+#!     \phantom{0}Cone(\psi):     & \mathbb{Q}^{1\times 1}& \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 3} & 0 & \phantom{0}\cdots\\
+#!     \phantom{:}C[1]:      & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\phantom{0}\cdots\\};
+#!
+#!   \path[-stealth]
+#!     (m-2-2) edge (m-2-3)
+#!     (m-2-3) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                          1 & 3  
+#!                                          \end{array}
+#!                                   \right)$}(m-2-4)
+#!     (m-2-4) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                          0  \\ 0  
+#!                                          \end{array}
+#!                                   \right)$} (m-2-5)
+#!     (m-2-5) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                          2& 6  
+#!                                          \end{array}
+#!                                   \right)$}(m-2-6)
+#!     (m-2-6) edge (m-2-7)
+#!     (m-2-1) edge (m-2-2)
+#     (m-2-7) edge (m-2-8)
+#!     (m-2-4) edge node[left=0.225ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                          0  \\ 0  
+#!                                          \end{array}
+#!                                   \right)$} (m-3-4)
+#!     (m-2-5) edge node[right=0.225ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                          10 
+#!                                          \end{array}
+#!                                   \right)$} (m-3-5)
+#!     (m-3-4) edge node[below=0.225ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                          5
+#!                                          \end{array}
+#!                                   \right)$} (m-3-5)
+#!     (m-3-5) edge (m-3-6)
+#     (m-3-7) edge (m-3-8)
+#! (m-3-3) edge (m-3-4)
+#! (m-3-2) edge (m-3-3)
+#! (m-3-1) edge (m-3-2)
+#! (m-3-6) edge (m-3-7)
+#! (m-4-2) edge node[above=0.225ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                          -1 & -3
+#!                                          \end{array}
+#!                                   \right)$}(m-4-3)
+#! (m-4-3) edge node[above=0.225ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                            0&0 \\
+#!                                            0&0
+#!                                          \end{array}
+#!                                   \right)$}(m-4-4)
+#! (m-4-4) edge node[above=0.225ex, scale=0.5] {$\left(\begin{array}{ccc}
+#!                                            -2&-6&-10 \\
+#!                                            0&0&5
+#!                                          \end{array}
+#!                                   \right)$}(m-4-5)
+#! (m-4-5) edge (m-4-6)
+#! (m-4-6) edge (m-4-7)
+# (m-4-7) edge (m-4-8)
+#! (m-4-1) edge (m-4-2)
+#! (m-3-4) edge node[left=0.225ex, scale=0.6]{$\left(\begin{array}{ccc}
+#!                                            0&1 \\
+#!                                          \end{array}
+#!                                   \right)$} (m-4-4)
+#! (m-3-5) edge node[right=0.225ex, scale=0.6]{$\left(\begin{array}{ccc}
+#!                                            0&0&1
+#!                                          \end{array}
+#!                                   \right)$} (m-4-5)
+#!     (m-5-1) edge (m-5-2)
+#!     (m-5-2) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                          -1 & -3
+#!                                          \end{array}
+#!                                   \right)$}(m-5-3)
+#!     (m-5-3) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                          0  \\ 0  
+#!                                          \end{array}
+#!                                   \right)$} (m-5-4)
+#!     (m-5-4) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                          -2& -6
+#!                                          \end{array}
+#!                                   \right)$}(m-5-5)
+#!     (m-5-5) edge (m-5-6)
+#!     (m-5-1) edge (m-5-2)
+#!     (m-5-6) edge (m-5-7)
+#!     (m-4-2) edge node[left=0.5ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                           1
+#!                                          \end{array}
+#!                                   \right)$} (m-5-2)
+#!     (m-4-3) edge node[left=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                           1,0\\
+#!                                           0,1
+#!                                          \end{array}
+#!                                   \right)$} (m-5-3)
+#!     (m-4-4) edge node[right=0.5ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                           1\\
+#!                                           0
+#!                                          \end{array}
+#!                                   \right)$} (m-5-4)
+#!     (m-4-5) edge node[right=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                           1&0\\
+#!                                           0&1\\
+#!                                           0&0
+#!                                          \end{array}
+#!                                   \right)$} (m-5-5)
+#!     (m-2-1) edge[thick] node[left=0.5ex]{$\psi$} (m-3-1)
+#!     (m-3-1) edge[thick] node[left=0.5ex]{$i$} (m-4-1)
+#!     (m-4-1) edge[thick] node[left=0.5ex]{$p$} (m-5-1)
+#! ;
+#! \end{tikzpicture}
+#! \end{center}
+#! @EndLatexOnly
+#! @Example
+cone := MappingCone( psi );
+#! <A bounded object in cochain complexes category over category of matrices over 
+#! Q with active lower bound 1 and active upper bound 6.>
+cone^4;
+#! <A morphism in Category of matrices over Q>
+Display( last );
+#! [ [   -2,   -6,  -10 ],
+#!   [    0,    0,    5 ] ]
+#!
+#! A morphism in Category of matrices over Q
+i := NaturalInjectionInMappingCone( psi );
+#! <A bounded morphism in cochain complexes category over category of matrices over
+#! Q with active lower bound 3 and active upper bound 6.>
+p := NaturalProjectionFromMappingCone( psi );
+#! <A bounded morphism in cochain complexes category over category of matrices over
+#! Q with active lower bound 1 and active upper bound 6.>
+#! @EndExample
 #! @EndChunk
 
+
+#! @Chunk vec_3
+#! @BeginLatexOnly
+#! The theory tells us that the composition $i\psi$ and $pi$ are both null homotop. That implies that the morphisms 
+#! induced on cohomologies are all zero.
+#! @EndLatexOnly
+#! @Example
+i_o_psi := PreCompose( psi, i );
+#! <A bounded morphism in cochain complexes category over category of matrices
+#! over Q with active lower bound 4 and active upper bound 6.>
+p_o_i := PreCompose( i, p );    
+#! <A bounded morphism in cochain complexes category over category of matrices
+#! over Q with active lower bound 3 and active upper bound 6.>
+H4 := CohomologyFunctor( cochain_cat, matrix_category, 4 );
+#! 4-th cohomology functor in category of matrices over Q
+H5 := CohomologyFunctor( cochain_cat, matrix_category, 5 );
+#! 5-th cohomology functor in category of matrices over Q
+IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
+#! true
+IsZeroForMorphisms( ApplyFunctor( H4, p_o_i ) );  
+#! true
+IsZeroForMorphisms( ApplyFunctor( H5, p_o_i ) );
+#! true
+#! @EndExample
+#! @EndChunk
 
