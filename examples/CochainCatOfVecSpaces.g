@@ -119,9 +119,9 @@ ActiveUpperBound( P );
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=4em,column sep=3em,minimum width=2em]
 #!   {
-#!    \cdots & 2& 3& 4& 5 & 6 & 7 &\cdots\\
-#!     \cdots      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\cdots\\
-#!     \cdots      & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 & 0&\cdots\\};
+#!    \cdots\phantom{0} & 2& 3& 4& 5 & 6 & 7 &\phantom{0}\cdots\\
+#!     \cdots\phantom{0}      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\phantom{0}\cdots\\
+#!     \cdots \phantom{0}     & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 & 0&\phantom{0}\cdots\\};
 #!     
 #!   \path[-stealth]
 #!     (m-2-2) edge (m-2-3)
@@ -174,6 +174,10 @@ D := CochainComplex( [ h ], 4 );
 phi := CochainMorphism( C, D, [ phi4, phi5 ], 4 );
 #! <A bounded morphism in cochain complexes category over category of matrices
 #!  over Q with active lower bound 3 and active upper bound 6.>
+Display( phi[ 5 ] );
+#! [ [ 10 ] ]
+#! 
+#! A morphism in Category of matrices over Q
 cone := MappingCone( phi );
 #! <A bounded object in cochain complexes category over category of matrices 
 #! over Q with active lower bound 1 and active upper bound 6.>
@@ -191,6 +195,10 @@ phi;
 #! over Q with active lower bound 4 and active upper bound 6.>
 ActiveLowerBound( phi );
 #! 4
+IsExact( D );
+#! true
+IsExact( C );
+#! false
 #! @EndExample
 #! @EndChunk
 
