@@ -85,12 +85,6 @@ IsExactInIndex( C, 3 );
 C;
 #! <A not cyclic, bounded object in cochain complexes category over category of 
 #! matrices over Q with active lower bound 2 and active upper bound 7.>
-T := ShiftFunctor( cochain_cat, 3 );
-#! Shift (3 times to the left) functor in cochain complexes category over category
-#!  of matrices over Q
-C_3 := ApplyFunctor( T, C );
-#! <A not cyclic, bounded object in cochain complexes category over category of 
-#! matrices over Q with active lower bound -1 and active upper bound 4.>
 P := CochainComplex( matrix_category, diffs );
 #! <An object in Cochain complexes category over category of matrices over Q>
 SetUpperBound( P, 15 );
@@ -212,10 +206,10 @@ psi;
 #!   \matrix (m) [matrix of math nodes,row sep=4em,column sep=3.4em,minimum width=2em]
 #!   {
 #!     \cdots\phantom{0}      & 2& 3& 4& 5 & 6 & \phantom{0}\cdots\\
-#!     \phantom{0}C:      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \phantom{0}\cdots\\
-#!     \phantom{0}D:     & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 &\phantom{0}\cdots\\
-#!     \phantom{0}Cone(\psi):     & \mathbb{Q}^{1\times 1}& \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 3} & 0 & \phantom{0}\cdots\\
-#!     \phantom{:}C[1]:      & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\phantom{0}\cdots\\};
+#!     \phantom{0}\color{blue}{C}\color{black}{:}      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \phantom{0}\cdots\\
+#!     \phantom{0}\color{blue}{D}\color{black}{:}     & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 &\phantom{0}\cdots\\
+#!     \phantom{0}\color{blue}{Cone(\psi)}\color{black}{:}     & \mathbb{Q}^{1\times 1}& \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 3} & 0 & \phantom{0}\cdots\\
+#!     \phantom{:}\color{blue}{C[1]}\color{black}{:}      & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\phantom{0}\cdots\\};
 #!
 #!   \path[-stealth]
 #!     (m-2-2) edge (m-2-3)
@@ -314,9 +308,9 @@ psi;
 #!                                           0&0
 #!                                          \end{array}
 #!                                   \right)$} (m-5-5)
-#!     (m-2-1) edge[thick] node[left=0.5ex]{$\psi$} (m-3-1)
-#!     (m-3-1) edge[thick] node[left=0.5ex]{$i$} (m-4-1)
-#!     (m-4-1) edge[thick] node[left=0.5ex]{$p$} (m-5-1)
+#!     (m-2-1) edge[blue, very thick] node[left=0.5ex]{$\psi$} (m-3-1)
+#!     (m-3-1) edge[blue, very thick] node[left=0.5ex]{$i$} (m-4-1)
+#!     (m-4-1) edge[blue, very thick] node[left=0.5ex]{$p$} (m-5-1)
 #! ;
 #! \end{tikzpicture}
 #! \end{center}
@@ -344,31 +338,27 @@ p := NaturalProjectionFromMappingCone( psi );
 
 #! @Chunk vec_3
 #! @BeginLatexOnly
-#! The theory tells us that the composition $i\psi$ and $pi$ are both null homotop. That implies that the morphisms 
+#! The theory tells us that each of the compositions $i\psi$ is null-homotopic. That implies that the morphisms 
 #! induced on cohomologies are all zero.
 #! @EndLatexOnly
 #! @Example
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in cochain complexes category over category of matrices
 #! over Q with active lower bound 4 and active upper bound 6.>
-p_o_i := PreCompose( i, p );    
-#! <A bounded morphism in cochain complexes category over category of matrices
 #! over Q with active lower bound 3 and active upper bound 6.>
-H4 := CohomologyFunctor( cochain_cat, matrix_category, 4 );
-#! 4-th cohomology functor in category of matrices over Q
 H5 := CohomologyFunctor( cochain_cat, matrix_category, 5 );
 #! 5-th cohomology functor in category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
-IsZeroForMorphisms( ApplyFunctor( H4, p_o_i ) );  
-#! true
-IsZeroForMorphisms( ApplyFunctor( H5, p_o_i ) );
 #! true
 #! @EndExample
 #! @BeginLatexOnly
-#! Next we define a functor $\mathbf{F}:\mathrm{Vek}_\mathbb{Q}\rightarrow \mathrm{Vek}_\mathbb{Q}$ 
+#! Next we define a functor $\mathbf{F}:\mathrm{Vec}_\mathbb{Q}\rightarrow \mathrm{Vec}_\mathbb{Q}$ 
 #! that maps every $\mathbb{Q}$-vector space $A$ to $A\oplus A$ and every morphism $f:A\rightarrow B$ to $f\oplus f$. Then we extend it 
-#! to a functor $\mathbf{Coch_F}:\mathrm{Coch}(\mathrm{Vek}_\mathbb{Q})\rightarrow \mathrm{Coch}(\mathrm{Vek}_\mathbb{Q})$.
+#! to the functor $\mathbf{Coch_F}:\mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})\rightarrow \mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})$
+#! that maps each cochain complex $C$ to the cochain complex we get after applying the functor $\mathbf{F}$ on every object and differential in $C$ and 
+#! maps any morphism $\phi:C\rightarrow D$ to the morphism we get after applying the functor $\mathbf{F}$ on every object,
+#! differential or morphism in $C,D$ and $\phi$.
 #! 
 #! @EndLatexOnly
 #! @Example
@@ -404,6 +394,38 @@ Display( Coch_F_psi[ 5 ] );
 #! [ [  10,   0 ],
 #!   [   0,  10 ] ]
 #! 
+#! A morphism in Category of matrices over Q
+#! @EndExample
+#! Next we will compute the shift $C[3]$. As we know the standard shift functor may change
+#! the sign of the differentials since $d^i_{C[n]}=(-1)^n d^{i+n}_C$. Hence if we don't want the signs to be 
+#! changed we may use the unsigned shift functor.
+#! @Example
+T := ShiftFunctor( cochain_cat, 3 );
+#! Shift (3 times to the left) functor in cochain complexes category over category
+#!  of matrices over Q
+C;
+#! <A not cyclic, bounded object in cochain complexes category over category of 
+#! matrices over Q with active lower bound 2 and active upper bound 7.>
+C_3 := ApplyFunctor( T, C );
+#! <A not cyclic, bounded object in cochain complexes category over category of 
+#! matrices over Q with active lower bound -1 and active upper bound 4.>
+Display( C^3 );
+#! [ [  1,  3 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( C_3^0 );
+#! [ [  -1,  -3 ] ]
+#!
+#! A morphism in Category of matrices over Q
+S := UnsignedShiftFunctor( cochain_cat, 3 );
+#! Unsigned shift (3 times to the left) functor in cochain complexes category over 
+#! category of matrices over Q
+C_3_unsigned := ApplyFunctor( S, C );
+#! <A bounded object in cochain complexes category over category of matrices over 
+#! Q with active lower bound -1 and active upper bound 4.>
+Display( C_3_unsigned^0 );
+#! [ [  1,  3 ] ]
+#!
 #! A morphism in Category of matrices over Q
 #! @EndExample
 #! @EndChunk
