@@ -376,22 +376,22 @@ KeyDependentOperation( "GoodTruncationAbove", IsChainComplex, IsInt, ReturnTrue 
 #! @Description
 #! @BeginLatexOnly
 #! Let $C^\bullet$ be cochain complex. A good truncation of $C^\bullet$ above $n$ is the cochain 
-#! complex $\tau_{\leq n}C^\bullet$ whose differentials are defined by
-#! $$d^i_{\tau_{\leq n}C^\bullet} = 
+#! complex $\tau^{\leq n}C^\bullet$ whose differentials are defined by
+#! $$d^i_{\tau^{\leq n}C^\bullet} = 
 #!     \begin{cases}
 #!        0:0\rightarrow 0 & \quad \text{if}\quad i>n, \\
 #!        0:Z_n\rightarrow 0 & \quad \text{if}\quad i=n,\\
 #!        \mathrm{KernelLift}( d_C^n, d_C^{n-1} ):C_{n-1}\rightarrow Z_n & \quad \text{if}\quad i=n-1,\\
 #!        d_C^i:C_{i}\rightarrow C_{i+1}& \quad \text{if}\quad i<n-1.
 #!     \end{cases}$$
-#! where $Z_n$ is the cycle in index $n$. It can be shown that $H^i(\tau_{\leq n}C^\bullet)=0$ for $i>n$
-#! and $H^i(\tau_{\leq n}C^\bullet)=H_i( C^\bullet)$ for $i\leq n$.
+#! where $Z_n$ is the cycle in index $n$. It can be shown that $H^i(\tau^{\leq n}C^\bullet)=0$ for $i>n$
+#! and $H^i(\tau^{\leq n}C^\bullet)=H_i( C^\bullet)$ for $i\leq n$.
 #! \begin{center}
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=1em,column sep=3em,minimum width=2em]
 #!   {
 #!           &   \cdots   &C_{n-2}& C_{n-1} & C_{n} & C_{n+1} & \cdots & C_\bullet\\
-#!    &      & & & Z_n & 0 & \cdots & \tau_{\leq n}C^\bullet \\};
+#!    &      & & & Z_n & 0 & \cdots & \tau^{\leq n}C^\bullet \\};
 #!   \path[-stealth]
 #!     (m-1-2) edge[blue, thick] (m-1-3)
 #!     (m-1-3) edge[blue, thick] (m-1-4)
@@ -413,9 +413,9 @@ KeyDependentOperation( "GoodTruncationAbove", IsCochainComplex, IsInt, ReturnTru
 #! @Description
 #! @BeginLatexOnly
 #! Let $C^\bullet$ be cochain complex. A good truncation of $C^\bullet$ above $n$ is the quotient cochain 
-#! complex $\tau_{>n}C^\bullet=C^\bullet/\tau_{\leq n}C^\bullet$.
-#!  It can be shown that $H^i(\tau_{>n}C^\bullet)=0$ for $i\leq n$
-#! and $H^i(\tau_{>n}C^\bullet)=H_i( C^\bullet)$ for $i>n$.
+#! complex $\tau^{>n}C^\bullet=C^\bullet/\tau^{\leq n}C^\bullet$.
+#!  It can be shown that $H^i(\tau^{>n}C^\bullet)=0$ for $i\leq n$
+#! and $H^i(\tau^{>n}C^\bullet)=H_i( C^\bullet)$ for $i>n$.
 #! @EndLatexOnly
 #! @Arguments C, n
 #! @Returns cochain complex
@@ -446,8 +446,8 @@ KeyDependentOperation( "BrutalTruncationAbove", IsChainComplex, IsInt, ReturnTru
 #! @Description
 #! @BeginLatexOnly
 #! Let $C^\bullet$ be cochain complex. A brutal truncation of $C_\bullet$ above $n$ is the cochain 
-#! complex $\sigma_{\leq n}C^\bullet$ where $(\sigma_{\leq n}C^\bullet)_i=C_i$ when 
-#! $i\leq n$ and $(\sigma_{\leq n}C^\bullet)_i=0$ otherwise.
+#! complex $\sigma^{\leq n}C^\bullet$ where $(\sigma^{\leq n}C^\bullet)_i=C_i$ when 
+#! $i\leq n$ and $(\sigma^{\leq n}C^\bullet)_i=0$ otherwise.
 #! @EndLatexOnly
 #! @Arguments C, n
 #! @Returns chain complex
@@ -456,9 +456,9 @@ KeyDependentOperation( "BrutalTruncationAbove", IsCochainComplex, IsInt, ReturnT
 #! @Description
 #! @BeginLatexOnly
 #! Let $C^\bullet$ be cochain complex. A brutal truncation of $C^\bullet$ bellow $n$ is the
-#! quotient cochain complex $\sigma_{>n}C^\bullet:=C^\bullet/\sigma_{\leq n}C_\bullet$.
-#! Hence $(\sigma_{>n}C^\bullet)_i=C_i$ when 
-#! $i> n$ and $(\sigma_{< n}C^\bullet)_i=0$ otherwise.
+#! quotient cochain complex $\sigma^{>n}C^\bullet:=C^\bullet/\sigma^{\leq n}C_\bullet$.
+#! Hence $(\sigma^{>n}C^\bullet)_i=C_i$ when 
+#! $i> n$ and $(\sigma^{< n}C^\bullet)_i=0$ otherwise.
 #! @EndLatexOnly
 #! @Arguments C, n
 #! @Returns chain complex
