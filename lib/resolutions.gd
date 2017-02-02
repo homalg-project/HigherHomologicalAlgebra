@@ -34,3 +34,13 @@ DeclareOperation( "AddMonomorphismInInjectiveObject",
 
 DeclareOperation( "AddMonomorphismInInjectiveObject",
                    [ IsCapCategory, IsList ] );
+
+# New properties of cap categories
+
+DeclareProperty( "HasHasEnoughProjectives", IsCapCategory );
+
+DeclareProperty( "HasHasEnoughInjectives", IsCapCategory );
+
+
+
+
