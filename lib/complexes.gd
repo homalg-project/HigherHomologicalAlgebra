@@ -199,6 +199,24 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 #! @Arguments C
 #! @Returns a Cap category
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
+
+#! @Description
+#! The input is an above bounded cochain complex $C^\bullet$. The output is
+#! a quasi-isomorphism $q:P^\bullet \rightarrow C^\bullet$ such that 
+#! $P^\bullet$ is upper bounded and all its objects
+#! are projective in the underlying abelian category.
+#! @Arguments C
+#! @Returns a cochain morphism
+DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCochainComplex );
+
+#! @Description
+#! The input is an below bounded chain complex $C_\bullet$. The output is
+#! a quasi-isomorphism $q:P_\bullet \rightarrow C_\bullet$ such that 
+#! $P_\bullet$ is lower bounded and all its objects
+#! are projective in the underlying abelian category.
+#! @Arguments C
+#! @Returns a chain morphism
+DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );
 #! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );

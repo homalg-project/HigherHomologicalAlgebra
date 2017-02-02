@@ -56,7 +56,9 @@ inductive_list := MapLazy( IntegersList, function( k )
                                          if k >= u then
                                             return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
                                          else
-                                            current_complex := CochainComplex( cat, MapLazy( inductive_list, function( j ) return j[ 1 ]; end, 1 ) );
+                                            current_complex := CochainComplex( cat, MapLazy( inductive_list, function( j ) 
+                                                                                                                 return j[ 1 ]; 
+                                                                                                             end, 1 ) );
                                             current_complex := BrutalTruncationBelow( current_complex, k );
                                             current_mor := CochainMorphism( current_complex, C, MapLazy( IntegersList, function( j )
                                                                                                                    if j <= k then return ZeroMorphism( zero, C[ j ] );
