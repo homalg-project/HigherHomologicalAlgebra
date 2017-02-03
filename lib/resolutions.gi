@@ -40,6 +40,8 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
 #
 ###############################
 
+# Here is categorical mathematical construction. It commented since there is more direct construction.
+#
 # InstallMethod( QuasiIsomorphismFromProjectiveResolution, 
 #                  [ IsBoundedAboveCochainComplex ], 
 # function( C )
@@ -90,6 +92,14 @@ function( C )
 local u, cat, proj, zero, inductive_list;
  
 cat := UnderlyingCategory( CapCategory( C ) );
+
+if not HasHasEnoughProjectives( cat ) then
+   Error( "It is not known whether the underlying category has enough projectives or not" );
+fi;
+
+if not HasHasEnoughProjectives( cat ) then 
+   Error( "The underlying category must have enough projectives" );
+fi;
  
 u := ActiveUpperBound( C );
  
