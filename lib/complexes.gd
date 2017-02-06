@@ -16,53 +16,35 @@
 #
 #########################################
 
+#! @BeginGroup 0
 #! @Description
 #!  bla bla
+#! @Arguments C
 DeclareCategory( "IsChainOrCochainComplex", IsCapCategoryObject );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsChainComplex", IsChainOrCochainComplex );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsCochainComplex", IsChainOrCochainComplex );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedBelowChainOrCochainComplex", IsChainOrCochainComplex );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedAboveChainOrCochainComplex", IsChainOrCochainComplex );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedChainOrCochainComplex", IsBoundedBelowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex );
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedBelowChainComplex", IsBoundedBelowChainOrCochainComplex and IsChainComplex ); 
-
-#! @Description
-#!  bla bla
-DeclareCategory( "IsBoundedBelowCochainComplex", IsBoundedBelowChainOrCochainComplex and IsCochainComplex ); 
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedAboveChainComplex", IsBoundedAboveChainOrCochainComplex and IsChainComplex ); 
-
-#! @Description
-#!  bla bla
-DeclareCategory( "IsBoundedAboveCochainComplex", IsBoundedAboveChainOrCochainComplex and IsCochainComplex ); 
-
-#! @Description
-#!  bla bla
+#! @Arguments C
 DeclareCategory( "IsBoundedChainComplex", IsBoundedChainOrCochainComplex and IsChainComplex ); 
-
-#! @Description
-#!  bla bla
+#! @Arguments C
+DeclareCategory( "IsBoundedBelowCochainComplex", IsBoundedBelowChainOrCochainComplex and IsCochainComplex ); 
+#! @Arguments C
+DeclareCategory( "IsBoundedAboveCochainComplex", IsBoundedAboveChainOrCochainComplex and IsCochainComplex ); 
+#! @Arguments C
 DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and IsCochainComplex ); 
+#! @EndGroup
+#! @Group 0
 
 #########################################
 #
@@ -205,22 +187,22 @@ DeclareAttribute( "ProjectiveResolution", IsBoundedBelowChainComplex );
 
 DeclareAttribute( "ProjectiveResolution", IsBoundedAboveCochainComplex );
 
+#! @BeginGroup 5
 #! @Description
 #! The input is an above bounded cochain complex $C^\bullet$. The output is
 #! a quasi-isomorphism $q:P^\bullet \rightarrow C^\bullet$ such that 
 #! $P^\bullet$ is upper bounded and all its objects
 #! are projective in the underlying abelian category.
-#! @Arguments C
-#! @Returns a cochain morphism
-DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCochainComplex );
-
-#! @Description
-#! The input is an below bounded chain complex $C_\bullet$. The output is
+#! In the second command the input is a below bounded chain complex $C_\bullet$. The output is
 #! a quasi-isomorphism $q:P_\bullet \rightarrow C_\bullet$ such that 
 #! $P_\bullet$ is lower bounded and all its objects
 #! are projective in the underlying abelian category.
 #! @Arguments C
-#! @Returns a chain morphism
+#! @Returns a (co)chain epimorphism
+DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCochainComplex );
+#! @EndGroup
+#! @Group 5
+#! @Arguments C
 DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );
 #! @EndSection
 
@@ -403,9 +385,9 @@ KeyDependentOperation( "GoodTruncationAbove", IsChainComplex, IsInt, ReturnTrue 
 #! $$d^i_{\tau^{\leq n}C^\bullet} = 
 #!     \begin{cases}
 #!        0:0\rightarrow 0 & \quad \text{if}\quad i>n, \\
-#!        0:Z_n\rightarrow 0 & \quad \text{if}\quad i=n,\\
-#!        \mathrm{KernelLift}( d_C^n, d_C^{n-1} ):C_{n-1}\rightarrow Z_n & \quad \text{if}\quad i=n-1,\\
-#!        d_C^i:C_{i}\rightarrow C_{i+1}& \quad \text{if}\quad i<n-1.
+#!        0:Z^n\rightarrow 0 & \quad \text{if}\quad i=n,\\
+#!        \mathrm{KernelLift}( d_C^n, d_C^{n-1} ):C^{n-1}\rightarrow Z^n & \quad \text{if}\quad i=n-1,\\
+#!        d_C^i:C^{i}\rightarrow C^{i+1}& \quad \text{if}\quad i<n-1.
 #!     \end{cases}$$
 #! where $Z_n$ is the cycle in index $n$. It can be shown that $H^i(\tau^{\leq n}C^\bullet)=0$ for $i>n$
 #! and $H^i(\tau^{\leq n}C^\bullet)=H_i( C^\bullet)$ for $i\leq n$.
@@ -413,8 +395,8 @@ KeyDependentOperation( "GoodTruncationAbove", IsChainComplex, IsInt, ReturnTrue 
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=1em,column sep=3em,minimum width=2em]
 #!   {
-#!           &   \cdots   &C_{n-2}& C_{n-1} & C_{n} & C_{n+1} & \cdots & C_\bullet\\
-#!    &      & & & Z_n & 0 & \cdots & \tau^{\leq n}C^\bullet \\};
+#!           &   \cdots   &C^{n-2}& C^{n-1} & C^{n} & C^{n+1} & \cdots & C^\bullet\\
+#!    &      & & & Z^n & 0 & \cdots & \tau^{\leq n}C^\bullet \\};
 #!   \path[-stealth]
 #!     (m-1-2) edge[blue, thick] (m-1-3)
 #!     (m-1-3) edge[blue, thick] (m-1-4)
