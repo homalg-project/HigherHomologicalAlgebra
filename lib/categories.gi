@@ -5,9 +5,6 @@
 # Gap package: complex        2016 
 ###########################################
 
-
-
-
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )

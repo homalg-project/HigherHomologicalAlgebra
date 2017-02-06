@@ -178,3 +178,4 @@ InstallMethod( ProjectiveResolution,
 function( C )
 return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 end );
+

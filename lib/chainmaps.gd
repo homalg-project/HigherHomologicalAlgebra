@@ -10,58 +10,35 @@
 #! @Chapter Complexes morphisms
 #! @Section Categories and filters
 
+#! @BeginGroup 10
 #! @Description
 #!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsChainOrCochainMorphism", IsCapCategoryMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedBelowChainOrCochainMorphism", IsChainOrCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedAboveChainOrCochainMorphism", IsChainOrCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedChainOrCochainMorphism", IsBoundedBelowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism );
-
-##
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsChainMorphism", IsChainOrCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedBelowChainMorphism", IsBoundedBelowChainOrCochainMorphism and IsChainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedAboveChainMorphism", IsBoundedAboveChainOrCochainMorphism and IsChainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedChainMorphism", IsBoundedChainOrCochainMorphism and IsChainMorphism );
-
-##
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsCochainMorphism", IsChainOrCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedBelowCochainMorphism", IsBoundedBelowChainOrCochainMorphism and IsCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedAboveCochainMorphism", IsBoundedAboveChainOrCochainMorphism and IsCochainMorphism );
-#! @Description
-#!  bla bla
 #! @Arguments phi
 DeclareCategory( "IsBoundedCochainMorphism", IsBoundedChainOrCochainMorphism and IsCochainMorphism );
+#! @EndGroup
+#! @Group 10
 #! @EndSection
 
 DeclareCategoryFamily( "IsChainMorphism" );
