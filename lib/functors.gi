@@ -481,8 +481,25 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
    return functor;
 
 end );
-
-end );
+# to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
+# InstallMethod( LeftDerivedFunctor, 
+#                [ IsCapFunctor ],
+#   function( F )
+#   local
+#   S := AsCapCategory( Source( F ) );
+# 
+#   T := AsCapCategory(  Range( F ) );
+# 
+#   name := Concatenation( "Left derived functor of ", Name( F ) );
+#   
+#   dF := CapFunctor( name, S, T );
+#   
+#   AddObjectFunction( dF, function( obj )
+#                          local C;
+#                          C := StalkCochainComplex( obj, 0 );
+# 
+#   dF := 
+# end );
 
 FUNCTORS_INSTALLER( );
 

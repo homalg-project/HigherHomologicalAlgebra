@@ -62,4 +62,9 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #! @EndSection
 #! @Section Examples
 #! @InsertChunk vec_3
+
+DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
+
+DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
+
 #! @EndSection
