@@ -29,20 +29,20 @@ DeclareCategory( "IsCochainComplexCategory", IsChainOrCochainComplexCategory );
 ###################################################
 
 #! @Description
-#!  Creates the chain complex category <A>Ch(A)</A> an Abelian category <A>A</A>.
+#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an Abelian category $A$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "ChainComplexCategory", IsCapCategory );
 
 #! @Description
-#!  Creates the cochain complex category <A>Coch(A)</A> an Abelian category <A>A</A>.
+#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an Abelian category $A$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "CochainComplexCategory", IsCapCategory );
 
 #! @Description
-#! The input is a chain or cochain complex category <A>B=C(A)</A> constructed by one of the previous commands. 
-#! The outout is <A>A</A>.
+#! The input is a chain or cochain complex category $B=C(A)$ constructed by one of the previous commands. 
+#! The outout is $A$
 #! @Arguments B
 #! @Returns a CAP category
 DeclareAttribute( "UnderlyingCategory", IsChainOrCochainComplexCategory );

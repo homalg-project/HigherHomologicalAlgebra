@@ -499,7 +499,8 @@ end );
 #                          C := StalkCochainComplex( obj, 0 );
 # 
 #   dF := 
-# end );
+
+end );
 
 FUNCTORS_INSTALLER( );
 

@@ -60,7 +60,7 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList, IsBool ] );
 #! @BeginGroup 1
 #! @Description
 #! The input is category <A>A</A> and an infinite list <A>diffs</A>. The output is the chain (resp. cochain) complex $M_{\bullet}\in \mathrm{Ch}(A)$
-#! ($M^{\bullet}\in \mathrm{CoCh}(A)$) where $d^M_{i}=\mathrm{diffs}[ i ]$($d_M^{i}=\mathrm{diffs}[ i ]$).
+#! ($M^{\bullet}\in \mathrm{Ch}^\bullet(A)$) where $d^M_{i}=\mathrm{diffs}[ i ]$($d_M^{i}=\mathrm{diffs}[ i ]$).
 #! @Arguments A, diffs
 #! @Returns a chain complex
 DeclareOperation( "ChainComplex", [ IsCapCategory, IsZList ] );
@@ -73,7 +73,7 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
 #! @BeginGroup 2
 #! @Description
 #! The input is a finite dense list <A>diffs</A> and an integer <A>n</A> . The output is the chain (resp. cochain) complex 
-#! $M_{\bullet}\in \mathrm{Ch}(A)$ ($M^{\bullet}\in \mathrm{CoCh}(A)$) where 
+#! $M_{\bullet}\in \mathrm{Ch}(A)$ ($M^{\bullet}\in \mathrm{Ch}^\bullet(A)$) where 
 #! $d^M_{n}:= \mathrm{diffs}[ 1 ](d_M^n :=\mathrm{diffs}[ 1 ]),d^M_{n+1}=\mathrm{diffs}[ 2 ](d_M^{n+1}:=\mathrm{diffs}[ 2 ])$, etc.
 #! @Arguments diffs, n
 #! @Returns a (co)chain complex
@@ -96,7 +96,7 @@ DeclareOperation( "CochainComplex", [ IsDenseList ] );
 
 #! @BeginGroup 4
 #! @Description
-#! The input is an object $M\in A$. The output is chain (resp. cochain) complex $M_{\bullet}\in\mathrm{Ch(A)}(M^{\bullet}\in\mathrm{CoCh(A)})$
+#! The input is an object $M\in A$. The output is chain (resp. cochain) complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)(M^{\bullet}\in\mathrm{Ch}^\bullet(A))$
 #! where $M_n=M( M^n=M)$ and $M_i=0(M^i=0)$ whenever $i\neq n$.
 #! @Arguments diffs, n
 #! @Returns a (co)chain complex
@@ -109,7 +109,7 @@ DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject, IsInt ] );
 #! @InsertChunk 3
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
-#! The output is chain complex $M_{\bullet}\in\mathrm{Ch(A)}$ where $d^{M}_{0}=d$ 
+#! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{0}=d$ 
 #! and $d^M_{i}=G^{i}(d)$ for all $i\leq -1$ and $d^M_{i}=F^{i}(d )$ for all $i \geq 1$.
 #! @Arguments d,G,F
 #! @Returns a chain complex
@@ -117,7 +117,7 @@ DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsF
 
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
-#! The output is cochain complex $M^{\bullet}\in\mathrm{CoCh(A)}$ where $d_{M}^{0}=d$ 
+#! The output is cochain complex $M^{\bullet}\in\mathrm{Ch}^\bullet(A)$ where $d_{M}^{0}=d$ 
 #! and $d_M^{i}=G^{i}( d)$ for all $i\leq -1$ and $d_M^{i}=F^{i}( d )$ for all $i \geq 1$.
 #! @Arguments d,G,F
 #! @Returns a cochain complex
@@ -125,7 +125,7 @@ DeclareOperation( "CochainComplexWithInductiveSides", [ IsCapCategoryMorphism, I
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $G$. 
-#! The output is chain complex $M_{\bullet}\in\mathrm{Ch(A)}$ where $d^{M}_{0}=d$ 
+#! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{0}=d$ 
 #! and $d^M_{i}=G^{i}( d )$ for all $i\leq -1$ and $d^M_{i}=0$ for all $i \geq 1$.
 #! @Arguments d,G
 #! @Returns a chain complex
@@ -133,7 +133,7 @@ DeclareOperation( "ChainComplexWithInductiveNegativeSide", [ IsCapCategoryMorphi
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $F$. 
-#! The output is chain complex $M_{\bullet}\in\mathrm{Ch(A)}$ where $d^{M}_{0}=d$ 
+#! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{0}=d$ 
 #! and $d^M_{i}=F^{i}( d )$ for all $i\geq 1$ and $d^M_{i}=0$ for all $i \leq 1$.
 #! @Arguments d,F
 #! @Returns a chain complex
@@ -141,7 +141,7 @@ DeclareOperation( "ChainComplexWithInductivePositiveSide", [ IsCapCategoryMorphi
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $G$. 
-#! The output is cochain complex $M^{\bullet}\in\mathrm{CoCh(A)}$ where $d_{M}^{0}=d$ 
+#! The output is cochain complex $M^{\bullet}\in\mathrm{Ch}^\bullet(A)$ where $d_{M}^{0}=d$ 
 #! and $d_M^{i}=G^{i}( d )$ for all $i\leq -1$ and $d_M^{i}=0$ for all $i \geq 1$.
 #! @Arguments d,G
 #! @Returns a cochain complex
@@ -149,7 +149,7 @@ DeclareOperation( "CochainComplexWithInductiveNegativeSide", [ IsCapCategoryMorp
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $F$. 
-#! The output is cochain complex $M^{\bullet}\in\mathrm{CoCh(A)}$ where $d_{M}^{0}=d$ 
+#! The output is cochain complex $M^{\bullet}\in\mathrm{Ch}^\bullet(A)$ where $d_{M}^{0}=d$ 
 #! and $d_M^{i}=F^{i}( d )$ for all $i\geq 1$ and $d_M^{i}=0$ for all $i \leq 1$.
 #! @Arguments d,F
 #! @Returns a cochain complex
@@ -181,47 +181,6 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 #! @Arguments C
 #! @Returns a Cap category
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
-
-
-DeclareAttribute( "ProjectiveResolution", IsBoundedBelowChainComplex );
-
-DeclareAttribute( "ProjectiveResolution", IsBoundedAboveCochainComplex );
-
-#! @BeginGroup 5
-#! @Description
-#! The input is an above bounded cochain complex $C^\bullet$. The output is
-#! a quasi-isomorphism $q:P^\bullet \rightarrow C^\bullet$ such that 
-#! $P^\bullet$ is upper bounded and all its objects
-#! are projective in the underlying abelian category.
-#! In the second command the input is a below bounded chain complex $C_\bullet$. The output is
-#! a quasi-isomorphism $q:P_\bullet \rightarrow C_\bullet$ such that 
-#! $P_\bullet$ is lower bounded and all its objects
-#! are projective in the underlying abelian category.
-#! @Arguments C
-#! @Returns a (co)chain epimorphism
-DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCochainComplex );
-#! @EndGroup
-#! @Group 5
-#! @Arguments C
-DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );
-
-#! @BeginGroup 15
-#! @Description
-#! The input is a below bounded cochain complex $C^\bullet$. The output is
-#! a quasi-isomorphism $q:C^\bullet \rightarrow I^\bullet$ such that 
-#! $I^\bullet$ is below bounded and all its objects
-#! are injectives in the underlying abelian category.
-#! In the second command the input is an above bounded chain complex $C_\bullet$. The output is
-#! a quasi-isomorphism $q:C_\bullet \rightarrow I_\bullet $ such that 
-#! $I_\bullet$ is lower bounded and all its objects
-#! are injectives in the underlying abelian category.
-#! @Arguments C
-#! @Returns a (co)chain monomorphism
-DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochainComplex );
-#! @EndGroup
-#! @Group 15
-#! @Arguments C
-DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
 #! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
