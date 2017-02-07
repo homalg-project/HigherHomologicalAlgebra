@@ -208,7 +208,7 @@ psi;
 #! over Q with active lower bound 4 and active upper bound 6.>
 #! @EndExample
 #! @BeginLatexOnly
-#! In the following we compute the mapping come of $\psi$ and its natural injection and projection.
+#! In the following we compute the mapping cone of $\psi$ and its natural injection and projection.
 #! \begin{center}
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=4em,column sep=3.4em,minimum width=2em]
