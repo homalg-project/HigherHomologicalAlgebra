@@ -204,6 +204,24 @@ DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCoch
 #! @Group 5
 #! @Arguments C
 DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );
+
+#! @BeginGroup 15
+#! @Description
+#! The input is a below bounded cochain complex $C^\bullet$. The output is
+#! a quasi-isomorphism $q:C^\bullet \rightarrow I^\bullet$ such that 
+#! $I^\bullet$ is below bounded and all its objects
+#! are injectives in the underlying abelian category.
+#! In the second command the input is an above bounded chain complex $C_\bullet$. The output is
+#! a quasi-isomorphism $q:C_\bullet \rightarrow I_\bullet $ such that 
+#! $I_\bullet$ is lower bounded and all its objects
+#! are injectives in the underlying abelian category.
+#! @Arguments C
+#! @Returns a (co)chain monomorphism
+DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochainComplex );
+#! @EndGroup
+#! @Group 15
+#! @Arguments C
+DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
 #! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
