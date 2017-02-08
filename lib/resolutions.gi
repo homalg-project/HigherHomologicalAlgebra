@@ -282,3 +282,79 @@ InstallMethod( InjectiveResolution,
 function( C )
 return Range( QuasiIsomorphismInInjectiveResolution( C ) );
 end );
+
+#######################################
+##
+## resolutions of objects 
+##
+#######################################
+
+InstallMethod( ProjectiveResolution, 
+                [ IsCapCategoryObject ],
+function( obj )
+local func, C, cat, ep, ker, ep_ker, d; 
+
+if IsBoundedAboveCochainComplex( obj ) or IsBoundedBelowChainComplex( obj ) then 
+TryNextMethod();
+fi;
+
+cat := CapCategory( obj );
+
+if not HasHasEnoughProjectives( cat ) then
+   Error( "It is not known whether the category has enough projectives or not" );
+fi;
+
+if not HasHasEnoughProjectives( cat ) then 
+   Error( "The category must have enough projectives" );
+fi;
+
+func := function( mor )
+        local k,p; 
+        k := KernelEmbedding( mor );
+        p := EpimorphismFromProjectiveObject( Source( k ) );
+        return PreCompose( p, k );
+        end;
+ep := EpimorphismFromProjectiveObject( obj );
+ker := KernelEmbedding( ep );
+ep_ker := EpimorphismFromProjectiveObject( Source( ker ) );
+d := PreCompose( ep_ker, ker );
+C := CochainComplexWithInductiveNegativeSide( d, func );
+
+return ShiftLazy( C, 1 );
+
+end );
+
+InstallMethod( InjectiveResolution, 
+                [ IsCapCategoryObject ],
+function( obj )
+local func, C, cat, em, coker, em_coker, d; 
+
+if IsBoundedBelowCochainComplex( obj ) or IsBoundedAboveChainComplex( obj ) then 
+TryNextMethod();
+fi;
+
+cat := CapCategory( obj );
+
+if not HasHasEnoughInjectives( cat ) then
+   Error( "It is not known whether the category has enough injectives or not" );
+fi;
+
+if not HasHasEnoughInjectives( cat ) then 
+   Error( "The category must have enough injectives" );
+fi;
+
+func := function( mor )
+        local k,p; 
+        k := CokernelProjection( mor );
+        p := MonomorphismInInjectiveObject( Range( k ) );
+        return PreCompose( k, p );
+        end;
+em := MonomorphismInInjectiveObject( obj );
+coker := CokernelProjection( em );
+em_coker := MonomorphismInInjectiveObject( Range( coker ) );
+d := PreCompose( coker, em_coker );
+C := CochainComplexWithInductivePositiveSide( d, func );
+
+return C;
+
+end );

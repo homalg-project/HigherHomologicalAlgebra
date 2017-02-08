@@ -15,6 +15,8 @@
 #! \item Each $P^n$ is projective object of $A$.
 #! \item The morphism $\alpha$ is quasi-isomorphism. 
 #! \end{itemize}
+#! It turns out that if $A$ is abelian category that has enough projective, then every above bounded cochain
+#! complex admits a projective resolution.
 #! @EndLatexOnly
 #! @EndSection
 
@@ -57,15 +59,35 @@ DeclareProperty( "HasEnoughProjectives", IsCapCategory );
 
 DeclareProperty( "HasEnoughInjectives", IsCapCategory );
 
+#! @Description
+#! If the input is bounded above cochain complex or bounded below chain complex then the 
+#! output is projective resolution in the sense of the above definition. If the input is
+#! an object $M$ which is not a complex and its category has enough projectives, then the output is 
+#! its projective resolution in the classical sense
+#! , i.e., complex $P^\bullet$ which is exact everywhere but in index $0$,
+#! where $H^0(P^\bullet)\cong M$.
+#! @Arguments arg
+#! @Returns a (co)chain complex
+DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 
+DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
 
-DeclareAttribute( "ProjectiveResolution", IsBoundedBelowChainComplex );
+DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAboveCochainComplex );
 
-DeclareAttribute( "ProjectiveResolution", IsBoundedAboveCochainComplex );
+#! @Description
+#! If the input is bounded above chain complex or bounded below cochain complex then the 
+#! output is injective resolution in the sense of the above definition. If the input is
+#! an object $M$ which is not a complex and its category has enough injectives, then the output is 
+#! its injective resolution in the classical sense
+#! , i.e., complex $I^\bullet$ which is exact everywhere but in index $0$,
+#! where $H^0(I^\bullet)\cong M$.
+#! @Arguments arg
+#! @Returns a (co)chain complex
+DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 
-DeclareAttribute( "InjectiveResolution", IsBoundedAboveChainComplex );
+DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
 
-DeclareAttribute( "InjectiveResolution", IsBoundedBelowCochainComplex );
+DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedBelowCochainComplex );
 
 
 #! @BeginGroup 5
