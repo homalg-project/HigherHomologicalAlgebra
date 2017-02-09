@@ -35,6 +35,127 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
  
   fi;
 
+## This may be changed ...
+AddIsEqualForCacheForObjects( complex_cat, IsIdenticalObj );
+
+AddIsEqualForCacheForMorphisms( complex_cat, IsIdenticalObj );
+##
+
+AddIsEqualForObjects( complex_cat, 
+    function( C1, C2 )
+    local l, u, i;
+
+    if IsIdenticalObj( C1, C2 ) then 
+
+       return true;
+
+    fi;
+
+    if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
+
+       Error( "Complexes must be bounded" );
+
+    fi;
+
+    l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+
+    u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
+
+    for i in [ l .. u ] do
+
+       if not IsEqualForObjects( C1[ i ], C2[ i ] ) then
+
+          return false;
+
+       fi;
+
+    od;
+
+    for i in [ l .. u ] do
+
+       if not IsCongruentForMorphisms( C1^i, C2^i ) then
+
+          return false;
+
+       fi;
+
+    od;
+
+    return true;
+
+end );
+
+AddIsEqualForMorphisms( complex_cat, 
+    function( m1, m2 )
+    local l, u, i;
+
+    if IsIdenticalObj( m1, m2 ) then 
+
+       return true;
+
+    fi;
+
+    if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+
+       Error( "Complex morphisms must be bounded" );
+
+    fi;
+
+
+    l := Minimum( ActiveLowerBound( m1 ), ActiveLowerBound( m2 ) );
+
+    u := Maximum( ActiveUpperBound( m1 ), ActiveUpperBound( m2 ) );
+
+    for i in [ l .. u ] do
+
+       if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
+
+          return false;
+
+       fi;
+
+    od;
+
+    return true;
+
+end );
+
+AddIsCongruentForMorphisms( complex_cat, 
+    function( m1, m2 )
+    local l, u, i;
+
+    if IsIdenticalObj( m1, m2 ) then 
+
+       return true;
+
+    fi;
+
+    if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+
+       Error( "Complex morphisms must be bounded" );
+
+    fi;
+
+
+    l := Minimum( ActiveLowerBound( m1 ), ActiveLowerBound( m2 ) );
+
+    u := Maximum( ActiveUpperBound( m1 ), ActiveUpperBound( m2 ) );
+
+    for i in [ l .. u ] do
+
+       if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
+
+          return false;
+
+       fi;
+
+    od;
+
+    return true;
+
+end );
+
+
   if IsAdditiveCategory( cat ) then 
 
      SetIsAdditiveCategory( complex_cat, true );
@@ -125,11 +246,13 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
                                        for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
 
-                                            if not IsZero( phi[ i ] ) then
+                                            if IsZero( phi[ i ] ) then
 
-                                               SetLowerBound( phi, i - 1 );
+                                               SetLowerBound( phi, i );
 
-                                              return false;
+                                           else
+
+                                               return false;
 
                                            fi;
 
