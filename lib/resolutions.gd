@@ -70,9 +70,9 @@ DeclareProperty( "HasEnoughInjectives", IsCapCategory );
 #! @Returns a (co)chain complex
 DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 
-DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
+# DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
 
-DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAboveCochainComplex );
+# DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAboveCochainComplex );
 
 #! @Description
 #! If the input is bounded above chain complex or bounded below cochain complex then the 
@@ -85,9 +85,9 @@ DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAbove
 #! @Returns a (co)chain complex
 DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 
-DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
+# DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
 
-DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedBelowCochainComplex );
+# DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedBelowCochainComplex );
 
 
 #! @BeginGroup 5
