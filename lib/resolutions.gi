@@ -41,7 +41,7 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
 ###############################
 
 # Here is categorical mathematical construction. It commented since there is more direct construction.
-#
+# version 0
 # InstallMethod( QuasiIsomorphismFromProjectiveResolution, 
 #                  [ IsBoundedAboveCochainComplex ], 
 # function( C )
@@ -84,10 +84,76 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
 # 
 # end );
 
+# version 1
+# InstallMethod( QuasiIsomorphismFromProjectiveResolution,
+#                  [ IsBoundedAboveCochainComplex ],
+# 
+# function( C )
+# local u, cat, proj, zero, inductive_list;
+#  
+# cat := UnderlyingCategory( CapCategory( C ) );
+# 
+# if not HasHasEnoughProjectives( cat ) then
+#    Error( "It is not known whether the underlying category has enough projectives or not" );
+# fi;
+# 
+# if not HasHasEnoughProjectives( cat ) then 
+#    Error( "The underlying category must have enough projectives" );
+# fi;
+#  
+# u := ActiveUpperBound( C );
+#  
+# zero := ZeroObject( cat );
+#  
+# inductive_list := MapLazy( IntegersList, function( k )
+#                                          local k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
+# 
+#                                          if k >= u then
+# 
+#                                             return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
+# 
+#                                          else
+# 
+#                                             k1 := inductive_list[ k + 1 ][ 1 ];
+# 
+#                                             m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
+# 
+#                                             mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
+# 
+#                                             mor2 := inductive_list[ k + 1 ][ 2 ];
+# 
+#                                             mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
+# 
+#                                             m2 := PreCompose( [ mor1, mor2, mor3 ] );
+# 
+#                                             m := m1 + m2;
+# 
+#                                             mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
+# 
+#                                             ker := KernelEmbedding( m );
+# 
+#                                             pk := EpimorphismFromProjectiveObject( Source( ker ) );
+# 
+#                                             return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
+# 
+#                                          fi;
+# 
+#                                          end, 1 );
+# 
+# proj := CochainComplex( cat, MapLazy( inductive_list, function( j ) return j[ 1 ]; end, 1 ) );
+# 
+# SetUpperBound( proj, u );
+# 
+# return CochainMorphism( proj, C, MapLazy( inductive_list, function( j ) return j[ 2 ]; end, 1 ) );
+# 
+# end );
+
+# version 2, much better than version 1 because it make use of
+# the structure of Oysteins inductive lists.
 
 InstallMethod( QuasiIsomorphismFromProjectiveResolution,
                  [ IsBoundedAboveCochainComplex ],
-                 
+
 function( C )
 local u, cat, proj, zero, inductive_list;
  
@@ -105,48 +171,64 @@ u := ActiveUpperBound( C );
  
 zero := ZeroObject( cat );
  
-inductive_list := MapLazy( IntegersList, function( k )
-                                         local k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
+inductive_list := InductiveList( [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ u ] ) ],
 
-                                         if k >= u then
+                                 function( d )
+                                 local k, k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
+                                 if not IsBound( inductive_list!.index ) then 
+                                    k := u-1;
+                                 else
+                                    k := inductive_list!.index;
+                                 fi;
 
-                                            return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
+                                 k1 := d[ 1 ];
 
-                                         else
+                                 m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
 
-                                            k1 := inductive_list[ k + 1 ][ 1 ];
+                                 mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
 
-                                            m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
+                                 mor2 := d[ 2 ];
 
-                                            mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
+                                 mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
 
-                                            mor2 := inductive_list[ k + 1 ][ 2 ];
+                                 m2 := PreCompose( [ mor1, mor2, mor3 ] );
 
-                                            mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
+                                 m := m1 + m2;
 
-                                            m2 := PreCompose( [ mor1, mor2, mor3 ] );
+                                 mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
 
-                                            m := m1 + m2;
+                                 ker := KernelEmbedding( m );
 
-                                            mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
+                                 pk := EpimorphismFromProjectiveObject( Source( ker ) );
 
-                                            ker := KernelEmbedding( m );
+                                 inductive_list!.index := k - 1;
 
-                                            pk := EpimorphismFromProjectiveObject( Source( ker ) );
+                                 return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
 
-                                            return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
+                                 end );
 
-                                         fi;
+proj := CochainComplex( cat, MapLazy( IntegersList, function( j )
+                                                    if j > u then
+                                                       return ZeroMorphism( zero, zero );
+                                                    else
+                                                       return  inductive_list[ u - j + 1 ][ 1 ];
+                                                    fi;
+                                                    end, 1 ) );
 
-                                         end, 1 );
-
-proj := CochainComplex( cat, MapLazy( inductive_list, function( j ) return j[ 1 ]; end, 1 ) );
- 
 SetUpperBound( proj, u );
- 
-return CochainMorphism( proj, C, MapLazy( inductive_list, function( j ) return j[ 2 ]; end, 1 ) );
- 
+
+return CochainMorphism( proj, C, MapLazy( IntegersList,   function( j )
+                                                          if j > u then
+                                                             return ZeroMorphism( zero, C[ j ] );
+                                                          else
+                                                             return  inductive_list[ u - j + 1 ][ 2 ];
+                                                          fi;
+                                                          end, 1 ) );
+
+return inductive_list;
+
 end );
+
 
 InstallMethod( ProjectiveResolution,
                [ IsBoundedAboveCochainComplex ],
@@ -295,17 +377,23 @@ function( obj )
 local func, C, cat, ep, ker, ep_ker, d; 
 
 if IsBoundedAboveCochainComplex( obj ) or IsBoundedBelowChainComplex( obj ) then 
-TryNextMethod();
+
+   TryNextMethod();
+
 fi;
 
 cat := CapCategory( obj );
 
 if not HasHasEnoughProjectives( cat ) then
+
    Error( "It is not known whether the category has enough projectives or not" );
+
 fi;
 
 if not HasHasEnoughProjectives( cat ) then 
+
    Error( "The category must have enough projectives" );
+
 fi;
 
 func := function( mor )
@@ -314,10 +402,15 @@ func := function( mor )
         p := EpimorphismFromProjectiveObject( Source( k ) );
         return PreCompose( p, k );
         end;
+
 ep := EpimorphismFromProjectiveObject( obj );
+
 ker := KernelEmbedding( ep );
+
 ep_ker := EpimorphismFromProjectiveObject( Source( ker ) );
+
 d := PreCompose( ep_ker, ker );
+
 C := CochainComplexWithInductiveNegativeSide( d, func );
 
 return ShiftLazy( C, 1 );
@@ -330,17 +423,23 @@ function( obj )
 local func, C, cat, em, coker, em_coker, d; 
 
 if IsBoundedBelowCochainComplex( obj ) or IsBoundedAboveChainComplex( obj ) then 
+
 TryNextMethod();
+
 fi;
 
 cat := CapCategory( obj );
 
 if not HasHasEnoughInjectives( cat ) then
+
    Error( "It is not known whether the category has enough injectives or not" );
+
 fi;
 
 if not HasHasEnoughInjectives( cat ) then 
+
    Error( "The category must have enough injectives" );
+
 fi;
 
 func := function( mor )
@@ -349,10 +448,15 @@ func := function( mor )
         p := MonomorphismInInjectiveObject( Range( k ) );
         return PreCompose( k, p );
         end;
+
 em := MonomorphismInInjectiveObject( obj );
+
 coker := CokernelProjection( em );
+
 em_coker := MonomorphismInInjectiveObject( Range( coker ) );
+
 d := PreCompose( coker, em_coker );
+
 C := CochainComplexWithInductivePositiveSide( d, func );
 
 return C;
