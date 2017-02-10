@@ -36,8 +36,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
   fi;
 
 ## This may be changed ...
+## changing it to IsEqualForObjects, IsEqualForMorphisms instead 
+## of IsIdenticalObj may slow down computations.
 AddIsEqualForCacheForObjects( complex_cat, IsIdenticalObj );
-
 AddIsEqualForCacheForMorphisms( complex_cat, IsIdenticalObj );
 ##
 
