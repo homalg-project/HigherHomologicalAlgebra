@@ -126,3 +126,6 @@ DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochain
 #! @Arguments C
 DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
 #! @EndSection
+#! @Section Examples
+#! @InsertChunk Z_0
+#! @EndSection
