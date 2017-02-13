@@ -18,6 +18,9 @@
 /doc/*.tex
 /doc/*.toc
 /doc/manual.pdf
+/doc/*.xml
+/doc/_Chapter_HomotopyCategories.xml
+/doc/_AutoDocMainFile.xml
 
 .deps/
 .dirstamp
