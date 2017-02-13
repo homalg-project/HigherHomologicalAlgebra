@@ -203,6 +203,12 @@ KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, Retur
 DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 
 #! @Description
+#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
+#! @Arguments phi, n
+#! @Returns an integer
+DeclareOperation( "IsQuasiIsomorphism_", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+
+#! @Description
 #! The command displays the components of the morphism between $m$ and $n$. 
 #! @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );

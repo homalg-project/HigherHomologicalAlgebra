@@ -755,6 +755,38 @@ InstallMethod( IsQuasiIsomorphism_,
 
 end );
 
+##
+InstallMethod( IsQuasiIsomorphism_,
+                  [ IsChainOrCochainMorphism, IsInt, IsInt ],
+   function( phi, min, max )
+   local h_functor, functor, i;
+
+   if IsChainMorphism( phi ) then
+
+      h_functor := HomologyFunctor;
+
+   else 
+
+      h_functor := CohomologyFunctor;
+
+   fi;
+
+   for i in [ min .. max ] do
+
+     functor := h_functor( CapCategory( phi ), UnderlyingCategory( CapCategory( phi ) ), i );
+
+     if not IsIsomorphism( ApplyFunctor( functor, phi ) ) then
+
+        return false;
+
+     fi;
+
+   od;
+
+   return true;
+
+end );
+
 #####################################
 #
 # To Do Lists operations
