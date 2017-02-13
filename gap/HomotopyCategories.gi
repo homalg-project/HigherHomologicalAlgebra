@@ -297,22 +297,43 @@ InstallMethod( AsHomotopyCategoryMorphism,
                [ IsChainOrCochainMorphism ],
 
     function( mor )
-    local category, homotopy_morphism;
+    local C1, C2, category, homotopy_morphism;
 
     category := HomotopyCategory( CapCategory( mor ) );
+
+    C1 := AsHomotopyCategoryObject( Source( mor ) );
+    
+    C2 := AsHomotopyCategoryObject( Range( mor ) );
 
     homotopy_morphism := rec( );
 
     ObjectifyWithAttributes( homotopy_morphism, TheTypeOfHomotopyCategoryMorphism,
-                             Source, AsHomotopyCategoryObject( Source( mor ) ),
-                             Range,  AsHomotopyCategoryObject( Range( mor ) )
+                             Source, C1,
+                             Range,  C2,
+                             Morphisms, Morphisms( mor )
                              );
+
+    if IsChainMorphism( mor ) then
+
+       SetFilterObj( homotopy_morphism, IsChainMorphism );
+
+    else
+
+       SetFilterObj( homotopy_morphism, IsCochainMorphism );
+
+    fi;
 
     SetUnderlyingMorphism( homotopy_morphism, mor );
 
-    SetMorphisms( homotopy_morphism, Morphisms( mor ) );
-
     AddMorphism( category, homotopy_morphism );
+
+     TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED( homotopy_morphism );
+
+     TODO_LIST_TO_PUSH_BOUNDS( C1, homotopy_morphism );
+
+     TODO_LIST_TO_PUSH_BOUNDS( C2, homotopy_morphism );
+
+     TODO_LIST_TO_PUSH_PULL_BOUNDS( mor, homotopy_morphism );
 
     return homotopy_morphism;
 
@@ -348,6 +369,8 @@ InstallMethod( AsHomotopyCategoryObject,
     AddObject( category, homotopy_obj );
 
     TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( homotopy_obj );
+
+    TODO_LIST_TO_PUSH_PULL_BOUNDS( obj, homotopy_obj );
 
     return homotopy_obj;
 
