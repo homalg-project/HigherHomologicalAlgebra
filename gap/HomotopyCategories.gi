@@ -48,141 +48,153 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
   
   function( category )
     local test_function;
-    
-    test_function := TestFunctionForHomotopyCategory( category );
-    
+
+    test_function := TestFunctionForHomotopyCategory(  UnderlyingCategory( category ) );
+
     ## Equalities
-    
+
     AddIsEqualForObjects( category, 
-          
+
        function( obj1, obj2 )
-       
-         return IsEqualForObjects( UnderlyingComplex( obj1 ), UnderlyingComplex( obj2 ) );
-       
+
+         if IsIdenticalObj( obj1, obj2 ) then return true; fi;
+
+         return IsEqualForObjects( UnderlyingObject( obj1 ), UnderlyingObject( obj2 ) );
+
     end );
-    
+
+    ##
     AddIsEqualForMorphisms( category, 
-    
+
        function( morphism1, morphism2 )
-       
-       return test_function( morphism1 - morphism2 );
+
+    return IsEqualForMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
+
     end );
-    
+
+    ##
+    AddIsCongruentForMorphisms( category, 
+
+       function( morphism1, morphism2 )
+
+       return test_function( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
+
+    end );
+
     ## PreCompose
-    
+
     AddPreCompose( category,
-      
-      function( morphism1, morphism2 )
+
+    function( morphism1, morphism2 )
         local composition;
-        
+
         composition := PreCompose( UnderlyingMorphism( morphism1 ),
                                    UnderlyingMorphism( morphism2 ) );
-        
-        return AsHomotopyCategoryMorphism( category, composition );
-        
+
+        return AsHomotopyCategoryMorphism( composition );
+
     end );
-    
+
     ## IdentityMorphism
-    
+
     AddIdentityMorphism( category,
-      
+
       function( object )
-      
-        return AsHomotopyCategoryMorphism( category, IdentityMorphism( UnderlyingComplex( object ) ) );
-        
+
+        return AsHomotopyCategoryMorphism( IdentityMorphism( UnderlyingObject( object ) ) );
+
     end );
-    
+
     ## Addition for morphisms
-    
+
     AddAdditionForMorphisms( category,
-      
+
       function( morphism1, morphism2 )
         local sum;
-        
+
         sum := AdditionForMorphisms( UnderlyingMorphism( morphism1 ),
                                      UnderlyingMorphism( morphism2 ) );
-        
-        return AsHomotopyCategoryMorphism( category, sum );
-        
+
+        return AsHomotopyCategoryMorphism( sum );
+
     end );
-    
+
     ## IsZeroForMorphisms
     AddIsZeroForMorphisms( category, 
-    
+
        function( morphism )
        local underlying_mor;
-       
+
        underlying_mor := UnderlyingMorphism( morphism );
-       
+
        if HasIsZero( underlying_mor ) and IsZero( underlying_mor ) then
-        
+
           return true;
-          
+
        else 
-       
-          return test_function( morphism );
-          
+
+          return test_function( UnderlyingMorphism( morphism ) );
+
        fi;
-       
+
     end );
-    
+
     ## IsZeroForObjects
     AddIsZeroForObjects( category, 
-    
+
     function( obj )
     local underlying_obj;
-       
-       underlying_obj := UnderlyingComplex( obj );
-       
+
+       underlying_obj := UnderlyingObject( obj );
+
        if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
-        
+
           return true;
-          
+
        else 
-       
+
           return IsZero( IdentityMorphism( obj ) );
-       
+
        fi;
-       
+
     end );
-    
-    
+
     ## Additive inverse for morphisms
-    
+
     AddAdditiveInverseForMorphisms( category,
-      
+
       function( morphism )
         local new_mor;
-        
+
         new_mor := AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) );
-        
-        return AsHomotopyCategoryMorphism( category, new_mor );
-        
+
+        return AsHomotopyCategoryMorphism( new_mor );
+
     end );
-    
+
     ## Zero morphism
-    
+
     AddZeroMorphism( category,
-      
+
       function( source, range )
         local zero_mor;
-        
-        zero_mor := ZeroMorphism( UnderlyingComplex( source ), UnderlyingComplex( range ) );
-        
-        return AsHomotopyCategoryMorphism( category, zero_mor );
-        
+
+        zero_mor := ZeroMorphism( UnderlyingObject( source ), UnderlyingObject( range ) );
+
+        return AsHomotopyCategoryMorphism( zero_mor );
+
     end );
-    
+
     ## Zero object
-    
+
     AddZeroObject( category,
-      
+
       function( )
         local zero_obj;
         
         zero_obj := ZeroObject( UnderlyingCategory( category ) );
         
-        return AsHomotopyCategoryObject( category, zero_obj );
+        return AsHomotopyCategoryObject( zero_obj );
         
     end );
     
@@ -193,13 +205,14 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
       function( obj_list )
         local underlying_list, underlying_sum;
         
-        underlying_list := List( obj_list, UnderlyingComplex );
+        underlying_list := List( obj_list, UnderlyingObject );
         
         underlying_sum := CallFuncList( DirectSum, underlying_list );
         
-        return AsHomotopyCategoryObject( category, underlying_sum );
+        return AsHomotopyCategoryObject( underlying_sum );
         
     end );
+
 
 end );
     
@@ -210,21 +223,24 @@ end );
 ########################
 
 InstallMethod( HomotopyCategory,
-                 [ IsCapCategory, IsFunction ],
-                                  
-  function( category, test_function )
+                 [ IsCapCategory ],
+
+function( category )
     local homotopy_category, gen_category, name, preconditions,
           category_weight_list, i, to_be_finalized;
-    
+
+    #   IMPORTANT
+    #   if category has test function as attribute ...
+
     if not HasIsFinalized( category ) or not IsFinalized( category ) then
-        
+
         Error( "category must be finalized" );
         return;
-        
+
     fi;
-    
+
     ## this may be extended or reduced ...
-    
+
     preconditions := [ "IsEqualForObjects",
                        "AdditiveInverseForMorphisms",
                        "IdentityMorphism",
@@ -235,9 +251,9 @@ InstallMethod( HomotopyCategory,
                        "UniversalMorphismFromDirectSum",
                        "UniversalMorphismIntoDirectSum",
                        "DirectSumFunctorial" ];
-    
+
     category_weight_list := category!.derivations_weight_list;
-    
+
     for i in preconditions do
         
         if CurrentOperationWeight( category_weight_list, i ) = infinity then
@@ -251,16 +267,14 @@ InstallMethod( HomotopyCategory,
     
     name := Name( category );
     
-    name := Concatenation( "The homotopy category of ", name ); # , " by ", function_name
+    name := Concatenation( "The homotopy category of ", name );
     
     homotopy_category := CreateCapCategory( name );
     
     SetFilterObj( homotopy_category, WasCreatedAsHomotopyCategory );
     
     SetUnderlyingCategory( homotopy_category, category );
-    
-    SetTestFunctionForHomotopyCategory( homotopy_category, test_function );
-    
+
     SetIsAdditiveCategory( homotopy_category, true );
      
     CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY( homotopy_category );
@@ -281,101 +295,104 @@ end );
 
 ##
 InstallMethod( AsHomotopyCategoryMorphism,
-               [ IsCapCategory and WasCreatedAsHomotopyCategory, IsCapCategoryMorphism ],
-               
-    function( category, mor )
-    local underlying_category, homotopy_morphism;
-    underlying_category := UnderlyingCategory( category );
-    
-    if not IsIdenticalObj( underlying_category, CapCategory( mor ) ) then 
-    
-       Error( "The morphism does not belong to the underlying category of the homotopy category" );
-       
-    fi;
-    
+               [ IsChainOrCochainMorphism ],
+
+    function( mor )
+    local category, homotopy_morphism;
+
+    category := HomotopyCategory( CapCategory( mor ) );
+
     homotopy_morphism := rec( );
-    
+
     ObjectifyWithAttributes( homotopy_morphism, TheTypeOfHomotopyCategoryMorphism,
-                             Source, AsHomotopyCategoryObject( category, Source( mor ) ),
-                             Range,  AsHomotopyCategoryObject( category, Range( mor ) )
+                             Source, AsHomotopyCategoryObject( Source( mor ) ),
+                             Range,  AsHomotopyCategoryObject( Range( mor ) )
                              );
-    
+
     SetUnderlyingMorphism( homotopy_morphism, mor );
 
-    ## here we should add to do list... 
-    
+    SetMorphisms( homotopy_morphism, Morphisms( mor ) );
+
     AddMorphism( category, homotopy_morphism );
-    
+
     return homotopy_morphism;
-    
+
 end );
-    
-    
+
 ##
 InstallMethod( AsHomotopyCategoryObject,
-               [ IsCapCategory and WasCreatedAsHomotopyCategory, IsCapCategoryObject ],
-               
-    function( category, obj )
-    local underlying_category, homotopy_obj;
-    underlying_category := UnderlyingCategory( category );
-    
-    if not IsIdenticalObj( underlying_category, CapCategory( obj ) ) then 
-    
-       Error( "The object does not belong to the underlying category of the homotopy category" );
-       
-    fi;
-    
+               [ IsChainOrCochainComplex ],
+
+    function( obj )
+    local category, homotopy_obj;
+
+    category := HomotopyCategory( CapCategory( obj ) );
+
     homotopy_obj := rec( );
-    
-    ObjectifyWithAttributes( homotopy_obj, TheTypeOfHomotopyCategoryObject );
-    
-    SetUnderlyingComplex( homotopy_obj, obj );
+
+    ObjectifyWithAttributes( homotopy_obj, TheTypeOfHomotopyCategoryObject,
+                             Differentials, Differentials( obj ),
+                             UnderlyingObject, obj );
+
+    if IsChainComplex( obj ) then
+
+       SetFilterObj( homotopy_obj, IsChainComplex );
+
+    else
+
+       SetFilterObj( homotopy_obj, IsCochainComplex );
+
+    fi;
+
 
     ## here we should add to do list... 
-    
+
     AddObject( category, homotopy_obj );
-    
+
+    TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( homotopy_obj );
+
     return homotopy_obj;
-    
+
 end );
+
 ###########################
 ##
 ##  View and Display
 ##
 ###########################
-
-InstallMethod( ViewObj,
-      [ IsHomotopyCategoryObject ], 
-    function( obj )
-    
-    Print( "<An object in the homotopy category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
-    
-    end );
-      
-
-InstallMethod( ViewObj,
-      [ IsHomotopyCategoryMorphism ], 
-    function( mor )
-    
-    Print( "<A morphism in the homotopy category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
-    
-    end );
-    
-InstallMethod( Display,
-      [ IsHomotopyCategoryObject ], 
-    function( obj )
-    
-    Print( "An object in the homotopy category of ", UnderlyingCategory( CapCategory( obj ) ), " with underlying object\n" );
-    Display( UnderlyingComplex( obj ) );
-    
-    end );
-      
-
-InstallMethod( Display,
-      [ IsHomotopyCategoryMorphism ], 
-    function( mor )
-    
-    Print( "A morphism in the homotopy category of ", UnderlyingCategory( CapCategory( mor ) ), " with underlying morphism\n" );
-    Display( UnderlyingMorphism( mor ) );
-    
-    end );
+#
+# InstallMethod( ViewObj,
+#       [ IsHomotopyCategoryObject ], 
+#     function( obj )
+#     
+#     Print( "<An object in the homotopy category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
+#     
+#     end );
+#       
+# 
+# InstallMethod( ViewObj,
+#       [ IsHomotopyCategoryMorphism ], 
+#     function( mor )
+#     
+#     Print( "<A morphism in the homotopy category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
+#     
+#     end );
+#     
+# InstallMethod( Display,
+#       [ IsHomotopyCategoryObject ], 
+#     function( obj )
+#     
+#     Print( "An object in the homotopy category of ", UnderlyingCategory( CapCategory( obj ) ), " with underlying object\n" );
+#     Display( UnderlyingObject( obj ) );
+#     
+#     end );
+#       
+# 
+# InstallMethod( Display,
+#       [ IsHomotopyCategoryMorphism ], 
+#     function( mor )
+#     
+#     Print( "A morphism in the homotopy category of ", UnderlyingCategory( CapCategory( mor ) ), " with underlying morphism\n" );
+#     Display( UnderlyingMorphism( mor ) );
+#     
+#     end );
