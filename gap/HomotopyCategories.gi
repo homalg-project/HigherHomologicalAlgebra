@@ -255,40 +255,39 @@ function( category )
     category_weight_list := category!.derivations_weight_list;
 
     for i in preconditions do
-        
+
         if CurrentOperationWeight( category_weight_list, i ) = infinity then
-            
+
             Error( Concatenation( "category must be able to compute ", i ) );
             return;
-            
-        fi;
-        
-    od;
-    
-    name := Name( category );
-    
-    name := Concatenation( "The homotopy category of ", name );
-    
-    homotopy_category := CreateCapCategory( name );
-    
-    SetFilterObj( homotopy_category, WasCreatedAsHomotopyCategory );
-    
-    SetUnderlyingCategory( homotopy_category, category );
 
+        fi;
+
+    od;
+
+    name := Name( category );
+
+    name := Concatenation( "The homotopy category of ", name );
+
+    homotopy_category := CreateCapCategory( name );
+
+    ObjectifyWithAttributes( homotopy_category, TheTypeOfHomotopyCategory );
+
+    SetUnderlyingCategory( homotopy_category, category );
     SetIsAdditiveCategory( homotopy_category, true );
-     
+
     CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY( homotopy_category );
-    
-       to_be_finalized := ValueOption( "FinalizeHomotopyCategory" );
-   
+
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+
     if to_be_finalized = true then
-      
+
        Finalize( homotopy_category );
-      
+
     fi;
-   
+
     return homotopy_category;
-   
+
 end );
 
 # HomotopyCategory( category, funk: FinalizeHomotopyCategory := false );
