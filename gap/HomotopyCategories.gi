@@ -13,7 +13,7 @@
 ########################
 
 DeclareRepresentation( "IsHomotopyCategoryRep",
-                       IsCapCategoryRep and IsHomotopyCategory,
+                       IsCapCategoryRep and IsHomotopyCategory and IsAttributeStoringRep,
                        [ ] );
 
 BindGlobal( "TheTypeOfHomotopyCategory",
@@ -271,26 +271,29 @@ function( category )
 
     homotopy_category := CreateCapCategory( name );
 
-    ObjectifyWithAttributes( homotopy_category, TheTypeOfHomotopyCategory );
+    SetFilterObj( homotopy_category, IsHomotopyCategory );
 
     SetUnderlyingCategory( homotopy_category, category );
+
     SetIsAdditiveCategory( homotopy_category, true );
 
     CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY( homotopy_category );
 
     to_be_finalized := ValueOption( "FinalizeCategory" );
 
-    if to_be_finalized = true then
+    if to_be_finalized = false then
 
-       Finalize( homotopy_category );
+       return homotopy_category;
 
     fi;
+
+    Finalize( homotopy_category );
 
     return homotopy_category;
 
 end );
 
-# HomotopyCategory( category, funk: FinalizeHomotopyCategory := false );
+# HomotopyCategory( category, FinalizeCategory := false );
 
 ##
 InstallMethod( AsHomotopyCategoryMorphism,

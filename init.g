@@ -5,5 +5,6 @@
 #
 
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gd");
+ReadPackage( "HomotopyCategories", "gap/functors.gd" );
 #! ReadPackage( "HomotopyCategories", "gap/Tools.gd"); 
 
