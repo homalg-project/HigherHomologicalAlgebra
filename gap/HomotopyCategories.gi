@@ -344,7 +344,6 @@ InstallMethod( AsHomotopyCategoryObject,
 
     fi;
 
-
     ## here we should add to do list... 
 
     AddObject( category, homotopy_obj );
