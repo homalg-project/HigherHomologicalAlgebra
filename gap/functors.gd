@@ -34,34 +34,13 @@ DeclareOperation( "ShiftFunctor", [ IsHomotopyCategory, IsInt ] );
 #! @Returns a functor
 DeclareOperation( "UnsignedShiftFunctor", [ IsHomotopyCategory, IsInt ] );
 
-# @Description
-# The input is a category <A>A</A>. The output is the functor $F:\mathrm{Ch(A)}\rightarrow\mathrm{Coch(A)}$ defined by $C_{\bullet}\mapsto C^{\bullet}$ for any 
-# for any chain complex $C_{\bullet}\in \mathrm{Ch}(A)$ and by $\phi_{\bullet}\mapsto \phi^{\bullet}$ for any map $\phi$ where $C^{i}=C_{-i}$ and $\phi^{i}=\phi_{-i}$.
-# @Arguments A
-# @Returns a functor
-#DeclareOperation( "ChainToCochainComplexFunctor", [ IsCapCategory ] );
+DeclareOperation( "ChainToCochainComplexFunctor", [ IsHomotopyCategory, IsHomotopyCategory ] );
 
-# @Description
-# The input is a category <A>A</A>. The output is the functor $F:\mathrm{Coch(A)}\rightarrow\mathrm{Ch(A)}$ defined by $C^{\bullet}\mapsto C_{\bullet}$ for any 
-# cochain complex $C^{\bullet}\in \mathrm{Coch}(A)$ and by $\phi^{\bullet}\mapsto \phi_{\bullet}$ for any map $\phi$ where $C_{i}=C^{-i}$ and $\phi_{i}=\phi^{-i}$.
-# @Arguments A
-# @Returns a functor
-# DeclareOperation( "CochainToChainComplexFunctor", [ IsCapCategory ] );
+DeclareOperation( "CochainToChainComplexFunctor", [ IsHomotopyCategory, IsHomotopyCategory ] );
 
-# @Description
-# The input is a functor $F:A\rightarrow B$. The output is its extention functor $F:\mathrm{Ch}(A)\rightarrow \mathrm{Ch}(B)$.
-# @Arguments F
-# @Returns a functor
-# DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ] );
+DeclareOperation( "ExtendFunctorToChainHomotopyCategoryFunctor", [ IsCapFunctor ] );
 
-# @Description
-# The input is a functor $F:A\rightarrow B$. The output is its extention functor $F:\mathrm{Coch}(A)\rightarrow \mathrm{Coch}(B)$.
-# @Arguments F
-# @Returns a functor
-# DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor ] );
-# @EndSection
-# @Section Examples
-# @InsertChunk vec_3
+DeclareOperation( "ExtendFunctorToCochainHomotopyCategoryFunctor", [ IsCapFunctor ] );
 
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
