@@ -321,18 +321,18 @@ InstallMethod( UnsignedShiftFunctor,
 end );
 
 InstallMethod( ChainToCochainComplexFunctor, 
-               [ IsCapCategory ], 
-   function( cat )
+               [ IsChainComplexCategory, IsCochainComplexCategory ], 
+   function( cat1, cat2  )
 
-   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( cat, "chain_to_cochain" );
+   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( UnderlyingCategory( cat1 ), "chain_to_cochain" );
 
    end );
 
 InstallMethod( CochainToChainComplexFunctor, 
-               [ IsCapCategory ], 
-   function( cat )
+               [ IsCochainComplexCategory, IsChainComplexCategory ], 
+   function( cat1, cat2 )
 
-   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( cat, "cochain_to_chain" );
+   return CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR( UnderlyingCategory( cat1 ), "cochain_to_chain" );
 
 end );
 

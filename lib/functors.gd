@@ -39,14 +39,14 @@ DeclareOperation( "UnsignedShiftFunctor", [ IsChainOrCochainComplexCategory, IsI
 #! for any chain complex $C_{\bullet}\in \mathrm{Ch}(A)$ and by $\phi_{\bullet}\mapsto \phi^{\bullet}$ for any map $\phi$ where $C^{i}=C_{-i}$ and $\phi^{i}=\phi_{-i}$.
 #! @Arguments A
 #! @Returns a functor
-DeclareOperation( "ChainToCochainComplexFunctor", [ IsCapCategory ] );
+DeclareOperation( "ChainToCochainComplexFunctor", [ IsChainComplexCategory, IsCochainComplexCategory ] );
 
 #! @Description
-#! The input is a category <A>A</A>. The output is the functor $F:\mathrm{Coch(A)}\rightarrow\mathrm{Ch(A)}$ defined by $C^{\bullet}\mapsto C_{\bullet}$ for any 
+#! TO CHANGE: The input is a category <A>A</A>. The output is the functor $F:\mathrm{Coch(A)}\rightarrow\mathrm{Ch(A)}$ defined by $C^{\bullet}\mapsto C_{\bullet}$ for any 
 #! cochain complex $C^{\bullet}\in \mathrm{Coch}(A)$ and by $\phi^{\bullet}\mapsto \phi_{\bullet}$ for any map $\phi$ where $C_{i}=C^{-i}$ and $\phi_{i}=\phi^{-i}$.
 #! @Arguments A
 #! @Returns a functor
-DeclareOperation( "CochainToChainComplexFunctor", [ IsCapCategory ] );
+DeclareOperation( "CochainToChainComplexFunctor", [ IsCochainComplexCategory, IsChainComplexCategory ] );
 
 #! @Description
 #! The input is a functor $F:A\rightarrow B$. The output is its extention functor $F:\mathrm{Ch}(A)\rightarrow \mathrm{Ch}(B)$.
