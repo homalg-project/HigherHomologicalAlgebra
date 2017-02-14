@@ -305,15 +305,15 @@ InstallMethod( ViewObj,
 
   if IsBoundedChainOrCochainMorphism( phi ) then
 
-     Print( "<A bounded morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), " and active upper bound ", ActiveUpperBound( phi ), ".>" );
+     Print( "<A bounded morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), " and active upper bound ", ActiveUpperBound( phi ), ">" );
 
   elif IsBoundedBelowChainOrCochainMorphism( phi ) then
 
-     Print( "<A bounded from below morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), ".>" );
+     Print( "<A bounded from below morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active lower bound ", ActiveLowerBound( phi ), ">" );
 
   elif IsBoundedAboveChainOrCochainMorphism( phi ) then
 
-     Print( "<A bounded from above morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active upper bound ", ActiveUpperBound( phi ), ".>" );
+     Print( "<A bounded from above morphism in ", Big_to_Small( Name( CapCategory( phi ) ) ), " with active upper bound ", ActiveUpperBound( phi ), ">" );
 
   else
 

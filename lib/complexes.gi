@@ -493,15 +493,15 @@ InstallMethod( ViewObj,
 
   if IsBoundedChainOrCochainComplex( C ) then
 
-     Print( "<A", is_exact, "bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ".>" );
+     Print( "<A", is_exact, "bounded object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), " and active upper bound ", ActiveUpperBound( C ), ">" );
 
   elif IsBoundedBelowChainOrCochainComplex( C ) then
 
-     Print( "<A", is_exact, "bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ".>" );
+     Print( "<A", is_exact, "bounded from below object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active lower bound ", ActiveLowerBound( C ), ">" );
 
   elif IsBoundedAboveChainOrCochainComplex( C ) then
 
-     Print( "<A", is_exact, "bounded from above object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active upper bound ", ActiveUpperBound( C ), ".>" );
+     Print( "<A", is_exact, "bounded from above object in ", Big_to_Small( Name( CapCategory( C ) ) ), " with active upper bound ", ActiveUpperBound( C ), ">" );
 
   else
 
