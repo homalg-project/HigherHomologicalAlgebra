@@ -56,7 +56,7 @@ g := VectorSpaceMorphism( B, HomalgMatrix( [ [ 0 ], [ 0 ] ], 2, 1, Q ), A );
 #! <A morphism in Category of matrices over Q>
 C := CochainComplex( [ f, g, 2*f ], 3 );
 #! <A bounded object in cochain complexes category over category of matrices over Q 
-#! with active lower bound 2 and active upper bound 7.>
+#! with active lower bound 2 and active upper bound 7>
 ActiveUpperBound( C );
 #! 7
 ActiveLowerBound( C );
@@ -92,23 +92,23 @@ IsExactInIndex( C, 3 );
 #! true
 C;
 #! <A not cyclic, bounded object in cochain complexes category over category of 
-#! matrices over Q with active lower bound 2 and active upper bound 7.>
+#! matrices over Q with active lower bound 2 and active upper bound 7>
 P := CochainComplex( matrix_category, diffs );
 #! <An object in Cochain complexes category over category of matrices over Q>
 SetUpperBound( P, 15 );
 P;
 #! <A bounded from above object in cochain complexes category over category of 
-#! matrices over Q with active upper bound 15.>
+#! matrices over Q with active upper bound 15>
 SetUpperBound( P, 20 );
 P;
 #! <A bounded from above object in cochain complexes category over category of 
-#! matrices over Q with active upper bound 15.>
+#! matrices over Q with active upper bound 15>
 ActiveUpperBound( P );
 #! 15
 SetUpperBound( P, 7 );
 P;
 #! <A bounded from above object in cochain complexes category over category of 
-#! matrices over Q with active upper bound 7.>
+#! matrices over Q with active upper bound 7>
 ActiveUpperBound( P );
 #! 7
 #! @EndExample
@@ -172,10 +172,10 @@ phi5 := 2*h;
 #! <A morphism in Category of matrices over Q>
 D := CochainComplex( [ h ], 4 );
 #! <A bounded object in cochain complexes category over category of matrices 
-#! over Q with active lower bound 3 and active upper bound 6.> 
+#! over Q with active lower bound 3 and active upper bound 6>
 phi := CochainMorphism( C, D, [ phi4, phi5 ], 4 );
 #! <A bounded morphism in cochain complexes category over category of matrices
-#!  over Q with active lower bound 3 and active upper bound 6.>
+#!  over Q with active lower bound 3 and active upper bound 6>
 Display( phi[ 5 ] );
 #! [ [ 10 ] ]
 #! 
@@ -195,7 +195,7 @@ IsExact( C );
 #! @Example
 psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
 #! <A bounded morphism in cochain complexes category over category of matrices 
-#! over Q with active lower bound 3 and active upper bound 6.>
+#! over Q with active lower bound 3 and active upper bound 6>
 #! @EndExample
 #! @BeginLatexOnly
 #! In some cases the morphism can change its lower bound when we apply the function \texttt{ IsZeroForMorphisms }.
@@ -205,7 +205,7 @@ IsZeroForMorphisms( psi );
 #! false
 psi;
 #! <A bounded morphism in cochain complexes category over category of matrices 
-#! over Q with active lower bound 4 and active upper bound 6.>
+#! over Q with active lower bound 4 and active upper bound 6>
 #! @EndExample
 #! @BeginLatexOnly
 #! In the following we compute the mapping cone of $\psi$ and its natural injection and projection.
@@ -326,7 +326,7 @@ psi;
 #! @Example
 cone := MappingCone( psi );
 #! <A bounded object in cochain complexes category over category of matrices over 
-#! Q with active lower bound 1 and active upper bound 6.>
+#! Q with active lower bound 1 and active upper bound 6>
 cone^4;
 #! <A morphism in Category of matrices over Q>
 Display( cone^4 );
@@ -336,10 +336,10 @@ Display( cone^4 );
 #! A morphism in Category of matrices over Q
 i := NaturalInjectionInMappingCone( psi );
 #! <A bounded morphism in cochain complexes category over category of matrices over
-#! Q with active lower bound 3 and active upper bound 6.>
+#! Q with active lower bound 3 and active upper bound 6>
 p := NaturalProjectionFromMappingCone( psi );
 #! <A bounded morphism in cochain complexes category over category of matrices over
-#! Q with active lower bound 1 and active upper bound 6.>
+#! Q with active lower bound 1 and active upper bound 6>
 #! @EndExample
 #! @EndChunk
 
@@ -352,7 +352,7 @@ p := NaturalProjectionFromMappingCone( psi );
 #! @Example
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in cochain complexes category over category of matrices
-#! over Q with active lower bound 4 and active upper bound 6.>
+#! over Q with active lower bound 4 and active upper bound 6>
 H5 := CohomologyFunctor( cochain_cat, matrix_category, 5 );
 #! 5-th cohomology functor in category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
@@ -389,10 +389,10 @@ Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );
 #! of matrices over Q to cochain complexes category over category of matrices over Q
 psi;
 #! <A bounded morphism in cochain complexes category over category of matrices 
-#! over Q with active lower bound 4 and active upper bound 6.>
+#! over Q with active lower bound 4 and active upper bound 6>
 Coch_F_psi := ApplyFunctor( Coch_F, psi );
 #! <A bounded morphism in cochain complexes category over category of matrices 
-#! over Q with active lower bound 4 and active upper bound 6.>
+#! over Q with active lower bound 4 and active upper bound 6>
 Display( psi[ 5 ] );
 #! [ [  10 ] ]
 #! 
@@ -412,10 +412,10 @@ T := ShiftFunctor( cochain_cat, 3 );
 #!  of matrices over Q
 C;
 #! <A not cyclic, bounded object in cochain complexes category over category of 
-#! matrices over Q with active lower bound 2 and active upper bound 7.>
+#! matrices over Q with active lower bound 2 and active upper bound 7>
 C_3 := ApplyFunctor( T, C );
 #! <A not cyclic, bounded object in cochain complexes category over category of 
-#! matrices over Q with active lower bound -1 and active upper bound 4.>
+#! matrices over Q with active lower bound -1 and active upper bound 4>
 Display( C^3 );
 #! [ [  1,  3 ] ]
 #! 
@@ -429,7 +429,7 @@ S := UnsignedShiftFunctor( cochain_cat, 3 );
 #! category of matrices over Q
 C_3_unsigned := ApplyFunctor( S, C );
 #! <A bounded object in cochain complexes category over category of matrices over 
-#! Q with active lower bound -1 and active upper bound 4.>
+#! Q with active lower bound -1 and active upper bound 4>
 Display( C_3_unsigned^0 );
 #! [ [  1,  3 ] ]
 #!
