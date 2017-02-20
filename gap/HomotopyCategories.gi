@@ -267,7 +267,7 @@ function( category )
 
     name := Name( category );
 
-    name := Concatenation( "The homotopy category of ", name );
+    name := Concatenation( "The homotopy category of ", Big_to_Small( name ) );
 
     homotopy_category := CreateCapCategory( name );
 
