@@ -59,7 +59,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
 
          if IsIdenticalObj( obj1, obj2 ) then return true; fi;
 
-         return IsEqualForObjects( UnderlyingObject( obj1 ), UnderlyingObject( obj2 ) );
+         return IsEqualForObjects( UnderlyingComplex_( obj1 ), UnderlyingComplex_( obj2 ) );
 
     end );
 
@@ -101,7 +101,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
 
       function( object )
 
-        return AsHomotopyCategoryMorphism( IdentityMorphism( UnderlyingObject( object ) ) );
+        return AsHomotopyCategoryMorphism( IdentityMorphism( UnderlyingComplex_( object ) ) );
 
     end );
 
@@ -145,7 +145,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
     function( obj )
     local underlying_obj;
 
-       underlying_obj := UnderlyingObject( obj );
+       underlying_obj := UnderlyingComplex_( obj );
 
        if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
 
@@ -179,7 +179,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
       function( source, range )
         local zero_mor;
 
-        zero_mor := ZeroMorphism( UnderlyingObject( source ), UnderlyingObject( range ) );
+        zero_mor := ZeroMorphism( UnderlyingComplex_( source ), UnderlyingComplex_( range ) );
 
         return AsHomotopyCategoryMorphism( zero_mor );
 
@@ -205,7 +205,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
       function( obj_list )
         local underlying_list, underlying_sum;
         
-        underlying_list := List( obj_list, UnderlyingObject );
+        underlying_list := List( obj_list, UnderlyingComplex_ );
         
         underlying_sum := CallFuncList( DirectSum, underlying_list );
         
@@ -355,7 +355,7 @@ InstallMethod( AsHomotopyCategoryObject,
 
     ObjectifyWithAttributes( homotopy_obj, TheTypeOfHomotopyCategoryObject,
                              Differentials, Differentials( obj ),
-                             UnderlyingObject, obj );
+                             UnderlyingComplex_, obj );
 
     if IsChainComplex( obj ) then
 

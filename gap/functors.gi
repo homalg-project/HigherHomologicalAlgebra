@@ -31,7 +31,7 @@ local functor, complex_cat, name, Hn;
   
      function( complex )
   
-     return ApplyFunctor( Hn, UnderlyingObject( complex ) );
+     return ApplyFunctor( Hn, UnderlyingComplex_( complex ) );
   
      end );
      
@@ -80,7 +80,7 @@ local functor, complex_cat, name, Hn;
   
      function( complex )
   
-     return ApplyFunctor( Hn, UnderlyingObject( complex ) );
+     return ApplyFunctor( Hn, UnderlyingComplex_( complex ) );
   
      end );
      
@@ -114,7 +114,7 @@ local functor, complex_cat, name, T;
   
      function( complex )
   
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingObject( complex ) ) );
+       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
   
      end );
      
@@ -149,7 +149,7 @@ local functor, complex_cat, name, T;
   
      function( complex )
   
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingObject( complex ) ) );
+       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
   
      end );
      
@@ -186,7 +186,7 @@ local functor, complex_cat1,complex_cat2, name, T;
 
      function( complex )
 
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingObject( complex ) ) );
+       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
 
      end );
 
@@ -223,7 +223,7 @@ local functor, complex_cat1,complex_cat2, name, T;
 
      function( complex )
 
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingObject( complex ) ) );
+       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
 
      end );
 

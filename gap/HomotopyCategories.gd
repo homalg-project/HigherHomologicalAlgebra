@@ -59,7 +59,7 @@ DeclareAttribute( "UnderlyingMorphism" ,IsHomotopyCategoryMorphism  );
 #! bla bla
 #! @Arguments obj
 #! @Returns <A>obj</A>
-DeclareAttribute( "UnderlyingObject" ,IsHomotopyCategoryObject  );
+DeclareAttribute( "UnderlyingComplex_" ,IsHomotopyCategoryObject  );
 
 #! @Description
 #! bla bla
