@@ -8,7 +8,7 @@
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
-  local name, complex_cat, complex_constructor, morphism_constructor;
+  local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized;
   if shift_index = -1 then 
 
      name := Concatenation( "Chain complexes category over ", Big_to_Small( Name( cat ) ) );
@@ -638,11 +638,21 @@ end );
   fi;
 
 
-SetUnderlyingCategory( complex_cat, cat );
+    SetUnderlyingCategory( complex_cat, cat );
 
-Finalize( complex_cat );
+    to_be_finalized := ValueOption( "FinalizeCategory" );
 
-return complex_cat;
+    if to_be_finalized = false then
+
+       return complex_cat;
+
+    else
+
+       Finalize( complex_cat );
+
+    fi;
+
+    return complex_cat;
 
 end );
 
