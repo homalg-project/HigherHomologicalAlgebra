@@ -12,6 +12,21 @@
 
 #! @Section Filters and categories
 
+DeclareOperationWithCache( "IsNullHomotopic", [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsFunction ] );
+
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsList ] );
+
 #! @Description
 #!  bla bla
 DeclareCategory( "IsHomotopyCategory",

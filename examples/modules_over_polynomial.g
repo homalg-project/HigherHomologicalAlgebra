@@ -318,25 +318,38 @@ fi;
 
 end;
 
-test_function := function( mor )
-  if IsBoundedChainOrCochainMorphism( mor ) then 
-     return compute_homotopy_in_left_presentations( mor, ActiveLowerBound( mor ), ActiveUpperBound( mor ) )[ 1 ];
-  fi;
-  Error( "The morphism must be bounded" );
+test_function := 
+   function( mor )
+   local S, R, m, n;
+
+   S := Source( mor );
+
+   R := Range( mor );
+
+   if not IsBoundedChainOrCochainComplex( S ) or not IsBoundedChainOrCochainComplex( R ) then 
+
+      Error( "Both source and range must be bounded complexes" );
+
+   fi;
+
+   m := Minimum( ActiveLowerBound( S ), ActiveLowerBound( R ) );
+
+   n := Maximum( ActiveUpperBound( S ), ActiveUpperBound( R ) );
+
+   return compute_homotopy_in_left_presentations( mor, m, n )[ 1 ];
+
 end;
 
 ########################################################
 
 R := HomalgFieldOfRationalsInSingular()*"x,y,z,t";
 #! Q[x,y,z,t]
-cat := LeftPresentations( R:FinalizeCategory := false );
+cat := LeftPresentations( R );
 #! Category of left presentations of Q[x,y,z,t]
-AddEpimorphismFromProjectiveObject( cat, CoverByFreeModule );;
-Finalize( cat );
-SetHasEnoughProjectives( cat, true );
-#! true
-cochain_cat := CochainComplexCategory( cat );
+cochain_cat := CochainComplexCategory( cat :FinalizeCategory := false );
 #! Cochain complexes category over category of left presentations of Q[x,y,z,t]
+AddIsNullHomotopic( cochain_cat, test_function );
+Finalize( cochain_cat );;
 SetTestFunctionForHomotopyCategory( cochain_cat, test_function );;
 homotopy_cat := HomotopyCategory( cochain_cat );
 #! The homotopy category of Cochain complexes category over category of left presentations of Q[x,y,z,t]

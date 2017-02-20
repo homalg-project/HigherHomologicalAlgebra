@@ -37,6 +37,25 @@ BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
         NewType( TheFamilyOfCapCategoryMorphisms,
                  IsHomotopyCategoryMorphismRep ) );
 
+##
+DeclareGlobalVariable( "NULL_HOMOTOPIC_METHOD" );
+
+InstallValue( NULL_HOMOTOPIC_METHOD, rec( 
+
+IsNullHomotopic := rec( 
+
+installation_name := "IsNullHomotopic", 
+filter_list := [ "morphism" ],
+cache_name := "IsNullHomotopic",
+return_type := "bool" ),
+
+) );
+
+CAP_INTERNAL_ENHANCE_NAME_RECORD( NULL_HOMOTOPIC_METHOD );
+
+CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( NULL_HOMOTOPIC_METHOD );
+
+
 ########################
 ##
 ## Installer
