@@ -330,17 +330,19 @@ end;
 R := HomalgFieldOfRationalsInSingular()*"x,y,z,t";
 #! Q[x,y,z,t]
 cat := LeftPresentations( R );
+#! Category of left presentations of Q[x,y,z,t]
 cochain_cat := CochainComplexCategory( cat );
-SetTestFunctionForHomotopyCategory( cochain_cat, test_function );
+#! Cochain complexes category over category of left presentations of Q[x,y,z,t]
+SetTestFunctionForHomotopyCategory( cochain_cat, test_function );;
 homotopy_cat := HomotopyCategory( cochain_cat );
-
+#! The homotopy category of Cochain complexes category over category of left presentations of Q[x,y,z,t]
 A1 := AsLeftPresentation( HomalgMatrix( "[ [ x ] ]",1,1,R) );
 #! <An object in Category of left presentations of Q[x,y,z,t]>
-A2 := AsLeftPresentation( HomalgMatrix( "[ [ yx ] ]",1,1,R) );
+A2 := AsLeftPresentation( HomalgMatrix( "[ [ xy ] ]",1,1,R) );
 #! <An object in Category of left presentations of Q[x,y,z,t]>
-B1 := AsLeftPresentation( HomalgMatrix( "[ [ yx ] ]",1,1,R) );
+B1 := AsLeftPresentation( HomalgMatrix( "[ [ xy ] ]",1,1,R) );
 #! <An object in Category of left presentations of Q[x,y,z,t]>
-B2 := AsLeftPresentation( HomalgMatrix( "[ [ yxt ] ]",1,1,R) );
+B2 := AsLeftPresentation( HomalgMatrix( "[ [ xyt ] ]",1,1,R) );
 #! <An object in Category of left presentations of Q[x,y,z,t]>
 a12 := PresentationMorphism( A1, HomalgMatrix( "[ [ y ] ]",1,1, R ), A2 );
 #! <A morphism in Category of left presentations of Q[x,y,z,t]>
@@ -357,4 +359,10 @@ phi1 := PreCompose( CA^1, h );
 phi2 := PreCompose( h, CB^1 );
 #! <A morphism in Category of left presentations of Q[x,y,z,t]>
 phi := CochainMorphism( CA, CB, [ phi1, phi2 ], 1 );
-
+#! <A bounded morphism in cochain complexes category over category of left presentations of Q[x,y,z,t] with active lower bound 0 and active upper bound 3>
+IsZero( phi );
+#! false
+H_phi := AsHomotopyCategoryMorphism( phi );
+#! <A bounded morphism in the homotopy category of cochain complexes category over category of left presentations of Q[x,y,z,t] with active lower bound 0 and active upper bound 3>
+IsZero( H_phi );
+#! true
