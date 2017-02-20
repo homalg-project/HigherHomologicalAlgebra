@@ -239,3 +239,149 @@ local functor, complex_cat1,complex_cat2, name, T;
 
 end );
 
+InstallMethod( ExtendFunctorToChainHomotopyCategoryFunctor, 
+               [ IsCapFunctor ], 
+function( F )
+local S, T, functor, name;
+
+   S := HomotopyCategory( ChainComplexCategory( AsCapCategory( Source( F ) ) ) );
+
+   T := HomotopyCategory( ChainComplexCategory( AsCapCategory(  Range( F ) ) ) );
+
+   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
+
+   functor := CapFunctor( name, S, T );
+
+   AddObjectFunction( functor,
+   function( C )
+   local diffs, functor_C;
+
+   diffs := MapLazy( Differentials( C ), function( d )
+
+                                         return ApplyFunctor( F, d );
+
+                                         end, 1 );
+     
+   functor_C := AsHomotopyCategoryObject( ChainComplex( AsCapCategory( Range( F ) ), diffs ) );
+     
+   TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
+
+   AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                              if not HasIsZero( functor_C ) then 
+
+                                                                 SetIsZero( functor_C, true );
+
+                                                              fi;
+
+                                                              end ) );
+
+   return functor_C;
+
+   end );
+
+   AddMorphismFunction( functor,
+     function( new_source, phi, new_range ) 
+     local morphisms, functor_phi;
+
+       morphisms := MapLazy( Morphisms( phi ), function( psi )
+
+                                                return ApplyFunctor( F, psi );
+       
+                                               end, 1 );
+       
+       functor_phi := AsHomotopyCategoryMorphism( ChainMorphism( new_source, new_range, morphisms ) );
+       
+       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
+                                                                  
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+
+                                                                  if not HasIsZero( functor_phi ) then
+
+                                                                     SetIsZero( functor_phi, true );
+
+                                                                  fi;
+
+                                                                  end ) );
+
+       return functor_phi;
+
+     end );
+
+   return functor;
+
+end );
+
+#####
+InstallMethod( ExtendFunctorToCochainHomotopyCategoryFunctor, 
+               [ IsCapFunctor ], 
+function( F )
+local S, T, functor, name;
+
+   S := HomotopyCategory( CochainComplexCategory( AsCapCategory( Source( F ) ) ) );
+
+   T := HomotopyCategory( CochainComplexCategory( AsCapCategory(  Range( F ) ) ) );
+
+   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
+
+   functor := CapFunctor( name, S, T );
+
+   AddObjectFunction( functor,
+   function( C )
+   local diffs, functor_C;
+
+   diffs := MapLazy( Differentials( C ), function( d )
+
+                                         return ApplyFunctor( F, d );
+
+                                         end, 1 );
+     
+   functor_C := AsHomotopyCategoryObject( CochainComplex( AsCapCategory( Range( F ) ), diffs ) );
+     
+   TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
+
+   AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+
+                                                              if not HasIsZero( functor_C ) then 
+
+                                                                 SetIsZero( functor_C, true );
+
+                                                              fi;
+
+                                                              end ) );
+
+   return functor_C;
+
+   end );
+
+   AddMorphismFunction( functor,
+     function( new_source, phi, new_range ) 
+     local morphisms, functor_phi;
+
+       morphisms := MapLazy( Morphisms( phi ), function( psi )
+
+                                                return ApplyFunctor( F, psi );
+       
+                                               end, 1 );
+       
+       functor_phi := AsHomotopyCategoryMorphism( CochainMorphism( new_source, new_range, morphisms ) );
+       
+       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
+                                                                  
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+
+                                                                  if not HasIsZero( functor_phi ) then
+
+                                                                     SetIsZero( functor_phi, true );
+
+                                                                  fi;
+
+                                                                  end ) );
+
+       return functor_phi;
+
+     end );
+
+   return functor;
+
+end );
