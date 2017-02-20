@@ -329,8 +329,12 @@ end;
 
 R := HomalgFieldOfRationalsInSingular()*"x,y,z,t";
 #! Q[x,y,z,t]
-cat := LeftPresentations( R );
+cat := LeftPresentations( R:FinalizeCategory := false );
 #! Category of left presentations of Q[x,y,z,t]
+AddEpimorphismFromProjectiveObject( cat, CoverByFreeModule );;
+Finalize( cat );
+SetHasEnoughProjectives( cat, true );
+#! true
 cochain_cat := CochainComplexCategory( cat );
 #! Cochain complexes category over category of left presentations of Q[x,y,z,t]
 SetTestFunctionForHomotopyCategory( cochain_cat, test_function );;

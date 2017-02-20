@@ -1,8 +1,9 @@
 LoadPackage( "QPA" );
 LoadPackage( "complex" );
+LoadPackage( "HomotopyCategories" );
 
 DeclareOperation( "StackMatricesDiagonally", [ IsQPAMatrix, IsQPAMatrix ] );
-DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );             
+DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );
 
 
 InstallMethod( StackMatricesDiagonally, 
@@ -60,7 +61,7 @@ InstallGlobalFunction( C_H,
             Add( current_mat, MatrixOfLinearTransformation( MapForVertex( A^m, v ) )*
                                                          MatrixOfLinearTransformation( MapForVertex( var[ 2 ], v ) ) );
          else
-            Add( current_mat, MakeZeroMatrix( k, d[ 1 ], d[ 2 ] ) );         
+            Add( current_mat, MakeZeroMatrix( k, d[ 1 ], d[ 2 ] ) );
          fi;
      od;
      if not ForAll( current_mat, IsZero ) then Add( mat, current_mat ); fi;
@@ -136,14 +137,32 @@ InstallGlobalFunction( C_H,
   fi;
 end );
 
-
+test_function := 
+  function( phi )
+  if IsBoundedChainOrCochainMorphism( phi ) then 
+     if C_H( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) ) = fail then
+        return false;
+     else
+        return true;
+     fi;
+  fi;
+  Error( "the morphism must be bounded" );
+end;
+ 
 # Testing
 
 Q := RightQuiver("Q1(3)[a:1->2,b:2->3]" );
 #! Q1(3)[a:1->2,b:2->3]
 A := PathAlgebra( Rationals, Q );
 #! Rationals * Q1
-m12 := MatrixByRows( Rationals, [ [ 2, 4 ] ] );            
+cat := CategoryOfQuiverRepresentations( A );
+#! quiver representations over Rationals * Q1
+cochain_cat := CochainComplexCategory( cat );
+#! Cochain complexes category over quiver representations over Rationals * Q1
+SetTestFunctionForHomotopyCategory( cochain_cat, test_function );;
+homotopy_cat := HomotopyCategory( cochain_cat );
+#! The homotopy category of cochain complexes category over quiver representations over Rationals * Q1
+m12 := MatrixByRows( Rationals, [ [ 2, 4 ] ] );
 #! <1x2 matrix over Rationals>
 m23 := MatrixByRows( Rationals, [ [ 3, 4, 5 ], [ 1, 2, 3 ] ] );
 #! <2x3 matrix over Rationals>
@@ -195,3 +214,8 @@ phi3 := PreCompose( h3, CB^2 );
 #! <(1,1,1)->(2,2,2)>
 phi := CochainMorphism( CA, CB, [ phi1, phi2, phi3 ], 1 );
 #! <A bounded morphism in cochain complexes category over quiver representations over Rationals * Q1 with active lower bound 0 and active upper bound 4.>
+phi_ := AsHomotopyCategoryMorphism( phi );
+#! <A bounded morphism in the homotopy category of cochain complexes category over quiver representations over Rationals * Q1 with active lower bound 
+#! 0 and active upper bound 4>
+IsZero( phi_ );
+#! true
