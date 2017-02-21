@@ -284,9 +284,17 @@ function( category )
 
     od;
 
-    name := Name( category );
+    name := Name( UnderlyingCategory( category ) );
 
-    name := Concatenation( "The homotopy category of ", Big_to_Small( name ) );
+    if IsChainComplexCategory( category ) then 
+
+       name := Concatenation( "Chain homotopy category of ", Big_to_Small( name ) );
+
+    else
+
+       name := Concatenation( "Cochain homotopy category of ", Big_to_Small( name ) );
+
+    fi;
 
     homotopy_category := CreateCapCategory( name );
 

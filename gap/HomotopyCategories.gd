@@ -60,7 +60,7 @@ DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
 
 #! @Description
 #! The input is a chain (or cochain complex category) $Ch(A)$ of an additive category $A$, in which the 
-#! method <C>IsNullHomotopic</C> can be computed. The output is the homotopy category of $A$.
+#! method <C>IsNullHomotopic</C> can be computed. The output is the homotopy category of $H(A)$.
 #! @Arguments Ch(A)
 #! @Returns a CAP category
 DeclareAttribute( "HomotopyCategory", IsCapCategory );
@@ -99,13 +99,13 @@ DeclareAttribute( "UnderlyingComplex_" ,IsHomotopyCategoryObject  );
 
 #! @Description
 #! c
-#! @Arguments S, phi
+#! @Arguments phi
 #! @Returns a morphism
 DeclareAttribute( "AsHomotopyCategoryMorphism", IsChainOrCochainMorphism );
 
 #! @Description
 #! c
-#! @Arguments S, obj
+#! @Arguments M
 #! @Returns an object
 DeclareAttribute( "AsHomotopyCategoryObject", IsChainOrCochainComplex );
 

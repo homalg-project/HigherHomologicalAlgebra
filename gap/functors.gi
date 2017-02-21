@@ -1,4 +1,38 @@
 
+InstallMethod( NaturalQuotientFunctor,
+               [ IsChainOrCochainComplexCategory, IsHomotopyCategory ],
+  function( C, H )
+  local name, functor;
+
+  if not IsIdenticalObj( C, UnderlyingCategory( H ) ) then 
+     Error( "The first argument must be the underlying category of the second argument" );
+  fi;
+
+  name := Concatenation( "Quotient functor from ", Big_to_Small( Name( C ) ), " to ", Big_to_Small( Name( H ) ) );
+
+  functor := CapFunctor( name, C, H );
+
+     AddObjectFunction( functor, 
+
+     function( complex )
+
+        return AsHomotopyCategoryObject( complex );
+
+     end );
+
+     AddMorphismFunction( functor,
+
+     function( new_source, map, new_range )
+
+        return AsHomotopyCategoryMorphism( map );
+
+     end );
+
+
+    return functor;
+
+end );
+
 #
 InstallMethod( HomologyFunctor, 
                [ IsHomotopyCategory, IsCapCategory, IsInt ],
