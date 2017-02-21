@@ -12,14 +12,39 @@
 
 #! @Section Filters and categories
 
-DeclareOperationWithCache( "IsNullHomotopic", [ IsCapCategoryMorphism ] );
+#! @BeginGroup 1
+#! @Description
+#! The objects of the homotopy category can have the same filters that objects of chain or cochain 
+#! categories can have, but they have one extra filter, namely, <C>IsHomotopyCategoryObject</C>.
+#! The same holds for morphisms in homotopy categories.
+#! @Arguments A
+DeclareCategory( "IsHomotopyCategory",
+                 IsCapCategory );
+#! @Arguments C
+DeclareCategory( "IsHomotopyCategoryObject",
+                 IsChainOrCochainComplex );
+#! @EndGroup
+#! @Group 1
+#! @Arguments phi
+DeclareCategory( "IsHomotopyCategoryMorphism",
+                 IsChainOrCochainMorphism );
 
-DeclareOperation( "AddIsNullHomotopic",
-                   [ IsCapCategory, IsFunction, IsInt ] );
+DeclareFilter( "WasCreatedAsHomotopyCategory" );
 
+#! @Section Creating homotopy categories
+
+#! @Description
+#! The input is chain (or cochain category) $Ch(A)$ of some additive category $A$ and 
+#! a function $F$. This operation adds the given function $F$ to the category $Ch(A)$ for the basic 
+#! operation <C>IsNullHomotopic</C>. So, $F$ should be a function whose input is a chain or cochain morphism 
+#! $\phi\in Ch(A)$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
+#! @Returns <C>true</C> or <C>false</C>
+#! @Arguments A, F
 DeclareOperation( "AddIsNullHomotopic",
                    [ IsCapCategory, IsFunction ] );
 
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsFunction, IsInt ] );
 
 DeclareOperation( "AddIsNullHomotopic",
                    [ IsCapCategory, IsList, IsInt ] );
@@ -28,21 +53,17 @@ DeclareOperation( "AddIsNullHomotopic",
                    [ IsCapCategory, IsList ] );
 
 #! @Description
-#!  bla bla
-DeclareCategory( "IsHomotopyCategory",
-                 IsCapCategory );
+#! The input is a chain or cochain morphism 
+#! $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
+#! @Arguments phi
+DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
 
 #! @Description
-#!  The category of objects in the homotopy category.
-#!  For actual objects this needs to be specialized.
-DeclareCategory( "IsHomotopyCategoryObject",
-                 IsChainOrCochainComplex );
-
-#! @Description
-DeclareCategory( "IsHomotopyCategoryMorphism",
-                 IsChainOrCochainMorphism );
-
-DeclareFilter( "WasCreatedAsHomotopyCategory" );
+#! The input is a chain (or cochain complex category) $Ch(A)$ of an additive category $A$, in which the 
+#! method <C>IsNullHomotopic</C> can be computed. The output is the homotopy category of $A$.
+#! @Arguments Ch(A)
+#! @Returns a CAP category
+DeclareAttribute( "HomotopyCategory", IsCapCategory );
 
 #! @Section Attributes
 
@@ -52,10 +73,10 @@ DeclareFilter( "WasCreatedAsHomotopyCategory" );
 ##
 #####################
 
-#! @Description
-#! This attribute is a function that tests if a given morphism can be factored through a projective function or not.
-#! @Arguments A
-#! @Returns <A>f</A>
+# @Description
+# This attribute is a function that tests if a given morphism can be factored through a projective function or not.
+# @Arguments A
+# @Returns <A>f</A>
 DeclareAttribute( "TestFunctionForHomotopyCategory", IsCapCategory );
 
 #! @Description
@@ -75,13 +96,6 @@ DeclareAttribute( "UnderlyingMorphism" ,IsHomotopyCategoryMorphism  );
 #! @Arguments obj
 #! @Returns <A>obj</A>
 DeclareAttribute( "UnderlyingComplex_" ,IsHomotopyCategoryObject  );
-
-#! @Description
-#! bla bla
-#! @Arguments A,func[,name]
-#! @Returns a CAP category
-DeclareAttribute( "HomotopyCategory", IsCapCategory );
-
 
 #! @Description
 #! c

@@ -45,7 +45,7 @@ InstallValue( NULL_HOMOTOPIC_METHOD, rec(
 IsNullHomotopic := rec( 
 
 installation_name := "IsNullHomotopic", 
-filter_list := [ "morphism" ],
+filter_list := [ IsChainOrCochainMorphism ],
 cache_name := "IsNullHomotopic",
 return_type := "bool" ),
 
@@ -68,8 +68,8 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
   function( category )
     local test_function;
 
-    test_function := TestFunctionForHomotopyCategory(  UnderlyingCategory( category ) );
-
+    #test_function := TestFunctionForHomotopyCategory(  UnderlyingCategory( category ) );
+    test_function := IsNullHomotopic;
     ## Equalities
 
     AddIsEqualForObjects( category, 
