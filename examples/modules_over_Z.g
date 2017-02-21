@@ -350,11 +350,11 @@ end;
 
 ZZ := HomalgRingOfIntegers( );
 #! Z
-cat := LeftPresentations( ZZ );
+cat := LeftPresentations( ZZ: FinalizeCategory := false );;
+Finalize( cat );
 cochain_cat := CochainComplexCategory( cat :FinalizeCategory := false );
-# AddIsNullHomotopic( cochain_cat, test_function );
+AddIsNullHomotopic( cochain_cat, test_function );
 Finalize( cochain_cat );;
-SetTestFunctionForHomotopyCategory( cochain_cat, test_function );;
 homotopy_cat := HomotopyCategory( cochain_cat );
 A1 := FreeLeftPresentation( 1, ZZ );
 #! <An object in Category of left presentations of Z>
@@ -396,4 +396,3 @@ phi := CochainMorphism( CA, CB, [ phi3 ], 3 );
 phi_ := AsHomotopyCategoryMorphism( phi );
 IsZero( phi );
 #! false
-
