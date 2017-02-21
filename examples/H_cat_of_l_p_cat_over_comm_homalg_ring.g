@@ -369,41 +369,42 @@ end;
 #   0      0      Z   5   Z     Z   6  Z  0 Z   0
 
 
+#! @Chunk 0
+#! @BeginLatexOnly
+#! Let $R$ be a commutative homalg ring. The category of finite left presentations over $R$, denoted by fpres-$R$,
+#! is abelian. Hence its cochain complex category $\mathrm{Ch}^\bullet($ fpres-$R$ $)$ is again abelian.
+#! Let $\mathrm{Ch}^{\bullet*}(\mathrm{fpres}-R)$ be the full subcategory whose objects are bounded complexes. In this 
+#! category it is decidable whether a cochain morphism is null-homotopic or not. Hence the bounded homotopy category 
+#! $H^{\bullet*}(\mathrm{fpres-}R)$ of fpres-$R$ can be constructed. The function $\texttt{is\_null\_homotopic}$ which 
+#! decides whether a morphism is null-homotopic or not is implemented in file $\texttt{H\_cat\_of\_l\_p\_cat\_over\_comm\_homalg\_ring.g}$
+#! in examples directory.
+#! @EndLatexOnly
+#! @Example
 ZZ := HomalgRingOfIntegers( );
-cochain_homotopy_cat := CochainHomotopyCategory( ZZ );;
-A1 := FreeLeftPresentation( 1, ZZ );
+#! Z
+cochain_homotopy_cat := CochainHomotopyCategory( ZZ );
+#! Cochain homotopy category of category of left presentations of Z
+A := FreeLeftPresentation( 1, ZZ );
 #! <An object in Category of left presentations of Z>
-A2 := FreeLeftPresentation( 1, ZZ );
-#! <An object in Category of left presentations of Z>
-A3 := FreeLeftPresentation( 1, ZZ );
-#! <An object in Category of left presentations of Z>
-A4 := FreeLeftPresentation( 1, ZZ );
-#! <An object in Category of left presentations of Z>
-A5 := FreeLeftPresentation( 1, ZZ );
-#! <An object in Category of left presentations of Z>
-d12 := PresentationMorphism( A1, HomalgMatrix( "[ [ 5 ] ]",1,1, ZZ ), A2 );
+d12 := PresentationMorphism( A, HomalgMatrix( "[ [ 5 ] ]",1,1, ZZ ), A );
 #! <A morphism in Category of left presentations of Z>
-d23 := PresentationMorphism( A1, HomalgMatrix( "[ [ 0 ] ]",1,1, ZZ ), A2 );
+d23 := PresentationMorphism( A, HomalgMatrix( "[ [ 0 ] ]",1,1, ZZ ), A );
 #! <A morphism in Category of left presentations of Z>
-d34 := PresentationMorphism( A1, HomalgMatrix( "[ [ 6 ] ]",1,1, ZZ ), A2 );
+d34 := PresentationMorphism( A, HomalgMatrix( "[ [ 6 ] ]",1,1, ZZ ), A );
 #! <A morphism in Category of left presentations of Z>
-d45 := PresentationMorphism( A1, HomalgMatrix( "[ [ 0 ] ]",1,1, ZZ ), A2 );
+d45 := PresentationMorphism( A, HomalgMatrix( "[ [ 0 ] ]",1,1, ZZ ), A );
 #! <A morphism in Category of left presentations of Z>
 CA := CochainComplex( [ d12,d23,d34,d45 ], 1 );
-#! <A bounded object in cochain complexes category over category of left presentations of Z with active lower bound 0 and active upper bound 6.>
-CB := ShiftUnsignedLazy( CA, 1 );
-#! <A bounded object in cochain complexes category over category of left presentations of Z with active lower bound -1 and active upper bound 5.>
-CA[ 0 ];
-#! <A zero object in Category of left presentations of Z>
-CB[ 1 ];
-#! <An object in Category of left presentations of Z>
+#! <A bounded object in cochain complexes category over category of left 
+#! presentations of Z with active lower bound 0 and active upper bound 6>
 CB := ShiftUnsignedLazy( CA, -1 );
-#! <A bounded object in cochain complexes category over category of left presentations of Z with active lower bound 1 and active upper bound 7.>
-h3 := PresentationMorphism( CA[ 3 ], HomalgMatrix( "[ [ 17 ] ]", 1, 1, ZZ ), CB[ 2 ] );
+#! <A bounded object in cochain complexes category over category of left 
+#! presentations of Z with active lower bound 1 and active upper bound 7>
+h3 := PresentationMorphism(CA[3],HomalgMatrix( "[[17]]",1,1,ZZ ),CB[2]);
 #! <A morphism in Category of left presentations of Z>
-h4 := PresentationMorphism( CA[ 4 ], HomalgMatrix( "[ [ 105 ] ]", 1, 1, ZZ ), CB[ 3 ] );
+h4 := PresentationMorphism(CA[4],HomalgMatrix("[[105]]",1,1,ZZ),CB[3]);
 #! <A morphism in Category of left presentations of Z>
-h5 := PresentationMorphism( CA[ 5 ], HomalgMatrix( "[ [ -13 ] ]", 1, 1, ZZ ), CB[ 4 ] );
+h5 := PresentationMorphism(CA[5],HomalgMatrix( "[[-13]]",1,1,ZZ ),CB[4]);
 #! <A morphism in Category of left presentations of Z>
 phi3 := PreCompose( CA^3,h4 ) + PreCompose( h3, CB^2 );
 #! <A morphism in Category of left presentations of Z>
@@ -411,3 +412,5 @@ phi := CochainMorphism( CA, CB, [ phi3 ], 3 );
 phi_ := AsHomotopyCategoryMorphism( phi );
 IsZero( phi );
 #! false
+#! @EndExample
+#! @EndChunk

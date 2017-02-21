@@ -58,6 +58,8 @@ DeclareOperation( "ChainToCochainComplexFunctor", [ IsHomotopyCategory, IsHomoto
 #! @Returns a functor
 DeclareOperation( "CochainToChainComplexFunctor", [ IsHomotopyCategory, IsHomotopyCategory ] );
 
+#! @Section Examples
+#! @InsertChunk 0
 
 DeclareOperation( "ExtendFunctorToChainHomotopyCategoryFunctor", [ IsCapFunctor ] );
 
