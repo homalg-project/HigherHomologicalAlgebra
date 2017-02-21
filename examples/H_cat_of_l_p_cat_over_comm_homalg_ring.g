@@ -318,7 +318,7 @@ fi;
 
 end;
 
-test_function := 
+is_null_homotopic :=
    function( mor )
    local S, R, m, n;
 
@@ -340,6 +340,27 @@ test_function :=
 
 end;
 
+CochainHomotopyCategory := 
+
+ function( R )
+ local cat, cochain_cat, homotopy_cat;
+
+ cat := LeftPresentations( R: FinalizeCategory := false );
+
+ Finalize( cat );
+
+ cochain_cat := CochainComplexCategory( cat :FinalizeCategory := false );
+
+ AddIsNullHomotopic( cochain_cat, is_null_homotopic );
+
+ Finalize( cochain_cat );
+
+ homotopy_cat := HomotopyCategory( cochain_cat );
+
+ return homotopy_cat;
+
+end;
+
 #   0      1      2       3     4      5    6
 #   0      Z  5   Z   0   Z  6  Z   0  Z    0
 #
@@ -349,13 +370,7 @@ end;
 
 
 ZZ := HomalgRingOfIntegers( );
-#! Z
-cat := LeftPresentations( ZZ: FinalizeCategory := false );;
-Finalize( cat );
-cochain_cat := CochainComplexCategory( cat :FinalizeCategory := false );
-AddIsNullHomotopic( cochain_cat, test_function );
-Finalize( cochain_cat );;
-homotopy_cat := HomotopyCategory( cochain_cat );
+cochain_homotopy_cat := CochainHomotopyCategory( ZZ );;
 A1 := FreeLeftPresentation( 1, ZZ );
 #! <An object in Category of left presentations of Z>
 A2 := FreeLeftPresentation( 1, ZZ );
@@ -390,7 +405,7 @@ h4 := PresentationMorphism( CA[ 4 ], HomalgMatrix( "[ [ 105 ] ]", 1, 1, ZZ ), CB
 #! <A morphism in Category of left presentations of Z>
 h5 := PresentationMorphism( CA[ 5 ], HomalgMatrix( "[ [ -13 ] ]", 1, 1, ZZ ), CB[ 4 ] );
 #! <A morphism in Category of left presentations of Z>
-phi3 := PreCompose( CA^3,h4 ) + PreCompose( h3, CB^2 );                                 
+phi3 := PreCompose( CA^3,h4 ) + PreCompose( h3, CB^2 );
 #! <A morphism in Category of left presentations of Z>
 phi := CochainMorphism( CA, CB, [ phi3 ], 3 );
 phi_ := AsHomotopyCategoryMorphism( phi );
