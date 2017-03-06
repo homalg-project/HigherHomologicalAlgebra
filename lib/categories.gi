@@ -406,13 +406,13 @@ end ) );
 end );
 
 
-AddDirectSumFunctorial( complex_cat, function( L )
- local source, range, maps, morphism, u, l;
+AddDirectSumFunctorialWithGivenDirectSums( complex_cat, function( source, L, range )
+ local maps, morphism, u, l;
 
  maps := MapLazy( List( L, Morphisms ), DirectSumFunctorial, 1 );
- source := DirectSum( List( L, Source ) );
+#  source := DirectSum( List( L, Source ) );
 
- range  := DirectSum( List( L, Range ) );
+#  range  := DirectSum( List( L, Range ) );
 
  morphism := morphism_constructor( source, range, maps );
 
