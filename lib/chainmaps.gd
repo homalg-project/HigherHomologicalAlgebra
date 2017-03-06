@@ -145,7 +145,6 @@ DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism )
 #! is not bounded an error is raised. 
 #! @Arguments phi
 DeclareProperty( "IsQuasiIsomorphism_", IsChainOrCochainMorphism );
-
 #! @EndSection
 
 

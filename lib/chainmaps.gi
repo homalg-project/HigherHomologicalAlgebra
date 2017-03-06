@@ -731,11 +731,11 @@ InstallMethod( IsQuasiIsomorphism_,
 
    if IsChainMorphism( phi ) then
 
-      h_functor := HomologyFunctor;
+      h_functor := HomologyFunctorAt;
 
    else 
 
-      h_functor := CohomologyFunctor;
+      h_functor := CohomologyFunctorAt;
 
    fi;
 
@@ -763,11 +763,11 @@ InstallMethod( IsQuasiIsomorphism_,
 
    if IsChainMorphism( phi ) then
 
-      h_functor := HomologyFunctor;
+      h_functor := HomologyFunctorAt;
 
    else 
 
-      h_functor := CohomologyFunctor;
+      h_functor := CohomologyFunctorAt;
 
    fi;
 
