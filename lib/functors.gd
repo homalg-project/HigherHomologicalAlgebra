@@ -35,7 +35,7 @@ DeclareOperation( "ShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
 DeclareOperation( "UnsignedShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
 
 #! @Description
-#! The input is a category <A>A</A>. The output is the functor $F:\mathrm{Ch(A)}\rightarrow\mathrm{Coch(A)}$ defined by $C_{\bullet}\mapsto C^{\bullet}$ for any 
+#! The arguments are $Ch(A)$ and $Ch(A)$. The output is the functor $F:\mathrm{Ch(A)}\rightarrow\mathrm{Coch(A)}$ defined by $C_{\bullet}\mapsto C^{\bullet}$ for any 
 #! for any chain complex $C_{\bullet}\in \mathrm{Ch}(A)$ and by $\phi_{\bullet}\mapsto \phi^{\bullet}$ for any map $\phi$ where $C^{i}=C_{-i}$ and $\phi^{i}=\phi_{-i}$.
 #! @Arguments A
 #! @Returns a functor

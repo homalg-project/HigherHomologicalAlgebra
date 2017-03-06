@@ -10,7 +10,7 @@ fi;
 AutoDoc( rec( scaffold := rec( 
 
          gapdoc_latex_options := rec( 
-         LateExtraPreamble := "\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\\usetikzlibrary{shapes,arrows,matrix}\n" ) 
+         LateExtraPreamble := "\\usepackage{amsmath}\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\\usetikzlibrary{shapes,arrows,matrix}\n" ) 
                              ),
 
          autodoc := rec(
