@@ -9,11 +9,11 @@
 #! the third argument is an integer <A>n</A>. The output is the $n$'th homology (resp. cohomology) functor $:\mathrm{Ch}(A) \rightarrow A$.
 #! @Arguments Ch(A), A, n
 #! @Returns a functor
-DeclareOperation( "HomologyFunctor", [ IsChainComplexCategory, IsCapCategory, IsInt  ] );
+DeclareOperation( "HomologyFunctorAt", [ IsChainComplexCategory, IsCapCategory, IsInt  ] );
 #! @EndGroup
 #! @Group f1
 #! @Arguments Coch(A), A, n
-DeclareOperation( "CohomologyFunctor", [ IsCochainComplexCategory, IsCapCategory, IsInt ] );
+DeclareOperation( "CohomologyFunctorAt", [ IsCochainComplexCategory, IsCapCategory, IsInt ] );
 
 #! @Description
 #! The inputs are complex category $\mathrm{Comp}(A)$ and an integer. The output is a the endofunctor $T[n]$ that sends any complex $C$ to $C[n]$ and any complex morphism

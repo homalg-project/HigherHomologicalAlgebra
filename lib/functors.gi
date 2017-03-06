@@ -288,7 +288,7 @@ end );
 BindGlobal( "FUNCTORS_INSTALLER",
    function( )
 
-InstallMethod( HomologyFunctor, 
+InstallMethod( HomologyFunctorAt, 
                [ IsChainComplexCategory, IsCapCategory, IsInt ],
   function( complex_cat, cat, i )
 
@@ -296,7 +296,7 @@ InstallMethod( HomologyFunctor,
 
   end );
 
-InstallMethod( CohomologyFunctor, 
+InstallMethod( CohomologyFunctorAt, 
                [ IsCochainComplexCategory, IsCapCategory, IsInt ],
   function( complex_cat, cat, i )
 
