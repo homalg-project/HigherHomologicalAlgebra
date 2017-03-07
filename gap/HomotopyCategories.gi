@@ -269,7 +269,8 @@ function( category )
                        "InjectionOfCofactorOfDirectSumWithGivenDirectSum",
                        "UniversalMorphismFromDirectSum",
                        "UniversalMorphismIntoDirectSum",
-                       "DirectSumFunctorial" ];
+#                       "DirectSumFunctorialWithGivenDirectSums"  (look back to this kamal.)
+                        ];
 
     category_weight_list := category!.derivations_weight_list;
 
