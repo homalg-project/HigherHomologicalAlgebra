@@ -916,6 +916,66 @@ InstallMethod( IsExact,
 
 end );
 
+##
+InstallMethod( CohomologySupport, 
+               [ IsCochainComplex, IsInt, IsInt ],
+  function( C, m, n )
+  local l, i;
+  l := [ ];
+  for i in [ m .. n ] do 
+  if not IsZero( CertainCohomology( C, i ) ) then 
+     Add( l, i );
+  fi;
+  od;
+  return l;
+end );
+
+##
+InstallMethod( HomologySupport, 
+               [ IsChainComplex, IsInt, IsInt ],
+  function( C, m, n )
+  local l, i;
+  l := [ ];
+  for i in [ m .. n ] do 
+  if not IsZero( CertainHomology( C, i ) ) then 
+     Add( l, i );
+  fi;
+  od;
+  return l;
+end );
+
+InstallMethod( IsWellDefined, 
+               [ IsCochainComplex, IsInt, IsInt ],
+ function( C, m, n )
+ local i;
+ 
+ for i in [ m .. n ] do 
+ if not IsZero( PreCompose( C^i, C^(i+1) ) ) then 
+    return false;
+ fi;
+ od;
+ return true;
+end );
+
+InstallMethod( IsWellDefined, 
+               [ IsChainComplex, IsInt, IsInt ],
+ function( C, m, n )
+ local i;
+ 
+ for i in [ m .. n ] do 
+ if not IsZero( PostCompose( C^i, C^(i+1) ) ) then 
+    return false;
+ fi;
+ od;
+ return true;
+end );
+
+InstallMethod( IsWellDefined,
+               [ IsBoundedChainOrCochainComplex ],
+  function( C )
+  return IsWellDefined( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+end );
+
 ######################################
 #
 # Shift using lazy methods

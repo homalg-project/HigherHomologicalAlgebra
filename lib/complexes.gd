@@ -243,6 +243,26 @@ KeyDependentOperation( "CertainCohomology", IsCochainComplex, IsInt, ReturnTrue 
 #! @Returns a object
 KeyDependentOperation( "DefectOfExactness", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
+#! @BeginGroup 100
+#! @Description
+#! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. The outout is the list of indices where 
+#! the homology (resp. cohomology) object of $C$ is not zero.
+#! @Arguments C, m, n
+#! @Returns a list
+DeclareOperation( "HomologySupport", [ IsChainComplex, IsInt, IsInt ] );
+#! @EndGroup
+#! @Group 100
+#! @Arguments C, m, n
+DeclareOperation( "CohomologySupport", [ IsCochainComplex, IsInt, IsInt ] );
+
+#! @Description
+#! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 
+#! The output is true when $C$ is a complex and false otherwise.
+#! @Arguments C, n
+#! @Returns a object
+DeclareOperation( "IsWellDefined", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+# DeclareProperty( "IsWellDefined", IsBoundedChainOrCochainComplex );
+
 #! @Description
 #! The input is a chain or cochain complex $C$ and an integer $n$. The outout is <A>true</A> if $C$ is exact in $i$. Otherwise the output is <A>false</A>.
 #! @Arguments C, n

@@ -708,7 +708,7 @@ InstallMethod( NaturalProjectionFromMappingCone, [ IsChainOrCochainMorphism ],
 end );
 
 ##
-InstallMethod( IsQuasiIsomorphism_,
+InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism ],
    function( phi )
    local min, max, h_functor, functor, i;
@@ -756,7 +756,7 @@ InstallMethod( IsQuasiIsomorphism_,
 end );
 
 ##
-InstallMethod( IsQuasiIsomorphism_,
+InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism, IsInt, IsInt ],
    function( phi, min, max )
    local h_functor, functor, i;

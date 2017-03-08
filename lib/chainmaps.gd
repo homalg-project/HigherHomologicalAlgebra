@@ -144,7 +144,7 @@ DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism )
 #! The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is **true** if $\phi$ is quasi-isomorphism and **false** otherwise. If $\phi$ 
 #! is not bounded an error is raised. 
 #! @Arguments phi
-DeclareProperty( "IsQuasiIsomorphism_", IsChainOrCochainMorphism );
+DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 #! @EndSection
 
 
@@ -205,7 +205,7 @@ KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, Retur
 #! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #! @Arguments phi, n
 #! @Returns an integer
-DeclareOperation( "IsQuasiIsomorphism_", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
 #! @Description
 #! The command displays the components of the morphism between $m$ and $n$. 
