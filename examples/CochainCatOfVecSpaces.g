@@ -353,7 +353,7 @@ p := NaturalProjectionFromMappingCone( psi );
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in cochain complexes category over category of matrices
 #! over Q with active lower bound 4 and active upper bound 6>
-H5 := CohomologyFunctor( cochain_cat, matrix_category, 5 );
+H5 := CohomologyFunctorAt( cochain_cat, matrix_category, 5 );
 #! 5-th cohomology functor in category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
