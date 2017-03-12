@@ -79,7 +79,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS",
 end );
 
 InstallMethod( DoubleChainComplex, 
-               [ IsInfList, IsInfList ],
+               [ IsFunction, IsFunction ],
  function( R, V )
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, "TheTypeOfDoubleChainComplex" );
@@ -87,11 +87,31 @@ InstallMethod( DoubleChainComplex,
 end );
 
 InstallMethod( DoubleCochainComplex, 
-               [ IsInfList, IsInfList ],
+               [ IsFunction, IsFunction ],
  function( R, V )
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, "TheTypeOfDoubleCochainComplex" );
  
+end );
+
+BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
+ function( C, name )
+ local R, V;
+
+ R := function( i, j )
+         return CertainDifferential( C, i )[ j ];
+      end;
+
+ V := function( i, j )
+      if i mod 2 = 0 then 
+         return CertainObject( C, i )^j;
+      else
+         return AdditiveInverseForMorphisms( C[i]^j );
+      fi;
+      end;
+
+ return  DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, name );
+
 end );
 
 
@@ -124,6 +144,44 @@ InstallMethod( CertainObject,
  function( C, m, n )
  return Source( CertainRowMorphism( C, m, n ) );
 end );
+
+#####################################
+#
+# Computations in double complexes
+#
+#####################################
+
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_FIRST_QUADRANT_DOUBLE_CHAIN_COMPLEX",
+function( C )
+local d, cat, zero_object, diff;
+
+d := CertainObject( C, 0, 0 );
+cat := CapCategory( d );
+zero_object := ZeroObject( cat );
+
+diff := MapLazy( IntegersList, function( m )
+                               local l;
+                               if m = 0 then 
+                                  return UniversalMorphismIntoZeroObject( d );
+                               elif m < 0 then
+                                  return UniversalMorphismIntoZeroObject( zero_object );
+                               fi;
+
+                               l := List( [ 1 .. m + 1 ], i -> List( [ 1 .. m ], function( j )
+                                                                         local zero;
+                                                                         zero := ZeroMorphism( CertainObject( C, i - 1, m - i + 1  ), CertainObject( C, j - 1, m - j ) );
+                                                                         if i <> j and i - 1 <> j then return zero;
+                                                                         elif i-1=j then return CertainRowMorphism( C, i - 1, m - i + 1 );
+                                                                         else return CertainColumnMorphism(C, i - 1, m - i + 1 );
+                                                                         fi;
+                                                                         end ) );
+                               return MorphismBetweenDirectSums( l );
+                               end, 1 );
+return ChainComplex( cat, diff );
+end );
+
+
+
 
 #####################################
 #
