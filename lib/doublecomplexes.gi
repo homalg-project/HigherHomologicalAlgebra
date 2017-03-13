@@ -210,7 +210,80 @@ diff := MapLazy( IntegersList, function( m )
 return ChainComplex( cat, diff );
 end );
 
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
+function( C, l, u )
+local d, cat, diff;
 
+d := CertainObject( C, 0, 0 );
+
+cat := CapCategory( d );
+
+diff := MapLazy( IntegersList, function( m )
+                               local list;
+                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
+                                                                     function( j )
+                                                                     local zero;
+                                                                     zero := ZeroMorphism( CertainObject( C, l + i - 1, m - l - i + 1  ), 
+                                                                                           CertainObject( C, l + j - 1, m - l - j ) );
+                                                                     if i <> j and i - 1 <> j then return zero;
+                                                                     elif i = j then return CertainColumnMorphism( C, l + i - 1, m - l - i + 1 );
+                                                                     else return CertainRowMorphism( C, l + i - 1, m - l - i + 1 );
+                                                                     fi;
+                                                                     end ) );
+                               return MorphismBetweenDirectSums( list );
+                               end, 1 );
+return ChainComplex( cat, diff );
+end );
+
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX",
+function( C, l, u )
+local d, cat, diff;
+
+d := CertainObject( C, 0, 0 );
+
+cat := CapCategory( d );
+
+diff := MapLazy( IntegersList, function( m )
+                               local list;
+                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
+                                                                     function( j )
+                                                                     local zero;
+                                                                     zero := ZeroMorphism( CertainObject( C, m -u + i - 1, u - i + 1  ), 
+                                                                                           CertainObject( C, m -u + j - 2, u - j + 1 ) );
+                                                                     if i <> j and i + 1 <> j then return zero;
+                                                                     elif i = j then return CertainRowMorphism( C, m -u + i - 1, u - i + 1 );
+                                                                     else return CertainColumnMorphism( C, m -u + i - 1, u - i + 1 );
+                                                                     fi;
+                                                                     end ) );
+                               return MorphismBetweenDirectSums( list );
+                               end, 1 );
+return ChainComplex( cat, diff );
+end );
+
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
+function( C, l, b )
+local d, cat, diff;
+
+d := CertainObject( C, 0, 0 );
+
+cat := CapCategory( d );
+
+diff := MapLazy( IntegersList, function( m )
+                               local list;
+                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
+                                                                     function( j )
+                                                                     local zero;
+                                                                     zero := ZeroMorphism( CertainObject( C, m -u + i - 1, u - i + 1  ), 
+                                                                                           CertainObject( C, m -u + j - 2, u - j + 1 ) );
+                                                                     if i <> j and i + 1 <> j then return zero;
+                                                                     elif i = j then return CertainRowMorphism( C, m -u + i - 1, u - i + 1 );
+                                                                     else return CertainColumnMorphism( C, m -u + i - 1, u - i + 1 );
+                                                                     fi;
+                                                                     end ) );
+                               return MorphismBetweenDirectSums( list );
+                               end, 1 );
+return ChainComplex( cat, diff );
+end );
 
 
 #####################################

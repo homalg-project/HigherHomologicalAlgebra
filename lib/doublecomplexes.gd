@@ -32,11 +32,11 @@ DeclareOperation( "DoubleChainComplex", [ IsInfList, IsInfList ] );
 #! @Returns a chain morphism
 DeclareOperation( "DoubleChainComplex", [ IsFunction, IsFunction ] );        
 
-DeclareOperation( "DoubleChainComplex", [ IsChainMorphism ] );
+DeclareOperation( "DoubleChainComplex", [ IsChainComplex ] );
 
 DeclareOperation( "DoubleCochainComplex", [ IsInfList, IsInfList ] );
 
-DeclareOperation( "DoubleCochainComplex", [ IsChainMorphism ] );
+DeclareOperation( "DoubleCochainComplex", [ IsCochainComplex ] );
 
 DeclareOperation( "DoubleCochainComplex", [ IsFunction, IsFunction ] ); 
 
