@@ -69,8 +69,8 @@ DeclareOperation( "ChainMorphism",
                   [ IsChainComplex, IsChainComplex, IsDenseList, IsInt ] );
 
 #! @Description
-#! The output is the chain morphism $\phi:C\rightarrow D$, where $C_m = c[ 1 ], C_{m+1} =c[ 2 ],$ etc.
-#! $D_n = d[ 1 ], D_{n+1} =d[ 2 ],$ etc. and $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc. 
+#! The output is the chain morphism $\phi:C\rightarrow D$, where $d^C_m = c[ 1 ], d^C_{m+1} =c[ 2 ],$ etc.
+#! $d^D_n = d[ 1 ], d^D_{n+1} =d[ 2 ],$ etc. and $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc. 
 #! @Arguments c,m,d,n,l, k
 #! @Returns a chain morphism
 DeclareOperation( "ChainMorphism",
