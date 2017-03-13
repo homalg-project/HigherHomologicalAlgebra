@@ -260,27 +260,35 @@ diff := MapLazy( IntegersList, function( m )
 return ChainComplex( cat, diff );
 end );
 
+# concentrated in
+# x > x0 and y > y0
+#
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, l, b )
-local d, cat, diff;
+function( C, x0, y0 )
+local d, cat, zero_object, diff;
 
-d := CertainObject( C, 0, 0 );
-
+d := CertainObject( C, x0, y0 );
 cat := CapCategory( d );
+zero_object := ZeroObject( cat );
 
 diff := MapLazy( IntegersList, function( m )
-                               local list;
-                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
-                                                                     function( j )
-                                                                     local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, m -u + i - 1, u - i + 1  ), 
-                                                                                           CertainObject( C, m -u + j - 2, u - j + 1 ) );
-                                                                     if i <> j and i + 1 <> j then return zero;
-                                                                     elif i = j then return CertainRowMorphism( C, m -u + i - 1, u - i + 1 );
-                                                                     else return CertainColumnMorphism( C, m -u + i - 1, u - i + 1 );
-                                                                     fi;
-                                                                     end ) );
-                               return MorphismBetweenDirectSums( list );
+                               local l;
+                               if m = x0 + y0 then 
+                                  return UniversalMorphismIntoZeroObject( d );
+                               elif m < x0 + y0 then
+                                  return UniversalMorphismIntoZeroObject( zero_object );
+                               fi;
+
+                               l := List( [ 1 .. m - x0 - y0 + 1 ], i -> List( [ 1 .. m - x0 - y0 ], function( j )
+                                                                  local zero;
+                                                                  zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
+                                                                                        CertainObject( C, x0 + j - 1, m - x0 - j ) );
+                                                                  if i <> j and i - 1 <> j then return zero;
+                                                                  elif i-1=j then return CertainRowMorphism( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  else return CertainColumnMorphism(C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  fi;
+                                                                  end ) );
+                               return MorphismBetweenDirectSums( l );
                                end, 1 );
 return ChainComplex( cat, diff );
 end );
