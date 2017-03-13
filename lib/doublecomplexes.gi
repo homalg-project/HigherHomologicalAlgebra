@@ -180,6 +180,36 @@ diff := MapLazy( IntegersList, function( m )
 return ChainComplex( cat, diff );
 end );
 
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_THIRD_QUADRANT_DOUBLE_CHAIN_COMPLEX",
+function( C )
+local d, cat, zero_object, diff;
+
+d := CertainObject( C, 0, 0 );
+cat := CapCategory( d );
+zero_object := ZeroObject( cat );
+
+diff := MapLazy( IntegersList, function( m )
+                               local l;
+                               if m = 1 then 
+                                  return UniversalMorphismFromZeroObject( d );
+                               elif m > 1 then
+                                  return UniversalMorphismFromZeroObject( zero_object );
+                               fi;
+
+                               l := List( [ 1 .. -m + 1 ], i -> List( [ 1 .. -m + 2 ], 
+                                                                     function( j )
+                                                                     local zero;
+                                                                     zero := ZeroMorphism( CertainObject( C, m + i - 1 , - i + 1  ), CertainObject( C, m + j - 2, 1 - j ) );
+                                                                     if i <> j and j - 1 <> i then return zero;
+                                                                     elif i = j then return CertainRowMorphism( C, m + i - 1 , - i + 1 );
+                                                                     else return CertainColumnMorphism( C, m + i - 1 , - i + 1 );
+                                                                     fi;
+                                                                     end ) );
+                               return MorphismBetweenDirectSums( l );
+                               end, 1 );
+return ChainComplex( cat, diff );
+end );
+
 
 
 
