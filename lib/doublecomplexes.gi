@@ -70,9 +70,9 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS",
  function( R, V, name )
  local r,v;
 
- r := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> R(i,j ), 1 ), 1 );
+ r := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> R( i, j ), 1 ), 1 );
 
- v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V(i,j ), 1 ), 1 );
+ v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( r, v, name );
 
