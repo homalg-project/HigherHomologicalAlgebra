@@ -68,4 +68,15 @@ DeclareOperation( "CertainColumnMorphism", [ IsDoubleChainOrCochainComplex, IsIn
 
 DeclareOperation( "CertainObject", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
 
+################################
+#
+# Bounds for double complexes
+#
+################################
 
+DeclareOperation( "SetAboveBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
+DeclareOperation( "SetBelowBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
+DeclareOperation( "SetRightBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
+DeclareOperation( "SetLeftBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
+
+DeclareAttribute( "TotalChainComplex", IsDoubleChainComplex );

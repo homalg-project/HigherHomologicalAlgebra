@@ -152,7 +152,7 @@ end );
 #####################################
 
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, l, u )
+function( C, x0, x1 )
 local d, cat, diff;
 
 d := CertainObject( C, 0, 0 );
@@ -161,14 +161,14 @@ cat := CapCategory( d );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
-                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
+                               list := List( [ 1 .. x1 - x0 + 1 ], i ->   List( [ 1 .. x1 - x0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, l + i - 1, m - l - i + 1  ), 
-                                                                                           CertainObject( C, l + j - 1, m - l - j ) );
+                                                                     zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
+                                                                                           CertainObject( C, x0 + j - 1, m - x0 - j ) );
                                                                      if i <> j and i - 1 <> j then return zero;
-                                                                     elif i = j then return CertainColumnMorphism( C, l + i - 1, m - l - i + 1 );
-                                                                     else return CertainRowMorphism( C, l + i - 1, m - l - i + 1 );
+                                                                     elif i = j then return CertainColumnMorphism( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                     else return CertainRowMorphism( C, x0 + i - 1, m - x0 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -177,7 +177,7 @@ return ChainComplex( cat, diff );
 end );
 
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, l, u )
+function( C, y0, y1 )
 local d, cat, diff;
 
 d := CertainObject( C, 0, 0 );
@@ -186,14 +186,14 @@ cat := CapCategory( d );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
-                               list := List( [ 1 .. u - l + 1 ], i ->   List( [ 1 .. u - l + 1 ], 
+                               list := List( [ 1 .. y1 - y0 + 1 ], i ->   List( [ 1 .. y1 - y0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, m -u + i - 1, u - i + 1  ), 
-                                                                                           CertainObject( C, m -u + j - 2, u - j + 1 ) );
+                                                                     zero := ZeroMorphism( CertainObject( C, m -y1 + i - 1, y1 - i + 1  ), 
+                                                                                           CertainObject( C, m -y1 + j - 2, y1 - j + 1 ) );
                                                                      if i <> j and i + 1 <> j then return zero;
-                                                                     elif i = j then return CertainRowMorphism( C, m -u + i - 1, u - i + 1 );
-                                                                     else return CertainColumnMorphism( C, m -u + i - 1, u - i + 1 );
+                                                                     elif i = j then return CertainRowMorphism( C, m -y1 + i - 1, y1 - i + 1 );
+                                                                     else return CertainColumnMorphism( C, m -y1 + i - 1, y1 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -238,7 +238,7 @@ SetLowerBound( complex, x0 + y0 - 1 );
 return complex;
 end );
 
-BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_UPPER_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
+BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, y0 )
 local d, cat, zero_object, diff, complex;
 d := CertainObject( C, x0, y0 );
@@ -273,6 +273,49 @@ SetUpperBound( complex, x0 + y0 + 1 );
 return complex;
 
 end );
+
+InstallMethod( TotalChainComplex, 
+               [ IsDoubleChainComplex ],
+ function( C )
+ local T, T1;
+ 
+ if IsBound( C!.RightBound ) and IsBound( C!.AboveBound ) then 
+    T := TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.RightBound, C!.AboveBound );
+ fi;
+ 
+ if IsBound( C!.LeftBound ) and IsBound( C!.BelowBound ) then
+    T1 := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.BelowBound );
+    if IsBound( T ) then
+       SetLowerBound( T, ActiveLowerBound( T1 ) );
+       return T;
+    else
+       return T1;
+    fi;
+ fi;
+ 
+ if IsBound( C!.LeftBound ) and IsBound( C!.RightBound ) then 
+    T := TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.RightBound );
+ fi;
+ 
+ if IsBound( C!.AboveBound ) and IsBound( C!.BelowBound ) then 
+    T := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.BelowBound, C!.AboveBound );
+ fi;
+ 
+ if IsBound( T ) then return T; fi;
+ 
+ Error( "The double chain complex does not have the required bounds" );
+ 
+end );
+#####################################
+#
+# Bounds
+#
+#####################################
+
+InstallMethod( SetAboveBound, [ IsDoubleChainOrCochainComplex, IsInt ], function( C, u ) C!.AboveBound := u; end );
+InstallMethod( SetBelowBound, [ IsDoubleChainOrCochainComplex, IsInt ], function( C, u ) C!.BelowBound := u; end );
+InstallMethod( SetRightBound, [ IsDoubleChainOrCochainComplex, IsInt ], function( C, u ) C!.RightBound := u; end );
+InstallMethod( SetLeftBound, [ IsDoubleChainOrCochainComplex, IsInt ],  function( C, u ) C!.LeftBound := u; end );
 
 #####################################
 #
