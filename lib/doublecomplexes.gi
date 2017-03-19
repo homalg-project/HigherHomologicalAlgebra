@@ -394,9 +394,37 @@ InstallMethod( ViewObj,
                [ IsDoubleChainOrCochainComplex ],
  function( C )
  if IsDoubleChainComplex( C ) then 
-    Print( "<A double chain complex>" );
+    Print( "<A double chain complex" );
  else
-    Print( "A double cochain cochain>" );
+    Print( "A double cochain cochain" );
  fi;
+
+ Print( " concentrated in window [ " );
+
+ if IsBound( C!.LeftBound ) then 
+    Print( C!.LeftBound, " ... " );
+ else 
+    Print( "-inf", " ... " );
+ fi;
+ 
+ if IsBound( C!.RightBound ) then 
+    Print( C!.RightBound, " ] X " );
+ else 
+    Print( "inf", " ] X " );
+ fi;
+ Print( "[ " );
+ if IsBound( C!.BelowBound ) then 
+    Print( C!.BelowBound, " ... " );
+ else 
+    Print( "-inf", " ... " );
+ fi;
+ 
+ if IsBound( C!.AboveBound ) then 
+    Print( C!.AboveBound, " ]" );
+ else 
+    Print( "inf", " ]" );
+ fi;
+ 
+ Print( ">" );
  end );
 
