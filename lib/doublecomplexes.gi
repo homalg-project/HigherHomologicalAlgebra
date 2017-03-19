@@ -114,6 +114,73 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
 
 end );
 
+InstallMethod( DoubleChainComplex, 
+               [ IsChainComplex ],
+ function( C )
+ local d, l;
+
+ d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleChainComplex" );
+
+ if HasActiveUpperBound( C ) then 
+    SetRightBound( d, ActiveUpperBound( C ) - 1 );
+ fi;
+
+ if HasActiveLowerBound( C ) then 
+    SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+ fi;
+ 
+ # more things can be done
+
+ if IsBoundedChainOrCochainComplex( C ) then 
+    l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+    if ForAll( l, u -> HasActiveUpperBound( C[u] ) ) then
+       SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+    fi;
+
+    if ForAll( l, u -> HasActiveLowerBound( C[u] ) ) then
+       SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+    fi;
+ fi;
+
+ return d;
+end );
+
+InstallMethod( DoubleCochainComplex, 
+               [ IsCochainComplex ],
+ function( C)
+ local d, l;
+ 
+ d :=  DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleCochainComplex" );
+ 
+ if HasActiveUpperBound( C ) then 
+    SetRightBound( d, ActiveUpperBound( C ) - 1 );
+ fi;
+
+ if HasActiveLowerBound( C ) then 
+    SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+ fi;
+ 
+ # more things can be done
+ if IsBoundedChainOrCochainComplex( C ) then 
+    l := [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ];
+    if ForAll( l, u -> HasActiveUpperBound( C[ u ] ) ) then
+       SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+    fi;
+
+    if ForAll( l, u -> HasActiveLowerBound( C[ u ] ) ) then
+       SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+    fi;
+ fi;
+
+ return d;
+
+end );
+
+###############################
+#
+#  methods on double complexes
+#
+###############################
 
 InstallMethod( CertainRow, 
                [ IsDoubleChainOrCochainComplex, IsInt ],
