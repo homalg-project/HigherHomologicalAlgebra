@@ -176,6 +176,48 @@ InstallMethod( DoubleCochainComplex,
 
 end );
 
+##
+InstallMethod( DoubleChainComplex,
+               [ IsDoubleCochainComplex ], 
+  function( d )
+  local R, V, dd;
+  R := function( i, j )
+       return CertainRowMorphism( -i, -j );
+       end;
+  V := function( i, j )
+       return CertainColumnMorphism( -i, -j );
+       end;
+  dd := DoubleChainComplex( R, V );
+  
+  if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
+  if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
+  if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
+  if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
+  
+  return dd;
+end );
+
+##
+InstallMethod( DoubleCochainComplex,
+               [ IsDoubleChainComplex ], 
+  function( d )
+  local R, V, dd;
+  R := function( i, j )
+       return CertainRowMorphism( d, -i, -j );
+       end;
+  V := function( i, j )
+       return CertainColumnMorphism( d, -i, -j );
+       end;
+  dd := DoubleCochainComplex( R, V );
+  
+  if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
+  if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
+  if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
+  if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
+  
+  return dd;
+end );
+
 ###############################
 #
 #  methods on double complexes

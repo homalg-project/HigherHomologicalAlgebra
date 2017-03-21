@@ -40,6 +40,10 @@ DeclareOperation( "DoubleCochainComplex", [ IsCochainComplex ] );
 
 DeclareOperation( "DoubleCochainComplex", [ IsFunction, IsFunction ] ); 
 
+DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
+
+DeclareOperation( "DoubleCochainComplex", [ IsDoubleChainComplex ] );
+
 #! @EndSection
 
 ######################
