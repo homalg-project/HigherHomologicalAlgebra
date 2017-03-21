@@ -182,10 +182,10 @@ InstallMethod( DoubleChainComplex,
   function( d )
   local R, V, dd;
   R := function( i, j )
-       return CertainRowMorphism( -i, -j );
+       return CertainHorizontalMorphism(d, -i, -j );
        end;
   V := function( i, j )
-       return CertainColumnMorphism( -i, -j );
+       return CertainVerticalMorphism(d, -i, -j );
        end;
   dd := DoubleChainComplex( R, V );
   
@@ -203,10 +203,10 @@ InstallMethod( DoubleCochainComplex,
   function( d )
   local R, V, dd;
   R := function( i, j )
-       return CertainRowMorphism( d, -i, -j );
+       return CertainHorizontalMorphism( d, -i, -j );
        end;
   V := function( i, j )
-       return CertainColumnMorphism( d, -i, -j );
+       return CertainVerticalMorphism( d, -i, -j );
        end;
   dd := DoubleCochainComplex( R, V );
   
@@ -224,25 +224,25 @@ end );
 #
 ###############################
 
-InstallMethod( CertainRow, 
+InstallMethod( CertainRowOp, 
                [ IsDoubleChainOrCochainComplex, IsInt ],
  function( C, n )
  return Rows( C )[ n ];
 end );
 
-InstallMethod( CertainColumn, 
+InstallMethod( CertainColumnOp, 
                [ IsDoubleChainOrCochainComplex, IsInt ],
  function( C, m )
  return Columns( C )[ m ];
 end );
 
-InstallMethod( CertainRowMorphism, 
+InstallMethod( CertainHorizontalMorphism, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
 return CertainRow( C, n )[ m ];
 end );
 
-InstallMethod( CertainColumnMorphism, 
+InstallMethod( CertainVerticalMorphism, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
 return CertainColumn( C, m )[ n ];
@@ -251,7 +251,7 @@ end );
 InstallMethod( CertainObject, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
- return Source( CertainRowMorphism( C, m, n ) );
+ return Source( CertainHorizontalMorphism( C, m, n ) );
 end );
 
 #####################################
@@ -276,8 +276,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
                                                                                            CertainObject( C, x0 + j - 1, m - x0 - j ) );
                                                                      if i <> j and i - 1 <> j then return zero;
-                                                                     elif i = j then return CertainColumnMorphism( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                     else return CertainRowMorphism( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                     elif i = j then return CertainVerticalMorphism( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                     else return CertainHorizontalMorphism( C, x0 + i - 1, m - x0 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -301,8 +301,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( CertainObject( C, m -y1 + i - 1, y1 - i + 1  ), 
                                                                                            CertainObject( C, m -y1 + j - 2, y1 - j + 1 ) );
                                                                      if i <> j and i + 1 <> j then return zero;
-                                                                     elif i = j then return CertainRowMorphism( C, m -y1 + i - 1, y1 - i + 1 );
-                                                                     else return CertainColumnMorphism( C, m -y1 + i - 1, y1 - i + 1 );
+                                                                     elif i = j then return CertainHorizontalMorphism( C, m -y1 + i - 1, y1 - i + 1 );
+                                                                     else return CertainVerticalMorphism( C, m -y1 + i - 1, y1 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -334,8 +334,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                   zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
                                                                                         CertainObject( C, x0 + j - 1, m - x0 - j ) );
                                                                   if i <> j and i - 1 <> j then return zero;
-                                                                  elif i-1=j then return CertainRowMorphism( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                  else return CertainColumnMorphism(C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  elif i-1=j then return CertainHorizontalMorphism( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  else return CertainVerticalMorphism(C, x0 + i - 1, m - x0 - i + 1 );
                                                                   fi;
                                                                   end ) );
                                return MorphismBetweenDirectSums( l );
@@ -368,8 +368,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( CertainObject( C, -y0 + m + i - 1 , y0 - i + 1  ), 
                                                                                            CertainObject( C, -y0 + m + j - 2 , y0 - j + 1 ) );
                                                                      if i <> j and j - 1 <> i then return zero;
-                                                                     elif i = j then return CertainRowMorphism( C, -y0 + m + i - 1 , y0 - i + 1 );
-                                                                     else return CertainColumnMorphism( C, -y0 + m + i - 1 , y0 - i + 1 );
+                                                                     elif i = j then return CertainHorizontalMorphism( C, -y0 + m + i - 1 , y0 - i + 1 );
+                                                                     else return CertainVerticalMorphism( C, -y0 + m + i - 1 , y0 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( l );
