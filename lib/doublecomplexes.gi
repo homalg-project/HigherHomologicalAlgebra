@@ -413,8 +413,30 @@ InstallMethod( TotalChainComplex,
  if IsBound( T ) then return T; fi;
  
  Error( "The double chain complex does not have the required bounds" );
- 
+  
 end );
+
+InstallMethod( TotalCochainComplex,
+               [ IsDoubleCochainComplex ],
+ function( d )
+ local dd, T, cat, chain_cat, cochain_cat, F;
+
+ dd := DoubleChainComplex( d );
+
+ T := TotalChainComplex( dd );
+
+ chain_cat := CapCategory( T );
+
+ cat := UnderlyingCategory( chain_cat );
+
+ cochain_cat := CochainComplexCategory( cat );
+
+ F := ChainToCochainComplexFunctor( chain_cat, cochain_cat );
+
+ return ApplyFunctor( F, T );
+
+end );
+
 #####################################
 #
 # Bounds
