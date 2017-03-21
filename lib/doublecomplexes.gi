@@ -438,7 +438,7 @@ InstallMethod( ViewObj,
  if IsDoubleChainComplex( C ) then 
     Print( "<A double chain complex" );
  else
-    Print( "A double cochain cochain" );
+    Print( "A double cochain complex" );
  fi;
 
  Print( " concentrated in window [ " );
