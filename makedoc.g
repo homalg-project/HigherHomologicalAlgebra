@@ -18,3 +18,5 @@ AutoDoc( rec( scaffold := rec(
                     "doc/Intro.autodoc",
                     ]
             ) ) );
+
+QUIT;
