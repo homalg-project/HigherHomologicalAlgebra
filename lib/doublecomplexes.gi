@@ -173,7 +173,7 @@ InstallMethod( DoubleCochainComplex,
  fi;
 
  return d;
-
+  
 end );
 
 ##
