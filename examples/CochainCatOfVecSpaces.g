@@ -1,10 +1,13 @@
 
+
 #! @Chunk vec_0
 #! @BeginLatexOnly
 #! Let $\mathbb{Q}$ be the field of rationals and let $\mathrm{Vec}_\mathbb{Q}$ be the category of $\mathbb{Q}$-vector spaces.
 #! The cochain complex category of $\mathrm{Vec}_\mathbb{Q}$ can be constructed as follows 
 #! @EndLatexOnly
 #! @Example
+LoadPackage( "Gauss" );;
+LoadPackage( "GaussForHomalg" );;
 LoadPackage( "LinearAlgebraForCap" );;
 LoadPackage( "complex" );;
 Q := HomalgFieldOfRationals( );;
@@ -378,7 +381,7 @@ AddMorphismFunction( F, v );
 Display( f );
 #! [ [  1,  3 ] ]
 #! 
-#! A morphism in Category of matrices over Q
+#! A split monomorphism in Category of matrices over Q
 Display( ApplyFunctor( F, f ) );
 #! [ [  1,  3,  0,  0 ],
 #!   [  0,  0,  1,  3 ] ]
@@ -419,7 +422,7 @@ C_3 := ApplyFunctor( T, C );
 Display( C^3 );
 #! [ [  1,  3 ] ]
 #! 
-#! A morphism in Category of matrices over Q
+#! A split monomorphism in Category of matrices over Q
 Display( C_3^0 );
 #! [ [  -1,  -3 ] ]
 #!
@@ -433,6 +436,6 @@ C_3_unsigned := ApplyFunctor( S, C );
 Display( C_3_unsigned^0 );
 #! [ [  1,  3 ] ]
 #!
-#! A morphism in Category of matrices over Q
+#! A split monomorphism in Category of matrices over Q
 #! @EndExample
 #! @EndChunk
