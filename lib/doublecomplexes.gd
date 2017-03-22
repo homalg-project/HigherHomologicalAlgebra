@@ -1,6 +1,5 @@
 #! @Chapter Double complexes
 #! @Section Categories and filters
-#! Here we ...
 
 DeclareCategory( "IsDoubleChainOrCochainComplex", IsObject );
 DeclareCategory( "IsDoubleChainComplex", IsDoubleChainOrCochainComplex );
@@ -15,6 +14,35 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 ##############################
 
 #! @Section Creating double complexes
+
+#! @BeginLatexOnly
+#! Here we bla bla 
+#! \begin{center}
+#! \begin{tikzpicture}
+#!   \matrix (m) [matrix of math nodes,row sep=3em,column sep=3em,minimum width=2em]
+#!   {
+#!    &      & \vdots & \vdots &  &\\
+#!    &   \phantom{D_{n}}\cdots   & D_{i-1,j} & D_{i,j} & \cdots\phantom{D_{n}} & row_{j}\\
+#!    &   \phantom{D_{n}}\cdots   & D_{i-1,j-1} & D_{i,j-1} & \cdots\phantom{D_{n}} & row_{j-1}\\ 
+#!    &      & \vdots & \vdots &  &\\
+#!    &      & col_{i-1} & col_{i} &  &\\};
+#!   \path[-stealth]
+#!     (m-2-2) edge[ <-,thick] (m-2-3)
+#!     (m-2-3) edge[ <-,thick] node[above]{$h^D_{i,j}$}(m-2-4)
+#!     (m-2-4) edge[ <-,thick] (m-2-5)
+#!     (m-3-2) edge[ <-,thick] (m-3-3)
+#!     (m-3-3) edge[ <-,thick] (m-3-4)
+#!     (m-3-4) edge[ <-,thick] (m-3-5)
+#!     (m-2-3) edge[ <-,thick] (m-1-3)
+#!     (m-2-4) edge[ <-,thick] (m-1-4)
+#!     (m-3-3) edge[ <-,thick] (m-2-3)
+#!     (m-3-4) edge[ <-,thick] node[right]{$v^D_{i,j}$}(m-2-4)
+#!     (m-4-3) edge[ <-,thick] (m-3-3)
+#!     (m-4-4) edge[ <-,thick] (m-3-4)
+#! ;
+#! \end{tikzpicture}
+#! \end{center}
+#! @EndLatexOnly
 
 #! @Description
 #! The input is two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
@@ -47,6 +75,36 @@ DeclareOperation( "DoubleChainComplex", [ IsChainComplex ] );
 #! @Arguments C
 #! @Returns a double chain complex
 DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
+
+#! @BeginLatexOnly
+#! Here we bla bla 
+#! \begin{center}
+#! \begin{tikzpicture}
+#!   \matrix (m) [matrix of math nodes,row sep=3em,column sep=3em,minimum width=2em]
+#!   {
+#!    &      & \vdots & \vdots &  &\\
+#!    &   \phantom{D^{n}}\cdots   & D^{i,j+1} & D^{i+1,j+1} & \cdots\phantom{D^{n}} & row_{j+1}\\
+#!    &   \phantom{D^{n}}\cdots   & D^{i,j} & D^{i+1,j} & \cdots\phantom{D^{n}} & row_j\\ 
+#!    &      & \vdots & \vdots &  &\\
+#!    &      & col_i & col_{i+1} &  &\\};
+#!   \path[-stealth]
+#!     (m-2-2) edge[ thick] (m-2-3)
+#!     (m-2-3) edge[ thick] (m-2-4)
+#!     (m-2-4) edge[ thick] (m-2-5)
+#!     (m-3-2) edge[ thick] (m-3-3)
+#!     (m-3-3) edge[ thick] node[above]{$h_D^{i,j}$}(m-3-4)
+#!     (m-3-4) edge[ thick] (m-3-5)
+#!     (m-2-3) edge[ thick] (m-1-3)
+#!     (m-2-4) edge[ thick] (m-1-4)
+#!     (m-3-3) edge[ thick] node[left]{$v_D^{i,j}$}(m-2-3)
+#!     (m-3-4) edge[ thick] (m-2-4)
+#!     (m-4-3) edge[ thick] (m-3-3)
+#!     (m-4-4) edge[ thick] (m-3-4)
+#! ;
+#! \end{tikzpicture}
+#! \end{center}
+#! @EndLatexOnly
+
 
 #! @Description
 #! The input is two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
