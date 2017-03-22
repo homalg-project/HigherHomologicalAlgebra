@@ -392,8 +392,8 @@ KeyDependentOperation( "GoodTruncationAbove", IsChainComplex, IsInt, ReturnTrue 
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=1em,column sep=3em,minimum width=2em]
 #!   {
-#!           &   \cdots   &C^{n-2}& C^{n-1} & C^{n} & C^{n+1} & \cdots & C^\bullet\\
-#!    &      & & & Z^n & 0 & \cdots & \tau^{\leq n}C^\bullet \\};
+#!           &   \phantom{C^{n}}\cdots   &C^{n-2}& C^{n-1} & C^{n} & C^{n+1} & \cdots\phantom{C^{n}} & C^\bullet\\
+#!    &      & & & Z^n & 0 & \cdots\phantom{C^{n}} & \tau^{\leq n}C^\bullet \\};
 #!   \path[-stealth]
 #!     (m-1-2) edge[blue, thick] (m-1-3)
 #!     (m-1-3) edge[blue, thick] (m-1-4)
