@@ -121,28 +121,29 @@ InstallMethod( DoubleChainComplex,
 
  d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleChainComplex" );
 
- if HasActiveUpperBound( C ) then 
-    SetRightBound( d, ActiveUpperBound( C ) - 1 );
- fi;
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
+                                                                 SetRightBound( d, ActiveUpperBound( C ) - 1 );
+                                                                 end ) );
 
- if HasActiveLowerBound( C ) then 
-    SetLeftBound( d, ActiveLowerBound( C ) + 1 );
- fi;
- 
- # more things can be done
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
+                                                                 SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+                                                                 end ) );
 
- if IsBoundedChainOrCochainComplex( C ) then 
-    l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
-    if ForAll( l, u -> HasActiveUpperBound( C[u] ) ) then
-       SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
-    fi;
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
+                                 function( ) 
+                                 local l, ll, lu;
+                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+                                 lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
+                                 ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
+                                 AddToToDoList( ToDoListEntry( lu, function( ) 
+                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+                                                                   end ) );
+                                 AddToToDoList( ToDoListEntry( ll, function( ) 
+                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+                                                                   end ) );
+                                 end ) );
 
-    if ForAll( l, u -> HasActiveLowerBound( C[u] ) ) then
-       SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
-    fi;
- fi;
-
- return d;
+return d;
 end );
 
 InstallMethod( DoubleCochainComplex, 
