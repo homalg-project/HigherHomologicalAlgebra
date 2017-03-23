@@ -182,14 +182,14 @@ DeclareOperation( "CertainObject", [ IsDoubleChainOrCochainComplex, IsInt, IsInt
 #! the horizontal differential $h^D_{i,j}$ (resp. $h_D^{i,j}$)
 #! @Arguments D, i, j
 #! @Returns a morphism
-DeclareOperation( "CertainHorizontalMorphism", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
+DeclareOperation( "CertainHorizontalDifferential", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
 
 #! @Description
 #! The input is double chain (resp. cochain) complex $D$ and integers $i,j$. The output is 
 #! the vertical differential $v^D_{i,j}$ (resp. $v_D^{i,j}$)
 #! @Arguments D, i, j
 #! @Returns a morphism
-DeclareOperation( "CertainVerticalMorphism", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
+DeclareOperation( "CertainVerticalDifferential", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
 
 ################################
 #
