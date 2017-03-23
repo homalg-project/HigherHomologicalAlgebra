@@ -14,9 +14,21 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 ##############################
 
 #! @Section Creating double complexes
-
 #! @BeginLatexOnly
-#! Here we bla bla 
+#!  Let $\mathcal{A}$ be an additive category.
+#!  A {\it double chain complex} in $\mathcal{A}$ is given
+#!  by a system $(\{D_{i, j}, h^D_{i, j}, v^D_{i, j}\}_{i, j\in \mathbf{Z}})$,
+#!  where each $D_{i, j}$ is an object of $\mathcal{A}$ and
+#!  $h^D_{i, j} : D_{i, j} \to D_{i - 1, j}$ and
+#!  $v^D_{i, j} : D_{i, j} \to D_{i, j - 1}$ are morphisms of $\mathcal{A}$
+#!  such that the following rules hold:
+#!  \begin{enumerate}
+#!  \item $h^D_{i - 1, j} \circ h^D_{i, j} = 0$
+#!  \item $v^D_{i, j - 1} \circ v^D_{i, j} = 0$
+#!  \item $h^D_{i, j - 1} \circ v^D_{i, j} = v^D_{i - 1, j} \circ h^D_{i, j}$
+#!  \end{enumerate}
+#!  for all $i, j \in \mathbf{Z}$.
+#!
 #! \begin{center}
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=3em,column sep=3em,minimum width=2em]
@@ -77,14 +89,26 @@ DeclareOperation( "DoubleChainComplex", [ IsChainComplex ] );
 DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
 
 #! @BeginLatexOnly
-#! Here we bla bla 
+#!  Let $\mathcal{A}$ be an additive category.
+#!  A {\it double cochain complex} in $\mathcal{A}$ is given
+#!  by a system $(\{D^{i, j}, h_D^{i, j}, v_D^{i, j}\}_{i, j\in \mathbf{Z}})$,
+#!  where each $D^{i, j}$ is an object of $\mathcal{A}$ and
+#!  $h_D^{i, j} : D^{i, j} \to D^{i + 1, j}$ and
+#!  $v_D^{i, j} : D^{i, j} \to D^{i, j + 1}$ are morphisms of $\mathcal{A}$
+#!  such that the following rules hold:
+#!  \begin{enumerate}
+#!  \item $h_D^{i + 1, j} \circ h_D^{i, j} = 0$
+#!  \item $v_D^{i, j + 1} \circ v_D^{i, j} = 0$
+#!  \item $h_D^{i, j + 1} \circ v_D^{i, j} = v_D^{i + 1, j} \circ h_D^{i, j}$
+#!  \end{enumerate}
+#!  for all $i, j \in \mathbf{Z}$.
 #! \begin{center}
 #! \begin{tikzpicture}
 #!   \matrix (m) [matrix of math nodes,row sep=3em,column sep=3em,minimum width=2em]
 #!   {
 #!    &      & \vdots & \vdots &  &\\
-#!    &   \phantom{D^{n}}\cdots   & D^{i,j+1} & D^{i+1,j+1} & \cdots\phantom{D^{n}} & row_{j+1}\\
-#!    &   \phantom{D^{n}}\cdots   & D^{i,j} & D^{i+1,j} & \cdots\phantom{D^{n}} & row_j\\ 
+#!    &   \phantom{D^{i}}\cdots   & D^{i,j+1} & D^{i+1,j+1} & \cdots\phantom{D^{i}} & row_{j+1}\\
+#!    &   \phantom{D^{i}}\cdots   & D^{i,j} & D^{i+1,j} & \cdots\phantom{D^{i}} & row_j\\ 
 #!    &      & \vdots & \vdots &  &\\
 #!    &      & col_i & col_{i+1} &  &\\};
 #!   \path[-stealth]
