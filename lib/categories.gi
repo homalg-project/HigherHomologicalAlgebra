@@ -634,6 +634,13 @@ end );
 
   fi;
 
+    if IsMonoidalCategory( cat ) and shift_index = -1 then
+      
+      ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
+      
+      ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
+      
+    fi;
 
     SetUnderlyingCategory( complex_cat, cat );
 
@@ -670,4 +677,90 @@ InstallMethod( CochainComplexCategory,
   function( cat )
   return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, 1 );
 end );
+
+##########################################
+#
+# Adding monoidal methods
+#
+##########################################
+
+InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES,
+
+  function( category )
+
+  AddTensorProductOnObjects( category, 
+      function( C, D )
+      local H, V, d;
+ 
+              if not ( HasActiveUpperBound( C ) and HasActiveUpperBound( D ) ) then 
+                 if not ( HasActiveLowerBound( C ) and HasActiveLowerBound( D ) ) then
+                    if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( C ) ) then
+                        if not ( HasActiveLowerBound( D ) and HasActiveUpperBound( D ) ) then
+                           Error( "To tensor two complexes they should have one of the following cases 1. One of them is bounded, 2. Both are upper bounded, 3. Both are lower bounded");
+                        fi;
+                    fi;
+                 fi;
+              fi;
+
+      H := function( i, j )
+              return TensorProductOnMorphisms( C^i, IdentityMorphism( D[ j ] ) );
+           end;
+
+      V := function( i, j )
+              return (-1)^i*TensorProductOnMorphisms( IdentityMorphism( C[ i ] ), D^j );
+           end;
+
+      d := DoubleChainComplex( UnderlyingCategory( category ), H, V );
+
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetRightBound( d, ActiveUpperBound( C ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetLeftBound( d, ActiveLowerBound( C ) + 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) + 1 ); end ) );
+
+      return TotalChainComplex( d );
+
+      end );
+
+end );
+
+InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES,
+
+  function( category )
+
+  AddInternalHomOnObjects( category, 
+      function( C, D )
+      local H, V, d;
+ 
+              if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( D ) ) then 
+                 if not ( HasActiveUpperBound( C ) and HasActiveLowerBound( D ) ) then
+                    if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( C ) ) then
+                        if not ( HasActiveLowerBound( D ) and HasActiveUpperBound( D ) ) then
+                           Error( "To complete the error string");
+                        fi;
+                    fi;
+                 fi;
+              fi;
+
+      H := function( i, j )
+              return ( -1 )^( i + j  + 1 ) * InternalHomOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) );
+           end;
+
+      V := function( i, j )
+              return InternalHomOnMorphisms( IdentityMorphism( C[ -i ] ), D^j );
+           end;
+
+      d := DoubleChainComplex( UnderlyingCategory( category), H, V );
+
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetLeftBound( d, -ActiveUpperBound( C ) + 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetRightBound( d, -ActiveLowerBound( C ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) + 1 ); end ) );
+
+      return TotalChainComplex( d );
+
+      end );
+
+end );
+
+
 

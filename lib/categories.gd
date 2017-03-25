@@ -49,3 +49,7 @@ DeclareAttribute( "UnderlyingCategory", IsChainOrCochainComplexCategory );
 
 #! @InsertChunk vec_0 
 #! @EndSection
+
+DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES" );
+
+DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES" );
