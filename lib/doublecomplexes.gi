@@ -34,7 +34,7 @@ BindGlobal( "TheTypeOfDoubleCochainComplex",
 ########################################
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
- function( h, v, name )
+ function( cat, h, v, name )
  local C;
 
  C := rec( );
@@ -43,7 +43,9 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
 
                           Rows, h,
 
-                          Columns, v );
+                          Columns, v,
+
+                          CatOfDoubleComplex, cat );
 
  return C; 
 
@@ -51,53 +53,55 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
 
 
 InstallMethod( DoubleChainComplex, 
-               [ IsInfList, IsInfList ],
- function( h, v )
+               [ IsCapCategory, IsInfList, IsInfList ],
+ function( cat, h, v )
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( h, v, "TheTypeOfDoubleChainComplex" );
+ return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleChainComplex" );
 
 end );
 
 InstallMethod( DoubleCochainComplex, 
-               [ IsInfList, IsInfList ],
- function( h, v )
+               [ IsCapCategory, IsInfList, IsInfList ],
+ function( cat, h, v )
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( h, v, "TheTypeOfDoubleCochainComplex" );
+ return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleCochainComplex" );
 
 end );
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS",
- function( R, V, name )
+ function( cat, R, V, name )
  local r,v;
 
  r := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> R( i, j ), 1 ), 1 );
 
  v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( r, v, name );
+ return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, r, v, name );
 
 end );
 
 InstallMethod( DoubleChainComplex, 
-               [ IsFunction, IsFunction ],
- function( R, V )
+               [ IsCapCategory, IsFunction, IsFunction ],
+ function( cat, R, V )
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, "TheTypeOfDoubleChainComplex" );
+ return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleChainComplex" );
 
 end );
 
 InstallMethod( DoubleCochainComplex, 
-               [ IsFunction, IsFunction ],
- function( R, V )
+               [ IsCapCategory, IsFunction, IsFunction ],
+ function( cat, R, V )
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, "TheTypeOfDoubleCochainComplex" );
+ return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleCochainComplex" );
  
 end );
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
  function( C, name )
- local R, V;
+ local cat, R, V;
 
+ cat := UnderlyingCategory( UnderlyingCategory( C ) );
+ 
  R := function( i, j )
          return CertainDifferential( C, i )[ j ];
       end;
@@ -110,7 +114,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
       fi;
       end;
 
- return  DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( R, V, name );
+ return  DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, name );
 
 end );
 
@@ -146,6 +150,8 @@ InstallMethod( DoubleChainComplex,
 return d;
 end );
 
+
+# TODO: use to do lists as above
 InstallMethod( DoubleCochainComplex, 
                [ IsCochainComplex ],
  function( C)
@@ -153,25 +159,27 @@ InstallMethod( DoubleCochainComplex,
  
  d :=  DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleCochainComplex" );
  
- if HasActiveUpperBound( C ) then 
-    SetRightBound( d, ActiveUpperBound( C ) - 1 );
- fi;
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
+                                                                 SetRightBound( d, ActiveUpperBound( C ) - 1 );
+                                                                 end ) );
 
- if HasActiveLowerBound( C ) then 
-    SetLeftBound( d, ActiveLowerBound( C ) + 1 );
- fi;
- 
- # more things can be done
- if IsBoundedChainOrCochainComplex( C ) then 
-    l := [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ];
-    if ForAll( l, u -> HasActiveUpperBound( C[ u ] ) ) then
-       SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
-    fi;
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
+                                                                 SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+                                                                 end ) );
 
-    if ForAll( l, u -> HasActiveLowerBound( C[ u ] ) ) then
-       SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
-    fi;
- fi;
+ AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
+                                 function( ) 
+                                 local l, ll, lu;
+                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+                                 lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
+                                 ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
+                                 AddToToDoList( ToDoListEntry( lu, function( ) 
+                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+                                                                   end ) );
+                                 AddToToDoList( ToDoListEntry( ll, function( ) 
+                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+                                                                   end ) );
+                                 end ) );
 
  return d;
   
@@ -188,7 +196,7 @@ InstallMethod( DoubleChainComplex,
   V := function( i, j )
        return CertainVerticalDifferential(d, -i, -j );
        end;
-  dd := DoubleChainComplex( R, V );
+  dd := DoubleChainComplex( CatOfDoubleComplex( d ), R, V );
   
   if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
   if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
@@ -209,7 +217,7 @@ InstallMethod( DoubleCochainComplex,
   V := function( i, j )
        return CertainVerticalDifferential( d, -i, -j );
        end;
-  dd := DoubleCochainComplex( R, V );
+  dd := DoubleCochainComplex( CatOfDoubleComplex( d ), R, V );
   
   if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
   if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
@@ -265,9 +273,7 @@ BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, x1 )
 local d, cat, diff;
 
-d := CertainObject( C, 0, 0 );
-
-cat := CapCategory( d );
+cat := CatOfDoubleComplex( C );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
@@ -283,16 +289,20 @@ diff := MapLazy( IntegersList, function( m )
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
                                end, 1 );
-return ChainComplex( cat, diff );
+d := ChainComplex( cat, diff );
+
+AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
+
+return d;
+
 end );
 
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, y0, y1 )
 local d, cat, diff;
 
-d := CertainObject( C, 0, 0 );
+cat := CatOfDoubleComplex( C );
 
-cat := CapCategory( d );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
@@ -307,8 +317,13 @@ diff := MapLazy( IntegersList, function( m )
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
-                               end, 1 );
-return ChainComplex( cat, diff );
+                                end, 1 );
+d := ChainComplex( cat, diff );
+
+AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
+
+return d;
+
 end );
 
 # concentrated in
@@ -316,16 +331,16 @@ end );
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, y0 )
-local d, cat, zero_object, diff, complex;
+local cat, zero_object, diff, complex;
 
-d := CertainObject( C, x0, y0 );
-cat := CapCategory( d );
+cat := CatOfDoubleComplex( C );
+
 zero_object := ZeroObject( cat );
 
 diff := MapLazy( IntegersList, function( m )
                                local l;
                                if m = x0 + y0 then 
-                                  return UniversalMorphismIntoZeroObject( d );
+                                  return UniversalMorphismIntoZeroObject( CertainObject( C, x0, y0 ) );
                                elif m < x0 + y0 then
                                   return UniversalMorphismIntoZeroObject( zero_object );
                                fi;
@@ -341,24 +356,29 @@ diff := MapLazy( IntegersList, function( m )
                                                                   end ) );
                                return MorphismBetweenDirectSums( l );
                                end, 1 );
+
 complex := ChainComplex( cat, diff );
 
 SetLowerBound( complex, x0 + y0 - 1 );
 
+AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
+
 return complex;
+
 end );
 
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, y0 )
 local d, cat, zero_object, diff, complex;
-d := CertainObject( C, x0, y0 );
-cat := CapCategory( d );
+
+cat := CatOfDoubleComplex( C );
+
 zero_object := ZeroObject( cat );
 
 diff := MapLazy( IntegersList, function( m )
                                local l;
                                if m = x0 + y0 + 1 then 
-                                  return UniversalMorphismFromZeroObject( d );
+                                  return UniversalMorphismFromZeroObject( CertainObject( C, x0, y0 ) );
                                elif m > x0 + y0 + 1 then
                                   return UniversalMorphismFromZeroObject( zero_object );
                                fi;
@@ -379,6 +399,8 @@ diff := MapLazy( IntegersList, function( m )
 complex := ChainComplex( cat, diff );
 
 SetUpperBound( complex, x0 + y0 + 1 );
+
+AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
 
 return complex;
 
@@ -434,7 +456,11 @@ InstallMethod( TotalCochainComplex,
 
  F := ChainToCochainComplexFunctor( chain_cat, cochain_cat );
 
- return ApplyFunctor( F, T );
+ T := ApplyFunctor( F, T );
+ 
+ AddToGenesis( T, "UnderlyingDoubleComplex", [ d ] );
+
+ return T;
 
 end );
 

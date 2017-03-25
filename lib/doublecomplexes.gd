@@ -57,22 +57,22 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 #! @EndLatexOnly
 
 #! @Description
-#! The input is two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
+#! The input is a Cap category $\mathcal{A}$ and two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
 #! be an infinite list that represents 
 #! the $j$'th row of the double complex. I.e., $h^D_{i,j}:= rows[j][i]$ for all $i\in\mathbb{Z}$. 
 #! Again, the entry in index $i$ of $cols$ should be an infinite list that represents the $i$'th 
 #! column of the double complex.
 #! I.e., $v^D_{i,j}:=cols[i][j]$.
-#! @Arguments rows, cols
+#! @Arguments A, rows, cols
 #! @Returns a double chain complex
-DeclareOperation( "DoubleChainComplex", [ IsInfList, IsInfList ] );
+DeclareOperation( "DoubleChainComplex", [ IsCapCategory, IsInfList, IsInfList ] );
 
 #! @Description
-#! The input is two functions $R$ and $V$. The output is the double chain complex $D$ defined by 
+#! The input is a Cap category $\mathcal{A}$ and  two functions $R$ and $V$. The output is the double chain complex $D$ defined by 
 #! $h^D_{i,j}=H(i,j)$ and $v^D_{i,j}=V(i,j)$.
-#! @Arguments H, V
+#! @Arguments A, H, V
 #! @Returns a double chain complex
-DeclareOperation( "DoubleChainComplex", [ IsFunction, IsFunction ] );
+DeclareOperation( "DoubleChainComplex", [ IsCapCategory, IsFunction, IsFunction ] );
 
 #! @Description
 #! The input is chain complex of chain complexes $C$. The output is the double chain complex
@@ -131,22 +131,22 @@ DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
 
 
 #! @Description
-#! The input is two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
+#! The input is a Cap category $\mathcal{A}$ and  two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
 #! be an infinite list that represents 
 #! the $j$'th row of the double complex. I.e., $h_D^{i,j}:= rows[j][i]$ for all $i\in\mathbb{Z}$. 
 #! Again, the entry in index $i$ of $cols$ should be an infinite list that represents the $i$'th 
 #! column of the double complex.
 #! I.e., $v_D^{i,j}:=cols[i][j]$.
-#! @Arguments rows, cols
+#! @Arguments A, rows, cols
 #! @Returns a double cochain complex
-DeclareOperation( "DoubleCochainComplex", [ IsInfList, IsInfList ] );
+DeclareOperation( "DoubleCochainComplex", [ IsCapCategory, IsInfList, IsInfList ] );
 
 #! @Description
-#! The input is two functions $R$ and $V$. The output is the double chain complex $D$ defined by 
+#! The input is a Cap category $\mathcal{A}$ and two functions $R$ and $V$. The output is the double chain complex $D$ defined by 
 #! $h_D^{i,j}=H(i,j)$ and $v_D^{i,j}=V(i,j)$.
-#! @Arguments H, V
+#! @Arguments A, H, V
 #! @Returns a double cochain complex
-DeclareOperation( "DoubleCochainComplex", [ IsFunction, IsFunction ] ); 
+DeclareOperation( "DoubleCochainComplex", [ IsCapCategory, IsFunction, IsFunction ] ); 
 
 #! @Description
 #! The input is cochain complex of cochain complexes $C$. The output is the double cochain complex
@@ -251,3 +251,5 @@ DeclareAttribute( "TotalChainComplex", IsDoubleChainComplex );
 #! @Group double_2
 #! @Arguments D
 DeclareAttribute( "TotalCochainComplex", IsDoubleCochainComplex );
+
+DeclareAttribute( "CatOfDoubleComplex", IsDoubleChainOrCochainComplex );
