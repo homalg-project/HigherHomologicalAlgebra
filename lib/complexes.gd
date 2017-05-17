@@ -211,7 +211,7 @@ KeyDependentOperation( "ObjectAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 #! @Returns an object
 # DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
 
-KeyDependentOperation( "CertainDifferential", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "DifferentialAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The command returns the differential of the chain or cochain complex in index $i$.
@@ -223,18 +223,18 @@ DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
 #! The input is a chain or cochain complex $C$ and an integer $n$. The output is the kernel embedding of the differential in index $n$.
 #! @Arguments C, n
 #! @Returns a morphism
-KeyDependentOperation( "CertainCycle", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "CycleAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The output is the image embeddin of $i+1$'th ( resp. $i-1$'th) differential of $C$.
 #! @Arguments C, n
 #! @Returns a morphism
-KeyDependentOperation( "CertainBoundary", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "BoundaryAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-KeyDependentOperation( "CertainHomology", IsChainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "HomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
 
-KeyDependentOperation( "CertainCohomology", IsCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "CohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The outout is the homology (resp. cohomology)

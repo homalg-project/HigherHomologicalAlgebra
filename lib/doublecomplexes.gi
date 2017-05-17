@@ -103,7 +103,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
  cat := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
  
  R := function( i, j )
-         return CertainDifferential( C, i )[ j ];
+         return DifferentialAt( C, i )[ j ];
       end;
 
  V := function( i, j )
@@ -191,10 +191,10 @@ InstallMethod( DoubleChainComplex,
   function( d )
   local R, V, dd;
   R := function( i, j )
-       return CertainHorizontalDifferential(d, -i, -j );
+       return HorizontalDifferentialAt(d, -i, -j );
        end;
   V := function( i, j )
-       return CertainVerticalDifferential(d, -i, -j );
+       return VerticalDifferentialAt(d, -i, -j );
        end;
   dd := DoubleChainComplex( CatOfDoubleComplex( d ), R, V );
   
@@ -212,10 +212,10 @@ InstallMethod( DoubleCochainComplex,
   function( d )
   local R, V, dd;
   R := function( i, j )
-       return CertainHorizontalDifferential( d, -i, -j );
+       return HorizontalDifferentialAt( d, -i, -j );
        end;
   V := function( i, j )
-       return CertainVerticalDifferential( d, -i, -j );
+       return VerticalDifferentialAt( d, -i, -j );
        end;
   dd := DoubleCochainComplex( CatOfDoubleComplex( d ), R, V );
   
@@ -245,13 +245,13 @@ InstallMethod( CertainColumnOp,
  return Columns( C )[ m ];
 end );
 
-InstallMethod( CertainHorizontalDifferential, 
+InstallMethod( HorizontalDifferentialAt, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
 return CertainRow( C, n )[ m ];
 end );
 
-InstallMethod( CertainVerticalDifferential, 
+InstallMethod( VerticalDifferentialAt, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
 return CertainColumn( C, m )[ n ];
@@ -260,7 +260,7 @@ end );
 InstallMethod( ObjectAt, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
- return Source( CertainHorizontalDifferential( C, m, n ) );
+ return Source( HorizontalDifferentialAt( C, m, n ) );
 end );
 
 #####################################
@@ -283,8 +283,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
                                                                                            ObjectAt( C, x0 + j - 1, m - x0 - j ) );
                                                                      if i <> j and i - 1 <> j then return zero;
-                                                                     elif i = j then return CertainVerticalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                     else return CertainHorizontalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                     elif i = j then return VerticalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                     else return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -312,8 +312,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( ObjectAt( C, m -y1 + i - 1, y1 - i + 1  ), 
                                                                                            ObjectAt( C, m -y1 + j - 2, y1 - j + 1 ) );
                                                                      if i <> j and i + 1 <> j then return zero;
-                                                                     elif i = j then return CertainHorizontalDifferential( C, m -y1 + i - 1, y1 - i + 1 );
-                                                                     else return CertainVerticalDifferential( C, m -y1 + i - 1, y1 - i + 1 );
+                                                                     elif i = j then return HorizontalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
+                                                                     else return VerticalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
@@ -350,8 +350,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                   zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
                                                                                         ObjectAt( C, x0 + j - 1, m - x0 - j ) );
                                                                   if i <> j and i - 1 <> j then return zero;
-                                                                  elif i-1=j then return CertainHorizontalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                  else return CertainVerticalDifferential(C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  elif i-1=j then return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
+                                                                  else return VerticalDifferentialAt(C, x0 + i - 1, m - x0 - i + 1 );
                                                                   fi;
                                                                   end ) );
                                return MorphismBetweenDirectSums( l );
@@ -389,8 +389,8 @@ diff := MapLazy( IntegersList, function( m )
                                                                      zero := ZeroMorphism( ObjectAt( C, -y0 + m + i - 1 , y0 - i + 1  ), 
                                                                                            ObjectAt( C, -y0 + m + j - 2 , y0 - j + 1 ) );
                                                                      if i <> j and j - 1 <> i then return zero;
-                                                                     elif i = j then return CertainHorizontalDifferential( C, -y0 + m + i - 1 , y0 - i + 1 );
-                                                                     else return CertainVerticalDifferential( C, -y0 + m + i - 1 , y0 - i + 1 );
+                                                                     elif i = j then return HorizontalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
+                                                                     else return VerticalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( l );

@@ -552,7 +552,7 @@ InstallMethod( Objects,
 end );
 
 ##
-InstallMethod( CertainDifferentialOp, 
+InstallMethod( DifferentialAtOp, 
                [ IsChainOrCochainComplex, IsInt ], 
   function( C, i )
   local d;
@@ -584,7 +584,7 @@ InstallMethod( CertainDifferentialOp,
 end );
 
 ##
-InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], CertainDifferential );
+InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], DifferentialAt );
 
 ##
 InstallMethod( ObjectAtOp, 
@@ -772,7 +772,7 @@ end );
 #############################################
 
 ##
-InstallMethod( CertainCycleOp, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( CycleAtOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
 
   return KernelEmbedding( C^i );
@@ -780,7 +780,7 @@ InstallMethod( CertainCycleOp, [ IsChainOrCochainComplex, IsInt ],
 end );
 
 ##
-InstallMethod( CertainBoundaryOp, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( BoundaryAtOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
 
   if IsChainComplex( C ) then
@@ -800,7 +800,7 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
   local im, inc;
 
-  im := CertainBoundary( C, i );
+  im := BoundaryAt( C, i );
 
   inc := KernelLift( C^i, im );
 
@@ -828,19 +828,19 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
 
   C2 := Range( map );
 
-  im1 := CertainBoundary( C1, i );
+  im1 := BoundaryAt( C1, i );
 
   d1 := C1^i;
 
   inc1 := KernelLift( d1, im1 );
 
-  im2 := CertainBoundary( C2, i );
+  im2 := BoundaryAt( C2, i );
 
   d2 := C2^i;
 
   inc2 := KernelLift( d2, im2 );
 
-  cycle1 := CertainCycle( C1, i );
+  cycle1 := CycleAt( C1, i );
 
   map_i := map[ i ];
 
@@ -851,10 +851,10 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
 end );
 
 ##
-InstallMethod( CertainHomologyOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( HomologyAtOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( CertainCohomologyOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( CohomologyAtOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
 InstallMethod( DefectOfExactnessAtOp, 
@@ -863,11 +863,11 @@ InstallMethod( DefectOfExactnessAtOp,
 
   if IsChainComplex( C ) then 
 
-     return CertainHomology( C, n );
+     return HomologyAt( C, n );
 
   else
 
-     return CertainCohomology( C, n );
+     return CohomologyAt( C, n );
 
   fi;
 
@@ -923,7 +923,7 @@ InstallMethod( CohomologySupport,
   local l, i;
   l := [ ];
   for i in [ m .. n ] do 
-  if not IsZero( CertainCohomology( C, i ) ) then 
+  if not IsZero( CohomologyAt( C, i ) ) then 
      Add( l, i );
   fi;
   od;
@@ -937,7 +937,7 @@ InstallMethod( HomologySupport,
   local l, i;
   l := [ ];
   for i in [ m .. n ] do 
-  if not IsZero( CertainHomology( C, i ) ) then 
+  if not IsZero( HomologyAt( C, i ) ) then 
      Add( l, i );
   fi;
   od;
@@ -1007,7 +1007,7 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   SetComputedObjectAts( complex, List( ComputedObjectAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
-  SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
+  SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
 
   AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
 
@@ -1076,7 +1076,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   SetComputedObjectAts( complex, List( ComputedObjectAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
-  SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+  SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
   AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
 

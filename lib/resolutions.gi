@@ -69,7 +69,7 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
 #      end, 1 ) );
 #      cone := MappingCone( current_mor );
 #      nat_inj := NaturalProjectionFromMappingCone( current_mor );
-#      ker_k := CertainCycle( cone, k );
+#      ker_k := CycleAt( cone, k );
 #      mor_from_proj := EpimorphismFromProjectiveObject( Source( ker_k ) );
 #      injec_in_C := ProjectionInFactorOfDirectSum( [ ShiftLazy( current_complex, 1 ), C ], 2 );
 #      return [ PreCompose( [ mor_from_proj, ker_k, nat_inj[ k ] ] ), PreCompose( [ mor_from_proj, ker_k, injec_in_C[ k ] ] ) ];
