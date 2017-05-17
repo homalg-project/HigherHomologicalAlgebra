@@ -25,7 +25,7 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 #!  \begin{enumerate}
 #!  \item $h^D_{i - 1, j} \circ h^D_{i, j} = 0$
 #!  \item $v^D_{i, j - 1} \circ v^D_{i, j} = 0$
-#!  \item $h^D_{i, j - 1} \circ v^D_{i, j} = v^D_{i - 1, j} \circ h^D_{i, j}$
+#!  \item $h^D_{i, j - 1} \circ v^D_{i, j} + v^D_{i - 1, j} \circ h^D_{i, j}=0$
 #!  \end{enumerate}
 #!  for all $i, j \in \mathbf{Z}$.
 #!
@@ -99,7 +99,7 @@ DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
 #!  \begin{enumerate}
 #!  \item $h_D^{i + 1, j} \circ h_D^{i, j} = 0$
 #!  \item $v_D^{i, j + 1} \circ v_D^{i, j} = 0$
-#!  \item $h_D^{i, j + 1} \circ v_D^{i, j} = v_D^{i + 1, j} \circ h_D^{i, j}$
+#!  \item $h_D^{i, j + 1} \circ v_D^{i, j} + v_D^{i + 1, j} \circ h_D^{i, j}=0$
 #!  \end{enumerate}
 #!  for all $i, j \in \mathbf{Z}$.
 #! \begin{center}
