@@ -634,13 +634,13 @@ end );
 
   fi;
 
-    if IsMonoidalCategory( cat ) and shift_index = -1 then
+  if HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and shift_index = -1 then
       
       ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
       
       ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
-      
-    fi;
+  
+  fi;
 
     SetUnderlyingCategory( complex_cat, cat );
 
