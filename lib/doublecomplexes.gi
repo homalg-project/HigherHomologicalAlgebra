@@ -100,7 +100,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
  function( C, name )
  local cat, R, V;
 
- cat := UnderlyingCategory( UnderlyingCategory( C ) );
+ cat := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
  
  R := function( i, j )
          return CertainDifferential( C, i )[ j ];
