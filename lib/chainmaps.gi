@@ -257,7 +257,7 @@ end );
 #
 ###################################
 
-InstallMethod( CertainMorphismOp, 
+InstallMethod( MorphismAtOp, 
           [ IsChainOrCochainMorphism, IsInt ], 
 
   function( phi, i )
@@ -289,7 +289,7 @@ InstallMethod( CertainMorphismOp,
 
 end );
 
-InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], CertainMorphism );
+InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], MorphismAt );
 
 #################################
 #

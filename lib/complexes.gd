@@ -201,7 +201,7 @@ DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainComplex );
 # operations derived from Attributes
 #
 #########################################
-KeyDependentOperation( "CertainObject", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "ObjectAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Section Operations
 
@@ -241,7 +241,7 @@ KeyDependentOperation( "CertainCohomology", IsCochainComplex, IsInt, ReturnTrue 
 #! object of $C$ in index $n$.
 #! @Arguments C, n
 #! @Returns a object
-KeyDependentOperation( "DefectOfExactness", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "DefectOfExactnessAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @BeginGroup 100
 #! @Description

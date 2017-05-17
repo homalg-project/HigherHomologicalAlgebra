@@ -108,7 +108,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
 
  V := function( i, j )
       if i mod 2 = 0 then 
-         return CertainObject( C, i )^j;
+         return ObjectAt( C, i )^j;
       else
          return AdditiveInverseForMorphisms( C[i]^j );
       fi;
@@ -257,7 +257,7 @@ InstallMethod( CertainVerticalDifferential,
 return CertainColumn( C, m )[ n ];
 end );
 
-InstallMethod( CertainObject, 
+InstallMethod( ObjectAt, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
  return Source( CertainHorizontalDifferential( C, m, n ) );
@@ -280,8 +280,8 @@ diff := MapLazy( IntegersList, function( m )
                                list := List( [ 1 .. x1 - x0 + 1 ], i ->   List( [ 1 .. x1 - x0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                                                                           CertainObject( C, x0 + j - 1, m - x0 - j ) );
+                                                                     zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
+                                                                                           ObjectAt( C, x0 + j - 1, m - x0 - j ) );
                                                                      if i <> j and i - 1 <> j then return zero;
                                                                      elif i = j then return CertainVerticalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
                                                                      else return CertainHorizontalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
@@ -309,8 +309,8 @@ diff := MapLazy( IntegersList, function( m )
                                list := List( [ 1 .. y1 - y0 + 1 ], i ->   List( [ 1 .. y1 - y0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, m -y1 + i - 1, y1 - i + 1  ), 
-                                                                                           CertainObject( C, m -y1 + j - 2, y1 - j + 1 ) );
+                                                                     zero := ZeroMorphism( ObjectAt( C, m -y1 + i - 1, y1 - i + 1  ), 
+                                                                                           ObjectAt( C, m -y1 + j - 2, y1 - j + 1 ) );
                                                                      if i <> j and i + 1 <> j then return zero;
                                                                      elif i = j then return CertainHorizontalDifferential( C, m -y1 + i - 1, y1 - i + 1 );
                                                                      else return CertainVerticalDifferential( C, m -y1 + i - 1, y1 - i + 1 );
@@ -340,15 +340,15 @@ zero_object := ZeroObject( cat );
 diff := MapLazy( IntegersList, function( m )
                                local l;
                                if m = x0 + y0 then 
-                                  return UniversalMorphismIntoZeroObject( CertainObject( C, x0, y0 ) );
+                                  return UniversalMorphismIntoZeroObject( ObjectAt( C, x0, y0 ) );
                                elif m < x0 + y0 then
                                   return UniversalMorphismIntoZeroObject( zero_object );
                                fi;
 
                                l := List( [ 1 .. m - x0 - y0 + 1 ], i -> List( [ 1 .. m - x0 - y0 ], function( j )
                                                                   local zero;
-                                                                  zero := ZeroMorphism( CertainObject( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                                                                        CertainObject( C, x0 + j - 1, m - x0 - j ) );
+                                                                  zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
+                                                                                        ObjectAt( C, x0 + j - 1, m - x0 - j ) );
                                                                   if i <> j and i - 1 <> j then return zero;
                                                                   elif i-1=j then return CertainHorizontalDifferential( C, x0 + i - 1, m - x0 - i + 1 );
                                                                   else return CertainVerticalDifferential(C, x0 + i - 1, m - x0 - i + 1 );
@@ -378,7 +378,7 @@ zero_object := ZeroObject( cat );
 diff := MapLazy( IntegersList, function( m )
                                local l;
                                if m = x0 + y0 + 1 then 
-                                  return UniversalMorphismFromZeroObject( CertainObject( C, x0, y0 ) );
+                                  return UniversalMorphismFromZeroObject( ObjectAt( C, x0, y0 ) );
                                elif m > x0 + y0 + 1 then
                                   return UniversalMorphismFromZeroObject( zero_object );
                                fi;
@@ -386,8 +386,8 @@ diff := MapLazy( IntegersList, function( m )
                                l := List( [ 1 .. x0 + y0 -m + 1 ], i -> List( [ 1 .. x0 + y0 -m + 2 ], 
                                                                      function( j )
                                                                      local zero;
-                                                                     zero := ZeroMorphism( CertainObject( C, -y0 + m + i - 1 , y0 - i + 1  ), 
-                                                                                           CertainObject( C, -y0 + m + j - 2 , y0 - j + 1 ) );
+                                                                     zero := ZeroMorphism( ObjectAt( C, -y0 + m + i - 1 , y0 - i + 1  ), 
+                                                                                           ObjectAt( C, -y0 + m + j - 2 , y0 - j + 1 ) );
                                                                      if i <> j and j - 1 <> i then return zero;
                                                                      elif i = j then return CertainHorizontalDifferential( C, -y0 + m + i - 1 , y0 - i + 1 );
                                                                      else return CertainVerticalDifferential( C, -y0 + m + i - 1 , y0 - i + 1 );

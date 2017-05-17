@@ -193,7 +193,7 @@ DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
 DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
 
 
-KeyDependentOperation( "CertainMorphism", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).

@@ -587,7 +587,7 @@ end );
 InstallMethod( \^, [ IsChainOrCochainComplex, IsInt], CertainDifferential );
 
 ##
-InstallMethod( CertainObjectOp, 
+InstallMethod( ObjectAtOp, 
                [ IsChainOrCochainComplex, IsInt ],
 function( C, i )
 local Obj;
@@ -617,7 +617,7 @@ local Obj;
 
 end );
 
-InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], CertainObject );
+InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], ObjectAt );
 
 ################################################
 #
@@ -857,7 +857,7 @@ InstallMethod( CertainHomologyOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOL
 InstallMethod( CertainCohomologyOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( DefectOfExactnessOp, 
+InstallMethod( DefectOfExactnessAtOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
 
@@ -879,7 +879,7 @@ InstallMethod( IsExactInIndexOp,
   function( C, n )
   local bool;
 
-  bool := IsZeroForObjects( DefectOfExactness( C, n ) );
+  bool := IsZeroForObjects( DefectOfExactnessAt( C, n ) );
 
   if bool = false then 
 
@@ -1005,7 +1005,7 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
-  SetComputedCertainObjects( complex, List( ComputedCertainObjects( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+  SetComputedObjectAts( complex, List( ComputedObjectAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
   SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
 
@@ -1074,7 +1074,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
-  SetComputedCertainObjects( complex, List( ComputedCertainObjects( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+  SetComputedObjectAts( complex, List( ComputedObjectAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
   SetComputedCertainDifferentials( complex, List( ComputedCertainDifferentials( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 

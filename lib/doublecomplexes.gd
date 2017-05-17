@@ -199,7 +199,7 @@ KeyDependentOperation( "CertainColumn", IsDoubleChainOrCochainComplex, IsInt, Re
 #! the object of $D$ in position $(i,j)$.
 #! @Arguments D, i, j
 #! @Returns an infinite list
-DeclareOperation( "CertainObject", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
+DeclareOperation( "ObjectAt", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
 
 #! @Description
 #! The input is double chain (resp. cochain) complex $D$ and integers $i,j$. The output is 

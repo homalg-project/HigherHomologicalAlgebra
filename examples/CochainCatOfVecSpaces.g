@@ -85,9 +85,9 @@ diffs[ 10000 ];
 #! <A zero, isomorphism in Category of matrices over Q>
 objs := Objects( C );
 #! <An infinite list>
-DefectOfExactness( C, 4 );
+DefectOfExactnessAt( C, 4 );
 #! <A vector space object over Q of dimension 1>
-DefectOfExactness( C, 3 );
+DefectOfExactnessAt( C, 3 );
 #! <A vector space object over Q of dimension 0>
 IsExactInIndex( C, 4 );
 #! false

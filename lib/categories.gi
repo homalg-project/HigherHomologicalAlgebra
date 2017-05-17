@@ -183,7 +183,7 @@ AddIsZeroForObjects( complex_cat, function( C )
 
     fi;
 
-    for obj in ComputedCertainObjects( C ) do
+    for obj in ComputedObjectAts( C ) do
 
       if IsCapCategoryObject( obj ) and not IsZero( obj ) then
 
@@ -235,7 +235,7 @@ AddIsZeroForMorphisms( complex_cat, function( phi )
 
         fi;
 
-        for mor in ComputedCertainMorphisms( phi ) do
+        for mor in ComputedMorphismAts( phi ) do
 
              if IsCapCategoryMorphism( mor ) and not IsZero( mor ) then
 
