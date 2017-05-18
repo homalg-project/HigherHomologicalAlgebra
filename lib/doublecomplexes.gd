@@ -170,8 +170,18 @@ DeclareOperation( "DoubleCochainComplex", [ IsDoubleChainComplex ] );
 #
 ########################################
 
+#! @Description
+#!  The input is double chain or cochain complex $D$.
+#!  The output is the infinite list of rows.
+#! @Arguments D
+#! @Returns an infinite list of infinite lists.
 DeclareAttribute( "Rows", IsDoubleChainOrCochainComplex );
 
+#! @Description
+#!  The input is double chain or cochain complex $D$.
+#!  The output is the infinite list of columns.
+#! @Arguments D
+#! @Returns an infinite list of infinite lists.
 DeclareAttribute( "Columns", IsDoubleChainOrCochainComplex );
 
 #################################
