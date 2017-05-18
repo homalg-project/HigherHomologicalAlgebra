@@ -125,7 +125,7 @@ DeclareAttribute( "UnderlyingCategoryOfComplexesOfComplexes",
 #!  The complex of complexes underlying the bicomplex <A>B</A>.
 #! @Arguments B
 DeclareAttribute( "UnderlyingComplexOfComplexes",
-        IsCapCategory );
+        IsObject );
 
 ####################################
 #

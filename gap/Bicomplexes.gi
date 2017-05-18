@@ -4,6 +4,20 @@
 # Implementations
 #
 
+##
+InstallMethod( UnderlyingComplexOfComplexes,
+        "for a list",
+        [ IsList ],
+        
+  L -> List( L, UnderlyingComplexOfComplexes ) );
+
+##
+InstallMethod( UnderlyingComplexOfComplexes,
+        "fallback method for an arbitrary GAP object",
+        [ IsObject ],
+        
+  IdFunc );
+
 ####################################
 #
 # methods for constructors:
