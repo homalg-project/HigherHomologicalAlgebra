@@ -493,21 +493,21 @@ InstallMethod( ViewObj,
  Print( " concentrated in window [ " );
 
  if IsBound( C!.LeftBound ) then 
-    Print( C!.LeftBound, " ... " );
+    Print( C!.LeftBound, " .. " );
  else 
-    Print( "-inf", " ... " );
+    Print( "-inf", " .. " );
  fi;
  
  if IsBound( C!.RightBound ) then 
-    Print( C!.RightBound, " ] X " );
+    Print( C!.RightBound, " ] x " );
  else 
-    Print( "inf", " ] X " );
+    Print( "inf", " ] x " );
  fi;
  Print( "[ " );
  if IsBound( C!.BelowBound ) then 
-    Print( C!.BelowBound, " ... " );
+    Print( C!.BelowBound, " .. " );
  else 
-    Print( "-inf", " ... " );
+    Print( "-inf", " .. " );
  fi;
  
  if IsBound( C!.AboveBound ) then 
