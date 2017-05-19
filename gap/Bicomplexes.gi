@@ -279,3 +279,287 @@ InstallMethod( AsCategoryOfBicomplexes,
     return BC;
     
 end );
+
+
+##
+InstallMethod( AssociatedBicomplex, 
+               [ IsChainOrCochainComplex ],
+   function( C )
+   local B, cat, type;
+
+   cat := CapCategory( C );
+   
+   if IsChainComplexCategory( cat ) and IsChainComplexCategory( UnderlyingCategory( cat ) ) then 
+      type := TheTypeHomologicalBicomplexObject;
+   elif IsCochainComplexCategory( cat ) and IsCochainComplexCategory( UnderlyingCategory( cat ) ) then
+      type := TheTypeCohomologicalBicomplexObject;
+   else 
+      Error( "not yet implemented" );
+   fi;
+   
+   B := rec( IndicesOfTotalComplex := rec( ) );
+   
+   ObjectifyWithAttributes(
+            B, type,
+            UnderlyingComplexOfComplexes, C
+            );
+   
+   cat := AsCategoryOfBicomplexes( CapCategory( C ) );
+   
+   Add( cat, B );
+   
+   TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX( C, B );
+   
+   return B;
+
+end );
+
+##
+InstallMethod( HomologicalBicomplex,
+               [ IsChainComplex ],
+    AssociatedBicomplex );
+
+InstallMethod( CohomologicalBicomplex,
+               [ IsCochainComplex ],
+    AssociatedBicomplex );
+
+##
+InstallMethod( HomologicalBicomplex,
+               [ IsCapCategory, IsZList, IsZList ],
+  function( A, h, v )
+  local chains_cat, C;
+  
+  chains_cat := ChainComplexCategory( A );
+  
+  C := ChainComplex( chains_cat, MapLazy( IntegersList, 
+                                                function( i )
+                                                local source, range, diff;
+
+                                                if i mod 2 = 0 then 
+                                                
+                                                   source := ChainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
+                                                
+                                                   range := ChainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i - 1 ][ j ] ), 1 ) );
+                                                
+                                                else
+                                                
+                                                   source := ChainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
+                                                
+                                                   range := ChainComplex( A, MapLazy( IntegersList, j-> v[ i - 1 ][ j ], 1 ) );
+                                                
+                                                fi;
+                                                
+                                                diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+                                                
+                                                return ChainMorphism( source, range, diff );
+                                                
+                                                end, 1 ) );
+                                                
+   return HomologicalBicomplex( C );
+
+end );
+
+##
+InstallMethod( CohomologicalBicomplex,
+               [ IsCapCategory, IsZList, IsZList ],
+  function( A, h, v )
+  local cochains_cat, C;
+  
+  cochains_cat := CochainComplexCategory( A );
+  
+  C := CochainComplex( cochains_cat, MapLazy( IntegersList, 
+                                                function( i )
+                                                local source, range, diff;
+
+                                                if i mod 2 = 0 then 
+                                                
+                                                   source := CochainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
+                                                
+                                                   range := CochainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i + 1 ][ j ] ), 1 ) );
+                                                
+                                                else
+                                                
+                                                   source := CochainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
+                                                
+                                                   range := CochainComplex( A, MapLazy( IntegersList, j-> v[ i + 1 ][ j ], 1 ) );
+                                                
+                                                fi;
+                                                
+                                                diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+                                                
+                                                return CochainMorphism( source, range, diff );
+                                                
+                                                end, 1 ) );
+                                                
+   return CohomologicalBicomplex( C );
+
+end );
+
+##
+InstallMethod( HomologicalBicomplex, 
+               [ IsCapCategory, IsFunction, IsFunction ],
+    function( A, H, V )
+    local h, v;
+   
+    h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
+
+    v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
+    
+    return HomologicalBicomplex( A, h, v );
+
+end );
+
+##
+InstallMethod( CohomologicalBicomplex, 
+               [ IsCapCategory, IsFunction, IsFunction ],
+    function( A, H, V )
+    local h, v;
+   
+    h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
+
+    v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
+    
+    return CohomologicalBicomplex( A, h, v );
+
+end );
+
+
+##
+InstallMethod( ObjectAt,
+               [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+       return UnderlyingComplexOfComplexes( B )[ i ][ j ];
+end );
+
+##
+InstallMethod( HorizontalDifferentialAt, 
+               [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local d;
+    d := UnderlyingComplexOfComplexes( B )^i;
+    return d[ j ];
+end );
+
+##
+InstallMethod( VerticalDifferentialAt, 
+               [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+       if i mod 2 = 0 then
+          return UnderlyingComplexOfComplexes( B )[ i ]^j;
+       else
+          return AdditiveInverseForMorphisms( UnderlyingComplexOfComplexes( B )[ i ]^j );
+       fi;
+end );
+
+##
+InstallMethod( RowAsComplexOp,
+               [ IsCapCategoryBicomplexObject, IsInt ],
+    function( B, j )
+    local C, A;
+    C := UnderlyingComplexOfComplexes( B );
+    
+    A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
+    
+    if IsCapCategoryHomologicalBicomplex( B ) then
+       return ChainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
+    else
+       return CochainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
+    fi;
+end );
+
+##
+InstallMethod( ColumnAsComplexOp,
+               [ IsCapCategoryBicomplexObject, IsInt ],
+    function( B, i )
+    local C, A;
+    C := UnderlyingComplexOfComplexes( B );
+    
+    A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
+    
+    if IsCapCategoryHomologicalBicomplex( B ) then
+       return ChainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
+    else
+       return CochainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j, 1 ) ) );
+    fi;
+end );
+
+############################################
+#
+# Transport bounds from com(com ) to bi com 
+#
+############################################
+
+InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX,
+   function( C, B )
+
+   AddToToDoList( ToDoListEntry( [ [ C, "FAU_BOUND" ] ], function( ) 
+                                                         SetRight_Bound( B, ActiveUpperBound( C ) );
+                                                         end ) );
+
+   AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ] ], function( ) 
+                                                         SetLeft_Bound( B, ActiveLowerBound( C ) );
+                                                         end ) );
+
+   AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ], [ C, "FAU_BOUND" ] ], 
+                                 function( )
+                                 local l, ll, lu;
+                                 if ActiveLowerBound( C ) >= ActiveUpperBound( C ) then
+                                            SetAbove_Bound( B, 0 );
+                                            SetBelow_Bound( B, 0 );
+                                 fi;
+                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+                                 lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
+                                 ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
+                                 AddToToDoList( ToDoListEntry( lu, function( ) 
+                                                                   SetAbove_Bound( B, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
+                                                                   end ) );
+                                 AddToToDoList( ToDoListEntry( ll, function( ) 
+                                                                   SetBelow_Bound( B, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
+                                                                   end ) );
+                                 end ) );
+end );
+    
+######################################
+#
+# View, Display
+#
+######################################
+
+InstallMethod( ViewObj,
+               [ IsCapCategoryBicomplexObject ],
+ function( B )
+ if IsCapCategoryHomologicalBicomplex( B ) then 
+    Print( "<A homological bicomplex in " );
+ else
+    Print( "<A cohomological bicomplex in " );
+ fi;
+ Print( Name( CapCategory( B ) ) );
+ Print( " concentrated in window [ " );
+
+ if HasLeft_Bound( B ) then 
+    Print( Left_Bound( B ), " ... " );
+ else 
+    Print( "-inf", " ... " );
+ fi;
+ 
+ if HasRight_Bound( B ) then 
+    Print( Right_Bound( B ), " ] x " );
+ else 
+    Print( "inf", " ] x " );
+ fi;
+ 
+ Print( "[ " );
+ if HasBelow_Bound( B ) then 
+    Print( Below_Bound( B ), " ... " );
+ else 
+    Print( "-inf", " ... " );
+ fi;
+ 
+ if HasAbove_Bound( B ) then 
+    Print( Above_Bound( B ), " ]" );
+ else 
+    Print( "inf", " ]" );
+ fi;
+ 
+ Print( ">" );
+ end );

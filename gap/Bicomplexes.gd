@@ -143,3 +143,39 @@ DeclareAttribute( "UnderlyingComplexOfComplexes",
 #
 ####################################
 
+DeclareOperation( "HomologicalBicomplex", [ IsChainComplex ] );
+DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
+DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
+
+DeclareOperation( "CohomologicalBicomplex", [ IsCochainComplex ] );
+DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
+DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
+
+DeclareOperation( "ObjectAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "HorizontalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "VerticalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+
+KeyDependentOperation( "RowAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
+KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
+
+# Attributes to maitain bounds
+
+DeclareAttribute( "Left_Bound",
+        IsCapCategoryBicomplexObject );
+
+DeclareAttribute( "Right_Bound",
+        IsCapCategoryBicomplexObject );
+
+DeclareAttribute( "Above_Bound",
+        IsCapCategoryBicomplexObject );
+
+DeclareAttribute( "Below_Bound",
+        IsCapCategoryBicomplexObject );
+
+###################################
+#
+#  Global functions 
+#
+###################################
+
+DeclareGlobalFunction( "TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX" );
