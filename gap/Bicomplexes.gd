@@ -172,6 +172,8 @@ DeclareAttribute( "Above_Bound",
 DeclareAttribute( "Below_Bound",
         IsCapCategoryBicomplexObject );
 
+DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
+
 ###################################
 #
 #  Global functions 
