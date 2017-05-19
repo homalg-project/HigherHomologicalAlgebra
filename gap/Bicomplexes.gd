@@ -153,6 +153,7 @@ DeclareAttribute( "UnderlyingComplexOfComplexes",
 #
 ####################################
 
+## Objects 
 DeclareOperation( "HomologicalBicomplex", [ IsChainComplex ] );
 DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
 DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
@@ -164,10 +165,15 @@ DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunct
 DeclareOperation( "ObjectAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "HorizontalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "VerticalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
-DeclareOperation( "MorphismAt", [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ] );
 
 KeyDependentOperation( "RowAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
+
+## Morphisms
+DeclareOperation( "BicomplexMorphism", [ IsChainOrCochainMorphism ] );
+DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ] );
+DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsFunction ] );
+DeclareOperation( "MorphismAt", [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ] );
 
 # Attributes to maitain bounds
 

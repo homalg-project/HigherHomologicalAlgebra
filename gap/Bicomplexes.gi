@@ -583,7 +583,49 @@ InstallMethod( AssociatedBicomplex,
    return psi;
 
 end );
+
+##
+InstallMethod( BicomplexMorphism,
+               [ IsChainOrCochainMorphism ],
+    AssociatedBicomplex );
+
+##
+InstallMethod( BicomplexMorphism,
+               [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ],
+    function( s, t, l )
+    local ss, tt, phi;
     
+    if not IsIdenticalObj( CapCategory( s ), CapCategory( t ) ) then 
+       Error( "The source and range should be in the same category" );
+    fi;
+    
+    if IsCapCategoryHomologicalBicomplexObject( s ) then 
+       phi := ChainMorphism( UnderlyingComplexOfComplexes( s ), UnderlyingComplexOfComplexes( t ), l );
+    else
+       phi := CochainMorphism( UnderlyingComplexOfComplexes( s ), UnderlyingComplexOfComplexes( t ), l );
+    fi;
+    
+    return AssociatedBicomplex( phi );
+    
+end );
+
+##
+InstallMethod( BicomplexMorphism,
+               [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsFunction ],
+    function( s, t, f )
+    local l, ss, tt, phi;
+    
+    if not IsIdenticalObj( CapCategory( s ), CapCategory( t ) ) then 
+       Error( "The source and range should be in the same category" );
+    fi;
+    
+    l := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> f( i, j ), 1 ), 1 );
+    
+    return BicomplexMorphism( s, t, l );
+    
+end );
+
+
 InstallMethod( MorphismAt, 
                [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ],
    function( psi, i, j )
