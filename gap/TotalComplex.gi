@@ -214,11 +214,11 @@ InstallMethod( TotalComplex,
     fi;
     
     AddToToDoList( ToDoListEntry( [ [ C, "Left_Bound" ], [ C, "Below_Bound" ] ], function( ) 
-                                                                                    SetLowerBound( T, Left_Bound( C ) + Below_Bound( C ) - 1 );
+                                                                                    SetLowerBound( T, Left_Bound( C ) + Below_Bound( C ) + 1 );
                                                                                  end ) );
     
     AddToToDoList( ToDoListEntry( [ [ C, "Right_Bound" ], [ C, "Above_Bound" ] ], function( ) 
-                                                                                    SetUpperBound( T, Right_Bound( C ) + Above_Bound( C ) + 1 );
+                                                                                    SetUpperBound( T, Right_Bound( C ) + Above_Bound( C ) - 1 );
                                                                                   end ) );
     return T;
 
