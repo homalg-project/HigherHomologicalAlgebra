@@ -20,6 +20,69 @@ InstallMethod( UnderlyingComplexOfComplexes,
 
 ####################################
 #
+# representations:
+#
+####################################
+
+DeclareRepresentation( "IsCapCategoryBicomplexCellRep",
+        IsCapCategoryBicomplexCell,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryBicomplexObjectRep",
+        IsCapCategoryBicomplexObject,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryHomologicalBicomplexObjectRep",
+        IsCapCategoryHomologicalBicomplex and IsCapCategoryBicomplexObjectRep,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryCohomologicalBicomplexObjectRep",
+        IsCapCategoryCohomologicalBicomplex and IsCapCategoryBicomplexObjectRep,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryBicomplexMorphismRep",
+        IsCapCategoryBicomplexMorphism,
+        [ ] );
+
+####################################
+#
+# families and types:
+#
+####################################
+
+# new families:
+BindGlobal( "TheFamilyOfBicomplexObjects",
+        NewFamily( "TheFamilyOfBicomplexObjects" ) );
+
+BindGlobal( "TheFamilyOfHomologicalBicomplexObjects",
+        NewFamily( "TheFamilyOfHomologicalBicomplexObjects" ) );
+
+BindGlobal( "TheFamilyOfCohomologicalBicomplexObjects",
+        NewFamily( "TheFamilyOfCohomologicalBicomplexObjects" ) );
+
+
+BindGlobal( "TheFamilyOfBicomplexMorphisms",
+        NewFamily( "TheFamilyOfBicomplexMorphisms" ) );
+
+# new types:
+BindGlobal( "TheTypeBicomplexObject",
+        NewType( TheFamilyOfBicomplexObjects,
+                IsCapCategoryBicomplexObjectRep ) );
+
+BindGlobal( "TheTypeHomologicalBicomplexObject",
+        NewType( TheFamilyOfHomologicalBicomplexObjects,
+                IsCapCategoryHomologicalBicomplexObjectRep ) );
+
+BindGlobal( "TheTypeCohomologicalBicomplexObject",
+        NewType( TheFamilyOfCohomologicalBicomplexObjects,
+                IsCapCategoryCohomologicalBicomplexObjectRep ) );
+
+BindGlobal( "TheTypeBicomplexMorphism",
+        NewType( TheFamilyOfBicomplexMorphisms,
+                IsCapCategoryBicomplexMorphismRep ) );
+
+####################################
+#
 # methods for constructors:
 #
 ####################################

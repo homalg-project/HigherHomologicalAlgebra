@@ -29,6 +29,16 @@ DeclareCategory( "IsCapCategoryBicomplexObject",
         IsCapCategoryObject );
 
 #! @Description
+#!  The &GAP; category of homological bicomplex objects in a &CAP; category of bicomplexes.
+DeclareCategory( "IsCapCategoryHomologicalBicomplex",
+                  IsCapCategoryBicomplexObject );
+
+#! @Description
+#!  The &GAP; category of cohomological bicomplex objects in a &CAP; category of bicomplexes.
+DeclareCategory( "IsCapCategoryCohomologicalBicomplex",
+                  IsCapCategoryBicomplexObject );
+
+#! @Description
 #!  The &GAP; category of bicomplex morphisms in a &CAP; category of bicomplexes.
 DeclareCategory( "IsCapCategoryBicomplexMorphism",
         IsCapCategoryBicomplexCell and
