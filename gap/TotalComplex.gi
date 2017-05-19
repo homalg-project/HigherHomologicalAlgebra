@@ -176,7 +176,7 @@ end );
 # end );
 
 InstallMethod( TotalComplex,
-               [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplex ],
+               [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject ],
     function( C )
     local T;
     

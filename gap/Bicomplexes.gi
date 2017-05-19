@@ -24,24 +24,35 @@ InstallMethod( UnderlyingComplexOfComplexes,
 #
 ####################################
 
+# Cells
 DeclareRepresentation( "IsCapCategoryBicomplexCellRep",
         IsCapCategoryBicomplexCell,
         [ ] );
 
+# Objects
 DeclareRepresentation( "IsCapCategoryBicomplexObjectRep",
         IsCapCategoryBicomplexObject,
         [ ] );
 
 DeclareRepresentation( "IsCapCategoryHomologicalBicomplexObjectRep",
-        IsCapCategoryHomologicalBicomplex and IsCapCategoryBicomplexObjectRep,
+        IsCapCategoryHomologicalBicomplexObject and IsCapCategoryBicomplexObjectRep,
         [ ] );
 
 DeclareRepresentation( "IsCapCategoryCohomologicalBicomplexObjectRep",
-        IsCapCategoryCohomologicalBicomplex and IsCapCategoryBicomplexObjectRep,
+        IsCapCategoryCohomologicalBicomplexObject and IsCapCategoryBicomplexObjectRep,
         [ ] );
 
+# Morphisms 
 DeclareRepresentation( "IsCapCategoryBicomplexMorphismRep",
         IsCapCategoryBicomplexMorphism,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryHomologicalBicomplexMorphismRep",
+        IsCapCategoryHomologicalBicomplexMorphism and IsCapCategoryBicomplexMorphismRep,
+        [ ] );
+
+DeclareRepresentation( "IsCapCategoryCohomologicalBicomplexMorphismRep",
+        IsCapCategoryCohomologicalBicomplexMorphism and IsCapCategoryBicomplexMorphismRep,
         [ ] );
 
 ####################################
@@ -60,9 +71,15 @@ BindGlobal( "TheFamilyOfHomologicalBicomplexObjects",
 BindGlobal( "TheFamilyOfCohomologicalBicomplexObjects",
         NewFamily( "TheFamilyOfCohomologicalBicomplexObjects" ) );
 
-
 BindGlobal( "TheFamilyOfBicomplexMorphisms",
         NewFamily( "TheFamilyOfBicomplexMorphisms" ) );
+
+BindGlobal( "TheFamilyOfHomologicalBicomplexMorphisms",
+        NewFamily( "TheFamilyOfHomologicalBicomplexMorphisms" ) );
+
+BindGlobal( "TheFamilyOfCohomologicalBicomplexMorphisms",
+        NewFamily( "TheFamilyOfCohomologicalBicomplexMorphisms" ) );
+
 
 # new types:
 BindGlobal( "TheTypeBicomplexObject",
@@ -80,6 +97,14 @@ BindGlobal( "TheTypeCohomologicalBicomplexObject",
 BindGlobal( "TheTypeBicomplexMorphism",
         NewType( TheFamilyOfBicomplexMorphisms,
                 IsCapCategoryBicomplexMorphismRep ) );
+
+BindGlobal( "TheTypeHomologicalBicomplexMorphism",
+        NewType( TheFamilyOfHomologicalBicomplexMorphisms,
+                IsCapCategoryHomologicalBicomplexMorphismRep ) );
+
+BindGlobal( "TheTypeCohomologicalBicomplexMorphism",
+        NewType( TheFamilyOfCohomologicalBicomplexMorphisms,
+                IsCapCategoryCohomologicalBicomplexMorphismRep ) );
 
 ####################################
 #
@@ -308,7 +333,7 @@ InstallMethod( AssociatedBicomplex,
    
    Add( cat, B );
    
-   TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX( C, B );
+   TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES( C, B );
    
    return B;
 
@@ -460,7 +485,7 @@ InstallMethod( RowAsComplexOp,
     
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
-    if IsCapCategoryHomologicalBicomplex( B ) then
+    if IsCapCategoryHomologicalBicomplexObject( B ) then
        return ChainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
     else
        return CochainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
@@ -476,7 +501,7 @@ InstallMethod( ColumnAsComplexOp,
     
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
-    if IsCapCategoryHomologicalBicomplex( B ) then
+    if IsCapCategoryHomologicalBicomplexObject( B ) then
        return ChainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
     else
        return CochainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j, 1 ) ) );
@@ -489,7 +514,7 @@ end );
 #
 ############################################
 
-InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX,
+InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES,
    function( C, B )
 
    AddToToDoList( ToDoListEntry( [ [ C, "FAU_BOUND" ] ], function( ) 
@@ -518,7 +543,54 @@ InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX,
                                                                    end ) );
                                  end ) );
 end );
+
+######################################
+#
+# Bicomplex morphism
+#
+######################################
+
+InstallMethod( AssociatedBicomplex, 
+               [ IsChainOrCochainMorphism ],
+   function( phi )
+   local cat, type, psi;
+   
+   cat := CapCategory( phi );
+   
+   if IsChainComplexCategory( cat ) and IsChainComplexCategory( UnderlyingCategory( cat ) ) then 
+      type := TheTypeHomologicalBicomplexMorphism;
+   elif IsCochainComplexCategory( cat ) and IsCochainComplexCategory( UnderlyingCategory( cat ) ) then
+      type := TheTypeCohomologicalBicomplexMorphism;
+   else 
+      Error( "not yet implemented" );
+   fi;
+   
+   psi := rec( );
+   
+   ObjectifyWithAttributes(
+            psi, type,
+            Source, AssociatedBicomplex( Source( phi ) ),
+            Range, AssociatedBicomplex( Range( phi ) ),
+            UnderlyingComplexOfComplexes, phi
+            );
+   
+   cat := AsCategoryOfBicomplexes( CapCategory( phi ) );
+   
+   AddMorphism( cat, psi );
+   
+   TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES( phi, psi );
+   
+   return psi;
+
+end );
     
+InstallMethod( MorphismAt, 
+               [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ],
+   function( psi, i, j )
+   return UnderlyingComplexOfComplexes( psi )[ i ][ j ];
+end );
+   
+   
 ######################################
 #
 # View, Display
@@ -526,13 +598,21 @@ end );
 ######################################
 
 InstallMethod( ViewObj,
-               [ IsCapCategoryBicomplexObject ],
+               [ IsCapCategoryBicomplexCell ],
  function( B )
- if IsCapCategoryHomologicalBicomplex( B ) then 
+ 
+ if IsCapCategoryHomologicalBicomplexObject( B ) then 
     Print( "<A homological bicomplex in " );
- else
+ elif IsCapCategoryCohomologicalBicomplexObject( B ) then
     Print( "<A cohomological bicomplex in " );
+ elif IsCapCategoryHomologicalBicomplexMorphism( B ) then 
+    Print( "<A homological bicomplex morphism in " );
+ elif IsCapCategoryCohomologicalBicomplexMorphism( B ) then
+    Print( "<A cohomological bicomplex morphism in " );
+ else 
+    Error( "Unexpected error occurred!" );
  fi;
+ 
  Print( Name( UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( B ) ) ) ) ) );
  Print( " concentrated in window [ " );
 

@@ -30,12 +30,12 @@ DeclareCategory( "IsCapCategoryBicomplexObject",
 
 #! @Description
 #!  The &GAP; category of homological bicomplex objects in a &CAP; category of bicomplexes.
-DeclareCategory( "IsCapCategoryHomologicalBicomplex",
+DeclareCategory( "IsCapCategoryHomologicalBicomplexObject",
                   IsCapCategoryBicomplexObject );
 
 #! @Description
 #!  The &GAP; category of cohomological bicomplex objects in a &CAP; category of bicomplexes.
-DeclareCategory( "IsCapCategoryCohomologicalBicomplex",
+DeclareCategory( "IsCapCategoryCohomologicalBicomplexObject",
                   IsCapCategoryBicomplexObject );
 
 #! @Description
@@ -43,6 +43,16 @@ DeclareCategory( "IsCapCategoryCohomologicalBicomplex",
 DeclareCategory( "IsCapCategoryBicomplexMorphism",
         IsCapCategoryBicomplexCell and
         IsCapCategoryMorphism );
+
+#! @Description
+#!  The &GAP; category of homological bicomplex morphisms in a &CAP; category of bicomplexes.
+DeclareCategory( "IsCapCategoryHomologicalBicomplexMorphism",
+                  IsCapCategoryBicomplexMorphism );
+
+#! @Description
+#!  The &GAP; category of cohomological bicomplex morphisms in a &CAP; category of bicomplexes.
+DeclareCategory( "IsCapCategoryCohomologicalBicomplexMorphism",
+                  IsCapCategoryBicomplexMorphism );
 
 ####################################
 #
@@ -154,6 +164,7 @@ DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunct
 DeclareOperation( "ObjectAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "HorizontalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "VerticalDifferentialAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "MorphismAt", [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ] );
 
 KeyDependentOperation( "RowAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
@@ -161,16 +172,16 @@ KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, R
 # Attributes to maitain bounds
 
 DeclareAttribute( "Left_Bound",
-        IsCapCategoryBicomplexObject );
+        IsCapCategoryBicomplexCell );
 
 DeclareAttribute( "Right_Bound",
-        IsCapCategoryBicomplexObject );
+        IsCapCategoryBicomplexCell );
 
 DeclareAttribute( "Above_Bound",
-        IsCapCategoryBicomplexObject );
+        IsCapCategoryBicomplexCell );
 
 DeclareAttribute( "Below_Bound",
-        IsCapCategoryBicomplexObject );
+        IsCapCategoryBicomplexCell );
 
 DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 
@@ -180,4 +191,4 @@ DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 #
 ###################################
 
-DeclareGlobalFunction( "TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEX" );
+DeclareGlobalFunction( "TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES" );
