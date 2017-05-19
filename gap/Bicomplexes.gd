@@ -78,7 +78,7 @@ DeclareGlobalFunction( "INSTALL_TODO_LIST_FOR_BICOMPLEX_MORPHISMS" );
 #! @Arguments cx
 #! @Returns a &CAP; object
 #! @Group AssociatedBicomplex_obj
-DeclareAttribute( "AssociatedBicomplex",
+DeclareAttribute( "AssociatedBicomplexObject",
         IsChainOrCochainComplex );
 
 #! @Description
@@ -87,7 +87,7 @@ DeclareAttribute( "AssociatedBicomplex",
 #! @Arguments mu
 #! @Returns a &CAP; morphism
 #! @Group AssociatedBicomplex_mor
-DeclareAttribute( "AssociatedBicomplex",
+DeclareAttribute( "AssociatedBicomplexMorphism",
         IsChainOrCochainMorphism );
 
 #! @Description
@@ -144,7 +144,7 @@ DeclareAttribute( "UnderlyingCategoryOfComplexesOfComplexes",
 #! @Description
 #!  The complex of complexes underlying the bicomplex <A>B</A>.
 #! @Arguments B
-DeclareAttribute( "UnderlyingComplexOfComplexes",
+DeclareAttribute( "UnderlyingCapCategoryCell",
         IsObject );
 
 ####################################

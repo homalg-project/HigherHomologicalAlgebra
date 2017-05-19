@@ -5,14 +5,14 @@
 #
 
 ##
-InstallMethod( UnderlyingComplexOfComplexes,
+InstallMethod( UnderlyingCapCategoryCell,
         "for a list",
         [ IsList ],
         
-  L -> List( L, UnderlyingComplexOfComplexes ) );
+  L -> List( L, UnderlyingCapCategoryCell ) );
 
 ##
-InstallMethod( UnderlyingComplexOfComplexes,
+InstallMethod( UnderlyingCapCategoryCell,
         "fallback method for an arbitrary GAP object",
         [ IsObject ],
         
@@ -153,7 +153,7 @@ InstallMethod( AsCategoryOfBicomplexes,
           function( arg )
             local eval_arg;
             
-            eval_arg := UnderlyingComplexOfComplexes( arg );
+            eval_arg := UnderlyingCapCategoryCell( arg );
             
             return CallFuncList( oper, eval_arg );
             
@@ -174,7 +174,7 @@ InstallMethod( AsCategoryOfBicomplexes,
             
             result := oper( C );
             
-            result := AssociatedBicomplex( result );
+            result := AssociatedBicomplexObject( result );
             
             return result;
             
@@ -193,11 +193,11 @@ InstallMethod( AsCategoryOfBicomplexes,
           function( arg )
             local eval_arg, result;
             
-            eval_arg := List( arg, UnderlyingComplexOfComplexes );
+            eval_arg := List( arg, UnderlyingCapCategoryCell );
             
             result := CallFuncList( oper, eval_arg );
             
-            return AssociatedBicomplex( result );
+            return AssociatedBicomplexObject( result );
             
           end;
           
@@ -214,11 +214,11 @@ InstallMethod( AsCategoryOfBicomplexes,
           function( arg )
             local eval_arg, result;
             
-            eval_arg := List( arg, UnderlyingComplexOfComplexes );
+            eval_arg := List( arg, UnderlyingCapCategoryCell );
             
             result := CallFuncList( oper, eval_arg );
            
-            return AssociatedBicomplex( result );
+            return AssociatedBicomplexMorphism( result );
             
           end;
           
@@ -245,11 +245,11 @@ InstallMethod( AsCategoryOfBicomplexes,
             
             universal_object := arg[l];
             
-            eval_arg := List( arg, UnderlyingComplexOfComplexes );
+            eval_arg := List( arg, UnderlyingCapCategoryCell );
             
             result := CallFuncList( oper, eval_arg );
             
-            return AssociatedBicomplex( result );
+            return AssociatedBicomplexMorphism( result );
             
           end;
           
@@ -307,7 +307,7 @@ end );
 
 
 ##
-InstallMethod( AssociatedBicomplex, 
+InstallMethod( AssociatedBicomplexObject, 
                [ IsChainOrCochainComplex ],
    function( C )
    local B, cat, type;
@@ -326,7 +326,7 @@ InstallMethod( AssociatedBicomplex,
    
    ObjectifyWithAttributes(
             B, type,
-            UnderlyingComplexOfComplexes, C
+            UnderlyingCapCategoryCell, C
             );
    
    cat := AsCategoryOfBicomplexes( CapCategory( C ) );
@@ -342,11 +342,11 @@ end );
 ##
 InstallMethod( HomologicalBicomplex,
                [ IsChainComplex ],
-    AssociatedBicomplex );
+    AssociatedBicomplexObject );
 
 InstallMethod( CohomologicalBicomplex,
                [ IsCochainComplex ],
-    AssociatedBicomplex );
+    AssociatedBicomplexObject );
 
 ##
 InstallMethod( HomologicalBicomplex,
@@ -453,7 +453,7 @@ end );
 InstallMethod( ObjectAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
     function( B, i, j )
-       return UnderlyingComplexOfComplexes( B )[ i ][ j ];
+       return UnderlyingCapCategoryCell( B )[ i ][ j ];
 end );
 
 ##
@@ -461,7 +461,7 @@ InstallMethod( HorizontalDifferentialAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
     function( B, i, j )
     local d;
-    d := UnderlyingComplexOfComplexes( B )^i;
+    d := UnderlyingCapCategoryCell( B )^i;
     return d[ j ];
 end );
 
@@ -470,9 +470,9 @@ InstallMethod( VerticalDifferentialAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
     function( B, i, j )
        if i mod 2 = 0 then
-          return UnderlyingComplexOfComplexes( B )[ i ]^j;
+          return UnderlyingCapCategoryCell( B )[ i ]^j;
        else
-          return AdditiveInverseForMorphisms( UnderlyingComplexOfComplexes( B )[ i ]^j );
+          return AdditiveInverseForMorphisms( UnderlyingCapCategoryCell( B )[ i ]^j );
        fi;
 end );
 
@@ -481,7 +481,7 @@ InstallMethod( RowAsComplexOp,
                [ IsCapCategoryBicomplexObject, IsInt ],
     function( B, j )
     local C, A;
-    C := UnderlyingComplexOfComplexes( B );
+    C := UnderlyingCapCategoryCell( B );
     
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
@@ -497,7 +497,7 @@ InstallMethod( ColumnAsComplexOp,
                [ IsCapCategoryBicomplexObject, IsInt ],
     function( B, i )
     local C, A;
-    C := UnderlyingComplexOfComplexes( B );
+    C := UnderlyingCapCategoryCell( B );
     
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
@@ -550,7 +550,7 @@ end );
 #
 ######################################
 
-InstallMethod( AssociatedBicomplex, 
+InstallMethod( AssociatedBicomplexMorphism, 
                [ IsChainOrCochainMorphism ],
    function( phi )
    local cat, type, psi;
@@ -569,9 +569,9 @@ InstallMethod( AssociatedBicomplex,
    
    ObjectifyWithAttributes(
             psi, type,
-            Source, AssociatedBicomplex( Source( phi ) ),
-            Range, AssociatedBicomplex( Range( phi ) ),
-            UnderlyingComplexOfComplexes, phi
+            Source, AssociatedBicomplexObject( Source( phi ) ),
+            Range, AssociatedBicomplexObject( Range( phi ) ),
+            UnderlyingCapCategoryCell, phi
             );
    
    cat := AsCategoryOfBicomplexes( CapCategory( phi ) );
@@ -587,7 +587,7 @@ end );
 ##
 InstallMethod( BicomplexMorphism,
                [ IsChainOrCochainMorphism ],
-    AssociatedBicomplex );
+    AssociatedBicomplexMorphism );
 
 ##
 InstallMethod( BicomplexMorphism,
@@ -600,12 +600,12 @@ InstallMethod( BicomplexMorphism,
     fi;
     
     if IsCapCategoryHomologicalBicomplexObject( s ) then 
-       phi := ChainMorphism( UnderlyingComplexOfComplexes( s ), UnderlyingComplexOfComplexes( t ), l );
+       phi := ChainMorphism( UnderlyingCapCategoryCell( s ), UnderlyingCapCategoryCell( t ), l );
     else
-       phi := CochainMorphism( UnderlyingComplexOfComplexes( s ), UnderlyingComplexOfComplexes( t ), l );
+       phi := CochainMorphism( UnderlyingCapCategoryCell( s ), UnderlyingCapCategoryCell( t ), l );
     fi;
     
-    return AssociatedBicomplex( phi );
+    return AssociatedBicomplexMorphism( phi );
     
 end );
 
@@ -629,7 +629,7 @@ end );
 InstallMethod( MorphismAt, 
                [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ],
    function( psi, i, j )
-   return UnderlyingComplexOfComplexes( psi )[ i ][ j ];
+   return UnderlyingCapCategoryCell( psi )[ i ][ j ];
 end );
    
    
