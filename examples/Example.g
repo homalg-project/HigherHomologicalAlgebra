@@ -1,12 +1,58 @@
 LoadPackage( "M2" );
 LoadPackage( "BiComplexes" );
 
+#  Chain complex of chian complexes
+#
+#  8             0 <---  0  <------ 0   <--- 0
+#                        |          |      
+#                        |          |      
+#                        v    (2)   v
+#  7             0 <---  Z  <------ Z   <--- 0
+#                        |          |      
+#               t7 = (2) |          | d7 = (4)      
+#                        v    (1)   v
+#  6             0 <---  Z  <------ Z   <--- 0
+#                        |          |      
+#       t6 = coker( t7 ) |          | d6 = coker( d7 )     
+#                        v          v
+#  5             0 <--- Z_2 <------ Z_4 <--- 0
+#                        |          |      
+#                        |          |      
+#                        v          v
+#  4             0 <---  0  <------ 0   <--- 0
+#
+#  .
+#  .   ....      8       9         10        11       ....        
+
+
+
+#  Homological bicomplex
+#
+#  8             0 <---  0  <------ 0   <--- 0
+#                        |          |      
+#                        |          |      
+#                        v    (2)   v
+#  7             0 <---  Z  <------ Z   <--- 0
+#                        |          |      
+#             -t7 = (-2) |          | d7 = (4)      
+#                        v    (1)   v
+#  6             0 <---  Z  <------ Z   <--- 0
+#                        |          |      
+#     -t6 = -coker( t7 ) |          | d6 = coker( d7 )     
+#                        v          v
+#  5             0 <--- Z_2 <------ Z_4 <--- 0
+#                        |          |      
+#                        |          |      
+#                        v          v
+#  4             0 <---  0  <------ 0   <--- 0
+#
+#  .
+#  .   ....      8       9         10        11       ....        
+
 ZZ := HomalgRingOfIntegers( );
 #! Z
 F1 := HomalgFreeLeftModule( 1, ZZ );
 #! <A free left module of rank 1 on a free generator>
-f := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );
-#! <An endo"morphism" of a left module>
 d7 := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );
 #! <An endo"morphism" of a left module>
 d6 := CokernelProjection( d7 );
@@ -23,11 +69,11 @@ C9 := ChainComplex( [ t6, t7 ], 6 );
 #! <A bounded object in chain complexes category over intrinsic 
 #! Category of left presentations of Z with ambient objects with 
 #! active lower bound 4 and active upper bound 8>
-phi5 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), Range( d6 ), Range( t6 ) );
+phi5 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), C10[ 5 ], C9[ 5 ] );
 #! <A "homomorphism" of left modules>
 phi6 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
 #! <An endo"morphism" of a left module>
-phi7 := HomalgMap( 2*HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
+phi7 := HomalgMap( 2 * HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
 #! <An endo"morphism" of a left module>
 phi := ChainMorphism( C10, C9, [ phi5, phi6, phi7 ], 5 );
 #! <A bounded morphism in chain complexes category over intrinsic 
