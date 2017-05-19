@@ -9,7 +9,10 @@ fi;
 
 AutoDoc( 
         rec(
-            scaffold := rec( entities := [ "GAP4", "homalg", "CAP" ],
+            scaffold := rec( gapdoc_latex_options := rec( 
+                             LateExtraPreamble := "\\usepackage{amsmath}\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\\usetikzlibrary{shapes,arrows,matrix}\n" 
+                                                        ),
+                             entities := [ "GAP4", "homalg", "CAP" ],
                              ),
             
             autodoc := rec( files := [ "doc/Doc.autodoc" ] ),
