@@ -533,13 +533,13 @@ InstallMethod( ViewObj,
  else
     Print( "<A cohomological bicomplex in " );
  fi;
- Print( Name( CapCategory( B ) ) );
+ Print( Name( UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( B ) ) ) ) ) );
  Print( " concentrated in window [ " );
 
  if HasLeft_Bound( B ) then 
-    Print( Left_Bound( B ), " ... " );
+    Print( Left_Bound( B ), " .. " );
  else 
-    Print( "-inf", " ... " );
+    Print( "-inf", " .. " );
  fi;
  
  if HasRight_Bound( B ) then 
@@ -550,9 +550,9 @@ InstallMethod( ViewObj,
  
  Print( "[ " );
  if HasBelow_Bound( B ) then 
-    Print( Below_Bound( B ), " ... " );
+    Print( Below_Bound( B ), " .. " );
  else 
-    Print( "-inf", " ... " );
+    Print( "-inf", " .. " );
  fi;
  
  if HasAbove_Bound( B ) then 
