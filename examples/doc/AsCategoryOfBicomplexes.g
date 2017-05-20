@@ -60,8 +60,6 @@ LoadPackage( "Bicomplexes" );
 #! @Example
 ZZ := HomalgRingOfIntegers( );
 #! Z
-LoadPackage( "M2" );
-#! true
 lp_cat := CategoryOfHomalgLeftModules( ZZ );
 #! intrinsic Category of left presentations of Z with ambient objects
 chains_lp_cat := ChainComplexCategory( lp_cat );
