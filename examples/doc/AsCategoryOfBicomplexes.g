@@ -12,7 +12,7 @@ LoadPackage( "Bicomplexes" );
 #!    &   0   &          0   &          0   & 0 & 8 \\
 #!    &   0   & \mathbb{Z}   & \mathbb{Z}   & 0 & 7 \\
 #!    &   0   & \mathbb{Z}   & \mathbb{Z}   & 0 & 6 \\ 
-#!    &   0   & \mathbb{Z}_2 & \mathbb{Z}_4 & 0 & 5 \\ 
+#!    &   0   & \faktor{\mathbb{Z}}{\langle 2 \rangle} & \faktor{\mathbb{Z}}{\langle 4 \rangle} & 0 & 5 \\ 
 #!    &   0   & 0            & 0            & 0 & 4 \\
 #!    &\mathbf{0} & C_9 & C_{10} & \mathbf{0} &\\};
 #!   \path[-stealth]
@@ -114,7 +114,7 @@ C := ChainComplex( [ phi ], 10 );
 #!    &   0   &          0   &          0   & 0 & 8 \\
 #!    &   0   & \mathbb{Z}   & \mathbb{Z}   & 0 & 7 \\
 #!    &   0   & \mathbb{Z}   & \mathbb{Z}   & 0 & 6 \\ 
-#!    &   0   & \mathbb{Z}_2 & \mathbb{Z}_4 & 0 & 5 \\ 
+#!    &   0   & \faktor{\mathbb{Z}}{\langle 2 \rangle} & \faktor{\mathbb{Z}}{\langle 4 \rangle} & 0 & 5 \\ 
 #!    &   0   & 0            & 0            & 0 & 4 \\
 #!    &   8   & 9 & 10 & 11 &\\};
 #!   \path[-stealth]
