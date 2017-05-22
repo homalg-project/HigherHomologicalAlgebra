@@ -169,7 +169,8 @@ T := TotalComplex( B );
 T[ 13 ];
 #! <A zero left module>
 T[ 14 ];
-#! <A cyclic left module presented by 1 relation for a cyclic generator>
+#! <A cyclic torsion left module presented by 1 relation
+#!  for a cyclic generator>
 T[ 15 ];
 #! <A non-torsion left module presented by 1 relation for 2 generators>
 T[ 16 ];
