@@ -233,7 +233,7 @@ InstallMethod( AsCategoryOfBicomplexes,
     ## e.g., CokernelColiftWithGivenCokernelObject
     create_func_universal_morphism :=
       function( name )
-        local info, oper, context;
+        local info, oper;
         
         info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
         
