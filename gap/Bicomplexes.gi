@@ -243,11 +243,7 @@ InstallMethod( AsCategoryOfBicomplexes,
         
         return
           function( arg )
-            local l, universal_object, eval_arg, result;
-            
-            l := Length( arg );
-            
-            universal_object := arg[l];
+            local eval_arg, result;
             
             eval_arg := List( arg, UnderlyingCapCategoryCell );
             
