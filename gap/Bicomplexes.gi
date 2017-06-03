@@ -231,13 +231,7 @@ InstallMethod( AsCategoryOfBicomplexes,
     ## e.g., CokernelColiftWithGivenCokernelObject
     create_func_universal_morphism :=
       function( name )
-        local info, oper;
-        
-        info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
-        
-        if not info.with_given_without_given_name_pair[2] = name then
-            Error( name, " is not the constructor of a universal morphism with a given universal object\n" );
-        fi;
+        local oper;
         
         oper := ValueGlobal( name );
         
