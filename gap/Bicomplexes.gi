@@ -4,20 +4,6 @@
 # Implementations
 #
 
-##
-InstallMethod( UnderlyingCapCategoryCell,
-        "for a list",
-        [ IsList ],
-        
-  L -> List( L, UnderlyingCapCategoryCell ) );
-
-##
-InstallMethod( UnderlyingCapCategoryCell,
-        "fallback method for an arbitrary GAP object",
-        [ IsObject ],
-        
-  IdFunc );
-
 ####################################
 #
 # representations:
@@ -105,6 +91,26 @@ BindGlobal( "TheTypeHomologicalBicomplexMorphism",
 BindGlobal( "TheTypeCohomologicalBicomplexMorphism",
         NewType( TheFamilyOfCohomologicalBicomplexMorphisms,
                 IsCapCategoryCohomologicalBicomplexMorphismRep ) );
+
+####################################
+#
+# methods for attributes:
+#
+####################################
+
+##
+InstallMethod( UnderlyingCapCategoryCell,
+        "for a list",
+        [ IsList ],
+        
+  L -> List( L, UnderlyingCapCategoryCell ) );
+
+##
+InstallMethod( UnderlyingCapCategoryCell,
+        "fallback method for an arbitrary GAP object",
+        [ IsObject ],
+        
+  IdFunc );
 
 ####################################
 #
