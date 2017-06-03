@@ -180,9 +180,7 @@ InstallMethod( AsCategoryOfBicomplexes,
             
             result := oper( C );
             
-            result := AssociatedBicomplexObject( result );
-            
-            return result;
+            return AssociatedBicomplexObject( result );
             
           end;
           
