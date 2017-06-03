@@ -311,7 +311,6 @@ InstallMethod( AsCategoryOfBicomplexes,
     
 end );
 
-
 ##
 InstallMethod( AssociatedBicomplexObject, 
                [ IsChainOrCochainComplex ],
@@ -335,7 +334,7 @@ InstallMethod( AssociatedBicomplexObject,
             UnderlyingCapCategoryCell, C
             );
    
-   cat := AsCategoryOfBicomplexes( CapCategory( C ) );
+   cat := AsCategoryOfBicomplexes( cat );
    
    Add( cat, B );
    
