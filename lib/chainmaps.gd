@@ -213,6 +213,8 @@ DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 #! @EndSection 
 
+DeclareOperation( "IsWellDefined", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+
 #! @Section Examples
 #! @InsertChunk vec_2
 #! @EndSection

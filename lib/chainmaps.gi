@@ -344,6 +344,35 @@ InstallMethod( Display,
 
 end );
 
+InstallMethod( IsWellDefined,
+               [ IsChainOrCochainMorphism, IsInt, IsInt ],
+   function( phi, m, n )
+   local i, S, T;
+   
+   S := Source( phi );
+   
+   T := Range( phi );
+   
+   if IsChainMorphism( phi ) then 
+   
+     for i in [ m .. n ] do 
+        if not IsCongruentForMorphisms( PreCompose( S^(i + 1), phi[ i ] ), PreCompose( phi[ i + 1 ], T^(i + 1) ) ) then
+           return false;
+        fi;
+     od;
+     
+   elif IsCochainMorphism( phi ) then
+   
+     for i in [ m .. n ] do 
+        if not IsCongruentForMorphisms( PreCompose( S^i, phi[ i + 1 ] ), PreCompose( phi[ i ], T^i ) ) then
+           return false;
+        fi;
+     od;
+     
+   fi;
+   return true;
+end );
+   
 #################################
 #
 # Operations
