@@ -37,7 +37,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
  function( cat, h, v, name )
  local C;
 
- C := rec( );
+ C := rec( IndicesOfTotalComplex := rec( ) );
 
  ObjectifyWithAttributes( C, ValueGlobal( name ),
 
@@ -46,7 +46,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
                           Columns, v,
 
                           CatOfDoubleComplex, cat );
-
+ 
  return C; 
 
  end );
@@ -203,6 +203,8 @@ InstallMethod( DoubleChainComplex,
   if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
   if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
   
+#   d!.EquivalentDoubleChainComplex := dd;
+  
   return dd;
 end );
 
@@ -223,7 +225,9 @@ InstallMethod( DoubleCochainComplex,
   if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
   if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
   if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
-  
+
+#   d!.EquivalentDoubleCochainComplex := dd;
+
   return dd;
 end );
 
@@ -269,6 +273,9 @@ end );
 #
 #####################################
 
+# concentrated in
+# x0 =< x =< x1
+#
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, x1 )
 local d, cat, diff;
@@ -277,6 +284,9 @@ cat := CatOfDoubleComplex( C );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
+                               
+                               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
+                               
                                list := List( [ 1 .. x1 - x0 + 1 ], i ->   List( [ 1 .. x1 - x0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
@@ -287,9 +297,12 @@ diff := MapLazy( IntegersList, function( m )
                                                                      else return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
                                                                      fi;
                                                                      end ) );
+                               
                                return MorphismBetweenDirectSums( list );
                                end, 1 );
 d := ChainComplex( cat, diff );
+
+d!.UnderlyingDoubleComplex := C;
 
 #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
 
@@ -297,6 +310,9 @@ return d;
 
 end );
 
+# concentrated in
+# y >= y0 and y =< y1
+#
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, y0, y1 )
 local d, cat, diff;
@@ -306,6 +322,9 @@ cat := CatOfDoubleComplex( C );
 
 diff := MapLazy( IntegersList, function( m )
                                local list;
+                               
+                               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
+                               
                                list := List( [ 1 .. y1 - y0 + 1 ], i ->   List( [ 1 .. y1 - y0 + 1 ], 
                                                                      function( j )
                                                                      local zero;
@@ -320,6 +339,8 @@ diff := MapLazy( IntegersList, function( m )
                                 end, 1 );
 d := ChainComplex( cat, diff );
 
+d!.UnderlyingDoubleComplex := C;
+
 #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
 
 return d;
@@ -327,7 +348,7 @@ return d;
 end );
 
 # concentrated in
-# x > x0 and y > y0
+# x >= x0 and y >= y0
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, y0 )
@@ -339,12 +360,17 @@ zero_object := ZeroObject( cat );
 
 diff := MapLazy( IntegersList, function( m )
                                local l;
-                               if m = x0 + y0 then 
+                               
+                               if m = x0 + y0 then
+                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x0 ];
                                   return UniversalMorphismIntoZeroObject( ObjectAt( C, x0, y0 ) );
                                elif m < x0 + y0 then
+                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
                                   return UniversalMorphismIntoZeroObject( zero_object );
                                fi;
-
+                               
+                               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, m - y0 ];
+                               
                                l := List( [ 1 .. m - x0 - y0 + 1 ], i -> List( [ 1 .. m - x0 - y0 ], function( j )
                                                                   local zero;
                                                                   zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
@@ -359,6 +385,8 @@ diff := MapLazy( IntegersList, function( m )
 
 complex := ChainComplex( cat, diff );
 
+complex!.UnderlyingDoubleComplex := C;
+
 SetLowerBound( complex, x0 + y0 - 1 );
 
 #AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
@@ -367,6 +395,9 @@ return complex;
 
 end );
 
+# concentrated in
+# x <= x0 and y <= y0
+#
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
 function( C, x0, y0 )
 local d, cat, zero_object, diff, complex;
@@ -377,12 +408,16 @@ zero_object := ZeroObject( cat );
 
 diff := MapLazy( IntegersList, function( m )
                                local l;
+                               
                                if m = x0 + y0 + 1 then 
+                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ x0 + 1, x0 + 1 ];
                                   return UniversalMorphismFromZeroObject( ObjectAt( C, x0, y0 ) );
                                elif m > x0 + y0 + 1 then
+                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
                                   return UniversalMorphismFromZeroObject( zero_object );
                                fi;
 
+                               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, x0 ];
                                l := List( [ 1 .. x0 + y0 -m + 1 ], i -> List( [ 1 .. x0 + y0 -m + 2 ], 
                                                                      function( j )
                                                                      local zero;
@@ -397,6 +432,8 @@ diff := MapLazy( IntegersList, function( m )
                                end, 1 );
 
 complex := ChainComplex( cat, diff );
+
+complex!.UnderlyingDoubleComplex := C;
 
 SetUpperBound( complex, x0 + y0 + 1 );
 
@@ -463,6 +500,21 @@ InstallMethod( TotalCochainComplex,
  return T;
 
 end );
+
+##
+InstallMethod( IndicesUsedToComputeTotalComplexAtOp,
+               [ IsDoubleChainComplex, IsInt ],
+    function( C, m )
+    local obj;
+    
+    # computing obj make it possible to read the indices used to compute obj.
+    # which are what we want.
+    obj := TotalChainComplex( C )[ m ];
+    
+    return C!.IndicesOfTotalComplex.( String( m ) );
+    
+end );
+
 
 #####################################
 #

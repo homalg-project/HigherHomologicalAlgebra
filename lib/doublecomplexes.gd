@@ -263,3 +263,6 @@ DeclareAttribute( "TotalChainComplex", IsDoubleChainComplex );
 DeclareAttribute( "TotalCochainComplex", IsDoubleCochainComplex );
 
 DeclareAttribute( "CatOfDoubleComplex", IsDoubleChainOrCochainComplex );
+
+KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleChainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleCochainComplex, IsInt, ReturnTrue );
