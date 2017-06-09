@@ -52,4 +52,12 @@ DeclareAttribute( "UnderlyingCategory", IsChainOrCochainComplexCategory );
 
 DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES" );
 
+DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS" );
+
 DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES" );
+
+DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS" );
+
+DeclareGlobalFunction( "ADD_TENSOR_UNIT_CHAIN" );
+
+DeclareGlobalFunction( "ADD_BRAIDING_FOR_CHAINS" );

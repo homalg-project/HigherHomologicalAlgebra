@@ -6,8 +6,6 @@
 #! The cochain complex category of $\mathrm{Vec}_\mathbb{Q}$ can be constructed as follows 
 #! @EndLatexOnly
 #! @Example
-LoadPackage( "Gauss" );;
-LoadPackage( "GaussForHomalg" );;
 LoadPackage( "LinearAlgebraForCap" );;
 LoadPackage( "complex" );;
 Q := HomalgFieldOfRationals( );;

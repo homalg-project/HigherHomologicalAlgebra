@@ -640,6 +640,12 @@ end );
       
       ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
   
+      ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
+      
+      ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
+      
+      ADD_TENSOR_UNIT_CHAIN( complex_cat );
+      
   fi;
 
     SetUnderlyingCategory( complex_cat, cat );
@@ -763,4 +769,143 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES,
 end );
 
 
+InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS,
+    function( category )
+    
+    AddTensorProductOnMorphismsWithGivenTensorProducts( category,
+         function( S, phi, psi, T )
+         local ss, tt, l;
+         
+         ss := S!.UnderlyingDoubleComplex;
 
+         tt := T!.UnderlyingDoubleComplex;
+
+         l := MapLazy( IntegersList, function( m )
+                                     local ind_s, ind_t, morphisms, obj;
+                                     
+                                     # this is important to write the used indices.
+                                     obj := ObjectAt( S, m );
+                                     obj := ObjectAt( T, m );
+                                     ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+                                     ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+                                     # correct this
+                                     morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ], 
+                                                          function( i )
+                                                          return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                                                                       function( j )
+                                                                         if i=j then 
+                                                                         return TensorProductOnMorphisms( phi[ i ], psi[ m - i ] );
+                                                                         else
+                                                                         return ZeroMorphism( ObjectAt( ss, i, m - i), ObjectAt( tt, j, m - j ) );
+                                                                         fi;
+                                                                         end );
+                                                          
+                                                          end );
+                                     return MorphismBetweenDirectSums( morphisms );
+                                     end, 1 );
+                                     
+         return ChainMorphism( S, T, l );
+         end );
+end );
+
+InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS,
+   function( category )
+   
+   AddInternalHomOnMorphismsWithGivenInternalHoms( category,
+         function( S, phi, psi, T )
+         local ss, tt, l;
+         
+         ss := S!.UnderlyingDoubleComplex;
+
+         tt := T!.UnderlyingDoubleComplex;
+
+         l := MapLazy( IntegersList, function( m )
+                                     local ind_s, ind_t, morphisms, obj;
+                                     
+                                     obj := ObjectAt( S, m );
+                                     obj := ObjectAt( T, m );
+                                     ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+                                     ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+                                     morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ], 
+                                                          function( i )
+                                                          return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                                                                       function( j )
+                                                                         if i=j then 
+                                                                         return InternalHomOnMorphisms( phi[ -i ], psi[ m - i ] );
+                                                                         else
+                                                                         return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( tt, j, m - j ) );
+                                                                         fi;
+                                                                         end );
+                                                          end );
+                                     return MorphismBetweenDirectSums( morphisms );
+                                     end, 1 );
+                                     
+         return ChainMorphism( S, T, l );
+         
+         end );
+
+end );
+
+InstallGlobalFunction( ADD_TENSOR_UNIT_CHAIN,
+   function( category )
+   
+   AddTensorUnit( category, function( )
+
+       return StalkChainComplex( TensorUnit( UnderlyingCategory( category ) ), 0 );
+       
+   end );
+   
+end );
+
+InstallGlobalFunction( ADD_BRAIDING_FOR_CHAINS,
+   function( category )
+   
+   AddBraidingWithGivenTensorProducts( category,
+      function( s, a, b, t )
+      local ss, tt, l;
+      
+      ss := s!.UnderlyingDoubleComplex;
+      tt := t!.UnderlyingDoubleComplex;
+      
+      l := MapLazy( IntegersList, function( m )
+                                  local ind_s, ind_t, morphisms, obj;
+                                     
+                                  obj := ObjectAt( s, m );
+                                  obj := ObjectAt( t, m );
+                                  ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+                                  ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+                                  if  IsOddInt( m ) then
+                                      morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ], 
+                                                          function( i )
+                                                          return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                                                                       function( j )
+                                                                         if i = m - j then 
+                                                                         return Braiding( a[ i ], b[ m - i ] );
+                                                                         else
+                                                                         return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( tt, j, m - j ) );
+                                                                         fi;
+                                                                         end );
+                                                          end );
+                                  else
+                                      morphisms :=  List( [ ind_s[ 1 ] .. ind_s[ 2 ] ], 
+                                                          function( i )
+                                                          return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                                                                       function( j )
+                                                                         if i = m - j then 
+                                                                         return (-1)^i*Braiding( a[ i ], b[ m - i ] );
+                                                                         else
+                                                                         return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( tt, j, m - j ) );
+                                                                         fi;
+                                                                         end );
+                                                          end );
+                                  fi;
+                                      
+                                  return MorphismBetweenDirectSums( morphisms );
+                                  end, 1 );
+                                  
+      return ChainMorphism( s, t, l );
+      end );
+
+end );
+         
+      
