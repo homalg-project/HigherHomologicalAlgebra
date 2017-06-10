@@ -357,6 +357,8 @@ AddInverse( complex_cat, function( m )
                               phi := morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse, 1 ) );
 
                               TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+                              
+                              return phi;
 
 end );
 
