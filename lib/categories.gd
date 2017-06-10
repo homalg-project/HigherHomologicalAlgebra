@@ -61,3 +61,5 @@ DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS" );
 DeclareGlobalFunction( "ADD_TENSOR_UNIT_CHAIN" );
 
 DeclareGlobalFunction( "ADD_BRAIDING_FOR_CHAINS" );
+
+DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP" );

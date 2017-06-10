@@ -72,6 +72,12 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
       
   fi;
   
+  if HasIsSymmetricClosedMonoidalCategory( cat ) and IsSymmetricClosedMonoidalCategory( cat ) then
+         
+         SetIsSymmetricClosedMonoidalCategory( complex_cat, true );
+      
+  fi;
+  
 ## This may be changed ...
 ## changing it to IsEqualForObjects, IsEqualForMorphisms instead 
 ## of IsIdenticalObj may slow down computations.
@@ -193,6 +199,24 @@ AddIsCongruentForMorphisms( complex_cat,
 
 end );
 
+AddIsWellDefinedForObjects( complex_cat, 
+   function( C )
+   if not IsBoundedChainOrCochainComplex( C ) then 
+      Error( "The complex must be bounded" );
+   else
+      return IsWellDefined( C, ActiveLowerBound( C  ), ActiveUpperBound( C ) );
+   fi;
+   end );
+
+AddIsWellDefinedForMorphisms( complex_cat, 
+   function( phi )
+   if not IsBoundedChainOrCochainMorphism( phi ) then 
+      Error( "The morphism must be bounded" );
+   else
+      return IsWellDefined( phi, ActiveLowerBound( phi  ), ActiveUpperBound( phi ) );
+   fi;
+   end );
+   
 
 if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then 
 
@@ -688,6 +712,12 @@ end );
          ADD_BRAIDING_FOR_CHAINS( complex_cat );
          
       fi;
+      
+      if IsSymmetricClosedMonoidalCategory( complex_cat ) then
+      
+         ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
+      
+      fi;
     
   fi;
 
@@ -950,5 +980,68 @@ InstallGlobalFunction( ADD_BRAIDING_FOR_CHAINS,
       end );
 
 end );
+
+InstallGlobalFunction( ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP,
+   function( category )
+   
+   AddTensorProductToInternalHomAdjunctionMap( category, 
+      function( A, B, phi )
+      local tensor_A_B, C, hom_B_C, hh, tt, l;
+      
+      tensor_A_B := TensorProductOnObjects( A, B );
+      
+      if not IsEqualForObjects( tensor_A_B, Source( phi ) ) then
+      
+         Error( "The inputs are not compatible" );
+        
+      fi;
+      
+      C := Range( phi );
+      
+      hom_B_C := InternalHomOnObjects( B, C );
+      
+      hh := hom_B_C!.UnderlyingDoubleComplex;
+      
+      tt := tensor_A_B!.UnderlyingDoubleComplex;
+      
+      l := MapLazy( IntegersList, function( m )
+                                  local obj, ind_hh, morphisms;
+                                  
+                                  obj := ObjectAt( hom_B_C, m );
+                                  
+                                  ind_hh := hh!.IndicesOfTotalComplex.( String( m ) );
+                                  
+                                  morphisms := List( [ ind_hh[ 1 ] .. ind_hh[ 2 ] ],
+                                                     function( j )
+                                                     local obj2, ind_tt, ll, f;
+                                                     
+                                                     obj2 := ObjectAt( tensor_A_B, m - j );
+                                                     
+                                                     ind_tt := tt!.IndicesOfTotalComplex.( String( m - j ) );
+                                                     
+                                                     ll := List( [ ind_tt[ 1 ] .. ind_tt[ 2 ] ], 
+                                                               function( i )
+                                                               if m = i then 
+                                                                  return IdentityMorphism( ObjectAt( tt, m, -j ) );
+                                                               else 
+                                                                  return ZeroMorphism( ObjectAt( tt, m, -j ), ObjectAt( tt, i, m - j - i ) );
+                                                               fi;
+                                                               end );
+                                                               
+                                                     f := PreCompose( MorphismBetweenDirectSums( [ ll ] ), phi[ m - j ] );
+                                                     
+                                                     return TensorProductToInternalHomAdjunctionMap( A[ m ], B[ - j ], f );
+                                                     end );
+                                                     
+                                   return MorphismBetweenDirectSums( [ morphisms ] );
+                                   
+                                   end, 1 );
+                                   
+       return ChainMorphism( A, hom_B_C, l );
+       end );
+       
+end );
+                                  
+                                  
          
       
