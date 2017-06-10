@@ -66,6 +66,12 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
       
   fi;
   
+  if HasIsSymmetricMonoidalCategory( cat ) and IsSymmetricMonoidalCategory( cat ) then
+         
+         SetIsSymmetricMonoidalCategory( complex_cat, true );
+      
+  fi;
+  
 ## This may be changed ...
 ## changing it to IsEqualForObjects, IsEqualForMorphisms instead 
 ## of IsIdenticalObj may slow down computations.
