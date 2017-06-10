@@ -35,6 +35,37 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
  
   fi;
 
+  if HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) then
+     
+        SetIsAdditiveCategory( complex_cat, true );
+  
+  fi;
+  
+  if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) then
+     
+        SetIsAbelianCategory( complex_cat, true );
+  
+  fi;
+  
+  
+  if HasIsStrictMonoidalCategory( cat ) and IsStrictMonoidalCategory( cat ) then
+         
+         SetIsStrictMonoidalCategory( complex_cat, true );
+      
+  fi;
+  
+  if HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) then
+         
+         SetIsMonoidalCategory( complex_cat, true );
+      
+  fi;
+  
+  if HasIsBraidedMonoidalCategory( cat ) and IsBraidedMonoidalCategory( cat ) then
+         
+         SetIsBraidedMonoidalCategory( complex_cat, true );
+      
+  fi;
+  
 ## This may be changed ...
 ## changing it to IsEqualForObjects, IsEqualForMorphisms instead 
 ## of IsIdenticalObj may slow down computations.
@@ -157,22 +188,20 @@ AddIsCongruentForMorphisms( complex_cat,
 end );
 
 
-  if IsAdditiveCategory( cat ) then 
+if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then 
 
-SetIsAdditiveCategory( complex_cat, true );
+  AddZeroObject( complex_cat, function( )
+    local C;
 
-AddZeroObject( complex_cat, function( )
-   local C;
+    C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
 
-   C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+    SetUpperBound( C, 0 );
 
-   SetUpperBound( C, 0 );
+    SetLowerBound( C, 0 );
 
-   SetLowerBound( C, 0 );
+    return C;
 
-   return C;
-
-end );
+  end );
 
 AddIsZeroForObjects( complex_cat, function( C )
     local obj, i;
@@ -529,9 +558,7 @@ end );
 
   fi;
 
-  if IsAbelianCategory( cat ) then
-
-     SetIsAbelianCategory( complex_cat, true );
+  if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
 
 AddKernelEmbedding( complex_cat, function( phi )
  local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
@@ -634,7 +661,9 @@ end );
 
   fi;
 
-  if HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and shift_index = -1 then
+  # This monoidal structure is yet only for chain complex categories ( shift_index = -1 )
+  #
+  if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
       
       ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
       
@@ -646,6 +675,12 @@ end );
       
       ADD_TENSOR_UNIT_CHAIN( complex_cat );
       
+      if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then 
+         
+         ADD_BRAIDING_FOR_CHAINS( complex_cat );
+         
+      fi;
+    
   fi;
 
     SetUnderlyingCategory( complex_cat, cat );
