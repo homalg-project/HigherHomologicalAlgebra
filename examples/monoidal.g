@@ -25,7 +25,274 @@ a_o_b := TensorProductOnObjects( a, b );
 #! <A bounded object in chain complexes category over category of matrices over Q with active lower bound -2 and active upper bound 4>
 b_o_a := TensorProductOnObjects( b, a );
 #! <A bounded object in chain complexes category over category of matrices over Q with active lower bound -2 and active upper bound 4>
-s := a_o_b;
-#! <A bounded object in chain complexes category over category of matrices over Q with active lower bound -2 and active upper bound 4>
-t := b_o_a;
-#! <A bounded object in chain complexes category over category of matrices over Q with active lower bound -2 and active upper bound 4>
+Display( a_o_b, -2, 4 );
+#! 
+#! -----------------------------------------------------------------
+#! In index -2
+#! 
+#! Object is
+#! A zero object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 0 x 0 matrix)
+#! 
+#! A zero, isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index -1
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 6 x 0 matrix)
+#! 
+#! A zero, split epimorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 0
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [  -11,  -12,  -13,    0,    0,    0 ],
+#!   [    0,    0,    0,  -11,  -12,  -13 ],
+#!   [  -10,    0,    0,    0,    0,    0 ],
+#!   [    0,  -10,    0,    0,    0,    0 ],
+#!   [    0,    0,  -10,    0,    0,    0 ],
+#!   [    8,    0,    0,    0,    0,    0 ],
+#!   [    0,    8,    0,    0,    0,    0 ],
+#!   [    0,    0,    8,    0,    0,    0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 1
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [  -10,    0,   11,   12,   13,    0,    0,    0 ],
+#!   [    8,    0,    0,    0,    0,   11,   12,   13 ],
+#!   [    0,    0,    0,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,    4,    0,    0,    5,    0,    0 ],
+#!   [    0,    0,    0,    4,    0,    0,    5,    0 ],
+#!   [    0,    0,    0,    0,    4,    0,    0,    5 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 2
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [    0,    0,  -11,  -12,  -13,    0,    0,    0 ],
+#!   [    4,    5,    0,    0,    0,  -11,  -12,  -13 ],
+#!   [    0,    0,    6,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    6,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    0,    6,    0,    0,    0 ],
+#!   [    0,    0,    7,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    7,    0,    0,    0,    0 ],
+#!   [    0,    0,    0,    0,    7,    0,    0,    0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 3
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [   6,   0,  11,  12,  13,   0,   0,   0 ],
+#!   [   7,   0,   0,   0,   0,  11,  12,  13 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 4
+#! 
+#! Object is
+#! A zero object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 0 x 2 matrix)
+#! 
+#! A zero, split monomorphism in Category of matrices over Q
+Display( b_o_a, -2, 4 );
+#! 
+#! -----------------------------------------------------------------
+#! In index -2
+#! 
+#! Object is
+#! A zero object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 0 x 0 matrix)
+#! 
+#! A zero, isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index -1
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 6 x 0 matrix)
+#! 
+#! A zero, split epimorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 0
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [  -10,    0,    0,    0,    0,    0 ],
+#!   [    8,    0,    0,    0,    0,    0 ],
+#!   [    0,    0,  -10,    0,    0,    0 ],
+#!   [    0,    0,    8,    0,    0,    0 ],
+#!   [    0,    0,    0,    0,  -10,    0 ],
+#!   [    0,    0,    0,    0,    8,    0 ],
+#!   [   11,    0,   12,    0,   13,    0 ],
+#!   [    0,   11,    0,   12,    0,   13 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 1
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [   0,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   4,   5,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   4,   5,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   4,   5,   0,   0 ],
+#!   [  11,   0,  12,   0,  13,   0,  10,   0 ],
+#!   [   0,  11,   0,  12,   0,  13,  -8,   0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 2
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [   6,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   7,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   6,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   7,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   6,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   7,   0,   0,   0 ],
+#!   [  11,   0,  12,   0,  13,   0,   0,   0 ],
+#!   [   0,  11,   0,  12,   0,  13,  -4,  -5 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 3
+#! 
+#! Object is
+#! An object in Category of matrices over Q.
+#! 
+#! Differential is
+#! [ [  11,   0,  12,   0,  13,   0,  -6,   0 ],
+#!   [   0,  11,   0,  12,   0,  13,  -7,   0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 4
+#! 
+#! Object is
+#! A zero object in Category of matrices over Q.
+#! 
+#! Differential is
+#! (an empty 0 x 2 matrix)
+#! 
+#! A zero, split monomorphism in Category of matrices over Q
+phi := Braiding( a, b );
+#! <A bounded morphism in chain complexes category over category of matrices over Q with active lower bound -2 and active upper bound 4>
+IsWellDefined( phi, -2, 4 );
+#! true
+IsIsomorphism( phi );
+#! true
+Display( phi, -2, 4 );
+#! In index -2
+#! 
+#! Morphism is
+#! (an empty 0 x 0 matrix)
+#! 
+#! A zero, isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index -1
+#! 
+#! Morphism is
+#! [ [  1,  0,  0,  0,  0,  0 ],
+#!   [  0,  0,  1,  0,  0,  0 ],
+#!   [  0,  0,  0,  0,  1,  0 ],
+#!   [  0,  1,  0,  0,  0,  0 ],
+#!   [  0,  0,  0,  1,  0,  0 ],
+#!   [  0,  0,  0,  0,  0,  1 ] ]
+#! 
+#! An isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 0
+#! 
+#! Morphism is
+#! [ [   0,   0,   0,   0,   0,   0,  -1,   0 ],
+#!   [   0,   0,   0,   0,   0,   0,   0,  -1 ],
+#!   [   1,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   1,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   1,   0,   0,   0 ],
+#!   [   0,   1,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   1,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   0,   1,   0,   0 ] ]
+#! 
+#! An isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 1
+#! 
+#! Morphism is
+#! [ [  0,  0,  0,  0,  0,  0,  1,  0 ],
+#!   [  0,  0,  0,  0,  0,  0,  0,  1 ],
+#!   [  1,  0,  0,  0,  0,  0,  0,  0 ],
+#!   [  0,  0,  1,  0,  0,  0,  0,  0 ],
+#!   [  0,  0,  0,  0,  1,  0,  0,  0 ],
+#!   [  0,  1,  0,  0,  0,  0,  0,  0 ],
+#!   [  0,  0,  0,  1,  0,  0,  0,  0 ],
+#!   [  0,  0,  0,  0,  0,  1,  0,  0 ] ]
+#! 
+#! An isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 2
+#! 
+#! Morphism is
+#! [ [   0,   0,   0,   0,   0,   0,  -1,   0 ],
+#!   [   0,   0,   0,   0,   0,   0,   0,  -1 ],
+#!   [   1,   0,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   1,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   1,   0,   0,   0 ],
+#!   [   0,   1,   0,   0,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   1,   0,   0,   0,   0 ],
+#!   [   0,   0,   0,   0,   0,   1,   0,   0 ] ]
+#! 
+#! An isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 3
+#! 
+#! Morphism is
+#! [ [  1,  0 ],
+#!   [  0,  1 ] ]
+#! 
+#! An isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
+#! In index 4
+#! 
+#! Morphism is
+#! (an empty 0 x 0 matrix)
+#! 
+#! A zero, isomorphism in Category of matrices over Q
+#! -----------------------------------------------------------------
