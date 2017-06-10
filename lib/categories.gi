@@ -716,6 +716,8 @@ end );
       if IsSymmetricClosedMonoidalCategory( complex_cat ) then
       
          ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
+         
+         ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
       
       fi;
     
@@ -1041,7 +1043,68 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP,
        end );
        
 end );
-                                  
-                                  
-         
+
+##
+InstallGlobalFunction( ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP,
+   function( category )
+   
+   AddInternalHomToTensorProductAdjunctionMap( category, 
+      function( B, C, psi )
+      local hom_B_C, A, tensor_A_B, tt, l, hh;
       
+      hom_B_C := InternalHomOnObjects( B, C );
+      
+      if not IsEqualForObjects( hom_B_C, Range( psi ) ) then
+      
+         Error( "The inputs are not compatible" );
+        
+      fi;
+      
+      A := Source( psi );
+      
+      tensor_A_B := TensorProductOnObjects( A, B );
+      
+      hh := hom_B_C!.UnderlyingDoubleComplex;
+      
+      tt := tensor_A_B!.UnderlyingDoubleComplex;
+      
+      l := MapLazy( IntegersList, function( m )
+                                  local obj, ind_tt, morphisms;
+                                  
+                                  obj := ObjectAt( tensor_A_B, m );
+                                  
+                                  ind_tt := tt!.IndicesOfTotalComplex.( String( m ) );
+                                  
+                                  morphisms := List( [ ind_tt[ 1 ] .. ind_tt[ 2 ] ],
+                                                     function( i )
+                                                     local obj2, ind_hh, ll, f;
+                                                     
+                                                     obj2 := ObjectAt( hom_B_C, i );
+                                                     
+                                                     ind_hh := hh!.IndicesOfTotalComplex.( String( i ) );
+                                                     
+                                                     ll := List( [ ind_hh[ 1 ] .. ind_hh[ 2 ] ], 
+                                                               function( j )
+                                                               if j = i - m then 
+                                                                  return [ IdentityMorphism( ObjectAt( hh, i - m, m ) ) ];
+                                                               else 
+                                                                  return [ ZeroMorphism( ObjectAt( hh, j, i - j ), ObjectAt( hh, i - m, m ) ) ];
+                                                               fi;
+                                                               
+                                                               end );
+                                                               
+                                                     f := PreCompose( psi[ i ], MorphismBetweenDirectSums( ll ) );
+                                                     
+                                                     return [ InternalHomToTensorProductAdjunctionMap( B[ m - i], C[ m ], f ) ];
+                                                     
+                                                     end );
+                                                     
+                                   return MorphismBetweenDirectSums( morphisms );
+                                   
+                                   end, 1 );
+                                   
+       return ChainMorphism( tensor_A_B, C, l );
+       
+       end );
+       
+end );
