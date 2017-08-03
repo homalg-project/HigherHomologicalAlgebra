@@ -5,6 +5,45 @@
 # Gap package: complex        2016 
 ###########################################
 
+DeclareGlobalVariable( "ENOUGH_PROJECTIVES_INJECTIVES_METHODS" );
+
+InstallValue( ENOUGH_PROJECTIVES_INJECTIVES_METHODS, rec( 
+
+EpimorphismFromProjectiveObject := rec( 
+
+installation_name := "EpimorphismFromProjectiveObject", 
+filter_list := [ "object" ],
+cache_name := "EpimorphismFromProjectiveObject",
+return_type := "morphism",
+post_function := function( object, return_value )
+        SetIsEpimorphism( return_value, true );
+        end ),
+
+MonomorphismInInjectiveObject := rec(
+
+installation_name := "MonomorphismInInjectiveObject",
+filter_list := [ "object" ],
+cache_name := "MonomorphismInInjectiveObject",
+return_type := "morphism",
+post_function := function( object, return_value )
+        SetIsMonomorphism( return_value, true );
+        end ),
+        
+
+ProjectiveLift := rec(
+
+installation_name := "ProjectiveLift",
+filter_list := [ "morphism", "morphism" ],
+cache_name := "ProjectiveLift",
+return_type := "morphism" )
+
+) );
+
+CAP_INTERNAL_ENHANCE_NAME_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
+
+CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
+
+
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
   function( cat, shift_index )
@@ -721,6 +760,65 @@ end );
       
       fi;
     
+  fi;
+
+  if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
+
+    AddIsProjective( complex_cat, function( C )
+                                  local i;
+
+				  if not IsBoundedChainOrCochainComplex( C ) then 
+				    Error( "The complex must be bounded" );
+				  fi;
+
+				  if not IsExact( C ) then 
+				    return false;
+				  fi;
+
+				  for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do 
+				    if not IsProjective( C[ i ] ) then
+				      return false;
+				    fi;
+				  od;
+
+				  return true;
+				  
+				  end );
+  
+  AddProjectiveLift( complex_cat, function( phi, pi )
+                                  local P, H, l, XX; 
+
+				  P := Source( phi );
+
+				  XX := Source( pi );
+				  
+				  H := MapLazy( IntegersList, function( i )
+				                              local id, m, n; 
+					
+							      id := IdentityMorphism( P );
+
+							      if i <= ActiveLowerBound( P ) then 
+                                                                return ZeroMorphism( P[ i ], P[ i + 1 ] );
+							      elif i = ActiveLowerBound( P ) + 1 then 
+								return ProjectiveLift( id[ i ], P^(i+1) );
+							      fi;
+
+							      m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
+
+							      n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
+
+							      return ProjectiveLift( m, n );
+
+							      end, 1 );
+				 l := MapLazy( IntegersList, 
+				      function( i )
+                                      return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] ) 
+                                             + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
+                                      end, 1 );
+                                      
+                                 return ChainMorphism( P, XX, l );
+
+			       end );
   fi;
 
     SetUnderlyingCategory( complex_cat, cat );
