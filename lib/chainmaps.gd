@@ -138,6 +138,16 @@ DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
 #! @EndSection
 
+#! @Description
+#! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
+#! mapping cylinder chain (resp. cochain) complex $\mathrm{Cyl}(\phi )$.
+#! @Arguments phi
+#! @Returns complex
+DeclareAttribute( "MappingCylinder", IsChainOrCochainMorphism );
+
+DeclareAttribute( "NaturalInjectionOfSourceInMappingCylinder", IsChainOrCochainMorphism );
+DeclareAttribute( "NaturalInjectionOfRangeInMappingCylinder" , IsChainOrCochainMorphism );
+
 #! @Section Properties
 
 #! @Description

@@ -116,7 +116,7 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
 
      fi;
 
-     Add( CapCategory( C1 ), phi );
+     AddMorphism( CapCategory( C1 ), phi );
 
      TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED( phi );
 
@@ -734,6 +734,109 @@ InstallMethod( NaturalProjectionFromMappingCone, [ IsChainOrCochainMorphism ],
 
    return NaturalProjectionFromMappingCone( phi );
 
+end );
+
+#######################################
+#
+#  MappingCylinder Objects
+#
+#######################################
+
+InstallMethod( MappingCylinder,
+               [ IsChainOrCochainMorphism ],
+               
+   function( phi )
+   local complex_cat, B, C, diffs;
+   
+   complex_cat := CapCategory( phi );
+   
+   B := Source( phi );
+      
+   C := Range( phi );
+
+   if IsChainMorphism( phi ) then 
+         
+      diffs := MapLazy( IntegersList, function( n )
+                                     
+                                      return MorphismBetweenDirectSums( [ [ B^n, ZeroMorphism( B[ n ], B[ n - 2 ] ), ZeroMorphism( B[ n ], C[ n - 1 ] ) ], 
+                                                                          [ IdentityMorphism( B[ n - 1 ] ), AdditiveInverse( B^(n-1) ), AdditiveInverse( phi[ n - 1 ] ) ],
+                                                                          [ ZeroMorphism( C[ n ], B[ n -1 ] ), ZeroMorphism( C[ n ], B[ n - 2 ] ), C^n ] ] );
+                                                                          
+                                      end, 1 );
+      
+      return ChainComplex( UnderlyingCategory( complex_cat ), diffs );
+      
+   else
+   
+      diffs := MapLazy( IntegersList, function( n )
+      
+                                      return MorphismBetweenDirectSums( [ [ B^n, ZeroMorphism( B[ n ], B[ n + 2 ] ), ZeroMorphism( B[ n ], C[ n + 1 ] ) ], 
+                                                                          [ IdentityMorphism( B[ n + 1 ] ), AdditiveInverse( B^(n+1) ), AdditiveInverse( phi[ n + 1 ] ) ],
+                                                                          [ ZeroMorphism( C[ n ], B[ n +1 ] ), ZeroMorphism( C[ n ], B[ n + 2 ] ), C^n ] ] );
+                                                                          
+                                      end, 1 );
+                                
+      return CochainComplex( UnderlyingCategory( complex_cat ), diffs );
+
+   fi;
+   
+end );
+
+##
+InstallMethod( NaturalInjectionOfSourceInMappingCylinder, 
+               [ IsChainOrCochainMorphism ], 
+    function( phi )
+    local morphisms, B, C;
+    
+    B := Source( phi );
+      
+    C := Range( phi );
+   
+    if IsChainMorphism( phi ) then 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ), ZeroMorphism( B[ n ], B[ n - 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ] ] );
+                                        end, 1 );
+    return ChainMorphism( B, MappingCylinder( phi ), morphisms );
+    
+    else
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ), ZeroMorphism( B[ n ], B[ n + 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ] ] );
+                                        end, 1 );
+    return CochainMorphism( B, MappingCylinder( phi ), morphisms );
+
+    fi;
+    
+end );
+
+##
+InstallMethod( NaturalInjectionOfRangeInMappingCylinder, 
+               [ IsChainOrCochainMorphism ], 
+    function( phi )
+    local morphisms, B, C;
+    
+    B := Source( phi );
+      
+    C := Range( phi );
+       
+    if IsChainMorphism( phi ) then 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ ZeroMorphism( C[ n ], B[ n ] ), ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ] ] );
+                                        end, 1 );
+    return ChainMorphism( C, MappingCylinder( phi ), morphisms );
+    
+    else
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ ZeroMorphism( C[ n ], B[ n ] ), ZeroMorphism( C[ n ], B[ n + 1 ] ), IdentityMorphism( C[ n ] ) ] ] );
+                                        end, 1 );
+                                        
+    return CochainMorphism( C, MappingCylinder( phi ), morphisms );
+
+    fi;
+    
 end );
 
 ##
