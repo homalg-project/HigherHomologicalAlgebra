@@ -607,133 +607,178 @@ end );
 #
 ########################################
 
-##
-BindGlobal( "MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP", 
-    function( phi )
-    local complex_cat, shift, complex_constructor, morphism_constructor, A, B, C, A_shifted, C_shifted, map1, map2, 
-          map_C_to_A_shifted, map_B_to_C, map_B_shifted_to_C_shifted, map_A_shifted_to_B_shifted, diffs_C, injection, 
-          projection, complex, u;
+# This is better implementation.
 
-    complex_cat := CapCategory( phi );
+InstallMethod( MappingCone,
+            [ IsChainOrCochainMorphism ],
+   function( phi )
+   local complex_cat, B, C, diffs, complex;
+   
+   complex_cat := CapCategory( phi );
+   
+   B := Source( phi );
+      
+   C := Range( phi );
 
-    if IsChainMorphism( phi ) then 
-
-       shift := ShiftFunctor( complex_cat, -1 );
-
-       complex_constructor := ChainComplex;
-
-       morphism_constructor := ChainMorphism;
-
-       u := -1;
-
-    else
-
-       shift := ShiftFunctor( complex_cat, 1 );
-
-       complex_constructor := CochainComplex;
-
-       morphism_constructor := CochainMorphism;
-
-       u := 1;
-
-    fi;
-
-    A := Source( phi );
-
-    B := Range( phi );
-
-    A_shifted := ApplyFunctor( shift, A );
-
-    C := DirectSum( A_shifted, B );
-
-    diffs_C := Differentials( C );
-
-    C_shifted := ApplyFunctor( shift, C );
-
-    map1 := morphism_constructor( C, C_shifted, diffs_C );
-
-    map_C_to_A_shifted := ProjectionInFactorOfDirectSum( [ A_shifted, B ], 1 );
-
-    map_A_shifted_to_B_shifted := ApplyFunctor( shift, phi );
-
-    map_B_to_C := InjectionOfCofactorOfDirectSum( [ A_shifted, B ], 2 );
-
-    map_B_shifted_to_C_shifted := ApplyFunctor( shift, map_B_to_C );
-
-    map2 := PreCompose( [ map_C_to_A_shifted, map_A_shifted_to_B_shifted, map_B_shifted_to_C_shifted ] );
-
-    complex := complex_constructor( UnderlyingCategory( complex_cat), Morphisms( map1 - map2 ) );
-
-    injection := Morphisms( InjectionOfCofactorOfDirectSum( [ A_shifted, B ], 2 ) );
-
-    projection := Morphisms( ProjectionInFactorOfDirectSum( [ A_shifted, B ], 1 ) );
-
-    injection := morphism_constructor( B, complex, injection );
-
-    projection := morphism_constructor( complex, A_shifted, projection );
-
-    SetNaturalInjectionInMappingCone( phi, injection );
-
-    SetNaturalProjectionFromMappingCone( phi, projection );
-
-    AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAL_BOUND", true ], [ B, "HAS_FAL_BOUND", true ] ], 
+   if IsChainMorphism( phi ) then 
+         
+        diffs := MapLazy( IntegersList, function( n )
+                                     
+                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n-1) ), AdditiveInverse( phi[ n - 1 ] ) ], 
+                                                                          [ ZeroMorphism( C[ n ], B[ n - 2 ] ), C^n ] ] );
+                                      end, 1 );
+      
+        complex := ChainComplex( UnderlyingCategory( complex_cat ), diffs );
+      
+        AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
 
                                   function( )
 
                                   if not HasFAL_BOUND( complex ) then
 
-                                     SetLowerBound( complex, Minimum( FAL_BOUND( A_shifted ), FAL_BOUND( B ) ) );
+                                     SetLowerBound( complex, Minimum( FAL_BOUND( B ) + 1, FAL_BOUND( C ) ) );
 
                                   fi;
 
                                   end ) );
 
-    AddToToDoList( ToDoListEntry( [ [ A_shifted, "HAS_FAU_BOUND", true ], [ B, "HAS_FAU_BOUND", true ] ],
+        AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
 
                                   function( )
 
                                   if not HasFAU_BOUND( complex ) then
 
-                                     SetUpperBound( complex, Maximum( FAU_BOUND( A_shifted ), FAU_BOUND( B ) ) );
+                                     SetUpperBound( complex, Maximum( FAU_BOUND( B ) + 1, FAU_BOUND( C ) ) );
+
+                                  fi;
+
+                                  end ) );
+                                  
+   else
+   
+        diffs := MapLazy( IntegersList, function( n )
+      
+                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n+1) ), AdditiveInverse( phi[ n + 1 ] ) ], 
+                                                                          [ ZeroMorphism( C[ n ], B[ n + 2 ] ), C^n ] ] );
+                                                                          
+                                      end, 1 );
+                                
+        complex :=  CochainComplex( UnderlyingCategory( complex_cat ), diffs );
+      
+        AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
+
+                                  function( )
+
+                                  if not HasFAL_BOUND( complex ) then
+
+                                     SetLowerBound( complex, Minimum( FAL_BOUND( B ) - 1, FAL_BOUND( C ) ) );
 
                                   fi;
 
                                   end ) );
 
+        AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
 
+                                  function( )
 
-    return [ complex, injection, projection ];
+                                  if not HasFAU_BOUND( complex ) then
 
-end );
+                                     SetUpperBound( complex, Maximum( FAU_BOUND( B ) - 1, FAU_BOUND( C ) ) );
 
-##
-InstallMethod( MappingCone, [ IsChainOrCochainMorphism ],
-   function( phi )
+                                  fi;
 
-   return MAPPING_CONE_OF_CHAIN_OR_COCHAIN_MAP( phi )[ 1 ];
+                                  end ) );
 
-end );
-
-##
-InstallMethod( NaturalInjectionInMappingCone, [ IsChainOrCochainMorphism ],
-   function( phi )
-   local mapping_cone;
-
-   mapping_cone := MappingCone( phi );
-
-   return NaturalInjectionInMappingCone( phi );
+    fi;
+                                  
+    return complex;
 
 end );
 
-##
-InstallMethod( NaturalProjectionFromMappingCone, [ IsChainOrCochainMorphism ],
-   function( phi )
-   local mapping_cone;
+InstallMethod( NaturalInjectionInMappingCone,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local B, C, cone, morphisms; 
+    
+    B := Source( phi );
+    
+    C := Range( phi );
+    
+    cone := MappingCone( phi );
+    
+    if IsChainMorphism( phi ) then 
+    
+       morphisms := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+    
+       return ChainMorphism( C, cone, morphisms );
+       
+    else
+    
+       morphisms := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( C[ n ], B[ n + 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+       
+       return CochainMorphism( C, cone, morphisms );
+       
+    fi;
+       
+end );
 
-   mapping_cone := MappingCone( phi );
+InstallMethod( NaturalProjectionFromMappingCone,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local B, C, cone, morphisms; 
+    
+    B := Source( phi );
+    
+    C := Range( phi );
+    
+    cone := MappingCone( phi );
+    
+    if IsChainMorphism( phi ) then 
+    
+       morphisms := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n - 1 ] ) ], [ ZeroMorphism( C[ n ], B[ n - 1 ] ) ] ] ), 1 );
+    
+       return ChainMorphism( cone, ShiftLazy( B, -1 ), morphisms );
+       
+    else
+    
+       morphisms := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n + 1 ] ) ], [ ZeroMorphism( C[ n ], B[ n + 1 ] ) ] ] ), 1 );
+       
+       return CochainMorphism( cone, ShiftLazy( B, 1 ), morphisms );
+       
+    fi;
+       
+end );
 
-   return NaturalProjectionFromMappingCone( phi );
+InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone, 
+            [ IsChainOrCochainMorphism ],
+    function( phi )
+    local B, C, morphisms;
+    
+    B := Source( phi );
+    
+    C := Range( phi );
+    
+    if IsChainMorphism( phi ) then 
+    
+       morphisms := MapLazy( IntegersList, 
+                             n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( B[ n ], B[ n - 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ],
+                                                               [ IdentityMorphism( B[ n - 1 ] ), ZeroMorphism( B[ n - 1 ], C[ n ] ) ],
+                                                               [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+    
+       return ChainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
+       
+    else
+    
 
+       morphisms := MapLazy( IntegersList, 
+                             n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( B[ n ], B[ n + 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ],
+                                                               [ IdentityMorphism( B[ n + 1 ] ), ZeroMorphism( B[ n + 1 ], C[ n ] ) ],
+                                                               [ ZeroMorphism( C[ n ], B[ n + 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+                                                               
+       return CochainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
+       
+    fi;
+       
 end );
 
 #######################################
@@ -813,6 +858,7 @@ end );
 ##
 InstallMethod( NaturalInjectionOfRangeInMappingCylinder, 
                [ IsChainOrCochainMorphism ], 
+               
     function( phi )
     local morphisms, B, C;
     
@@ -834,6 +880,39 @@ InstallMethod( NaturalInjectionOfRangeInMappingCylinder,
                                         end, 1 );
                                         
     return CochainMorphism( C, MappingCylinder( phi ), morphisms );
+
+    fi;
+    
+end );
+
+##
+InstallMethod( NaturalMorphismFromMappingCylinderInRange,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local morphisms, B, C;
+    
+    B := Source( phi );
+      
+    C := Range( phi );
+       
+    if IsChainMorphism( phi ) then 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ phi[ n ]                           ],
+                                                                            [ ZeroMorphism( B[ n - 1 ], C[ n ] ) ], 
+                                                                            [ IdentityMorphism( C[ n ] )         ]  ] );
+                                        end, 1 );
+    return ChainMorphism( MappingCylinder( phi ), C, morphisms );
+    
+    else
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ phi[ n ]                           ],
+                                                                            [ ZeroMorphism( B[ n + 1 ], C[ n ] ) ], 
+                                                                            [ IdentityMorphism( C[ n ] )     ]  ] );
+                                        end, 1 );
+                                        
+    return CochainMorphism( MappingCylinder( phi ), C, morphisms );
 
     fi;
     
