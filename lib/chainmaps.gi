@@ -607,8 +607,6 @@ end );
 #
 ########################################
 
-# This is better implementation.
-
 InstallMethod( MappingCone,
             [ IsChainOrCochainMorphism ],
    function( phi )
@@ -791,7 +789,7 @@ InstallMethod( MappingCylinder,
                [ IsChainOrCochainMorphism ],
                
    function( phi )
-   local complex_cat, B, C, diffs;
+   local complex_cat, B, C, diffs, complex;
    
    complex_cat := CapCategory( phi );
    
@@ -809,8 +807,32 @@ InstallMethod( MappingCylinder,
                                                                           
                                       end, 1 );
       
-      return ChainComplex( UnderlyingCategory( complex_cat ), diffs );
+      complex := ChainComplex( UnderlyingCategory( complex_cat ), diffs );
       
+      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
+
+                                    function( )
+
+                                    if not HasFAL_BOUND( complex ) then
+
+                                        SetLowerBound( complex, Minimum( FAL_BOUND( B ), FAL_BOUND( C ) ) );
+
+                                    fi;
+
+                                    end ) );
+
+      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
+
+                                    function( )
+
+                                    if not HasFAU_BOUND( complex ) then
+
+                                        SetUpperBound( complex, Maximum( FAU_BOUND( B ) + 1, FAU_BOUND( C ) ) );
+
+                                    fi;
+
+                                    end ) );
+                                  
    else
    
       diffs := MapLazy( IntegersList, function( n )
@@ -820,10 +842,36 @@ InstallMethod( MappingCylinder,
                                                                           [ ZeroMorphism( C[ n ], B[ n +1 ] ), ZeroMorphism( C[ n ], B[ n + 2 ] ), C^n ] ] );
                                                                           
                                       end, 1 );
-                                
-      return CochainComplex( UnderlyingCategory( complex_cat ), diffs );
+      
+      complex := CochainComplex( UnderlyingCategory( complex_cat ), diffs );
+      
+      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
 
+                                    function( )
+
+                                    if not HasFAL_BOUND( complex ) then
+
+                                        SetLowerBound( complex, Minimum( FAL_BOUND( B ) -  1, FAL_BOUND( C ) ) );
+
+                                    fi;
+
+                                    end ) );
+
+      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
+
+                                    function( )
+
+                                    if not HasFAU_BOUND( complex ) then
+
+                                        SetUpperBound( complex, Maximum( FAU_BOUND( B ), FAU_BOUND( C ) ) );
+
+                                    fi;
+
+                                    end ) );
+                                
    fi;
+   
+   return complex;
    
 end );
 
