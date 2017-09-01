@@ -261,7 +261,7 @@ InstallMethod( VerticalDifferentialAt,
 return CertainColumn( C, m )[ n ];
 end );
 
-InstallMethod( ObjectAt, 
+InstallOtherMethod( ObjectAt, 
                [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
  function( C, m, n )
  return Source( HorizontalDifferentialAt( C, m, n ) );
