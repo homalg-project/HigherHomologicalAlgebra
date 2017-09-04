@@ -70,7 +70,7 @@ C^3;
 #! <A morphism in Category of matrices over Q>
 C^3 = f;
 #! true
-Display( CyclesAt( C, 4 ) );
+Display( CycleAt( C, 4 ) );
 #! [ [  1,  0 ],
 #!   [  0,  1 ] ]
 #!
@@ -360,14 +360,12 @@ IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
 #! @EndExample
 #! @BeginLatexOnly
-#! 
 #! Next we define a functor $\mathbf{F}:\mathrm{Vec}_\mathbb{Q}\rightarrow \mathrm{Vec}_\mathbb{Q}$ 
 #! that maps every $\mathbb{Q}$-vector space $A$ to $A\oplus A$ and every morphism $f:A\rightarrow B$ to $f\oplus f$. Then we extend it 
 #! to the functor $\mathbf{Coch_F}:\mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})\rightarrow \mathrm{Coch}(\mathrm{Vec}_\mathbb{Q})$
-#! that maps each cochain complex $C$ to the cochain complex we get after applying the functor $\mathbf{F}$ on every object and differential in $C$ and 
-#! maps any morphism $\phi:C\rightarrow D$ to the morphism we get after applying the functor $\mathbf{F}$ on every object,
+#! that maps each cochain complex $C$ to the cochain complex we get after applying the functor $\mathbf{F}$ on every object and differential in $C$
+#! and maps any morphism $\phi:C\rightarrow D$ to the morphism we get after applying the functor $\mathbf{F}$ on every object,
 #! differential or morphism in $C,D$ and $\phi$.
-#! 
 #! @EndLatexOnly
 #! @Example
 F := CapFunctor( "double functor", matrix_category, matrix_category );
