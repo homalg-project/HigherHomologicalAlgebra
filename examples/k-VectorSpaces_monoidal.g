@@ -32,7 +32,7 @@ D := ChainComplex( [ g, t ], 1 );
 
 internal_hom_C_D := InternalHomOnObjects( C, D );
 
-cycle0 := CycleAt( internal_hom_C_D, 0 );
+cycle0 := CyclesAt( internal_hom_C_D, 0 );
 
 external_hom := Source( cycle0 );
 

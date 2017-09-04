@@ -394,7 +394,7 @@ Display( hom_a_b, -3, 3 );
 #! (an empty 0 x 2 matrix)
 #! 
 #! A zero, split monomorphism in Category of matrices over Q
-cycle0 := CycleAt( hom_a_b, 0 );
+cycle0 := CyclesAt( hom_a_b, 0 );
 #! [ [      0,   4/13,  11/13,  12/13,      1,      0,      0,      0 ],
 #!   [      0,      0,   -5/4,      0,      0,      1,      0,      0 ],
 #!   [      0,      0,      0,   -5/4,      0,      0,      1,      0 ],

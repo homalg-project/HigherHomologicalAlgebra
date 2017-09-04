@@ -223,7 +223,7 @@ DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
 #! The input is a chain or cochain complex $C$ and an integer $n$. The output is the kernel embedding of the differential in index $n$.
 #! @Arguments C, n
 #! @Returns a morphism
-KeyDependentOperation( "CycleAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "CyclesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The output is the image embeddin of $i+1$'th ( resp. $i-1$'th) differential of $C$.

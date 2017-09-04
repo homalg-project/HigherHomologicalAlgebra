@@ -772,7 +772,7 @@ end );
 #############################################
 
 ##
-InstallMethod( CycleAtOp, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( CyclesAtOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
 
   return KernelEmbedding( C^i );
@@ -840,7 +840,7 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
 
   inc2 := KernelLift( d2, im2 );
 
-  cycle1 := CycleAt( C1, i );
+  cycle1 := CyclesAt( C1, i );
 
   map_i := map[ i ];
 

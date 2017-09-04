@@ -70,7 +70,7 @@ C^3;
 #! <A morphism in Category of matrices over Q>
 C^3 = f;
 #! true
-Display( CycleAt( C, 4 ) );
+Display( CyclesAt( C, 4 ) );
 #! [ [  1,  0 ],
 #!   [  0,  1 ] ]
 #!
