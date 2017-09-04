@@ -443,7 +443,7 @@ end );
 
 
 ##
-InstallMethod( ObjectAt,
+InstallOtherMethod( ObjectAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
     function( B, i, j )
        return UnderlyingCapCategoryCell( B )[ i ][ j ];
@@ -619,7 +619,7 @@ InstallMethod( BicomplexMorphism,
 end );
 
 
-InstallMethod( MorphismAt, 
+InstallOtherMethod( MorphismAt, 
                [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ],
    function( psi, i, j )
    return UnderlyingCapCategoryCell( psi )[ i ][ j ];
