@@ -95,14 +95,14 @@ DeclareAttribute( "AssociatedBicomplexMorphism",
 #! @Arguments F, name
 #! @Returns a &CAP; functor
 #! @Group AssociatedBicomplex_fun
-DeclareOperation( "AssociatedBicomplex",
+DeclareOperation( "AssociatedBicomplexFunctor",
         [ IsCapFunctor, IsString ] );
 
 #! @Description
 #!  
 #! @Arguments F
 #! @Group AssociatedBicomplex_fun
-DeclareAttribute( "AssociatedBicomplex",
+DeclareAttribute( "AssociatedBicomplexFunctor",
         IsCapFunctor );
 
 #! @Description

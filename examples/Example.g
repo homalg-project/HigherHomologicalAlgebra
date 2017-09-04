@@ -1,3 +1,5 @@
+#! @System AsCategoryOfBicomplexes2
+
 LoadPackage( "M2" );
 LoadPackage( "BiComplexes" );
 
@@ -49,6 +51,7 @@ LoadPackage( "BiComplexes" );
 #  .
 #  .   ....      8       9         10        11       ....        
 
+#! @Example
 ZZ := HomalgRingOfIntegers( );
 #! Z
 F1 := HomalgFreeLeftModule( 1, ZZ );
@@ -109,3 +112,79 @@ Display( T^16 );
 #! the map is currently represented by the above 2 x 2 matrix
 IsExact( T );
 #! true
+Display( T, 13, 18 );
+#! 
+#! -----------------------------------------------------------------
+#! In index 13
+#! 
+#! Object is
+#! 0
+#! 
+#! Differential is
+#! (an empty 0 x 0 matrix)
+#! 
+#! the map is currently represented by the above 0 x 0 matrix
+#! 
+#! -----------------------------------------------------------------
+#! In index 14
+#! 
+#! Object is
+#! Z/< 2 > 
+#! 
+#! Differential is
+#! (an empty 1 x 0 matrix)
+#! 
+#! the map is currently represented by the above 1 x 0 matrix
+#! 
+#! -----------------------------------------------------------------
+#! In index 15
+#! 
+#! Object is
+#! [ [  0,  4 ] ]
+#! 
+#! Cokernel of the map
+#! 
+#! Z^(1x1) --> Z^(1x2),
+#! 
+#! currently represented by the above matrix
+#! 
+#! Differential is
+#! [ [  -1 ],
+#!   [   1 ] ]
+#! 
+#! the map is currently represented by the above 2 x 1 matrix
+#! 
+#! -----------------------------------------------------------------
+#! In index 16
+#! 
+#! Object is
+#! Z^(1 x 2)
+#! 
+#! Differential is
+#! [ [  -2,   0 ],
+#!   [   1,   1 ] ]
+#! 
+#! the map is currently represented by the above 2 x 2 matrix
+#! 
+#! -----------------------------------------------------------------
+#! In index 17
+#! 
+#! Object is
+#! Z^(1 x 1)
+#! 
+#! Differential is
+#! [ [  2,  4 ] ]
+#! 
+#! the map is currently represented by the above 1 x 2 matrix
+#! 
+#! -----------------------------------------------------------------
+#! In index 18
+#! 
+#! Object is
+#! 0
+#! 
+#! Differential is
+#! (an empty 0 x 1 matrix)
+#! 
+#! the map is currently represented by the above 0 x 1 matrix
+#! @EndExample

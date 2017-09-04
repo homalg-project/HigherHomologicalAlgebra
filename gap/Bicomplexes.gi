@@ -624,8 +624,38 @@ InstallMethod( MorphismAt,
    function( psi, i, j )
    return UnderlyingCapCategoryCell( psi )[ i ][ j ];
 end );
-   
-   
+
+##
+InstallMethod( AssociatedBicomplexFunctor,
+               [ IsCapFunctor, IsString ],
+    function( F, name )
+    local S, R, BF;
+    
+    S := AsCategoryOfBicomplexes( AsCapCategory( Source( F ) ) );
+    R := AsCategoryOfBicomplexes( AsCapCategory( Range( F ) ) );
+    
+    BF := CapFunctor( name, S, R );
+    
+    AddObjectFunction( BF, function( obj )
+                             return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( obj ) ) );
+                           end );
+                           
+    AddMorphismFunction( BF, function( s, phi, r )
+                               return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( phi ) ) );
+                             end );
+    return BF;
+    
+end );
+
+##
+InstallMethod( AssociatedBicomplexFunctor,
+               [ IsCapFunctor ],
+    function( F )
+    local name;
+    name := Concatenation( "Associated bicomplex functor of ", Name( F ) );
+    return AssociatedBicomplexFunctor( F, name );
+end );
+
 ######################################
 #
 # View, Display
