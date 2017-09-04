@@ -229,7 +229,7 @@ KeyDependentOperation( "CyclesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The output is the image embeddin of $i+1$'th ( resp. $i-1$'th) differential of $C$.
 #! @Arguments C, n
 #! @Returns a morphism
-KeyDependentOperation( "BoundaryAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "BoundariesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 KeyDependentOperation( "HomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
