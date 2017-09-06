@@ -4,3 +4,5 @@
 # Reading the implementation part of the package.
 #
 ReadPackage( "ComplexesForCAP", "lib/complexes.gi" );
+
+ReadPackage( "ComplexesForCAP", "lib/categories.gi" );

@@ -4,3 +4,5 @@
 # Reading the declaration part of the package.
 #
 ReadPackage( "ComplexesForCAP", "lib/complexes.gd" );
+
+ReadPackage( "ComplexesForCAP", "lib/categories.gd" );
