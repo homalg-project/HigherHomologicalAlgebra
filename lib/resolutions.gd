@@ -43,4 +43,6 @@ DeclareProperty( "HasHasEnoughInjectives", IsCapCategory );
 
 DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCochainComplex );
 
+DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );  
+
 
