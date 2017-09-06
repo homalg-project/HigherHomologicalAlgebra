@@ -10,3 +10,5 @@ ReadPackage( "ComplexesForCAP", "lib/categories.gi" );
 ReadPackage( "ComplexesForCAP", "lib/functors.gi" );
 
 ReadPackage( "ComplexesForCAP", "lib/chainmaps.gi" );
+
+ReadPackage( "ComplexesForCAP", "lib/resolutions.gi" );
