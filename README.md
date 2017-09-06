@@ -17,7 +17,7 @@ in the pkg directory of the Gap installation.
 Required packages
 -----------------
 
-* This package is written to handle categories that are already implemented in CAP, so you will need to fresh version of CAP. You may install it from
+* This package is written to handle categories that are already implemented in CAP, so you will need a fresh version of CAP. You may install it from
   https://github.com/homalg-project/CAP_project
   
 * The infinite lists package "InfiniteLists". You can install it from 
