@@ -200,6 +200,11 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 #! @Returns a Cap category
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
 
+
+DeclareAttribute( "ProjectiveResolution", IsBoundedBelowChainComplex );
+
+DeclareAttribute( "ProjectiveResolution", IsBoundedAboveCochainComplex );
+
 #! @Description
 #! The input is an above bounded cochain complex $C^\bullet$. The output is
 #! a quasi-isomorphism $q:P^\bullet \rightarrow C^\bullet$ such that 

@@ -148,6 +148,11 @@ return CochainMorphism( proj, C, MapLazy( inductive_list, function( j ) return j
  
 end );
 
+InstallMethod( ProjectiveResolution,
+               [ IsBoundedAboveCochainComplex ],
+function( C )
+return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+end );
 
 InstallMethod( QuasiIsomorphismFromProjectiveResolution,
                  [ IsBoundedBelowChainComplex ], 
@@ -166,4 +171,10 @@ quasi := QuasiIsomorphismFromProjectiveResolution( C1 );
 
 return ApplyFunctor( G, quasi );
 
+end );
+
+InstallMethod( ProjectiveResolution,
+               [ IsBoundedBelowChainComplex ],
+function( C )
+return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 end );
