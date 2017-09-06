@@ -5,6 +5,8 @@
 #
 ReadPackage( "ComplexesForCAP", "lib/complexes.gd" );
 
+ReadPackage( "ComplexesForCAP", "lib/doublecomplexes.gd" );
+
 ReadPackage( "ComplexesForCAP", "lib/categories.gd" );
 
 ReadPackage( "ComplexesForCAP", "lib/functors.gd" );

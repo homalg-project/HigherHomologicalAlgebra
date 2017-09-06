@@ -5,6 +5,8 @@
 #
 ReadPackage( "ComplexesForCAP", "lib/complexes.gi" );
 
+ReadPackage( "ComplexesForCAP", "lib/doublecomplexes.gi" );
+
 ReadPackage( "ComplexesForCAP", "lib/categories.gi" );
 
 ReadPackage( "ComplexesForCAP", "lib/functors.gi" );
