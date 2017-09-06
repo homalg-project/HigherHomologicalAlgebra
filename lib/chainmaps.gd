@@ -227,7 +227,11 @@ DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
 #!  @Returns an integer
 DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
 
-
+#!  @Description
+#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component 
+#! of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
+#!  @Arguments phi, n
+#!  @Returns a morphism
 KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 #!  @Description
@@ -246,9 +250,12 @@ DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt
 #!  The command displays the components of the morphism between $m$ and $n$. 
 #!  @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
-#!  @EndSection 
 
+#!  @Description
+#!  The command checks if the morphism is well defined between $m$ and $n$. 
+#!  @Arguments true or false
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+#!  @EndSection 
 
 #!  @Section Examples
 #!  @InsertChunk vec_2
