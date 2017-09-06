@@ -2,7 +2,7 @@ LoadPackage( "ModulePresentations" );
 LoadPackage( "Gauss" );
 LoadPackage( "GaussForHomalg" );
 LoadPackage( "LinearAlgebraForCap" );
-LoadPackage( "complex" );
+LoadPackage( "ComplexesForCAP" );
 
 AUTODOC_file_scan_list := [ "../PackageInfo.g" ];
 LoadPackage( "GAPDoc" );
