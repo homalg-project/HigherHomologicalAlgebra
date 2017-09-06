@@ -6,3 +6,5 @@
 ReadPackage( "ComplexesForCAP", "lib/complexes.gd" );
 
 ReadPackage( "ComplexesForCAP", "lib/categories.gd" );
+
+ReadPackage( "ComplexesForCAP", "lib/chainmaps.gd" );
