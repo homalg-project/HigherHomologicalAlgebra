@@ -1,5 +1,5 @@
 LoadPackage( "ModulePre" );
-LoadPackage( "complex" );
+LoadPackage( "ComplexesForCAP" );;
 ZZ := HomalgRingOfIntegers( );
 #! Z
 F1 := FreeLeftPresentation( 1, ZZ );

@@ -1,4 +1,4 @@
-LoadPackage( "complex" );
+LoadPackage( "ComplexesForCAP" );;
 LoadPackage( "ModulePresentations" );
 
 R := HomalgFieldOfRationalsInSingular( )*"x,y,z";;

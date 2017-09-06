@@ -1,5 +1,5 @@
 LoadPackage( "LinearAlgebra" );
-LoadPackage( "complex" );
+LoadPackage( "ComplexesForCAP" );;
 
 Q := HomalgFieldOfRationals( );
 #! Q

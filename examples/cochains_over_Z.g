@@ -1,5 +1,5 @@
 LoadPackage( "ModulePresentation" );
-LoadPackage( "complex" );
+LoadPackage( "ComplexesForCAP" );;
 
 ZZ := HomalgRingOfIntegers( );
 cat := LeftPresentations( ZZ:FinalizeCategory := false );

@@ -1,5 +1,5 @@
 LoadPackage( "ModulePresentationsForCap" );;
-LoadPackage( "complex" );;
+LoadPackage( "ComplexesForCAP" );;
 
 #! @Chunk complexes_example_2
 #! @BeginLatexOnly

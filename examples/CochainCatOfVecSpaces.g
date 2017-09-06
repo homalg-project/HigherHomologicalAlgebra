@@ -7,7 +7,7 @@
 #! @EndLatexOnly
 #! @Example
 LoadPackage( "LinearAlgebraForCap" );;
-LoadPackage( "complex" );;
+LoadPackage( "ComplexesForCAP" );;
 Q := HomalgFieldOfRationals( );;
 matrix_category := MatrixCategory( Q );
 #! Category of matrices over Q
