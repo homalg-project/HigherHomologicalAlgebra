@@ -3,3 +3,4 @@
 #
 # Reading the declaration part of the package.
 #
+ReadPackage( "ComplexesForCAP", "lib/complexes.gd" );
