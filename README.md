@@ -38,4 +38,5 @@ Remarks
 * For the installation of Gap see https://www.gap-system.org/
 
   Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
+  
   Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
