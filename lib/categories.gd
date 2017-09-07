@@ -11,15 +11,15 @@
 ###################################################
 
 #! @Description
-#!  bla bla
+#!  Gap-categories of the chain or cochain complexes category.
 DeclareCategory( "IsChainOrCochainComplexCategory", IsCapCategory );
 
 #! @Description
-#!  bla bla
+#!  Gap-categories of the chain complexes category.
 DeclareCategory( "IsChainComplexCategory", IsChainOrCochainComplexCategory );
 
 #! @Description
-#!  bla bla
+#!  Gap-category of the cochain complexes category.
 DeclareCategory( "IsCochainComplexCategory", IsChainOrCochainComplexCategory );
 
 ###################################################
