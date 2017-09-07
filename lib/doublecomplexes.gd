@@ -1,4 +1,12 @@
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
 #! @Chapter Double complexes
+##
+#############################################################################
+
 #! @Section Categories and filters
 
 DeclareCategory( "IsDoubleChainOrCochainComplex", IsObject );

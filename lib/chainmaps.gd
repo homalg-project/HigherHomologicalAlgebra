@@ -1,13 +1,12 @@
-################################################
-#  chainmaps.gd         complex package
-#  Kamal Saleh
-#  2017
-#
-#  Working with chain morphisms
-#
-################################################
-
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
 #!  @Chapter Complexes morphisms
+##
+#############################################################################
+
 #!  @Section Categories and filters
 
 #!  @BeginGroup 10

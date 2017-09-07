@@ -1,12 +1,11 @@
-###############################################
+#############################################################################
 ##
-##              CAP package
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
 ##
-##              Kamal Saleh 2016
-##
-###############################################
-
 #! @Chapter Complexes
+##
+#############################################################################
 
 #! @Section Categories and filters
 
@@ -18,7 +17,7 @@
 
 #! @BeginGroup 0
 #! @Description
-#!  bla bla
+#! Gap-categories for chain and cochain complexes. 
 #! @Arguments C
 DeclareCategory( "IsChainOrCochainComplex", IsCapCategoryObject );
 #! @Arguments C

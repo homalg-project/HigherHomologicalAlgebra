@@ -1,10 +1,12 @@
-###############################################
-# resolutions.gd             complex package
-#
-# Feb. 2017
-###############################################
-
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
 #! @Chapter Resolutions
+##
+#############################################################################
+
 #! @Section Definitions
 #! @BeginLatexOnly
 #! Let $A$ be an abelian category and is $C^\bullet$ is a complex in $\mathrm{Ch}^\bullet(A)$.

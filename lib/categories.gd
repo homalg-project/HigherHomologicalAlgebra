@@ -1,5 +1,11 @@
-
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
 #! @Chapter Complexes categories
+##
+#############################################################################
 
 #! @Section Constructing chain and cochain categories
 
@@ -29,13 +35,13 @@ DeclareCategory( "IsCochainComplexCategory", IsChainOrCochainComplexCategory );
 ###################################################
 
 #! @Description
-#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an Abelian category $A$.
+#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an additive category $A$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "ChainComplexCategory", IsCapCategory );
 
 #! @Description
-#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an Abelian category $A$.
+#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an additive category $A$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "CochainComplexCategory", IsCapCategory );

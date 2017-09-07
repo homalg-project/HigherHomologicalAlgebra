@@ -1,8 +1,11 @@
-###############################################
-# resolutions.gi    complex package
-#
-# Feb. 2017
-###############################################
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
+#! @Chapter Resolutions
+##
+#############################################################################
 
 
 # DeclareGlobalVariable( "ENOUGH_PROJECTIVES_INJECTIVES_METHODS" );

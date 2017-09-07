@@ -1,6 +1,12 @@
-#
-
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
 #! @Chapter Functors
+##
+#############################################################################
+
 #! @Section Basic functors for complex categories.
 
 #! @Group f1

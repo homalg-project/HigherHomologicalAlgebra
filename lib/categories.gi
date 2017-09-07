@@ -1,9 +1,11 @@
-############################################
-#
-# Categories.gi               Kamal Saleh
-#
-# Gap package: complex        2016 
-###########################################
+#############################################################################
+##
+##  ComplexesForCAP package             Kamal Saleh 
+##  2017                                University of Siegen
+##
+##  Chapter Complexes categories
+##
+#############################################################################
 
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY",
 
