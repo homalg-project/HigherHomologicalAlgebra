@@ -12,7 +12,7 @@
 
 #!  @BeginGroup 10
 #!  @Description
-#!   bla bla
+#!  Gap-categories for chain and cochains morphisms.
 #!  @Arguments phi
 DeclareCategory( "IsChainOrCochainMorphism", IsCapCategoryMorphism );
 #!  @Arguments phi
