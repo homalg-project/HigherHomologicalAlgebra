@@ -9,21 +9,21 @@
 # 
 # InstallValue( ENOUGH_PROJECTIVES_INJECTIVES_METHODS, rec( 
 # 
-# EpimorphismFromProjectiveObject := rec( 
+# EpimorphismFromSomeProjectiveObject := rec( 
 # 
-# installation_name := "EpimorphismFromProjectiveObject", 
+# installation_name := "EpimorphismFromSomeProjectiveObject", 
 # filter_list := [ "object" ],
-# cache_name := "EpimorphismFromProjectiveObject",
+# cache_name := "EpimorphismFromSomeProjectiveObject",
 # return_type := "morphism",
 # post_function := function( object, return_value )
 #         SetIsEpimorphism( return_value, true );
 #         end ),
 # 
-# MonomorphismInInjectiveObject := rec(
+# MonomorphismIntoSomeInjectiveObject := rec(
 # 
-# installation_name := "MonomorphismInInjectiveObject",
+# installation_name := "MonomorphismIntoSomeInjectiveObject",
 # filter_list := [ "object" ],
-# cache_name := "MonomorphismInInjectiveObject",
+# cache_name := "MonomorphismIntoSomeInjectiveObject",
 # return_type := "morphism",
 # post_function := function( object, return_value )
 #         SetIsMonomorphism( return_value, true );
@@ -70,7 +70,7 @@
 #      cone := MappingCone( current_mor );
 #      nat_inj := NaturalProjectionFromMappingCone( current_mor );
 #      ker_k := CyclesAt( cone, k );
-#      mor_from_proj := EpimorphismFromProjectiveObject( Source( ker_k ) );
+#      mor_from_proj := EpimorphismFromSomeProjectiveObject( Source( ker_k ) );
 #      injec_in_C := ProjectionInFactorOfDirectSum( [ ShiftLazy( current_complex, 1 ), C ], 2 );
 #      return [ PreCompose( [ mor_from_proj, ker_k, nat_inj[ k ] ] ), PreCompose( [ mor_from_proj, ker_k, injec_in_C[ k ] ] ) ];
 #   fi;
@@ -132,7 +132,7 @@
 # 
 #      ker := KernelEmbedding( m );
 # 
-#      pk := EpimorphismFromProjectiveObject( Source( ker ) );
+#      pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
 # 
 #      return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
 # 
@@ -199,7 +199,7 @@ inductive_list := InductiveList( [ ZeroMorphism( zero, zero ), ZeroMorphism( zer
 
    ker := KernelEmbedding( m );
 
-   pk := EpimorphismFromProjectiveObject( Source( ker ) );
+   pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
 
    inductive_list!.index := k - 1;
 
@@ -314,7 +314,7 @@ end );
 # 
 #      coker := CokernelProjection( m );
 # 
-#      pk := MonomorphismInInjectiveObject( Range( coker ) );
+#      pk := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
 # 
 #      return [ PostCompose( [ pk, coker, mor3 ] ), PostCompose( [ pk, coker, mor4 ] ) ];
 # 
@@ -383,7 +383,7 @@ inductive_list := InductiveList( [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ 
 
      coker := CokernelProjection( m );
 
-     pk := MonomorphismInInjectiveObject( Range( coker ) );
+     pk := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
 
      inductive_list!.index := k + 1;
 
@@ -479,15 +479,15 @@ fi;
 func := function( mor )
         local k,p; 
         k := KernelEmbedding( mor );
-        p := EpimorphismFromProjectiveObject( Source( k ) );
+        p := EpimorphismFromSomeProjectiveObject( Source( k ) );
         return PreCompose( p, k );
         end;
 
-ep := EpimorphismFromProjectiveObject( obj );
+ep := EpimorphismFromSomeProjectiveObject( obj );
 
 ker := KernelEmbedding( ep );
 
-ep_ker := EpimorphismFromProjectiveObject( Source( ker ) );
+ep_ker := EpimorphismFromSomeProjectiveObject( Source( ker ) );
 
 d := PreCompose( ep_ker, ker );
 
@@ -525,15 +525,15 @@ fi;
 func := function( mor )
         local k,p; 
         k := CokernelProjection( mor );
-        p := MonomorphismInInjectiveObject( Range( k ) );
+        p := MonomorphismIntoSomeInjectiveObject( Range( k ) );
         return PreCompose( k, p );
         end;
 
-em := MonomorphismInInjectiveObject( obj );
+em := MonomorphismIntoSomeInjectiveObject( obj );
 
 coker := CokernelProjection( em );
 
-em_coker := MonomorphismInInjectiveObject( Range( coker ) );
+em_coker := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
 
 d := PreCompose( coker, em_coker );
 

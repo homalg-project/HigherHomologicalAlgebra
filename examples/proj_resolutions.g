@@ -1,10 +1,11 @@
 LoadPackage( "ComplexesForCAP" );;
-LoadPackage( "ModulePresentations" );
+LoadPackage( "ModulePresentations" );;
+LoadPackage( "RingsForHomalg" );;
 
 R := HomalgFieldOfRationalsInSingular( )*"x,y,z";;
 cat := LeftPresentations( R: FinalizeCategory := false );
 #! Category of left presentations of Q[x,y,z]
-AddEpimorphismFromProjectiveObject( cat, CoverByFreeModule );
+AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
 SetHasEnoughProjectives( cat, true );;
 Finalize( cat );
 #! true

@@ -10,7 +10,7 @@ Z6 := HomalgRingOfIntegers( )/6;
 #! Z/( 6 )
 cat := LeftPresentations( Z6:FinalizeCategory := false );
 #! Category of left presentations of Z/( 6 )
-AddEpimorphismFromProjectiveObject( cat, CoverByFreeModule );
+AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
 Finalize( cat );
 #! true
 SetHasEnoughProjectives( cat, true );

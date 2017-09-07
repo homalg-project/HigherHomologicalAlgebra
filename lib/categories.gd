@@ -68,19 +68,5 @@ DeclareGlobalFunction( "ADD_BRAIDING_FOR_CHAINS" );
 DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP" );
 DeclareGlobalFunction( "ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP" );
 
-################# to change position
-
-DeclareOperationWithCache( "ProjectiveLift", [ IsCapCategoryMorphism, IsCapCategoryMorphism  ] );
-
-DeclareOperation( "AddProjectiveLift",
-                   [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddProjectiveLift",
-                   [ IsCapCategory, IsFunction ] );
-
-
-DeclareOperation( "AddProjectiveLift",
-                   [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddProjectiveLift",
-                   [ IsCapCategory, IsList ] );
+DeclareProperty( "HasEnoughProjectives", IsCapCategory );
+DeclareProperty( "HasEnoughInjectives", IsCapCategory );

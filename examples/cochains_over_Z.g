@@ -3,7 +3,7 @@ LoadPackage( "ComplexesForCAP" );;
 
 ZZ := HomalgRingOfIntegers( );
 cat := LeftPresentations( ZZ:FinalizeCategory := false );
-AddEpimorphismFromProjectiveObject( cat, CoverByFreeModule );
+AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
 Finalize( cat );
 SetHasEnoughProjectives( cat, true );
 m1 := HomalgMatrix( "[ [ 2 ] ]", 1, 1, ZZ );

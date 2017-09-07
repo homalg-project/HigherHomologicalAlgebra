@@ -23,7 +23,7 @@ obj_to_double_dual_obj := ApplyNaturalTransformation( nat, obj );
 return PreCompose( obj_to_double_dual_obj, dual_free_cover );
 end;;
 
-AddMonomorphismInInjectiveObject( left_pre_category, func );
+AddMonomorphismIntoInjectiveObject( left_pre_category, func );
 SetHasEnoughInjectives( left_pre_category, true );
 Finalize( left_pre_category );
 
