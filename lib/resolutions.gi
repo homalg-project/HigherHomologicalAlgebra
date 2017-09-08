@@ -224,7 +224,8 @@ return CochainMorphism( proj, C, MapLazy( IntegersList,   function( j )
         if j > u then
  return ZeroMorphism( zero, C[ j ] );
         else
- return  inductive_list[ u - j + 1 ][ 2 ];
+        
+ return  (-1)^j*inductive_list[ u - j + 1 ][ 2 ];
         fi;
         end, 1 ) );
 
