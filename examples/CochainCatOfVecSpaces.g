@@ -265,7 +265,7 @@ psi;
 #!                                          \end{array}
 #!                                   \right)$}(m-4-4)
 #! (m-4-4) edge node[above=0.225ex, scale=0.5] {$\left(\begin{array}{ccc}
-#!                                            -2&-6&-10 \\
+#!                                            -2&-6&10 \\
 #!                                            0&0&5
 #!                                          \end{array}
 #!                                   \right)$}(m-4-5)
@@ -331,7 +331,7 @@ cone := MappingCone( psi );
 cone^4;
 #! <A morphism in Category of matrices over Q>
 Display( cone^4 );
-#! [ [   -2,   -6,  -10 ],
+#! [ [   -2,   -6,  10 ],
 #!   [    0,    0,    5 ] ]
 #!
 #! A morphism in Category of matrices over Q

@@ -632,7 +632,7 @@ InstallMethod( MappingCone,
          
         diffs := MapLazy( IntegersList, function( n )
                                      
-                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n-1) ), AdditiveInverse( phi[ n - 1 ] ) ], 
+                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n-1) ), phi[ n - 1 ] ], 
                                                                           [ ZeroMorphism( C[ n ], B[ n - 2 ] ), C^n ] ] );
                                       end, 1 );
       
@@ -666,7 +666,7 @@ InstallMethod( MappingCone,
    
         diffs := MapLazy( IntegersList, function( n )
       
-                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n+1) ), AdditiveInverse( phi[ n + 1 ] ) ], 
+                                      return MorphismBetweenDirectSums( [ [ AdditiveInverse( B^(n+1) ), phi[ n + 1 ] ], 
                                                                           [ ZeroMorphism( C[ n ], B[ n + 2 ] ), C^n ] ] );
                                                                           
                                       end, 1 );
