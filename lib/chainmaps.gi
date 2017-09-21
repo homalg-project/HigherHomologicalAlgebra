@@ -771,7 +771,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone,
        morphisms := MapLazy( IntegersList, 
                              n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( B[ n ], B[ n - 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ],
                                                                [ IdentityMorphism( B[ n - 1 ] ), ZeroMorphism( B[ n - 1 ], C[ n ] ) ],
-                                                               [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+                                                               [ ZeroMorphism( C[ n ], B[ n - 1 ] ), AdditiveInverse( IdentityMorphism( C[ n ] ) ) ] ] ), 1 );
     
        return ChainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
        
@@ -781,7 +781,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone,
        morphisms := MapLazy( IntegersList, 
                              n -> MorphismBetweenDirectSums( [ [ ZeroMorphism( B[ n ], B[ n + 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ],
                                                                [ IdentityMorphism( B[ n + 1 ] ), ZeroMorphism( B[ n + 1 ], C[ n ] ) ],
-                                                               [ ZeroMorphism( C[ n ], B[ n + 1 ] ), IdentityMorphism( C[ n ] ) ] ] ), 1 );
+                                                               [ ZeroMorphism( C[ n ], B[ n + 1 ] ), AdditiveInverse( IdentityMorphism( C[ n ] ) ) ] ] ), 1 );
                                                                
        return CochainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
        
