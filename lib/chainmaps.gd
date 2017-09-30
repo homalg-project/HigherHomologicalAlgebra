@@ -143,6 +143,9 @@ DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism )
 #!  @Returns complex
 DeclareAttribute( "MappingCylinder", IsChainOrCochainMorphism );
 
+DeclareAttribute( "MappingCocylinder", IsChainOrCochainMorphism );
+DeclareAttribute( "NaturalMorphismFromSourceInMappingCocylinder", IsChainOrCochainMorphism );
+
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
 #!  $C\rightarrow \mathrm{Cyl}(\phi )$.

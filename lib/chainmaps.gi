@@ -895,6 +895,61 @@ InstallMethod( NaturalMorphismFromMappingCylinderInRange,
 end );
 
 ##
+InstallMethod( MappingCocylinder,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local cat, F;
+    
+    cat := CapCategory( phi );
+    
+    if IsChainMorphism( phi ) then
+        
+        F := ShiftFunctor( cat, 1 );
+    
+        return MappingCone( ApplyFunctor( F, MorphismBetweenDirectSums( [ [ IdentityMorphism( Range( phi ) ) ], [ AdditiveInverse( phi ) ] ] ) ) );
+      
+    else
+   
+        F := ShiftFunctor( cat, -1 );
+    
+        return MappingCone( ApplyFunctor( F, MorphismBetweenDirectSums( [ [ IdentityMorphism( Range( phi ) ) ], [ AdditiveInverse( phi ) ] ] ) ) );
+      
+
+    fi;
+
+end );
+
+# This morphism defines a homotopy equivalence between the source of phi and the cocylinder object.
+# Hence it is always quasi isomorphism.
+
+InstallMethod( NaturalMorphismFromSourceInMappingCocylinder,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local morphisms, B, C;
+    
+    C := Source( phi );
+      
+    B := Range( phi );
+       
+    if IsChainMorphism( phi ) then 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ phi[ n ], IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], B[ n + 1 ] ) ] ] );
+                                        end, 1 );
+    return ChainMorphism( C, MappingCocylinder( phi ), morphisms );
+    
+    else
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ phi[ n ], IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ] ] );
+                                        end, 1 );
+    return CochainMorphism( C, MappingCocylinder( phi ), morphisms );
+    
+    fi;
+    
+end );
+
+##
 InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism ],
    function( phi )
