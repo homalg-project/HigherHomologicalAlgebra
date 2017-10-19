@@ -638,13 +638,25 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
                 end );
         fi;
 
-        if CanCompute( cat, "TerminalObject" ) then
         
+        if CanCompute( cat, "TerminalObject" ) and CanCompute( cat, "TerminalObjectFunctorial" ) then
+
             AddTerminalObject( complex_cat, 
                 function( )
+                local complex;
+                
+                complex := complex_constructor( cat, RepeatListZ( [ TerminalObjectFunctorial( cat ) ] ) );
 
-                return complex_constructor( cat, RepeatListZ( [ TerminalObjectFunctorial( cat ) ] ) );
-
+                if HasZeroObject( cat ) and IsEqualForObjects( TerminalObject( cat ), ZeroObject( cat ) ) then
+                
+                    SetUpperBound( complex, 0 );
+                
+                    SetLowerBound( complex, 0 );
+                
+                fi;
+                
+                return complex;
+                
                 end );
         fi;
         
@@ -664,13 +676,24 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
                 end );
         fi;
         
-        if CanCompute( cat, "InitialObject" ) then
+        if CanCompute( cat, "InitialObject" ) and CanCompute( cat, "InitialObjectFunctorial" ) then
 
             AddInitialObject( complex_cat, 
                 function( )
+                local complex;
+                
+                complex := complex_constructor( cat, RepeatListZ( [ InitialObjectFunctorial( cat ) ] ) );
 
-                return complex_constructor( cat, RepeatListZ( [ InitialObjectFunctorial( cat ) ] ) );
-
+                if HasZeroObject( cat ) and IsEqualForObjects( InitialObject( cat ), ZeroObject( cat ) ) then
+                
+                    SetUpperBound( complex, 0 );
+                
+                    SetLowerBound( complex, 0 );
+                
+                fi;
+                
+                return complex;
+                
                 end );
         fi;
         
