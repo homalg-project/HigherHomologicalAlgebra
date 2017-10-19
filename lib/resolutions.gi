@@ -96,11 +96,11 @@
 #  
 # cat := UnderlyingCategory( CapCategory( C ) );
 # 
-# if not HasHasEnoughProjectives( cat ) then
+# if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
 #    Error( "It is not known whether the underlying category has enough projectives or not" );
 # fi;
 # 
-# if not HasHasEnoughProjectives( cat ) then 
+# if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then 
 #    Error( "The underlying category must have enough projectives" );
 # fi;
 #  
@@ -162,11 +162,11 @@ local u, cat, proj, zero, inductive_list;
  
 cat := UnderlyingCategory( CapCategory( C ) );
 
-if not HasHasEnoughProjectives( cat ) then
+if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
    Error( "It is not known whether the underlying category has enough projectives or not" );
 fi;
 
-if not HasHasEnoughProjectives( cat ) then 
+if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then 
    Error( "The underlying category must have enough projectives" );
 fi;
  
@@ -248,7 +248,7 @@ cat := UnderlyingCategory( CapCategory( C ) );
 F := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
 
 G := CochainToChainComplexFunctor( CochainComplexCategory( cat ), ChainComplexCategory( cat ) );
-
+    
 C1 := ApplyFunctor( F, C );
 
 quasi := QuasiIsomorphismFromProjectiveResolution( C1 );
@@ -279,11 +279,11 @@ end );
 #  
 # cat := UnderlyingCategory( CapCategory( C ) );
 # 
-# if not HasHasEnoughInjectives( cat ) then
+# if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
 #    Error( "It is not known whether the underlying category has enough injectives or not" );
 # fi;
 # 
-# if not HasHasEnoughInjectives( cat ) then 
+# if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then 
 #    Error( "The underlying category must have enough injectives" );
 # fi;
 #  
@@ -343,11 +343,11 @@ local u, cat, inj, zero, inductive_list;
  
 cat := UnderlyingCategory( CapCategory( C ) );
 
-if not HasHasEnoughInjectives( cat ) then
+if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
    Error( "It is not known whether the underlying category has enough injectives or not" );
 fi;
 
-if not HasHasEnoughInjectives( cat ) then 
+if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then 
    Error( "The underlying category must have enough injectives" );
 fi;
  
@@ -468,13 +468,13 @@ fi;
 
 cat := CapCategory( obj );
 
-if not HasHasEnoughProjectives( cat ) then
+if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
 
    Error( "It is not known whether the category has enough projectives or not" );
 
 fi;
 
-if not HasHasEnoughProjectives( cat ) then 
+if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then 
 
    Error( "The category must have enough projectives" );
 
@@ -514,13 +514,13 @@ fi;
 
 cat := CapCategory( obj );
 
-if not HasHasEnoughInjectives( cat ) then
+if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
 
    Error( "It is not known whether the category has enough injectives or not" );
 
 fi;
 
-if not HasHasEnoughInjectives( cat ) then 
+if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then 
 
    Error( "The category must have enough injectives" );
 
