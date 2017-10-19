@@ -949,6 +949,38 @@ InstallMethod( NaturalMorphismFromSourceInMappingCocylinder,
     
 end );
 
+InstallMethod( NaturalMorphismFromMappingCocylinderToRange,
+               [ IsChainOrCochainMorphism ],
+    function( phi )
+    local C, B, morphisms;
+    
+    C := Source( phi );
+    
+    B := Range( phi );
+    
+    if IsChainMorphism( phi ) then 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ) ],
+                                                                            [ ZeroMorphism( C[ n ], B[ n ] ) ], 
+                                                                            [ ZeroMorphism( B[ n + 1 ], B[ n ] ) ] ] );
+                                        end, 1 );
+    return ChainMorphism( MappingCocylinder( phi ), B, morphisms );
+    
+    else 
+    
+    morphisms := MapLazy( IntegersList, function( n )
+                                        return MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ) ],
+                                                                            [ ZeroMorphism( C[ n ], B[ n ] ) ], 
+                                                                            [ ZeroMorphism( B[ n - 1 ], B[ n ] ) ] ] );
+                                        end, 1 );
+                                        
+    return CochainMorphism( MappingCocylinder( phi ), B, morphisms );
+    
+    fi;
+    
+    end );
+    
 ##
 InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism ],

@@ -145,6 +145,7 @@ DeclareAttribute( "MappingCylinder", IsChainOrCochainMorphism );
 
 DeclareAttribute( "MappingCocylinder", IsChainOrCochainMorphism );
 DeclareAttribute( "NaturalMorphismFromSourceInMappingCocylinder", IsChainOrCochainMorphism );
+DeclareAttribute( "NaturalMorphismFromMappingCocylinderToRange", IsChainOrCochainMorphism );
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
