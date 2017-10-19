@@ -428,7 +428,7 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
                 end );
     fi;
 
-    if CanCompute( cat, "IdentityMorphism" ) then
+    if CanCompute( cat, "InverseImmutable" ) then
 
             AddInverse( complex_cat, 
                 function( m )
