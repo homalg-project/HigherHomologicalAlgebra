@@ -1,6 +1,7 @@
 
 ## tools for solving two sided equation over exterior algebra
-
+LoadPackage( "GradedRing" );
+LoadPackage( "GradedModules" );
 
 DeclareOperation( "UnionOfRows", [ IsList ] );
 InstallMethod( UnionOfRows, 
@@ -345,3 +346,36 @@ return [ X_, Y_ ];
 
 end );
 
+DeclareGlobalFunction( "ReductionOfHomalgMatrix" );
+InstallGlobalFunction( ReductionOfHomalgMatrix,
+    function( A, D )
+    local M,nr_rows, nr_columns, m, l, i, j;
+    
+    M := UnderlyingNonGradedRing( HomalgRing( A ) )*A;
+    nr_rows := NrRows( M );
+    nr_columns := NrColumns( M ); 
+    
+    l := List( [ 1 .. nr_rows ], i -> List( [ 1 .. nr_columns ], function( j )
+                                                                    local coef, new_coef, degrees, k;
+                                                                    coef := Coefficients( MatElmAsString( M, i, j )/HomalgRing( M ) );
+                                                                
+                                                                    degrees := List( coef!.monomials, u -> Degree( u ) );
+                                                                
+                                                                    new_coef := [ ];
+                                                                
+                                                                    for k in [ 1 .. Length( degrees ) ] do
+                                                                        if degrees[ k ] <> D[i][j] then
+                                                                            Add( new_coef, Zero( HomalgRing( M ) ) );
+                                                                        else
+                                                                            Add( new_coef, MatElm( coef, k, 1 ) );
+                                                                        fi;
+                                                                    od;
+                                                                    new_coef := HomalgMatrix( new_coef, 1, Length( degrees ), HomalgRing( M ) );
+                                                                    return MatElm( new_coef*HomalgMatrix( coef!.monomials, Length( degrees ), 1, HomalgRing( M ) ), 1, 1 );
+                                                                 end ) );
+    return HomalgRing(A)*HomalgMatrix( l, nr_rows, nr_columns, HomalgRing( M ) );
+    
+end );
+                                                                
+    
+                                                                    
