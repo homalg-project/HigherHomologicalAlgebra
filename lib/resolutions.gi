@@ -160,6 +160,11 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
 function( C )
 local u, cat, proj, zero, inductive_list;
  
+
+if HasIsZero( C ) and IsZero( C ) then 
+    return UniversalMorphismFromZeroObject( C );
+fi;
+
 cat := UnderlyingCategory( CapCategory( C ) );
 
 if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
@@ -171,14 +176,21 @@ if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
 fi;
  
 u := ActiveUpperBound( C );
- 
+
+# this is important
+if IsZero( C[ u - 1 ] ) then
+    SetUpperBound( C, u - 1 );
+    return QuasiIsomorphismFromProjectiveResolution( C );
+fi;
+#
+
 zero := ZeroObject( cat );
  
 inductive_list := InductiveList( [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ u ] ) ],
 
    function( d )
    local k, k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
-   if not IsBound( inductive_list!.index ) then 
+   if not IsBound( inductive_list!.index ) then
       k := u-1;
    else
       k := inductive_list!.index;
@@ -340,7 +352,11 @@ InstallMethod( QuasiIsomorphismInInjectiveResolution,
 
 function( C )
 local u, cat, inj, zero, inductive_list;
- 
+
+if HasIsZero( C ) and IsZero( C ) then 
+    return UniversalMorphismIntoZeroObject( C );
+fi;
+
 cat := UnderlyingCategory( CapCategory( C ) );
 
 if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
@@ -352,7 +368,12 @@ if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
 fi;
  
 u := ActiveLowerBound( C );
- 
+
+if IsZero( C[ u + 1 ] ) then 
+    SetLowerBound( C, u + 1 );
+    return QuasiIsomorphismInInjectiveResolution( C );
+fi;
+
 zero := ZeroObject( cat );
  
 inductive_list := InductiveList( [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ u ], zero ) ],
