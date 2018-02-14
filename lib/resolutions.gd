@@ -35,6 +35,8 @@
 #! @Returns a (co)chain complex
 DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 
+DeclareOperation( "ProjectiveResolutionWithBounds", [ IsCapCategoryObject, IsInt ] );
+
 # DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
 
 # DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAboveCochainComplex );
@@ -49,6 +51,8 @@ DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 #! @Arguments arg
 #! @Returns a (co)chain complex
 DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
+
+DeclareOperation( "InjectiveResolutionWithBounds", [ IsCapCategoryObject, IsInt ] );
 
 # DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
 

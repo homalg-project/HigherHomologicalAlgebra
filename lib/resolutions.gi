@@ -250,6 +250,46 @@ function( C )
 return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 end );
 
+##
+InstallMethod( ProjectiveResolutionWithBounds,
+      [ IsBoundedAboveCochainComplex, IsInt ],
+function( C, m )
+local p, i;
+
+p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+
+for i in [ m .. ActiveUpperBound( p ) - 1 ] do
+
+    if IsZero( p[ ActiveUpperBound( p ) - 1 + m - i ] ) then 
+        SetLowerBound( p, ActiveUpperBound( p ) - 1 + m - i );
+        return p;
+    fi;
+od;
+
+Error( "It seems that the lower bound of the projective resolution is less than ", m );
+
+end );
+
+InstallMethod( ProjectiveResolutionWithBounds,
+        [ IsBoundedBelowChainComplex, IsInt ],
+    function( C, m )
+    local p, i;
+
+    p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+
+    for i in [ ActiveLowerBound( p ) + 1 .. m ] do
+    
+        if IsZero( p[ i ] ) then 
+            SetUpperBound( p, i );
+            return p;
+        fi;
+    od;
+
+    Error( "It seems that the upper bound of the projective resolution is greater than ", m );
+
+end );
+    
+
 InstallMethod( QuasiIsomorphismFromProjectiveResolution,
         [ IsBoundedBelowChainComplex ], 
 function( C )
