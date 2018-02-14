@@ -489,6 +489,60 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
    return functor;
 
 end );
+
+##
+InstallMethod( ChainCategoryToCochainCategoryOfOppositeCategory,
+                [ IsCapCategory ],
+    function( cat )
+    local chains, cochains, functor;
+    
+    chains := ChainComplexCategory( cat );
+    cochains := CochainComplexCategory( Opposite( cat ) );
+    
+    functor := CapFunctor( "Bla Bla", chains, cochains );
+    AddObjectFunction( functor,
+        function( C )
+        local inf_list;
+        inf_list := MapLazy( Differentials( C ), Opposite, 1 );
+        inf_list := ShiftLazy( inf_list, 1 );
+        return CochainComplex( Opposite( cat ), inf_list );
+        end );
+    AddMorphismFunction( functor,
+        function( obj1, phi, obj2 )
+        local inf_list;
+        inf_list := MapLazy( Morphisms( phi ), Opposite, 1 );
+        return CochainMorphism( obj1, obj2, inf_list );
+        end );
+    return functor;
+end );
+
+##
+InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
+                [ IsCapCategory ],
+    function( cat )
+    local chains, cochains, functor;
+    
+    cochains := CochainComplexCategory( cat );
+    chains := ChainComplexCategory( Opposite( cat ) );
+    
+    functor := CapFunctor( "Bla Bla", cochains, chains );
+    AddObjectFunction( functor,
+        function( C )
+        local inf_list;
+        inf_list := MapLazy( Differentials( C ), Opposite, 1 );
+        inf_list := ShiftLazy( inf_list, -1 );
+        return ChainComplex( Opposite( cat ), inf_list );
+        end );
+    AddMorphismFunction( functor,
+        function( obj1, phi, obj2 )
+        local inf_list;
+        inf_list := MapLazy( Morphisms( phi ), Opposite, 1 );
+        return ChainMorphism( obj1, obj2, inf_list );
+        end );
+    return functor;
+end );
+
+
 # to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
 # InstallMethod( LeftDerivedFunctor, 
 #                [ IsCapFunctor ],
