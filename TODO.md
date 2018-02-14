@@ -8,3 +8,4 @@ To do
 -----
 * Implement the monoidal structure also for cochain complex categories. Try to do this by turning hard coded indices into variables
   to avoid code duplication
+* Associator in monoidal categories
