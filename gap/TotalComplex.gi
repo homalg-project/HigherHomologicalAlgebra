@@ -256,7 +256,7 @@ InstallMethod( TotalComplexFunctorial,
            function( m )
            local ind_r, ind_s, morphisms;
            ind_s := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
-           ind_r := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
+           ind_r := IndicesUsedToComputeTotalComplexOfBicomplexAt( R, m );
            morphisms := List( [ ind_s[1] .. ind_s[2] ],
                             i-> List( [ ind_r[1] .. ind_r[2] ],
                                     function( j )
