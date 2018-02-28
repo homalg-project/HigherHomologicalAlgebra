@@ -2,10 +2,11 @@
 # concentrated in
 # x0 =< x =< x1
 #
-BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
+InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
 function( C, x0, x1 )
   local d, cat, diff;
 
+  if x0 > x1 then return TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, x1, x0 );fi;
   cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
 
   diff := MapLazy( IntegersList, function( m )
@@ -34,10 +35,11 @@ end );
 # concentrated in
 # y >= y0 and y =< y1
 #
-BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX",
+InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX",
   function( C, y0, y1 )
   local d, cat, diff;
-
+    
+  if y0 > y1 then return TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, y1, y0 );fi;
   cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) );
 
   diff := MapLazy( IntegersList, function( m )
@@ -64,7 +66,7 @@ end );
 # concentrated in
 # x >= x0 and y >= y0
 #
-BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
+InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
 function( C, x0, y0 )
   local cat, zero_object, diff;
 
@@ -102,7 +104,7 @@ end );
 # concentrated in
 # x <= x0 and y <= y0
 #
-BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
+InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
   function( C, x0, y0 )
   local d, cat, zero_object, diff;
 
