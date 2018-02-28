@@ -5,3 +5,4 @@
 #
 
 ReadPackage( "Bicomplexes", "gap/Bicomplexes.gd");
+ReadPackage( "Bicomplexes", "gap/TotalComplex.gd");
