@@ -190,6 +190,8 @@ DeclareAttribute( "Below_Bound",
         IsCapCategoryBicomplexCell );
 
 DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
+DeclareAttribute( "TotalComplexFunctorial", IsCapCategoryBicomplexMorphism );
+
 
 ###################################
 #
