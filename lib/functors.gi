@@ -229,7 +229,7 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
 
        complex := complex_constructor( cat, diffs );
 
-       AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
+       AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
 
        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
@@ -371,11 +371,11 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
      TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
 
-     AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+     AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ], function( )
 
-                                                              if not HasIsZero( functor_C ) then 
+                                                              if not HasIsZeroForObjects( functor_C ) then 
 
-                                                                 SetIsZero( functor_C, true );
+                                                                 SetIsZeroForObjects( functor_C, true );
 
                                                               fi;
 
@@ -399,11 +399,11 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
        TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
 
-       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ], function( )
 
-                                                                  if not HasIsZero( functor_phi ) then
+                                                                  if not HasIsZeroForMorphisms( functor_phi ) then
 
-                                                                     SetIsZero( functor_phi, true );
+                                                                     SetIsZeroForMorphisms( functor_phi, true );
 
                                                                   fi; 
 
@@ -444,11 +444,11 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
 
      TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
 
-     AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+     AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ], function( )
 
-                                                              if not HasIsZero( functor_C ) then
+                                                              if not HasIsZeroForObjects( functor_C ) then
 
-                                                                 SetIsZero( functor_C, true );
+                                                                 SetIsZeroForObjects( functor_C, true );
 
                                                               fi;
 
@@ -471,11 +471,11 @@ InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
 
        TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
 
-       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+       AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ], function( )
 
-                                                                  if not HasIsZero( functor_phi ) then
+                                                                  if not HasIsZeroForMorphisms( functor_phi ) then
 
-                                                                     SetIsZero( functor_phi, true );
+                                                                     SetIsZeroForMorphisms( functor_phi, true );
 
                                                                   fi;
 

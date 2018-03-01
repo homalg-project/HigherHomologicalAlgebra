@@ -70,7 +70,7 @@ InstallValue( PROPAGATION_LIST_FOR_CO_CHAIN_MORPHISMS,
          "IsIsomorphism",
          "IsSplitMonomorphism",
          "IsSplitEpimorphism",
-         "IsZero",
+         "IsZeroForMorphisms",
          # ..
          ]
         );
@@ -218,9 +218,9 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
    map := map_constructor( C1, C2, all_maps );
 
-   if n > base_list[ Length( base_list ) ] and not HasIsZero( map ) then SetIsZero( map, true );fi;
+   if n > base_list[ Length( base_list ) ] and not HasIsZeroForMorphisms( map ) then SetIsZeroForMorphisms( map, true );fi;
 
-   if n + Length( mor ) -1 < base_list[ 1 ] and not HasIsZero( map ) then SetIsZero( map, true ); fi;
+   if n + Length( mor ) -1 < base_list[ 1 ] and not HasIsZeroForMorphisms( map ) then SetIsZeroForMorphisms( map, true ); fi;
 
    return map;
 
@@ -275,21 +275,21 @@ InstallMethod( MorphismAtOp,
 
      m := Morphisms( phi )[ i ];
 
-     AddToToDoList( ToDoListEntry( [ [ m, "IsZero", false ] ], function( )
+     AddToToDoList( ToDoListEntry( [ [ m, "IsZeroForMorphisms", false ] ], function( )
 
-                                                               if not HasIsZero( phi ) then
+                                                               if not HasIsZeroForMorphisms( phi ) then
 
-                                                                 SetIsZero( phi, false );
+                                                                 SetIsZeroForMorphisms( phi, false );
 
                                                                fi;
 
                                                                end ) );
 
-     AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+     AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ], function( )
 
-                                                                if not HasIsZero( m ) then
+                                                                if not HasIsZeroForMorphisms( m ) then
 
-                                                                   SetIsZero( m, true );
+                                                                   SetIsZeroForMorphisms( m, true );
 
                                                                 fi;
 
@@ -446,7 +446,7 @@ InstallMethod( SetUpperBound,
  
       phi!.UpperBound := phi!.LowerBound; 
 
-      if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+      if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
 
    else
 
@@ -480,7 +480,7 @@ InstallMethod( SetLowerBound,
 
       phi!.LowerBound := phi!.UpperBound;
 
-      if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+      if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
 
    else
 
@@ -547,7 +547,7 @@ InstallMethod( ActiveLowerBound,
 
         phi!.LowerBound := phi!.UpperBound;
 
-        if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+        if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
 
   fi;
 
@@ -603,7 +603,7 @@ InstallMethod( ActiveUpperBound,
 
         phi!.UpperBound := phi!.LowerBound;
 
-        if not HasIsZero( phi ) then SetIsZero( phi, true ); fi;
+        if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
 
   fi;
 

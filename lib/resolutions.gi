@@ -161,7 +161,7 @@ function( C )
 local u, cat, proj, zero, inductive_list;
  
 
-if HasIsZero( C ) and IsZero( C ) then 
+if HasIsZeroForObjects( C ) and IsZeroForObjects( C ) then 
     return UniversalMorphismFromZeroObject( C );
 fi;
 
@@ -178,7 +178,7 @@ fi;
 u := ActiveUpperBound( C );
 
 # this is important
-if IsZero( C[ u - 1 ] ) then
+if IsZeroForObjects( C[ u - 1 ] ) then
     SetUpperBound( C, u - 1 );
     return QuasiIsomorphismFromProjectiveResolution( C );
 fi;
@@ -260,7 +260,7 @@ p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 
 for i in [ m .. ActiveUpperBound( p ) - 1 ] do
 
-    if IsZero( p[ ActiveUpperBound( p ) - 1 + m - i ] ) then 
+    if IsZeroForObjects( p[ ActiveUpperBound( p ) - 1 + m - i ] ) then 
         SetLowerBound( p, ActiveUpperBound( p ) - 1 + m - i );
         return p;
     fi;
@@ -279,7 +279,7 @@ InstallMethod( ProjectiveResolutionWithBounds,
 
     for i in [ ActiveLowerBound( p ) + 1 .. m ] do
     
-        if IsZero( p[ i ] ) then 
+        if IsZeroForObjects( p[ i ] ) then 
             SetUpperBound( p, i );
             return p;
         fi;
@@ -393,7 +393,7 @@ InstallMethod( QuasiIsomorphismInInjectiveResolution,
 function( C )
 local u, cat, inj, zero, inductive_list;
 
-if HasIsZero( C ) and IsZero( C ) then 
+if HasIsZeroForObjects( C ) and IsZeroForObjects( C ) then 
     return UniversalMorphismIntoZeroObject( C );
 fi;
 
@@ -409,7 +409,7 @@ fi;
  
 u := ActiveLowerBound( C );
 
-if IsZero( C[ u + 1 ] ) then 
+if IsZeroForObjects( C[ u + 1 ] ) then 
     SetLowerBound( C, u + 1 );
     return QuasiIsomorphismInInjectiveResolution( C );
 fi;

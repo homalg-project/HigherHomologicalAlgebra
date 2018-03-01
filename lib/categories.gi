@@ -261,7 +261,7 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
 
             for obj in ComputedObjectAts( C ) do
 
-                if IsCapCategoryObject( obj ) and not IsZero( obj ) then
+                if IsCapCategoryObject( obj ) and not IsZeroForObjects( obj ) then
 
                     return false;
 
@@ -271,7 +271,7 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
 
             for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do
 
-                if not IsZero( C[ i ] ) then 
+                if not IsZeroForObjects( C[ i ] ) then 
 
                 SetLowerBound( C, i - 1 );
 
@@ -320,7 +320,7 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
 
                 for mor in ComputedMorphismAts( phi ) do
 
-                        if IsCapCategoryMorphism( mor ) and not IsZero( mor ) then
+                        if IsCapCategoryMorphism( mor ) and not IsZeroForMorphisms( mor ) then
 
                         return false;
 
@@ -330,7 +330,7 @@ if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) th
 
                 for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
 
-                        if IsZero( phi[ i ] ) then
+                        if IsZeroForMorphisms( phi[ i ] ) then
 
                         SetLowerBound( phi, i );
 

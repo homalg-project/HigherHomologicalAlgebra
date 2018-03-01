@@ -342,7 +342,7 @@ InstallMethod( SetUpperBound,
 
       C!.UpperBound := C!.LowerBound;
 
-      if not HasIsZero( C ) then SetIsZero( C, true ); fi;
+      if not HasIsZeroForObjects( C ) then SetIsZeroForObjects( C, true ); fi;
 
    else
 
@@ -375,7 +375,7 @@ InstallMethod( SetLowerBound,
 
       C!.LowerBound := C!.UpperBound;
 
-      if not HasIsZero( C ) then SetIsZero( C, true ); fi;
+      if not HasIsZeroForObjects( C ) then SetIsZeroForObjects( C, true ); fi;
 
    else
 
@@ -568,21 +568,21 @@ InstallMethod( DifferentialAtOp,
 
   d := Differentials( C )[ i ];
 
-  AddToToDoList( ToDoListEntry( [ [ d, "IsZero", false ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ d, "IsZeroForObjects", false ] ], function( )
 
-                                                            if not HasIsZero( C ) then
+                                                            if not HasIsZeroForObjects( C ) then
 
-                                                               SetIsZero( C, false );
+                                                               SetIsZeroForObjects( C, false );
 
                                                             fi;
 
                                                             end ) );
 
-  AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ], function( )
 
-                                                            if not HasIsZero( d ) then
+                                                            if not HasIsZeroForObjects( d ) then
 
-                                                              SetIsZero( d, true );
+                                                              SetIsZeroForObjects( d, true );
 
                                                            fi;
 
@@ -603,21 +603,21 @@ local Obj;
 
   Obj := Objects( C )[ i ];
 
-  AddToToDoList( ToDoListEntry( [ [ Obj, "IsZero", false ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ Obj, "IsZeroForObjects", false ] ], function( )
 
-                                                              if not HasIsZero( C ) then
+                                                              if not HasIsZeroForObjects( C ) then
 
-                                                                 SetIsZero( C, false );
+                                                                 SetIsZeroForObjects( C, false );
 
                                                               fi;
 
                                                               end ) );
 
-  AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ], function( )
 
-                                                           if not HasIsZero( Obj ) then
+                                                           if not HasIsZeroForObjects( Obj ) then
 
-                                                              SetIsZero( Obj, true );
+                                                              SetIsZeroForObjects( Obj, true );
 
                                                            fi;
 
@@ -815,7 +815,7 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
 
   im := CokernelObject( inc );
 
-  AddToToDoList( ToDoListEntry( [ [ im, "IsZero", false ] ], function( )
+  AddToToDoList( ToDoListEntry( [ [ im, "IsZeroForObjects", false ] ], function( )
 
                                                              if not HasIsExact( C ) then
 
@@ -932,7 +932,7 @@ InstallMethod( CohomologySupport,
   local l, i;
   l := [ ];
   for i in [ m .. n ] do 
-  if not IsZero( CohomologyAt( C, i ) ) then 
+  if not IsZeroForObjects( CohomologyAt( C, i ) ) then 
      Add( l, i );
   fi;
   od;
@@ -946,7 +946,7 @@ InstallMethod( HomologySupport,
   local l, i;
   l := [ ];
   for i in [ m .. n ] do 
-  if not IsZero( HomologyAt( C, i ) ) then 
+  if not IsZeroForObjects( HomologyAt( C, i ) ) then 
      Add( l, i );
   fi;
   od;
@@ -959,7 +959,7 @@ InstallMethod( IsWellDefined,
  local i;
  
  for i in [ m .. n ] do 
- if not IsZero( PreCompose( C^i, C^(i+1) ) ) then 
+ if not IsZeroForMorphisms( PreCompose( C^i, C^(i+1) ) ) then 
     return false;
  fi;
  od;
@@ -972,7 +972,7 @@ InstallMethod( IsWellDefined,
  local i;
  
  for i in [ m .. n ] do 
- if not IsZero( PostCompose( C^i, C^(i+1) ) ) then 
+ if not IsZeroForMorphisms( PostCompose( C^i, C^(i+1) ) ) then 
     return false;
  fi;
  od;
@@ -1018,7 +1018,7 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
 
-  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
+  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
 
   AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsExact", complex, "IsExact" ) );
 
@@ -1087,7 +1087,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
 
-  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZero", complex, "IsZero" ) );
+  AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
 
   AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( )
 
