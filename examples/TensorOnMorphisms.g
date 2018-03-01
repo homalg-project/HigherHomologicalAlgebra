@@ -37,5 +37,5 @@ Display( ObjectAt( d, 3, 3 ) );
 #!   [  12 ] ]
 #! 
 #! An object in Category of left presentations of Z
-IsZero( ObjectAt( d, 3, 3 ) );
+IsZeroForObjects( ObjectAt( d, 3, 3 ) );
 #! false

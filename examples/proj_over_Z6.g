@@ -13,7 +13,7 @@ cat := LeftPresentations( Z6:FinalizeCategory := false );
 AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
 Finalize( cat );
 #! true
-SetHasEnoughProjectives( cat, true );
+SetIsAbelianCategoryWithEnoughProjectives( cat, true );
 m := HomalgMatrix( "[ [ 3 ] ]", 1, 1, Z6 );
 #! <A 1 x 1 matrix over a residue class ring>
 Z2 := AsLeftPresentation( m );

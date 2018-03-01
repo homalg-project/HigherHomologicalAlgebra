@@ -6,7 +6,7 @@ R := HomalgFieldOfRationalsInSingular( )*"x,y,z";;
 cat := LeftPresentations( R: FinalizeCategory := false );
 #! Category of left presentations of Q[x,y,z]
 AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
-SetHasEnoughProjectives( cat, true );;
+SetIsAbelianCategoryWithEnoughProjectives( cat, true );;
 Finalize( cat );
 #! true
 M := AsLeftPresentation( HomalgMatrix( "[ [ x ], [ y ], [ z ] ]", 3, 1, R ) );

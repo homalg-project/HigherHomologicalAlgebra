@@ -57,26 +57,27 @@ Hom_Obj_N_from_chains_to_cochains :=
 
 quit;
 
-CM := StalkChainComplex( M, 0 );
-P := ProjectiveResolutionWithBounds( CM, 5000 );
-lambdas := List( [ 2 .. ActiveUpperBound( P ) ], i-> KernelEmbedding( P^(i-1) ) );
-kappas  := List( [ 2 .. ActiveUpperBound( P ) ], i-> KernelLift( P^(i-1), P^i ) );
-List( kappas, IsEpimorphism );
-hom_P := ApplyFunctor( Hom_Obj_N_from_chains_to_cochains, P );
-SetLowerBound( hom_P, -1 );
-SetUpperBound( hom_P, ActiveUpperBound( P ) );
-IsWellDefined( hom_P, -1, ActiveUpperBound( P ) );
-
-hom_lambdas := List( lambdas, l -> ApplyFunctor( hom_to_N, Opposite( l ) ) );
-hom_kappas := List( kappas, k -> ApplyFunctor( hom_to_N, Opposite( k ) ) );
-# The following list should contain only true's
-List( hom_kappas, IsMonomorphism );
-# The following two lists are supposed to be equals
-List( hom_lambdas, IsEpimorphism );
-List( [ 2 .. ActiveUpperBound( P ) ], i-> IsExactInIndex( hom_P, i ) );
-pres := List( [ 2 .. ActiveUpperBound( P ) ], i-> PreCompose( hom_kappas[i-1], hom_P^(i) ) );
-# The output should be true
-IsZero( pres );
-l := List( [ 2 .. ActiveUpperBound( P ) ], i -> KernelLift( hom_P^(i), hom_kappas[ i-1 ] ) );
-# The list should contain only true's
-List( l, f-> IsIsomorphism( f ) );
+# Very important
+# CM := StalkChainComplex( M, 0 );
+# P := ProjectiveResolution( CM );
+# lambdas := List( [ 2 .. ActiveUpperBound( P ) ], i-> KernelEmbedding( P^(i-1) ) );
+# kappas  := List( [ 2 .. ActiveUpperBound( P ) ], i-> KernelLift( P^(i-1), P^i ) );
+# List( kappas, IsEpimorphism );
+# hom_P := ApplyFunctor( Hom_Obj_N_from_chains_to_cochains, P );
+# SetLowerBound( hom_P, -1 );
+# SetUpperBound( hom_P, ActiveUpperBound( P ) );
+# IsWellDefined( hom_P, -1, ActiveUpperBound( P ) );
+# 
+# hom_lambdas := List( lambdas, l -> ApplyFunctor( hom_to_N, Opposite( l ) ) );
+# hom_kappas := List( kappas, k -> ApplyFunctor( hom_to_N, Opposite( k ) ) );
+# # The following list should contain only true's
+# List( hom_kappas, IsMonomorphism );
+# # The following two lists are supposed to be equals
+# List( hom_lambdas, IsEpimorphism );
+# List( [ 2 .. ActiveUpperBound( P ) ], i-> IsExactInIndex( hom_P, i ) );
+# pres := List( [ 2 .. ActiveUpperBound( P ) ], i-> PreCompose( hom_kappas[i-1], hom_P^(i) ) );
+# # The output should be true
+# ForAll( pres, IsZeroForMorphisms );
+# l := List( [ 2 .. ActiveUpperBound( P ) ], i -> KernelLift( hom_P^(i), hom_kappas[ i-1 ] ) );
+# # The list should contain only true's
+# List( l, f-> IsIsomorphism( f ) );

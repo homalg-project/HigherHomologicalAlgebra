@@ -1,3 +1,4 @@
+LoadPackage( "RingsForHomalg" );
 LoadPackage( "ModulePresentationsForCap" );;
 LoadPackage( "ComplexesForCAP" );;
 
@@ -14,8 +15,8 @@ func := function( obj )
 local ring, dual, nat, dual_obj, free_cover, 
        dual_free_cover, obj_to_double_dual_obj, embedding;
 ring := UnderlyingHomalgRing( obj );
-dual := FunctorDualForLeftPresentations( ring );
-nat  := NaturalTransformationFromIdentityToDoubleDualForLeftPresentations( ring );
+dual := FunctorDualLeft( ring );
+nat  := NaturalTransformationFromIdentityToDoubleDualLeft( ring );
 dual_obj := ApplyFunctor( dual, obj );
 free_cover := CoverByFreeModule( dual_obj );
 dual_free_cover := ApplyFunctor( dual, free_cover );
@@ -23,8 +24,8 @@ obj_to_double_dual_obj := ApplyNaturalTransformation( nat, obj );
 return PreCompose( obj_to_double_dual_obj, dual_free_cover );
 end;;
 
-AddMonomorphismIntoInjectiveObject( left_pre_category, func );
-SetHasEnoughInjectives( left_pre_category, true );
+AddMonomorphismIntoSomeInjectiveObject( left_pre_category, func );
+SetIsAbelianCategoryWithEnoughInjectives( left_pre_category, true );
 Finalize( left_pre_category );
 
 m := HomalgMatrix( "[ [ e0, e1, e2 ],[ 0, 0, e0 ] ]", 2, 3, S );;
@@ -39,6 +40,7 @@ C := CochainComplex( [ h, g, f ] );;
 # Display( C, 0, 1 );
 C[ 2 ];;
 C^2;;
+I := InjectiveResolution( C );
 #! @EndExample
 #! @EndChunk
 
