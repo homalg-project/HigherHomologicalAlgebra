@@ -963,6 +963,11 @@ InstallMethod( IsWellDefined,
     return false;
  fi;
  od;
+ 
+ if not IsWellDefined( C[ i ] ) then 
+    return false;
+ fi;
+ 
  return true;
 end );
 
@@ -976,6 +981,11 @@ InstallMethod( IsWellDefined,
     return false;
  fi;
  od;
+ 
+ if not IsWellDefined( C[ i ] ) then 
+    return false;
+ fi;
+ 
  return true;
 end );
 

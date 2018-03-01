@@ -357,12 +357,19 @@ end );
 InstallMethod( IsWellDefined,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
    function( phi, m, n )
-   local i, S, T;
+    local i, S, T;
    
-   S := Source( phi );
+    S := Source( phi );
    
-   T := Range( phi );
-   
+    T := Range( phi );
+    if not IsWellDefined( Source( phi ), m, n ) then
+        return false;
+    fi;
+    
+    if not IsWellDefined( Range( phi ), m, n ) then
+        return false;
+    fi;
+    
    if IsChainMorphism( phi ) then 
    
      for i in [ m .. n ] do 
