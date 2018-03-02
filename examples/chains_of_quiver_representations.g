@@ -65,68 +65,6 @@ InstallMethod( ArrowsBetweenTwoVertices,
     return Intersection( OutgoingArrows( v1 ), IncomingArrows( v2 ) );
 end );
 
-# DeclareOperation( "StackMatricesDiagonally", [ IsQPAMatrix, IsQPAMatrix ] );
-# DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );
-# 
-
-# InstallMethod( StackMatricesDiagonally, 
-#                 [ IsQPAMatrix, IsQPAMatrix ],
-#  function( M1, M2 )
-#  local d1,d2,F, M1_, M2_; 
-# 
-#  d1 := DimensionsMat( M1 );
-#  d2 := DimensionsMat( M2 );
-# 
-#  if d1[1]*d1[2] = 0 then return M2;fi;
-#  if d2[1]*d2[2] = 0 then return M1;fi;
-# 
-#  F := BaseDomain( M1 );
-#  if F <> BaseDomain( M2 ) then
-#     Error( "matrices over different rings" );
-#  fi;
-# 
-#  M1_ := StackMatricesHorizontally( M1, MakeZeroMatrix( F, d1[1], d2[2] ) );
-#  M2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[1], d1[2] ), M2 );
-#  return StackMatricesVertically( M1_, M2_ );
-# end );
-# 
-# InstallMethod( StackMatricesDiagonally, [ IsDenseList ],
-# function( matrices )
-#   return Iterated( matrices, StackMatricesDiagonally );
-# end );
-
-
-# f := function( q, kq, rel, m, n )
-#  local quiver, kquiver, c, l, rel1, rel2, L, arrows, paths;
-#  L := LinearRightQuiver( m, n );
-#  quiver := QuiverProduct( L, q );
-#  kquiver := PathAlgebra( LeftActingDomain( kq ), quiver );
-#  c := ArrowLabels( L );
-#  l := Concatenation( List( [ 1 .. Length(c)-1], i -> List( VertexLabels( q ), j -> [ [ c[i], j ], [ c[i+1], j ] ] ) ) );
-#  l := List( l, label -> PrimitivePathByLabel( quiver, label[1] )*PrimitivePathByLabel( quiver, label[2] ) );
-#  rel1 := List( l, r -> QuiverAlgebraElement( kquiver, [1], [r] ) );
-#  c := VertexLabels( L );
-#  l := Concatenation( List( [ 1 .. Length(c)-1], i -> List( ArrowLabels( q ), j -> [ [ c[i], j ], [ c[i+1], j ] ] ) ) );
-#  l := List( l, label -> [ PrimitivePathByLabel( quiver, label[1] ), PrimitivePathByLabel( quiver, label[2] ) ] );
-#  l := List( l, arrows -> [ arrows[1]*ArrowsBetweenTwoVertices( Target( arrows[1] ), Target( arrows[2] ) )[1], 
-#       				ArrowsBetweenTwoVertices( Source( arrows[1] ), Source( arrows[2] ) )[1]*arrows[2] ] );
-#  rel2 := List( l, paths-> QuiverAlgebraElement( kquiver, [ 1, -1 ], paths ) );
-#  if rel=[] then return [ quiver, kquiver, Concatenation( rel1, rel2 ) ] ;fi;
-#  paths := List( rel, r -> [ Coefficients( r ), Paths( r ) ] );
-#  arrows := List( paths, p -> [ p[1], List( p[2], path -> ArrowList( path ) ) ] );
-#  l := Concatenation( List( Vertices( L ), v -> List( arrows, p -> [ p[1], List( p[2], l -> List( l, u-> [ Label(v), Label(u) ] ) ) ] ) ) );
-#  l := List( l, u -> [ u[1], List( u[2], l-> Product( List( l, label->PrimitivePathByLabel( quiver, label ) ) ) )] );
-#  l := DuplicateFreeList( List( l, h-> QuiverAlgebraElement( kquiver, h[1], h[2] ) ) );
-#  l := Filtered( l, u-> not IsZero(u) );
-#  return [ quiver, kquiver, Concatenation( l, rel1, rel2 ) ];
-# end;
-
-# q := RightQuiver( "q(0)[a]", 2, [ [ 0, 1 ], [ 1, 0 ] ] );
-# p := f(q, -2, 5 );
-# A := QuotientOfPathAlgebra( last, p );
-# QuotientOfPathAlgebraElement( A, p[1] );
-# { 0 }
-
 product_of_algebras := function( Aq, m, n )
     local k, Lmn, AL;
     k := LeftActingDomain( Aq );
