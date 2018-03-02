@@ -340,6 +340,8 @@ f := QuiverRepresentationHomomorphism( r1, r2, [ f1, f2, f3 ] );
 g := KernelEmbedding( f );
 CA := ChainComplex( [ f, g ], 5 );
 CB := DirectSum( CA, CA );
+# In the following I will construct a null-homotopic morphism phi:CA -> CB.
+# Then I will test if it is really null-homotopic.
 b56 := BasisOfHom( CA[5], CB[6] );
 h56 := 2*b56[ 1 ]+32*b56[ 2 ]+67*b56[3]+12*b56[4]-88*b56[5]+11*b56[6];
 b45 := BasisOfHom( CA[4], CB[5] );
@@ -357,3 +359,5 @@ psi := Colift( Cone_CA, phi );
 IsEqualForMorphisms( PreCompose( Cone_CA, psi ), phi );
 # This means that phi is null-homotopic :)
 
+# Note: You can find the basis of hom_k(CA,CB) and test if they are null-homotopic :)
+# See the above function basis_of_hom(_,_).
