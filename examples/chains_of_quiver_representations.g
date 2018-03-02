@@ -4,22 +4,7 @@ LoadPackage( "ComplexesForCAP" );
 DeclareOperation( "LinearQuiver", [ IsDirection, IsObject, IsInt, IsInt ] );
 DeclareOperation( "LinearRightQuiver", [ IsObject, IsInt, IsInt ] );
 DeclareOperation( "LinearLeftQuiver", [ IsObject, IsInt, IsInt ] );
-
-DeclareOperation( "MultiplyQuiver", [ IsRightQuiver, IsInt ] );
-
-InstallMethod( LinearRightQuiver, 
-	[ IsObject, IsInt, IsInt ],
-  function( k, m, n )
-    return LinearQuiver( RIGHT, k, m, n );
-end );
-
-InstallMethod( LinearLeftQuiver, 
-	[ IsObject, IsInt, IsInt ],
-  function( k, m, n )
-    return LinearQuiver( LEFT, k, m, n );
-end );
-
-
+DeclareOperation( "ArrowsBetweenTwoVertices", [ IsVertex, IsVertex ] );
 
 InstallMethod( LinearQuiver, 
 	[ IsDirection, IsObject, IsInt, IsInt ],
@@ -62,8 +47,17 @@ InstallMethod( LinearQuiver,
     fi;
 end );
 
+InstallMethod( LinearRightQuiver, 
+	[ IsObject, IsInt, IsInt ],
+  function( k, m, n )
+    return LinearQuiver( RIGHT, k, m, n );
+end );
 
-DeclareOperation( "ArrowsBetweenTwoVertices", [ IsVertex, IsVertex ] );
+InstallMethod( LinearLeftQuiver, 
+	[ IsObject, IsInt, IsInt ],
+  function( k, m, n )
+    return LinearQuiver( LEFT, k, m, n );
+end );
 
 InstallMethod( ArrowsBetweenTwoVertices, 
 		[ IsVertex, IsVertex ],
@@ -71,35 +65,35 @@ InstallMethod( ArrowsBetweenTwoVertices,
     return Intersection( OutgoingArrows( v1 ), IncomingArrows( v2 ) );
 end );
 
-DeclareOperation( "StackMatricesDiagonally", [ IsQPAMatrix, IsQPAMatrix ] );
-DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );
+# DeclareOperation( "StackMatricesDiagonally", [ IsQPAMatrix, IsQPAMatrix ] );
+# DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );
+# 
 
-
-InstallMethod( StackMatricesDiagonally, 
-                [ IsQPAMatrix, IsQPAMatrix ],
- function( M1, M2 )
- local d1,d2,F, M1_, M2_; 
-
- d1 := DimensionsMat( M1 );
- d2 := DimensionsMat( M2 );
-
- if d1[1]*d1[2] = 0 then return M2;fi;
- if d2[1]*d2[2] = 0 then return M1;fi;
-
- F := BaseDomain( M1 );
- if F <> BaseDomain( M2 ) then
-    Error( "matrices over different rings" );
- fi;
-
- M1_ := StackMatricesHorizontally( M1, MakeZeroMatrix( F, d1[1], d2[2] ) );
- M2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[1], d1[2] ), M2 );
- return StackMatricesVertically( M1_, M2_ );
-end );
-
-InstallMethod( StackMatricesDiagonally, [ IsDenseList ],
-function( matrices )
-  return Iterated( matrices, StackMatricesDiagonally );
-end );
+# InstallMethod( StackMatricesDiagonally, 
+#                 [ IsQPAMatrix, IsQPAMatrix ],
+#  function( M1, M2 )
+#  local d1,d2,F, M1_, M2_; 
+# 
+#  d1 := DimensionsMat( M1 );
+#  d2 := DimensionsMat( M2 );
+# 
+#  if d1[1]*d1[2] = 0 then return M2;fi;
+#  if d2[1]*d2[2] = 0 then return M1;fi;
+# 
+#  F := BaseDomain( M1 );
+#  if F <> BaseDomain( M2 ) then
+#     Error( "matrices over different rings" );
+#  fi;
+# 
+#  M1_ := StackMatricesHorizontally( M1, MakeZeroMatrix( F, d1[1], d2[2] ) );
+#  M2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[1], d1[2] ), M2 );
+#  return StackMatricesVertically( M1_, M2_ );
+# end );
+# 
+# InstallMethod( StackMatricesDiagonally, [ IsDenseList ],
+# function( matrices )
+#   return Iterated( matrices, StackMatricesDiagonally );
+# end );
 
 
 # f := function( q, kq, rel, m, n )
@@ -132,11 +126,6 @@ end );
 # A := QuotientOfPathAlgebra( last, p );
 # QuotientOfPathAlgebraElement( A, p[1] );
 # { 0 }
-
-k := Rationals;
-Q := RightQuiver("Q(4)[a:1->2,b:1->3,c:2->4,d:3->4]" );
-kQ := PathAlgebra( k, Q );
-AQ := QuotientOfPathAlgebra( kQ, [ kQ.ac-kQ.bd ] );
 
 product_of_algebras := function( Aq, m, n )
     local k, Lmn, AL;
@@ -176,6 +165,21 @@ convert_chain_or_cochain_to_representation :=
     fi;
     
 end;
+
+convert_chain_or_cochain_mor_to_representation_mor :=
+    function( phi, A )
+    local L,m,n, matrices, r1, r2;
+    L := QuiverOfAlgebra( TensorProductFactors( A )[1] );
+    m := ShallowCopy( Label( Vertex( L, 1 ) ) );
+    RemoveCharacters( m, "v" );
+    m := Int(m);
+    n := m + NumberOfVertices( L ) - 1;
+    matrices := Concatenation( List( [ m .. n ], i -> MatricesOfRepresentationHomomorphism( phi[ i ] ) ) );
+    r1 := convert_chain_or_cochain_to_representation( Source( phi ), A );
+    r2 := convert_chain_or_cochain_to_representation( Range( phi ), A );
+    return QuiverRepresentationHomomorphism( r1, r2, matrices );
+end;
+    
 
 convert_rep_mor_to_complex_mor := 
     function( C1, C2, mor, A )
@@ -217,45 +221,73 @@ basis_of_hom :=
     B := BasisOfHom( R1, R2 );
     return List( B, mor -> convert_rep_mor_to_complex_mor( C1, C2, mor, A ) );
 end;
-    
+
 compute_lift_in_quiver_rep := 
     function( f, g )
-    local homs_basis, Q, k, V, homs_basis_composed_with_g, l, vector, mat, sol, lift, h;
+    local homs_basis, Q, k, V, homs_basis_composed_with_g, L, vector, mat, sol, lift, h;
     
     homs_basis := BasisOfHom( Source( f ), Source( g ) );
     Q := QuiverOfRepresentation( Source( f ) );
     k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
     V := Vertices( Q );
     homs_basis_composed_with_g := List( homs_basis, m -> PreCompose( m, g ) );
-    l := List( V, v -> Concatenation( [ MatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
+    L := List( V, v -> Concatenation( [ MatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
                                         List( homs_basis_composed_with_g, h -> MatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
-    l := TransposedMat( l );
-    l := List( l, row_of_matrices -> StackMatricesDiagonally( row_of_matrices ) );
-    l := List( l, function( m )
-                    local cols;
-                    cols := ColsOfMatrix( m );
-                    cols := Concatenation( cols );
-                    return MatrixByCols( k, [ cols ] );
-                    end );
-    vector := RowVector( k, ColsOfMatrix( l[ 1 ] )[ 1 ] );
-    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( l ) ], i -> l[ i ] ) ) );
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
 
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    vector := RowVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+
+    sol := SolutionMat( mat, vector );
+ 
+    if sol = fail then 
+        return fail;
+    else
+    sol := sol!.entries;
+    lift := ZeroMorphism( Source( f ), Source( g ) );
+    for h in homs_basis do
+         if not IsZero( sol[ 1 ] ) then
+             lift := lift + sol[ 1 ]*h;
+         fi;
+    Remove( sol, 1 );
+    od;
+    fi;
+    return lift;
+end;
+
+compute_colift_in_quiver_rep := 
+    function( f, g )
+    local homs_basis, Q, k, V, homs_basis_composed_with_f, L, vector, mat, sol, colift, h;
+    
+    homs_basis := BasisOfHom( Range( f ), Range( g ) );
+    Q := QuiverOfRepresentation( Source( f ) );
+    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    V := Vertices( Q );
+    homs_basis_composed_with_f := List( homs_basis, m -> PreCompose( f, m ) );
+    L := List( V, v -> Concatenation( [ MatrixOfLinearTransformation( MapForVertex( g, v ) ) ],
+                                        List( homs_basis_composed_with_f, h -> MatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    vector := RowVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
     sol := SolutionMat( mat, vector );
 
     if sol = fail then 
      return fail;
     else
     sol := sol!.entries;
-    lift := ZeroMorphism( Source( f ), Source( g ) );
+    colift := ZeroMorphism( Range( f ), Range( g ) );
     for h in homs_basis do
         if not IsZero( sol[ 1 ] ) then
-            lift := lift + sol[ 1 ]*h;
+            colift := colift + sol[ 1 ]*h;
         fi;
     Remove( sol, 1 );
     od;
      
     fi;
-    return h;
+    return colift;
 end;
 
 
@@ -281,44 +313,80 @@ dual_functor :=
     return dual;
 end;
 
-# Q := RightQuiver("Q(5)[a:1->2,b:3->2,c:4->3,d:3->5]" );
-# Q(5)[a:1->2,b:3->2,c:4->3,d:3->5]
-# gap> kQ := PathAlgebra( Rationals, Q );
-# Rationals * Q
-# gap> ind_kQ := IndecProjRepresentations( kQ );
-# [ <1,1,0,0,0>, <0,1,0,0,0>, <0,1,1,0,1>, <0,1,1,1,1>, <0,0,0,0,1> ]
-# gap> R := DirectSum( ind_kQ );
-# <1,4,2,1,3>
-# gap> cat := CapCategory( ind_kQ[1] );
-# quiver representations over Rationals * Q
-# gap> D := dual_functor( cat );
-# Dual functor
-# gap> R_dual := ApplyFunctor( D, Opposite( R ) );
-# <1,4,2,1,3>
-# gap> f := ProjectiveCover( R_dual );
-# <(4,4,7,7,3)->(1,4,2,1,3)>
-# gap> DD := dual_functor( CapCategory( R_dual ) );
-# Dual functor
-# gap> ApplyFunctor( DD, Opposite( f ) );
-# <(1,4,2,1,3)->(4,4,7,7,3)>
-# gap> l := last;
-# <(1,4,2,1,3)->(4,4,7,7,3)>
+compute_lifts_in_complexes := 
+    function( f, g )
+    local m, n, A, f_, g_, lift; 
+    m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) ) + 1;
+    n := Minimum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
+    
+    if IsChainMorphism( f ) then
+        A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
+    else
+        A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), m, n );
+    fi;
+    
+    f_ := convert_chain_or_cochain_mor_to_representation_mor( f, A );
+    g_ := convert_chain_or_cochain_mor_to_representation_mor( g, A );
+    
+    lift := compute_lift_in_quiver_rep( f_, g_ );
+    
+    if lift = fail then 
+        return fail;
+    else 
+        return convert_rep_mor_to_complex_mor( Source(f), Source( g ), lift, A );
+    fi;
+end;
 
+compute_colifts_in_complexes := 
+    function( f, g )
+    local m, n, A, f_, g_, colift; 
+    m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) ) + 1;
+    n := Minimum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
+    
+    if IsChainMorphism( f ) then
+        A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
+    else
+        A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), m, n );
+    fi;
+    
+    f_ := convert_chain_or_cochain_mor_to_representation_mor( f, A );
+    g_ := convert_chain_or_cochain_mor_to_representation_mor( g, A );
+    
+    colift := compute_colift_in_quiver_rep( f_, g_ );
+    
+    if colift = fail then 
+        return fail;
+    else 
+        return convert_rep_mor_to_complex_mor( Range(f), Range( g ), colift, A );
+    fi;
+end;
 
+########################################################
 
+k := Rationals;
+Q := RightQuiver("Q(4)[a:1->2,b:1->3,c:2->4,d:3->4]" );
+kQ := PathAlgebra( k, Q );
+AQ := QuotientOfPathAlgebra( kQ, [ kQ.ac-kQ.bd ] );
 
+#           a
+#       1 ---> 2
+#     b |      | c
+#       v      V
+#       3 ---> 4
+#          d
 
+cat := CategoryOfQuiverRepresentations( AQ: FinalizeCategory := false );
 
+AddEpimorphismFromSomeProjectiveObject( cat, ProjectiveCover );
+SetIsAbelianCategoryWithEnoughProjectives( cat, true );
+AddIsProjective( cat, function( R ) 
+                        return IsIsomorphism( ProjectiveCover( R ) ) ;
+                      end );
+AddLift( cat, compute_lift_in_quiver_rep );
+AddColift( cat, compute_colift_in_quiver_rep );
+Finalize( cat );
 
-
-
-
-
-
-
-
-
-
-
-
-
+chains := ChainComplexCategory( cat: FinalizeCategory := false );
+AddLift( chains, compute_lifts_in_complexes );
+AddColift( chains, compute_colifts_in_complexes );
+Finalize( chains );
