@@ -35,13 +35,15 @@ DeclareCategory( "IsCochainComplexCategory", IsChainOrCochainComplexCategory );
 ###################################################
 
 #! @Description
-#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an additive category $A$.
+#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an additive category $A$. If you want to contruct the category without finalizing it so that you can add
+#! your own methods, you can run the command $\texttt{ChainComplexCategory(A:FinalizeCategory := false)}$. 
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "ChainComplexCategory", IsCapCategory );
 
 #! @Description
-#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an additive category $A$.
+#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an additive category $A$. If you want to contruct the category without finalizing it so that you can add
+#! your own methods, you can run the command $\texttt{CochainComplexCategory(A:FinalizeCategory := false)}$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "CochainComplexCategory", IsCapCategory );
