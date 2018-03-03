@@ -55,6 +55,32 @@ DeclareAttribute( "CochainComplexCategory", IsCapCategory );
 #! @Returns a CAP category
 DeclareAttribute( "UnderlyingCategory", IsChainOrCochainComplexCategory );
 
+#! @Description
+#! The input is chain (or cochain category) $Ch(A)$ of some additive category $A$ and 
+#! a function $F$. This operation adds the given function $F$ to the category $Ch(A)$ for the basic 
+#! operation <C>IsNullHomotopic</C>. So, $F$ should be a function whose input is a chain or cochain morphism 
+#! $\phi\in Ch(A)$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
+#! @Returns <C>true</C> or <C>false</C>
+#! @Arguments A, F
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsNullHomotopic",
+                   [ IsCapCategory, IsList ] );
+
+# this is taken to chains morphisms file
+# @Description
+# The input is a chain or cochain morphism 
+# $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
+# @Arguments phi
+# DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
+
 #! @EndSection
 
 #! @Section Examples

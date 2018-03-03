@@ -185,6 +185,11 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 #!  @EndSection
 
+#! @Description
+#! The input is a chain or cochain morphism 
+#! $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
+#! @Arguments phi
+DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
 
 #!  @Section Operations
 
