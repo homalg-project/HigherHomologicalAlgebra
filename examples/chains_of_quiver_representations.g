@@ -1,3 +1,5 @@
+
+# This example requires QPA2 in my devel branch in github: https://github.com/kamalsaleh/QPA2.git
 LoadPackage( "QPA" );
 LoadPackage( "ComplexesForCAP" );
 
@@ -165,13 +167,22 @@ compute_lift_in_quiver_rep :=
     local homs_basis, Q, k, V, homs_basis_composed_with_g, L, vector, mat, sol, lift, h;
     
     homs_basis := BasisOfHom( Source( f ), Source( g ) );
+    # if homs_basis = [] then there is only the zero morphism between source(f) and source(g)
+    # Thus f must be zero in order for lift to exist.
+    if homs_basis = [ ] then
+      if IsZeroForMorphisms( f ) then
+        return ZeroMorphism( Source( f ), Source( g ) );
+      else
+        return fail;
+      fi;
+    fi;
     Q := QuiverOfRepresentation( Source( f ) );
     k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
     V := Vertices( Q );
     homs_basis_composed_with_g := List( homs_basis, m -> PreCompose( m, g ) );
     L := List( V, v -> Concatenation( [ MatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
                                         List( homs_basis_composed_with_g, h -> MatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m ) ) ) );
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
     L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
 
     L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
@@ -200,6 +211,15 @@ compute_colift_in_quiver_rep :=
     local homs_basis, Q, k, V, homs_basis_composed_with_f, L, vector, mat, sol, colift, h;
     
     homs_basis := BasisOfHom( Range( f ), Range( g ) );
+    # if homs_basis = [] then there is only the zero morphism between range(f) and range(g)
+    # Thus g must be zero in order for colift to exist.
+    if homs_basis = [ ] then
+      if IsZeroForMorphisms( g ) then
+	return ZeroMorphism( Range( f ), Range( g ) );
+      else
+	return fail;
+      fi;
+    fi;
     Q := QuiverOfRepresentation( Source( f ) );
     k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
     V := Vertices( Q );
@@ -208,7 +228,7 @@ compute_colift_in_quiver_rep :=
                                         List( homs_basis_composed_with_f, h -> MatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
     # this line is added because I get errors when MatrixByCols recieve empty matrix 
     # it is still true since i only delete zero matrices from the equation system.
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m ) ) ) );
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
     L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
 
     L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
@@ -259,7 +279,7 @@ compute_lifts_in_complexes :=
     function( f, g )
     local m, n, A, f_, g_, lift; 
     m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) ) + 1;
-    n := Minimum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
+    n := Maximum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
     
     if IsChainMorphism( f ) then
         A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
@@ -282,8 +302,8 @@ end;
 compute_colifts_in_complexes := 
     function( f, g )
     local m, n, A, f_, g_, colift; 
-    m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) ) + 1;
-    n := Minimum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
+    m := Minimum( ActiveLowerBound( Range(f) ), ActiveLowerBound( Range(g) ) ) + 1;
+    n := Maximum( ActiveUpperBound( Range(f) ), ActiveUpperBound( Range(g) ) ) - 1;
     
     if IsChainMorphism( f ) then
         A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
@@ -327,6 +347,7 @@ Finalize( cat );
 chains := ChainComplexCategory( cat: FinalizeCategory := false );
 AddLift( chains, compute_lifts_in_complexes );
 AddColift( chains, compute_colifts_in_complexes );
+AddIsNullHomotopic( chains, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
 Finalize( chains );
 
 m12 := MatrixByRows( Rationals, [ [ 2, 4 ] ] );
@@ -361,3 +382,13 @@ IsEqualForMorphisms( PreCompose( Cone_CA, psi ), phi );
 
 # Note: You can find the basis of hom_k(CA,CB) and test if they are null-homotopic :)
 # See the above function basis_of_hom(_,_).
+quit;
+A := DirectSum( IndecProjRepresentations( AQ ) );
+C := StalkChainComplex( A, 0 );
+L := basis_of_hom( C, C );
+List( L, l->IsNullHomotopic( l ) );
+# [ false, false, false, false, false, false ]
+List( L, l -> IsNullHomotopic( PreCompose( l, NaturalInjectionInMappingCone( l ) ) ) );
+# [ true, true, true, true, true, true ]
+
+# which is exactly what one would expect
