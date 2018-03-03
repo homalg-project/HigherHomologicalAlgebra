@@ -323,6 +323,23 @@ compute_colifts_in_complexes :=
     fi;
 end;
 
+compute_homotopy_chain_morphisms_for_null_homotopic_morphism := 
+    function( f )
+    local B, C, colift;
+    B := Source( f );
+    C := Range( f );
+    colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( f ) ) ), f );
+    if colift = fail then 
+      return fail;
+    else
+      return MapLazy( IntegersList, 
+      		n -> PreCompose( 
+		MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ), ZeroMorphism( B[ n ], B[ n + 1 ] ) ] ] ),
+		colift[ n + 1 ] ), 1 );
+    fi;
+    # Here: l[n]: B[n] --> C[n+1], n in Z.
+end;
+
 ########################################################
 
 # k := Rationals;
