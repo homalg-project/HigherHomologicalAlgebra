@@ -74,6 +74,19 @@ DeclareOperation( "AddIsNullHomotopic",
 DeclareOperation( "AddIsNullHomotopic",
                    [ IsCapCategory, IsList ] );
 
+DeclareOperation( "AddHomotopyMorphisms",
+                   [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddHomotopyMorphisms",
+                   [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddHomotopyMorphisms",
+                   [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddHomotopyMorphisms",
+                   [ IsCapCategory, IsList ] );
+
+
 # this is taken to chains morphisms file
 # @Description
 # The input is a chain or cochain morphism 

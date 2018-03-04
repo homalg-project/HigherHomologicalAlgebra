@@ -174,6 +174,14 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInRange", IsChainOrCochainM
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCochainMorphism );
+
+#!  @Description
+#!  The input is a null-homotopic chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the homotopy morphisms given as 
+#! an infinite list $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ).
+#!  @Arguments phi
+#!  @Returns Infinite list
+DeclareAttribute( "HomotopyMorphisms", IsChainOrCochainMorphism );
+
 #!  @EndSection
 
 #!  @Section Properties
