@@ -84,6 +84,9 @@ end;
 compute_homotopy_chain_morphisms_for_null_homotopic_morphism := 
     function( f )
     local B, C, colift;
+    if not IsNullHomotopic( f ) then
+        return fail;
+    fi;
     B := Source( f );
     C := Range( f );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( f ) ) ), f );
@@ -116,6 +119,7 @@ chains := ChainComplexCategory( cat : FinalizeCategory := false );
 AddLift( chains, compute_lifts_in_chains );
 AddColift( chains, compute_colifts_in_chains );
 AddIsNullHomotopic( chains, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( chains, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
 Finalize( chains );
 
 #################################
@@ -139,5 +143,8 @@ phi3 := PresentationMorphism( A3, HomalgMatrix( "[ [ zt ] ]",1,1, R ), B3 );
 phi4 := PresentationMorphism( A4, HomalgMatrix( "[ [ yz ] ]",1,1, R ), B4 );
 phi := ChainMorphism( CA, CB, [ phi3, phi4 ], 3 );
 IsZeroForMorphisms( phi );
-AddIsNullHomotopic( phi );
+IsNullHomotopic( phi );
 # true
+h := HomotopyMorphisms( phi );
+Display( h[ 3 ] );
+
