@@ -399,7 +399,9 @@ IsEqualForMorphisms( PreCompose( Cone_CA, psi ), phi );
 
 # Note: You can find the basis of hom_k(CA,CB) and test if they are null-homotopic :)
 # See the above function basis_of_hom(_,_).
-quit;
+
+# quit;
+
 A := DirectSum( IndecProjRepresentations( AQ ) );
 C := StalkChainComplex( A, 0 );
 L := basis_of_hom( C, C );

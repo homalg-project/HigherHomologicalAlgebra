@@ -17,9 +17,9 @@ local ring, dual, nat, dual_obj, free_cover,
 ring := UnderlyingHomalgRing( obj );
 dual := FunctorDualLeft( ring );
 nat  := NaturalTransformationFromIdentityToDoubleDualLeft( ring );
-dual_obj := ApplyFunctor( dual, obj );
-free_cover := CoverByFreeModule( dual_obj );
-dual_free_cover := ApplyFunctor( dual, free_cover );
+dual_obj := ApplyFunctor( dual, Opposite( obj ) );
+free_cover := EpimorphismFromSomeProjectiveObject( dual_obj );
+dual_free_cover := ApplyFunctor( dual, Opposite( free_cover ) );
 obj_to_double_dual_obj := ApplyNaturalTransformation( nat, obj );
 return PreCompose( obj_to_double_dual_obj, dual_free_cover );
 end;;
