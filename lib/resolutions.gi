@@ -485,9 +485,9 @@ local cat, F, G, C1, quasi;
 
 cat := UnderlyingCategory( CapCategory( C ) );
 
-F := ChainToCochainComplexFunctor( cat );
+F := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
 
-G := CochainToChainComplexFunctor( cat );
+G := CochainToChainComplexFunctor( CochainComplexCategory( cat ), ChainComplexCategory( cat ) );
 
 C1 := ApplyFunctor( F, C );
 
