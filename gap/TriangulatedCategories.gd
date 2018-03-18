@@ -32,87 +32,186 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsCapCategoryMorphism );
 ##
 ####################################
 
-#! @Arguments a
-#! @Returns object
-#! @Description
-#! The argument is an object $a$.
-#! The output is $T(a)$.
- DeclareOperationWithCache( "ShiftOfObject", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "ShiftOfObject" );
 
-#! @Arguments alpha
-#! @Returns morphism
-#! @Description
-#! The argument is a morphism $\alpha$.
-#! The output is $T(\alpha)$.
- DeclareOperationWithCache( "ShiftOfMorphism", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "ShiftOfMorphism" );
+DeclareOperation( "ShiftOfObject", [ IsCapCategoryObject ] );
 
-#! @Arguments a
-#! @Returns object
-#! @Description
-#! The argument is an object $a$.
-#! The output is $D(a)$.
- DeclareOperationWithCache( "ReverseShiftOfObject", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "ReverseShiftOfObject" );
- 
-#! @Arguments alpha
-#! @Returns morphism
-#! @Description
-#! The argument is a morphism $\alpha$.
-#! The output is $D(\alpha)$.
- DeclareOperationWithCache( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "ReverseShiftOfMorphism" );
- 
-#! @Arguments a
-#! @Returns morphism
-#! @Description
-#! The argument is an object $a$.
-#! The output is an isomorphism $\alpha: a \rightarrow TD(a)$.
- DeclareOperationWithCache( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject" );
- 
-#! @Arguments a
-#! @Returns morphism
-#! @Description
-#! The argument is an object $a$.
-#! The output is an isomorphism $\alpha: a \rightarrow DT(a)$.
- DeclareOperationWithCache( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject", [ IsCapCategoryObject ] );
- DoDeclarationStuff( "IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject" );
- 
-#! @Arguments tr
-#! @Returns a boolian
-#! @Description
-#! The argument is a triangle in the category $\mathcal{C}$.
-#! The output is <C>true</C> if $tr$ is exact. Otherwise the output is <C>false</C>.
- DeclareOperationWithCache( "IsExactForTriangles", [ IsCapCategoryTriangle ] );
- DoDeclarationStuff( "IsExactForTriangles" );
- 
-#! @Arguments alpha
-#! @Returns an exact triangle.
-#! @Description
-#! The input is a morphism $\alpha:a\rightarrow b$. The output is an exact triangle 
-#! $a \rightarrow b \rightarrow c \rightarrow T(a)$, in which the morphism from $a$ to $b$ is $\alpha$.
- DeclareOperationWithCache( "CompleteMorphismToExactTriangle", [ IsCapCategoryMorphism ] );
- DoDeclarationStuff( "CompleteMorphismToExactTriangle" );
+DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsFunction, IsInt ] );
 
-#! @Arguments tr1, tr2, alpha, beta
-#! @Returns a morphism.
-#! @Description
-#! The input is two triangles $tr_1, tr_2$ and two morphisms $\alpha, \beta$ as in axiom $\mathrm{TR?}$.
-#! The output is a morphism $\gamma$ that complete the diagram in $\mathrm{TR?}$ into a morphism of exact triangles.
-DeclareOperationWithCache( "CompleteToMorphismOfExactTriangles",
+DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "ShiftOfMorphism", [ IsCapCategoryMorphism ] );
+ 
+DeclareOperation( "AddShiftOfMorphism", [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddShiftOfMorphism", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddShiftOfMorphism", [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddShiftOfMorphism", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "ReverseShiftOfObject", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsList ] );
+
+ 
+
+DeclareOperation( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ConeObject", IsCapCategoryMorphism );
+
+DeclareOperation( "AddConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddConeObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddConeObject", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "IsomorphismToShiftOfReverseShift", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "IsomorphismToReverseShiftOfShift", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "IsomorphismFromShiftOfReverseShift", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "IsomorphismFromReverseShiftOfShift", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList ] );
+
+
+DeclareProperty( "IsCanonicalExactTriangle", IsCapCategoryTriangle );
+
+DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+
+DeclareProperty( "IsExactTriangle", IsCapCategoryTriangle );
+
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "UnderlyingCanonicalExactTriangle", IsCapCategoryExactTriangle );
+
+DeclareAttribute( "IsomorphismToCanonicalExactTriangle", IsCapCategoryExactTriangle );
+
+DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "IsomorphismFromCanonicalExactTriangle", IsCapCategoryExactTriangle );
+
+DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+
+DeclareAttribute( "RotationOfCanonicalExactTriangle", IsCapCategoryCanonicalExactTriangle );
+
+DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ReverseRotationOfCanonicalExactTriangle", IsCapCategoryCanonicalExactTriangle );
+
+DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "RotationOfExactTriangle", IsCapCategoryExactTriangle );
+
+DeclareOperation( "AddRotationOfExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddRotationOfExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddRotationOfExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddRotationOfExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ReverseRotationOfExactTriangle", IsCapCategoryExactTriangle );
+
+DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "CompleteMorphismToCanonicalExactTriangle", [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "CompleteToMorphismOfCanonicalExactTriangles",
+             [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "CompleteToMorphismOfExactTriangles",
              [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
-DoDeclarationStuff( "CompleteToMorphismOfExactTriangles" );
 
-#! @Arguments alpha, beta
-#! @Returns list.
-#! @Description
-#! The input is two morphisms $\alpha:a\rightarrow b, \beta: b\rightarrow c$. 
-#! The output is a list of $4$ exact triangle satisfying the octohedral axiom.
-DeclareOperationWithCache( "OctohedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
-DoDeclarationStuff( "OctohedralAxiom" );
- 
+DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "CompleteToMorphismOfCanonicalExactTriangles", 
+             [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
+
+
+DeclareOperation( "OctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList ] );
+
+############## to remove ##########
+# DeclareAttribute( "Testtt", IsCapCategory );
+# 
+# DeclareOperation( "AddTesttt", [ IsCapCategory, IsFunction, IsInt ] );
+# DeclareOperation( "AddTesttt", [ IsCapCategory, IsFunction ] );
+# DeclareOperation( "AddTesttt", [ IsCapCategory, IsList, IsInt ] );
+# DeclareOperation( "AddTesttt", [ IsCapCategory, IsList ] );
+############## to remove ##########
 
 ###################################
 ##
@@ -226,16 +325,9 @@ DeclareOperation( "IsIsomorphicTriangles",
  
 #! @Section Attributes
 
-#! @Arguments C
-#! @Returns a functor
-#! @Description
-#! The input is finalised triangulated category $\mathcal{C}$. The output is its shift functor $T$.
 DeclareAttribute( "ShiftFunctor", IsCapCategory );
 
-#! @Arguments C
-#! @Returns a functor
-#! @Description
-#! The input is finalised triangulated category $\mathcal{C}$. The output is the inverse of its shift functor, i.e., $D$.
+
 DeclareAttribute( "ReverseShiftFunctor", IsCapCategory );
 
 #! @Arguments C
@@ -252,14 +344,9 @@ DeclareAttribute( "NaturalIsomorphismFromIdentityToReverseShiftAfterShiftFunctor
 #! and $T\circ D$.
 DeclareAttribute( "NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor", IsCapCategory );
 
-#! @Arguments tr
-#! @Returns Cap category
-#! @Description The input is a triangle. The output is the category of $tr$.
-DeclareAttribute( "CapCategory", IsCapCategoryTriangle );
 
 DeclareAttribute( "CapCategory", IsCapCategoryTrianglesMorphism );
 
-DeclareAttribute( "CreateTriangleByTR2Forward", IsCapCategoryTriangle );
 
 DeclareAttribute( "CreateTriangleByTR2Backward", IsCapCategoryTriangle );
 
@@ -275,11 +362,7 @@ DeclareAttribute( "Range", IsCapCategoryTrianglesMorphism );
  
 #! @Section Properties
 
-DeclareProperty( "IsExactTriangle", IsCapCategoryTriangle );
 
-#! @Arguments C
-#! @Returns a boolian
-#! @Description The output is <C>true</C> if the category is triangulated. Otherwise <C>false</C>.
 DeclareProperty( "IsTriangulatedCategory", IsCapCategory );
 
 #! @Arguments mor 
