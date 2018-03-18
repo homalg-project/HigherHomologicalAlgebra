@@ -915,7 +915,7 @@ end );
 
 ##############################
 ##
-## View
+##  View
 ##
 ##############################
 
@@ -923,41 +923,35 @@ InstallMethod( ViewObj,
                
                [ IsCapCategoryTriangle ], 
                
-  function( triangle )
-  
-  if HasIsExactTriangle( triangle ) then 
-  
-     if not IsExactTriangle( triangle ) then 
-  
-        Print( "< A not exact triangle in ", CapCategory( triangle ), " >" );
+    function( triangle )
 
-     else 
-     
-        Print( "< An exact triangle in ", CapCategory( triangle ), " >" );
- 
-     fi;
-     
-  else 
-  
-     Print( "< A triangle in ", CapCategory( triangle ), " >" );
+    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+        Print( "<A canonical exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
+    elif IsCapCategoryExactTriangle( triangle ) then 
+        if HasIsCanonicalExactTriangle( triangle ) and not IsCanonicalExactTriangle( triangle ) then
+            Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
+        else
+            Print( "<An exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">");
+        fi;
+    else
+        Print( "<A triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
+    fi;
 
-  fi;
-  
 end );
   
 InstallMethod( ViewObj, 
 
                [ IsCapCategoryTrianglesMorphism ], 
                
-  function( morphism )
+    function( morphism )
   
-  Print( "< A morphism of triangles in ", CapCategory( morphism ), " >" );
+        Print( "<A morphism of triangles in ", CapCategory( MorphismAt( morphism, 0 ) ), ">" );
   
 end );
   
 ##############################
 ##
-## Display
+##  Display
 ##
 ##############################
 
@@ -966,69 +960,62 @@ InstallMethod( Display,
 
         [ IsCapCategoryTriangle ],
         
-  function( triangle )
-    
-  Print( "object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 )\n" );
+    function( triangle )
+    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+        Print( "A canonical exact triangle given by the sequence\n\n");
+    elif IsCapCategoryExactTriangle( triangle ) then 
+        Print( "An exact triangle given by the sequence\n\n");
+    else
+        Print( "A triangle given by the sequence\n\n" );
+    fi;
   
-  Print( "\n\nobject1 is\n" ); Display( triangle!.object1 );
+    Print( "     t0         t1         t2           \n");
+    Print( "T0 ------> T1 ------> T2 ------> Σ( T0 )\n" );
+    Print( "\n\nT0 is\n\n" ); Display( ObjectAt( triangle, 0 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "t0 is \n\n");Display( MorphismAt( triangle, 0 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "T1 is\n\n" );Display( ObjectAt( triangle, 1 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "t1 is \n\n");Display( MorphismAt( triangle, 1 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "T2 is\n\n" );Display( ObjectAt( triangle, 2 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "t2 is \n\n");Display( MorphismAt( triangle, 2 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "Σ( T0 ) is \n\n" ); Display( ShiftOfObject( ObjectAt( triangle, 0 ) ) );
   
-  Print( "\n\nmorphism1 is \n");Display( triangle!.morphism1 );
-  
-  Print( "\n\nobject2 is\n" );Display( triangle!.object2 );
-  
-  Print( "\n\nmorphism2 is \n");Display( triangle!.morphism2 );
-  
-  Print( "\n\nobject3 is\n" );Display( triangle!.object3 );
-  
-  Print( "\n\nmorphism3 is \n");Display( triangle!.morphism3 );
-  
-  Print( "\n\nShiftOfObject( object1 ) is \n" ); Display( ShiftOfObject( triangle!.object1 ) );
-  
-end );
+end, 5 );
 
+##
 InstallMethod( Display, 
-
-       [ IsCapCategoryTrianglesMorphism ],
+        [ IsCapCategoryTrianglesMorphism ],
+    
+    function( morphism )
    
-  function( morphism )
-  
-  Print( "A morphism of triangles:\n");
-
-  Print( "Triangle1: object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 ) \n" );
-  Print( "              |                        |                        |                              |               \n" );
-  Print( "              |                        |                        |                              |               \n" );
-  Print( "          morphism11               morphism22               morphism33            ShiftOfMorphism( morphism11 )\n" );
-  Print( "              |                        |                        |                              |               \n" );
-  Print( "              |                        |                        |                              |               \n" );
-  Print( "              V                        V                        V                              V               \n" );
-  Print( "Triangle2: object1 --(morphism1)--> object2 --(morphism2)--> object3 --(morphism3)--> ShiftOfObject( object1 ) \n" );
-  Print( "\n--------------------------------\n" );
-  Print( "Triangle1 is \n" );
-  Display( morphism!.triangle1 );
-  Print( "\n--------------------------------" );
-  Print( "\nTriangle2 is \n" );
-  Display( morphism!.triangle2 );
-  Print( "\n--------------------------------" );
-  Print( "\nMorphism11\n" );
-  Display( morphism!.morphism11 );
-  Print( "--------------------------------" );
-  Print( "\nMorphism22\n" );
-  Display( morphism!.morphism22 );
-  Print( "--------------------------------" );
-  Print( "\nMorphism33\n" );
-  Display( morphism!.morphism33 );
-  Print( "--------------------------------" );
-  Print( "\nShiftOfMorphism( morphism11 )\n" );
-  Display( ShiftOfMorphism( morphism!.morphism11 ) );
-  Print( "--------------------------------" );
-  
-end );
-  
-  
-  
-       
-       
-       
-       
-
-
+    Print( "A morphism of triangles:\n");
+ 
+    Print( "          t0         t1         t2             \n" );
+    Print( "Tr1: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
+    Print( "     |          |          |            |      \n" );
+    Print( "     | m0       | m1       | m2         | Σ(m0)\n" );
+    Print( "     |          |          |            |      \n" );
+    Print( "     V          V          V            V      \n" );
+    Print( "Tr2: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
+    Print( "          t0         t1         t2             \n" );
+    Print( "\n---------------------------------------------\n" );
+    Print( "\nm0 is\n\n" );
+    Display( MorphismAt( morphism, 0 ) );
+    Print( "----------------------------------------------\n" );
+    Print( "\nm1 is\n\n" );
+    Display( MorphismAt( morphism, 1 ) );
+    Print( "----------------------------------------------\n" );
+    Print( "\nm2 is\n\n" );
+    Display( MorphismAt( morphism, 2 ) );
+    Print( "----------------------------------------------\n" );
+    Print( "\nΣ( m0 ) is\n\n" );
+    Display( MorphismAt( morphism, 3 ) );
+    Print( "----------------------------------------------\n" );
+   
+ end );
+   
