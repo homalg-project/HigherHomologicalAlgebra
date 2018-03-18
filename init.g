@@ -5,3 +5,5 @@
 #
 
 ReadPackage( "TriangulatedCategoriesForCAP", "gap/TriangulatedCategories.gd");
+ReadPackage( "TriangulatedCategoriesForCAP", "gap/TrianglesCategory.gd");
+
