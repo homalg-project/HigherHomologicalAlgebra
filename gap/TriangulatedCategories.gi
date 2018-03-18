@@ -22,6 +22,10 @@ DeclareRepresentation( "IsCapCategoryExactTriangleRep",
                         IsCapCategoryExactTriangle and IsAttributeStoringRep,
                         [ ] );
 
+DeclareRepresentation( "IsCapCategoryCanonicalExactTriangleRep",
+                        IsCapCategoryCanonicalExactTriangle and IsAttributeStoringRep,
+                        [ ] );
+                        
 DeclareRepresentation( "IsCapCategoryTrianglesMorphismRep",
 
                         IsCapCategoryTrianglesMorphism and IsAttributeStoringRep, 
@@ -39,6 +43,9 @@ BindGlobal( "CapCategoryTrianglesFamily",
 BindGlobal( "CapCategoryExactTrianglesFamily",
   NewFamily( "CapCategoryExactTrianglesFamily", IsCapCategoryTriangle ) );
 
+BindGlobal( "CapCategoryCanonicalExactTrianglesFamily",
+  NewFamily( "CapCategoryCanonicalExactTrianglesFamily", IsCapCategoryExactTriangle ) );
+  
 BindGlobal( "CapCategoryTrianglesMorphismsFamily",
   NewFamily( "CapCategoryTrianglesMorphismsFamily", IsObject ) );
   
@@ -50,13 +57,18 @@ BindGlobal( "TheTypeCapCategoryExactTriangle",
   NewType( CapCategoryExactTrianglesFamily, 
                       IsCapCategoryExactTriangleRep ) );
                       
+BindGlobal( "TheTypeCapCategoryCanonicalExactTriangle", 
+  NewType( CapCategoryCanonicalExactTrianglesFamily, 
+                      IsCapCategoryCanonicalExactTriangleRep ) );
+
+                      
 BindGlobal( "TheTypeCapCategoryTrianglesMorphism", 
   NewType( CapCategoryTrianglesMorphismsFamily, 
                       IsCapCategoryTrianglesMorphismRep ) );
                       
 ###############################
 ##
-##  
+##  Methods record
 ##
 ###############################
 

@@ -17,50 +17,14 @@ DeclareGlobalVariable( "CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS" )
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 
-DeclareCategory( "IsCapCategoryTriangle", IsObject );
+DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryObject );
 
 DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
 
-DeclareCategory( "IsCapCategoryTrianglesMorphism", IsObject );
+DeclareCategory( "IsCapCategoryCanonicalExactTriangle", IsCapCategoryExactTriangle );
 
-#################################
-##
-##  Saving time for declarations 
-##
-#################################
+DeclareCategory( "IsCapCategoryTrianglesMorphism", IsCapCategoryMorphism );
 
-if not IsPackageMarkedForLoading( "FrobeniusCategoriesForCAP", ">0.1" ) then
-
-##
- DeclareOperation( "DoDeclarationStuff", [ IsString ] );
- 
-## 
- InstallMethod( DoDeclarationStuff, 
-                [ IsString ], 
- function( name_of_the_function )
-
- DeclareOperation( Concatenation( "Add", name_of_the_function ),
-                   [ IsCapCategory, IsFunction, IsInt ] );
-                   
- DeclareOperation( Concatenation( "Add", name_of_the_function ),
-                   [ IsCapCategory, IsFunction ] );
-
-
- DeclareOperation( Concatenation( "Add", name_of_the_function ),
-                   [ IsCapCategory, IsList, IsInt ] );
-                   
- DeclareOperation( Concatenation( "Add", name_of_the_function ),
-                   [ IsCapCategory, IsList ] );
- end );
- 
-fi;
-
-#! @Chapter Creating triangulated categories and their operations
-#! @Section Creating triangulated category.
-#! bla bla.
-#! @Section Primitive operations
-#! In the following $T$ is the shift fuctor of the triangulated category $\mathcal{C}$. Its inverse will be 
-#! denoted by $D$.
 
 ####################################
 ##
