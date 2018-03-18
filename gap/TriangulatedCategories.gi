@@ -2,7 +2,7 @@
 ##
 ##  TriangulatedCategories.gi             TriangulatedCategories package
 ##
-##  Copyright 2016,                       Kamal Saleh, RWTH Aachen University
+##  Copyright 2018,                       Kamal Saleh, Siegen University, Germany
 ##
 #############################################################################
 
