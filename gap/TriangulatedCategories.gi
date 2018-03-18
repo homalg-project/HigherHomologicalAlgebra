@@ -516,45 +516,6 @@ end );
      
         Error( "The third squar is not commutative" );
         
-     fi;
-     
-
-  morphism := rec( triangle1:= triangle1,
-                   
-                   triangle2:= triangle2,
-                   
-                   morphism11:= morphism11,
-                   
-                   morphism22:= morphism22,
-                   
-                   morphism33:= morphism33 
-                   
-                 );
-                 
-  ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
-                           Source, triangle1,
-                           Range, triangle2,
-                           CapCategory, category
-                         );
-  
-  return morphism;
-  
-  end );
-  
-InstallMethod( ShiftFunctor,
-                 [ IsCapCategory and IsTriangulatedCategory ],
-                 
-    function( category )
-    local name, functor;
-    
-    name := Concatenation( "Shift functor in ", Name( category ) );
-    
-    functor := CapFunctor( name, category, category );
-    
-    if not CanCompute( category, "ShiftOfObject" ) or not CanCompute( category, "ShiftOfMorphism" ) then
-    
-       Error( "ShiftOfObject and ShiftOfMorphism should be added to the category" );
-       
     fi;
     
     AddObjectFunction( functor, 
@@ -567,16 +528,8 @@ InstallMethod( ShiftFunctor,
           
     AddMorphismFunction( functor, 
     
-          function( new_source, mor, new_range )
-          
-          return ShiftOfMorphism( mor );
-          
-          end );
-          
-    return functor;
- 
 end );
-    
+
 ##
 InstallMethod( ReverseShiftFunctor,
                  [ IsCapCategory and IsTriangulatedCategory ],
@@ -596,91 +549,21 @@ InstallMethod( ReverseShiftFunctor,
     
     AddObjectFunction( functor, 
     
-          function( obj )
-          
-          return ReverseShiftOfObject( obj );
-          
-          end );
-          
-    AddMorphismFunction( functor, 
-    
-          function( new_source, mor, new_range )
-          
-          return ReverseShiftOfMorphism( mor );
-          
-          end );
-          
-    return functor;
- 
 end );
 
-InstallMethod( NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor, 
-                     [ IsCapCategory and IsTriangulatedCategory ],
-                     
-       function( category )
-       local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
-       
-       id := IdentityMorphism( AsCatObject( category ) );
-       
-       shift := ShiftFunctor( category );
-       
-       reverse_shift := ReverseShiftFunctor( category );
-       
-       shift_after_reverse_shift := PreCompose( reverse_shift, shift );
-       
-       name := "Autoequivalence from identity functor to Shift after ReverseShift functor in ";
-       
-       name := Concatenation( name, Name( category ) );
-       
-       nat := NaturalTransformation( name, id, shift_after_reverse_shift );
-       
-       AddNaturalTransformationFunction( nat, 
-        
-          function( Id_of_object, object, shift_after_reverse_shift_of_object )
-             
-             return IsomorphismFromObjectToShiftAfterReverseShiftOfTheObject( object );
-             
-          end );
-        
-       return nat;
-       
-end );
-
-InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftAfterShiftFunctor, 
-                     [ IsCapCategory and IsTriangulatedCategory ],
-                     
-       function( category )
-       local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
-       
-       id := IdentityMorphism( AsCatObject( category ) );
-       
-       shift := ShiftFunctor( category );
-       
-       reverse_shift := ReverseShiftFunctor( category );
-       
-       reverse_shift_after_shift := PreCompose( shift, reverse_shift);
-       
-       name := "Autoequivalence from identity functor to ReverseShift after Shift functor in ";
-       
-       name := Concatenation( name, Name( category ) );
-       
-       nat := NaturalTransformation( name, id, reverse_shift_after_shift );
-       
-       AddNaturalTransformationFunction( nat, 
-        
-          function( Id_of_object, object, reverse_shift_after_shift_of_object )
-             
-             return IsomorphismFromObjectToReverseShiftAfterShiftOfTheObject( object );
-             
-          end );
-        
-       return nat;
-       
-end );
-
-##############################
 ##
-## Methods
+InstallMethod( UnderlyingCanonicalExactTriangle,
+                [ IsCapCategoryExactTriangle ],
+    function( T )
+   
+    if IsCapCategoryCanonicalExactTriangle( T ) then
+        return T;
+    else
+        return CompleteMorphismToCanonicalExactTriangle( MorphismAt( T, 0 ) );
+    fi;
+
+end );
+
 ##
 ##############################
  
@@ -733,21 +616,15 @@ InstallMethodWithCache( PostCompose,
  
     Error( "'PostCompose' for morphisms in ",category, " is not yet 'Add'ed." );
     
- fi;
- 
- return CreateMorphismOfTriangles( Source( mor1), Range( mor2 ), PostCompose( mor2!.morphism11, mor1!.morphism11 ),
-                                       PostCompose( mor2!.morphism22, mor1!.morphism22 ),
-                                       PostCompose( mor2!.morphism33, mor1!.morphism33 )
-                                 );
-
 end );
 
-InstallMethodWithCache( IsEqualForTriangles,
 
-                        [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
-                        
-  function( trian1, trian2 )
-  local category;
+#\begin{tikzcd}
+#A \arrow[r, "f"] & B \arrow[r, "g"] & C \arrow[r, "h"] \arrow[d, "u", two heads, tail] & A[1] &  &  &  & C[-1] \arrow[r, "{-h[-1]}"] \arrow[d, "{u[-1]}"'] & A \arrow[r, "f"] & B \arrow[r, "g"] & C \arrow[d, "u"] \\
+#A \arrow[r, "f"'] & B \arrow[r, "\alpha(f)"'] & C(f) \arrow[r, "\beta(f)"'] & A[1] &  &  &  & C(f)[-1] \arrow[r, "{-\beta(f)[-1]}"'] & A \arrow[r, "f"'] & B \arrow[r, "\alpha(f)"'] \arrow[d, "t"] & C(f) \\
+# &  &  &  &  &  &  & C(f)[-1] \arrow[r, "{-\beta(f)[-1]}"] \arrow[d, "{u[-1]^{-1}}"'] & A \arrow[r, "\alpha(*)"] & C(\beta(f)[-1]) \arrow[r, "\beta(*)"] \arrow[d, "s"] & C(f) \arrow[d, "u^{-1}"] \\
+# &  &  &  &  &  &  & C[-1] \arrow[r, "{-h[-1]}"'] & A \arrow[r, "{\alpha(-h[-1])}"'] & C(h[-1]) \arrow[r, "{\beta(-h[-1])}"'] & C
+#\end{tikzcd}
 
   category := CapCategory( trian1 );
   
@@ -916,12 +793,6 @@ InstallMethod( IsExactTriangleByTR2Forward,
   
      return IsExactTriangleByTR2Forward( CreateTriangleByTR2Forward( triangle ) );
      
-  fi;
-  
-  
-  return fail;
-  
-  
 end );
 
 InstallMethod( IsExactTriangleByTR2Backward, 
@@ -1099,96 +970,212 @@ end );
 od;
 
 end );
-   
-#############################
-##
-##  Attributes
-##
-#############################
 
-InstallMethod( CreateTriangleByTR2Forward,
-                  [ IsCapCategoryTriangle ], 
+InstallMethod( ShiftFunctor,
+                  [ IsCapCategory and IsTriangulatedCategory ],
                   
-  function( triangle )
-  
-  local new_morphism, new_triangle;
-  
-  
-  new_morphism :=  AdditiveInverseForMorphisms( ShiftOfMorphism( triangle!.morphism1 ) );
-  
-  if HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
-  
-     new_triangle:= CreateExactTriangle( triangle!.morphism2, triangle!.morphism3, new_morphism );
+    function( category )
+    local name, functor;
      
-     SetCreateTriangleByTR2Backward( new_triangle, triangle );
+    name := Concatenation( "Shift endofunctor in ", Name( category ) );
      
-     return new_triangle;
+    functor := CapFunctor( name, category, category );
      
-  else 
-  
-     new_triangle:= CreateTriangle( triangle!.morphism2, triangle!.morphism3, new_morphism );
-     
-     SetCreateTriangleByTR2Backward( new_triangle, triangle );
-     
-     return new_triangle;
-     
-  fi;
-  
-end );
-     
-
-InstallMethod( CreateTriangleByTR2Backward,
-                  [ IsCapCategoryTriangle ], 
-                  
-  function( triangle )
-  
-  local new_morphism, new_triangle;
-  
-  
-  new_morphism :=  AdditiveInverseForMorphisms( ReverseShiftOfMorphism( triangle!.morphism3 ) );
-  
-  if HasIsExactTriangle( triangle ) and IsExactTriangle( triangle ) then 
-  
-     new_triangle:= CreateExactTriangle( new_morphism, triangle!.morphism1, triangle!.morphism2  );
-     
-     SetCreateTriangleByTR2Forward( new_triangle, triangle );
-     
-     return new_triangle;
-     
-  else 
-  
-     new_triangle:= CreateTriangle( new_morphism, triangle!.morphism1, triangle!.morphism2 );
-     
-     SetCreateTriangleByTR2Forward( new_triangle, triangle );
-     
-     return new_triangle;
-     
-  fi;
-  
-end );
- 
-InstallMethodWithCache( ApplyCreationTrianglesByTR2,
-                        [ IsCapCategoryTriangle, IsInt ],
-  function( t, n )
-  
-  if n=0 then 
-  
-    return t;
+    if not CanCompute( category, "ShiftOfObject" ) or not CanCompute( category, "ShiftOfMorphism" ) then
+        
+        Error( "ShiftOfObject and ShiftOfMorphism should be added to the category" );
+        
+    fi;
     
-  elif n<0 then
-  
-    return CreateTriangleByTR2Backward( ApplyCreationTrianglesByTR2( t, n+1 ) );
-    
-  else 
-  
-    return CreateTriangleByTR2Forward( ApplyCreationTrianglesByTR2( t, n-1 ) );
-    
-  fi;
-  
-end );
- 
-  
+    AddObjectFunction( functor, 
+            
+           function( obj )
                 
+                return ShiftOfObject( obj );
+                
+           end );
+           
+    AddMorphismFunction( functor, 
+     
+           function( new_source, mor, new_range )
+                
+                return ShiftOfMorphism( mor );
+                
+           end );
+           
+     return functor;
+  
+end );
+     
+ 
+InstallMethod( ReverseShiftFunctor,
+                  [ IsCapCategory and IsTriangulatedCategory ],
+                  
+     function( category )
+     local name, functor;
+     
+     name := Concatenation( "Reverse Shift endofunctor in ", Name( category ) );
+     
+     functor := CapFunctor( name, category, category );
+     
+     if not CanCompute( category, "ReverseShiftOfObject" ) or not CanCompute( category, "ReverseShiftOfMorphism" ) then
+     
+        Error( "ReverseShiftOfObject and ReverseShiftOfMorphism should be added to the category" );
+        
+     fi;
+     
+     AddObjectFunction( functor, 
+     
+           function( obj )
+           
+           return ReverseShiftOfObject( obj );
+           
+           end );
+           
+     AddMorphismFunction( functor, 
+     
+           function( new_source, mor, new_range )
+           
+           return ReverseShiftOfMorphism( mor );
+           
+           end );
+           
+     return functor;
+  
+end );
+
+##
+InstallMethod( NaturalIsomorphismFromIdentityToShiftOfReverseShift, 
+                      [ IsCapCategory and IsTriangulatedCategory ],
+                      
+        function( category )
+        local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
+        
+        id := IdentityFunctor( category );
+        
+        shift := ShiftFunctor( category );
+        
+        reverse_shift := ReverseShiftFunctor( category );
+        
+        shift_after_reverse_shift := PreCompose( reverse_shift, shift );
+        
+        name := "Autoequivalence from identity functor to Σ o Σ^-1 in ";
+        
+        name := Concatenation( name, Name( category ) );
+        
+        nat := NaturalTransformation( name, id, shift_after_reverse_shift );
+        
+        AddNaturalTransformationFunction( nat, 
+         
+           function( Id_of_object, object, shift_after_reverse_shift_of_object )
+              
+              return IsomorphismToShiftOfReverseShift( object );
+              
+           end );
+         
+        return nat;
+        
+end );
+ 
+##
+InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftOfShift, 
+                      [ IsCapCategory and IsTriangulatedCategory ],
+                      
+        function( category )
+        local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
+        
+        id := IdentityFunctor( category );
+        
+        shift := ShiftFunctor( category );
+        
+        reverse_shift := ReverseShiftFunctor( category );
+        
+        reverse_shift_after_shift := PreCompose( shift, reverse_shift);
+        
+        name := "Autoequivalence from identity functor to Σ^-1 o Σ in  ";
+        
+        name := Concatenation( name, Name( category ) );
+        
+        nat := NaturalTransformation( name, id, reverse_shift_after_shift );
+        
+        AddNaturalTransformationFunction( nat, 
+         
+           function( Id_of_object, object, reverse_shift_after_shift_of_object )
+              
+              return IsomorphismToReverseShiftOfShift( object );
+              
+           end );
+         
+        return nat;
+        
+end );
+
+##
+InstallMethod( NaturalIsomorphismFromShiftOfReverseShiftToIdentity, 
+                      [ IsCapCategory and IsTriangulatedCategory ],
+                      
+        function( category )
+        local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
+        
+        id := IdentityFunctor( category );
+        
+        shift := ShiftFunctor( category );
+        
+        reverse_shift := ReverseShiftFunctor( category );
+        
+        shift_after_reverse_shift := PreCompose( reverse_shift, shift );
+        
+        name := "Autoequivalence from Σ o Σ^-1 to identity functor in ";
+        
+        name := Concatenation( name, Name( category ) );
+        
+        nat := NaturalTransformation( name, id, shift_after_reverse_shift );
+        
+        AddNaturalTransformationFunction( nat, 
+         
+           function( Id_of_object, object, shift_after_reverse_shift_of_object )
+              
+              return IsomorphismFromShiftOfReverseShift( object );
+              
+           end );
+         
+        return nat;
+        
+end );
+ 
+##
+InstallMethod( NaturalIsomorphismFromReverseShiftOfShiftToIdentity, 
+                      [ IsCapCategory and IsTriangulatedCategory ],
+                      
+        function( category )
+        local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
+        
+        id := IdentityFunctor( category );
+        
+        shift := ShiftFunctor( category );
+        
+        reverse_shift := ReverseShiftFunctor( category );
+        
+        reverse_shift_after_shift := PreCompose( shift, reverse_shift);
+        
+        name := "Autoequivalence from Σ^-1 o Σ to identity functor in ";
+        
+        name := Concatenation( name, Name( category ) );
+        
+        nat := NaturalTransformation( name, id, reverse_shift_after_shift );
+        
+        AddNaturalTransformationFunction( nat, 
+         
+           function( Id_of_object, object, reverse_shift_after_shift_of_object )
+              
+              return IsomorphismFromReverseShiftOfShift( object );
+              
+           end );
+         
+        return nat;
+        
+end );
+
 ##############################
 ##
 ## View

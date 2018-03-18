@@ -240,22 +240,15 @@ DeclareAttribute( "ShiftFunctor", IsCapCategory );
 
 DeclareAttribute( "ReverseShiftFunctor", IsCapCategory );
 
-#! @Arguments C
-#! @Returns a natural transformation
-#! @Description
-#! The input is finalised triangulated category $\mathcal{C}$. The output is the natural isomorphism between the identity functor
-#! and $D\circ T$.
-DeclareAttribute( "NaturalIsomorphismFromIdentityToReverseShiftAfterShiftFunctor", IsCapCategory );
+DeclareAttribute( "NaturalIsomorphismFromIdentityToReverseShiftOfShift", IsCapCategory );
 
-#! @Arguments C
-#! @Returns a natural transformation
-#! @Description
-#! The input is finalised triangulated category $\mathcal{C}$. The output is the natural isomorphism between the identity functor
-#! and $T\circ D$.
-DeclareAttribute( "NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor", IsCapCategory );
+DeclareAttribute( "NaturalIsomorphismFromIdentityToShiftOfReverseShift", IsCapCategory );
 
 
-DeclareAttribute( "CapCategory", IsCapCategoryTrianglesMorphism );
+DeclareAttribute( "NaturalIsomorphismFromReverseShiftOfShiftToIdentity", IsCapCategory );
+
+
+DeclareAttribute( "NaturalIsomorphismFromShiftOfReverseShiftToIdentity", IsCapCategory );
 
 DeclareAttribute( "UnderlyingCapCategory", IsCapCategoryTriangle );
 
