@@ -215,107 +215,19 @@ DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList ] );
 
 ###################################
 ##
-## General Methods declaration
+## construction operations
 ##
 ##################################
 
-#! @Section General operations
+DeclareOperation( "CreateTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] ); 
 
-#! @Arguments a,n
-#! @Returns object
-#! @Description
-#! The argument is an object $a$.
-#! The output is $T^n(a)$.
-DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryObject,   IsInt ] );
+DeclareOperation( "CreateExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
 
-#! @Arguments alpha,n
-#! @Returns morphism
-#! @Description
-#! The argument is a morphism $\alpha$.
-#! The output is $T^n(\alpha)$.
-DeclareOperationWithCache( "ApplyShift", [ IsCapCategoryMorphism, IsInt ] );
+DeclareOperation( "CreateCanonicalExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
 
+DeclareOperation( "CreateTrianglesMorphism", 
+                    [ IsCapCategoryTriangle, IsCapCategoryTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] ); 
 
-DeclareOperationWithCache( "ApplyCreationTrianglesByTR2", [ IsCapCategoryTriangle, IsInt ] );
-
-#! @Arguments alpha,beta, gamma
-#! @Returns a triangle
-#! @Description
-#! The arguments are morphism $\alpha:a\rightarrow b,\beta:b \rightarrow c, \gamma: c\rightarrow T(a)$.
-#! The output is the triangle defined by $\alpha,\beta,\gamma$.
-DeclareOperationWithCache( "CreateTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
-
-#! @Arguments alpha
-#! @Returns object
-#! @Description
-#! The input is a morphism $\alpha:a\rightarrow b$. The output is an object $c$ such that there exsits an exact triangle 
-#! $a \rightarrow b \rightarrow c \rightarrow T(a)$, in which the morphism from $a$ to $b$ is $\alpha$.
-DeclareOperationWithCache( "ConeObject", [ IsCapCategoryMorphism ] );
-
-#! @Arguments alpha,beta, gamma
-#! @Returns a triangle
-#! @Description
-#! The arguments are morphism $\alpha:a\rightarrow b,\beta:b \rightarrow c, \gamma: c\rightarrow T(a)$.
-#! The output is exact triangle defined by $\alpha,\beta,\gamma$.
-DeclareOperationWithCache( "CreateExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
-                    
-#! @Arguments tr
-#! @Returns exact triangle
-#! @Description
-#! The argument is a triangle $tr$. The output is an exact triangle that equals to $tr$ as triangles.
-DeclareOperationWithCache( "CreateExactTriangle", 
-                    [ IsCapCategoryTriangle ] );
-#! @Arguments tr1, tr2
-#! @Returns a boolian
-#! @Description
-#! The output is <C>true</C> if $tr_1 = tr_2$. Otherwise it returns <C>false</C>.
-DeclareOperationWithCache( "IsEqualForTriangles", 
-                    [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
-
-#! @Arguments tr1, tr2, f,g,h
-#! @Returns morphism of triangles
-#! @Description
-#! The output is a morphism of triangles defined by the input data.
-DeclareOperationWithCache( "CreateMorphismOfTriangles", [ IsCapCategoryTriangle, IsCapCategoryTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] ); 
-
-#! @Arguments mor1, mor2
-#! @Returns morphism of triangles
-#! @Description
-#! The input is two morphisms of triangles $mor_1:tr_1 \rightarrow tr_2, mor_2: tr_2 \rightarrow tr_3$.
-#! The output is their pre-composition.
-DeclareOperationWithCache( "PreCompose", [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
-
-#! @Arguments mor2, mor1
-#! @Returns morphism of triangles
-#! @Description
-#! The input is two morphisms of triangles $mor_1:tr_1 \rightarrow tr_2, mor_2: tr_2 \rightarrow tr_3$.
-#! The output is their post-composition.
-DeclareOperationWithCache( "PostCompose", [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ] );
-
-#! @Arguments tr1, tr2, alpha, beta, list
-#! @Returns morphism
-#! @Description
-#! The input is two exact triangles and two morphisms $\alpha, \beta$ and a <C>list</C>. The list is allowed to be $[1,2],[1,3]$ or $[2,3]$.  
-#! It discribes between which objects in $tr_1,tr_2$ the morphisms $\alpha, \beta$ are. The output is a morphism that 
-#! complete the diagram to a morphism of exact triangles.
-DeclareOperationWithCache( "CompleteToMorphismOfExactTriangles", [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
-
-DeclareOperation( "IsExactTriangleByAxioms", [ IsCapCategoryTriangle ] );
-
-DeclareOperation( "IsExactTriangleByTR2Backward", [ IsCapCategoryTriangle ] );
-
-DeclareOperation( "IsExactTriangleByTR2Forward", [ IsCapCategoryTriangle ] );
-
-DeclareOperation( "Iso_Triangles", [ IsCapCategoryTriangle, IsList ] );
-
-DeclareOperation( "CurrentIsoClassOfTriangle", [ IsCapCategoryTriangle ] );
-
-DeclareOperation( "SetIsIsomorphicTriangles",
-                  [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
-DeclareOperation( "In", [ IsCapCategoryTriangle, IsList ] );
- 
-DeclareOperation( "IsIsomorphicTriangles", 
-               [ IsCapCategoryTriangle, IsCapCategoryTriangle ] );
 
 ###############################
 ##

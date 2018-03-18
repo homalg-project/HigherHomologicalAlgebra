@@ -286,127 +286,102 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECOR
 ##
 ####################################
 
-InstallMethodWithCache( ApplyShift,
-                        [ IsCapCategoryObject, IsInt ],
-  function( obj, n )
-  
-  if n=0 then 
-  
-    return obj;
+##
+InstallMethod( CreateTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
     
-  elif n<0 then
-  
-    return ReverseShiftOfObject( ApplyShift( obj, n+1 ) );
+    function( mor1, mor2, mor3 )
+    local  triangle;
     
-  else 
-  
-    return ShiftOfObject( ApplyShift( obj, n-1 ) );
+    triangle:= rec( T0 := Source( mor1 ),
+                    t0 := mor1,
+                    T1 := Source( mor2 ),
+                    t1 := mor2,
+                    T2 := Source( mor3 ),
+                    t2 := mor3,
+                    T3 :=  Range( mor3 ) 
+                  );
     
-  fi;
-  
+    ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle,
+                             UnderlyingCapCategory, CapCategory( mor1 )
+                           );
+    
+    AddObject( CategoryOfTriangles( CapCategory( mor1 ) ), triangle );
+    
+    AddToToDoList( ToDoListEntry( [ [ triangle, "IsExactTriangle", true ] ], 
+                    function( )
+                    SetFilterObj( triangle, IsCapCategoryExactTriangle );
+                    end ) );
+
+    AddToToDoList( ToDoListEntry( [ [ triangle, "IsCanonicalExactTriangle", true ] ], 
+                    function( )
+                    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
+                    end ) );
+
+    return triangle;
+    
 end );
 
-InstallMethodWithCache( ApplyShift,
-                        [ IsCapCategoryMorphism, IsInt ],
-  function( mor, n )
-  
-  if n=0 then 
-  
-    return mor;
+##
+InstallMethod( CreateExactTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+   
+                       
+    function( mor1, mor2, mor3 )
+    local  triangle;
+        
+    triangle:= CreateTriangle( mor1, mor2, mor3 );
     
-  elif n<0 then
-  
-    return ReverseShiftOfMorphism( ApplyShift( mor, n+1 ) );
+    SetFilterObj( triangle, IsCapCategoryExactTriangle );
     
-  else 
-  
-    return ShiftOfMorphism( ApplyShift( mor, n-1 ) );
+    return triangle;
     
-  fi;
-  
 end );
 
-InstallMethod( IsExactTriangle, 
-               [ IsCapCategoryTriangle ], 
-function( triangle )
-
-if not IsExactTriangleByAxioms( triangle )=fail then 
-
-    return IsExactTriangleByAxioms( triangle );
+##
+InstallMethod( CreateCanonicalExactTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+   
+                       
+    function( mor1, mor2, mor3 )
+    local  triangle;
+        
+    triangle:= CreateTriangle( mor1, mor2, mor3 );
     
-else 
-
-    return IsExactForTriangles( triangle );
+    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
     
-fi;
+    SetIsomorphismFromCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
+    
+    SetIsomorphismToCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
 
+    return triangle;
+    
 end );
 
-####################################
 ##
-## Constructors
-##
-####################################
-
-##
-InstallMethodWithCache( CreateTriangle, 
-               [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
-  
-                      
-function( mor1, mor2, mor3 )
-   local  triangle;
+InstallMethod( CreateTrianglesMorphism, 
+               [ IsCapCategoryTriangle, IsCapCategoryTriangle,
+               IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                       IsCapCategoryMorphism ], 
+               
+   function( T1, T2, morphism0, morphism1, morphism2 )
+   local morphism;
+ 
+   morphism := rec( m0 := morphism0,
+                    
+                    m1 := morphism1,
+                    
+                    m2 := morphism2 );
+                  
+   ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
+                            Source, T1,
+                            Range, T2,
+                            UnderlyingCapCategory, CapCategory( morphism0 )
+                          );
    
-   if not CanCompute( CapCategory( mor1 ), "ShiftOfObject" ) then 
+   AddMorphism( CategoryOfTriangles( CapCategory( morphism0 ) ), morphism );
    
-      return Error( "creating triangle needs a shift functor" );
-      
-   fi;
-   
-   if CapCategory( mor1 ) <> CapCategory( mor2) or CapCategory( mor2 ) <> CapCategory( mor3 ) then 
-   
-      return Error( "Morphisms are not in the same Category" );
-      
-   fi;
-   
-   
-   if CanCompute( CapCategory( mor1 ), "IsEqualForObjects" ) then 
-   
-      
-       if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
-              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) or
-                  not IsEqualForObjects( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
-      
-        Error( "Morphisms are not compatible" );
-      
-       fi;
-   
-   
-   else 
-   
-       Print( "'IsEqualForObjects' is not yet added." );
-   
-       return fail;
-      
-   fi;
-     
-   triangle:= rec( object1:= Source( mor1 ),
-                   morphism1:= mor1,
-                   object2:= Source( mor2 ),
-                   morphism2:= mor2,
-                   object3:= Source( mor3 ),
-                   morphism3:= mor3,
-                   object4:=  Range( mor3 ), 
-                   iso_class:= [ ] 
-                   
-                 );
-                   
-   ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle, 
-                            CapCategory, CapCategory( mor1 )
-   );
-   
-   Add( triangle!.iso_class, triangle );
-   
-   return triangle;
+   return morphism;
    
 end );
    
