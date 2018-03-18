@@ -583,56 +583,40 @@ InstallMethod( UnderlyingCanonicalExactTriangle,
 end );
 
 ##
-##############################
- 
-InstallMethodWithCache( PreCompose, 
- 
-                 [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
-                 
- function( mor1, mor2 )
- local category;
- 
- category:= CapCategory( mor1 );
- 
- if not  category = CapCategory( mor2 ) then 
- 
-    Error( "The morphisms are not in the same category" );
+InstallMethod( RotationOfExactTriangle,
+                [ IsCapCategoryExactTriangle ],
+                -1000,
+    function( T )
+    local can_T, T_to_can_T, can_T_to_T, rT, rcan_T, rT_to_rcan_T, rcan_T_to_rT, can_rcan_T,
+          rcan_T_to_can_rcan_T, can_rcan_T_to_rcan_T, can_rT, can_rcan_T_to_can_rT, can_rT_to_can_rcan_T;
     
- fi;
- 
- if not CanCompute( category , "PreCompose" ) then 
- 
-    Error( "'PreCompose' for morphisms in ",category, " is not yet 'Add'ed." );
+    if IsCapCategoryCanonicalExactTriangle( T ) then
+        return RotationOfCanonicalExactTriangle( T );
+    fi;
     
- fi;
- 
- return CreateMorphismOfTriangles( Source( mor1), Range( mor2 ), PreCompose( mor1!.morphism11, mor2!.morphism11 ),
-                                       PreCompose( mor1!.morphism22, mor2!.morphism22 ),
-                                       PreCompose( mor1!.morphism33, mor2!.morphism33 )
-                                 );
-
-end );
- 
-
-## 
-InstallMethodWithCache( PostCompose, 
- 
-                 [ IsCapCategoryTrianglesMorphism, IsCapCategoryTrianglesMorphism ],
-                 
- function( mor2, mor1 )
- local category;
- 
- category:= CapCategory( mor1 );
- 
- if not  category = CapCategory( mor2 ) then 
- 
-    Error( "The morphisms are not in the same category" );
+    can_T := UnderlyingCanonicalExactTriangle( T );
+    T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
+    can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
     
- fi;
- 
- if not CanCompute( category , "PostCompose" ) then 
- 
-    Error( "'PostCompose' for morphisms in ",category, " is not yet 'Add'ed." );
+    rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );
+    rcan_T := RotationOfCanonicalExactTriangle( can_T );
+    
+    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), MorphismAt( T_to_can_T, 3 ) );
+    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), MorphismAt( can_T_to_T, 3 ) );
+    
+    can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
+    rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
+    can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
+    
+    can_rT := UnderlyingCanonicalExactTriangle( rT );
+    
+    can_rcan_T_to_can_rT := CompleteToMorphismOfCanonicalExactTriangles( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ) );
+    can_rT_to_can_rcan_T := CompleteToMorphismOfCanonicalExactTriangles( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ) );
+    
+    SetIsomorphismToCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
+    SetIsomorphismFromCanonicalExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
+    
+    return rT;
     
 end );
 
@@ -644,349 +628,84 @@ end );
 # &  &  &  &  &  &  & C[-1] \arrow[r, "{-h[-1]}"'] & A \arrow[r, "{\alpha(-h[-1])}"'] & C(h[-1]) \arrow[r, "{\beta(-h[-1])}"'] & C
 #\end{tikzcd}
 
-  category := CapCategory( trian1 );
-  
-  if category <> CapCategory( trian2 ) then 
-  
-    return false;
+InstallMethod( ReverseRotationOfExactTriangle,
+                [ IsCapCategoryExactTriangle ],
+                -1000,
+    function( T )
+    local can_T, T_to_can_T, can_T_to_T, rT, rcan_T, rT_to_rcan_T, rcan_T_to_rT, can_rcan_T,
+       rcan_T_to_can_rcan_T, can_rcan_T_to_rcan_T, can_rT, can_rcan_T_to_can_rT, can_rT_to_can_rcan_T;
     
-  fi;
-   
-  if CanCompute( category, "IsEqualForObjects" ) and CanCompute( category, "IsEqualForMorphisms" ) then
-  
-     return IsEqualForObjects( trian1!.object1, trian2!.object1 ) and 
-            IsEqualForObjects( trian1!.object2, trian2!.object2 ) and 
-            IsEqualForObjects( trian1!.object3, trian2!.object3 ) and 
-            IsEqualForMorphisms( trian1!.morphism1, trian2!.morphism1 ) and 
-            IsEqualForMorphisms( trian1!.morphism2, trian2!.morphism2 ) and 
-            IsEqualForMorphisms( trian1!.morphism3, trian2!.morphism3 );
-            
-  else
+    if not HasIsTriangulatedCategoryWithShiftAutomorphism( UnderlyingCapCategory( T ) ) then
+        Error( "Its not known wether the shift functor is automorphism!" );
+    fi;
      
-    Error( "Either 'IsEqualForObjects' or 'IsEqualForMorphisms' is not yet added.\n" );
-           
-  fi;
- 
-end );
+    if not IsTriangulatedCategoryWithShiftAutomorphism( UnderlyingCapCategory( T ) ) then
+        Error( "The shift-functor that defines the triangulated struture must be automorphism!" );
+    fi;
 
-InstallMethod( IsIsomorphicTriangles, 
-               [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
-               
-  function( triangle1, triangle2 )
-  
-  if In( triangle1, triangle2!.iso_class ) or In( triangle1, CurrentIsoClassOfTriangle( triangle2 ) ) then 
-  
-     return true;
+    if IsCapCategoryCanonicalExactTriangle( T ) then
+        return ReverseRotationOfCanonicalExactTriangle( T );
+    fi;
      
-  fi;
-  
-  if In( triangle2, triangle1!.iso_class ) or In( triangle2, CurrentIsoClassOfTriangle( triangle1 ) ) then 
-  
-     return true;
+    can_T := UnderlyingCanonicalExactTriangle( T );
+    T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
+    can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
      
-  fi;
-  
-  return fail;
-  
-end );
-
-InstallMethod( SetIsIsomorphicTriangles, 
-               [ IsCapCategoryTriangle, IsCapCategoryTriangle ],
-               
- function( triangle1, triangle2 )
- 
- if not In( triangle1, triangle2!.iso_class ) then 
- 
-    Add( triangle2!.iso_class, triangle1 );
+    rT := CreateExactTriangle( AdditiveInverse(ReverseShiftOfMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
+    rcan_T := ReverseRotationOfCanonicalExactTriangle( can_T );
+     
+    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, ReverseShiftOfMorphism( MorphismAt( T_to_can_T, 2 ) ), 
+                                                        MorphismAt( T_to_can_T, 0 ), 
+                                                        MorphismAt( T_to_can_T, 1 ) );
+                                                          
+    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, ReverseShiftOfMorphism( MorphismAt( can_T_to_T, 2 ) ), 
+                                                        MorphismAt( can_T_to_T, 0 ), 
+                                                        MorphismAt( can_T_to_T, 1 ) );
+                                                          
+     
+    can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
+    rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
+    can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
+     
+    can_rT := UnderlyingCanonicalExactTriangle( rT );
+     
+    can_rcan_T_to_can_rT := CompleteToMorphismOfCanonicalExactTriangles( can_rcan_T, can_rT, 
+                                ReverseShiftOfMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ) );
+    can_rT_to_can_rcan_T := CompleteToMorphismOfCanonicalExactTriangles( can_rT, can_rcan_T, 
+                                ReverseShiftOfMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ) );
     
- fi;
+    SetIsomorphismToCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
+    SetIsomorphismFromCanonicalExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
+     
+    return rT;
+     
+end );
 
- if not In( triangle2, triangle1!.iso_class ) then 
- 
-    Add( triangle1!.iso_class, triangle2 );
+InstallMethod( CompleteToMorphismOfExactTriangles,
+                [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                -1000,
+    function( T1, T2, m0, m1 )
+    local can_T1, can_T2, T1_to_can_T1, T2_to_can_T2, can_T1_to_T1, can_T2_to_T2, can_T1_to_can_T2,
+        can_T1_to_can_T2_0, can_T1_to_can_T2_1;
     
- fi;
- 
- if   HasIsExactTriangle( triangle1 ) and not HasIsExactTriangle( triangle2 ) then 
- 
-      SetIsExactTriangle( triangle2, IsExactTriangle( triangle1 ) );
-   
- elif HasIsExactTriangle( triangle2 ) and not HasIsExactTriangle( triangle1 ) then 
- 
-      SetIsExactTriangle( triangle1, IsExactTriangle( triangle2 ) );
-      
- elif HasIsExactTriangle( triangle1 ) and HasIsExactTriangle( triangle2 ) then 
- 
-      if IsExactTriangle( triangle1 ) <> IsExactTriangle( triangle2 ) then 
-      
-         Error( "It has been tried to set two triangles to be isomorphic, but this can not be true because one of them is exact and the other ist not!" );
-         
-      fi;
-      
- fi;
-   
-   
+    if IsCapCategoryCanonicalExactTriangle( T1 ) and IsCapCategoryCanonicalExactTriangle( T2 ) then
+        return CompleteToMorphismOfCanonicalExactTriangles( T1, T2, m0, m1 );
+    fi;
 
-end );
-
-InstallMethod( In,
-               [ IsCapCategoryTriangle, IsList ], 
-               
-  function( triangle, l )
-  local t;
-  
-  for t in l do 
-  
-     if IsEqualForTriangles( triangle, t ) then 
-     
-        return true;
-        
-     fi;
-     
-  od;
-  
-  return false;
-   
-   
-end );
-
-
-InstallMethod( IsIsomorphism, 
-       
-               [ IsCapCategoryTrianglesMorphism ], 
-               
-  function( mor )
-  local t;
-  
-  if HasIsIsomorphism( mor!.morphism11 ) and 
-          HasIsIsomorphism( mor!.morphism22 ) and 
-             HasIsIsomorphism( mor!.morphism33 ) then 
-             
-       t:= IsIsomorphism( mor!.morphism11 ) and 
-          IsIsomorphism( mor!.morphism22 ) and 
-             IsIsomorphism( mor!.morphism33 );
-             
-       if t= true then 
-                  
-          SetIsIsomorphicTriangles( mor!.triangle1, mor!.triangle2 );
-                  
-       fi;
-       
-       return t;
-      
-  elif
-  
-    not CanCompute( CapCategory( mor ), "IsIsomorphism" ) then 
-  
-    Error( "'IsIsomorphism' for category morphisms is not yet 'Add'ed" );
+    can_T1 := UnderlyingCanonicalExactTriangle( T1 );
+    can_T2 := UnderlyingCanonicalExactTriangle( T2 );
     
-  elif  IsIsomorphism( mor!.morphism11 ) and 
-          IsIsomorphism( mor!.morphism22 ) and 
-             IsIsomorphism( mor!.morphism33 ) then 
-                
-        SetIsIsomorphicTriangles( mor!.triangle1, mor!.triangle2 );
-      
-        return true;
-           
-  else 
-  
-        return false;
-      
-  fi;
-  
-end );
+    T1_to_can_T1 := IsomorphismToCanonicalExactTriangle( T1 );
+    can_T1_to_T1 := IsomorphismFromCanonicalExactTriangle( T1 );
 
+    T2_to_can_T2 := IsomorphismToCanonicalExactTriangle( T2 );
+    can_T2_to_T2 := IsomorphismFromCanonicalExactTriangle( T2 );
 
-InstallMethod( IsExactTriangleByTR2Forward, 
-               [ IsCapCategoryTriangle ], 
-  function( triangle )
-  
-  if HasIsExactTriangle( triangle ) then 
-  
-      return IsExactTriangle( triangle );
-      
-  fi;
-  
-  if HasCreateTriangleByTR2Forward( triangle ) then 
-  
-     return IsExactTriangleByTR2Forward( CreateTriangleByTR2Forward( triangle ) );
-     
-end );
-
-InstallMethod( IsExactTriangleByTR2Backward, 
-               [ IsCapCategoryTriangle ], 
-  function( triangle )
-  
-  if HasIsExactTriangle( triangle ) then 
-  
-      return IsExactTriangle( triangle );
-      
-  fi;
-  
-  if HasCreateTriangleByTR2Backward( triangle ) then 
-  
-     return IsExactTriangleByTR2Forward( CreateTriangleByTR2Forward( triangle ) );
-     
-  fi;
-  
-  
-  return fail;
-  
-  
-end );
-
-
-##
-InstallMethod( IsExactTriangleByAxioms, 
-               [ IsCapCategoryTriangle ], 
-               
- function( triangle )
- local T, current_iso_class, iso_class, category;
- 
- category := CapCategory( triangle );
- 
- if IsCapCategoryExactTriangle( triangle ) then 
- 
-    return true;
+    can_T1_to_can_T2_0 := PreCompose( [ MorphismAt( can_T1_to_T1, 0 ), m0, MorphismAt( T2_to_can_T2, 0 ) ] );
+    can_T1_to_can_T2_1 := PreCompose( [ MorphismAt( can_T1_to_T1, 1 ), m1, MorphismAt( T2_to_can_T2, 1 ) ] );
+    can_T1_to_can_T2 := CompleteToMorphismOfCanonicalExactTriangles( can_T1, can_T2, can_T1_to_can_T2_0, can_T1_to_can_T2_1 );
+    return PreCompose( [ T1_to_can_T1, can_T1_to_can_T2, can_T2_to_T2 ] );
     
- elif HasIsExactTriangle( triangle ) then 
- 
-    return IsExactTriangle( triangle );
-    
- elif CanCompute( category, "IsZeroForMorphisms" ) and CanCompute( category, "PreCompose" ) then 
- 
-       if not IsZeroForMorphisms(PreCompose( triangle!.morphism1, triangle!.morphism2 ) ) or
-            not IsZeroForMorphisms(PreCompose( triangle!.morphism2, triangle!.morphism3 ) ) then 
-           
-            return false;
-           
-       fi;
-      
- else
-      
- ## TR1 --- 2
-   iso_class:= triangle!.iso_class;
-  
-   for T in iso_class do 
-   
-     if HasIsExactTriangle( T )  then 
-      
-         return IsExactTriangle( T );
-         
-     fi;
-
-   od;
-   
- fi; 
- 
- current_iso_class:= CurrentIsoClassOfTriangle( triangle );
-  
- for T in current_iso_class do
- 
-    ## By TR1 --- 2
-    if HasIsExactTriangle( T )  then 
-      
-         return IsExactTriangle( T );
-         
-    elif CanCompute( category, "IsZeroForMorphisms" ) and CanCompute( category, "PreCompose" ) then 
- 
-       if not IsZeroForMorphisms(PreCompose( T!.morphism1, T!.morphism2 ) ) or
-            not IsZeroForMorphisms(PreCompose( T!.morphism2, T!.morphism3 ) ) then 
-           
-            return false;
-           
-       fi;
-       
-     
-    ## By TR1 --- 1
-    elif ForAll( [ "IsZeroForObjects", "IsIdenticalToIdentityMorphism" ], i-> CanCompute( category, i ) ) and
- 
-       IsZeroForObjects( T!.object3 ) and IsIdenticalToIdentityMorphism( T!.morphism1 ) then 
-       
-       return true;
-      
-   ## By TR2
-   elif not IsExactTriangleByTR2Forward( T )= fail then 
- 
-       return IsExactTriangleByTR2Forward( T );
-    
-   elif not IsExactTriangleByTR2Backward( T )= fail then 
- 
-       return IsExactTriangleByTR2Backward( T );
- 
-   fi;    
- 
- od;
- 
- return fail;
- 
- end );
- 
-
- InstallMethod( Iso_Triangles,
-                 [ IsCapCategoryTriangle, IsList ], 
-                 
-  function( triangle, l )
-  local dynamik_list, current_iso_class, T;
-  
-  dynamik_list := StructuralCopy( l );
-  
-  current_iso_class:= triangle!.iso_class;
-  
-     for T in current_iso_class do 
-     
-        if not In( T, dynamik_list ) then
-        
-           Add( dynamik_list, T );
-           
-        fi;
-        
-     od;
-   
-  return dynamik_list;
-  
-end );
-
-  
- 
- InstallMethod( CurrentIsoClassOfTriangle,
-                 [ IsCapCategoryTriangle ], 
-                 
- function( triangle )
- local dyn, new_dyn, T, old_length;
- 
- dyn:= [ triangle ];
- 
- while 1=1 do
- 
-   old_length := Length( dyn );
-   
-   new_dyn:= StructuralCopy( dyn );
-   
-   for T in new_dyn do 
-   
-       new_dyn := Iso_Triangles( T, new_dyn );
-       
-   od;
-   
-   if Length( new_dyn )= old_length then 
-   
-     for T in new_dyn do 
-     
-        T!.iso_class := new_dyn;
-        
-     od;
-     
-     return new_dyn;
-     
-   else 
-   
-     dyn:= new_dyn;
-   
-   fi;
-   
-od;
-
 end );
 
 InstallMethod( ShiftFunctor,
