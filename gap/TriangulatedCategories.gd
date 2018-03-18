@@ -234,8 +234,6 @@ DeclareOperation( "CreateTrianglesMorphism",
 ## Attributes
 ##
 ###############################
- 
-#! @Section Attributes
 
 DeclareAttribute( "ShiftFunctor", IsCapCategory );
 
@@ -259,20 +257,19 @@ DeclareAttribute( "NaturalIsomorphismFromIdentityToShiftAfterReverseShiftFunctor
 
 DeclareAttribute( "CapCategory", IsCapCategoryTrianglesMorphism );
 
+DeclareAttribute( "UnderlyingCapCategory", IsCapCategoryTriangle );
 
-DeclareAttribute( "CreateTriangleByTR2Backward", IsCapCategoryTriangle );
+DeclareAttribute( "UnderlyingCapCategory", IsCapCategoryTrianglesMorphism );
 
 DeclareAttribute( "Source", IsCapCategoryTrianglesMorphism );
 
 DeclareAttribute( "Range", IsCapCategoryTrianglesMorphism );
 
-##############################
-##
-## Properties
-##
-##############################
- 
-#! @Section Properties
+KeyDependentOperation( "MorphismAt", IsCapCategoryTriangle, IsInt, ReturnTrue );
+
+KeyDependentOperation( "MorphismAt", IsCapCategoryTrianglesMorphism, IsInt, ReturnTrue );
+
+KeyDependentOperation( "ObjectAt", IsCapCategoryTriangle, IsInt, ReturnTrue );
 
 
 DeclareProperty( "IsTriangulatedCategory", IsCapCategory );

@@ -384,111 +384,62 @@ InstallMethod( CreateTrianglesMorphism,
    return morphism;
    
 end );
-   
+
 
 ##
-InstallMethodWithCache( CreateExactTriangle, 
-               [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
-  
-                      
-function( mor1, mor2, mor3 )
-   local  triangle;
-   
-   if not CanCompute( CapCategory( mor1 ), "ShiftOfObject" ) then 
-   
-      Error( "creating a triangle needs a shift functor" );
-      
-      
-   fi;
-   
-   if not CanCompute( CapCategory( mor1 ), "IsEqualForObjects" ) then 
-     
-      Error( "'IsEqualForObjects' is not yet added.\n" );
-   
-   fi;
-      
-   if CapCategory( mor1 ) <> CapCategory( mor2) or CapCategory( mor2 ) <> CapCategory( mor3 ) then 
-   
-      return Error( "Morphisms are not in the same Category" );
-      
-   fi;
-   
-      
-   if not IsEqualForObjects( Range( mor1 ), Source( mor2 ) ) or
-              not IsEqualForObjects( Range( mor2 ), Source( mor3 ) ) or
-                  not IsEqualForObjects( Range( mor3 ), ShiftOfObject( Source( mor1 ) ) ) then 
-   
-      Error( "Morphisms are not compatible" );
-      
-   fi;
-   
-   triangle:= rec( object1:= Source( mor1 ),
-                   morphism1:= mor1,
-                   object2:= Source( mor2 ),
-                   morphism2:= mor2,
-                   object3:= Source( mor3 ),
-                   morphism3:= mor3,
-                   object4:=  Range( mor3 ),
-                   iso_class:= [ ]
-                 );
-                   
-   ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle,
-                            CapCategory, CapCategory( mor1 ) 
-   );
-   
-   SetIsExactTriangle( triangle, true );
-   
-   Add( triangle!.iso_class, triangle );
-   
-   return triangle;
-   
-end );
+InstallMethod( MorphismAtOp, 
+                [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    
+    if i = 0 then return T!.t0;
+    
+    elif i = 1 then return T!.t1;
+    
+    elif i = 2 then return T!.t2;
+    
+    else Error( "The second entry should be 0, 1 or 2" );
+    
+    fi;
 
-
-InstallMethodWithCache( ConeObject,
-                       
-                       [  IsCapCategoryMorphism ], 
-                        
-  function( mor )
-  local cone;
-  
-  cone:= CompleteMorphismToExactTriangle( mor );
-  
-  return cone!.object3;
-  
 end );
 
 ##
-InstallMethodWithCache( CreateExactTriangle,
-                        [  IsCapCategoryTriangle ], 
-                        
-  function( triangle )
-  
-  if HasIsExactTriangle( triangle ) then 
-  
-     if IsExactTriangle( triangle ) then 
-     
-         ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle );
-         
-     else 
-     
-         Error( "The given triangle is not exact!" );
-         
-     fi;
-     
-  else
-  
-     SetIsExactTriangle( triangle, true );
-     
-     ObjectifyWithAttributes( triangle, TheTypeCapCategoryExactTriangle );
-         
-         
-  fi;
-  
-  return triangle;
-  
+InstallMethod( ObjectAtOp, 
+                [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    
+    if i = 0 then return T!.T0;
+    
+    elif i = 1 then return T!.T1;
+    
+    elif i = 2 then return T!.T2;
+    
+    elif i = 3 then return T!.T3;
+    
+    else Error( "The second entry should be 0, 1, 2 or 3" );
+    
+    fi;
+
 end );
 
+##
+InstallMethod( MorphismAtOp, 
+                [ IsCapCategoryTrianglesMorphism, IsInt ],
+    function( phi, i )
+    
+    if i = 0 then return phi!.m0;
+    
+    elif i = 1 then return phi!.m1;
+    
+    elif i = 2 then return phi!.m2;
+    
+    elif i = 3 then return ShiftOfMorphism( phi!.m0 );
+    
+    else
+        Error( "Index can be 0,1,2 or 3" );
+    fi;
+
+end );
 
 
  InstallMethodWithCache( CreateMorphismOfTriangles, 
