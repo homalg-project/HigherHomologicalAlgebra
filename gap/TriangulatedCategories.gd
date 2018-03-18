@@ -228,6 +228,7 @@ DeclareOperation( "CreateCanonicalExactTriangle", [ IsCapCategoryMorphism, IsCap
 DeclareOperation( "CreateTrianglesMorphism", 
                     [ IsCapCategoryTriangle, IsCapCategoryTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] ); 
 
+DeclareAttribute( "TrivialExactTriangle", IsCapCategoryObject );
 
 ###############################
 ##
@@ -267,7 +268,9 @@ KeyDependentOperation( "ObjectAt", IsCapCategoryTriangle, IsInt, ReturnTrue );
 
 DeclareProperty( "IsTriangulatedCategory", IsCapCategory );
 
-#! @Arguments mor 
-#! @Returns a boolian
-#! @Description The output is <C>true</C> if $mor$ is isomorphism. Otherwise <C>false</C>.
-DeclareProperty( "IsIsomorphism", IsCapCategoryTrianglesMorphism );
+# This property is declared only to be set by the user, not to be computed in any way.
+DeclareProperty( "IsTriangulatedCategoryWithShiftAutomorphism", IsCapCategory );
+
+DeclareProperty( "IsWellDefinedTriangle", IsCapCategoryTriangle );
+
+DeclareProperty( "IsWellDefinedTrianglesMorphism", IsCapCategoryTrianglesMorphism );

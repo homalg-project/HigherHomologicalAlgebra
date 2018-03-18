@@ -441,113 +441,131 @@ InstallMethod( MorphismAtOp,
 
 end );
 
+InstallMethod( IsWellDefinedTriangle, 
+                [ IsCapCategoryTriangle ],
+    function( T )
+    
+    if not IsWellDefined( ObjectAt( T, 0 ) ) or 
+        not IsWellDefined( ObjectAt( T, 1 ) ) or
+          not IsWellDefined( ObjectAt( T, 2 ) ) or
+            not IsWellDefined( ObjectAt( T, 3 ) ) then 
+            return false;
+    fi;
+    
+    if not IsWellDefined( MorphismAt( T, 0 ) ) or 
+        not IsWellDefined( MorphismAt( T, 1 ) ) or
+          not IsWellDefined( MorphismAt( T,2 ) ) then 
+            return false;
+    fi;
+    
+    if not IsEqualForObjects( Range( MorphismAt( T, 0 ) ), Source( MorphismAt( T, 1 ) ) ) or
+       not IsEqualForObjects( Range( MorphismAt( T, 1 ) ), Source( MorphismAt( T, 2 ) ) ) or
+       not IsEqualForObjects( ShiftOfObject( Source( MorphismAt( T, 0 ) ) ), Range( MorphismAt( T, 2 ) ) ) then
+       return false;
+    fi;
+    
+    if not IsZeroForMorphisms( PreCompose( MorphismAt( T, 0), MorphismAt( T, 1 ) ) ) or
+        not IsZeroForMorphisms( PreCompose( MorphismAt( T, 1), MorphismAt( T, 2 ) ) ) then 
+            return false;
+    fi;
+    
+    return true;
+    
+end );
 
- InstallMethodWithCache( CreateMorphismOfTriangles, 
- 
-              [ IsCapCategoryTriangle, IsCapCategoryTriangle,
-              IsCapCategoryMorphism, IsCapCategoryMorphism, 
-                      IsCapCategoryMorphism ], 
-              
-  function( triangle1, triangle2, morphism11, morphism22, morphism33 )
-  local category, morphism;
-  
-  category := CapCategory( triangle1 );
-  
-  # Are all inputs in the same category?
-     if not ForAll( [ triangle2, morphism11, morphism22, morphism33 ], 
-                 i-> CapCategory( i ) = category ) then 
-                 
-        Error( "Some inputs are not in the same category" );
-      
-     fi;
-  
-  # Are required methods are defined
-  
-     if not ForAll( [ "PreCompose", "IsEqualForObjects", "IsEqualForMorphisms" ], 
-                    s-> CanCompute( category, s ) ) then 
-                    
-         Error( "'PreCompose', 'IsEqualForObjects' or 'IsEqualForMorphisms' is not yet Added" );
+InstallMethod( IsWellDefinedTrianglesMorphism,
+                [ IsCapCategoryTrianglesMorphism ],
+    function( phi )
+    local T1, T2;
+    
+    T1 := Source( phi );
+    T2 := Range( phi );
+    
+    if not IsEqualForObjects( Source( MorphismAt( phi, 0 ) ), ObjectAt( T1, 0 ) ) or 
+        not IsEqualForObjects( Range( MorphismAt( phi, 0 ) ), ObjectAt( T2, 0) )  then 
         
-     fi;
-  
-  # Are Source and Range of all morphisms compatible?
-  
-   
-  
-     if not IsEqualForObjects( Source( morphism11 ), triangle1!.object1 ) or 
-        not IsEqualForObjects( Range( morphism11 ), triangle2!.object1 )  then 
+        Error( "The morphism m0 is not compatible" );
         
-        Error( "The third input is not compatible with the triangles" );
-        
-     fi;
+    fi;
      
-     if not IsEqualForObjects( Source( morphism22 ), triangle1!.object2 ) or 
-        not IsEqualForObjects( Range( morphism22 ), triangle2!.object2 )  then 
+    if not IsEqualForObjects( Source( MorphismAt( phi, 1 ) ), ObjectAt( T1, 1 ) ) or 
+        not IsEqualForObjects( Range( MorphismAt( phi, 1 ) ), ObjectAt( T2, 1) )  then 
         
-        Error( "The 4'th input is not compatible with the triangles" );
+        Error( "The morphism m1 is not compatible" );
      
-     fi;
+    fi;
      
-     if not IsEqualForObjects( Source( morphism33 ), triangle1!.object3 ) or 
-        not IsEqualForObjects( Range( morphism33 ), triangle2!.object3 )  then 
+    if not IsEqualForObjects( Source( MorphismAt( phi, 2 ) ), ObjectAt( T1, 2) ) or 
+        not IsEqualForObjects( Range( MorphismAt( phi, 2 ) ), ObjectAt( T2, 2) )  then 
         
-        Error( "The 5'th input is not compatible with the triangles" );
+        Error( "The morphism m2 is not compatible" );
      
-     fi;
-  
+    fi;
   
   # Is the diagram commutative?
 
   
-     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism1, morphism22 ), PreCompose( morphism11, triangle2!.morphism1 ) ) then
+    if not IsEqualForMorphisms( PreCompose( MorphismAt( T1, 0 ), MorphismAt( phi, 1 ) ), PreCompose( MorphismAt( phi, 0 ), MorphismAt( T2, 0) ) ) then
      
         Error( "The first squar is not commutative" );
         
-     fi;
+    fi;
      
-     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism2, morphism33 ), PreCompose( morphism22, triangle2!.morphism2 ) ) then
+    if not IsEqualForMorphisms( PreCompose( MorphismAt( T1, 1 ), MorphismAt( phi, 2 ) ), PreCompose( MorphismAt( phi, 1 ), MorphismAt( T2, 1) ) ) then
      
         Error( "The second squar is not commutative" );
         
-     fi;
+    fi;
      
-     if not IsEqualForMorphisms( PreCompose( triangle1!.morphism3, ShiftOfMorphism( morphism11) ), 
-                                 PreCompose( morphism33, triangle2!.morphism3 ) ) then
+    if not IsEqualForMorphisms( PreCompose( MorphismAt( T1, 2), MorphismAt( phi, 3 ) ), 
+                                 PreCompose( MorphismAt( phi, 2 ), MorphismAt( T2, 2) ) ) then
      
         Error( "The third squar is not commutative" );
         
     fi;
     
-    AddObjectFunction( functor, 
-    
-          function( obj )
-          
-          return ShiftOfObject( obj );
-          
-          end );
-          
-    AddMorphismFunction( functor, 
+    return true;
     
 end );
 
 ##
-InstallMethod( ReverseShiftFunctor,
-                 [ IsCapCategory and IsTriangulatedCategory ],
-                 
-    function( category )
-    local name, functor;
+InstallMethod( ConeObject,
+                [ IsCapCategoryMorphism ],
+                -1000,
+   function( mor )
+   
+   return ObjectAt( CompleteMorphismToCanonicalExactTriangle( mor ), 2 );
+   
+end );
+
+##
+# InstallMethod( Testtt,
+#                 [ IsCapCategory and IsTriangulatedCategory ],
+#                 -1000, 
+#                 # or any method-value \leq -1
+#    function( cat )
+#    Print( "I am the default method\n" );
+#    return true;
+#    
+# end );
+
+##
+InstallMethod( TrivialExactTriangle,
+                [ IsCapCategoryObject ],
+    function( obj )
+    local T, i, j, can_triangle;
+   
+    T := CreateExactTriangle( IdentityMorphism( obj ), UniversalMorphismIntoZeroObject( obj ), UniversalMorphismFromZeroObject( ShiftOfObject( obj ) ) );
+    can_triangle := CompleteMorphismToCanonicalExactTriangle( IdentityMorphism( obj ) );
     
-    name := Concatenation( "Reverse Shift functor in ", Name( category ) );
+    i := CreateTrianglesMorphism( T, can_triangle, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T, 1 ) ),
+                                                    UniversalMorphismFromZeroObject( ObjectAt( can_triangle, 2 ) ) );
+    j := CreateTrianglesMorphism( can_triangle, T, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T, 1 ) ),
+                                                    UniversalMorphismIntoZeroObject( ObjectAt( can_triangle, 2 ) ) );
+    SetIsomorphismFromCanonicalExactTriangle( T, j );
+    SetIsomorphismToCanonicalExactTriangle( T, i );
     
-    functor := CapFunctor( name, category, category );
-    
-    if not CanCompute( category, "ReverseShiftOfObject" ) or not CanCompute( category, "ReverseShiftOfMorphism" ) then
-    
-       Error( "ReverseShiftOfObject and ReverseShiftOfMorphism should be added to the category" );
-       
-    fi;
-    
-    AddObjectFunction( functor, 
+    return T;
     
 end );
 
