@@ -3,40 +3,6 @@
 LoadPackage( "GradedRing" );
 LoadPackage( "GradedModules" );
 
-DeclareOperation( "UnionOfRows", [ IsList ] );
-InstallMethod( UnionOfRows, 
-               [ IsList ],
-function( l )
-local current_mat, mat;
-
-if Length( l ) = 0 then 
-  
-  Error( "The given list is empty" );
-  
-fi;
-
-return Iterated( l, UnionOfRows );
-
-end );
-
-##                  
-DeclareOperation( "UnionOfColumns", [ IsList ] );
-InstallMethod( UnionOfColumns, 
-               [ IsList ],
-function( l )
-local current_mat, mat;
-
-if Length( l ) = 0 then 
-  
-  Error( "The given list is empty" );
-  
-fi;
-
-return Iterated( l, UnionOfColumns );
-
-end );
-
-
 ##
 DeclareOperation( "HomalgTransposedMat", 
                   [ IsHomalgMatrix ] );
@@ -280,7 +246,7 @@ S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
 basis_indices := MyList( n );
 
-return UnionOfRows( List( basis_indices, sigma -> F2( sigma, A, B ) ) );
+return Iterated( List( basis_indices, sigma -> F2( sigma, A, B ) ), UnionOfRows );
 
 end );
 
@@ -312,9 +278,9 @@ C_deco := DecompositionOfHomalgMat( C );
 
 C_deco_list := List( C_deco, i-> i[ 2 ] );
 
-C_deco_list_vec := List( C_deco_list, c-> UnionOfRows( List( [ 1..NrColumns( C ) ], i-> CertainColumns( c, [ i ] ) ) ) );
+C_deco_list_vec := List( C_deco_list, c-> Iterated( List( [ 1..NrColumns( C ) ], i-> CertainColumns( c, [ i ] ) ), UnionOfRows ) );
 
-C_vec := Q*UnionOfRows( C_deco_list_vec );
+C_vec := Q*Iterated( C_deco_list_vec, UnionOfRows );
 
 N := Q*F3( A, B );
 
@@ -336,8 +302,8 @@ XX := CertainRows( sol, [ 1..m*s*2^l ] );
 YY := CertainRows( sol, [ 1+ m*s*2^l ..( m*s+r*n)*2^l] );
 
 
-XX_ := UnionOfColumns( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ) );
-YY_ := UnionOfColumns( List( [ 1 .. n*2^l ], i -> CertainRows( YY, [ ( i - 1 )*r + 1 .. i*r ] ) ) );
+XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
+YY_ := Iterated( List( [ 1 .. n*2^l ], i -> CertainRows( YY, [ ( i - 1 )*r + 1 .. i*r ] ) ), UnionOfColumns );
 
 X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* RingElement( basis_indices[ i ], R ) ) );
 Y_ := Sum( List( [ 1..2^l ], i-> (R*CertainColumns( YY_, [ ( i - 1 )*n + 1 .. i*n ] ) )* RingElement( basis_indices[ i ], R ) ) );

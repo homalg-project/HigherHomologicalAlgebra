@@ -58,12 +58,13 @@ AddColift( category,
     #                I
     #                ꓥ
     #         vxs    | nxs 
-    #       ?X      (A) 
+    #       ?X      (A)    morphism 2
     #                |
     #                |
     #    uxv    nxv   mxn
     #   M <----(B)-- N
     #
+    #      morphism 1
     #
     # We need to solve the system
     #     B*X + Y*I = A
@@ -87,7 +88,7 @@ AddColift( category,
     
     B_over_M := UnionOfRows( B, M );
     
-    zero_mat := HomalgZeroMatrix( NrRows( M ), NrColumns( I ), R );
+    zero_mat := HomalgZeroMatrix( NrRows( M ), NrColumns( I ), HomalgRing( M ) );
     
     A_over_zero := UnionOfRows( A, zero_mat );
 
