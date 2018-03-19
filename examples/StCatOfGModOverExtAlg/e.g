@@ -1,6 +1,5 @@
 
 ReadPackage( "StableCategoriesForCap", "/examples/StCatOfGModOverExtAlg/tools.gi" );
-LoadPackage( "ComplexesAndFilteredObjectsForCAP" );
 LoadPackage( "GradedModulePresentations" );
 
 r := KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z,t" );
@@ -9,25 +8,23 @@ SetWeightsOfIndeterminates( R, [ 1,1,1,0] );
 
 cat := GradedLeftPresentations( R : FinalizeCategory  := false );
 
-SetIsAbelianCategoryWithEnoughProjectives( cat, true );
 SetIsAbelianCategoryWithEnoughInjectives( cat, true );
 
-AddEpimorphismFromSomeProjectiveObject( cat, CoverByProjective );
 AddMonomorphismIntoSomeInjectiveObject( cat, 
     function( obj )
     local ring, dual, nat, dual_obj, proj_cover, dual_proj_cover, obj_to_double_dual_obj;
                                                     
     ring := UnderlyingHomalgRing( obj );
     
-    dual := FunctorDualLeft( ring );
+    dual := FunctorGradedDualLeft( ring );
     
-    nat  := NaturalTransformationFromIdentityToDoubleDualLeft( ring );
+    nat  := NaturalTransformationFromIdentityToGradedDoubleDualLeft( ring );
     
-    dual_obj := ApplyFunctor( dual, obj );
+    dual_obj := ApplyFunctor( dual, Opposite( obj ) );
     
     proj_cover := EpimorphismFromSomeProjectiveObject( dual_obj );
     
-    dual_proj_cover := ApplyFunctor( dual, proj_cover );
+    dual_proj_cover := ApplyFunctor( dual, Opposite( proj_cover ) );
     
     obj_to_double_dual_obj := ApplyNaturalTransformation( nat, obj );
     
@@ -228,3 +225,51 @@ end );
 AddIsInjective( cat, IsProjective );
                         
 Finalize( cat );
+
+create_random_morphism := 
+    function( g1, g2 )
+    local Fr1, Fr2, Fr3, m12, m32, v, g, f, u, fiber, cover_of_fiber;
+    Fr1 := GradedFreeLeftPresentation( Length(g1), R, g1 );
+    Fr2 := GradedFreeLeftPresentation( Length(g2), R, g2 );
+    m12 := RandomMatrixBetweenGradedFreeLeftModules( g1, g2, R );
+
+    g := List( [ 1 .. Length( g2 ) + 2  ], i -> g2[ ( i mod Length(g2) ) + 1 ] + Random([1..2]) );
+    m32 := RandomMatrixBetweenGradedFreeLeftModules( g, g2, R );
+
+    Fr3 := GradedFreeLeftPresentation( Length(g), R, g );
+
+    v := GradedPresentationMorphism( Fr1, m12, Fr2 );
+    g := GradedPresentationMorphism( Fr3, m32, Fr2 );
+
+    f := ProjectionInFactorOfFiberProduct( [ v, g ], 1 );
+    u := ProjectionInFactorOfFiberProduct( [ v, g ], 2 );
+
+    fiber := FiberProduct( v, g );
+
+    cover_of_fiber := EpimorphismFromSomeProjectiveObject( fiber );
+
+    f := PreCompose( cover_of_fiber, f );
+
+    return GradedPresentationMorphism( CokernelObject( f), m12, CokernelObject( g ) );
+
+end;
+
+can_be_factored_through_free_module := 
+    function( mor )
+    local m;
+    m := Colift( MonomorphismIntoSomeInjectiveObject( Source( mor ) ), mor );
+    if m = fail then
+        return false;
+    else
+        return true;
+    fi;
+end;
+
+f := create_random_morphism( [ 1, 2, 2 ],[ 1, 0 ] );
+i := MonomorphismIntoSomeInjectiveObject( Source( f ) );
+
+# The following morphism factors through the range of i which is free,
+# let us test that.
+mor := PreCompose( f, InjectionOfCofactorOfPushout( [ f, i ], 1 ))
+can_be_factored_through_free_module(mor);
+# true
