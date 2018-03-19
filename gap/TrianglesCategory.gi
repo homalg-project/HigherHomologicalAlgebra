@@ -32,6 +32,13 @@ InstallMethod( CategoryOfTriangles,
                   IsEqualForMorphisms( MorphismAt( phi1, 1 ), MorphismAt( phi2, 1 ) ) and
                     IsEqualForMorphisms( MorphismAt( phi1, 2 ), MorphismAt( phi2, 2 ) );
         end );
+
+    AddIsCongruentForMorphisms( cat,
+        function( phi1, phi2 )
+        return IsCongruentForMorphisms( MorphismAt( phi1, 0 ), MorphismAt( phi2, 0 ) ) and 
+                  IsCongruentForMorphisms( MorphismAt( phi1, 1 ), MorphismAt( phi2, 1 ) ) and
+                    IsCongruentForMorphisms( MorphismAt( phi1, 2 ), MorphismAt( phi2, 2 ) );
+        end );
     
     AddIsZeroForObjects( cat, 
         function( T )
