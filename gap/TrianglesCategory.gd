@@ -15,3 +15,4 @@ DeclareOperation( "\^", [ IsCapCategoryTriangle, IsInt ] );
 #DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
 
 DeclareAttribute( "ExtendFunctorToTrianglesCategory", IsCapFunctor );
+DeclareAttribute( "MappingCone", IsCapCategoryMorphism );

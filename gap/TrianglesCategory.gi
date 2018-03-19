@@ -446,6 +446,38 @@ InstallMethod( ExtendFunctorToTrianglesCategory, [ IsCapFunctor ],
 
 end );
 
+##
+InstallMethod( MappingCone,
+                [ IsCapCategoryMorphism ],
+
+    function( phi )
+    local T1, T2, t0, t1, t2;
+
+    T1 := Source( phi );
+    
+    T2 := Range( phi );
+    
+    t0 := MorphismBetweenDirectSums( 
+                                    [
+                                        [ AdditiveInverse( T1^1 ), phi[1] ],
+                                        [ ZeroMorphism( T2[0], T1[2]), T2^0]
+                                    ]
+                                    );
+    t1 := MorphismBetweenDirectSums( 
+                                    [
+                                        [ AdditiveInverse( T1^2 ), phi[2] ],
+                                        [ ZeroMorphism( T2[1], T1[3]), T2^1]
+                                    ]
+                                    );
+    t2 := MorphismBetweenDirectSums( 
+                                    [
+                                        [ AdditiveInverse( ShiftOfMorphism( T1^0 ) ), ShiftOfMorphism( phi[0] ) ],
+                                        [ ZeroMorphism( T2[2], ShiftOfObject( T1[1]) ) , T2^2]
+                                    ]
+                                    );
+    return CreateTriangle( t0, t1, t2 );
+
+end );
 ##############################
 ##
 ##  View
