@@ -14,3 +14,4 @@ DeclareOperation( "\^", [ IsCapCategoryTriangle, IsInt ] );
 #DeclareOperation( "\[\]", [ IsCapCategoryTriangle, IsInt ] );
 #DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
 
+DeclareAttribute( "ExtendFunctorToTrianglesCategory", IsCapFunctor );

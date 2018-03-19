@@ -408,6 +408,43 @@ InstallMethod( \[\], [ IsCapCategoryTrianglesMorphism, IsInt ],
     return MorphismAt( phi, i );
 
 end );
+##
+InstallMethod( ExtendFunctorToTrianglesCategory, [ IsCapFunctor ],
+
+    function( F )
+    local source, range, name, functor;
+    
+    # Note: F must commute with the Shift functor.
+
+    source := AsCapCategory( Source( F ) );
+    range := AsCapCategory( Range( F ) );
+    
+    source := CategoryOfTriangles( source );
+    range := CategoryOfTriangles( range );
+    
+    name := Concatenation( "Extension of ", Name( F ) );
+    
+    functor := CapFunctor( name, source, range );
+
+    AddObjectFunction( functor, 
+    
+        function( T )
+          
+        return CreateTriangle( ApplyFunctor(F, T^0), ApplyFunctor(F, T^1), ApplyFunctor(F, T^2) );
+          
+        end );
+          
+    AddMorphismFunction( functor, 
+    
+        function( new_source, phi, new_range )
+          
+        return CreateTrianglesMorphism( new_source, new_range, ApplyFunctor(F,phi[0]), ApplyFunctor(F,phi[1]), ApplyFunctor(F,phi[2]) );
+          
+        end );
+          
+    return functor;
+
+end );
 
 ##############################
 ##
