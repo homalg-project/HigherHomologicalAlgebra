@@ -91,8 +91,89 @@ InstallMethod( CategoryOfTriangles,
     
     end );
 
-    AddIsWellDefinedForObjects( cat, IsWellDefinedTriangle );
-    AddIsWellDefinedForMorphisms( cat, IsWellDefinedTrianglesMorphism );
+    AddIsWellDefinedForObjects( cat, 
+        function( T )
+    
+        if not IsWellDefined( ObjectAt( T, 0 ) ) or 
+            not IsWellDefined( ObjectAt( T, 1 ) ) or
+            not IsWellDefined( ObjectAt( T, 2 ) ) or
+            not IsWellDefined( ObjectAt( T, 3 ) ) then 
+                return false;
+        fi;
+    
+        if not IsWellDefined( MorphismAt( T, 0 ) ) or 
+            not IsWellDefined( MorphismAt( T, 1 ) ) or
+            not IsWellDefined( MorphismAt( T,2 ) ) then 
+                return false;
+        fi;
+    
+        if not IsEqualForObjects( Range( MorphismAt( T, 0 ) ), Source( MorphismAt( T, 1 ) ) ) or
+            not IsEqualForObjects( Range( MorphismAt( T, 1 ) ), Source( MorphismAt( T, 2 ) ) ) or
+            not IsEqualForObjects( ShiftOfObject( Source( MorphismAt( T, 0 ) ) ), Range( MorphismAt( T, 2 ) ) ) then
+                return false;
+        fi;
+    
+        if not IsZeroForMorphisms( PreCompose( MorphismAt( T, 0), MorphismAt( T, 1 ) ) ) or
+            not IsZeroForMorphisms( PreCompose( MorphismAt( T, 1), MorphismAt( T, 2 ) ) ) then 
+                return false;
+        fi;
+    
+        return true;
+
+    end );
+    
+    AddIsWellDefinedForMorphisms( cat, 
+        function( phi )
+        local T1, T2;
+        
+        T1 := Source( phi );
+        T2 := Range( phi );
+        
+        if not IsEqualForObjects( Source( MorphismAt( phi, 0 ) ), ObjectAt( T1, 0 ) ) or 
+            not IsEqualForObjects( Range( MorphismAt( phi, 0 ) ), ObjectAt( T2, 0) )  then 
+            
+            Error( "The morphism m0 is not compatible" );
+            
+        fi;
+        
+        if not IsEqualForObjects( Source( MorphismAt( phi, 1 ) ), ObjectAt( T1, 1 ) ) or 
+            not IsEqualForObjects( Range( MorphismAt( phi, 1 ) ), ObjectAt( T2, 1) )  then 
+            
+            Error( "The morphism m1 is not compatible" );
+        
+        fi;
+        
+        if not IsEqualForObjects( Source( MorphismAt( phi, 2 ) ), ObjectAt( T1, 2) ) or 
+            not IsEqualForObjects( Range( MorphismAt( phi, 2 ) ), ObjectAt( T2, 2) )  then 
+            
+            Error( "The morphism m2 is not compatible" );
+        
+        fi;
+    
+        # Is the diagram commutative?
+
+        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 0 ), MorphismAt( phi, 1 ) ), PreCompose( MorphismAt( phi, 0 ), MorphismAt( T2, 0) ) ) then
+        
+            Error( "The first squar is not commutative" );
+            
+        fi;
+        
+        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 1 ), MorphismAt( phi, 2 ) ), PreCompose( MorphismAt( phi, 1 ), MorphismAt( T2, 1) ) ) then
+        
+            Error( "The second squar is not commutative" );
+            
+        fi;
+        
+        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 2), MorphismAt( phi, 3 ) ), 
+                                    PreCompose( MorphismAt( phi, 2 ), MorphismAt( T2, 2) ) ) then
+        
+            Error( "The third squar is not commutative" );
+            
+        fi;
+        
+        return true;
+    
+    end );
     
     AddDirectSum( cat, 
         function( L )
@@ -134,6 +215,7 @@ InstallMethod( CategoryOfTriangles,
                     mor := CreateTrianglesMorphism( D, can_D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor ); 
                     
                     SetIsomorphismToCanonicalExactTriangle( D, mor );
+                    
                     end ) );
         return D;
 
