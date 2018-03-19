@@ -226,3 +226,270 @@ InstallMethod( CategoryOfTriangles,
     return cat;
     
 end );
+
+####################################
+##
+## Constructors
+##
+####################################
+
+##
+InstallMethod( CreateTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+    
+    function( mor1, mor2, mor3 )
+    local  triangle;
+    
+    triangle:= rec( T0 := Source( mor1 ),
+                    t0 := mor1,
+                    T1 := Source( mor2 ),
+                    t1 := mor2,
+                    T2 := Source( mor3 ),
+                    t2 := mor3,
+                    T3 :=  Range( mor3 ) 
+                  );
+    
+    ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle,
+                             UnderlyingCapCategory, CapCategory( mor1 )
+                           );
+    
+    AddObject( CategoryOfTriangles( CapCategory( mor1 ) ), triangle );
+    
+    AddToToDoList( ToDoListEntry( [ [ triangle, "IsExactTriangle", true ] ], 
+                    function( )
+                    SetFilterObj( triangle, IsCapCategoryExactTriangle );
+                    end ) );
+
+    AddToToDoList( ToDoListEntry( [ [ triangle, "IsCanonicalExactTriangle", true ] ], 
+                    function( )
+                    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
+                    end ) );
+
+    return triangle;
+    
+end );
+
+##
+InstallMethod( CreateExactTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+   
+                       
+    function( mor1, mor2, mor3 )
+    local  triangle;
+        
+    triangle:= CreateTriangle( mor1, mor2, mor3 );
+    
+    SetFilterObj( triangle, IsCapCategoryExactTriangle );
+    
+    return triangle;
+    
+end );
+
+##
+InstallMethod( CreateCanonicalExactTriangle, 
+                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
+   
+                       
+    function( mor1, mor2, mor3 )
+    local  triangle;
+        
+    triangle:= CreateTriangle( mor1, mor2, mor3 );
+    
+    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
+    
+    SetIsomorphismFromCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
+    
+    SetIsomorphismToCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
+
+    return triangle;
+    
+end );
+
+##
+InstallMethod( CreateTrianglesMorphism, 
+               [ IsCapCategoryTriangle, IsCapCategoryTriangle,
+               IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                       IsCapCategoryMorphism ], 
+               
+   function( T1, T2, morphism0, morphism1, morphism2 )
+   local morphism;
+ 
+   morphism := rec( m0 := morphism0,
+                    
+                    m1 := morphism1,
+                    
+                    m2 := morphism2 );
+                  
+   ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
+                            Source, T1,
+                            Range, T2,
+                            UnderlyingCapCategory, CapCategory( morphism0 )
+                          );
+   
+   AddMorphism( CategoryOfTriangles( CapCategory( morphism0 ) ), morphism );
+   
+   return morphism;
+   
+end );
+
+
+##
+InstallMethod( MorphismAtOp, 
+                [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    
+    if i = 0 then return T!.t0;
+    
+    elif i = 1 then return T!.t1;
+    
+    elif i = 2 then return T!.t2;
+    
+    else Error( "The second entry should be 0, 1 or 2" );
+    
+    fi;
+
+end );
+
+##
+InstallMethod( ObjectAtOp, 
+                [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    
+    if i = 0 then return T!.T0;
+    
+    elif i = 1 then return T!.T1;
+    
+    elif i = 2 then return T!.T2;
+    
+    elif i = 3 then return T!.T3;
+    
+    else Error( "The second entry should be 0, 1, 2 or 3" );
+    
+    fi;
+
+end );
+
+##
+InstallMethod( MorphismAtOp, 
+                [ IsCapCategoryTrianglesMorphism, IsInt ],
+    function( phi, i )
+    
+    if i = 0 then return phi!.m0;
+    
+    elif i = 1 then return phi!.m1;
+    
+    elif i = 2 then return phi!.m2;
+    
+    elif i = 3 then return ShiftOfMorphism( phi!.m0 );
+    
+    else
+        Error( "Index can be 0,1,2 or 3" );
+    fi;
+
+end );
+
+##############################
+##
+##  View
+##
+##############################
+
+InstallMethod( ViewObj,
+               
+               [ IsCapCategoryTriangle ], 
+               
+    function( triangle )
+
+    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+        Print( "<A canonical exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
+    elif IsCapCategoryExactTriangle( triangle ) then 
+        if HasIsCanonicalExactTriangle( triangle ) and not IsCanonicalExactTriangle( triangle ) then
+            Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
+        else
+            Print( "<An exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">");
+        fi;
+    else
+        Print( "<A triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
+    fi;
+
+end );
+  
+InstallMethod( ViewObj, 
+
+               [ IsCapCategoryTrianglesMorphism ], 
+               
+    function( morphism )
+  
+        Print( "<A morphism of triangles in ", CapCategory( MorphismAt( morphism, 0 ) ), ">" );
+  
+end );
+  
+##############################
+##
+##  Display
+##
+##############################
+
+
+InstallMethod( Display, 
+
+        [ IsCapCategoryTriangle ],
+        
+    function( triangle )
+    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+        Print( "A canonical exact triangle given by the sequence\n\n");
+    elif IsCapCategoryExactTriangle( triangle ) then 
+        Print( "An exact triangle given by the sequence\n\n");
+    else
+        Print( "A triangle given by the sequence\n\n" );
+    fi;
+  
+    Print( "     τ0         τ1         τ2           \n");
+    Print( "T0 ------> T1 ------> T2 ------> Σ(T0)\n" );
+    Print( "\n\nT0 is\n\n" ); Display( ObjectAt( triangle, 0 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "τ0 is \n\n");Display( MorphismAt( triangle, 0 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "T1 is\n\n" );Display( ObjectAt( triangle, 1 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "τ1 is \n\n");Display( MorphismAt( triangle, 1 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "T2 is\n\n" );Display( ObjectAt( triangle, 2 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "τ2 is \n\n");Display( MorphismAt( triangle, 2 ) );
+    Print( "\n------------------------------------\n\n" );
+    Print( "Σ(T0) is \n\n" ); Display( ShiftOfObject( ObjectAt( triangle, 0 ) ) );
+  
+end, 5 );
+
+##
+InstallMethod( Display, 
+        [ IsCapCategoryTrianglesMorphism ],
+    
+    function( morphism )
+   
+    Print( "A morphism of triangles:\n");
+ 
+    Print( "          τ0         τ1         τ2             \n" );
+    Print( "Tr1: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
+    Print( "     |          |          |            |      \n" );
+    Print( "     | m0       | m1       | m2         | Σ(m0)\n" );
+    Print( "     |          |          |            |      \n" );
+    Print( "     V          V          V            V      \n" );
+    Print( "Tr2: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
+    Print( "          τ0         τ1         τ2             \n" );
+    Print( "\n---------------------------------------------\n" );
+    Print( "\nm0 is\n\n" );
+    Display( MorphismAt( morphism, 0 ) );
+    Print( "-----------------------------------------------\n" );
+    Print( "\nm1 is\n\n" );
+    Display( MorphismAt( morphism, 1 ) );
+    Print( "-----------------------------------------------\n" );
+    Print( "\nm2 is\n\n" );
+    Display( MorphismAt( morphism, 2 ) );
+    Print( "-----------------------------------------------\n" );
+    Print( "\nΣ(m0) is\n\n" );
+    Display( MorphismAt( morphism, 3 ) );
+    Print( "-----------------------------------------------\n" );
+   
+ end );
