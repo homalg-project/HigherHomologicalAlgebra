@@ -213,8 +213,8 @@ return Iterated( List( basis_indices, function( tau )
                      
 end );
  
-DeclareGlobalFunction( "F2" );
-InstallGlobalFunction( F2,
+DeclareGlobalFunction( "FF2" );
+InstallGlobalFunction( FF2,
 
  function( sigma, A, B )
  
@@ -236,8 +236,8 @@ InstallGlobalFunction( F2,
  end );
 
 
-DeclareGlobalFunction( "F3" );
-InstallGlobalFunction( F3, 
+DeclareGlobalFunction( "FF3" );
+InstallGlobalFunction( FF3, 
 
 function( A, B )
 local S, n, basis_indices;
@@ -246,7 +246,7 @@ S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
 basis_indices := MyList( n );
 
-return Iterated( List( basis_indices, sigma -> F2( sigma, A, B ) ), UnionOfRows );
+return Iterated( List( basis_indices, sigma -> FF2( sigma, A, B ) ), UnionOfRows );
 
 end );
 
@@ -282,7 +282,7 @@ C_deco_list_vec := List( C_deco_list, c-> Iterated( List( [ 1..NrColumns( C ) ],
 
 C_vec := Q*Iterated( C_deco_list_vec, UnionOfRows );
 
-N := Q*F3( A, B );
+N := Q*FF3( A, B );
 
 sol := LeftDivide( N, C_vec );
 

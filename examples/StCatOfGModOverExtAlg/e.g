@@ -270,6 +270,6 @@ i := MonomorphismIntoSomeInjectiveObject( Source( f ) );
 
 # The following morphism factors through the range of i which is free,
 # let us test that.
-mor := PreCompose( f, InjectionOfCofactorOfPushout( [ f, i ], 1 ))
+mor := PreCompose( f, InjectionOfCofactorOfPushout( [ f, i ], 1 ) );
 can_be_factored_through_free_module(mor);
 # true
