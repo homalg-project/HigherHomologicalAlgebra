@@ -388,6 +388,27 @@ InstallMethod( MorphismAtOp,
 
 end );
 
+##
+InstallMethod( \^, [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    return MorphismAt( T, i );
+
+end );
+
+##
+InstallMethod( \[\], [ IsCapCategoryTriangle, IsInt ],
+    function( T, i )
+    return ObjectAt( T, i );
+
+end );
+
+##
+InstallMethod( \[\], [ IsCapCategoryTrianglesMorphism, IsInt ],
+    function( phi, i )
+    return MorphismAt( phi, i );
+
+end );
+
 ##############################
 ##
 ##  View
@@ -423,7 +444,8 @@ InstallMethod( ViewObj,
         Print( "<A morphism of triangles in ", CapCategory( MorphismAt( morphism, 0 ) ), ">" );
   
 end );
-  
+
+
 ##############################
 ##
 ##  Display

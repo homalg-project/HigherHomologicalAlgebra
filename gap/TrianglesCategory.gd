@@ -9,3 +9,8 @@
 
 
 DeclareAttribute( "CategoryOfTriangles", IsCapCategory );
+
+DeclareOperation( "\^", [ IsCapCategoryTriangle, IsInt ] );
+#DeclareOperation( "\[\]", [ IsCapCategoryTriangle, IsInt ] );
+#DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
+
