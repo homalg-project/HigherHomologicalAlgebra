@@ -312,6 +312,7 @@ return [ X_, Y_ ];
 
 end );
 
+#old version, look at the same function in the examples of graded case
 DeclareGlobalFunction( "ReductionOfHomalgMatrix" );
 InstallGlobalFunction( ReductionOfHomalgMatrix,
     function( A, D )
