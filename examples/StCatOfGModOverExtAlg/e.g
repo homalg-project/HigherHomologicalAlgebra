@@ -265,6 +265,61 @@ can_be_factored_through_free_module :=
     fi;
 end;
 
+return_degree_zero_part := 
+    function( M, N, f )
+    local mat, required_degrees;
+    mat := UnderlyingMatrix( f );
+    required_degrees := List( GeneratorDegrees( M ), i -> 
+                                    List( GeneratorDegrees( N ), j -> i - j ) );
+    mat := ReductionOfHomalgMatrix( mat, required_degrees );
+    return GradedPresentationMorphism(M,mat,N);
+end;
+
+try_of_external_hom := 
+    function( MA, MB )
+    local A, B, l, basis_indices, Q, N, sN, r,m,s,n,t,sN_t, basis_sN_t, basis, XX, XX_, X_, i;
+
+    A := UnderlyingMatrix( UnderlyingPresentationObject( MA ) );
+    B := UnderlyingMatrix( UnderlyingPresentationObject( MB ) );
+
+    l := Length( IndeterminatesOfExteriorRing( R ) );
+    basis_indices := MyList( l-1 );
+
+    Q := CoefficientsRing( R ); 
+
+    N := Q*FF3( A, B );
+
+    sN := SyzygiesOfColumns( N );
+
+    r := NrRows( A );
+    m := NrColumns( A );
+    s := NrColumns( B );
+    n := NrRows( B );
+
+    t := m*s*2^l;
+
+    sN_t := CertainRows( sN, [ 1..t ] );
+    
+    basis_sN_t := BasisOfColumns( sN_t );
+    
+    basis := [ ];
+
+    for i in [ 1 .. NrColumns( basis_sN_t ) ] do 
+        
+        XX := CertainColumns( basis_sN_t, [ i ] );
+
+        XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
+
+        X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* RingElement( basis_indices[ i ], R ) ) );
+
+        Add( basis, GradedPresentationMorphism( MA, X_, MB ) );
+
+    od;
+    basis := List( basis, b -> return_degree_zero_part( MA, MB, b ) );
+return Filtered( basis, b -> not IsZeroForMorphisms(b) );
+
+end;
+
 f := create_random_morphism( [ 1, 2, 2 ],[ 1, 0 ] );
 i := MonomorphismIntoSomeInjectiveObject( Source( f ) );
 
