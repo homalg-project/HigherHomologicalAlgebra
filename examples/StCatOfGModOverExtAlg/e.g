@@ -265,7 +265,7 @@ can_be_factored_through_free_module :=
     fi;
 end;
 
-return_degree_zero_part := 
+compute_degree_zero_part := 
     function( M, N, f )
     local mat, required_degrees;
     mat := UnderlyingMatrix( f );
@@ -275,7 +275,7 @@ return_degree_zero_part :=
     return GradedPresentationMorphism(M,mat,N);
 end;
 
-try_of_external_hom := 
+basis_of_external_graded_hom := 
     function( MA, MB )
     local A, B, l, basis_indices, Q, N, sN, r,m,s,n,t,sN_t, basis_sN_t, basis, XX, XX_, X_, i;
 
@@ -315,7 +315,7 @@ try_of_external_hom :=
         Add( basis, GradedPresentationMorphism( MA, X_, MB ) );
 
     od;
-    basis := List( basis, b -> return_degree_zero_part( MA, MB, b ) );
+    basis := List( basis, b -> compute_degree_zero_part( MA, MB, b ) );
 return Filtered( basis, b -> not IsZeroForMorphisms(b) );
 
 end;
