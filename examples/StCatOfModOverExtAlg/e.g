@@ -120,7 +120,7 @@ AddLift( cat,
    
     l := Length( IndeterminatesOfExteriorRing( R ) );
     
-    basis_indices := MyList( l-1 );
+    basis_indices := standard_list_of_basis_indices( l-1 );
     
     Q := CoefficientsRing( R ); 
 
@@ -180,7 +180,7 @@ AddLift( cat,
     
     XX_ := UnionOfColumns( List( [ 1 .. v*2^l ], i -> CertainRows( XX, [ ( i - 1 )*s + 1 .. i*s ] ) ) );
 
-    X_ := Sum( List( [ 1..2^l ], i-> ( R * CertainColumns( XX_, [ ( i - 1 )*v + 1 .. i*v ] ) )* RingElement( basis_indices[ i ], R ) ) );
+    X_ := Sum( List( [ 1..2^l ], i-> ( R * CertainColumns( XX_, [ ( i - 1 )*v + 1 .. i*v ] ) )* ring_element( basis_indices[ i ], R ) ) );
 
     return PresentationMorphism( Source( morphism_1 ), X_, Source( morphism_2 ) );
     
@@ -264,7 +264,7 @@ basis_of_external_hom :=
     B := UnderlyingMatrix( MB );
 
     l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := MyList( l-1 );
+    basis_indices := standard_list_of_basis_indices( l-1 );
 
     Q := CoefficientsRing( R ); 
 
@@ -291,7 +291,7 @@ basis_of_external_hom :=
 
         XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
 
-        X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* RingElement( basis_indices[ i ], R ) ) );
+        X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* ring_element( basis_indices[ i ], R ) ) );
 
         Add( basis, PresentationMorphism( MA, X_, MB ) );
 

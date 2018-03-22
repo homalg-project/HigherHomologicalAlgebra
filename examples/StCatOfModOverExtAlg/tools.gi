@@ -16,8 +16,8 @@ end );
 
 
 ##
-DeclareGlobalFunction( "MyList" );
-InstallGlobalFunction( MyList, 
+DeclareGlobalFunction( "standard_list_of_basis_indices" );
+InstallGlobalFunction( standard_list_of_basis_indices, 
 
 function ( n )
 local f, new_l,l;
@@ -56,8 +56,8 @@ return Concatenation( new_l );
 end );
 
 ##
-DeclareGlobalFunction( "RingElement" );
-InstallGlobalFunction( RingElement, 
+DeclareGlobalFunction( "ring_element" );
+InstallGlobalFunction( ring_element, 
 
 function( l, R )
 
@@ -92,7 +92,7 @@ R := d!.ring;
 
 n := Length( IndeterminatesOfExteriorRing( R ) ) -1;
 
-l := MyList( n );
+l := standard_list_of_basis_indices( n );
 
 coeff_list := [ ];
 
@@ -102,13 +102,13 @@ for u in l do
   
   SubtractSet( v, u );
   
-  reduction_element := RingElement( v, R );
+  reduction_element := ring_element( v, R );
   
   dd_new := dd*reduction_element;
   
   m := NrColumns( dd_new );
   
-  r:= RingElement( Concatenation( u, v ), R );
+  r:= ring_element( Concatenation( u, v ), R );
   
   M := HomalgDiagonalMatrix( List( [ 1 .. m ], i -> r ), R );   
     
@@ -116,7 +116,7 @@ for u in l do
  
   Add( coeff_list, [ u, coeff_element ] );
   
-  dd := dd - coeff_element*RingElement( u, R );
+  dd := dd - coeff_element*ring_element( u, R );
    
 od;
 
@@ -133,13 +133,13 @@ local S,n, basis_indices, zero_matrix,d, e_sigma;
 
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := MyList( n );
+basis_indices := standard_list_of_basis_indices( n );
 
 d := DecompositionOfHomalgMat( A );
 
 zero_matrix := A - A;
 
-e_sigma := RingElement( sigma, S );
+e_sigma := ring_element( sigma, S );
 
 return Iterated( List( basis_indices, function( tau )
                             local lambda, m;
@@ -162,7 +162,7 @@ return Iterated( List( basis_indices, function( tau )
                             
                             m := Position( basis_indices, lambda );
                             
-                            return  ( ( RingElement( lambda, S )* RingElement( tau, S ) )/e_sigma )*d[ m ][ 2 ];
+                            return  ( ( ring_element( lambda, S )* ring_element( tau, S ) )/e_sigma )*d[ m ][ 2 ];
                             
                             end ), UnionOfColumns );
                      
@@ -178,13 +178,13 @@ local S,n, basis_indices, zero_matrix,d, e_sigma;
 
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := MyList( n );
+basis_indices := standard_list_of_basis_indices( n );
 
 d := DecompositionOfHomalgMat( A );
 
 zero_matrix := HomalgZeroMatrix( NrRows( A ), NrColumns( A ), S );
 
-e_sigma := RingElement( sigma, S );
+e_sigma := ring_element( sigma, S );
 
 return Iterated( List( basis_indices, function( tau )
                             local lambda, m;
@@ -207,7 +207,7 @@ return Iterated( List( basis_indices, function( tau )
                             
                             m := Position( basis_indices, lambda );
                             
-                            return  ( RingElement( tau, S )*( RingElement( lambda, S ) )/e_sigma )*d[ m ][ 2 ];
+                            return  ( ring_element( tau, S )*( ring_element( lambda, S ) )/e_sigma )*d[ m ][ 2 ];
                             
                             end ), UnionOfRows );
                      
@@ -244,7 +244,7 @@ local S, n, basis_indices;
 
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := MyList( n );
+basis_indices := standard_list_of_basis_indices( n );
 
 return Iterated( List( basis_indices, sigma -> FF2( sigma, A, B ) ), UnionOfRows );
 
@@ -270,7 +270,7 @@ fi;
 R := A!.ring;
 
 l := Length( IndeterminatesOfExteriorRing( R ) );
-basis_indices := MyList( l-1 );
+basis_indices := standard_list_of_basis_indices( l-1 );
 
 Q := CoefficientsRing( R ); 
 
@@ -305,8 +305,8 @@ YY := CertainRows( sol, [ 1+ m*s*2^l ..( m*s+r*n)*2^l] );
 XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
 YY_ := Iterated( List( [ 1 .. n*2^l ], i -> CertainRows( YY, [ ( i - 1 )*r + 1 .. i*r ] ) ), UnionOfColumns );
 
-X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* RingElement( basis_indices[ i ], R ) ) );
-Y_ := Sum( List( [ 1..2^l ], i-> (R*CertainColumns( YY_, [ ( i - 1 )*n + 1 .. i*n ] ) )* RingElement( basis_indices[ i ], R ) ) );
+X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* ring_element( basis_indices[ i ], R ) ) );
+Y_ := Sum( List( [ 1..2^l ], i-> (R*CertainColumns( YY_, [ ( i - 1 )*n + 1 .. i*n ] ) )* ring_element( basis_indices[ i ], R ) ) );
 
 return [ X_, Y_ ];
 
