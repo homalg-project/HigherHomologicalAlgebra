@@ -1,6 +1,7 @@
 
 ReadPackage( "StableCategoriesForCap", "/examples/StCatOfModOverExtAlg/tools.gi" );
 LoadPackage( "ModulePresentations" );
+LoadPackage( "LinearAlgebra" );
 
 R := KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" );
 
@@ -301,6 +302,133 @@ return Filtered( basis, b -> not IsZeroForMorphisms(b) );
 
 end;
 
+lifts_in_stable_category := 
+    function( alpha_, beta_ )
+    local A, B, C, alpha, beta, gamma, I, R, l, basis_indices, Q, L_B, L_id_s, L_B_mod, R_C, R_beta, L_gamma, R_A_2, R_A_3, L_I, alpha_deco, alpha_deco_list,
+            alpha_deco_list_vec, alpha_vec, R_1, R_2, R_3, C_x, C_y, C_z, C_u, C_w, C_1, sol, s, v, XX, XX_, X_, main_matrix, constants_matrix;
+    A := UnderlyingMatrix( Range( alpha_ ) );
+    B := UnderlyingMatrix( Source( alpha_ ) );
+    C := UnderlyingMatrix( Source( beta_ ) );
+    
+    alpha := UnderlyingMatrix( alpha_ );
+    beta := UnderlyingMatrix( beta_ );
+    gamma := UnderlyingMatrix( MonomorphismIntoSomeInjectiveObject( Source( alpha_ ) ) );
+    
+    I := UnderlyingMatrix( Range( MonomorphismIntoSomeInjectiveObject( Source( alpha_ ) ) ) );
+    
+    # We need X,Y,Z,U,W such that
+    # B*X                         + W*C  = 0
+    # X*beta + gamma*Y       + U*A      = alpha
+    #              I*Y + Z*A            = 0
+
+    R := HomalgRing( A );
+    
+    l := Length( IndeterminatesOfExteriorRing( R ) );
+
+    basis_indices := standard_list_of_basis_indices( l-1 );
+    
+    Q := CoefficientsRing( R );
+    
+    L_B := Iterated( List( basis_indices, u-> KroneckerMat( HomalgIdentityMatrix( NrColumns( C ), Q ), Q*FLeft( u, B ) ) ), UnionOfRows );
+    L_id_s := Iterated( List( basis_indices, u-> KroneckerMat( HomalgIdentityMatrix( NrRows( beta ), Q ), Q*FLeft( u, HomalgIdentityMatrix( NrRows( alpha ), R ) ) ) ), UnionOfRows );
+    L_B_mod :=  L_B* Involution( L_id_s );
+    
+    R_C := Iterated( List( basis_indices, u-> KroneckerMat( Involution( Q*FRight( u, C ) ), HomalgIdentityMatrix( NrRows( B ), Q ) ) ), UnionOfRows );
+    R_beta := Iterated( List( basis_indices, u-> KroneckerMat( Involution( Q*FRight( u, beta ) ), HomalgIdentityMatrix( NrRows( alpha ), Q ) ) ), UnionOfRows );
+    L_gamma := Iterated( List( basis_indices, u-> KroneckerMat( HomalgIdentityMatrix( NrColumns( alpha ), Q ), Q*FLeft( u, gamma ) ) ), UnionOfRows );
+    R_A_2 := Iterated( List( basis_indices, u-> KroneckerMat( Involution( Q*FRight( u, A ) ), HomalgIdentityMatrix( NrRows( alpha ), Q ) ) ), UnionOfRows ); 
+    R_A_3 := Iterated( List( basis_indices, u-> KroneckerMat( Involution( Q*FRight( u, A ) ), HomalgIdentityMatrix( NrRows( I ), Q ) ) ), UnionOfRows ); 
+    L_I := Iterated( List( basis_indices, u-> KroneckerMat( HomalgIdentityMatrix( NrColumns( A ), Q ), Q*FLeft( u, I ) ) ), UnionOfRows );
+    
+    alpha_deco := DecompositionOfHomalgMat( alpha );
+   
+    alpha_deco_list := List( alpha_deco, i-> i[ 2 ] );
+
+    alpha_deco_list_vec := List( alpha_deco_list, mat -> UnionOfRows( List( [ 1..NrColumns( alpha ) ], i-> CertainColumns( mat, [ i ] ) ) ) );
+
+    alpha_vec := Q*UnionOfRows( alpha_deco_list_vec );
+    
+    R_1 := VectorSpaceObject( NrRows( L_B_mod ), Q );
+    R_2 := VectorSpaceObject( NrRows( R_beta ), Q );
+    R_3 := VectorSpaceObject( NrRows( L_I ), Q );
+    
+    C_x := VectorSpaceObject( NrColumns( L_B_mod ), Q );
+    C_y := VectorSpaceObject( NrColumns( L_gamma ), Q );
+    C_z := VectorSpaceObject( NrColumns( R_A_3 ), Q );
+    C_u := VectorSpaceObject( NrColumns( R_A_2 ), Q );
+    C_w := VectorSpaceObject( NrColumns( R_C ), Q );
+    C_1 := VectorSpaceObject( 1, Q );
+    
+    # main matrix is 
+    # L_B_mod* vec(X)                                                   + R_C*vec(W)   = 0
+    # R_beta * vec(X) + L_gamma * vec(Y)                + R_A_2*vec(U)                 = vec( alpha )
+    #                       L_I * vec(Y) + R_A_3*vec(Z)                                = 0
+
+    main_matrix := UnderlyingMatrix( MorphismBetweenDirectSums(
+    [ [ VectorSpaceMorphism(R_1,L_B_mod,C_x), ZeroMorphism(R_1,C_y), ZeroMorphism(R_1,C_z), ZeroMorphism(R_1,C_u), VectorSpaceMorphism(R_1,R_C,C_w ) ],
+    [ VectorSpaceMorphism(R_2,R_beta,C_x) , VectorSpaceMorphism(R_2,L_gamma,C_y), ZeroMorphism(R_2,C_z), VectorSpaceMorphism(R_2,R_A_2,C_u), ZeroMorphism(R_2,C_w) ],
+    [ ZeroMorphism(R_3,C_x) , VectorSpaceMorphism(R_3,L_I,C_y), VectorSpaceMorphism(R_3,R_A_3,C_z), ZeroMorphism(R_3,C_u), ZeroMorphism(R_3,C_w) ] ] ) );
+        
+    
+    constants_matrix := UnderlyingMatrix( MorphismBetweenDirectSums( [ [ ZeroMorphism( R_1, C_1 ) ], [ VectorSpaceMorphism( R_2, alpha_vec, C_1 ) ], [ ZeroMorphism( R_3,C_1) ] ] ) );
+    
+    sol := LeftDivide( main_matrix, constants_matrix );
+    
+    if sol = fail then 
+      
+      return fail;
+     
+    fi;
+    
+    s := NrColumns( B );
+    
+    v := NrColumns( C );
+    
+    XX := CertainRows( sol, [ 1 .. s*v*2^l ] );
+    
+    XX_ := UnionOfColumns( List( [ 1 .. v*2^l ], i -> CertainRows( XX, [ ( i - 1 )*s + 1 .. i*s ] ) ) );
+
+    X_ := Sum( List( [ 1..2^l ], i-> ( R * CertainColumns( XX_, [ ( i - 1 )*v + 1 .. i*v ] ) )* ring_element( basis_indices[ i ], R ) ) );
+
+    return PresentationMorphism( Source( alpha_ ), X_, Source( beta_ ) );
+end;
+
+colifts_in_stable_category := 
+    function( alpha_, beta_ )
+    local A, B, C, alpha, beta, gamma, I, R, sol, mat1, mat2;
+
+    A := UnderlyingMatrix( Source( alpha_ ) );
+    B := UnderlyingMatrix( Range( alpha_ ) );
+    C := UnderlyingMatrix( Range( beta_ ) );
+
+    alpha := UnderlyingMatrix( alpha_ );
+    beta := UnderlyingMatrix( beta_ );
+    gamma := UnderlyingMatrix( MonomorphismIntoSomeInjectiveObject( Source( alpha_ ) ) );
+    I := UnderlyingMatrix( Range( MonomorphismIntoSomeInjectiveObject( Source( alpha_ ) ) ) );
+    R := HomalgRing( A );
+
+    mat1 := Iterated( 
+            [
+                UnionOfColumns( B, HomalgZeroMatrix( NrRows(B), NrColumns(gamma), R ) ),
+                UnionOfColumns( alpha, gamma ),
+                UnionOfColumns( HomalgZeroMatrix( NrRows(I), NrColumns(alpha), R), I )
+            ], UnionOfRows );
+
+    mat2 := Iterated(
+            [
+                HomalgZeroMatrix( NrRows( B ), NrColumns( C ), R ),
+                beta,
+                HomalgZeroMatrix( NrRows( I), NrColumns( C ), R )
+            ], UnionOfRows );
+    
+    sol := SolveTwoSidedEquationOverExteriorAlgebra( mat1, C, mat2 );
+
+    if sol = fail then
+        return fail;
+    else
+        return PresentationMorphism( Range( alpha_ ), CertainRows( sol[1], [ 1..NrColumns( B ) ] ), Range( beta_ ) );
+    fi;
+end;
 
 f := create_random_morphism( [ 1, 2 ],[ 1, 0 ] );
 i := MonomorphismIntoSomeInjectiveObject( Source( f ) );
