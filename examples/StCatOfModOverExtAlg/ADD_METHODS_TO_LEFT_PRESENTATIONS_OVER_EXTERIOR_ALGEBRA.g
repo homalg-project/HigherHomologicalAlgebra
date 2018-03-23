@@ -255,7 +255,7 @@ return cat;
 
 end );
 
-basis_of_external_hom := 
+generating_set_of_external_hom := 
     function( MA, MB )
     local A, B, l, basis_indices, Q, N, sN, r,m,s,n,t,sN_t, basis_sN_t, basis, XX, XX_, X_, i, R;
 
@@ -310,3 +310,85 @@ n := HomalgMatrix( "[ [ e0, e1, e1, e1*e0, e0-e1 ], [ 1, 0, e1*e0, e0, e0 ], [ e
 N := AsLeftPresentation( n );
 
 
+# Very important note:
+# if you compute hom(M,N) you will have a set of 46 morphisms and the first and the 30'th are congruent.
+# h := generating_set_of_external_hom(M,N);
+# gap> IsCongruentForMorphisms( h[1], h[30] );
+# true
+# gap> Display( h[1] );
+# e1,0,0,0,0,
+# 0, 0,0,0,0,
+# 0, 0,0,0,0,
+# 0, 0,0,0,0,
+# 0, 0,0,0,0 
+
+# A morphism in Category of left presentations of Q{e0,e1}
+# gap> Display( h[30] );
+# 0,0,0,e0*e1,0,
+# 0,0,0,0,    0,
+# 0,0,0,0,    0,
+# 0,0,0,0,    0,
+# 0,0,0,0,    0 
+
+# A morphism in Category of left presentations of Q{e0,e1}
+# gap> 
+
+# basis_of_external_hom := 
+#     function( MA, MB )
+#     local R, A, B, A_1, A_2, A_3, A_, l, basis_indices, Q, N, sN, cB, cA, r,m,s,n,t,sN_t, sN_x, 
+#          basis_sN_x, basis, XX, XX_, X_, i;
+
+#     R := UnderlyingHomalgRing( MA );
+
+#     A := UnderlyingMatrix( MA );
+#     B := UnderlyingMatrix( MB );
+
+#     A_1 := UnionOfColumns( A, HomalgZeroMatrix( NrRows(A), NrColumns(A), R) );
+#     A_2 := UnionOfColumns( HomalgZeroMatrix( NrRows(A), NrColumns(A), R), A );
+#     A_3 := UnionOfColumns( HomalgIdentityMatrix( NrColumns(A), R), -HomalgIdentityMatrix( NrColumns(A), R) );
+#     A_ := Iterated( [ A_1, A_2, A_3], UnionOfRows );
+
+#     l := Length( IndeterminatesOfExteriorRing( R ) );
+#     basis_indices := standard_list_of_basis_indices( l-1 );
+
+#     Q := CoefficientsRing( R ); 
+
+#     N := Q*FF3( A_, B );
+
+#     sN := SyzygiesOfColumns( N );
+
+#     cB := NrColumns( B );
+#     cA := NrColumns( A );
+
+#     r := NrRows( A_ );
+#     m := NrColumns( A_ );
+#     s := NrColumns( B );
+#     n := NrRows( B );
+
+#     t := m*s*2^l;
+
+#     sN_t := CertainRows( sN, [ 1..t ] );
+    
+#     sN_x := Iterated(
+#         List( [ 0..cB*2^l-1 ], i-> CertainRows( sN_t, [ 2*i*cA +1 .. (2*i+1)*cA ] ) ) ,
+#         UnionOfRows
+#     );
+
+#     basis_sN_x := BasisOfColumns( sN_x );
+    
+#     basis := [ ];
+
+#     for i in [ 1 .. NrColumns( basis_sN_x ) ] do 
+        
+#         XX := CertainColumns( basis_sN_x, [ i ] );
+
+#         XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*cA*2^l + 1 .. i*cA*2^l ] ) ), UnionOfColumns );
+
+#         X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*cA + 1 .. i*cA ] ) )* ring_element( basis_indices[ i ], R ) ) );
+
+#         Add( basis, PresentationMorphism( MA, X_, MB ) );
+
+#     od;
+
+# return Filtered( basis, b -> not IsZeroForMorphisms(b) );
+# end;
