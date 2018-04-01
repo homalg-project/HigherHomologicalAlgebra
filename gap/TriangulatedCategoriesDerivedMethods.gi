@@ -189,3 +189,44 @@ AddDerivationToCAP( IsomorphismToCanonicalExactTriangle,
     i := IsomorphismFromCanonicalExactTriangle( T );
     return CreateTrianglesMorphism( Range( i ), Source( i ), MorphismAt(i,0), MorphismAt(i,1), Inverse( MorphismAt( i, 2 ) ) );
 end: Description := "computes the iso to canonical exact triangle");
+
+##
+AddDerivationToCAP( IsomorphismFromShiftOfReverseShift,
+                [
+                    [ IsomorphismIntoShiftOfReverseShift, 1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( obj )
+    return Inverse( IsomorphismIntoShiftOfReverseShift( obj ) );
+end: Description := "computes iso from shift of reverse shift using the iso to shift of reverse shift" );
+
+##
+AddDerivationToCAP( IsomorphismIntoShiftOfReverseShift,
+                [
+                    [ IsomorphismFromShiftOfReverseShift, 1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( obj )
+    return Inverse( IsomorphismFromShiftOfReverseShift( obj ) );
+end: Description := "computes iso to shift of reverse shift using the iso from shift of reverse shift" );
+
+##
+AddDerivationToCAP( IsomorphismFromReverseShiftOfShift,
+                [
+                    [ IsomorphismIntoReverseShiftOfShift, 1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( obj )
+    return Inverse( IsomorphismIntoReverseShiftOfShift( obj ) );
+end: Description := "computes iso from shift of reverse shift using the iso to shift of reverse shift" );
+
+##
+AddDerivationToCAP( IsomorphismIntoReverseShiftOfShift,
+                [
+                    [ IsomorphismFromReverseShiftOfShift, 1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( obj )
+    return Inverse( IsomorphismFromReverseShiftOfShift( obj ) );
+end: Description := "computes iso to shift of reverse shift using the iso from shift of reverse shift" );
+
