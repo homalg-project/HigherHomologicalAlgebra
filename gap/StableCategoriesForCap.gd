@@ -38,8 +38,7 @@ DeclareFilter( "WasCreatedAsStableCategory" );
 #! returns true, then this <A>mor</A> will be zero in the stable category.
 #! @Arguments A,func[,name]
 #! @Returns a CAP category
-DeclareOperation( "StableCategory",
-                  [ IsCapCategory, IsFunction ] );
+DeclareAttribute( "StableCategory", IsCapCategory );
 
 
 #! @Description
@@ -48,8 +47,7 @@ DeclareOperation( "StableCategory",
 #! corresponding morphism in the stable category.
 #! @Arguments S, phi
 #! @Returns a morphism
-DeclareOperation( "AsStableCategoryMorphism", 
-                   [ IsCapCategory, IsCapCategoryMorphism ] );
+DeclareAttribute( "AsStableMorphism", IsCapCategoryMorphism );
 
 #! @Description
 #!  Given a stable category <A>S</A> and an object <A>obj</A> in
@@ -57,8 +55,7 @@ DeclareOperation( "AsStableCategoryMorphism",
 #! corresponding object in the stable category.
 #! @Arguments S, obj
 #! @Returns an object
-DeclareOperation( "AsStableCategoryObject", 
-                   [ IsCapCategory, IsCapCategoryObject ] );
+DeclareAttribute( "AsStableObject", IsCapCategoryObject );
 
 #! @Section Attributes
 
@@ -84,7 +81,7 @@ DeclareAttribute( "UnderlyingCategory" ,IsStableCategory  );
 #! bla bla
 #! @Arguments f
 #! @Returns <A>g</A>
-DeclareAttribute( "UnderlyingMorphismOfTheStableMorphism" ,IsStableCategoryMorphism  );
+DeclareAttribute( "UnderlyingUnstableMorphism" ,IsStableCategoryMorphism  );
 
 #! @Description
 #! bla bla
@@ -96,7 +93,7 @@ DeclareAttribute( "UnderlyingMatrix" ,IsStableCategoryMorphism  );
 #! bla bla
 #! @Arguments obj
 #! @Returns <A>obj</A>
-DeclareAttribute( "UnderlyingObjectOfTheStableObject" ,IsStableCategoryObject  );
+DeclareAttribute( "UnderlyingUnstableObject" ,IsStableCategoryObject  );
 
 #! @Description
 #! bla bla
