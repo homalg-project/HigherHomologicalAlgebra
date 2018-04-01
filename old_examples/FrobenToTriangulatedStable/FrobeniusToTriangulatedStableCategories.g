@@ -1,8 +1,8 @@
 
 
-BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_CATEGORY", 
+BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_stable_cat_OF_A_FROBENIUS_CATEGORY", 
 
-    function( stable_category )
+    function( stable_cat )
     
     # Here we start computing the triangulated structure
     
@@ -10,51 +10,55 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
     
     # We fit the object obj into a conflation using injective object:   obj --------> I --------> M
     # Then we define ShiftOfObject( obj ) := M
-   
-    AddShiftOfObject( stable_category, function( obj )
-                                       local underlying_obj, conf;
-                                       
-                                       underlying_obj := UnderlyingObjectOfTheStableObject( obj );
-                                       
-                                       conf := FitIntoConflationUsingInjectiveObject( underlying_obj );
-                                       
-                                       return AsStableCategoryObject( stable_category, conf!.object3 );
-                                       
-                                       end );
+
+SetIsTriangulatedCategory( stable_cat, true );
+
+AddShiftOfObject( stable_cat, 
+    function( stable_obj )
+    local obj, conf;
+    
+    obj := UnderlyingUnstableObject( stable_obj );
+    
+    conf := FitIntoConflationUsingExactInjectiveObject( obj );
+    
+    return AsStableObject( ObjectAt( conf, 2 ) );
+    
+    end );
    
    # Adding the shift of morphisms method
    
    # Remember : That I is injective object when every morphism f : X → I factors through every mono X → Y.
    # the complement morphism is InjectiveColift( mono, f ).
    
-   # mor0: A -----> B
+   # mor: A -----> B
    
    #  conf_A:     A -------> I(A) ------> T(A)
    #              |           |             |
-   #         mor0 |      mor1 |             | mor2
+   #          mor |      mor1 |             | mor2
    #              V           V             V
    #  conf_B:     B -------> I(B) ------> T(B)
    
-   AddShiftOfMorphism( stable_category, function( mor )
-                                        local A, B, conf_A, conf_B, mor0, mor1, mor2;
-                                        
-                                        mor0 := UnderlyingMorphismOfTheStableMorphism( mor );
-                                        
-                                        A := Source( mor0 );
-                                        
-                                        B := Range( mor0 );
-                                        
-                                        conf_A := FitIntoConflationUsingInjectiveObject( A );
-                                        
-                                        conf_B := FitIntoConflationUsingInjectiveObject( B );
-                                        
-                                        mor1 := InjectiveColift( conf_A!.morphism1 , PreCompose( mor0, conf_B!.morphism1 ) );
-                                        
-                                        mor2 :=  CokernelColift( conf_A!.morphism1, PreCompose( mor1, conf_B!.morphism2 ) );
-                                        
-                                        return AsStableCategoryMorphism( stable_category, mor2 );
-                                        
-                                        end );
+AddShiftOfMorphism( stable_cat, 
+    function( stable_mor )
+    local A, B, conf_A, conf_B, mor, mor1, mor2;
+    
+    mor := UnderlyingUnstableMorphism( stable_mor );
+    
+    A := Source( mor );
+    
+    B := Range( mor );
+    
+    conf_A := FitIntoConflationUsingExactInjectiveObject( A );
+    
+    conf_B := FitIntoConflationUsingExactInjectiveObject( B );
+    
+    mor1 := ExactInjectiveColift( MorphismAt( conf_A, 0 ) , PreCompose( mor, MorphismAt( conf_B, 0 ) ) );
+    
+    mor2 :=  CokernelColift( MorphismAt( conf_A, 0 ), PreCompose( mor1, MorphismAt( conf_B, 1 ) ) );
+    
+    return AsStableMorphism( mor2 );
+    
+    end );
                                      
    
     # Adding the reverse shift of objects method 
@@ -62,16 +66,17 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
     # We fit the given object obj into a conflation using projective object:  M --------> P --------> obj.
     # Then we define ReverseShiftOfObject( obj ) := M
    
-   AddReverseShiftOfObject( stable_category, function( obj )
-                                             local underlying_obj, conf;
-                                             
-                                             underlying_obj := UnderlyingObjectOfTheStableObject( obj );
-                                             
-                                             conf := FitIntoConflationUsingProjectiveObject( underlying_obj );
-                                             
-                                             return AsStableCategoryObject( stable_category, conf!.object1 );
-                                             
-                                             end );
+AddReverseShiftOfObject( stable_cat, 
+    function( stable_obj )
+    local obj, conf;
+    
+    obj := UnderlyingUnstableObject( stable_obj );
+    
+    conf := FitIntoConflationUsingExactProjectiveObject( obj );
+    
+    return AsStableObject( ObjectAt( conf, 0 ) );
+    
+    end );
                                              
    
    # Adding the  reverse shift of morphisms method
@@ -83,77 +88,84 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
    
    #  conf_A:    S(A) -------> P(A) --------> A
    #              |             |             |
-   #         mor2 |        mor1 |             | mor0
+   #         mor2 |        mor1 |             | mor
    #              V             V             V
    #  conf_B:    S(B) -------> P(B) --------> B
    
-   AddReverseShiftOfMorphism( stable_category, function( mor )
-                                        local A, B, conf_A, conf_B, mor0, mor1, mor2;
-                                        
-                                        mor0 := UnderlyingMorphismOfTheStableMorphism( mor );
-                                        
-                                        A := Source( mor0 );
-                                        
-                                        B := Range( mor0 );
-                                        
-                                        conf_A := FitIntoConflationUsingProjectiveObject( A );
-                                        
-                                        conf_B := FitIntoConflationUsingProjectiveObject( B );
-                                        
-                                        mor1 := ProjectiveLift( PreCompose( conf_A!.morphism2, mor0 ), conf_B!.morphism2 );
-                                        
-                                        mor2 :=  KernelLift( conf_B!.morphism2, PreCompose( conf_A!.morphism1, mor1 ) );
-                                        
-                                        return AsStableCategoryMorphism( stable_category, mor2 );
-                                        
-                                        end );
-                                       
-   AddIsomorphismFromObjectToShiftAfterReverseShiftOfTheObject( stable_category, 
-               
-               function( A_ )
-               local A, conf_A, SA, conf_SA, TSA, inf1, inf2, h1, h2, mor, u1, v1, I_SA, injection_A, injection_SA, inverse_alpha, inverse_h1, alpha; 
-               
-               A := UnderlyingObjectOfTheStableObject( A_ );
-               
-               conf_A := FitIntoConflationUsingProjectiveObject( A );
-               
-               SA := conf_A!.object1;
-               
-               conf_SA := FitIntoConflationUsingInjectiveObject( SA );
-               
-               TSA := conf_SA!.object3;
-               
-               inf1 := conf_A!.morphism1;
-               
-               inf2 := conf_SA!.morphism1;
-               
-               h1 := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ inf1, inf2 ], [ conf_A!.morphism2, ZeroMorphism( conf_SA!.object2, A ) ] );
-               
-               h2 := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ inf1, inf2 ], [ ZeroMorphism( conf_A!.object2, TSA ), conf_SA!.morphism2 ] );
-               
-               u1 := InjectionsOfPushoutInducedByStructureOfExactCategory( AsInflation( inf1 ), inf2 )[ 2 ];
-               
-               I_SA := conf_SA!.object2;
-               
-               injection_SA := InjectionOfCofactorOfDirectSum( [ I_SA, A ], 1 );
-               
-               injection_A  := InjectionOfCofactorOfDirectSum( [ I_SA, A ], 2 );
-               
-               v1 := InjectiveColift( u1, IdentityMorphism( I_SA ) );
-               
-               alpha := PreCompose( v1, injection_SA ) + PreCompose( h1, injection_A );
-               
-               inverse_alpha := Inverse( alpha );
-               
-               inverse_h1 := PreCompose( injection_A, inverse_alpha );
-               
-               mor := AdditiveInverseForMorphisms( PreCompose( inverse_h1, h2 ) );
-               
-               return AsStableCategoryMorphism( stable_category, mor );
-               
-               end );
-               
+AddReverseShiftOfMorphism( stable_cat, 
+    function( stable_mor )
+    local A, B, conf_A, conf_B, mor, mor1, mor2;
+
+    mor := UnderlyingUnstableMorphism( stable_mor );
     
+    A := Source( mor );
+    
+    B := Range( mor );
+    
+    conf_A := FitIntoConflationUsingExactProjectiveObject( A );
+    
+    conf_B := FitIntoConflationUsingExactProjectiveObject( B );
+    
+    mor1 := ExactProjectiveLift( PreCompose( MorphismAt( conf_A, 1 ), mor ), MorphismAt( conf_B, 1 ) );
+    
+    mor2 := KernelLift( MorphismAt( conf_B, 1 ), PreCompose( MorphismAt( conf_A, 0 ), mor1 ) );
+    
+    return AsStableMorphism( mor2 );
+    
+    end );
+                                       
+# \begin{tikzcd}
+# conf(obj): & S(obj) \arrow[r, "inf1"] \arrow[d, "inf2"'] & P(obj) \arrow[r] \arrow[d] \arrow[rd] \arrow[dd, dotted, bend left] & obj &  & obj \arrow[d, "inj_{obj}"'] & IS(obj) \arrow[ld, "inj_{S(obj)}"] \\
+#  & I(S(obj)) \arrow[d] \arrow[r, "u1"'] \arrow[rr, dotted, bend right] \arrow[rd] \arrow[rrrrru, "=", bend left] & Push \arrow[r, "h1", dashed] \arrow[d, "h2"', dashed] \arrow[l, "v1"', bend right] \arrow[rrr, "\alpha"', bend right=49] & obj \arrow[rru, "="] &  & IS(obj)+obj \arrow[lll, "\alpha^{-1}", bend left=60] &  \\
+#  & TS(obj) & TS(obj) &  &  &  & 
+# \end{tikzcd}
+AddIsomorphismIntoShiftOfReverseShift( stable_cat, 
+               
+    function( stable_obj )
+    local obj, conf_obj, S_obj, conf_S_obj, TS_obj, inf1, inf2, h1, h2, mor, u1, v1, I_S_obj, 
+    injection_obj, injection_I_S_obj, inverse_alpha, inverse_h1, alpha; 
+    
+    obj := UnderlyingUnstableObject( stable_obj );
+    
+    conf_obj := FitIntoConflationUsingExactProjectiveObject( obj );
+    
+    S_obj := ObjectAt( conf_obj, 0 );
+    
+    conf_S_obj := FitIntoConflationUsingExactInjectiveObject( S_obj );
+    
+    TS_obj := ObjectAt( conf_S_obj, 2 );
+    
+    inf1 := MorphismAt( conf_obj, 0 );
+    
+    inf2 := MorphismAt( conf_S_obj, 0 );
+    
+    h1 := UniversalMorphismFromExactPushout( [ inf1, inf2 ], [ MorphismAt( conf_obj, 1 ), ZeroMorphism( ObjectAt( conf_S_obj, 1 ), obj ) ] );
+    
+    h2 := UniversalMorphismFromExactPushout( [ inf1, inf2 ], [ ZeroMorphism( ObjectAt( conf_obj, 1 ), TS_obj ), MorphismAt( conf_S_obj, 1 ) ] );
+    
+    u1 := InjectionOfCofactorOfExactPushout( [ inf1, inf2 ], 2 );
+    
+    I_S_obj := ObjectAt( conf_S_obj, 1 );
+    
+    injection_I_S_obj := InjectionOfCofactorOfDirectSum( [ I_S_obj, obj ], 1 );
+    
+    injection_obj  := InjectionOfCofactorOfDirectSum( [ I_S_obj, obj ], 2 );
+    
+    v1 := ExactInjectiveColift( u1, IdentityMorphism( I_S_obj ) );
+    
+    alpha := PreCompose( v1, injection_I_S_obj ) + PreCompose( h1, injection_obj );
+    
+    inverse_alpha := Inverse( alpha );
+    
+    inverse_h1 := PreCompose( injection_obj, inverse_alpha );
+    
+    mor := AdditiveInverseForMorphisms( PreCompose( inverse_h1, h2 ) );
+    
+    return AsStableMorphism( mor );
+    
+    end );
+    
+
   # Standard triangles are of the form  
   #       A -------> B -------> C ----------> T( A )
   # where  C = PushoutObject( B, I ) where A ----> I ----> T( A ) is a conflation.
@@ -161,29 +173,31 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
   # Adding TR1, 
   # It states that every morphism f: A ---> B can be completed to an exact triangle.
   
-  AddCompleteMorphismToExactTriangle( stable_category,
+AddCompleteMorphismToCanonicalExactTriangle( stable_cat,
          
-         function( mor )
-         local underlying_mor, A, B, conf_A, inf, mor1, mor2;
-         
-         underlying_mor := UnderlyingMorphismOfTheStableMorphism( mor );
-         
-         A := Source( underlying_mor );
-                             
-         B := Range( underlying_mor );
-                             
-         conf_A := FitIntoConflationUsingInjectiveObject( A );                             
-         
-         inf := conf_A!.morphism1;
-         
-         mor1 := InjectionsOfPushoutInducedByStructureOfExactCategory( inf, underlying_mor )[ 2 ];
-         
-         mor2 := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ inf, underlying_mor ], [ conf_A!.morphism2, ZeroMorphism( Range( underlying_mor ), conf_A!.object3 ) ] );
-         
-         return CreateExactTriangle( mor,
-                                     AsStableCategoryMorphism( stable_category, mor1 ),
-                                     AsStableCategoryMorphism( stable_category, mor2 ) );
-         end );
+    function( stable_mor )
+    local mor, A, B, conf_A, inf, mor1, mor2;
+    
+    mor := UnderlyingUnstableMorphism( stable_mor );
+    
+    A := Source( mor );
+                        
+    B := Range( mor );
+                        
+    conf_A := FitIntoConflationUsingExactInjectiveObject( A );                             
+    
+    inf := MorphismAt( conf_A, 0);
+    
+    mor1 := InjectionOfCofactorOfExactPushout( [ inf, mor ], 2 );
+    
+    mor2 := UniversalMorphismFromExactPushout( 
+                       [ inf, mor ], 
+                       [ MorphismAt( conf_A, 1 ), ZeroMorphism( Range( mor ), ObjectAt( conf_A, 2 ) ) ] );
+    
+    return CreateCanonicalExactTriangle( stable_mor,
+                                AsStableMorphism( mor1 ),
+                                AsStableMorphism( mor2 ) );
+    end );
 
          
   # Adding TR3
@@ -199,7 +213,7 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
   #
   # Output is theta: C1 ---> C2 such that the diagram is commutative
   
-  AddCompleteToMorphismOfExactTriangles( stable_category, 
+  AddCompleteToMorphismOfExactTriangles( stable_cat, 
   
        function( tr1, tr2, phi_, psi_ )
        local f1_, f2_, g2_, f2_after_phi_minus_psi_after_f1_, u1, beta,
@@ -242,12 +256,12 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
        
        mor := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ u1, f1 ], 
                                                                [ PreCompose(beta, g2 ) + PreCompose( phi1, alpha2 ), PreCompose( psi, g2 ) ] ); 
-       return AsStableCategoryMorphism( stable_category, mor );
+       return AsStableCategoryMorphism( stable_cat, mor );
        
        end );
      
      ###
-     AddOctohedralAxiom( stable_category, 
+     AddOctohedralAxiom( stable_cat, 
      
         function( f_, g_ )
         local f, g, h_, h, A, B, C, tr_f_, tr_h_, D, conf_D, f1, B_to_I_D, conf_B_to_I_D, w, I1, B1, push_object_to_B1, conf_B, I, TB, iso, B1_TB, tr_g_,
@@ -321,8 +335,8 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
                                ProjectionInFactorOfDirectSum( [ I1, TB ], 2 ) ] ) );
                                
         tr_g_ := CreateExactTriangle( g_,
-                                     AsStableCategoryMorphism( stable_category,  g1 ),
-                                     AsStableCategoryMorphism( stable_category, PreCompose( push_object_to_B1, B1_TB ) ) );
+                                     AsStableCategoryMorphism( stable_cat,  g1 ),
+                                     AsStableCategoryMorphism( stable_cat, PreCompose( push_object_to_B1, B1_TB ) ) );
         
         D_F := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ u_A, f ], [ gamma, PreCompose( g, h1 ) ] );
         
@@ -330,15 +344,15 @@ BindGlobal( "COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CATEGORY_OF_A_FROBENIUS_
         
         E_TD := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ B_to_I_D, g ], [ pi_D, ZeroMorphism( C, TD ) ] );
         
-        tr := CreateExactTriangle( AsStableCategoryMorphism( stable_category, D_F ),
-                                     AsStableCategoryMorphism( stable_category,  F_E ),
-                                     AsStableCategoryMorphism( stable_category, E_TD ) );
+        tr := CreateExactTriangle( AsStableCategoryMorphism( stable_cat, D_F ),
+                                     AsStableCategoryMorphism( stable_cat,  F_E ),
+                                     AsStableCategoryMorphism( stable_cat, E_TD ) );
         
         return [ tr_f_, tr_g_, tr_h_, tr ];
         end );
     
-    SetIsTriangulatedCategory( stable_category, true );
+    SetIsTriangulatedCategory( stable_cat, true );
     
-    return stable_category;
+    return stable_cat;
     
 end );
