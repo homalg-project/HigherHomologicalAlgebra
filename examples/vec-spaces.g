@@ -19,9 +19,9 @@ AddShiftOfMorphism( cat, IdFunc );
 AddReverseShiftOfObject( cat, IdFunc );
 AddReverseShiftOfMorphism( cat, IdFunc );
 
-AddIsomorphismToReverseShiftOfShift( cat, IdentityMorphism );
+AddIsomorphismIntoReverseShiftOfShift( cat, IdentityMorphism );
 AddIsomorphismFromReverseShiftOfShift( cat, IdentityMorphism );
-AddIsomorphismToShiftOfReverseShift( cat, IdentityMorphism );
+AddIsomorphismIntoShiftOfReverseShift( cat, IdentityMorphism );
 AddIsomorphismFromShiftOfReverseShift( cat, IdentityMorphism );
 
 ## to understand the code see this commutative diagram
