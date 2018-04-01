@@ -113,11 +113,11 @@ filter_list := [ "morphism" ],
 cache_name := "ReverseShiftOfMorphism",
 return_type := "morphism" ),
 
-IsomorphismToShiftOfReverseShift := rec( 
+IsomorphismIntoShiftOfReverseShift := rec( 
 
-installation_name := "IsomorphismToShiftOfReverseShift",
+installation_name := "IsomorphismIntoShiftOfReverseShift",
 filter_list := [ "object" ],
-cache_name := "IsomorphismToShiftOfReverseShift",
+cache_name := "IsomorphismIntoShiftOfReverseShift",
 return_type := "morphism",
 post_function := 
     function( obj, return_value )
@@ -136,11 +136,11 @@ post_function :=
     end 
 ),
 
-IsomorphismToReverseShiftOfShift := rec( 
+IsomorphismIntoReverseShiftOfShift := rec( 
 
-installation_name := "IsomorphismToReverseShiftOfShift",
+installation_name := "IsomorphismIntoReverseShiftOfShift",
 filter_list := [ "object" ],
-cache_name := "IsomorphismToReverseShiftOfShift",
+cache_name := "IsomorphismIntoReverseShiftOfShift",
 return_type := "morphism",
 post_function := 
     function( obj, return_value )
@@ -558,7 +558,7 @@ InstallMethod( NaturalIsomorphismFromIdentityToShiftOfReverseShift,
          
            function( Id_of_object, object, shift_after_reverse_shift_of_object )
               
-              return IsomorphismToShiftOfReverseShift( object );
+              return IsomorphismIntoShiftOfReverseShift( object );
               
            end );
          
@@ -591,7 +591,7 @@ InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftOfShift,
          
            function( Id_of_object, object, reverse_shift_after_shift_of_object )
               
-              return IsomorphismToReverseShiftOfShift( object );
+              return IsomorphismIntoReverseShiftOfShift( object );
               
            end );
          

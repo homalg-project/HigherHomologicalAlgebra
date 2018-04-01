@@ -79,20 +79,20 @@ DeclareOperation( "AddConeObject", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsList ] );
 
 
-DeclareOperation( "IsomorphismToShiftOfReverseShift", [ IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismIntoShiftOfReverseShift", [ IsCapCategoryObject ] );
 
-DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismToShiftOfReverseShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsList ] );
 
 
-DeclareOperation( "IsomorphismToReverseShiftOfShift", [ IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismIntoReverseShiftOfShift", [ IsCapCategoryObject ] );
 
-DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismToReverseShiftOfShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsList ] );
 
 
 DeclareOperation( "IsomorphismFromShiftOfReverseShift", [ IsCapCategoryObject ] );
