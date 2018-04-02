@@ -201,11 +201,12 @@ InstallMethod( CategoryOfTriangles,
                     isos := List( L, IsomorphismToCanonicalExactTriangle );
                     mors := List( [ 1 .. Length( L ) ], 
                                     function( k )
-                                    local can_L_k, i1, i2;
+                                    local can_L_k, i1, i2, t;
                                     can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
                                     i1 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
                                     i2 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                                    return CompleteToMorphismOfCanonicalExactTriangles( can_L_k, can_D, i1, i2 );
+                                    t := CompleteToMorphismOfCanonicalExactTriangles( can_L_k, can_D, i1, i2 );
+                                    return CreateTrianglesMorphism( can_L_k, can_D, i1, i2, t );
                                     end );
                     isos := List( isos, iso -> MorphismAt( iso, 2 ) );
                     mors := List( mors, mor -> MorphismAt( mor, 2 ) );
