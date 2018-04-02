@@ -219,7 +219,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
     AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( category,
         function( list, n, D )
         
-        return AsStableMorphism( InjectionOfCofactorOfDirectSumWithGivenDirectSum( List( list, UnderlyingUnstableObject, UnderlyingUnstableObject( D ) ), n ) );
+        return AsStableMorphism( InjectionOfCofactorOfDirectSumWithGivenDirectSum( List( list, UnderlyingUnstableObject ), n, UnderlyingUnstableObject( D ) ) );
     
     end );
     
@@ -408,7 +408,7 @@ InstallMethod( Display,
       [ IsStableCategoryObject ], 
     function( obj )
     
-    Print( "An object in the stable category of ", UnderlyingCategory( CapCategory( obj ) ), "\nwith underlying object\n" );
+    Print( "An object in the stable category of ", UnderlyingCategory( CapCategory( obj ) ), "\nwith underlying object\n\n" );
     Display( UnderlyingUnstableObject( obj ) );
     
     end );
@@ -418,7 +418,7 @@ InstallMethod( Display,
       [ IsStableCategoryMorphism ], 
     function( mor )
     
-    Print( "A morphism in the stable category of ", UnderlyingCategory( CapCategory( mor ) ), "\nwith underlying morphism\n" );
+    Print( "A morphism in the stable category of ", UnderlyingCategory( CapCategory( mor ) ), "\nwith underlying morphism\n\n" );
     Display( UnderlyingUnstableMorphism( mor ) );
     
     end );
