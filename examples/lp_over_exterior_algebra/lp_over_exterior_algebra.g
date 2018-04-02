@@ -280,6 +280,39 @@ AddCanBeFactoredThroughExactProjective( cat,
     fi;
 end );
 
+AddCanBeFactoredThroughExactInjective( cat,  
+    function( mor )
+    local m;
+    m := Colift( MonomorphismIntoSomeInjectiveObject( Source( mor ) ), mor );
+    if m = fail then
+        return false;
+    else
+        return true;
+    fi;
+end );
+
+AddFactorizationThroughExactInjective( cat, 
+    function( mor )
+    local m;
+    m := Colift( MonomorphismIntoSomeInjectiveObject( Source( mor ) ), mor );
+    if m = fail then
+        return fail;
+    else
+        return [ MonomorphismIntoSomeInjectiveObject( Source( mor ) ), m ];
+    fi;
+end );
+
+AddFactorizationThroughExactProjective( cat, 
+    function( mor )
+    local m;
+    m := Colift( MonomorphismIntoSomeInjectiveObject( Source( mor ) ), mor );
+    if m = fail then
+        return fail;
+    else
+        return [ MonomorphismIntoSomeInjectiveObject( Source( mor ) ), m ];
+    fi;
+end );
+
 return cat;
 
 end );
