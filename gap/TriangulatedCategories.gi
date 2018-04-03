@@ -239,6 +239,13 @@ CompleteToMorphismOfCanonicalExactTriangles:= rec(
 installation_name := "CompleteToMorphismOfCanonicalExactTriangles", 
 filter_list := [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExactTriangle, "morphism", "morphism" ],
 cache_name := "CompleteToMorphismOfCanonicalExactTriangles",
+pre_function := function(tr1, tr2, phi, psi )
+                if not IsCongruentForMorphisms( PreCompose( tr1^0, psi ), PreCompose(phi, tr2^0 ) ) then
+                    return [ false, "The given squar in the input does not commute!" ];
+                else
+                    return [ true ];
+                fi;
+                end,
 return_type := [ IsCapCategoryTrianglesMorphism ] ),
 
 OctahedralAxiom:= rec(
