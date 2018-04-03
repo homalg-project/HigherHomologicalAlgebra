@@ -13,6 +13,19 @@
 ##
 #################################
 
+if not IsBound( Reasons ) then 
+    DeclareGlobalVariable( "Reasons" );
+    InstallValue( Reasons, [ fail ] );
+    DeclareGlobalVariable( "AddToReasons" );
+    DeclareGlobalVariable( "why" );
+    InstallValue( AddToReasons, function( s )
+                                Add( Reasons, s, 1 ); 
+                                MakeReadWriteGlobal("why");
+                                why := s;
+                                MakeReadOnlyGlobal("why");
+                                end );
+fi;
+
 DeclareGlobalVariable( "CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS" );
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
