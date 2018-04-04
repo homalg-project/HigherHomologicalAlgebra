@@ -522,6 +522,7 @@ end );
 InstallMethod( DistributivityIsomorphismOfShift, 
                 [ IsList ],
     function( list )
+    local mor;
 
     if Length( list ) = 0 then
         Error( "The given list is empty" );
@@ -530,13 +531,43 @@ InstallMethod( DistributivityIsomorphismOfShift,
     elif Length( list ) = 2 then
         return DistributivityIsomorphismOfShift( list[1], list[2] );
     else
-        return PreCompose( 
+        mor := PreCompose( 
             DirectSumFunctorial( Concatenation( 
                                 [ DistributivityIsomorphismOfShift( list[ 1 ], list[ 2 ] ) ],
                                 List( [ 3 .. Length(list) ], i -> IdentityMorphism( ShiftOfObject( list[ i ] ) ) ) ) ), 
             DistributivityIsomorphismOfShift( Concatenation(
                 [ DirectSum( [ list[1], list[2] ] ) ],
                 List( [ 3.. Length(list) ], i-> list[ i ] ) ) ) );
+        Assert( 5, IsIsomorphism( mor ) );
+        SetIsIsomorphism( mor, true );
+        
+        return mor;
+        
+    fi;
+end );
+
+InstallMethod( DistributivityIsomorphismOfReverseShift, 
+                [ IsList ],
+    function( list )
+    local mor;
+    if Length( list ) = 0 then
+        Error( "The given list is empty" );
+    elif Length( list ) = 1 then 
+        return IdentityMorphism( ReverseShiftOfObject( list[1] ) );
+    elif Length( list ) = 2 then
+        return DistributivityIsomorphismOfReverseShift( list[1], list[2] );
+    else
+        mor := PreCompose( 
+            DirectSumFunctorial( Concatenation( 
+                                [ DistributivityIsomorphismOfReverseShift( list[ 1 ], list[ 2 ] ) ],
+                                List( [ 3 .. Length(list) ], i -> IdentityMorphism( ReverseShiftOfObject( list[ i ] ) ) ) ) ), 
+            DistributivityIsomorphismOfReverseShift( Concatenation(
+                [ DirectSum( [ list[1], list[2] ] ) ],
+                List( [ 3.. Length(list) ], i-> list[ i ] ) ) ) );
+        Assert( 5, IsIsomorphism( mor ) );
+        SetIsIsomorphism( mor, true );
+
+        return mor;        
     fi;
 end );
 
