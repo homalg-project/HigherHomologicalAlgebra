@@ -489,6 +489,27 @@ InstallMethod( CompleteToMorphismOfExactTriangles,
     
 end );
 
+InstallMethod( DistributivityIsomorphismOfShift, 
+                [ IsList ],
+    function( list )
+
+    if Length( list ) = 0 then
+        Error( "The given list is empty" );
+    elif Length( list ) = 1 then 
+        return IdentityMorphism( ShiftOfObject( list[1] ) );
+    elif Length( list ) = 2 then
+        return DistributivityIsomorphismOfShift( list[1], list[2] );
+    else
+        return PreCompose( 
+            DirectSumFunctorial( Concatenation( 
+                                [ DistributivityIsomorphismOfShift( list[ 1 ], list[ 2 ] ) ],
+                                List( [ 3 .. Length(list) ], i -> IdentityMorphism( ShiftOfObject( list[ i ] ) ) ) ) ), 
+            DistributivityIsomorphismOfShift( Concatenation(
+                [ DirectSum( [ list[1], list[2] ] ) ],
+                List( [ 3.. Length(list) ], i-> list[ i ] ) ) ) );
+    fi;
+end );
+
 InstallMethod( ShiftFunctor,
                   [ IsCapCategory and IsTriangulatedCategory ],
                   

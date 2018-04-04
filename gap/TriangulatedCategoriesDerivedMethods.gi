@@ -229,4 +229,3 @@ AddDerivationToCAP( IsomorphismIntoReverseShiftOfShift,
     function( obj )
     return Inverse( IsomorphismFromReverseShiftOfShift( obj ) );
 end: Description := "computes iso to shift of reverse shift using the iso from shift of reverse shift" );
-
