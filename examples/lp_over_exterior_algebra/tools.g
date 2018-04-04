@@ -255,18 +255,17 @@ InstallGlobalFunction( SolveTwoSidedEquationOverExteriorAlgebra,
 
 function( A, B, C )
 local C_deco, C_deco_list, C_deco_list_vec, C_vec, N, sol, Q, R, l, m, s, r, n, XX, YY, XX_, YY_, X_, Y_, basis_indices;
+R := A!.ring;
 
 if NrRows( A )= 0 or NrColumns( A ) = 0 then 
 
-   return [ "optional", RightDivide( C, B ) ];
+   return [ HomalgZeroMatrix( NrColumns(A), NrColumns(C), R ), RightDivide( C, B ) ];
    
 elif NrRows( B )= 0 or NrColumns( B ) = 0 then 
 
-   return [ LeftDivide( A, C ), "optional" ];
+   return [ LeftDivide( A, C ), HomalgZeroMatrix( NrRows(C), NrRows( B), R ) ];
    
 fi;
-
-R := A!.ring;
 
 l := Length( IndeterminatesOfExteriorRing( R ) );
 basis_indices := standard_list_of_basis_indices( l-1 );
