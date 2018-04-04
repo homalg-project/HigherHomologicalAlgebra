@@ -367,26 +367,26 @@ InstallMethod( RotationOfExactTriangle,
         return RotationOfCanonicalExactTriangle( T );
     fi;
     
-    can_T := UnderlyingCanonicalExactTriangle( T );
-    T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
-    can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
-    
-    rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );
-    rcan_T := RotationOfCanonicalExactTriangle( can_T );
-    
-    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), MorphismAt( T_to_can_T, 3 ) );
-    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), MorphismAt( can_T_to_T, 3 ) );
-    
-    can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
-    rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
-    can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
-    
-    can_rT := UnderlyingCanonicalExactTriangle( rT );
-    
-    can_rcan_T_to_can_rT := CompleteToMorphismOfCanonicalExactTriangles( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ) );
-    can_rcan_T_to_can_rT := CreateTrianglesMorphism( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), can_rcan_T_to_can_rT );
-    can_rT_to_can_rcan_T := CompleteToMorphismOfCanonicalExactTriangles( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ) );
-    can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), can_rT_to_can_rcan_T );
+can_T := UnderlyingCanonicalExactTriangle( T );
+T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
+can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
+
+rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );
+rcan_T := RotationOfCanonicalExactTriangle( can_T );
+
+rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), MorphismAt( T_to_can_T, 3 ) );
+rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), MorphismAt( can_T_to_T, 3 ) );
+
+can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
+rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
+can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
+
+can_rT := UnderlyingCanonicalExactTriangle( rT );
+
+can_rcan_T_to_can_rT := CompleteToMorphismOfCanonicalExactTriangles( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ) );
+can_rcan_T_to_can_rT := CreateTrianglesMorphism( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), can_rcan_T_to_can_rT );
+can_rT_to_can_rcan_T := CompleteToMorphismOfCanonicalExactTriangles( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ) );
+can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), can_rT_to_can_rcan_T );
 
     
     SetIsomorphismToCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
