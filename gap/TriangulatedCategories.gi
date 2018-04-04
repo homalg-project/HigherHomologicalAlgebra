@@ -118,14 +118,32 @@ DistributivityIsomorphismOfShift := rec(
 installation_name := "DistributivityIsomorphismOfShift", 
 filter_list := [ "object", "object" ],
 cache_name := "DistributivityIsomorphismOfShift",
-return_type := "morphism" ),    
+return_type := "morphism",
+post_function := function( obj1, obj2, return_value )
+                if not IsEqualForObjects( DirectSum( ShiftOfObject(obj1), ShiftOfObject( obj2 ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                elif not IsEqualForObjects( ShiftOfObject( DirectSum( obj1, obj2 ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),    
 
 DistributivityIsomorphismOfReverseShift := rec(
 
 installation_name := "DistributivityIsomorphismOfReverseShift", 
 filter_list := [ "object", "object" ],
 cache_name := "DistributivityIsomorphismOfReverseShift",
-return_type := "morphism" ),    
+return_type := "morphism",
+post_function := function( obj1, obj2, return_value )
+                if not IsEqualForObjects( DirectSum( ReverseShiftOfObject(obj1), ReverseShiftOfObject( obj2 ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                elif not IsEqualForObjects( ReverseShiftOfObject( DirectSum( obj1, obj2 ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),    
 
 IsomorphismIntoShiftOfReverseShift := rec( 
 
@@ -146,9 +164,10 @@ post_function :=
     if not IsIsomorphism( return_value ) then
         Error( "The output must be isomorphism");
     fi;
-    
-    end 
-),
+
+    Assert( 5, IsIsomorphism( return_value ) );
+    SetIsIsomorphism( return_value, true );
+    end ),
 
 IsomorphismIntoReverseShiftOfShift := rec( 
 
@@ -170,22 +189,33 @@ post_function :=
         Error( "The output must be isomorphism");
     fi;
 
-    end
-),
+    Assert( 5, IsIsomorphism( return_value ) );
+    SetIsIsomorphism( return_value, true );
+    end ),
 
 IsomorphismFromShiftOfReverseShift := rec( 
 
 installation_name := "IsomorphismFromShiftOfReverseShift",
 filter_list := [ "object" ],
 cache_name := "IsomorphismFromShiftOfReverseShift",
-return_type := "morphism" ),
+return_type := "morphism",
+post_function := 
+    function( obj, return_value )
+        Assert( 5, IsIsomorphism( return_value ) );
+        SetIsIsomorphism( return_value, true );
+    end ),
 
 IsomorphismFromReverseShiftOfShift := rec( 
 
 installation_name := "IsomorphismFromReverseShiftOfShift",
 filter_list := [ "object" ],
 cache_name := "IsomorphismFromReverseShiftOfShift",
-return_type := "morphism" ),
+return_type := "morphism",
+post_function := 
+    function( obj, return_value )
+    Assert( 5, IsIsomorphism( return_value ) );
+    SetIsIsomorphism( return_value, true );
+    end ),
 
 IsExactTriangle:= rec( 
 
