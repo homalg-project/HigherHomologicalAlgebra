@@ -198,15 +198,16 @@ InstallMethod( CategoryOfTriangles,
     
     AddDirectSum( cat, 
         function( L )
-        local m, D, u;
+        local m, D, u, o;
         
         m := TransposedMat( List( L, l -> List( [ 0, 1, 2 ], i -> MorphismAt( l, i ) ) ) );
         
+        o := List( L, l -> l[0] );
+
         m := List( [ 1, 2, 3 ], l -> DirectSumFunctorial( m[ l ] ) );
         
-        D := CreateTriangle( m[ 1 ], m[ 2 ], m[ 3 ] );
-        
-        
+        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], DistributivityIsomorphismOfShift( o ) ) );
+
         u := List( L, i-> [ i, "IsExactTriangle", true ] );
 
         AddToToDoList( ToDoListEntry( u, 
