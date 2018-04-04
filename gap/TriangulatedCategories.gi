@@ -113,6 +113,20 @@ filter_list := [ "morphism" ],
 cache_name := "ReverseShiftOfMorphism",
 return_type := "morphism" ),
 
+DistributivityIsomorphismOfShift := rec(
+
+installation_name := "DistributivityIsomorphismOfShift", 
+filter_list := [ "object", "object" ],
+cache_name := "DistributivityIsomorphismOfShift",
+return_type := "morphism" ),    
+
+DistributivityIsomorphismOfReverseShift := rec(
+
+installation_name := "DistributivityIsomorphismOfReverseShift", 
+filter_list := [ "object", "object" ],
+cache_name := "DistributivityIsomorphismOfReverseShift",
+return_type := "morphism" ),    
+
 IsomorphismIntoShiftOfReverseShift := rec( 
 
 installation_name := "IsomorphismIntoShiftOfReverseShift",

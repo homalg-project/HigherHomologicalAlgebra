@@ -75,7 +75,6 @@ DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsList ] );
 
- 
 
 DeclareOperation( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
 
@@ -83,6 +82,24 @@ DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction, IsIn
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsList ] );
+
+DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsList ] );
+
+DeclareOperation( "DistributivityIsomorphismOfShift", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "DistributivityIsomorphismOfShift", [ IsList ] );
+
+DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsList ] );
+
 
 DeclareAttribute( "ConeObject", IsCapCategoryMorphism );
 
