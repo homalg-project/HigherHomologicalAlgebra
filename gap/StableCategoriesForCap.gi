@@ -387,22 +387,22 @@ end );
 ##
 ###########################
 
-InstallMethod( ViewObj,
-      [ IsStableCategoryObject ], 
-    function( obj )
+# InstallMethod( ViewObj,
+#       [ IsStableCategoryObject ], 
+#     function( obj )
     
-    Print( "<An object in the stable category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
+#     Print( "<An object in the stable category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
     
-    end );
+#     end );
       
 
-InstallMethod( ViewObj,
-      [ IsStableCategoryMorphism ], 
-    function( mor )
+# InstallMethod( ViewObj,
+#       [ IsStableCategoryMorphism ], 
+#     function( mor )
     
-    Print( "<A morphism in the stable category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
+#     Print( "<A morphism in the stable category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
     
-    end );
+#     end );
     
 InstallMethod( Display,
       [ IsStableCategoryObject ], 
