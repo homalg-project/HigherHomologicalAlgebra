@@ -287,6 +287,7 @@ InstallMethod( CreateTriangle,
     AddToToDoList( ToDoListEntry( [ [ triangle, "IsCanonicalExactTriangle", true ] ], 
                     function( )
                     SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
+                    SetIsExactTriangle( triangle, true );
                     end ) );
 
     return triangle;
@@ -304,6 +305,9 @@ InstallMethod( CreateExactTriangle,
     triangle:= CreateTriangle( mor1, mor2, mor3 );
     
     SetFilterObj( triangle, IsCapCategoryExactTriangle );
+
+    Assert( 5, IsExactTriangle( triangle ) );
+    SetIsExactTriangle( triangle, true );
     
     return triangle;
     
@@ -320,9 +324,10 @@ InstallMethod( CreateCanonicalExactTriangle,
     triangle:= CreateTriangle( mor1, mor2, mor3 );
     
     SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
-    
+    Assert( 5, IsCanonicalExactTriangle( triangle ) );
+    SetIsCanonicalExactTriangle( triangle, true );
+
     SetIsomorphismFromCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
-    
     SetIsomorphismToCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
 
     return triangle;
