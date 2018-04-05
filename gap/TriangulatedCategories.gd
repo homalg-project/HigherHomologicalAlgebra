@@ -198,12 +198,12 @@ DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList ] );
 
 DeclareAttribute( "UnderlyingCanonicalExactTriangle", IsCapCategoryExactTriangle );
 
-DeclareAttribute( "IsomorphismToCanonicalExactTriangle", IsCapCategoryExactTriangle );
+DeclareAttribute( "IsomorphismIntoCanonicalExactTriangle", IsCapCategoryExactTriangle );
 
-DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismToCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsList ] );
 
 DeclareAttribute( "IsomorphismFromCanonicalExactTriangle", IsCapCategoryExactTriangle );
 
@@ -312,15 +312,15 @@ DeclareAttribute( "ShiftFunctor", IsCapCategory );
 
 DeclareAttribute( "ReverseShiftFunctor", IsCapCategory );
 
-DeclareAttribute( "NaturalIsomorphismFromIdentityToReverseShiftOfShift", IsCapCategory );
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoReverseShiftOfShift", IsCapCategory );
 
-DeclareAttribute( "NaturalIsomorphismFromIdentityToShiftOfReverseShift", IsCapCategory );
-
-
-DeclareAttribute( "NaturalIsomorphismFromReverseShiftOfShiftToIdentity", IsCapCategory );
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoShiftOfReverseShift", IsCapCategory );
 
 
-DeclareAttribute( "NaturalIsomorphismFromShiftOfReverseShiftToIdentity", IsCapCategory );
+DeclareAttribute( "NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity", IsCapCategory );
+
+
+DeclareAttribute( "NaturalIsomorphismFromShiftOfReverseShiftIntoIdentity", IsCapCategory );
 
 DeclareAttribute( "UnderlyingCapCategory", IsCapCategoryTriangle );
 

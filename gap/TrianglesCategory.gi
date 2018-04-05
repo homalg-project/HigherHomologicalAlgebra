@@ -217,13 +217,13 @@ InstallMethod( CategoryOfTriangles,
 
         return D;
         
-        u := List( L, i-> [ i, "IsomorphismToCanonicalExactTriangle" ] );
+        u := List( L, i-> [ i, "IsomorphismIntoCanonicalExactTriangle" ] );
         AddToToDoList( ToDoListEntry( u, 
                     function( )
                     local can_D, isos, mors, mor;
                     SetIsExactTriangle( D, true );
                     can_D := UnderlyingCanonicalExactTriangle( D );
-                    isos := List( L, IsomorphismToCanonicalExactTriangle );
+                    isos := List( L, IsomorphismIntoCanonicalExactTriangle );
                     mors := List( [ 1 .. Length( L ) ], 
                                     function( k )
                                     local can_L_k, i1, i2, t;
@@ -240,7 +240,7 @@ InstallMethod( CategoryOfTriangles,
                     
                     mor := CreateTrianglesMorphism( D, can_D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor ); 
                     
-                    SetIsomorphismToCanonicalExactTriangle( D, mor );
+                    SetIsomorphismIntoCanonicalExactTriangle( D, mor );
                     
                     end ) );
         return D;
@@ -330,7 +330,7 @@ InstallMethod( CreateCanonicalExactTriangle,
     SetIsCanonicalExactTriangle( triangle, true );
 
     SetIsomorphismFromCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
-    SetIsomorphismToCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
+    SetIsomorphismIntoCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
 
     return triangle;
     

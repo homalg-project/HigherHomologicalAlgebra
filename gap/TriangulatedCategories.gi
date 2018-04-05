@@ -282,11 +282,11 @@ filter_list := [ IsCapCategoryExactTriangle ],
 cache_name := "IsomorphismFromCanonicalExactTriangle",
 return_type := [ IsCapCategoryTrianglesMorphism ] ),
 
-IsomorphismToCanonicalExactTriangle := rec(
+IsomorphismIntoCanonicalExactTriangle := rec(
 
-installation_name := "IsomorphismToCanonicalExactTriangle",
+installation_name := "IsomorphismIntoCanonicalExactTriangle",
 filter_list := [ IsCapCategoryExactTriangle ],
-cache_name := "IsomorphismToCanonicalExactTriangle",
+cache_name := "IsomorphismIntoCanonicalExactTriangle",
 return_type := [ IsCapCategoryTrianglesMorphism ] ),
 
 RotationOfCanonicalExactTriangle := rec( 
@@ -396,7 +396,7 @@ InstallMethod( TrivialExactTriangle,
     j := CreateTrianglesMorphism( can_triangle, T, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T, 1 ) ),
                                                     UniversalMorphismIntoZeroObject( ObjectAt( can_triangle, 2 ) ) );
     SetIsomorphismFromCanonicalExactTriangle( T, j );
-    SetIsomorphismToCanonicalExactTriangle( T, i );
+    SetIsomorphismIntoCanonicalExactTriangle( T, i );
     
     return T;
     
@@ -428,7 +428,7 @@ InstallMethod( RotationOfExactTriangle,
     fi;
     
 can_T := UnderlyingCanonicalExactTriangle( T );
-T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
+T_to_can_T := IsomorphismIntoCanonicalExactTriangle( T );
 can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
 
 rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );
@@ -438,7 +438,7 @@ rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, MorphismAt( T_to_can_T, 1 )
 rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), MorphismAt( can_T_to_T, 3 ) );
 
 can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
-rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
+rcan_T_to_can_rcan_T := IsomorphismIntoCanonicalExactTriangle( rcan_T );
 can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
 
 can_rT := UnderlyingCanonicalExactTriangle( rT );
@@ -449,7 +449,7 @@ can_rT_to_can_rcan_T := CompleteToMorphismOfCanonicalExactTriangles( can_rT, can
 can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), can_rT_to_can_rcan_T );
 
     
-    SetIsomorphismToCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
+    SetIsomorphismIntoCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
     SetIsomorphismFromCanonicalExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
     
     return rT;
@@ -484,7 +484,7 @@ InstallMethod( ReverseRotationOfExactTriangle,
     fi;
      
     can_T := UnderlyingCanonicalExactTriangle( T );
-    T_to_can_T := IsomorphismToCanonicalExactTriangle( T );
+    T_to_can_T := IsomorphismIntoCanonicalExactTriangle( T );
     can_T_to_T := IsomorphismFromCanonicalExactTriangle( T );
      
     rT := CreateExactTriangle( AdditiveInverse(ReverseShiftOfMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
@@ -500,7 +500,7 @@ InstallMethod( ReverseRotationOfExactTriangle,
                                                           
      
     can_rcan_T := UnderlyingCanonicalExactTriangle( rcan_T );
-    rcan_T_to_can_rcan_T := IsomorphismToCanonicalExactTriangle( rcan_T );
+    rcan_T_to_can_rcan_T := IsomorphismIntoCanonicalExactTriangle( rcan_T );
     can_rcan_T_to_rcan_T := IsomorphismFromCanonicalExactTriangle( rcan_T );
      
     can_rT := UnderlyingCanonicalExactTriangle( rT );
@@ -515,7 +515,7 @@ InstallMethod( ReverseRotationOfExactTriangle,
     can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T, 
                                 ReverseShiftOfMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ), can_rT_to_can_rcan_T );
     
-    SetIsomorphismToCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
+    SetIsomorphismIntoCanonicalExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
     SetIsomorphismFromCanonicalExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
      
     return rT;
@@ -536,10 +536,10 @@ InstallMethod( CompleteToMorphismOfExactTriangles,
     can_T1 := UnderlyingCanonicalExactTriangle( T1 );
     can_T2 := UnderlyingCanonicalExactTriangle( T2 );
     
-    T1_to_can_T1 := IsomorphismToCanonicalExactTriangle( T1 );
+    T1_to_can_T1 := IsomorphismIntoCanonicalExactTriangle( T1 );
     can_T1_to_T1 := IsomorphismFromCanonicalExactTriangle( T1 );
 
-    T2_to_can_T2 := IsomorphismToCanonicalExactTriangle( T2 );
+    T2_to_can_T2 := IsomorphismIntoCanonicalExactTriangle( T2 );
     can_T2_to_T2 := IsomorphismFromCanonicalExactTriangle( T2 );
 
     can_T1_to_can_T2_0 := PreCompose( [ MorphismAt( can_T1_to_T1, 0 ), m0, MorphismAt( T2_to_can_T2, 0 ) ] );
@@ -675,7 +675,7 @@ InstallMethod( ReverseShiftFunctor,
 end );
 
 ##
-InstallMethod( NaturalIsomorphismFromIdentityToShiftOfReverseShift, 
+InstallMethod( NaturalIsomorphismFromIdentityIntoShiftOfReverseShift, 
                       [ IsCapCategory and IsTriangulatedCategory ],
                       
         function( category )
@@ -708,7 +708,7 @@ InstallMethod( NaturalIsomorphismFromIdentityToShiftOfReverseShift,
 end );
  
 ##
-InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftOfShift, 
+InstallMethod( NaturalIsomorphismFromIdentityIntoReverseShiftOfShift, 
                       [ IsCapCategory and IsTriangulatedCategory ],
                       
         function( category )
@@ -741,7 +741,7 @@ InstallMethod( NaturalIsomorphismFromIdentityToReverseShiftOfShift,
 end );
 
 ##
-InstallMethod( NaturalIsomorphismFromShiftOfReverseShiftToIdentity, 
+InstallMethod( NaturalIsomorphismFromShiftOfReverseShiftIntoIdentity, 
                       [ IsCapCategory and IsTriangulatedCategory ],
                       
         function( category )
@@ -774,7 +774,7 @@ InstallMethod( NaturalIsomorphismFromShiftOfReverseShiftToIdentity,
 end );
  
 ##
-InstallMethod( NaturalIsomorphismFromReverseShiftOfShiftToIdentity, 
+InstallMethod( NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity, 
                       [ IsCapCategory and IsTriangulatedCategory ],
                       
         function( category )
