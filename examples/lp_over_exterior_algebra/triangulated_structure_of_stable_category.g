@@ -550,11 +550,9 @@ Finalize( stable_cat );
 m := HomalgMatrix( "[ [ e1, e0, e1, e1*e0, e0-e1 ], [ 0, 1, e1*e0, 0, -4*e1 ], [ e1+e0, 0, 1, e1*e0-e1, 0 ] ]", 3, 5, R);
 m := AsLeftPresentation( m );
 M := AsStableObject( m );
-n := HomalgMatrix( "[ [ e0, e1, e1, e1*e0, e0-e1 ], [ 1, 0, e1*e0, e0, e0 ], [ e1*e0, 0, 1, e1*e0-e0, 0 ] ]", 3, 5, R);
+n := HomalgMatrix( "[ [ e1*e0, e0-e1 ], [ 1, e0 ], [ e1*e0, e1*e0-e0 ] ]", 3, 2, R);
 n := AsLeftPresentation( n );
 N := AsStableObject( n );
-f := HomalgMatrix( "[ [ -1, 1, 0, 0, 0 ], [ -4, 4*e1, -4, 0, 0 ], [ 0, -e0, 0, 0, 0 ], [ -1, 1, 0, 0, 0 ], [ 1, 0, 0, 0, 1 ] ]", 5, 5, R );
-f := AsStableMorphism( PresentationMorphism(m,f,n) );
 quit;
 
 hom_basis := basis_of_external_hom( M, N );
