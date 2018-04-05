@@ -261,22 +261,21 @@ AddIsomorphismFromReverseShiftOfShift( stable_cat,
     
 end );
 
-AddDistributivityIsomorphismOfShift( stable_cat,
+AddShiftFactoringIsomorphismWithGivenObjects( stable_cat,
 
-    function( obj1, obj2 )
-    local a1, i1, a2, i2, a, m1, m2;
+    function( s, L, r  )
+    local a, aL, i, m;
 
-    a1 := FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( obj1 ) );
-    i1 := InjectionOfCofactorOfDirectSum( [ UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ], 1 );
-    a2 := FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( obj2 ) );
-    i2 := InjectionOfCofactorOfDirectSum( [ UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ], 2 );
-    
-    a  := FitIntoConflationUsingExactInjectiveObject( DirectSum( UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ) );
+    aL := List( L, l -> FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( l ) ) );
 
-    m1 := CokernelColift( a1^0, PreCompose( ExactInjectiveColift( a1^0, PreCompose( i1, a^0 ) ), a^1 ) );
-    m2 := CokernelColift( a2^0, PreCompose( ExactInjectiveColift( a2^0, PreCompose( i2, a^0 ) ), a^1 ) );
-    
-    return AsStableMorphism( MorphismBetweenDirectSums( [ [ m1 ], [ m2 ] ] ) );
+    i := List( [ 1..Length( L ) ], k -> InjectionOfCofactorOfDirectSum( List( L, UnderlyingUnstableObject ) , k ) );
+
+    a  := FitIntoConflationUsingExactInjectiveObject( DirectSum( List( L, UnderlyingUnstableObject ) ) );
+
+    m := List( [ 1 .. Length( L ) ], 
+            k -> [ CokernelColift( aL[k]^0, PreCompose( ExactInjectiveColift( aL[ k ]^0, PreCompose( i[ k ], a^0 ) ), a^1 ) ) ] );
+
+    return AsStableMorphism( MorphismBetweenDirectSums( m ) );
     
 end );
 
