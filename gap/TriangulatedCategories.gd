@@ -83,6 +83,46 @@ DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList ] );
 
+##
+DeclareOperation( "ShiftExpandingIsomorphism", [ IsList ] );
+
+DeclareOperation( "ShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "ShiftFactoringIsomorphism", [ IsList ] );
+
+DeclareOperation( "ShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "ReverseShiftExpandingIsomorphism", [ IsList ] );
+
+DeclareOperation( "ReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "ReverseShiftFactoringIsomorphism", [ IsList ] );
+
+DeclareOperation( "ReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+
 
 DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsCapCategoryObject, IsCapCategoryObject ] );
 DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsList ] );

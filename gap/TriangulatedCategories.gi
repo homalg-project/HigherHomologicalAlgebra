@@ -113,6 +113,36 @@ filter_list := [ "morphism" ],
 cache_name := "ReverseShiftOfMorphism",
 return_type := "morphism" ),
 
+##
+ShiftExpandingIsomorphismWithGivenObjects := rec(
+  installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
+  return_type := "morphism" ),
+
+ShiftFactoringIsomorphismWithGivenObjects := rec(
+  installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
+  return_type := "morphism" ),
+
+ReverseShiftExpandingIsomorphismWithGivenObjects := rec(
+  installation_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
+  return_type := "morphism" ),
+
+ReverseShiftFactoringIsomorphismWithGivenObjects := rec(
+  installation_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
+  return_type := "morphism" ),
+
+##
 DistributivityIsomorphismOfShift := rec(
 
 installation_name := "DistributivityIsomorphismOfShift", 
