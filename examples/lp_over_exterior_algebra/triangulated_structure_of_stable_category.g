@@ -279,19 +279,19 @@ AddShiftFactoringIsomorphismWithGivenObjects( stable_cat,
     
 end );
 
- AddDistributivityIsomorphismOfReverseShift( stable_cat,
-     function( obj1, obj2 )
-     local a1, i1, a2, i2, a, m1, m2;
-     a1 := FitIntoConflationUsingExactProjectiveObject( UnderlyingUnstableObject( obj1 ) );
-     i1 := InjectionOfCofactorOfDirectSum( [ UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ], 1 );
-     a2 := FitIntoConflationUsingExactProjectiveObject( UnderlyingUnstableObject( obj2 ) );
-     i2 := InjectionOfCofactorOfDirectSum( [ UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ], 2 );
-   
-     a  := FitIntoConflationUsingExactProjectiveObject( DirectSum( UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) ) );
-     m1 := KernelLift( a^1, PreCompose( a1^0, ExactProjectiveLift( PreCompose( a1^1, i1 ), a^1 ) ) );
-     m2 := KernelLift( a^1, PreCompose( a2^0, ExactProjectiveLift( PreCompose( a2^1, i2 ), a^1 ) ) );
-   
-     return AsStableMorphism( MorphismBetweenDirectSums( [ [ m1 ], [ m2 ] ] ) );
+ AddReverseShiftFactoringIsomorphismWithGivenObjects( stable_cat,
+    function( s, L, r )
+    local a, aL, i, m;
+    aL := List( L, l -> FitIntoConflationUsingExactProjectiveObject( UnderlyingUnstableObject( l ) ) );
+
+    i := List( [ 1..Length( L ) ], k -> InjectionOfCofactorOfDirectSum( List( L, UnderlyingUnstableObject ) , k ) );
+
+    a  := FitIntoConflationUsingExactProjectiveObject( DirectSum( List( L, UnderlyingUnstableObject ) ) );
+
+    m := List( [ 1 .. Length( L ) ], 
+            k -> [ KernelLift( a^1, PreCompose( aL[ k ]^0, ExactProjectiveLift( PreCompose( aL[ k ]^1, i[ k ] ), a^1 ) ) ) ] );
+
+    return AsStableMorphism( MorphismBetweenDirectSums( m ) );
    
  end );
 
