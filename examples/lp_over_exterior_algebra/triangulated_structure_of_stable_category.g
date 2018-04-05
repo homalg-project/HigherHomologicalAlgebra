@@ -428,7 +428,7 @@ AddRotationOfCanonicalExactTriangle( stable_cat,
     i := CreateTrianglesMorphism( rot, crot, IdentityMorphism( rot[ 0 ] ), IdentityMorphism( rot[ 1 ] ), i );
     p := CreateTrianglesMorphism( crot, rot, IdentityMorphism( rot[ 0 ] ), IdentityMorphism( rot[ 1 ] ), p );
     
-    SetIsomorphismToCanonicalExactTriangle( rot, i );
+    SetIsomorphismIntoCanonicalExactTriangle( rot, i );
     SetIsomorphismFromCanonicalExactTriangle( rot, p );
     
     return rot;
