@@ -122,22 +122,22 @@ od;
 return coeff_list;
 
 end );
+                    
+KeyDependentOperation( "FLeftt", IsHomalgMatrix, IsInt, ReturnTrue );
+InstallMethod( FLefttOp, [ IsHomalgMatrix, IsInt ],
+function( A, m )
+local S,n, basis_indices, zero_matrix,d, e_sigma, sigma;
 
-##
-DeclareGlobalFunction( "FLeft" );
-InstallGlobalFunction( FLeft,
-
-function( sigma, A )
-local S,n, basis_indices, zero_matrix,d, e_sigma;
-
+#AddToReasons(["left",A,m]);
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
 basis_indices := standard_list_of_basis_indices( n );
 
 d := DecompositionOfHomalgMat( A );
 
-zero_matrix := A - A;
+zero_matrix := HomalgZeroMatrix( NrRows(A), NrColumns(A), S );
 
+sigma := basis_indices[ m ];
 e_sigma := ring_element( sigma, S );
 
 return Iterated( List( basis_indices, function( tau )
@@ -166,15 +166,31 @@ return Iterated( List( basis_indices, function( tau )
                             end ), UnionOfColumns );
                      
 end );
-                     
-                     
+ 
 ##
-DeclareGlobalFunction( "FRight" );
-InstallGlobalFunction( FRight,
+DeclareGlobalFunction( "FLeft" );
+InstallGlobalFunction( FLeft,
 
 function( sigma, A )
-local S,n, basis_indices, zero_matrix,d, e_sigma;
+local p, basis_indices;
+basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( A!.ring ) ) - 1  );
+p := Position( basis_indices, sigma ); 
+if HasIsOne( A ) and IsOne( A ) then
+	return Iterated( [ HomalgZeroMatrix(NrRows(A), (p-1)*NrColumns(A), A!.ring ), A, HomalgZeroMatrix( NrRows(A), ( Length(basis_indices) - p )*NrColumns(A), A!.ring)], UnionOfColumns );
+elif HasIsZero( A ) and IsZero( A ) then
+	return HomalgZeroMatrix( NrRows(A), NrColumns(A)*Length( basis_indices ), A!.ring );
+else
+	return FLeftt(A, p);
+fi;
+end );
+  
+                  
+KeyDependentOperation( "FRightt", IsHomalgMatrix, IsInt, ReturnTrue );
+InstallMethod( FRighttOp, [ IsHomalgMatrix, IsInt ],
+function( A, m )
+local S,n, basis_indices, zero_matrix,d, e_sigma, sigma;
 
+#AddToReasons(["right",A,m]);
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
 basis_indices := standard_list_of_basis_indices( n );
@@ -183,6 +199,7 @@ d := DecompositionOfHomalgMat( A );
 
 zero_matrix := HomalgZeroMatrix( NrRows( A ), NrColumns( A ), S );
 
+sigma := basis_indices[ m ];
 e_sigma := ring_element( sigma, S );
 
 return Iterated( List( basis_indices, function( tau )
@@ -210,6 +227,23 @@ return Iterated( List( basis_indices, function( tau )
                             
                             end ), UnionOfRows );
                      
+end );
+
+##
+DeclareGlobalFunction( "FRight" );
+InstallGlobalFunction( FRight,
+
+function( sigma, A )
+local p, basis_indices;
+basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( A!.ring ) ) - 1 );
+p := Position( basis_indices, sigma ); 
+if HasIsOne( A ) and IsOne( A ) then
+	return Iterated( [ HomalgZeroMatrix( (p-1)*NrRows(A),NrColumns(A), A!.ring ), A, HomalgZeroMatrix( (Length(basis_indices) - p)*NrRows(A), NrColumns(A), A!.ring)], UnionOfRows );
+elif HasIsZero( A ) and IsZero( A ) then
+	return HomalgZeroMatrix( NrRows(A)*Length( basis_indices ), NrColumns(A), A!.ring );
+else 
+	return FRightt(A, p);
+fi;
 end );
  
 DeclareGlobalFunction( "FF2" );
