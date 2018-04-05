@@ -206,7 +206,7 @@ InstallMethod( CategoryOfTriangles,
 
         m := List( [ 1, 2, 3 ], l -> DirectSumFunctorial( m[ l ] ) );
         
-        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], DistributivityIsomorphismOfShift( o ) ) );
+        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], ShiftFactoringIsomorphismWithGivenObjects( Range( m[ 3 ] ), o, ShiftOfObject( DirectSum( o ) ) ) ) );
 
         u := List( L, i-> [ i, "IsExactTriangle", true ] );
 
@@ -215,6 +215,8 @@ InstallMethod( CategoryOfTriangles,
                         SetIsExactTriangle( D, true );
                     end ) );
 
+        return D;
+        
         u := List( L, i-> [ i, "IsomorphismToCanonicalExactTriangle" ] );
         AddToToDoList( ToDoListEntry( u, 
                     function( )

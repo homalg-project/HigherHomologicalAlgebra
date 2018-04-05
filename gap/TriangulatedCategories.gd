@@ -26,6 +26,7 @@ if not IsBound( Reasons ) then
                                 end );
 fi;
 
+
 DeclareGlobalVariable( "CAP_INTERNAL_TRIANGULATED_CATEGORIES_BASIC_OPERATIONS" );
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
