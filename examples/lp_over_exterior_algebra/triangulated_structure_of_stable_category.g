@@ -261,6 +261,7 @@ AddIsomorphismFromReverseShiftOfShift( stable_cat,
     
 end );
 
+##
 AddShiftFactoringIsomorphismWithGivenObjects( stable_cat,
 
     function( s, L, r  )
@@ -273,13 +274,32 @@ AddShiftFactoringIsomorphismWithGivenObjects( stable_cat,
     a  := FitIntoConflationUsingExactInjectiveObject( DirectSum( List( L, UnderlyingUnstableObject ) ) );
 
     m := List( [ 1 .. Length( L ) ], 
-            k -> [ CokernelColift( aL[k]^0, PreCompose( ExactInjectiveColift( aL[ k ]^0, PreCompose( i[ k ], a^0 ) ), a^1 ) ) ] );
+            k -> [ CokernelColift( aL[ k ]^0, PreCompose( ExactInjectiveColift( aL[ k ]^0, PreCompose( i[ k ], a^0 ) ), a^1 ) ) ] );
 
     return AsStableMorphism( MorphismBetweenDirectSums( m ) );
     
 end );
 
- AddReverseShiftFactoringIsomorphismWithGivenObjects( stable_cat,
+AddShiftExpandingIsomorphismWithGivenObjects( stable_cat,
+
+    function( s, L, r  )
+    local a, aL, p, m;
+
+    aL := List( L, l -> FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( l ) ) );
+
+    p := List( [ 1..Length( L ) ], k -> ProjectionInFactorOfDirectSum( List( L, UnderlyingUnstableObject ) , k ) );
+
+    a  := FitIntoConflationUsingExactInjectiveObject( DirectSum( List( L, UnderlyingUnstableObject ) ) );
+
+    m := List( [ 1 .. Length( L ) ], 
+            k -> CokernelColift( a^0, PreCompose( ExactInjectiveColift( a^0, PreCompose( p[ k ], aL[ k ]^0 ) ), aL[ k ]^1 ) ) );
+
+    return AsStableMorphism( MorphismBetweenDirectSums( [ m ] ) );
+    
+end );
+
+##
+AddReverseShiftFactoringIsomorphismWithGivenObjects( stable_cat,
     function( s, L, r )
     local a, aL, i, m;
     aL := List( L, l -> FitIntoConflationUsingExactProjectiveObject( UnderlyingUnstableObject( l ) ) );
@@ -292,6 +312,23 @@ end );
             k -> [ KernelLift( a^1, PreCompose( aL[ k ]^0, ExactProjectiveLift( PreCompose( aL[ k ]^1, i[ k ] ), a^1 ) ) ) ] );
 
     return AsStableMorphism( MorphismBetweenDirectSums( m ) );
+   
+ end );
+
+##
+AddReverseShiftExpandingIsomorphismWithGivenObjects( stable_cat,
+    function( s, L, r )
+    local a, aL, p, m;
+    aL := List( L, l -> FitIntoConflationUsingExactProjectiveObject( UnderlyingUnstableObject( l ) ) );
+
+    p := List( [ 1..Length( L ) ], k -> ProjectionInFactorOfDirectSum( List( L, UnderlyingUnstableObject ) , k ) );
+
+    a  := FitIntoConflationUsingExactProjectiveObject( DirectSum( List( L, UnderlyingUnstableObject ) ) );
+
+    m := List( [ 1 .. Length( L ) ], 
+            k -> KernelLift( aL[k]^1, PreCompose( a^0, ExactProjectiveLift( PreCompose( a^1, p[ k ] ), aL[k]^1 ) ) ) );
+
+    return AsStableMorphism( MorphismBetweenDirectSums( [ m ] ) );
    
  end );
 
