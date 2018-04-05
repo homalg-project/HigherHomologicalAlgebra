@@ -88,7 +88,7 @@ AddIsExactTriangle( cat,
 end );
 
 ##
-AddIsomorphismToCanonicalExactTriangle( cat, 
+AddIsomorphismIntoCanonicalExactTriangle( cat, 
     function( T )
     local f, g, h, can_triangle, A, B, a, b;
     f := MorphismAt( T, 0 );
@@ -148,7 +148,7 @@ AddOctahedralAxiom( cat,
 
   IsExactTriangle( t );
   IsomorphismFromCanonicalExactTriangle( t );
-  IsomorphismToCanonicalExactTriangle( t );
+  IsomorphismIntoCanonicalExactTriangle( t );
   
   return t;
 end );
