@@ -681,6 +681,18 @@ all_colift_lift_in_stable_category :=
     return [ PresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) ), K ];
 end;
 
+random_element := function( R )
+local basis_indices;
+basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( R ) ) - 1 );
+# if the element contains constant then it is unit in the algebra.
+Remove( basis_indices, 1 );
+return Sum( basis_indices, i -> Random([-10..10])*ring_element(i,R) + Random( Concatenation(List([1..8*Length(basis_indices)],i->0),[1] ) ) *ring_element( [], R ) );
+end;
+
+random_matrix := function(m,n,R)
+return HomalgMatrix( List([1..m], i-> List([1..n], j -> random_element( R ) ) ), m, n, R );
+end;
+
 # Very important note:
 # if you compute hom(M,N) you will have a set of 46 morphisms and the first and the 30'th are congruent.
 # h := generating_set_of_external_hom(M,N);
@@ -703,3 +715,7 @@ end;
 
 # methods for stable category
 
+# -5*e0*e1-7*e0+2*e1-8,-6*e0*e1+8*e0-4*e1-8,6*e0*e1+10*e0-3*e1+5,
+# 10*e0*e1+e0+7*e1-2,  -e0*e1-8*e0+4*e1-6,  -e0*e1-e0+e1+2       
+
+# A projective object in Category of left presentations of Q{e0,e1}
