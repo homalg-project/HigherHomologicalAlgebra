@@ -119,28 +119,64 @@ ShiftExpandingIsomorphismWithGivenObjects := rec(
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  post_function := function( s, L, r, return_value )
+                if not IsEqualForObjects( ShiftOfObject( DirectSum( L ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                elif not IsEqualForObjects( DirectSum( List( L, ShiftOfObject ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  post_function := function( s, L, r, return_value )
+                if not IsEqualForObjects( ShiftOfObject( DirectSum( L ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                elif not IsEqualForObjects( DirectSum( List( L, ShiftOfObject ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),
 
 ReverseShiftExpandingIsomorphismWithGivenObjects := rec(
   installation_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  post_function := function( s, L, r, return_value )
+                if not IsEqualForObjects( ReverseShiftOfObject( DirectSum( L ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                elif not IsEqualForObjects( DirectSum( List( L, ReverseShiftOfObject ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),
 
 ReverseShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  post_function := function( s, L, r, return_value )
+                if not IsEqualForObjects( ReverseShiftOfObject( DirectSum( L ) ), Range( return_value ) ) then
+                    Error( "The range of the output is not as it should be" );
+                elif not IsEqualForObjects( DirectSum( List( L, ReverseShiftOfObject ) ), Source( return_value ) ) then
+                    Error( "The source of the output is not as it should be" );
+                fi;
+                Assert( 5, IsIsomorphism( return_value ) );
+                SetIsIsomorphism( return_value, true );
+                end ),
 
 ##
 DistributivityIsomorphismOfShift := rec(
