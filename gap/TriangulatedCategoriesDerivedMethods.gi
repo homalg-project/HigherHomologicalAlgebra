@@ -247,3 +247,62 @@ AddDerivationToCAP( DistributivityIsomorphismOfReverseShift,
     k := IsomorphismIntoReverseShiftOfShift( DirectSum( ReverseShiftOfObject( obj1 ), ReverseShiftOfObject( obj2 ) ) );
     return PreCompose( k, u );
 end: Description := "computes iso to Distributivity isomorphism of reverse shift on direct sum" );
+
+##
+AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
+                [
+                    [ InjectionOfCofactorOfDirectSum, 1 ],
+                    [ ShiftOfMorphism, 1 ]
+                ],
+    function( s, L, r  )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> [ ShiftOfMorphism( m ) ] );
+    return MorphismBetweenDirectSums( Tl );
+    
+end );
+
+AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
+                [
+                    [ ProjectionInFactorOfDirectSum, 1 ],
+                    [ ShiftOfMorphism, 1 ]
+                ],
+    function( s, L, r  )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> ShiftOfMorphism( m ) );
+    return MorphismBetweenDirectSums( [ Tl ] );
+    
+end );
+
+##
+AddDerivationToCAP( ReverseShiftFactoringIsomorphismWithGivenObjects,
+                [
+                    [ InjectionOfCofactorOfDirectSum, 1 ],
+                    [ ReverseShiftOfMorphism, 1 ]
+                ],
+    function( s, L, r )
+     local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> [ ReverseShiftOfMorphism( m ) ] );
+    return MorphismBetweenDirectSums( Tl );
+    
+ end );
+
+##
+AddDerivationToCAP( ReverseShiftExpandingIsomorphismWithGivenObjects,
+                [
+                    [ ProjectionInFactorOfDirectSum, 1 ],
+                    [ ReverseShiftOfMorphism, 1 ]
+                ],
+    function( s, L, r )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> ReverseShiftOfMorphism( m ) );
+    return MorphismBetweenDirectSums( [ Tl ] );
+       
+ end );
