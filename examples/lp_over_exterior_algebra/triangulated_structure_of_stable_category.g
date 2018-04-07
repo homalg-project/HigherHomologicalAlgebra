@@ -359,7 +359,7 @@ AddCompleteToMorphismOfCanonicalExactTriangles( stable_cat,
     mor := UniversalMorphismFromExactPushout( [ u1, f1 ], 
             [ AdditionForMorphisms( PreCompose( phi1, alpha2 ), AdditiveInverse( PreCompose( beta, g2 ) ) ), PreCompose( psi, g2 ) ] ); 
     
-    return AsStableMorphism( mor );
+    return CreateTrianglesMorphism( tr1, tr2, phi_, psi_, AsStableMorphism( mor ) );
 
 end );
 
