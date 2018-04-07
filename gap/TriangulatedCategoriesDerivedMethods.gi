@@ -306,3 +306,14 @@ AddDerivationToCAP( ReverseShiftExpandingIsomorphismWithGivenObjects,
     return MorphismBetweenDirectSums( [ Tl ] );
        
  end );
+
+##
+# See categories and homological algebra (schapira)
+AddDerivationToCAP( IsIsomorphism,
+                [
+                    [ ConeObject, 1 ],
+                    [ IsZeroForObjects,  1 ]
+                ],
+    function( mor )
+    return IsZeroForObjects( ConeObject( mor ) );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "Is isomorphism by deciding if the cone object is zero" );
