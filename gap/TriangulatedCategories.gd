@@ -341,7 +341,3 @@ DeclareProperty( "IsTriangulatedCategory", IsCapCategory );
 
 # This property is declared only to be set by the user, not to be computed in any way.
 DeclareProperty( "IsTriangulatedCategoryWithShiftAutomorphism", IsCapCategory );
-
-DeclareProperty( "IsWellDefinedTriangle", IsCapCategoryTriangle );
-
-DeclareProperty( "IsWellDefinedTrianglesMorphism", IsCapCategoryTrianglesMorphism );
