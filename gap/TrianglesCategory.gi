@@ -269,7 +269,39 @@ InstallMethod( CategoryOfTriangles,
         return D;
 
     end );
+
+    AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( cat, 
+        function( L, n, D )
+        local objs0, objs1, objs2, i0, i1, i2;
+
+        objs0 := List( L, l -> l[0] );
+        objs1 := List( L, l -> l[1] );
+        objs2 := List( L, l -> l[2] );
+
+        i0 := InjectionOfCofactorOfDirectSum( objs0, n );
+        i1 := InjectionOfCofactorOfDirectSum( objs1, n );
+        i2 := InjectionOfCofactorOfDirectSum( objs2, n );
+
+        return CreateTrianglesMorphism( L[ n ], D, i0, i1, i2 );
+
+    end );
     
+    AddProjectionInFactorOfDirectSumWithGivenDirectSum( cat, 
+        function( L, n, D )
+        local objs0, objs1, objs2, p0, p1, p2;
+
+        objs0 := List( L, l -> l[0] );
+        objs1 := List( L, l -> l[1] );
+        objs2 := List( L, l -> l[2] );
+
+        p0 := ProjectionInFactorOfDirectSum( objs0, n );
+        p1 := ProjectionInFactorOfDirectSum( objs1, n );
+        p2 := ProjectionInFactorOfDirectSum( objs2, n );
+
+        return CreateTrianglesMorphism( D, L[ n ], p0, p1, p2 );
+
+    end );
+
     Finalize( cat );
     
     return cat;
