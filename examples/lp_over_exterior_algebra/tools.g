@@ -259,45 +259,57 @@ InstallGlobalFunction( FRight,
 
 function( sigma, A )
 local p, basis_indices;
+
+if WithComments = true then
+    Print( "FRight of ", NrRows(A),"x", NrColumns(A)," homalg matrix and sigma = ", sigma, "\n" );
+fi;
+
 basis_indices := standard_list_of_basis_indices( A!.ring );
 p := Position( basis_indices, sigma ); 
 if HasIsOne( A ) and IsOne( A ) then
 	return Iterated( [ HomalgZeroMatrix( (p-1)*NrRows(A),NrColumns(A), A!.ring ), A, HomalgZeroMatrix( (Length(basis_indices) - p)*NrRows(A), NrColumns(A), A!.ring)], UnionOfRows );
 elif HasIsZero( A ) and IsZero( A ) then
 	return HomalgZeroMatrix( NrRows(A)*Length( basis_indices ), NrColumns(A), A!.ring );
-else 
+else
 	return FRightt(A, p);
 fi;
 end );
  
-DeclareGlobalFunction( "FF2" );
-InstallGlobalFunction( FF2,
+DeclareOperationWithCache( "FF2", [ IsList, IsHomalgMatrix, IsHomalgMatrix ] );
+InstallMethodWithCache( FF2,
+                    [ IsList, IsHomalgMatrix, IsHomalgMatrix ],
+function( sigma, A, B )
+local R, r,s, AA, BB, Is_Kronecker_AA, BB_Kronecker_Ir; 
+ 
+if WithComments = true then
+    Print( "FF2 of ", NrRows(A),"x", NrColumns(A), " & ", NrRows(B),"x", NrColumns(B)," homalg matrices and sigma =", sigma, "\n" );
+fi;
 
- function( sigma, A, B )
- 
- local R, r,s, AA, BB, Is_Kronecker_AA, BB_Kronecker_Ir; 
- 
- R := A!.ring;
- 
- r := NrRows( A );
- s := NrColumns( B );
- 
- AA := FLeft( sigma, A );
- BB := FRight( sigma, B );
- 
- Is_Kronecker_AA :=  KroneckerMat( HomalgIdentityMatrix( s, R ), AA );
- BB_Kronecker_Ir :=  KroneckerMat( Involution( BB ), HomalgIdentityMatrix( r, R ) );
- 
- return UnionOfColumns( Is_Kronecker_AA, BB_Kronecker_Ir );
- 
- end );
+R := A!.ring;
+
+r := NrRows( A );
+s := NrColumns( B );
+
+AA := FLeft( sigma, A );
+BB := FRight( sigma, B );
+
+Is_Kronecker_AA :=  KroneckerMat( HomalgIdentityMatrix( s, R ), AA );
+BB_Kronecker_Ir :=  KroneckerMat( Involution( BB ), HomalgIdentityMatrix( r, R ) );
+
+return UnionOfColumns( Is_Kronecker_AA, BB_Kronecker_Ir );
+
+end );
 
 
-DeclareGlobalFunction( "FF3" );
-InstallGlobalFunction( FF3, 
-
+DeclareOperationWithCache( "FF3", [ IsHomalgMatrix, IsHomalgMatrix ] );
+InstallMethodWithCache( FF3,
+                [ IsHomalgMatrix, IsHomalgMatrix ],
 function( A, B )
 local S, n, basis_indices;
+
+if WithComments = true then
+    Print( "FF3 of ", NrRows(A),"x", NrColumns(A), " & ", NrRows(B),"x", NrColumns(B)," homalg matrices\n" );
+fi;
 
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
@@ -307,12 +319,17 @@ return Iterated( List( basis_indices, sigma -> FF2( sigma, A, B ) ), UnionOfRows
 
 end );
 
-
-DeclareGlobalFunction( "SolveTwoSidedEquationOverExteriorAlgebra" );
-InstallGlobalFunction( SolveTwoSidedEquationOverExteriorAlgebra,
-
+DeclareOperationWithCache( "SolveTwoSidedEquationOverExteriorAlgebra", [ IsHomalgMatrix, IsHomalgMatrix, IsHomalgMatrix ] );
+InstallMethodWithCache( SolveTwoSidedEquationOverExteriorAlgebra,
+                            [ IsHomalgMatrix, IsHomalgMatrix, IsHomalgMatrix ],
 function( A, B, C )
 local C_deco, C_deco_list, C_deco_list_vec, C_vec, N, sol, Q, R, l, m, s, r, n, XX, YY, XX_, YY_, X_, Y_, basis_indices;
+
+
+if WithComments = true then
+    Print( "SolveTwoSidedEquationOverExteriorAlgebra on ", NrRows(A),"x", NrColumns(A), " & ", NrRows(B),"x", NrColumns(B)," & ",NrRows(C),"x", NrColumns(C), "\n" );
+fi;
+
 R := A!.ring;
 
 if NrRows( A )= 0 or NrColumns( A ) = 0 then 
