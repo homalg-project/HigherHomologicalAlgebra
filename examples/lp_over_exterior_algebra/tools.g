@@ -2,6 +2,9 @@
 LoadPackage( "ModulePresentations" );
 LoadPackage( "RingsForHomalg" );
 
+DeclareGlobalVariable( "WithComments" );
+MakeReadWriteGlobal("WithComments");
+
 ##
 DeclareOperation( "HomalgTransposedMat", 
                   [ IsHomalgMatrix ] );
@@ -21,6 +24,10 @@ InstallMethod( standard_list_of_basis_indices,
 
 function ( R )
 local f, new_l,l, n;
+
+if WithComments = true then
+    Print( "standard_list_of_basis_indices\n" );
+fi;
 
 n := Length( IndeterminatesOfExteriorRing( R ) ) -1;
 
@@ -88,6 +95,10 @@ InstallMethod( DecompositionOfHomalgMat,
 function( d )
 local R, n, l, coeff_list, dd, reduction_element, coeff_element, dd_new, u,v, M, m,r;
 
+if WithComments = true then
+    Print( "DecompositionOfHomalgMat of ", NrRows(d),"x",NrColumns(d)," homalg matrix \n" );
+fi;
+
 dd := ShallowCopy( d );
 
 R := d!.ring;
@@ -130,6 +141,10 @@ KeyDependentOperation( "FLeftt", IsHomalgMatrix, IsInt, ReturnTrue );
 InstallMethod( FLefttOp, [ IsHomalgMatrix, IsInt ],
 function( A, m )
 local S, basis_indices, zero_matrix,d, e_sigma, sigma;
+
+if WithComments = true then
+    Print( "FLefttOp of ", NrRows(A),"x", NrColumns(A)," homalg matrix and m =", m, "\n" );
+fi;
 
 #AddToReasons(["left",A,m]);
 S := A!.ring;
@@ -176,6 +191,11 @@ InstallGlobalFunction( FLeft,
 
 function( sigma, A )
 local p, basis_indices;
+
+if WithComments = true then
+    Print( "FLeft of ", NrRows(A),"x", NrColumns(A)," homalg matrix and sigma = ", sigma, "\n" );
+fi;
+
 basis_indices := standard_list_of_basis_indices(  A!.ring  );
 p := Position( basis_indices, sigma ); 
 if HasIsOne( A ) and IsOne( A ) then
@@ -193,7 +213,9 @@ InstallMethod( FRighttOp, [ IsHomalgMatrix, IsInt ],
 function( A, m )
 local R,basis_indices, zero_matrix,d, e_sigma, sigma;
 
-#AddToReasons(["right",A,m]);
+if WithComments = true then
+    Print( "FRighttOp of ", NrRows(A),"x", NrColumns(A)," homalg matrix and m = ", m, "\n" );
+fi;
 R := A!.ring;
 basis_indices := standard_list_of_basis_indices( R );
 

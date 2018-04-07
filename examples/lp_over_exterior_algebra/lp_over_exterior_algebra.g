@@ -332,8 +332,16 @@ basis_of_external_hom :=
 
     N := Q*FF3( A, B );
 
+    if WithComments = true then
+        Print( "SyzygiesOfColumns on ", NrRows(N),"x", NrColumns(N)," homalg matrix\n" );
+    fi;
+    
     sN := SyzygiesOfColumns( N );
 
+    if WithComments = true then
+        Print( "Done!\n" );
+    fi;
+    
     r := NrRows( A );
     m := NrColumns( A );
     s := NrColumns( B );
@@ -396,6 +404,9 @@ compute_coefficients := function( b, f )
 
     matrix :=   Iterated( List( main_list, m -> m[ 1 ] ), UnionOfRows );
     constant := Iterated( List( main_list, m -> m[ 2 ] ), UnionOfRows );
+    if WithComments = true then
+        Print( "LeftDivide on ", NrRows(matrix),"x", NrColumns(matrix)," homalg matrix\n" );
+    fi;
     sol := LeftDivide( matrix, constant);
     if sol = fail then 
         return fail;
@@ -515,6 +526,10 @@ colift_lift_in_stable_category :=
     fi;
 
     constants_matrix :=  Iterated( [ HomalgZeroMatrix(R_1, C_1, Q ), beta_vec, gamma_vec ], UnionOfRows );
+    
+    if WithComments = true then
+        Print( "LeftDivide on ", NrRows(main_matrix),"x", NrColumns(main_matrix)," homalg matrix\n" );
+    fi;
     
     sol := LeftDivide( main_matrix, constants_matrix );
     
@@ -639,6 +654,10 @@ all_colift_lift_in_stable_category :=
     fi;
 
     constants_matrix :=  Iterated( [ HomalgZeroMatrix(R_1, C_1, Q ), beta_vec, gamma_vec ], UnionOfRows );
+
+    if WithComments = true then
+        Print( "LeftDivide on ", NrRows(main_matrix),"x", NrColumns(main_matrix)," homalg matrix\n" );
+    fi;
 
     sol := LeftDivide( main_matrix, constants_matrix );
     
