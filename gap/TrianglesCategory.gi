@@ -272,12 +272,13 @@ InstallMethod( CreateTriangle,
                     t1 := mor2,
                     T2 := Source( mor3 ),
                     t2 := mor3,
-                    T3 :=  Range( mor3 ) 
-                  );
+                    T3 :=  Range( mor3 ),
+                    UnderlyingLazyMethods := [ ]
+                    );
     
     ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle,
-                             UnderlyingCapCategory, CapCategory( mor1 )
-                           );
+                             UnderlyingCapCategory, CapCategory( mor1 ) 
+                            );
     
     AddObject( CategoryOfTriangles( CapCategory( mor1 ) ), triangle );
     
@@ -349,7 +350,9 @@ InstallMethod( CreateTrianglesMorphism,
                     
                     m1 := morphism1,
                     
-                    m2 := morphism2 );
+                    m2 := morphism2,
+                            
+                    UnderlyingLazyMethods := [ ] );
                   
    ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
                             Source, T1,
@@ -439,6 +442,18 @@ InstallMethod( \[\], [ IsCapCategoryTrianglesMorphism, IsInt ],
     return MorphismAt( phi, i );
 
 end );
+
+##
+InstallMethod( AddToUnderlyingLazyMethods, 
+            [ IsCapCategoryCell, IsOperation, IsFunction, IsList ],
+    function( C, method_name, F, l )
+    
+    Add( C!.UnderlyingLazyMethods, method_name );
+    Add( C!.UnderlyingLazyMethods, F );
+    Add( C!.UnderlyingLazyMethods, l );
+
+end );
+
 ##
 InstallMethod( ExtendFunctorToTrianglesCategory, [ IsCapFunctor ],
 
