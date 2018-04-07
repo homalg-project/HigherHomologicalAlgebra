@@ -15,11 +15,14 @@ end );
 
 
 ##
-DeclareGlobalFunction( "standard_list_of_basis_indices" );
-InstallGlobalFunction( standard_list_of_basis_indices, 
+DeclareAttribute( "standard_list_of_basis_indices", IsHomalgRing );
+InstallMethod( standard_list_of_basis_indices,
+                [ IsHomalgRing and IsExteriorRing ],
 
-function ( n )
-local f, new_l,l;
+function ( R )
+local f, new_l,l, n;
+
+n := Length( IndeterminatesOfExteriorRing( R ) ) -1;
 
 l := Combinations( [ 0 ..n ] );
 
@@ -91,7 +94,7 @@ R := d!.ring;
 
 n := Length( IndeterminatesOfExteriorRing( R ) ) -1;
 
-l := standard_list_of_basis_indices( n );
+l := standard_list_of_basis_indices( R );
 
 coeff_list := [ ];
 
@@ -126,12 +129,12 @@ end );
 KeyDependentOperation( "FLeftt", IsHomalgMatrix, IsInt, ReturnTrue );
 InstallMethod( FLefttOp, [ IsHomalgMatrix, IsInt ],
 function( A, m )
-local S,n, basis_indices, zero_matrix,d, e_sigma, sigma;
+local S, basis_indices, zero_matrix,d, e_sigma, sigma;
 
 #AddToReasons(["left",A,m]);
 S := A!.ring;
-n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := standard_list_of_basis_indices( n );
+
+basis_indices := standard_list_of_basis_indices( S );
 
 d := DecompositionOfHomalgMat( A );
 
@@ -173,7 +176,7 @@ InstallGlobalFunction( FLeft,
 
 function( sigma, A )
 local p, basis_indices;
-basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( A!.ring ) ) - 1  );
+basis_indices := standard_list_of_basis_indices(  A!.ring  );
 p := Position( basis_indices, sigma ); 
 if HasIsOne( A ) and IsOne( A ) then
 	return Iterated( [ HomalgZeroMatrix(NrRows(A), (p-1)*NrColumns(A), A!.ring ), A, HomalgZeroMatrix( NrRows(A), ( Length(basis_indices) - p )*NrColumns(A), A!.ring)], UnionOfColumns );
@@ -188,19 +191,18 @@ end );
 KeyDependentOperation( "FRightt", IsHomalgMatrix, IsInt, ReturnTrue );
 InstallMethod( FRighttOp, [ IsHomalgMatrix, IsInt ],
 function( A, m )
-local S,n, basis_indices, zero_matrix,d, e_sigma, sigma;
+local R,basis_indices, zero_matrix,d, e_sigma, sigma;
 
 #AddToReasons(["right",A,m]);
-S := A!.ring;
-n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := standard_list_of_basis_indices( n );
+R := A!.ring;
+basis_indices := standard_list_of_basis_indices( R );
 
 d := DecompositionOfHomalgMat( A );
 
-zero_matrix := HomalgZeroMatrix( NrRows( A ), NrColumns( A ), S );
+zero_matrix := HomalgZeroMatrix( NrRows( A ), NrColumns( A ), R );
 
 sigma := basis_indices[ m ];
-e_sigma := ring_element( sigma, S );
+e_sigma := ring_element( sigma, R );
 
 return Iterated( List( basis_indices, function( tau )
                             local lambda, m;
@@ -223,7 +225,7 @@ return Iterated( List( basis_indices, function( tau )
                             
                             m := Position( basis_indices, lambda );
                             
-                            return  ( ring_element( tau, S )*( ring_element( lambda, S ) )/e_sigma )*d[ m ][ 2 ];
+                            return  ( ring_element( tau, R )*( ring_element( lambda, R ) )/e_sigma )*d[ m ][ 2 ];
                             
                             end ), UnionOfRows );
                      
@@ -235,7 +237,7 @@ InstallGlobalFunction( FRight,
 
 function( sigma, A )
 local p, basis_indices;
-basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( A!.ring ) ) - 1 );
+basis_indices := standard_list_of_basis_indices( A!.ring );
 p := Position( basis_indices, sigma ); 
 if HasIsOne( A ) and IsOne( A ) then
 	return Iterated( [ HomalgZeroMatrix( (p-1)*NrRows(A),NrColumns(A), A!.ring ), A, HomalgZeroMatrix( (Length(basis_indices) - p)*NrRows(A), NrColumns(A), A!.ring)], UnionOfRows );
@@ -277,7 +279,7 @@ local S, n, basis_indices;
 
 S := A!.ring;
 n := Length( IndeterminatesOfExteriorRing( S ) )-1;
-basis_indices := standard_list_of_basis_indices( n );
+basis_indices := standard_list_of_basis_indices( S );
 
 return Iterated( List( basis_indices, sigma -> FF2( sigma, A, B ) ), UnionOfRows );
 
@@ -302,7 +304,7 @@ elif NrRows( B )= 0 or NrColumns( B ) = 0 then
 fi;
 
 l := Length( IndeterminatesOfExteriorRing( R ) );
-basis_indices := standard_list_of_basis_indices( l-1 );
+basis_indices := standard_list_of_basis_indices( R );
 
 Q := CoefficientsRing( R );                                                                                                                                                                                                                                                     
 
@@ -343,6 +345,3 @@ Y_ := Sum( List( [ 1..2^l ], i-> (R*CertainColumns( YY_, [ ( i - 1 )*n + 1 .. i*
 return [ X_, Y_ ];
 
 end );
-                                                                
-    
-                                                                    

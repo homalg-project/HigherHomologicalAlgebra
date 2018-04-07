@@ -127,7 +127,7 @@ AddLift( cat,
    
     l := Length( IndeterminatesOfExteriorRing( R ) );
     
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R ); 
 
@@ -326,7 +326,7 @@ basis_of_external_hom :=
     B := UnderlyingMatrix( MB );
 
     l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
 
     Q := CoefficientsRing( R ); 
 
@@ -364,7 +364,7 @@ return DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms(b) ) );
 end;
 
 compute_coefficients := function( b, f )
-    local R, l, basis_indices, Q, A, B, C, vec, main_list, matrix, constant, M, N, sol;
+    local R, basis_indices, Q, A, B, C, vec, main_list, matrix, constant, M, N, sol;
     
     M := Source( f );
     N := Range( f );
@@ -374,8 +374,7 @@ compute_coefficients := function( b, f )
     fi;
     
     R := UnderlyingHomalgRing( M );
-    l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     Q := CoefficientsRing( R ); 
     
     A := List( b, UnderlyingMatrix );
@@ -444,7 +443,7 @@ colift_lift_in_stable_category :=
     
     l := Length( IndeterminatesOfExteriorRing( R ) );
 
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R );
     
@@ -567,7 +566,7 @@ all_colift_lift_in_stable_category :=
     
     l := Length( IndeterminatesOfExteriorRing( R ) );
 
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R );
     
@@ -683,7 +682,7 @@ end;
 
 random_element := function( R )
 local basis_indices;
-basis_indices := standard_list_of_basis_indices( Length( IndeterminatesOfExteriorRing( R ) ) - 1 );
+basis_indices := ShallowCopy( standard_list_of_basis_indices( R ) );
 # if the element contains constant then it is unit in the algebra.
 Remove( basis_indices, 1 );
 return Sum( basis_indices, i -> Random([-10..10])*ring_element(i,R) + Random( Concatenation(List([1..8*Length(basis_indices)],i->0),[1] ) ) *ring_element( [], R ) );
