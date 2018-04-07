@@ -316,14 +316,22 @@ IsomorphismFromCanonicalExactTriangle := rec(
 installation_name := "IsomorphismFromCanonicalExactTriangle",
 filter_list := [ IsCapCategoryExactTriangle ],
 cache_name := "IsomorphismFromCanonicalExactTriangle",
-return_type := [ IsCapCategoryTrianglesMorphism ] ),
+return_type := [ IsCapCategoryTrianglesMorphism ],
+post_function :=    function( T, return_value )
+                    Assert( 5, IsIsomorphism( return_value[ 2 ] ) );
+                    SetIsIsomorphism( return_value, true );
+                    end ),
 
 IsomorphismIntoCanonicalExactTriangle := rec(
 
 installation_name := "IsomorphismIntoCanonicalExactTriangle",
 filter_list := [ IsCapCategoryExactTriangle ],
 cache_name := "IsomorphismIntoCanonicalExactTriangle",
-return_type := [ IsCapCategoryTrianglesMorphism ] ),
+return_type := [ IsCapCategoryTrianglesMorphism ],
+post_function :=    function( T, return_value )
+                    Assert( 5, IsIsomorphism( return_value[ 2 ] ) );
+                    SetIsIsomorphism( return_value, true );
+                    end ),
 
 RotationOfCanonicalExactTriangle := rec( 
 installation_name := "RotationOfCanonicalExactTriangle",
@@ -351,12 +359,12 @@ filter_list := [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExac
 cache_name := "CompleteToMorphismOfCanonicalExactTriangles",
 pre_function := function(tr1, tr2, phi, psi )
                 if not IsCongruentForMorphisms( PreCompose( tr1^0, psi ), PreCompose(phi, tr2^0 ) ) then
-                    return [ false, "The given squar in the input does not commute!" ];
+                    return [ false, "The first squar in the given input does not commute!" ];
                 else
                     return [ true ];
                 fi;
                 end,
-return_type := [ IsCapCategoryTrianglesMorphism ] ),
+return_type := [ "morphism" ] ),
 
 OctahedralAxiom:= rec(
 
