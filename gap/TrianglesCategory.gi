@@ -206,43 +206,66 @@ InstallMethod( CategoryOfTriangles,
 
         m := List( [ 1, 2, 3 ], l -> DirectSumFunctorial( m[ l ] ) );
         
-        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], ShiftFactoringIsomorphismWithGivenObjects( Range( m[ 3 ] ), o, ShiftOfObject( DirectSum( o ) ) ) ) );
+        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], ShiftFactoringIsomorphism( o ) ) );
 
         u := List( L, i-> [ i, "IsExactTriangle", true ] );
 
         AddToToDoList( ToDoListEntry( u, 
                     function( )
-                        SetIsExactTriangle( D, true );
-                    end ) );
+                    local iso_from_can_triangle, iso_into_can_triangle;
 
-        return D;
-        
-        u := List( L, i-> [ i, "IsomorphismIntoCanonicalExactTriangle" ] );
-        AddToToDoList( ToDoListEntry( u, 
-                    function( )
-                    local can_D, isos, mors, mor;
                     SetIsExactTriangle( D, true );
-                    can_D := UnderlyingCanonicalExactTriangle( D );
-                    isos := List( L, IsomorphismIntoCanonicalExactTriangle );
-                    mors := List( [ 1 .. Length( L ) ], 
-                                    function( k )
-                                    local can_L_k, i1, i2, t;
-                                    can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
-                                    i1 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
-                                    i2 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                                    t := CompleteToMorphismOfCanonicalExactTriangles( can_L_k, can_D, i1, i2 );
-                                    return CreateTrianglesMorphism( can_L_k, can_D, i1, i2, t );
-                                    end );
-                    isos := List( isos, iso -> MorphismAt( iso, 2 ) );
-                    mors := List( mors, mor -> MorphismAt( mor, 2 ) );
 
-                    mor := MorphismBetweenDirectSums( TransposedMat( [ List( [ 1 .. Length( L ) ], k -> PreCompose( isos[ k ], mors[ k ] ) ) ] ) );
+                    iso_into_can_triangle := function( L, D )
+                        local can_D, i1, i2, k, can_L_k, ik_1, ik_2, mor;
+
+                        can_D := UnderlyingCanonicalExactTriangle( D );
+                        i1 := List( L, IsomorphismIntoCanonicalExactTriangle );
+                        i2 := [ ];
+                        for k in [ 1 .. Length( L ) ] do
+                            can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
+                            ik_1 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
+                            ik_2 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
+                            Add( i2, CompleteToMorphismOfCanonicalExactTriangles( can_L_k, can_D, ik_1, ik_2 ) );
+                        od;
+
+                        i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
+                        i2 := List( i2, iso -> MorphismAt( iso, 2 ) );
+
+                        mor := MorphismBetweenDirectSums( TransposedMat( [ List( [ 1 .. Length( L ) ], k -> PreCompose( i1[ k ], i2[ k ] ) ) ] ) );
+
+                        return CreateTrianglesMorphism( D, can_D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor );
+
+                        end;
+
+                    AddToUnderlyingLazyMethods( D, IsomorphismIntoCanonicalExactTriangle, iso_into_can_triangle, [ L, D ] );
+
+                    iso_from_can_triangle := function( L, D )
+                        local can_D, i1, i2, k, can_L_k, pk_1, pk_2, mor;
+
+                        can_D := UnderlyingCanonicalExactTriangle( D );
+                        i1 := List( L, IsomorphismFromCanonicalExactTriangle );
+                        i2 := [ ];
+                        for k in [ 1 .. Length( L ) ] do
+                            can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
+                            pk_1 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
+                            pk_2 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
+                            Add( i2, CompleteToMorphismOfCanonicalExactTriangles( can_D, can_L_k, pk_1, pk_2 ) );
+                        od;
+
+                        i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
+                        i2 := List( i2, iso -> MorphismAt( iso, 2 ) );
+
+                        mor := MorphismBetweenDirectSums( [ List( [ 1 .. Length( L ) ], k -> PreCompose( i2[ k ], i1[ k ] ) ) ] );
+
+                        return CreateTrianglesMorphism( can_D, D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor );
+
+                        end;
                     
-                    mor := CreateTrianglesMorphism( D, can_D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor ); 
-                    
-                    SetIsomorphismIntoCanonicalExactTriangle( D, mor );
+                    AddToUnderlyingLazyMethods( D, IsomorphismFromCanonicalExactTriangle, iso_from_can_triangle, [ L, D ] );
                     
                     end ) );
+
         return D;
 
     end );
