@@ -826,3 +826,65 @@ InstallMethod( NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity,
         return nat;
         
 end );   
+
+##
+InstallMethod( IsomorphismFromCanonicalExactTriangle,
+                [ IsCapCategoryExactTriangle ],
+                -1000,
+    function( T )
+    local F, p;
+    F := T!.UnderlyingLazyMethods;
+    if not IsomorphismFromCanonicalExactTriangle in F then
+        TryNextMethod( );
+    else 
+        p := Position( F, IsomorphismFromCanonicalExactTriangle );
+        return CallFuncList( F[p+1], F[ p+2 ] );
+    fi;
+end );
+
+##
+InstallMethod( IsomorphismIntoCanonicalExactTriangle,
+                [ IsCapCategoryExactTriangle ],
+                -1000,
+    function( T )
+    local F, p;
+    F := T!.UnderlyingLazyMethods;
+    if not IsomorphismIntoCanonicalExactTriangle in F then
+        TryNextMethod( );
+    else 
+        p := Position( F, IsomorphismIntoCanonicalExactTriangle );
+        return CallFuncList( F[p+1], F[ p+2 ] );
+    fi;
+end );
+
+
+# BindGlobal( "NAMES_OF_LAZY_METHODS",
+#  [
+#      [ IsomorphismFromCanonicalExactTriangle, IsCapCategoryExactTriangle ],
+#      [ IsomorphismIntoCanonicalExactTriangle, IsCapCategoryExactTriangle ],
+#  ] );
+ 
+# BindGlobal( "INSTALL_LAZY_METHODS",
+#     function()
+#     local l;
+      
+#     for l in NAMES_OF_LAZY_METHODS do
+#         InstallMethod( l[1],
+#                     [ l[2] ],
+#                     -1000,
+#         function( T )
+#         local F, p;
+  
+#         F := T!.UnderlyingLazyMethods;
+#         if not l[1] in F then
+#             TryNextMethod( );
+#         else 
+#             p := Position( F, l[1] );
+#             return CallFuncList( F[p+1], F[ p+2 ] );
+#         fi;
+#         end );
+#     od;
+  
+# end );
+
+# INSTALL_LAZY_METHODS( );
