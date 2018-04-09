@@ -403,96 +403,83 @@ end );
 
 
 ###
-#      AddOctohedralAxiom( stable_cat, 
-     
-#         function( f_, g_ )
-#         local f, g, h_, h, A, B, C, tr_f_, tr_h_, D, conf_D, f1, B_to_I_D, conf_B_to_I_D, w, I1, B1, push_object_to_B1, conf_B, I, TB, iso, B1_TB, tr_g_,
-#         u_A, alpha, gamma, h1, u_D, pi_D, TD, injections, beta, g1, D_F, F_E, E_TD, tr;
-        
-#         f := UnderlyingMorphismOfTheStableMorphism( f_ );
-        
-#         g := UnderlyingMorphismOfTheStableMorphism( g_ );
-        
-#         h_ := PreCompose( f_, g_ );
-        
-#         h := UnderlyingMorphismOfTheStableMorphism( h_ );
-        
-#         A := Source( f );
-        
-#         B := Range( f );
-        
-#         C := Range( g );
-        
-#         tr_f_ := CompleteMorphismToExactTriangle( f_ );
-        
-#         u_A := FitIntoConflationUsingInjectiveObject( A )!.morphism1;
-        
-#         alpha :=  InjectionsOfPushoutInducedByStructureOfExactCategory( AsInflation( u_A ), f )[ 1 ];
-        
-#         f1 := UnderlyingMorphismOfTheStableMorphism( tr_f_!.morphism2 );
-        
-#         tr_h_ := CompleteMorphismToExactTriangle( h_ );
-        
-#         gamma := InjectionsOfPushoutInducedByStructureOfExactCategory( AsInflation( u_A ), h )[ 1 ];
-        
-#         h1 := UnderlyingMorphismOfTheStableMorphism( tr_h_!.morphism2 );
-        
-#         D := UnderlyingObjectOfTheStableObject( tr_f_!.object3 );
-        
-#         conf_D := FitIntoConflationUsingInjectiveObject( D );
-        
-#         u_D := conf_D!.morphism1;
-        
-#         pi_D := conf_D!.morphism2;
-        
-#         TD := conf_D!.object3;
-        
-#         B_to_I_D := PreCompose( f1, u_D );
-        
-#         conf_B_to_I_D := ConflationOfInflation( AsInflation( B_to_I_D ) );
-        
-#         injections := InjectionsOfPushoutInducedByStructureOfExactCategory( B_to_I_D, g );
-        
-#         beta := injections[ 1 ];
-        
-#         g1 := injections[ 2 ];
-        
-#         I1 := conf_B_to_I_D!.object2;
-        
-#         B1 := conf_B_to_I_D!.object3;
-        
-#         push_object_to_B1 := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ B_to_I_D, g ], 
-#                  [conf_B_to_I_D!.morphism2, ZeroMorphism( C, B1 ) ] );
-        
-#         conf_B := FitIntoConflationUsingInjectiveObject( B );
-        
-#         I := conf_B!.object2;
-        
-#         TB := conf_B!.object3;
-        
-#         iso := SchanuelsIsomorphism(  conf_B_to_I_D, conf_B );
-        
-#         B1_TB := AdditiveInverseForMorphisms( PreCompose( [ InjectionOfCofactorOfDirectSum( [ I, B1 ], 2), 
-#                                iso,
-#                                ProjectionInFactorOfDirectSum( [ I1, TB ], 2 ) ] ) );
-                               
-#         tr_g_ := CreateExactTriangle( g_,
-#                                      AsStableCategoryMorphism( stable_cat,  g1 ),
-#                                      AsStableCategoryMorphism( stable_cat, PreCompose( push_object_to_B1, B1_TB ) ) );
-        
-#         D_F := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ u_A, f ], [ gamma, PreCompose( g, h1 ) ] );
-        
-#         F_E := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ u_A, h ], [ PreCompose( [ alpha, u_D, beta ] ), g1 ] );
-        
-#         E_TD := UniversalMorphismFromPushoutInducedByStructureOfExactCategory( [ B_to_I_D, g ], [ pi_D, ZeroMorphism( C, TD ) ] );
-        
-#         tr := CreateExactTriangle( AsStableCategoryMorphism( stable_cat, D_F ),
-#                                      AsStableCategoryMorphism( stable_cat,  F_E ),
-#                                      AsStableCategoryMorphism( stable_cat, E_TD ) );
-        
-#         return [ tr_f_, tr_g_, tr_h_, tr ];
-#         end );
-        
+AddOctahedralAxiom( stable_cat, 
+    
+    function( sf, sg )
+    local sh, f, g, h, A, B, C, tf, u_A, alpha, f1, th, gamma, h1, D, conf_D, u_D, pi_D, TD, B_to_I_D, conf_B_to_I_D, beta, g1, I_D, B1, push_object_to_B1, conf_B,
+    I_B, T_B, u_B, beta_B, g_B, v_from, v_to, ctr_g_, iso, B1_TB, tr_g_, test1, test2, j, j1, u, u_, tr, E_TD, can_j, v;
+    sh := PreCompose( sf, sg );
+    f := UnderlyingUnstableMorphism( sf );
+    g := UnderlyingUnstableMorphism( sg );
+    h := UnderlyingUnstableMorphism( sh );
+    A := Source( f );
+    B := Range( f );
+    C := Range( g );
+
+    tf := CompleteMorphismToCanonicalExactTriangle( sf );
+    u_A := FitIntoConflationUsingExactInjectiveObject( A )^0;
+    alpha :=  InjectionOfCofactorOfExactPushout( [ u_A, f ], 1);
+    f1 := UnderlyingUnstableMorphism( tf^1 );
+
+    th := CompleteMorphismToCanonicalExactTriangle( sh );
+    gamma := InjectionOfCofactorOfExactPushout( [ u_A, h ] , 1 );
+    h1 := UnderlyingUnstableMorphism( th^1 );
+
+    D := UnderlyingUnstableObject( tf[ 2 ] );
+    conf_D := FitIntoConflationUsingExactInjectiveObject( D );
+    u_D := conf_D^0;
+    pi_D := conf_D^1;
+    TD := conf_D[ 2 ];
+
+    B_to_I_D := PreCompose( f1, u_D );
+    conf_B_to_I_D := ConflationOfInflation( B_to_I_D );
+    beta := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 1 );
+    g1 := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 2 );
+
+    I_D := conf_B_to_I_D[ 1 ];
+    B1 := conf_B_to_I_D[ 2 ];
+
+    push_object_to_B1 := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ conf_B_to_I_D^1, ZeroMorphism( C, B1 ) ] );
+
+    conf_B := FitIntoConflationUsingExactInjectiveObject( B );
+    I_B := conf_B[ 1 ];
+    T_B := conf_B[ 2 ];
+    u_B := conf_B^0;
+    beta_B := InjectionOfCofactorOfExactPushout( [ u_B, g ], 1 );
+    g_B := InjectionOfCofactorOfExactPushout( [ u_B, g ], 2 );    
+    v_from := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_B, g ], [ PreCompose( ExactInjectiveColift( u_B, B_to_I_D ), beta ), g1 ] ) );
+    v_to :=   AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ PreCompose( ExactInjectiveColift( B_to_I_D, u_B ), beta_B ), g_B ] ) );
+    ctr_g_ := CompleteMorphismToCanonicalExactTriangle( sg );
+
+    iso := SchanuelsIsomorphism(  conf_B_to_I_D, conf_B, "left" );
+    B1_TB := AdditiveInverseForMorphisms( PreCompose( [ InjectionOfCofactorOfDirectSum( [ I_B, B1 ], 2 ), 
+                           iso,
+                           ProjectionInFactorOfDirectSum( [ I_D, T_B ], 2 ) ] ) );
+
+    tr_g_ := CreateExactTriangle( sg,
+                                 AsStableMorphism( g1 ),
+                                 AsStableMorphism(PreCompose( push_object_to_B1, B1_TB ) ) );
+
+    test1 := CreateTrianglesMorphism( ctr_g_, tr_g_, IdentityMorphism( ctr_g_[0]), IdentityMorphism( ctr_g_[1]), v_from );
+    test2 := CreateTrianglesMorphism( tr_g_, ctr_g_, IdentityMorphism( ctr_g_[0]), IdentityMorphism( ctr_g_[1]), v_to );
+
+    j := UniversalMorphismFromExactPushout( [ u_A, f ], [ gamma, PreCompose( g, h1 ) ] );
+    j1 := UniversalMorphismFromExactPushout( [ u_A, h ], [ PreCompose( [ alpha, u_D, beta ] ), g1 ] );
+
+    E_TD := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ pi_D, ZeroMorphism( C, TD ) ] );
+    tr := CreateExactTriangle( AsStableMorphism( j ),
+                                 PreCompose( AsStableMorphism( j1 ), v_to ),
+                                 PreCompose( v_from, AsStableMorphism( E_TD ) ) );
+    u := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_D, j ], [ beta, j1 ] ) );
+    u_ := AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], 
+                        [ InjectionOfCofactorOfExactPushout( [ u_D, j ], 1 ), PreCompose( h1, InjectionOfCofactorOfExactPushout( [ u_D, j ], 2 ) )  ] ) );
+    can_j := CompleteMorphismToCanonicalExactTriangle( AsStableMorphism( j ) );
+    SetIsomorphismFromCanonicalExactTriangle( tr, CreateTrianglesMorphism( can_j, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(u, v_to) ) );
+    SetIsomorphismIntoCanonicalExactTriangle( tr, CreateTrianglesMorphism( tr, can_j, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(v_from, u_ ) ) );
+
+    return tr; 
+    end );
+
     return stable_cat;
     
 end );
@@ -520,71 +507,7 @@ n := AsLeftPresentation( n );
 N := AsStableObject( n );
 quit;
 
-compute := function( f_, g_ )
-local f, g, h_, h, A, B, C, tr_f_, tr_h_, D, conf_D, f1, B_to_I_D, conf_B_to_I_D, w, I1, B1, push_object_to_B1, conf_B, I, TB, iso, B1_TB, tr_g_,
-    u_A, alpha, gamma, h1, u_D, pi_D, TD, injections, beta, g1, D_F, F_E, E_TD, tr;
-    h_ := PreCompose( f_, g_ );
-    f := UnderlyingUnstableMorphism( f_ );
-    g := UnderlyingUnstableMorphism( g_ );
-    h := UnderlyingUnstableMorphism( h_ );
-    A := Source( f );
-    B := Range( f );
-    C := Range( g );
-    
-    tr_f_ := CompleteMorphismToCanonicalExactTriangle( f_ );
-    u_A := FitIntoConflationUsingExactInjectiveObject( A )^0;
-    alpha :=  InjectionOfCofactorOfExactPushout( [ u_A, f ], 1);
-    f1 := UnderlyingUnstableMorphism( tr_f_^1 );
-    
-    tr_h_ := CompleteMorphismToCanonicalExactTriangle( h_ );
-    gamma := InjectionOfCofactorOfExactPushout( [ u_A, h ] , 1 );
-    h1 := UnderlyingUnstableMorphism( tr_h_^1 );
-    
-    D := UnderlyingUnstableObject( tr_f_[ 2 ] );
-    conf_D := FitIntoConflationUsingExactInjectiveObject( D );
-    u_D := conf_D^0;
-    pi_D := conf_D^1;
-    TD := conf_D[ 2 ];
-    
-    B_to_I_D := PreCompose( f1, u_D );
-    conf_B_to_I_D := ConflationOfInflation( B_to_I_D );
-    beta := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 1 );
-    g1 := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 2 );
-
-    I_D := conf_B_to_I_D[ 1 ];
-    B1 := conf_B_to_I_D[ 2 ];
-
-    push_object_to_B1 := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ conf_B_to_I_D^1, ZeroMorphism( C, B1 ) ] );
-
-    conf_B := FitIntoConflationUsingExactInjectiveObject( B );
-    I_B := conf_B[ 1 ];
-    T_B := conf_B[ 2 ];
-    u_B := conf_B^0;
-    v := UniversalMorphismFromExactPushout( [ u_B, g ], [ PreCompose( ExactInjectiveColift( u_B, B_to_I_D ), beta ), g1 ] );
-
-    iso := SchanuelsIsomorphism(  conf_B_to_I_D, conf_B, "left" );
-    B1_TB := AdditiveInverseForMorphisms( PreCompose( [ InjectionOfCofactorOfDirectSum( [ I_B, B1 ], 2 ), 
-                           iso,
-                           ProjectionInFactorOfDirectSum( [ I_D, T_B ], 2 ) ] ) );
-
-    tr_g_ := CreateExactTriangle( g_,
-                                 AsStableMorphism( g1 ),
-                                 AsStableMorphism(PreCompose( push_object_to_B1, B1_TB ) ) );
-    
-    j := UniversalMorphismFromExactPushout( [ u_A, f ], [ gamma, PreCompose( g, h1 ) ] );
-    j1 := UniversalMorphismFromExactPushout( [ u_A, h ], [ PreCompose( [ alpha, u_D, beta ] ), g1 ] );
-    
-    E_TD := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ pi_D, ZeroMorphism( C, TD ) ] );
-    tr := CreateExactTriangle( AsStableMorphism( j ),
-                                 AsStableMorphism( j1 ),
-                                 AsStableMorphism( E_TD ) );
-    u := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_D, j ], [ beta, j1 ] ) );
-    can_j := CompleteMorphismToCanonicalExactTriangle( AsStableMorphism( j ) );
-    SetIsomorphismFromCanonicalExactTriangle( tr, CreateTrianglesMorphism( can_j, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), u ) );
-    SetIsomorphismIntoCanonicalExactTriangle( tr, CreateTrianglesMorphism( tr, can_j, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), Inverse( u ) ) );
-    
-    return; 
-end;
+compute := ;
 
 hom_basis := basis_of_external_hom( M, N );
 random := List( [ 1..Length( hom_basis ) ], i-> Random( [ -i..i ] ) );;
