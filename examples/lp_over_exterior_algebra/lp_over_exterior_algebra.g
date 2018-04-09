@@ -41,6 +41,11 @@ AddColift( cat,
 
     function( morphism_1, morphism_2 )
     local N, M, A, B, I, B_over_M, zero_mat, A_over_zero, sol, XX;
+
+    if WithComments = true then
+        Print( "computing Colift of ", NrRows( UnderlyingMatrix(morphism_1) ),"x", NrColumns( UnderlyingMatrix(morphism_1) ), " & ",
+                NrRows( UnderlyingMatrix(morphism_2) ),"x", NrColumns( UnderlyingMatrix(morphism_2) ), "\n" );
+    fi;
     #                 rxs
     #                I
     #                ꓥ
@@ -99,6 +104,10 @@ AddLift( cat,
    local P, N, M, A, B, l, basis_indices, Q, R_B, R_N, L_P, R_M, L_id_s, L_P_mod, 
     A_deco, A_deco_list, A_deco_list_vec, A_vec, mat1, mat2, A_vec_over_zero_vec, mat, sol, XX, XX_, X_, s, v;
    
+    if WithComments = true then
+        Print( "computing Lift of ", NrRows( UnderlyingMatrix(morphism_1) ),"x", NrColumns( UnderlyingMatrix(morphism_1) ), " & ",
+                NrRows( UnderlyingMatrix(morphism_2) ),"x", NrColumns( UnderlyingMatrix(morphism_2) ), "\n" );
+    fi;
     #                 rxs
     #                P
     #                |
