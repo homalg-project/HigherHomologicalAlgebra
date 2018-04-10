@@ -371,7 +371,37 @@ OctahedralAxiom:= rec(
 installation_name := "OctahedralAxiom", 
 filter_list := [ "morphism", "morphism" ],
 cache_name := "OctahedralAxiom",
-return_type := [ IsCapCategoryExactTriangle ] ),
+return_type := [ IsCapCategoryExactTriangle ],
+post_function :=    function( f, g, return_value )
+                    local h, t, tf, tg, th;
+                    h := PreCompose( f, g );
+                    t := return_value;
+                    tf := CompleteMorphismToStandardExactTriangle( f );
+                    tg := CompleteMorphismToStandardExactTriangle( g );
+                    th := CompleteMorphismToStandardExactTriangle( h );
+
+                    if not IsCongruentForMorphisms( PreCompose( tf^1, t^0 ), PreCompose( tg^0, th^1 ) ) then
+                        Error( "The top middle squar is not commutative!");
+                    fi;
+
+                    if not IsCongruentForMorphisms( tf^2, PreCompose( t^0, th^2 ) ) then
+                        Error( "The top-right squar is not commutative!");
+                    fi;
+
+                    if not IsCongruentForMorphisms( PreCompose( th^1, t^1 ), tg^1 ) then
+                        Error( "The middle-left squar is not commutative!");
+                    fi;
+
+                    if not IsCongruentForMorphisms( PreCompose( th^2, ShiftOfMorphism( f ) ), PreCompose( t^1, tg^2 ) ) then
+                        Error( "The middle-right squar is not commutative!");
+                    fi;
+
+                    if not IsCongruentForMorphisms( t^2, PreCompose( tg^2, ShiftOfMorphism( tf^1 ) ) ) then
+                        Error( "The bottom squar is not commutative!");
+                    fi;
+
+
+                    end ),
 
 RotationOfExactTriangle := rec( 
 installation_name := "RotationOfExactTriangle",
