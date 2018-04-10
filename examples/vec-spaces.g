@@ -33,7 +33,7 @@ AddIsomorphismFromShiftOfReverseShift( cat, IdentityMorphism );
 # ker(f) \arrow[ru, tail] & A/ker(f) & im(f) \arrow[ru, tail] & B/im(f) &  &  &  & 
 # \end{tikzcd}
 #
-AddCompleteMorphismToCanonicalExactTriangle( cat, 
+AddCompleteMorphismToStandardExactTriangle( cat, 
     function( f )
     local g, h;
     
@@ -42,7 +42,7 @@ AddCompleteMorphismToCanonicalExactTriangle( cat,
     h := PreCompose( ProjectionInFactorOfDirectSum( [ CokernelObject(f), KernelObject( f ) ], 2 ),
                         KernelEmbedding( f ) );
 
-    return CreateCanonicalExactTriangle( f, g, h );
+    return CreateStandardExactTriangle( f, g, h );
        
 end );
 
@@ -88,14 +88,14 @@ AddIsExactTriangle( cat,
 end );
 
 ##
-AddIsomorphismIntoCanonicalExactTriangle( cat, 
+AddIsomorphismIntoStandardExactTriangle( cat, 
     function( T )
     local f, g, h, can_triangle, A, B, a, b;
     f := MorphismAt( T, 0 );
     g := MorphismAt( T, 1 );
     h := MorphismAt( T, 2 );
     
-    can_triangle := CompleteMorphismToCanonicalExactTriangle( f );
+    can_triangle := CompleteMorphismToStandardExactTriangle( f );
     A := ObjectAt( T, 0 );
     B := ObjectAt( T, 1 );
     
@@ -111,7 +111,7 @@ AddIsomorphismIntoCanonicalExactTriangle( cat,
 end );
 
 ##
-AddCompleteToMorphismOfCanonicalExactTriangles( cat, 
+AddCompleteToMorphismOfStandardExactTriangles( cat, 
     function( T1, T2, u, v )
     local f1, f2, a, b, m22;
     
@@ -129,15 +129,15 @@ AddOctahedralAxiom( cat,
   function( f, g )
   local t, i,j,T, S, W, N, u,v, w;
    
-  T := CompleteMorphismToCanonicalExactTriangle( f );
+  T := CompleteMorphismToStandardExactTriangle( f );
    
-  S := CompleteMorphismToCanonicalExactTriangle( PreCompose( f, g ) );
+  S := CompleteMorphismToStandardExactTriangle( PreCompose( f, g ) );
    
-  u := CompleteToMorphismOfCanonicalExactTriangles( T, S, IdentityMorphism( Source( f ) ), g );
+  u := CompleteToMorphismOfStandardExactTriangles( T, S, IdentityMorphism( Source( f ) ), g );
 
-  W := CompleteMorphismToCanonicalExactTriangle( g );
+  W := CompleteMorphismToStandardExactTriangle( g );
    
-  v := CompleteToMorphismOfCanonicalExactTriangles( S, W, f, IdentityMorphism( Range( g ) ) );
+  v := CompleteToMorphismOfStandardExactTriangles( S, W, f, IdentityMorphism( Range( g ) ) );
    
   j:= MorphismAt( T, 1 );
   i:= MorphismAt( W, 2 );
@@ -147,8 +147,8 @@ AddOctahedralAxiom( cat,
   t := CreateTriangle( MorphismAt( u, 2 ), MorphismAt( v, 2 ), w );
 
   IsExactTriangle( t );
-  IsomorphismFromCanonicalExactTriangle( t );
-  IsomorphismIntoCanonicalExactTriangle( t );
+  IsomorphismFromStandardExactTriangle( t );
+  IsomorphismIntoStandardExactTriangle( t );
   
   return t;
 end );
@@ -195,7 +195,7 @@ v := create_random_morphism(4,2);
 g := create_random_morphism(3,2);
 f := ProjectionInFactorOfFiberProduct( [ v, g ], 1 );
 u := ProjectionInFactorOfFiberProduct( [ v, g ], 2 );
-Tf := CompleteMorphismToCanonicalExactTriangle( f );
-Tg := CompleteMorphismToCanonicalExactTriangle( g );
-phi := CompleteToMorphismOfCanonicalExactTriangles( Tf, Tg, u, v );
+Tf := CompleteMorphismToStandardExactTriangle( f );
+Tg := CompleteMorphismToStandardExactTriangle( g );
+phi := CompleteToMorphismOfStandardExactTriangles( Tf, Tg, u, v );
 Display( phi );

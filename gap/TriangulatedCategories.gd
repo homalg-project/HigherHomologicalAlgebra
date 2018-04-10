@@ -35,7 +35,7 @@ DeclareCategory( "IsCapCategoryTriangle", IsCapCategoryObject );
 
 DeclareCategory( "IsCapCategoryExactTriangle", IsCapCategoryTriangle );
 
-DeclareCategory( "IsCapCategoryCanonicalExactTriangle", IsCapCategoryExactTriangle );
+DeclareCategory( "IsCapCategoryStandardExactTriangle", IsCapCategoryExactTriangle );
 
 DeclareCategory( "IsCapCategoryTrianglesMorphism", IsCapCategoryMorphism );
 
@@ -181,12 +181,12 @@ DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsLi
 DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList ] );
 
 
-DeclareProperty( "IsCanonicalExactTriangle", IsCapCategoryTriangle );
+DeclareProperty( "IsStandardExactTriangle", IsCapCategoryTriangle );
 
-DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsStandardExactTriangle", [ IsCapCategory, IsList ] );
 
 
 DeclareProperty( "IsExactTriangle", IsCapCategoryTriangle );
@@ -196,36 +196,36 @@ DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList ] );
 
-DeclareAttribute( "UnderlyingCanonicalExactTriangle", IsCapCategoryExactTriangle );
+DeclareAttribute( "UnderlyingStandardExactTriangle", IsCapCategoryExactTriangle );
 
-DeclareAttribute( "IsomorphismIntoCanonicalExactTriangle", IsCapCategoryExactTriangle );
+DeclareAttribute( "IsomorphismIntoStandardExactTriangle", IsCapCategoryExactTriangle );
 
-DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoStandardExactTriangle", [ IsCapCategory, IsList ] );
 
-DeclareAttribute( "IsomorphismFromCanonicalExactTriangle", IsCapCategoryExactTriangle );
+DeclareAttribute( "IsomorphismFromStandardExactTriangle", IsCapCategoryExactTriangle );
 
-DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismFromStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromStandardExactTriangle", [ IsCapCategory, IsList ] );
 
 
-DeclareAttribute( "RotationOfCanonicalExactTriangle", IsCapCategoryCanonicalExactTriangle );
+DeclareAttribute( "RotationOfStandardExactTriangle", IsCapCategoryStandardExactTriangle );
 
-DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddRotationOfStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddRotationOfStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddRotationOfStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddRotationOfStandardExactTriangle", [ IsCapCategory, IsList ] );
 
-DeclareAttribute( "ReverseRotationOfCanonicalExactTriangle", IsCapCategoryCanonicalExactTriangle );
+DeclareAttribute( "ReverseRotationOfStandardExactTriangle", IsCapCategoryStandardExactTriangle );
 
-DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseRotationOfCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddReverseRotationOfStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddReverseRotationOfStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddReverseRotationOfStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddReverseRotationOfStandardExactTriangle", [ IsCapCategory, IsList ] );
 
 DeclareAttribute( "RotationOfExactTriangle", IsCapCategoryExactTriangle );
 
@@ -241,20 +241,20 @@ DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsFuncti
 DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseRotationOfExactTriangle", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "CompleteMorphismToCanonicalExactTriangle", [ IsCapCategoryMorphism ] );
+DeclareOperation( "CompleteMorphismToStandardExactTriangle", [ IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddCompleteMorphismToCanonicalExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddCompleteMorphismToStandardExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCompleteMorphismToStandardExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCompleteMorphismToStandardExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCompleteMorphismToStandardExactTriangle", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "CompleteToMorphismOfCanonicalExactTriangles",
-             [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "CompleteToMorphismOfStandardExactTriangles",
+             [ IsCapCategoryStandardExactTriangle, IsCapCategoryStandardExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddCompleteToMorphismOfCanonicalExactTriangles", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddCompleteToMorphismOfStandardExactTriangles", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfStandardExactTriangles", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCompleteToMorphismOfStandardExactTriangles", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCompleteToMorphismOfStandardExactTriangles", [ IsCapCategory, IsList ] );
 
 DeclareOperation( "CompleteToMorphismOfExactTriangles",
              [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
@@ -264,8 +264,8 @@ DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsFu
 DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddCompleteToMorphismOfExactTriangles", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "CompleteToMorphismOfCanonicalExactTriangles", 
-             [ IsCapCategoryCanonicalExactTriangle, IsCapCategoryCanonicalExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
+DeclareOperation( "CompleteToMorphismOfStandardExactTriangles", 
+             [ IsCapCategoryStandardExactTriangle, IsCapCategoryStandardExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsList ] );
 
 
 DeclareOperation( "OctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
@@ -294,7 +294,7 @@ DeclareOperation( "CreateTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphi
 
 DeclareOperation( "CreateExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
 
-DeclareOperation( "CreateCanonicalExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
+DeclareOperation( "CreateStandardExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ]); 
 
 DeclareOperation( "CreateTrianglesMorphism", 
                     [ IsCapCategoryTriangle, IsCapCategoryTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] ); 

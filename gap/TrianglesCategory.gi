@@ -219,14 +219,14 @@ InstallMethod( CategoryOfTriangles,
                     iso_into_can_triangle := function( L, D )
                         local can_D, i1, i2, k, can_L_k, ik_1, ik_2, mor;
 
-                        can_D := UnderlyingCanonicalExactTriangle( D );
-                        i1 := List( L, IsomorphismIntoCanonicalExactTriangle );
+                        can_D := UnderlyingStandardExactTriangle( D );
+                        i1 := List( L, IsomorphismIntoStandardExactTriangle );
                         i2 := [ ];
                         for k in [ 1 .. Length( L ) ] do
-                            can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
+                            can_L_k := UnderlyingStandardExactTriangle( L[ k ] );
                             ik_1 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
                             ik_2 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                            Add( i2, CompleteToMorphismOfCanonicalExactTriangles( can_L_k, can_D, ik_1, ik_2 ) );
+                            Add( i2, CompleteToMorphismOfStandardExactTriangles( can_L_k, can_D, ik_1, ik_2 ) );
                         od;
 
                         i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
@@ -238,19 +238,19 @@ InstallMethod( CategoryOfTriangles,
 
                         end;
 
-                    AddToUnderlyingLazyMethods( D, IsomorphismIntoCanonicalExactTriangle, iso_into_can_triangle, [ L, D ] );
+                    AddToUnderlyingLazyMethods( D, IsomorphismIntoStandardExactTriangle, iso_into_can_triangle, [ L, D ] );
 
                     iso_from_can_triangle := function( L, D )
                         local can_D, i1, i2, k, can_L_k, pk_1, pk_2, mor;
 
-                        can_D := UnderlyingCanonicalExactTriangle( D );
-                        i1 := List( L, IsomorphismFromCanonicalExactTriangle );
+                        can_D := UnderlyingStandardExactTriangle( D );
+                        i1 := List( L, IsomorphismFromStandardExactTriangle );
                         i2 := [ ];
                         for k in [ 1 .. Length( L ) ] do
-                            can_L_k := UnderlyingCanonicalExactTriangle( L[ k ] );
+                            can_L_k := UnderlyingStandardExactTriangle( L[ k ] );
                             pk_1 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
                             pk_2 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                            Add( i2, CompleteToMorphismOfCanonicalExactTriangles( can_D, can_L_k, pk_1, pk_2 ) );
+                            Add( i2, CompleteToMorphismOfStandardExactTriangles( can_D, can_L_k, pk_1, pk_2 ) );
                         od;
 
                         i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
@@ -262,7 +262,7 @@ InstallMethod( CategoryOfTriangles,
 
                         end;
                     
-                    AddToUnderlyingLazyMethods( D, IsomorphismFromCanonicalExactTriangle, iso_from_can_triangle, [ L, D ] );
+                    AddToUnderlyingLazyMethods( D, IsomorphismFromStandardExactTriangle, iso_from_can_triangle, [ L, D ] );
                     
                     end ) );
 
@@ -342,9 +342,9 @@ InstallMethod( CreateTriangle,
                     SetFilterObj( triangle, IsCapCategoryExactTriangle );
                     end ) );
 
-    AddToToDoList( ToDoListEntry( [ [ triangle, "IsCanonicalExactTriangle", true ] ], 
+    AddToToDoList( ToDoListEntry( [ [ triangle, "IsStandardExactTriangle", true ] ], 
                     function( )
-                    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
+                    SetFilterObj( triangle, IsCapCategoryStandardExactTriangle );
                     SetIsExactTriangle( triangle, true );
                     end ) );
 
@@ -372,7 +372,7 @@ InstallMethod( CreateExactTriangle,
 end );
 
 ##
-InstallMethod( CreateCanonicalExactTriangle, 
+InstallMethod( CreateStandardExactTriangle, 
                 [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
    
                        
@@ -381,12 +381,12 @@ InstallMethod( CreateCanonicalExactTriangle,
         
     triangle:= CreateTriangle( mor1, mor2, mor3 );
     
-    SetFilterObj( triangle, IsCapCategoryCanonicalExactTriangle );
-    Assert( 5, IsCanonicalExactTriangle( triangle ) );
-    SetIsCanonicalExactTriangle( triangle, true );
+    SetFilterObj( triangle, IsCapCategoryStandardExactTriangle );
+    Assert( 5, IsStandardExactTriangle( triangle ) );
+    SetIsStandardExactTriangle( triangle, true );
 
-    SetIsomorphismFromCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
-    SetIsomorphismIntoCanonicalExactTriangle( triangle, IdentityMorphism( triangle ) );
+    SetIsomorphismFromStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
+    SetIsomorphismIntoStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
 
     return triangle;
     
@@ -591,10 +591,10 @@ InstallMethod( ViewObj,
                
     function( triangle )
 
-    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+    if IsCapCategoryStandardExactTriangle( triangle ) then 
         Print( "<A canonical exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
     elif IsCapCategoryExactTriangle( triangle ) then 
-        if HasIsCanonicalExactTriangle( triangle ) and not IsCanonicalExactTriangle( triangle ) then
+        if HasIsStandardExactTriangle( triangle ) and not IsStandardExactTriangle( triangle ) then
             Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
         else
             Print( "<An exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">");
@@ -628,7 +628,7 @@ InstallMethod( Display,
         [ IsCapCategoryTriangle ],
         
     function( triangle )
-    if IsCapCategoryCanonicalExactTriangle( triangle ) then 
+    if IsCapCategoryStandardExactTriangle( triangle ) then 
         Print( "A canonical exact triangle given by the sequence\n\n");
     elif IsCapCategoryExactTriangle( triangle ) then 
         Print( "An exact triangle given by the sequence\n\n");

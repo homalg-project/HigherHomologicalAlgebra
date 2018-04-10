@@ -14,31 +14,31 @@
 
 ##
 AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
-                [   [ IsomorphismIntoCanonicalExactTriangle, 1 ],
-                    [ IsomorphismFromCanonicalExactTriangle, 1 ], 
-                    [ CompleteToMorphismOfCanonicalExactTriangles, 1 ],
-                    [ CompleteMorphismToCanonicalExactTriangle, 1 ]
+                [   [ IsomorphismIntoStandardExactTriangle, 1 ],
+                    [ IsomorphismFromStandardExactTriangle, 1 ], 
+                    [ CompleteToMorphismOfStandardExactTriangles, 1 ],
+                    [ CompleteMorphismToStandardExactTriangle, 1 ]
                 ], 
     function( T1, T2, m0, m1 )
     local can_T1, can_T2, T1_to_can_T1, T2_to_can_T2, can_T1_to_T1, can_T2_to_T2, can_T1_to_can_T2,
         can_T1_to_can_T2_0, can_T1_to_can_T2_1;
     
-    if IsCapCategoryCanonicalExactTriangle( T1 ) and IsCapCategoryCanonicalExactTriangle( T2 ) then
-        return CompleteToMorphismOfCanonicalExactTriangles( T1, T2, m0, m1 );
+    if IsCapCategoryStandardExactTriangle( T1 ) and IsCapCategoryStandardExactTriangle( T2 ) then
+        return CompleteToMorphismOfStandardExactTriangles( T1, T2, m0, m1 );
     fi;
 
-    can_T1 := UnderlyingCanonicalExactTriangle( T1 );
-    can_T2 := UnderlyingCanonicalExactTriangle( T2 );
+    can_T1 := UnderlyingStandardExactTriangle( T1 );
+    can_T2 := UnderlyingStandardExactTriangle( T2 );
     
-    T1_to_can_T1 := IsomorphismIntoCanonicalExactTriangle( T1 );
-    can_T1_to_T1 := IsomorphismFromCanonicalExactTriangle( T1 );
+    T1_to_can_T1 := IsomorphismIntoStandardExactTriangle( T1 );
+    can_T1_to_T1 := IsomorphismFromStandardExactTriangle( T1 );
 
-    T2_to_can_T2 := IsomorphismIntoCanonicalExactTriangle( T2 );
-    can_T2_to_T2 := IsomorphismFromCanonicalExactTriangle( T2 );
+    T2_to_can_T2 := IsomorphismIntoStandardExactTriangle( T2 );
+    can_T2_to_T2 := IsomorphismFromStandardExactTriangle( T2 );
 
     can_T1_to_can_T2_0 := PreCompose( [ MorphismAt( can_T1_to_T1, 0 ), m0, MorphismAt( T2_to_can_T2, 0 ) ] );
     can_T1_to_can_T2_1 := PreCompose( [ MorphismAt( can_T1_to_T1, 1 ), m1, MorphismAt( T2_to_can_T2, 1 ) ] );
-    can_T1_to_can_T2 := CompleteToMorphismOfCanonicalExactTriangles( can_T1, can_T2, can_T1_to_can_T2_0, can_T1_to_can_T2_1 );
+    can_T1_to_can_T2 := CompleteToMorphismOfStandardExactTriangles( can_T1, can_T2, can_T1_to_can_T2_0, can_T1_to_can_T2_1 );
     return PreCompose( [ T1_to_can_T1, can_T1_to_can_T2, can_T2_to_T2 ] );
     
 end: Description := "complete to morphism of exact triangles" );
@@ -47,8 +47,8 @@ end: Description := "complete to morphism of exact triangles" );
 ## and isomorphisms (to,from) its canonical representative, otherwise we can not do anything with this (reverse) rotation.
 
 AddDerivationToCAP( RotationOfExactTriangle,
-                [   [ IsomorphismFromCanonicalExactTriangle, 1 ],
-                    [ IsomorphismIntoCanonicalExactTriangle, 1 ],
+                [   [ IsomorphismFromStandardExactTriangle, 1 ],
+                    [ IsomorphismIntoStandardExactTriangle, 1 ],
                     [ ShiftOfMorphism, 1 ]
                 ],
     function( T )
@@ -58,9 +58,9 @@ AddDerivationToCAP( RotationOfExactTriangle,
 end: Description := "creates a rotation of an exact triangle");
 
 ##
-AddDerivationToCAP( RotationOfCanonicalExactTriangle,
-                [   [ IsomorphismFromCanonicalExactTriangle, 1 ],
-                    [ IsomorphismIntoCanonicalExactTriangle, 1 ],
+AddDerivationToCAP( RotationOfStandardExactTriangle,
+                [   [ IsomorphismFromStandardExactTriangle, 1 ],
+                    [ IsomorphismIntoStandardExactTriangle, 1 ],
                     [ ShiftOfMorphism, 1 ]
                 ],
     function( T )
@@ -68,9 +68,9 @@ AddDerivationToCAP( RotationOfCanonicalExactTriangle,
 
     rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );     
     
-    IsomorphismFromCanonicalExactTriangle( rT );
+    IsomorphismFromStandardExactTriangle( rT );
     
-    IsomorphismIntoCanonicalExactTriangle( rT );
+    IsomorphismIntoStandardExactTriangle( rT );
 
     return rT;
 
@@ -78,8 +78,8 @@ end: Description := "creates a rotation of a canonical exact triangle");
 
 ##
 AddDerivationToCAP( ReverseRotationOfExactTriangle,
-                [   [ IsomorphismFromCanonicalExactTriangle, 1 ],
-                    [ IsomorphismIntoCanonicalExactTriangle, 1 ],
+                [   [ IsomorphismFromStandardExactTriangle, 1 ],
+                    [ IsomorphismIntoStandardExactTriangle, 1 ],
                     [ ReverseShiftOfMorphism, 1 ]
                 ],
     function( T )
@@ -95,18 +95,18 @@ AddDerivationToCAP( ReverseRotationOfExactTriangle,
 
     rT := CreateExactTriangle( AdditiveInverse(ReverseShiftOfMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
 
-    IsomorphismFromCanonicalExactTriangle( rT );
+    IsomorphismFromStandardExactTriangle( rT );
     
-    IsomorphismIntoCanonicalExactTriangle( rT );
+    IsomorphismIntoStandardExactTriangle( rT );
 
     return rT;
 
 end: Description := "creates the reverse rotation of an exact triangle");
 
 ##
-AddDerivationToCAP( ReverseRotationOfCanonicalExactTriangle,
-                [   [ IsomorphismFromCanonicalExactTriangle, 1 ],
-                    [ IsomorphismIntoCanonicalExactTriangle, 1 ],
+AddDerivationToCAP( ReverseRotationOfStandardExactTriangle,
+                [   [ IsomorphismFromStandardExactTriangle, 1 ],
+                    [ IsomorphismIntoStandardExactTriangle, 1 ],
                     [ ReverseShiftOfMorphism, 1 ]
                 ],
     function( T )
@@ -124,42 +124,42 @@ AddDerivationToCAP( ReverseRotationOfCanonicalExactTriangle,
 end: Description := "creates the reverse rotation of a canonical exact triangle");
 
 ##
-AddDerivationToCAP( IsomorphismFromCanonicalExactTriangle,
+AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
                 [   [ CompleteToMorphismOfExactTriangles, 1 ],
-                    [ CompleteMorphismToCanonicalExactTriangle, 1 ]
+                    [ CompleteMorphismToStandardExactTriangle, 1 ]
                 ],
     function( T )
     local can_T;
 
-    can_T := UnderlyingCanonicalExactTriangle( T );
+    can_T := UnderlyingStandardExactTriangle( T );
 
     return CompleteToMorphismOfExactTriangles( can_T, T, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T,1 ) ) );
 
 end: Description := "creates isomorphism from the underlying canonical exact triangle");
 
 ##
-AddDerivationToCAP( IsomorphismIntoCanonicalExactTriangle,
+AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
                 [   [ CompleteToMorphismOfExactTriangles, 1 ],
-                    [ CompleteMorphismToCanonicalExactTriangle, 1 ]
+                    [ CompleteMorphismToStandardExactTriangle, 1 ]
                 ],
     function( T )
     local can_T;
 
-    can_T := UnderlyingCanonicalExactTriangle( T );
+    can_T := UnderlyingStandardExactTriangle( T );
 
     return CompleteToMorphismOfExactTriangles( T, can_T, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T,1 ) ) );
 
 end: Description := "creates isomorphism to the underlying canonical exact triangle");
 
 ##
-AddDerivationToCAP( IsCanonicalExactTriangle,
+AddDerivationToCAP( IsStandardExactTriangle,
                 [
-                    [ CompleteMorphismToCanonicalExactTriangle, 1 ]
+                    [ CompleteMorphismToStandardExactTriangle, 1 ]
                 ],
     function( T )
     local can_T;
     
-    can_T := CompleteMorphismToCanonicalExactTriangle( MorphismAt( T, 0 ) );
+    can_T := CompleteMorphismToStandardExactTriangle( MorphismAt( T, 0 ) );
     
     return  ForAll( [ 0..3 ], i -> IsEqualForObjects( ObjectAt( T, i ), ObjectAt( can_T, i ) ) ) and 
             ForAll( [ 0..2 ], i -> IsEqualForMorphisms( MorphismAt( T, i ), MorphismAt( can_T, i ) ) );
@@ -167,26 +167,26 @@ AddDerivationToCAP( IsCanonicalExactTriangle,
 end: Description := "checks if the given exact triangle is canonical");
 
 ##
-AddDerivationToCAP( IsomorphismFromCanonicalExactTriangle,
+AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
                 [
-                    [ IsomorphismIntoCanonicalExactTriangle, 1 ],
+                    [ IsomorphismIntoStandardExactTriangle, 1 ],
                     [ InverseImmutable, 1 ]
                 ],
     function( T )
     local i;
-    i := IsomorphismIntoCanonicalExactTriangle( T );
+    i := IsomorphismIntoStandardExactTriangle( T );
     return CreateTrianglesMorphism( Range( i ), Source( i ), MorphismAt(i,0), MorphismAt(i,1), Inverse( MorphismAt( i, 2 ) ) );
 end: Description := "computes the iso from canonical exact triangle");
 
 ##
-AddDerivationToCAP( IsomorphismIntoCanonicalExactTriangle,
+AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
                 [
-                    [ IsomorphismFromCanonicalExactTriangle, 1 ],
+                    [ IsomorphismFromStandardExactTriangle, 1 ],
                     [ InverseImmutable, 1 ]
                 ],
     function( T )
     local i;
-    i := IsomorphismFromCanonicalExactTriangle( T );
+    i := IsomorphismFromStandardExactTriangle( T );
     return CreateTrianglesMorphism( Range( i ), Source( i ), MorphismAt(i,0), MorphismAt(i,1), Inverse( MorphismAt( i, 2 ) ) );
 end: Description := "computes the iso to canonical exact triangle");
 
