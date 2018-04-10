@@ -297,6 +297,29 @@ post_function :=
     end
 ),
 
+##
+LiftColift := rec( 
+installation_name := "LiftColift", 
+filter_list := [ "morphism", "morphism", "morphism", "morphism" ],
+cache_name := "LiftColift",
+pre_function := function( alpha, beta, gamma, delta )
+                if not IsCongruentForMorphisms( PreCompose( alpha, gamma ), PreCompose( beta, delta ) ) then
+                    return [ false, "The commutativity test on the input is not satisfied" ];
+                fi;
+                return [ true ];
+                end,
+return_type := "morphism",
+post_function :=function( alpha, beta, gamma, delta, return_value )
+                # In the language of lifts and colifts we must have
+                # return_value colifts alpha to beta and lifts gamma to delta.
+                if not IsCongruentForMorphisms( PreCompose( alpha, return_value ), beta ) then
+                    Error( "The commutativity test on the output is not satisfied" );
+                fi;
+                if not IsCongruentForMorphisms( PreCompose( return_value, delta ), gamma ) then
+                    Error( "The commutativity test on the output is not satisfied" );
+                fi;    
+end ),
+
 IsStandardExactTriangle:= rec( 
 
 installation_name := "IsStandardExactTriangle", 

@@ -46,7 +46,17 @@ DeclareCategory( "IsCapCategoryTrianglesMorphism", IsCapCategoryMorphism );
 ##
 ####################################
 
+DeclareOperation( "LiftColift", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
+DeclareOperation( "AddLiftColift", [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddLiftColift", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddLiftColift", [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddLiftColift", [ IsCapCategory, IsList ] );
+
+##
 DeclareOperation( "ShiftOfObject", [ IsCapCategoryObject ] );
 
 DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsFunction, IsInt ] );
