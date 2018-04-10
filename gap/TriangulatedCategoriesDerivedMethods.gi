@@ -317,3 +317,43 @@ AddDerivationToCAP( IsIsomorphism,
     function( mor )
     return IsZeroForObjects( ConeObject( mor ) );
 end: CategoryFilter := IsTriangulatedCategory, Description:= "Is isomorphism by deciding if the cone object is zero" );
+
+##
+AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
+                [
+                    [ LiftColift, 1 ],
+                    [ CompleteMorphismToStandardExactTriangle,  1 ]
+                ],
+    function( tr )
+    local str, l;
+    str := UnderlyingStandardExactTriangle( tr );
+    
+    l := LiftColift( tr^1, str^1, tr^2, str^2 );
+
+    if l = fail then
+        return fail;
+    else
+        return CreateTrianglesMorphism( tr, str, IdentityMorphism( tr[ 0 ] ), IdentityMorphism( tr[ 1 ] ), l );
+    fi;
+
+end: CategoryFilter := IsTriangulatedCategory, Description:= "Computing the isomorphism into the standard exact triangle using LiftColift" );
+
+##
+AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
+                [
+                    [ LiftColift, 1 ],
+                    [ CompleteMorphismToStandardExactTriangle,  1 ]
+                ],
+    function( tr )
+    local str, l;
+    str := UnderlyingStandardExactTriangle( tr );
+    
+    l := LiftColift( str^1, tr^1, str^2, tr^2 );
+
+    if l = fail then
+        return fail;
+    else
+        return CreateTrianglesMorphism( str, tr, IdentityMorphism( tr[ 0 ] ), IdentityMorphism( tr[ 1 ] ), l );
+    fi;
+
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using LiftColift" );
