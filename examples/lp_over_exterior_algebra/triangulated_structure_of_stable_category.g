@@ -277,7 +277,7 @@ end );
 #       |
 #       |------------> T(A)
 
-AddCompleteMorphismToCanonicalExactTriangle( stable_cat,
+AddCompleteMorphismToStandardExactTriangle( stable_cat,
          
     function( stable_mor )
     local mor, A, B, conf_A, inf, mor1, mor2;
@@ -298,7 +298,7 @@ AddCompleteMorphismToCanonicalExactTriangle( stable_cat,
                        [ inf, mor ], 
                        [ MorphismAt( conf_A, 1 ), ZeroMorphism( B, ObjectAt( conf_A, 2 ) ) ] );
     
-    return CreateCanonicalExactTriangle( stable_mor,
+    return CreateStandardExactTriangle( stable_mor,
                                 AsStableMorphism( mor1 ),
                                 AsStableMorphism( mor2 ) );
 end );
@@ -316,7 +316,7 @@ end );
 #
 # Output is theta: C1 ---> C2 such that the diagram is commutative
   
-AddCompleteToMorphismOfCanonicalExactTriangles( stable_cat, 
+AddCompleteToMorphismOfStandardExactTriangles( stable_cat, 
   
     function( tr1, tr2, phi_, psi_ )
     local phi, psi, f1, f2, g2, lambda, u1, u2, beta,
@@ -363,12 +363,12 @@ AddCompleteToMorphismOfCanonicalExactTriangles( stable_cat,
 
 end );
 
-AddRotationOfCanonicalExactTriangle( stable_cat,
+AddRotationOfStandardExactTriangle( stable_cat,
     function( tr )
     local rot, crot, a, b, psi, iso, teta, i, p;
 
     rot := CreateExactTriangle( tr^1, tr^2, AdditiveInverse( ShiftOfMorphism( tr^0 ) ) );
-    crot := CompleteMorphismToCanonicalExactTriangle( tr^1 );
+    crot := CompleteMorphismToStandardExactTriangle( tr^1 );
     a := FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( tr[ 0 ] ) );
     b := FitIntoConflationUsingExactInjectiveObject( UnderlyingUnstableObject( tr[ 1 ] ) );
     
@@ -394,8 +394,8 @@ AddRotationOfCanonicalExactTriangle( stable_cat,
     i := CreateTrianglesMorphism( rot, crot, IdentityMorphism( rot[ 0 ] ), IdentityMorphism( rot[ 1 ] ), i );
     p := CreateTrianglesMorphism( crot, rot, IdentityMorphism( rot[ 0 ] ), IdentityMorphism( rot[ 1 ] ), p );
     
-    SetIsomorphismIntoCanonicalExactTriangle( rot, i );
-    SetIsomorphismFromCanonicalExactTriangle( rot, p );
+    SetIsomorphismIntoStandardExactTriangle( rot, i );
+    SetIsomorphismFromStandardExactTriangle( rot, p );
     
     return rot;
 
@@ -416,12 +416,12 @@ AddOctahedralAxiom( stable_cat,
     B := Range( f );
     C := Range( g );
 
-    tf := CompleteMorphismToCanonicalExactTriangle( sf );
+    tf := CompleteMorphismToStandardExactTriangle( sf );
     u_A := FitIntoConflationUsingExactInjectiveObject( A )^0;
     alpha :=  InjectionOfCofactorOfExactPushout( [ u_A, f ], 1);
     f1 := UnderlyingUnstableMorphism( tf^1 );
 
-    th := CompleteMorphismToCanonicalExactTriangle( sh );
+    th := CompleteMorphismToStandardExactTriangle( sh );
     gamma := InjectionOfCofactorOfExactPushout( [ u_A, h ] , 1 );
     h1 := UnderlyingUnstableMorphism( th^1 );
 
@@ -449,7 +449,7 @@ AddOctahedralAxiom( stable_cat,
     g_B := InjectionOfCofactorOfExactPushout( [ u_B, g ], 2 );    
     v_from := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_B, g ], [ PreCompose( ExactInjectiveColift( u_B, B_to_I_D ), beta ), g1 ] ) );
     v_to :=   AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ PreCompose( ExactInjectiveColift( B_to_I_D, u_B ), beta_B ), g_B ] ) );
-    ctr_g_ := CompleteMorphismToCanonicalExactTriangle( sg );
+    ctr_g_ := CompleteMorphismToStandardExactTriangle( sg );
 
     iso := SchanuelsIsomorphism(  conf_B_to_I_D, conf_B, "left" );
     B1_TB := AdditiveInverseForMorphisms( PreCompose( [ InjectionOfCofactorOfDirectSum( [ I_B, B1 ], 2 ), 
@@ -473,9 +473,9 @@ AddOctahedralAxiom( stable_cat,
     u := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_D, j ], [ beta, j1 ] ) );
     u_ := AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], 
                         [ InjectionOfCofactorOfExactPushout( [ u_D, j ], 1 ), PreCompose( h1, InjectionOfCofactorOfExactPushout( [ u_D, j ], 2 ) )  ] ) );
-    can_j := CompleteMorphismToCanonicalExactTriangle( AsStableMorphism( j ) );
-    SetIsomorphismFromCanonicalExactTriangle( tr, CreateTrianglesMorphism( can_j, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(u, v_to) ) );
-    SetIsomorphismIntoCanonicalExactTriangle( tr, CreateTrianglesMorphism( tr, can_j, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(v_from, u_ ) ) );
+    can_j := CompleteMorphismToStandardExactTriangle( AsStableMorphism( j ) );
+    SetIsomorphismFromStandardExactTriangle( tr, CreateTrianglesMorphism( can_j, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(u, v_to) ) );
+    SetIsomorphismIntoStandardExactTriangle( tr, CreateTrianglesMorphism( tr, can_j, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(v_from, u_ ) ) );
 
     return tr; 
     end );
@@ -506,8 +506,6 @@ n := HomalgMatrix( "[ [ e1*e0, e0-e1 ], [ 1, e0 ], [ e1*e0, e1*e0-e0 ] ]", 3, 2,
 n := AsLeftPresentation( n );
 N := AsStableObject( n );
 quit;
-
-compute := ;
 
 hom_basis := basis_of_external_hom( M, N );
 random := List( [ 1..Length( hom_basis ) ], i-> Random( [ -i..i ] ) );;
