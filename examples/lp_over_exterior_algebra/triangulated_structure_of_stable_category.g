@@ -56,7 +56,7 @@ AddShiftOfMorphism( stable_cat,
     
     mor1 := ExactInjectiveColift( MorphismAt( conf_A, 0 ) , PreCompose( mor, MorphismAt( conf_B, 0 ) ) );
     
-    mor2 :=  CokernelColift( MorphismAt( conf_A, 0 ), PreCompose( mor1, MorphismAt( conf_B, 1 ) ) );
+    mor2 :=  ExactCokernelColift( MorphismAt( conf_A, 0 ), PreCompose( mor1, MorphismAt( conf_B, 1 ) ) );
     
     return AsStableMorphism( mor2 );
     
@@ -110,7 +110,7 @@ AddReverseShiftOfMorphism( stable_cat,
     
     mor1 := ExactProjectiveLift( PreCompose( MorphismAt( conf_A, 1 ), mor ), MorphismAt( conf_B, 1 ) );
     
-    mor2 := KernelLift( MorphismAt( conf_B, 1 ), PreCompose( MorphismAt( conf_A, 0 ), mor1 ) );
+    mor2 := ExactKernelLift( MorphismAt( conf_B, 1 ), PreCompose( MorphismAt( conf_A, 0 ), mor1 ) );
     
     return AsStableMorphism( mor2 );
     
