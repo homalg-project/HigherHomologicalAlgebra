@@ -708,18 +708,6 @@ all_colift_lift_in_stable_category :=
     return [ PresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) ), K ];
 end;
 
-random_element := function( R )
-local basis_indices;
-basis_indices := ShallowCopy( standard_list_of_basis_indices( R ) );
-# if the element contains constant then it is unit in the algebra.
-Remove( basis_indices, 1 );
-return Sum( basis_indices, i -> Random([-10..10])*ring_element(i,R) + Random( Concatenation(List([1..8*Length(basis_indices)],i->0),[1] ) ) *ring_element( [], R ) );
-end;
-
-random_matrix := function(m,n,R)
-return HomalgMatrix( List([1..m], i-> List([1..n], j -> random_element( R ) ) ), m, n, R );
-end;
-
 # Very important note:
 # if you compute hom(M,N) you will have a set of 46 morphisms and the first and the 30'th are congruent.
 # h := generating_set_of_external_hom(M,N);

@@ -357,6 +357,10 @@ C_vec := Q*Iterated( C_deco_list_vec, UnionOfRows );
 
 N := Q*FF3( A, B );
 
+if WithComments = true then
+    Print( "linear system with ", NrRows(N), "x", NrColumns(N), " homalg matrices \n" );
+fi;
+
 sol := LeftDivide( N, C_vec );
 
 if sol = fail then 
@@ -384,3 +388,15 @@ Y_ := Sum( List( [ 1..2^l ], i-> (R*CertainColumns( YY_, [ ( i - 1 )*n + 1 .. i*
 return [ X_, Y_ ];
 
 end );
+
+random_element := function( R )
+local basis_indices;
+basis_indices := ShallowCopy( standard_list_of_basis_indices( R ) );
+# if the element contains constant then it is unit in the algebra.
+Remove( basis_indices, 1 );
+return Sum( basis_indices, i -> Random([-10..10])*ring_element(i,R) + Random( Concatenation(List([1..8*Length(basis_indices)],i->0),[1] ) ) *ring_element( [], R ) );
+end;
+
+random_matrix := function(m,n,R)
+return HomalgMatrix( List([1..m], i-> List([1..n], j -> random_element( R ) ) ), m, n, R );
+end;
