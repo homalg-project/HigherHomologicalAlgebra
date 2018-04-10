@@ -4,7 +4,25 @@ ReadPackage( "StableCategoriesForCAP", "/examples/lp_over_exterior_algebra/lp_ov
 BindGlobal( "ADD_METHODS_TO_STABLE_CAT_OF_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA",
 
 function( category )
+
+##
+AddLiftColift( category,
+    function( alpha, beta, gamma, delta )
+    local lift;
+    lift := colift_lift_in_stable_category( 
+            UnderlyingUnstableMorphism( alpha ), 
+            UnderlyingUnstableMorphism( beta ), 
+            UnderlyingUnstableMorphism( gamma ), 
+            UnderlyingUnstableMorphism( delta ) 
+            );
+    if lift = fail then
+        return fail;
+    else
+        return AsStableMorphism( lift );
+    fi;
     
+    end );
+
 AddLift( category,
     function( alpha, beta )
     local lift;
@@ -22,8 +40,7 @@ AddLift( category,
     
 end );
 
-
-
+##
 AddColift( category,
     function( alpha, beta )
     local col;
@@ -42,7 +59,7 @@ AddColift( category,
     
 end );
 
-
+##
 AddIsSplitMonomorphism( category, 
     function( mor )
     local l;
