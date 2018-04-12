@@ -48,10 +48,10 @@ AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
     end: CategoryFilter := IsTriangulatedCategory, Description := "complete to morphism of exact triangles using LiftColift method" );
 ##
 AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
-                [   [ IsomorphismIntoStandardExactTriangle, 1 ],
-                    [ IsomorphismFromStandardExactTriangle, 1 ], 
-                    [ CompleteToMorphismOfStandardExactTriangles, 1 ],
-                    [ CompleteMorphismToStandardExactTriangle, 1 ]
+                [   [ IsomorphismIntoStandardExactTriangle, 2 ],
+                    [ IsomorphismFromStandardExactTriangle, 2 ], 
+                    [ CompleteToMorphismOfStandardExactTriangles, 2 ],
+                    [ CompleteMorphismToStandardExactTriangle, 2 ]
                 ], 
     function( T1, T2, m0, m1 )
     local can_T1, can_T2, T1_to_can_T1, T2_to_can_T2, can_T1_to_T1, can_T2_to_T2, can_T1_to_can_T2,
@@ -90,8 +90,8 @@ AddDerivationToCAP( CompleteToMorphismOfStandardExactTriangles,
 ## and isomorphisms (to,from) its canonical representative, otherwise we can not do anything with this (reverse) rotation.
 
 AddDerivationToCAP( RotationOfExactTriangle,
-                [   [ IsomorphismFromStandardExactTriangle, 1 ],
-                    [ IsomorphismIntoStandardExactTriangle, 1 ],
+                [   [ IsomorphismFromStandardExactTriangle, 0 ],
+                    [ IsomorphismIntoStandardExactTriangle, 0 ],
                     [ ShiftOfMorphism, 1 ]
                 ],
     function( T )
@@ -102,18 +102,14 @@ end:CategoryFilter := IsTriangulatedCategory, Description := "creates a rotation
 
 ##
 AddDerivationToCAP( RotationOfStandardExactTriangle,
-                [   [ IsomorphismFromStandardExactTriangle, 1 ],
-                    [ IsomorphismIntoStandardExactTriangle, 1 ],
+                [   [ IsomorphismFromStandardExactTriangle, 0 ],
+                    [ IsomorphismIntoStandardExactTriangle, 0 ],
                     [ ShiftOfMorphism, 1 ]
                 ],
     function( T )
     local rT;
 
-    rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );     
-    
-    IsomorphismFromStandardExactTriangle( rT );
-    
-    IsomorphismIntoStandardExactTriangle( rT );
+    rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOfMorphism( MorphismAt( T, 0 ) ) ) );
 
     return rT;
 
@@ -277,7 +273,7 @@ AddDerivationToCAP( DistributivityIsomorphismOfReverseShift,
                 [
                     [ DistributivityIsomorphismOfShift, 1 ],
                     [ InverseImmutable, 1],
-                    [ IsomorphismFromShiftOfReverseShift, 1 ],
+                    [ IsomorphismFromShiftOfReverseShift, 2 ],
                     [ ReverseShiftOfMorphism, 1 ],
                     [ DirectSum, 1 ],
                     [ IsomorphismIntoReverseShiftOfShift, 1 ],
