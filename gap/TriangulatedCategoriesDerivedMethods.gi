@@ -12,6 +12,21 @@
 ##
 ################################################
 
+AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
+                [
+                    [ LiftColift, 1 ],
+                    [ ShiftOfMorphism, 1 ]
+                ],
+    function( T1, T2, m0, m1 )
+    local l;
+
+    l := LiftColift( T1^1, PreCompose( m1, T2^1 ), PreCompose( T1^2, ShiftOfMorphism( m0 ) ), T2^2 );
+    if l = fail then
+        return fail;
+    else
+        return CreateTrianglesMorphism( T1, T2, m0, m1, l );
+    fi;
+    end: CategoryFilter := IsTriangulatedCategory, Description := "complete to morphism of exact triangles using LiftColift method" );
 ##
 AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
                 [   [ IsomorphismIntoStandardExactTriangle, 1 ],
@@ -42,6 +57,15 @@ AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
     return PreCompose( [ T1_to_can_T1, can_T1_to_can_T2, can_T2_to_T2 ] );
     
 end:CategoryFilter := IsTriangulatedCategory, Description := "complete to morphism of exact triangles" );
+
+##
+AddDerivationToCAP( CompleteToMorphismOfStandardExactTriangles,
+                [
+                    [ CompleteToMorphismOfExactTriangles, 1 ]
+                ],
+    function( T1, T2, m0, m1 )
+    return CompleteToMorphismOfExactTriangles( T1, T2, m0, m1 );
+    end: CategoryFilter := IsTriangulatedCategory, Description := "complete to morphism of standard exact triangles if we can complete to morphism of exact triangles" );
 
 ## In the following 4 derivations we need iso's methods because we want the (reverse) rotation 
 ## and isomorphisms (to,from) its canonical representative, otherwise we can not do anything with this (reverse) rotation.
