@@ -269,24 +269,6 @@ AddDerivationToCAP( IsomorphismIntoReverseShiftOfShift,
     return Inverse( IsomorphismFromReverseShiftOfShift( obj ) );
 end:CategoryFilter := IsTriangulatedCategory, Description := "computes iso to shift of reverse shift using the iso from shift of reverse shift" );
 
-AddDerivationToCAP( DistributivityIsomorphismOfReverseShift,
-                [
-                    [ DistributivityIsomorphismOfShift, 1 ],
-                    [ InverseImmutable, 1],
-                    [ IsomorphismFromShiftOfReverseShift, 2 ],
-                    [ ReverseShiftOfMorphism, 1 ],
-                    [ DirectSum, 1 ],
-                    [ IsomorphismIntoReverseShiftOfShift, 1 ],
-                ],
-    function( obj1, obj2 )
-    local i, j, u, k;
-    i := Inverse( DistributivityIsomorphismOfShift( ReverseShiftOfObject( obj1 ), ReverseShiftOfObject( obj2 ) ) );
-    j := DirectSumFunctorial( [ IsomorphismFromShiftOfReverseShift( obj1 ), IsomorphismFromShiftOfReverseShift( obj2 ) ] );
-    u := ReverseShiftOfMorphism( PreCompose( i, j ) );
-    k := IsomorphismIntoReverseShiftOfShift( DirectSum( ReverseShiftOfObject( obj1 ), ReverseShiftOfObject( obj2 ) ) );
-    return PreCompose( k, u );
-end:CategoryFilter := IsTriangulatedCategory, Description := "computes iso to Distributivity isomorphism of reverse shift on direct sum" );
-
 ##
 AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
                 [

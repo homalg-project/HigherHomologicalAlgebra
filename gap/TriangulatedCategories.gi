@@ -176,40 +176,7 @@ ReverseShiftFactoringIsomorphismWithGivenObjects := rec(
                 fi;
                 Assert( 5, IsIsomorphism( return_value ) );
                 SetIsIsomorphism( return_value, true );
-                end ),
-
-##
-DistributivityIsomorphismOfShift := rec(
-
-installation_name := "DistributivityIsomorphismOfShift", 
-filter_list := [ "object", "object" ],
-cache_name := "DistributivityIsomorphismOfShift",
-return_type := "morphism",
-post_function := function( obj1, obj2, return_value )
-                if not IsEqualForObjects( DirectSum( ShiftOfObject(obj1), ShiftOfObject( obj2 ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                elif not IsEqualForObjects( ShiftOfObject( DirectSum( obj1, obj2 ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),    
-
-DistributivityIsomorphismOfReverseShift := rec(
-
-installation_name := "DistributivityIsomorphismOfReverseShift", 
-filter_list := [ "object", "object" ],
-cache_name := "DistributivityIsomorphismOfReverseShift",
-return_type := "morphism",
-post_function := function( obj1, obj2, return_value )
-                if not IsEqualForObjects( DirectSum( ReverseShiftOfObject(obj1), ReverseShiftOfObject( obj2 ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                elif not IsEqualForObjects( ReverseShiftOfObject( DirectSum( obj1, obj2 ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),    
+                end ),   
 
 IsomorphismIntoShiftOfReverseShift := rec( 
 
@@ -317,7 +284,7 @@ post_function :=function( alpha, beta, gamma, delta, return_value )
                 fi;
                 if return_value <> fail and not IsCongruentForMorphisms( PreCompose( return_value, delta ), gamma ) then
                     Error( "The commutativity test on the output is not satisfied" );
-                fi;    
+                fi;
 end ),
 
 IsStandardExactTriangle:= rec( 

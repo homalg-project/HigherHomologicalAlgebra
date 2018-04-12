@@ -134,24 +134,6 @@ DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCap
 DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-
-DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsCapCategoryObject, IsCapCategoryObject ] );
-DeclareOperation( "DistributivityIsomorphismOfReverseShift", [ IsList ] );
-
-DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddDistributivityIsomorphismOfReverseShift", [ IsCapCategory, IsList ] );
-
-DeclareOperation( "DistributivityIsomorphismOfShift", [ IsCapCategoryObject, IsCapCategoryObject ] );
-DeclareOperation( "DistributivityIsomorphismOfShift", [ IsList ] );
-
-DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsFunction ] );
-DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddDistributivityIsomorphismOfShift", [ IsCapCategory, IsList ] );
-
-
 DeclareAttribute( "ConeObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsFunction, IsInt ] );
