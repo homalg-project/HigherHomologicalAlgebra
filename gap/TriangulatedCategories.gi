@@ -515,6 +515,7 @@ end );
 ##
 InstallMethod( RotationOfExactTriangle,
                 [ IsCapCategoryExactTriangle ],
+                # the following -1000 implies that this method will be called only if there is no other option to compute the isomorphism.
                 -1000,
     function( T )
     local rT, iso_from_can_exact_tr, iso_into_can_exact_tr;
