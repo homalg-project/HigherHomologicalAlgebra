@@ -308,14 +308,14 @@ pre_function := function( alpha, beta, gamma, delta )
                 fi;
                 return [ true ];
                 end,
-return_type := "morphism",
+return_type := "morphism_or_fail",
 post_function :=function( alpha, beta, gamma, delta, return_value )
                 # In the language of lifts and colifts we must have
                 # return_value colifts alpha to beta and lifts gamma to delta.
-                if not IsCongruentForMorphisms( PreCompose( alpha, return_value ), beta ) then
+                if return_value <> fail and not IsCongruentForMorphisms( PreCompose( alpha, return_value ), beta ) then
                     Error( "The commutativity test on the output is not satisfied" );
                 fi;
-                if not IsCongruentForMorphisms( PreCompose( return_value, delta ), gamma ) then
+                if return_value <> fail and not IsCongruentForMorphisms( PreCompose( return_value, delta ), gamma ) then
                     Error( "The commutativity test on the output is not satisfied" );
                 fi;    
 end ),
