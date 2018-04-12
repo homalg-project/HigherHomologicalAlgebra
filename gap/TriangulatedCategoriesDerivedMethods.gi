@@ -11,6 +11,7 @@
 ## Derived Methods for Triangulated Categories
 ##
 ################################################
+
 AddDerivationToCAP( IsExactTriangle,
                 [
                     [ LiftColift, 1 ],
@@ -19,7 +20,7 @@ AddDerivationToCAP( IsExactTriangle,
     function( T )
     local sT, m;
     
-    sT := UnderlyingStandardExactTriangle( T );
+    sT := CompleteMorphismToStandardExactTriangle( T^0 );
     m := LiftColift( T^1, sT^1, T^2, sT^2 );
 
     if m = fail then
