@@ -342,18 +342,65 @@ end: CategoryFilter := IsTriangulatedCategory, Description:= "Computing the isom
 AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
                 [
                     [ LiftColift, 1 ],
-                    [ CompleteMorphismToStandardExactTriangle,  1 ]
+                    [ CompleteMorphismToStandardExactTriangle,  1 ],
+                    [ InverseImmutable, 1 ]
                 ],
     function( tr )
     local str, l;
     str := UnderlyingStandardExactTriangle( tr );
     
-    l := LiftColift( str^1, tr^1, str^2, tr^2 );
+    l := LiftColift( tr^1, str^1, tr^2, str^2 );
 
     if l = fail then
         return fail;
     else
-        return CreateTrianglesMorphism( str, tr, IdentityMorphism( tr[ 0 ] ), IdentityMorphism( tr[ 1 ] ), l );
+        return CreateTrianglesMorphism( str, tr, IdentityMorphism( tr[ 0 ] ), IdentityMorphism( tr[ 1 ] ), Inverse( l ) );
     fi;
 
 end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using LiftColift" );
+
+##
+AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
+                [
+                    [ IsomorphismIntoStandardExactTriangle,  1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( tr )
+    local i;
+    i := IsomorphismIntoStandardExactTriangle( tr );
+    return CreateTrianglesMorphism( Range( i ), Source( i ), i[ 0 ], i[ 1 ], Inverse( i[ 2 ] ) );
+
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using the isomorphism into standard exact triangle" );
+
+##
+AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
+                [
+                    [ IsomorphismFromStandardExactTriangle,  1 ],
+                    [ InverseImmutable, 1 ]
+                ],
+    function( tr )
+    local i;
+    i := IsomorphismFromStandardExactTriangle( tr );
+    return CreateTrianglesMorphism( Range( i ), Source( i ), i[ 0 ], i[ 1 ], Inverse( i[ 2 ] ) );
+
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism into the standard exact triangle using the isomorphism from standard exact triangle" );
+
+##
+AddDerivationToCAP( Lift, 
+                [
+                    [ LiftColift, 1 ],
+                    [ UniversalMorphismFromZeroObject, 1 ]
+                ],
+    function( alpha, beta )
+    return LiftColift( UniversalMorphismFromZeroObject( Source( alpha ) ), UniversalMorphismFromZeroObject( Source( beta ) ), alpha, beta );
+end );
+
+##
+AddDerivationToCAP( Colift, 
+                [
+                    [ LiftColift, 1 ],
+                    [ UniversalMorphismIntoZeroObject, 1 ]
+                ],
+    function( alpha, beta )
+    return LiftColift( alpha, beta, UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ), alpha, beta );
+end );
