@@ -445,5 +445,5 @@ AddDerivationToCAP( Colift,
                     [ UniversalMorphismIntoZeroObject, 1 ]
                 ],
     function( alpha, beta )
-    return LiftColift( alpha, beta, UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ), alpha, beta );
+    return LiftColift( alpha, beta, UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ) );
 end );
