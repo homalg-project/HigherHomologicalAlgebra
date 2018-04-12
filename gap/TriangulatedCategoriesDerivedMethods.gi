@@ -11,6 +11,24 @@
 ## Derived Methods for Triangulated Categories
 ##
 ################################################
+AddDerivationToCAP( IsExactTriangle,
+                [
+                    [ LiftColift, 1 ],
+                    [ CompleteMorphismToStandardExactTriangle, 1 ]
+                ],
+    function( T )
+    local sT, m;
+    
+    sT := UnderlyingStandardExactTriangle( T );
+    m := LiftColift( T^1, sT^1, T^2, sT^2 );
+
+    if m = fail then
+        return false;
+    else
+        return true;
+    fi;
+
+    end: CategoryFilter := IsTriangulatedCategory, Description := "compute if a triangles exact or not using LiftColift method" );
 
 AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
                 [
