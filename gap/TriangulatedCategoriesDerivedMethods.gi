@@ -24,6 +24,7 @@ AddDerivationToCAP( IsExactTriangle,
     m := LiftColift( T^1, sT^1, T^2, sT^2 );
 
     if m = fail then
+        AddToReasons( "IsExactTriangle: because there is no lift/colift that makes the required diagram commutative." );
         return false;
     else
         return true;
