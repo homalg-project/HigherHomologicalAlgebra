@@ -23,42 +23,7 @@ AddLiftColift( category,
     
     end );
 
-AddLift( category,
-    function( alpha, beta )
-    local lift;
-    
-    lift := colift_lift_in_stable_category( 
-            UniversalMorphismFromZeroObject( Source( UnderlyingUnstableMorphism( alpha ) ) ),
-            UniversalMorphismFromZeroObject( Source( UnderlyingUnstableMorphism( beta ) ) ),
-            UnderlyingUnstableMorphism( alpha ),
-            UnderlyingUnstableMorphism( beta ) );
-    if lift = fail then
-        return fail;
-    else
-        return AsStableMorphism( lift );
-    fi;
-    
-end );
-
-##
-AddColift( category,
-    function( alpha, beta )
-    local col;
-    
-    col :=  colift_lift_in_stable_category( 
-            UnderlyingUnstableMorphism( alpha ),
-            UnderlyingUnstableMorphism( beta ),
-            UniversalMorphismIntoZeroObject( Range( UnderlyingUnstableMorphism( alpha ) ) ),
-            UniversalMorphismIntoZeroObject( Range( UnderlyingUnstableMorphism( beta ) ) ) );
-    
-    if col = fail then
-        return fail;
-    else
-        return AsStableMorphism( col );
-    fi;
-    
-end );
-
+## Since we have LiftColift, we automatically have Lifts & Colifts (see Derivations in Triangulated categories).
 ##
 AddIsSplitMonomorphism( category, 
     function( mor )
