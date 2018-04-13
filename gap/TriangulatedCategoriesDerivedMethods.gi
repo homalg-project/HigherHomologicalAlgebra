@@ -426,3 +426,40 @@ AddDerivationToCAP( Colift,
     function( alpha, beta )
     return LiftColift( alpha, beta, UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ) );
 end );
+
+##
+AddDerivationToCAP( IsSplitEpimorphism,
+                [
+                    [ IsEpimorphism, 1 ]
+                ],
+    function( alpha )
+    return IsEpimorphism( alpha );
+end:  CategoryFilter := IsTriangulatedCategory, Description:= "a morphism is triangulated categories is epi iff it is split epi" );
+
+##
+AddDerivationToCAP( IsSplitMonomorphism,
+                [
+                    [ IsMonomorphism, 1 ]
+                ],
+    function( alpha )
+    return IsMonomorphism( alpha );
+end:  CategoryFilter := IsTriangulatedCategory, Description:= "a morphism is triangulated categories is mono iff it is split mono" );
+
+##
+AddDerivationToCAP( IsEpimorphism,
+                [
+                    [ IsSplitEpimorphism, 1 ]
+                ],
+    function( alpha )
+    return IsSplitEpimorphism( alpha );
+end:  CategoryFilter := IsTriangulatedCategory, Description:= "a morphism is triangulated categories is epi iff it is split epi" );
+
+##
+AddDerivationToCAP( IsMonomorphism,
+                [
+                    [ IsSplitMonomorphism, 1 ]
+                ],
+    function( alpha )
+    return IsSplitMonomorphism( alpha );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "a morphism is triangulated categories is mono iff it is split mono" );
+
