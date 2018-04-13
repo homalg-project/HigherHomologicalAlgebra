@@ -338,7 +338,7 @@ AddDerivationToCAP( IsIsomorphism,
                 ],
     function( mor )
     return IsZeroForObjects( ConeObject( mor ) );
-end:CategoryFilter := IsTriangulatedCategory, CategoryFilter := IsTriangulatedCategory, Description:= "Is isomorphism by deciding if the cone object is zero" );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "Is isomorphism by deciding if the cone object is zero" );
 
 ##
 AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
@@ -379,7 +379,7 @@ AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
         return CreateTrianglesMorphism( str, tr, IdentityMorphism( tr[ 0 ] ), IdentityMorphism( tr[ 1 ] ), Inverse( l ) );
     fi;
 
-end:CategoryFilter := IsTriangulatedCategory, CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using LiftColift" );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using LiftColift" );
 
 ##
 AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
@@ -392,7 +392,7 @@ AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
     i := IsomorphismIntoStandardExactTriangle( tr );
     return CreateTrianglesMorphism( Range( i ), Source( i ), i[ 0 ], i[ 1 ], Inverse( i[ 2 ] ) );
 
-end:CategoryFilter := IsTriangulatedCategory, CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using the isomorphism into standard exact triangle" );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism from the standard exact triangle using the isomorphism into standard exact triangle" );
 
 ##
 AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
@@ -405,7 +405,7 @@ AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
     i := IsomorphismFromStandardExactTriangle( tr );
     return CreateTrianglesMorphism( Range( i ), Source( i ), i[ 0 ], i[ 1 ], Inverse( i[ 2 ] ) );
 
-end:CategoryFilter := IsTriangulatedCategory, CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism into the standard exact triangle using the isomorphism from standard exact triangle" );
+end: CategoryFilter := IsTriangulatedCategory, Description:= "computing the isomorphism into the standard exact triangle using the isomorphism from standard exact triangle" );
 
 ##
 AddDerivationToCAP( Lift, 
