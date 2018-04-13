@@ -892,33 +892,17 @@ InstallMethod( IsomorphismIntoStandardExactTriangle,
 end );
 
 
-# BindGlobal( "NAMES_OF_LAZY_METHODS",
-#  [
-#      [ IsomorphismFromStandardExactTriangle, IsCapCategoryExactTriangle ],
-#      [ IsomorphismIntoStandardExactTriangle, IsCapCategoryExactTriangle ],
-#  ] );
- 
-# BindGlobal( "INSTALL_LAZY_METHODS",
-#     function()
-#     local l;
-      
-#     for l in NAMES_OF_LAZY_METHODS do
-#         InstallMethod( l[1],
-#                     [ l[2] ],
-#                     -1000,
-#         function( T )
-#         local F, p;
-  
-#         F := T!.UnderlyingLazyMethods;
-#         if not l[1] in F then
-#             TryNextMethod( );
-#         else 
-#             p := Position( F, l[1] );
-#             return CallFuncList( F[p+1], F[ p+2 ] );
-#         fi;
-#         end );
-#     od;
-  
-# end );
-
-# INSTALL_LAZY_METHODS( );
+InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
+               IsCapCategory and IsTriangulatedCategory, 
+               0,
+               
+   function( category )
+   
+   AddPredicateImplicationFileToCategory( category,
+      Filename(
+        DirectoriesPackageLibrary( "TriangulatedCategoriesForCAP", "LogicForTriangulatedCategories" ),
+        "PredicateImplicationsForTriangulatedCategories.tex" ) );
+        
+   TryNextMethod( );
+     
+end );

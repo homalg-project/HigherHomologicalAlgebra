@@ -333,3 +333,5 @@ DeclareProperty( "IsTriangulatedCategory", IsCapCategory );
 
 # This property is declared only to be set by the user, not to be computed in any way.
 DeclareProperty( "IsTriangulatedCategoryWithShiftAutomorphism", IsCapCategory );
+
+DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCapCategory );
