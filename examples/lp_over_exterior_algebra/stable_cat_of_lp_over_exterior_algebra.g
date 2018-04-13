@@ -30,7 +30,8 @@ AddIsSplitMonomorphism( category,
     local l;
     l := Colift( mor, IdentityMorphism( Source( mor ) ) );
 
-    if l = fail then 
+    if l = fail then
+        AddToReasons( "IsSplitMonomorphism: because the morphism can not be coliftet to the identity morphism of the source" ); 
         return false;
     else 
         return true;
@@ -44,6 +45,7 @@ AddIsSplitEpimorphism( category,
     l := Lift( IdentityMorphism( Range( mor ) ), mor );
 
     if l = fail then 
+        AddToReasons( "IsSplitMonomorphism: because the morphism can not be coliftet to the identity morphism of the source" );
         return false;
     else 
         return true;

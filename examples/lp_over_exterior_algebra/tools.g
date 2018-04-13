@@ -16,7 +16,6 @@ function( M )
 
 end );
 
-
 ##
 DeclareAttribute( "standard_list_of_basis_indices", IsHomalgRing );
 InstallMethod( standard_list_of_basis_indices,
@@ -358,10 +357,14 @@ C_vec := Q*Iterated( C_deco_list_vec, UnionOfRows );
 N := Q*FF3( A, B );
 
 if WithComments = true then
-    Print( "linear system with ", NrRows(N), "x", NrColumns(N), " homalg matrices \n" );
+    Print( "rational linear system with ", NrRows(N), "x", NrColumns(N), " homalg matrices \n" );
 fi;
 
 sol := LeftDivide( N, C_vec );
+
+if WithComments = true then
+    Print( "done!\n" );
+fi;
 
 if sol = fail then 
 

@@ -495,6 +495,7 @@ Finalize( cat );
 
 SetTestFunctionForStableCategories(cat, CanBeFactoredThroughExactProjective );
 stable_cat := StableCategory( cat );
+SetIsTriangulatedCategory( stable_cat, true );
 ADD_METHODS_TO_STABLE_CAT_OF_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_cat );
 COMPUTE_TRIANGULATED_STRUCTURE_OF_A_STABLE_CAT_OF_A_FROBENIUS_CATEGORY( stable_cat);
 Finalize( stable_cat );
