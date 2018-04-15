@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategoriesForCAP",
 Subtitle := "framework for triangulated categories",
-Version := "0.1",
-Date := "21/07/2016", # dd/mm/yyyy format
+Version := "1.0",
+Date := "14/04/2018", # dd/mm/yyyy format
 
 Persons := [
   rec(
