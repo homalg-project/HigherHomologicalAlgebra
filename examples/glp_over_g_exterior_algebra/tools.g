@@ -5,6 +5,7 @@ LoadPackage( "GradedModules" );
 
 DeclareGlobalVariable( "WithComments" );
 MakeReadWriteGlobal("WithComments");
+WithComments := true;
 
 ##
 DeclareOperation( "HomalgTransposedMat", 
@@ -12,8 +13,16 @@ DeclareOperation( "HomalgTransposedMat",
 InstallMethod( HomalgTransposedMat, 
                 [ IsHomalgMatrix ], 
 function( M )
+  
+    if NrRows( M ) = 0 or NrColumns( M ) = 0 then
+    
+        return HomalgZeroMatrix( NrColumns( M ), NrRows( M ), M!.ring );
+    
+    else
 
-  return HomalgMatrix( String( TransposedMat( EntriesOfHomalgMatrixAsListList( M ) ) ), NrColumns( M ), NrRows( M ), HomalgRing( M ) );
+        return HomalgMatrix( String( TransposedMat( EntriesOfHomalgMatrixAsListList( M ) ) ), NrColumns( M ), NrRows( M ), HomalgRing( M ) );
+        
+    fi;
 
 end );
 
