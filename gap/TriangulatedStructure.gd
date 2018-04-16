@@ -1,0 +1,3 @@
+
+
+DeclareOperation( "AsTriangulatedCategory", [ IsCapCategory ] );
