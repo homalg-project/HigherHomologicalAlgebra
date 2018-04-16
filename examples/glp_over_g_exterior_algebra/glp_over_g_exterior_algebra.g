@@ -1,7 +1,7 @@
 
 LoadPackage( "FrobeniusCategoriesForCAP" );
 LoadPackage( "GradedModulePresentations" );
-ReadPackage( "FrobeniusCategoriesForCAP", "/examples/glp_over_g_exterior_algebra/tools.g" );
+ReadPackage( "StableCategoriesForCAP", "/examples/glp_over_g_exterior_algebra/tools.g" );
 
 BindGlobal( "ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA", 
 
@@ -98,7 +98,7 @@ AddColift( cat,
        
     fi;
     
-end, 500 );
+end, 1000 );
 
 AddLift( cat, 
 
@@ -138,7 +138,7 @@ AddLift( cat,
    
     l := Length( IndeterminatesOfExteriorRing( R ) );
     
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R ); 
 
@@ -222,7 +222,7 @@ AddLift( cat,
 
     return GradedPresentationMorphism( Source( morphism1 ), DecideZeroRows( X_, M ), Source( morphism2 ) );
     
-end, 100 );
+end, 1000 );
 
 AddIsSplitMonomorphism( cat, 
     function( mor )
@@ -235,7 +235,7 @@ AddIsSplitMonomorphism( cat,
         return true;
     fi;
 
-end );
+end, 1000 );
 
 AddIsSplitEpimorphism( cat, 
     function( mor )
@@ -248,7 +248,7 @@ AddIsSplitEpimorphism( cat,
         return true;
     fi;
 
-end );
+end, 1000 );
 
 AddIsProjective( cat, 
     function( obj )
@@ -373,13 +373,21 @@ nongraded_basis_of_external_hom :=
     N := UnderlyingMatrix( GN );
 
     l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
 
     Q := CoefficientsRing( R ); 
 
     N_ := Q*FF3( M, N );
 
+    if WithComments = true then
+        Print( "SyzygiesOfColumns on ", NrRows(N),"x", NrColumns(N)," homalg matrix\n" );
+    fi;
+
     sN_ := SyzygiesOfColumns( N_ );
+
+        if WithComments = true then
+        Print( "done!\n" );
+    fi;
 
     r := NrRows( M );
     m := NrColumns( M );
@@ -390,7 +398,15 @@ nongraded_basis_of_external_hom :=
 
     sN_t := CertainRows( sN_, [ 1..t ] );
     
+    if WithComments = true then
+        Print( "BasisOfColumns on ", NrRows(sN_t),"x", NrColumns(sN_t)," homalg matrix\n" );
+    fi;
+
     basis_sN_t := BasisOfColumns( sN_t );
+    
+    if WithComments = true then
+        Print( "done!\n" );
+    fi;
     
     basis := [ ];
 
@@ -410,55 +426,15 @@ return DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms(b) ) );
 
 end;
 
-graded_basis_of_external_hom := 
-    function( MA, MB )
-    local A, B, l, basis_indices, Q, N, sN, r,m,s,n,t,sN_t, basis_sN_t, basis, XX, XX_, X_, i, R;
-    R := UnderlyingHomalgRing( MA );
-    A := UnderlyingMatrix( UnderlyingPresentationObject( MA ) );
-    B := UnderlyingMatrix( UnderlyingPresentationObject( MB ) );
-
-    l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := standard_list_of_basis_indices( l-1 );
-
-    Q := CoefficientsRing( R ); 
-
-    N := Q*FF3( A, B );
-
-    sN := SyzygiesOfColumns( N );
-
-    r := NrRows( A );
-    m := NrColumns( A );
-    s := NrColumns( B );
-    n := NrRows( B );
-
-    t := m*s*2^l;
-
-    sN_t := CertainRows( sN, [ 1..t ] );
-    
-    basis_sN_t := BasisOfColumns( sN_t );
-    
-    basis := [ ];
-
-    for i in [ 1 .. NrColumns( basis_sN_t ) ] do 
-        
-        XX := CertainColumns( basis_sN_t, [ i ] );
-
-        XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
-
-        X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* ring_element( basis_indices[ i ], R ) ) );
-
-        Add( basis, GradedPresentationMorphism( MA, DecideZeroRows( X_, B ), MB ) );
-
-    od;
-    
-    basis := List( basis, b -> compute_degree_zero_part( MA, MB, b ) );
-
-return DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms(b) ) );
-
+decide := function( sigma, i, j, m, R )
+    local r;
+    r := Degree( ring_element( sigma, R ) );
+    if m[i][j] = r then return "*";fi;
+    return 0;
 end;
 
 graded_compute_coefficients := function( b, f )
-    local R, l, basis_indices, Q, A, B, C, vec, main_list, matrix, constant, M, N, sol;
+    local R, basis_indices, Q, A, B, C, vec, main_list, matrix, constant, M, N, sol;
     
     M := Source( f );
     N := Range( f );
@@ -468,8 +444,7 @@ graded_compute_coefficients := function( b, f )
     fi;
     
     R := UnderlyingHomalgRing( M );
-    l := Length( IndeterminatesOfExteriorRing( R ) );
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     Q := CoefficientsRing( R ); 
     
     A := List( b, UnderlyingMatrix );
@@ -497,6 +472,203 @@ graded_compute_coefficients := function( b, f )
     else
         return EntriesOfHomalgMatrix( CertainRows( sol, [ 1..Length( b ) ] ) );
     fi;
+end;
+
+graded_generators_of_external_hom := function( M_, N_ )
+    local R, basis_indices, M, N, degrees_of_M_, degrees_of_N_, degrees_of_M, degrees_of_N, required_degrees_X, required_degrees_Y,
+        degrees_of_sM, degrees_of_sN, Lx, Ly, Q, mat, x_positions, y_positions, all_positions, smat, r, m, s, n, t, smat_x,
+        basis_smat_x, generators, i, j, X_, XX, XX_, l;
+
+    R := UnderlyingHomalgRing( M_ );
+    l := Length( IndeterminatesOfExteriorRing( R ) );
+    basis_indices := standard_list_of_basis_indices( R );
+
+    M := UnderlyingMatrix( M_ );
+    N := UnderlyingMatrix( N_ );
+    degrees_of_M_ := GeneratorDegrees( M_ );
+    degrees_of_N_ := GeneratorDegrees( N_ );
+
+    required_degrees_X := List( degrees_of_M_, i -> List( degrees_of_N_, j -> i - j ) );
+    
+    degrees_of_M := DegreesOfEntries( M );
+    degrees_of_sM := List( [ 1 .. NrRows( M ) ], i-> Maximum( List( [ 1.. NrColumns( M ) ], j -> degrees_of_M_[ j ] + degrees_of_M[ i ][ j ] ) ) );
+
+    degrees_of_N := DegreesOfEntries( N );
+    degrees_of_sN := List( [ 1 .. NrRows( N ) ], i-> Maximum( List( [ 1.. NrColumns( N ) ], j -> degrees_of_N_[ j ] + degrees_of_N[ i ][ j ] ) ) );
+
+    required_degrees_Y := List( degrees_of_sM, i -> List( degrees_of_sN, j -> i - j ) );
+
+    Lx := Concatenation( TransposedMat( Concatenation( List( basis_indices , sigma -> List( [ 1 .. Length( required_degrees_X ) ], 
+            i -> List( [ 1 .. Length( required_degrees_X[ 1 ] ) ], j -> decide( sigma, i, j, required_degrees_X, R ) ) ) ) ) ) );
+
+    Ly := Concatenation( Concatenation( List( List( basis_indices, sigma -> List( [ 1 .. Length( required_degrees_Y ) ], 
+            i -> List( [ 1 .. Length( required_degrees_Y[ 1 ] ) ], j -> decide( sigma, i, j, required_degrees_Y, R ) ) ) ), l -> TransposedMat( l ) ) ) );
+  
+    Q := CoefficientsRing( R ); 
+
+    mat := Q*FF3( M, N );
+
+    x_positions := Positions( Lx, "*" );
+    y_positions := Positions( Ly, "*" ) + Length( Lx );
+
+    all_positions := Concatenation( x_positions, y_positions );
+
+    mat := CertainColumns( mat, all_positions );
+
+    smat := SyzygiesOfColumns( mat );
+
+    if WithComments = true then
+        Print( "done!\n" );
+    fi;
+
+    r := NrRows( M );
+    m := NrColumns( M );
+    s := NrColumns( N );
+    n := NrRows( N );
+
+    t := m*s*2^l;
+
+    smat_x := CertainRows( smat, [ 1.. Length( x_positions ) ] );
+    
+    if WithComments = true then
+        Print( "BasisOfColumns on ", NrRows( smat_x ),"x", NrColumns( smat_x )," homalg matrix\n" );
+    fi;
+
+    basis_smat_x := BasisOfColumns( smat_x );
+    
+    if WithComments = true then
+        Print( "done!\n" );
+    fi;
+
+    generators := [ ];
+
+    for i in [ 1 .. NrColumns( basis_smat_x ) ] do 
+        
+        if WithComments = true then
+            Print( "constructing the ", i,"'th morphism out of", NrColumns( basis_smat_x )," morphisms\n" );
+        fi;
+        
+        XX := EntriesOfHomalgMatrix( CertainColumns( basis_smat_x, [ i ] ) );
+
+        XX := List( [ 1 .. Length( Lx ) ], 
+                        function( n )
+                        if n in x_positions then
+                        
+                            return XX[ Position( x_positions, n ) ];
+                        else
+                            return "0"/Q;
+                        fi;
+
+                        end );
+
+        XX := HomalgMatrix( XX, Length( XX ), 1, Q );
+
+        XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
+
+        X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* ring_element( basis_indices[ i ], R ) ) );
+
+        Add( generators, GradedPresentationMorphism( M_, X_, N_ ) );
+
+    od;
+    
+    generators := DuplicateFreeList( Filtered( generators, b -> not IsZeroForMorphisms( b ) ) );
+
+    return generators;
+
+end;
+
+# graded_generators_of_external_hom := 
+#     function( MA, MB )
+#     local A, B, l, basis_indices, Q, N, sN, r,m,s,n,t,sN_t, basis_sN_t, basis, XX, XX_, X_, i, R;
+#     R := UnderlyingHomalgRing( MA );
+#     A := UnderlyingMatrix( MA );
+#     B := UnderlyingMatrix( MB );
+
+#     l := Length( IndeterminatesOfExteriorRing( R ) );
+
+#     basis_indices := standard_list_of_basis_indices( R );
+
+#     Q := CoefficientsRing( R ); 
+
+#     N := Q*FF3( A, B );
+
+#     if WithComments = true then
+#         Print( "SyzygiesOfColumns on ", NrRows( N ),"x", NrColumns( N )," homalg matrix\n" );
+#     fi;
+
+#     sN := SyzygiesOfColumns( N );
+
+#     if WithComments = true then
+#         Print( "done!\n" );
+#     fi;
+
+#     r := NrRows( A );
+#     m := NrColumns( A );
+#     s := NrColumns( B );
+#     n := NrRows( B );
+
+#     t := m*s*2^l;
+
+#     sN_t := CertainRows( sN, [ 1..t ] );
+    
+#     if WithComments = true then
+#         Print( "BasisOfColumns on ", NrRows(sN_t),"x", NrColumns(sN_t)," homalg matrix\n" );
+#     fi;
+
+#     basis_sN_t := BasisOfColumns( sN_t );
+    
+#     if WithComments = true then
+#         Print( "done!\n" );
+#     fi;
+
+#     basis := [ ];
+
+#     for i in [ 1 .. NrColumns( basis_sN_t ) ] do 
+        
+#         XX := CertainColumns( basis_sN_t, [ i ] );
+
+#         XX_ := Iterated( List( [ 1 .. s ], i -> CertainRows( XX, [ ( i - 1 )*m*2^l + 1 .. i*m*2^l ] ) ), UnionOfColumns );
+
+#         X_ := Sum( List( [ 1..2^l ], i-> ( R*CertainRows( XX_, [ ( i - 1 )*m + 1 .. i*m ] ) )* ring_element( basis_indices[ i ], R ) ) );
+
+#         Add( basis, GradedPresentationMorphism( MA, DecideZeroRows( X_, B ), MB ) );
+
+#     od;
+    
+#     basis := List( basis, b -> compute_degree_zero_part( MA, MB, b ) );
+
+# return DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms(b) ) );
+
+# end;
+
+
+graded_basis_of_external_hom := function( M, N )
+    local generators, basis, i;
+    
+    generators := graded_generators_of_external_hom( M, N );
+    
+    if generators = [ ] then
+        return [ ];
+    fi;
+
+    basis := [ generators[ 1 ] ];
+    
+    if WithComments = true then
+        Print( "There is ", Length( generators ), " morphisms to filter!" );
+    fi;
+
+    for i in [ 2 .. Length( generators ) ] do
+
+        if WithComments = true then
+            Print( "i =", i, " out of ", Length( generators ), "\n" );
+        fi;
+
+        if graded_compute_coefficients( basis, generators[ i ] ) = fail then
+            Add( basis, generators[ i ] );
+        fi;
+    od;
+
+    return basis;
 end;
 
 is_reduced_graded_module := 
@@ -542,9 +714,7 @@ graded_colift_lift_in_stable_category :=
 
     R := HomalgRing( A );
     
-    l := Length( IndeterminatesOfExteriorRing( R ) );
-
-    basis_indices := standard_list_of_basis_indices( l-1 );
+    basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R );
     
@@ -638,101 +808,21 @@ graded_colift_lift_in_stable_category :=
     return GradedPresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) );
 end;
 
-graded_lift_for_stable_category := 
-    function( alpha, beta )
-    return graded_colift_lift_in_stable_category( 
-        UniversalMorphismFromZeroObject( Source( alpha ) ),
-        UniversalMorphismFromZeroObject( Source( beta ) ),
-        alpha,
-        beta 
-    );
-end;
 
-graded_colift_for_stable_category := 
-    function( alpha, beta )
-    return graded_colift_lift_in_stable_category( 
-        alpha,
-        beta,
-        UniversalMorphismIntoZeroObject( Range( alpha ) ),
-        UniversalMorphismIntoZeroObject( Range( beta ) ) 
-    );
-end;
-
-is_split_graded_mono_for_stable_category := 
-    function( mor )
-    local l;
-    l := graded_colift_for_stable_category( mor, IdentityMorphism( Source( mor ) ) );
-
-    if l = fail then 
-        return false;
-    else 
-        return true;
-    fi;
-
-end;
-
-is_split_graded_epi_for_stable_category := 
-    function( mor )
-    local l;
-    l := graded_lift_for_stable_category( IdentityMorphism( Range( mor ) ), mor );
-
-    if l = fail then 
-        return false;
-    else 
-        return true;
-    fi;
-
-end;
-
-is_isomorphism_for_stable_category := 
-    function( mor )
-    return is_split_graded_epi_for_stable_category( mor ) and is_split_graded_mono_for_stable_category( mor );
-end;
-
-graded_inverse_in_stable_category := 
-    function( mor )
-    # check if mor is really iso
-    return graded_lift_for_stable_category( IdentityMorphism( Range( mor ) ), mor );
-end;
-
-r := KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z,t" );
-R := GradedRing( r );
-SetWeightsOfIndeterminates( R, [ 1,1,1,0] );
+R := GradedRing( KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" ) );
+SetWeightsOfIndeterminates( R, [ 1,1,0] );
 cat := GradedLeftPresentations( R: FinalizeCategory := false );
+SetIsFrobeniusCategory( cat, true );
 ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
 TurnAbelianCategoryToExactCategory( cat );
-SetIsFrobeniusCategory( cat, true );
 Finalize( cat );
 
-# gap> Display( Source(f) );
-# 0,           0,   0,        0,   0,     
-# 0,           7*e1,0,        0,   0,     
-# 0,           0,   0,        2*e1,0,     
-# e1,          0,   e1,       2,   0,     
-# 20*e0-151*e1,20,  15*e1,    -154,0,     
-# 7*e1,        0,   2*e0-3*e1,10,  0,     
-# -81*e1,      20,  25*e1,    -114,0,     
-# 29*e1,       -20, -5*e1,    26,  0,     
-# -7*e1,       0,   -5*e1,    2,   4*e0*e1
-# (over a graded ring)
 
-# An object in The category of graded left f.p. modules over Q{e0,e1} (with weights [ 1, 1 ])
+quit;
+m := matrix of required degrees 
 
-# (graded, degrees of generators:[ 2, 3, 2, 3, 1 ])
-# gap> Display( Range(f) );
-# -e0*e1,    -2*e0-e1,2*e0-2*e1,0,     
-# 0,         3*e0*e1, 4*e0*e1,  0,     
-# -2*e0+2*e1,0,       -1,       -e0+e1,
-# -e0,       2,       -1,       e1,    
-# 0,         2*e0*e1, -2*e0*e1, 0,     
-# 0,         e0*e1,   2*e0*e1,  0      
-# (over a graded ring)
+# x s that are not zero
 
-# An object in The category of graded left f.p. modules over Q{e0,e1} (with weights [ 1, 1 ])
+s := standard_list_of_basis_indices( R );
 
-# (graded, degrees of generators:[ 1, 2, 2, 1 ])
-# gap> is_reduced_graded_module(Source(f));
-# [ false, <A morphism in The category of graded left f.p. modules over Q{e0,e1} (with weights [ 1, 1 ])> ]
-# gap> is_reduced_graded_module(Range(f));
-# [ false, <A morphism in The category of graded left f.p. modules over Q{e0,e1} (with weights [ 1, 1 ])> ]
-# gap> 
+
