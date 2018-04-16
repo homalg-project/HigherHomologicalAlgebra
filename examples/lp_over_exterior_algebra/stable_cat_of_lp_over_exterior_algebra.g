@@ -59,3 +59,24 @@ AddInverseImmutable( category,
 end );
 
 end );
+
+R := KoszulDualRing( HomalgFieldOfRationalsInSingular()*"x,y" );
+cat := LeftPresentations( R: FinalizeCategory := false );
+ADD_METHODS_TO_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
+TurnAbelianCategoryToExactCategory( cat );
+SetIsFrobeniusCategory( cat, true );
+Finalize( cat );
+
+SetTestFunctionForStableCategories(cat, CanBeFactoredThroughExactProjective );
+stable_cat := StableCategory( cat );
+SetIsTriangulatedCategory( stable_cat, true );
+ADD_METHODS_TO_STABLE_CAT_OF_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_cat );
+AsTriangulatedCategory( stable_cat );
+Finalize( stable_cat );
+
+m := HomalgMatrix( "[ [ e1, e0, e1, e1*e0, e0-e1 ], [ 0, 1, e1*e0, 0, -4*e1 ], [ e1+e0, 0, 1, e1*e0-e1, 0 ] ]", 3, 5, R);
+m := AsLeftPresentation( m );
+M := AsStableObject( m );
+n := HomalgMatrix( "[ [ e1*e0, e0-e1 ], [ 1, e0 ], [ e1*e0, e1*e0-e0 ] ]", 3, 2, R);
+n := AsLeftPresentation( n );
+N := AsStableObject( n );

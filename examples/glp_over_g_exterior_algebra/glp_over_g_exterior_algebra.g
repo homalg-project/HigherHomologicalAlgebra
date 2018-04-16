@@ -713,7 +713,7 @@ graded_colift_lift_in_stable_category :=
     #  X    * delta                                   tau * G + H * D   = gamma
 
     R := HomalgRing( A );
-    
+    l := Length( IndeterminatesOfExteriorRing( R ) );
     basis_indices := standard_list_of_basis_indices( R );
     
     Q := CoefficientsRing( R );
@@ -808,21 +808,5 @@ graded_colift_lift_in_stable_category :=
     return GradedPresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) );
 end;
 
-
-R := GradedRing( KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" ) );
-SetWeightsOfIndeterminates( R, [ 1,1,0] );
-cat := GradedLeftPresentations( R: FinalizeCategory := false );
-SetIsFrobeniusCategory( cat, true );
-ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
-TurnAbelianCategoryToExactCategory( cat );
-Finalize( cat );
-
-
-quit;
-m := matrix of required degrees 
-
-# x s that are not zero
-
-s := standard_list_of_basis_indices( R );
 
 

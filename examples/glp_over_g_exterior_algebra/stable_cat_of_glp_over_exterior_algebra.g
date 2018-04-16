@@ -1,5 +1,5 @@
 LoadPackage( "StableCategoriesForCAP" );
-ReadPackage( "StableCategoriesForCAP", "/examples/glp_over_exterior_algebra/glp_over_exterior_algebra.g" );
+ReadPackage( "StableCategoriesForCAP", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_algebra.g" );
 
 BindGlobal( "ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA",
 
@@ -59,3 +59,20 @@ AddInverseImmutable( category,
 end );
 
 end );
+
+
+R := GradedRing( KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y" ) );
+SetWeightsOfIndeterminates( R, [ -1,-1 ] );
+cat := GradedLeftPresentations( R: FinalizeCategory := false );
+SetIsFrobeniusCategory( cat, true );
+ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
+TurnAbelianCategoryToExactCategory( cat );
+SetTestFunctionForStableCategories(cat, CanBeFactoredThroughExactProjective );
+Finalize( cat );
+
+stable_cat := StableCategory( cat );
+SetIsTriangulatedCategory( stable_cat, true );
+ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_cat );
+AsTriangulatedCategory( stable_cat );
+Finalize( stable_cat );
+
