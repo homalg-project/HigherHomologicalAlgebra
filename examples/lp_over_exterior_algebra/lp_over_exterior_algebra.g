@@ -348,7 +348,7 @@ basis_of_external_hom :=
     sN := SyzygiesOfColumns( N );
 
     if WithComments = true then
-        Print( "Done!\n" );
+        Print( "done!\n" );
     fi;
     
     r := NrRows( A );
@@ -360,8 +360,16 @@ basis_of_external_hom :=
 
     sN_t := CertainRows( sN, [ 1..t ] );
     
+    if WithComments = true then
+        Print( "SyzygiesOfColumns on ", NrRows(sN_t),"x", NrColumns(sN_t)," homalg matrix\n" );
+    fi;
+    
     basis_sN_t := BasisOfColumns( sN_t );
     
+    if WithComments = true then
+        Print( "done!\n" );
+    fi;
+
     basis := [ ];
 
     for i in [ 1 .. NrColumns( basis_sN_t ) ] do 
