@@ -326,34 +326,6 @@ return cat;
 
 end );
 
-create_random_morphism := 
-    function( g1, g2, R )
-    local Fr1, Fr2, Fr3, m12, m32, v, g, f, u, fiber, cover_of_fiber;
-    Fr1 := GradedFreeLeftPresentation( Length(g1), R, g1 );
-    Fr2 := GradedFreeLeftPresentation( Length(g2), R, g2 );
-    m12 := RandomMatrixBetweenGradedFreeLeftModules( g1, g2, R );
-
-    g := List( [ 1 .. Length( g2 ) + 2  ], i -> g2[ ( i mod Length(g2) ) + 1 ] + Random([1..2]) );
-    m32 := RandomMatrixBetweenGradedFreeLeftModules( g, g2, R );
-
-    Fr3 := GradedFreeLeftPresentation( Length(g), R, g );
-
-    v := GradedPresentationMorphism( Fr1, m12, Fr2 );
-    g := GradedPresentationMorphism( Fr3, m32, Fr2 );
-
-    f := ProjectionInFactorOfFiberProduct( [ v, g ], 1 );
-    u := ProjectionInFactorOfFiberProduct( [ v, g ], 2 );
-
-    fiber := FiberProduct( v, g );
-
-    cover_of_fiber := EpimorphismFromSomeProjectiveObject( fiber );
-
-    f := PreCompose( cover_of_fiber, f );
-
-    return GradedPresentationMorphism( CokernelObject( f), m12, CokernelObject( g ) );
-
-end;
-
 compute_degree_zero_part := 
     function( M, N, f )
     local mat, required_degrees;
@@ -808,5 +780,16 @@ graded_colift_lift_in_stable_category :=
     return GradedPresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) );
 end;
 
-
-
+create_random_object := function( m, n, R )
+    local mat,l,r,s;
+    l := Length( IndeterminatesOfExteriorRing( R ) );
+    s := List( [ 1 .. m ], i -> Random( [ -10 .. 10 ] ) );
+    r := List( [ 1 .. n ], j -> s[j mod m ] + Random( [ -l .. 0 ] ) );
+    mat :=  RandomMatrixBetweenGradedFreeLeftModules( s, r, R );
+    mat := AsGradedLeftPresentation( mat, r );
+    if  IsProjective( mat ) then 
+        return create_random_object( m, n, R );
+    else
+        return mat;
+    fi;
+end;
