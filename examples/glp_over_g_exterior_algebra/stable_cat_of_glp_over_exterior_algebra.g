@@ -128,7 +128,7 @@ end;
 
 
 R := GradedRing( KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" ) );
-SetWeightsOfIndeterminates( R, [ -1,-1, -1 ] );
+SetWeightsOfIndeterminates( R, [ 1, 1, 1 ] );
 cat := GradedLeftPresentations( R: FinalizeCategory := false );
 SetIsFrobeniusCategory( cat, true );
 ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
