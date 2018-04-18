@@ -118,7 +118,7 @@ generators := generators_of_stable_hom( M, N );
 basis := [ generators[ 1 ] ];
 
 for i in [ 2 .. Length( generators ) ] do 
-    if graded_compute_coefficients_for_stable_morphisms( basis, generators[ i ] ) <> fail then
+    if graded_compute_coefficients_for_stable_morphisms( basis, generators[ i ] ) = fail then
         Add( basis, generators[ i ] );
     fi;
 od;
