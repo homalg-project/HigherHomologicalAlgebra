@@ -728,3 +728,21 @@ create_random_object := function( m, n, R )
         return mat;
     fi;
 end;
+
+twist_functor := function( n, R )
+    local cat, name, T;
+    cat := GradedLeftPresentations( R );
+    name := Concatenation( "Twist  by ", String( n ), " automorphism in ", Name( cat ) );
+    T := CapFunctor( name, cat, cat );
+
+    AddObjectFunction( T, function( M )
+                          local degrees;
+                          degrees := GeneratorDegrees( M );
+                          degrees := List( degrees, d -> d - n );
+                          return AsGradedLeftPresentation( UnderlyingMatrix( M ), degrees );
+                          end );
+    AddMorphismFunction( T, function( new_source, f, new_range )
+                            return GradedPresentationMorphism( new_source, UnderlyingMatrix(f), new_range );
+                            end );
+    return T;
+end;
