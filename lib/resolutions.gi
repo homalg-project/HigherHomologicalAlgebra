@@ -147,7 +147,15 @@ function( C )
  
  SetUpperBound( proj, u );
  
-return CochainMorphism( proj, C, MapLazy( list, function( j ) return j[ 2 ]; end, 1 ) );
+return CochainMorphism( proj, C, 
+        MapLazy( IntegersList, 
+            function( j ) 
+            if j mod 2 = 0 then 
+            return  list[ j ][ 2 ]; 
+            else
+            return AdditiveInverse( list[ j ][ 2 ] );
+            fi;
+            end, 1 ) );
  
 end );
 
