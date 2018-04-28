@@ -70,3 +70,20 @@ InstallMethod( AsPresentationMorphismInHomalg,
     SetAsPresentationMorphismInCAP( g, f );
     return g;
 end );
+
+InstallMethod( RResolution,
+                [ IsGradedLeftOrRightPresentation ],
+    function( M )
+    local cat, hM, diff, d, C;
+    cat := CapCategory( M );
+    hM := AsPresentationInHomalg( M );
+    diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
+    C := CochainComplex( CochainComplexCategory( cat ), diff );
+    d := ShallowCopy( GeneratorDegrees( M ) );
+
+    # the output of GeneratorDegrees is in general not integer.
+    Apply( d, String );
+    Apply( d, Int );
+    SetLowerBound( C, Minimum( d ) - 1 );
+    return C;
+end );
