@@ -78,7 +78,7 @@ InstallMethod( RResolution,
     cat := CapCategory( M );
     hM := AsPresentationInHomalg( M );
     diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
-    C := CochainComplex( CochainComplexCategory( cat ), diff );
+    C := CochainComplex( cat , diff );
     d := ShallowCopy( GeneratorDegrees( M ) );
 
     # the output of GeneratorDegrees is in general not integer.
@@ -87,3 +87,10 @@ InstallMethod( RResolution,
     SetLowerBound( C, Minimum( d ) - 1 );
     return C;
 end );
+
+InstallMethod( CastelnuovoMumfordRegularity,
+                [ IsGradedLeftOrRightPresentation ],
+    function( M )
+    return CastelnuovoMumfordRegularity( AsPresentationInHomalg( M ) );
+end );
+

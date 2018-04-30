@@ -12,5 +12,6 @@ DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresenta
 
 
 DeclareAttribute( "RResolution", IsGradedLeftOrRightPresentation );
+DeclareAttribute( "CastelnuovoMumfordRegularity", IsGradedLeftOrRightPresentation );
 DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentation  );
 
