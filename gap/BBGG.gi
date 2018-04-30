@@ -94,3 +94,13 @@ InstallMethod( CastelnuovoMumfordRegularity,
     return CastelnuovoMumfordRegularity( AsPresentationInHomalg( M ) );
 end );
 
+InstallMethod( TateResolution, 
+                [ IsGradedLeftOrRightPresentation ],
+    function( M )
+    local cat, hM, diff, C;
+    cat := GradedLeftPresentations( KoszulDualRing( UnderlyingHomalgRing( M ) ) );
+    hM := AsPresentationInHomalg( M );
+    diff := MapLazy( IntegersList, i -> 
+        AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i, i + 1 ), i ) ), 1 );
+    return CochainComplex( cat , diff );
+end );
