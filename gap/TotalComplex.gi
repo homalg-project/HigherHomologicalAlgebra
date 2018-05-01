@@ -243,36 +243,38 @@ InstallMethod( IndicesUsedToComputeTotalComplexOfBicomplexAtOp,
 end );
 
 InstallMethod( TotalComplexFunctorial,
-                 [ IsCapCategoryBicomplexMorphism and IsCapCategoryHomologicalBicomplexMorphism ],
-     function( phi )
-     local S, tS, R, tR, l;
+                [ IsCapCategoryBicomplexMorphism and IsCapCategoryHomologicalBicomplexMorphism ],
+        
+        function( phi )
+        local S, tS, R, tR, l;
      
-      S := Source( phi );
-     tS := TotalComplex( S );
-      R := Range( phi );
-     tR := TotalComplex( R );
+        S := Source( phi );
+        tS := TotalComplex( S );
+        R := Range( phi );
+        tR := TotalComplex( R );
      
-     l := MapLazy( IntegersList, 
-           function( m )
-           local ind_r, ind_s, morphisms;
-           ind_s := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
-           ind_r := IndicesUsedToComputeTotalComplexOfBicomplexAt( R, m );
-           morphisms := List( [ ind_s[1] .. ind_s[2] ],
-                            i-> List( [ ind_r[1] .. ind_r[2] ],
-                                    function( j )
-                                    
-                                    if i=j then
-                                        return MorphismAt( phi, i, m - i );
-                                    else
-                                        return ZeroMorphism( ObjectAt( S, i, m-i ), ObjectAt( R, j, m-j ) );
-                                    fi;
-                                    end ) );
+        l := MapLazy( IntegersList, 
+                function( m )
+                local ind_r, ind_s, morphisms;
+                ind_s := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
+                ind_r := IndicesUsedToComputeTotalComplexOfBicomplexAt( R, m );
+                morphisms := List( [ ind_s[1] .. ind_s[2] ],
+                        i-> List( [ ind_r[1] .. ind_r[2] ],
+                                function( j )
+                                
+                                if i=j then
+                                    return MorphismAt( phi, i, m - i );
+                                else
+                                    return ZeroMorphism( ObjectAt( S, i, m-i ), ObjectAt( R, j, m-j ) );
+                                fi;
+                                end ) );
            
-           if morphisms = [] or morphisms = [[]] then
-                return ZeroMorphism( tS[m], tR[m] );
-           else
-                return MorphismBetweenDirectSums( morphisms );
-           fi;
-           end, 1 );
+                if morphisms = [] or morphisms = [[]] then
+                     return ZeroMorphism( tS[m], tR[m] );
+                else
+                     return MorphismBetweenDirectSums( morphisms );
+                fi;
+                end, 1 );
+
         return ChainMorphism( tS, tR, l );
 end );
