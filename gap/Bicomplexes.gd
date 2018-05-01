@@ -189,6 +189,9 @@ DeclareAttribute( "Above_Bound",
 DeclareAttribute( "Below_Bound",
         IsCapCategoryBicomplexCell );
 
+DeclareOperation( "CohomologicalToHomologicalBicomplexsFunctor", [ IsCapCategory, IsCapCategory ] );
+DeclareOperation( "HomologicalToCohomologicalBicomplexsFunctor", [ IsCapCategory, IsCapCategory ] );
+
 DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 DeclareAttribute( "TotalComplexFunctorial", IsCapCategoryBicomplexMorphism );
 

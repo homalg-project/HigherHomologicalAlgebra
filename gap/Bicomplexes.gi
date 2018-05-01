@@ -658,6 +658,122 @@ end );
 
 ######################################
 #
+# Functors
+#
+######################################
+
+#DeclareOperation( "CohomologicalToHomologicalBicomplexsFunctor", [ IsCapCategory, IsCapCategory ] );
+InstallMethod( CohomologicalToHomologicalBicomplexsFunctor,
+                [ IsCapCategory, IsCapCategory ],
+    function( CohCat, HoCat )
+    local A, F;
+
+    A := UnderlyingCategoryOfComplexesOfComplexes( CohCat );
+    A := UnderlyingCategory( A );
+    A := UnderlyingCategory( A );
+
+    F := CapFunctor( "Cohomological to homological bicomplexes functor", CohCat, HoCat );
+
+    AddObjectFunction( F, 
+        function( CohB )
+        local H, V, HB;
+
+        H := function( i, j ) return HorizontalDifferentialAt( CohB, -i, -j ); end;
+        V := function( i, j ) return VerticalDifferentialAt( CohB, -i, -j ); end;
+        HB := HomologicalBicomplex( A, H, V );
+        
+        AddToToDoList( ToDoListEntry( 
+                [ [ CohB, "Above_Bound" ] ], 
+                    function( ) 
+                    SetBelow_Bound( HB, -Above_Bound( CohB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ CohB, "Below_Bound" ] ], 
+                    function( ) 
+                    SetAbove_Bound( HB, -Below_Bound( CohB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ CohB, "Right_Bound" ] ], 
+                    function( ) 
+                    SetLeft_Bound( HB, -Right_Bound( CohB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ CohB, "Left_Bound" ] ], 
+                    function( ) 
+                    SetRight_Bound( HB, -Left_Bound( CohB ) );
+                    end ) );
+                
+        return HB;
+        
+    end );
+    
+    AddMorphismFunction( F,
+        function( new_source, f, new_range )
+        local mor;
+        mor := function( i, j ) return MorphismAt( f, -i, -j ); end;
+        return BicomplexMorphism( new_source, new_range, mor );
+    end );
+
+    return F;
+end );
+
+##
+InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
+                [ IsCapCategory, IsCapCategory ],
+    function( HoCat, CohCat )
+    local A, F;
+
+    A := UnderlyingCategoryOfComplexesOfComplexes( CohCat );
+    A := UnderlyingCategory( A );
+    A := UnderlyingCategory( A );
+
+    F := CapFunctor( "Homological to cohomological bicomplexes functor",HoCat, CohCat );
+
+    AddObjectFunction( F, 
+        function( HB )
+        local H, V, CohB;
+
+        H := function( i, j ) return HorizontalDifferentialAt( HB, -i, -j ); end;
+        V := function( i, j ) return VerticalDifferentialAt( HB, -i, -j ); end;
+        CohB := CohomologicalBicomplex( A, H, V );
+        
+        AddToToDoList( ToDoListEntry( 
+                [ [ HB, "Above_Bound" ] ], 
+                    function( ) 
+                    SetBelow_Bound( CohB, -Above_Bound( HB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ HB, "Below_Bound" ] ], 
+                    function( ) 
+                    SetAbove_Bound( CohB, -Below_Bound( HB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ HB, "Right_Bound" ] ], 
+                    function( ) 
+                    SetLeft_Bound( CohB, -Right_Bound( HB ) );
+                    end ) );
+        AddToToDoList( ToDoListEntry( 
+                [ [ HB, "Left_Bound" ] ], 
+                    function( ) 
+                    SetRight_Bound( CohB, -Left_Bound( HB ) );
+                    end ) );
+                
+        return CohB;
+        
+    end );
+    
+    AddMorphismFunction( F,
+        function( new_source, f, new_range )
+        local mor;
+        mor := function( i, j ) return MorphismAt( f, -i, -j ); end;
+        return BicomplexMorphism( new_source, new_range, mor );
+    end );
+
+    return F;
+end );
+
+######################################
+#
 # View, Display
 #
 ######################################
