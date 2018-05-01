@@ -11,7 +11,7 @@ DeclareAttribute( "AsPresentationMorphismInCAP",  IsHomalgGradedMap  );
 DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresentationMorphism  );
 
 
-DeclareAttribute( "RResolution", IsGradedLeftOrRightPresentation );
+DeclareAttribute( "RFunctor", IsHomalgGradedRing );
 DeclareAttribute( "CastelnuovoMumfordRegularity", IsGradedLeftOrRightPresentation );
 DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentation  );
 
