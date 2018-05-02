@@ -135,6 +135,89 @@ InstallMethod( RFunctor,
     return R;
 end );
 
+DeclareAttribute( "LFunctor", IsHomalgGradedRing );
+InstallMethod( LFunctor, 
+            [ IsHomalgGradedRing ],
+    function( S )
+    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n; 
+
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    KS := KoszulDualRing( S );
+    ind_ext := IndeterminatesOfExteriorRing( KS );
+    ind_sym := IndeterminatesOfPolynomialRing( S );
+    
+    cat_lp_sym := GradedLeftPresentations( S );
+    cat_lp_ext := GradedLeftPresentations( KS );
+    cochains := CochainComplexCategory( cat_lp_sym );
+
+    L := CapFunctor( "L resolution ", cat_lp_ext, cochains );
+    
+    AddObjectFunction( L, 
+        function( M )
+        local hM, diffs, C, d;
+        hM := AsPresentationInHomalg( M );
+        diffs := MapLazy( IntegersList, 
+            function( i )
+            local l, source, range;
+            l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
+            l := List( l, m -> UnderlyingMorphism( m ) );
+            l := List( l, m -> m!.matrices!.( "[ 1, 1 ]" ) * S );
+            l := Sum( List( [ 1 .. n ], j -> ind_sym[ j ]* l[ j ] ) );
+            source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l )], j -> -i ) );
+            range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l )], j -> -i - 1 ) );
+            return GradedPresentationMorphism( source, l, range );
+            end, 1 );
+        C :=  CochainComplex( cat_lp_sym, diffs );
+
+        d := ShallowCopy( GeneratorDegrees( M ) );
+
+        # the output of GeneratorDegrees is in general not integer.
+        Apply( d, String );
+        Apply( d, Int );
+
+        if Length( d ) = 0 then
+            SetLowerBound( C, 0 );
+            SetUpperBound( C, 0 );
+        else
+            SetLowerBound( C, -Maximum( d ) - 1 );
+            SetUpperBound( C, -Minimum( d ) + n + 1);
+        fi;
+        
+        return C;
+
+        end );
+
+    AddMorphismFunction( L, 
+        function( new_source, f, new_range )
+        local M, N, G1, G2, hM, hN, mors;
+        M := Source( f );
+        N := Range( f );
+        hM := AsPresentationInHomalg( M );
+        hN := AsPresentationInHomalg( N );
+        mors := MapLazy( IntegersList, 
+                function( k )
+                local hMn, hNn, hMn_, hNn_, iMn, iNn, l;
+                hMn := HomogeneousPartOverCoefficientsRing( -k, hM );
+                hNn := HomogeneousPartOverCoefficientsRing( -k, hN );
+                G1 := GetGenerators( hMn );
+                G2 := GetGenerators( hNn );
+                if Length( G1 ) = 0 or Length( G2 ) = 0 then 
+                    return ZeroMorphism( new_source[ k ], new_range[ k ] );
+                fi;
+                hMn_ := UnionOfRows( G1 )* KS;
+                hNn_ := UnionOfRows( G2 )* KS;
+                iMn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMn_ ), KS, List( [1..NrRows( hMn_ ) ], i -> -k ) ), hMn_, M );
+                iNn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNn_ ), KS, List( [1..NrRows( hNn_ ) ], i -> -k ) ), hNn_, N );
+                l := Lift( PreCompose( iMn, f ), iNn );
+                return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
+                end, 1 );
+        return CochainMorphism( new_source, new_range, mors );
+        end );
+
+    return L;
+
+end );
+
 InstallMethod( CastelnuovoMumfordRegularity,
                 [ IsGradedLeftOrRightPresentation ],
     function( M )
