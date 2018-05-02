@@ -138,7 +138,7 @@ TurnAbelianCategoryToExactCategory( lp_ext );
 SetTestFunctionForStableCategories(lp_ext, CanBeFactoredThroughExactProjective );
 Finalize( lp_ext );
 
-stable_lp_ext := StableCategory( cat );
+stable_lp_ext := StableCategory( lp_ext );
 SetIsTriangulatedCategory( stable_lp_ext, true );
 ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_lp_ext );
 AsTriangulatedCategory( stable_lp_ext );
