@@ -74,11 +74,13 @@ end );
 InstallMethod( RFunctor,
                 [ IsHomalgGradedRing ],
     function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, R; 
+    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n; 
 
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    KS := KoszulDualRing( S );
     cat_lp_sym := GradedLeftPresentations( S );
-    cat_lp_ext := GradedLeftPresentations( KoszulDualRing( S ) );
-    cochains := CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) );
+    cat_lp_ext := GradedLeftPresentations( KS );
+    cochains := CochainComplexCategory( cat_lp_ext );
 
     R := CapFunctor( "R resolution ", cat_lp_sym, cochains );
     
@@ -93,11 +95,17 @@ InstallMethod( RFunctor,
         # the output of GeneratorDegrees is in general not integer.
         Apply( d, String );
         Apply( d, Int );
-        SetLowerBound( C, Minimum( d ) - 1 );
+
+        if Length( d ) = 0 then
+            SetLowerBound( C, 0 );
+        else
+            SetLowerBound( C, Minimum( d ) - 1 );
+        fi;
+        
         return C;
         end );
 
-        AddMorphismFunction( R, 
+    AddMorphismFunction( R, 
         function( new_source, f, new_range )
         local M, N, G1, G2, hM, hN, mors;
         M := Source( f );
