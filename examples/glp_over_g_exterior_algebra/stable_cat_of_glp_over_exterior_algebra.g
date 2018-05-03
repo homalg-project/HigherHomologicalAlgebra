@@ -127,8 +127,8 @@ return basis;
 end;
 
 LoadPackage( "BBGG" );
-S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" );
-SetWeightsOfIndeterminates( S, [ 1, 1, 1 ] );
+S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y,z,w" );
+SetWeightsOfIndeterminates( S, [ 1, 1, 1, 1 ] );
 R := KoszulDualRing( S );
 lp_sym := GradedLeftPresentations( S );
 lp_ext := GradedLeftPresentations( R: FinalizeCategory := false );
@@ -145,6 +145,13 @@ AsTriangulatedCategory( stable_lp_ext );
 Finalize( stable_lp_ext );
 
 # Gamma
-
+m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], R );
+n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], R );
+M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
+N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
+b := graded_basis_of_external_hom(M,N);
+L := LFunctor( S );
+#Lb1 := ApplyFunctor( L, b[1] );
+#Display( Lb1, -6, 2 );
 
 
