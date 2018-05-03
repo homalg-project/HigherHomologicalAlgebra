@@ -154,4 +154,10 @@ L := LFunctor( S );
 #Lb1 := ApplyFunctor( L, b[1] );
 #Display( Lb1, -6, 2 );
 
+p := RandomMatrixBetweenGradedFreeLeftModules( [3,4,5,4,2], [ 2,3,2,2,1], S );
+P := AsGradedLeftPresentation( p, [2,3,2,2,1] );
+R := RFunctor( S );
+#RP := ApplyFunctor( R, P );
+#Display( Lb1, 0, 5 );
+
 
