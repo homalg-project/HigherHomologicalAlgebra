@@ -128,7 +128,7 @@ end;
 
 
 R := GradedRing( KoszulDualRing( HomalgFieldOfRationalsInSingular( )*"x,y,z" ) );
-SetWeightsOfIndeterminates( R, [ 1, 1, 1 ] );
+SetWeightsOfIndeterminates( R, [ -1,-1, -1 ] );
 cat := GradedLeftPresentations( R: FinalizeCategory := false );
 SetIsFrobeniusCategory( cat, true );
 ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( cat );
@@ -142,3 +142,9 @@ ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( st
 AsTriangulatedCategory( stable_cat );
 Finalize( stable_cat );
 
+# Gamma
+m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], R );
+n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], R );
+M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
+N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
+b := graded_basis_of_external_hom(M,N);
