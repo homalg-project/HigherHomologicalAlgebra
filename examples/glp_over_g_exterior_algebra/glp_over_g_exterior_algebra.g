@@ -463,10 +463,10 @@ graded_generators_of_external_hom := function( M_, N_ )
     required_degrees_X := List( degrees_of_M_, i -> List( degrees_of_N_, j -> i - j ) );
     
     degrees_of_M := DegreesOfEntries( M );
-    degrees_of_sM := List( [ 1 .. NrRows( M ) ], i-> Maximum( List( [ 1.. NrColumns( M ) ], j -> degrees_of_M_[ j ] + degrees_of_M[ i ][ j ] ) ) );
+    degrees_of_sM := List( [ 1 .. NrRows( M ) ], i-> Minimum( List( [ 1.. NrColumns( M ) ], j -> degrees_of_M_[ j ] + degrees_of_M[ i ][ j ] ) ) );
 
     degrees_of_N := DegreesOfEntries( N );
-    degrees_of_sN := List( [ 1 .. NrRows( N ) ], i-> Maximum( List( [ 1.. NrColumns( N ) ], j -> degrees_of_N_[ j ] + degrees_of_N[ i ][ j ] ) ) );
+    degrees_of_sN := List( [ 1 .. NrRows( N ) ], i-> Minimum( List( [ 1.. NrColumns( N ) ], j -> degrees_of_N_[ j ] + degrees_of_N[ i ][ j ] ) ) );
 
     required_degrees_Y := List( degrees_of_sM, i -> List( degrees_of_sN, j -> i - j ) );
 
