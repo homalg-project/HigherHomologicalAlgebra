@@ -136,11 +136,37 @@ return basis;
 end;
 
 LoadPackage( "BBGG" );
-S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y,z,w" );
-SetWeightsOfIndeterminates( S, [ 1, 1, 1, 1 ] );
+S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y" );
+SetWeightsOfIndeterminates( S, [ 1, 1 ] );
 R := KoszulDualRing( S );
-lp_sym := GradedLeftPresentations( S );
+lp_sym := GradedLeftPresentations( S: FinalizeCategory := false );
+AddEpimorphismFromSomeProjectiveObject( lp_sym, 
+    function( M )
+    local hM, U, current_degrees;
+    hM := AsPresentationInHomalg( M );
+    ByASmallerPresentation( hM );
+    U := UnderlyingModule( hM );
+    current_degrees := DegreesOfGenerators( hM );
+    return GradedPresentationMorphism( 
+                GradedFreeLeftPresentation( Length( current_degrees), S, current_degrees ),
+                TransitionMatrix( U, PositionOfTheDefaultPresentation(U), 1 )*S,
+                M );
+end, -1 );
+Finalize( lp_sym );
+
 lp_ext := GradedLeftPresentations( R: FinalizeCategory := false );
+AddEpimorphismFromSomeProjectiveObject( lp_ext, 
+    function( M )
+    local hM, U, current_degrees;
+    hM := AsPresentationInHomalg( M );
+    ByASmallerPresentation( hM );
+    U := UnderlyingModule( hM );
+    current_degrees := DegreesOfGenerators( hM );
+    return GradedPresentationMorphism( 
+                GradedFreeLeftPresentation( Length( current_degrees), R, current_degrees ),
+                TransitionMatrix( U, PositionOfTheDefaultPresentation(U), 1 )*R,
+                M );
+end, -1 );  
 SetIsFrobeniusCategory( lp_ext, true );
 ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( lp_ext );
 TurnAbelianCategoryToExactCategory( lp_ext );
@@ -158,14 +184,14 @@ m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], R );
 n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], R );
 M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
 N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
-b := graded_basis_of_external_hom(M,N);
-L := LFunctor( S );
+#b := graded_basis_of_external_hom(M,N);
+LL := LFunctor( S );
 #Lb1 := ApplyFunctor( L, b[1] );
 #Display( Lb1, -6, 2 );
 
-p := RandomMatrixBetweenGradedFreeLeftModules( [3,4,5,4,2], [ 2,3,2,2,1], S );
-P := AsGradedLeftPresentation( p, [2,3,2,2,1] );
-R := RFunctor( S );
+p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1 ], S );
+P := AsGradedLeftPresentation( p, [2,2,1] );
+RR := RFunctor( S );
 #RP := ApplyFunctor( R, P );
 #Display( Lb1, 0, 5 );
 
