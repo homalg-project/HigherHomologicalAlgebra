@@ -115,9 +115,18 @@ local generators, i, basis;
 
 generators := generators_of_stable_hom( M, N );
 
+if generators = [ ] then
+    return [ ];
+fi;
+
 basis := [ generators[ 1 ] ];
 
-for i in [ 2 .. Length( generators ) ] do 
+for i in [ 2 .. Length( generators ) ] do
+
+    if WithComments = true then
+        Print( "Testing the redundancy of the ", i, "'th morphism out of ", Length( generators ), "morphisms!." );
+    fi;
+
     if graded_compute_coefficients_for_stable_morphisms( basis, generators[ i ] ) = fail then
         Add( basis, generators[ i ] );
     fi;
