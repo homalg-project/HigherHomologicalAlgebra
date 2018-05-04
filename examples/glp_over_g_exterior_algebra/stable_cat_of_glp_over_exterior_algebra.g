@@ -115,6 +115,10 @@ local generators, i, basis;
 
 generators := generators_of_stable_hom( M, N );
 
+if generators = [ ] then
+    return [ ];
+fi;
+
 basis := [ generators[ 1 ] ];
 
 for i in [ 2 .. Length( generators ) ] do 
