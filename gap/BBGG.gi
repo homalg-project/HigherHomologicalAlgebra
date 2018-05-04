@@ -218,12 +218,14 @@ InstallMethod( LFunctor,
 
 end );
 
+##
 InstallMethod( CastelnuovoMumfordRegularity,
-                [ IsGradedLeftOrRightPresentation ],
+                [ IsCapCategoryObject and IsGradedLeftOrRightPresentation ],
     function( M )
     return CastelnuovoMumfordRegularity( AsPresentationInHomalg( M ) );
 end );
 
+##
 InstallMethod( TateResolution, 
                 [ IsGradedLeftOrRightPresentation ],
     function( M )
@@ -232,5 +234,37 @@ InstallMethod( TateResolution,
     hM := AsPresentationInHomalg( M );
     diff := MapLazy( IntegersList, i -> 
         AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i, i + 1 ), i ) ), 1 );
-    return CochainComplex( cat , diff );
+    C := CochainComplex( cat , diff );
+    SetCastelnuovoMumfordRegularity( C, CastelnuovoMumfordRegularity( M) );
+    return C;
 end );
+
+InstallMethod( TateResolution,
+                [ IsGradedLeftOrRightPresentationMorphism ],
+    function( phi )
+    local R, M, N, r_M, r_N, r, tM, tN, RR, RR_phi, mors;
+    R := UnderlyingHomalgRing( phi );
+    M := Source( phi );
+    N := Range( phi );
+    r_M := CastelnuovoMumfordRegularity( M );
+    r_N := CastelnuovoMumfordRegularity( N );
+    r := Maximum( r_M, r_N );
+
+    tM := TateResolution( M );
+    tN := TateResolution( N );
+
+    RR := RFunctor( R );
+    RR_phi := ApplyFunctor( RR, phi );
+    
+    mors := MapLazy( IntegersList, 
+                function( i )
+                if i > r then
+                    return RR_phi[ i ];
+                else
+                    return Lift( PreCompose( tM^i, mors[ i + 1 ] ), tN^i );
+                fi;
+                end, 1 );
+    return CochainMorphism( tM, tN, mors );
+end );
+
+    
