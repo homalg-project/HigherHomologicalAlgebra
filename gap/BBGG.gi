@@ -267,4 +267,13 @@ InstallMethod( TateResolution,
     return CochainMorphism( tM, tN, mors );
 end );
 
+BindGlobal( "TateTest",
+    function( S )
+    local T;
+    T := CapFunctor( "test Tate ", GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
+    AddObjectFunction( T, TateResolution );
+    AddMorphismFunction( T, function( s, phi, r ) return TateResolution( phi ); end );
+    return T;
+end );
+
     
