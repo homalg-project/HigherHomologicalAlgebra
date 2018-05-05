@@ -274,3 +274,29 @@ InstallMethod( TotalComplexFunctorial,
 
         return ChainMorphism( tS, tR, l );
 end );
+
+InstallMethod( TotalComplex,
+               [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject ],
+        function( C )
+        local CohCat, HCat, cat, convert, Ch_to_Coch, T;
+        CohCat := CapCategory( C );
+        cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
+        HCat := AsCategoryOfBicomplexes( ChainComplexCategory( ChainComplexCategory( cat ) ) );
+        convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
+        Ch_to_Coch := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
+        T := TotalComplex( ApplyFunctor( convert, C ) );
+        return ApplyFunctor( Ch_to_Coch, T );
+end );
+
+InstallMethod( TotalComplexFunctorial,
+               [ IsCapCategoryBicomplexMorphism and IsCapCategoryCohomologicalBicomplexMorphism ],
+        function( phi )
+        local CohCat, HCat, cat, convert, Ch_to_Coch, T;
+        CohCat := CapCategory( phi );
+        cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
+        HCat := AsCategoryOfBicomplexes( ChainComplexCategory( ChainComplexCategory( cat ) ) );
+        convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
+        Ch_to_Coch := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
+        T := TotalComplexFunctorial( ApplyFunctor( convert, phi ) );
+        return ApplyFunctor( Ch_to_Coch, T );
+end );
