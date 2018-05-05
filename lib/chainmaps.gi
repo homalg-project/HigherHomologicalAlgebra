@@ -363,10 +363,12 @@ InstallMethod( IsWellDefined,
    
     T := Range( phi );
     if not IsWellDefined( Source( phi ), m, n ) then
+        AddToReasons( "IsWellDefined: The source of the morphism is not well-defined in the given interbal" );
         return false;
     fi;
     
     if not IsWellDefined( Range( phi ), m, n ) then
+        AddToReasons( "IsWellDefined: The range of the morphism is not well-defined in the given interbal" );
         return false;
     fi;
     
@@ -374,7 +376,8 @@ InstallMethod( IsWellDefined,
    
      for i in [ m .. n ] do 
         if not IsCongruentForMorphisms( PreCompose( S^(i + 1), phi[ i ] ), PreCompose( phi[ i + 1 ], T^(i + 1) ) ) then
-           return false;
+          AddToReasons( Concatenation( "IsWellDefined: problem at the squar whose differentials are in index ", String( i + 1 ) ) );
+          return false;
         fi;
      od;
      
@@ -382,6 +385,7 @@ InstallMethod( IsWellDefined,
    
      for i in [ m .. n ] do 
         if not IsCongruentForMorphisms( PreCompose( S^i, phi[ i + 1 ] ), PreCompose( phi[ i ], T^i ) ) then
+          AddToReasons( Concatenation( "IsWellDefined: problem at the squar whose differentials are in index ", String( i ) ) );
            return false;
         fi;
      od;

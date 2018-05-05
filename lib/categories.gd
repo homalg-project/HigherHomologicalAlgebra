@@ -7,6 +7,19 @@
 ##
 #############################################################################
 
+if not IsBound( Reasons ) then 
+    DeclareGlobalVariable( "Reasons" );
+    InstallValue( Reasons, [ fail ] );
+    DeclareGlobalVariable( "AddToReasons" );
+    DeclareGlobalVariable( "why" );
+    InstallValue( AddToReasons, function( s )
+                                Add( Reasons, s, 1 ); 
+                                MakeReadWriteGlobal("why");
+                                why := s;
+                                MakeReadOnlyGlobal("why");
+                                end );
+fi;
+
 #! @Section Constructing chain and cochain categories
 
 
