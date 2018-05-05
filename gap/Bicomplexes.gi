@@ -772,6 +772,134 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
     return F;
 end );
 
+DeclareOperation( "IsWellDefined", [ IsCapCategoryBicomplexCell, IsInt, IsInt, IsInt, IsInt ] );
+InstallMethod( IsWellDefined, 
+        [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( B, left, right, below, above )
+    local i,j;
+
+    for i in [ left .. right ] do
+        for j in [ below .. above ] do
+
+            if not IsZero( PreCompose( VerticalDifferentialAt( B, i, j - 1), VerticalDifferentialAt( B, i, j ) ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The composition of vertical differntials at indeices", String(i),",",String(j), "is not zero" ) );
+                return false;
+            fi;
+
+            if not IsZero( PreCompose( HorizontalDifferentialAt( B, i - 1, j ), HorizontalDifferentialAt( B, i, j ) ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The composition of horizontal differntials at indeices", String(i),",",String(j), "is not zero" ) );
+                return false;
+            fi;
+            
+            if not IsWellDefined( ObjectAt( B, i, j ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The object at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                return false;
+            fi;
+            
+            if not IsWellDefined( VerticalDifferentialAt( B, i, j ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The vertical diff at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                return false;
+            fi;
+            
+            if not IsWellDefined( HorizontalDifferentialAt( B, i, j ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The Horizontal diff at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                return false;
+            fi;
+
+            if not IsCongruentForMorphisms( 
+                        PreCompose( VerticalDifferentialAt( B, i, j ), HorizontalDifferentialAt( B, i, j + 1 ) ), 
+                        AdditiveInverse( PreCompose( HorizontalDifferentialAt( B, i, j ), VerticalDifferentialAt( B, i + 1, j ) ) ) ) then
+                        AddToReasons( Concatenation( "IsWellDefined: problem at squar whose source morphisms are at indices", String( i ), String( j ) ) );
+                        return false;
+            fi;
+        od;
+    od;
+    return true;
+end );
+
+InstallMethod( IsWellDefined,
+            [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexMorphism, IsInt, IsInt, IsInt, IsInt ],
+    function( phi, left, right, below, above )
+    local S, R, i, j;
+    S := Source( phi );
+    R := Range( phi );
+
+    if not IsWellDefined( S, left, right, below, above ) then
+        AddToReasons( "IsWellDefined: The source is not well-defined in the given interval" );
+    fi;
+
+    if not IsWellDefined( R, left, right, below, above ) then
+        AddToReasons( "IsWellDefined: The range is not well-defined in the given interval" );
+    fi;
+
+    for i in [ left .. right ] do 
+        for j in [ below .. above ] do
+
+            if not IsWellDefined( MorphismAt( phi, i, j ) ) then
+                AddToReasons( Concatenation( "IsWellDefined: The morphism at indices", String( i ), ",",String( j ), " is not well-defined" ) );
+                return false;
+            fi;
+
+            if not IsCongruentForMorphisms(
+                PreCompose( MorphismAt( phi, i, j), HorizontalDifferentialAt( R, i, j ) ),
+                PreCompose( HorizontalDifferentialAt( S, i, j ), MorphismAt( phi, i + 1, j ) )
+            ) then
+
+            AddToReasons( Concatenation( "IsWellDefined: Problem at horizontal compatibility of the bicomplex morphism at indices", String( i ),",",String( j ) ) );
+            return false;
+
+            fi;
+
+            if not IsCongruentForMorphisms(
+                PreCompose( MorphismAt( phi, i, j), VerticalDifferentialAt( R, i, j ) ),
+                PreCompose( VerticalDifferentialAt( S, i, j ), MorphismAt( phi, i , j + 1 ) )
+            ) then
+
+            AddToReasons( Concatenation( "IsWellDefined: Problem at vertical compatibility of the bicomplex morphism at indices", String( i ),",",String( j ) ) );
+            return false;
+
+            fi;
+        od;
+    od;
+
+    return true;
+
+end );
+
+InstallMethod( IsWellDefined,
+        [ IsCapCategoryBicomplexCell and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( B, left, right, below, above )
+    local HoCat, cat, CohCat, convert, is_well_defined;
+
+    HoCat := CapCategory( B );
+    cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( HoCat ) ) );
+    CohCat := AsCategoryOfBicomplexes( CochainComplexCategory( CochainComplexCategory( cat ) ) );
+    convert := HomologicalToCohomologicalBicomplexsFunctor( HoCat, CohCat );
+    is_well_defined := IsWellDefined( ApplyFunctor( convert, B ), -right, -left, -above, -below );
+
+    if is_well_defined = false then
+        AddToReasons( Concatenation( "IsWellDefined: Because the corresponding cohomological bicomplex is not well-defined" ) );
+    fi;
+
+    return is_well_defined;
+end );
+
+InstallMethod( IsWellDefined,
+        [ IsCapCategoryBicomplexCell and IsCapCategoryHomologicalBicomplexMorphism, IsInt, IsInt, IsInt, IsInt ],
+    function( B, left, right, below, above )
+    local HoCat, cat, CohCat, convert, is_well_defined;
+
+    HoCat := CapCategory( B );
+    cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( HoCat ) ) );
+    CohCat := AsCategoryOfBicomplexes( CochainComplexCategory( CochainComplexCategory( cat ) ) );
+    convert := HomologicalToCohomologicalBicomplexsFunctor( HoCat, CohCat );
+    is_well_defined := IsWellDefined( ApplyFunctor( convert, B ), -right, -left, -above, -below );
+    if is_well_defined = false then
+        AddToReasons( Concatenation( "IsWellDefined: Because the corresponding cohomological bicomplex morphism is not well-defined" ) );
+    fi;
+    return is_well_defined;
+end );
+
 ######################################
 #
 # View, Display
