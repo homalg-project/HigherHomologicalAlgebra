@@ -792,24 +792,24 @@ InstallMethod( IsWellDefined,
             fi;
             
             if not IsWellDefined( ObjectAt( B, i, j ) ) then
-                AddToReasons( Concatenation( "IsWellDefined: The object at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                AddToReasons( Concatenation( "IsWellDefined: The object at indices ", String( i ), ",", String( j ), "is not well-defined." ) );
                 return false;
             fi;
             
             if not IsWellDefined( VerticalDifferentialAt( B, i, j ) ) then
-                AddToReasons( Concatenation( "IsWellDefined: The vertical diff at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                AddToReasons( Concatenation( "IsWellDefined: The vertical diff at indices ", String( i ), ",", String( j ), "is not well-defined." ) );
                 return false;
             fi;
             
             if not IsWellDefined( HorizontalDifferentialAt( B, i, j ) ) then
-                AddToReasons( Concatenation( "IsWellDefined: The Horizontal diff at indices", String( i ), ",", String( j ), "is not well-defined." ) );
+                AddToReasons( Concatenation( "IsWellDefined: The Horizontal diff at indices ", String( i ), ",", String( j ), "is not well-defined." ) );
                 return false;
             fi;
 
             if not IsCongruentForMorphisms( 
                         PreCompose( VerticalDifferentialAt( B, i, j ), HorizontalDifferentialAt( B, i, j + 1 ) ), 
                         AdditiveInverse( PreCompose( HorizontalDifferentialAt( B, i, j ), VerticalDifferentialAt( B, i + 1, j ) ) ) ) then
-                        AddToReasons( Concatenation( "IsWellDefined: problem at squar whose source morphisms are at indices", String( i ), String( j ) ) );
+                        AddToReasons( Concatenation( "IsWellDefined: problem at squar whose source morphisms are at indices ", String( i ), String( j ) ) );
                         return false;
             fi;
         od;
@@ -836,7 +836,7 @@ InstallMethod( IsWellDefined,
         for j in [ below .. above ] do
 
             if not IsWellDefined( MorphismAt( phi, i, j ) ) then
-                AddToReasons( Concatenation( "IsWellDefined: The morphism at indices", String( i ), ",",String( j ), " is not well-defined" ) );
+                AddToReasons( Concatenation( "IsWellDefined: The morphism at indices ", String( i ), ",",String( j ), " is not well-defined" ) );
                 return false;
             fi;
 
@@ -845,7 +845,7 @@ InstallMethod( IsWellDefined,
                 PreCompose( HorizontalDifferentialAt( S, i, j ), MorphismAt( phi, i + 1, j ) )
             ) then
 
-            AddToReasons( Concatenation( "IsWellDefined: Problem at horizontal compatibility of the bicomplex morphism at indices", String( i ),",",String( j ) ) );
+            AddToReasons( Concatenation( "IsWellDefined: Problem at horizontal compatibility of the bicomplex morphism at indices ", String( i ),",",String( j ) ) );
             return false;
 
             fi;
@@ -855,7 +855,7 @@ InstallMethod( IsWellDefined,
                 PreCompose( VerticalDifferentialAt( S, i, j ), MorphismAt( phi, i , j + 1 ) )
             ) then
 
-            AddToReasons( Concatenation( "IsWellDefined: Problem at vertical compatibility of the bicomplex morphism at indices", String( i ),",",String( j ) ) );
+            AddToReasons( Concatenation( "IsWellDefined: Problem at vertical compatibility of the bicomplex morphism at indices ", String( i ),",",String( j ) ) );
             return false;
 
             fi;
