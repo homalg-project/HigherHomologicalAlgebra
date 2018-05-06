@@ -195,6 +195,7 @@ DeclareOperation( "HomologicalToCohomologicalBicomplexsFunctor", [ IsCapCategory
 DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 DeclareAttribute( "TotalComplexFunctorial", IsCapCategoryBicomplexMorphism );
 
+DeclareOperation( "SupportInWindow", [ IsCapCategoryBicomplexCell, IsInt, IsInt, IsInt, IsInt ] );
 
 ###################################
 #

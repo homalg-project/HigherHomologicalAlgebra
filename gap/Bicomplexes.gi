@@ -900,6 +900,41 @@ InstallMethod( IsWellDefined,
     return is_well_defined;
 end );
 
+InstallMethod( SupportInWindow,
+    [ IsCapCategoryBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( B, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do 
+    for i in [ left .. right ] do
+    if IsZeroForObjects( ObjectAt( B, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+
+
+InstallMethod( SupportInWindow,
+    [ IsCapCategoryBicomplexMorphism, IsInt, IsInt, IsInt, IsInt ],
+    function( phi, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForMorphisms( MorphismAt( phi, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+	
 ######################################
 #
 # View, Display
