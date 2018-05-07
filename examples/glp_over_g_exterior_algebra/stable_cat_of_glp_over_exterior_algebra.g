@@ -140,6 +140,8 @@ S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y" );
 SetWeightsOfIndeterminates( S, [ 1, 1 ] );
 R := KoszulDualRing( S );
 lp_sym := GradedLeftPresentations( S: FinalizeCategory := false );
+
+##
 AddEpimorphismFromSomeProjectiveObject( lp_sym, 
     function( M )
     local hM, U, current_degrees;
@@ -152,6 +154,19 @@ AddEpimorphismFromSomeProjectiveObject( lp_sym,
                 TransitionMatrix( U, PositionOfTheDefaultPresentation(U), 1 )*S,
                 M );
 end, -1 );
+
+##
+AddIsProjective( lp_sym,
+    function( M )
+    local l;
+    l := Lift( IdentityMorphism( M ), EpimorphismFromSomeProjectiveObject( M ) );
+    if l = fail then
+	return false;
+    else
+	return true;
+    fi;
+end );
+
 Finalize( lp_sym );
 
 lp_ext := GradedLeftPresentations( R: FinalizeCategory := false );
@@ -189,10 +204,24 @@ LL := LFunctor( S );
 #Lb1 := ApplyFunctor( L, b[1] );
 #Display( Lb1, -6, 2 );
 
-p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1 ], S );
-P := AsGradedLeftPresentation( p, [2,2,1] );
+p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1, 5, 6 ], S );
+P := AsGradedLeftPresentation( p, [2,2,1, 5, 6] );
 RR := RFunctor( S );
 #RP := ApplyFunctor( R, P );
 #Display( Lb1, 0, 5 );
 
+##
+modules_to_stable_module := CapFunctor( "modules to stable modules", lp_sym, stable_lp_ext );
+AddObjectFunction( modules_to_stable_module, 
+	function( M )
+	local tM;
+	tM := TateResolution( M );
+	return AsStableObject( Source( CyclesAt( tM, 0 ) ) );
+	end );
+AddMorphismFunction( modules_to_stable_module,
+	function( s, f, r )
+	local tf;
+	tf := TateResolution( f );
+	return AsStableMorphism( KernelLift( Range( tf )^0, PreCompose( CyclesAt( Source( tf ), 0 ), tf[ 0 ] ) ) );
+	end );
 
