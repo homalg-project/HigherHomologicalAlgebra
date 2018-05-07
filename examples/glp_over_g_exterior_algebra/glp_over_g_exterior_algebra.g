@@ -706,13 +706,22 @@ graded_colift_lift_in_stable_category :=
     
     v := NrColumns( B );
     
+    if v <> 0 then
+    
     XX := CertainRows( sol, [ 1 .. s*v*2^l ] );
     
     XX := UnionOfColumns( List( [ 1 .. v*2^l ], i -> CertainRows( XX, [ ( i - 1 )*s + 1 .. i*s ] ) ) );
 
     XX := Sum( List( [ 1..2^l ], i-> ( R * CertainColumns( XX, [ ( i - 1 )*v + 1 .. i*v ] ) )* ring_element( basis_indices[ i ], R ) ) );
-
+    
     return GradedPresentationMorphism( Range( alpha_ ), DecideZeroRows( XX, B ), Range( beta_ ) );
+
+    else
+    
+    return ZeroMorphism(  Range( alpha_ ), Range( beta_ ) );
+    
+    fi;
+    
 end;
 
 create_random_object := function( m, n, R )
