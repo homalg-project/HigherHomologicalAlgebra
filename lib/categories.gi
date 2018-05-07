@@ -14,8 +14,10 @@
 #
 #################################################################
 
+DeclareGlobalVariable( "CAP_INTERNAL_NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES" );
 DeclareGlobalVariable( "NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES" );
 
+InstallValue( CAP_INTERNAL_NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec( ) );
 InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec( 
 
 IsNullHomotopic := rec( 
