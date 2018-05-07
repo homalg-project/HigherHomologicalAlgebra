@@ -180,7 +180,7 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 #! an infinite list $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ).
 #!  @Arguments phi
 #!  @Returns Infinite list
-DeclareAttribute( "HomotopyMorphisms", IsChainOrCochainMorphism );
+DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 
 #!  @EndSection
 
@@ -196,7 +196,7 @@ DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 #! The input is a chain or cochain morphism 
 #! $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
 #! @Arguments phi
-DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
+DeclareProperty( "IsNullHomotopic", IsCapCategoryMorphism );
 
 #!  @EndSection
 

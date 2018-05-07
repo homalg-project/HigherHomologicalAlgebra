@@ -23,16 +23,16 @@ InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec(
 IsNullHomotopic := rec( 
 
 installation_name := "IsNullHomotopic", 
-filter_list := [ IsChainOrCochainMorphism ],
+filter_list := [ "morphism" ],
 cache_name := "IsNullHomotopic",
 return_type := "bool" ),
 
 HomotopyMorphisms := rec( 
 
 installation_name := "HomotopyMorphisms", 
-filter_list := [ IsChainOrCochainMorphism ],
+filter_list := [ "morphism" ],
 cache_name := "HomotopyMorphisms",
-return_type := IsInfList ),
+return_type := [ IsInfList ] ),
 
 ) );
 
