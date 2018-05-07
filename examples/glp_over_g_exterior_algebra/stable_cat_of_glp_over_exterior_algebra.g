@@ -259,16 +259,27 @@ AddMorphismFunction( modules_to_stable_module,
 	return AsStableMorphism( KernelLift( Range( tf )^0, PreCompose( CyclesAt( Source( tf ), 0 ), tf[ 0 ] ) ) );
 	end );
 
-reduction_natural_transformation :=  
+DeclareAttribute( "iso_to_reduced_stable_module", IsStableCategoryObject );
+DeclareAttribute( "iso_from_reduced_stable_module", IsStableCategoryObject );
+
+InstallMethod( iso_to_reduced_stable_module,
+            [ IsStableCategoryObject ],
     function( M )
     local m;
     m := is_reduced_graded_module( UnderlyingUnstableObject( M ) );
     if m = true then
         return IdentityMorphism( M );
     else
-        return PreCompose( AsStableMorphism( CokernelProjection( m[ 2 ] ) ), reduction_natural_transformation( AsStableObject( CokernelObject( m[ 2 ] ) ) ) );
+        return PreCompose( AsStableMorphism( CokernelProjection( m[ 2 ] ) ), iso_to_reduced_stable_module( AsStableObject( CokernelObject( m[ 2 ] ) ) ) );
     fi;
-    end;
+end );
+
+InstallMethod( iso_from_reduced_stable_module,
+            [ IsStableCategoryObject ],
+    function( M )
+    return Inverse( iso_to_reduced_stable_module( M ) );
+end );
+
 ##
 as_stable_functor := CapFunctor( "as stable functor", graded_lp_cat_ext, stable_lp_cat_ext );
 AddObjectFunction( as_stable_functor, AsStableObject );
@@ -277,18 +288,13 @@ AddMorphismFunction( as_stable_functor,
 	return AsStableMorphism( f );
 end );
 
-# Gamma
-m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], A );
-n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], A );
-M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
-N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
-#b := graded_basis_of_external_hom(M,N);
-LL := LFunctor( S );
+##
+#LL := LFunctor( S );
 #Lb1 := ApplyFunctor( L, b[1] );
 #Display( Lb1, -6, 2 );
 
-p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1, 5, 6 ], S );
-P := AsGradedLeftPresentation( p, [2,2,1, 5, 6] );
+p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 1, 3, 5 ], S );
+P := AsGradedLeftPresentation( p, [ 1, 3, 5 ] );
 RR := RFunctor( S );
 #RP := ApplyFunctor( R, P );
 #Display( Lb1, 0, 5 );

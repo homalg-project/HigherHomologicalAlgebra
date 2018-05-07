@@ -8,8 +8,8 @@ MakeReadWriteGlobal("WithComments");
 WithComments := true;
 
 ##
-DeclareOperation( "HomalgTransposedMat", 
-                  [ IsHomalgMatrix ] );
+DeclareAttribute( "HomalgTransposedMat", IsHomalgMatrix );
+
 InstallMethod( HomalgTransposedMat, 
                 [ IsHomalgMatrix ], 
 function( M )
