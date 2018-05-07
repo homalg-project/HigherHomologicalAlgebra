@@ -35,6 +35,18 @@ compute_lifts_in_chains :=
 	  fi;
 end;
 
+compute_lifts_in_cochains := 
+        function( alpha, beta )
+        local cochains_cat, chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+        cochains_cat := CapCategory( alpha );
+        cat := UnderlyingCategory( cochains_cat );
+        chains_cat := ChainComplexCategory( cat );
+        cochains_to_chains := CochainToChainComplexFunctor( cochains_cat, chains_cat );
+        chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, cochains_cat );
+        l := compute_lifts_in_chains( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+        return ApplyFunctor( chains_to_cochains, l );
+end;
+
 compute_colifts_in_chains := 
 	function( alpha, beta )
 	  local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_N_M, internal_hom_alpha_id_M, k_internal_hom_alpha_id_M_0, beta_1, lift;
@@ -68,7 +80,19 @@ compute_colifts_in_chains :=
 
 end;
 
-generators_of_hom := 
+compute_colifts_in_cochains := 
+        function( alpha, beta )
+        local cochains_cat, chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+        cochains_cat := CapCategory( alpha );
+        cat := UnderlyingCategory( cochains_cat );
+        chains_cat := ChainComplexCategory( cat );
+        cochains_to_chains := CochainToChainComplexFunctor( cochains_cat, chains_cat );
+        chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, cochains_cat );
+        l := compute_colifts_in_chains( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+        return ApplyFunctor( chains_to_cochains, l );
+end;
+
+generators_of_hom_for_chains := 
     function( C, D )
     local chains, H, kernel_mor_of_H, kernel_obj_of_H, morphisms_C_to_D, morphisms_from_R_to_kernel, morphisms_from_T_to_H, T;
     chains := CapCategory( C );
@@ -79,6 +103,18 @@ generators_of_hom :=
     T := TensorUnit( chains );
     morphisms_from_T_to_H := List( morphisms_from_R_to_kernel, m -> ChainMorphism( T, H, [ PreCompose( m, kernel_mor_of_H) ], 0 ) );
     return List( morphisms_from_T_to_H, m-> InternalHomToTensorProductAdjunctionMap( C, D, m ) );
+end;
+
+generators_of_hom_for_cochains := 
+        function( C, D )
+        local cochains_cat, chains_cat, cat, cochains_to_chains, chains_to_cochains, l, m;
+        cochains_cat := CapCategory( C );
+        cat := UnderlyingCategory( cochains_cat );
+        chains_cat := ChainComplexCategory( cat );
+        cochains_to_chains := CochainToChainComplexFunctor( cochains_cat, chains_cat );
+        chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, cochains_cat );
+        l := generators_of_hom_for_chains( ApplyFunctor( cochains_to_chains, C ), ApplyFunctor( cochains_to_chains, D ) );
+        return List( l, m -> ApplyFunctor( chains_to_cochains, m ) );
 end;
 
 compute_homotopy_chain_morphisms_for_null_homotopic_morphism := 
@@ -101,7 +137,21 @@ compute_homotopy_chain_morphisms_for_null_homotopic_morphism :=
     # Here: l[n]: B[n] --> C[n+1], n in Z.
 end;
 
-quit;
+compute_homotopy_cochain_morphisms_for_null_homotopic_morphism := 
+        function( f )
+        local cochains_cat, chains_cat, cat, cochains_to_chains, list;
+        cochains_cat := CapCategory( f );
+        cat := UnderlyingCategory( cochains_cat );
+        chains_cat := ChainComplexCategory( cat );
+        cochains_to_chains := CochainToChainComplexFunctor( cochains_cat, chains_cat );
+        list := compute_homotopy_chain_morphisms_for_null_homotopic_morphism( ApplyFunctor( cochains_to_chains, f ) );
+        if list = fail then
+            return fail;
+        else
+            return MapLazy( IntegersList, n -> list[ -n ], 1 );
+        fi;
+end;
+
 ##################################
 
 # R := HomalgFieldOfRationals( );
@@ -115,12 +165,22 @@ AddEpimorphismFromSomeProjectiveObject( cat, CoverByFreeModule );
 SetIsAbelianCategoryWithEnoughProjectives( cat, true );
 Finalize( cat );
 
+# constructing the chain complex category of left presentations over R
 chains := ChainComplexCategory( cat : FinalizeCategory := false );
 AddLift( chains, compute_lifts_in_chains );
 AddColift( chains, compute_colifts_in_chains );
 AddIsNullHomotopic( chains, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
 AddHomotopyMorphisms( chains, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
 Finalize( chains );
+
+# constructing the cochain complex category of left presentations over R
+cochains := CochainComplexCategory( cat : FinalizeCategory := false );
+AddLift( cochains, compute_lifts_in_cochains );
+AddColift( cochains, compute_colifts_in_cochains );
+AddIsNullHomotopic( cochains, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( cochains, compute_homotopy_cochain_morphisms_for_null_homotopic_morphism );
+Finalize( cochains );
+
 
 #################################
 
