@@ -191,13 +191,14 @@ DeclareAttribute( "HomotopyMorphisms", IsChainOrCochainMorphism );
 #!  is not bounded an error is raised. 
 #!  @Arguments phi
 DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
-#!  @EndSection
 
 #! @Description
 #! The input is a chain or cochain morphism 
 #! $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
 #! @Arguments phi
 DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
+
+#!  @EndSection
 
 #!  @Section Operations
 
@@ -295,5 +296,3 @@ DeclareAttribute( "FAL_BOUND", IsChainOrCochainMorphism );
 DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
 
 DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
-
-

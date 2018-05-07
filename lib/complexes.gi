@@ -1024,9 +1024,27 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
   fi;
 
-  SetComputedObjectAts( complex, List( ComputedObjectAts( C ), function( u ) if IsInt( u ) then return u - i; else return u; fi; end ) );
+  SetComputedObjectAts( complex, List( ComputedObjectAts( C ), 
+            function( u ) 
+            if IsInt( u ) then 
+              return u - i; 
+            else 
+              return u; 
+            fi; 
+            end ) );
 
-  SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), function( u ) if IsInt( u ) then return u - i; else return (-1)^i*u; fi; end ) );
+  SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), 
+            function( u ) 
+            if IsInt( u ) then 
+              return u - i; 
+            else
+              if i mod 2 = 0 then
+                return u; 
+              else
+                return AdditiveInverse( u );
+              fi;
+            fi; 
+            end ) );
 
   AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
 

@@ -1029,12 +1029,16 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES,
                  fi;
               fi;
 
-      H := function( i, j )
+        H := function( i, j )
               return TensorProductOnMorphisms( C^i, IdentityMorphism( D[ j ] ) );
            end;
 
-      V := function( i, j )
-              return (-1)^i*TensorProductOnMorphisms( IdentityMorphism( C[ i ] ), D^j );
+        V := function( i, j )
+            if i mod 2 = 0 then
+                return TensorProductOnMorphisms( IdentityMorphism( C[ i ] ), D^j );
+            else
+                return AdditiveInverse( TensorProductOnMorphisms( IdentityMorphism( C[ i ] ), D^j ) );
+            fi;
            end;
 
       d := DoubleChainComplex( UnderlyingCategory( category ), H, V );
@@ -1068,9 +1072,13 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES,
                  fi;
               fi;
 
-      H := function( i, j )
-              return ( -1 )^( i + j  + 1 ) * InternalHomOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) );
-           end;
+        H := function( i, j )
+            if ( i + j  + 1 ) mod 2 = 0 then 
+                return  InternalHomOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) );
+            else
+                return AdditiveInverse( InternalHomOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) ) );
+            fi;
+            end;
 
       V := function( i, j )
               return InternalHomOnMorphisms( IdentityMorphism( C[ -i ] ), D^j );
@@ -1212,12 +1220,16 @@ InstallGlobalFunction( ADD_BRAIDING_FOR_CHAINS,
                                                           function( i )
                                                           return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
                                                                        function( j )
-                                                                         if i = m - j then 
-                                                                         return (-1)^i*Braiding( a[ i ], b[ m - i ] );
-                                                                         else
-                                                                         return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( tt, j, m - j ) );
-                                                                         fi;
-                                                                         end );
+                                                                        if i = m - j then
+                                                                            if i mod 2 = 0 then
+                                                                                return Braiding( a[ i ], b[ m - i ] );
+                                                                            else
+                                                                                return AdditiveInverse( Braiding( a[ i ], b[ m - i ] ) );
+                                                                            fi;
+                                                                        else
+                                                                            return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( tt, j, m - j ) );
+                                                                        fi;
+                                                                        end );
                                                           end );
                                   fi;
                                       

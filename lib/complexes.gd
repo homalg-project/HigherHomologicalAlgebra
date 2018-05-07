@@ -413,7 +413,7 @@ KeyDependentOperation( "GoodTruncationAbove", IsCochainComplex, IsInt, ReturnTru
 
 #! @Description
 #! @BeginLatexOnly
-#! Let $C^\bullet$ be cochain complex. A good truncation of $C^\bullet$ above $n$ is the quotient cochain 
+#! Let $C^\bullet$ be cochain complex. A good truncation of $C^\bullet$ below $n$ is the quotient cochain 
 #! complex $\tau^{>n}C^\bullet=C^\bullet/\tau^{\leq n}C^\bullet$.
 #!  It can be shown that $H^i(\tau^{>n}C^\bullet)=0$ for $i\leq n$
 #! and $H^i(\tau^{>n}C^\bullet)=H_i( C^\bullet)$ for $i>n$.
