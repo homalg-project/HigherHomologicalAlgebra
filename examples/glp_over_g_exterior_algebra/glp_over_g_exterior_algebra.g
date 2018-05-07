@@ -580,18 +580,21 @@ end;
 
 is_reduced_graded_module := 
     function( GM )
-    local R, F, b, f, l,p;
+    local R, F, b, fs, ls, ps, epi, degrees;
     R := UnderlyingHomalgRing( GM );
     F := FreeLeftPresentation( 1, R );
     b := nongraded_basis_of_external_hom(GM, F );
     if not ForAny( b, IsEpimorphism ) then 
         return true;
     else
-        f := b[ PositionProperty(b, IsEpimorphism ) ];
-        l := EntriesOfHomalgMatrix( UnderlyingMatrix( f ) );
-        p := PositionProperty( l, e -> Inverse( e ) <> fail );
-        F := GradedFreeLeftPresentation( 1, R, [ GeneratorDegrees( GM )[ p ] ] );
-        return [ false, Lift( IdentityMorphism( F ), compute_degree_zero_part( GM, F, f ) ) ];
+        ps := PositionsProperty( b, IsEpimorphism );
+        fs := List( ps, p -> b[ p ] );
+        ls := List( fs, f -> EntriesOfHomalgMatrix( UnderlyingMatrix( f ) ) );
+        ps := List( ls, l -> PositionProperty( l, e -> Inverse( e ) <> fail ) );
+        degrees := List( ps, p -> GeneratorDegrees( GM )[ p ] );
+        F := GradedFreeLeftPresentation( Length( degrees ), R, degrees );
+        epi := compute_degree_zero_part( GM, F, MorphismBetweenDirectSums( [ fs ] ) );
+        return [ false, Lift( IdentityMorphism( F ), epi ) ];
     fi;
 end;
 

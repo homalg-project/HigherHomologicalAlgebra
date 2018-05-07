@@ -1,5 +1,6 @@
 LoadPackage( "StableCategoriesForCAP" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_algebra.g" );
+ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/complexes_of_graded_left_presentations_over_graded_polynomial_ring.g" );
 
 BindGlobal( "ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA",
 
@@ -135,14 +136,29 @@ od;
 return basis;
 end;
 
-LoadPackage( "BBGG" );
-S := GradedRing( HomalgFieldOfRationalsInSingular( )*"x,y" );
-SetWeightsOfIndeterminates( S, [ 1, 1 ] );
-R := KoszulDualRing( S );
-lp_sym := GradedLeftPresentations( S: FinalizeCategory := false );
+R := HomalgFieldOfRationalsInSingular()*"x,y";
+S := GradedRing( R );
+A := KoszulDualRing( S );
 
-##
-AddEpimorphismFromSomeProjectiveObject( lp_sym, 
+lp_cat_sym := LeftPresentations( R );
+
+graded_lp_cat_sym := GradedLeftPresentations( S : FinalizeCategory := false );
+
+AddEvaluationMorphismWithGivenSource( graded_lp_cat_sym, 
+    function( a, b, s )
+    local mor;
+    mor := EvaluationMorphismWithGivenSource( UnderlyingPresentationObject( a ), UnderlyingPresentationObject( b ), UnderlyingPresentationObject( s ) );
+    return GradedPresentationMorphism( s, UnderlyingMatrix( mor )*S, b );
+end );
+
+AddCoevaluationMorphismWithGivenRange( graded_lp_cat_sym, 
+    function( a, b, r )
+    local mor;
+    mor := CoevaluationMorphismWithGivenRange( UnderlyingPresentationObject( a ), UnderlyingPresentationObject( b ), UnderlyingPresentationObject( r ) );
+    return GradedPresentationMorphism( a, UnderlyingMatrix( mor )*S, r );
+end );
+
+AddEpimorphismFromSomeProjectiveObject( graded_lp_cat_sym, 
     function( M )
     local hM, U, current_degrees;
     hM := AsPresentationInHomalg( M );
@@ -156,7 +172,7 @@ AddEpimorphismFromSomeProjectiveObject( lp_sym,
 end, -1 );
 
 ##
-AddIsProjective( lp_sym,
+AddIsProjective( graded_lp_cat_sym,
     function( M )
     local l;
     l := Lift( IdentityMorphism( M ), EpimorphismFromSomeProjectiveObject( M ) );
@@ -167,10 +183,43 @@ AddIsProjective( lp_sym,
     fi;
 end );
 
-Finalize( lp_sym );
+Finalize( graded_lp_cat_sym );
 
-lp_ext := GradedLeftPresentations( R: FinalizeCategory := false );
-AddEpimorphismFromSomeProjectiveObject( lp_ext, 
+# constructing the chain complex category of left presentations over R
+chains_lp_cat_sym := ChainComplexCategory( lp_cat_sym : FinalizeCategory := false );
+AddLift( chains_lp_cat_sym, compute_lifts_in_chains );
+AddColift( chains_lp_cat_sym, compute_colifts_in_chains );
+AddIsNullHomotopic( chains_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( chains_lp_cat_sym, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
+Finalize( chains_lp_cat_sym );
+
+# constructing the cochain complex category of left presentations over R
+cochains_lp_cat_sym := CochainComplexCategory( lp_cat_sym : FinalizeCategory := false );
+AddLift( cochains_lp_cat_sym, compute_lifts_in_cochains );
+AddColift( cochains_lp_cat_sym, compute_colifts_in_cochains );
+AddIsNullHomotopic( cochains_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( cochains_lp_cat_sym, compute_homotopy_cochain_morphisms_for_null_homotopic_morphism );
+Finalize( cochains_lp_cat_sym );
+
+# constructing the chain complex category of graded left presentations over R
+chains_graded_lp_cat_sym := ChainComplexCategory( graded_lp_cat_sym : FinalizeCategory := false );
+AddLift( chains_graded_lp_cat_sym, compute_lifts_in_chains );
+AddColift( chains_graded_lp_cat_sym, compute_colifts_in_chains );
+AddIsNullHomotopic( chains_graded_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( chains_graded_lp_cat_sym, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
+Finalize( chains_graded_lp_cat_sym );
+
+# constructing the cochain complex category of graded left presentations over R
+cochains_graded_lp_cat_sym := CochainComplexCategory( graded_lp_cat_sym : FinalizeCategory := false );
+AddLift( cochains_graded_lp_cat_sym, compute_lifts_in_cochains );
+AddColift( cochains_graded_lp_cat_sym, compute_colifts_in_cochains );
+AddIsNullHomotopic( cochains_graded_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
+AddHomotopyMorphisms( cochains_graded_lp_cat_sym, compute_homotopy_cochain_morphisms_for_null_homotopic_morphism );
+Finalize( cochains_graded_lp_cat_sym );
+
+graded_lp_cat_ext := GradedLeftPresentations( A: FinalizeCategory := false );
+
+AddEpimorphismFromSomeProjectiveObject( graded_lp_cat_ext, 
     function( M )
     local hM, U, current_degrees;
     hM := AsPresentationInHomalg( M );
@@ -178,40 +227,25 @@ AddEpimorphismFromSomeProjectiveObject( lp_ext,
     U := UnderlyingModule( hM );
     current_degrees := DegreesOfGenerators( hM );
     return GradedPresentationMorphism( 
-                GradedFreeLeftPresentation( Length( current_degrees), R, current_degrees ),
-                TransitionMatrix( U, PositionOfTheDefaultPresentation(U), 1 )*R,
+                GradedFreeLeftPresentation( Length( current_degrees), A, current_degrees ),
+                TransitionMatrix( U, PositionOfTheDefaultPresentation(U), 1 )*A,
                 M );
-end, -1 );  
-SetIsFrobeniusCategory( lp_ext, true );
-ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( lp_ext );
-TurnAbelianCategoryToExactCategory( lp_ext );
-SetTestFunctionForStableCategories(lp_ext, CanBeFactoredThroughExactProjective );
-Finalize( lp_ext );
+end, -1 );
 
-stable_lp_ext := StableCategory( lp_ext );
-SetIsTriangulatedCategory( stable_lp_ext, true );
-ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_lp_ext );
-AsTriangulatedCategory( stable_lp_ext );
-Finalize( stable_lp_ext );
+SetIsFrobeniusCategory( graded_lp_cat_ext, true );
+ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( graded_lp_cat_ext );
+TurnAbelianCategoryToExactCategory( graded_lp_cat_ext );
+SetTestFunctionForStableCategories(graded_lp_cat_ext, CanBeFactoredThroughExactProjective );
+Finalize( graded_lp_cat_ext );
 
-# Gamma
-m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], R );
-n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], R );
-M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
-N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
-#b := graded_basis_of_external_hom(M,N);
-LL := LFunctor( S );
-#Lb1 := ApplyFunctor( L, b[1] );
-#Display( Lb1, -6, 2 );
-
-p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1, 5, 6 ], S );
-P := AsGradedLeftPresentation( p, [2,2,1, 5, 6] );
-RR := RFunctor( S );
-#RP := ApplyFunctor( R, P );
-#Display( Lb1, 0, 5 );
+stable_lp_cat_ext := StableCategory( graded_lp_cat_ext );
+SetIsTriangulatedCategory( stable_lp_cat_ext, true );
+ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_lp_cat_ext );
+AsTriangulatedCategory( stable_lp_cat_ext );
+Finalize( stable_lp_cat_ext );
 
 ##
-modules_to_stable_module := CapFunctor( "modules to stable modules", lp_sym, stable_lp_ext );
+modules_to_stable_module := CapFunctor( "modules to stable modules", graded_lp_cat_sym, stable_lp_cat_ext );
 AddObjectFunction( modules_to_stable_module, 
 	function( M )
 	local tM;
@@ -225,3 +259,36 @@ AddMorphismFunction( modules_to_stable_module,
 	return AsStableMorphism( KernelLift( Range( tf )^0, PreCompose( CyclesAt( Source( tf ), 0 ), tf[ 0 ] ) ) );
 	end );
 
+reduction_natural_transformation :=  
+    function( M )
+    local m;
+    m := is_reduced_graded_module( UnderlyingUnstableObject( M ) );
+    if m = true then
+        return IdentityMorphism( M );
+    else
+        return PreCompose( AsStableMorphism( CokernelProjection( m[ 2 ] ) ), reduction_natural_transformation( AsStableObject( CokernelObject( m[ 2 ] ) ) ) );
+    fi;
+    end;
+##
+as_stable_functor := CapFunctor( "as stable functor", graded_lp_cat_ext, stable_lp_cat_ext );
+AddObjectFunction( as_stable_functor, AsStableObject );
+AddMorphismFunction( as_stable_functor,
+	function( s, f, r )
+	return AsStableMorphism( f );
+end );
+
+# Gamma
+m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], A );
+n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], A );
+M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
+N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
+#b := graded_basis_of_external_hom(M,N);
+LL := LFunctor( S );
+#Lb1 := ApplyFunctor( L, b[1] );
+#Display( Lb1, -6, 2 );
+
+p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 2, 2, 1, 5, 6 ], S );
+P := AsGradedLeftPresentation( p, [2,2,1, 5, 6] );
+RR := RFunctor( S );
+#RP := ApplyFunctor( R, P );
+#Display( Lb1, 0, 5 );
