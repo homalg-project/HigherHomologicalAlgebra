@@ -1,6 +1,7 @@
 
 LoadPackage( "FrobeniusCategoriesForCAP" );
 LoadPackage( "GradedModulePresentations" );
+LoadPackage( "BBGG" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/tools.g" );
 
 BindGlobal( "ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA", 
@@ -580,10 +581,14 @@ end;
 
 is_reduced_graded_module := 
     function( GM )
-    local R, F, b, fs, ls, ps, epi, degrees;
+    local hM, hF, R, F, G, b, fs, ls, ps, epi, degrees, duplicate_free_ps;
     R := UnderlyingHomalgRing( GM );
-    F := FreeLeftPresentation( 1, R );
-    b := nongraded_basis_of_external_hom(GM, F );
+    F := GradedFreeLeftPresentation( 1, R, [ 0 ] );
+    hM := UnderlyingModule( AsPresentationInHomalg( GM ) );
+    hF := UnderlyingModule( AsPresentationInHomalg( F ) );
+    G := GetGenerators( Hom( hM, hF ) );
+    G := List( G, g -> g!.matrices.( "[ 1, 1 ]" )*R );
+    b := List( G, mat -> PresentationMorphism( UnderlyingPresentationObject(GM), mat, UnderlyingPresentationObject( F ) ) );
     if not ForAny( b, IsEpimorphism ) then 
         return true;
     else
@@ -591,7 +596,9 @@ is_reduced_graded_module :=
         fs := List( ps, p -> b[ p ] );
         ls := List( fs, f -> EntriesOfHomalgMatrix( UnderlyingMatrix( f ) ) );
         ps := List( ls, l -> PositionProperty( l, e -> Inverse( e ) <> fail ) );
-        degrees := List( ps, p -> GeneratorDegrees( GM )[ p ] );
+        duplicate_free_ps := DuplicateFreeList( ps );
+        fs := List( duplicate_free_ps, p -> fs[ Position(ps,p) ] );
+        degrees := List( duplicate_free_ps, p -> GeneratorDegrees( GM )[ p ] );
         F := GradedFreeLeftPresentation( Length( degrees ), R, degrees );
         epi := compute_degree_zero_part( GM, F, MorphismBetweenDirectSums( [ fs ] ) );
         return [ false, Lift( IdentityMorphism( F ), epi ) ];
