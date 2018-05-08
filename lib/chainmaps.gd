@@ -252,6 +252,13 @@ DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
 KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 #!  @Description
+#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the morphism
+#! between the kernels in index $n$.
+#!  @Arguments phi, n
+#!  @Returns a morphism
+KeyDependentOperation( "CyclesFunctorialAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+
+#!  @Description
 #!  The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #!  @Arguments phi, n
 #!  @Returns an integer

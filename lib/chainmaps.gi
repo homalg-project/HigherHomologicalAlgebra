@@ -1041,6 +1041,13 @@ InstallMethod( IsQuasiIsomorphism,
 end );
 
 ##
+InstallMethod( CyclesFunctorialAtOp,
+        [ IsChainOrCochainMorphism, IsInt ],
+  function( phi, n )
+  return KernelLift( Range( phi )^n, PreCompose( CyclesAt( Source( phi ), n ), phi[ n ] ) );
+end );
+
+##
 InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism, IsInt, IsInt ],
    function( phi, min, max )
