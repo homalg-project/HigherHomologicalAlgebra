@@ -136,6 +136,35 @@ od;
 return basis;
 end;
 
+DeclareAttribute( "iso_to_reduced_stable_module", IsStableCategoryObject );
+DeclareAttribute( "iso_from_reduced_stable_module", IsStableCategoryObject );
+
+InstallMethod( iso_to_reduced_stable_module,
+            [ IsStableCategoryObject ],
+    function( M )
+    local m, hM, s, rM, cM, iso;
+    cM := UnderlyingUnstableObject( M );
+    m := is_reduced_graded_module( cM );
+    if m = true then
+        hM := AsPresentationInHomalg( cM );
+        ByASmallerPresentation( hM );
+        s := PositionOfTheDefaultPresentation( hM );
+        rM := AsGradedLeftPresentation( MatrixOfRelations( hM ), DegreesOfGenerators( hM ) );
+        return AsStableMorphism( GradedPresentationMorphism( cM, TransitionMatrix( hM, 1, s ), rM ) );
+    else
+        iso := PreCompose( AsStableMorphism( CokernelProjection( m[ 2 ] ) ), iso_to_reduced_stable_module( AsStableObject( CokernelObject( m[ 2 ] ) ) ) );
+        Assert( 3, IsIsomorphism( iso ) );
+        SetIsIsomorphism( iso, true );
+        return iso;
+    fi;
+end );
+
+InstallMethod( iso_from_reduced_stable_module,
+            [ IsStableCategoryObject ],
+    function( M )
+    return Inverse( iso_to_reduced_stable_module( M ) );
+end );
+
 R := HomalgFieldOfRationalsInSingular()*"x,y";
 S := GradedRing( R );
 A := KoszulDualRing( S );
@@ -258,27 +287,6 @@ AddMorphismFunction( modules_to_stable_module,
 	tf := TateResolution( f );
 	return AsStableMorphism( KernelLift( Range( tf )^0, PreCompose( CyclesAt( Source( tf ), 0 ), tf[ 0 ] ) ) );
 	end );
-
-DeclareAttribute( "iso_to_reduced_stable_module", IsStableCategoryObject );
-DeclareAttribute( "iso_from_reduced_stable_module", IsStableCategoryObject );
-
-InstallMethod( iso_to_reduced_stable_module,
-            [ IsStableCategoryObject ],
-    function( M )
-    local m;
-    m := is_reduced_graded_module( UnderlyingUnstableObject( M ) );
-    if m = true then
-        return IdentityMorphism( M );
-    else
-        return PreCompose( AsStableMorphism( CokernelProjection( m[ 2 ] ) ), iso_to_reduced_stable_module( AsStableObject( CokernelObject( m[ 2 ] ) ) ) );
-    fi;
-end );
-
-InstallMethod( iso_from_reduced_stable_module,
-            [ IsStableCategoryObject ],
-    function( M )
-    return Inverse( iso_to_reduced_stable_module( M ) );
-end );
 
 ##
 as_stable_functor := CapFunctor( "as stable functor", graded_lp_cat_ext, stable_lp_cat_ext );
