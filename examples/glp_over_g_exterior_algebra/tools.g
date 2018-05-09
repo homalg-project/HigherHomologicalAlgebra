@@ -34,10 +34,6 @@ InstallMethod( standard_list_of_basis_indices,
 function ( R )
 local f, new_l,l, n;
 
-if WithComments = true then
-    Print( "standard_list_of_basis_indices\n" );
-fi;
-
 n := Length( IndeterminatesOfExteriorRing( R ) ) -1;
 
 l := Combinations( [ 0 ..n ] );
@@ -197,9 +193,9 @@ return Iterated( List( basis_indices, function( tau )
 end );
 
 ##
-DeclareGlobalFunction( "FLeft" );
-InstallGlobalFunction( FLeft,
-
+DeclareOperationWithCache( "FLeft", [ IsList, IsHomalgMatrix ] );
+InstallMethodWithCache( FLeft,
+            [ IsList, IsHomalgMatrix ],
 function( sigma, A )
 local p, basis_indices;
 
@@ -264,9 +260,9 @@ return Iterated( List( basis_indices, function( tau )
 end );
 
 ##
-DeclareGlobalFunction( "FRight" );
-InstallGlobalFunction( FRight,
-
+DeclareOperationWithCache( "FRight", [ IsList, IsHomalgMatrix ] );
+InstallMethodWithCache( FRight,
+        [ IsList, IsHomalgMatrix ],
 function( sigma, A )
 local p, basis_indices;
 
