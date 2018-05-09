@@ -306,3 +306,28 @@ P := AsGradedLeftPresentation( p, [ 1, 3, 5 ] );
 RR := RFunctor( S );
 #RP := ApplyFunctor( R, P );
 #Display( Lb1, 0, 5 );
+
+# The output here is stable module that correspondes to O(k) [ the sheafification of S(k) ]
+KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( TwistedStructureBundleOp,
+	[ IsHomalgGradedRing, IsInt ],
+	function( Sym, k )
+	local F;
+    F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
+    return AsStableObject( Source( CyclesAt( TateResolution( F ), 0 ) ) );
+end );
+
+KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( TwistedCotangentBundleOp,
+	[ IsHomalgGradedRing, IsInt ],
+	function( A, k )
+	local n, F, hF, hM;
+	n := Length( IndeterminatesOfExteriorRing( A ) );
+	F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
+	hF := AsPresentationInHomalg( F );
+	hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
+	hM := UnderlyingObject( hM );
+	return AsStableObject( AsPresentationInCAP( hM ) );
+end );
+
+
