@@ -343,3 +343,23 @@ InstallMethod( KoszulSyzygyModuleOp,
       	return CokernelObject( koszul_resolution^( -k - 2 ) );
 end );
 
+KeyDependentOperation( "TwistFunctor", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( TwistFunctorOp,
+	[ IsHomalgGradedRing, IsInt ],
+	function( S, n )
+	local cat, F;
+	cat := GradedLeftPresentations( S );
+	F := CapFunctor( Concatenation( String( n ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
+	AddObjectFunction( F,
+		function( M )
+		return AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - n ) );
+		end );
+	AddMorphismFunction( F,
+		function( source, f, range )
+		return GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
+		end );
+	return F;
+end );
+
+	
+
