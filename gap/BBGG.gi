@@ -88,6 +88,7 @@ InstallMethod( RFunctor,
         function( M )
         local hM, diff, d, C;
         hM := AsPresentationInHomalg( M );
+        SetPositionOfTheDefaultPresentation( hM, 1 );
         diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
         C := CochainComplex( cat_lp_ext , diff );
         d := ShallowCopy( GeneratorDegrees( M ) );
@@ -113,21 +114,21 @@ InstallMethod( RFunctor,
         hM := AsPresentationInHomalg( M );
         hN := AsPresentationInHomalg( N );
         mors := MapLazy( IntegersList, 
-                function( n )
-                local hMn, hNn, hMn_, hNn_, iMn, iNn, l;
-                hMn := HomogeneousPartOverCoefficientsRing( n, hM );
-                hNn := HomogeneousPartOverCoefficientsRing( n, hN );
-                G1 := GetGenerators( hMn );
-                G2 := GetGenerators( hNn );
+                function( k )
+                local hMk, hNk, hMk_, hNk_, iMk, iNk, l;
+                hMk := HomogeneousPartOverCoefficientsRing( k, hM );
+                hNk := HomogeneousPartOverCoefficientsRing( k, hN );
+                G1 := GetGenerators( hMk );
+                G2 := GetGenerators( hNk );
                 if Length( G1 ) = 0 or Length( G2 ) = 0 then 
-                    return ZeroMorphism( new_source[ n ], new_range[ n ] );
+                    return ZeroMorphism( new_source[ k ], new_range[ k ] );
                 fi;
-                hMn_ := UnionOfRows( G1 )*S;
-                hNn_ := UnionOfRows( G2 )*S;
-                iMn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMn_ ), S, List( [1..NrRows( hMn_ ) ], i -> n ) ), hMn_, M );
-                iNn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNn_ ), S, List( [1..NrRows( hNn_ ) ], i -> n ) ), hNn_, N );
-                l := Lift( PreCompose( iMn, f ), iNn );
-                return GradedPresentationMorphism( new_source[ n ], UnderlyingMatrix( l )*KoszulDualRing( S ), new_range[ n ] );
+                hMk_ := UnionOfRows( G1 )*S;
+                hNk_ := UnionOfRows( G2 )*S;
+                iMk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMk_ ), S, List( [1..NrRows( hMk_ ) ], i -> k ) ), hMk_, M );
+                iNk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNk_ ), S, List( [1..NrRows( hNk_ ) ], i -> k ) ), hNk_, N );
+                l := Lift( PreCompose( iMk, f ), iNk );
+                return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l )*KoszulDualRing( S ), new_range[ k ] );
                 end, 1 );
         return CochainMorphism( new_source, new_range, mors );
         end );
@@ -189,28 +190,31 @@ InstallMethod( LFunctor,
 
     AddMorphismFunction( L, 
         function( new_source, f, new_range )
-        local M, N, G1, G2, hM, hN, mors;
+        local M, N, G1, G2, mors;
         M := Source( f );
         N := Range( f );
-        hM := AsPresentationInHomalg( M );
-        hN := AsPresentationInHomalg( N );
         mors := MapLazy( IntegersList, 
-                function( k )
-                local hMn, hNn, hMn_, hNn_, iMn, iNn, l;
-                hMn := HomogeneousPartOverCoefficientsRing( -k, hM );
-                hNn := HomogeneousPartOverCoefficientsRing( -k, hN );
-                G1 := GetGenerators( hMn );
-                G2 := GetGenerators( hNn );
+                 function( k )
+                local hM, hN, hMk, hNk, hMk_, hNk_, iMk, iNk, l;
+                # There is a reason to write the next two lines like this
+                # See AdjustedGenerators.
+                hM := LeftPresentationWithDegrees( UnderlyingMatrix( M ), GeneratorDegrees( M ) );
+                hN := LeftPresentationWithDegrees( UnderlyingMatrix( N ), GeneratorDegrees( N ) );
+                hMk := HomogeneousPartOverCoefficientsRing( -k, hM );
+                hNk := HomogeneousPartOverCoefficientsRing( -k, hN );
+                G1 := GetGenerators( hMk );
+                G2 := GetGenerators( hNk );
                 if Length( G1 ) = 0 or Length( G2 ) = 0 then 
                     return ZeroMorphism( new_source[ k ], new_range[ k ] );
                 fi;
-                hMn_ := UnionOfRows( G1 )* KS;
-                hNn_ := UnionOfRows( G2 )* KS;
-                iMn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMn_ ), KS, List( [1..NrRows( hMn_ ) ], i -> -k ) ), hMn_, M );
-                iNn := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNn_ ), KS, List( [1..NrRows( hNn_ ) ], i -> -k ) ), hNn_, N );
-                l := Lift( PreCompose( iMn, f ), iNn );
+                hMk_ := UnionOfRows( G1 )* KS;
+                hNk_ := UnionOfRows( G2 )* KS;
+                iMk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMk_ ), KS, List( [1..NrRows( hMk_ ) ], i -> -k ) ), hMk_, M );
+                iNk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNk_ ), KS, List( [1..NrRows( hNk_ ) ], i -> -k ) ), hNk_, N );
+                l := Lift( PreCompose( iMk, f ), iNk );
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 end, 1 );
+
         return CochainMorphism( new_source, new_range, mors );
         end );
 
