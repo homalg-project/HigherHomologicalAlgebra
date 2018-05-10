@@ -165,7 +165,7 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-R := HomalgFieldOfRationalsInSingular()*"x,y";
+R := HomalgFieldOfRationalsInSingular()*"x0,x1,x2";
 S := GradedRing( R );
 A := KoszulDualRing( S );
 
@@ -317,6 +317,7 @@ InstallMethod( TwistedStructureBundleOp,
     return AsStableObject( Source( CyclesAt( TateResolution( F ), 0 ) ) );
 end );
 
+# See Appendix of Vector Bundels over complex projective spaces
 KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
 InstallMethod( TwistedCotangentBundleOp,
 	[ IsHomalgGradedRing, IsInt ],
@@ -330,4 +331,15 @@ InstallMethod( TwistedCotangentBundleOp,
 	return AsStableObject( AsPresentationInCAP( hM ) );
 end );
 
+# See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
+KeyDependentOperation( "KoszulSyzygyModule", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( KoszulSyzygyModuleOp,
+	[ IsHomalgGradedRing, IsInt ],
+       	function( S, k )
+       	local ind, K, koszul_resolution, n;
+       	ind := IndeterminatesOfPolynomialRing( S );
+       	K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
+       	koszul_resolution := ProjectiveResolution( K );
+      	return CokernelObject( koszul_resolution^( -k - 2 ) );
+end );
 
