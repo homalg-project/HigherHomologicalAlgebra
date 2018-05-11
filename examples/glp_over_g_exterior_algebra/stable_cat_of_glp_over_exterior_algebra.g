@@ -313,8 +313,8 @@ InstallMethod( TwistedStructureBundleOp,
 	[ IsHomalgGradedRing, IsInt ],
 	function( Sym, k )
 	local F;
-    F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
-    return AsStableObject( Source( CyclesAt( TateResolution( F ), 0 ) ) );
+    	F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
+    	return Source( CyclesAt( TateResolution( F ), 0 ) );
 end );
 
 # See Appendix of Vector Bundels over complex projective spaces
@@ -328,7 +328,7 @@ InstallMethod( TwistedCotangentBundleOp,
 	hF := AsPresentationInHomalg( F );
 	hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
 	hM := UnderlyingObject( hM );
-	return AsStableObject( AsPresentationInCAP( hM ) );
+	return AsPresentationInCAP( hM );
 end );
 
 # See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
@@ -359,6 +359,51 @@ InstallMethod( TwistFunctorOp,
 		return GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
 		end );
 	return F;
+end );
+
+w_E := function(k) 
+	return ApplyFunctor( TwistFunctor( A, k ), 
+			     GradedFreeLeftPresentation( 1, A, [ Length( IndeterminatesOfExteriorRing( A ) ) ] ) ); 
+end;
+
+DeclareAttribute( "ToMorphismBetweenCotangentBundles", IsCapCategoryMorphism );
+InstallMethod( ToMorphismBetweenCotangentBundles,
+    [ IsCapCategoryMorphism ],
+    function( phi )
+    local A, n, F1, d1, k1, F2, d2, k2, i1, i2, Cotangent_bundle_1, Cotangent_bundle_2;
+
+    # Omega^i(i) correspondes to E( -n + i ) = E( -n )( i ) = w_i
+    # degree of E( -n + i ) is n - i
+    # hence i = n  - degree of w_i
+
+    A := UnderlyingHomalgRing( phi );
+    n := Length( IndeterminatesOfExteriorRing( A ) );
+
+    F1 := Source( phi );
+    if Length( GeneratorDegrees( F1 ) ) <> 1 then 
+        Error( "The source must be free of rank 1" );
+    fi;
+
+    d1 := GeneratorDegrees( F1 )[ 1 ];
+    
+    k1 := n - Int( String( d1 ) );
+
+    F2 := Range( phi );
+    if Length( GeneratorDegrees( F2 ) ) <> 1 then 
+        Error( "The range must be free of rank 1" );
+    fi;
+    
+    d2 := GeneratorDegrees( F2 )[ 1 ];
+    k2 := n - Int( String( d2 ) );
+    
+    Cotangent_bundle_1 := TwistedCotangentBundle( A, k1 );
+    Cotangent_bundle_2 := TwistedCotangentBundle( A, k2 );
+    
+    i1 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_1 );
+    i2 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_2 );
+    
+    return Lift( PreCompose( i1, phi ), i2 );
+
 end );
 
 	
