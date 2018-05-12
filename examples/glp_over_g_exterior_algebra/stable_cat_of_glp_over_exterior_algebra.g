@@ -322,13 +322,22 @@ KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, Retu
 InstallMethod( TwistedCotangentBundleOp,
 	[ IsHomalgGradedRing, IsInt ],
 	function( A, k )
-	local n, F, hF, hM;
+	local n, F, hF, hM, cM, id, i, mat;
 	n := Length( IndeterminatesOfExteriorRing( A ) );
+    if k < 0 or k > n - 1 then
+        Error( Concatenation( "Cotangent bundels are defined only for 0,1,...,", String( n - 1 ) ) );
+    fi;
 	F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
 	hF := AsPresentationInHomalg( F );
 	hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
 	hM := UnderlyingObject( hM );
-	return AsPresentationInCAP( hM );
+	cM := AsPresentationInCAP( hM );
+	mat := UnderlyingMatrix( cM );
+	id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
+	for i in [ 1 .. NrColumns( mat ) ] do
+		SetMatElm( id, i, NrColumns( mat )-i+1, One(A) );
+	od;
+	return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
 end );
 
 # See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
