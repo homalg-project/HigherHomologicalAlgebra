@@ -217,7 +217,7 @@ end );
 KeyDependentOperation( "FRightt", IsHomalgMatrix, IsInt, ReturnTrue );
 InstallMethod( FRighttOp, [ IsHomalgMatrix, IsInt ],
 function( A, m )
-local R,basis_indices, zero_matrix,d, e_sigma, sigma;
+local R, basis_indices, zero_matrix,d, e_sigma, sigma, list;
 
 if WithComments = true then
     Print( "FRighttOp of ", NrRows(A),"x", NrColumns(A)," homalg matrix and m = ", m, "\n" );
@@ -232,7 +232,7 @@ zero_matrix := HomalgZeroMatrix( NrRows( A ), NrColumns( A ), R );
 sigma := basis_indices[ m ];
 e_sigma := ring_element( sigma, R );
 
-return Iterated( List( basis_indices, function( tau )
+list := Iterated( List( basis_indices, function( tau )
                             local lambda, m;
                             
                             if ( not IsSubset( sigma, tau ) ) or ( IsSubset( tau, sigma ) and Length( tau ) > Length( sigma ) ) then 
@@ -256,7 +256,11 @@ return Iterated( List( basis_indices, function( tau )
                             return  ( ring_element( tau, R )*( ring_element( lambda, R ) )/e_sigma )*d[ m ][ 2 ];
                             
                             end ), UnionOfRows );
-                     
+    if WithComments = true then
+        Print( "FRightOp finished \n" );
+    fi;
+    
+    return list;
 end );
 
 ##
