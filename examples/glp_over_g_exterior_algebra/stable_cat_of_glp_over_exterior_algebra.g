@@ -379,7 +379,7 @@ DeclareAttribute( "ToMorphismBetweenCotangentBundles", IsCapCategoryMorphism );
 InstallMethod( ToMorphismBetweenCotangentBundles,
     [ IsCapCategoryMorphism ],
     function( phi )
-    local A, n, F1, d1, k1, F2, d2, k2, i1, i2, Cotangent_bundle_1, Cotangent_bundle_2;
+    local A, n, F1, d1, k1, F2, d2, k2, i1, i2, Cotangent_bundle_1, Cotangent_bundle_2, is_zero_obj_1, is_zero_obj_2;
 
     # Omega^i(i) correspondes to E( -n + i ) = E( -n )( i ) = w_i
     # degree of E( -n + i ) is n - i
@@ -401,12 +401,29 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
     if Length( GeneratorDegrees( F2 ) ) <> 1 then 
         Error( "The range must be free of rank 1" );
     fi;
-    
+     
     d2 := GeneratorDegrees( F2 )[ 1 ];
     k2 := n - Int( String( d2 ) );
     
-    Cotangent_bundle_1 := TwistedCotangentBundle( A, k1 );
-    Cotangent_bundle_2 := TwistedCotangentBundle( A, k2 );
+    is_zero_obj_1 := false;
+    if -1 < k1 and k1 < n then
+       	Cotangent_bundle_1 := TwistedCotangentBundle( A, k1 );
+    else
+	Cotangent_bundle_1 := ZeroObject( CapCategory( phi ) );
+	is_zero_obj_1 := true;
+    fi;
+
+    is_zero_obj_2 := false;
+    if -1 < k2 and k2 < n then
+       	Cotangent_bundle_2 := TwistedCotangentBundle( A, k2 );
+    else
+	Cotangent_bundle_2 := ZeroObject( CapCategory( phi ) );
+	is_zero_obj_2 := true;
+    fi;
+	
+    if is_zero_obj_1 or is_zero_obj_2 then
+	return ZeroMorphism( Cotangent_bundle_1, Cotangent_bundle_2 );
+    fi;
     
     i1 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_1 );
     i2 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_2 );
