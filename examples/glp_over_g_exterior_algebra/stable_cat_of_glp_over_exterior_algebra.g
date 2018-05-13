@@ -425,6 +425,10 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
 	return ZeroMorphism( Cotangent_bundle_1, Cotangent_bundle_2 );
     fi;
     
+    if IsZeroForMorphisms( phi ) then
+	return ZeroMorphism(  Cotangent_bundle_1, Cotangent_bundle_2 );
+    fi;
+
     i1 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_1 );
     i2 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_2 );
     
@@ -432,5 +436,44 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
 
 end );
 
-	
+
+to_be_named := CapFunctor( "to be named", graded_lp_cat_ext, graded_lp_cat_ext );
+AddObjectFunction( to_be_named,
+function( M )
+local mat, degrees_M, summands_M, list, d, k, n, F;
+n := Length( IndeterminatesOfExteriorRing( A ) );
+degrees_M := GeneratorDegrees( M );
+degrees_M := List( degrees_M, i -> Int( String( i ) ) );
+summands_M := List( degrees_M, d -> GradedFreeLeftPresentation(1,A,[d]) );
+list := [ ];
+for F in summands_M do 
+    d := GeneratorDegrees( F )[ 1 ];
+    
+    k := n - Int( String( d ) );
+    
+    if -1 < k and k < n then
+       	Add( list, TwistedCotangentBundle( A, k ) );
+    else
+	Add( list, ZeroObject( CapCategory( M ) ) );
+    fi;
+od;
+return DirectSum( list );
+end ); 
+
+AddMorphismFunction( to_be_named,
+function( new_source, t, new_range )
+local mat, M, N, degrees_N, degrees_M, summands_N, summands_M, L;
+mat := UnderlyingMatrix( t );
+M := Source( t );
+N := Range( t );
+degrees_M := GeneratorDegrees( M );
+degrees_N := GeneratorDegrees( N );
+degrees_M := List( degrees_M, i -> Int( String( i ) ) );
+degrees_N := List( degrees_N, i -> Int( String( i ) ) );
+summands_M := List( degrees_M, d -> GradedFreeLeftPresentation(1,A,[d]) );;
+summands_N := List( degrees_N, d -> GradedFreeLeftPresentation(1,A,[d]) );;
+L := List( [ 1 .. Length( degrees_M ) ], i -> List( [ 1 .. Length( degrees_N ) ], 
+        j -> ToMorphismBetweenCotangentBundles( GradedPresentationMorphism( summands_M[i],HomalgMatrix([ MatElm(mat,i,j)],1,1,A), summands_N[j]) ) ) );;
+return MorphismBetweenDirectSums( L );
+end );
 
