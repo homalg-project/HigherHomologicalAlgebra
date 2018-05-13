@@ -1374,7 +1374,7 @@ InstallMethod( BrutalTruncationAboveOp,
 
   TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
 
-  SetUpperBound( tr_C, n + 1 );
+  SetUpperBound( tr_C, n );
 
   return tr_C;
 
@@ -1409,7 +1409,7 @@ InstallMethod( BrutalTruncationBelowOp,
  
   TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
 
-  SetLowerBound( tr_C, n - 1 );
+  SetLowerBound( tr_C, n );
 
   return tr_C;
  
