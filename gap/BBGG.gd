@@ -12,6 +12,9 @@ DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresenta
 
 
 DeclareAttribute( "RFunctor", IsHomalgGradedRing );
+DeclareAttribute( "LFunctor", IsHomalgGradedRing );
+DeclareAttribute( "TateFunctor", IsHomalgGradedRing );
+
 DeclareAttribute( "CastelnuovoMumfordRegularity", IsCapCategoryObject );
 DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentation  );
 DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentationMorphism );

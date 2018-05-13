@@ -136,7 +136,6 @@ InstallMethod( RFunctor,
     return R;
 end );
 
-DeclareAttribute( "LFunctor", IsHomalgGradedRing );
 InstallMethod( LFunctor, 
             [ IsHomalgGradedRing ],
     function( S )
@@ -271,13 +270,13 @@ InstallMethod( TateResolution,
     return CochainMorphism( tM, tN, mors );
 end );
 
-BindGlobal( "TateTest",
+InstallMethod( TateFunctor,
+	[ IsHomalgGradedRing ],
     function( S )
     local T;
-    T := CapFunctor( "test Tate ", GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
+    T := CapFunctor( "Tate functor", GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
     AddObjectFunction( T, TateResolution );
     AddMorphismFunction( T, function( s, phi, r ) return TateResolution( phi ); end );
     return T;
 end );
 
-    
