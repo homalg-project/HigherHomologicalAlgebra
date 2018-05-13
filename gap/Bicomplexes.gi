@@ -518,23 +518,25 @@ InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES,
                                                          SetLeft_Bound( B, ActiveLowerBound( C ) );
                                                          end ) );
 
-   AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ], [ C, "FAU_BOUND" ] ], 
-                                 function( )
-                                 local l, ll, lu;
-                                 if ActiveLowerBound( C ) >= ActiveUpperBound( C ) then
-                                            SetAbove_Bound( B, 0 );
-                                            SetBelow_Bound( B, 0 );
-                                 fi;
-                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
-                                 lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
-                                 ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
-                                 AddToToDoList( ToDoListEntry( lu, function( ) 
-                                                                   SetAbove_Bound( B, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 AddToToDoList( ToDoListEntry( ll, function( ) 
-                                                                   SetBelow_Bound( B, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 end ) );
+# This code trigers computations
+# look at the demo file in BBGG examples
+#    AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ], [ C, "FAU_BOUND" ] ], 
+#                                  function( )
+#                                  local l, ll, lu;
+#                                  if ActiveLowerBound( C ) >= ActiveUpperBound( C ) then
+#                                             SetAbove_Bound( B, 0 );
+#                                             SetBelow_Bound( B, 0 );
+#                                  fi;
+#                                  l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+#                                  lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
+#                                  ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
+#                                  AddToToDoList( ToDoListEntry( lu, function( ) 
+#                                                                    SetAbove_Bound( B, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
+#                                                                    end ) );
+#                                  AddToToDoList( ToDoListEntry( ll, function( ) 
+#                                                                    SetBelow_Bound( B, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
+#                                                                    end ) );
+#                                  end ) );
 end );
 
 ######################################
