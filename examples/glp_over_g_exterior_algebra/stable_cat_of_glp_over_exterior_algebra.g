@@ -437,8 +437,8 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
 end );
 
 
-to_be_named := CapFunctor( "to be named", graded_lp_cat_ext, graded_lp_cat_ext );
-AddObjectFunction( to_be_named,
+ToMorphismBetweenCotangentBundlesFunctor := CapFunctor( "to be named", graded_lp_cat_ext, graded_lp_cat_ext );
+AddObjectFunction( ToMorphismBetweenCotangentBundlesFunctor,
 function( M )
 local mat, degrees_M, summands_M, list, d, k, n, F;
 n := Length( IndeterminatesOfExteriorRing( A ) );
@@ -465,7 +465,7 @@ od;
 return DirectSum( list );
 end ); 
 
-AddMorphismFunction( to_be_named,
+AddMorphismFunction( ToMorphismBetweenCotangentBundlesFunctor,
 function( new_source, t, new_range )
 local mat, M, N, degrees_N, degrees_M, summands_N, summands_M, L;
 mat := UnderlyingMatrix( t );
