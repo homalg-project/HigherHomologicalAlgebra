@@ -165,7 +165,7 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-R := HomalgFieldOfRationalsInSingular()*"x0,x1,x2,x4";
+R := HomalgFieldOfRationalsInSingular()*"x0,x1";
 S := GradedRing( R );
 A := KoszulDualRing( S );
 

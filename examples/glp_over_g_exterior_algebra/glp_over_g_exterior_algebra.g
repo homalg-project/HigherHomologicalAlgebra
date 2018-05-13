@@ -122,7 +122,10 @@ AddLift( cat,
     #     X*B + Y*N = A
     #     P*X + Z*M = 0
     # the function is supposed to return X as a ( well defined ) morphism from P to M.
-    
+ 
+    if WithComments = true then
+	Print( "Computing Lift" );
+    fi;    
     morphism_1 := UnderlyingPresentationMorphism( morphism1 );
     
     morphism_2 := UnderlyingPresentationMorphism( morphism2 );
@@ -148,6 +151,9 @@ AddLift( cat,
         if sol = fail then 
             return fail;
         else
+    	    if WithComments = true then
+		Print( "Computing Lift done!" );
+    	    fi;    
             return GradedPresentationMorphism( Source( morphism1 ), DecideZeroRows( CertainColumns( sol, [1..NrRows(B) ] ), M ), Source( morphism2 ) );
         fi;
     fi;
@@ -202,7 +208,7 @@ AddLift( cat,
     mat := UnionOfRows( mat1, mat2 );
      
     A_vec_over_zero_vec := UnionOfRows( A_vec, HomalgZeroMatrix( NrColumns( M )*NrRows( P )*2^l, 1, Q ) );
-
+#Error();
     sol := LeftDivide( mat, A_vec_over_zero_vec );
     
     if sol = fail then 
@@ -221,6 +227,10 @@ AddLift( cat,
 
     X_ := Sum( List( [ 1..2^l ], i-> ( R * CertainColumns( XX_, [ ( i - 1 )*v + 1 .. i*v ] ) )* ring_element( basis_indices[ i ], R ) ) );
 
+    if WithComments = true then
+	Print( "Computing Lift done!" );
+    fi;    
+ 
     return GradedPresentationMorphism( Source( morphism1 ), DecideZeroRows( X_, M ), Source( morphism2 ) );
     
 end, 1000 );
