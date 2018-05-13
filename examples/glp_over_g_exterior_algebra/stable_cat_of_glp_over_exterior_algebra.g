@@ -445,6 +445,11 @@ n := Length( IndeterminatesOfExteriorRing( A ) );
 degrees_M := GeneratorDegrees( M );
 degrees_M := List( degrees_M, i -> Int( String( i ) ) );
 summands_M := List( degrees_M, d -> GradedFreeLeftPresentation(1,A,[d]) );
+
+if summands_M = [ ] then
+    return ZeroObject( graded_lp_cat_ext );
+fi;
+
 list := [ ];
 for F in summands_M do 
     d := GeneratorDegrees( F )[ 1 ];
@@ -454,7 +459,7 @@ for F in summands_M do
     if -1 < k and k < n then
        	Add( list, TwistedCotangentBundle( A, k ) );
     else
-	Add( list, ZeroObject( CapCategory( M ) ) );
+	    Add( list, ZeroObject( CapCategory( M ) ) );
     fi;
 od;
 return DirectSum( list );
@@ -474,6 +479,10 @@ summands_M := List( degrees_M, d -> GradedFreeLeftPresentation(1,A,[d]) );;
 summands_N := List( degrees_N, d -> GradedFreeLeftPresentation(1,A,[d]) );;
 L := List( [ 1 .. Length( degrees_M ) ], i -> List( [ 1 .. Length( degrees_N ) ], 
         j -> ToMorphismBetweenCotangentBundles( GradedPresentationMorphism( summands_M[i],HomalgMatrix([ MatElm(mat,i,j)],1,1,A), summands_N[j]) ) ) );;
-return MorphismBetweenDirectSums( L );
+if Concatenation( L ) = [ ] then
+    return ZeroMorphism( new_source, new_range );
+else
+    return MorphismBetweenDirectSums( L );
+fi;
 end );
 
