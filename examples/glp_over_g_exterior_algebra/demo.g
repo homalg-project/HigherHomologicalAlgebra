@@ -1,10 +1,10 @@
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/stable_cat_of_glp_over_exterior_algebra.g" );
-m := RandomMatrixBetweenGradedFreeLeftModules( [3,4,7],[1,2,1,2,0], S);
-M :=  AsGradedLeftPresentation(m,[1,2,1,2,0]);
+m := RandomMatrixBetweenGradedFreeLeftModules( [3,4,2],[1,2,2,0], S);
+M :=  AsGradedLeftPresentation(m,[1,2,2,0]);
 T := TateFunctor( S );
 TM := ApplyFunctor( T, M );
-TM := BrutalTruncationAbove( TM, 1 );
-TM := BrutalTruncationBelow( TM, -2 );
+TM := BrutalTruncationAbove( TM, 2 );
+TM := BrutalTruncationBelow( TM, -3 );
 F := ToMorphismBetweenCotangentBundlesFunctor;
 ChF := ExtendFunctorToCochainComplexCategoryFunctor( F );
 U := ApplyFunctor( ChF, TM );

@@ -165,7 +165,7 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-R := HomalgFieldOfRationalsInSingular()*"x0,x1";
+R := HomalgFieldOfRationalsInSingular()*"x0,x1,x2";
 S := GradedRing( R );
 A := KoszulDualRing( S );
 
@@ -436,8 +436,8 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
 
 end );
 
-
-ToMorphismBetweenCotangentBundlesFunctor := CapFunctor( "to be named", graded_lp_cat_ext, graded_lp_cat_ext );
+name := Concatenation( "w(i)->w(j) to Ω^i(i)->Ω^j(j) endofunctor in ", Name( graded_lp_cat_ext ) );
+ToMorphismBetweenCotangentBundlesFunctor := CapFunctor( name, graded_lp_cat_ext, graded_lp_cat_ext );
 AddObjectFunction( ToMorphismBetweenCotangentBundlesFunctor,
 function( M )
 local mat, degrees_M, summands_M, list, d, k, n, F;
