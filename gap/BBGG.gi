@@ -210,7 +210,9 @@ InstallMethod( LFunctor,
                 hNk_ := UnionOfRows( G2 )* KS;
                 iMk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMk_ ), KS, List( [1..NrRows( hMk_ ) ], i -> -k ) ), hMk_, M );
                 iNk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNk_ ), KS, List( [1..NrRows( hNk_ ) ], i -> -k ) ), hNk_, N );
-                l := Lift( PreCompose( iMk, f ), iNk );
+                #l := Lift( PreCompose( iMk, f ), iNk );
+                Assert( 4, IsMonomorphism( iNk ) );
+                l := LiftAlongMonomorphism( iNk, PreCompose( iMk, f ) );
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 end, 1 );
 
