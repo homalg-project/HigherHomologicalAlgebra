@@ -250,6 +250,14 @@ Finalize( cochains_graded_lp_cat_sym );
 
 graded_lp_cat_ext := GradedLeftPresentations( A: FinalizeCategory := false );
 
+AddLiftAlongMonomorphism( graded_lp_cat_ext, 
+    function( iota, tau )
+    local l;
+    l := LiftAlongMonomorphism( UnderlyingPresentationMorphism( iota ), 
+            UnderlyingPresentationMorphism( tau ) );
+    return GradedPresentationMorphism( Source( tau ), l, Source( iota ) );    
+end );
+
 AddEpimorphismFromSomeProjectiveObject( graded_lp_cat_ext, 
     function( M )
     local hM, U, current_degrees;
