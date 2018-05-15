@@ -447,7 +447,7 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
     return LiftAlongMonomorphism( i2, PreCompose( i1, phi ) );
 end );
 
-name := Concatenation( "w(i)->w(j) to Ω^i(i)->Ω^j(j) endofunctor in ", Name( graded_lp_cat_ext ) );
+name := Concatenation( "ω(i)->ω(j) to Ω^i(i)->Ω^j(j) endofunctor in ", Name( graded_lp_cat_ext ) );
 ToMorphismBetweenCotangentBundlesFunctor := CapFunctor( name, graded_lp_cat_ext, graded_lp_cat_ext );
 AddObjectFunction( ToMorphismBetweenCotangentBundlesFunctor,
 function( M )

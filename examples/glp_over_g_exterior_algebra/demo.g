@@ -1,7 +1,7 @@
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/stable_cat_of_glp_over_exterior_algebra.g" );
 n := Length( Indeterminates( S ) );
-m := RandomMatrixBetweenGradedFreeLeftModules( [3,4,2],[1,2,2,0], S);
-M :=  AsGradedLeftPresentation(m,[1,2,2,0]);
+m := RandomMatrixBetweenGradedFreeLeftModules( [3,2],[1,2,0], S);
+M :=  AsGradedLeftPresentation(m,[1,2,0]);
 T := TateFunctor( S );
 TM := ApplyFunctor( T, M );
 TM := BrutalTruncationAbove( TM, n - 1 );
