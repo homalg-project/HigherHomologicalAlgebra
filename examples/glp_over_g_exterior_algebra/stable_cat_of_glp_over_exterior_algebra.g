@@ -389,7 +389,7 @@ DeclareAttribute( "ToMorphismBetweenCotangentBundles", IsCapCategoryMorphism );
 InstallMethod( ToMorphismBetweenCotangentBundles,
     [ IsCapCategoryMorphism ],
     function( phi )
-    local A, n, F1, d1, k1, F2, d2, k2, i1, i2, Cotangent_bundle_1, Cotangent_bundle_2, is_zero_obj_1, is_zero_obj_2;
+    local A, n, F1, d1, k1, F2, d2, k2, i1, i2, Cotangent_bundle_1, Cotangent_bundle_2, is_zero_obj_1, is_zero_obj_2, l;
 
     # Omega^i(i) correspondes to E( -n + i ) = E( -n )( i ) = w_i
     # degree of E( -n + i ) is n - i
@@ -419,31 +419,32 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
     if -1 < k1 and k1 < n then
        	Cotangent_bundle_1 := TwistedCotangentBundle( A, k1 );
     else
-	Cotangent_bundle_1 := ZeroObject( CapCategory( phi ) );
-	is_zero_obj_1 := true;
+	    Cotangent_bundle_1 := ZeroObject( CapCategory( phi ) );
+	    is_zero_obj_1 := true;
     fi;
 
     is_zero_obj_2 := false;
     if -1 < k2 and k2 < n then
        	Cotangent_bundle_2 := TwistedCotangentBundle( A, k2 );
     else
-	Cotangent_bundle_2 := ZeroObject( CapCategory( phi ) );
-	is_zero_obj_2 := true;
+	    Cotangent_bundle_2 := ZeroObject( CapCategory( phi ) );
+	    is_zero_obj_2 := true;
     fi;
 	
     if is_zero_obj_1 or is_zero_obj_2 then
-	return ZeroMorphism( Cotangent_bundle_1, Cotangent_bundle_2 );
+	    return ZeroMorphism( Cotangent_bundle_1, Cotangent_bundle_2 );
     fi;
     
     if IsZeroForMorphisms( phi ) then
-	return ZeroMorphism(  Cotangent_bundle_1, Cotangent_bundle_2 );
+	    return ZeroMorphism(  Cotangent_bundle_1, Cotangent_bundle_2 );
     fi;
-
+    # The embedding of a submodule of a graded ring in a free module of rank 1 is unique up to 
+    # multiplication by a scalar.
     i1 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_1 );
     i2 := MonomorphismIntoSomeInjectiveObject( Cotangent_bundle_2 );
     
-    return Lift( PreCompose( i1, phi ), i2 );
-
+    #return Lift( PreCompose( i1, phi ), i2 );
+    return LiftAlongMonomorphism( i2, PreCompose( i1, phi ) );
 end );
 
 name := Concatenation( "w(i)->w(j) to Ω^i(i)->Ω^j(j) endofunctor in ", Name( graded_lp_cat_ext ) );
