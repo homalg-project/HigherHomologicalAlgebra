@@ -74,15 +74,16 @@ end );
 InstallMethod( RFunctor,
                 [ IsHomalgGradedRing ],
     function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n; 
+    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name; 
 
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
     cat_lp_sym := GradedLeftPresentations( S );
     cat_lp_ext := GradedLeftPresentations( KS );
     cochains := CochainComplexCategory( cat_lp_ext );
+    name := Concatenation( "R functor from ", Name( cat_lp_sym ), " to ", Name( cochains ) );
 
-    R := CapFunctor( "R resolution ", cat_lp_sym, cochains );
+    R := CapFunctor( name, cat_lp_sym, cochains );
     
     AddObjectFunction( R, 
         function( M )
@@ -139,7 +140,7 @@ end );
 InstallMethod( LFunctor, 
             [ IsHomalgGradedRing ],
     function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n; 
+    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
 
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
@@ -149,8 +150,8 @@ InstallMethod( LFunctor,
     cat_lp_sym := GradedLeftPresentations( S );
     cat_lp_ext := GradedLeftPresentations( KS );
     cochains := CochainComplexCategory( cat_lp_sym );
-
-    L := CapFunctor( "L resolution ", cat_lp_ext, cochains );
+    name := Concatenation( "L functor from ", Name( cat_lp_ext ), " to ", Name( cochains ) );
+    L := CapFunctor( name, cat_lp_ext, cochains );
     
     AddObjectFunction( L, 
         function( M )
@@ -275,8 +276,10 @@ end );
 InstallMethod( TateFunctor,
 	[ IsHomalgGradedRing ],
     function( S )
-    local T;
-    T := CapFunctor( "Tate functor", GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
+    local T, name;
+    name := Concatenation( "Tate 'functor' from ", Name( GradedLeftPresentations( S ) ), " to ", 
+    Name( CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) ) );
+    T := CapFunctor( name, GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
     AddObjectFunction( T, TateResolution );
     AddMorphismFunction( T, function( s, phi, r ) return TateResolution( phi ); end );
     return T;
