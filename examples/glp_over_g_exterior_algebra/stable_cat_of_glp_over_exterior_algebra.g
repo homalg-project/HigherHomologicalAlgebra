@@ -165,7 +165,9 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-R := HomalgFieldOfRationalsInSingular()*"x0,x1,x2";
+l := InputFromUser( "Please enter l to define the polynomial ring Q[x_0,...,x_l],  l = " );
+vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. l ], i -> Concatenation( ",x", String( i ) ) ) ) );
+R := HomalgFieldOfRationalsInSingular( )*vars;
 S := GradedRing( R );
 A := KoszulDualRing( S );
 
