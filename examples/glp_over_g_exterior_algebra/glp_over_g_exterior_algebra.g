@@ -596,6 +596,8 @@ is_reduced_graded_module :=
     F := GradedFreeLeftPresentation( 1, R, [ 0 ] );
     hM := UnderlyingModule( AsPresentationInHomalg( GM ) );
     hF := UnderlyingModule( AsPresentationInHomalg( F ) );
+    SetPositionOfTheDefaultPresentation(hM, 1);
+    SetPositionOfTheDefaultPresentation(hF, 1);
     G := GetGenerators( Hom( hM, hF ) );
     G := List( G, g -> g!.matrices.( "[ 1, 1 ]" )*R );
     b := List( G, mat -> PresentationMorphism( UnderlyingPresentationObject(GM), mat, UnderlyingPresentationObject( F ) ) );
