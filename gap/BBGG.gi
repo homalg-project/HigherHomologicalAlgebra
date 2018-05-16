@@ -285,3 +285,63 @@ InstallMethod( TateFunctor,
     return T;
 end );
 
+InstallMethod( TateSequenceFunctor, 
+    [ IsHomalgGradedRing ],
+    function( S )
+    local A, graded_lp_cat, cochains_graded_lp_cat, name, T;
+    A := KoszulDualRing( S );
+    graded_lp_cat := GradedLeftPresentations( A );
+    cochains_graded_lp_cat := CochainComplexCategory( graded_lp_cat );
+    name := Concatenation( "Tate sequence functor from ", Name( graded_lp_cat ), " to ", Name( cochains_graded_lp_cat ) );
+    T := CapFunctor( name, graded_lp_cat, cochains_graded_lp_cat );
+    AddObjectFunction( T, 
+        function( P )
+        local p, q, diffs;
+        p := ProjectiveResolution( P );
+        q := InjectiveResolution( P );
+        diffs := MapLazy( IntegersList, function( i )
+                                        if i<-1 then
+                                            return p^( i + 1 );
+                                        elif i = -1 then
+                                            return PreCompose( EpimorphismFromSomeProjectiveObject( P ), MonomorphismIntoSomeInjectiveObject( P ) );
+                                        else
+                                            return q^( i );
+                                        fi;
+                                        end, 1 );
+        return CochainComplex( graded_lp_cat, diffs );
+    end );
+
+    AddMorphismFunction( T,
+        function( new_source, phi, new_range )
+        local source, range, mors; 
+        source := Source( phi );
+        range := Range( phi );
+        mors := MapLazy( IntegersList,  function( i )
+                                        local epi_to_range, epi_to_source;
+                                        if i < -1 then
+                                            return Lift( PreCompose( new_source^i, mors[ i + 1 ] ), new_range^i );
+                                        elif i = -1 then
+                                            epi_to_source := EpimorphismFromSomeProjectiveObject( source );
+                                            epi_to_range := EpimorphismFromSomeProjectiveObject( range );
+                                            return ProjectiveLift( PreCompose( epi_to_source, phi ), epi_to_range );
+                                        else
+                                            return Colift( new_source^( i - 1 ), PreCompose( mors[ i - 1 ], new_range^( i - 1 ) ) );
+                                        fi;
+                                        end, 1 );
+        return CochainMorphism( new_source, new_range, mors );
+    end );
+    return T;
+end );
+
+InstallMethod( DimensionOfTateCohomology,
+        [ IsCochainComplex, IsInt, IsInt ],
+    function( T, i, k )
+    local cat, n, j, t, degrees;
+    cat := UnderlyingCategory( CapCategory( T ) );
+    n := Length( IndeterminatesOfExteriorRing( cat!.ring_for_representation_category ) );
+    j := i + k;
+    t := -n - k;
+    degrees := GeneratorDegrees( T[ j ] );
+    degrees := List( degrees, i -> Int( String( i ) ) );
+    return Length( Positions( degrees, -t ) );
+end );
