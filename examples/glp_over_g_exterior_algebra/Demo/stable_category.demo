@@ -73,4 +73,18 @@ Display( b[ 1 ] );
 b := basis_of_stable_hom( sM, sM );
 %
 Perform( b, Display );
+%
+sf := b[1];
+%
+t_sf := CompleteMorphismToStandardExactTriangle( sf );
+%
+Display( t_sf );
+%
+Display( t_sf^0 );
+%
+Display( t_sf[ 0 ] );
+%
+i := IdentityMorphism( t_sf );
+%
+Display( i );
 
