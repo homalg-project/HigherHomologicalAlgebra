@@ -1,0 +1,76 @@
+Read( "../stable_cat_of_glp_over_exterior_algebra.g" );
+%
+S;
+%
+A;
+%
+graded_lp_cat_sym := GradedLeftPresentations( S );
+%
+cochains_graded_lp_cat_sym := CochainComplexCategory( graded_lp_cat_sym );
+%
+graded_lp_cat_ext := GradedLeftPresentations( A );
+%
+cochains_graded_lp_cat_ext := CochainComplexCategory( graded_lp_cat_ext );
+%
+stable_lp_cat_ext := StableCategory( graded_lp_cat_ext );
+%
+m := HomalgMatrix( "[ [ x0^5 ], [ x1^3 ] ]", 2, 1, S );
+%
+M := AsGradedLeftPresentation( m, [ 0 ] );
+%
+O := GradedFreeLeftPresentation(1, S, [ 0 ] );
+%
+O_plus_M := DirectSum( O, M );
+%
+Display( M );
+%
+Display( O );
+%
+Display( O_plus_M );
+%
+T := TateFunctor( S );
+%
+TM := ApplyFunctor( T, M );
+%
+TO := ApplyFunctor( T, O );
+%
+TO_plus_M := ApplyFunctor( T, O_plus_M );
+%
+syz_TM_0 := Source( CyclesAt( TM, 0 ) );
+%
+syz_TO_0 := Source( CyclesAt( TO, 0 ) );
+%
+syz_TO_plus_M_0 := Source( CyclesAt( TO_plus_M, 0 ) );
+%
+syz_TM_0 := AsStableObject( syz_TM_0 );
+%
+syz_TO_0 := AsStableObject( syz_TO_0 );
+%
+syz_TO_plus_M_0 := AsStableObject( syz_TO_plus_M_0 );
+%
+Display( syz_TM_0 );
+%
+Display( syz_TO_0 );
+%
+Display( syz_TO_plus_M_0 );
+%
+m := RandomMatrixBetweenGradedFreeLeftModules( [ 2, 3, 4 ], [ 3, 5, 4, 5 ], A );
+%
+M := AsGradedLeftPresentation( m, [ 3, 5, 4, 5 ] );
+%
+sM := AsStableObject( M );
+%
+Display( sM );
+%
+b := basis_of_stable_hom( sM, syz_TO_0 );
+%
+b := basis_of_stable_hom( syz_TO_0, sM );
+%
+b := basis_of_stable_hom( syz_TO_0, syz_TO_0 );
+%
+Display( b[ 1 ] );
+%
+b := basis_of_stable_hom( sM, sM );
+%
+Perform( b, Display );
+
