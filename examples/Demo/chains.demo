@@ -3,6 +3,10 @@ Read( "chains_of_left_presentations_over_commutative_homalg_ring.g" );
 %
 R;
 %
+lp_cat := LeftPresentations( R );
+%
+chains_lp_cat := ChainComplexCategory( lp_cat );
+%
 A4 := AsLeftPresentation( HomalgMatrix( "[ [ x ] ]", 1, 1, R ) );
 %
 A3 := AsLeftPresentation( HomalgMatrix( "[ [ xy ] ]", 1, 1, R ) );
@@ -19,6 +23,26 @@ CA := ChainComplex( [ a43 ], 4 );
 %
 CB := ChainComplex( [ b43 ], 4 );
 %
+Display( CA[ 3 ] );
+%
+Display( CA[ 4 ] );
+%
+Display( CA^3 );
+%
+Display( CA, 0, 5 );
+%
+H3 := HomologyFunctorAt( chains_lp_cat, lp_cat, 3 );
+%
+H4 := HomologyFunctorAt( chains_lp_cat, lp_cat, 4 );
+%
+H3_CA := ApplyFunctor( H3, CA );
+%
+Display( H3_CA );
+%
+IsExactInIndex( CA, 3 );
+%
+IsExact( CA );
+%
 phi3 := PresentationMorphism( A3, HomalgMatrix( "[ [ zt ] ]", 1, 1, R ), B3 );
 %
 phi4 := PresentationMorphism( A4, HomalgMatrix( "[ [ yz ] ]", 1, 1, R ), B4 );
@@ -27,9 +51,49 @@ phi := ChainMorphism( CA, CB, [ phi3, phi4 ], 3 );
 %
 IsZeroForMorphisms( phi );
 %
+IsWellDefined( phi );
+%
+IsWellDefined( phi, 0, 10 );
+%
+Display( phi[ 3 ] );
+%
+Display( phi[ 4 ] );
+%
+Display( phi, 2, 5 );
+%
+k_phi := KernelObject( phi );
+%
+IsZero( k_phi );
+%
+H3_phi := ApplyFunctor( H3, phi );
+%
+Display( H3_phi );
+%
+H4_phi := ApplyFunctor( H4, phi );
+%
+Display( H4_phi );
+%
 IsNullHomotopic( phi );
+%
+IsZeroForMorphisms( H3_phi );
+%
+IsZeroForMorphisms( H4_phi );
 %
 h := HomotopyMorphisms( phi );
 %
 Display( h[ 3 ] );
+%
+chains_chains_lp_cat := ChainComplexCategory( chains_lp_cat );
+%
+C := ChainComplex( [ phi ], 7 );
+%
+C := HomologicalBicomplex( C );
+%
+SupportInWindow( C, 0, 10, -4, 8 );
+%
+T := TotalComplex( C );
+%
+IsWellDefined( T );
+%
+Display( T, 8, 12 );
 %
