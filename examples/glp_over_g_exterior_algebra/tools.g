@@ -5,7 +5,7 @@ LoadPackage( "GradedModules" );
 
 DeclareGlobalVariable( "WithComments" );
 MakeReadWriteGlobal("WithComments");
-WithComments := true;
+WithComments := false;
 
 ##
 DeclareAttribute( "HomalgTransposedMat", IsHomalgMatrix );

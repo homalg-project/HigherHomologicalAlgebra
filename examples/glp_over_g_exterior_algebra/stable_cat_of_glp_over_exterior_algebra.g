@@ -277,6 +277,8 @@ TurnAbelianCategoryToExactCategory( graded_lp_cat_ext );
 SetTestFunctionForStableCategories(graded_lp_cat_ext, CanBeFactoredThroughExactProjective );
 Finalize( graded_lp_cat_ext );
 
+cochains_graded_lp_cat_ext := CochainComplexCategory( graded_lp_cat_ext );
+
 stable_lp_cat_ext := StableCategory( graded_lp_cat_ext );
 SetIsTriangulatedCategory( stable_lp_cat_ext, true );
 ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_lp_cat_ext );
