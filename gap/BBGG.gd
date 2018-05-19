@@ -14,6 +14,7 @@ DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresenta
 DeclareAttribute( "RFunctor", IsHomalgGradedRing );
 DeclareAttribute( "LFunctor", IsHomalgGradedRing );
 DeclareAttribute( "TateFunctor", IsHomalgGradedRing );
+DeclareAttribute( "TateFunctorForCochains", IsHomalgGradedRing );
 DeclareAttribute( "TateSequenceFunctor", IsHomalgGradedRing );
 
 DeclareAttribute( "CastelnuovoMumfordRegularity", IsCapCategoryObject );

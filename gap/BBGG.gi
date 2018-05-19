@@ -231,6 +231,15 @@ InstallMethod( CastelnuovoMumfordRegularity,
     return CastelnuovoMumfordRegularity( AsPresentationInHomalg( M ) );
 end );
 
+InstallMethod( CastelnuovoMumfordRegularity,
+                [ IsCapCategoryObject and IsCochainComplex ],
+    function( C )
+    local reg;
+    reg := Maximum( List( [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ], 
+                        i -> i + CastelnuovoMumfordRegularity( C[ i ] ) ) );
+    return Int( String( reg ) );
+end );
+
 ##
 InstallMethod( TateResolution, 
                 [ IsGradedLeftOrRightPresentation ],
@@ -282,6 +291,62 @@ InstallMethod( TateFunctor,
     T := CapFunctor( name, GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
     AddObjectFunction( T, TateResolution );
     AddMorphismFunction( T, function( s, phi, r ) return TateResolution( phi ); end );
+    return T;
+end );
+
+InstallMethod( TateFunctorForCochains,
+    [ IsHomalgGradedRing ],
+    function( S )
+    local A, lp_cat_ext, R, ChR, cochains_sym, cochains_ext, T;
+    A := KoszulDualRing( S );
+    lp_cat_ext := GradedLeftPresentations( A );
+    R := RFunctor( S );
+    ChR := ExtendFunctorToCochainComplexCategoryFunctor( R );
+    cochains_sym := CochainComplexCategory( GradedLeftPresentations( S ) );
+    cochains_ext := CochainComplexCategory( GradedLeftPresentations( A ) );
+    T := CapFunctor( "to be named", cochains_sym, cochains_ext );
+    AddObjectFunction( T,
+        function( C )
+        local reg, ChR_C, B, syz, proj_syz, diffs, Tot;
+        reg := CastelnuovoMumfordRegularity( C );
+        ChR_C := ApplyFunctor( ChR, C );
+        B := CohomologicalBicomplex( ChR_C );
+        Tot := TotalComplex( B );
+        syz := Source( CyclesAt( Tot, reg ) );
+        proj_syz := ProjectiveResolution( syz );
+        diffs := MapLazy( IntegersList, 
+            function( i )
+            if i >= reg then
+                return Tot^i;
+            elif i = reg - 1 then
+                return PreCompose( 
+                    EpimorphismFromSomeProjectiveObject( syz ),
+                    CyclesAt( Tot, reg ) );
+            else
+                return proj_syz^( i - reg + 1 );
+            fi; end, 1 );
+        return CochainComplex( lp_cat_ext, diffs );
+    end );
+
+    AddMorphismFunction( T,
+        function( new_source, phi, new_range )
+        local ChR_phi, B, Tot, reg_source, reg_range, reg, mors;
+        ChR_phi := ApplyFunctor( ChR, phi );
+        B := BicomplexMorphism( ChR_phi );
+        Tot := TotalComplexFunctorial( B );
+        reg_source := CastelnuovoMumfordRegularity( Source( phi ) );
+        reg_range := CastelnuovoMumfordRegularity( Range( phi ) );
+        reg := Maximum( reg_source, reg_range );
+        mors := MapLazy( IntegersList, 
+                function( i )
+                if i >= reg then
+                    return Tot[ i ];
+                else
+                    return ProjectiveLift( PreCompose( new_source^i, mors[ i + 1 ] ), new_range^i );
+                fi;
+                end, 1 );
+        return CochainMorphism( new_source, new_range, mors );
+        end );
     return T;
 end );
 
