@@ -953,6 +953,36 @@ InstallMethod( HomologySupport,
   return l;
 end );
 
+##
+InstallMethod( ObjectsSupport, 
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, m, n )
+  local l, i;
+  l := [ ];
+  for i in [ m .. n ] do 
+  if not IsZeroForObjects( C[i] ) then 
+     Add( l, i );
+  fi;
+  od;
+  return l;
+end );
+
+
+##
+InstallMethod( DifferentialsSupport, 
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, m, n )
+  local l, i;
+  l := [ ];
+  for i in [ m .. n ] do 
+  if not IsZeroForObjects( C^i ) then 
+     Add( l, i );
+  fi;
+  od;
+  return l;
+end );
+
+
 InstallMethod( IsWellDefined, 
                [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )

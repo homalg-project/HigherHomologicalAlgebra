@@ -254,6 +254,10 @@ DeclareOperation( "HomologySupport", [ IsChainComplex, IsInt, IsInt ] );
 #! @Arguments C, m, n
 DeclareOperation( "CohomologySupport", [ IsCochainComplex, IsInt, IsInt ] );
 
+DeclareOperation( "ObjectsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+DeclareOperation( "DifferentialsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+
+
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 
 #! The output is true when $C$ is a complex and false otherwise.
