@@ -8,7 +8,7 @@ Introduction
 The "ComplexesForCAP" package is a Gap/CAP package written for constructing chain or cochain complexes category of a given CAP category. Its aim is to carry out categorical and homological constructions and computation in the complexes categories such as homology, cohomology, mapping cones, mapping cylinders, resolutions, etc.
 
 
-Installtion
+Installation
 -----------
 The package can easily be obtained by cloning the repository 
 https://github.com/kamalsaleh/ComplexesForCAP.git
