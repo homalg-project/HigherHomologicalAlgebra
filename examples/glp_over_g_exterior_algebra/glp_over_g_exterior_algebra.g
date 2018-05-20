@@ -95,7 +95,7 @@ AddColift( cat,
        
     else 
     
-       return GradedPresentationMorphism( Range( morphism1 ), sol[ 1 ], Range( morphism2 ) );
+       return GradedPresentationMorphism( Range( morphism1 ), DecideZeroRows( sol[ 1 ], I ), Range( morphism2 ) );
        
     fi;
     
