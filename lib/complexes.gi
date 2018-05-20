@@ -531,13 +531,13 @@ InstallMethod( Display,
 
    Print( "\n-----------------------------------------------------------------\n" );
 
-   Print( "In index ", String( i ) );
+   Print( TextAttr.underscore, TextAttr.(2),  "In index ", String( i ) , TextAttr.reset );
 
-   Print( "\n\nObject is\n" );
+   Print( "\n\n", TextAttr.underscore, TextAttr.(2), "Object is", TextAttr.reset, "\n" );
 
    Display( C[ i ] );
 
-   Print( "\nDifferential is\n" );
+   Print( "\n", TextAttr.underscore, TextAttr.(2), "Differential is", TextAttr.reset, "\n" );
 
    Display( C^i );
 

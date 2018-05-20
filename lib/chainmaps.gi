@@ -342,15 +342,15 @@ InstallMethod( Display,
 
    for i in [ m .. n ] do
 
-     Print( "In index ", String( i ) );
+     Print( TextAttr.underscore, TextAttr.(2), "In index ", String( i ) );
 
-     Print( "\n\nMorphism is\n" );
+     Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism is\n", TextAttr.reset );
 
      Display( map[ i ] );
 
      Print( "\n-----------------------------------------------------------------\n" );
 
-     od;
+   od;
 
 end );
 
