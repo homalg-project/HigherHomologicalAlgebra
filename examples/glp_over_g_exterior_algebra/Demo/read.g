@@ -4,5 +4,6 @@ LoadPackage( "Browse" );
 LoadPackage( "ComplexesForCAP" );
 LoadPackage( "Bicomplexes" );
 LoadPackage( "BBGG" );
-LoadDemoFile( "Demo", "stable_category.demo" );
+LoadDemoFile( "general example", "stable_category.demo" );
+LoadDemoFile( "Beilinson", "Beilinson.demo" );
 

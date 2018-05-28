@@ -1,0 +1,59 @@
+%
+# Please enter l=3 when asked!;
+%
+Read( "../stable_cat_of_glp_over_exterior_algebra.g" );
+%
+S;
+%
+A;
+%
+m := RandomMatrixBetweenGradedFreeLeftModules([2,1],[1,-1,2],S);
+%
+M := AsGradedLeftPresentation(m,[1,-1,2]);
+%
+Display( M );
+%
+Tate := TateFunctor( S );
+%
+TM := ApplyFunctor( Tate, M );
+%
+U := ToMorphismBetweenCotangentBundlesFunctor;
+%
+ChU := ExtendFunctorToCochainComplexCategoryFunctor(U);
+%
+ChU_TM := ApplyFunctor( ChU, TM );
+%
+L := LFunctor( S );
+%
+ChL := ExtendFunctorToCochainComplexCategoryFunctor(L);
+%
+ChL_ChU_TM := ApplyFunctor( ChL, ChU_TM );
+%
+B := CohomologicalBicomplex( ChL_ChU_TM );
+%
+SupportInWindow( B, -4, 4, -4, 4 );
+%
+SetRight_Bound( B, 1 );
+%
+SetLeft_Bound( B, -2 );
+%
+T := TotalComplex( B );
+%
+CohomologySupport( T, -4, 4 );
+%
+H0 := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, 0 );
+%
+H0_T := ApplyFunctor( H0, T );
+%
+Display( H0_T );
+%
+Display( M );
+%
+syz0_M := Source( CyclesAt( ApplyFunctor( Tate, M ), 0 ) );
+%
+syz0_H0_T := Source( CyclesAt( ApplyFunctor( Tate, H0_T ), 0 ) );
+%
+Display( syz0_M );
+%
+Display( syz0_H0_T );
+%

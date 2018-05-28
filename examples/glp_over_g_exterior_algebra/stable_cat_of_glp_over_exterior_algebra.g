@@ -391,7 +391,7 @@ InstallMethod( TwistFunctorOp,
 	return F;
 end );
 
-w_E := function(k) 
+w_A := function(k) 
 	return ApplyFunctor( TwistFunctor( A, k ), 
 			     GradedFreeLeftPresentation( 1, A, [ Length( IndeterminatesOfExteriorRing( A ) ) ] ) ); 
 end;
@@ -458,7 +458,7 @@ InstallMethod( ToMorphismBetweenCotangentBundles,
     return LiftAlongMonomorphism( i2, PreCompose( i1, phi ) );
 end );
 
-name := Concatenation( "ω(i)->ω(j) to Ω^i(i)->Ω^j(j) endofunctor in ", Name( graded_lp_cat_ext ) );
+name := Concatenation( "ω_A(i)->ω_A(j) to Ω^i_A(i)->Ω^j_A(j) endofunctor in ", Name( graded_lp_cat_ext ) );
 ToMorphismBetweenCotangentBundlesFunctor := CapFunctor( name, graded_lp_cat_ext, graded_lp_cat_ext );
 AddObjectFunction( ToMorphismBetweenCotangentBundlesFunctor,
 function( M )
