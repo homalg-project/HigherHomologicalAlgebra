@@ -532,7 +532,7 @@ InstallMethod( ColumnAsComplexOp,
     if IsCapCategoryHomologicalBicomplexObject( B ) then
        return ChainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
     else
-       return CochainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j, 1 ) ) );
+       return CochainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
     fi;
 end );
 
