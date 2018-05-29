@@ -470,6 +470,41 @@ InstallMethod( VerticalDifferentialAt,
 end );
 
 ##
+InstallMethod( VerticalCohomologyAt,
+        [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ], 
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return CohomologyAt( col, j );    
+end );
+
+InstallMethod( HorizontalCohomologyAt,
+        [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ], 
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, i );
+    return CohomologyAt( row, j );    
+end );
+
+##
+InstallMethod( VerticalHomologyAt,
+        [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ], 
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return HomologyAt( col, j );    
+end );
+
+##
+InstallMethod( HorizontalHomologyAt,
+        [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ], 
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, i );
+    return HomologyAt( row, j );    
+end );
+
+##
 InstallMethod( RowAsComplexOp,
                [ IsCapCategoryBicomplexObject, IsInt ],
     function( B, j )
@@ -772,7 +807,6 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
     return F;
 end );
 
-DeclareOperation( "IsWellDefined", [ IsCapCategoryBicomplexCell, IsInt, IsInt, IsInt, IsInt ] );
 InstallMethod( IsWellDefined, 
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
     function( B, left, right, below, above )
@@ -934,6 +968,69 @@ InstallMethod( SupportInWindow,
     od;
 end );
 
+InstallMethod( HorizontalCohomologySupportInWindow,
+    [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( b, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForObjects( HorizontalCohomologyAt( b, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+InstallMethod( VerticalCohomologySupportInWindow,
+    [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( b, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForObjects( VerticalCohomologyAt( b, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+InstallMethod( HorizontalHomologySupportInWindow,
+    [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( b, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForObjects( HorizontalHomologyAt( b, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+InstallMethod( VerticalHomologySupportInWindow,
+    [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+    function( b, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForObjects( VerticalHomologyAt( b, i, j ) ) then
+	Print( ". ");
+    else
+	Print( "* ");
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
 	
 ######################################
 #

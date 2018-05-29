@@ -169,6 +169,12 @@ DeclareOperation( "VerticalDifferentialAt", [ IsCapCategoryBicomplexObject, IsIn
 KeyDependentOperation( "RowAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, ReturnTrue );
 
+DeclareOperation( "HorizontalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "VerticalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+
+DeclareOperation( "HorizontalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "VerticalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+
 ## Morphisms
 DeclareOperation( "BicomplexMorphism", [ IsChainOrCochainMorphism ] );
 DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ] );
@@ -196,6 +202,13 @@ DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 DeclareAttribute( "TotalComplexFunctorial", IsCapCategoryBicomplexMorphism );
 
 DeclareOperation( "SupportInWindow", [ IsCapCategoryBicomplexCell, IsInt, IsInt, IsInt, IsInt ] );
+
+DeclareOperation( "HorizontalCohomologySupportInWindow", [ IsCapCategoryBicomplexObject, IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "VerticalCohomologySupportInWindow", [ IsCapCategoryBicomplexObject, IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "HorizontalHomologySupportInWindow", [ IsCapCategoryBicomplexObject, IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "VerticalHomologySupportInWindow", [ IsCapCategoryBicomplexObject, IsInt, IsInt, IsInt, IsInt ] );
+
+DeclareOperation( "IsWellDefined", [ IsCapCategoryBicomplexCell, IsInt, IsInt, IsInt, IsInt ] );
 
 ###################################
 #
