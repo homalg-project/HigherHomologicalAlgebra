@@ -482,8 +482,8 @@ InstallMethod( HorizontalCohomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ], 
     function( B, i, j )
     local row;
-    row := RowAsComplex( B, i );
-    return CohomologyAt( row, j );    
+    row := RowAsComplex( B, j );
+    return CohomologyAt( row, i );    
 end );
 
 ##
@@ -500,8 +500,8 @@ InstallMethod( HorizontalHomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ], 
     function( B, i, j )
     local row;
-    row := RowAsComplex( B, i );
-    return HomologyAt( row, j );    
+    row := RowAsComplex( B, j );
+    return HomologyAt( row, i );    
 end );
 
 ##
