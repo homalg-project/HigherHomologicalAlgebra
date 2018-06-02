@@ -490,3 +490,15 @@ else
 fi;
 end );
 
+print_stuff := function( bicomplex, left, right, below, above, Func )
+                local i, j, m, n;
+                m := [ [left -1 .. right ] ];
+                for j in Reversed( [ below .. above ] ) do
+                n := [ j ];
+                for i in [ left .. right ] do
+                Add( n, Func( ObjectAt( bicomplex, i, j ) ) );
+                od;
+                Add( m, n );
+                od;
+                return m;
+end;
