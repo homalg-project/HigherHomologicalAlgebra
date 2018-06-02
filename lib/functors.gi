@@ -542,6 +542,33 @@ InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
     return functor;
 end );
 
+InstallMethod( BrutalTruncationAboveFunctor,
+        [ IsCapCategory and IsCochainComplexCategory, IsInt ],
+    function( cochains, n )
+    local name, F;
+
+    name := Concatenation( "Brutal Truncation from above in ", Name( cochains ) );
+    F := CapFunctor( name, cochains, cochains );
+    AddObjectFunction( F,
+    function( C )
+      return BrutalTruncationAbove( C, n );
+    end );
+
+    AddMorphismFunction( F,
+    function( new_source, phi, new_range )
+    local morphisms;
+    morphisms := MapLazy( IntegersList, 
+                            function( i ) 
+                            if i <= n then 
+                              return phi[ i ];
+                            else
+                              return ZeroMorphism( new_source[ i ], new_range[ i ] );
+                            fi;
+                            end, 1 );
+    return CochainMorphism( new_source, new_range, morphisms );   
+    end );
+    return F;
+end );
 
 # to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
 # InstallMethod( LeftDerivedFunctor, 
