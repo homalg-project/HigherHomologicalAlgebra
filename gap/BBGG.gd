@@ -22,3 +22,6 @@ DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentation  );
 DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentationMorphism );
 
 DeclareOperation( "DimensionOfTateCohomology", [ IsCochainComplex, IsInt, IsInt ] );
+
+KeyDependentOperation( "TwistFunctor", IsHomalgGradedRing, IsInt, ReturnTrue );
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsInt ] );

@@ -398,6 +398,31 @@ InstallMethod( TateSequenceFunctor,
     return T;
 end );
 
+InstallMethod( TwistFunctorOp,
+	[ IsHomalgGradedRing, IsInt ],
+	function( S, n )
+	local cat, F;
+	cat := GradedLeftPresentations( S );
+	F := CapFunctor( Concatenation( String( n ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
+	AddObjectFunction( F,
+		function( M )
+		return AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - n ) );
+		end );
+	AddMorphismFunction( F,
+		function( source, f, range )
+		return GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
+		end );
+	return F;
+end );
+
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentation, IsInt ],
+    function( M, n )
+    local ring;
+    ring := UnderlyingHomalgRing( M );
+    return ApplyFunctor( TwistFunctor( ring, n ), M );
+end );
+
 InstallMethod( DimensionOfTateCohomology,
         [ IsCochainComplex, IsInt, IsInt ],
     function( T, i, k )
