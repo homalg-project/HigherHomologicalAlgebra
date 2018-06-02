@@ -807,6 +807,47 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
     return F;
 end );
 
+InstallMethod( ComplexOfVerticalCohomologiesAtOp,
+        [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
+    function( B, n )
+    local bicomplexes, cochains, cat, Coh, C, diffs;
+    bicomplexes := CapCategory( B );
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+    cat := UnderlyingCategory( cochains );
+    Coh := CohomologyFunctorAt( cochains, cat, n );
+    C := UnderlyingCapCategoryCell( B );
+    diffs := MapLazy( IntegersList, function( i ) 
+                                    return ApplyFunctor( Coh, C^i );
+                                    end, 1 );
+    return CochainComplex( cat, diffs );
+    ## Add to do list for the bounds
+end );
+
+InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
+        [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
+    function( B, m )
+    local bicomplexes, cochains, cat, Coh, C, diffs;
+    bicomplexes := CapCategory( B );
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+    cat := UnderlyingCategory( cochains );
+    Coh := CohomologyFunctorAt( cochains, cat, m );
+    diffs := MapLazy( IntegersList, function( i ) 
+                                    local current_source, current_range, current_mor, maps;
+                                    current_source := RowAsComplex( B, i );
+                                    current_range := RowAsComplex( B, i + 1 );
+                                    maps := MapLazy( IntegersList, function( j )
+                                                                    return VerticalDifferentialAt( B, j, i );
+                                                                    end, 1 );
+                                    current_mor := CochainMorphism( current_source, current_range, maps );
+                                    return ApplyFunctor( Coh, current_mor );
+                                    end, 1 );
+    return CochainComplex( cat, diffs );
+    ## Add to do list for the bounds
+end );
+
+
 InstallMethod( IsWellDefined, 
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
     function( B, left, right, below, above )
