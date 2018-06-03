@@ -116,19 +116,12 @@ InstallMethod( RFunctor,
         hN := AsPresentationInHomalg( N );
         mors := MapLazy( IntegersList, 
                 function( k )
-                local hMk, hNk, hMk_, hNk_, iMk, iNk, l;
-                hMk := HomogeneousPartOverCoefficientsRing( k, hM );
-                hNk := HomogeneousPartOverCoefficientsRing( k, hN );
-                G1 := GetGenerators( hMk );
-                G2 := GetGenerators( hNk );
-                if Length( G1 ) = 0 or Length( G2 ) = 0 then 
-                    return ZeroMorphism( new_source[ k ], new_range[ k ] );
-                fi;
-                hMk_ := UnionOfRows( G1 )*S;
-                hNk_ := UnionOfRows( G2 )*S;
-                iMk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMk_ ), S, List( [1..NrRows( hMk_ ) ], i -> k ) ), hMk_, M );
-                iNk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNk_ ), S, List( [1..NrRows( hNk_ ) ], i -> k ) ), hNk_, N );
-                l := Lift( PreCompose( iMk, f ), iNk );
+                local emb_hMk, emb_hNk, l;
+                emb_hMk := EmbeddingInSuperObject( SubmoduleGeneratedByHomogeneousPart( k, hM ) );
+                emb_hMk := AsPresentationMorphismInCAP( emb_hMk );
+                emb_hNk := EmbeddingInSuperObject( SubmoduleGeneratedByHomogeneousPart( k, hN ) );
+                emb_hNk := AsPresentationMorphismInCAP( emb_hNk );
+                l := LiftAlongMonomorphism( emb_hNk, PreCompose( emb_hMk, f ) );
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l )*KoszulDualRing( S ), new_range[ k ] );
                 end, 1 );
         return CochainMorphism( new_source, new_range, mors );
