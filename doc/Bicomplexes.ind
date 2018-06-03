@@ -1,0 +1,43 @@
+\begin{theindex}
+
+  \item \texttt  {AsCategoryOfBicomplexes}
+    \subitem for IsCapCategory, \hyperpage{9}
+  \item \texttt  {AssociatedBicomplex}
+    \subitem for IsCapNaturalTransformation, \hyperpage{9}
+    \subitem for IsCapNaturalTransformation, IsString, \hyperpage{9}
+  \item \texttt  {AssociatedBicomplexFunctor}
+    \subitem for IsCapFunctor, \hyperpage{9}
+    \subitem for IsCapFunctor, IsString, \hyperpage{9}
+  \item \texttt  {AssociatedBicomplexMorphism}
+    \subitem for IsChainOrCochainMorphism, \hyperpage{8}
+  \item \texttt  {AssociatedBicomplexObject}
+    \subitem for IsChainOrCochainComplex, \hyperpage{8}
+
+  \indexspace
+
+  \item \texttt  {IsCapCategoryBicomplexCell}
+    \subitem for IsCapCategoryCell andIsAttributeStoringRep, 
+		\hyperpage{7}
+  \item \texttt  {IsCapCategoryBicomplexMorphism}
+    \subitem for IsCapCategoryBicomplexCell andIsCapCategoryMorphism, 
+		\hyperpage{8}
+  \item \texttt  {IsCapCategoryBicomplexObject}
+    \subitem for IsCapCategoryBicomplexCell andIsCapCategoryObject, 
+		\hyperpage{7}
+  \item \texttt  {IsCap}\discretionary {-}{}{}\texttt  {Category}\discretionary {-}{}{}\texttt  {Cohomological}\discretionary {-}{}{}\texttt  {Bicomplex}\discretionary {-}{}{}\texttt  {Morphism}
+    \subitem for IsCapCategoryBicomplexMorphism, \hyperpage{8}
+  \item \texttt  {IsCap}\discretionary {-}{}{}\texttt  {Category}\discretionary {-}{}{}\texttt  {Cohomological}\discretionary {-}{}{}\texttt  {Bicomplex}\discretionary {-}{}{}\texttt  {Object}
+    \subitem for IsCapCategoryBicomplexObject, \hyperpage{8}
+  \item \texttt  {IsCap}\discretionary {-}{}{}\texttt  {Category}\discretionary {-}{}{}\texttt  {Homological}\discretionary {-}{}{}\texttt  {Bicomplex}\discretionary {-}{}{}\texttt  {Morphism}
+    \subitem for IsCapCategoryBicomplexMorphism, \hyperpage{8}
+  \item \texttt  {IsCap}\discretionary {-}{}{}\texttt  {Category}\discretionary {-}{}{}\texttt  {Homological}\discretionary {-}{}{}\texttt  {Bicomplex}\discretionary {-}{}{}\texttt  {Object}
+    \subitem for IsCapCategoryBicomplexObject, \hyperpage{7}
+
+  \indexspace
+
+  \item \texttt  {UnderlyingCapCategoryCell}
+    \subitem for IsObject, \hyperpage{9}
+  \item \texttt  {Underlying}\discretionary {-}{}{}\texttt  {Category}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Complexes}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Complexes}
+    \subitem for IsCapCategory, \hyperpage{9}
+
+\end{theindex}

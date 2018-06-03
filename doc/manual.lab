@@ -1,0 +1,24 @@
+\GAPDocLabFile{bicomplexes}
+\makelabel{bicomplexes:Title page}{}{X7D2C85EC87DD46E5}
+\makelabel{bicomplexes:Table of Contents}{}{X8537FEB07AF2BEC8}
+\makelabel{bicomplexes:Bicomplexes}{1}{X7CEDAD61826170CF}
+\makelabel{bicomplexes:Categories}{1.1}{X7CC6903E78F24167}
+\makelabel{bicomplexes:Constructors}{1.2}{X86EC0F0A78ECBC10}
+\makelabel{bicomplexes:Attributes}{1.3}{X7C701DBF7BAE649A}
+\makelabel{bicomplexes:Index}{Ind}{X83A0356F839C696F}
+\makelabel{bicomplexes:IsCapCategoryBicomplexCell (for IsCapCategoryCell andIsAttributeStoringRep)}{1.1.1}{X84CBFFF580D63EDC}
+\makelabel{bicomplexes:IsCapCategoryBicomplexObject (for IsCapCategoryBicomplexCell andIsCapCategoryObject)}{1.1.2}{X7A225A8C815B4456}
+\makelabel{bicomplexes:IsCapCategoryHomologicalBicomplexObject (for IsCapCategoryBicomplexObject)}{1.1.3}{X82480AED7A67D01D}
+\makelabel{bicomplexes:IsCapCategoryCohomologicalBicomplexObject (for IsCapCategoryBicomplexObject)}{1.1.4}{X7F2D3C91805A5030}
+\makelabel{bicomplexes:IsCapCategoryBicomplexMorphism (for IsCapCategoryBicomplexCell andIsCapCategoryMorphism)}{1.1.5}{X7B5DFA2682ADF118}
+\makelabel{bicomplexes:IsCapCategoryHomologicalBicomplexMorphism (for IsCapCategoryBicomplexMorphism)}{1.1.6}{X7FECBADB7FED3C1F}
+\makelabel{bicomplexes:IsCapCategoryCohomologicalBicomplexMorphism (for IsCapCategoryBicomplexMorphism)}{1.1.7}{X7EC396067E8B1647}
+\makelabel{bicomplexes:AssociatedBicomplexObject (for IsChainOrCochainComplex)}{1.2.1}{X79D66C8A838BC9C2}
+\makelabel{bicomplexes:AssociatedBicomplexMorphism (for IsChainOrCochainMorphism)}{1.2.2}{X7B39940985505A52}
+\makelabel{bicomplexes:AssociatedBicomplexFunctor (for IsCapFunctor, IsString)}{1.2.3}{X7F3AE9F287867A00}
+\makelabel{bicomplexes:AssociatedBicomplexFunctor (for IsCapFunctor)}{1.2.3}{X7F3AE9F287867A00}
+\makelabel{bicomplexes:AssociatedBicomplex (for IsCapNaturalTransformation, IsString)}{1.2.4}{X827932218253241C}
+\makelabel{bicomplexes:AssociatedBicomplex (for IsCapNaturalTransformation)}{1.2.4}{X827932218253241C}
+\makelabel{bicomplexes:AsCategoryOfBicomplexes (for IsCapCategory)}{1.2.5}{X7863B0A27821EB4E}
+\makelabel{bicomplexes:UnderlyingCategoryOfComplexesOfComplexes (for IsCapCategory)}{1.3.1}{X84B9923C79785D8E}
+\makelabel{bicomplexes:UnderlyingCapCategoryCell (for IsObject)}{1.3.2}{X7A032D6D79B2EFA6}

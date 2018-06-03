@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (Bicomplexes) - Chapter 1: Bicomplexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
+<p><a id="X7CEDAD61826170CF" name="X7CEDAD61826170CF"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X7CEDAD61826170CF">1 <span class="Heading">Bicomplexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7CC6903E78F24167">1.1 <span class="Heading">Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84CBFFF580D63EDC">1.1-1 IsCapCategoryBicomplexCell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A225A8C815B4456">1.1-2 IsCapCategoryBicomplexObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X82480AED7A67D01D">1.1-3 IsCapCategoryHomologicalBicomplexObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F2D3C91805A5030">1.1-4 IsCapCategoryCohomologicalBicomplexObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B5DFA2682ADF118">1.1-5 IsCapCategoryBicomplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FECBADB7FED3C1F">1.1-6 IsCapCategoryHomologicalBicomplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EC396067E8B1647">1.1-7 IsCapCategoryCohomologicalBicomplexMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X86EC0F0A78ECBC10">1.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79D66C8A838BC9C2">1.2-1 AssociatedBicomplexObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B39940985505A52">1.2-2 AssociatedBicomplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F3AE9F287867A00">1.2-3 AssociatedBicomplexFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X827932218253241C">1.2-4 AssociatedBicomplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7863B0A27821EB4E">1.2-5 AsCategoryOfBicomplexes</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7C701DBF7BAE649A">1.3 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X84B9923C79785D8E">1.3-1 UnderlyingCategoryOfComplexesOfComplexes</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A032D6D79B2EFA6">1.3-2 UnderlyingCapCategoryCell</a></span>
+</div></div>
+</div>
+
+<h3>1 <span class="Heading">Bicomplexes</span></h3>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ := HomalgRingOfIntegers( );</span>
+Z
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lp_cat := CategoryOfHomalgLeftModules( ZZ );</span>
+intrinsic Category of left presentations of Z with ambient objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chains_lp_cat := ChainComplexCategory( lp_cat );</span>
+Chain complexes category over intrinsic Category
+of left presentations of Z with ambient objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chains_chains_lp_cat := ChainComplexCategory( chains_lp_cat );</span>
+Chain complexes category over chain complexes category over
+intrinsic Category of left presentations of Z with ambient objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Bicomplexes_cat := AsCategoryOfBicomplexes( chains_chains_lp_cat );</span>
+Chain complexes category over chain complexes category over
+intrinsic Category of left presentations of Z with ambient objects
+as bicomplexes
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F1 := HomalgFreeLeftModule( 1, ZZ );</span>
+&lt;A free left module of rank 1 on a free generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d7 := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );</span>
+&lt;An endo"morphism" of a left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d6 := CokernelProjection( d7 );</span>
+&lt;An epimorphism of left modules&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C10 := ChainComplex( [ d6, d7 ], 6 );</span>
+&lt;A bounded object in chain complexes category over intrinsic 
+Category of left presentations of Z with ambient objects with 
+active lower bound 4 and active upper bound 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t7 := HomalgMap( HomalgMatrix( "[ [ 2 ] ]", 1, 1, ZZ ), F1, F1 );</span>
+&lt;An endo"morphism" of a left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t6 := CokernelProjection( t7 );</span>
+&lt;An epimorphism of left modules&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C9 := ChainComplex( [ t6, t7 ], 6 );</span>
+&lt;A bounded object in chain complexes category over intrinsic 
+Category of left presentations of Z with ambient objects with 
+active lower bound 4 and active upper bound 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi5 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), C10[ 5 ], C9[ 5 ] );</span>
+&lt;A "homomorphism" of left modules&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi6 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), F1, F1 );</span>
+&lt;An endo"morphism" of a left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi7 := HomalgMap( 2 * HomalgIdentityMatrix( 1, ZZ ), F1, F1 );</span>
+&lt;An endo"morphism" of a left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := ChainMorphism( C10, C9, [ phi5, phi6, phi7 ], 5 );</span>
+&lt;A bounded morphism in chain complexes category over intrinsic 
+Category of left presentations of Z with ambient objects with 
+active lower bound 4 and active upper bound 8&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := ChainComplex( [ phi ], 10 );</span>
+&lt;A bounded object in chain complexes category over chain complexes 
+category over intrinsic Category of left presentations of Z with 
+ambient objects with active lower bound 8 and active upper bound 11&gt;
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := HomologicalBicomplex( C );</span>
+&lt;A homological bicomplex in intrinsic Category of left presentations 
+of Z with ambient objects concentrated in window [ 8 .. 11 ] x [ 4 .. 8 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( VerticalDifferentialAt( B, 9, 7 ) );</span>
+[ [  -2 ] ]
+
+the map is currently represented by the above 1 x 1 matrix
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := TotalComplex( B );</span>
+&lt;A bounded object in chain complexes category over intrinsic Category 
+of left presentations of Z with ambient objects with active lower 
+bound 13 and active upper bound 18&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 13 ];</span>
+&lt;A zero left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 14 ];</span>
+&lt;A cyclic torsion left module presented by 1 relation
+ for a cyclic generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 15 ];</span>
+&lt;A non-torsion left module presented by 1 relation for 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 16 ];</span>
+&lt;A free left module of rank 2 on free generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 17 ];</span>
+&lt;A free left module of rank 1 on a free generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T[ 18 ];</span>
+&lt;A zero left module&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( T^16 );</span>
+[ [  -2,   0 ],
+  [   1,   1 ] ]
+
+the map is currently represented by the above 2 x 2 matrix
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExact( T );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T;</span>
+&lt;A cyclic, bounded object in chain complexes category over intrinsic 
+Category of left presentations of Z with ambient objects with active 
+lower bound 13 and active upper bound 18&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( T, 13, 18 );</span>
+
+-----------------------------------------------------------------
+In index 13
+
+Object is
+0
+
+Differential is
+(an empty 0 x 0 matrix)
+
+the map is currently represented by the above 0 x 0 matrix
+
+-----------------------------------------------------------------
+In index 14
+
+Object is
+Z/&lt; 2 &gt; 
+
+Differential is
+(an empty 1 x 0 matrix)
+
+the map is currently represented by the above 1 x 0 matrix
+
+-----------------------------------------------------------------
+In index 15
+
+Object is
+[ [  0,  4 ] ]
+
+Cokernel of the map
+
+Z^(1x1) --&gt; Z^(1x2),
+
+currently represented by the above matrix
+
+Differential is
+[ [  -1 ],
+  [   1 ] ]
+
+the map is currently represented by the above 2 x 1 matrix
+
+-----------------------------------------------------------------
+In index 16
+
+Object is
+Z^(1 x 2)
+
+Differential is
+[ [  -2,   0 ],
+  [   1,   1 ] ]
+
+the map is currently represented by the above 2 x 2 matrix
+
+-----------------------------------------------------------------
+In index 17
+
+Object is
+Z^(1 x 1)
+
+Differential is
+[ [  2,  4 ] ]
+
+the map is currently represented by the above 1 x 2 matrix
+
+-----------------------------------------------------------------
+In index 18
+
+Object is
+0
+
+Differential is
+(an empty 0 x 1 matrix)
+
+the map is currently represented by the above 0 x 1 matrix
+</pre></div>
+
+<p><a id="X7CC6903E78F24167" name="X7CC6903E78F24167"></a></p>
+
+<h4>1.1 <span class="Heading">Categories</span></h4>
+
+<p><a id="X84CBFFF580D63EDC" name="X84CBFFF580D63EDC"></a></p>
+
+<h5>1.1-1 IsCapCategoryBicomplexCell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryBicomplexCell</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of cells in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X7A225A8C815B4456" name="X7A225A8C815B4456"></a></p>
+
+<h5>1.1-2 IsCapCategoryBicomplexObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryBicomplexObject</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of bicomplex objects in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X82480AED7A67D01D" name="X82480AED7A67D01D"></a></p>
+
+<h5>1.1-3 IsCapCategoryHomologicalBicomplexObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryHomologicalBicomplexObject</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of homological bicomplex objects in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X7F2D3C91805A5030" name="X7F2D3C91805A5030"></a></p>
+
+<h5>1.1-4 IsCapCategoryCohomologicalBicomplexObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryCohomologicalBicomplexObject</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of cohomological bicomplex objects in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X7B5DFA2682ADF118" name="X7B5DFA2682ADF118"></a></p>
+
+<h5>1.1-5 IsCapCategoryBicomplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryBicomplexMorphism</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of bicomplex morphisms in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X7FECBADB7FED3C1F" name="X7FECBADB7FED3C1F"></a></p>
+
+<h5>1.1-6 IsCapCategoryHomologicalBicomplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryHomologicalBicomplexMorphism</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of homological bicomplex morphisms in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X7EC396067E8B1647" name="X7EC396067E8B1647"></a></p>
+
+<h5>1.1-7 IsCapCategoryCohomologicalBicomplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryCohomologicalBicomplexMorphism</code>( <var class="Arg">arg</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of cohomological bicomplex morphisms in a <strong class="pkg">CAP</strong> category of bicomplexes.</p>
+
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+
+<h4>1.2 <span class="Heading">Constructors</span></h4>
+
+<p><a id="X79D66C8A838BC9C2" name="X79D66C8A838BC9C2"></a></p>
+
+<h5>1.2-1 AssociatedBicomplexObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplexObject</code>( <var class="Arg">cx</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> object</p>
+
+<p>Return the bicomplex associated to the complex of complexes <var class="Arg">cx</var>.</p>
+
+<p><a id="X7B39940985505A52" name="X7B39940985505A52"></a></p>
+
+<h5>1.2-2 AssociatedBicomplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplexMorphism</code>( <var class="Arg">mu</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> morphism</p>
+
+<p>Return the morphism of bicomplexes associated to the chain morphism between two complexes of complexes <var class="Arg">mu</var>.</p>
+
+<p><a id="X7F3AE9F287867A00" name="X7F3AE9F287867A00"></a></p>
+
+<h5>1.2-3 AssociatedBicomplexFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplexFunctor</code>( <var class="Arg">F</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplexFunctor</code>( <var class="Arg">F</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> functor</p>
+
+<p><a id="X827932218253241C" name="X827932218253241C"></a></p>
+
+<h5>1.2-4 AssociatedBicomplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplex</code>( <var class="Arg">eta</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssociatedBicomplex</code>( <var class="Arg">eta</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> natural transformation</p>
+
+<p><a id="X7863B0A27821EB4E" name="X7863B0A27821EB4E"></a></p>
+
+<h5>1.2-5 AsCategoryOfBicomplexes</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCategoryOfBicomplexes</code>( <var class="Arg">A</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>Returns: a <strong class="pkg">CAP</strong> category</p>
+
+<p>Return the category of bicomplexes of the Abelian category <var class="Arg">A</var> of complexes of complexes.</p>
+
+<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
+
+<h4>1.3 <span class="Heading">Attributes</span></h4>
+
+<p><a id="X84B9923C79785D8E" name="X84B9923C79785D8E"></a></p>
+
+<h5>1.3-1 UnderlyingCategoryOfComplexesOfComplexes</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCategoryOfComplexesOfComplexes</code>( <var class="Arg">Bicx</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>The category of double complexes underlying the category of bicomplexes <var class="Arg">Bicx</var>.</p>
+
+<p><a id="X7A032D6D79B2EFA6" name="X7A032D6D79B2EFA6"></a></p>
+
+<h5>1.3-2 UnderlyingCapCategoryCell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCapCategoryCell</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>The complex of complexes underlying the bicomplex <var class="Arg">B</var>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

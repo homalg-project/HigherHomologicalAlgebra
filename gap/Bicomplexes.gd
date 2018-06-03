@@ -176,10 +176,17 @@ DeclareOperation( "HorizontalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt,
 DeclareOperation( "VerticalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 
 KeyDependentOperation( "ComplexOfVerticalCohomologiesAt", IsCapCategoryCohomologicalBicomplexObject, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexMorphismOfVerticalCohomologiesAt", IsCapCategoryCohomologicalBicomplexMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexOfVerticalCohomologiesFunctorAt", IsCapCategory, IsInt, ReturnTrue );
+
 KeyDependentOperation( "ComplexOfHorizontalCohomologiesAt", IsCapCategoryCohomologicalBicomplexObject, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexMorphismOfHorizontalCohomologiesAt", IsCapCategoryCohomologicalBicomplexMorphism, IsInt, ReturnTrue );
 
 KeyDependentOperation( "ComplexOfVerticalHomologiesAt", IsCapCategoryHomologicalBicomplexObject, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexMorphismOfVerticalHomologiesAt", IsCapCategoryHomologicalBicomplexMorphism, IsInt, ReturnTrue );
+                        
 KeyDependentOperation( "ComplexOfHorizontalHomologiesAt", IsCapCategoryHomologicalBicomplexObject, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexMorphismOfHorizontalHomologiesAt", IsCapCategoryHomologicalBicomplexMorphism, IsInt, ReturnTrue );
 
 ## Morphisms
 DeclareOperation( "BicomplexMorphism", [ IsChainOrCochainMorphism ] );

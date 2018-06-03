@@ -824,6 +824,47 @@ InstallMethod( ComplexOfVerticalCohomologiesAtOp,
     ## Add to do list for the bounds
 end );
 
+InstallMethod( ComplexMorphismOfVerticalCohomologiesAtOp,
+        [ IsCapCategoryCohomologicalBicomplexMorphism, IsInt ],
+    function( phi, n )
+    local bicomplexes, cochains, cat, Coh, C, maps, psi;
+    bicomplexes := CapCategory( phi );
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+    cat := UnderlyingCategory( cochains );
+    Coh := CohomologyFunctorAt( cochains, cat, n );
+    psi := UnderlyingCapCategoryCell( phi );
+    maps := MapLazy( IntegersList, function( i )
+                                    return ApplyFunctor( Coh, psi[ i ] );
+                                    end, 1 );
+    return CochainMorphism( ComplexOfVerticalCohomologiesAt( Source( phi ), n ), 
+                            ComplexOfVerticalCohomologiesAt( Range( phi ), n ), maps );
+
+end );
+
+InstallMethod( ComplexOfVerticalCohomologiesFunctorAtOp,
+        [ IsCapCategory, IsInt ],
+    function( bicomplexes, n )
+    local F, cochains, name;
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+    
+    name := Concatenation( " Complex of vertical cohomologies at ", String( n ), " from ", Name( bicomplexes),
+    " to ", Name( cochains ) );
+
+    F := CapFunctor( bicomplexes, cochains, name );
+    AddObjectFunction( F,
+        function( bicomplex )
+            return ComplexOfVerticalCohomologiesAt( bicomplex, n );
+        end );
+    AddMorphismFunction( F,
+        function( new_source, phi, new_range )
+            return ComplexMorphismOfVerticalCohomologiesAt( phi, n );
+        end );
+    return F;
+end );
+
+
 InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
         [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
     function( B, m )

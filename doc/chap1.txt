@@ -1,0 +1,275 @@
+  
+  [1X1 [33X[0;0YBicomplexes[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
+    [4X[28XZ[128X[104X
+    [4X[25Xgap>[125X [27Xlp_cat := CategoryOfHomalgLeftModules( ZZ );[127X[104X
+    [4X[28Xintrinsic Category of left presentations of Z with ambient objects[128X[104X
+    [4X[25Xgap>[125X [27Xchains_lp_cat := ChainComplexCategory( lp_cat );[127X[104X
+    [4X[28XChain complexes category over intrinsic Category[128X[104X
+    [4X[28Xof left presentations of Z with ambient objects[128X[104X
+    [4X[25Xgap>[125X [27Xchains_chains_lp_cat := ChainComplexCategory( chains_lp_cat );[127X[104X
+    [4X[28XChain complexes category over chain complexes category over[128X[104X
+    [4X[28Xintrinsic Category of left presentations of Z with ambient objects[128X[104X
+    [4X[25Xgap>[125X [27XBicomplexes_cat := AsCategoryOfBicomplexes( chains_chains_lp_cat );[127X[104X
+    [4X[28XChain complexes category over chain complexes category over[128X[104X
+    [4X[28Xintrinsic Category of left presentations of Z with ambient objects[128X[104X
+    [4X[28Xas bicomplexes[128X[104X
+    [4X[25Xgap>[125X [27XF1 := HomalgFreeLeftModule( 1, ZZ );[127X[104X
+    [4X[28X<A free left module of rank 1 on a free generator>[128X[104X
+    [4X[25Xgap>[125X [27Xd7 := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );[127X[104X
+    [4X[28X<An endo"morphism" of a left module>[128X[104X
+    [4X[25Xgap>[125X [27Xd6 := CokernelProjection( d7 );[127X[104X
+    [4X[28X<An epimorphism of left modules>[128X[104X
+    [4X[25Xgap>[125X [27XC10 := ChainComplex( [ d6, d7 ], 6 );[127X[104X
+    [4X[28X<A bounded object in chain complexes category over intrinsic [128X[104X
+    [4X[28XCategory of left presentations of Z with ambient objects with [128X[104X
+    [4X[28Xactive lower bound 4 and active upper bound 8>[128X[104X
+    [4X[25Xgap>[125X [27Xt7 := HomalgMap( HomalgMatrix( "[ [ 2 ] ]", 1, 1, ZZ ), F1, F1 );[127X[104X
+    [4X[28X<An endo"morphism" of a left module>[128X[104X
+    [4X[25Xgap>[125X [27Xt6 := CokernelProjection( t7 );[127X[104X
+    [4X[28X<An epimorphism of left modules>[128X[104X
+    [4X[25Xgap>[125X [27XC9 := ChainComplex( [ t6, t7 ], 6 );[127X[104X
+    [4X[28X<A bounded object in chain complexes category over intrinsic [128X[104X
+    [4X[28XCategory of left presentations of Z with ambient objects with [128X[104X
+    [4X[28Xactive lower bound 4 and active upper bound 8>[128X[104X
+    [4X[25Xgap>[125X [27Xphi5 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), C10[ 5 ], C9[ 5 ] );[127X[104X
+    [4X[28X<A "homomorphism" of left modules>[128X[104X
+    [4X[25Xgap>[125X [27Xphi6 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), F1, F1 );[127X[104X
+    [4X[28X<An endo"morphism" of a left module>[128X[104X
+    [4X[25Xgap>[125X [27Xphi7 := HomalgMap( 2 * HomalgIdentityMatrix( 1, ZZ ), F1, F1 );[127X[104X
+    [4X[28X<An endo"morphism" of a left module>[128X[104X
+    [4X[25Xgap>[125X [27Xphi := ChainMorphism( C10, C9, [ phi5, phi6, phi7 ], 5 );[127X[104X
+    [4X[28X<A bounded morphism in chain complexes category over intrinsic [128X[104X
+    [4X[28XCategory of left presentations of Z with ambient objects with [128X[104X
+    [4X[28Xactive lower bound 4 and active upper bound 8>[128X[104X
+    [4X[25Xgap>[125X [27XC := ChainComplex( [ phi ], 10 );[127X[104X
+    [4X[28X<A bounded object in chain complexes category over chain complexes [128X[104X
+    [4X[28Xcategory over intrinsic Category of left presentations of Z with [128X[104X
+    [4X[28Xambient objects with active lower bound 8 and active upper bound 11>[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XB := HomologicalBicomplex( C );[127X[104X
+    [4X[28X<A homological bicomplex in intrinsic Category of left presentations [128X[104X
+    [4X[28Xof Z with ambient objects concentrated in window [ 8 .. 11 ] x [ 4 .. 8 ]>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( VerticalDifferentialAt( B, 9, 7 ) );[127X[104X
+    [4X[28X[ [  -2 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 1 x 1 matrix[128X[104X
+    [4X[25Xgap>[125X [27XT := TotalComplex( B );[127X[104X
+    [4X[28X<A bounded object in chain complexes category over intrinsic Category [128X[104X
+    [4X[28Xof left presentations of Z with ambient objects with active lower [128X[104X
+    [4X[28Xbound 13 and active upper bound 18>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 13 ];[127X[104X
+    [4X[28X<A zero left module>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 14 ];[127X[104X
+    [4X[28X<A cyclic torsion left module presented by 1 relation[128X[104X
+    [4X[28X for a cyclic generator>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 15 ];[127X[104X
+    [4X[28X<A non-torsion left module presented by 1 relation for 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 16 ];[127X[104X
+    [4X[28X<A free left module of rank 2 on free generators>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 17 ];[127X[104X
+    [4X[28X<A free left module of rank 1 on a free generator>[128X[104X
+    [4X[25Xgap>[125X [27XT[ 18 ];[127X[104X
+    [4X[28X<A zero left module>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( T^16 );[127X[104X
+    [4X[28X[ [  -2,   0 ],[128X[104X
+    [4X[28X  [   1,   1 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 2 x 2 matrix[128X[104X
+    [4X[25Xgap>[125X [27XIsExact( T );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XT;[127X[104X
+    [4X[28X<A cyclic, bounded object in chain complexes category over intrinsic [128X[104X
+    [4X[28XCategory of left presentations of Z with ambient objects with active [128X[104X
+    [4X[28Xlower bound 13 and active upper bound 18>[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( T, 13, 18 );[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 13[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X(an empty 0 x 0 matrix)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 0 x 0 matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 14[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28XZ/< 2 > [128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X(an empty 1 x 0 matrix)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 1 x 0 matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 15[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28X[ [  0,  4 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28XCokernel of the map[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XZ^(1x1) --> Z^(1x2),[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xcurrently represented by the above matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X[ [  -1 ],[128X[104X
+    [4X[28X  [   1 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 2 x 1 matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 16[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28XZ^(1 x 2)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X[ [  -2,   0 ],[128X[104X
+    [4X[28X  [   1,   1 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 2 x 2 matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 17[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28XZ^(1 x 1)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X[ [  2,  4 ] ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 1 x 2 matrix[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X-----------------------------------------------------------------[128X[104X
+    [4X[28XIn index 18[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XObject is[128X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XDifferential is[128X[104X
+    [4X[28X(an empty 0 x 1 matrix)[128X[104X
+    [4X[28X[128X[104X
+    [4X[28Xthe map is currently represented by the above 0 x 1 matrix[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.1 [33X[0;0YCategories[133X[101X
+  
+  [1X1.1-1 IsCapCategoryBicomplexCell[101X
+  
+  [29X[2XIsCapCategoryBicomplexCell[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of cells in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-2 IsCapCategoryBicomplexObject[101X
+  
+  [29X[2XIsCapCategoryBicomplexObject[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of bicomplex objects in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-3 IsCapCategoryHomologicalBicomplexObject[101X
+  
+  [29X[2XIsCapCategoryHomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  homological  bicomplex  objects in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-4 IsCapCategoryCohomologicalBicomplexObject[101X
+  
+  [29X[2XIsCapCategoryCohomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  cohomological bicomplex objects in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-5 IsCapCategoryBicomplexMorphism[101X
+  
+  [29X[2XIsCapCategoryBicomplexMorphism[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of bicomplex morphisms in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-6 IsCapCategoryHomologicalBicomplexMorphism[101X
+  
+  [29X[2XIsCapCategoryHomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  homological bicomplex morphisms in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-7 IsCapCategoryCohomologicalBicomplexMorphism[101X
+  
+  [29X[2XIsCapCategoryCohomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category of cohomological bicomplex morphisms in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  
+  [1X1.2 [33X[0;0YConstructors[133X[101X
+  
+  [1X1.2-1 AssociatedBicomplexObject[101X
+  
+  [29X[2XAssociatedBicomplexObject[102X( [3Xcx[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X object[133X
+  
+  [33X[0;0YReturn the bicomplex associated to the complex of complexes [3Xcx[103X.[133X
+  
+  [1X1.2-2 AssociatedBicomplexMorphism[101X
+  
+  [29X[2XAssociatedBicomplexMorphism[102X( [3Xmu[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X morphism[133X
+  
+  [33X[0;0YReturn  the morphism of bicomplexes associated to the chain morphism between
+  two complexes of complexes [3Xmu[103X.[133X
+  
+  [1X1.2-3 AssociatedBicomplexFunctor[101X
+  
+  [29X[2XAssociatedBicomplexFunctor[102X( [3XF[103X, [3Xname[103X ) [32X operation
+  [29X[2XAssociatedBicomplexFunctor[102X( [3XF[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X functor[133X
+  
+  [1X1.2-4 AssociatedBicomplex[101X
+  
+  [29X[2XAssociatedBicomplex[102X( [3Xeta[103X, [3Xname[103X ) [32X operation
+  [29X[2XAssociatedBicomplex[102X( [3Xeta[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X natural transformation[133X
+  
+  [1X1.2-5 AsCategoryOfBicomplexes[101X
+  
+  [29X[2XAsCategoryOfBicomplexes[102X( [3XA[103X ) [32X attribute
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X category[133X
+  
+  [33X[0;0YReturn the category of bicomplexes of the Abelian category [3XA[103X of complexes of
+  complexes.[133X
+  
+  
+  [1X1.3 [33X[0;0YAttributes[133X[101X
+  
+  [1X1.3-1 UnderlyingCategoryOfComplexesOfComplexes[101X
+  
+  [29X[2XUnderlyingCategoryOfComplexesOfComplexes[102X( [3XBicx[103X ) [32X attribute
+  
+  [33X[0;0YThe  category  of  double  complexes  underlying the category of bicomplexes
+  [3XBicx[103X.[133X
+  
+  [1X1.3-2 UnderlyingCapCategoryCell[101X
+  
+  [29X[2XUnderlyingCapCategoryCell[102X( [3XB[103X ) [32X attribute
+  
+  [33X[0;0YThe complex of complexes underlying the bicomplex [3XB[103X.[133X
+  
