@@ -69,8 +69,8 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #! @Section Examples
 #! @InsertChunk vec_3
 
-DeclareOperation( "BrutalTruncationAboveFunctor", [ IsCapCategory, IsInt ] );
-DeclareOperation( "BrutalTruncationBelowFunctor", [ IsCapCategory ] );
+KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, ReturnTrue );
+KeyDependentOperation( "BrutalTruncationBelowFunctor", IsCapCategory, IsInt, ReturnTrue );
 
 DeclareOperation( "GoodTruncationAboveFunctor", [ IsCapCategory ] );
 DeclareOperation( "GoodTruncationBelowFunctor", [ IsCapCategory ] );

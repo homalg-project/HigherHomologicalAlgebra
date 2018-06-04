@@ -542,12 +542,12 @@ InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
     return functor;
 end );
 
-InstallMethod( BrutalTruncationAboveFunctor,
+InstallMethod( BrutalTruncationAboveFunctorOp,
         [ IsCapCategory and IsCochainComplexCategory, IsInt ],
     function( cochains, n )
     local name, F;
 
-    name := Concatenation( "Brutal Truncation from above in ", Name( cochains ) );
+    name := Concatenation( "Functor of brutal truncation from above (C -> C^<= ", String( n ), ") in ", Name( cochains ) );
     F := CapFunctor( name, cochains, cochains );
     AddObjectFunction( F,
     function( C )
@@ -566,6 +566,34 @@ InstallMethod( BrutalTruncationAboveFunctor,
                             fi;
                             end, 1 );
     return CochainMorphism( new_source, new_range, morphisms );   
+    end );
+    return F;
+end );
+
+InstallMethod( BrutalTruncationBelowFunctorOp,
+        [ IsCapCategory and IsCochainComplexCategory, IsInt ],
+    function( cochains, n )
+    local name, F;
+
+    name := Concatenation( "Functor of brutal truncation from below (C -> C^> ", String( n ), ") in ", Name( cochains ) );
+    F := CapFunctor( name, cochains, cochains );
+    AddObjectFunction( F,
+    function( C )
+      return BrutalTruncationBelow( C, n );
+    end );
+
+    AddMorphismFunction( F,
+    function( new_source, phi, new_range )
+    local morphisms;
+    morphisms := MapLazy( IntegersList, 
+                            function( i ) 
+                            if i > n then 
+                              return phi[ i ];
+                            else
+                              return ZeroMorphism( new_source[ i ], new_range[ i ] );
+                            fi;
+                            end, 1 );
+    return CochainMorphism( new_source, new_range, morphisms );
     end );
     return F;
 end );
