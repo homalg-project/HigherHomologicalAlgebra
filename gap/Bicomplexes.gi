@@ -852,7 +852,7 @@ InstallMethod( ComplexOfVerticalCohomologiesFunctorAtOp,
     name := Concatenation( " Complex of vertical cohomologies at ", String( n ), " from ", Name( bicomplexes),
     " to ", Name( cochains ) );
 
-    F := CapFunctor( bicomplexes, cochains, name );
+    F := CapFunctor( name, bicomplexes, cochains );
     AddObjectFunction( F,
         function( bicomplex )
             return ComplexOfVerticalCohomologiesAt( bicomplex, n );
@@ -888,6 +888,30 @@ InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
     ## Add to do list for the bounds
 end );
 
+##
+InstallMethod( ComplexMorphismOfHorizontalCohomologiesAtOp,
+        [ IsCapCategoryCohomologicalBicomplexMorphism, IsInt ],
+    function( phi, m )
+    local bicomplexes, cochains, cat, Coh, C, maps, psi;
+    bicomplexes := CapCategory( phi );
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+    cat := UnderlyingCategory( cochains );
+    Coh := CohomologyFunctorAt( cochains, cat, m );
+    maps := MapLazy( IntegersList,  function( i )
+                                    local current_source, current_range, current_mor, current_maps;
+                                    current_source := RowAsComplex( Source( phi ), i );
+                                    current_range := RowAsComplex( Range( phi ), i );
+                                    current_maps := MapLazy( IntegersList,  function( j )
+                                                                    return MorphismAt( phi, j, i );
+                                                                    end, 1 );
+                                    current_mor := CochainMorphism( current_source, current_range, current_maps );
+                                    return ApplyFunctor( Coh, current_mor );
+                                    end, 1 );
+    return CochainMorphism( ComplexOfHorizontalCohomologiesAt( Source( phi ), m ), 
+                            ComplexOfHorizontalCohomologiesAt( Range( phi ), m ), maps );
+
+end );
 
 InstallMethod( IsWellDefined, 
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
