@@ -126,4 +126,38 @@
     \textcolor{my_color}{IsIsomorphism( H_mr_Li );}
     \end{Verbatim}
     
+    \begin{idea}
+        If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$.
+    \end{idea}
+    \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
+    \textcolor{my_color}{r := Maximum( CastelnuovoMumfordRegularity(M), 1 );}
+    \textcolor{my_color}{trunc_leq_r := BrutalTruncationAboveFunctor(cochains_graded_lp_cat_ext, r );;}
+    \textcolor{my_color}{trunc_g_r := BrutalTruncationBelowFunctor(cochains_graded_lp_cat_ext,r);;}
+    \textcolor{my_color}{T := TateFunctor(S);}
+    \textcolor{my_color}{trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;}
+    \textcolor{my_color}{Ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;}
+    \textcolor{my_color}{complexes_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );;}
+    \textcolor{my_color}{bicomplxes_sym := AsCategoryOfBicomplexes(complexes_sym);;}
+    \textcolor{my_color}{complexes_to_bicomplex := ComplexOfComplexesToBicomplexFunctor(complexes_sym, bicomplxes_sym );;}
+    \textcolor{my_color}{L := LFunctor(S);}
+    \textcolor{my_color}{ChL := ExtendFunctorToCochainComplexCategoryFunctor(L);;}
+    \textcolor{my_color}{shift_step_to_left := UnsignedShiftFunctor(cochains_graded_lp_cat_ext, 1);;}
+    \textcolor{my_color}{T1 := PreCompose( [ T, trunc_leq_r ] );;}
+    \textcolor{my_color}{T2 := PreCompose( [ T, trunc_g_r ] );;}    
+    \textcolor{my_color}{T2_shifted := PreCompose( [ T, trunc_g_r, shift_step_to_left ] );;}
+    \textcolor{my_color}{tM := ApplyFunctor( T, M );;}
+    \textcolor{my_color}{tM1 := ApplyFunctor( T1, M );;}
+    \textcolor{my_color}{tM2 := ApplyFunctor( T2, M );;}
+    \textcolor{my_color}{tM2_shifted := ApplyFunctor( T2_shifted, M );;}
+    \textcolor{my_color}{phi := CochainMorphism( tM1, tM2_shifted, [ tM^r ], r );;}
+    \textcolor{my_color}{F := PreCompose( [ ChL, Ch_trunc_leq_m1, complexes_to_bicomplex ] );;}
+    \textcolor{my_color}{FtM1 := ApplyFunctor(F,tM1);;}
+    \textcolor{my_color}{FtM2 := ApplyFunctor(F,tM2);;}
+    \textcolor{my_color}{Fphi := ApplyFunctor(F,phi);;}
+    \textcolor{my_color}{f := ComplexMorphismOfHorizontalCohomologiesAt( Fphi, r );;}
+    \textcolor{my_color}{H_mrm1 := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r-1 );;}
+    \textcolor{my_color}{iso := ApplyFunctor( H_mrm1, f );;}
+    \textcolor{my_color}{IsIsomorphism( iso );}
+
+\end{Verbatim}
 \end{document}
