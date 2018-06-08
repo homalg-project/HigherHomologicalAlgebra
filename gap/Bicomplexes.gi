@@ -807,6 +807,30 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
     return F;
 end );
 
+InstallMethod( ComplexOfComplexesToBicomplexFunctor,
+        [ IsCapCategory, IsCapCategory ],
+    function( complexes, bicomplexes )
+    local F, obj_map, name;
+    name := "Functor from Complex of complexes category to the associated Bicomplex category";
+    F := CapFunctor( name, complexes, bicomplexes );
+    if IsCochainComplexCategory( complexes ) then
+        obj_map := CohomologicalBicomplex;
+    elif IsChainComplexCategory( complexes ) then
+        obj_map := HomologicalBicomplex;
+    fi;
+
+    AddObjectFunction( F,
+        function( C )
+        return obj_map( C );
+        end );
+    
+    AddMorphismFunction( F,
+        function( new_source, phi, new_range )
+        return BicomplexMorphism( phi );
+        end );
+    return F;
+end );
+
 InstallMethod( ComplexOfVerticalCohomologiesAtOp,
         [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
     function( B, n )

@@ -210,6 +210,7 @@ DeclareAttribute( "Below_Bound",
 
 DeclareOperation( "CohomologicalToHomologicalBicomplexsFunctor", [ IsCapCategory, IsCapCategory ] );
 DeclareOperation( "HomologicalToCohomologicalBicomplexsFunctor", [ IsCapCategory, IsCapCategory ] );
+DeclareOperation( "ComplexOfComplexesToBicomplexFunctor", [ IsCapCategory, IsCapCategory ] );
 
 DeclareAttribute( "TotalComplex", IsCapCategoryBicomplexObject );
 DeclareAttribute( "TotalComplexFunctorial", IsCapCategoryBicomplexMorphism );
