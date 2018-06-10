@@ -10,6 +10,8 @@ DeclareAttribute( "AsPresentationInHomalg",  IsGradedLeftOrRightPresentation  );
 DeclareAttribute( "AsPresentationMorphismInCAP",  IsHomalgGradedMap  );
 DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresentationMorphism  );
 
+KeyDependentOperation( "GradedLeftPresentationGeneratedByHomogeneousPart", IsGradedLeftPresentation, IsInt, ReturnTrue );
+DeclareAttribute( "EmbeddingInSuperObject", IsGradedLeftPresentation);
 
 DeclareAttribute( "RFunctor", IsHomalgGradedRing );
 DeclareAttribute( "LFunctor", IsHomalgGradedRing );

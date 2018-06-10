@@ -37,6 +37,21 @@ InstallMethod( AsPresentationInHomalg,
     fi;
 end );
 
+InstallMethod( GradedLeftPresentationGeneratedByHomogeneousPartOp,
+        [ IsGradedLeftPresentation, IsInt ],
+    function( M, n )
+    local Mn, Mn_in_homalg;
+    Mn_in_homalg := SubmoduleGeneratedByHomogeneousPart( n, AsPresentationInHomalg(M) );
+    Mn := AsPresentationInCAP( UnderlyingObject( Mn_in_homalg ) );
+    SetEmbeddingInSuperObject( Mn, AsPresentationMorphismInCAP( EmbeddingInSuperObject( Mn_in_homalg ) ) );
+    return Mn;
+end );
+
+InstallMethod( EmbeddingInSuperObject,
+      [ IsGradedLeftPresentation ],
+    function( M )
+    Error( "This attribute should be set by: GradedLeftPresentationGeneratedByHomogeneousPart" );  
+end );
 InstallMethod( AsPresentationMorphismInCAP,
                 [ IsHomalgGradedMap ],
     function( f )
