@@ -83,30 +83,35 @@
     
 \begin{idea}
     If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$, Then the exactness of $\TT(M)$ implies
-    $$\HH^r( \TT^{> r-1}(M))\cong \HH^{r-1}( \TT^{\leq r-1}(M)),$$ hence, 
-    $\LL(\HH^r( \TT^{> r-1}(M)) )$ and $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ are isomorphic. In particular 
+    $$\HH^{r-1}( \TT^{\leq r-1}(M)) \cong \HH^r( \TT^{> r-1}(M)),$$ hence, 
+    $$\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) ) \cong  \LL(\HH^r( \TT^{> r-1}(M)) )$$ are isomorphic. In particular 
     $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ is free resolution of $M_{\geq r}$.
-        Here $\TT^{\leq r-1}(M) = \trunc^{\leq r-1}_{above}(\TT(M))$.
+    Here $\TT^{\leq r-1}(M) = \trunc^{\leq r-1}_{above}(\TT(M))$.
+
+    This isomorphism can be simply computed by applying the functor $H^{r-1}$ on the 
+    natural cochain morphism 
+    $$\psi: \TT^{\leq r-1}(M)\rightarrow \TT^{> r-1}(M)[1]^{\mathrm{unsigned}}.$$
+    
 \end{idea}
 
 \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
-\textcolor{my_color}{TM := ApplyFunctor( T, M );}
-\textcolor{my_color}{u_shift_m1 := UnsignedShiftFunctor( cochains_graded_lp_cat_ext, -1 );}
-\textcolor{my_color}{TM_g_rm1 := ApplyFunctor( trunc_g_rm1_below, TM );}
-\textcolor{my_color}{TM_leq_rm1 := ApplyFunctor( trunc_leq_rm1_above, TM );}
-\textcolor{my_color}{TM_leq_rm1_shifted := ApplyFunctor( u_shift_m1, TM_leq_rm1 );}
-\textcolor{my_color}{phi := CochainMorphism( TM_leq_rm1_shifted, TM_g_rm1, [ TM^(r-1) ], r  );}
-\textcolor{my_color}{IsWellDefined( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );}
-\textcolor{my_color}{i := ApplyFunctor( H_r, phi );}
-\textcolor{my_color}{IsIsomorphism( i );}
-\textcolor{my_color}{Display( i );}
-\textcolor{my_color}{Li := ApplyFunctor( L, i );}
-\textcolor{my_color}{IsWellDefined(Li);}
-\textcolor{my_color}{IsIsomorphism(Li);}
-\textcolor{my_color}{H_mr := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r );}
-\textcolor{my_color}{H_mr_Li := ApplyFunctor( H_mr, Li );}
-\textcolor{my_color}{Display( H_mr_Li );}
-\textcolor{my_color}{IsIsomorphism( H_mr_Li );}
+    \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );;}
+    \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );;}
+    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );;}
+    \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );;}
+    \textcolor{my_color}{Display( M_geq_r );;}
+    \textcolor{my_color}{T := TateFunctor(S);;}
+    \textcolor{my_color}{trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;}
+    \textcolor{my_color}{trunc_g_rm1 := BrutalTruncationBelowFunctor( cochains_graded_lp_cat_ext, r-1 );;}
+    \textcolor{my_color}{unsigned_shift_by_1 := UnsignedShiftFunctor( cochains_graded_lp_cat_ext, 1 );;}
+    \textcolor{my_color}{coh_rm1 := CohomologyFunctorAt( cochains_graded_lp_cat_ext, graded_lp_cat_ext, r-1 );;}
+    \textcolor{my_color}{psi := CochainMorphism(}
+            \textcolor{my_color}{ApplyFunctor( PreCompose([T,trunc_leq_rm1]), M_geq_r ),}
+            \textcolor{my_color}{ApplyFunctor( PreCompose([T,trunc_g_rm1, unsigned_shift_by_1]), M_geq_r ),}
+            \textcolor{my_color}{[ ApplyFunctor(T,M_geq_r)^(r-1) ],}
+            \textcolor{my_color}{r-1 );}
+    \textcolor{my_color}{iso := ApplyFunctor( coh_rm1, psi );;}
+    \textcolor{my_color}{IsIsomorphism(iso);}
 \end{Verbatim}
 
     
@@ -114,34 +119,31 @@
         If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$.
     \end{idea}
     \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
-    \textcolor{my_color}{r := Maximum( CastelnuovoMumfordRegularity(M), 1 );}
-    \textcolor{my_color}{trunc_leq_r := BrutalTruncationAboveFunctor(cochains_graded_lp_cat_ext, r );;}
-    \textcolor{my_color}{trunc_g_r := BrutalTruncationBelowFunctor(cochains_graded_lp_cat_ext,r);;}
-    \textcolor{my_color}{T := TateFunctor(S);}
+    \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );;}
+    \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );;}
+    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );;}
+    \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );;}
+    \textcolor{my_color}{trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;}
+    \textcolor{my_color}{T := TateFunctor(S);;}
     \textcolor{my_color}{trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;}
-    \textcolor{my_color}{Ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;}
+    \textcolor{my_color}{ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;}
     \textcolor{my_color}{complexes_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );;}
     \textcolor{my_color}{bicomplxes_sym := AsCategoryOfBicomplexes(complexes_sym);;}
     \textcolor{my_color}{complexes_to_bicomplex := ComplexOfComplexesToBicomplexFunctor(complexes_sym, bicomplxes_sym );;}
-    \textcolor{my_color}{L := LFunctor(S);}
-    \textcolor{my_color}{ChL := ExtendFunctorToCochainComplexCategoryFunctor(L);;}
-    \textcolor{my_color}{shift_step_to_left := UnsignedShiftFunctor(cochains_graded_lp_cat_ext, 1);;}
-    \textcolor{my_color}{T1 := PreCompose( [ T, trunc_leq_r ] );;}
-    \textcolor{my_color}{T2 := PreCompose( [ T, trunc_g_r ] );;}    
-    \textcolor{my_color}{T2_shifted := PreCompose( [ T, trunc_g_r, shift_step_to_left ] );;}
-    \textcolor{my_color}{tM := ApplyFunctor( T, M );;}
-    \textcolor{my_color}{tM1 := ApplyFunctor( T1, M );;}
-    \textcolor{my_color}{tM2 := ApplyFunctor( T2, M );;}
-    \textcolor{my_color}{tM2_shifted := ApplyFunctor( T2_shifted, M );;}
-    \textcolor{my_color}{phi := CochainMorphism( tM1, tM2_shifted, [ tM^r ], r );;}
-    \textcolor{my_color}{F := PreCompose( [ ChL, Ch_trunc_leq_m1, complexes_to_bicomplex ] );;}
-    \textcolor{my_color}{FtM1 := ApplyFunctor(F,tM1);;}
-    \textcolor{my_color}{FtM2 := ApplyFunctor(F,tM2);;}
-    \textcolor{my_color}{Fphi := ApplyFunctor(F,phi);;}
-    \textcolor{my_color}{f := ComplexMorphismOfHorizontalCohomologiesAt( Fphi, r );;}
-    \textcolor{my_color}{H_mrm1 := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r-1 );;}
-    \textcolor{my_color}{iso := ApplyFunctor( H_mrm1, f );;}
-    \textcolor{my_color}{IsIsomorphism( iso );}
-    
-\end{Verbatim}
+    \textcolor{my_color}{L := LFunctor(S);;}
+    \textcolor{my_color}{chL := ExtendFunctorToCochainComplexCategoryFunctor(L);;}
+    \textcolor{my_color}{trunc_leq_rm1_TM_geq_r := ApplyFunctor( PreCompose(T,trunc_leq_rm1), M_geq_r );;}
+    \textcolor{my_color}{phi := CochainMorphism(}
+        \textcolor{my_color}{trunc_leq_rm1_TM_geq_r,}
+        \textcolor{my_color}{StalkCochainComplex( CokernelObject( trunc_leq_rm1_TM_geq_r^(r-2) ), r-1 ),}
+        \textcolor{my_color}{[ CokernelProjection( trunc_leq_rm1_TM_geq_r^(r-2) ) ],}
+        \textcolor{my_color}{r-1 );}
+    \textcolor{my_color}{IsWellDefined( phi,2,4);;}
+    \textcolor{my_color}{mor := ApplyFunctor( PreCompose( [ chL, ch_trunc_leq_m1, complexes_to_bicomplex ] ), phi );;}
+    \textcolor{my_color}{tau := ComplexMorphismOfHorizontalCohomologiesAt(mor,r-1);;}
+    \end{Verbatim}
+
+\begin{idea}
+    d
+\end{idea}
 \end{document}
