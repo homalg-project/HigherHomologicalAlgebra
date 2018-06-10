@@ -57,74 +57,58 @@
 \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color}]
     \textcolor{my_color}{S;}
     \textcolor{my_color}{A;}
-    \textcolor{my_color}{M := KoszulSyzygyModule(S,2);}
+    \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );}
+    \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );}
     \textcolor{my_color}{Display( M );}
     \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );}
-    \textcolor{my_color}{T := TateFunctor( S );}
+    \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );}
+    \textcolor{my_color}{R := RFunctor( S );}
     \textcolor{my_color}{trunc_g_rm1_below := BrutalTruncationBelowFunctor( cochains_graded_lp_cat_ext, r - 1 );}
     \textcolor{my_color}{H_r := CohomologyFunctorAt( cochains_graded_lp_cat_ext, graded_lp_cat_ext, r );}
     \textcolor{my_color}{L := LFunctor( S );}
-    \textcolor{my_color}{Free_res_of_trunc := PreCompose( [ T, trunc_g_rm1_below, H_r, L ] );}
-    \textcolor{my_color}{F := ApplyFunctor( Free_res_of_trunc, M );}
-    \textcolor{my_color}{CohomologySupport( F, ActiveLowerBound( F ), ActiveUpperBound( F ) );}
-    \textcolor{my_color}{-r in last;}
-    \textcolor{my_color}{obj_isomorphic_to_M_g_rm1 := CohomologyAt( F, -r );}
-    \textcolor{my_color}{hM := AsPresentationInHomalg( M );}
-    \textcolor{my_color}{hM_g_rm1 := SubmoduleGeneratedByHomogeneousPart( r, hM );}
-    \textcolor{my_color}{h_emb_in_M := EmbeddingInSuperObject( hM_g_rm1 );}
-    \textcolor{my_color}{emb_in_M := AsPresentationMorphismInCAP( h_emb_in_M );}
-    \end{Verbatim}
-    \begin{idea}
-        If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$, then $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ is free resolution of $M_{\geq r}$.
-        Here $\TT^{\leq r-1}(M) = \trunc^{\leq r-1}_{above}(\TT(M))$
-    \end{idea}
-
-    \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
-    \textcolor{my_color}{S;}
-    \textcolor{my_color}{A;}
-    \textcolor{my_color}{N := KoszulSyzygyModule(S,2);}
-    \textcolor{my_color}{Display( N );}
-    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );}
-    \textcolor{my_color}{T := TateFunctor( S );}
-    \textcolor{my_color}{trunc_leq_rm1_above := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r - 1 );}
-    \textcolor{my_color}{H_rm1 := CohomologyFunctorAt( cochains_graded_lp_cat_ext, graded_lp_cat_ext, r - 1 );}
-    \textcolor{my_color}{L := LFunctor( S );}
-    \textcolor{my_color}{Free_res_of_trunc := PreCompose( [ T, trunc_leq_rm1_above, H_rm1, L ] );}
-    \textcolor{my_color}{F := ApplyFunctor( Free_res_of_trunc, N );}
-    \textcolor{my_color}{CohomologySupport( F, ActiveLowerBound( F ), ActiveUpperBound( F ) );}
-    \textcolor{my_color}{-r in last;}
-    \textcolor{my_color}{obj_isomorphic_to_N_g_rm1 := CohomologyAt( F, -r );}
-    \textcolor{my_color}{hN := AsPresentationInHomalg( N );}
-    \textcolor{my_color}{hN_g_rm1 := SubmoduleGeneratedByHomogeneousPart( r, hN );}
-    \textcolor{my_color}{h_emb_in_N := EmbeddingInSuperObject( hN_g_rm1 );}
-    \textcolor{my_color}{emb_in_N := AsPresentationMorphismInCAP( h_emb_in_N );}
-    \end{Verbatim}
+    \textcolor{my_color}{Free_res := PreCompose( [ R, trunc_g_rm1_below, H_r, L ] );}
+    \textcolor{my_color}{F := ApplyFunctor( Free_res, M_geq_r );}
+    \textcolor{my_color}{RM_geq_r := ApplyFunctor(R,M_geq_r);;}
+    \textcolor{my_color}{P := Source( CyclesAt( RM_geq_r, r ) );;}
+    \textcolor{my_color}{P_leq_r := GradedLeftPresentationGeneratedByHomogeneousPart(P,r);;}
+    \textcolor{my_color}{emb_P_leq_r_in_P := EmbeddingInSuperObject( P_leq_r );}
+    \textcolor{my_color}{h := PreCompose( emb_P_leq_r_in_P, CyclesAt( RM_geq_r, r ) );}
+    \textcolor{my_color}{mat := UnderlyingMatrix(h);}
+    \textcolor{my_color}{mat := DecompositionOfHomalgMat(mat)[2^(l+1)][2]*S;}
+    \textcolor{my_color}{t := GradedPresentationMorphism( F[ -r ], mat, M_geq_r );}
+    \textcolor{my_color}{IsZero( PreCompose( F^(-r-1), t ) );}
+    \textcolor{my_color}{iso := CokernelColift( F^(-r-1), t );}
+    \textcolor{my_color}{IsIsomorphism( iso );}
+\end{Verbatim}
     
-    \begin{idea}
-        If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$, Then the exactness of $\TT(M)$ implies
-        $$\HH^r( \TT^{> r-1}(M))\cong \HH^{r-1}( \TT^{\leq r-1}(M)),$$ hence, 
-        $\LL(\HH^r( \TT^{> r-1}(M)) )$ and $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ are isomorphic.
-    \end{idea}
+\begin{idea}
+    If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$, Then the exactness of $\TT(M)$ implies
+    $$\HH^r( \TT^{> r-1}(M))\cong \HH^{r-1}( \TT^{\leq r-1}(M)),$$ hence, 
+    $\LL(\HH^r( \TT^{> r-1}(M)) )$ and $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ are isomorphic. In particular 
+    $\LL(\HH^{r-1}( \TT^{\leq r-1}(M)) )$ is free resolution of $M_{\geq r}$.
+        Here $\TT^{\leq r-1}(M) = \trunc^{\leq r-1}_{above}(\TT(M))$.
+\end{idea}
 
-    \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
-    \textcolor{my_color}{TM := ApplyFunctor( T, M );}
-    \textcolor{my_color}{u_shift_m1 := UnsignedShiftFunctor( cochains_graded_lp_cat_ext, -1 );}
-    \textcolor{my_color}{TM_g_rm1 := ApplyFunctor( trunc_g_rm1_below, TM );}
-    \textcolor{my_color}{TM_leq_rm1 := ApplyFunctor( trunc_leq_rm1_above, TM );}
-    \textcolor{my_color}{TM_leq_rm1_shifted := ApplyFunctor( u_shift_m1, TM_leq_rm1 );}
-    \textcolor{my_color}{phi := CochainMorphism( TM_leq_rm1_shifted, TM_g_rm1, [ TM^(r-1) ], r  );}
-    \textcolor{my_color}{IsWellDefined( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );}
-    \textcolor{my_color}{i := ApplyFunctor( H_r, phi );}
-    \textcolor{my_color}{IsIsomorphism( i );}
-    \textcolor{my_color}{Display( i );}
-    \textcolor{my_color}{Li := ApplyFunctor( L, i );}
-    \textcolor{my_color}{IsWellDefined(Li);}
-    \textcolor{my_color}{IsIsomorphism(Li);}
-    \textcolor{my_color}{H_mr := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r );}
-    \textcolor{my_color}{H_mr_Li := ApplyFunctor( H_mr, Li );}
-    \textcolor{my_color}{Display( H_mr_Li );}
-    \textcolor{my_color}{IsIsomorphism( H_mr_Li );}
-    \end{Verbatim}
+\begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
+\textcolor{my_color}{TM := ApplyFunctor( T, M );}
+\textcolor{my_color}{u_shift_m1 := UnsignedShiftFunctor( cochains_graded_lp_cat_ext, -1 );}
+\textcolor{my_color}{TM_g_rm1 := ApplyFunctor( trunc_g_rm1_below, TM );}
+\textcolor{my_color}{TM_leq_rm1 := ApplyFunctor( trunc_leq_rm1_above, TM );}
+\textcolor{my_color}{TM_leq_rm1_shifted := ApplyFunctor( u_shift_m1, TM_leq_rm1 );}
+\textcolor{my_color}{phi := CochainMorphism( TM_leq_rm1_shifted, TM_g_rm1, [ TM^(r-1) ], r  );}
+\textcolor{my_color}{IsWellDefined( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );}
+\textcolor{my_color}{i := ApplyFunctor( H_r, phi );}
+\textcolor{my_color}{IsIsomorphism( i );}
+\textcolor{my_color}{Display( i );}
+\textcolor{my_color}{Li := ApplyFunctor( L, i );}
+\textcolor{my_color}{IsWellDefined(Li);}
+\textcolor{my_color}{IsIsomorphism(Li);}
+\textcolor{my_color}{H_mr := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r );}
+\textcolor{my_color}{H_mr_Li := ApplyFunctor( H_mr, Li );}
+\textcolor{my_color}{Display( H_mr_Li );}
+\textcolor{my_color}{IsIsomorphism( H_mr_Li );}
+\end{Verbatim}
+
     
     \begin{idea}
         If $M$ is finitely generated graded $S$-module and $r\geq\mathrm{reg}(M)$.
@@ -158,6 +142,6 @@
     \textcolor{my_color}{H_mrm1 := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r-1 );;}
     \textcolor{my_color}{iso := ApplyFunctor( H_mrm1, f );;}
     \textcolor{my_color}{IsIsomorphism( iso );}
-
+    
 \end{Verbatim}
 \end{document}
