@@ -829,6 +829,58 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
 end );
 
 ##
+BindGlobal( "PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
+  function( C, i )
+  local im, inc, pi, cyc;
+
+  im := BoundariesAt( C, i );
+
+  inc := KernelLift( C^i, im );
+
+  pi := CokernelProjection( inc );
+  
+  cyc := CyclesAt( C, i );
+
+  AddToToDoList( ToDoListEntry( [ [ Range( pi ), "IsZeroForObjects", false ] ], function( )
+
+                                                             if not HasIsExact( C ) then
+
+                                                                SetIsExact( C, false );
+
+                                                             fi;
+
+                                                             end ) );
+  return GeneralizedMorphismBySpan( cyc, pi );
+
+end );
+
+##
+BindGlobal( "INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
+  function( C, i )
+  local im, inc, pi, cyc;
+
+  im := BoundariesAt( C, i );
+
+  inc := KernelLift( C^i, im );
+
+  pi := CokernelProjection( inc );
+  
+  cyc := CyclesAt( C, i );
+
+  AddToToDoList( ToDoListEntry( [ [ Range( pi ), "IsZeroForObjects", false ] ], function( )
+
+                                                             if not HasIsExact( C ) then
+
+                                                                SetIsExact( C, false );
+
+                                                             fi;
+
+                                                             end ) );
+  return GeneralizedMorphismBySpan( pi, cyc );
+
+end );
+
+##
 BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
   function( map, i )
   local C1, C2, im1, d1, inc1, im2, d2, inc2, cycle1, map_i, ker1_to_ker2;
