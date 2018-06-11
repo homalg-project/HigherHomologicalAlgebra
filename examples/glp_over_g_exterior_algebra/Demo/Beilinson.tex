@@ -1,20 +1,22 @@
 \documentclass[16pt,a4paper]{extarticle}
-    \usepackage[a4paper,margin=12mm]{geometry}
-    \usepackage{amsmath}
-    \usepackage{amsthm}
-    \usepackage{amssymb}
-    \usepackage{hyperref}
-    \usepackage{fancyvrb}
-    \usepackage{xcolor}
-    \usepackage{tikz}
-    \usetikzlibrary{matrix}
-    
-    \theoremstyle{definition}
-    \newtheorem{definition}{Definition}
-    \newtheorem{idea}{Idea}
-    
-    \theoremstyle{theorem}
-    \newtheorem{theorem}{Theorem}
+\usepackage[a4paper,margin=12mm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+\usetikzlibrary{matrix}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{idea}{Idea}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}
     
 \newcommand{\LL}{\mathbf{L}}
 \newcommand{\HH}{\mathbf{H}}
@@ -60,7 +62,7 @@
     \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );}
     \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );}
     \textcolor{my_color}{Display( M );}
-    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );}
+    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) ) + 1;}
     \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );}
     \textcolor{my_color}{R := RFunctor( S );}
     \textcolor{my_color}{trunc_g_rm1_below := BrutalTruncationBelowFunctor( cochains_graded_lp_cat_ext, r - 1 );}
@@ -97,7 +99,7 @@
 \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
     \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );;}
     \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );;}
-    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );;}
+    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) ) + 1;;}
     \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );;}
     \textcolor{my_color}{Display( M_geq_r );;}
     \textcolor{my_color}{T := TateFunctor(S);;}
@@ -121,7 +123,7 @@
     \begin{Verbatim}[commandchars=\\\{\}, fontseries=b, frame=single, label=Gap Code, framerule=0.5mm, rulecolor=\color{rule_color} ]
     \textcolor{my_color}{m := RandomMatrixBetweenGradedFreeLeftModules( [ 5, 4 ],[ 4, 2, 3, 1 ], S );;}
     \textcolor{my_color}{M := AsGradedLeftPresentation( m, [ 4, 2, 3, 1 ] );;}
-    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );;}
+    \textcolor{my_color}{r := Maximum( 1, CastelnuovoMumfordRegularity( M ) )+1;;}
     \textcolor{my_color}{M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );;}
     \textcolor{my_color}{trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;}
     \textcolor{my_color}{T := TateFunctor(S);;}
@@ -144,6 +146,22 @@
     \end{Verbatim}
 
 \begin{idea}
-    d
+    In the previous right and above bounded bicomplex, the Beilinson Monad is the cochain complex of the vertical cohomologies at the line 
+    with cohomological index $-1$.
 \end{idea}
+\begin{tikzpicture}[baseline= (a).base]
+    \node[scale=0.8] (a) at (0,0){
+\begin{tikzcd}
+ &  & i & i+1 & \cdots & 0 & \cdots & r-1 & r \\    
+0 &  & 0 & 0 & \cdots & 0 &  & 0 &  \\
+-1 & \cdots \arrow[r] & S\otimes_k T_1^i \arrow[r] \arrow[u] & S\otimes_k T_1^{i+1} \arrow[r] \arrow[u] & \cdots \arrow[r] \arrow[u] & S\otimes_k T_1^{0} \arrow[u] \arrow[r] & \cdots \arrow[r] & S\otimes_k T_1^{r-1}(=0) \arrow[u] \arrow[r] & 0 \\
+ &  \arrow[r] & \vdots \arrow[u] \arrow[r] & \vdots \arrow[u] \arrow[r] & \cdots \arrow[r] \arrow[u] & \vdots \arrow[u] \arrow[r] & \cdots \arrow[r] & \cdots(=0) \arrow[u] &  \\
+-r+1 &  \arrow[r] & S\otimes_k T^i_{r-1} \arrow[u] \arrow[r] & S\otimes_k T^{i+1}_{r-1} \arrow[u] \arrow[r] & \cdots \arrow[r] \arrow[u] & S\otimes_k T_{r-1}^{0} \arrow[u] \arrow[r] & \cdots \arrow[r] & S\otimes_k T^{r-1}_{r-1} \arrow[u] \arrow[r] & 0 \\
+-r &  \arrow[r] & S\otimes_k T^i_{r} \arrow[u] \arrow[r] & S\otimes_k T^{i+1}_{r} \arrow[u] \arrow[r] & \cdots \arrow[r] \arrow[u] & S\otimes_k T_{r}^{0} \arrow[u] \arrow[r] & \cdots \arrow[r] & S\otimes_k T_{r}^{r-1} \arrow[u] \arrow[r] & 0 \\
+% &  &  \arrow[u] &  \arrow[u] &  \arrow[u] &  \arrow[u] &  &  \arrow[u] & \\
+ &  & \vdots & \vdots& \vdots & \vdots &  & \vdots \arrow[u] &  \\ 
+ -r-n&  & \vdots & \vdots& \vdots & \vdots &  & S\otimes_k T^{r-1}_{n+r}\arrow[r]\arrow[u] & 0 \\ 
+\end{tikzcd}
+   };
+\end{tikzpicture}
 \end{document}
