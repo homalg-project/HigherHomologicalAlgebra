@@ -891,6 +891,28 @@ InstallMethod( ComplexOfComplexesToBicomplexFunctor,
     return F;
 end );
 
+##
+InstallMethod( ExtendFunctorToCohomologicalBicomplexCategoryFunctor,
+            [ IsCapFunctor ],
+    function( F )
+    local functor, name;
+    functor := ExtendFunctorToCochainComplexCategoryFunctor( F );
+    functor := ExtendFunctorToCochainComplexCategoryFunctor( functor );
+    name := Concatenation( "Extension of ", Name( F ), " to cohomological bicomplexes functor" );
+    return AssociatedBicomplexFunctor( functor, name );
+end );
+
+##
+InstallMethod( ExtendFunctorToHomologicalBicomplexCategoryFunctor,
+            [ IsCapFunctor ],
+    function( F )
+    local functor, name;
+    functor := ExtendFunctorToChainComplexCategoryFunctor( F );
+    functor := ExtendFunctorToChainComplexCategoryFunctor( functor );
+    name := Concatenation( "Extension of ", Name( F ), " to homological bicomplexes functor" );
+    return AssociatedBicomplexFunctor( functor, name );
+end );
+
 InstallMethod( ComplexOfVerticalCohomologiesAtOp,
         [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
     function( B, n )
