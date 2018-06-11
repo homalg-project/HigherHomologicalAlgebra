@@ -294,6 +294,15 @@ ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( st
 AsTriangulatedCategory( stable_lp_cat_ext );
 Finalize( stable_lp_cat_ext );
 
+# constructing the category of coherent sheaves
+IsFiniteDimensionalGradedLeftPresentation := function(M) 
+                                            return IsZero(HilbertPolynomial(AsPresentationInHomalg(M)));
+                                            end;
+C := FullSubcategoryByMembershipFunction(graded_lp_cat_sym, IsFiniteDimensionalGradedLeftPresentation );
+Coh := graded_lp_cat_sym / C;
+Sh := CanonicalProjection( Coh );
+
+
 ##
 modules_to_stable_module := CapFunctor( "modules to stable modules", graded_lp_cat_sym, stable_lp_cat_ext );
 AddObjectFunction( modules_to_stable_module, 
@@ -317,16 +326,6 @@ AddMorphismFunction( as_stable_functor,
 	return AsStableMorphism( f );
 end );
 
-##
-#LL := LFunctor( S );
-#Lb1 := ApplyFunctor( L, b[1] );
-#Display( Lb1, -6, 2 );
-
-p := RandomMatrixBetweenGradedFreeLeftModules( [ 3, 4 ], [ 1, 3, 5 ], S );
-P := AsGradedLeftPresentation( p, [ 1, 3, 5 ] );
-RR := RFunctor( S );
-#RP := ApplyFunctor( R, P );
-#Display( Lb1, 0, 5 );
 
 # The output here is stable module that correspondes to O(k) [ the sheafification of S(k) ]
 KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
