@@ -231,9 +231,14 @@ KeyDependentOperation( "CyclesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 KeyDependentOperation( "BoundariesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 KeyDependentOperation( "HomologyAt", IsChainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "GeneralizedEmbeddingOfHomologyAt", IsChainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "GeneralizedProjectionOntoHomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
 
 KeyDependentOperation( "CohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
+
+KeyDependentOperation( "GeneralizedEmbeddingOfCohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "GeneralizedProjectionOntoCohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The outout is the homology (resp. cohomology)

@@ -917,7 +917,14 @@ InstallMethod( HomologyAtOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_O
 ##
 InstallMethod( CohomologyAtOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
+InstallMethod( GeneralizedProjectionOntoHomologyAtOp, [ IsChainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
+InstallMethod( GeneralizedEmbeddingOfHomologyAtOp, [ IsChainComplex, IsInt ], INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 ##
+InstallMethod( GeneralizedProjectionOntoCohomologyAtOp, [ IsCochainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
+InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp, [ IsCochainComplex, IsInt ], INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
 InstallMethod( DefectOfExactnessAtOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
