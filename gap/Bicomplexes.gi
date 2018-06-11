@@ -478,6 +478,20 @@ InstallMethod( VerticalCohomologyAt,
     return CohomologyAt( col, j );    
 end );
 
+InstallMethod( GeneralizedProjectionOntoVerticalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return GeneralizedProjectionOntoCohomologyAt( col, j );
+end );
+
+InstallMethod( GeneralizedEmbeddingOfVerticalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return GeneralizedEmbeddingOfCohomologyAt( col, j );
+end );
+
 InstallMethod( HorizontalCohomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ], 
     function( B, i, j )
@@ -485,6 +499,22 @@ InstallMethod( HorizontalCohomologyAt,
     row := RowAsComplex( B, j );
     return CohomologyAt( row, i );    
 end );
+
+
+InstallMethod( GeneralizedProjectionOntoHorizontalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, j );
+    return GeneralizedProjectionOntoCohomologyAt( row, i );
+end );
+
+InstallMethod( GeneralizedEmbeddingOfHorizontalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, j );
+    return GeneralizedEmbeddingOfCohomologyAt( row, i );
+end );
+
 
 ##
 InstallMethod( VerticalHomologyAt,
@@ -495,6 +525,20 @@ InstallMethod( VerticalHomologyAt,
     return HomologyAt( col, j );    
 end );
 
+InstallMethod( GeneralizedProjectionOntoVerticalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return GeneralizedProjectionOntoHomologyAt( col, j );
+end );
+
+InstallMethod( GeneralizedEmbeddingOfVerticalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local col;
+    col := ColumnAsComplex( B, i );
+    return GeneralizedEmbeddingOfHomologyAt( col, j );
+end );
+
 ##
 InstallMethod( HorizontalHomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ], 
@@ -502,6 +546,22 @@ InstallMethod( HorizontalHomologyAt,
     local row;
     row := RowAsComplex( B, j );
     return HomologyAt( row, i );    
+end );
+
+## Methods for Generalized Morphisms 
+
+InstallMethod( GeneralizedProjectionOntoHorizontalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, j );
+    return GeneralizedProjectionOntoHomologyAt( row, i );
+end );
+
+InstallMethod( GeneralizedEmbeddingOfHorizontalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
+    function( B, i, j )
+    local row;
+    row := RowAsComplex( B, j );
+    return GeneralizedEmbeddingOfHomologyAt( row, i );
 end );
 
 ##

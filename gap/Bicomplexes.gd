@@ -172,8 +172,19 @@ KeyDependentOperation( "ColumnAsComplex", IsCapCategoryBicomplexObject, IsInt, R
 DeclareOperation( "HorizontalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "VerticalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 
+DeclareOperation( "GeneralizedProjectionOntoVerticalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedEmbeddingOfVerticalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedProjectionOntoHorizontalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedEmbeddingOfHorizontalCohomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+
+
 DeclareOperation( "HorizontalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 DeclareOperation( "VerticalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+
+DeclareOperation( "GeneralizedProjectionOntoVerticalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedEmbeddingOfVerticalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedProjectionOntoHorizontalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
+DeclareOperation( "GeneralizedEmbeddingOfHorizontalHomologyAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
 
 KeyDependentOperation( "ComplexOfVerticalCohomologiesAt", IsCapCategoryCohomologicalBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ComplexMorphismOfVerticalCohomologiesAt", IsCapCategoryCohomologicalBicomplexMorphism, IsInt, ReturnTrue );
