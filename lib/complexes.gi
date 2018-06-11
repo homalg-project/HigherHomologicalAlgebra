@@ -524,20 +524,25 @@ end );
 InstallMethod( Display, 
                [ IsChainOrCochainComplex, IsInt, IsInt ],
    function( C, m, n )
+   local i, co_homo;
 
-   local i;
+   if IsChainComplex( C ) then
+	co_homo := "homological";
+   else
+        co_homo := "cohomological";
+   fi;
 
    for i in [ m .. n ] do
 
    Print( "\n-----------------------------------------------------------------\n" );
 
-   Print( TextAttr.underscore, TextAttr.(2),  "In index ", String( i ) , TextAttr.reset );
+   Print( TextAttr.underscore, TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
 
-   Print( "\n\n", TextAttr.underscore, TextAttr.(2), "Object is", TextAttr.reset, "\n" );
+   Print( "\n\n", TextAttr.underscore, TextAttr.(2), "Object:", TextAttr.reset, "\n" );
 
    Display( C[ i ] );
 
-   Print( "\n", TextAttr.underscore, TextAttr.(2), "Differential is", TextAttr.reset, "\n" );
+   Print( "\n", TextAttr.underscore, TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
 
    Display( C^i );
 

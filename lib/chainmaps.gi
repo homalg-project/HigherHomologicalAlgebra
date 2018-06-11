@@ -338,13 +338,19 @@ end );
 InstallMethod( Display, 
                [ IsChainOrCochainMorphism, IsInt, IsInt ], 
    function( map, m, n )
-   local i;
+   local i, co_homo;
+
+   if IsChainMorphism( map ) then
+	co_homo := "homological";
+   else
+        co_homo := "cohomological";
+   fi;
 
    for i in [ m .. n ] do
 
-     Print( TextAttr.underscore, TextAttr.(2), "In index ", String( i ) );
+     Print( TextAttr.underscore, TextAttr.(2), "In ", co_homo, "degree ", String( i ) );
 
-     Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism is\n", TextAttr.reset );
+     Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
 
      Display( map[ i ] );
 
