@@ -330,3 +330,44 @@ w_A := function(k)
 	return ApplyFunctor( TwistFunctor( A, k ), 
 			     GradedFreeLeftPresentation( 1, A, [ Length( IndeterminatesOfExteriorRing( A ) ) ] ) ); 
 end;
+
+# H := function( M )
+#     r := Maximum( 1, CastelnuovoMumfordRegularity( M ) );;
+#     M_geq_r := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );;
+#     trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;
+#     T := TateFunctor(S);;
+#     trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;
+#     ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;
+#     complexes_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );;
+#     bicomplxes_sym := AsCategoryOfBicomplexes(complexes_sym);;
+#     complexes_to_bicomplex := ComplexOfComplexesToBicomplexFunctor(complexes_sym, bicomplxes_sym );;
+#     L := LFunctor(S);;
+#     chL := ExtendFunctorToCochainComplexCategoryFunctor(L);;
+#     trunc_leq_rm1_TM_geq_r := ApplyFunctor( PreCompose(T,trunc_leq_rm1), M_geq_r );;
+#     phi := CochainMorphism(
+#     trunc_leq_rm1_TM_geq_r,
+#     StalkCochainComplex( CokernelObject( trunc_leq_rm1_TM_geq_r^(r-2) ), r-1 ),
+#     [ CokernelProjection( trunc_leq_rm1_TM_geq_r^(r-2) ) ],
+#     r-1 );
+#     IsWellDefined( phi,2,4);;
+#     mor := ApplyFunctor( PreCompose( [ chL, ch_trunc_leq_m1, complexes_to_bicomplex ] ), phi );;
+#     tau := ComplexMorphismOfHorizontalCohomologiesAt(mor,r-1);;
+#     LP := Range( tau );
+#     ###
+#     tM := ApplyFunctor(T,M);
+#     colift := CokernelColift( tM^(r-2), tM^(r-1) );
+#     P := Source(colift);
+#     Pr := GradedLeftPresentationGeneratedByHomogeneousPart(P,r);
+#     emb_of_Pr := EmbeddingInSuperObject(Pr);
+#     emb := PreCompose( emb_of_Pr, colift );
+#     mat := UnderlyingMatrix(emb);
+#     mat := DecompositionOfHomalgMat(mat)[2^(n+1)][2]*S;
+#     ##
+#     t := GradedPresentationMorphism( LP[ -r ], mat, M_geq_r );
+#     emb := EmbeddingInSuperObject( M_geq_r );
+#     phi := CochainMorphism( Range(tau), StalkCochainComplex( M, -r ), [ PreCompose( t, emb ) ], -r );
+#     Hmr := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r );;
+#     mor := ApplyFunctor( Hmr, PreCompose( tau, phi ) );
+#     g_emb := GeneralizedEmbeddingOfCohomologyAt(Range(phi),-r);
+#     iso := PreCompose( mor, HonestRepresentative( g_emb ) );
+# end;
