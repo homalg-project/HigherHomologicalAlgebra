@@ -192,10 +192,11 @@ KeyDependentOperation( "ComplexOfVerticalCohomologiesFunctorAt", IsCapCategory, 
 
 KeyDependentOperation( "ComplexOfHorizontalCohomologiesAt", IsCapCategoryCohomologicalBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ComplexMorphismOfHorizontalCohomologiesAt", IsCapCategoryCohomologicalBicomplexMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "ComplexOfHorizontalCohomologiesFunctorAt", IsCapCategory, IsInt, ReturnTrue );
 
 KeyDependentOperation( "ComplexOfVerticalHomologiesAt", IsCapCategoryHomologicalBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ComplexMorphismOfVerticalHomologiesAt", IsCapCategoryHomologicalBicomplexMorphism, IsInt, ReturnTrue );
-                        
+
 KeyDependentOperation( "ComplexOfHorizontalHomologiesAt", IsCapCategoryHomologicalBicomplexObject, IsInt, ReturnTrue );
 KeyDependentOperation( "ComplexMorphismOfHorizontalHomologiesAt", IsCapCategoryHomologicalBicomplexMorphism, IsInt, ReturnTrue );
 

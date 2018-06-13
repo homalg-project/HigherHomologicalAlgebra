@@ -1014,12 +1014,34 @@ InstallMethod( ComplexMorphismOfHorizontalCohomologiesAtOp,
                                     current_mor := CochainMorphism( current_source, current_range, current_maps );
                                     return ApplyFunctor( Coh, current_mor );
                                     end, 1 );
-    return CochainMorphism( ComplexOfHorizontalCohomologiesAt( Source( phi ), m ), 
+    return CochainMorphism( ComplexOfHorizontalCohomologiesAt( Source( phi ), m ),
                             ComplexOfHorizontalCohomologiesAt( Range( phi ), m ), maps );
 
 end );
 
-InstallMethod( IsWellDefined, 
+InstallMethod( ComplexOfHorizontalCohomologiesFunctorAtOp,
+        [ IsCapCategory, IsInt ],
+    function( bicomplexes, n )
+    local F, cochains, name;
+    cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
+    cochains := UnderlyingCategory( cochains );
+
+    name := Concatenation( " Complex of Horizontal cohomologies at ", String( n ), " from ", Name( bicomplexes),
+    " to ", Name( cochains ) );
+
+    F := CapFunctor( name, bicomplexes, cochains );
+    AddObjectFunction( F,
+        function( bicomplex )
+            return ComplexOfHorizontalCohomologiesAt( bicomplex, n );
+        end );
+    AddMorphismFunction( F,
+        function( new_source, phi, new_range )
+            return ComplexMorphismOfHorizontalCohomologiesAt( phi, n );
+        end );
+    return F;
+end );
+
+InstallMethod( IsWellDefined,
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
     function( B, left, right, below, above )
     local i,j;
