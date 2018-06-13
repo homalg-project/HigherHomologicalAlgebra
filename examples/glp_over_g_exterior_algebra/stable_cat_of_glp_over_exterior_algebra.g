@@ -365,15 +365,15 @@ Cochain_of_ver_coho_coh := ComplexOfVerticalCohomologiesFunctorAt( bicomplexes_o
 ChCh_to_Bi_sym := ComplexOfComplexesToBicomplexFunctor(cochains_cochains_graded_lp_cat_sym, bicomplexes_of_graded_lp_cat_sym );;
 
 ##
-Beilinson_complex_Serre := CapFunctor( "Beilinson Complex functor (Output is cochain of sheaves)",
+Beilinson_complex_Serre_v1 := CapFunctor( "Beilinson Complex functor (Output is cochain of sheaves)",
                             graded_lp_cat_sym, cochains_of_coh );
-AddObjectFunction( Beilinson_complex_Serre,
+AddObjectFunction( Beilinson_complex_Serre_v1,
     function( M )
     return ApplyFunctor(
         PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, BiSh, Cochain_of_ver_coho_coh ] ), M );;
 end );
 
-AddMorphismFunction( Beilinson_complex_Serre,
+AddMorphismFunction( Beilinson_complex_Serre_v1,
     function( new_source, f, new_range )
     return ApplyFunctor(
         PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, BiSh, Cochain_of_ver_coho_coh ] ),
@@ -393,6 +393,19 @@ AddMorphismFunction( Beilinson_complex_sym,
     function( new_source, f, new_range )
     return ApplyFunctor(
         PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, Cochain_of_ver_coho_sym ] ), f );;
+end );
+
+##
+Beilinson_complex_Serre_v2 := CapFunctor( "Beilinson Complex functor (Output is cochain of sheaves)",
+                            graded_lp_cat_sym, cochains_of_coh );
+AddObjectFunction( Beilinson_complex_Serre_v2,
+    function( M )
+    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), M );;
+end );
+
+AddMorphismFunction( Beilinson_complex_Serre_v2,
+    function( new_source, f, new_range )
+    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), f );;
 end );
 
 quit;
