@@ -490,6 +490,59 @@ InstallMethod( TruncationToBeilinsonOp,
 end );
 
 
+Canonicalize_coh := CapFunctor( "Canonicalization Functor",
+                    graded_lp_cat_sym, coh );
+AddObjectFunction( Canonicalize_coh,
+    function( M )
+    local r;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    return ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym,
+            _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh
+        ] ), M );
+end );
+
+AddMorphismFunction( Canonicalize_coh,
+    function( source, f, range )
+    local M1, M2, r1, r2, r, can_f_r;
+    M1 := Source( f );
+    M2 := Range( f );
+
+    r1 := Maximum( 2, CastelnuovoMumfordRegularity( M1 ) );
+    r2 := Maximum( 2, CastelnuovoMumfordRegularity( M2 ) );
+
+    r := Maximum( r1, r2 );
+
+    can_f_r := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym,
+            _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh
+        ] ), f );
+    if r1 < r then
+        return PreCompose(
+        # LiftAlongMonomorphism( TruncationToBeilinson( M1, r ), TruncationToBeilinson( M1, r1 ) )
+        # or pre...
+            PreCompose( TruncationToBeilinson( M1, r1 ), Inverse( TruncationToBeilinson( M1, r ) ) ),
+            can_f_r
+            );
+    elif r2 < r then
+        return PreCompose(
+            can_f_r,
+        #LiftAlongMonomorphism( TruncationToBeilinson( M2, r2 ), TruncationToBeilinson( M2, r ) )
+        # or pre...
+            PreCompose( TruncationToBeilinson( M2, r ), Inverse( TruncationToBeilinson( M2, r2 ) ) )
+            );
+    else
+        return can_f_r;
+    fi;
+end );
+
+Nat_1 := NaturalTransformation( "Nat. iso. from Canonicalize -> Sh(H0(Beilinson))",
+        Canonicalize_coh, PreCompose( [ Beilinson_complex_sym, Coh0_sym, Sh ] ) );
+AddNaturalTransformationFunction( Nat_1,
+    function( source, M, range )
+    return TruncationToBeilinson( M, Maximum( 2, CastelnuovoMumfordRegularity ( M ) ) );
+end );
+
 quit;
 test_right := function( M, i )
     local r, Mr, emb_of_Mr, Trunc_leq_m1, Cochain_of_hor_coho_sym_rm1, Coh_mr,
