@@ -356,7 +356,14 @@ ChLL := ExtendFunctorToCochainComplexCategoryFunctor( LL );
 TT := TateFunctor( S );
 
 Trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;
-_Trunc_leq_rm1 := function(r) return BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r - 1 ); end;
+
+KeyDependentOperation( "_Trunc_leq_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( _Trunc_leq_rm1Op,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r - 1 );
+end );
+
 ChTrunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor( Trunc_leq_m1 );;
 
 # the functor from the category of bicomplexes to cochains that returns the cochain of vertical cohomologies
@@ -365,8 +372,42 @@ ChTrunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor( Trunc_leq_m1 );;
 Cochain_of_ver_coho_sym := ComplexOfVerticalCohomologiesFunctorAt( bicomplexes_of_graded_lp_cat_sym, -1 );
 Cochain_of_ver_coho_coh := ComplexOfVerticalCohomologiesFunctorAt( bicomplexes_of_coh, -1 );
 
-_Cochain_of_hor_coho_sym_rm1 := function(r) return ComplexOfHorizontalCohomologiesFunctorAt( bicomplexes_of_graded_lp_cat_sym, r - 1 ); end;
-_Cochain_of_hor_coho_coh_rm1 := function(r) return ComplexOfHorizontalCohomologiesFunctorAt( bicomplexes_of_coh, r - 1 ); end;
+Coh0_sym := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, 0 );
+Coh0_coh := CohomologyFunctorAt( cochains_of_coh, coh, 0 );
+
+KeyDependentOperation( "_Cochain_of_hor_coho_sym_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "_Cochain_of_hor_coho_coh_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "_Coh_mr_sym", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "_Coh_mr_coh", IsHomalgGradedRing, IsInt, ReturnTrue );
+
+##
+InstallMethod( _Cochain_of_hor_coho_sym_rm1Op,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return ComplexOfHorizontalCohomologiesFunctorAt( bicomplexes_of_graded_lp_cat_sym, r - 1 );
+end );
+
+##
+InstallMethod( _Cochain_of_hor_coho_coh_rm1Op,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return ComplexOfHorizontalCohomologiesFunctorAt( bicomplexes_of_coh, r - 1 );
+end );
+
+##
+InstallMethod( _Coh_mr_symOp,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, -r );
+end );
+
+##
+InstallMethod( _Coh_mr_cohOp,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return CohomologyFunctorAt( cochains_of_coh, coh, -r );
+end );
+
 
 # Ch(Ch( graded_lp_cat_sym )) -> Bicomplex( graded__lp_cat_sym)
 
