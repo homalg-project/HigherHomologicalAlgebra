@@ -457,7 +457,116 @@ AddMorphismFunction( Beilinson_complex_Serre_v2,
     return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), f );;
 end );
 
-Coh0_sym := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, 0 );
+
+
+KeyDependentOperation( "TruncationToBeilinson", IsGradedLeftPresentation, IsInt, ReturnTrue );
+InstallMethod( TruncationToBeilinsonOp,
+                [ IsGradedLeftPresentation, IsInt ],
+    function( M, r )
+    local a, CV, CH, i1, i2, p1, p2, L, iso, Trunc_leq_rm1,
+        indices, Cochain_of_hor_coho_sym_rm1, mono;
+    if r < Maximum( 2, CastelnuovoMumfordRegularity( M ) ) then
+        Error( "r should be >= maximim(2, reg(M))" );
+    fi;
+    Trunc_leq_rm1 := _Trunc_leq_rm1(S,r);
+    Cochain_of_hor_coho_sym_rm1 := _Cochain_of_hor_coho_sym_rm1(S,r);
+
+    a := ApplyFunctor( PreCompose( [ TT, Trunc_leq_rm1, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M );
+    CV := ApplyFunctor( Cochain_of_ver_coho_sym, a );;
+    CH := ApplyFunctor( Cochain_of_hor_coho_sym_rm1, a );;
+    i1 := GeneralizedEmbeddingOfCohomologyAt( CH, -r );;
+    i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( a, r-1, -r );;
+    p1 := GeneralizedProjectionOntoVerticalCohomologyAt( a, 0, -1 );;
+    p2 := GeneralizedProjectionOntoCohomologyAt( CV, 0 );
+    indices := Reversed( List( [ 1 .. r-1 ], i -> [ i, -i ] ) );;
+    L := List( indices,i -> GeneralizedMorphismByCospan(
+            VerticalDifferentialAt( a, i[1], i[2]-1 ),
+            HorizontalDifferentialAt( a, i[1]-1, i[2] ) ) );;
+    cospan_to_span := FunctorFromCospansToSpans( graded_lp_cat_sym );;
+    L := List( L, l -> ApplyFunctor( cospan_to_span, l ) );;
+    mono := PreCompose( Concatenation( [ i1, i2 ], L, [ p1, p2 ] ) );
+    iso := SerreQuotientCategoryMorphism( coh, ApplyFunctor( span_to_three_arrows, mono ) );
+    return iso;
+end );
+
+
+quit;
+test_right := function( M, i )
+    local r, Mr, emb_of_Mr, Trunc_leq_m1, Cochain_of_hor_coho_sym_rm1, Coh_mr,
+        tM, colift, P, Pr, emb_of_Pr, emb, mat, tau1, tau2, phi, tau, mono1, mono2,
+        a, CV, CH, i1, i2, p1, p2, L, iso1, iso2, Trunc_leq_rm1, indices;
+    #r := Maximum( 2, CastelnuovoMumfordRegularity( M ) ) + i;;
+    r := i;
+    Mr := GradedLeftPresentationGeneratedByHomogeneousPart( M, r );
+    emb_of_Mr := EmbeddingInSuperObject( Mr );
+
+    # Using r we define 3 functors:
+
+    # the following functor truncates the tate resolution (the output is concentrated in window
+    #[ -ifinity .. r - 1 ] ).
+    Trunc_leq_rm1 := _Trunc_leq_rm1(S,r);
+
+    # This functor computes the complex of horizontal cohomologies of a bicomplex at index r
+    Cochain_of_hor_coho_sym_rm1 := _Cochain_of_hor_coho_sym_rm1(r);
+
+    # This computes the Cohomology at cohomological index -r
+    Coh_mr := _Coh_mr_sym(r);
+
+    # Hom_S(L(P),M) \sim Hom_k(P,M) \sim Hom_A(P,R(M))
+    tM := ApplyFunctor( TT, M );;
+    colift := CokernelColift( tM^(r-2), tM^(r-1) );;
+    P := CokernelObject( tM^(r-2) );;
+    Pr := GradedLeftPresentationGeneratedByHomogeneousPart( P, r );;
+    emb_of_Pr := EmbeddingInSuperObject( Pr );;
+    emb := PreCompose( emb_of_Pr, colift );;
+    mat := UnderlyingMatrix(emb);;
+    mat := DecompositionOfHomalgMat(mat)[2^(n+1)][2]*S;;
+
+    # We don't need tM anymore, we only need now a truncation of it.
+    tM := ApplyFunctor( PreCompose( [ TT, Trunc_leq_rm1 ] ), M );
+    phi := CochainMorphism( tM, StalkCochainComplex( P, r - 1 ),
+                            [ CokernelProjection( tM^(r-2) ) ], r - 1 );
+
+    tau1 := ApplyFunctor(
+        PreCompose( [ ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, Cochain_of_hor_coho_sym_rm1 ] ),
+        phi );
+
+    tau2 := CochainMorphism( Range( tau1 ), StalkCochainComplex( M, -r ),
+        [ PreCompose(
+            GradedPresentationMorphism( Range( tau1 )[ -r ], mat, Mr ), emb_of_Mr ) ], -r );
+
+    # Note: You may think that the following tau is quasi-isomorphism, but it may not.
+    # because here we are in modules not in (Serre Quotients).
+    tau := PreCompose( tau1, tau2 );
+
+    mono1 := PreCompose(
+            ApplyFunctor( Coh_mr, tau ),
+            HonestRepresentative( GeneralizedEmbeddingOfCohomologyAt( Range( tau ), -r ) )
+            );
+
+    a := ApplyFunctor( PreCompose( [ TT, Trunc_leq_rm1, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M );
+    CV := ApplyFunctor( Cochain_of_ver_coho_sym, a );;
+    CH := ApplyFunctor( Cochain_of_hor_coho_sym_rm1, a );;
+    i1 := GeneralizedEmbeddingOfCohomologyAt( CH, -r );;
+    i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( a, r-1, -r );;
+    p1 := GeneralizedProjectionOntoVerticalCohomologyAt( a, 0, -1 );;
+    p2 := GeneralizedProjectionOntoCohomologyAt( CV, 0 );
+    indices := Reversed( List( [ 1 .. r-1 ], i -> [ i, -i ] ) );;
+    L := List( indices,i -> GeneralizedMorphismByCospan(
+            VerticalDifferentialAt( a, i[1], i[2]-1 ),
+            HorizontalDifferentialAt( a, i[1]-1, i[2] ) ) );;
+    cospan_to_span := FunctorFromCospansToSpans( graded_lp_cat_sym );;
+    L := List( L, l -> ApplyFunctor( cospan_to_span, l ) );;
+    mono2 := PreCompose( Concatenation( [ i1, i2 ], L, [ p1, p2 ] ) );
+    return [ mono1, HonestRepresentative( mono2 )];
+    iso1 := Inverse( ApplyFunctor( Sh, mono1 ) );
+    iso2 := SerreQuotientCategoryMorphism( coh, ApplyFunctor( span_to_three_arrows, mono2 ) );
+
+    return PreCompose( iso1, iso2 );
+
+end;
+
+quit;
 
 # searching for the nat trans.
 _nat := function(i)
