@@ -661,16 +661,16 @@ AddNaturalTransformationFunction( Nat_2,
     return phi;
 end );
 
-TruncateModule_sym := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+GeneratedByHomogeneousPart_sym := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
 
-AddObjectFunction( TruncateModule_sym,
+AddObjectFunction( GeneratedByHomogeneousPart_sym,
     function( M )
     local r;
     r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
     return GradedLeftPresentationGeneratedByHomogeneousPart( M, r);
 end );
 
-AddMorphismFunction( TruncateModule_sym,
+AddMorphismFunction( GeneratedByHomogeneousPart_sym,
     function( source, f, range )
     local M1, M2, emb1, emb2, r1, r2;
     M1 := Source( f );
@@ -688,8 +688,8 @@ AddMorphismFunction( TruncateModule_sym,
     return LiftAlongMonomorphism( emb2, PreCompose( emb1, f ) );
 end );
 
-Nat_3 := NaturalTransformation( "from truncation functor to identity functor",
-        TruncateModule_sym, IdentityFunctor( graded_lp_cat_sym ) );
+Nat_3 := NaturalTransformation( "from GeneratedByHomogeneousPart-functor to identity functor",
+        GeneratedByHomogeneousPart_sym, IdentityFunctor( graded_lp_cat_sym ) );
 AddNaturalTransformationFunction( Nat_3,
     function( source, M, range )
     local r;
