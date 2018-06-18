@@ -228,6 +228,7 @@ Finalize( graded_lp_cat_sym );
 cospan_to_span := FunctorFromCospansToSpans( graded_lp_cat_sym );;
 cospan_to_three_arrows := FunctorFromCospansToThreeArrows( graded_lp_cat_sym );;
 span_to_three_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );;
+span_to_cospan := FunctorFromSpansToCospans( graded_lp_cat_sym );;
 
 # constructing the chain complex category of left presentations over R
 chains_lp_cat_sym := ChainComplexCategory( lp_cat_sym : FinalizeCategory := false );
@@ -548,17 +549,18 @@ AddMorphismFunction( Canonicalize_coh_v1,
         i1 := GeneralizedEmbeddingOfCohomologyAt( CH1, -r1 );
         i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( Br1, r1 - 1, -r1 );
         i := PreCompose( i1, i2 );
+        i := ApplyFunctor( span_to_cospan, i );
         p1 := GeneralizedProjectionOntoHorizontalCohomologyAt( Br, r - 1, -r );
         p2 := GeneralizedProjectionOntoCohomologyAt( CH, -r );
         p := PreCompose( p1, p2 );
+        p := ApplyFunctor( span_to_cospan, p );
         indices := List( [ r1 .. r - 1 ], i -> [ i, -i ] );
         L := List( indices, i -> GeneralizedMorphismByCospan(
             HorizontalDifferentialAt( Br, i[1]-1, i[2] ), VerticalDifferentialAt( Br, i[1], i[2] -1 )
             ) );
-        L := ApplyFunctor( cospan_to_span, PreCompose( L ) );
 
         lift := PreCompose( [ i, L, p ] );
-        lift := ApplyFunctor( span_to_three_arrows, lift );
+        lift := ApplyFunctor( cospan_to_three_arrows, lift );
         lift := SerreQuotientCategoryMorphism( coh, lift );
 
         return PreCompose( lift, can_f_r );
@@ -576,17 +578,19 @@ AddMorphismFunction( Canonicalize_coh_v1,
         i1 := GeneralizedEmbeddingOfCohomologyAt( CH, -r );
         i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( Br, r - 1, -r );
         i := PreCompose( i1, i2 );
+        i := ApplyFunctor( span_to_cospan, i );
         p1 := GeneralizedProjectionOntoHorizontalCohomologyAt( Br2, r2 - 1, -r2 );
         p2 := GeneralizedProjectionOntoCohomologyAt( CH2, -r2 );
         p := PreCompose( p1, p2 );
+        p := ApplyFunctor( span_to_cospan, p );
         indices := Reversed( List( [ r2 .. r - 1 ], i -> [ i, -i ] ) );
         L := List( indices, i -> GeneralizedMorphismByCospan(
             VerticalDifferentialAt( Br, i[1], i[2] -1 ), HorizontalDifferentialAt( Br, i[1]-1, i[2] )
             ) );
-        L := ApplyFunctor( cospan_to_span, PreCompose(L) );
+        L := PreCompose(L);
 
         lift := PreCompose( [ i, L, p ] );
-        lift := ApplyFunctor( span_to_three_arrows, lift );
+        lift := ApplyFunctor( cospan_to_three_arrows, lift );
         lift := SerreQuotientCategoryMorphism( coh, lift );
 
         return PreCompose( can_f_r, lift );
@@ -657,6 +661,42 @@ AddNaturalTransformationFunction( Nat_2,
     return phi;
 end );
 
+TruncateModule_sym := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+
+AddObjectFunction( TruncateModule_sym,
+    function( M )
+    local r;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    return GradedLeftPresentationGeneratedByHomogeneousPart( M, r);
+end );
+
+AddMorphismFunction( TruncateModule_sym,
+    function( source, f, range )
+    local M1, M2, emb1, emb2, r1, r2;
+    M1 := Source( f );
+    M2 := Range( f );
+
+    r1 := Maximum( 2, CastelnuovoMumfordRegularity( M1 ) );
+    r2 := Maximum( 2, CastelnuovoMumfordRegularity( M2 ) );
+
+    M1 := GradedLeftPresentationGeneratedByHomogeneousPart( M1, r1 );
+    M2 := GradedLeftPresentationGeneratedByHomogeneousPart( M2, r2 );
+
+    emb1 := EmbeddingInSuperObject( M1 );
+    emb2 := EmbeddingInSuperObject( M2 );
+
+    return LiftAlongMonomorphism( emb2, PreCompose( emb1, f ) );
+end );
+
+Nat_3 := NaturalTransformation( "from truncation functor to identity functor",
+        TruncateModule_sym, IdentityFunctor( graded_lp_cat_sym ) );
+AddNaturalTransformationFunction( Nat_3,
+    function( source, M, range )
+    local r;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    return EmbeddingInSuperObject( GradedLeftPresentationGeneratedByHomogeneousPart( M, r ) );
+end );
+
 quit;
 
 AddMorphismFunction( Standard_coh,
@@ -714,8 +754,6 @@ AddMorphismFunction( Standard_coh,
     fi;
 
 end );
-
-quit;
 
 Canonicalize_coh_v2 := CapFunctor( "Canonicalization Functor",
                     graded_lp_cat_sym, coh );
@@ -838,8 +876,6 @@ test_right := function( M, i )
 
 end;
 
-quit;
-
 # searching for the nat trans.
 _nat := function(i)
 local Nat;
@@ -924,7 +960,6 @@ end );
 
 return Nat;
 end;
-quit;
 
 Nat := NaturalTransformation( "Name", Sh, Beilinson );
 AddNaturalTransformationFunction( Nat,
