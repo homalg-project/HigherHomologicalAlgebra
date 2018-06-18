@@ -262,6 +262,14 @@ DeclareOperation( "CohomologySupport", [ IsCochainComplex, IsInt, IsInt ] );
 DeclareOperation( "ObjectsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 DeclareOperation( "DifferentialsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
+DeclareOperation( "HomologySupport", [ IsChainComplex ] );
+#! @EndGroup
+#! @Group 100
+#! @Arguments C, m, n
+DeclareOperation( "CohomologySupport", [ IsCochainComplex ] );
+
+DeclareOperation( "ObjectsSupport", [ IsChainOrCochainComplex ] );
+DeclareOperation( "DifferentialsSupport", [ IsChainOrCochainComplex ] );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 

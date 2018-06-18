@@ -1046,6 +1046,45 @@ InstallMethod( DifferentialsSupport,
   return l;
 end );
 
+##
+InstallMethod( CohomologySupport,
+               [ IsCochainComplex ],
+  function( C )
+  if not IsBoundedAboveCochainComplex(C) or not IsBoundedBelowCochainComplex(C) then
+    Error( "The cochain must be bounded, you can  still use: CohomologySupport(C,m,n)" );
+  fi;
+  return CohomologySupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
+end );
+
+##
+InstallMethod( HomologySupport,
+               [ IsChainComplex ],
+  function( C )
+  if not IsBoundedAboveChainComplex(C) or not IsBoundedBelowChainComplex(C) then
+    Error( "The chain must be bounded, you can  still use: HomologySupport(C,m,n)" );
+  fi;
+  return HomologySupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
+end );
+
+##
+InstallMethod( ObjectsSupport,
+               [ IsChainOrCochainComplex ],
+  function( C )
+  if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
+    Error( "The (co)chain complex must be bounded, you can  still use: ObjectsSupport(C,m,n)" );
+  fi;
+  return ObjectsSupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
+end );
+
+##
+InstallMethod( DifferentialsSupport,
+               [ IsChainOrCochainComplex ],
+  function( C )
+  if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
+    Error( "The (co)chain complex must be bounded, you can  still use: DifferentialsSupport(C,m,n)" );
+  fi;
+  return DifferentialsSupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
+end );
 
 InstallMethod( IsWellDefined, 
                [ IsCochainComplex, IsInt, IsInt ],
