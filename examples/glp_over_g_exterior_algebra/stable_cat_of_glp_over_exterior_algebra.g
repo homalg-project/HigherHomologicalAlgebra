@@ -661,41 +661,66 @@ AddNaturalTransformationFunction( Nat_2,
     return phi;
 end );
 
-GeneratedByHomogeneousPart_sym := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+KeyDependentOperation( "GeneratedByHomogeneousPart_sym", IsHomalgRing, IsInt, ReturnTrue );
 
-AddObjectFunction( GeneratedByHomogeneousPart_sym,
-    function( M )
-    local r;
-    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
-    return GradedLeftPresentationGeneratedByHomogeneousPart( M, r);
+InstallMethod( GeneratedByHomogeneousPart_symOp,
+        [ IsHomalgRing, IsInt ],
+  function( S, r )
+    local F;
+    
+    if r < 2 then
+        Error( "please choose the second argument to be greater than 2; received ", r, "\n" );
+    fi;
+    
+    F := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+    
+    AddObjectFunction( F,
+      function( M )
+        return GradedLeftPresentationGeneratedByHomogeneousPart( M, r );
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, f, range )
+        local M1, M2, emb1, emb2;
+        
+        M1 := Source( f );
+        M2 := Range( f );
+        
+        M1 := GradedLeftPresentationGeneratedByHomogeneousPart( M1, r );
+        M2 := GradedLeftPresentationGeneratedByHomogeneousPart( M2, r );
+        
+        emb1 := EmbeddingInSuperObject( M1 );
+        emb2 := EmbeddingInSuperObject( M2 );
+        
+        return LiftAlongMonomorphism( emb2, PreCompose( emb1, f ) );
+        
+    end );
+    
+    return F;
+    
 end );
 
-AddMorphismFunction( GeneratedByHomogeneousPart_sym,
-    function( source, f, range )
-    local M1, M2, emb1, emb2, r1, r2;
-    M1 := Source( f );
-    M2 := Range( f );
+KeyDependentOperation( "Nat_3", IsHomalgRing, IsInt, ReturnTrue );
 
-    r1 := Maximum( 2, CastelnuovoMumfordRegularity( M1 ) );
-    r2 := Maximum( 2, CastelnuovoMumfordRegularity( M2 ) );
-
-    M1 := GradedLeftPresentationGeneratedByHomogeneousPart( M1, r1 );
-    M2 := GradedLeftPresentationGeneratedByHomogeneousPart( M2, r2 );
-
-    emb1 := EmbeddingInSuperObject( M1 );
-    emb2 := EmbeddingInSuperObject( M2 );
-
-    return LiftAlongMonomorphism( emb2, PreCompose( emb1, f ) );
+InstallMethod( Nat_3Op,
+        [ IsHomalgRing, IsInt ],
+        
+  function( S, r )
+    local nat;
+    
+    nat := NaturalTransformation( "from GeneratedByHomogeneousPart-functor to identity functor",
+                     GeneratedByHomogeneousPart_sym( S, r ), IdentityFunctor( graded_lp_cat_sym ) );
+    AddNaturalTransformationFunction( nat,
+      function( source, M, range )
+        
+        return EmbeddingInSuperObject( GradedLeftPresentationGeneratedByHomogeneousPart( M, r ) );
+        
+    end );
+    
+    return nat;
+    
 end );
 
-Nat_3 := NaturalTransformation( "from GeneratedByHomogeneousPart-functor to identity functor",
-        GeneratedByHomogeneousPart_sym, IdentityFunctor( graded_lp_cat_sym ) );
-AddNaturalTransformationFunction( Nat_3,
-    function( source, M, range )
-    local r;
-    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
-    return EmbeddingInSuperObject( GradedLeftPresentationGeneratedByHomogeneousPart( M, r ) );
-end );
 
 quit;
 
