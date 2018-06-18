@@ -364,6 +364,14 @@ InstallMethod( _Trunc_leq_rm1Op,
     return BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r - 1 );
 end );
 
+
+KeyDependentOperation( "_Trunc_g_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( _Trunc_g_rm1Op,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return BrutalTruncationBelowFunctor( cochains_graded_lp_cat_ext, r - 1 );
+end );
+
 ChTrunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor( Trunc_leq_m1 );;
 
 # the functor from the category of bicomplexes to cochains that returns the cochain of vertical cohomologies
@@ -379,6 +387,14 @@ KeyDependentOperation( "_Cochain_of_hor_coho_sym_rm1", IsHomalgGradedRing, IsInt
 KeyDependentOperation( "_Cochain_of_hor_coho_coh_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "_Coh_mr_sym", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "_Coh_mr_coh", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "_Coh_r_ext", IsHomalgGradedRing, IsInt, ReturnTrue );
+
+##
+InstallMethod( _Coh_r_extOp,
+            [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    return CohomologyFunctorAt( cochains_graded_lp_cat_ext, graded_lp_cat_ext, r );
+end );
 
 ##
 InstallMethod( _Cochain_of_hor_coho_sym_rm1Op,
@@ -490,9 +506,9 @@ InstallMethod( TruncationToBeilinsonOp,
 end );
 
 
-Canonicalize_coh := CapFunctor( "Canonicalization Functor",
+Canonicalize_coh_v1 := CapFunctor( "Canonicalization Functor version 1",
                     graded_lp_cat_sym, coh );
-AddObjectFunction( Canonicalize_coh,
+AddObjectFunction( Canonicalize_coh_v1,
     function( M )
     local r;
     r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
@@ -502,7 +518,218 @@ AddObjectFunction( Canonicalize_coh,
         ] ), M );
 end );
 
-AddMorphismFunction( Canonicalize_coh,
+AddMorphismFunction( Canonicalize_coh_v1,
+    function( source, f, range )
+    local M1, M2, r1, r2, r, can_f_r, Br, Br1, Br2, CH,
+    CH1, CH2, L, indices, lift, i1, i2, p1, p2, i, p;
+    M1 := Source( f );
+    M2 := Range( f );
+
+    r1 := Maximum( 2, CastelnuovoMumfordRegularity( M1 ) );
+    r2 := Maximum( 2, CastelnuovoMumfordRegularity( M2 ) );
+
+    r := Maximum( r1, r2 );
+
+    can_f_r := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym,
+            _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh
+        ] ), f );
+    if r1 < r then
+        Br := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M1 );
+
+        CH := ApplyFunctor( _Cochain_of_hor_coho_sym_rm1(S,r), Br );;
+
+        Br1 := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r1), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M1 );
+
+        CH1 := ApplyFunctor( _Cochain_of_hor_coho_sym_rm1(S,r1), Br1 );;
+
+        i1 := GeneralizedEmbeddingOfCohomologyAt( CH1, -r1 );
+        i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( Br1, r1 - 1, -r1 );
+        i := PreCompose( i1, i2 );
+        p1 := GeneralizedProjectionOntoHorizontalCohomologyAt( Br, r - 1, -r );
+        p2 := GeneralizedProjectionOntoCohomologyAt( CH, -r );
+        p := PreCompose( p1, p2 );
+        indices := List( [ r1 .. r - 1 ], i -> [ i, -i ] );
+        L := List( indices, i -> GeneralizedMorphismByCospan(
+            HorizontalDifferentialAt( Br, i[1]-1, i[2] ), VerticalDifferentialAt( Br, i[1], i[2] -1 )
+            ) );
+        L := ApplyFunctor( cospan_to_span, PreCompose( L ) );
+
+        lift := PreCompose( [ i, L, p ] );
+        lift := ApplyFunctor( span_to_three_arrows, lift );
+        lift := SerreQuotientCategoryMorphism( coh, lift );
+
+        return PreCompose( lift, can_f_r );
+    elif r2 < r then
+        Br := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M2 );
+
+        CH := ApplyFunctor( _Cochain_of_hor_coho_sym_rm1(S,r), Br );;
+
+        Br2 := ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r2), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym ] ), M2 );
+
+        CH2 := ApplyFunctor( _Cochain_of_hor_coho_sym_rm1(S,r2), Br2 );;
+
+        i1 := GeneralizedEmbeddingOfCohomologyAt( CH, -r );
+        i2 := GeneralizedEmbeddingOfHorizontalCohomologyAt( Br, r - 1, -r );
+        i := PreCompose( i1, i2 );
+        p1 := GeneralizedProjectionOntoHorizontalCohomologyAt( Br2, r2 - 1, -r2 );
+        p2 := GeneralizedProjectionOntoCohomologyAt( CH2, -r2 );
+        p := PreCompose( p1, p2 );
+        indices := Reversed( List( [ r2 .. r - 1 ], i -> [ i, -i ] ) );
+        L := List( indices, i -> GeneralizedMorphismByCospan(
+            VerticalDifferentialAt( Br, i[1], i[2] -1 ), HorizontalDifferentialAt( Br, i[1]-1, i[2] )
+            ) );
+        L := ApplyFunctor( cospan_to_span, PreCompose(L) );
+
+        lift := PreCompose( [ i, L, p ] );
+        lift := ApplyFunctor( span_to_three_arrows, lift );
+        lift := SerreQuotientCategoryMorphism( coh, lift );
+
+        return PreCompose( can_f_r, lift );
+    else
+        return can_f_r;
+    fi;
+end );
+
+
+Nat_1 := NaturalTransformation( "Nat. iso. from Canonicalize -> Sh(H0(Beilinson))",
+        Canonicalize_coh_v1, PreCompose( [ Beilinson_complex_sym, Coh0_sym, Sh ] ) );
+AddNaturalTransformationFunction( Nat_1,
+    function( source, M, range )
+    return TruncationToBeilinson( M, Maximum( 2, CastelnuovoMumfordRegularity ( M ) ) );
+end );
+
+Standard_coh_v1 := CapFunctor( "Some Name", graded_lp_cat_sym, coh );
+Nat_2 := NaturalTransformation( "Nat. iso. from Canonicalize -> Standard",
+    Canonicalize_coh_v1, Standard_coh_v1 );
+
+AddObjectFunction( Standard_coh_v1,
+    function( M )
+    local r, tM, lift, P, phi;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    tM := ApplyFunctor( PreCompose( [ TT ] ), M );
+    lift := KernelLift( tM^r, tM^(r-1) );
+    P := Range( lift );
+    phi := CochainMorphism(
+        ApplyFunctor( _Trunc_leq_rm1(S,r), tM ),
+        StalkCochainComplex( P, r - 1 ),
+        [ lift ], r - 1 );
+    phi := ApplyFunctor(
+        PreCompose( [ ChLL, ChCh_to_Bi_sym, _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh ] ),
+         phi );
+    return Range( phi );
+end );
+
+AddMorphismFunction( Standard_coh_v1,
+    function( source, f, range )
+    local M1, M2;
+
+    M1 := Source( f );
+    M2 := Range( f );
+
+    return PreCompose(
+        [
+            Inverse( ApplyNaturalTransformation( Nat_2, M1 ) ),
+            ApplyFunctor( Canonicalize_coh_v1, f ),
+            ApplyNaturalTransformation( Nat_2, M2 )
+        ]
+    );
+end );
+
+AddNaturalTransformationFunction( Nat_2,
+    function( source, M, range )
+    local r, tM, lift, P, phi;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    tM := ApplyFunctor( PreCompose( [ TT ] ), M );
+    lift := KernelLift( tM^r, tM^(r-1) );
+    P := Range( lift );
+    phi := CochainMorphism(
+        ApplyFunctor( _Trunc_leq_rm1(S,r), tM ),
+        StalkCochainComplex( P, r - 1 ),
+        [ lift ], r - 1 );
+    phi := ApplyFunctor(
+        PreCompose( [ ChLL, ChCh_to_Bi_sym, _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh ] ),
+         phi );
+    return phi;
+end );
+
+quit;
+
+AddMorphismFunction( Standard_coh,
+    function( source, f, range )
+    local M1, M2, r1, r2, r, stand_f;
+    M1 := Source( f );
+    M2 := Range( f );
+
+    r1 := Maximum( 2, CastelnuovoMumfordRegularity( M1 ) );
+    r2 := Maximum( 2, CastelnuovoMumfordRegularity( M2 ) );
+
+    r := Maximum( r1, r2 );
+
+    stand_f := ApplyFunctor( PreCompose(
+        [ TT, _Trunc_g_rm1( S, r ), _Coh_r_ext(S, r), LL, _Coh_mr_sym( S, r ), Sh ] ), f );
+    if r1 < r then
+
+        tMr1 := ApplyFunctor( PreCompose( [ TT, _Trunc_g_rm1(S, r1) ] ), M1 );
+        P1 := ApplyFunctor( _Coh_r_ext( S, r1 ), tMr1 );
+        phi := CochainMorphism(
+            StalkCochainComplex( P1, r1 ),
+            tMr1,
+            [ HonestRepresentative( GeneralizedEmbeddingOfCohomologyAt( tMr1, r1 ) ) ],
+            r1 );
+        phi_r1 := ApplyFunctor( PreCompose( [ ChLL, ChCh_to_Bi_sym ] ), phi );
+
+        tMr := ApplyFunctor( PreCompose( [ TT, _Trunc_g_rm1(S, r) ] ), M1 );
+        P := ApplyFunctor( _Coh_r_ext( S, r ), tMr );
+        phi := CochainMorphism(
+            StalkCochainComplex( P, r ),
+            tMr,
+            [ HonestRepresentative( GeneralizedEmbeddingOfCohomologyAt( tM, r ) ) ],
+            r );
+        phi_r := ApplyFunctor( PreCompose( [ ChLL, ChCh_to_Bi_sym ] ), phi );
+        i1 := GeneralizedEmbeddingOfVerticalCohomologyAt( Source( phi_r1 ), r1, -r1 );
+        i1 := ApplyFunctor( span_to_three_arrows, i1 );
+        i2 := MorphismAt( phi_r1, r1, -r1 );
+        indices := List( [ r1 + 1 .. r ], i -> [ i, -i + 1 ] );
+        L := List( indices, i -> GeneralizedMorphismByCospan(
+            HorizontalDifferentialAt( Range( phi_r ), i[1] - 1, i[2] ),
+            VerticalDifferentialAt( Range( phi_r ), i[1], i[2] - 1 )
+        ) );
+
+        p1 := MorphismAt( phi_r, r, -r );
+        p1 := ApplyFunctor( Sh, p1 );
+        p2 := GeneralizedProjectionOfVerticalCohomologyAt( Source( phi_r ), r, -r );
+        p2 := ApplyFunctor( span_to_three_arrows, p );
+
+
+
+    elif r2 < r then
+        Error( "to do" );
+    else
+        return stand_f;
+    fi;
+
+end );
+
+quit;
+
+Canonicalize_coh_v2 := CapFunctor( "Canonicalization Functor",
+                    graded_lp_cat_sym, coh );
+AddObjectFunction( Canonicalize_coh_v2,
+    function( M )
+    local r;
+    r := Maximum( 2, CastelnuovoMumfordRegularity( M ) );
+    return ApplyFunctor(  PreCompose(
+        [ TT,_Trunc_leq_rm1(S,r), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym,
+            _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh
+        ] ), M );
+end );
+
+AddMorphismFunction( Canonicalize_coh_v2,
     function( source, f, range )
     local M1, M2, r1, r2, r, can_f_r;
     M1 := Source( f );
@@ -536,14 +763,6 @@ AddMorphismFunction( Canonicalize_coh,
     fi;
 end );
 
-Nat_1 := NaturalTransformation( "Nat. iso. from Canonicalize -> Sh(H0(Beilinson))",
-        Canonicalize_coh, PreCompose( [ Beilinson_complex_sym, Coh0_sym, Sh ] ) );
-AddNaturalTransformationFunction( Nat_1,
-    function( source, M, range )
-    return TruncationToBeilinson( M, Maximum( 2, CastelnuovoMumfordRegularity ( M ) ) );
-end );
-
-quit;
 test_right := function( M, i )
     local r, Mr, emb_of_Mr, Trunc_leq_m1, Cochain_of_hor_coho_sym_rm1, Coh_mr,
         tM, colift, P, Pr, emb_of_Pr, emb, mat, tau1, tau2, phi, tau, mono1, mono2,
