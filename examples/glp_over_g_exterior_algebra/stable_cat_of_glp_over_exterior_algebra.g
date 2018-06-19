@@ -174,8 +174,8 @@ graded_generators_of_external_hom := function( M, N )
 	return List( G, AsPresentationMorphismInCAP );
 end;
 
-n := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
-vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. n ], i -> Concatenation( ",x", String( i ) ) ) ) );
+nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
+vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. nr_indeterminates ], i -> Concatenation( ",x", String( i ) ) ) ) );
 R := HomalgFieldOfRationalsInSingular( )*vars;
 S := GradedRing( R );
 A := KoszulDualRing( S );
@@ -672,7 +672,7 @@ InstallMethod( GeneratedByHomogeneousPart_symOp,
         Error( "please choose the second argument to be greater than 2; received ", r, "\n" );
     fi;
     
-    F := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+    F := CapFunctor( "GeneratedByHomogeneousPart_sym", graded_lp_cat_sym, graded_lp_cat_sym );
     
     AddObjectFunction( F,
       function( M )
@@ -721,6 +721,30 @@ InstallMethod( Nat_3Op,
     
 end );
 
+KeyDependentOperation( "test_nat_r", IsHomalgGradedRing, IsInt, ReturnTrue );
+InstallMethod( test_nat_rOp,
+    [ IsHomalgGradedRing, IsInt ],
+    function( S, r )
+    local nat;
+    nat := NaturalTransformation( Concatenation( "test_nat_r where r=",String(r) ), 
+    PreCompose( [ TT, _Trunc_g_rm1(S,r), _Coh_r_ext(S,r), LL, _Coh_mr_sym(S,r) ] ),
+    GeneratedByHomogeneousPart_sym(S,r) );
+    AddNaturalTransformationFunction( nat,
+        function( source, M, range )
+        local tM, M_geq_r,f,emb,Pr,LP,mat,mor;
+        tM := ApplyFunctor( TT, M );
+        M_geq_r := ApplyFunctor( GeneratedByHomogeneousPart_sym(S,r), M );
+        f := tM^r;
+        emb := KernelEmbedding( f );
+        Pr := GradedLeftPresentationGeneratedByHomogeneousPart( Source( emb ), r );
+        LP := ApplyFunctor( LL, Source( emb ) );
+        mat := UnderlyingMatrix( PreCompose( EmbeddingInSuperObject( Pr ), emb ) );
+        mat := DecompositionOfHomalgMat(mat)[2^( nr_indeterminates+1)][2]*S;
+        mor := GradedPresentationMorphism( LP[ -r ], mat, M_geq_r );
+        return CokernelColift( LP^(-r-1), mor );
+        end );
+    return nat;
+end );
 
 quit;
 
