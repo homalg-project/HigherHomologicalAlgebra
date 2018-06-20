@@ -442,8 +442,7 @@ end );
 AddMorphismFunction( Beilinson_complex_Serre_v1,
     function( new_source, f, new_range )
     return ApplyFunctor(
-        PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, BiSh, Cochain_of_ver_coho_coh ] ),
-        f );;
+        PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, BiSh, Cochain_of_ver_coho_coh ] ), f );;
 end );
 
 ##
@@ -504,6 +503,27 @@ InstallMethod( TruncationToBeilinsonOp,
     mono := PreCompose( Concatenation( [ i1, i2 ], L, [ p1, p2 ] ) );
     iso := SerreQuotientCategoryMorphism( coh, ApplyFunctor( span_to_three_arrows, mono ) );
     return iso;
+end );
+
+KeyDependentOperation( "TruncToTrunc1", IsGradedLeftPresentation, IsInt, ReturnTrue );
+InstallMethod( TruncToTrunc1Op,
+                [ IsGradedLeftPresentation, IsInt ],
+    function( M, r )
+    local tM, lift, P, phi;
+    if r < Maximum( 2, CastelnuovoMumfordRegularity( M ) ) then
+        Error( "r should be >= maximim(2, reg(M))" );
+    fi;
+    tM := ApplyFunctor( PreCompose( [ TT ] ), M );
+    lift := KernelLift( tM^r, tM^(r-1) );
+    P := Range( lift );
+    phi := CochainMorphism(
+        ApplyFunctor( _Trunc_leq_rm1(S,r), tM ),
+        StalkCochainComplex( P, r - 1 ),
+        [ lift ], r - 1 );
+    phi := ApplyFunctor(
+        PreCompose( [ ChLL, ChCh_to_Bi_sym, _Cochain_of_hor_coho_sym_rm1(S,r), _Coh_mr_sym(S,r), Sh ] ),
+         phi );
+    return phi;
 end );
 
 
@@ -721,29 +741,58 @@ InstallMethod( Nat_3Op,
     
 end );
 
-KeyDependentOperation( "test_nat_r", IsHomalgGradedRing, IsInt, ReturnTrue );
-InstallMethod( test_nat_rOp,
-    [ IsHomalgGradedRing, IsInt ],
-    function( S, r )
-    local nat;
-    nat := NaturalTransformation( Concatenation( "test_nat_r where r=",String(r) ), 
-    PreCompose( [ TT, _Trunc_g_rm1(S,r), _Coh_r_ext(S,r), LL, _Coh_mr_sym(S,r) ] ),
-    GeneratedByHomogeneousPart_sym(S,r) );
-    AddNaturalTransformationFunction( nat,
-        function( source, M, range )
-        local tM, M_geq_r,f,emb,Pr,LP,mat,mor;
-        tM := ApplyFunctor( TT, M );
-        M_geq_r := ApplyFunctor( GeneratedByHomogeneousPart_sym(S,r), M );
-        f := tM^r;
-        emb := KernelEmbedding( f );
-        Pr := GradedLeftPresentationGeneratedByHomogeneousPart( Source( emb ), r );
-        LP := ApplyFunctor( LL, Source( emb ) );
-        mat := UnderlyingMatrix( PreCompose( EmbeddingInSuperObject( Pr ), emb ) );
-        mat := DecompositionOfHomalgMat(mat)[2^( nr_indeterminates+1)][2]*S;
-        mor := GradedPresentationMorphism( LP[ -r ], mat, M_geq_r );
-        return CokernelColift( LP^(-r-1), mor );
-        end );
-    return nat;
+KeyDependentOperation( "TruncToTrunc2_test_old", IsGradedLeftPresentation, IsInt, ReturnTrue );
+InstallMethod( TruncToTrunc2_test_oldOp,
+    [ IsGradedLeftPresentation, IsInt ],
+    function( M, r )
+    local tM, M_geq_r,f,emb,Pr,LP,mat,mor;
+    tM := ApplyFunctor( TT, M );
+    M_geq_r := ApplyFunctor( GeneratedByHomogeneousPart_sym(S,r), M );
+    f := tM^r;
+    emb := KernelEmbedding( f );
+    Pr := GradedLeftPresentationGeneratedByHomogeneousPart( Source( emb ), r );
+    LP := ApplyFunctor( LL, Source( emb ) );
+    mat := UnderlyingMatrix( PreCompose( EmbeddingInSuperObject( Pr ), emb ) );
+    mat := DecompositionOfHomalgMat(mat)[2^( nr_indeterminates+1)][2]*S;
+    mor := GradedPresentationMorphism( LP[ -r ], mat, M_geq_r );
+    if r mod 2 = 0 then
+        return ApplyFunctor( Sh, CokernelColift( AdditiveInverse( LP^(-r-1) ), mor ) );
+    else
+        return ApplyFunctor( Sh, CokernelColift( LP^(-r-1), mor ) );
+    fi;
+end );
+
+KeyDependentOperation( "TruncToTrunc2_test_new", IsGradedLeftPresentation, IsInt, ReturnTrue );
+InstallMethod( TruncToTrunc2_test_newOp,
+    [ IsGradedLeftPresentation, IsInt ],
+    function( M, r )
+    local tM, M_geq_r,f,P,Mr,Pr,emb_Mr_in_P, emb_Pr_in_P,lift, LP,mat,mor;
+    tM := ApplyFunctor( TT, M );
+    M_geq_r := ApplyFunctor( GeneratedByHomogeneousPart_sym(S,r), M );
+    f := tM^r;
+    P := KernelObject( f );
+    Mr := GradedLeftPresentationGeneratedByHomogeneousPart( tM[r], r );
+    emb_Mr_in_P := KernelLift( f, EmbeddingInSuperObject( Mr ) );
+
+    Pr := GradedLeftPresentationGeneratedByHomogeneousPart( P, r );
+    emb_Pr_in_P := EmbeddingInSuperObject( Pr );
+    lift := LiftAlongMonomorphism( emb_Mr_in_P, emb_Pr_in_P );
+
+    LP := ApplyFunctor( LL, P );
+    mat := UnderlyingMatrix( lift )*S;
+    mor := GradedPresentationMorphism( LP[ -r ], mat, M_geq_r );
+    if r mod 2 = 0 then
+        return ApplyFunctor( Sh, CokernelColift( AdditiveInverse( LP^(-r-1) ), mor ) );
+    else
+        return ApplyFunctor( Sh, CokernelColift( LP^(-r-1), mor ) );
+    fi;
+end );
+
+KeyDependentOperation( "TruncToSheaf", IsGradedLeftPresentation, IsInt, ReturnTrue );
+InstallMethod( TruncToSheafOp,
+    [ IsGradedLeftPresentation, IsInt ],
+    function( M, r )
+    return ApplyFunctor( Sh, ApplyNaturalTransformation( Nat_3(S,r), M ) );
 end );
 
 quit;
