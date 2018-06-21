@@ -14,7 +14,7 @@ Subtitle := "Bicomplexes for Abelian categories",
 Version := Maximum( [
                    "2017.05.02", ## Mohamed's version
                    ## this line prevents merge conflicts
-                   "2017.05.01", ## Kamals's version
+                   "2018.06.15", ## Kamals's version
                    ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
