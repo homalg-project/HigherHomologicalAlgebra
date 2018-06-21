@@ -344,73 +344,49 @@ InstallMethod( CohomologicalBicomplex,
 ##
 InstallMethod( HomologicalBicomplex,
                [ IsCapCategory, IsZList, IsZList ],
-  function( A, h, v )
-  local chains_cat, C;
+    function( A, h, v )
+    local chains_cat, C;
 
-  chains_cat := ChainComplexCategory( A );
-
-  C := ChainComplex( chains_cat, MapLazy( IntegersList,
-                                                function( i )
-                                                local source, range, diff;
-
-                                                if i mod 2 = 0 then
-
-                                                   source := ChainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
-
-                                                   range := ChainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i - 1 ][ j ] ), 1 ) );
-
-                                                else
-
-                                                   source := ChainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
-
-                                                   range := ChainComplex( A, MapLazy( IntegersList, j-> v[ i - 1 ][ j ], 1 ) );
-
-                                                fi;
-
-                                                diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
-
-                                                return ChainMorphism( source, range, diff );
-
-                                                end, 1 ) );
-
+    chains_cat := ChainComplexCategory( A );
+    C := ChainComplex( chains_cat, 
+        MapLazy( IntegersList,
+            function( i )
+            local source, range, diff;
+            if i mod 2 = 0 then
+               source := ChainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
+               range := ChainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i - 1 ][ j ] ), 1 ) );
+            else
+               source := ChainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
+               range := ChainComplex( A, MapLazy( IntegersList, j-> v[ i - 1 ][ j ], 1 ) );
+            fi;
+            diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+            return ChainMorphism( source, range, diff );
+            end, 1 ) );
    return HomologicalBicomplex( C );
-
 end );
 
 ##
 InstallMethod( CohomologicalBicomplex,
                [ IsCapCategory, IsZList, IsZList ],
-  function( A, h, v )
-  local cochains_cat, C;
+    function( A, h, v )
+    local cochains_cat, C;
 
-  cochains_cat := CochainComplexCategory( A );
-
-  C := CochainComplex( cochains_cat, MapLazy( IntegersList,
-                                                function( i )
-                                                local source, range, diff;
-
-                                                if i mod 2 = 0 then
-
-                                                   source := CochainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
-
-                                                   range := CochainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i + 1 ][ j ] ), 1 ) );
-
-                                                else
-
-                                                   source := CochainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
-
-                                                   range := CochainComplex( A, MapLazy( IntegersList, j-> v[ i + 1 ][ j ], 1 ) );
-
-                                                fi;
-
-                                                diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
-
-                                                return CochainMorphism( source, range, diff );
-
-                                                end, 1 ) );
-
+    cochains_cat := CochainComplexCategory( A );
+    C := CochainComplex( cochains_cat, 
+        MapLazy( IntegersList,
+        function( i )
+        local source, range, diff;
+        if i mod 2 = 0 then
+           source := CochainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
+           range := CochainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i + 1 ][ j ] ), 1 ) );
+        else
+           source := CochainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
+           range := CochainComplex( A, MapLazy( IntegersList, j-> v[ i + 1 ][ j ], 1 ) );
+        fi;
+        diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+        return CochainMorphism( source, range, diff );
+        end, 1 ) );
    return CohomologicalBicomplex( C );
-
 end );
 
 ##
@@ -459,14 +435,23 @@ InstallMethod( HorizontalDifferentialAt,
 end );
 
 ##
+DeclareProperty( "IsBicomplexCategoryWithCommutativeSquares", IsCapCategory );
+
 InstallMethod( VerticalDifferentialAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
     function( B, i, j )
-       if i mod 2 = 0 then
-          return UnderlyingCapCategoryCell( B )[ i ]^j;
-       else
-          return AdditiveInverseForMorphisms( UnderlyingCapCategoryCell( B )[ i ]^j );
-       fi;
+    local cat;
+    cat := CapCategory( B );
+
+    if i mod 2 = 0 then
+       return UnderlyingCapCategoryCell( B )[ i ]^j;
+    fi;
+    if HasIsBicomplexCategoryWithCommutativeSquares( cat ) and 
+        IsBicomplexCategoryWithCommutativeSquares( cat ) then
+        return UnderlyingCapCategoryCell( B )[ i ]^j;
+    fi;
+    Info( InfoBicomplexes, 1, "Additive-Inverse-For-Morphisms is called when computing vertical morphism" );
+    return AdditiveInverseForMorphisms( UnderlyingCapCategoryCell( B )[ i ]^j );
 end );
 
 ##
@@ -736,13 +721,16 @@ InstallMethod( AssociatedBicomplexFunctor,
 
     BF := CapFunctor( name, S, R );
 
-    AddObjectFunction( BF, function( obj )
-                             return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( obj ) ) );
-                           end );
+    AddObjectFunction( BF, 
+        function( obj )
+            return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( obj ) ) );
+        end );
 
-    AddMorphismFunction( BF, function( s, phi, r )
-                               return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( phi ) ) );
-                             end );
+    AddMorphismFunction( BF, 
+        function( s, phi, r )
+            return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( phi ) ) );
+        end );
+        
     return BF;
 
 end );
@@ -1049,8 +1037,9 @@ end );
 InstallMethod( IsWellDefined,
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
     function( B, left, right, below, above )
-    local i,j;
+    local i,j, cat;
 
+    cat := CapCategory( B );
     for i in [ left .. right ] do
         for j in [ below .. above ] do
 
@@ -1079,9 +1068,16 @@ InstallMethod( IsWellDefined,
                 return false;
             fi;
 
-            if not IsCongruentForMorphisms(
+            if HasIsBicomplexCategoryWithCommutativeSquares( cat ) and IsBicomplexCategoryWithCommutativeSquares( cat ) then
+                if not IsCongruentForMorphisms(
+                            PreCompose( VerticalDifferentialAt( B, i, j ), HorizontalDifferentialAt( B, i, j + 1 ) ),
+                            PreCompose( HorizontalDifferentialAt( B, i, j ), VerticalDifferentialAt( B, i + 1, j ) ) ) then
+                            AddToReasons( Concatenation( "IsWellDefined: problem at squar whose source morphisms are at indices ", String( i ), String( j ) ) );
+                            return false;
+                fi;
+            elif not IsCongruentForMorphisms(
                         PreCompose( VerticalDifferentialAt( B, i, j ), HorizontalDifferentialAt( B, i, j + 1 ) ),
-                        AdditiveInverse( PreCompose( HorizontalDifferentialAt( B, i, j ), VerticalDifferentialAt( B, i + 1, j ) ) ) ) then
+                        AdditiveInverseForMorphisms( PreCompose( HorizontalDifferentialAt( B, i, j ), VerticalDifferentialAt( B, i + 1, j ) ) ) ) then
                         AddToReasons( Concatenation( "IsWellDefined: problem at squar whose source morphisms are at indices ", String( i ), String( j ) ) );
                         return false;
             fi;
@@ -1182,7 +1178,7 @@ InstallMethod( SupportInWindow,
     if IsZeroForObjects( ObjectAt( B, i, j ) ) then
 	Print( ". ");
     else
-	Print( "* ");
+	Print( TextAttr.1, TextAttr.bold, ". ", TextAttr.reset );
     fi;
     od;
     Print( "  |", j, "\n" );
