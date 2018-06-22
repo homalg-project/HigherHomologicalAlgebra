@@ -1,5 +1,5 @@
-%
-# Please enter l=3 when asked!;
+# How quick is the computation depends on the defined graded polynomial ring
+# For tests I would recommend defining S=Q[x0,x1]
 %
 Read( "../stable_cat_of_glp_over_exterior_algebra.g" );
 %
@@ -7,53 +7,63 @@ S;
 %
 A;
 %
-m := RandomMatrixBetweenGradedFreeLeftModules([2,1],[1,-1,2],S);
+graded_lp_cat_sym;
 %
-M := AsGradedLeftPresentation(m,[1,-1,2]);
+cochains_graded_lp_cat_sym;
 %
-Display( M );
+graded_lp_cat_ext;
 %
-Tate := TateFunctor( S );
+cochains_graded_lp_cat_ext;
 %
-TM := ApplyFunctor( Tate, M );
+coh;
 %
-U := ToMorphismBetweenCotangentBundlesFunctor;
+cochains_coh;
 %
-ChU := ExtendFunctorToCochainComplexCategoryFunctor(U);
+m := RandomMatrixBetweenGradedFreeLeftModules([4],[1,2,1,2,3],S);
 %
-ChU_TM := ApplyFunctor( ChU, TM );
+M := AsGradedLeftPresentation(m,[1,2,1,2,3]);
 %
-L := LFunctor( S );
+n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
 %
-ChL := ExtendFunctorToCochainComplexCategoryFunctor(L);
+N := AsGradedLeftPresentation(n,[1,2,1,2]);
 %
-ChL_ChU_TM := ApplyFunctor( ChL, ChU_TM );
+G := GradedGeneratorsOfExternalHom(M,N);
 %
-B := CohomologicalBicomplex( ChL_ChU_TM );
+f := Random(G);
 %
-SupportInWindow( B, -4, 4, -4, 4 );
+CohomologyOfBeilinsonComplexToSheafification;
 %
-SetRight_Bound( B, 1 );
+FF := Source( CohomologyOfBeilinsonComplexToSheafification );
 %
-SetLeft_Bound( B, -2 );
+GG := Range( CohomologyOfBeilinsonComplexToSheafification );
 %
-T := TotalComplex( B );
+FF_f := ApplyFunctor( FF, f );
 %
-CohomologySupport( T, -4, 4 );
+GG_f := ApplyFunctor( GG, f );
 %
-H0 := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, 0 );
+mu_M := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, M );
 %
-H0_T := ApplyFunctor( H0, T );
+mu_N := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, N );
 %
-Display( H0_T );
+IsWellDefined( mu_M );
 %
-Display( M );
+IsWellDefined( mu_N );
 %
-syz0_M := Source( CyclesAt( ApplyFunctor( Tate, M ), 0 ) );
+IsIsomorphism( mu_M );
 %
-syz0_H0_T := Source( CyclesAt( ApplyFunctor( Tate, H0_T ), 0 ) );
+IsIsomorphism( mu_N );
 %
-Display( syz0_M );
+p1 := PreCompose( mu_M, GG_f );
 %
-Display( syz0_H0_T );
+p2 := PreCompose( FF_f, mu_N );
 %
+IsCongruentForMorphisms(p1,p2);
+%
+Beilinson_sym := ApplyFunctor( Beilinson_complex_sym, M );
+%
+IsWellDefined( Beilinson_sym, -3, 3 );
+%
+Display( Beilinson_sym, -3, 3 );
+%
+Beilinson_Serre_v2 := ApplyFunctor( Beilinson_complex_Serre_v2, M );
+
