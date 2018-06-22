@@ -678,27 +678,50 @@ AddNaturalTransformationFunction( CohomologyOfBeilinsonComplexToSheafification,
 end );
 
 quit;
+
+# To compute Beilinson complex there is three functors 
+#    *Beilinson_complex_sym
+#    *Beilinson_complex_Serre_v1
+#    *Beilinson_complex_Serre_v2
+# In the first one, we get a complex of graded S-modules.
+# In the second and third, we get a complex of coherent sheaves 
+# (i.e., a complex in Serre Quotient category)
+# Serre_v1: it is complex of vertical cohomologies of a bicomplex in Serre quotient (very slow)
+# Serre_v2: it is nothing but the sheafification of Beilinson_complex_sym (quicker than v1)
+
+# I would recommend testing this example with S=Q[x0,x1], because over bigger rings computing 
+# G will take more time.
+
 m := RandomMatrixBetweenGradedFreeLeftModules([4],[1,2,1,2,3],S);
 M := AsGradedLeftPresentation(m,[1,2,1,2,3]);
 n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
 N := AsGradedLeftPresentation(n,[1,2,1,2]);
 G := GradedGeneratorsOfExternalHom(M,N);
 f := Random(G);
+
 CohomologyOfBeilinsonComplexToSheafification;
+
 FF := Source( CohomologyOfBeilinsonComplexToSheafification );
 GG := Range( CohomologyOfBeilinsonComplexToSheafification );
+
 FF_f := ApplyFunctor( FF, f );
 GG_f := ApplyFunctor( GG, f );
+
 mu_M := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, M );
 mu_N := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, N );
+
 IsWellDefined( mu_M );
 IsWellDefined( mu_N );
+
 IsIsomorphism( mu_M );
 IsIsomorphism( mu_N );
+
 p1 := PreCompose( mu_M, GG_f );
 p2 := PreCompose( FF_f, mu_N );
+
 IsCongruentForMorphisms(p1,p2);
 Beilinson_sym := ApplyFunctor( Beilinson_complex_sym, M );
+IsWellDefined( Beilinson_sym, -3, 3 );
 Display( Beilinson_sym, -3, 3 );
 
 Beilinson_Serre_v2 := ApplyFunctor( Beilinson_complex_Serre_v2, M );
