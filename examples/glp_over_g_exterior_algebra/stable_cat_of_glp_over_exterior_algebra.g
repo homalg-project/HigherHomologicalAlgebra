@@ -315,9 +315,9 @@ IsFiniteDimensionalGradedLeftPresentation := function(M)
                                             end;
 C := FullSubcategoryByMembershipFunction(graded_lp_cat_sym, IsFiniteDimensionalGradedLeftPresentation );
 coh := graded_lp_cat_sym / C;
-cochains_of_coh := CochainComplexCategory( coh );
-cochains_cochains_of_coh := CochainComplexCategory( cochains_of_coh );
-bicomplexes_of_coh := AsCategoryOfBicomplexes( cochains_cochains_of_coh );
+cochains_coh := CochainComplexCategory( coh );
+cochains_cochains_coh := CochainComplexCategory( cochains_coh );
+bicomplexes_of_coh := AsCategoryOfBicomplexes( cochains_cochains_coh );
 SetIsBicomplexCategoryWithCommutativeSquares( bicomplexes_of_coh, with_commutative_squares );
 
 # The sheafification functor
@@ -387,7 +387,7 @@ Cochain_of_ver_coho_sym := ComplexOfVerticalCohomologiesFunctorAt( bicomplexes_o
 Cochain_of_ver_coho_coh := ComplexOfVerticalCohomologiesFunctorAt( bicomplexes_of_coh, -1 );
 
 Coh0_sym := CohomologyFunctorAt( cochains_graded_lp_cat_sym, graded_lp_cat_sym, 0 );
-Coh0_coh := CohomologyFunctorAt( cochains_of_coh, coh, 0 );
+Coh0_coh := CohomologyFunctorAt( cochains_coh, coh, 0 );
 
 KeyDependentOperation( "_Cochain_of_hor_coho_sym_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "_Cochain_of_hor_coho_coh_rm1", IsHomalgGradedRing, IsInt, ReturnTrue );
@@ -427,7 +427,7 @@ end );
 InstallMethod( _Coh_mr_cohOp,
             [ IsHomalgGradedRing, IsInt ],
     function( S, r )
-    return CohomologyFunctorAt( cochains_of_coh, coh, -r );
+    return CohomologyFunctorAt( cochains_coh, coh, -r );
 end );
 
 
@@ -454,7 +454,7 @@ end );
 ## This method is very very expensive since the bicomplex is in the category of 
 ## bicomplexes of Serre quotient category.
 Beilinson_complex_Serre_v1 := CapFunctor( "Beilinson Complex functor (Output is cochain of sheaves)",
-                            graded_lp_cat_sym, cochains_of_coh );
+                            graded_lp_cat_sym, cochains_coh );
 AddObjectFunction( Beilinson_complex_Serre_v1,
     function( M )
     return ApplyFunctor(
@@ -470,7 +470,7 @@ end );
 ## This method is better, it computes the complex as a complex of modules then applies 
 ## the sheafification functor.
 Beilinson_complex_Serre_v2 := CapFunctor( "Beilinson Complex functor (Output is cochain of sheaves)",
-                            graded_lp_cat_sym, cochains_of_coh );
+                            graded_lp_cat_sym, cochains_coh );
 AddObjectFunction( Beilinson_complex_Serre_v2,
     function( M )
     return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), M );;
