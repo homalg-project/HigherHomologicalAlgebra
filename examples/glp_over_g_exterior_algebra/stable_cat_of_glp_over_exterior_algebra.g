@@ -177,7 +177,7 @@ end;
 GradedGeneratorsOfExternalHom := graded_generators_of_external_hom;
 
 nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
-with_commutative_squares := true;
+with_commutative_squares := false;
 vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. nr_indeterminates ], i -> Concatenation( ",x", String( i ) ) ) ) );
 R := HomalgFieldOfRationalsInSingular( )*vars;
 S := GradedRing( R );
@@ -654,11 +654,22 @@ InstallMethod( BeilinsonToSheafOp,
     if r < Maximum( 2, CastelnuovoMumfordRegularity( M ) ) then
         Error( "r should be >= maximum(2, reg(M))" );
     fi;
-    if r mod 2 = 0 then
+
+    # This is because the bicomplex is with anti-commutative squares
+    if r mod 4 = 0 or r mod 4 = 3 then
         s := r;
+    elif r mod 4 = 1 then
+        s := r + 2;
     else
-        s := r+1;
+        s := r + 1;
     fi;
+
+    # if the bicomplexes are with commutative squars then:
+    # if r mod 2 = 0 then
+    # s := r;
+    # else
+    #     s := r+1;
+    # fi;
     l := TruncationToBeilinson( M, s );
     r1 := TruncToTrunc1( M, s );
     r2 := TruncToTrunc2( M, s );
