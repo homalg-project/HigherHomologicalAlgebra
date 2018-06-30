@@ -450,7 +450,7 @@ InstallMethod( VerticalDifferentialAt,
         IsBicomplexCategoryWithCommutativeSquares( cat ) then
         return UnderlyingCapCategoryCell( B )[ i ]^j;
     fi;
-    Info( InfoBicomplexes, 1, "Additive-Inverse-For-Morphisms is called when computing vertical morphism" );
+    Info( InfoBicomplexes, 2, "Additive-Inverse-For-Morphisms is called when computing vertical morphism" );
     return AdditiveInverseForMorphisms( UnderlyingCapCategoryCell( B )[ i ]^j );
 end );
 
@@ -916,9 +916,26 @@ InstallMethod( ComplexOfVerticalCohomologiesAtOp,
     cat := UnderlyingCategory( cochains );
     Coh := CohomologyFunctorAt( cochains, cat, n );
     C := UnderlyingCapCategoryCell( B );
-    diffs := MapLazy( IntegersList, function( i )
-                                    return ApplyFunctor( Coh, C^i );
-                                    end, 1 );
+
+    if IsBicomplexCategoryWithCommutativeSquares( bicomplexes ) then 
+    diffs := MapLazy( IntegersList, 
+        function( i )
+        return ApplyFunctor( Coh, C^i );
+        end, 1 );
+    else
+        diffs := MapLazy( IntegersList, 
+            function( i )
+            local D;
+            if i mod 2 = 0 then
+                D := CochainComplex( cat, MapLazy( Differentials( Range( C^i ) ), d->AdditiveInverseForMorphisms(d), 1 ) );
+                D := CochainMorphism( Source( C^i ), D, Morphisms( C^i ) );
+            else
+                D := CochainComplex( cat, MapLazy( Differentials( Source( C^i ) ), d->AdditiveInverseForMorphisms(d), 1 ) );
+                D := CochainMorphism( D, Range( C^i ), Morphisms( C^i ) );
+            fi;
+            return ApplyFunctor( Coh, D );
+            end, 1 );
+    fi;
     return CochainComplex( cat, diffs );
     ## Add to do list for the bounds
 end );
@@ -934,7 +951,11 @@ InstallMethod( ComplexMorphismOfVerticalCohomologiesAtOp,
     Coh := CohomologyFunctorAt( cochains, cat, n );
     psi := UnderlyingCapCategoryCell( phi );
     maps := MapLazy( IntegersList, function( i )
-                                    return ApplyFunctor( Coh, psi[ i ] );
+                                    local s,r, p;
+                                    s := ColumnAsComplex( Source( phi ), i );
+                                    r := ColumnAsComplex( Range( phi ), i );
+                                    p := CochainMorphism( s, r, Morphisms( psi[ i ] ) );
+                                    return ApplyFunctor( Coh, p );
                                     end, 1 );
     return CochainMorphism( ComplexOfVerticalCohomologiesAt( Source( phi ), n ),
                             ComplexOfVerticalCohomologiesAt( Range( phi ), n ), maps );
