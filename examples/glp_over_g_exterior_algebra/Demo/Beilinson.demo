@@ -59,11 +59,17 @@ p2 := PreCompose( FF_f, mu_N );
 %
 IsCongruentForMorphisms(p1,p2);
 %
-Beilinson_sym := ApplyFunctor( Beilinson_complex_sym, M );
+Beilinson_sym_M := ApplyFunctor( Beilinson_complex_sym, M );
 %
-IsWellDefined( Beilinson_sym, -3, 3 );
+IsWellDefined( Beilinson_sym_M, -3, 3 );
 %
-Display( Beilinson_sym, -3, 3 );
+Display( Beilinson_sym_M, -3, 3 );
+%
+Beilinson_sym_f := ApplyFunctor( Beilinson_complex_sym, f );
+%
+IsWellDefined( Beilinson_sym_f, -3, 3 );
+%
+Display( Beilinson_sym_f, -3, 3 );
 %
 Beilinson_Serre_v2 := ApplyFunctor( Beilinson_complex_Serre_v2, M );
-
+%
