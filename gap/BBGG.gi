@@ -252,13 +252,21 @@ end );
 InstallMethod( TateResolution, 
                 [ IsGradedLeftOrRightPresentation ],
     function( M )
-    local cat, hM, diff, C;
+    local cat, hM, diff, C, r_M;
     cat := GradedLeftPresentations( KoszulDualRing( UnderlyingHomalgRing( M ) ) );
     hM := AsPresentationInHomalg( M );
-    diff := MapLazy( IntegersList, i -> 
-        AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i, i + 1 ), i ) ), 1 );
+    r_M := CastelnuovoMumfordRegularity( M );
+
+    #homalg may return wrong answer if I use (i,i+1) when i=r_M.
+    diff := MapLazy( IntegersList, function( i )
+        if i = r_M then
+            return AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i - 1, i + 1 ), i ) );
+        else
+            return AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i, i + 1 ), i ) );
+        fi;
+        end, 1 );
     C := CochainComplex( cat , diff );
-    SetCastelnuovoMumfordRegularity( C, CastelnuovoMumfordRegularity( M) );
+    SetCastelnuovoMumfordRegularity( C, r_M );
     return C;
 end );
 
