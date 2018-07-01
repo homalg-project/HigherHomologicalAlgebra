@@ -122,7 +122,11 @@ AddLift( cat,
     #     X*B + Y*N = A
     #     P*X + Z*M = 0
     # the function is supposed to return X as a ( well defined ) morphism from P to M.
- 
+    
+    if not IsEqualForObjects( Range( morphism1 ), Range( morphism2 ) ) then
+        Error( "Wrong input for the Lift operation!" );
+    fi;
+
     if WithComments = true then
 	Print( "Computing Lift" );
     fi;    
