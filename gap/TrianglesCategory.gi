@@ -629,7 +629,7 @@ InstallMethod( Display,
         
     function( triangle )
     if IsCapCategoryStandardExactTriangle( triangle ) then 
-        Print( "A canonical exact triangle given by the sequence\n\n");
+        Print( "A standard exact triangle given by the sequence\n\n");
     elif IsCapCategoryExactTriangle( triangle ) then 
         Print( "An exact triangle given by the sequence\n\n");
     else
