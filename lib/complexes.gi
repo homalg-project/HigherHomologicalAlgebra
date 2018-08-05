@@ -550,6 +550,17 @@ InstallMethod( Display,
 
 end );
 
+##
+InstallMethod( Display,
+      [ IsBoundedChainOrCochainComplex ],
+    function( C )
+    if ActiveUpperBound( C ) -  ActiveLowerBound( C ) >= 2 then
+        Display( C, ActiveLowerBound( C ) + 1 , ActiveUpperBound( C ) - 1 );
+    else
+	      Print( "A zero complex in ", Name( CapCategory( C ) ) );
+    fi;
+end );
+
 #########################################
 #
 # Attributes of a (co)chain complexes

@@ -337,65 +337,61 @@ end );
 ##
 InstallMethod( Display, 
                [ IsChainOrCochainMorphism, IsInt, IsInt ], 
-   function( map, m, n )
-   local i, co_homo;
+    function( map, m, n )
+    local i, co_homo;
 
-   if IsChainMorphism( map ) then
-	co_homo := "homological";
-   else
-        co_homo := "cohomological";
-   fi;
+    if IsChainMorphism( map ) then
+	    co_homo := "homological";
+    else
+      co_homo := "cohomological";
+    fi;
 
-   for i in [ m .. n ] do
-
-     Print( TextAttr.underscore, TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
-
-     Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
-
-     Display( map[ i ] );
-
-     Print( "\n-----------------------------------------------------------------\n" );
-
+    for i in [ m .. n ] do
+      Print( TextAttr.underscore, TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
+      Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
+      Display( map[ i ] );
+      Print( "\n-----------------------------------------------------------------\n" );
    od;
+end );
 
+InstallMethod( Display,
+    [ IsBoundedChainOrCochainMorphism ],
+    function( phi )
+    if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
+    	Display( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
+    else
+ 	    Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
+    fi;
 end );
 
 InstallMethod( IsWellDefined,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
    function( phi, m, n )
     local i, S, T;
-   
     S := Source( phi );
-   
     T := Range( phi );
     if not IsWellDefined( Source( phi ), m, n ) then
         AddToReasons( "IsWellDefined: The source of the morphism is not well-defined in the given interbal" );
         return false;
     fi;
-    
     if not IsWellDefined( Range( phi ), m, n ) then
         AddToReasons( "IsWellDefined: The range of the morphism is not well-defined in the given interbal" );
         return false;
     fi;
-    
    if IsChainMorphism( phi ) then 
-   
      for i in [ m .. n ] do 
         if not IsCongruentForMorphisms( PreCompose( S^(i + 1), phi[ i ] ), PreCompose( phi[ i + 1 ], T^(i + 1) ) ) then
           AddToReasons( Concatenation( "IsWellDefined: problem at the squar whose differentials are in index ", String( i + 1 ) ) );
           return false;
         fi;
      od;
-     
    elif IsCochainMorphism( phi ) then
-   
      for i in [ m .. n ] do 
         if not IsCongruentForMorphisms( PreCompose( S^i, phi[ i + 1 ] ), PreCompose( phi[ i ], T^i ) ) then
           AddToReasons( Concatenation( "IsWellDefined: problem at the squar whose differentials are in index ", String( i ) ) );
            return false;
         fi;
      od;
-     
    fi;
    return true;
 end );
