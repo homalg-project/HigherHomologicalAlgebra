@@ -592,7 +592,7 @@ InstallMethod( ViewObj,
     function( triangle )
 
     if IsCapCategoryStandardExactTriangle( triangle ) then 
-        Print( "<A canonical exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
+        Print( "<A standard exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
     elif IsCapCategoryExactTriangle( triangle ) then 
         if HasIsStandardExactTriangle( triangle ) and not IsStandardExactTriangle( triangle ) then
             Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
@@ -636,8 +636,8 @@ InstallMethod( Display,
         Print( "A triangle given by the sequence\n\n" );
     fi;
 
-    Print( "     τ0         τ1         τ2           \n");
-    Print( "T0 ------> T1 ------> T2 ------> Σ(T0)\n" );
+    Print( TextAttr.bold, TextAttr.1, "          τ0         τ1         τ2           \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "     T0 ------> T1 ------> T2 ------> Σ(T0)  \n", TextAttr.reset );
     Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\n\nT0:\n\n" , TextAttr.reset );
     Display( ObjectAt( triangle, 0 ) );
     Print(      "\n------------------------------------\n\n" );
@@ -669,25 +669,25 @@ InstallMethod( Display,
 
     Print( "A morphism of triangles:\n");
 
-    Print( "          τ0         τ1         τ2             \n" );
-    Print( "Tr1: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
-    Print( "     |          |          |            |      \n" );
-    Print( "     | m0       | m1       | m2         | Σ(m0)\n" );
-    Print( "     |          |          |            |      \n" );
-    Print( "     V          V          V            V      \n" );
-    Print( "Tr2: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
-    Print( "          τ0         τ1         τ2             \n" );
+    Print( TextAttr.bold, TextAttr.1, "                τ0          τ1           τ2             \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "     Tr  : T0 -------> T1 -------> T2 -------> Σ(T0)    \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "           |           |           |             |      \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "           | m0        | m1        | m2          | Σ(m0)\n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "           |           |           |             |      \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "           V           V           V             V      \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "     Tr' : T'0 ------> T'1 ------> T'2 ------> Σ(T'0)    \n", TextAttr.reset );
+    Print( TextAttr.bold, TextAttr.1, "                τ'0         τ'1          τ'2             \n", TextAttr.reset );
     Print( "\n---------------------------------------------\n" );
-    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm0:\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm0:\n\n", TextAttr.reset );
     Display( MorphismAt( morphism, 0 ) );
     Print( "-----------------------------------------------\n" );
-    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm1:\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm1:\n\n", TextAttr.reset );
     Display( MorphismAt( morphism, 1 ) );
     Print( "-----------------------------------------------\n" );
-    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm2:\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm2:\n\n", TextAttr.reset );
     Display( MorphismAt( morphism, 2 ) );
     Print( "-----------------------------------------------\n" );
-    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nΣ(m0):\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nΣ(m0):\n\n", TextAttr.reset );
     Display( MorphismAt( morphism, 3 ) );
     Print( "-----------------------------------------------\n" );
 
