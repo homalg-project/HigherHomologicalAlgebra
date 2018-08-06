@@ -623,45 +623,52 @@ end );
 ##############################
 
 
-InstallMethod( Display, 
+InstallMethod( Display,
 
         [ IsCapCategoryTriangle ],
-        
+
     function( triangle )
-    if IsCapCategoryStandardExactTriangle( triangle ) then 
+    if IsCapCategoryStandardExactTriangle( triangle ) then
         Print( "A standard exact triangle given by the sequence\n\n");
-    elif IsCapCategoryExactTriangle( triangle ) then 
+    elif IsCapCategoryExactTriangle( triangle ) then
         Print( "An exact triangle given by the sequence\n\n");
     else
         Print( "A triangle given by the sequence\n\n" );
     fi;
-  
+
     Print( "     τ0         τ1         τ2           \n");
     Print( "T0 ------> T1 ------> T2 ------> Σ(T0)\n" );
-    Print( "\n\nT0 is\n\n" ); Display( ObjectAt( triangle, 0 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "τ0 is \n\n");Display( MorphismAt( triangle, 0 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "T1 is\n\n" );Display( ObjectAt( triangle, 1 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "τ1 is \n\n");Display( MorphismAt( triangle, 1 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "T2 is\n\n" );Display( ObjectAt( triangle, 2 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "τ2 is \n\n");Display( MorphismAt( triangle, 2 ) );
-    Print( "\n------------------------------------\n\n" );
-    Print( "Σ(T0) is \n\n" ); Display( ShiftOfObject( ObjectAt( triangle, 0 ) ) );
-  
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\n\nT0:\n\n" , TextAttr.reset );
+    Display( ObjectAt( triangle, 0 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ0:\n\n", TextAttr.reset );
+    Display( MorphismAt( triangle, 0 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "T1:\n\n" , TextAttr.reset );
+    Display( ObjectAt( triangle, 1 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ1:\n\n", TextAttr.reset );
+    Display( MorphismAt( triangle, 1 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "T2:\n\n" , TextAttr.reset );
+    Display( ObjectAt( triangle, 2 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ2:\n\n", TextAttr.reset );
+    Display( MorphismAt( triangle, 2 ) );
+    Print(      "\n------------------------------------\n\n" );
+    Print(     TextAttr.bold, TextAttr.1, TextAttr.underscore,  "Σ(T0):\n\n" , TextAttr.reset );
+    Display( ShiftOfObject( ObjectAt( triangle, 0 ) ) );
+
 end, 5 );
 
 ##
-InstallMethod( Display, 
+InstallMethod( Display,
         [ IsCapCategoryTrianglesMorphism ],
-    
+
     function( morphism )
-   
+
     Print( "A morphism of triangles:\n");
- 
+
     Print( "          τ0         τ1         τ2             \n" );
     Print( "Tr1: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
     Print( "     |          |          |            |      \n" );
@@ -671,17 +678,17 @@ InstallMethod( Display,
     Print( "Tr2: T0 ------> T1 ------> T2 ------> Σ(T0)    \n" );
     Print( "          τ0         τ1         τ2             \n" );
     Print( "\n---------------------------------------------\n" );
-    Print( "\nm0 is\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm0:\n\n" );
     Display( MorphismAt( morphism, 0 ) );
     Print( "-----------------------------------------------\n" );
-    Print( "\nm1 is\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm1:\n\n" );
     Display( MorphismAt( morphism, 1 ) );
     Print( "-----------------------------------------------\n" );
-    Print( "\nm2 is\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm2:\n\n" );
     Display( MorphismAt( morphism, 2 ) );
     Print( "-----------------------------------------------\n" );
-    Print( "\nΣ(m0) is\n\n" );
+    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nΣ(m0):\n\n" );
     Display( MorphismAt( morphism, 3 ) );
     Print( "-----------------------------------------------\n" );
-   
+
  end );
