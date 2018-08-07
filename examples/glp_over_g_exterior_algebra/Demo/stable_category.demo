@@ -62,15 +62,15 @@ sM := AsStableObject( M );
 %
 Display( sM );
 %
-b := basis_of_stable_hom( sM, syz_TO_0 );
+b := BasisOfExternalHom( sM, syz_TO_0 );
 %
-b := basis_of_stable_hom( syz_TO_0, sM );
+b := BasisOfExternalHom( syz_TO_0, sM );
 %
-b := basis_of_stable_hom( syz_TO_0, syz_TO_0 );
+b := BasisOfExternalHom( syz_TO_0, syz_TO_0 );
 %
 Display( b[ 1 ] );
 %
-b := basis_of_stable_hom( sM, sM );
+b := BasisOfExternalHom( sM, sM );
 %
 Perform( b, Display );
 %

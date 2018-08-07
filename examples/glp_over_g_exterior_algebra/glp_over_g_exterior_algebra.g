@@ -465,7 +465,7 @@ graded_generators_of_external_hom := function( M_, N_ )
     local R, basis_indices, M, N, degrees_of_M_, degrees_of_N_, degrees_of_M, degrees_of_N, required_degrees_X, required_degrees_Y,
         degrees_of_sM, degrees_of_sN, Lx, Ly, Q, mat, x_positions, y_positions, all_positions, smat, r, m, s, n, t, smat_x,
         basis_smat_x, generators, i, j, X_, XX, XX_, l;
-
+    
     R := UnderlyingHomalgRing( M_ );
     l := Length( IndeterminatesOfExteriorRing( R ) );
     basis_indices := standard_list_of_basis_indices( R );

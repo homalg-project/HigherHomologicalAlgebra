@@ -2,6 +2,10 @@ LoadPackage( "StableCategoriesForCAP" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_algebra.g" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/complexes_of_graded_left_presentations_over_graded_polynomial_ring.g" );
 
+
+DeclareOperation( "GeneratorsOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "BasisOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
+
 BindGlobal( "ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA",
 
 function( category )
@@ -61,13 +65,20 @@ end );
 
 end );
 
-generators_of_stable_hom := function( M, N )
+##
+InstallMethodWithCache( GeneratorsOfExternalHom,
+    [ IsCapCategoryObject, IsCapCategoryObject ],
+    function( M, N )
     local basis;
-    basis := graded_generators_of_external_hom( UnderlyingUnstableObject(M), UnderlyingUnstableObject(N));
-    Apply( basis, AsStableMorphism );
-    basis := DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms( b ) ) );
-    return basis;
-end;
+    if IsStableCategoryObject( M ) and IsStableCategoryObject( N ) then
+            basis := GeneratorsOfExternalHom( UnderlyingUnstableObject(M), UnderlyingUnstableObject(N));
+            basis := List( basis, AsStableMorphism );
+            basis := DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms( b ) ) );
+            return basis;
+    else
+        TryNextMethod( );
+    fi;
+end );
 
 graded_compute_coefficients_for_stable_morphisms := function( b, f )
     local R, basis_indices, Q, a, A, B, C, vec, main_list, matrix, constant, M, N, sol, F;
@@ -111,30 +122,39 @@ graded_compute_coefficients_for_stable_morphisms := function( b, f )
     fi;
 end;
 
-basis_of_stable_hom := function( M, N )
-local generators, i, basis;
+InstallMethodWithCache( BasisOfExternalHom, 
+    [ IsCapCategoryObject, IsCapCategoryObject ],
+    function( M, N )
+    local generators, i, basis;
+    if IsStableCategoryObject( M ) and IsStableCategoryObject( N ) then
 
-generators := generators_of_stable_hom( M, N );
-
-if generators = [ ] then
-    return [ ];
-fi;
-
-basis := [ generators[ 1 ] ];
-
-for i in [ 2 .. Length( generators ) ] do
-
-    if WithComments = true then
-        Print( "Testing the redundancy of the ", i, "'th morphism out of ", Length( generators ), "morphisms!." );
+        generators := GeneratorsOfExternalHom( M, N );
+        if generators = [ ] then
+            return [ ];
+        fi;
+        basis := [ generators[ 1 ] ];
+        for i in [ 2 .. Length( generators ) ] do
+            if WithComments = true then
+                Print( "Testing the redundancy of the ", i, "'th morphism out of ", Length( generators ), "morphisms!." );
+            fi;
+            if graded_compute_coefficients_for_stable_morphisms( basis, generators[ i ] ) = fail then
+                Add( basis, generators[ i ] );
+            fi;
+        od;
+        return basis;
+    else
+        TryNextMethod( );
     fi;
+end );
 
-    if graded_compute_coefficients_for_stable_morphisms( basis, generators[ i ] ) = fail then
-        Add( basis, generators[ i ] );
+InstallMethodWithCache( BasisOfExternalHom, [ IsCapCategoryObject, IsCapCategoryObject ],
+    function( M, N )
+    if HasUnderlyingHomalgRing( M ) and IsExteriorRing( UnderlyingHomalgRing( M ) ) then
+        graded_basis_of_external_hom( M, N );
+    else
+        TryNextMethod( );
     fi;
-od;
-
-return basis;
-end;
+end );
 
 DeclareAttribute( "iso_to_reduced_stable_module", IsStableCategoryObject );
 DeclareAttribute( "iso_from_reduced_stable_module", IsStableCategoryObject );
@@ -165,16 +185,22 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-# this function can be implemented using the monoidal structure of lp over the polynomial ring
-graded_generators_of_external_hom := function( M, N )
-	local hM, hN, G;
-	hM := AsPresentationInHomalg( M );
-	hN := AsPresentationInHomalg( N );
-	G := GetGenerators( Hom( hM, hN ) );
-	return List( G, AsPresentationMorphismInCAP );
-end;
-
-GradedGeneratorsOfExternalHom := graded_generators_of_external_hom;
+InstallMethodWithCache( GeneratorsOfExternalHom,
+    [ IsCapCategoryObject, IsCapCategoryObject ],
+    function( M, N )
+    local hM, hN, G;
+    
+    if HasUnderlyingHomalgRing( M ) and IsFreePolynomialRing( UnderlyingHomalgRing( M ) ) then
+        hM := AsPresentationInHomalg( M );
+	    hN := AsPresentationInHomalg( N );
+	    G := GetGenerators( Hom( hM, hN ) );
+	    return List( G, AsPresentationMorphismInCAP );
+    elif HasUnderlyingHomalgRing( M ) and IsExteriorRing( UnderlyingHomalgRing( M ) ) then
+        return graded_generators_of_external_hom( M, N );
+    else
+        TryNextMethod( );
+    fi;
+end );
 
 nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
 with_commutative_squares := false;
@@ -707,7 +733,7 @@ m := RandomMatrixBetweenGradedFreeLeftModules([4],[1,2,1,2,3],S);
 M := AsGradedLeftPresentation(m,[1,2,1,2,3]);
 n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
 N := AsGradedLeftPresentation(n,[1,2,1,2]);
-G := GradedGeneratorsOfExternalHom(M,N);
+G := GeneratorsOfExternalHom(M,N);
 f := Random(G);
 
 CohomologyOfBeilinsonComplexToSheafification;
