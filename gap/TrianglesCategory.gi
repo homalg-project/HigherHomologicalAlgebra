@@ -91,6 +91,17 @@ InstallMethod( CategoryOfTriangles,
     
     end );
 
+    AddIsIsomorphism( cat,
+        function( phi )
+        if IsIsomorphism( phi[0] ) and IsIsomorphism( phi[1] ) and IsIsomorphism( phi[2] ) and IsIsomorphism( phi[3] ) then
+            return true;
+        else
+            AddToReasons( "IsIsomorphism: At least one of the 4 underlying morphisms is not isomorphism" );
+            return false;
+        fi;
+    end );
+
+
     AddIsWellDefinedForObjects( cat, 
         function( T )
     
