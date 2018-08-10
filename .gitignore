@@ -1,41 +1,79 @@
-	doc/TriangulatedCategoriesForCAP.aux
-	doc/TriangulatedCategoriesForCAP.bbl
-	doc/TriangulatedCategoriesForCAP.blg
-	doc/TriangulatedCategoriesForCAP.idx
-	doc/TriangulatedCategoriesForCAP.ilg
-	doc/TriangulatedCategoriesForCAP.ind
-	doc/TriangulatedCategoriesForCAP.log
-	doc/TriangulatedCategoriesForCAP.out
-	doc/TriangulatedCategoriesForCAP.pnr
-	doc/TriangulatedCategoriesForCAP.tex
-	doc/TriangulatedCategoriesForCAP.toc
-	doc/TriangulatedCategoriesForCAP.xml
-	doc/_AutoDocMainFile.xml
-	doc/_Chapter_Introduction.xml
-	doc/_Chapter_Triangulated_Categories.xml
-	doc/chap0.html
-	doc/chap0.txt
-	doc/chap0_mj.html
-	doc/chap1.html
-	doc/chap1.txt
-	doc/chap1_mj.html
-	doc/chap2.html
-	doc/chap2.txt
-	doc/chap2_mj.html
-	doc/chapInd.html
-	doc/chapInd.txt
-	doc/chapInd_mj.html
-	doc/chooser.html
-	doc/lefttoc.css
-	doc/manual.css
-	doc/manual.js
-	doc/manual.lab
-	doc/manual.six
-	doc/nocolorprompt.css
-	doc/ragged.css
-	doc/rainbow.js
-	doc/times.css
-	doc/title.xml
-	doc/toggless.css
-	doc/toggless.js
-
+tmp/
+gh-pages
+*swp
+DISCUSS
+*~
+# git-ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+*~
+bin
+change.log
+VERSION
+public_html
+public_html.version
+*/doc/manual.six
+*/doc/*.pdf
+*/doc/*.html
+*/doc/*.txt
+*/doc/*.css
+*/doc/*.js
+*/doc/*Bib.xml
+*/doc/*Bib.xml.bib
+*/doc/*.aux
+*/doc/*.bbl
+*/doc/*.blg
+*/doc/*.brf
+*/doc/*.idx
+*/doc/*.ilg
+*/doc/*.ind
+*/doc/*.log
+*/doc/*.pnr
+*/doc/*.tex
+*/doc/*.toc
+*/doc/*.out
+*/doc/manual.lab
+*.DS_Store
+doc/*.xml
+*/doc/*.xml
+doc/TriangulatedCategoriesForCAP.aux
+doc/TriangulatedCategoriesForCAP.bbl
+doc/TriangulatedCategoriesForCAP.blg
+doc/TriangulatedCategoriesForCAP.idx
+doc/TriangulatedCategoriesForCAP.ilg
+doc/TriangulatedCategoriesForCAP.ind
+doc/TriangulatedCategoriesForCAP.log
+doc/TriangulatedCategoriesForCAP.out
+doc/TriangulatedCategoriesForCAP.pnr
+doc/TriangulatedCategoriesForCAP.tex
+doc/TriangulatedCategoriesForCAP.toc
+doc/chap0.html
+doc/chap0.txt
+doc/chap0_mj.html
+doc/chap1.html
+doc/chap1.txt
+doc/chap1_mj.html
+doc/chap2.html
+doc/chap2.txt
+doc/chap2_mj.html
+doc/chapInd.html
+doc/chapInd.txt
+doc/chapInd_mj.html
+doc/chooser.html
+doc/lefttoc.css
+doc/manual.css
+doc/manual.js
+doc/manual.lab
+doc/manual.six
+doc/manual.pdf
+doc/nocolorprompt.css
+doc/ragged.css
+doc/rainbow.js
+doc/times.css
+doc/toggless.css
+doc/toggless.js
+maketest.g
+parsertest.g
+judgement_test
