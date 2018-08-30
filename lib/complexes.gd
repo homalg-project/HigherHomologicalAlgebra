@@ -208,7 +208,7 @@ KeyDependentOperation( "ObjectAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 #! The command returns the object of the chain or cochain complex in index $i$.
 #! @Arguments C, i
 #! @Returns an object
-# DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
+DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
 
 KeyDependentOperation( "DifferentialAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 

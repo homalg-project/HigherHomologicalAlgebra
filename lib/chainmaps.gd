@@ -262,7 +262,7 @@ KeyDependentOperation( "CyclesFunctorialAt", IsChainOrCochainMorphism, IsInt, Re
 #!  The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #!  @Arguments phi, n
 #!  @Returns an integer
-# DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
+DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 
 #!  @Description
 #!  The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
