@@ -598,6 +598,62 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
     return F;
 end );
 
+InstallMethod( BrutalTruncationAboveFunctorOp,
+        [ IsCapCategory and IsChainComplexCategory, IsInt ],
+    function( chains, n )
+    local name, F;
+
+    name := Concatenation( "Functor of brutal truncation from above (C -> C^< ", String( n ), ") in ", Name( chains ) );
+    F := CapFunctor( name, chains, chains );
+    AddObjectFunction( F,
+    function( C )
+      return BrutalTruncationAbove( C, n );
+    end );
+
+    AddMorphismFunction( F,
+    function( new_source, phi, new_range )
+    local morphisms;
+    morphisms := MapLazy( IntegersList, 
+                            function( i ) 
+                            if i < n then 
+                              return phi[ i ];
+                            else
+                              return ZeroMorphism( new_source[ i ], new_range[ i ] );
+                            fi;
+                            end, 1 );
+    return ChainMorphism( new_source, new_range, morphisms );   
+    end );
+    return F;
+end );
+
+InstallMethod( BrutalTruncationBelowFunctorOp,
+        [ IsCapCategory and IsChainComplexCategory, IsInt ],
+    function( chains, n )
+    local name, F;
+
+    name := Concatenation( "Functor of brutal truncation from below (C -> C^>= ", String( n ), ") in ", Name( chains ) );
+    F := CapFunctor( name, chains, chains );
+    AddObjectFunction( F,
+    function( C )
+      return BrutalTruncationBelow( C, n );
+    end );
+
+    AddMorphismFunction( F,
+    function( new_source, phi, new_range )
+    local morphisms;
+    morphisms := MapLazy( IntegersList, 
+                            function( i ) 
+                            if i >= n then 
+                              return phi[ i ];
+                            else
+                              return ZeroMorphism( new_source[ i ], new_range[ i ] );
+                            fi;
+                            end, 1 );
+    return ChainMorphism( new_source, new_range, morphisms );
+    end );
+    return F;
+end );
+
 # to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
 # InstallMethod( LeftDerivedFunctor, 
 #                [ IsCapFunctor ],
