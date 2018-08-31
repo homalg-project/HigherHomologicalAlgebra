@@ -1059,6 +1059,26 @@ InstallMethod( ComplexOfHorizontalCohomologiesFunctorAtOp,
     return F;
 end );
 
+InstallMethod( ComplexOfHorizontalHomologiesFunctorAtOp,
+        [ IsCapCategory, IsInt ],
+    function( ho_bicomplexes, n )
+    local F, name, homological_bi_to_cohomological_bi, 
+            complex_of_horizontal_cohomologies_functor, cochain_to_chain_complex,
+            chains1, chains2, cochains1, cochains2, cat, coh_bicomplexes;
+    chains2 := UnderlyingCategoryOfComplexesOfComplexes( ho_bicomplexes );
+    chains1 := UnderlyingCategory( chains2 );
+    cat := UnderlyingCategory( chains1 );
+    cochains1 := CochainComplexCategory( cat );
+    cochains2 := CochainComplexCategory( cochains1 );
+    coh_bicomplexes := AsCategoryOfBicomplexes( cochains2 );
+
+    homological_bi_to_cohomological_bi := HomologicalToCohomologicalBicomplexsFunctor( ho_bicomplexes, coh_bicomplexes );
+    complex_of_horizontal_cohomologies_functor := ComplexOfHorizontalCohomologiesFunctorAt( coh_bicomplexes, -n );
+    cochain_to_chain_complex := CochainToChainComplexFunctor( cochains1, chains1 );
+    return PreCompose( [ homological_bi_to_cohomological_bi, complex_of_horizontal_cohomologies_functor, cochain_to_chain_complex ] );
+end );
+
+
 InstallMethod( IsWellDefined,
         [ IsCapCategoryBicomplexCell and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
     function( B, left, right, below, above )
