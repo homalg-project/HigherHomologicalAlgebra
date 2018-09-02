@@ -603,7 +603,7 @@ InstallMethod( BrutalTruncationAboveFunctorOp,
     function( chains, n )
     local name, F;
 
-    name := Concatenation( "Functor of brutal truncation from above (C -> C^< ", String( n ), ") in ", Name( chains ) );
+    name := Concatenation( "Functor of brutal truncation from above (C -> C_< ", String( n ), ") in ", Name( chains ) );
     F := CapFunctor( name, chains, chains );
     AddObjectFunction( F,
     function( C )
@@ -631,7 +631,7 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
     function( chains, n )
     local name, F;
 
-    name := Concatenation( "Functor of brutal truncation from below (C -> C^>= ", String( n ), ") in ", Name( chains ) );
+    name := Concatenation( "Functor of brutal truncation from below (C -> C_>= ", String( n ), ") in ", Name( chains ) );
     F := CapFunctor( name, chains, chains );
     AddObjectFunction( F,
     function( C )
