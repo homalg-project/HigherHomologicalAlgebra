@@ -115,11 +115,45 @@ DeclareOperation( "CochainMorphism",
 #!  @Returns infinite list
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
-#!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
-#!  mapping cone chain (resp. cochain) complex $\mathrm{Cone}(\phi )$.
-#!  @Arguments phi
-#!  @Returns complex
+#! @Description
+#! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
+#! mapping cone chain (resp. cochain) complex $\mathrm{Cone}(\phi )$.
+#! @BeginLatexOnly
+#! If the input is a chain complex then the mapping cone is the chain complex whose differential at index $n$ is defined by
+#! \begin{center}
+#! \begin{tikzpicture}[x=4cm,y=0.7cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V3) at (0,3) {$C_{n-2}$};
+#! \node (0V2) at (0,2) {$\bigoplus$};
+#! \node (0V1) at (0,1) {$D_{n-1}$};
+#! \node (1V3) at (1,3) {$C_{n-1}$};
+#! \node (1V2) at (1,2) {$\bigoplus$};
+#! \node (1V1) at (1,1) {$D_{n}$};
+#!         \draw[->,thick] (1V3)-- node[above]{$-d^C_{n-1}$} (0V3);
+#!         \draw[->,thick] (1V3)-- node[above]{$\phi_{n-1}$} (0V1);
+#! \draw[->,thick] (1V1)-- node[below]{$d^D_{n}$} (0V1);
+#! \end{tikzpicture}
+#! \end{center}
+#! If the input is a cochain complex then the mapping cone is the cochain complex whose differential at index $n$ is defined by
+#! \begin{center}
+#! \begin{tikzpicture}[x=4cm,y=0.7cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V3) at (0,3) {$C^{n+1}$};
+#! \node (0V2) at (0,2) {$\bigoplus$};
+#! \node (0V1) at (0,1) {$D^{n}$};
+#! \node (1V3) at (1,3) {$C^{n+2}$};
+#! \node (1V2) at (1,2) {$\bigoplus$};
+#! \node (1V1) at (1,1) {$D^{n+1}$};
+#! \draw[<-,thick] (1V3)-- node[above]{$-d_C^{n+1}$} (0V3);
+#! \draw[<-,thick] (1V1)-- node[below]{$\phi^{n+1}$} (0V3);
+#! \draw[<-,thick] (1V1)-- node[below]{$d_D^{n}$} (0V1);
+#! \end{tikzpicture}
+#! \end{center}
+#! @EndLatexOnly
+#! @Arguments phi
+#! @Returns complex
 DeclareAttribute( "MappingCone", IsChainOrCochainMorphism );
 
 #!  @Description
