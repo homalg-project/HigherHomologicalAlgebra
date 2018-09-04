@@ -871,7 +871,7 @@ BindGlobal( "PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
 end );
 
 ##
-BindGlobal( "INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
+BindGlobal( "INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
   local im, inc, pi, cyc;
 
@@ -935,11 +935,11 @@ InstallMethod( CohomologyAtOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLO
 
 InstallMethod( GeneralizedProjectionOntoHomologyAtOp, [ IsChainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
-InstallMethod( GeneralizedEmbeddingOfHomologyAtOp, [ IsChainComplex, IsInt ], INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedEmbeddingOfHomologyAtOp, [ IsChainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 ##
 InstallMethod( GeneralizedProjectionOntoCohomologyAtOp, [ IsCochainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
-InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp, [ IsCochainComplex, IsInt ], INJECTION_INTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp, [ IsCochainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 InstallMethod( DefectOfExactnessAtOp, 
                [ IsChainOrCochainComplex, IsInt ],
@@ -1059,7 +1059,7 @@ end );
 
 ##
 InstallMethod( CohomologySupport,
-               [ IsCochainComplex ],
+               [ IsBoundedCochainComplex ],
   function( C )
   if not IsBoundedAboveCochainComplex(C) or not IsBoundedBelowCochainComplex(C) then
     Error( "The cochain must be bounded, you can  still use: CohomologySupport(C,m,n)" );
@@ -1069,7 +1069,7 @@ end );
 
 ##
 InstallMethod( HomologySupport,
-               [ IsChainComplex ],
+               [ IsBoundedChainComplex ],
   function( C )
   if not IsBoundedAboveChainComplex(C) or not IsBoundedBelowChainComplex(C) then
     Error( "The chain must be bounded, you can  still use: HomologySupport(C,m,n)" );
@@ -1079,7 +1079,7 @@ end );
 
 ##
 InstallMethod( ObjectsSupport,
-               [ IsChainOrCochainComplex ],
+               [ IsBoundedChainOrCochainComplex ],
   function( C )
   if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
     Error( "The (co)chain complex must be bounded, you can  still use: ObjectsSupport(C,m,n)" );
@@ -1089,7 +1089,7 @@ end );
 
 ##
 InstallMethod( DifferentialsSupport,
-               [ IsChainOrCochainComplex ],
+               [ IsBoundedChainOrCochainComplex ],
   function( C )
   if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
     Error( "The (co)chain complex must be bounded, you can  still use: DifferentialsSupport(C,m,n)" );
