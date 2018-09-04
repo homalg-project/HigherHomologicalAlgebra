@@ -259,35 +259,36 @@ function( C )
 return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 end );
 
-##
-InstallMethod( ProjectiveResolutionWithBounds,
-      [ IsBoundedAboveCochainComplex, IsInt ],
-function( C, m )
-local p, i;
-
-p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
-
-for i in [ m .. ActiveUpperBound( p ) - 1 ] do
-
-    if IsZeroForObjects( p[ ActiveUpperBound( p ) - 1 + m - i ] ) then 
-        SetLowerBound( p, ActiveUpperBound( p ) - 1 + m - i );
-        return p;
-    fi;
-od;
-
-Error( "It seems that the lower bound of the projective resolution is less than ", m );
-
-end );
+## fix the bounds, try example where C is direct sum of stalks
+#InstallMethod( ProjectiveResolutionWithBounds,
+#      [ IsBoundedCochainComplex, IsInt ],
+#function( C, m )
+#local p, i;
+#
+#p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+#
+#for i in [ m .. ActiveUpperBound( p ) - 1 ] do
+#
+#    if IsZeroForObjects( p[ ActiveUpperBound( p ) - 1 + m - i ] ) then 
+#        SetLowerBound( p, ActiveUpperBound( p ) - 1 + m - i );
+#        return p;
+#    fi;
+#od;
+#Error( "It seems that the lower bound of the projective resolution is less than ", m );
+#end );
 
 InstallMethod( ProjectiveResolutionWithBounds,
-        [ IsBoundedBelowChainComplex, IsInt ],
+        [ IsBoundedChainComplex, IsInt ],
     function( C, m )
     local p, i;
-
+    
+    if m < ActiveUpperBound( C ) then
+	Error( "The second argument should be greater than the active upper bound of C" );
+    fi;
+    
     p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
 
-    for i in [ ActiveLowerBound( p ) + 1 .. m ] do
-    
+    for i in [ ActiveUpperBound( C ) .. m ] do
         if IsZeroForObjects( p[ i ] ) then 
             SetUpperBound( p, i );
             return p;
