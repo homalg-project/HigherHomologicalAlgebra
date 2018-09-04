@@ -276,8 +276,8 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$C_\bullet$};
-#!   \node (0V0) at (0,0) {$D_\bullet$};
+#!   \node (0V1) at (0,1) {$C^\bullet$};
+#!   \node (0V0) at (0,0) {$D^\bullet$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$C_{n-1}$};
 #!   \node (3V1) at (3,1) {$C_{n}$};
@@ -306,8 +306,8 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$\sigma^{\leq n}(C_\bullet)$};
-#!   \node (0V0) at (0,0) {$\sigma^{\leq n}(D_\bullet)$};
+#!   \node (0V1) at (0,1) {$\sigma^{\leq n}(C^\bullet)$};
+#!   \node (0V0) at (0,0) {$\sigma^{\leq n}(D^\bullet)$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$C_{n-1}$};
 #!   \node (3V1) at (3,1) {$C_{n}$};
@@ -410,8 +410,8 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$C_\bullet$};
-#!   \node (0V0) at (0,0) {$D_\bullet$};
+#!   \node (0V1) at (0,1) {$C^\bullet$};
+#!   \node (0V0) at (0,0) {$D^\bullet$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$C_{n-1}$};
 #!   \node (3V1) at (3,1) {$C_{n}$};
@@ -440,8 +440,8 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$\sigma^{\textgreater n}(C_\bullet)$};
-#!   \node (0V0) at (0,0) {$\sigma^{\textgreater n}(D_\bullet)$};
+#!   \node (0V1) at (0,1) {$\sigma^{\textgreater n}(C^\bullet)$};
+#!   \node (0V0) at (0,0) {$\sigma^{\textgreater n}(D^\bullet)$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$0$};
 #!   \node (3V1) at (3,1) {$0$};
@@ -471,12 +471,13 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #! @Returns a endofunctor
 KeyDependentOperation( "BrutalTruncationBelowFunctor", IsCapCategory, IsInt, ReturnTrue );
 
-#! @Description
-#! The input is a category $A$. The output is the functor 
-#! $F:\mathrm{Ch}_\bullet(A)\rightarrow \mathrm{Ch}^\bullet(A^{\mathrm{op}).$
-#! @Arguments A
-#! @Returns a functor
+# @Description
+# The input is a category $A$. The output is the functor 
+# $F:\mathrm{Ch}_\bullet(A)\rightarrow \mathrm{Ch}^\bullet(A^{\mathrm{op}).$
+# @Arguments A
+# @Returns a functor
 DeclareOperation( "ChainCategoryToCochainCategoryOfOppositeCategory", [ IsCapCategory ] );
+
 #! @EndSection
 #! @Section Examples
 #! @InsertChunk vec_3

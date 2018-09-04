@@ -230,51 +230,199 @@ KeyDependentOperation( "CyclesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 #! @Returns a morphism
 KeyDependentOperation( "BoundariesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-KeyDependentOperation( "HomologyAt", IsChainComplex, IsInt, ReturnTrue );
+#! @Description
+#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! (defined by span) of the homology object at index $n$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzpicture}[x=5cm,y=2cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V0) at (0,0) {$C_{n-1}$};
+#! \node (1V0) at (1,0) {$C_{n}$};
+#! \node (2V0) at (2,0) {$C_{n+1}$};
+#! \node (1V-1) at (1,-1) {$\mathrm{ker}(d_{n})$};
+#! \node (2V-1) at (2,-1) {$\mathrm{im}(d_{n+1})$};
+#! \node (0V-1) at (0,-1) {$H_{\bullet}^{n}(C)$};
+#! \draw[->,thick] (1V0)-- node[above]{$d_n$} (0V0);
+#! \draw[->,thick] (2V0)-- node[above]{$d_{n+1}$} (1V0);
+#! \draw[>->,thick] (1V-1)-- node[right]{$\iota$} (1V0);
+#! \draw[>->,thick] (2V-1)-- node[above]{$\alpha$} (1V0);
+#!         \draw[->,thick,blue,double] (0V-1)-- node[above]{$(\tau,\iota)^\mathrm{span}$} (1V0);
+#! \draw[->,thick] (2V-1)-- node[below]{$\beta$} (1V-1);
+#! \draw[->>,thick] (1V-1)-- node[below]{$\tau$} (0V-1);
+#! \end{tikzpicture}
+#! \end{center}
+#! $$\iota := \mathtt{KernelEmbedding}(d_{n})$$
+#! $$\alpha := \mathtt{ImageEmbedding}(d_{n+1})$$
+#! $$\beta := \mathtt{KernelLift}(d_{n}, \alpha)$$
+#! $$\tau := \mathtt{CokernelProjection}(\beta)$$
+#! @EndLatexOnly
+#! @Arguments C, n
+#! @Returns a generalized morphism
 KeyDependentOperation( "GeneralizedEmbeddingOfHomologyAt", IsChainComplex, IsInt, ReturnTrue );
+
+#! @Description
+#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! (defined by span) on the homology object at index $n$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzpicture}[x=5cm,y=2cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V0) at (0,0) {$C_{n-1}$};
+#! \node (1V0) at (1,0) {$C_{n}$};
+#! \node (2V0) at (2,0) {$C_{n+1}$};
+#! \node (1V-1) at (1,-1) {$\mathrm{ker}(d_{n})$};
+#! \node (2V-1) at (2,-1) {$\mathrm{im}(d_{n+1})$};
+#! \node (0V-1) at (0,-1) {$H_{\bullet}^{n}(C)$};
+#! \draw[->,thick] (1V0)-- node[above]{$d_n$} (0V0);
+#! \draw[->,thick] (2V0)-- node[above]{$d_{n+1}$} (1V0);
+#! \draw[>->,thick] (1V-1)-- node[right]{$\iota$} (1V0);
+#! \draw[>->,thick] (2V-1)-- node[above]{$\alpha$} (1V0);
+#!         \draw[<-,thick,blue,double] (0V-1)-- node[above]{$(\iota,\tau)^\mathrm{span}$} (1V0);
+#! \draw[->,thick] (2V-1)-- node[below]{$\beta$} (1V-1);
+#! \draw[->>,thick] (1V-1)-- node[below]{$\tau$} (0V-1);
+#! \end{tikzpicture}
+#! \end{center}
+#! $$\iota := \mathtt{KernelEmbedding}(d_{n})$$
+#! $$\alpha := \mathtt{ImageEmbedding}(d_{n+1})$$
+#! $$\beta := \mathtt{KernelLift}(d_{n}, \alpha)$$
+#! $$\tau := \mathtt{CokernelProjection}(\beta)$$
+#! @EndLatexOnly
+#! @Arguments C, n
+#! @Returns a generalized morphism
 KeyDependentOperation( "GeneralizedProjectionOntoHomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
-
-KeyDependentOperation( "CohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
-
+#! @Description
+#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! (defined by span) of the cohomology object at index $n$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzpicture}[x=5cm,y=2cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V0) at (0,0) {$C^{n-1}$};
+#! \node (1V0) at (1,0) {$C^{n}$};
+#! \node (2V0) at (2,0) {$C^{n+1}$};
+#! \node (1V-1) at (1,-1) {$\mathrm{ker}(d^{n})$};
+#! \node (2V-1) at (0,-1) {$\mathrm{im}(d^{n-1})$};
+#! \node (0V-1) at (2,-1) {$H^{\bullet}_{n}(C)$};
+#!         \draw[<-,thick] (1V0)-- node[above]{$d^{n-1}$} (0V0);
+#! \draw[<-,thick] (2V0)-- node[above]{$d^{n}$} (1V0);
+#! \draw[>->,thick] (1V-1)-- node[right]{$\iota$} (1V0);
+#! \draw[>->,thick] (2V-1)-- node[above]{$\alpha$} (1V0);
+#!         \draw[->,thick,blue,double] (0V-1)-- node[above]{$\;\;(\tau,\iota)^\mathrm{span}$} (1V0);
+#! \draw[->,thick] (2V-1)-- node[below]{$\beta$} (1V-1);
+#! \draw[->>,thick] (1V-1)-- node[below]{$\tau$} (0V-1);
+#! \end{tikzpicture}
+#! \end{center}
+#! $$\iota := \mathtt{KernelEmbedding}(d^{n})$$
+#! $$\alpha := \mathtt{ImageEmbedding}(d^{n-1})$$
+#! $$\beta := \mathtt{KernelLift}(d^{n}, \alpha)$$
+#! $$\tau := \mathtt{CokernelProjection}(\beta)$$
+#! @EndLatexOnly
+#! @Arguments C, n
+#! @Returns a generalized morphism
 KeyDependentOperation( "GeneralizedEmbeddingOfCohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
+
+#! @Description
+#! The input is a chain complex category and an integer $n$. The output is the generalized projection 
+#! (defined by span) on the cohomology object at index $n$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzpicture}[x=5cm,y=2cm,transform shape,
+#! mylabel/.style={thick, draw=black,
+#! align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white}]
+#! \node (0V0) at (0,0) {$C^{n-1}$};
+#! \node (1V0) at (1,0) {$C^{n}$};
+#! \node (2V0) at (2,0) {$C^{n+1}$};
+#! \node (1V-1) at (1,-1) {$\mathrm{ker}(d^{n})$};
+#! \node (2V-1) at (0,-1) {$\mathrm{im}(d^{n-1})$};
+#! \node (0V-1) at (2,-1) {$H^{\bullet}_{n}(C)$};
+#!         \draw[<-,thick] (1V0)-- node[above]{$d^{n-1}$} (0V0);
+#! \draw[<-,thick] (2V0)-- node[above]{$d^{n}$} (1V0);
+#! \draw[>->,thick] (1V-1)-- node[right]{$\iota$} (1V0);
+#! \draw[>->,thick] (2V-1)-- node[above]{$\alpha$} (1V0);
+#!         \draw[<-,thick,blue,double] (0V-1)-- node[above]{$\;\;(\iota,\tau)^\mathrm{span}$} (1V0);
+#! \draw[->,thick] (2V-1)-- node[below]{$\beta$} (1V-1);
+#! \draw[->>,thick] (1V-1)-- node[below]{$\tau$} (0V-1);
+#! \end{tikzpicture}
+#! \end{center}
+#! $$\iota := \mathtt{KernelEmbedding}(d^{n})$$
+#! $$\alpha := \mathtt{ImageEmbedding}(d^{n-1})$$
+#! $$\beta := \mathtt{KernelLift}(d^{n}, \alpha)$$
+#! $$\tau := \mathtt{CokernelProjection}(\beta)$$
+#! @EndLatexOnly
+#! @Arguments C, n
+#! @Returns a generalized morphism
 KeyDependentOperation( "GeneralizedProjectionOntoCohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
 
+#! @BeginGroup 6
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The outout is the homology (resp. cohomology)
 #! object of $C$ in index $n$.
 #! @Arguments C, n
 #! @Returns a object
 KeyDependentOperation( "DefectOfExactnessAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+#! @Arguments C, n
+#! @Returns a object
+KeyDependentOperation( "CohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
+#! @EndGroup
+#! @Group 6
+#! @Arguments C, n
+KeyDependentOperation( "HomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
-#! @BeginGroup 100
+#! @BeginGroup 7
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. The outout is the list of indices where 
-#! the homology (resp. cohomology) object of $C$ is not zero.
+#! the homology (resp. cohomology) objects of $C$ are not zero.
 #! @Arguments C, m, n
 #! @Returns a list
 DeclareOperation( "HomologySupport", [ IsChainComplex, IsInt, IsInt ] );
 #! @EndGroup
-#! @Group 100
+#! @Group 7
 #! @Arguments C, m, n
 DeclareOperation( "CohomologySupport", [ IsCochainComplex, IsInt, IsInt ] );
 
+#! @BeginGroup 7.1
+#! @Description
+#! The same as above but for bounded complexes.
+#! @Arguments C
+#! @Returns a list
+DeclareOperation( "HomologySupport", [ IsBoundedChainComplex ] );
+#! @EndGroup
+#! @Group 7.1
+#! @Arguments C
+DeclareOperation( "CohomologySupport", [ IsBoundedCochainComplex ] );
+
+#! @BeginGroup 8
+#! @Description
+#! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. The outout is the list of indices where 
+#! the objects (resp. differentials) of $C$ are not zero.
+#! @Arguments C, m, n
+#! @Returns a list
 DeclareOperation( "ObjectsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+#! @EndGroup
+#! @Group 8
+#! @Arguments C, m, n
 DeclareOperation( "DifferentialsSupport", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
-DeclareOperation( "HomologySupport", [ IsChainComplex ] );
+#! @BeginGroup 8.1
+#! @Description
+#! The same as above but for bounded complexes.
+#! @Arguments C
+#! @Returns a list
+DeclareOperation( "ObjectsSupport", [ IsBoundedChainOrCochainComplex ] );
 #! @EndGroup
-#! @Group 100
-#! @Arguments C, m, n
-DeclareOperation( "CohomologySupport", [ IsCochainComplex ] );
-
-DeclareOperation( "ObjectsSupport", [ IsChainOrCochainComplex ] );
-DeclareOperation( "DifferentialsSupport", [ IsChainOrCochainComplex ] );
+#! @Group 8.1
+#! @Arguments C
+DeclareOperation( "DifferentialsSupport", [ IsBoundedChainOrCochainComplex ] );
 
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 
-#! The output is true when $C$ is a complex and false otherwise.
-#! @Arguments C, n
+#! The output is true when $C$ is well defined in the interval $[m,\dots,n]$ and false otherwise.
+#! @Arguments C, m, n
 #! @Returns a object
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 # DeclareProperty( "IsWellDefined", IsBoundedChainOrCochainComplex );

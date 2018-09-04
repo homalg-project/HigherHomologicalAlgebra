@@ -35,7 +35,7 @@
 #! @Returns a (co)chain complex
 DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 
-DeclareOperation( "ProjectiveResolutionWithBounds", [ IsCapCategoryObject, IsInt ] );
+DeclareOperation( "ProjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
 
 # DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
 
@@ -52,7 +52,7 @@ DeclareOperation( "ProjectiveResolutionWithBounds", [ IsCapCategoryObject, IsInt
 #! @Returns a (co)chain complex
 DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 
-DeclareOperation( "InjectiveResolutionWithBounds", [ IsCapCategoryObject, IsInt ] );
+DeclareOperation( "InjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
 
 # DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
 
