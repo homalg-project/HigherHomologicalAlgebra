@@ -446,6 +446,7 @@ Display( C_3_unsigned^0 );
 #! @Example
 #! (continued)
 cochain_cat;
+#! Cochain complexes category over category of matrices over Q
 chain_cat := ChainComplexCategory( matrix_category );
 #! Chain complexes category over category of matrices over Q
 trunc_leq_4 := BrutalTruncationAboveFunctor( cochain_cat, 4 );
