@@ -1050,7 +1050,7 @@ InstallMethod( DifferentialsSupport,
   local l, i;
   l := [ ];
   for i in [ m .. n ] do 
-  if not IsZeroForObjects( C^i ) then 
+  if not IsZeroForMorphisms( C^i ) then 
      Add( l, i );
   fi;
   od;
