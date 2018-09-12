@@ -11,8 +11,9 @@
 DeclareAttribute( "CategoryOfTriangles", IsCapCategory );
 
 DeclareOperation( "\^", [ IsCapCategoryTriangle, IsInt ] );
-#DeclareOperation( "\[\]", [ IsCapCategoryTriangle, IsInt ] );
-#DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
+
+DeclareOperation( "\[\]", [ IsCapCategoryTriangle, IsInt ] );
+DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
 
 DeclareAttribute( "ExtendFunctorToTrianglesCategory", IsCapFunctor );
 DeclareAttribute( "MappingCone", IsCapCategoryMorphism );
