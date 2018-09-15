@@ -228,7 +228,12 @@ DeclareAttribute( "NaturalInjectionOfRangeInMappingCylinder" , IsChainOrCochainM
 #! If the input is cochains morphism then the natural map has in each cohomological index the morphism
 #! $$C^{n+1}\oplus D^n \oplus C^n \xrightarrow[]{ \biggl( \begin{smallmatrix}0 \\ \mathrm{id}_D^n \\ \phi^n \end{smallmatrix}\biggr)} D^n.$$
 #! @EndLatexOnly
-#! It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent. See Weibel, page 21.
+#! It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent. 
+#! This homotopy equivalence is given by the two morphisms
+#! $$\mathrm{NaturalInjectionOfRangeInMappingCylinder}(\phi):D \rightarrow \mathrm{Cyl}(\phi )$$
+#! and 
+#! $$\mathrm{NaturalMorphismFromMappingCylinderInRange}(\phi):\mathrm{Cyl}(\phi ) \rightarrow D.$$
+#! See Weibel, page 21.
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalMorphismFromMappingCylinderInRange", IsChainOrCochainMorphism );
@@ -253,7 +258,8 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 
 #!  @Description
 #!  The input is a null-homotopic chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the homotopy morphisms given as 
-#! an infinite list $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ).
+#! an infinite list $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ). Note that this method 
+#! can be called only if it is added to the category, see $\texttt{AddHomotopyMorphisms}$.
 #!  @Arguments phi
 #!  @Returns Infinite list
 DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
@@ -265,6 +271,8 @@ DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 #!  @Description
 #!  The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is **true** if $\phi$ is quasi-isomorphism and **false** otherwise. If $\phi$ 
 #!  is not bounded an error is raised. 
+
+
 #!  @Arguments phi
 DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 
