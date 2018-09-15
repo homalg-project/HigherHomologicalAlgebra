@@ -184,7 +184,10 @@ DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism )
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
-#!  mapping cylinder chain (resp. cochain) complex $\mathrm{Cyl}(\phi )$.
+#!  mapping cylinder chain (resp. cochain) complex
+#! @BeginLatexOnly
+#! $\mathrm{Cyl}(\phi ):=\mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C)$.
+#! @EndLatexOnly
 #!  @Arguments phi
 #!  @Returns complex
 DeclareAttribute( "MappingCylinder", IsChainOrCochainMorphism );
@@ -195,7 +198,11 @@ DeclareAttribute( "NaturalMorphismFromMappingCocylinderToRange", IsChainOrCochai
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
-#!  $C\rightarrow \mathrm{Cyl}(\phi )$.
+#!  $C\rightarrow \mathrm{Cyl}(\phi )$. I.e., the composition
+#! @BeginLatexOnly
+#! $$C \xrightarrow[]{\bigl( \begin{smallmatrix}0 & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C \xrightarrow[]{\iota} \mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C),$$
+#! where $\iota := \mathrm{NaturalInjectionInMappingCone}\bigl(C \xrightarrow[]{\left( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\right)} D \oplus C\bigr)$.
+#! @EndLatexOnly
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalInjectionOfSourceInMappingCylinder", IsChainOrCochainMorphism );

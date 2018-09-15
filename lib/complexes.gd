@@ -97,12 +97,12 @@ DeclareOperation( "CochainComplex", [ IsDenseList ] );
 #! @Description
 #! The input is an object $M\in A$. The output is chain (resp. cochain) complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)(M^{\bullet}\in\mathrm{Ch}^\bullet(A))$
 #! where $M_n=M( M^n=M)$ and $M_i=0(M^i=0)$ whenever $i\neq n$.
-#! @Arguments diffs, n
+#! @Arguments M, n
 #! @Returns a (co)chain complex
 DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject, IsInt ] );
 #! @EndGroup
 #! @Group 4
-#! @Arguments diffs, n
+#! @Arguments M, n
 DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject, IsInt ] );
 
 #! @InsertChunk 3
