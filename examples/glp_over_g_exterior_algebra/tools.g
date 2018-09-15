@@ -515,3 +515,25 @@ end;
 random_matrix := function(m,n,R)
 return HomalgMatrix( List([1..m], i-> List([1..n], j -> random_element( R ) ) ), m, n, R );
 end;
+
+DeclareGlobalFunction( "LogarithmOfGradedRingElement" );
+InstallGlobalFunction( LogarithmOfGradedRingElement,
+    function( e, x )
+    if e/x = fail then 
+        return 0;
+    else
+        return LogarithmOfGradedRingElement( e/x, x ) + 1;
+    fi;
+end );
+
+DeclareGlobalFunction( "PowersOfIndeterminatesInGradedRingElement" );
+InstallGlobalFunction( PowersOfIndeterminatesInGradedRingElement,
+    function( e )
+    local S, ind;
+    S := HomalgRing( e );
+    ind := IndeterminatesOfPolynomialRing( S );
+    if IsZero(e) then
+        return List( ind, i -> 0 );
+    fi;
+    return List( ind, x -> LogarithmOfGradedRingElement( e, x ) ); 
+end );

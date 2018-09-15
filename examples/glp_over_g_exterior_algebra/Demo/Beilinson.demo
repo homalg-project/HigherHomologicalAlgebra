@@ -27,7 +27,7 @@ n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
 %
 N := AsGradedLeftPresentation(n,[1,2,1,2]);
 %
-G := GradedGeneratorsOfExternalHom(M,N);
+G := GeneratorsOfExternalHom(M,N);
 %
 f := Random(G);
 %

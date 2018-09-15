@@ -1,3 +1,6 @@
+LoadPackage( "GradedModulePresentations" );
+LoadPackage( "ModelCategories" );
+LoadPackage( "TriangulatedCategoriesForCAP" );
 LoadPackage( "StableCategoriesForCAP" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_algebra.g" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/complexes_of_graded_left_presentations_over_graded_polynomial_ring.g" );
@@ -202,6 +205,29 @@ InstallMethodWithCache( GeneratorsOfExternalHom,
     fi;
 end );
 
+# for a morphism between two free modules of rank 1 and with degrees 1, ..., n
+# o(-1) <-> p_1, ..., o(-n) <-> p_n
+# see quivers
+# to be removed later
+print_command := function(f, n)
+local e, coeff, powers;
+e := EntriesOfHomalgMatrixAsListList(UnderlyingMatrix(f))[1][1];
+powers := PowersOfIndeterminatesInGradedRingElement( e );
+powers := Concatenation( List( [ 1 .. n ], i -> List( [ 1 .. powers[i] ], j -> i ) ) );
+coeff := Coefficients( e/UnderlyingNonGradedRing( UnderlyingHomalgRing( f ) ) );
+if IsZero( e ) then
+    Print( "some_name( ", GeneratorDegrees( Source(f) )[1],",", GeneratorDegrees( Range(f) )[1],",", powers,",", 0, ")," );
+    return;
+fi;
+
+if NrRows( coeff ) <> 1 or NrColumns( coeff ) <> 1 then
+    Error( "?" );
+fi;
+
+Print( "some_name( ", GeneratorDegrees( Source(f) )[1],",", GeneratorDegrees( Range(f) )[1],",", powers,",", MatElm( coeff, 1, 1 ), ")," );
+
+end;
+
 nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
 with_commutative_squares := false;
 vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. nr_indeterminates ], i -> Concatenation( ",x", String( i ) ) ) ) );
@@ -261,35 +287,24 @@ span_to_cospan := FunctorFromSpansToCospans( graded_lp_cat_sym );;
 
 # constructing the chain complex category of left presentations over R
 chains_lp_cat_sym := ChainComplexCategory( lp_cat_sym : FinalizeCategory := false );
-AddLift( chains_lp_cat_sym, compute_lifts_in_chains );
-AddColift( chains_lp_cat_sym, compute_colifts_in_chains );
-AddIsNullHomotopic( chains_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
-AddHomotopyMorphisms( chains_lp_cat_sym, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
+ModelStructureOnChainComplexes( chains_lp_cat_sym );
 Finalize( chains_lp_cat_sym );
 
 # constructing the cochain complex category of left presentations over R
-cochains_lp_cat_sym := CochainComplexCategory( lp_cat_sym : FinalizeCategory := false );
-AddLift( cochains_lp_cat_sym, compute_lifts_in_cochains );
-AddColift( cochains_lp_cat_sym, compute_colifts_in_cochains );
-AddIsNullHomotopic( cochains_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
-AddHomotopyMorphisms( cochains_lp_cat_sym, compute_homotopy_cochain_morphisms_for_null_homotopic_morphism );
-Finalize( cochains_lp_cat_sym );
+cochains_lp_cat_sym := CochainComplexCategory( lp_cat_sym );
 
 # constructing the chain complex category of graded left presentations over S
 chains_graded_lp_cat_sym := ChainComplexCategory( graded_lp_cat_sym : FinalizeCategory := false );
-AddLift( chains_graded_lp_cat_sym, compute_lifts_in_chains );
-AddColift( chains_graded_lp_cat_sym, compute_colifts_in_chains );
-AddIsNullHomotopic( chains_graded_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
-AddHomotopyMorphisms( chains_graded_lp_cat_sym, compute_homotopy_chain_morphisms_for_null_homotopic_morphism );
+ModelStructureOnChainComplexes( chains_graded_lp_cat_sym );
+AddAreLeftHomotopic( chains_graded_lp_cat_sym, 
+    function( phi, psi )
+        return IsNullHomotopic( phi - psi );
+        #return is_left_homotopic_to_null( phi - psi );
+    end );
 Finalize( chains_graded_lp_cat_sym );
 
 # constructing the cochain complex category of graded left presentations over S
-cochains_graded_lp_cat_sym := CochainComplexCategory( graded_lp_cat_sym : FinalizeCategory := false );
-AddLift( cochains_graded_lp_cat_sym, compute_lifts_in_cochains );
-AddColift( cochains_graded_lp_cat_sym, compute_colifts_in_cochains );
-AddIsNullHomotopic( cochains_graded_lp_cat_sym, phi -> not Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) = fail );
-AddHomotopyMorphisms( cochains_graded_lp_cat_sym, compute_homotopy_cochain_morphisms_for_null_homotopic_morphism );
-Finalize( cochains_graded_lp_cat_sym );
+cochains_graded_lp_cat_sym := CochainComplexCategory( graded_lp_cat_sym );
 
 # constructing the category Ch( ch( graded_lp_Cat_sym ) ) and the it associated bicomplex category
 cochains_cochains_graded_lp_cat_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );
