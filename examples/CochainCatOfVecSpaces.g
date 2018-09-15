@@ -346,6 +346,26 @@ i := NaturalInjectionInMappingCone( psi );
 p := NaturalProjectionFromMappingCone( psi );
 #! <A bounded morphism in cochain complexes category over category of matrices over
 #! Q with active lower bound 1 and active upper bound 6>
+
+IsZeroForMorphisms( PreCompose( psi, i ) );
+#! false
+IsNullHomotopic( PreCompose( psi, i ) );
+#! true
+H := HomotopyMorphisms( PreCompose( psi, i ) );
+#! <An infinite list>
+Display( H[5] );
+#! [ [  0,  2 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( H[4] );
+#! [ [  0,  0 ],
+#!   [  0,  0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( H[3] );
+#! [ [  0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
 #! @EndExample
 #! @EndChunk
 
