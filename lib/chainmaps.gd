@@ -209,21 +209,44 @@ DeclareAttribute( "NaturalInjectionOfSourceInMappingCylinder", IsChainOrCochainM
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
-#!  $D \rightarrow \mathrm{Cyl}(\phi )$. This morphism can be proven to be quasi-isomorphism. See Weibel, page 21.
+#!  $D \rightarrow \mathrm{Cyl}(\phi )$. I.e., the composition
+#! @BeginLatexOnly
+#! $$D \xrightarrow[]{\bigl( \begin{smallmatrix}\mathrm{id}_D & 0 \end{smallmatrix}\bigr)} D \oplus C \xrightarrow[]{\iota} \mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C),$$
+#! where $\iota := \mathrm{NaturalInjectionInMappingCone}\bigl(C \xrightarrow[]{\left( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\right)} D \oplus C\bigr)$.
+#! @EndLatexOnly
+#! This morphism can be proven to be quasi-isomorphism. See Weibel, page 21.
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalInjectionOfRangeInMappingCylinder" , IsChainOrCochainMorphism );
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism 
-#!  $\mathrm{Cyl}(\phi )\rightarrow D$. It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent. See Weibel, page 21.
+#!  $\mathrm{Cyl}(\phi )\rightarrow D$. 
+#! @BeginLatexOnly
+#! If the input is chains morphism then the natural map has in each homological index the morphism
+#! $$C_{n-1}\oplus D_n \oplus C_n \xrightarrow[]{ \biggl( \begin{smallmatrix}0 \\ \mathrm{id}^D_n \\ \phi_n \end{smallmatrix}\biggr)} D_n.$$
+#! If the input is cochains morphism then the natural map has in each cohomological index the morphism
+#! $$C^{n+1}\oplus D^n \oplus C^n \xrightarrow[]{ \biggl( \begin{smallmatrix}0 \\ \mathrm{id}_D^n \\ \phi^n \end{smallmatrix}\biggr)} D^n.$$
+#! @EndLatexOnly
+#! It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent. See Weibel, page 21.
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalMorphismFromMappingCylinderInRange", IsChainOrCochainMorphism );
 
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism 
-#!  $\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )$. It can be shown that $0 \rightarrow C\rightarrow \mathrm{Cyl}(\phi ) \rightarrow \mathrm{Cone}(\phi )\rightarrow 0$ is a short exact sequence. See Weibel, page 21.
+#!  $\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )$. 
+#! @BeginLatexOnly
+#! If the input is chains morphism then the natural map has in each homological index the morphism
+#! $$C_{n-1}\oplus D_n \oplus C_n \xrightarrow[]{ \biggl( \begin{smallmatrix}\mathrm{id}^C_{n-1} & 0\\ 0 & -\mathrm{id}^D_{n}\\ 0 & 0 \end{smallmatrix}\biggr)} C_{n-1} \oplus D_n.$$
+#! If the input is cochains morphism then the natural map has in each cohomological index the morphism
+#! $$C^{n+1}\oplus D^n \oplus C^n \xrightarrow[]{ \biggl( \begin{smallmatrix}\mathrm{id}_C^{n+1} & 0\\ 0 & -\mathrm{id}_D^{n}\\ 0 & 0 \end{smallmatrix}\biggr)} C^{n+1} \oplus D^n.$$
+#! @EndLatexOnly
+#! It can be shown that $$0 \rightarrow C\xrightarrow[]{\alpha} \mathrm{Cyl}(\phi ) \xrightarrow[]{\beta} \mathrm{Cone}(\phi )\rightarrow 0$$ 
+#! where $$\alpha := \mathrm{NaturalInjectionOfSourceInMappingCylinder}(\phi)$$
+#! and  
+#! $$\beta := \mathrm{NaturalMorphismFromMappingCylinderInMappingCone}(\phi),$$
+#! is a short exact sequence. See Weibel, page 21.
 #!  @Arguments phi
 #!  @Returns morphism
 DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCochainMorphism );
