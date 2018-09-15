@@ -100,6 +100,18 @@ DeclareOperation( "CochainMorphism",
 DeclareOperation( "CochainMorphism",
                    [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ] );
 
+#! @BeginGroup 41
+#! @Description
+#! The input is a morphism $f:a\rightarrow b$ in a category $A$. The output is chain (resp. cochain) morphism $f_{\bullet}\in\mathrm{Ch}_\bullet(A)(f^{\bullet}\in\mathrm{Ch}^\bullet(A))$
+#! where $f^{\bullet}_n=f( f_{\bullet}^n=f)$ and $f^{\bullet}_i=0(f_{\bullet}^i=0)$ whenever $i\neq n$.
+#! @Arguments f, n
+#! @Returns a (co)chain morphism
+DeclareOperation( "StalkChainMorphism", [ IsCapCategoryMorphism, IsInt ] );
+#! @EndGroup
+#! @Group 41
+#! @Arguments f, n
+DeclareOperation( "StalkCochainMorphism", [ IsCapCategoryMorphism, IsInt ] );
+
 #!  @EndSection
 ######################################
 #

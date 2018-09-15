@@ -1081,6 +1081,19 @@ InstallMethod( IsQuasiIsomorphism,
 
 end );
 
+
+InstallMethod( StalkChainMorphism,
+	[ IsCapCategoryMorphism, IsInt ], 
+  function( f, n )
+  return ChainMorphism( StalkChainComplex( Source( f ), n ), StalkChainComplex( Range( f ), n ), [ f ], n );
+end );
+
+InstallMethod( StalkCochainMorphism,
+	[ IsCapCategoryMorphism, IsInt ], 
+  function( f, n )
+  return CochainMorphism( StalkCochainComplex( Source( f ), n ), StalkCochainComplex( Range( f ), n ), [ f ], n );
+end );
+
 #####################################
 #
 # To Do Lists operations
