@@ -153,9 +153,24 @@ DeclareAttribute( "UnderlyingCapCategoryCell",
 #
 ####################################
 
-## Objects 
+#! @Description
+#! The input is a chain of chains. The output is the corresponding anti-commutative homological bicomplex.
+#! @Arguments C
+#! @Returns B
 DeclareOperation( "HomologicalBicomplex", [ IsChainComplex ] );
+
+#! @Description
+#! The input is Cap category and two infinite lists(??????). 
+#! The output is the corresponding anti-commutative homological bicomplex.
+#! @Arguments C, h, v
+#! @Returns B
 DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
+
+#! @Description
+#! The input is Cap category and two functions.  
+#! The output is the corresponding anti-commutative homological bicomplex.
+#! @Arguments C, h, v
+#! @Returns B
 DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
 
 DeclareOperation( "CohomologicalBicomplex", [ IsCochainComplex ] );
