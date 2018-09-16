@@ -145,25 +145,25 @@ DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ]
 #!   \node (0V1) at (0,1) {$C^\bullet$};
 #!   \node (0V0) at (0,0) {$D^\bullet$};
 #!   \node (1V1) at (1,1) {$\cdots$};
-#!   \node (2V1) at (2,1) {$C_{n-1}$};
-#!   \node (3V1) at (3,1) {$C_{n}$};
-#!   \node (4V1) at (4,1) {$C_{n+1}$};
+#!   \node (2V1) at (2,1) {$C^{n-1}$};
+#!   \node (3V1) at (3,1) {$C^{n}$};
+#!   \node (4V1) at (4,1) {$C^{n+1}$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
-#!   \node (2V0) at (2,0) {$D_{n-1}$};
-#!   \node (3V0) at (3,0) {$D_{n}$};
-#!   \node (4V0) at (4,0) {$D_{n+1}$};
+#!   \node (2V0) at (2,0) {$D^{n-1}$};
+#!   \node (3V0) at (3,0) {$D^{n}$};
+#!   \node (4V0) at (4,0) {$D^{n+1}$};
 #!   \node (5V0) at (5,0) {$\cdots$};
 #!   \draw[->,thick] (0V1)-- node[left]{$\phi$} (0V0);
-#!   \draw[->,thick] (2V1)-- node[left]{$\phi_{n-1}$} (2V0);
-#!   \draw[->,thick] (3V1)-- node[left]{$\phi_{n}$} (3V0);
-#!   \draw[->,thick] (4V1)-- node[left]{$\phi_{n+1}$} (4V0);
-#!   \draw[<-,thick] (2V0)-- node[below]{$d_{n-2}$} (1V0);
-#!   \draw[<-,thick] (3V0)-- node[below]{$d_{n-1}$} (2V0);
-#!   \draw[<-,thick] (4V0)-- node[below]{$d_{n}$} (3V0);
-#!   \draw[<-,thick] (2V1)-- node[above]{$d_{n-2}$} (1V1);
-#!   \draw[<-,thick] (3V1)-- node[above]{$d_{n-1}$} (2V1);
-#!   \draw[<-,thick] (4V1)-- node[above]{$d_{n}$} (3V1);
+#!   \draw[->,thick] (2V1)-- node[left]{$\phi^{n-1}$} (2V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi^{n}$} (3V0);
+#!   \draw[->,thick] (4V1)-- node[left]{$\phi^{n+1}$} (4V0);
+#!   \draw[<-,thick] (2V0)-- node[below]{$d^{n-2}$} (1V0);
+#!   \draw[<-,thick] (3V0)-- node[below]{$d^{n-1}$} (2V0);
+#!   \draw[<-,thick] (4V0)-- node[below]{$d^{n}$} (3V0);
+#!   \draw[<-,thick] (2V1)-- node[above]{$d^{n-2}$} (1V1);
+#!   \draw[<-,thick] (3V1)-- node[above]{$d^{n-1}$} (2V1);
+#!   \draw[<-,thick] (4V1)-- node[above]{$d^{n}$} (3V1);
 #!   \draw[<-,thick] (5V0)-- (4V0);
 #!   \draw[<-,thick] (5V1)-- (4V1);
 #!   \end{tikzpicture}
@@ -175,25 +175,25 @@ DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ]
 #!   \node (0V1) at (0,1) {$\mathrm{Ch}^\bullet F( C^\bullet )$};
 #!   \node (0V0) at (0,0) {$\mathrm{Ch}^\bullet F( D^\bullet )$};
 #!   \node (1V1) at (1,1) {$\cdots$};
-#!   \node (2V1) at (2,1) {$F( C_{n-1})$};
-#!   \node (3V1) at (3,1) {$F( C_{n})$};
-#!   \node (4V1) at (4,1) {$F( C_{n+1})$};
+#!   \node (2V1) at (2,1) {$F( C^{n-1})$};
+#!   \node (3V1) at (3,1) {$F( C^{n})$};
+#!   \node (4V1) at (4,1) {$F( C^{n+1})$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
-#!   \node (2V0) at (2,0) {$F( D_{n-1})$};
-#!   \node (3V0) at (3,0) {$F( D_{n})$};
-#!   \node (4V0) at (4,0) {$F( D_{n+1})$};
+#!   \node (2V0) at (2,0) {$F( D^{n-1})$};
+#!   \node (3V0) at (3,0) {$F( D^{n})$};
+#!   \node (4V0) at (4,0) {$F( D^{n+1})$};
 #!   \node (5V0) at (5,0) {$\cdots$};
 #!   \draw[->,thick] (0V1)-- node[left]{$\mathrm{Ch}^\bullet F( \phi )$} (0V0);
-#!   \draw[->,thick] (2V1)-- node[left]{$F( \phi_{n-1} )$} (2V0);
-#!   \draw[->,thick] (3V1)-- node[left]{$F( \phi_{n} )$} (3V0);
-#!   \draw[->,thick] (4V1)-- node[left]{$F( \phi_{n+1} )$} (4V0);
-#!   \draw[<-,thick] (2V0)-- node[below]{$F( d_{n-2} )$} (1V0);
-#!   \draw[<-,thick] (3V0)-- node[below]{$F( d_{n-1} )$} (2V0);
-#!   \draw[<-,thick] (4V0)-- node[below]{$F( d_{n} )$} (3V0);
-#!   \draw[<-,thick] (2V1)-- node[above]{$F( d_{n-2} )$} (1V1);
-#!   \draw[<-,thick] (3V1)-- node[above]{$F( d_{n-1} )$} (2V1);
-#!   \draw[<-,thick] (4V1)-- node[above]{$F( d_{n} )$} (3V1);
+#!   \draw[->,thick] (2V1)-- node[left]{$F( \phi^{n-1} )$} (2V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$F( \phi^{n} )$} (3V0);
+#!   \draw[->,thick] (4V1)-- node[left]{$F( \phi^{n+1} )$} (4V0);
+#!   \draw[<-,thick] (2V0)-- node[below]{$F( d^{n-2} )$} (1V0);
+#!   \draw[<-,thick] (3V0)-- node[below]{$F( d^{n-1} )$} (2V0);
+#!   \draw[<-,thick] (4V0)-- node[below]{$F( d^{n} )$} (3V0);
+#!   \draw[<-,thick] (2V1)-- node[above]{$F( d^{n-2} )$} (1V1);
+#!   \draw[<-,thick] (3V1)-- node[above]{$F( d^{n-1} )$} (2V1);
+#!   \draw[<-,thick] (4V1)-- node[above]{$F( d^{n} )$} (3V1);
 #!   \draw[<-,thick] (5V0)-- (4V0);
 #!   \draw[<-,thick] (5V1)-- (4V1);
 #!   \end{tikzpicture}
@@ -233,9 +233,9 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \draw[->,thick] (2V0)-- node[below]{$d_{n-1}$} (1V0);
 #!   \draw[->,thick] (3V0)-- node[below]{$d_{n}$} (2V0);
 #!   \draw[->,thick] (4V0)-- node[below]{$d_{n+1}$} (3V0);
-#!   \draw[->,thick] (2V1)-- node[below]{$d_{n-1}$} (1V1);
-#!   \draw[->,thick] (3V1)-- node[below]{$d_{n}$} (2V1);
-#!   \draw[->,thick] (4V1)-- node[below]{$d_{n+1}$} (3V1);
+#!   \draw[->,thick] (2V1)-- node[above]{$d_{n-1}$} (1V1);
+#!   \draw[->,thick] (3V1)-- node[above]{$d_{n}$} (2V1);
+#!   \draw[->,thick] (4V1)-- node[above]{$d_{n+1}$} (3V1);
 #!   \draw[->,thick] (5V0)-- (4V0);
 #!   \draw[->,thick] (5V1)-- (4V1);
 #!   \end{tikzpicture}
@@ -263,7 +263,7 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \draw[->,thick] (2V0)-- node[below]{$d_{n-1}$} (1V0);
 #!   \draw[->,thick] (3V0)-- (2V0);
 #!   \draw[->,thick] (4V0)-- (3V0);
-#!   \draw[->,thick] (2V1)-- node[below]{$d_{n-1}$} (1V1);
+#!   \draw[->,thick] (2V1)-- node[above]{$d_{n-1}$} (1V1);
 #!   \draw[->,thick] (3V1)-- (2V1);
 #!   \draw[->,thick] (4V1)-- (3V1);
 #!   \draw[->,thick] (5V0)-- (4V0);
@@ -279,25 +279,25 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \node (0V1) at (0,1) {$C^\bullet$};
 #!   \node (0V0) at (0,0) {$D^\bullet$};
 #!   \node (1V1) at (1,1) {$\cdots$};
-#!   \node (2V1) at (2,1) {$C_{n-1}$};
-#!   \node (3V1) at (3,1) {$C_{n}$};
-#!   \node (4V1) at (4,1) {$C_{n+1}$};
+#!   \node (2V1) at (2,1) {$C^{n-1}$};
+#!   \node (3V1) at (3,1) {$C^{n}$};
+#!   \node (4V1) at (4,1) {$C^{n+1}$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
-#!   \node (2V0) at (2,0) {$D_{n-1}$};
-#!   \node (3V0) at (3,0) {$D_{n}$};
-#!   \node (4V0) at (4,0) {$D_{n+1}$};
+#!   \node (2V0) at (2,0) {$D^{n-1}$};
+#!   \node (3V0) at (3,0) {$D^{n}$};
+#!   \node (4V0) at (4,0) {$D^{n+1}$};
 #!   \node (5V0) at (5,0) {$\cdots$};
 #!   \draw[->,thick] (0V1)-- node[left]{$\phi$} (0V0);
-#!   \draw[->,thick] (2V1)-- node[left]{$\phi_{n-1}$} (2V0);
-#!   \draw[->,thick] (3V1)-- node[left]{$\phi_{n}$} (3V0);
-#!   \draw[->,thick] (4V1)-- node[left]{$\phi_{n+1}$} (4V0);
-#!   \draw[<-,thick] (2V0)-- node[below]{$d_{n-2}$} (1V0);
-#!   \draw[<-,thick] (3V0)-- node[below]{$d_{n-1}$} (2V0);
-#!   \draw[<-,thick] (4V0)-- node[below]{$d_{n}$} (3V0);
-#!   \draw[<-,thick] (2V1)-- node[above]{$d_{n-2}$} (1V1);
-#!   \draw[<-,thick] (3V1)-- node[above]{$d_{n-1}$} (2V1);
-#!   \draw[<-,thick] (4V1)-- node[above]{$d_{n}$} (3V1);
+#!   \draw[->,thick] (2V1)-- node[left]{$\phi^{n-1}$} (2V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi^{n}$} (3V0);
+#!   \draw[->,thick] (4V1)-- node[left]{$\phi^{n+1}$} (4V0);
+#!   \draw[<-,thick] (2V0)-- node[below]{$d^{n-2}$} (1V0);
+#!   \draw[<-,thick] (3V0)-- node[below]{$d^{n-1}$} (2V0);
+#!   \draw[<-,thick] (4V0)-- node[below]{$d^{n}$} (3V0);
+#!   \draw[<-,thick] (2V1)-- node[above]{$d^{n-2}$} (1V1);
+#!   \draw[<-,thick] (3V1)-- node[above]{$d^{n-1}$} (2V1);
+#!   \draw[<-,thick] (4V1)-- node[above]{$d^{n}$} (3V1);
 #!   \draw[<-,thick] (5V0)-- (4V0);
 #!   \draw[<-,thick] (5V1)-- (4V1);
 #!   \end{tikzpicture}
@@ -309,24 +309,24 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #!   \node (0V1) at (0,1) {$\sigma^{\leq n}(C^\bullet)$};
 #!   \node (0V0) at (0,0) {$\sigma^{\leq n}(D^\bullet)$};
 #!   \node (1V1) at (1,1) {$\cdots$};
-#!   \node (2V1) at (2,1) {$C_{n-1}$};
-#!   \node (3V1) at (3,1) {$C_{n}$};
+#!   \node (2V1) at (2,1) {$C^{n-1}$};
+#!   \node (3V1) at (3,1) {$C^{n}$};
 #!   \node (4V1) at (4,1) {$0$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
-#!   \node (2V0) at (2,0) {$D_{n-1}$};
-#!   \node (3V0) at (3,0) {$D_{n}$};
+#!   \node (2V0) at (2,0) {$D^{n-1}$};
+#!   \node (3V0) at (3,0) {$D^{n}$};
 #!   \node (4V0) at (4,0) {$0$};
 #!   \node (5V0) at (5,0) {$\cdots$};
-#!   \draw[->,thick] (0V1)-- node[left]{$\sigma_{\leq n}(\phi)$} (0V0);
-#!   \draw[->,thick] (2V1)-- node[left]{$\phi_{n-1}$} (2V0);
-#!   \draw[->,thick] (3V1)-- node[left]{$\phi_{n}$} (3V0);
+#!   \draw[->,thick] (0V1)-- node[left]{$\sigma^{\leq n}(\phi)$} (0V0);
+#!   \draw[->,thick] (2V1)-- node[left]{$\phi^{n-1}$} (2V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi^{n}$} (3V0);
 #!   \draw[->,thick] (4V1)-- (4V0);
-#!   \draw[<-,thick] (2V0)-- node[below]{$d_{n-2}$} (1V0);
-#!   \draw[<-,thick] (3V0)-- node[below]{$d_{n-1}$} (2V0);
+#!   \draw[<-,thick] (2V0)-- node[below]{$d^{n-2}$} (1V0);
+#!   \draw[<-,thick] (3V0)-- node[below]{$d^{n-1}$} (2V0);
 #!   \draw[<-,thick] (4V0)-- (3V0);
-#!   \draw[<-,thick] (2V1)-- node[above]{$d_{n-2}$} (1V1);
-#!   \draw[<-,thick] (3V1)-- node[above]{$d_{n-1}$} (2V1);
+#!   \draw[<-,thick] (2V1)-- node[above]{$d^{n-2}$} (1V1);
+#!   \draw[<-,thick] (3V1)-- node[above]{$d^{n-1}$} (2V1);
 #!   \draw[<-,thick] (4V1)-- (3V1);
 #!   \draw[<-,thick] (5V0)-- (4V0);
 #!   \draw[<-,thick] (5V1)-- (4V1);
@@ -335,7 +335,7 @@ DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor
 #! @EndLatexOnly
 #! @Arguments Com(A), n
 #! @Returns a endofunctor
-KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, ReturnTrue );
+KeyDependentOperation( "BrutalTruncationAboveFunctor", IsChainOrCochainComplexCategory, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is a complex category $\mathrm{Com}(A)$ of some Cap category $A$ 
@@ -396,7 +396,7 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #!   \draw[->,thick] (4V1)-- node[left]{$\phi_{n+1}$} (4V0);
 #!   \draw[->,thick] (2V0)--  (1V0);
 #!   \draw[->,thick] (3V0)-- (2V0);
-#!   \draw[->,thick] (4V0)-- node[above]{$d_{n+1}$} (3V0);
+#!   \draw[->,thick] (4V0)-- node[below]{$d_{n+1}$} (3V0);
 #!   \draw[->,thick] (2V1)--  (1V1);
 #!   \draw[->,thick] (3V1)-- (2V1);
 #!   \draw[->,thick] (4V1)-- node[above]{$d_{n+1}$} (3V1);
@@ -413,25 +413,25 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #!   \node (0V1) at (0,1) {$C^\bullet$};
 #!   \node (0V0) at (0,0) {$D^\bullet$};
 #!   \node (1V1) at (1,1) {$\cdots$};
-#!   \node (2V1) at (2,1) {$C_{n-1}$};
-#!   \node (3V1) at (3,1) {$C_{n}$};
-#!   \node (4V1) at (4,1) {$C_{n+1}$};
+#!   \node (2V1) at (2,1) {$C^{n-1}$};
+#!   \node (3V1) at (3,1) {$C^{n}$};
+#!   \node (4V1) at (4,1) {$C^{n+1}$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
-#!   \node (2V0) at (2,0) {$D_{n-1}$};
-#!   \node (3V0) at (3,0) {$D_{n}$};
-#!   \node (4V0) at (4,0) {$D_{n+1}$};
+#!   \node (2V0) at (2,0) {$D^{n-1}$};
+#!   \node (3V0) at (3,0) {$D^{n}$};
+#!   \node (4V0) at (4,0) {$D^{n+1}$};
 #!   \node (5V0) at (5,0) {$\cdots$};
 #!   \draw[->,thick] (0V1)-- node[left]{$\phi$} (0V0);
-#!   \draw[->,thick] (2V1)-- node[left]{$\phi_{n-1}$} (2V0);
-#!   \draw[->,thick] (3V1)-- node[left]{$\phi_{n}$} (3V0);
-#!   \draw[->,thick] (4V1)-- node[left]{$\phi_{n+1}$} (4V0);
-#!   \draw[<-,thick] (2V0)-- node[below]{$d_{n-2}$} (1V0);
-#!   \draw[<-,thick] (3V0)-- node[below]{$d_{n-1}$} (2V0);
-#!   \draw[<-,thick] (4V0)-- node[below]{$d_{n}$} (3V0);
-#!   \draw[<-,thick] (2V1)-- node[above]{$d_{n-2}$} (1V1);
-#!   \draw[<-,thick] (3V1)-- node[above]{$d_{n-1}$} (2V1);
-#!   \draw[<-,thick] (4V1)-- node[above]{$d_{n}$} (3V1);
+#!   \draw[->,thick] (2V1)-- node[left]{$\phi^{n-1}$} (2V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi^{n}$} (3V0);
+#!   \draw[->,thick] (4V1)-- node[left]{$\phi^{n+1}$} (4V0);
+#!   \draw[<-,thick] (2V0)-- node[below]{$d^{n-2}$} (1V0);
+#!   \draw[<-,thick] (3V0)-- node[below]{$d^{n-1}$} (2V0);
+#!   \draw[<-,thick] (4V0)-- node[below]{$d^{n}$} (3V0);
+#!   \draw[<-,thick] (2V1)-- node[above]{$d^{n-2}$} (1V1);
+#!   \draw[<-,thick] (3V1)-- node[above]{$d^{n-1}$} (2V1);
+#!   \draw[<-,thick] (4V1)-- node[above]{$d^{n}$} (3V1);
 #!   \draw[<-,thick] (5V0)-- (4V0);
 #!   \draw[<-,thick] (5V1)-- (4V1);
 #!   \end{tikzpicture}
@@ -445,31 +445,31 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsCapCategory, IsInt, Ret
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$0$};
 #!   \node (3V1) at (3,1) {$0$};
-#!   \node (4V1) at (4,1) {$C_{n+1}$};
+#!   \node (4V1) at (4,1) {$C^{n+1}$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
 #!   \node (2V0) at (2,0) {$0$};
 #!   \node (3V0) at (3,0) {$0$};
-#!   \node (4V0) at (4,0) {$D_{n+1}$};
+#!   \node (4V0) at (4,0) {$D^{n+1}$};
 #!   \node (5V0) at (5,0) {$\cdots$};
 #!   \draw[->,thick] (0V1)-- node[left]{$\sigma^{\textgreater n}(\phi)$} (0V0);
 #!   \draw[->,thick] (2V1)-- (2V0);
 #!   \draw[->,thick] (3V1)-- (3V0);
-#!   \draw[->,thick] (4V1)-- node[left]{$\phi_{n+1}$} (4V0);
+#!   \draw[->,thick] (4V1)-- node[left]{$\phi^{n+1}$} (4V0);
 #!   \draw[<-,thick] (2V0)-- (1V0);
 #!   \draw[<-,thick] (3V0)-- (2V0);
 #!   \draw[<-,thick] (4V0)-- (3V0);
 #!   \draw[<-,thick] (2V1)-- (1V1);
 #!   \draw[<-,thick] (3V1)-- (2V1);
 #!   \draw[<-,thick] (4V1)-- (3V1);
-#!   \draw[<-,thick] (5V0)-- node[above]{$d_{n+1}$} (4V0);
-#!   \draw[<-,thick] (5V1)-- node[above]{$d_{n+1}$} (4V1);
+#!   \draw[<-,thick] (5V0)-- node[below]{$d^{n+1}$} (4V0);
+#!   \draw[<-,thick] (5V1)-- node[above]{$d^{n+1}$} (4V1);
 #!   \end{tikzpicture}
 #!   \end{center}
 #! @EndLatexOnly
 #! @Arguments Com(A), n
 #! @Returns a endofunctor
-KeyDependentOperation( "BrutalTruncationBelowFunctor", IsCapCategory, IsInt, ReturnTrue );
+KeyDependentOperation( "BrutalTruncationBelowFunctor", IsChainOrCochainComplexCategory, IsInt, ReturnTrue );
 
 # @Description
 # The input is a category $A$. The output is the functor 

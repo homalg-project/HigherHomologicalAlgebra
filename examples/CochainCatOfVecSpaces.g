@@ -221,7 +221,7 @@ psi;
 #!     \cdots\phantom{0}      & 2& 3& 4& 5 & 6 & \phantom{0}\cdots\\
 #!     \phantom{0}\color{blue}{C}\color{black}{:}      & 0& \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \phantom{0}\cdots\\
 #!     \phantom{0}\color{blue}{D}\color{black}{:}     & 0& 0 & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 1} & 0 &\phantom{0}\cdots\\
-#!     \phantom{0}\color{blue}{Cone(\psi)}\color{black}{:}     & \mathbb{Q}^{1\times 1}& \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 3} & 0 & \phantom{0}\cdots\\
+#!     \phantom{0}\color{blue}{\mathrm{Cone}(\psi)}\color{black}{:}     & \mathbb{Q}^{1\times 1}& \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 3} & 0 & \phantom{0}\cdots\\
 #!     \phantom{:}\color{blue}{C[1]}\color{black}{:}      & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & \mathbb{Q}^{1\times 1} & \mathbb{Q}^{1\times 2} & 0&\phantom{0}\cdots\\};
 #!
 #!   \path[-stealth]
@@ -286,15 +286,15 @@ psi;
 #!                                          \end{array}
 #!                                   \right)$} (m-4-5)
 #!     (m-5-1) edge (m-5-2)
-#!     (m-5-2) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
-#!                                          -1 & -3
-#!                                          \end{array}
-#!                                   \right)$}(m-5-3)
-#!     (m-5-3) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{c}
-#!                                          0  \\ 0  
-#!                                          \end{array}
-#!                                   \right)$} (m-5-4)
-#!     (m-5-4) edge node[above=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!     (m-5-2) edge node[below=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
+#!                                        -1 & -3
+#!                                        \end{array}
+#!                                 \right)$}(m-5-3)
+#!     (m-5-3) edge node[below=0.5ex, scale=0.6] {$\left(\begin{array}{c}
+#!                                        0  \\ 0  
+#!                                        \end{array}
+#!                                 \right)$} (m-5-4)
+#!     (m-5-4) edge node[below=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
 #!                                          -2& -6
 #!                                          \end{array}
 #!                                   \right)$}(m-5-5)
@@ -306,8 +306,8 @@ psi;
 #!                                          \end{array}
 #!                                   \right)$} (m-5-2)
 #!     (m-4-3) edge node[left=0.5ex, scale=0.6] {$\left(\begin{array}{cc}
-#!                                           1,0\\
-#!                                           0,1
+#!                                           1 & 0\\
+#!                                           0 & 1
 #!                                          \end{array}
 #!                                   \right)$} (m-5-3)
 #!     (m-4-4) edge node[right=0.5ex, scale=0.6] {$\left(\begin{array}{c}
@@ -366,6 +366,29 @@ Display( H[3] );
 #! [ [  0 ] ]
 #! 
 #! A morphism in Category of matrices over Q
+#! @EndExample
+#! Let us now show that $D$ and $\mathrm{Cyl(\psi)}$ are homotopy equivalent.
+#! @Example
+cyl_psi := MappingCylinder( psi );
+#! <A bounded object in cochain complexes category over category of matrices over Q
+#! with active lower bound 1 and active upper bound 7>
+D_to_cyl_psi := NaturalInjectionOfRangeInMappingCylinder( psi );
+#! <A bounded morphism in cochain complexes category over category of matrices over
+#! Q with active lower bound 3 and active upper bound 6>
+cyl_psi_to_D := NaturalMorphismFromMappingCylinderInRange( psi );
+#! <A bounded morphism in cochain complexes category over category of matrices over
+#! Q with active lower bound 3 and active upper bound 6>
+IsZeroForMorphisms( PreCompose( D_to_cyl_psi, cyl_psi_to_D ) 
+                    - IdentityMorphism( D ) );
+#! true
+IsZeroForMorphisms( PreCompose( cyl_psi_to_D, D_to_cyl_psi ) 
+                    - IdentityMorphism( cyl_psi ) );
+#! false
+IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi ) 
+                    - IdentityMorphism( cyl_psi ) );
+#! true
+# Display( D_to_cyl_psi );
+# Display( cyl_psi_to_D );
 #! @EndExample
 #! @EndChunk
 
