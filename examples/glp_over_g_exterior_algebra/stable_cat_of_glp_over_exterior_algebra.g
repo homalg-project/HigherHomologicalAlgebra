@@ -6,7 +6,6 @@ ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/complexes_of_graded_left_presentations_over_graded_polynomial_ring.g" );
 
 
-DeclareOperation( "GeneratorsOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
 DeclareOperation( "BasisOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 BindGlobal( "ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA",
@@ -188,23 +187,6 @@ InstallMethod( iso_from_reduced_stable_module,
     return Inverse( iso_to_reduced_stable_module( M ) );
 end );
 
-InstallMethodWithCache( GeneratorsOfExternalHom,
-    [ IsCapCategoryObject, IsCapCategoryObject ],
-    function( M, N )
-    local hM, hN, G;
-    
-    if HasUnderlyingHomalgRing( M ) and IsFreePolynomialRing( UnderlyingHomalgRing( M ) ) then
-        hM := AsPresentationInHomalg( M );
-	    hN := AsPresentationInHomalg( N );
-	    G := GetGenerators( Hom( hM, hN ) );
-	    return List( G, AsPresentationMorphismInCAP );
-    elif HasUnderlyingHomalgRing( M ) and IsExteriorRing( UnderlyingHomalgRing( M ) ) then
-        return graded_generators_of_external_hom( M, N );
-    else
-        TryNextMethod( );
-    fi;
-end );
-
 # for a morphism between two free modules of rank 1 and with degrees 1, ..., n
 # o(-1) <-> p_1, ..., o(-n) <-> p_n
 # see quivers
@@ -278,6 +260,15 @@ AddIsProjective( graded_lp_cat_sym,
     fi;
 end );
 
+AddGeneratorsOfExternalHom( graded_lp_cat_sym,
+   function( M, N )
+    local hM, hN, G;
+    hM := AsPresentationInHomalg( M );
+    hN := AsPresentationInHomalg( N );
+    G := GetGenerators( Hom( hM, hN ) );
+    return List( G, AsPresentationMorphismInCAP );
+end );
+
 Finalize( graded_lp_cat_sym );
 
 cospan_to_span := FunctorFromCospansToSpans( graded_lp_cat_sym );;
@@ -334,6 +325,11 @@ AddEpimorphismFromSomeProjectiveObject( graded_lp_cat_ext,
                 M );
 end, -1 );
 
+AddGeneratorsOfExternalHom( graded_lp_cat_ext,
+    function( M, N )
+    return graded_basis_of_external_hom( M, N );
+end );
+
 SetIsFrobeniusCategory( graded_lp_cat_ext, true );
 ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( graded_lp_cat_ext );
 TurnAbelianCategoryToExactCategory( graded_lp_cat_ext );
@@ -345,6 +341,16 @@ cochains_graded_lp_cat_ext := CochainComplexCategory( graded_lp_cat_ext );
 # constructing the stable category of graded left presentations over A and giving it the
 # triangulated structure
 stable_lp_cat_ext := StableCategory( graded_lp_cat_ext );
+
+AddGeneratorsOfExternalHom( stable_lp_cat_ext,
+    function( M, N )
+    local basis;
+    basis := GeneratorsOfExternalHom( UnderlyingUnstableObject(M), UnderlyingUnstableObject(N));
+    basis := List( basis, AsStableMorphism );
+    basis := DuplicateFreeList( Filtered( basis, b -> not IsZeroForMorphisms( b ) ) );
+    return basis;
+end );
+
 SetIsTriangulatedCategory( stable_lp_cat_ext, true );
 ADD_METHODS_TO_STABLE_CAT_OF_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA( stable_lp_cat_ext );
 AsTriangulatedCategory( stable_lp_cat_ext );

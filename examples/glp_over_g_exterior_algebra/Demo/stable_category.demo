@@ -62,15 +62,15 @@ sM := AsStableObject( M );
 %
 Display( sM );
 %
-b := BasisOfExternalHom( sM, syz_TO_0 );
+b := GeneratorsOfExternalHom( sM, syz_TO_0 );
 %
-b := BasisOfExternalHom( syz_TO_0, sM );
+b := GeneratorsOfExternalHom( syz_TO_0, sM );
 %
-b := BasisOfExternalHom( syz_TO_0, syz_TO_0 );
+b := GeneratorsOfExternalHom( syz_TO_0, syz_TO_0 );
 %
 Display( b[ 1 ] );
 %
-b := BasisOfExternalHom( sM, sM );
+b := GeneratorsOfExternalHom( sM, sM );
 %
 Perform( b, Display );
 %
