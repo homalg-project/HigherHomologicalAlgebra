@@ -3,5 +3,5 @@
 LoadPackage( "Browse" );
 LoadPackage( "ComplexesForCAP" );
 LoadPackage( "Bicomplexes" );
-LoadDemoFile( "Demo", "chains.demo" );
+LoadDemoFile( "Demo", "chains_of_left_presentations_over_commutative_homalg_ring.demo" );
 
