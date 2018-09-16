@@ -347,8 +347,8 @@ InstallMethod( Display,
     fi;
 
     for i in [ m .. n ] do
-      Print( TextAttr.underscore, TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
-      Print( TextAttr.underscore, TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
+      Print( TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
+      Print( TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
       Display( map[ i ] );
       Print( "\n-----------------------------------------------------------------\n" );
    od;

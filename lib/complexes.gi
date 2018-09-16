@@ -536,13 +536,13 @@ InstallMethod( Display,
 
    Print( "\n-----------------------------------------------------------------\n" );
 
-   Print( TextAttr.underscore, TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
+   Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
 
-   Print( "\n\n", TextAttr.underscore, TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+   Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
 
    Display( C[ i ] );
 
-   Print( "\n", TextAttr.underscore, TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+   Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
 
    Display( C^i );
 
