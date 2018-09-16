@@ -34,6 +34,13 @@ filter_list := [ "morphism" ],
 cache_name := "HomotopyMorphisms",
 return_type := [ IsInfList ] ),
 
+GeneratorsOfExternalHom := rec( 
+
+installation_name := "GeneratorsOfExternalHom", 
+filter_list := [ "object", "object" ],
+cache_name := "GeneratorsOfExternalHom",
+return_type := [ IsList ] ),
+
 ) );
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES );

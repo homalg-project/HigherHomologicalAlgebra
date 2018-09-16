@@ -130,3 +130,20 @@ DeclareGlobalFunction( "ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP" );
 
 # DeclareProperty( "HasEnoughProjectives", IsCapCategory );
 # DeclareProperty( "HasEnoughInjectives", IsCapCategory );
+
+
+# THIS IS TEMPORARILY, IT SHOULD BE INTRODUCED IN CONTEXT OF K OR R-LINEAR CATEGORIES AS IN QUIVERS.
+DeclareOperation( "GeneratorsOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
+
+DeclareOperation( "AddGeneratorsOfExternalHom",
+                   [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddGeneratorsOfExternalHom",
+                   [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddGeneratorsOfExternalHom",
+                   [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddGeneratorsOfExternalHom",
+                   [ IsCapCategory, IsList ] );
+
