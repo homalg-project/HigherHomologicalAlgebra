@@ -292,6 +292,11 @@ AddAreLeftHomotopic( chains_graded_lp_cat_sym,
         return IsNullHomotopic( phi - psi );
         #return is_left_homotopic_to_null( phi - psi );
     end );
+AddGeneratorsOfExternalHom( chains_graded_lp_cat_sym,
+    function( C, D )
+    return graded_generators_of_hom_for_chains( C, D );
+end );
+
 Finalize( chains_graded_lp_cat_sym );
 
 # constructing the cochain complex category of graded left presentations over S
@@ -734,6 +739,67 @@ AddNaturalTransformationFunction( CohomologyOfBeilinsonComplexToSheafification,
     function( source, M, range )
     return BeilinsonToSheaf( M, Maximum( 2, CastelnuovoMumfordRegularity( M ) ) );
 end );
+
+create_complex := function( n )
+local degrees, new_degrees, L, i, matrices, objects, morphisms;
+
+degrees := [ Random( [ -n .. 0 ] ), Random( [ 1 .. n ] ) ];
+
+L := [ degrees ];
+
+for i in [ 2 .. n ] do
+new_degrees :=  [ Random( [ degrees[1]+1 .. degrees[2] ] ), degrees[2] + Random([1..3]) ];
+Add( L, new_degrees );
+degrees := new_degrees;
+od;
+
+matrices := List( [ 1 .. n - 1 ], i -> RandomMatrixBetweenGradedFreeLeftModules( L[i], L[i+1], S) );
+objects := List( [ 1 .. n ], i -> GradedFreeLeftPresentation(2,S,L[i] ) );
+morphisms := List( [ 1 .. n - 1 ], i -> GradedPresentationMorphism( objects[i], matrices[i], objects[i+1]));
+
+return CochainComplex( morphisms, -Int(n/2) );
+end;
+
+# Beilinson "functor" of a complex
+
+Beilinson_complex_of_complex_sym := 
+    PreCompose( [ TateFunctorForCochains(S), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, Cochain_of_ver_coho_sym ] );
+
+kamal := function( S )
+local omegas, morphisms, n, k, l, j, current;
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+omegas := List( [ 1 .. n ], i -> KoszulSyzygyModule( S, i - 1)[ i - 1 ] );
+morphisms := Reversed( List( [ 1 .. n -1 ], i -> GeneratorsOfExternalHom( omegas[i+1], omegas[i]) ) );
+
+for j in [ 2 .. n-1] do
+    current := [ ];
+    for k in [ 1 .. n ] do
+    for l in [ 1 .. n ] do
+        if IsZeroForMorphisms( PreCompose( morphisms[j-1][k], morphisms[j][l] ) ) then
+            current[k] := morphisms[j][l];
+        fi;
+    od;
+    od;
+    morphisms[ j ] := current;
+od;
+
+for j in [ 2 .. n-1] do
+    for k in [ 1 .. n ] do
+    for l in [ 1 .. n ] do
+        if k <> l and IsEqualForMorphisms( PreCompose( morphisms[j-1][k], morphisms[j][l] ),
+             PreCompose( morphisms[j-1][l], morphisms[j][k] ) ) then
+            morphisms[ j ][ l ] := -morphisms[ j ][ l ];
+        elif k <> l and not IsEqualForMorphisms( PreCompose( morphisms[j-1][k], morphisms[j][l] ),
+             -PreCompose( morphisms[j-1][l], morphisms[j][k] ) ) then
+            Print( "unexpected!");
+        fi;
+    od;
+    od;
+od;
+
+return morphisms;
+end;
 
 quit;
 

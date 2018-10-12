@@ -239,6 +239,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
     return CastelnuovoMumfordRegularity( AsPresentationInHomalg( M ) );
 end );
 
+##
 InstallMethod( CastelnuovoMumfordRegularity,
                 [ IsCapCategoryObject and IsCochainComplex ],
     function( C )
@@ -270,6 +271,7 @@ InstallMethod( TateResolution,
     return C;
 end );
 
+##
 InstallMethod( TateResolution,
                 [ IsGradedLeftOrRightPresentationMorphism ],
     function( phi )
