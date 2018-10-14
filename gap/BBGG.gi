@@ -490,7 +490,7 @@ InstallMethod( KoszulSyzygyModuleOp,
 	[ IsHomalgGradedRing, IsInt ],
     function( S, k )
     local ind, K, koszul_resolution, n;
-    ind := IndeterminatesOfPolynomialRing( S );
+    ind := Reversed( IndeterminatesOfPolynomialRing( S ) );
     K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
     koszul_resolution := ProjectiveResolution( K );
     return CokernelObject( koszul_resolution^( -k - 2 ) );

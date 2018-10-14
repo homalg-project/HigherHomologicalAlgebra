@@ -801,6 +801,173 @@ od;
 return morphisms;
 end;
 
+DeclareAttribute( "MorphismFromCanonicalKoszulSyzygyModule", IsGradedLeftPresentation );
+
+DeclareAttribute( "MorphismIntoCanonicalKoszulSyzygyModule", IsGradedLeftPresentation );
+InstallMethod( MorphismIntoCanonicalKoszulSyzygyModule,
+    [ IsGradedLeftPresentation ],
+function( some_omega )
+local mat, S, n, L, index, G;
+
+mat := UnderlyingMatrix( some_omega );
+S := UnderlyingHomalgRing( some_omega );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+if NrColumns( mat ) = 1 and NrRows( mat ) = n then
+    SetMorphismFromCanonicalKoszulSyzygyModule( some_omega, UniversalMorphismFromZeroObject( some_omega ) );
+    return UniversalMorphismIntoZeroObject( some_omega );
+fi;
+if NrRows( mat ) = 0 then
+    SetMorphismFromCanonicalKoszulSyzygyModule( some_omega, IdentityMorphism( some_omega ) );
+    return IdentityMorphism( some_omega );
+fi;
+L := List( [ 0 .. n - 1 ], i-> [ Binomial( n, i-1 ), Binomial( n, i ) ] );
+index := n - Position( L, [ NrRows(mat), NrColumns(mat) ] );
+G := GeneratorsOfExternalHom(some_omega, KoszulSyzygyModule(S,index)[index] );
+if Length( G ) <> 1 then
+    Error( "unexpected thing happend" );
+fi;
+SetMorphismFromCanonicalKoszulSyzygyModule( some_omega, Inverse( G[1] ) );
+return G[1];
+end );
+
+
+DeclareAttribute( "CanonicalizeOmegaModule", IsGradedLeftPresentation );
+InstallMethod( CanonicalizeOmegaModule, [ IsGradedLeftPresentation ],
+function( some_omega )
+local mat, S, n, L, index, K;
+
+mat := UnderlyingMatrix( some_omega );
+S := UnderlyingHomalgRing( some_omega );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+if NrColumns( mat ) = 1 and NrRows( mat ) = n then
+    ZeroObject( CapCategory( some_omega ) )!.index := -1;
+    return ZeroObject( CapCategory( some_omega ) );
+fi;
+if NrRows( mat ) = 0 then
+    some_omega!.index := n - 1;
+    return some_omega;
+fi;
+
+L := List( [ 0 .. n - 1 ], i-> [ Binomial( n, i-1 ), Binomial( n, i ) ] );
+index := n - Position( L, [ NrRows(mat), NrColumns(mat) ] );
+K := KoszulSyzygyModule( S, index )[ index ];
+K!.index := index;
+return K;
+end );
+
+DeclareAttribute( "CanonicalizeOmegaModule", IsGradedLeftPresentationMorphism );
+InstallMethod( CanonicalizeOmegaModule, [ IsGradedLeftPresentationMorphism ],
+function( phi )
+MorphismIntoCanonicalKoszulSyzygyModule( Source( phi ) );
+return PreCompose( [ 
+    MorphismFromCanonicalKoszulSyzygyModule( Source( phi ) ),
+    phi,
+    MorphismIntoCanonicalKoszulSyzygyModule( Range( phi ) )
+] );
+end );
+
+DeclareAttribute( "CanonicalizeDirectSumOfOmegaModules", IsGradedLeftPresentation );
+InstallMethod( CanonicalizeDirectSumOfOmegaModules, [ IsGradedLeftPresentation ],
+function( M )
+local mat, S, n, L, non_zeros, length_non_zeros, degrees, current_degrees, current_mat, p, omega, N, irrelevant_module;
+
+S := UnderlyingHomalgRing( M );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+L := List( [ 0 .. n - 1 ], i-> [ Binomial( n, i-1 ), Binomial( n, i ) ] );
+mat := UnderlyingMatrix( M );
+
+if NrRows(mat) = 0 and NrColumns(mat) <> 0 then
+    return List( [ 1 .. NrColumns(mat) ], i -> GradedFreeLeftPresentation(1,S,[ GeneratorDegrees(M)[i] ] ) );
+fi;
+
+if NrRows(mat) = 0 and NrColumns(mat) = 0 then
+    return [];
+fi;
+
+non_zeros := Filtered( EntriesOfHomalgMatrix( CertainColumns( mat, [1] ) ), e -> IsZero(e)<> true );
+length_non_zeros := Length( non_zeros );
+if length_non_zeros = n then
+    non_zeros := HomalgMatrix( non_zeros, n, 1, S );
+    irrelevant_module := AsGradedLeftPresentation( non_zeros, GeneratorDegrees(M){[1]} );
+
+    degrees := GeneratorDegrees(M){[2..NrColumns(mat)]};
+    mat := CertainColumns( CertainRows( mat, [ n + 1 .. NrRows( mat ) ] ), [ 2 .. NrColumns( mat ) ] );
+    N := AsGradedLeftPresentation( mat, degrees );
+    return Concatenation( [irrelevant_module ], CanonicalizeDirectSumOfOmegaModules( N ) );
+else
+    p := length_non_zeros + 1;
+    current_degrees := GeneratorDegrees(M){[ 1 .. L[p][2] ] };
+    current_mat := CertainColumns( CertainRows( mat, [ 1 .. L[p][1] ] ), [ 1 .. L[p][2] ] );
+
+    omega := AsGradedLeftPresentation( current_mat, current_degrees );
+
+    current_degrees := GeneratorDegrees(M){[ L[p][2]+1 .. NrColumns(mat) ] };
+    current_mat := CertainColumns( CertainRows( mat, [ L[p][1]+1 .. NrRows( mat ) ] ), [ L[p][2]+1 .. NrColumns( mat ) ] );
+
+    N := AsGradedLeftPresentation( current_mat, current_degrees );
+    
+    return Concatenation( [ omega ], CanonicalizeDirectSumOfOmegaModules( N ) );
+
+fi;
+
+end );
+
+DeclareAttribute( "CanonicalizeMorphismOfDirectSumsOfOmegaModules", IsGradedLeftPresentationMorphism );
+InstallMethod( CanonicalizeMorphismOfDirectSumsOfOmegaModules, [ IsGradedLeftPresentationMorphism ],
+    function( phi )
+    local direct_summand_of_range, direct_summand_of_source, L;
+    direct_summand_of_source := CanonicalizeDirectSumOfOmegaModules( Source( phi ) );
+    direct_summand_of_range := CanonicalizeDirectSumOfOmegaModules( Range( phi ) );
+    L := List( [ 1 .. Length( direct_summand_of_source ) ], 
+        i -> List( [ 1 .. Length( direct_summand_of_range ) ],
+            j -> PreCompose(
+                [
+                    InjectionOfCofactorOfDirectSum(direct_summand_of_source, i),
+                    phi,
+                    ProjectionInFactorOfDirectSum(direct_summand_of_range, j )
+                ]
+            )));
+    return L;
+end );
+
+Canonicalize := CapFunctor( "canonicalize functor", graded_lp_cat_sym, graded_lp_cat_sym );
+AddObjectFunction( Canonicalize,
+function( M )
+local L;
+L := CanonicalizeDirectSumOfOmegaModules( M );
+L := List( L, CanonicalizeOmegaModule );
+if L = [] then
+    return ZeroObject( CapCategory( M ) );
+fi;
+return DirectSum( L );
+end );
+
+AddMorphismFunction( Canonicalize,
+function( source, phi, range )
+local L;
+if IsZero( phi ) then 
+    return ZeroMorphism( source, range );
+fi;
+L := CanonicalizeMorphismOfDirectSumsOfOmegaModules( phi );
+L := List( L, l -> List( l, CanonicalizeOmegaModule ) );
+L := MorphismBetweenDirectSums( L );
+return L;
+end );
+
+solve := function(phi)
+local source, range, G, mat;
+source := Source( phi );
+range := Range( phi );
+
+G := GeneratorsOfExternalHom( source, range );
+G := List( G, UnderlyingMatrix );
+G := UnionOfRows( List( G, 
+    g -> UnionOfColumns( List( [ 1 .. NrRows( g ) ], i -> CertainRows( g, [i] ) ) ) ) );
+mat := UnderlyingMatrix( phi );
+mat := UnionOfColumns( List( [ 1 .. NrRows( mat ) ], i -> CertainRows( mat, [i] ) ) );
+return EntriesOfHomalgMatrix( RightDivide( mat, G) );
+end;
+
 quit;
 
 # To compute Beilinson complex there is three functors 
