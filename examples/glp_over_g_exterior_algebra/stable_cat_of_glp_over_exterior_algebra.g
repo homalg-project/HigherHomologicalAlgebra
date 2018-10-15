@@ -883,7 +883,7 @@ if NrRows(mat) = 0 and NrColumns(mat) <> 0 then
 fi;
 
 if NrRows(mat) = 0 and NrColumns(mat) = 0 then
-    return [];
+    return [ZeroObject( M ) ];
 fi;
 
 non_zeros := Filtered( EntriesOfHomalgMatrix( CertainColumns( mat, [1] ) ), e -> IsZero(e)<> true );
@@ -984,7 +984,11 @@ InstallMethodWithCache( BasisBetweenCotangentBundles,
     return List( L, l -> PreCompose(l) );
 end );
 
-solve := function( phi)
+
+DeclareAttribute( "MorphismToListOfRecords", IsGradedLeftPresentationMorphism );
+InstallMethod( MorphismToListOfRecords, 
+    [ IsGradedLeftPresentationMorphism ],
+function( phi)
 local source, range, G, mat, n, L, i, j, zero_obj;
 source := Source( phi );
 range := Range( phi );
@@ -998,18 +1002,18 @@ L := Concatenation( [ zero_obj ], L );
 
 if Position( L, source ) = fail or Position( L, range ) = fail then
     L := CanonicalizeMorphismOfDirectSumsOfOmegaModules( phi );
-    return List( L, l -> List( l, f -> solve( f ) ) );
+    return List( L, l -> List( l, f -> MorphismToListOfRecords( f )[1][1] ) );
 fi;
 
 i := Position( L, source )-2;
 j := Position( L, range )-2;
 
 if i = -1 or j = -1 then
-    return rec( indices := [i, j], coefficients := [] );
+    return [ [ rec( indices := [i, j], coefficients := [] ) ] ];
 fi;
 
 if i<j then
-    return rec( indices := [i,j], coefficients := [] );
+    return [ [ rec( indices := [i,j], coefficients := [] ) ] ];
 fi;
 
 G := ShallowCopy( BasisBetweenCotangentBundles( S, i, j ) );
@@ -1019,8 +1023,32 @@ G := UnionOfRows( List( G,
     g -> UnionOfColumns( List( [ 1 .. NrRows( g ) ], i -> CertainRows( g, [i] ) ) ) ) );
 mat := UnderlyingMatrix( phi );
 mat := UnionOfColumns( List( [ 1 .. NrRows( mat ) ], i -> CertainRows( mat, [i] ) ) );
-return rec( indices := [i,j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) );
+return [ [ rec( indices := [i,j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) ) ] ];
+end );
+
+
+morphism_between_cotangent_bundles := function( S, r )
+local cat, coefficients, indices;
+cat := GradedLeftPresentations( S );
+indices := r!.indices;
+coefficients := List( r.coefficients, c -> String(c)/S );
+if indices = [ -1, -1 ] then
+    return ZeroMorphism( ZeroObject(cat), ZeroObject( cat ) );
+elif indices[ 1 ] = -1 then
+    return UniversalMorphismFromZeroObject( KoszulSyzygyModule( S, indices[2] )[ indices[2] ] );
+elif indices[ 2 ] = -1 then
+    return UniversalMorphismIntoZeroObject( KoszulSyzygyModule( S, indices[1] )[ indices[1] ] );
+else
+    return coefficients*BasisBetweenCotangentBundles( S, indices[1], indices[2] );
+fi;
 end;
+
+
+DeclareOperation( "ListOfRecordsToMorphism", [ IsHomalgGradedRing, IsList ] );
+InstallMethod( ListOfRecordsToMorphism, [ IsHomalgGradedRing, IsList ],
+function( S, L )
+return MorphismBetweenDirectSums( List( L, l -> List( l, r -> morphism_between_cotangent_bundles( S, r ) ) ) ); 
+end );
 
 quit;
 
