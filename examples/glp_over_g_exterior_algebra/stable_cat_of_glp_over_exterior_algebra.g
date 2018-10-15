@@ -765,7 +765,9 @@ end;
 Beilinson_complex_of_complex_sym := 
     PreCompose( [ TateFunctorForCochains(S), ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, Cochain_of_ver_coho_sym ] );
 
-kamal := function( S )
+DeclareAttribute( "kamal", IsHomalgGradedRing );
+InstallMethod( kamal, [ IsHomalgGradedRing ],
+function( S )
 local omegas, morphisms, n, k, l, j, current;
 n := Length( IndeterminatesOfPolynomialRing( S ) );
 
@@ -799,7 +801,7 @@ for j in [ 2 .. n-1] do
 od;
 
 return morphisms;
-end;
+end );
 
 DeclareAttribute( "MorphismFromCanonicalKoszulSyzygyModule", IsGradedLeftPresentation );
 
@@ -954,18 +956,70 @@ L := MorphismBetweenDirectSums( L );
 return L;
 end );
 
-solve := function(phi)
-local source, range, G, mat;
+Canonicalize := ExtendFunctorToCochainComplexCategoryFunctor( Canonicalize );
+
+DeclareOperation( "BasisBetweenCotangentBundles", [ IsHomalgGradedRing, IsInt, IsInt ] );
+InstallMethodWithCache( BasisBetweenCotangentBundles, 
+        "this should return the basis of Hom( omega^i(i),omega^j(j) )",
+        [ IsHomalgGradedRing, IsInt, IsInt ],
+    function( S, i, j )
+    local G, n, index, combinations, L;
+    if i<j then
+        return [];
+    fi;
+
+    if i = j then
+        return [ IdentityMorphism( KoszulSyzygyModule( S, i)[i] ) ];
+    fi;
+
+    G := kamal( S );
+    
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+    index := n - i;
+    combinations := Combinations( [ 1 .. n ], i - j );
+    combinations := List( combinations, comb -> Reversed( comb ) );
+
+    L := List( combinations, comb -> List( [ 1 .. i - j ], k-> G[index+k-1][comb[k]] ) );
+    return List( L, l -> PreCompose(l) );
+end );
+
+solve := function( phi)
+local source, range, G, mat, n, L, i, j, zero_obj;
 source := Source( phi );
 range := Range( phi );
 
-G := GeneratorsOfExternalHom( source, range );
+S := UnderlyingHomalgRing( phi );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+L := List( [ 1 .. n ], k -> KoszulSyzygyModule(S,k-1)[k-1] );
+zero_obj := ZeroObject( CapCategory( phi ) );
+L := Concatenation( [ zero_obj ], L );
+
+if Position( L, source ) = fail or Position( L, range ) = fail then
+    L := CanonicalizeMorphismOfDirectSumsOfOmegaModules( phi );
+    return List( L, l -> List( l, f -> solve( f ) ) );
+fi;
+
+i := Position( L, source )-2;
+j := Position( L, range )-2;
+
+if i = -1 or j = -1 then
+    return rec( indices := [i, j], coefficients := [] );
+fi;
+
+if i<j then
+    return rec( indices := [i,j], coefficients := [] );
+fi;
+
+G := ShallowCopy( BasisBetweenCotangentBundles( S, i, j ) );
+#G := GeneratorsOfExternalHom( source, range );
 G := List( G, UnderlyingMatrix );
 G := UnionOfRows( List( G, 
     g -> UnionOfColumns( List( [ 1 .. NrRows( g ) ], i -> CertainRows( g, [i] ) ) ) ) );
 mat := UnderlyingMatrix( phi );
 mat := UnionOfColumns( List( [ 1 .. NrRows( mat ) ], i -> CertainRows( mat, [i] ) ) );
-return EntriesOfHomalgMatrix( RightDivide( mat, G) );
+return rec( indices := [i,j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) );
 end;
 
 quit;
