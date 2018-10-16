@@ -210,7 +210,11 @@ Print( "some_name( ", GeneratorDegrees( Source(f) )[1],",", GeneratorDegrees( Ra
 
 end;
 
+if not IsBound( dimension_of_projective_space ) then
 nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
+else
+nr_indeterminates := ValueGlobal( "dimension_of_projective_space" );
+fi;
 with_commutative_squares := false;
 vars := Concatenation( Concatenation( [ "x0" ] , List( [ 1 .. nr_indeterminates ], i -> Concatenation( ",x", String( i ) ) ) ) );
 R := HomalgFieldOfRationalsInSingular( )*vars;
@@ -1050,7 +1054,15 @@ function( S, L )
 return MorphismBetweenDirectSums( List( L, l -> List( l, r -> morphism_between_cotangent_bundles( S, r ) ) ) ); 
 end );
 
-quit;
+set_bounds := function( f, a, b )
+SetLowerBound( f, a );
+SetLowerBound( Source(f), a );
+SetLowerBound( Range(f), a );
+SetUpperBound( f, b );
+SetUpperBound( Source(f), b );
+SetUpperBound( Range(f), b );
+end;
+
 
 # To compute Beilinson complex there is three functors 
 #    *Beilinson_complex_sym
@@ -1065,37 +1077,38 @@ quit;
 # I would recommend testing this example with S=Q[x0,x1], because over bigger rings computing 
 # G will take more time.
 
-m := RandomMatrixBetweenGradedFreeLeftModules([4],[1,2,1,2,3],S);
-M := AsGradedLeftPresentation(m,[1,2,1,2,3]);
-n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
-N := AsGradedLeftPresentation(n,[1,2,1,2]);
-G := GeneratorsOfExternalHom(M,N);
-f := Random(G);
-
-CohomologyOfBeilinsonComplexToSheafification;
-
-FF := Source( CohomologyOfBeilinsonComplexToSheafification );
-GG := Range( CohomologyOfBeilinsonComplexToSheafification );
-
-FF_f := ApplyFunctor( FF, f );
-GG_f := ApplyFunctor( GG, f );
-
-mu_M := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, M );
-mu_N := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, N );
-
-IsWellDefined( mu_M );
-IsWellDefined( mu_N );
-
-IsIsomorphism( mu_M );
-IsIsomorphism( mu_N );
-
-p1 := PreCompose( mu_M, GG_f );
-p2 := PreCompose( FF_f, mu_N );
-
-IsCongruentForMorphisms(p1,p2);
-Beilinson_sym := ApplyFunctor( Beilinson_complex_sym, M );
-IsWellDefined( Beilinson_sym, -3, 3 );
-Display( Beilinson_sym, -3, 3 );
-
-Beilinson_Serre_v2 := ApplyFunctor( Beilinson_complex_Serre_v2, M );
-
+# m := RandomMatrixBetweenGradedFreeLeftModules([4],[1,2,1,2,3],S);
+# M := AsGradedLeftPresentation(m,[1,2,1,2,3]);
+# n := RandomMatrixBetweenGradedFreeLeftModules([4,5],[1,2,1,2],S);
+# N := AsGradedLeftPresentation(n,[1,2,1,2]);
+# G := GeneratorsOfExternalHom(M,N);
+# f := Random(G);
+# 
+# CohomologyOfBeilinsonComplexToSheafification;
+# 
+# FF := Source( CohomologyOfBeilinsonComplexToSheafification );
+# GG := Range( CohomologyOfBeilinsonComplexToSheafification );
+# 
+# FF_f := ApplyFunctor( FF, f );
+# GG_f := ApplyFunctor( GG, f );
+# 
+# mu_M := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, M );
+# mu_N := ApplyNaturalTransformation( CohomologyOfBeilinsonComplexToSheafification, N );
+# 
+# IsWellDefined( mu_M );
+# IsWellDefined( mu_N );
+# 
+# IsIsomorphism( mu_M );
+# IsIsomorphism( mu_N );
+# 
+# p1 := PreCompose( mu_M, GG_f );
+# p2 := PreCompose( FF_f, mu_N );
+# 
+# IsCongruentForMorphisms(p1,p2);
+# Beilinson_sym := ApplyFunctor( Beilinson_complex_sym, M );
+# IsWellDefined( Beilinson_sym, -3, 3 );
+# Display( Beilinson_sym, -3, 3 );
+# 
+# Beilinson_Serre_v2 := ApplyFunctor( Beilinson_complex_Serre_v2, M );
+# 
+# 
