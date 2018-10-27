@@ -364,6 +364,20 @@ InstallMethod( Display,
     fi;
 end );
 
+##
+InstallMethod( MorphismsSupport,
+               [ IsChainOrCochainMorphism, IsInt, IsInt ],
+  function( phi, m, n )
+  local l, i;
+  l := [ ];
+  for i in [ m .. n ] do
+  if not IsZeroForMorphisms( phi[i] ) then
+     Add( l, i );
+  fi;
+  od;
+  return l;
+end );
+
 InstallMethod( IsWellDefined,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
    function( phi, m, n )

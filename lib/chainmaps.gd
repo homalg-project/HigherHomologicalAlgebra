@@ -355,6 +355,11 @@ DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
 #!  @Description
+#!  The command gives back the list of indices between $m$ and $n$ where the complex morphism is not zero. 
+#!  @Arguments phi, m, n
+DeclareOperation( "MorphismsSupport", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+
+#!  @Description
 #!  The command displays the components of the morphism between $m$ and $n$. 
 #!  @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
