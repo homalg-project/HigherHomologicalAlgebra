@@ -189,26 +189,6 @@ end );
 
 # for a morphism between two free modules of rank 1 and with degrees 1, ..., n
 # o(-1) <-> p_1, ..., o(-n) <-> p_n
-# see quivers
-# to be removed later
-print_command := function(f, n)
-local e, coeff, powers;
-e := EntriesOfHomalgMatrixAsListList(UnderlyingMatrix(f))[1][1];
-powers := PowersOfIndeterminatesInGradedRingElement( e );
-powers := Concatenation( List( [ 1 .. n ], i -> List( [ 1 .. powers[i] ], j -> i ) ) );
-coeff := Coefficients( e/UnderlyingNonGradedRing( UnderlyingHomalgRing( f ) ) );
-if IsZero( e ) then
-    Print( "some_name( ", GeneratorDegrees( Source(f) )[1],",", GeneratorDegrees( Range(f) )[1],",", powers,",", 0, ")," );
-    return;
-fi;
-
-if NrRows( coeff ) <> 1 or NrColumns( coeff ) <> 1 then
-    Error( "?" );
-fi;
-
-Print( "some_name( ", GeneratorDegrees( Source(f) )[1],",", GeneratorDegrees( Range(f) )[1],",", powers,",", MatElm( coeff, 1, 1 ), ")," );
-
-end;
 
 if not IsBound( dimension_of_projective_space ) then
 nr_indeterminates := InputFromUser( "Please enter n to define the polynomial ring Q[x_0,...,x_n],  n = " );
@@ -305,6 +285,8 @@ Finalize( chains_graded_lp_cat_sym );
 
 # constructing the cochain complex category of graded left presentations over S
 cochains_graded_lp_cat_sym := CochainComplexCategory( graded_lp_cat_sym );
+
+cochain_to_chain_functor := CochainToChainComplexFunctor( cochains_graded_lp_cat_sym, chains_graded_lp_cat_sym );
 
 # constructing the category Ch( ch( graded_lp_Cat_sym ) ) and the it associated bicomplex category
 cochains_cochains_graded_lp_cat_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );
@@ -497,8 +479,13 @@ Beilinson_complex_sym := CapFunctor( "Beilinson Complex functor (Output is cocha
                         graded_lp_cat_sym, cochains_graded_lp_cat_sym );
 AddObjectFunction( Beilinson_complex_sym,
     function( M )
-    return ApplyFunctor(
+    local C, n;
+    n := Length( IndeterminatesOfPolynomialRing( UnderlyingHomalgRing( M ) ) );
+    C := ApplyFunctor(
         PreCompose( [ TT, ChLL, ChTrunc_leq_m1, ChCh_to_Bi_sym, Cochain_of_ver_coho_sym ] ), M );;
+    SetLowerBound( C, -n );
+    SetUpperBound( C, n );
+    return C;
 end );
 
 AddMorphismFunction( Beilinson_complex_sym,
@@ -807,6 +794,23 @@ od;
 return morphisms;
 end );
 
+DeclareAttribute( "saleh", IsHomalgGradedRing );
+InstallMethod( saleh, [ IsHomalgGradedRing ],
+function( S )
+local o_s, morphisms, o, matrices, n;
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+matrices := List( Indeterminates( S ), x -> HomalgMatrix( [[x]],1,1,S) );
+
+o := GradedFreeLeftPresentation( 1, S, [ 0 ] );
+o_s := Reversed( List( [ 1 .. n ], i -> o[ -i ] ) );
+
+morphisms := List( [ 1 .. n - 1 ], 
+                i -> List( [ 1 .. n ], 
+                    j -> GradedPresentationMorphism( o_s[ i ], matrices[j], o_s[ i + 1 ] ) ) );
+return morphisms;
+end );
+
 DeclareAttribute( "MorphismFromCanonicalKoszulSyzygyModule", IsGradedLeftPresentation );
 
 DeclareAttribute( "MorphismIntoCanonicalKoszulSyzygyModule", IsGradedLeftPresentation );
@@ -936,6 +940,34 @@ InstallMethod( CanonicalizeMorphismOfDirectSumsOfOmegaModules, [ IsGradedLeftPre
     return L;
 end );
 
+DeclareAttribute( "CanonicalizeMorphismOfDirectSumsOfOModules", IsGradedLeftPresentationMorphism );
+InstallMethod( CanonicalizeMorphismOfDirectSumsOfOModules, [ IsGradedLeftPresentationMorphism ],
+    function( phi )
+    local direct_summand_of_range, direct_summand_of_source, L;
+    direct_summand_of_source := List( GeneratorDegrees( Source( phi ) ), 
+            d -> GradedFreeLeftPresentation( 1, S, [ d ] ) ); 
+    direct_summand_of_range := List( GeneratorDegrees( Range( phi ) ), 
+            d -> GradedFreeLeftPresentation( 1, S, [ d ] ) ); 
+    if direct_summand_of_source = [ ] then
+        direct_summand_of_source := [ ZeroObject( phi ) ];
+    fi;
+
+    if direct_summand_of_range = [ ] then
+        direct_summand_of_range := [ ZeroObject( phi ) ];
+    fi;
+
+    L := List( [ 1 .. Length( direct_summand_of_source ) ], 
+        i -> List( [ 1 .. Length( direct_summand_of_range ) ],
+            j -> PreCompose(
+                [
+                    InjectionOfCofactorOfDirectSum(direct_summand_of_source, i),
+                    phi,
+                    ProjectionInFactorOfDirectSum(direct_summand_of_range, j )
+                ]
+            )));
+    return L;
+end );
+
 Canonicalize := CapFunctor( "canonicalize functor", graded_lp_cat_sym, graded_lp_cat_sym );
 AddObjectFunction( Canonicalize,
 function( M )
@@ -989,8 +1021,46 @@ InstallMethodWithCache( BasisBetweenCotangentBundles,
 end );
 
 
-DeclareAttribute( "MorphismToListOfRecords", IsGradedLeftPresentationMorphism );
-InstallMethod( MorphismToListOfRecords, 
+DeclareOperation( "BasisBetweenVectorBundles", [ IsHomalgGradedRing, IsInt, IsInt ] );
+InstallMethodWithCache( BasisBetweenVectorBundles, 
+    [ IsHomalgGradedRing, IsInt, IsInt ],
+    function( S, i, j )
+    local n, L, source_index, range_index, d, indices, index;
+
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    
+    if i >= 0 or j >= 0 or i < -n or j < -n then
+        Error( "wrong input\n");
+    fi;
+
+    if i > j then
+        return [ ];
+    fi;
+
+    if i = j then
+        return [ IdentityMorphism( GradedFreeLeftPresentation( 1, S, [ -i ] ) ) ];
+    fi;
+
+    L := saleh( S );
+
+    source_index := Position( [ -n .. -1 ], i );
+    range_index := Position( [ -n .. -1 ], j );
+
+    d := range_index - source_index;
+
+    indices := Cartesian( List( [ 1 .. d ], i -> [ 1 .. n ] ) );;
+    for index in indices do
+        Sort( index );
+    od;
+    indices := Set( indices );;
+
+    return List( indices, index -> 
+        PreCompose( List( [ 1 .. d ], i -> L[i+source_index-1][index[i]]) ) );
+
+end );
+
+DeclareAttribute( "MorphismToListOfRecords_Cotangents", IsGradedLeftPresentationMorphism );
+InstallMethod( MorphismToListOfRecords_Cotangents, 
     [ IsGradedLeftPresentationMorphism ],
 function( phi)
 local source, range, G, mat, n, L, i, j, zero_obj;
@@ -1006,7 +1076,7 @@ L := Concatenation( [ zero_obj ], L );
 
 if Position( L, source ) = fail or Position( L, range ) = fail then
     L := CanonicalizeMorphismOfDirectSumsOfOmegaModules( phi );
-    return List( L, l -> List( l, f -> MorphismToListOfRecords( f )[1][1] ) );
+    return List( L, l -> List( l, f -> MorphismToListOfRecords_Cotangents( f )[1][1] ) );
 fi;
 
 i := Position( L, source )-2;
@@ -1030,6 +1100,45 @@ mat := UnionOfColumns( List( [ 1 .. NrRows( mat ) ], i -> CertainRows( mat, [i] 
 return [ [ rec( indices := [i,j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) ) ] ];
 end );
 
+DeclareAttribute( "MorphismToListOfRecords_VectorBundles", IsGradedLeftPresentationMorphism );
+InstallMethod( MorphismToListOfRecords_VectorBundles, 
+    [ IsGradedLeftPresentationMorphism ],
+function( phi)
+local source, range, G, mat, n, L, i, j, zero_obj, o;
+source := Source( phi );
+range := Range( phi );
+
+S := UnderlyingHomalgRing( phi );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+L := List( [ 1 .. n ], k -> GradedFreeLeftPresentation( 1, S, [ k ] ) );
+
+zero_obj := ZeroObject( CapCategory( phi ) );
+L := Concatenation( L, [ zero_obj ] );
+
+if Position( L, source ) = fail or Position( L, range ) = fail then
+    L := CanonicalizeMorphismOfDirectSumsOfOModules( phi );
+    return List( L, l -> List( l, f -> MorphismToListOfRecords_VectorBundles( f )[1][1] ) );
+fi;
+
+i := Position( L, source );
+j := Position( L, range );
+
+if i = n+1 or j = n+1 then
+    return [ [ rec( indices := [-i, -j], coefficients := [] ) ] ];
+fi;
+
+if i<j then
+    return [ [ rec( indices := [-i,-j], coefficients := [] ) ] ];
+fi;
+
+G := ShallowCopy( BasisBetweenVectorBundles( S, -i, -j ) );
+G := List( G, UnderlyingMatrix );
+G := UnionOfRows( G );
+mat := UnderlyingMatrix( phi );
+return [ [ rec( indices := [-i,-j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) ) ] ];
+end );
+
 
 morphism_between_cotangent_bundles := function( S, r )
 local cat, coefficients, indices;
@@ -1047,11 +1156,35 @@ else
 fi;
 end;
 
+morphism_between_vector_bundles := function( S, r )
+local cat, coefficients, indices, n;
+cat := GradedLeftPresentations( S );
+n := Length( IndeterminatesOfPolynomialRing( S ) );
+indices := r!.indices;
+coefficients := List( r.coefficients, c -> String(c)/S );
+if indices = [ -n-1, -n-1 ] then
+    return ZeroMorphism( ZeroObject(cat), ZeroObject( cat ) );
+elif indices[ 1 ] = -n-1 then
+    return UniversalMorphismFromZeroObject( GradedFreeLeftPresentation( 1, S, [ -indices[ 2 ] ] ) );
+elif indices[ 2 ] = -n-1 then
+    return UniversalMorphismIntoZeroObject( GradedFreeLeftPresentation( 1, S, [ -indices[ 1 ] ] ) );
+else
+    return coefficients*BasisBetweenVectorBundles( S, indices[1], indices[2] );
+fi;
+end;
 
-DeclareOperation( "ListOfRecordsToMorphism", [ IsHomalgGradedRing, IsList ] );
-InstallMethod( ListOfRecordsToMorphism, [ IsHomalgGradedRing, IsList ],
+
+
+DeclareOperation( "ListOfRecordsToMorphism_Cotangents", [ IsHomalgGradedRing, IsList ] );
+InstallMethod( ListOfRecordsToMorphism_Cotangents, [ IsHomalgGradedRing, IsList ],
 function( S, L )
 return MorphismBetweenDirectSums( List( L, l -> List( l, r -> morphism_between_cotangent_bundles( S, r ) ) ) ); 
+end );
+
+DeclareOperation( "ListOfRecordsToMorphism_VectorBundles", [ IsHomalgGradedRing, IsList ] );
+InstallMethod( ListOfRecordsToMorphism_VectorBundles, [ IsHomalgGradedRing, IsList ],
+function( S, L )
+return MorphismBetweenDirectSums( List( L, l -> List( l, r -> morphism_between_vector_bundles( S, r ) ) ) ); 
 end );
 
 set_bounds := function( f, a, b )
