@@ -301,6 +301,14 @@ end );
 
 InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], MorphismAt );
 
+InstallMethod( \*, [ IsRingElement, IsChainOrCochainMorphism ],
+  function( a, phi )
+  local morphisms, psi;
+  morphisms := MapLazy( Morphisms( phi ), m -> a*m, 1 );
+  psi := ChainMorphism( Source( phi ), Range( phi ), morphisms );
+  return psi;
+end );
+
 #################################
 #
 # Display and View

@@ -354,6 +354,8 @@ DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 #!  @Returns an integer
 DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
+# DeclareOperation( "\*", [ IsRingElement, IsChainOrCochainMorphism ] );
+
 #!  @Description
 #!  The command gives back the list of indices between $m$ and $n$ where the complex morphism is not zero. 
 #!  @Arguments phi, m, n
