@@ -1143,7 +1143,7 @@ end );
 InstallMethod( IsWellDefined,
                [ IsBoundedChainOrCochainComplex ],
   function( C )
-  return IsWellDefined( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+  return IsWellDefined( C, ActiveLowerBound( C ) + 1, ActiveUpperBound( C ) - 1 );
 end );
 
 ######################################
@@ -1272,7 +1272,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
                                                                    if not HasFAU_BOUND( complex ) then
 
-                                                                      SetUpperBound( complex, FAU_BOUND( C ) - i );
+                                                                      SetUpperBound( complex, ActiveUpperBound( C ) - i );
 
                                                                    fi;
 
@@ -1282,7 +1282,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
                                                                    if not HasFAU_BOUND( C ) then
 
-                                                                      SetUpperBound( C, FAU_BOUND( complex ) + i );
+                                                                      SetUpperBound( C, ActiveUpperBound( complex ) + i );
 
                                                                    fi;
 
@@ -1292,7 +1292,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
                                                                    if not HasFAL_BOUND( complex ) then
 
-                                                                      SetLowerBound( complex, FAL_BOUND( C ) - i );
+                                                                      SetLowerBound( complex, ActiveLowerBound( C ) - i );
 
                                                                    fi;
 
@@ -1302,7 +1302,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
 
                                                                    if not HasFAL_BOUND( C ) then
 
-                                                                      SetLowerBound( C, FAL_BOUND( complex ) + i );
+                                                                      SetLowerBound( C, ActiveLowerBound( complex ) + i );
 
                                                                    fi;
 
