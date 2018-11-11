@@ -1032,14 +1032,22 @@ end );
 InstallMethod( ObjectsSupport, 
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
-  local l, i;
-  l := [ ];
-  for i in [ m .. n ] do 
-  if not IsZeroForObjects( C[i] ) then 
-     Add( l, i );
-  fi;
-  od;
-  return l;
+    local l, i;
+    l := [ ];
+    for i in [ m .. n ] do 
+    if not IsZeroForObjects( C[i] ) then 
+        Add( l, i );
+    fi;
+    od;
+    
+    if l = [ ] then
+        SetUpperBound( C, ActiveLowerBound(C) );
+    else
+        SetLowerBound( C, l[1]-1 );
+        SetUpperBound( C, l[Length(l)] + 1 );
+    fi;
+
+    return l;
 end );
 
 
