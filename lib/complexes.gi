@@ -1108,19 +1108,19 @@ end );
 InstallMethod( IsWellDefined, 
                [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )
-  local i;
- 
-  for i in [ m .. n ] do 
-    if not IsZeroForMorphisms( PreCompose( C^i, C^(i+1) ) ) then 
-      AddToReasons( Concatenation( "IsWellDefined: The composition is not zero in index ", String( i ) ) );  
-      return false;
-    fi;
-  od;
-  if not IsWellDefined( C[ i ] ) then 
-    AddToReasons( Concatenation( "IsWellDefined: The object is not well-defined in index ", String( i ) ) );  
-    return false;
-  fi;
-  return true;
+    local i;
+    for i in [ m .. n ] do 
+        if not IsZeroForMorphisms( PreCompose( C^i, C^(i+1) ) ) then 
+            AddToReasons( Concatenation( "IsWellDefined: The composition is not zero in index ", String( i ) ) );  
+            return false;
+        fi;
+        
+        if not IsWellDefined( C[ i ] ) then 
+            AddToReasons( Concatenation( "IsWellDefined: The object is not well-defined in index ", String( i ) ) );  
+            return false;
+        fi;
+    od;
+    return true;
 end );
 
 InstallMethod( IsWellDefined, 
@@ -1129,15 +1129,14 @@ InstallMethod( IsWellDefined,
  local i;
  
  for i in [ m .. n ] do 
- if not IsZeroForMorphisms( PostCompose( C^i, C^(i+1) ) ) then 
-    return false;
- fi;
+    if not IsZeroForMorphisms( PostCompose( C^i, C^(i+1) ) ) then 
+        return false;
+    fi;
+ 
+    if not IsWellDefined( C[ i ] ) then 
+        return false;
+    fi;
  od;
- 
- if not IsWellDefined( C[ i ] ) then 
-    return false;
- fi;
- 
  return true;
 end );
 
