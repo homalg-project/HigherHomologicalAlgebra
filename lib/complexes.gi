@@ -523,31 +523,25 @@ end );
 ##
 InstallMethod( Display, 
                [ IsChainOrCochainComplex, IsInt, IsInt ],
-   function( C, m, n )
-   local i, co_homo;
+    function( C, m, n )
+    local i, co_homo, dashes;
 
-   if IsChainComplex( C ) then
-	co_homo := "homological";
-   else
+    if IsChainComplex( C ) then
+	    co_homo := "homological";
+        dashes := "\n------------------------/\\--------------------------\n";
+    else
         co_homo := "cohomological";
-   fi;
+        dashes := "\n------------------------\\/--------------------------\n";
+    fi;
 
-   for i in [ m .. n ] do
-
-   Print( "\n-----------------------------------------------------------------\n" );
-
-   Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-
-   Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-
-   Display( C[ i ] );
-
-   Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-
-   Display( C^i );
-
-   od;
-
+    for i in [ m .. n ] do
+        Print( dashes );
+        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
+        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+        Display( C[ i ] );
+        Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+        Display( C^i );
+    od;
 end );
 
 ##
@@ -558,6 +552,45 @@ InstallMethod( Display,
         Display( C, ActiveLowerBound( C ) + 1 , ActiveUpperBound( C ) - 1 );
     else
 	      Print( "A zero complex in ", Name( CapCategory( C ) ) );
+    fi;
+end );
+
+InstallMethod( DisplayComplex, [ IsChainOrCochainComplex, IsInt, IsInt ], Display );
+InstallMethod( DisplayComplex, [ IsBoundedChainOrCochainComplex ], Display );
+
+
+##
+InstallMethod( ViewComplex, 
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
+    function( C, m, n )
+    local i, co_homo, dashes;
+
+    if IsChainComplex( C ) then
+	    co_homo := "homological";
+        dashes := "\n------------------------/\\--------------------------\n";
+    else
+        co_homo := "cohomological";
+        dashes := "\n------------------------\\/--------------------------\n";
+    fi;
+
+    for i in [ m .. n ] do
+        Print( dashes );
+        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
+        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+        View( C[ i ] );
+        Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+        View( C^i );
+    od;
+end );
+
+##
+InstallMethod( ViewComplex,
+    [ IsBoundedChainOrCochainComplex ],
+    function( C )
+    if ActiveUpperBound( C ) -  ActiveLowerBound( C ) >= 2 then
+        ViewComplex( C, ActiveLowerBound( C ) + 1 , ActiveUpperBound( C ) - 1 );
+    else
+	    Print( "A zero complex in ", Name( CapCategory( C ) ) );
     fi;
 end );
 

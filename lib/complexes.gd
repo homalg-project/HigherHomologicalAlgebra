@@ -485,7 +485,18 @@ DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainComplex ] );
 #! The input is chain or cochain complex $C$ and two integers $m$ and $n$. The command displays all components of $C$ between the indices $m,n$.
 #! @Arguments C, m, n
 #! @Returns nothing
+DeclareOperation( "DisplayComplex", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+
 DeclareOperation( "Display", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+DeclareOperation( "DisplayComplex", [ IsBoundedChainOrCochainComplex ] );
+
+#! @Description
+#! The input is chain or cochain complex $C$ and two integers $m$ and $n$. The command views all components of $C$ between the indices $m,n$.
+#! @Arguments C, m, n
+#! @Returns nothing
+DeclareOperation( "ViewComplex", [ IsChainOrCochainComplex, IsInt, IsInt ] );
+
+DeclareOperation( "ViewComplex", [ IsBoundedChainOrCochainComplex ] );
 
 #! @EndSection
 
