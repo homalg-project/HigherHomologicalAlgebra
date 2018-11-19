@@ -148,6 +148,28 @@ InstallMethod( RFunctor,
     return R;
 end );
 
+InstallMethod( RCochainFunctor,
+    [ IsHomalgGradedRing ],
+RFunctor
+);
+
+InstallMethod( RChainFunctor,
+    [ IsHomalgGradedRing ],
+    function( S )
+    local A, cat_ext, chains_ext, cochains_ext, cochains_to_chains;
+
+    A := KoszulDualRing( S );
+    cat_ext := GradedLeftPresentations( A );
+
+    chains_ext := ChainComplexCategory( cat_ext );
+    cochains_ext := CochainComplexCategory( cat_ext );
+
+    cochains_to_chains := CochainToChainComplexFunctor( cochains_ext, chains_ext );
+
+    return PreCompose( [ RCochainFunctor(S),  cochains_to_chains ] );
+
+end );
+
 InstallMethod( LFunctor, 
             [ IsHomalgGradedRing ],
     function( S )
