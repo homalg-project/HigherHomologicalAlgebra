@@ -14,8 +14,8 @@ KeyDependentOperation( "GradedLeftPresentationGeneratedByHomogeneousPart", IsGra
 DeclareAttribute( "EmbeddingInSuperObject", IsGradedLeftPresentation);
 
 DeclareAttribute( "CastelnuovoMumfordRegularity", IsCapCategoryObject );
-DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentation  );
-DeclareAttribute( "TateResolution",  IsGradedLeftOrRightPresentationMorphism );
+DeclareAttribute( "TateResolution",  IsCapCategoryObject  );
+DeclareAttribute( "TateResolution",  IsCapCategoryMorphism );
 
 DeclareOperation( "DimensionOfTateCohomology", [ IsCochainComplex, IsInt, IsInt ] );
 

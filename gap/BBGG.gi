@@ -136,6 +136,9 @@ InstallMethod( RFunctor,
                 emb_hMk := AsPresentationMorphismInCAP( emb_hMk );
                 emb_hNk := EmbeddingInSuperObject( SubmoduleGeneratedByHomogeneousPart( k, hN ) );
                 emb_hNk := AsPresentationMorphismInCAP( emb_hNk );
+                if not IsMonomorphism( emb_hNk ) then
+                    Error( "Something unexpected happend!"  );
+                fi;
                 l := LiftAlongMonomorphism( emb_hNk, PreCompose( emb_hMk, f ) );
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l )*KoszulDualRing( S ), new_range[ k ] );
                 end, 1 );
