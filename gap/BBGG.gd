@@ -26,6 +26,10 @@ KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, Retu
 KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "KoszulSyzygyModule", IsHomalgGradedRing, IsInt, ReturnTrue );
 DeclareAttribute( "RFunctor", IsHomalgGradedRing );
+
+DeclareAttribute( "RCochainFunctor", IsHomalgGradedRing );
+DeclareAttribute( "RChainFunctor", IsHomalgGradedRing );
+
 DeclareAttribute( "LFunctor", IsHomalgGradedRing );
 DeclareAttribute( "TateFunctor", IsHomalgGradedRing );
 DeclareAttribute( "TateFunctorForCochains", IsHomalgGradedRing );
