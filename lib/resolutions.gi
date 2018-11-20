@@ -545,7 +545,7 @@ if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
 
 fi;
 
-if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then 
+if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
 
    Error( "The category must have enough projectives" );
 
@@ -591,7 +591,7 @@ if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
 
 fi;
 
-if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then 
+if not IsAbelianCategoryWithEnoughInjectives( cat ) then 
 
    Error( "The category must have enough injectives" );
 
