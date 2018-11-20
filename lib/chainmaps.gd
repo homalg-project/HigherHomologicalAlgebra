@@ -128,6 +128,18 @@ DeclareOperation( "StalkCochainMorphism", [ IsCapCategoryMorphism, IsInt ] );
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
 #! @Description
+#! The input is a cochain morphism $\phi$ and the output is the associated chain morphism.
+#! @Arguments phi
+#! @Returns a chain morphism
+DeclareAttribute( "AsChainMorphism", IsCochainMorphism );
+
+#! @Description
+#! The input is a chain morphism $\phi$ and the output is the associated cochain morphism.
+#! @Arguments phi
+#! @Returns a cochain morphism
+DeclareAttribute( "AsCochainMorphism", IsChainMorphism );
+
+#! @Description
 #! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
 #! mapping cone chain (resp. cochain) complex $\mathrm{Cone}(\phi )$.
 #! @BeginLatexOnly

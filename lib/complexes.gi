@@ -677,6 +677,32 @@ end );
 
 InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], ObjectAt );
 
+##
+InstallMethod( AsChainComplex,
+    [ IsCochainComplex ],
+    function( C )
+    local F, cochains, chains, D;
+    cochains := CapCategory( C );
+    chains := ChainComplexCategory( UnderlyingCategory( cochains ) );
+    F := CochainToChainComplexFunctor( cochains, chains );
+    D := ApplyFunctor( F, C );
+    SetAsCochainComplex( D, C );
+    return D;
+end );
+
+##
+InstallMethod( AsCochainComplex,
+    [ IsChainComplex ],
+    function( C )
+    local F, cochains, chains, D;
+    chains := CapCategory( C );
+    cochains := CochainComplexCategory( UnderlyingCategory( chains ) );
+    F := ChainToCochainComplexFunctor( chains, cochains );
+    D := ApplyFunctor( F, C );
+    SetAsChainComplex( D, C );
+    return D;
+end );
+
 ################################################
 #
 #  Constructors of finite (co)chain complexes

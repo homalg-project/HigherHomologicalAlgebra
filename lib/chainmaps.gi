@@ -646,6 +646,33 @@ InstallMethod( ActiveUpperBound,
  
 end );
 
+##
+InstallMethod( AsChainMorphism,
+    [ IsCochainMorphism ],
+    function( phi )
+    local F, cochains, chains, psi;
+    cochains := CapCategory( phi );
+    chains := ChainComplexCategory( UnderlyingCategory( cochains ) );
+    F := CochainToChainComplexFunctor( cochains, chains );
+    psi := ApplyFunctor( F, phi );
+    SetAsCochainMorphism( psi, phi );
+    return psi;
+end );
+
+##
+InstallMethod( AsCochainMorphism,
+    [ IsChainMorphism ],
+    function( phi )
+    local F, cochains, chains, psi;
+    chains := CapCategory( phi );
+    cochains := CochainComplexCategory( UnderlyingCategory( chains ) );
+    F := ChainToCochainComplexFunctor( chains, cochains );
+    psi := ApplyFunctor( F, phi );
+    SetAsChainMorphism( psi, phi );
+    return psi;
+end );
+
+
 ########################################
 #
 # Mapping Cones and Nat (in)projections

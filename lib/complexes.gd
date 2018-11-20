@@ -180,6 +180,18 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 #! @Arguments C
 #! @Returns a Cap category
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
+
+#! @Description
+#! The input is a cochain complex $C$ and the output is the associated chain complex.
+#! @Arguments C
+#! @Returns a chain complex
+DeclareAttribute( "AsChainComplex", IsCochainComplex );
+
+#! @Description
+#! The input is a chain complex $C$ and the output is the associated cochain complex.
+#! @Arguments C
+#! @Returns a cochain complex
+DeclareAttribute( "AsCochainComplex", IsChainComplex );
 #! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
