@@ -2,7 +2,6 @@ LoadPackage( "GradedModulePresentations" );
 LoadPackage( "ModelCategories" );
 LoadPackage( "TriangulatedCategoriesForCAP" );
 LoadPackage( "StableCategoriesForCAP" );
-ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/glp_over_g_exterior_algebra.g" );
 ReadPackage( "BBGG", "/examples/glp_over_g_exterior_algebra/complexes_of_graded_left_presentations_over_graded_polynomial_ring.g" );
 
 
@@ -152,7 +151,7 @@ end );
 InstallMethodWithCache( BasisOfExternalHom, [ IsCapCategoryObject, IsCapCategoryObject ],
     function( M, N )
     if HasUnderlyingHomalgRing( M ) and IsExteriorRing( UnderlyingHomalgRing( M ) ) then
-        graded_basis_of_external_hom( M, N );
+        BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_LEFT_PRES_OVER_EXTERIOR_ALGEBRA( M, N );
     else
         TryNextMethod( );
     fi;
@@ -318,7 +317,7 @@ end, -1 );
 
 AddGeneratorsOfExternalHom( graded_lp_cat_ext,
     function( M, N )
-    return graded_basis_of_external_hom( M, N );
+    return BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_LEFT_PRES_OVER_EXTERIOR_ALGEBRA( M, N );
 end );
 
 SetIsFrobeniusCategory( graded_lp_cat_ext, true );
@@ -360,7 +359,8 @@ SetIsBicomplexCategoryWithCommutativeSquares( bicomplexes_of_coh, with_commutati
 
 # The sheafification functor
 Sh := CanonicalProjection( coh );
-ChSh := ExtendFunctorToCochainComplexCategoryFunctor(Sh);
+CochSh := ExtendFunctorToCochainComplexCategoryFunctor(Sh);
+ChSh := ExtendFunctorToChainComplexCategoryFunctor(Sh);
 BiSh := ExtendFunctorToCohomologicalBicomplexCategoryFunctor(Sh);
 
 
@@ -516,12 +516,12 @@ Beilinson_complex_Serre_v2 := CapFunctor( "Beilinson Complex functor (Output is 
                             graded_lp_cat_sym, cochains_coh );
 AddObjectFunction( Beilinson_complex_Serre_v2,
     function( M )
-    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), M );;
+    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, CochSh ] ), M );;
 end );
 
 AddMorphismFunction( Beilinson_complex_Serre_v2,
     function( new_source, f, new_range )
-    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, ChSh ] ), f );;
+    return ApplyFunctor( PreCompose( [ Beilinson_complex_sym, CochSh ] ), f );;
 end );
 
 # This should be later changed to use the homalg command: TruncatedModule, etc...
@@ -1100,45 +1100,6 @@ mat := UnionOfColumns( List( [ 1 .. NrRows( mat ) ], i -> CertainRows( mat, [i] 
 return [ [ rec( indices := [i,j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) ) ] ];
 end );
 
-DeclareAttribute( "MorphismToListOfRecords_VectorBundles", IsGradedLeftPresentationMorphism );
-InstallMethod( MorphismToListOfRecords_VectorBundles, 
-    [ IsGradedLeftPresentationMorphism ],
-function( phi)
-local source, range, G, mat, n, L, i, j, zero_obj, o;
-source := Source( phi );
-range := Range( phi );
-
-S := UnderlyingHomalgRing( phi );
-n := Length( IndeterminatesOfPolynomialRing( S ) );
-
-L := List( [ 1 .. n ], k -> GradedFreeLeftPresentation( 1, S, [ k ] ) );
-
-zero_obj := ZeroObject( CapCategory( phi ) );
-L := Concatenation( L, [ zero_obj ] );
-
-if Position( L, source ) = fail or Position( L, range ) = fail then
-    L := CanonicalizeMorphismOfDirectSumsOfOModules( phi );
-    return List( L, l -> List( l, f -> MorphismToListOfRecords_VectorBundles( f )[1][1] ) );
-fi;
-
-i := Position( L, source );
-j := Position( L, range );
-
-if i = n+1 or j = n+1 then
-    return [ [ rec( indices := [-i, -j], coefficients := [] ) ] ];
-fi;
-
-if i<j then
-    return [ [ rec( indices := [-i,-j], coefficients := [] ) ] ];
-fi;
-
-G := ShallowCopy( BasisBetweenVectorBundles( S, -i, -j ) );
-G := List( G, UnderlyingMatrix );
-G := UnionOfRows( G );
-mat := UnderlyingMatrix( phi );
-return [ [ rec( indices := [-i,-j], coefficients := EntriesOfHomalgMatrix( RightDivide( mat, G) ) ) ] ];
-end );
-
 
 morphism_between_cotangent_bundles := function( S, r )
 local cat, coefficients, indices;
@@ -1195,7 +1156,6 @@ SetUpperBound( f, b );
 SetUpperBound( Source(f), b );
 SetUpperBound( Range(f), b );
 end;
-
 
 # To compute Beilinson complex there is three functors 
 #    *Beilinson_complex_sym

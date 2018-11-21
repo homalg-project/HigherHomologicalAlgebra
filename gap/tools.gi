@@ -3,9 +3,11 @@
 LoadPackage( "GradedRing" );
 LoadPackage( "GradedModules" );
 
-DeclareGlobalVariable( "WithComments" );
-MakeReadWriteGlobal("WithComments");
-WithComments := false;
+if not IsBound( WithComments ) then
+    DeclareGlobalVariable( "WithComments" );
+    MakeReadWriteGlobal("WithComments");
+    WithComments := false;
+fi;
 
 ##
 DeclareAttribute( "HomalgTransposedMat", IsHomalgMatrix );
