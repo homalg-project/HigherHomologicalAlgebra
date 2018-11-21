@@ -195,6 +195,7 @@ InstallMethod( LFunctor,
             local l, source, range;
             l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
             l := List( l, m -> S * MatrixOfMap( m, 1, 1 ) );
+            #l := List( l, m -> m!.matrices!.( "[ 1, 1 ]" ) * S );
             l := Sum( List( [ 1 .. n ], j -> ind_sym[ j ]* l[ j ] ) );
             source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
             range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
@@ -222,28 +223,27 @@ InstallMethod( LFunctor,
 
     AddMorphismFunction( L, 
         function( new_source, f, new_range )
-        local M, N, G1, G2, mors;
+        local M, N, mors;
+
         M := Source( f );
         N := Range( f );
+        
         mors := MapLazy( IntegersList, 
-                 function( k )
-                local hM, hN, hMk, hNk, hMk_, hNk_, iMk, iNk, l;
+                function( k )
+                local Mk, Nk, iMk, iNk, l;
                 # There is a reason to write the next two lines like this
                 # See AdjustedGenerators.
-                hM := LeftPresentationWithDegrees( UnderlyingMatrix( M ), GeneratorDegrees( M ) );
-                hN := LeftPresentationWithDegrees( UnderlyingMatrix( N ), GeneratorDegrees( N ) );
-                hMk := HomogeneousPartOverCoefficientsRing( -k, hM );
-                hNk := HomogeneousPartOverCoefficientsRing( -k, hN );
-                G1 := GetGenerators( hMk );
-                G2 := GetGenerators( hNk );
-                if Length( G1 ) = 0 or Length( G2 ) = 0 then 
-                    return ZeroMorphism( new_source[ k ], new_range[ k ] );
+                Mk := GradedLeftPresentationGeneratedByHomogeneousPart( M, -k );
+                Nk := GradedLeftPresentationGeneratedByHomogeneousPart( N, -k );
+                iMk := EmbeddingInSuperObject( Mk );
+                iNk := EmbeddingInSuperObject( Nk );
+                
+                if not IsMonomorphism( iNk ) then
+                  Error( "Very serious: You think something is mono, but it is not" );
                 fi;
-                hMk_ := UnionOfRows( G1 )* KS;
-                hNk_ := UnionOfRows( G2 )* KS;
-                iMk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hMk_ ), KS, List( [1..NrRows( hMk_ ) ], i -> -k ) ), hMk_, M );
-                iNk := GradedPresentationMorphism( GradedFreeLeftPresentation( NrRows( hNk_ ), KS, List( [1..NrRows( hNk_ ) ], i -> -k ) ), hNk_, N );
-                l := Lift( PreCompose( iMk, f ), iNk );
+
+                l := LiftAlongMonomorphism( iNk, PreCompose( iMk, f ) );
+
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 end, 1 );
 
@@ -354,6 +354,7 @@ InstallMethod( TateResolution,
     diffs := MapLazy( IntegersList, 
         function( i )
         if i <= reg then
+            #Print( "Total complex is used to compute differential of a Tate resolution\n" );
             return Tot^i;
         elif i = reg + 1 then
             #Print( "kernel and epi from some projective object are used to compute differential of a Tate resolution\n" );
@@ -361,6 +362,7 @@ InstallMethod( TateResolution,
                     EpimorphismFromSomeProjectiveObject( syz ),
                     CyclesAt( Tot, reg ) );
         else
+            #Print( "projective resolution is used to compute differential of a Tate resolution\n" );
             return proj_syz^( i - reg - 1 );
         fi;
         end, 1 );
@@ -390,8 +392,10 @@ InstallMethod( TateResolution,
     mors := MapLazy( IntegersList, 
             function( i )
             if i <= reg then
+                #Print( "Total complex is used when computing a morphism between Tate resolutions\n" );
                 return Tot[ i ];
             else
+                #Print( "Lift is used when computing a morphism between Tate resolutions\n" );
                 return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
             fi;
             end, 1 );
