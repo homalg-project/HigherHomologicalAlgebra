@@ -194,11 +194,10 @@ InstallMethod( LFunctor,
             function( i )
             local l, source, range;
             l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
-            l := List( l, m -> UnderlyingMorphism( m ) );
-            l := List( l, m -> m!.matrices!.( "[ 1, 1 ]" ) * S );
+            l := List( l, m -> S * MatrixOfMap( m, 1, 1 ) );
             l := Sum( List( [ 1 .. n ], j -> ind_sym[ j ]* l[ j ] ) );
-            source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l )], j -> -i ) );
-            range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l )], j -> -i - 1 ) );
+            source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
+            range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
             return GradedPresentationMorphism( source, l, range );
             end, 1 );
         C :=  CochainComplex( cat_lp_sym, diffs );
@@ -357,12 +356,13 @@ InstallMethod( TateResolution,
         if i <= reg then
             return Tot^i;
         elif i = reg + 1 then
+            #Print( "kernel and epi from some projective object are used to compute differential of a Tate resolution\n" );
             return PreCompose( 
                     EpimorphismFromSomeProjectiveObject( syz ),
                     CyclesAt( Tot, reg ) );
         else
             return proj_syz^( i - reg - 1 );
-        fi; 
+        fi;
         end, 1 );
     return ChainComplex(  lp_cat_ext, diffs );
 end );
