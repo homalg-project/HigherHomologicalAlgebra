@@ -336,7 +336,7 @@ end );
 InstallMethod( TateResolution,
     [ IsCapCategoryObject and IsChainComplex ],
     function( C )
-    local chains, cat, S, A, lp_cat_ext, reg, R, ChR, B, Tot, syz, proj_syz, diffs;
+    local chains, cat, S, A, lp_cat_ext, reg, R, ChR, B, Tot, ker, diffs, tot_i;
     # The smalled index where the homology of RR(C) is not zero is s.
     chains := CapCategory( C );
     cat := UnderlyingCategory( chains );
@@ -349,21 +349,18 @@ InstallMethod( TateResolution,
     B := ApplyFunctor( ChR, C );
     B := HomologicalBicomplex( B );
     Tot := TotalComplex( B );
-    syz := Source( CyclesAt( Tot, reg ) );
-    proj_syz := ProjectiveResolution( StalkChainComplex( syz, 0 ) );
     diffs := MapLazy( IntegersList, 
         function( i )
         if i <= reg then
-            #Print( "Total complex is used to compute differential of a Tate resolution\n" );
-            return Tot^i;
-        elif i = reg + 1 then
-            #Print( "kernel and epi from some projective object are used to compute differential of a Tate resolution\n" );
-            return PreCompose( 
-                    EpimorphismFromSomeProjectiveObject( syz ),
-                    CyclesAt( Tot, reg ) );
+            tot_i := Tot^i;
+            if i = reg and IsZeroForMorphisms( tot_i ) then
+                return ZeroObjectFunctorial( lp_cat_ext );
+            else
+                return tot_i;
+            fi;
         else
-            #Print( "projective resolution is used to compute differential of a Tate resolution\n" );
-            return proj_syz^( i - reg - 1 );
+            ker := KernelEmbedding( diffs[ i - 1 ] );
+            return PreCompose( EpimorphismFromSomeProjectiveObject( Source( ker ) ), ker );
         fi;
         end, 1 );
     return ChainComplex(  lp_cat_ext, diffs );
@@ -373,7 +370,7 @@ InstallMethod( TateResolution,
     [ IsCapCategoryMorphism and IsChainMorphism ],
     function( phi )
     local chains, cat, S, A, lp_cat_ext, R, ChR, ChR_phi, B, Tot, reg_range, reg_source,
-    new_source, new_range, reg, mors;
+    new_source, new_range, reg, mors, kernel_lift_1, kernel_lift_2, kernel_functorial;
     chains := CapCategory( phi );
     cat := UnderlyingCategory( chains );
     S := cat!.ring_for_representation_category;
@@ -390,15 +387,24 @@ InstallMethod( TateResolution,
     new_source := TateResolution( Source( phi ) );
     new_range := TateResolution( Range( phi ) );
     mors := MapLazy( IntegersList, 
-            function( i )
-            if i <= reg then
-                #Print( "Total complex is used when computing a morphism between Tate resolutions\n" );
-                return Tot[ i ];
+        function( i )
+        if i < reg then
+            return Tot[ i ];
+        elif i = reg then
+            if IsZeroForObjects( new_source[ i ] ) or IsZeroForObjects( new_range[ i ] ) then
+                return ZeroMorphism( new_source[ i ], new_range[ i ] );
             else
-                #Print( "Lift is used when computing a morphism between Tate resolutions\n" );
-                return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
+                return Tot[ i ];
             fi;
-            end, 1 );
+        elif i = reg + 1 then
+            kernel_lift_1 := KernelLift( new_source^( reg ), new_source^i );
+            kernel_lift_2 := KernelLift( new_range^( reg ), new_range^i );
+            kernel_functorial := KernelObjectFunctorial( new_source^( reg ), mors[ reg ], new_range^( reg ) );
+            return Lift( PreCompose( kernel_lift_1, kernel_functorial ), kernel_lift_2 );
+        else
+            return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
+        fi;
+        end, 1 );
     return ChainMorphism( new_source, new_range, mors );
 end );
 
