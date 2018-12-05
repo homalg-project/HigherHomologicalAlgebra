@@ -4,16 +4,8 @@
 # Declarations
 #
 
-DeclareAttribute( "AsPresentationInCAP",  IsHomalgGradedModule  );
-DeclareAttribute( "AsPresentationInHomalg",  IsGradedLeftOrRightPresentation  );
+#DeclareAttribute( "CastelnuovoMumfordRegularity", IsCapCategoryObject );
 
-DeclareAttribute( "AsPresentationMorphismInCAP",  IsHomalgGradedMap  );
-DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresentationMorphism  );
-
-KeyDependentOperation( "GradedLeftPresentationGeneratedByHomogeneousPart", IsGradedLeftPresentation, IsInt, ReturnTrue );
-DeclareAttribute( "EmbeddingInSuperObject", IsGradedLeftPresentation);
-
-DeclareAttribute( "CastelnuovoMumfordRegularity", IsCapCategoryObject );
 DeclareAttribute( "TateResolution",  IsCapCategoryObject  );
 DeclareAttribute( "TateResolution",  IsCapCategoryMorphism );
 
