@@ -236,6 +236,13 @@ end );
 
 
 
+##
+# Can be very slow comparing to the new one.
+# it is here only  for making tests.
+BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
+    function( S )
+    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
+
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
     ind_ext := IndeterminatesOfExteriorRing( KS );
@@ -256,7 +263,6 @@ end );
             local l, source, range;
             l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
             l := List( l, m -> S * MatrixOfMap( m, 1, 1 ) );
-            #l := List( l, m -> m!.matrices!.( "[ 1, 1 ]" ) * S );
             l := Sum( List( [ 1 .. n ], j -> ind_sym[ j ]* l[ j ] ) );
             source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
             range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
@@ -267,8 +273,7 @@ end );
         d := ShallowCopy( GeneratorDegrees( M ) );
 
         # the output of GeneratorDegrees is in general not integer.
-        Apply( d, String );
-        Apply( d, Int );
+        Apply( d, HomalgElementToInteger );
 
         if Length( d ) = 0 then
             SetLowerBound( C, 0 );
