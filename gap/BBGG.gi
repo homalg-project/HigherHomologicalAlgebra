@@ -5,7 +5,7 @@
 #
 
 InstallMethod( RCochainFunctor,
-                [ IsHomalgGradedRing ],
+    [ IsHomalgGradedRing ],
     function( S )
     local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name; 
 
@@ -550,50 +550,67 @@ InstallMethod( NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsing
       function( source, M, range )
         local A, L, tM, f, P, glp_i, nat_i, Mi, emb_Mi, emb_Mi_in_P, Pi, emb_Pi_in_P, lift, LP, mat, mor, colift;
 
-    A := KoszulDualRing( S );
-    graded_lp_cat := GradedLeftPresentations( A );
-    cochains_graded_lp_cat := CochainComplexCategory( graded_lp_cat );
-    name := Concatenation( "Tate sequence functor from ", Name( graded_lp_cat ), " to ", Name( cochains_graded_lp_cat ) );
-    T := CapFunctor( name, graded_lp_cat, cochains_graded_lp_cat );
-    AddObjectFunction( T, 
-        function( P )
-        local p, q, diffs;
-        p := ProjectiveResolution( P );
-        q := InjectiveResolution( P );
-        diffs := MapLazy( IntegersList, function( i )
-                                        if i<-1 then
-                                            return p^( i + 1 );
-                                        elif i = -1 then
-                                            return PreCompose( EpimorphismFromSomeProjectiveObject( P ), MonomorphismIntoSomeInjectiveObject( P ) );
-                                        else
-                                            return q^( i );
-                                        fi;
-                                        end, 1 );
-        return CochainComplex( graded_lp_cat, diffs );
-    end );
+        A := KoszulDualRing( S );
+        L := LCochainFunctor( S );
 
-    AddMorphismFunction( T,
-        function( new_source, phi, new_range )
-        local source, range, mors; 
-        source := Source( phi );
-        range := Range( phi );
-        mors := MapLazy( IntegersList,  function( i )
-                                        local epi_to_range, epi_to_source;
-                                        if i < -1 then
-                                            return Lift( PreCompose( new_source^i, mors[ i + 1 ] ), new_range^i );
-                                        elif i = -1 then
-                                            epi_to_source := EpimorphismFromSomeProjectiveObject( source );
-                                            epi_to_range := EpimorphismFromSomeProjectiveObject( range );
-                                            return ProjectiveLift( PreCompose( epi_to_source, phi ), epi_to_range );
-                                        else
-                                            return Colift( new_source^( i - 1 ), PreCompose( mors[ i - 1 ], new_range^( i - 1 ) ) );
-                                        fi;
-                                        end, 1 );
-        return CochainMorphism( new_source, new_range, mors );
-    end );
-    return T;
+        tM := AsCochainComplex( TateResolution( M ) );
+
+        f := tM^i;
+        P := KernelObject( f );
+        glp_i := GLPGeneratedByHomogeneousPartFunctor( A, i );
+        nat_i := NatTransFromGLPGeneratedByHomogeneousPartToIdentityFunctor( A, i );
+
+        Mi := ApplyFunctor( glp_i, tM[ i ] );
+        
+        emb_Mi := ApplyNaturalTransformation( nat_i, tM[ i ] );
+        emb_Mi_in_P := KernelLift( f, emb_Mi );
+        
+        Pi := ApplyFunctor( glp_i, P );
+
+        emb_Pi_in_P := ApplyNaturalTransformation(  nat_i,  P );
+
+        lift := LiftAlongMonomorphism( emb_Mi_in_P, emb_Pi_in_P );
+        
+        LP := ApplyFunctor( L, P );
+        mat := UnderlyingMatrix( lift ) * S;
+        mor := GradedPresentationMorphism( LP[ -i ], mat, range );
+        colift := CokernelColift( LP^( -i - 1 ), mor );
+
+        return colift;
+      end );
+
+      return nat;
 end );
 
+InstallMethod( NatTransFromTruncationUsingTateResolutionToIdentityFunctorOp,
+    [ IsHomalgGradedRing, IsInt ],
+    function( S, i )
+      local graded_lp_cat, T, Id, name, nat, nat_tate, nat_homalg;
+
+      graded_lp_cat := GradedLeftPresentations( S );
+      
+      T := TruncationFunctorUsingTateResolutionOp( S, i );
+      Id := IdentityFunctor( graded_lp_cat );
+      name := Concatenation( "A natural transformation from ", Name( T ), " to ", Name( Id ) );
+      nat := NaturalTransformation( name, T, Id );
+
+      nat_tate   := NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg( S, i );
+      nat_homalg := NatTransFromTruncationUsingHomalgToIdentityFunctor( S, i );
+      
+      AddNaturalTransformationFunction( nat,
+      function( source, M, range )
+        local nat_tate_M, nat_homalg_M;
+
+        nat_tate_M := ApplyNaturalTransformation( nat_tate, M );
+        nat_homalg_M := ApplyNaturalTransformation( nat_homalg, M );
+        return PreCompose( nat_tate_M, nat_homalg_M );
+
+      end );
+
+      return nat;
+end );
+
+##
 InstallMethod( TwistFunctorOp,
 	[ IsHomalgGradedRing, IsInt ],
 	function( S, n )
@@ -611,6 +628,7 @@ InstallMethod( TwistFunctorOp,
 	return F;
 end );
 
+##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentation, IsInt ],
     function( M, n )
@@ -619,6 +637,7 @@ InstallMethod( \[\],
     return ApplyFunctor( TwistFunctor( ring, n ), M );
 end );
 
+##
 InstallMethod( DimensionOfTateCohomology,
         [ IsCochainComplex, IsInt, IsInt ],
     function( T, i, k )
@@ -628,7 +647,7 @@ InstallMethod( DimensionOfTateCohomology,
     j := i + k;
     t := -n - k;
     degrees := GeneratorDegrees( T[ j ] );
-    degrees := List( degrees, i -> Int( String( i ) ) );
+    degrees := List( degrees, HomalgElementToInteger );
     return Length( Positions( degrees, -t ) );
 end );
 
