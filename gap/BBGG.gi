@@ -499,66 +499,57 @@ InstallMethod( TateResolution,
     fi;
 end );
 
-# InstallMethod( TateFunctorForCochains,
-#     [ IsHomalgGradedRing ],
-#     function( S )
-#     local A, lp_cat_ext, R, ChR, cochains_sym, cochains_ext, T;
-#     A := KoszulDualRing( S );
-#     lp_cat_ext := GradedLeftPresentations( A );
-#     R := RFunctor( S );
-#     ChR := ExtendFunctorToCochainComplexCategoryFunctor( R );
-#     cochains_sym := CochainComplexCategory( GradedLeftPresentations( S ) );
-#     cochains_ext := CochainComplexCategory( GradedLeftPresentations( A ) );
-#     T := CapFunctor( "to be named", cochains_sym, cochains_ext );
-#     AddObjectFunction( T,
-#         function( C )
-#         local reg, ChR_C, B, syz, proj_syz, diffs, Tot;
-#         reg := CastelnuovoMumfordRegularity( C );
-#         ChR_C := ApplyFunctor( ChR, C );
-#         B := CohomologicalBicomplex( ChR_C );
-#         Tot := TotalComplex( B );
-#         syz := Source( CyclesAt( Tot, reg ) );
-#         proj_syz := ProjectiveResolution( syz );
-#         diffs := MapLazy( IntegersList, 
-#             function( i )
-#             if i >= reg then
-#                 return Tot^i;
-#             elif i = reg - 1 then
-#                 return PreCompose( 
-#                     EpimorphismFromSomeProjectiveObject( syz ),
-#                     CyclesAt( Tot, reg ) );
-#             else
-#                 return proj_syz^( i - reg + 1 );
-#             fi; end, 1 );
-#         return CochainComplex( lp_cat_ext, diffs );
-#     end );
-# 
-#     AddMorphismFunction( T,
-#         function( new_source, phi, new_range )
-#         local ChR_phi, B, Tot, reg_source, reg_range, reg, mors;
-#         ChR_phi := ApplyFunctor( ChR, phi );
-#         B := BicomplexMorphism( ChR_phi );
-#         Tot := TotalComplexFunctorial( B );
-#         reg_source := CastelnuovoMumfordRegularity( Source( phi ) );
-#         reg_range := CastelnuovoMumfordRegularity( Range( phi ) );
-#         reg := Maximum( reg_source, reg_range );
-#         mors := MapLazy( IntegersList, 
-#                 function( i )
-#                 if i >= reg then
-#                     return Tot[ i ];
-#                 else
-#                     return ProjectiveLift( PreCompose( new_source^i, mors[ i + 1 ] ), new_range^i );
-#                 fi;
-#                 end, 1 );
-#         return CochainMorphism( new_source, new_range, mors );
-#         end );
-#     return T;
-# end );
+##
+InstallMethod( TruncationFunctorUsingTateResolutionOp,
+    [ IsHomalgGradedRing, IsInt ],
+    function( S, i )
+      local graded_lp_cat_sym, cochains, L, Tr, Cok, T, F;
 
-InstallMethod( TateSequenceFunctor, 
-    [ IsHomalgGradedRing ],
-    function( S )
-    local A, graded_lp_cat, cochains_graded_lp_cat, name, T;
+      graded_lp_cat_sym := GradedLeftPresentations( S );
+      cochains := CochainComplexCategory( graded_lp_cat_sym );
+      
+      L := LCochainFunctor( S );
+      Tr := BrutalTruncationAboveFunctor( cochains, -i );
+      Cok := CokernelObjectFunctor( cochains, graded_lp_cat_sym, -i - 1 );
+      
+      T := PreCompose( [ L, Tr, Cok ] );
+      F := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+      
+      AddObjectFunction( F,
+      function( M )
+        local tM, P;
+        tM := AsCochainComplex( TateResolution( M ) );
+        P := Source(  CyclesAt( tM, i ) );
+        return ApplyFunctor( T, P );
+      end );
+
+      AddMorphismFunction( F,
+      function( source, phi, range )
+        local t_phi, psi;
+        t_phi := AsCochainMorphism( TateResolution( phi ) );
+        psi := CyclesFunctorialAt( t_phi, i );
+        return ApplyFunctor( T, psi );
+      end );
+
+      return F;
+end );
+
+InstallMethod( NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalgOp,
+    [ IsHomalgGradedRing, IsInt ],
+    function( S, i )
+      local graded_lp_cat, T1, T2, name, nat;
+
+      graded_lp_cat := GradedLeftPresentations( S );
+      
+      T1 := TruncationFunctorUsingTateResolutionOp( S, i );
+      T2 := TruncationFunctorUsingHomalg( S, i );
+      name := Concatenation( "A natural transformation from ", Name( T1 ), " to ", Name( T2 ) );
+      nat := NaturalTransformation( name, T1, T2 );
+
+      AddNaturalTransformationFunction( nat,
+      function( source, M, range )
+        local A, L, tM, f, P, glp_i, nat_i, Mi, emb_Mi, emb_Mi_in_P, Pi, emb_Pi_in_P, lift, LP, mat, mor, colift;
+
     A := KoszulDualRing( S );
     graded_lp_cat := GradedLeftPresentations( A );
     cochains_graded_lp_cat := CochainComplexCategory( graded_lp_cat );
