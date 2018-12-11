@@ -117,16 +117,16 @@ BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
     return R;
 end );
 
-InstallMethod( RCochainFunctor,
-    [ IsHomalgGradedRing ],
-RFunctor
-);
-
+##
 InstallMethod( RChainFunctor,
     [ IsHomalgGradedRing ],
     function( S )
     local A, cat_ext, chains_ext, cochains_ext, cochains_to_chains;
 
+    if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+      Error( "The input should be a graded polynomial ring" );
+    fi;
+ 
     A := KoszulDualRing( S );
     cat_ext := GradedLeftPresentations( A );
 
