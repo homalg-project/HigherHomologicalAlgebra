@@ -340,58 +340,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
     return Int( String( reg ) );
 end );
 
-
 ##
-# InstallMethod( TateResolution, 
-#                 [ IsGradedLeftOrRightPresentation ],
-#     function( M )
-#     local cat, hM, diff, C, r_M;
-#     cat := GradedLeftPresentations( KoszulDualRing( UnderlyingHomalgRing( M ) ) );
-#     hM := AsPresentationInHomalg( M );
-#     r_M := CastelnuovoMumfordRegularity( M );
-# 
-#     #homalg may return wrong answer if I use (i,i+1) when i=r_M.
-#     diff := MapLazy( IntegersList, function( i )
-#         if i = r_M then
-#             return AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i - 1, i + 1 ), i ) );
-#         else
-#             return AsPresentationMorphismInCAP( CertainMorphism( TateResolution( hM, i, i + 1 ), i ) );
-#         fi;
-#         end, 1 );
-#     C := CochainComplex( cat , diff );
-#     SetCastelnuovoMumfordRegularity( C, r_M );
-#     return C;
-# end );
-# 
-# ##
-# InstallMethod( TateResolution,
-#                 [ IsGradedLeftOrRightPresentationMorphism ],
-#     function( phi )
-#     local R, M, N, r_M, r_N, r, tM, tN, RR, RR_phi, mors;
-#     R := UnderlyingHomalgRing( phi );
-#     M := Source( phi );
-#     N := Range( phi );
-#     r_M := CastelnuovoMumfordRegularity( M );
-#     r_N := CastelnuovoMumfordRegularity( N );
-#     r := Maximum( r_M, r_N );
-# 
-#     tM := TateResolution( M );
-#     tN := TateResolution( N );
-# 
-#     RR := RFunctor( R );
-#     RR_phi := ApplyFunctor( RR, phi );
-#     
-#     mors := MapLazy( IntegersList, 
-#                 function( i )
-#                 if i > r then
-#                     return RR_phi[ i ];
-#                 else
-#                     return Lift( PreCompose( tM^i, mors[ i + 1 ] ), tN^i );
-#                 fi;
-#                 end, 1 );
-#     return CochainMorphism( tM, tN, mors );
-# end );
-
 InstallMethod( TateResolution,
     [ IsCapCategoryObject and IsChainComplex ],
     function( C )
@@ -549,17 +498,6 @@ InstallMethod( TateResolution,
         TryNextMethod();
     fi;
 end );
-# InstallMethod( TateFunctor,
-# 	[ IsHomalgGradedRing ],
-#     function( S )
-#     local T, name;
-#     name := Concatenation( "Tate 'functor' from ", Name( GradedLeftPresentations( S ) ), " to ", 
-#     Name( CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) ) );
-#     T := CapFunctor( name, GradedLeftPresentations( S ), CochainComplexCategory( GradedLeftPresentations( KoszulDualRing( S ) ) ) );
-#     AddObjectFunction( T, TateResolution );
-#     AddMorphismFunction( T, function( s, phi, r ) return TateResolution( phi ); end );
-#     return T;
-# end );
 
 # InstallMethod( TateFunctorForCochains,
 #     [ IsHomalgGradedRing ],
