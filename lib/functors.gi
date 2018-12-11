@@ -14,24 +14,26 @@
 #
 ####################################
 
-# Homology and Cohomology functors
-
-BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR", 
+BindGlobal( "COKERNEL_OBJECT_AS_FUNCTOR", 
      function( cat, i, string )
 
-     local functor, complex_cat, name;
+     local functor, complex_cat, name, index;
      
-     if string = "Homology" then
+     if string = "chains" then
      
-     complex_cat := ChainComplexCategory( cat );
+        complex_cat := ChainComplexCategory( cat );
      
-     name := Concatenation( String( i ), "-th homology functor in ", Big_to_Small( Name( cat ) ) );
+        index := -1;
+
+        name := Concatenation( "Functor of cokernel object of the ", String( i ), "'th differential in ", Big_to_Small( Name( complex_cat ) ) );
      
      else
      
-     complex_cat := CochainComplexCategory( cat );
+        complex_cat := CochainComplexCategory( cat );
      
-     name := Concatenation( String( i ), "-th cohomology functor in ", Big_to_Small( Name( cat ) ) );
+        index := 1;
+
+        name := Concatenation( "Functor of cokernel object of the ", String( i ), "'th differential in ", Big_to_Small( Name( complex_cat ) ) );
      
      fi;
      
@@ -41,7 +43,7 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR",
 
      function( complex )
 
-     return HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX( complex, i );
+       return CokernelObject( complex^i );
 
      end );
      
@@ -49,9 +51,92 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR",
 
      function( new_source, map, new_range )
 
-     return HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL( map, i );
+       return CokernelObjectFunctorial( Source( map )^i, map[ i + index ], Range( map )^i );
 
      end );
+     
+     return functor;
+
+end );
+
+BindGlobal( "KERNEL_OBJECT_AS_FUNCTOR", 
+     function( cat, i, string )
+
+     local functor, complex_cat, name, index;
+     
+     if string = "chains" then
+     
+        complex_cat := ChainComplexCategory( cat );
+     
+        name := Concatenation( "Functor of kernel object of the ", String( i ), "'th differential in ", Big_to_Small( Name( complex_cat ) ) );
+     
+     else
+     
+        complex_cat := CochainComplexCategory( cat );
+
+        name := Concatenation( "Functor of kernel object of the ", String( i ), "'th differential in ", Big_to_Small( Name( complex_cat ) ) );
+     
+     fi;
+     
+     functor := CapFunctor( name, complex_cat, cat );
+
+     AddObjectFunction( functor, 
+
+     function( complex )
+
+       return KernelObject( complex^i );
+
+     end );
+     
+     AddMorphismFunction( functor,
+
+     function( new_source, map, new_range )
+
+       return KernelObjectFunctorial( Source( map )^i, map[ i ], Range( map )^i );
+
+     end );
+     
+     return functor;
+
+end );
+
+
+# Homology and Cohomology functors
+
+BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR", 
+    function( cat, i, string )
+      local functor, complex_cat, name;
+      
+      if string = "Homology" then
+        
+        complex_cat := ChainComplexCategory( cat );
+     
+        name := Concatenation( String( i ), "-th homology functor in ", Big_to_Small( Name( cat ) ) );
+      
+      else
+        
+        complex_cat := CochainComplexCategory( cat );
+        
+        name := Concatenation( String( i ), "-th cohomology functor in ", Big_to_Small( Name( cat ) ) );
+      fi;
+     
+      functor := CapFunctor( name, complex_cat, cat );
+
+      AddObjectFunction( functor, 
+
+      function( complex )
+
+        return HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX( complex, i );
+
+      end );
+     
+      AddMorphismFunction( functor,
+
+      function( new_source, map, new_range )
+
+        return HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL( map, i );
+
+      end );
      
      return functor;
 
@@ -296,13 +381,42 @@ end );
 BindGlobal( "FUNCTORS_INSTALLER",
    function( )
 
+InstallMethod( KernelObjectFunctor, 
+               [ IsChainOrCochainComplexCategory, IsCapCategory, IsInt ],
+  function( complex_cat, cat, i )
+
+    if IsChainComplexCategory( complex_cat ) then 
+        return KERNEL_OBJECT_AS_FUNCTOR( cat, i, "chains" );
+    elif IsCochainComplexCategory( complex_cat ) then
+        return KERNEL_OBJECT_AS_FUNCTOR( cat, i, "cochains" );
+    else
+        Error( "The input is wrong" );
+    fi;
+
+end );
+
+InstallMethod( CokernelObjectFunctor, 
+               [ IsChainOrCochainComplexCategory, IsCapCategory, IsInt ],
+  function( complex_cat, cat, i )
+
+    if IsChainComplexCategory( complex_cat ) then 
+        return COKERNEL_OBJECT_AS_FUNCTOR( cat, i, "chains" );
+    elif IsCochainComplexCategory( complex_cat ) then
+        return COKERNEL_OBJECT_AS_FUNCTOR( cat, i, "cochains" );
+    else
+        Error( "The input is wrong" );
+    fi;
+
+end );
+
+
 InstallMethod( HomologyFunctorAt, 
                [ IsChainComplexCategory, IsCapCategory, IsInt ],
   function( complex_cat, cat, i )
 
   return HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR( cat, i, "Homology" );
 
-  end );
+end );
 
 InstallMethod( CohomologyFunctorAt, 
                [ IsCochainComplexCategory, IsCapCategory, IsInt ],

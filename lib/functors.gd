@@ -493,6 +493,9 @@ KeyDependentOperation( "GoodTruncationAboveFunctor", IsCapCategory, IsInt, Retur
 
 KeyDependentOperation( "GoodTruncationBelowFunctor", IsCapCategory, IsInt, ReturnTrue );
 
+DeclareOperation( "KernelObjectFunctor",   [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
+DeclareOperation( "CokernelObjectFunctor", [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
+
 
 DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
