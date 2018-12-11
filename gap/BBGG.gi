@@ -139,10 +139,102 @@ InstallMethod( RChainFunctor,
 
 end );
 
-InstallMethod( LFunctor, 
+
+##
+InstallMethod( LCochainFunctor, 
             [ IsHomalgGradedRing ],
     function( S )
     local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
+    if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+      Error( "The input should be a graded polynomial ring" );
+    fi;
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    KS := KoszulDualRing( S );
+    ind_ext := IndeterminatesOfExteriorRing( KS );
+    ind_sym := IndeterminatesOfPolynomialRing( S );
+    
+    cat_lp_sym := GradedLeftPresentations( S );
+    cat_lp_ext := GradedLeftPresentations( KS );
+    cochains := CochainComplexCategory( cat_lp_sym );
+    name := Concatenation( "L functor from ", Name( cat_lp_ext ), " to ", Name( cochains ) );
+    L := CapFunctor( name, cat_lp_ext, cochains );
+    
+    AddObjectFunction( L, 
+        function( M )
+        local hM, diffs, C, d;
+        hM := AsPresentationInHomalg( M );
+        diffs := MapLazy( IntegersList, 
+            function( i )
+            local l, source, range;
+            l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
+            l := List( l, m -> S * MatrixOfMap( m, 1, 1 ) );
+            l := Sum( List( [ 1 .. n ], j -> ind_sym[ j ]* l[ j ] ) );
+            source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
+            range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
+            return GradedPresentationMorphism( source, l, range );
+            end, 1 );
+        C :=  CochainComplex( cat_lp_sym, diffs );
+
+        d := ShallowCopy( GeneratorDegrees( M ) );
+
+        # the output of GeneratorDegrees is in general not integer.
+        Apply( d, HomalgElementToInteger );
+
+        if Length( d ) = 0 then
+            SetLowerBound( C, 0 );
+            SetUpperBound( C, 0 );
+        else
+            SetLowerBound( C, -Maximum( d ) - 1 );
+            SetUpperBound( C, -Minimum( d ) + n + 1);
+        fi;
+        
+        return C;
+
+        end );
+
+    AddMorphismFunction( L, 
+        function( new_source, f, new_range )
+        local M, N, mors;
+
+        M := Source( f );
+        N := Range( f );
+        
+        mors := MapLazy( IntegersList, 
+                function( k )
+                local l;
+                l := ApplyFunctor( HomogeneousPartOverCoefficientsRingFunctor( KS, -k ), f );
+                return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
+                end, 1 );
+
+        return CochainMorphism( new_source, new_range, mors );
+        end );
+
+    return L;
+
+end );
+
+##
+InstallMethod( LChainFunctor,
+    [ IsHomalgGradedRing ],
+    function( S )
+    local cat_sym, chains_sym, cochains_sym, cochains_to_chains;
+
+    if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+      Error( "The input should be a graded polynomial ring" );
+    fi;
+ 
+    cat_sym := GradedLeftPresentations( S );
+
+    chains_sym := ChainComplexCategory( cat_sym );
+    cochains_sym := CochainComplexCategory( cat_sym );
+
+    cochains_to_chains := CochainToChainComplexFunctor( cochains_sym, chains_sym );
+
+    return PreCompose( [ LCochainFunctor( S ),  cochains_to_chains ] );
+
+end );
+
+
 
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
