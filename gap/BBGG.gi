@@ -4,7 +4,7 @@
 # Implementations
 #
 
-InstallMethod( RFunctor,
+InstallMethod( RCochainFunctor,
                 [ IsHomalgGradedRing ],
     function( S )
     local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name; 
@@ -28,8 +28,59 @@ InstallMethod( RFunctor,
         d := ShallowCopy( GeneratorDegrees( M ) );
 
         # the output of GeneratorDegrees is in general not integer.
-        Apply( d, String );
-        Apply( d, Int );
+        Apply( d, HomalgElementToInteger );
+
+        if Length( d ) = 0 then
+            SetLowerBound( C, 0 );
+        else
+            SetLowerBound( C, Minimum( d ) - 1 );
+        fi;
+        
+        return C;
+        end );
+
+    AddMorphismFunction( R, 
+        function( new_source, f, new_range )
+        local mors;
+        mors := MapLazy( IntegersList, 
+                function( k )
+                local H, map;
+                H := HomogeneousPartOverCoefficientsRingFunctor( S, k );
+                map := ApplyFunctor( H, f );
+                return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( map )*KoszulDualRing( S ), new_range[ k ] );
+                end, 1 );
+        return CochainMorphism( new_source, new_range, mors );
+        end );
+
+    return R;
+end );
+
+# This is old alternative implementation of the functor R
+# Can be very slow comparing to the new one
+BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
+    function( S )
+    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name; 
+
+    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    KS := KoszulDualRing( S );
+    cat_lp_sym := GradedLeftPresentations( S );
+    cat_lp_ext := GradedLeftPresentations( KS );
+    cochains := CochainComplexCategory( cat_lp_ext );
+    name := Concatenation( "R functor from ", Name( cat_lp_sym ), " to ", Name( cochains ) );
+
+    R := CapFunctor( name, cat_lp_sym, cochains );
+    
+    AddObjectFunction( R, 
+        function( M )
+        local hM, diff, d, C;
+        hM := AsPresentationInHomalg( M );
+        SetPositionOfTheDefaultPresentation( hM, 1 );
+        diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
+        C := CochainComplex( cat_lp_ext , diff );
+        d := ShallowCopy( GeneratorDegrees( M ) );
+
+        # the output of GeneratorDegrees is in general not integer.
+        Apply( d, HomalgElementToInteger );
 
         if Length( d ) = 0 then
             SetLowerBound( C, 0 );
