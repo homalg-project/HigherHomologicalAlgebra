@@ -7,28 +7,28 @@
 #! the corresponding graded lp in <C>homalg</C>.
 #! @Arguments M
 #! @Returns a graded lp in homalg
-DeclareAttribute( "AsPresentationInHomalg",  IsGradedLeftOrRightPresentation  );
+DeclareAttribute( "AsPresentationInHomalg", IsGradedLeftOrRightPresentation  );
 
 #! @Description
 #! The input is a graded lp in homalg and the output is the corresponding graded lp
 #! in <C>CAP</C>.
 #! @Arguments M
 #! @Returns a graded lp in CAP
-DeclareAttribute( "AsPresentationInCAP",  IsHomalgGradedModule  );
+DeclareAttribute( "AsPresentationInCAP", IsHomalgGradedModule  );
 
 #! @Description
 #! The input is a graded lp morphism in CAP and the output is
 #! the corresponding graded lp morphism in <C>homalg</C>.
 #! @Arguments phi
 #! @Returns a graded lp in homalg
-DeclareAttribute( "AsPresentationMorphismInHomalg",  IsGradedLeftOrRightPresentationMorphism  );
+DeclareAttribute( "AsPresentationMorphismInHomalg", IsGradedLeftOrRightPresentationMorphism  );
 
 #! @Description
 #! The input is a graded lp morphism in homalg and the output is the corresponding graded lp morphism
 #! in <C>CAP</C>.
 #! @Arguments phi
 #! @Returns a graded lp in CAP
-DeclareAttribute( "AsPresentationMorphismInCAP",  IsHomalgGradedMap  );
+DeclareAttribute( "AsPresentationMorphismInCAP", IsHomalgGradedMap  );
 
 #! @EndSection
 
