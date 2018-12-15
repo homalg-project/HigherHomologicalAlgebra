@@ -243,7 +243,7 @@ KeyDependentOperation( "CyclesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 KeyDependentOperation( "BoundariesAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! The input is a chain complex and an integer $n$. The output is the generalized embedding 
 #! (defined by span) of the homology object at index $n$.
 #! @BeginLatexOnly
 #! \begin{center}
@@ -275,7 +275,7 @@ KeyDependentOperation( "BoundariesAt", IsChainOrCochainComplex, IsInt, ReturnTru
 KeyDependentOperation( "GeneralizedEmbeddingOfHomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! The input is a chain complex and an integer $n$. The output is the generalized embedding 
 #! (defined by span) on the homology object at index $n$.
 #! @BeginLatexOnly
 #! \begin{center}
@@ -307,7 +307,7 @@ KeyDependentOperation( "GeneralizedEmbeddingOfHomologyAt", IsChainComplex, IsInt
 KeyDependentOperation( "GeneralizedProjectionOntoHomologyAt", IsChainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain complex category and an integer $n$. The output is the generalized embedding 
+#! The input is a chain complex and an integer $n$. The output is the generalized embedding 
 #! (defined by span) of the cohomology object at index $n$.
 #! @BeginLatexOnly
 #! \begin{center}
@@ -339,7 +339,7 @@ KeyDependentOperation( "GeneralizedProjectionOntoHomologyAt", IsChainComplex, Is
 KeyDependentOperation( "GeneralizedEmbeddingOfCohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
-#! The input is a chain complex category and an integer $n$. The output is the generalized projection 
+#! The input is a chain complex and an integer $n$. The output is the generalized projection 
 #! (defined by span) on the cohomology object at index $n$.
 #! @BeginLatexOnly
 #! \begin{center}
