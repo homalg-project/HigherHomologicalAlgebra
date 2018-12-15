@@ -83,6 +83,12 @@ DeclareAttribute( "BeilinsonReplacement", IsCapCategoryObject );
 #! @Returns a chain or cochain complex
 DeclareAttribute( "BeilinsonReplacement", IsCapCategoryMorphism );
 
+#! @Description
+#! @Arguments M
+#! The inpute is a homalg matrix or anything that has attribute <C>UnderlyingMatrix</C>. It views the entries using the browse package. To quit: <C>q+y</C>.
+#! @Returns nothing
+DeclareGlobalFunction( "ShowMatrix" );
+
 #! @EndSection
 
 ##

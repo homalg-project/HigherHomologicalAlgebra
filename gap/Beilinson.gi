@@ -1,5 +1,30 @@
 
-##
+InstallGlobalFunction( ShowMatrix,
+ function( C )
+    local mat;
+
+    if TestPackageAvailability( "Browse" ) = fail then
+      Error( "Browse could not be loaded!" );
+    else
+      LoadPackage( "Browse" );
+    fi;
+
+    if IsHomalgMatrix( C ) then
+      mat := C;
+    elif IsCapCategoryCell( C ) and HasUnderlyingMatrix( C ) then
+      mat := UnderlyingMatrix( C );
+    else
+      return fail;
+    fi;
+
+    if NrRows( mat ) * NrColumns( mat ) = 0 then
+      Display( mat );
+    else
+      Browse( EntriesOfHomalgMatrixAsListList( mat ) );
+    fi;
+ end );
+
+ ##
 InstallMethod( TwistedOmegaModuleOp,
     [ IsExteriorRing, IsInt ],
     function( A, i )
