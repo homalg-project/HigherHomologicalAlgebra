@@ -534,8 +534,7 @@ InstallMethod( TruncationFunctorUsingTateResolutionOp,
       return F;
 end );
 
-InstallMethod( NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalgOp,
-    [ IsHomalgGradedRing, IsInt ],
+BindGlobal( "NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg_old",
     function( S, i )
       local graded_lp_cat, T1, T2, name, nat;
 
@@ -584,6 +583,86 @@ end );
 
 InstallMethod( NatTransFromTruncationUsingTateResolutionToIdentityFunctorOp,
     [ IsHomalgGradedRing, IsInt ],
+    function( S, i )
+      local A, inds, n, graded_lp_cat, T, Id, name, nat;
+
+      A := KoszulDualRing( S );
+
+      inds := IndeterminatesOfExteriorRing( A );
+
+      n := Length( inds );
+
+      graded_lp_cat := GradedLeftPresentations( S );
+      
+      T := TruncationFunctorUsingTateResolutionOp( S, i );
+      Id := IdentityFunctor( graded_lp_cat );
+
+      name := Concatenation( "A natural transformation from ", Name( T ), " to ", Name( Id ) );
+      nat := NaturalTransformation( name, T, Id );
+
+      AddNaturalTransformationFunction( nat,
+      function( source, M, range )
+        local L, tM, f, ker_emb, tM_i, htM_i, nat_i, L_ker_emb, emb_Mi, some_proj, max, mat, from_proj_to_Mi, mor, colift;
+        
+        if i < CastelnuovoMumfordRegularity( M ) then
+          Error( "regularity of M should be less or equal to ", i );
+        fi;
+
+        L := LCochainFunctor( S );
+
+        tM := AsCochainComplex( TateResolution( M ) );
+
+        f := tM^i;
+        ker_emb := KernelEmbedding( f );
+
+        tM_i := Source( f );
+        htM_i := AsPresentationInHomalg( tM_i );
+
+        if Length( DuplicateFreeList( GeneratorDegrees( tM_i ) ) ) > 1 then
+          Error( "This should not happen, check the regularity of the module!" );
+        fi;
+
+        nat_i := NatTransFromGLPGeneratedByHomogeneousPartToIdentityFunctor( S, i );
+
+        L_ker_emb := ApplyFunctor( L, ker_emb );
+        
+        emb_Mi := ApplyNaturalTransformation( nat_i, M );
+        
+        some_proj := SomeProjectiveObject( Source( emb_Mi ) );
+
+        max := HomalgElementToInteger( Maximum( GeneratorDegrees( tM_i ) ) );
+        
+        L := List( [ 1 .. n ], j -> RepresentationMapOfRingElement( inds[j], htM_i, max - j + 1 ) );
+
+        mat := Product( List( L, MatrixOfMap ) );
+
+        if LeftInverse( mat ) <> RightInverse( mat ) then
+          Error( "The matrix is not invertable" );
+        fi;
+        
+        # mat will be identity or -identity, depending on the number of indeterminates and max.
+        mat := LeftInverse( mat );
+
+        from_proj_to_Mi := GradedPresentationMorphism( some_proj, S*mat, Source( emb_Mi ) );
+
+        mor := PreCompose( [ L_ker_emb[ -i ], from_proj_to_Mi, emb_Mi ] );
+        
+        if not IsZeroForMorphisms( PreCompose( Source( L_ker_emb )^( -i - 1 ), mor ) ) then
+          Error( "Something unexpected happened!" );
+        fi;
+
+        colift := CokernelColift( Source( L_ker_emb )^( -i - 1 ), mor );
+
+        return colift;
+      end );
+
+      return nat;
+end );
+
+
+##
+BindGlobal( "NatTransFromTruncationUsingTateResolutionToIdentityFunctor_old",
+#    [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       local graded_lp_cat, T, Id, name, nat, nat_tate, nat_homalg;
 
