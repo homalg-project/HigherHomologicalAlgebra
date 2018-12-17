@@ -689,6 +689,41 @@ BindGlobal( "NatTransFromTruncationUsingTateResolutionToIdentityFunctor_old",
       return nat;
 end );
 
+InstallGlobalFunction( RandomGradedPresentationMorphism,
+    function( R, m, u, n, v, D )
+    local d_A_1, d_A_2, d_B_1, d_B_2, d_C_1, d_C_2, A, B, C, M, N;
+    if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
+    d_A_1 := List( [ 1 .. m ], i -> Random( D ) );
+    d_A_2 := List( [ 1 .. n ], i -> Maximum( d_A_1 ) + Random( [ -1 .. 2 ] ) );
+    d_B_1 := d_A_2;
+    d_B_2 := List( [ 1 .. u ], i -> Maximum( d_B_1 ) + Random( [ -1 .. 2 ] ) );
+    d_C_1 := d_B_2;
+    d_C_2 := List( [ 1 .. v ], i -> Maximum( d_C_1 ) + Random( [ -1 .. 2 ] ) );
+
+    A := RandomMatrixBetweenGradedFreeLeftModules( d_A_1, d_A_2, R );
+    B := RandomMatrixBetweenGradedFreeLeftModules( d_B_1, d_B_2, R );
+    C := RandomMatrixBetweenGradedFreeLeftModules( d_C_1, d_C_2, R );
+    M := AsGradedLeftPresentation( A*B, d_B_2 );
+    N := AsGradedLeftPresentation( B*C, d_C_2 );
+    return GradedPresentationMorphism( M, C, N );
+  else
+    d_A_1 := List( [ 1 .. m ], i -> Random( D ) );
+    d_A_2 := List( [ 1 .. n ], i -> Minimum( d_A_1 ) + Random( [ -2 .. 1 ] ) );
+    d_B_1 := d_A_2;
+    d_B_2 := List( [ 1 .. u ], i -> Minimum( d_B_1 ) + Random( [ -2 .. 1 ] ) );
+    d_C_1 := d_B_2;
+    d_C_2 := List( [ 1 .. v ], i -> Minimum( d_C_1 ) + Random( [ -2 .. 1 ] ) );
+
+    A := RandomMatrixBetweenGradedFreeLeftModules( d_A_1, d_A_2, R );
+    B := RandomMatrixBetweenGradedFreeLeftModules( d_B_1, d_B_2, R );
+    C := RandomMatrixBetweenGradedFreeLeftModules( d_C_1, d_C_2, R );
+    M := AsGradedLeftPresentation( A*B, d_B_2 );
+    N := AsGradedLeftPresentation( B*C, d_C_2 );
+    return GradedPresentationMorphism( M, C, N );
+  fi;
+end );
+
+
 ##
 InstallMethod( TwistFunctorOp,
 	[ IsHomalgGradedRing, IsInt ],

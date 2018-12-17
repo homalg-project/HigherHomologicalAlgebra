@@ -117,6 +117,9 @@ KeyDependentOperation( "NatTransFromGLPGeneratedByHomogeneousPartToIdentityFunct
 #! @Returns a CAP functor
 KeyDependentOperation( "HomogeneousPartOverCoefficientsRingFunctor", IsHomalgGradedRing, IsInt, ReturnTrue );
 
+
+DeclareGlobalFunction( "RandomGradedPresentationMorphism" ); 
+
 #! @EndSection
 
 # to be removed and renamed!
