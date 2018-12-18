@@ -62,10 +62,22 @@ end );
 InstallMethod( AsPresentationMorphismInHomalg,
                 [ IsGradedLeftOrRightPresentationMorphism ],
     function( f )
-      local M, N, g;
+      local M, N, s, t, g;
+
       M := AsPresentationInHomalg( Source( f ) );
       N := AsPresentationInHomalg( Range( f ) );
+      
+      s := PositionOfTheDefaultPresentation( M );
+      t := PositionOfTheDefaultPresentation( N );
+
+      SetPositionOfTheDefaultPresentation( M, 1 );
+      SetPositionOfTheDefaultPresentation( N, 1 );
+
       g :=  GradedMap( UnderlyingMatrix( f ), M, N );
+      
+      SetPositionOfTheDefaultPresentation( M, s );
+      SetPositionOfTheDefaultPresentation( N, t );
+
       SetAsPresentationMorphismInCAP( g, f );
       return g;
 end );
