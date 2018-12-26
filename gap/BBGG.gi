@@ -408,9 +408,9 @@ InstallMethod( TateResolution,
     Tot := TotalComplex( B );
     diffs := MapLazy( IntegersList, 
         function( i )
-        if i <= reg then
+        if i <= reg - 1 then
             tot_i := Tot^i;
-            if i = reg and IsZeroForMorphisms( tot_i ) then
+            if i = reg - 1 and IsZeroForMorphisms( tot_i ) then
                 return ZeroObjectFunctorial( lp_cat_ext );
             else
                 return tot_i;
