@@ -517,7 +517,156 @@ InstallMethod( MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS,
         fi;
     fi;
 end );
- 
+
+##
+InstallMethodWithCache( PATH_FROM_j_TO_i_THROUGHT_TATE_COCHAIN,
+    [ IsInt, IsInt, IsGradedLeftPresentation ],
+    function( j, i, M )
+      local S, graded_lp_cat_sym, coh, t, L, g_morphisms, Lt_k, H, V, span_to_3_arrows, k;
+      
+      if j <= i then
+        Error( "the first argument should be greater than the second!" );
+      fi;
+
+      if i < CastelnuovoMumfordRegularity( M ) then
+        Error( "the second argument should be greater than the regularity of the left module" );
+      fi;
+
+      S := UnderlyingHomalgRing( M );
+
+      graded_lp_cat_sym := GradedLeftPresentations( S );
+
+      coh := CoherentSheavesOverProjectiveSpace( S );
+
+      t := AsCochainComplex( TateResolution( M ) );
+
+      L := LCochainFunctor( S );
+
+      g_morphisms := [  ];
+
+      for k in [ i .. j - 1 ] do
+        Lt_k := ApplyFunctor( L, t^k );
+        H := Lt_k[ -k - 1 ];
+        V := Source( Lt_k )^( -k - 1 );
+        Add( g_morphisms, GeneralizedMorphismBySpan( H, V ) );
+      od;
+    
+      span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );;
+
+      g_morphisms := List( g_morphisms, g -> ApplyFunctor( span_to_3_arrows, g ) );
+
+      return SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
+
+end );
+
+##
+InstallMethodWithCache( PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN,
+    [ IsInt, IsGradedLeftPresentation ], 
+    function( j, M )
+    local S, t, L, g_morphisms, k, Lt_0, Lt_k, H, V, H0, V0, mor0, coh, 
+    graded_lp_cat_sym, span_to_3_arrows, BM, mor_1, mor_2;
+
+    S := UnderlyingHomalgRing( M );
+    
+    graded_lp_cat_sym := GradedLeftPresentations( S );
+
+    coh := CoherentSheavesOverProjectiveSpace( S );
+
+    t := AsCochainComplex( TateResolution( M ) );
+
+    L := LCochainFunctor( S );
+    
+    BM := BeilinsonReplacement( M );
+    
+    mor_1 := GeneralizedProjectionOntoHomologyAt( BM, 0 );
+    
+    Lt_0 := ApplyFunctor( L, t^0 );
+
+    H0 := Lt_0[ -1 ];
+    V0 := CokernelProjection( Source( Lt_0 )^-2 );
+    
+    mor_2 := GeneralizedMorphismBySpan( H0, V0 );
+    
+    g_morphisms := [ mor_1, mor_2 ];
+    
+    for k in [ 1 .. j - 1 ] do
+        Lt_k := ApplyFunctor( L, t^k );
+        H := Lt_k[ -k - 1 ];
+        V := Source( Lt_k )^( -k - 1 );
+        Add( g_morphisms, GeneralizedMorphismBySpan( H, V ) );
+    od;
+   
+    span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );; 
+    
+    g_morphisms := List( g_morphisms, g -> ApplyFunctor( span_to_3_arrows, g ) );
+    
+    return SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
+
+end );
+
+
+InstallMethodWithCache( TRUNCATION_MORPHISM,
+    [ IsInt, IsGradedLeftPresentation ],
+function( i, M )
+    local S, coh, Sh, hM, G, mor, F;
+    
+    S := UnderlyingHomalgRing( M );
+
+    coh := CoherentSheavesOverProjectiveSpace( S );
+    
+    Sh := CanonicalProjection( coh );
+
+    hM := AsPresentationInHomalg( M );
+    
+    SetPositionOfTheDefaultPresentation( hM, 1 );
+    
+    G := GeneratorsOfHomogeneousPart( i, hM );
+    
+    F := GradedFreeLeftPresentation( NrRows( G ), S, List( [ 1 .. NrRows( G ) ], j -> i ) );
+
+    mor := GradedPresentationMorphism( F, G, M );
+    
+    return ApplyFunctor( Sh, mor );
+
+end );
+
+##
+InstallMethodWithCache( MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT,
+    [ IsInt, IsGradedLeftPresentation ],
+    function( i, M )
+      local S, coh, alpha, beta;
+
+      S := UnderlyingHomalgRing( M );
+
+      coh := CoherentSheavesOverProjectiveSpace( S );
+
+      alpha := TRUNCATION_MORPHISM( i, M );
+      
+      alpha := UnderlyingGeneralizedMorphism( alpha );
+
+      beta := PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN( i, M );
+      
+      beta := UnderlyingGeneralizedMorphism( beta );
+
+      return SerreQuotientCategoryMorphism( coh, PreCompose( PseudoInverse( alpha ), beta ) );
+
+end );
+
+##
+InstallMethodWithCache( MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP,
+    [ IsInt, IsGradedLeftPresentation ],
+    function( i, M )
+      local alpha, beta;
+
+      alpha := TRUNCATION_MORPHISM( i, M );
+      
+      beta := PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN( i, M );
+      
+      return PreCompose( PseudoInverse( beta ), alpha );
+
+end );
+
+
 ##
 InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],

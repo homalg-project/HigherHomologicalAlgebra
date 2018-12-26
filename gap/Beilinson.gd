@@ -96,3 +96,15 @@ DeclareOperation( "RECORD_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES", [ IsHomalgG
 DeclareAttribute( "MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS", IsGradedLeftPresentationMorphism );
 DeclareOperation( "LIST_OF_RECORDS_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES", [ IsHomalgGradedRing, IsList ] );
 
+DeclareOperation( "PATH_FROM_j_TO_i_THROUGHT_TATE_COCHAIN", [ IsInt, IsInt, IsGradedLeftPresentation ] );
+DeclareOperation( "TRUNCATION_MORPHISM", [ IsInt, IsGradedLeftPresentation ] );
+DeclareOperation( "PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN",
+[ IsInt, IsGradedLeftPresentation ] );
+
+DeclareOperation(  "MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP",
+    [ IsInt, IsGradedLeftPresentation ] );
+
+DeclareOperation(  "MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT",
+    [ IsInt, IsGradedLeftPresentation ] );
+
+
