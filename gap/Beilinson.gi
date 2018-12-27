@@ -173,15 +173,24 @@ end );
 InstallMethod( BeilinsonReplacement, 
     [ IsCapCategoryObject and IsBoundedChainComplex ],
     function( C )
-    local TC, S, chains, cat, n, diff, diffs, rep, reg;
+      local TC, reg, chains, cat, cochains, S, n, L, Tr, Cok, BB, diff, diffs, rep;
     TC := TateResolution( C );
     reg := CastelnuovoMumfordRegularity( C );
+    
     chains := CapCategory( C );
     cat := UnderlyingCategory( chains );
+    cochains := CochainComplexCategory( cat );
+
     S := cat!.ring_for_representation_category; 
     n := Length( IndeterminatesOfPolynomialRing( S ) );
+    
+    L := LCochainFunctor( S );;
+    Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+    Cok := CokernelObjectFunctor( cochains, cat, -2 );
+    BB := PreCompose( [ L, Tr, Cok ] );
+
     diff := function(i)
-            local B, b, d, u, L;
+            local B, b, d, u;
             B := BeilinsonReplacement( C );
             
             # very nice trick to improve speed and reduce computations
@@ -201,10 +210,10 @@ InstallMethod( BeilinsonReplacement,
                     # Tate is minimal because I am using homalg to compute the projective cover.
                     if ForAll( d, j -> j <= 1 ) then
                         u := UniversalMorphismFromZeroObject( TC[ i - 1 ] );
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( u );
                         SetUpperBound( B, i );
+                        return ApplyFunctor( BB, u );
                     else
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TC^i );
+                        return ApplyFunctor( BB, TC^i );
                     fi;
                 
                 elif i+1 in ComputedDifferentialAts( TC ) then
@@ -212,16 +221,15 @@ InstallMethod( BeilinsonReplacement,
                     # Same as above
                     if ForAll( d, j -> j >= n ) then
                         u := UniversalMorphismIntoZeroObject( TC[ i ] );
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( u );
                         SetLowerBound( B, i - 1 );
+                        return ApplyFunctor( BB, u );
                     else
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TC^i );
+                        return ApplyFunctor( BB, TC^i );
                     fi;
                 else    
-                    L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TC^i );
+                    return ApplyFunctor( BB, TC^i );
                 fi;
 
-                return LIST_OF_RECORDS_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES( S, L );
             fi;
             end;
     diffs := MapLazy( IntegersList, diff, 1 );
@@ -234,14 +242,22 @@ end );
 InstallMethod( BeilinsonReplacement, 
     [ IsCapCategoryMorphism and IsBoundedChainMorphism ],
     function( phi )
-    local Tphi, S, chains, cat, n, mor, mors, rep, source, range;
+    local Tphi, chains, cochains, cat, S, n, L, Tr, Cok, BB, source, range, mor, mors, rep;
     Tphi := TateResolution( phi );
     chains := CapCategory( phi );
     cat := UnderlyingCategory( chains );
+    cochains := CochainComplexCategory( cat );
     S := cat!.ring_for_representation_category;
     n := Length( IndeterminatesOfPolynomialRing( S ) );
+
+    L := LCochainFunctor( S );;
+    Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+    Cok := CokernelObjectFunctor( cochains, cat, -2 );
+    BB := PreCompose( [ L, Tr, Cok ] );
+
     source := BeilinsonReplacement( Source( phi ) );
     range := BeilinsonReplacement( Range( phi ) );
+
     mor :=  function( i )
             local a, b, l, u, L;
             a := source[ i ];
@@ -253,9 +269,9 @@ InstallMethod( BeilinsonReplacement,
             if i >= u or i <= l then
                 return ZeroMorphism( a, b );
             else
-                L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( Tphi[i] );
-                return LIST_OF_RECORDS_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES( S, L );
+                return ApplyFunctor( BB, Tphi[ i ] );
             fi;
+
             end;
     mors := MapLazy( IntegersList, mor, 1 );
     rep := ChainMorphism( source, range, mors );
@@ -289,7 +305,7 @@ end );
 InstallMethod( BeilinsonReplacement, 
     [ IsCapCategoryObject and IsGradedLeftPresentation ],
     function( P )
-    local TP, R, S, chains, cat, n, diff, diffs, rep, reg;
+    local R, TP, reg, S, cat, chains, cochains, n, L, Tr, Cok, BB, diff, diffs, rep;
 
     R := UnderlyingHomalgRing( P );
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
@@ -300,7 +316,14 @@ InstallMethod( BeilinsonReplacement,
 
     cat := GradedLeftPresentations( S );
     chains := ChainComplexCategory( cat );
+    cochains := CochainComplexCategory( cat );
     n := Length( IndeterminatesOfExteriorRing( R ) );
+    
+    L := LCochainFunctor( S );;
+    Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+    Cok := CokernelObjectFunctor( cochains, cat, -2 );
+    BB := PreCompose( [ L, Tr, Cok ] );
+
     diff := function(i)
             local B, b, d, u, L;
             B := BeilinsonReplacement( P );
@@ -323,10 +346,10 @@ InstallMethod( BeilinsonReplacement,
                     # Tate is minimal because I am using homalg to compute the projective cover.
                     if ForAll( d, j -> j <= 1 ) then
                         u := UniversalMorphismFromZeroObject( TP[ i - 1 ] );
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( u );
                         SetUpperBound( B, i );
+                        return ApplyFunctor( BB, u );
                     else
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TP^i );
+                        return ApplyFunctor( BB, TP^i );
                     fi;
                 
                 elif i+1 in ComputedDifferentialAts( TP ) then
@@ -334,18 +357,18 @@ InstallMethod( BeilinsonReplacement,
                     # Same as above
                     if ForAll( d, j -> j >= n ) then
                         u := UniversalMorphismIntoZeroObject( TP[ i ] );
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( u );
                         SetLowerBound( B, i - 1 );
+                        return ApplyFunctor( BB, u );
                     else
-                        L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TP^i );
+                        return ApplyFunctor( BB, TP^i );
                     fi;
                 else
-                    L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( TP^i );
+                    return ApplyFunctor( BB, TP^i );
                 fi;
 
-                return LIST_OF_RECORDS_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES( S, L );
             fi;
             end;
+
     diffs := MapLazy( IntegersList, diff, 1 );
     rep := ChainComplex( cat, diffs );
     return rep;
@@ -358,16 +381,25 @@ end );
 InstallMethod( BeilinsonReplacement,
     [ IsCapCategoryMorphism and IsGradedLeftPresentationMorphism ],
     function( phi )
-    local Tphi, R, S, chains, cat, n, mor, mors, rep, source, range;
+    local R, Tphi, S, cat, cochains, n, L, Tr, Cok, BB, source, range, mor, mors, rep;
     
     R := UnderlyingHomalgRing( phi );
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
 
         Tphi := TateResolution( phi );
         S := KoszulDualRing( R );
+        cat := GradedLeftPresentations( S );
+        cochains := CochainComplexCategory( cat );
         n := Length( IndeterminatesOfPolynomialRing( S ) );
+        
+        L := LCochainFunctor( S );;
+        Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+        Cok := CokernelObjectFunctor( cochains, cat, -2 );
+        BB := PreCompose( [ L, Tr, Cok ] );
+
         source := BeilinsonReplacement( Source( phi ) );
         range := BeilinsonReplacement( Range( phi ) );
+
         mor :=  function( i )
                 local a, b, l, u, L;
                 a := source[ i ];
@@ -387,8 +419,7 @@ InstallMethod( BeilinsonReplacement,
                 if i >= u or i <= l then
                     return ZeroMorphism( a, b );
                 else
-                   L := MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS( Tphi[i] );
-                    return LIST_OF_RECORDS_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES( S, L );
+                   return ApplyFunctor( BB, Tphi[i] );
                 fi;
                 end;
         mors := MapLazy( IntegersList, mor, 1 );
