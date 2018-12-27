@@ -195,7 +195,7 @@ InstallMethod( LCochainFunctor,
             u := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
             
             if u[ 1 ] and i = u[ 2 ] - 1 then
-              Info( InfoWarning, 1, "Basis change is applied when applying the functor L on an object!" );
+              #Info( InfoWarning, 1, "Basis change is applied when applying the functor L on an object!" );
               return AdditiveInverse( l );
             else
               return l;
@@ -240,14 +240,14 @@ InstallMethod( LCochainFunctor,
                 if ( s[ 1 ] and not r[ 1 ] ) or ( not s[ 1 ] and r[ 1 ] ) then
                   if ( s[ 1 ] and k = s[ 2 ] ) or ( r[ 1 ] and k = r[ 2 ] ) then
                     l := AdditiveInverse( l );
-                    Info( InfoWarning, 1, "Basis change is applied when applying the functor L on a morphism!" );
+                    #Info( InfoWarning, 1, "Basis change is applied when applying the functor L on a morphism!" );
                   fi;
                 fi;
                 
                 if s[ 1 ] and r[ 1 ] and s[ 2 ] <> r[ 2 ] then
                   if ( k = s[ 2 ] ) or ( k = r[ 2 ] ) then
                     l := AdditiveInverse( l );
-                    Info( InfoWarning, 1, "Basis change is applied when applying the functor L on a morphism!!" );
+                    #Info( InfoWarning, 1, "Basis change is applied when applying the functor L on a morphism!!" );
                   fi;
                 fi;
 
