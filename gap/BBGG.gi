@@ -445,18 +445,19 @@ InstallMethod( TateResolution,
     new_range := TateResolution( Range( phi ) );
     mors := MapLazy( IntegersList, 
         function( i )
-        if i < reg then
+        if i < reg - 1 then
             return Tot[ i ];
-        elif i = reg then
+        elif i = reg - 1 then
             if IsZeroForObjects( new_source[ i ] ) or IsZeroForObjects( new_range[ i ] ) then
                 return ZeroMorphism( new_source[ i ], new_range[ i ] );
             else
                 return Tot[ i ];
             fi;
-        elif i = reg + 1 then
-            kernel_lift_1 := KernelLift( new_source^( reg ), new_source^i );
-            kernel_lift_2 := KernelLift( new_range^( reg ), new_range^i );
-            kernel_functorial := KernelObjectFunctorial( new_source^( reg ), mors[ reg ], new_range^( reg ) );
+        elif i = reg then
+            kernel_lift_1 := KernelLift( new_source^( i - 1 ), new_source^i );
+            kernel_lift_2 := KernelLift( new_range^( i - 1 ), new_range^i );
+            kernel_functorial := KernelObjectFunctorial( 
+                    new_source^( i - 1 ), mors[ i - 1 ], new_range^( i - 1 ) );
             return Lift( PreCompose( kernel_lift_1, kernel_functorial ), kernel_lift_2 );
         else
             return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
