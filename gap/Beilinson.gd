@@ -107,4 +107,13 @@ DeclareOperation(  "MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GL
 DeclareOperation(  "MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT",
     [ IsInt, IsGradedLeftPresentation ] );
 
+DeclareOperation( "PATH_FROM_j_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN",
+[ IsInt, IsGradedLeftPresentation ] );
+
+DeclareOperation(  "MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP",
+    [ IsInt, IsGradedLeftPresentation ] );
+
+DeclareOperation(  "MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT",
+    [ IsInt, IsGradedLeftPresentation ] );
+
 
