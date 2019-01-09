@@ -745,13 +745,21 @@ end );
 InstallMethodWithCache( MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP,
     [ IsInt, IsGradedLeftPresentation ],
     function( i, M )
-      local alpha, beta;
+      local S, coh, alpha, beta;
+      
+      S := UnderlyingHomalgRing( M );
+      
+      coh := CoherentSheavesOverProjectiveSpace( S );
 
       alpha := TRUNCATION_MORPHISM( i, M );
       
+      alpha := UnderlyingGeneralizedMorphism( alpha );
+      
       beta := PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN( i, M );
       
-      return PreCompose( PseudoInverse( beta ), alpha );
+      beta := UnderlyingGeneralizedMorphism( beta );
+      
+      return SerreQuotientCategoryMorphism( coh, PreCompose( PseudoInverse( beta ), alpha ) );
 
 end );
 
@@ -786,13 +794,21 @@ end );
 InstallMethodWithCache( MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP,
     [ IsInt, IsGradedLeftPresentation ],
     function( i, M )
-      local alpha, beta;
+      local S, coh, alpha, beta;
+      
+      S := UnderlyingHomalgRing( M );
+      
+      coh := CoherentSheavesOverProjectiveSpace( S );
 
       alpha := TRUNCATION_MORPHISM( i, M );
       
+      alpha := UnderlyingGeneralizedMorphism( alpha );
+      
       beta := PATH_FROM_j_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_THROUGHT_TATE_COCHAIN( i, M );
       
-      return PreCompose( PseudoInverse( beta ), alpha );
+      beta := UnderlyingGeneralizedMorphism( beta );
+      
+      return SerreQuotientCategoryMorphism( coh, PreCompose( PseudoInverse( beta ), alpha ) );
 
 end );
 
