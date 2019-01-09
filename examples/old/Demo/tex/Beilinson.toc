@@ -1,0 +1,1 @@
+\contentsline {section}{\numberline {1}The functors $\mathbf {R}$ and $\mathbf {L}$}{1}{section.1}
