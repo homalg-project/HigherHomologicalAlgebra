@@ -584,8 +584,10 @@ InstallMethodWithCache( PATH_FROM_j_TO_i_THROUGHT_TATE_COCHAIN,
     
       span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );;
 
+      Info( InfoBBGG, 1, "Converting span to 3-arrows ..." );  
       g_morphisms := List( g_morphisms, g -> ApplyFunctor( span_to_3_arrows, g ) );
-
+      Info( InfoBBGG, 1, "Converting span to 3-arrows is done!" );
+ 
       return SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
 
 end );
@@ -626,10 +628,12 @@ InstallMethodWithCache( PATH_FROM_j_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_
         V := Source( Lt_k )^( -k - 1 );
         Add( g_morphisms, GeneralizedMorphismBySpan( H, V ) );
     od;
-   
-    span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );; 
     
+    span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );; 
+
+    Info( InfoBBGG, 1, "Converting span to 3-arrows ..." );  
     g_morphisms := List( g_morphisms, g -> ApplyFunctor( span_to_3_arrows, g ) );
+    Info( InfoBBGG, 1, "Converting span to 3-arrows is done!" );
     
     return SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
 
@@ -672,9 +676,16 @@ InstallMethodWithCache( PATH_FROM_j_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TH
    
     span_to_3_arrows := FunctorFromSpansToThreeArrows( graded_lp_cat_sym );; 
     
+    Info( InfoBBGG, 1, "Converting span to 3-arrows ..." );  
     g_morphisms := List( g_morphisms, g -> ApplyFunctor( span_to_3_arrows, g ) );
+    Info( InfoBBGG, 1, "Converting span to 3-arrows is done!" );
     
-    return SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
+
+    Info( InfoBBGG, 1, "Computing Postcompose of generalized morphisms given by 3-arrows ..." );  
+    mor_1 := SerreQuotientCategoryMorphism( coh, PostCompose( g_morphisms ) );
+    Info( InfoBBGG, 1, "Computing Postcompose of generalized morphisms given by 3-arrows is done!" );  
+    
+    return mor_1;
 
 end );
 

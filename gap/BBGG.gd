@@ -4,6 +4,8 @@
 # Declarations
 #
 
+DeclareInfoClass( "InfoBBGG" );
+
 #! @Chapter Operations and attributes
 
 #! @Section Attributes
