@@ -813,6 +813,59 @@ InstallMethodWithCache( MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_
 end );
 
 ##
+InstallMethod( MorphismFromZerothObjectOfBeilinsonReplacementToGLP,
+    [ IsGradedLeftPresentation ],
+
+    function( M )
+      local reg;
+      
+      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
+
+      return MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP( reg + 1, M );
+
+end );
+
+##
+InstallMethod( MorphismFromZerothHomologyOfBeilinsonReplacementToGLP,
+    [ IsGradedLeftPresentation ],
+
+    function( M )
+      local reg;
+      
+      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
+
+      return MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP( reg + 1, M );
+
+end );
+
+##
+InstallMethod( MorphismFromGLPToZerothObjectOfBeilinsonReplacement,
+    [ IsGradedLeftPresentation ],
+
+    function( M )
+      local reg;
+      
+      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
+
+      return MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT( reg + 1, M );
+
+end );
+
+##
+InstallMethod( MorphismFromGLPToZerothHomologyOfBeilinsonReplacement,
+    [ IsGradedLeftPresentation ],
+
+    function( M )
+      local reg;
+      
+      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
+      
+      return MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT( reg + 1, M );
+
+end );
+
+
+##
 InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],
     function( M )

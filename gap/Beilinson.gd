@@ -116,4 +116,10 @@ DeclareOperation(  "MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP"
 DeclareOperation(  "MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT",
     [ IsInt, IsGradedLeftPresentation ] );
 
+DeclareAttribute( "MorphismFromGLPToZerothObjectOfBeilinsonReplacement", IsGradedLeftPresentation );
+DeclareAttribute( "MorphismFromGLPToZerothHomologyOfBeilinsonReplacement", IsGradedLeftPresentation );
+DeclareAttribute( "MorphismFromZerothObjectOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
+DeclareAttribute( "MorphismFromZerothHomologyOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
+
+
 
