@@ -864,7 +864,6 @@ InstallMethod( MorphismFromGLPToZerothHomologyOfBeilinsonReplacement,
 
 end );
 
-
 ##
 InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],

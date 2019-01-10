@@ -85,6 +85,48 @@ DeclareAttribute( "BeilinsonReplacement", IsCapCategoryMorphism );
 
 #! @Description
 #! @Arguments M
+#! The input is graded $S$-lp $M$.
+#! The output is a morphism from the sheafification of $M$ to the 
+#! sheafification of the $0$'th object of its Beilinson replacement.
+#! This morphism induces a quasi-isomorphism from sheafification of $M$ 
+#! considered as a chain  complex concentrated in degree $0$ to the 
+#! sheafification of the Beilinson replacement of $M$.
+#! @Returns a morphism
+DeclareAttribute( "MorphismFromGLPToZerothObjectOfBeilinsonReplacement", IsGradedLeftPresentation );
+
+#! @Description
+#! @Arguments M
+#! The input is graded $S$-lp $M$.
+#! The output is an isomorphism from the Sheafification of $M$ to the 
+#! sheafification of the $0$'th homology of its Beilinson replacement.
+#! @Returns a morphism
+DeclareAttribute( "MorphismFromGLPToZerothHomologyOfBeilinsonReplacement", IsGradedLeftPresentation );
+
+#! @Description
+#! @Arguments M
+#! The input is graded $S$-lp $M$.
+#! The output is a morphism from the 
+#! sheafification of the $0$'th object of the Beilinson replacement of $M$ to
+#! the sheafification of $M$.
+#! This morphism induces a quasi-isomorphism from the 
+#! sheafification of the Beilinson replacement of $M$ to
+#! sheafification of $M$ 
+#! considered as a chain complex concentrated in degree $0$.
+#! @Returns a morphism
+DeclareAttribute( "MorphismFromZerothObjectOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
+
+#! @Description
+#! @Arguments M
+#! The input is graded $S$-lp $M$.
+#! The output is an isomorphism from the the 
+#! sheafification of the $0$'th homology of its Beilinson replacement to
+#! Sheafification of $M$.
+#! @Returns a morphism
+DeclareAttribute( "MorphismFromZerothHomologyOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
+
+
+#! @Description
+#! @Arguments M
 #! The inpute is a homalg matrix or anything that has attribute <C>UnderlyingMatrix</C>. It views the entries using the browse package. To quit: <C>q+y</C>.
 #! @Returns nothing
 DeclareGlobalFunction( "ShowMatrix" );
@@ -115,11 +157,4 @@ DeclareOperation(  "MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP"
 
 DeclareOperation(  "MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT",
     [ IsInt, IsGradedLeftPresentation ] );
-
-DeclareAttribute( "MorphismFromGLPToZerothObjectOfBeilinsonReplacement", IsGradedLeftPresentation );
-DeclareAttribute( "MorphismFromGLPToZerothHomologyOfBeilinsonReplacement", IsGradedLeftPresentation );
-DeclareAttribute( "MorphismFromZerothObjectOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
-DeclareAttribute( "MorphismFromZerothHomologyOfBeilinsonReplacementToGLP", IsGradedLeftPresentation );
-
-
 
