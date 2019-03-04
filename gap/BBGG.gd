@@ -127,8 +127,14 @@ DeclareGlobalFunction( "RandomGradedPresentationMorphism" );
 # to be removed and renamed!
 DeclareOperation( "DimensionOfTateCohomology", [ IsCochainComplex, IsInt, IsInt ] );
 
-KeyDependentOperation( "TwistFunctor", IsHomalgGradedRing, IsInt, ReturnTrue );
+DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsHomalgElement ] );
+DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsList ] );
+DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsInt ] );
+
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsHomalgElement ] );
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsList ] );
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsInt ] );
+
 
 KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, ReturnTrue );

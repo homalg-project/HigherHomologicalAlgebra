@@ -635,6 +635,7 @@ BindGlobal( "NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHo
       return nat;
 end );
 
+##
 InstallMethod( NatTransFromTruncationUsingTateResolutionToIdentityFunctorOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
@@ -713,7 +714,6 @@ InstallMethod( NatTransFromTruncationUsingTateResolutionToIdentityFunctorOp,
       return nat;
 end );
 
-
 ##
 BindGlobal( "NatTransFromTruncationUsingTateResolutionToIdentityFunctor_old",
 #    [ IsHomalgGradedRing, IsInt ],
@@ -744,21 +744,58 @@ BindGlobal( "NatTransFromTruncationUsingTateResolutionToIdentityFunctor_old",
 end );
 
 ##
-InstallMethod( TwistFunctorOp,
-	[ IsHomalgGradedRing, IsInt ],
-	function( S, n )
-	local cat, F;
-	cat := GradedLeftPresentations( S );
-	F := CapFunctor( Concatenation( String( n ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
-	AddObjectFunction( F,
+InstallMethod( TwistFunctor,
+	[ IsHomalgGradedRing, IsHomalgElement ],
+	function( S, degree )
+      local cat, F;
+	  cat := GradedLeftPresentations( S );
+	  F := CapFunctor( Concatenation( String( degree ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
+
+	  AddObjectFunction( F,
 		function( M )
-		return AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - n ) );
+		return AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
 		end );
-	AddMorphismFunction( F,
+        
+	  AddMorphismFunction( F,
 		function( source, f, range )
 		return GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
 		end );
-	return F;
+
+	  return F;
+end );
+
+##
+InstallMethod( TwistFunctor,
+    [ IsHomalgGradedRing, IsList ],
+    function( S, list )
+      local degree;
+      degree := HomalgModuleElement( list, DegreeGroup( S ) );
+      return TwistFunctor( S, degree );
+end );
+
+##
+InstallMethod( TwistFunctor,
+    [ IsHomalgGradedRing, IsInt ],
+    function( S, n )
+      return TwistFunctor( S, [ n ] );
+end );
+
+##
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentation, IsHomalgElement ],
+    function( M, degree )
+    local ring;
+    ring := UnderlyingHomalgRing( M );
+    return ApplyFunctor( TwistFunctor( ring, degree ), M );
+end );
+
+##
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentation, IsList ],
+    function( M, list )
+    local ring;
+    ring := UnderlyingHomalgRing( M );
+    return ApplyFunctor( TwistFunctor( ring, list ), M );
 end );
 
 ##
