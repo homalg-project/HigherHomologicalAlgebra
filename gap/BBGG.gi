@@ -808,6 +808,33 @@ InstallMethod( \[\],
 end );
 
 ##
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentationMorphism, IsHomalgElement ],
+    function( phi, degree )
+    local ring;
+    ring := UnderlyingHomalgRing( phi );
+    return ApplyFunctor( TwistFunctor( ring, degree ), phi );
+end );
+
+##
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentationMorphism, IsList ],
+    function( phi, list )
+    local ring;
+    ring := UnderlyingHomalgRing( phi );
+    return ApplyFunctor( TwistFunctor( ring, list ), phi );
+end );
+
+##
+InstallMethod( \[\],
+    [ IsGradedLeftOrRightPresentationMorphism, IsInt ],
+    function( phi, n )
+    local ring;
+    ring := UnderlyingHomalgRing( phi );
+    return ApplyFunctor( TwistFunctor( ring, n ), phi );
+end );
+
+##
 InstallMethod( DimensionOfTateCohomology,
         [ IsCochainComplex, IsInt, IsInt ],
     function( T, i, k )

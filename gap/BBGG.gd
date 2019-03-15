@@ -134,6 +134,10 @@ DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsInt ] );
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsHomalgElement ] );
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsList ] );
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsInt ] );
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsHomalgElement ] );
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsList ] );
+DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsInt ] );
+
 
 
 KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
