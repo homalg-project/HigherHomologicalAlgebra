@@ -174,69 +174,76 @@ InstallMethod( BeilinsonReplacement,
     [ IsCapCategoryObject and IsBoundedChainComplex ],
     function( C )
       local TC, reg, chains, cat, cochains, S, n, L, Tr, Cok, BB, diff, diffs, rep;
-    TC := TateResolution( C );
-    reg := CastelnuovoMumfordRegularity( C );
-    
-    chains := CapCategory( C );
-    cat := UnderlyingCategory( chains );
-    cochains := CochainComplexCategory( cat );
-
-    S := cat!.ring_for_representation_category; 
-    n := Length( IndeterminatesOfPolynomialRing( S ) );
-    
-    L := LCochainFunctor( S );;
-    Tr := BrutalTruncationAboveFunctor( cochains, -1 );
-    Cok := CokernelObjectFunctor( cochains, cat, -2 );
-    BB := PreCompose( [ L, Tr, Cok ] );
-
-    diff := function(i)
-            local B, b, d, u;
-            B := BeilinsonReplacement( C );
-            
-            # very nice trick to improve speed and reduce computations
-            if i < reg then
-                b := B^( i + 1 );
-            elif i> reg then
+      
+      TC := TateResolution( C );
+      reg := CastelnuovoMumfordRegularity( C );
+      
+      chains := CapCategory( C );
+      cat := UnderlyingCategory( chains );
+      cochains := CochainComplexCategory( cat );
+      
+      S := cat!.ring_for_representation_category; 
+      n := Length( IndeterminatesOfPolynomialRing( S ) );
+      
+      L := LCochainFunctor( S );;
+      Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+      Cok := CokernelObjectFunctor( cochains, cat, -2 );
+      BB := PreCompose( [ L, Tr, Cok ] );
+      
+      diff := function(i)
+              local B, b, d, u;
+              B := BeilinsonReplacement( C );
+              
+              # very nice trick to improve speed and reduce computations
+                           
+              if i = reg then
+                return ApplyFunctor( BB, TC^reg );
+              elif i > reg then
                 b := B^( i - 1 );
-            fi;
-
-            if i> ActiveUpperBound( B ) + 1 or i<= ActiveLowerBound( B ) then
-                return ZeroObjectFunctorial( cat );
-            else
-                if i-1 in ComputedDifferentialAts( TC ) then
-                    d := GeneratorDegrees( TC[ i-1 ] );
-                    # It would be more secure to write j<1, but since the Tate res is minimal,
-                    # there is no units in differentials matrices. Hence it is ok to write i<=1
-                    # Tate is minimal because I am using homalg to compute the projective cover.
-                    if ForAll( d, j -> j <= 1 ) then
-                        u := UniversalMorphismFromZeroObject( TC[ i - 1 ] );
-                        SetUpperBound( B, i );
-                        return ApplyFunctor( BB, u );
-                    else
-                        return ApplyFunctor( BB, TC^i );
-                    fi;
-                
-                elif i+1 in ComputedDifferentialAts( TC ) then
-                    d := GeneratorDegrees( TC[ i ] );
-                    # Same as above
-                    if ForAll( d, j -> j >= n ) then
-                        u := UniversalMorphismIntoZeroObject( TC[ i ] );
-                        SetLowerBound( B, i - 1 );
-                        return ApplyFunctor( BB, u );
-                    else
-                        return ApplyFunctor( BB, TC^i );
-                    fi;
-                else    
-                    return ApplyFunctor( BB, TC^i );
-                fi;
-
-            fi;
-            end;
-    diffs := MapLazy( IntegersList, diff, 1 );
-    rep := ChainComplex( cat, diffs );
-    SetUpperBound( rep, ActiveUpperBound(C)+n-1 );
-    SetLowerBound( rep, ActiveLowerBound(C)-n+1 );
-    return rep;
+              #else
+              #  b := B^( i + 1 );
+              fi;
+              
+              if i> ActiveUpperBound( B ) + 1 then
+                  return UniversalMorphismFromZeroObject( Source( B^( i - 1 ) ) );
+              elif i<= ActiveLowerBound( B ) and not i > reg then
+                  return UniversalMorphismIntoZeroObject( Range( B^( i + 1 ) ) );
+              else
+                  if i-1 in ComputedDifferentialAts( TC ) then
+                      d := GeneratorDegrees( TC[ i-1 ] );
+                      # It would be more secure to write j<1, but since the Tate res is minimal,
+                      # there is no units in differentials matrices. Hence it is ok to write i<=1
+                      # Tate is minimal because I am using homalg to compute the projective cover.
+                      if ForAll( d, j -> j <= 1 ) then
+                          u := UniversalMorphismFromZeroObject( TC[ i - 1 ] );
+                          SetUpperBound( B, i );
+                          return ApplyFunctor( BB, u );
+                      else
+                          return ApplyFunctor( BB, TC^i );
+                      fi;
+                  
+                  elif i+1 in ComputedDifferentialAts( TC ) then
+                      d := GeneratorDegrees( TC[ i ] );
+                      # Same as above
+                      if ForAll( d, j -> j >= n ) then
+                          u := UniversalMorphismIntoZeroObject( TC[ i ] );
+                          SetLowerBound( B, i - 1 );
+                          return ApplyFunctor( BB, u );
+                      else
+                          return ApplyFunctor( BB, TC^i );
+                      fi;
+                  else    
+                      return ApplyFunctor( BB, TC^i );
+                  fi;
+              
+              fi;
+              end;
+      diffs := MapLazy( IntegersList, diff, 1 );
+      rep := ChainComplex( cat, diffs );
+      SetUpperBound( rep, ActiveUpperBound(C)+n-1 );
+      SetLowerBound( rep, ActiveLowerBound(C)-n+1 );
+      rep!.underlying_chain_complex := C;
+      return rep;
 end );
 
 InstallMethod( BeilinsonReplacement, 
