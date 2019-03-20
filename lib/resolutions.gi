@@ -572,6 +572,66 @@ return ShiftLazy( C, 1 );
 
 end );
 
+##
+InstallMethod( MorphismBetweenProjectiveResolutions,
+       [ IsCapCategoryMorphism ],
+function( phi )
+  local cat, P, Q, func, maps, temp;
+
+  if IsChainOrCochainMorphism( phi ) then
+    
+    Error( "Not yet implemented!" );
+  
+  fi;
+
+  cat := CapCategory( phi );
+
+  if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+    
+    Error( "It is not known whether the category has enough projectives or not" );
+  
+  fi;
+
+  if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
+  
+     Error( "The category must have enough projectives" );
+  
+  fi;
+  
+  P := ProjectiveResolution( Source( phi ) );
+  
+  Q := ProjectiveResolution( Range( phi ) );
+ 
+  temp := rec(  );
+
+  func := function( i )
+            local a, b, c;
+            if i > 0 then
+              c := ZeroMorphism( P[i], Q[i] );
+            elif i = 0 then
+              a := PreCompose( EpimorphismFromSomeProjectiveObject( Source( phi ) ), phi );
+              b := EpimorphismFromSomeProjectiveObject( Range( phi ) );
+              c := ProjectiveLift( a, b );
+            else
+              if IsBound( temp!.( i + 1 ) ) then
+                a := KernelLift( Q^( i+1 ), PreCompose( P^i, temp!.( i + 1 ) ) );
+              else
+                a := KernelLift( Q^( i+1 ), PreCompose( P^i, func( i + 1 ) ) );
+              fi;
+              b := KernelLift( Q^( i+1 ), Q^i );
+              c := ProjectiveLift( a, b );
+            fi;
+            temp!.( String( i ) ) := c;
+            return c;
+          end;
+  
+  maps := MapLazy( IntegersList, func, 1 );
+  
+  return CochainMorphism( P, Q, maps );
+
+end );
+
+
 InstallMethod( InjectiveResolution, 
        [ IsCapCategoryObject ],
 function( obj )
@@ -617,3 +677,66 @@ C := CochainComplexWithInductivePositiveSide( d, func );
 return C;
 
 end );
+
+
+# TODO
+InstallMethod( MorphismBetweenInjectiveResolutions,
+       [ IsCapCategoryMorphism ],
+function( phi )
+  local cat, P, Q, func, maps, temp;
+
+  if IsChainOrCochainMorphism( phi ) then
+    
+    Error( "Not yet implemented!" );
+  
+  fi;
+
+  cat := CapCategory( phi );
+
+  if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
+    
+    Error( "It is not known whether the category has enough injectives or not" );
+  
+  fi;
+
+  if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
+  
+     Error( "The category must have enough injectives" );
+  
+  fi;
+  
+  P := InjectiveResolution( Source( phi ) );
+  
+  Q := InjectiveResolution( Range( phi ) );
+ 
+  temp := rec(  );
+
+  func := function( i )
+            local a, b, c;
+            Print( i );
+            if i < 0 then
+              c := ZeroMorphism( P[i], Q[i] );
+            elif i = 0 then
+              a := PreCompose( phi, MonomorphismIntoSomeInjectiveObject( Range( phi ) ) );
+              b := MonomorphismIntoSomeInjectiveObject( Source( phi ) );
+              c := InjectiveColift( b, a );
+            else
+              if IsBound( temp!.( i - 1 ) ) then
+                a := CokernelColift( P^( i - 2 ), PreCompose( temp!.( i - 1 ), Q^( i - 1 )  ) );
+              else
+                a := CokernelColift( P^( i - 2 ), PreCompose( func( i - 1 ), Q^( i - 1 )  ) );
+              fi;
+              b := CokernelColift( P^( i - 2 ), P^( i - 1 ) );
+              c := InjectiveColift( b, a );
+            fi;
+            temp!.( String( i ) ) := c;
+            return c;
+          end;
+  
+  maps := MapLazy( IntegersList, func, 1 );
+  
+  return CochainMorphism( P, Q, maps );
+
+end );
+
+

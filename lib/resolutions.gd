@@ -35,6 +35,13 @@
 #! @Returns a (co)chain complex
 DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 
+#! @Description
+#! The input is a morphism $\alpha$ whose category is abelian with enough projectives. The output is the induced
+#! cochain morphism between the projective resolutions of the source and range of $\alpha$. This morphism is unique up to homotopy.
+#! @Arguments alpha
+#! @Returns a (co)chain morphism
+DeclareAttribute( "MorphismBetweenProjectiveResolutions", IsCapCategoryMorphism );
+
 DeclareOperation( "ProjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
 
 # DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
@@ -51,6 +58,14 @@ DeclareOperation( "ProjectiveResolutionWithBounds", [ IsBoundedChainOrCochainCom
 #! @Arguments arg
 #! @Returns a (co)chain complex
 DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
+
+#! @Description
+#! The input is a morphism $\alpha$ whose category is abelian with enough injectives. The output is the induced
+#! cochain morphism between the injective resolutions of the source and range of $\alpha$.
+#! This morphism is unique up to homotopy.
+#! @Arguments alpha
+#! @Returns a (co)chain morphism
+DeclareAttribute( "MorphismBetweenInjectiveResolutions", IsCapCategoryMorphism );
 
 DeclareOperation( "InjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
 
