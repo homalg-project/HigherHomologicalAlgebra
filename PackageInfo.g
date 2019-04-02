@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesForCAP",
 Subtitle := "Gap package to create (co)chain complexes category of a given Cap category",
-Version := "2018.09.15",
-Date := "2018.09.15", # yyyy.mm.dd format
+Version := "2019.04.01",
+Date := "01/04/2019", # dd/mm/yyyy format
 
 Persons := [
   rec(
@@ -34,7 +34,7 @@ Persons := [
 #IssueTrackerURL := "TODO",
 #SupportEmail := "TODO",
 
-PackageWWWHome := "http://TODO/",
+PackageWWWHome := "https://github.com/kamalsaleh/ComplexesForCAP",
 
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
@@ -67,9 +67,9 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-			   [ "CAP", ">= 2018.05.22" ],
-			   [ "GeneralizedMorphismsForCAP", ">= 2018.06.15" ],
-			   [ "InfiniteLists", ">= 2017.08.01"] ],
+                           [ "CAP", ">= 2018.05.22" ],
+                           [ "GeneralizedMorphismsForCAP", ">= 2018.06.15" ],
+                           [ "InfiniteLists", ">= 2017.08.01"] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
