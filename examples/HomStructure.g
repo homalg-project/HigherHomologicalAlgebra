@@ -230,7 +230,7 @@ Finalize( cat );
 LoadPackage( "FreydCategoriesForCAP" );
 
 basis_of_external_hom_from_tensor_unit2 := function( M )
-  local S, indeterminates, weights_of_indeterminates, D, G, dG, func, positions, L, mats, current_mat, U, i;
+  local S, indeterminates, weights_of_indeterminates, D, G, dG, func, positions, L, mats, current_mat, i;
   
   S := UnderlyingHomalgGradedRing( M );
   indeterminates := Indeterminates( S );
@@ -280,6 +280,15 @@ basis_of_external_hom_from_tensor_unit2 := function( M )
 
 end;
 
+#
+BasisOfExternalHom2 :=
+  function( a, b )
+    local S, hom_a_b, mats;
+    S := UnderlyingHomalgGradedRing( a );
+    hom_a_b := InternalHomOnObjects( a, b );
+    mats := basis_of_external_hom_from_tensor_unit2( hom_a_b );
+    return List( mats, mat -> GradedRowOrColumnMorphism( a, HomalgMatrix( mat, Rank( a ), Rank( b ), S ) ) );
+end;
 
 basis_of_external_hom_from_tensor_unit := function( M )
   local S, weights, n, variables, G, dG, positions, L, mats, current_mat, U, i;
