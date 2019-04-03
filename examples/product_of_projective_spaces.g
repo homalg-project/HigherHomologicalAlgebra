@@ -1,5 +1,7 @@
+LoadPackage( "FreydCategoriesForCAP" );
 LoadPackage( "NConvex" );
 LoadPackage( "BBGG" );
+LoadPackage( "ExamplesForModelCategories" );
 
 multi_linears := function( S )
   local weights, inds, l, cart_l, M, N, L, K;
@@ -14,6 +16,79 @@ multi_linears := function( S )
   K := List( L, l -> Sum( List( l, e -> Product( List( [ 1 .. M ], i -> inds[ i ][ e[ i ] ] ) ) ) ) );
   K := HomalgMatrix( K, S );
   return AsGradedLeftPresentation( K, [ Degree( One( S ) ) ] );
+end;
+
+basis_from_unit_to_graded_row := function( M )
+  local S, weights, n, variables, G, dG, positions, L, mats, current_mat, U, i;
+
+  S := UnderlyingHomalgGradedRing( M );
+  weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+  n := Length( weights );
+  variables := List( weights,  w -> Filtered( Indeterminates( S ), ind -> Degree( ind ) =   w ) );
+  weights := List( weights, w -> 
+               List( EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( w ) ) ), HomalgElementToInteger ) );
+  
+  G := UnzipDegreeList( M );
+  G := List( G, UnderlyingMorphism );
+  G := List( G, MatrixOfMap );
+  G := List( G, EntriesOfHomalgMatrix );
+  G := List( G, g -> List( g, HomalgElementToInteger ) );
+  dG := DuplicateFreeList( G );
+  dG := List( dG, g -> SolutionIntMat( weights, g ) );
+  dG := List( dG, function( g )
+                    if ForAny( g, i -> i < 0 ) then
+                      return  [ [ Zero( S )  ] ];
+                    fi;
+                    return List( [ 1 .. n ], 
+                             i -> List( UnorderedTuples( variables[ i ], g[ i ] ),
+                                    l -> Product( l ) * One( S ) ) );
+                  end );
+  dG := List( dG, g ->
+           Iterated( g, 
+             function( l1, l2 )
+               return ListX( l1, l2, \* );
+             end ) );
+
+  positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
+  L := ListWithIdenticalEntries( Length( G ), 0 );
+  List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
+  
+  mats := [  ];
+
+  for i in [ 1 .. Length( L ) ] do
+    
+    current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
+
+    current_mat[ i ] := L[ i ];
+
+    mats := Concatenation( mats, Cartesian( current_mat ) );
+
+  od;
+
+  U := TensorUnit( CapCategory( M ) );
+  return List( mats, mat -> GradedRowOrColumnMorphism( U, HomalgMatrix( mat, Rank( U ), Rank( M ), S ), M ) );
+end;
+
+coeff_from_unit_to_graded_tow := function( phi )
+  local category, S, K, U, B, A, sol;
+  category := CapCategory( phi );
+  S := UnderlyingHomalgGradedRing( phi );
+  K := CoefficientsRing( S );
+  U := TensorUnit( category );
+  B := basis_from_unit_to_graded_row( Range( phi ) );
+  B := UnionOfRows( List( B, UnderlyingHomalgMatrix) );
+  A := UnderlyingHomalgMatrix( phi );
+  # XB = A
+  sol := RightDivide( A, B );
+  sol := EntriesOfHomalgMatrix( sol );
+  return List( sol, s -> s/K );
+end;
+
+basis_between_graded_rows := function( M, N )
+  local hom_M_N, B;
+  hom_M_N := InternalHomOnObjects( M, N );
+  B := basis_from_unit_to_graded_row( hom_M_N );
+  return List( B, mor -> InternalHomToTensorProductAdjunctionMap( M, N, mor) );
 end;
 
 generators_of_external_hom := function( M, N )
@@ -61,6 +136,50 @@ L := List( L, l -> GradedPresentationMorphism( M, l, N ) );
 return L;
 end;
 
+
+emb_of_power_irr_ideal :=
+  function( S, n )
+    local F, irr, syz, func, entries, degrees, power;
+
+    F := GradedFreeLeftPresentation( 1, S );
+    irr := S!.irrelevant_ideal;
+    syz := SyzygiesOfRows( irr );
+    func := function( e )
+              local ev, list_of_coeff, monomials;
+              if IsZero( e ) then
+                return e;
+              fi;
+              ev := EvalRingElement( e );
+              list_of_coeff := EntriesOfHomalgMatrix( Coefficients( ev ) );
+              list_of_coeff := List( list_of_coeff, c -> String(c)/S );
+              monomials := List( Coefficients( ev )!.monomials, m -> String( m )/S );
+              monomials := List( monomials, m -> m^n );
+              return list_of_coeff * monomials;
+            end;
+    entries := EntriesOfHomalgMatrix( syz );
+    entries := List( entries, func );
+    syz := HomalgMatrix( entries, NrRows( syz ), NrCols( syz ), S );
+
+    entries := EntriesOfHomalgMatrix( irr );
+    entries := List( entries, e -> e^n );
+    irr := HomalgMatrix( entries, NrRows( irr ), NrCols( irr ), S );
+    degrees := ListWithIdenticalEntries( NrCols( syz ), Degree( MatElm( irr, 1, 1 ) ) );
+    power := AsGradedLeftPresentation( syz, degrees );
+    return GradedPresentationMorphism( power, irr,  F );
+end;
+
+# the embedding of B^n+1 in B^n, B^0 = S
+emb_of_two_succ_powers_of_irr_ideal := function( S, n )
+  local irr, H, a, b;
+  if n = 0 then
+    return emb_of_power_irr_ideal( S, 1 );
+  fi;
+  irr := EntriesOfHomalgMatrix( S!.irrelevant_ideal );
+  H := HomalgDiagonalMatrix( irr );
+  a := Source( emb_of_power_irr_ideal( S, n + 1 ) );
+  b := Source( emb_of_power_irr_ideal( S, n ) );
+  return GradedPresentationMorphism( a, H, b );
+end;
 
 ann := function( M )
   local mat, S, F, n, Id, L, ann, f, g;
@@ -159,8 +278,52 @@ sheafifies_to_zero := function( M )
 
 end;
 
+
+test_sat_cochain :=
+     function( M )
+       local S, M_, U, U_, right_unitor, right_unitor_, t, maps, cat;
+
+       S := UnderlyingHomalgRing( M );
+       cat := GradedLeftPresentations( S );
+ 
+       # We need the isomorphism M --> Hom(U,M)
+ 
+       M_ := UnderlyingPresentationObject( M );
+       
+       U := TensorUnit( cat );
+       U_ := UnderlyingPresentationObject( U );
+ 
+       right_unitor := RightUnitorInverse( M );
+       right_unitor_ := UnderlyingPresentationMorphism( right_unitor );
+ 
+       t := TensorProductToInternalHomAdjunctionMap( M_, U_, right_unitor_ );
+       if not IsIsomorphism( t ) then
+         Error( "?" );
+       fi;
+ 
+       t := GradedPresentationMorphism( M, t, InternalHomOnObjects( U, M ) );
+ 
+       maps := MapLazy( IntegersList, function( i )
+ 
+                                        if i < -1 then
+                                          
+                                          return UniversalMorphismFromZeroObject( Source( maps[ i + 1 ] ) );
+                                        
+                                        elif i = -1 then
+ 
+                                          return t;
+ 
+                                        else
+ 
+                                          return InternalHomOnMorphisms( emb_of_two_succ_powers_of_irr_ideal( S, i ), IdentityMorphism( M ) );
+ 
+                                        fi; end, 1 );
+
+         return maps;
+end;
+
 cox_ring_of_product_of_projective_spaces := function( L )
-  local homalg_field, variables, variables_strings, factor_rings, weights, S, irrelevant_ideal;
+  local homalg_field, variables, variables_strings, factor_rings, weights, S, irrelevant_ideal, ring_maps;
 
   homalg_field := HomalgFieldOfRationalsInSingular(  );
 
@@ -169,6 +332,22 @@ cox_ring_of_product_of_projective_spaces := function( L )
   fi;
 
   variables := [ "x_", "y_", "z_", "s_", "t_", "u_", "w_" ];
+
+  ring_maps := List( [ 1 .. Length( L ) ],
+    k -> JoinStringsWithSeparator( Concatenation( List( [ 1 .. Length( L ) ],
+        i -> List( [ 0 .. L[ i ] ], function( j )
+                                      if i = k then
+
+                                        return Concatenation( variables[ i ], String( j ) );
+
+                                      else
+                                        
+                                        return "1";
+                                      
+                                      fi;
+
+                                    end ) ) ), "," ) );
+
   variables_strings := List( [ 1 .. Length( L ) ], 
         i -> List( [ 0 .. L[ i ] ], j -> Concatenation( variables[ i ], String( j ) ) ) );
   variables := List( variables_strings, v -> JoinStringsWithSeparator(v,",") );
@@ -184,19 +363,43 @@ cox_ring_of_product_of_projective_spaces := function( L )
   variables := List( variables_strings, V -> List( V, v -> v/S ) );
   irrelevant_ideal := Iterated( variables, function( V1, V2 ) return ListX( V1, V2, \* ); end );
   S!.irrelevant_ideal := HomalgMatrix( irrelevant_ideal, Length( irrelevant_ideal ), 1, S );
+  ring_maps := List( [ 1 .. Length( L ) ], k -> HomalgMatrix( ring_maps[ k ], Sum( L ) + Length( L ), 1, S!.factor_rings[ k ]  ) );
+  ring_maps := List( [ 1 .. Length( L ) ], k -> RingMap( ring_maps[ k ], S, S!.factor_rings[ k ] ) );
+  S!.ring_maps := ring_maps;
   return S;
 end;
 
 
 S := 0; cat := 0; sub_cat := 0; coh := 0; sh := 0;
+S_1 := 0; cat_1 := 0; coh_1 := 0; sh_1 := 0;
+S_2 := 0; cat_2 := 0; coh_2 := 0; sh_2 := 0;
 
 constructe_categories := function( product )
+    local AQ_1, AQ_2;
     S := cox_ring_of_product_of_projective_spaces( product );
     cat := GradedLeftPresentations( S );
     sub_cat := FullSubcategoryByMembershipFunction( cat, sheafifies_to_zero );
     coh := cat / sub_cat;
     sh := CanonicalProjection( coh );
+
+
+    # first factor
+    S_1 := S!.factor_rings[ 1 ];
+    PREPARE_CATEGORIES_OF_HOMALG_GRADED_POLYNOMIAL_RING( S_1 );
+    cat_1 := GradedLeftPresentations( S_1 );
+    coh_1 := CoherentSheavesOverProjectiveSpace( S_1 );
+    sh_1 := CanonicalProjection( coh_1 );
+
+    S_2 := S!.factor_rings[ 2 ];
+    PREPARE_CATEGORIES_OF_HOMALG_GRADED_POLYNOMIAL_RING( S_2 );
+    cat_2 := GradedLeftPresentations( S_2 );
+    coh_2 := CoherentSheavesOverProjectiveSpace( S_2 );
+    sh_2 := CanonicalProjection( coh_2 );
+
     Print( "S, cat, coh, sh\n" );
+    Print( "S_1, cat_1, coh_1, sh_1\n" );
+    Print( "S_2, cat_2, coh_2, sh_2\n" );
+
     return;
 end;
 
@@ -327,14 +530,313 @@ box_tensor_bifunctor := function( S )
     return F;
 end;
 
-m := InputFromUser( "P^m x P^n, for m = " );
-n := InputFromUser( "and n = " );
-L := Cartesian( [ 0 .. m ], [ 0 .. n ] );
-L := List( L, l -> Concatenation( "Z_", String( l[ 1 ] ), String( l[ 2 ] ) ) );
-constructe_categories( [m,n] );
-A := GradedRing( HomalgFieldOfRationalsInSingular()*JoinStringsWithSeparator(L,",") );
-WeightsOfIndeterminates( A );
+non_zero_elements_in_first_row_and_column :=
+    function( mat )
+      local row_1, col_1;
+      if NrRows( mat ) * NrCols( mat ) = 0 then
+        return [ 0, 0 ];
+      fi;
+      col_1 := EntriesOfHomalgMatrix( CertainColumns( mat, [ 1 ] ) );
+      col_1 := Length( Filtered( col_1, e -> not IsZero( e ) ) );
+      row_1 := EntriesOfHomalgMatrix( CertainRows( mat, [ 1 ] ) );
+      row_1 := Length( Filtered( row_1, e -> not IsZero( e ) ) );
+      return [ col_1, row_1 ];
+end;
 
+decompose_matrix :=
+function( M )
+  local S, n, L, dimensions, non_zeros, func;
+  
+  S := UnderlyingHomalgRing( M );
+  n := Length( Indeterminates( S ) );
+  L := List( [ 1 .. n-1 ], i -> UnderlyingMatrix( TwistedCotangentSheaf( S, i-1 ) ) );
+  Add( L, SyzygiesOfColumns( L[ 1 ] ), 1 );
+  dimensions := List( L, l -> [ NrRows( l ), NrCols( l ) ] );
+  non_zeros := List( L, non_zero_elements_in_first_row_and_column );
+
+  func := function( M )
+    local m, non_zeros_m, p, current_m, current_M; 
+    
+    m := UnderlyingMatrix( M );
+
+    if NrCols( m ) = 0 then
+      
+      return [  ];
+
+    fi;
+
+    non_zeros_m := non_zero_elements_in_first_row_and_column( m );
+
+    if non_zeros_m[ 1 ] = 0 and GeneratorDegrees( M )[ 1 ] = 1 then
+        
+      current_m := CertainColumns( m, [ 2 .. NrCols( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [  2 .. NrCols( m ) ] } );
+      return Concatenation( [ n-1 ], func( current_M  ) );
+
+    elif non_zeros_m[ 1 ] = 0 and GeneratorDegrees( M )[ 1 ] = 0 then
+
+      current_m := CertainColumns( m, [ 2 .. NrCols( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [  2 .. NrCols( m ) ] } );
+      return Concatenation( [ 0 ], func( CertainColumns( m, [ 2 .. NrCols( m ) ] ) ) );
+
+    elif non_zeros_m[ 1 ] <> 0 and non_zeros_m[ 2 ] = 0 then
+
+      current_m := CertainRows( m, [ 2 .. NrRows( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ) );
+      return func( current_M );
+
+    else
+
+      p := Position( non_zeros, non_zeros_m );
+
+      if p <> fail then
+
+        current_m := CertainRows( CertainColumns( m, [ dimensions[p][ 2 ] + 1 .. NrCols( m ) ] ), [ dimensions[p][ 1 ] + 1 .. NrRows( m ) ] );
+        current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [ dimensions[p][ 2 ] + 1 .. NrCols( m ) ] } );
+        return Concatenation(  [ p - 2 ], func( current_M ) );
+
+      else
+
+        return [ fail ];
+
+      fi;
+
+    fi;
+
+  end;
+
+  return func( M );
+
+end;
+
+morphism_into_canonical_object := function( M )
+  local mat, dec, S, syz, zero_sheaf, omega_00, n, L, sources, ranges, mor;
+  
+  if IsBound( M!.canonicalized ) and M!.canonicalized = true then
+    return IdentityMorphism( M );
+  fi;
+
+  mat := UnderlyingMatrix( M );
+  dec := decompose_matrix( M );
+  if dec = [  ] then
+    return UniversalMorphismIntoZeroObject( M );
+  fi;
+  
+  S := UnderlyingHomalgRing( M );
+  syz := SyzygiesOfColumns( UnderlyingMatrix( TwistedCotangentSheaf( S, 0 ) ) );
+  zero_sheaf := AsGradedLeftPresentation( syz, [ 1 ] );
+  omega_00 := GradedFreeLeftPresentation( 1, S, [ 0 ] );
+
+  n := Length( dec );
+
+  L := List( [ 1 .. n ], 
+            function( i )
+
+              if dec[ i ] = -1 then
+                return UniversalMorphismIntoZeroObject( zero_sheaf );
+              elif dec[ i ] = 0 then
+                return GradedPresentationMorphism( TwistedCotangentSheaf( S, 0 ), syz, omega_00 );
+              else
+                return IdentityMorphism( TwistedCotangentSheaf( S, dec[ i ] ) );
+              fi;
+            end );
+
+    sources := List( L, Source );
+    ranges := List( L, Range );
+
+    mor := List( [ 1 .. n ], i -> 
+                List( [ 1 .. n ], function( j )
+                                    if i = j then
+                                      return L[ i ];
+                                    else
+                                      return ZeroMorphism( sources[ i ], ranges[ j ] );
+                                    fi;
+                                   end ) );
+
+    mor := MorphismBetweenDirectSums( mor );
+    mor := GradedPresentationMorphism( M, UnderlyingMatrix( mor ), Range( mor ) );
+    
+    Range( mor )!.canonicalized := true;
+    
+    return mor;
+
+end;
+
+canonicalize_functor := function( S )
+  local cat, Can;
+
+  cat := GradedLeftPresentations( S );
+  Can := CapFunctor( "canonicalize direct sums of twisted cotangent sheaves", cat, cat );
+
+  AddObjectFunction( Can,
+    function( M )
+      return Range( morphism_into_canonical_object( M ) );
+    end );
+
+  AddMorphismFunction( Can,
+    function( source, phi, range )
+      local s, r, psi;
+      s := morphism_into_canonical_object( Source( phi ) );
+      r := morphism_into_canonical_object( Range( phi ) );
+      return Colift( s, PreCompose( phi, r ) );
+    end );
+
+  return Can;
+
+end;
+
+L := InputFromUser( "P^m_1 x ... x P^m_s, for L = " );
+constructe_categories( L );
+
+LFReplacement := function( cell )
+  local S, B, Can;
+  S := UnderlyingHomalgRing( cell );
+  B := BeilinsonReplacement( cell );
+  Can := canonicalize_functor( S );
+  Can := ExtendFunctorToChainComplexCategoryFunctor( Can );
+  B := ApplyFunctor( Can, B );
+  return B;
+end;
+
+LF := function( S )
+  local cat, chains, F;
+
+  cat := GradedLeftPresentations( S );
+  chains := ChainComplexCategory( cat );
+  F := CapFunctor( "to be named", cat, chains );
+  AddObjectFunction( F,
+    function( M )
+      return LFReplacement( M );
+  end );
+
+  AddMorphismFunction( F,
+    function( source, phi, range )
+      return LFReplacement( phi );
+  end );
+
+  return F;
+
+end;
+
+
+U_p1_p1_on_objects :=
+  function( M )
+    local m, S, G, M_1, M_2, LF_M_1, LF_M_2, ch_p_1_star, ch_p_2_star, L;
+
+    m := UnderlyingMatrix( M );
+    S := HomalgRing( m );
+    cat := GradedLeftPresentations( S );
+
+    if NrRows( m ) <> 0 then
+
+      Error( "Wrong input" );
+
+    fi;
+    
+    G := GeneratorDegrees( M );
+    
+    if G = [  ] then
+
+      return ZeroObject( cat );
+
+    elif Length( G ) = 1 then
+      
+      G := List( G, g ->
+             List( 
+               EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( g ) ) ),
+                 HomalgElementToInteger ) );
+
+      M_1 := GradedFreeLeftPresentation( 1, S!.factor_rings[ 1 ], [ G[ 1 ][ 1 ] ] );
+      M_2 := GradedFreeLeftPresentation( 1, S!.factor_rings[ 2 ], [ G[ 1 ][ 2 ] ] );
+
+      LF_M_1 := ApplyFunctor( LF(S_1), M_1 );
+      LF_M_2 := ApplyFunctor( LF(S_2), M_2 );
+
+      ch_p_1_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 1 ) );
+      ch_p_2_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 2 ) );
+
+      M_1 := ApplyFunctor( ch_p_1_star, LF_M_1 );
+      M_2 := ApplyFunctor( ch_p_2_star, LF_M_2 );
+
+      return TensorProductOnObjects( M_1, M_2 );
+
+    else
+
+      Error( "Wrong input" );
+
+    fi;
+
+end;
+
+quit;
+
+U_p1_p1_on_morphisms :=
+  function( phi )
+    local S, cat, M_1, M_2, m_1, m_2, mat, G_1, G_2, mats, 
+      phi_1, phi_2, LF_phi_1, LF_phi_2, ch_p_1_star, ch_p_2_star;
+
+    S := UnderlyingHomalgRing( phi );
+    cat := GradedLeftPresentations( S );
+
+    M_1 := Source( phi );
+    M_2 := Range( phi );
+
+    m_1 := UnderlyingMatrix( M_1 );
+    m_2 := UnderlyingMatrix( M_2 );
+
+    mat := UnderlyingMatrix( phi );
+
+    if NrRows( m_1 ) <> 0 or NrRows( m_2 ) <> 0 then
+
+      Error( "Wrong input" );
+
+    fi;
+    
+    G_1 := GeneratorDegrees( M_1 );
+    G_2 := GeneratorDegrees( M_2 );
+
+    if G_1 = [  ] or G_2 = [  ] then
+
+      return fail;
+
+    elif Length( G_1 ) = 1 and Length( G_2 ) = 1 then
+
+      mats := List( S!.ring_maps, map -> Pullback( map, mat ) );
+
+      G_1 := List( G_1, g ->
+       List(
+         EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( g ) ) ),
+           HomalgElementToInteger ) );
+
+      G_2 := List( G_2, g ->
+       List(
+        EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( g ) ) ),
+           HomalgElementToInteger ) );
+
+      phi_1 := GradedPresentationMorphism(
+                GradedFreeLeftPresentation( 1, S!.factor_rings[ 1 ], [ G_1[ 1 ][ 1 ] ] ),
+                mats[ 1 ],
+                GradedFreeLeftPresentation( 1, S!.factor_rings[ 1 ], [ G_2[ 1 ][ 1 ] ] )
+            );
+
+      phi_2 := GradedPresentationMorphism(
+                GradedFreeLeftPresentation( 1, S!.factor_rings[ 2 ], [ G_1[ 1 ][ 2 ] ] ),
+                mats[ 2 ],
+                GradedFreeLeftPresentation( 1, S!.factor_rings[ 2 ], [ G_2[ 1 ][ 2 ] ] )
+            );
+
+      LF_phi_1 := ApplyFunctor( LF(S_1), phi_1 );
+      LF_phi_2 := ApplyFunctor( LF(S_2), phi_2 );
+
+      ch_p_1_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 1 ) );
+      ch_p_2_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 2 ) );
+
+      phi_1 := ApplyFunctor( ch_p_1_star, LF_phi_1 );
+      phi_2 := ApplyFunctor( ch_p_2_star, LF_phi_2 );
+
+      return TensorProductOnMorphisms( phi_1, phi_2 );
+
+end;
 
 quit;
 create_delta := function( S, i )
