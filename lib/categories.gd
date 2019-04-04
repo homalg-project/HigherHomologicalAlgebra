@@ -126,7 +126,20 @@ DeclareGlobalFunction( "ADD_TENSOR_UNIT_CHAIN" );
 DeclareGlobalFunction( "ADD_BRAIDING_FOR_CHAINS" );
 
 DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP" );
+
 DeclareGlobalFunction( "ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP" );
+
+DeclareGlobalFunction( "ADD_HOM_STRUCTURE_ON_CHAINS" );
+
+DeclareGlobalFunction( "ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS" );
+
+DeclareGlobalFunction( "ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE" );
+
+DeclareGlobalFunction( "ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM" );
+
+DeclareGlobalFunction( "ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE" );
+
+
 
 # DeclareProperty( "HasEnoughProjectives", IsCapCategory );
 # DeclareProperty( "HasEnoughInjectives", IsCapCategory );
