@@ -10,8 +10,8 @@ The "ComplexesForCAP" package is a Gap/CAP package written for constructing chai
 
 Installation
 -----------
-The package can easily be obtained by cloning the repository 
-https://github.com/kamalsaleh/ComplexesForCAP.git
+The package can easily be obtained by cloning the repository
+https://github.com/homalg-project/ComplexesForCAP.git
 in the pkg directory of the Gap installation.
 
 Required packages
@@ -21,7 +21,7 @@ Required packages
   https://github.com/homalg-project/CAP_project
   
 * The infinite lists package "InfiniteLists". You can install it from 
-  https://github.com/kamalsaleh/InfiniteLists.git
+  https://github.com/oysteins/InfiniteLists.git
 
 * You will also need "AutoDoc" package to be able to create the documentation and to perform tests. A fresh version can be installed from
 https://github.com/gap-packages/AutoDoc
