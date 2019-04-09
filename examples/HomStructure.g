@@ -74,6 +74,15 @@ AddHomomorphismStructureOnCategory :=
     local field;
     
     field := FieldOfExternalHom( cat );
+
+    SetRangeCategoryOfHomomorphismStructure( cat, MatrixCategory( field ) );
+
+    AddDistinguishedObjectOfHomomorphismStructure( cat,
+       function( )
+         
+         return VectorSpaceObject( 1, field );
+    
+    end );
     
     ##
     AddHomomorphismStructureOnObjects( cat,
@@ -229,142 +238,184 @@ Finalize( cat );
 ## Example: Graded rows over Cox ring of product of projective spaces
 LoadPackage( "FreydCategoriesForCAP" );
 
-basis_of_external_hom_from_tensor_unit2 := function( M )
+#  function( M )
+#    local S, weights, n, variables, G, dG, positions, L, mats, current_mat, U, i;
+#
+#    S := UnderlyingHomalgGradedRing( M );
+#    weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+#    n := Length( weights );
+#    variables := List( weights,  w -> Filtered( Indeterminates( S ), ind -> Degree( ind ) =   w ) );
+#    weights := List( weights, w -> 
+#                 List( EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( w ) ) ), HomalgElementToInteger ) );
+#    
+#    G := UnzipDegreeList( M );
+#    G := List( G, UnderlyingMorphism );
+#    G := List( G, MatrixOfMap );
+#    G := List( G, EntriesOfHomalgMatrix );
+#    G := List( G, g -> List( g, HomalgElementToInteger ) );
+#    dG := DuplicateFreeList( G );
+#    dG := List( dG, g -> SolutionIntMat( weights, g ) );
+#    dG := List( dG, function( g )
+#                      if ForAny( g, i -> i < 0 ) then
+#                        return  [ [ Zero( S )  ] ];
+#                      fi;
+#                      return List( [ 1 .. n ], 
+#                               i -> List( UnorderedTuples( variables[ i ], g[ i ] ),
+#                                      l -> Product( l ) * One( S ) ) );
+#                    end );
+#    dG := List( dG, g ->
+#             Iterated( g, 
+#               function( l1, l2 )
+#                 return ListX( l1, l2, \* );
+#               end ) );
+#
+#    positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
+#    L := ListWithIdenticalEntries( Length( G ), 0 );
+#    List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
+#    
+#    mats := [  ];
+#    
+#    for i in [ 1 .. Length( L ) ] do
+#      
+#      current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
+#      
+#      current_mat[ i ] := L[ i ];
+#      
+#      if not IsZero( current_mat ) then
+#        
+#        mats := Concatenation( mats, Cartesian( current_mat ) );
+#      
+#      fi;
+#    
+#    od;
+#    
+#    return mats;
+#end 
+#
+##
+#BasisOfExternalHom2 :=
+#  function( a, b )
+#    local S, hom_a_b, mats;
+#    S := UnderlyingHomalgGradedRing( a );
+#    hom_a_b := InternalHomOnObjects( a, b );
+#    mats := basis_of_external_hom_from_tensor_unit2( hom_a_b );
+#    return List( mats, mat -> GradedRowOrColumnMorphism( a, HomalgMatrix( mat, Rank( a ), Rank( b ), S ), b ) );
+#end;
+
+DeclareOperation( "BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW", [ IsGradedRow ] );
+
+InstallMethodWithCrispCache( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
+            [ IsGradedRow ],
+function( M )
   local S, indeterminates, weights_of_indeterminates, D, G, dG, func, positions, L, mats, current_mat, i;
+  
+  if Rank( M ) = 0 then
+    return [  ];
+  fi;
   
   S := UnderlyingHomalgGradedRing( M );
   indeterminates := Indeterminates( S );
-
+  
   weights_of_indeterminates := WeightsOfIndeterminates( S );
   D := List( weights_of_indeterminates, UnderlyingMorphism );
   D := List( D, d -> MatrixOfMap( d ) );
   D := Involution( UnionOfRows( D ) );
   D := EntriesOfHomalgMatrixAsListList( D );
- 
+  
   G := UnzipDegreeList( M );
   G := List( G, UnderlyingMorphism );
   G := List( G, MatrixOfMap );
   G := List( G, EntriesOfHomalgMatrix );
   G := List( G, g -> List( g, HomalgElementToInteger ) );
   dG := DuplicateFreeList( G );
-
+  
   func := function( degree )
-            local solutions;
-            solutions := 4ti2Interface_zsolve_equalities_and_inequalities_in_positive_orthant( D, degree, [], [] )[ 1 ];
-            return List( solutions, sol -> Product( ListN( indeterminates, sol, \^ )  ) );
+            local solutions, new_degree;
+            
+            if not IsList( degree ) then
+              new_degree := [ degree ];
+            else
+              new_degree := degree;
+            fi;
+
+            solutions := 4ti2Interface_zsolve_equalities_and_inequalities_in_positive_orthant( D, new_degree, [], [] )[ 1 ];
+            solutions := List( solutions, sol -> Product( ListN( indeterminates, sol, \^ )  ) );
+
+            if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+
+              solutions := Filtered( solutions, sol -> not IsZero( sol ) );
+
+            fi;
+
+            return  solutions;
+
         end;
 
   dG := List( dG, d -> func( d ) );
-
+  
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
   L := ListWithIdenticalEntries( Length( G ), 0 );
   List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
   
   mats := [  ];
-
+  
   for i in [ 1 .. Length( L ) ] do
     
     current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
-
+    
     current_mat[ i ] := L[ i ];
-
+    
     if not IsZero( current_mat ) then
-
+      
       mats := Concatenation( mats, Cartesian( current_mat ) );
-
+    
     fi;
-
+  
   od;
-
+  
   return mats;
 
-end;
-
-#
-BasisOfExternalHom2 :=
-  function( a, b )
-    local S, hom_a_b, mats;
-    S := UnderlyingHomalgGradedRing( a );
-    hom_a_b := InternalHomOnObjects( a, b );
-    mats := basis_of_external_hom_from_tensor_unit2( hom_a_b );
-    return List( mats, mat -> GradedRowOrColumnMorphism( a, HomalgMatrix( mat, Rank( a ), Rank( b ), S ) ) );
-end;
-
-basis_of_external_hom_from_tensor_unit := function( M )
-  local S, weights, n, variables, G, dG, positions, L, mats, current_mat, U, i;
-
-  S := UnderlyingHomalgGradedRing( M );
-  weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
-  n := Length( weights );
-  variables := List( weights,  w -> Filtered( Indeterminates( S ), ind -> Degree( ind ) =   w ) );
-  weights := List( weights, w -> 
-               List( EntriesOfHomalgMatrix( MatrixOfMap( UnderlyingMorphism( w ) ) ), HomalgElementToInteger ) );
-  
-  G := UnzipDegreeList( M );
-  G := List( G, UnderlyingMorphism );
-  G := List( G, MatrixOfMap );
-  G := List( G, EntriesOfHomalgMatrix );
-  G := List( G, g -> List( g, HomalgElementToInteger ) );
-  dG := DuplicateFreeList( G );
-  dG := List( dG, g -> SolutionIntMat( weights, g ) );
-  dG := List( dG, function( g )
-                    if ForAny( g, i -> i < 0 ) then
-                      return  [ [ Zero( S )  ] ];
-                    fi;
-                    return List( [ 1 .. n ], 
-                             i -> List( UnorderedTuples( variables[ i ], g[ i ] ),
-                                    l -> Product( l ) * One( S ) ) );
-                  end );
-  dG := List( dG, g ->
-           Iterated( g, 
-             function( l1, l2 )
-               return ListX( l1, l2, \* );
-             end ) );
-
-  positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
-  L := ListWithIdenticalEntries( Length( G ), 0 );
-  List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
-  
-  mats := [  ];
-
-  for i in [ 1 .. Length( L ) ] do
-    
-    current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
-
-    current_mat[ i ] := L[ i ];
-
-    if not IsZero( current_mat ) then
-
-      mats := Concatenation( mats, Cartesian( current_mat ) );
-
-    fi;
-
-  od;
-
-  U := TensorUnit( CapCategory( M ) );
-
-  return List( mats, mat -> GradedRowOrColumnMorphism( U, HomalgMatrix( mat, Rank( U ), Rank( M ), S ), M ) );
-end;
-
-#
-InstallMethod( BasisOfExternalHom,
-            [ IsGradedRowOrColumn, IsGradedRowOrColumn ],
-  function( a, b )
-    local hom_a_b, B;
-    hom_a_b := InternalHomOnObjects( a, b );
-    B := basis_of_external_hom_from_tensor_unit( hom_a_b );
-    return List( B, mor -> InternalHomToTensorProductAdjunctionMap( a, b, mor) );
 end );
 
+#
+InstallMethodWithCrispCache( BasisOfExternalHom,
+            [ IsGradedRowOrColumn, IsGradedRowOrColumn ],
+  function( a, b )
+    local S, degrees_a, degrees_b, degrees, hom_a_b, mats;
+
+    S := UnderlyingHomalgGradedRing( a );
+    
+    degrees_a := UnzipDegreeList( a );
+
+    degrees_b := UnzipDegreeList( b );
+
+    degrees := Concatenation( List( degrees_a, a -> List( degrees_b, b -> -a + b ) ) );
+
+    degrees := List( degrees, d -> [ d, 1 ] );
+    
+    # This is the same as the internal hom, but this works for all graded rows.
+    hom_a_b := GradedRow( degrees, S );
+
+    mats := BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW( hom_a_b );
+
+    return List( mats, mat -> GradedRowOrColumnMorphism( a, HomalgMatrix( mat, Rank( a ), Rank( b ), S ), b ) );
+
+end );
+
+##
 InstallMethod( CoefficientsOfLinearMorphism,
             [ IsGradedRowOrColumnMorphism ],
   function( phi )
-    local category, K, a, b, U, psi, hom_a_b, B, A, sol;
+    local category, K, S, a, b, U, degrees_a, degrees_b, degrees, hom_a_b, mat, psi, B, A, sol, list_of_entries,
+    position_of_non_zero_entry, current_coeff, current_coeff_mat, current_mono, position_in_basis,
+    current_term, current_entry;
     
     category := CapCategory( phi );
     
     K := FieldOfExternalHom( category );
-    
+   
+    S := UnderlyingHomalgGradedRing( phi );
+
     a := Source( phi );
     
     b := Range( phi );
@@ -375,13 +426,21 @@ InstallMethod( CoefficientsOfLinearMorphism,
     
     fi;
     
-    U := TensorUnit( category );
+    degrees_a := UnzipDegreeList( a );
+
+    degrees_b := UnzipDegreeList( b );
+
+    degrees := Concatenation( List( degrees_a, a -> List( degrees_b, b -> -a + b ) ) );
+
+    degrees := List( degrees, d -> [ d, 1 ] );
+
+    hom_a_b := GradedRow( degrees, S );
     
-    psi := TensorProductToInternalHomAdjunctionMap( U, a, phi );
-    
-    hom_a_b := Range( psi );
-    
-    B := BasisOfExternalHom( U, hom_a_b );
+    A := UnderlyingHomalgMatrix( phi );
+
+    list_of_entries := ShallowCopy( EntriesOfHomalgMatrix( A ) );
+
+    B := BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW( hom_a_b );
     
     if B = [  ] then
       
@@ -389,19 +448,31 @@ InstallMethod( CoefficientsOfLinearMorphism,
 
     fi;
     
-    B := UnionOfRows( List( B, UnderlyingHomalgMatrix) );
-    
-    A := UnderlyingHomalgMatrix( psi );
-    
     # XB = A
-    sol := RightDivide( A, B );
+    # RightDivide takes a lot time to send the matrix to singular and then to solve it
+    # or I fall in recursion trap, because of call of union of rows or cols.
+
+    sol := ListWithIdenticalEntries( Length( B ), Zero( K) );
+
+    while PositionProperty( list_of_entries, a -> not IsZero( a ) ) <> fail do
+
+      position_of_non_zero_entry := PositionProperty( list_of_entries, a -> not IsZero( a ) );
+      current_entry := list_of_entries[ position_of_non_zero_entry ];
+      current_coeff_mat := Coefficients( EvalRingElement( current_entry ) );
+      current_coeff := MatElm( current_coeff_mat, 1, 1 );
+      current_mono := current_coeff_mat!.monomials[1]/S;
+      current_term := current_coeff/S * current_mono;
+      position_in_basis := PositionProperty( B, b -> b[ position_of_non_zero_entry ] = current_mono );
+      sol[ position_in_basis ] := current_coeff/K;
+      list_of_entries[ position_of_non_zero_entry ] := list_of_entries[ position_of_non_zero_entry ] - current_term;
+
+    od;
     
-    sol := EntriesOfHomalgMatrix( sol );
-    
-    return List( sol, s -> s/K );
-    
+    return sol;
+
 end );
 
+##
 InstallMethod( MultiplyWithHomalgRingElement,
             [ IsMultiplicativeElement, IsGradedRowOrColumnMorphism ],
   function( e, alpha )
@@ -414,137 +485,6 @@ InstallMethod( MultiplyWithHomalgRingElement,
     return GradedRowOrColumnMorphism( Source( alpha ), mat, Range( alpha ) );
     
 end );
-
-hom_struc_on_objects := function( C, D )
-          local chains, cat, H, V, d;
-          
-          chains := CapCategory( C );
-          cat := UnderlyingCategory( chains );
-          if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( D ) ) then 
-             if not ( HasActiveUpperBound( C ) and HasActiveLowerBound( D ) ) then
-                if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( C ) ) then
-                    if not ( HasActiveLowerBound( D ) and HasActiveUpperBound( D ) ) then
-                       Error( "The complexes should be bounded" );
-                    fi;
-                fi;
-             fi;
-          fi;
-          
-          H := function( i, j )
-                 if ( i + j  + 1 ) mod 2 = 0 then 
-                   return  HomomorphismStructureOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) );
-                 else
-                   return AdditiveInverse( HomomorphismStructureOnMorphisms( C^( -i + 1 ), IdentityMorphism( D[ j ] ) ) );
-                 fi;
-               end;
-          
-          V := function( i, j )
-                 return HomomorphismStructureOnMorphisms( IdentityMorphism( C[ -i ] ), D^j );
-               end;
-          
-          d := DoubleChainComplex( MatrixCategory( FieldOfExternalHom( cat ) ), H, V );
-          
-          AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetLeftBound( d, -ActiveUpperBound( C ) + 1 ); end ) );
-          AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetRightBound( d, -ActiveLowerBound( C ) - 1 ); end ) );
-          AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) - 1 ); end ) );
-          AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) + 1 ); end ) );
-      
-      return TotalChainComplex( d );
-
-end;
-
-
-hom_struc_on_morphisms :=
-         function( phi, psi )
-           local source, range, ss, rr, l;
-           
-           source := hom_struc_on_objects( Range( phi ), Source( psi ) );
-           
-           range := hom_struc_on_objects( Source( phi ), Range( psi ) );
-           
-           ss := source!.UnderlyingDoubleComplex;
-           
-           rr := range!.UnderlyingDoubleComplex;
-           
-           l := MapLazy( IntegersList, function( m )
-                                         local ind_s, ind_t, morphisms, obj;
-                                         
-                                         obj := ObjectAt( source, m );
-                                         obj := ObjectAt( range, m );
-                                         ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
-                                         ind_t := rr!.IndicesOfTotalComplex.( String( m ) );
-                                         morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ], 
-                                                              function( i )
-                                                                return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
-                                                                             function( j )
-                                                                               if i=j then 
-                                                                                 return HomomorphismStructureOnMorphisms( phi[ -i ], psi[ m - i ] );
-                                                                               else
-                                                                                 return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( rr, j, m - j ) );
-                                                                               fi;
-                                                                             end );
-                                                              end );
-                                         return MorphismBetweenDirectSums( morphisms );
-                                       end, 1 );
-
-           return ChainMorphism( source, range, l );
-         
-end;
-
-morphism_to_dis_to_hom_struc :=
-      function( phi )
-        local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, hom_C_D, i;
-        
-        C := Source( phi );
-        D := Range( phi );
-        
-        lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
-        upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
-        
-        morphisms_from_distinguished_object := [  ];
-        
-        for i in [ lower_bound .. upper_bound ] do
-          
-          Add( morphisms_from_distinguished_object, InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
-        
-        od;
-        
-        morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
-        
-        hom_C_D := hom_struc_on_objects( C, D );
-
-        return KernelLift( hom_C_D^0, morphism );   
-    
-end;
-
-dis_to_hom_struc_to_morphism :=
-    function( C, D, psi )
-      local lower_bound, upper_bound, hom_C_D, phi, struc_on_objects, L, i;
-
-      lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
-      upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
-
-      hom_C_D := hom_struc_on_objects( C, D );
-
-      phi := PreCompose( psi, CyclesAt( hom_C_D, 0 ) );
-
-      struc_on_objects := [  ];
-
-      for i in [ lower_bound .. upper_bound ] do
-
-        Add( struc_on_objects, HomomorphismStructureOnObjects( C[ i ], D[ i ] ) );
-
-      od;
-
-      L := List( [ 1 .. Length( struc_on_objects ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-
-      L := List( L, l -> PreCompose( phi, l ) );
-
-      L := List( L, l -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( l ) );
-
-      return ChainMorphism( C, D, L );
-end;
-
 
 convert_to_graded_rows := function( S )
   local graded_lp_cat, rows, F;
@@ -575,13 +515,14 @@ convert_to_graded_rows := function( S )
 
 end;
 
-S := GradedRing( HomalgFieldOfRationalsInSingular(  )*"x_0,x_1,y_0,y_1" );
-SetWeightsOfIndeterminates( S, [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1] ] );
+S := GradedRing( HomalgFieldOfRationalsInSingular(  )*"x_0,x_1,x_2,y_0,y_1" );
+weights := InputFromUser( "weights?" );
+SetWeightsOfIndeterminates( S, weights );
 
-cat_rows := CAPCategoryOfGradedRows( S : FinalizeCategory := false );
-SetFieldOfExternalHom( cat_rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
-AddHomomorphismStructureOnCategory( cat_rows );
+rows := CAPCategoryOfGradedRows( S : FinalizeCategory := false );
+SetFieldOfExternalHom( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
+AddHomomorphismStructureOnCategory( rows );
 add_random_methods_to_graded_rows( S );
-Finalize( cat_rows );
+Finalize( rows );
 
 
