@@ -68,7 +68,8 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "CAP", ">= 1.0" ],
                            [ "GAPDoc", ">= 1.5" ],
                             [ "TriangulatedCategoriesForCAP", ">= 1" ],
-                            [ "FrobeniusCategoriesForCAP", ">= 1" ] 
+                            [ "FrobeniusCategoriesForCAP", ">= 1" ],
+                            [ "QuotientCategoriesForCAP", ">= 0" ]
                           ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

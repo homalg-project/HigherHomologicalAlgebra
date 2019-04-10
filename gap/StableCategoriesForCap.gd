@@ -7,112 +7,202 @@
 ##
 #############################################################################
 
-#! Objects of the stable category are the same of the original but morphisms ...
-
-#! @Section Filters
-
-#! @Description
-#!  bla bla
 DeclareCategory( "IsStableCategory",
-                 IsCapCategory );
+                 IsQuotientCategory );
                  
-#! @Description
-#!  The category of objects in the stable category.
-#!  For actual objects this needs to be specialized.
 DeclareCategory( "IsStableCategoryObject",
-                 IsCapCategoryObject );
+                 IsQuotientCategoryObject );
 
-#! @Description
-#!  The category of morphisms in the category of Serre quotients.
-#!  For actual morphisms this needs to be specialized.
 DeclareCategory( "IsStableCategoryMorphism",
-                 IsCapCategoryMorphism );
+                 IsQuotientCategoryMorphism );
 
-DeclareFilter( "WasCreatedAsStableCategory" );
-
-#! @Section General operations
-#! @Description
-#!  Creates a stable category <A>S</A> with name <A>name</A> out of an Abelian category <A>A</A>.
-#!  If <A>name</A> is not given, a generic name is constructed out of the name of <A>A</A>.
-#!  The argument <A>func</A> is the membership function. If <A>func</A> applied on a morphism <A>mor</A>
-#! returns true, then this <A>mor</A> will be zero in the stable category.
-#! @Arguments A,func[,name]
-#! @Returns a CAP category
-DeclareAttribute( "StableCategory", IsCapCategory );
-
-
-#! @Description
-#!  Given a stable category <A>S</A> and a morphism <A>phi</A> in
-#!  the underlying category <A>A</A>,this constructor returns the 
-#! corresponding morphism in the stable category.
-#! @Arguments S, phi
-#! @Returns a morphism
-DeclareAttribute( "AsStableMorphism", IsCapCategoryMorphism );
-
-#! @Description
-#!  Given a stable category <A>S</A> and an object <A>obj</A> in
-#!  the underlying category <A>A</A>,this constructor returns the 
-#! corresponding object in the stable category.
-#! @Arguments S, obj
-#! @Returns an object
-DeclareAttribute( "AsStableObject", IsCapCategoryObject );
-
-#! @Section Attributes
-
-#####################
 ##
-## Attributes
+## Stable colifting structure
+
+DeclareOperation( "ColiftingObject",
+                  [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddColiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+
+###
+DeclareOperation( "MorphismIntoColiftingObjectWithGivenColiftingObject",
+                  [ IsCapCategoryObject, IsCapCategoryObject ] );
+
+DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+
 ##
-#####################
+DeclareOperation( "MorphismIntoColiftingObject",
+                  [ IsCapCategoryObject ] );
 
-#! @Description
-#! This attribute is a function that tests if a given morphism can be factored through a projective function or not.
-#! @Arguments A
-#! @Returns <A>f</A>
-DeclareAttribute( "TestFunctionForStableCategories", IsCapCategory );
+DeclareOperation( "AddMorphismIntoColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
 
-#! @Description
-#! bla bla
-#! @Arguments S
-#! @Returns <A>A</A>
-DeclareAttribute( "UnderlyingCategory" ,IsStableCategory  );
+DeclareOperation( "AddMorphismIntoColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
-#! @Description
-#! bla bla
-#! @Arguments f
-#! @Returns <A>g</A>
-DeclareAttribute( "UnderlyingUnstableMorphism" ,IsStableCategoryMorphism  );
+DeclareOperation( "AddMorphismIntoColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
 
-#! @Description
-#! bla bla
-#! @Arguments f
-#! @Returns <A>g</A>
-DeclareAttribute( "UnderlyingMatrix" ,IsStableCategoryMorphism  );
+DeclareOperation( "AddMorphismIntoColiftingObject",
+                  [ IsCapCategory, IsList ] );
 
-#! @Description
-#! bla bla
-#! @Arguments obj
-#! @Returns <A>obj</A>
-DeclareAttribute( "UnderlyingUnstableObject" ,IsStableCategoryObject  );
-
-#! @Description
-#! bla bla
-#! @Arguments obj
-#! @Returns <A>obj</A>
-DeclareAttribute( "UnderlyingMatrix" ,IsStableCategoryObject  );
-
-
-#####################
 ##
-##   Methods
+DeclareOperation( "ColiftingMorphismWithGivenColiftingObjects",
+                  [ IsCapCategoryMorphism, IsCapCategoryObject, IsCapCategoryObject ] );
+
+DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "ColiftingMorphism",
+                  [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddColiftingMorphism",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddColiftingMorphism",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddColiftingMorphism",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddColiftingMorphism",
+                  [ IsCapCategory, IsList ] );
+
+
+## Stable lifting structure
+
+DeclareOperation( "LiftingObject",
+                  [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddLiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+
+###
+DeclareOperation( "MorphismFromLiftingObjectWithGivenLiftingObject",
+                  [ IsCapCategoryObject, IsCapCategoryObject ] );
+
+DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+
 ##
-#####################
+DeclareOperation( "MorphismFromLiftingObject",
+                  [ IsCapCategoryObject ] );
 
+DeclareOperation( "AddMorphismFromLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
 
+DeclareOperation( "AddMorphismFromLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
+DeclareOperation( "AddMorphismFromLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
 
+DeclareOperation( "AddMorphismFromLiftingObject",
+                  [ IsCapCategory, IsList ] );
 
+##
+DeclareOperation( "LiftingMorphismWithGivenLiftingObjects",
+                  [ IsCapCategoryMorphism, IsCapCategoryObject, IsCapCategoryObject ] );
 
+DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
+                  [ IsCapCategory, IsFunction ] );
 
+DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
+DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "LiftingMorphism",
+                  [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddLiftingMorphism",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddLiftingMorphism",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddLiftingMorphism",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddLiftingMorphism",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "StableCategory",
+            [ IsCapCategory, IsFunction ] );
+
+# These methods call AsQuotientCategory(Object/Morphism)
+DeclareOperation( "AsStableCategoryObject",
+            [ IsStableCategory, IsCapCategoryObject ] );
+
+DeclareOperation( "AsStableCategoryMorphism",
+            [ IsStableCategory, IsCapCategoryMorphism ] );
+
+DeclareAttribute( "StableCategoryByColiftingStructure", IsCapCategory );
+
+DeclareAttribute( "StableCategoryByLiftingStructure", IsCapCategory );
+
+DeclareAttribute( "CongruencyTestFunctionForStableCategory", IsStableCategory );
+
+DeclareAttribute( "CanonicalProjectionFunctor", IsStableCategory );
+
+DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE" );
+
+DeclareGlobalVariable( "CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS" );
+
+DeclareGlobalVariable( "STABLE_CATEGORIES_METHOD_NAME_RECORD" );
 

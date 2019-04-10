@@ -5,5 +5,5 @@
 #
 
 ReadPackage( "StableCategoriesForCap", "gap/StableCategoriesForCap.gd");
-ReadPackage( "StableCategoriesForCAP", "gap/TriangulatedStructure.gd" );
+#ReadPackage( "StableCategoriesForCAP", "gap/TriangulatedStructure.gd" );
 

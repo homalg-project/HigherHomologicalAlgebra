@@ -36,389 +36,434 @@ BindGlobal( "TheTypeOfStableCategoryMorphism",
         NewType( TheFamilyOfCapCategoryMorphisms,
                  IsStableCategoryMorphismRep ) );
 
+##################################
+##
+##  Lifting & Colifting structure
+##
+##################################
+
+InstallValue( CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS, rec( ) );
+
+InstallValue( STABLE_CATEGORIES_METHOD_NAME_RECORD, rec(
+ 
+LiftingObject := rec(
+  installation_name := "LiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "LiftingObject",
+  return_type := "object" ),
+
+LiftingMorphismWithGivenLiftingObjects := rec(
+    installation_name := "LiftingMorphismWithGivenLiftingObjects",
+    filter_list := [ "morphism", "object", "object" ],
+    cache_name := "LiftingMorphismWithGivenLiftingObjects",
+    return_type := "morphism" ),
+
+LiftingMorphism := rec(
+    installation_name := "LiftingMorphism",
+    filter_list := [ "morphism" ],
+    cache_name := "LiftingMorphism",
+    return_type := "morphism" ),
+
+MorphismFromLiftingObjectWithGivenLiftingObject := rec(
+  installation_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
+  filter_list := [ "object", "object" ],
+  cache_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
+  return_type := "morphism" ),
+
+MorphismFromLiftingObject := rec(
+  installation_name := "MorphismFromLiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "MorphismFromLiftingObject",
+  return_type := "morphism" ),
+
+
+ColiftingObject := rec(
+  installation_name := "ColiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "ColiftingObject",
+  return_type := "object" ),
+
+ColiftingMorphismWithGivenColiftingObjects := rec(
+  installation_name := "ColiftingMorphismWithGivenColiftingObjects",
+  filter_list := [ "morphism", "object", "object" ],
+  cache_name := "ColiftingMorphismWithGivenColiftingObjects",
+  return_type := "morphism" ),
+
+ColiftingMorphism := rec(
+  installation_name := "ColiftingMorphism",
+  filter_list := [ "morphism" ],
+  cache_name := "ColiftingMorphism",
+  return_type := "morphism" ),
+  
+MorphismIntoColiftingObjectWithGivenColiftingObject := rec(
+  installation_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
+  filter_list := [ "object", "object" ],
+  cache_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
+  return_type := "morphism" ),
+
+MorphismIntoColiftingObject := rec(
+  installation_name := "MorphismIntoColiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "MorphismIntoColiftingObject",
+  return_type := "morphism" ),
+ 
+) );
+
+CAP_INTERNAL_ENHANCE_NAME_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
+
+CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
+
 ########################
 ##
 ## Installer
 ##
 ########################
 
-
-BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY",
-  
-  function( category )
-    local test_function;
+InstallMethod( StableCategory,
+              [ IsCapCategory, IsFunction ],
+  function( category, membership_function )
+    local congruency_test_function, to_be_finalized, name, stable_category, name_membership_function;
     
-    test_function := TestFunctionForStableCategories( UnderlyingCategory( category ) );
-    
-    ## Equalities
-    
-    AddIsEqualForObjects( category, 
-          
-        function( obj1, obj2 )
-       
-        return IsEqualForObjects( UnderlyingUnstableObject( obj1 ), UnderlyingUnstableObject( obj2 ) );
-       
-    end );
-    
-    AddIsWellDefinedForObjects( category,
-        function( obj )
-        
-        return IsWellDefinedForObjects( UnderlyingUnstableObject( obj ) );
-        
-        end );
-    
-    AddIsEqualForMorphisms( category, 
-    
-       function( morphism1, morphism2 )
-       
-       return IsEqualForMorphisms( UnderlyingUnstableMorphism( morphism1 ), UnderlyingUnstableMorphism( morphism2 ) );
-    end );
-    
-    AddIsCongruentForMorphisms( category, 
-    
-        function( morphism1, morphism2 )
-       
-        return test_function( UnderlyingUnstableMorphism( morphism1 ) - UnderlyingUnstableMorphism( morphism2 ) );
-    end );
-    
-    AddIsWellDefinedForMorphisms( category,
-        function( mor )
-        
-        return IsWellDefinedForMorphisms( UnderlyingUnstableMorphism( mor ) );
-        
-        end );
-    
-    ## PreCompose
-    
-    AddPreCompose( category,
+    if not HasIsAdditiveCategory( category ) or not IsAdditiveCategory( category ) then
       
-      function( morphism1, morphism2 )
-        local composition;
-        
-        composition := PreCompose( UnderlyingUnstableMorphism( morphism1 ),
-                                   UnderlyingUnstableMorphism( morphism2 ) );
-        
-        return AsStableMorphism( composition );
-        
-    end );
-    
-    ## IdentityMorphism
-    
-    AddIdentityMorphism( category,
+      Error( "The category in the input should be additive category" );
       
-      function( object )
+    fi;
+    
+    congruency_test_function := function( alpha, beta ) return membership_function( alpha - beta ); end;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    name := ValueOption( "Name" );
+    
+    if name = fail then
       
-        return AsStableMorphism( IdentityMorphism( UnderlyingUnstableObject( object ) ) );
-        
-    end );
-    
-    ## Addition for morphisms
-    
-    AddAdditionForMorphisms( category,
+      name := Name( category );
       
-      function( morphism1, morphism2 )
-        local sum;
-        
-        sum := AdditionForMorphisms( UnderlyingUnstableMorphism( morphism1 ),
-                                     UnderlyingUnstableMorphism( morphism2 ) );
-        
-        return AsStableMorphism( sum );
-        
-    end );
-    
-    ## IsZeroForMorphisms
-    AddIsZeroForMorphisms( category, 
-    
-       function( morphism )
-       local underlying_mor;
-       
-       underlying_mor := UnderlyingUnstableMorphism( morphism );
-       
-       if HasIsZero( underlying_mor ) and IsZero( underlying_mor ) then
-        
-          return true;
-          
-       else 
-       
-          return test_function( underlying_mor );
-          
-       fi;
-       
-    end );
-    
-    ## IsZeroForObjects
-    AddIsZeroForObjects( category, 
-    
-    function( obj )
-    local underlying_obj;
-       
-       underlying_obj := UnderlyingUnstableObject( obj );
-       
-       if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
-        
-          return true;
-        
-       else 
-       
-          return IsZeroForMorphisms( IdentityMorphism( obj ) );
-       
-       fi;
-       
-    end );
-    
-    ## Additive inverse for morphisms
-    
-    AddAdditiveInverseForMorphisms( category,
+      name_membership_function := NameFunction( membership_function );
       
-    function( morphism )
+      if name_membership_function = "unknown" then
+        
+        name_membership_function := "a congruency test function";
+        
+      fi;
       
-        return AsStableMorphism( AdditiveInverseForMorphisms( UnderlyingUnstableMorphism( morphism ) ) );
-    
-    end );
-    
-    ## Zero morphism
-    
-    AddZeroMorphism( category,
+      name := Concatenation( "The stable category of ", name, " by ", name_membership_function );
       
-    function( source, range )
-
-        return AsStableMorphism( ZeroMorphism( UnderlyingUnstableObject( source ), UnderlyingUnstableObject( range ) ) );
-        
-    end );
+    fi;
     
-    ## Zero object
+    stable_category := QuotientCategory( category, congruency_test_function: Name := name, FinalizeCategory := to_be_finalized );
     
-    AddZeroObject( category,
-      
-      function( )
-        
-        return AsStableObject( ZeroObject( UnderlyingCategory( category ) ) );
-        
-    end );
+    SetFilterObj( stable_category, IsStableCategory );
     
-    AddUniversalMorphismIntoZeroObject( category,
-        function( obj )
-        return AsStableMorphism( UniversalMorphismIntoZeroObject( UnderlyingUnstableObject( obj ) ) );
-    end );
+    SetCongruencyTestFunctionForStableCategory( stable_category, membership_function );
     
-    AddUniversalMorphismFromZeroObject( category,
-        function( obj )
-        return AsStableMorphism( UniversalMorphismFromZeroObject( UnderlyingUnstableObject( obj ) ) );
-    end );
+    return stable_category;
     
-    ## direct sum
-    
-    AddDirectSum( category,
-      
-        function( obj_list )
-        
-        return AsStableObject( DirectSum( List( obj_list, UnderlyingUnstableObject ) ) );
-        
-    end );
-    
-    AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( category,
-        function( list, n, D )
-        
-        return AsStableMorphism( InjectionOfCofactorOfDirectSumWithGivenDirectSum( List( list, UnderlyingUnstableObject ), n, UnderlyingUnstableObject( D ) ) );
-    
-    end );
-    
-    AddProjectionInFactorOfDirectSumWithGivenDirectSum( category,
-        function( list, n, D )
-        
-        return AsStableMorphism( ProjectionInFactorOfDirectSumWithGivenDirectSum( List( list, UnderlyingUnstableObject ), n, UnderlyingUnstableObject( D ) ) );
-        
-    end );
-    
-    AddUniversalMorphismIntoDirectSumWithGivenDirectSum( category,
-        function( list, product_morphism, direct_sum )
-        return AsStableMorphism( UniversalMorphismIntoDirectSumWithGivenDirectSum(
-                                        List( list, UnderlyingUnstableObject ),
-                                        List( product_morphism, UnderlyingUnstableMorphism ),
-                                        UnderlyingUnstableObject( direct_sum ) ) );
-        
-        end );
-        
-    AddUniversalMorphismFromDirectSumWithGivenDirectSum( category,
-        function( list, product_morphism, direct_sum )
-        return AsStableMorphism( UniversalMorphismFromDirectSumWithGivenDirectSum(
-                                        List( list, UnderlyingUnstableObject ),
-                                        List( product_morphism, UnderlyingUnstableMorphism ),
-                                        UnderlyingUnstableObject( direct_sum ) ) );
-        
-        end );
-        
-        
 end );
+
+##
+InstallMethod( AsStableCategoryObject,
+            [ IsStableCategory, IsCapCategoryObject ],
+  function( stable_category, a )
+    local stable_a;
     
-#########################
+    stable_a := AsQuotientCategoryObject( stable_category, a );
+    
+    SetFilterObj( stable_a, IsStableCategoryObject );
+    
+    return stable_a;
+    
+end );
+
+##
+InstallMethod( AsStableCategoryMorphism,
+            [ IsStableCategory, IsCapCategoryMorphism ],
+  function( stable_category, alpha )
+    local stable_alpha;
+    
+    stable_alpha := AsQuotientCategoryMorphism( stable_category, alpha );
+    
+    SetFilterObj( stable_alpha, IsStableCategoryMorphism );
+    
+    return stable_alpha;
+    
+end );
+
+########################
 #
 # constructor
 #
 ########################
 
-InstallMethod( StableCategory,
-                 [ IsCapCategory ],
-                                  
+InstallMethod( StableCategoryByColiftingStructure,
+            [ IsCapCategory ],
   function( category )
-    local stable_category, test_function, gen_category, name, preconditions,
-          category_weight_list, i, to_be_finalized;
+    local to_be_finalized, name, can_be_factored_through_colifting_object, FinalizeCategory, Name, stable_category;
     
-    test_function := TestFunctionForStableCategories( category );
-    
-    if not HasIsFinalized( category ) or not IsFinalized( category ) then
-        
-        Error( "category must be finalized" );
-        return;
-        
-    fi;
-    
-    ## this may be extended or reduced ...
-    
-    preconditions := [ "IsEqualForObjects",
-                       "AdditiveInverseForMorphisms",
-                       "IdentityMorphism",
-                       "ZeroMorphism",
-                       "DirectSum",
-                       "ProjectionInFactorOfDirectSumWithGivenDirectSum",
-                       "InjectionOfCofactorOfDirectSumWithGivenDirectSum",
-                       "UniversalMorphismFromDirectSum",
-                       "UniversalMorphismIntoDirectSum" ];
-    
-    category_weight_list := category!.derivations_weight_list;
-    
-for i in preconditions do
-        
-    if CurrentOperationWeight( category_weight_list, i ) = infinity then
-            
-        Error( Concatenation( "category must be able to compute ", i ) );
-        return;
-            
-    fi;
-        
-od;
-    
-name := Name( category );
-    
-name := Concatenation( "The stable category of ", name ); # , " by ", function_name
-    
-stable_category := CreateCapCategory( name );
-
-AddObjectRepresentation( stable_category, IsStableCategoryObject );
-    
-AddMorphismRepresentation( stable_category, IsStableCategoryMorphism );
-    
-SetFilterObj( stable_category, WasCreatedAsStableCategory );
-    
-SetUnderlyingCategory( stable_category, category );
-    
-SetIsAdditiveCategory( stable_category, true );
-     
-CAP_INTERNAL_INSTALL_OPERATIONS_FOR_STABLE_CATEGORY( stable_category );
-    
-to_be_finalized := ValueOption( "FinalizeStableCategory" );
-   
-if to_be_finalized = true then
+    if not CanCompute( category, "MorphismIntoColiftingObject" ) then
       
+      Error( "The method 'MorphismIntoColiftingObject' should be added to ", Name( category ) );
+    
+    fi;
+    
+    if not CanCompute( category, "Colift" ) then
+      
+      Error( "The method 'Colift' should be added to ", Name( category ) );
+    
+    fi;
+    
+    name := ValueOption( "Name" );
+    
+    can_be_factored_through_colifting_object :=
+      function( alpha )
+        local a, I_a;
+        a := Source( alpha );
+        I_a := MorphismIntoColiftingObject( a );
+        return Colift( I_a, alpha ) <> fail;
+      end;
+    
+    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, Name := name );
+    
+    if CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+         CanCompute( category, "HomomorphismStructureOnObjects" ) and
+           CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
+             CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+               CanCompute( category, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
+                 CanCompute( category, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                 
+                 ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
+    
+    fi;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    if to_be_finalized = false then
+      
+      return stable_category;
+      
+    fi;
+    
     Finalize( stable_category );
+    
+    return stable_category;
+    
+end );
+
+InstallMethod( StableCategoryByLiftingStructure,
+            [ IsCapCategory ],
+  function( category )
+    local to_be_finalized, name, can_be_factored_through_lifting_object, FinalizeCategory, Name;
+    
+    if not CanCompute( category, "MorphismFromLiftingObject" ) then
       
-fi;
-   
-return stable_category;
-   
-end );
-
-# StableCategory( category, funk: FinalizeStableCategory := false );
-
-##
-InstallMethod( AsStableMorphism,
-               [ IsCapCategoryMorphism ],
-               
-    function( mor )
-    local underlying_category, stable_morphism, category;
-    
-    category := StableCategory( CapCategory( mor ) );
-    
-    stable_morphism := rec( );
-    
-    ObjectifyMorphismForCAPWithAttributes( stable_morphism, category,
-                             Source, AsStableObject( Source( mor ) ),
-                             Range,  AsStableObject( Range( mor ) ),
-                             UnderlyingUnstableMorphism, mor );
-    
-    if HasUnderlyingMatrix( mor ) then 
-    
-        SetUnderlyingMatrix( stable_morphism, UnderlyingMatrix( mor ) );
-
-    fi;
-    
-    return stable_morphism;
-    
-end );
-    
-    
-##
-InstallMethod( AsStableObject,
-               [ IsCapCategoryObject ],
-               
-    function( obj )
-    local stable_obj, category;
-    
-    category := StableCategory( CapCategory( obj ) );
-    
-    stable_obj := rec( );
-    
-    ObjectifyObjectForCAPWithAttributes( stable_obj, category,
-                                         UnderlyingUnstableObject, obj );
-    
-    if HasUnderlyingMatrix( obj ) then 
-    
-        SetUnderlyingMatrix( stable_obj, UnderlyingMatrix( obj ) );
+      Error( "The method 'MorphismFromLiftingObject' should be added to ", Name( category ) );
     
     fi;
     
-    return stable_obj;
+    if not CanCompute( category, "Lift" ) then
+      
+      Error( "The method 'Lift' should be added to ", Name( category ) );
+    
+    fi;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    name := ValueOption( "Name" );
+    
+    can_be_factored_through_lifting_object :=
+      function( alpha )
+        local b, P_b;
+        b := Range( alpha );
+        P_b := MorphismFromLiftingObject( b );
+        return Lift( alpha, P_b ) <> fail;
+      end;
+    
+    return StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, Name := name ); #Complete this
     
 end );
 
-###########################
-##
-##  View and Display
-##
-###########################
+##########################
+#
+#  Homomorphism structure
+#
+##########################
 
-# InstallMethod( ViewObj,
-#       [ IsStableCategoryObject ], 
-#     function( obj )
+InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE,
+  
+  function( stable_category )
+    local category, category_of_hom_structure;
     
-#     Print( "<An object in the stable category of ", Name( UnderlyingCategory( CapCategory( obj ) ) ), ">" );
+    category := UnderlyingCapCategory( stable_category );
     
-#     end );
-      
-
-# InstallMethod( ViewObj,
-#       [ IsStableCategoryMorphism ], 
-#     function( mor )
+    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
     
-#     Print( "<A morphism in the stable category of ", Name( UnderlyingCategory( CapCategory( mor ) ) ), ">" );
+    SetRangeCategoryOfHomomorphismStructure( stable_category, category_of_hom_structure );
     
-#     end );
-    
-InstallMethod( Display,
-      [ IsStableCategoryObject ], 
-    function( obj )
-    
-    Print( "An object in the stable category of ", UnderlyingCategory( CapCategory( obj ) ), "\nwith underlying object\n\n" );
-    Display( UnderlyingUnstableObject( obj ) );
+    AddDistinguishedObjectOfHomomorphismStructure( stable_category,
+       function( )
+         
+         return DistinguishedObjectOfHomomorphismStructure( category );
     
     end );
-      
-
-InstallMethod( Display,
-      [ IsStableCategoryMorphism ], 
-    function( mor )
     
-    Print( "A morphism in the stable category of ", UnderlyingCategory( CapCategory( mor ) ), "\nwith underlying morphism\n\n" );
-    Display( UnderlyingUnstableMorphism( mor ) );
+    ##
+    ##                a -----------> I(a)
+    ##            hom(a,b) <---- hom(I(a),b)
+    ##
+    AddHomomorphismStructureOnObjects( stable_category,
+      function( stable_a, stable_b )
+        local a, b, a_to_I_a, hom_a_to_I_a_id_b, hom_object;
+        
+        a := UnderlyingCapCategoryObject( stable_a );
+        
+        b := UnderlyingCapCategoryObject( stable_b );
+        
+        a_to_I_a := MorphismIntoColiftingObject( a );
+        
+        hom_a_to_I_a_id_b := HomomorphismStructureOnMorphisms( a_to_I_a, IdentityMorphism( b ) );
+        
+        hom_object := CokernelObject( hom_a_to_I_a_id_b );
+        
+        hom_object!.UnderlyingMorphism := hom_a_to_I_a_id_b;
+        
+        return hom_object;
     
     end );
+    
+    ##                          coker(*)                        coker(*)
+    ##
+    ##
+    ##
+    ##      alpha                            hom(alpha,beta)
+    ##  a --------> b           Hom( a, d ) <------------------ Hom( b, c )
+    ##
+    ##                             /|\                            /|\
+    ##                              |                              |
+    ##                              |                              |
+    ##
+    ##  d <-------- c         Hom( I(a), d )                  Hom( I(b), c )
+    ##      beta
+    ##
+    AddHomomorphismStructureOnMorphismsWithGivenObjects( stable_category,
+      function( s, stable_alpha, stable_beta, r )
+        local a, b, c, d, alpha, beta, hom_b_to_I_b_id_c, hom_a_to_I_a_id_d, hom_alpha_beta;
+        
+        a := UnderlyingCapCategoryObject( Source( stable_alpha ) );
+        
+        b := UnderlyingCapCategoryObject( Range( stable_alpha ) );
+        
+        c := UnderlyingCapCategoryObject( Source( stable_beta ) );
+        
+        d := UnderlyingCapCategoryObject( Range( stable_beta ) );
+        
+        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        
+        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        
+        hom_b_to_I_b_id_c := s!.UnderlyingMorphism;
+        
+        hom_a_to_I_a_id_d := r!.UnderlyingMorphism;
+        
+        hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
+        
+        return CokernelObjectFunctorial( hom_b_to_I_b_id_c, hom_alpha_beta, hom_a_to_I_a_id_d );
+        
+    end );
+    
+    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+      function( stable_alpha )
+        local stable_a, stable_b, hom_stable_a_stable_b, h, alpha, i;
+        
+        stable_a := Source( stable_alpha );
+        
+        stable_b := Range( stable_alpha );
+        
+        hom_stable_a_stable_b := HomomorphismStructureOnObjects( stable_a, stable_b );
+        
+        h := hom_stable_a_stable_b!.UnderlyingMorphism;
+        
+        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        
+        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        
+        return PreCompose( i, CokernelProjection( h ) );
+        
+    end );
+    
+    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+      function( stable_a, stable_b, iota )
+        local a, b, hom_stable_a_stable_b, h, l, i;
+        
+        a := UnderlyingCapCategoryObject( stable_a );
+        
+        b := UnderlyingCapCategoryObject( stable_b );
+        
+        hom_stable_a_stable_b := HomomorphismStructureOnObjects( stable_a, stable_b );
+        
+        h := hom_stable_a_stable_b!.UnderlyingMorphism;
+        
+        l := Lift( iota, CokernelProjection( h ) );
+        
+        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
+        
+        return AsStableCategoryMorphism( stable_category, i );
+        
+    end );
+    
+end );
+
+#######################
+#
+# Display
+#
+######################
+
+##
+InstallMethod( Display,
+            [ IsStableCategoryObject ],
+  function( a )
+    local test_function, name;
+    
+    test_function := CongruencyTestFunctionForStableCategory( CapCategory( a ) );
+    
+    name := NameFunction( test_function );
+    
+    if name = "unknown" then
+      
+      name := "a congruency test function";
+    
+    fi;
+    
+    Print( "Stable object defined by:\n\n" );
+    
+    Display( UnderlyingCapCategoryObject( a ) );
+    
+    Print( "\nmodulo ", name );
+    
+end );
+
+##
+InstallMethod( Display,
+            [ IsStableCategoryMorphism ],
+  function( alpha )
+    local name, test_function;
+    
+    test_function := CongruencyTestFunctionForStableCategory( CapCategory( alpha ) );
+    
+    name := NameFunction( test_function );
+    
+    if name = "unknown" then
+      
+      name := "a congruency test function";
+      
+    fi;
+    
+    Print( "Stable morphism defined by:\n\n" );
+    
+    Display( UnderlyingCapCategoryMorphism( alpha ) );
+    
+    Print( "\nmodulo ", name );
+  
+end );
+

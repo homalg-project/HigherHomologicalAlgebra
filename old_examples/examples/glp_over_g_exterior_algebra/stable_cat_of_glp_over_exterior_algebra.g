@@ -156,4 +156,4 @@ m := RandomMatrixBetweenGradedFreeLeftModules( [ 2,3,4 ], [ 3,5,4,5 ], R );
 n := RandomMatrixBetweenGradedFreeLeftModules( [ 3,2,4 ], [ 5,3,5,4 ], R );
 M := AsGradedLeftPresentation( m, [ 3,5,4,5 ] );
 N := AsGradedLeftPresentation( n, [ 5,3,5,4 ] );
-b := graded_basis_of_external_hom(M,N);
+#b := graded_basis_of_external_hom(M,N);
