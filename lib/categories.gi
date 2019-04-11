@@ -1522,48 +1522,11 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
               fi;
             fi;
           fi;
-        fi;
+        fi; 
         
-        H := function ( i, j )
-              if (i + j + 1) mod 2 = 0 then
-                return HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) );
-              else
-                return AdditiveInverse( HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) ) );
-              fi;
-              return;
-          end;
+        d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
         
-        V := function ( i, j )
-              return HomomorphismStructureOnMorphisms( IdentityMorphism( C[- i] ), D ^ j );
-          end;
-        
-        d := DoubleChainComplex( range_cat_of_hom_struc, H, V );
-        
-        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function (  )
-                SetLeftBound( d, - ActiveUpperBound( C ) + 1 );
-                return;
-            end ) );
-        
-        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function (  )
-                SetRightBound( d, - ActiveLowerBound( C ) - 1 );
-                return;
-            end ) );
-        
-        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function (  )
-                SetAboveBound( d, ActiveUpperBound( D ) - 1 );
-                return;
-            end ) );
-        
-        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function (  )
-                SetBelowBound( d, ActiveLowerBound( D ) + 1 );
-                return;
-            end ) );
-        
-        hom := Source(  CyclesAt( TotalChainComplex( d ), 0 ) );
-        
-        hom!.UnderlyingDoubleComplex := d;
-        
-        return hom;
+        return Source(  CyclesAt( TotalChainComplex( d ), 0 ) );
   
   end );
 
@@ -1582,17 +1545,13 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
    
     AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
       function( s, phi, psi, r )
-        local source, range, ss, Tot1, rr, Tot2, l;
+        local ss, Tot1, rr, Tot2, l;
         
-        source := HomomorphismStructureOnObjects( Range( phi ), Source( psi ) );
+        ss := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Range( phi ), Source( psi ) );
         
-        range := HomomorphismStructureOnObjects( Source( phi ), Range( psi ) );
-        
-        ss := source!.UnderlyingDoubleComplex;
+        rr := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Source( phi ), Range( psi ) );
         
         Tot1 := TotalChainComplex( ss );
-        
-        rr := range!.UnderlyingDoubleComplex;
         
         Tot2 := TotalChainComplex( rr );
         
@@ -1642,27 +1601,27 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( category,
         function( phi )
-          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, hom_C_D, d, T, i;
+          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i;
           
           C := Source( phi );
           D := Range( phi );
           
           lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
+          
           upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
           
           morphisms_from_distinguished_object := [  ];
           
           for i in Reversed( [ lower_bound .. upper_bound ] ) do
           
-            Add( morphisms_from_distinguished_object, InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
+            Add( morphisms_from_distinguished_object,
+              InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
           
           od;
           
           morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
           
-          hom_C_D := HomomorphismStructureOnObjects( C, D );
-          
-          d := hom_C_D!.UnderlyingDoubleComplex;
+          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
           T := TotalChainComplex( d );
           
@@ -1685,14 +1644,12 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( category,
         function( C, D, psi )
-          local lower_bound, upper_bound, hom_C_D, d, T, phi, struc_on_objects, indices, L, i;
+          local lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
           lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
           upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
           
-          hom_C_D := HomomorphismStructureOnObjects( C, D );
-          
-          d := hom_C_D!.UnderlyingDoubleComplex;
+          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
           T := TotalChainComplex( d );
           
@@ -1742,41 +1699,36 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE,
 end );
 
 ##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
-  function( category )
-    local cat, range_cat_of_hom_struc, V, d, H, Tot, hom;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-    
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
-    AddHomomorphismStructureOnObjects( category,
+InstallMethodWithCrispCache( DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS,
+      [ IsChainComplex, IsChainComplex ],
       function ( C, D )
-        local H, V, d, hom;
+        local category, cat, range_cat_of_hom_struc, H, V, d, hom;
         
-        if not (HasActiveLowerBound( C ) and HasActiveUpperBound( D )) then
-          if not (HasActiveUpperBound( C ) and HasActiveLowerBound( D )) then
-            if not (HasActiveLowerBound( C ) and HasActiveUpperBound( C )) then
-              if not (HasActiveLowerBound( D ) and HasActiveUpperBound( D )) then
-                Error( "The complexes should be bounded" );
-              fi;
-            fi;
-          fi;
-        fi;
+        category := CapCategory( C );
+        
+        cat := UnderlyingCategory( category );
+        
+        range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat ); 
         
         H := function ( i, j )
-              if (i + j + 1) mod 2 = 0 then
-                return HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) );
-              else
-                return AdditiveInverse( HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) ) );
-              fi;
-              return;
+              
+               if (i + j + 1) mod 2 = 0 then
+                 
+                 return HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) );
+                 
+               else
+                 
+                 return AdditiveInverse( HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) ) );
+                 
+               fi;
+               
+               return;
           end;
         
         V := function ( i, j )
+        
               return HomomorphismStructureOnMorphisms( IdentityMorphism( C[- i] ), D ^ j );
+              
           end;
         
         d := DoubleChainComplex( range_cat_of_hom_struc, H, V );
@@ -1801,200 +1753,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
                 return;
             end ) );
         
-        H := HomologyFunctorAt( ChainComplexCategory( range_cat_of_hom_struc ), range_cat_of_hom_struc, 0 );
-        
-        Tot := TotalChainComplex( d );
-
-        hom := ApplyFunctor( H, Tot );
-
-        hom!.UnderlyingTotalComplex := Tot;
-
-        hom!.UnderlyingDoubleComplex := d;
-        
-        return hom;
-  
-  end );
-
-end );
-
-##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGORY,
-  function( category )
-    local cat, range_cat_of_hom_struc;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-    
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-   
-    AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-      function( s, phi, psi, r )
-        local source, range, ss, Tot1, rr, Tot2, l, T, H, hom;
-        
-        source := HomomorphismStructureOnObjects( Range( phi ), Source( psi ) );
-        
-        range := HomomorphismStructureOnObjects( Source( phi ), Range( psi ) );
-        
-        ss := source!.UnderlyingDoubleComplex;
-        
-        Tot1 := source!.UnderlyingTotalComplex;
-        
-        rr := range!.UnderlyingDoubleComplex;
-        
-        Tot2 := range!.UnderlyingTotalComplex;
-        
-        l := MapLazy( IntegersList, function ( m )
-                local ind_s, ind_t, morphisms, obj;
-                
-                obj := ObjectAt( Tot1, m );
-                
-                obj := ObjectAt( Tot2, m );
-                
-                ind_s := ss!.IndicesOfTotalComplex.(String( m ));
-                
-                ind_t := rr!.IndicesOfTotalComplex.(String( m ));
-                
-                morphisms := List( [ ind_s[1] .. ind_s[2] ],
-                             function ( i )
-                               return List( [ ind_t[1] .. ind_t[2] ],
-                                 function ( j )
-                                   if i = j then
-                                     return HomomorphismStructureOnMorphisms( phi[- i], psi[m - i] );
-                                   else
-                                     return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( rr, j, m - j ) );
-                                   fi;
-                                 end );
-                             end );
-                
-                return MorphismBetweenDirectSums( morphisms );
-              
-              end, 1 );
-        
-        T := ChainMorphism( Tot1, Tot2, l );
-
-        H := HomologyFunctorAt( ChainComplexCategory( range_cat_of_hom_struc ), range_cat_of_hom_struc, 0 );
-        
-        hom := ApplyFunctor( H, T );
-
-        return hom;
-
-
-    end );
-
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
-  function( category )
-    local cat, range_cat_of_hom_struc;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-    
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( category,
-        function( phi )
-          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, hom_C_D, T, G, l, i;
-          
-          C := Source( phi );
-          D := Range( phi );
-          
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
-          
-          morphisms_from_distinguished_object := [  ];
-          
-          for i in Reversed( [ lower_bound .. upper_bound ] ) do
-          
-            Add( morphisms_from_distinguished_object, InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
-          
-          od;
-          
-          morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
-          
-          hom_C_D := HomomorphismStructureOnObjects( C, D );
-          
-          T := hom_C_D!.UnderlyingTotalComplex;
-
-          G := GeneralizedEmbeddingOfHomologyAt( T, 0 );
-          
-          l := KernelLift( T^0, morphism );
-
-          return PreCompose( l, ReversedArrow( G ) );
-        
-  end );
-
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY,
-  function( category )
-    local cat, range_cat_of_hom_struc;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-    
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( C, D, psi )
-          local lower_bound, upper_bound, hom_C_D, T, G, phi, struc_on_objects, indices, L, i;
-          
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
-          
-          hom_C_D := HomomorphismStructureOnObjects( C, D );
-          
-          T := hom_C_D!.UnderlyingTotalComplex;
-          
-          G := GeneralizedEmbeddingOfHomologyAt( T, 0 );
-         
-          phi := PreCompose( psi, HonestRepresentative( G ) );
-          
-          struc_on_objects := [  ];
-          
-          indices := Reversed( [ lower_bound .. upper_bound ] );
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( C[ i ], D[ i ] ) );
-          
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
-          
-          return ChainMorphism( C, D, Reversed( L ), lower_bound );
-  
-  end );
-
-end );
-
-##
-InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
-    function( category )
-      local cat, range_cat_of_hom_struc;
-      
-      cat := UnderlyingCategory( category );
-      
-      range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-      
-      SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-      
-      AddDistinguishedObjectOfHomomorphismStructure( category,
-        function( )
-          
-          return DistinguishedObjectOfHomomorphismStructure( cat );
-        
-        end );
+        return d;
     
 end );
 

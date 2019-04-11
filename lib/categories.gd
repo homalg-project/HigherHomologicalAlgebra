@@ -149,6 +149,7 @@ DeclareGlobalFunction( "ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMO
 
 DeclareGlobalFunction( "ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY" );
 
+DeclareOperation( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS", [ IsChainComplex, IsChainComplex ] );
 
 # DeclareProperty( "HasEnoughProjectives", IsCapCategory );
 # DeclareProperty( "HasEnoughInjectives", IsCapCategory );
