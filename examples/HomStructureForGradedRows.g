@@ -320,7 +320,7 @@ end );
 #AddHomomorphismStructureOnCategory( rows );
 #Finalize( rows );
 
-TRY_TO_ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS :=
+TRY_TO_ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS2 :=
     
     function( S )
       local R, D, indeterminates, degrees_of_indeterminates, random_matrix_between_free_left_or_right_presentations_func,
