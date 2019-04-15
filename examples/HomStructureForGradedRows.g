@@ -7,6 +7,22 @@ DeclareOperation( "BasisOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObje
 DeclareAttribute( "FieldOfExternalHom", IsCapCategory );
 DeclareAttribute( "CoefficientsOfLinearMorphism", IsCapCategoryMorphism );
 DeclareOperation( "MultiplyWithHomalgRingElement", [ IsMultiplicativeElement, IsCapCategoryMorphism ] );
+DeclareOperation( "HomalgElementToListOfIntegers", [ IsHomalgModuleElement ] );
+
+InstallMethod( HomalgElementToListOfIntegers,
+            [ IsHomalgModuleElement ],
+  function( degree )
+    local new_degree;
+    
+    new_degree := UnderlyingMorphism( degree );
+    
+    new_degree := MatrixOfMap( new_degree );
+    
+    new_degree := EntriesOfHomalgMatrix( new_degree );
+    
+    return List( new_degree, HomalgElementToInteger );
+    
+end );
 
 ##
 AddHomomorphismStructureOnCategory :=
@@ -119,57 +135,56 @@ AddHomomorphismStructureOnCategory :=
 
 end;
 
+DeclareOperation( "MONOMIALS_IN_GRADED_RING_WITH_FIXED_DEGREE", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
+
+InstallMethodWithCrispCache( MONOMIALS_IN_GRADED_RING_WITH_FIXED_DEGREE,
+  [ IsHomalgGradedRing, IsHomalgModuleElement ],
+  function( S, degree )
+    local new_degree, indeterminates, weights_of_indeterminates, D, solutions;
+    
+    new_degree := UnderlyingMorphism( degree );
+    new_degree := MatrixOfMap( new_degree );
+    new_degree := EntriesOfHomalgMatrix( new_degree );
+    new_degree := List( new_degree, HomalgElementToInteger );
+    
+    indeterminates := Indeterminates( S );
+    weights_of_indeterminates := WeightsOfIndeterminates( S );
+    D := List( weights_of_indeterminates, UnderlyingMorphism );
+    D := List( D, d -> MatrixOfMap( d ) );
+    D := Involution( UnionOfRows( D ) );
+    D := EntriesOfHomalgMatrixAsListList( D );
+ 
+    solutions := 4ti2Interface_zsolve_equalities_and_inequalities_in_positive_orthant( D, new_degree, [], [] )[ 1 ];
+    solutions := List( solutions, sol -> Product( ListN( indeterminates, sol, \^ )  ) );
+
+    if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+
+      solutions := Filtered( solutions, sol -> not IsZero( sol ) );
+
+    fi;
+
+    return  solutions;
+
+end );
+
+
 
 DeclareOperation( "BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW", [ IsGradedRow ] );
 
 InstallMethodWithCrispCache( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
             [ IsGradedRow ],
 function( M )
-  local S, indeterminates, weights_of_indeterminates, D, G, dG, func, positions, L, mats, current_mat, i;
+  local S, G, dG, positions, L, mats, current_mat, i;
   
   if Rank( M ) = 0 then
     return [  ];
   fi;
   
   S := UnderlyingHomalgGradedRing( M );
-  indeterminates := Indeterminates( S );
-  
-  weights_of_indeterminates := WeightsOfIndeterminates( S );
-  D := List( weights_of_indeterminates, UnderlyingMorphism );
-  D := List( D, d -> MatrixOfMap( d ) );
-  D := Involution( UnionOfRows( D ) );
-  D := EntriesOfHomalgMatrixAsListList( D );
   
   G := UnzipDegreeList( M );
-  G := List( G, UnderlyingMorphism );
-  G := List( G, MatrixOfMap );
-  G := List( G, EntriesOfHomalgMatrix );
-  G := List( G, g -> List( g, HomalgElementToInteger ) );
   dG := DuplicateFreeList( G );
-  
-  func := function( degree )
-            local solutions, new_degree;
-            
-            if not IsList( degree ) then
-              new_degree := [ degree ];
-            else
-              new_degree := degree;
-            fi;
-
-            solutions := 4ti2Interface_zsolve_equalities_and_inequalities_in_positive_orthant( D, new_degree, [], [] )[ 1 ];
-            solutions := List( solutions, sol -> Product( ListN( indeterminates, sol, \^ )  ) );
-
-            if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
-
-              solutions := Filtered( solutions, sol -> not IsZero( sol ) );
-
-            fi;
-
-            return  solutions;
-
-        end;
-
-  dG := List( dG, d -> func( d ) );
+  dG := List( dG, d -> MONOMIALS_IN_GRADED_RING_WITH_FIXED_DEGREE( S, d ) );
   
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
   L := ListWithIdenticalEntries( Length( G ), 0 );
@@ -679,6 +694,94 @@ TRY_TO_ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS2 :=
     
 end;
 
+TRY_TO_ENHANCE_HOMALG_RING_WITH_RANDOM_FUNCTIONS2 :=
+  function( R )
+    local random_element_func, random_matrix_func;
+    
+    if IsBound( R!.random_element_func ) and IsBound( R!.random_matrix_func ) then
+      
+      return true;
+    
+    fi;
+    
+    if ( HasIsFreePolynomialRing( R ) and IsFreePolynomialRing( R ) ) or 
+        ( HasIsExteriorRing( R ) and IsExteriorRing( R ) ) then
+      
+      random_element_func :=
+        function(  )
+             local ind, n, l1, l2;
+             
+             ind := Concatenation(  [ One( R ) ], Indeterminates( R ), Indeterminates( R ) );
+             
+             n := Random( [ 1, 1, 1, 2, 2, 3 ] );
+             
+             l1 := List( [ 1 .. n ], i -> Product( Random( Combinations( ind, i ) ) ) );
+             
+             l2 := List( [ 1 .. n ], i -> Random( [ -2, -1, -1, 0, 1, 1, 2 ] ) * One( R ) );
+             
+             return l1 * l2;
+        
+        end;
+        
+      R!.random_element_func := random_element_func;
+    
+    elif ( HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) ) or
+          ( HasIsIntegersForHomalg( R ) and IsIntegersForHomalg( R ) ) then
+      
+      random_element_func :=
+        function( )
+          
+          return Random( [ -20 .. 20 ] )*One( R );
+        
+        end;
+      
+      R!.random_element_func := random_element_func;
+    
+    elif HasAmbientRing( R ) and IsBound( AmbientRing( R )!.random_element_func ) then
+    
+      random_element_func :=
+        function( )
+          
+          return AmbientRing( R )!.random_element_func(  )/R;
+        
+        end;
+      
+      R!.random_element_func := random_element_func;
+     
+     fi;
+     
+     random_matrix_func :=
+        function( m, n )
+          local L;
+          
+          if m * n = 0 then
+            
+            return HomalgZeroMatrix( m, n, R );
+          
+          else
+            
+            L := List( [ 1 .. m ], i -> List( [ 1 .. n ], j -> R!.random_element_func(  ) ) );
+            
+            return HomalgMatrix( L, m, n, R );
+          
+          fi;
+        
+        end;
+     
+     if IsBound( R!.random_element_func ) then
+       
+       R!.random_matrix_func := random_matrix_func;
+       
+       return true;
+     
+     else
+       
+       return false;
+     
+     fi;
+    
+end;
+
 AddRandomMethodsToGradedRows := function( category )
   local S;
   
@@ -735,5 +838,144 @@ AddRandomMethodsToGradedRows := function( category )
       return GradedRowOrColumnMorphism( a, mat, b );
     end );
 
+  AddRandomObjectByInteger( category,
+    function( category, n )
+      local weights, degrees_list;
+    
+      weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+      Add( weights, Degree( One( S ) ) );
+      weights := List( weights, HomalgElementToListOfIntegers );
+      degrees_list := List( [ 1 .. n ], i -> Sum( List( [ 1 .. Random( [ 1 .. 4 ] ) ], j -> Random( weights ) ) ) );
+      return RandomObjectByList( category, [ n, degrees_list ] );
+    end );
+  
+  AddRandomMorphismWithFixedSourceAndRangeByInteger( category,
+    function( a, b, n )
+      return RandomMorphismWithFixedSourceAndRangeByList( a, b, [] );
+    end );
+  
+  AddRandomMorphismWithFixedSourceByInteger( category,
+    function( a, n )
+      local degrees_a, weights, degrees_b, b;
+        
+      degrees_a := UnzipDegreeList( a );
+      weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+      Add( weights, Degree( One( S ) ) );
+      degrees_b := List( [ 1 .. n ], i -> [ Random( weights ) + Sum( List( [ 1 .. Random( [ 1 .. 3 ] ) ], j -> Random( weights ) ) ), 1 ]  );
+      b := GradedRow( degrees_b, S );
+      return RandomMorphismWithFixedSourceAndRangeByInteger( a, b, 0 );
+    end );
+    
 end;
 
+AddRandomMethodsToRows := function( category )
+  local R;
+  
+  R := category!.UnderlyingRing;
+  
+  TRY_TO_ENHANCE_HOMALG_RING_WITH_RANDOM_FUNCTIONS2( R );
+  
+  AddRandomObjectByList( category,
+    function( category, L )
+      if Length( L ) = 0 then
+        Error();
+      fi;
+      
+      if not ForAll( L, IsPosInt ) then
+        Error();
+      fi;
+      
+      return CategoryOfRowsObject( Random( L ), category ); 
+      
+    end );
+  
+  AddRandomMorphismWithFixedSourceByList( category,
+    function( a, L )
+      local r, mat, b;
+      
+      if Length( L ) = 0 then
+        Error();
+      fi;
+      
+      if not ForAll( L, IsPosInt ) then
+        Error();
+      fi;
+     
+      r := Random( L );
+      
+      mat := R!.random_matrix_func( RankOfObject( a ), r );
+      
+      b := CategoryOfRowsObject( r, category );
+      
+      return CategoryOfRowsMorphism( a, mat, b );
+      
+      end );
+  
+  AddRandomMorphismWithFixedRangeByList( category,
+    function( b, L )
+      local r, mat, a;
+      
+      if Length( L ) = 0 then
+        Error();
+      fi;
+      
+      if not ForAll( L, IsPosInt ) then
+        Error();
+      fi;
+     
+      r := Random( L );
+      
+      mat := R!.random_matrix_func( r, RankOfObject( b ) );
+      
+      a := CategoryOfRowsObject( r, category );
+      
+      return CategoryOfRowsMorphism( a, mat, b );
+      
+      end );
+   
+  AddRandomMorphismWithFixedSourceAndRangeByList( category,
+    function( a, b, L )
+      local mat;
+      
+      if Length( L ) = 0 then
+        Error();
+      fi;
+      
+      if not ForAll( L, IsPosInt ) then
+        Error();
+      fi;
+      
+      mat := R!.random_matrix_func( RankOfObject( a ), RankOfObject( b ) );
+      
+      return CategoryOfRowsMorphism( a, mat, b );
+      
+      end );
+  
+  AddRandomMorphismByList( category,
+    function( category, L )
+      local r1, r2, a, b, mat;
+      
+      if Length( L ) = 0 then
+        Error();
+      fi;
+      
+      if not ForAll( L, IsPosInt ) then
+        Error();
+      fi;
+      
+      r1 := Random( L );
+      
+      r2 := Random( L );
+      
+      a := CategoryOfRowsObject( r1, category );
+
+      b := CategoryOfRowsObject( r2, category );
+
+      mat := R!.random_matrix_func( r1, r2 );
+      
+      return CategoryOfRowsMorphism( a, mat, b );
+      
+    end );
+
+
+end;
