@@ -1,4 +1,3 @@
-LoadPackage( "FreydCategoriesForCAP" );
 LoadPackage( "StableCategoriesForCAP" );
 ReadPackage( "StableCategoriesForCAP", "/examples/HomStructureForGradedRows.g" );
 
