@@ -1773,8 +1773,6 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
     AddHomomorphismStructureOnObjects( category,
       function ( C, D )
         local H, V, d, hom;
@@ -1791,7 +1789,15 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
         
         d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
         
-        return Source(  CyclesAt( TotalChainComplex( d ), 0 ) );
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+          
+          return Source(  CyclesAt( TotalChainComplex( d ), 0 ) );
+          
+        else
+          
+          return TotalChainComplex( d );
+          
+        fi;
   
   end );
 
@@ -1806,8 +1812,6 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-   
     AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
       function( s, phi, psi, r )
         local ss, Tot1, rr, Tot2, l;
@@ -1847,7 +1851,15 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
               
               end, 1 );
         
-        return CyclesFunctorialAt( ChainMorphism( Tot1, Tot2, l ), 0 );
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+          
+          return CyclesFunctorialAt( ChainMorphism( Tot1, Tot2, l ), 0 );
+          
+        else
+          
+          return ChainMorphism( Tot1, Tot2, l );
+          
+        fi;
 
     end );
 
@@ -1862,11 +1874,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
     AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( category,
         function( phi )
-          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i;
+          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i, U;
           
           C := Source( phi );
           D := Range( phi );
@@ -1890,7 +1900,17 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           T := TotalChainComplex( d );
           
-          return KernelLift( T^0, morphism );
+          if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+            
+            return KernelLift( T^0, morphism );
+            
+          else
+            
+            U := StalkChainComplex( Source( morphism ), 0 );
+            
+            return ChainMorphism( U, T, [ morphism ], 0 );
+            
+          fi;
         
   end );
 
@@ -1905,8 +1925,6 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-    
     AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( category,
         function( C, D, psi )
           local lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
@@ -1918,7 +1936,15 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           T := TotalChainComplex( d );
           
-          phi := PreCompose( psi, CyclesAt( T, 0 ) );
+          if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+            
+            phi := PreCompose( psi, CyclesAt( T, 0 ) );
+            
+          else
+            
+            phi := psi[ 0 ];
+            
+          fi;
           
           struc_on_objects := [  ];
           
@@ -1951,13 +1977,19 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE,
       cat := UnderlyingCategory( category );
       
       range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-      
-      SetRangeCategoryOfHomomorphismStructure( category, range_cat_of_hom_struc );
-      
+       
       AddDistinguishedObjectOfHomomorphismStructure( category,
         function( )
           
-          return DistinguishedObjectOfHomomorphismStructure( cat );
+          if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+            
+            return DistinguishedObjectOfHomomorphismStructure( cat );
+            
+          else
+            
+            return StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 );
+            
+          fi;
         
         end );
     
