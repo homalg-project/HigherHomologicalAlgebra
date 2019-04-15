@@ -199,7 +199,8 @@ end );
 InstallMethod( StableCategoryByColiftingStructure,
             [ IsCapCategory ],
   function( category )
-    local to_be_finalized, name, can_be_factored_through_colifting_object, FinalizeCategory, Name, stable_category;
+    local name, can_be_factored_through_colifting_object, stable_category, FinalizeCategory, Name,
+            category_of_hom_structure, to_be_finalized, with_hom_structure;
     
     if not CanCompute( category, "MorphismIntoColiftingObject" ) then
       
@@ -225,14 +226,27 @@ InstallMethod( StableCategoryByColiftingStructure,
     
     stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, Name := name );
     
-    if CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-         CanCompute( category, "HomomorphismStructureOnObjects" ) and
-           CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
-             CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-               CanCompute( category, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-                 CanCompute( category, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
-                 
-                 ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
+    with_hom_structure := ValueOption( "WithHomomorphismStructure" );
+    
+    if with_hom_structure <> false and
+         CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+           CanCompute( category, "HomomorphismStructureOnObjects" ) and
+             CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
+               CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+                 CanCompute( category, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
+                   CanCompute( category, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                   
+                    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
+                   
+                    if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
+                     
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
+                  
+                    else
+                    
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
+                    
+                    fi;
     
     fi;
     
@@ -289,7 +303,7 @@ end );
 #
 ##########################
 
-InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE,
+InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT,
   
   function( stable_category )
     local category, category_of_hom_structure;
@@ -412,6 +426,129 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
     end );
     
 end );
+
+InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE,
+  
+  function( stable_category )
+    local category, range_category, freyd_cat;
+     
+    category := UnderlyingCapCategory( stable_category );
+    
+    range_category := RangeCategoryOfHomomorphismStructure( category );
+    
+    freyd_cat := FreydCategory( range_category );
+    
+    SetRangeCategoryOfHomomorphismStructure( stable_category, freyd_cat );
+    
+    ##  -1       0       1
+    ## 
+    ##   0 <---- D <---- 0 <-----
+    ##
+    AddDistinguishedObjectOfHomomorphismStructure( stable_category,
+       function( )
+         local D;
+         
+         D := DistinguishedObjectOfHomomorphismStructure( category );
+         
+         return AsFreydCategoryObject( D );
+         
+    end );
+    
+    ##
+    ##                a -----------> I(a)
+    ##            hom(a,b) <---- hom(I(a),b)
+    ##
+    ##
+    ##   -1          0               1                2
+    ##
+    ##    0 <---- hom(a,b) <---- hom(I(a),b) <------ 0 <---
+    ##
+    AddHomomorphismStructureOnObjects( stable_category,
+      function( stable_a, stable_b )
+        local a, b, a_to_I_a, hom_a_to_I_a_id_b, hom_object;
+        
+        a := UnderlyingCapCategoryObject( stable_a );
+        
+        b := UnderlyingCapCategoryObject( stable_b );
+        
+        a_to_I_a := MorphismIntoColiftingObject( a );
+        
+        hom_a_to_I_a_id_b := HomomorphismStructureOnMorphisms( a_to_I_a, IdentityMorphism( b ) );
+        
+        return FreydCategoryObject( hom_a_to_I_a_id_b );
+    
+    end );
+    
+    ##                          coker(*)                        coker(*)
+    ##
+    ##
+    ##
+    ##      alpha                            hom(alpha,beta)
+    ##  a --------> b           Hom( a, d ) <------------------ Hom( b, c )
+    ##
+    ##                             /|\                            /|\
+    ##                              |                              |
+    ##                              |                              |
+    ##
+    ##  d <-------- c         Hom( I(a), d )                  Hom( I(b), c )
+    ##      beta
+    ##
+    AddHomomorphismStructureOnMorphismsWithGivenObjects( stable_category,
+      function( s, stable_alpha, stable_beta, r )
+        local alpha, beta, hom_alpha_beta; 
+        
+        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        
+        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        
+        hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
+                
+        return FreydCategoryMorphism( s, hom_alpha_beta, r );
+        
+    end );
+    
+    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+      function( stable_alpha )
+        local stable_a, stable_b, hom_stable_a_stable_b, D, alpha, i;
+        
+        stable_a := Source( stable_alpha );
+        
+        stable_b := Range( stable_alpha );
+        
+        hom_stable_a_stable_b := HomomorphismStructureOnObjects( stable_a, stable_b );
+        
+        D := DistinguishedObjectOfHomomorphismStructure( stable_category );
+        
+        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        
+        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        
+        return FreydCategoryMorphism( D, i, hom_stable_a_stable_b );
+        
+    end );
+#    
+#    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+#      function( stable_a, stable_b, iota )
+#        local a, b, hom_stable_a_stable_b, h, l, i;
+#        
+#        a := UnderlyingCapCategoryObject( stable_a );
+#        
+#        b := UnderlyingCapCategoryObject( stable_b );
+#        
+#        hom_stable_a_stable_b := HomomorphismStructureOnObjects( stable_a, stable_b );
+#        
+#        h := hom_stable_a_stable_b!.UnderlyingMorphism;
+#        
+#        l := Lift( iota, CokernelProjection( h ) );
+#        
+#        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
+#        
+#        return AsStableCategoryMorphism( stable_category, i );
+#        
+#    end );
+    
+end );
+
 
 #######################
 #

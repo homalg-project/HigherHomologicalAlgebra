@@ -200,6 +200,8 @@ DeclareAttribute( "CongruencyTestFunctionForStableCategory", IsStableCategory );
 
 DeclareAttribute( "CanonicalProjectionFunctor", IsStableCategory );
 
+DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT" );
+
 DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE" );
 
 DeclareGlobalVariable( "CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS" );
