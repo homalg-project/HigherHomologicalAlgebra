@@ -1,8 +1,8 @@
 LoadPackage( "StableCategoriesForCAP" );
 ReadPackage( "StableCategoriesForCAP", "/examples/HomStructureForGradedRows.g" );
 
-R := HomalgFieldOfRationals( );
-#R := HomalgRingOfIntegers( );
+#R := HomalgFieldOfRationals( );
+R := HomalgRingOfIntegers( );
 #R := HomalgFieldOfRationalsInSingular( )*"x,y";
 
 rows := CategoryOfRows( R : FinalizeCategory := false );
