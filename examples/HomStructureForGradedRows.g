@@ -1,6 +1,7 @@
 LoadPackage( "LinearAlgebraForCAP" );
+LoadPackage( "4ti2Interface" );
 LoadPackage( "NConvex" );
-LoadPackage( "GradedModuleP" );
+#LoadPackage( "GradedModuleP" );
 LoadPackage( "Frey" );
 
 DeclareOperation( "BasisOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
