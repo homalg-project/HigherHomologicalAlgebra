@@ -507,6 +507,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
     end );
     
+    ##
     AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
       function( stable_alpha )
         local stable_a, stable_b, hom_stable_a_stable_b, D, alpha, i;
@@ -526,26 +527,22 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         return FreydCategoryMorphism( D, i, hom_stable_a_stable_b );
         
     end );
-#    
-#    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
-#      function( stable_a, stable_b, iota )
-#        local a, b, hom_stable_a_stable_b, h, l, i;
-#        
-#        a := UnderlyingCapCategoryObject( stable_a );
-#        
-#        b := UnderlyingCapCategoryObject( stable_b );
-#        
-#        hom_stable_a_stable_b := HomomorphismStructureOnObjects( stable_a, stable_b );
-#        
-#        h := hom_stable_a_stable_b!.UnderlyingMorphism;
-#        
-#        l := Lift( iota, CokernelProjection( h ) );
-#        
-#        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
-#        
-#        return AsStableCategoryMorphism( stable_category, i );
-#        
-#    end );
+    #    
+    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+      function( stable_a, stable_b, iota )
+        local a, b, h, i;
+        
+        a := UnderlyingCapCategoryObject( stable_a );
+        
+        b := UnderlyingCapCategoryObject( stable_b );
+        
+        h := MorphismDatum( iota );
+        
+        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
+        
+        return AsStableCategoryMorphism( stable_category, i );
+        
+    end );
     
 end );
 
