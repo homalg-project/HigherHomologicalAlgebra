@@ -532,9 +532,9 @@ InstallMethod( Display,
         for i in [ m .. n ] do
             Print( dashes );
             Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-            Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+            Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+            Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
             Display( C^i );
-            Print( "\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
             Display( C[ i ] );
         od;
     else
@@ -574,21 +574,51 @@ InstallMethod( ViewComplex,
     local i, co_homo, dashes;
 
     if IsChainComplex( C ) then
+      
 	    co_homo := "homological";
-        dashes := "\n------------------------/\\--------------------------\n";
+      
+      dashes := "\n------------------------/\\--------------------------\n";
+        
+      for i in [ m .. n ] do
+        
+        Print( dashes );
+        
+        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
+        
+        Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+        
+        View( C^i );
+        
+        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+        
+        View( C[ i ] );
+ 
+      od;
+
     else
-        co_homo := "cohomological";
-        dashes := "\n------------------------\\/--------------------------\n";
+      
+      co_homo := "cohomological";
+        
+      dashes := "\n------------------------\\/--------------------------\n";
+        
+      for i in [ m .. n ] do
+        
+        Print( dashes );
+        
+        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
+        
+        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
+        
+        View( C[ i ] );
+        
+        Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
+        
+        View( C^i );
+        
+      od;
+
     fi;
 
-    for i in [ m .. n ] do
-        Print( dashes );
-        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-        View( C[ i ] );
-        Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-        View( C^i );
-    od;
 end );
 
 ##
