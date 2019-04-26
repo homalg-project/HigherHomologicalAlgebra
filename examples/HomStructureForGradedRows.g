@@ -5,9 +5,9 @@ LoadPackage( "NConvex" );
 LoadPackage( "Frey" );
 
 DeclareOperation( "BasisOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
-DeclareAttribute( "FieldOfExternalHom", IsCapCategory );
+DeclareAttribute( "FieldForHomomorphismStructure", IsCapCategory );
 DeclareAttribute( "CoefficientsOfLinearMorphism", IsCapCategoryMorphism );
-DeclareOperation( "MultiplyWithHomalgRingElement", [ IsMultiplicativeElement, IsCapCategoryMorphism ] );
+DeclareOperation( "MultiplyWithElementInFieldForHomomorphismStructure", [ IsMultiplicativeElement, IsCapCategoryMorphism ] );
 DeclareOperation( "HomalgElementToListOfIntegers", [ IsHomalgModuleElement ] );
 
 InstallMethod( HomalgElementToListOfIntegers,
@@ -30,7 +30,7 @@ AddHomomorphismStructureOnCategory :=
   function( cat )
     local field;
     
-    field := FieldOfExternalHom( cat );
+    field := FieldForHomomorphismStructure( cat );
 
     SetRangeCategoryOfHomomorphismStructure( cat, MatrixCategory( field ) );
 
@@ -120,7 +120,7 @@ AddHomomorphismStructureOnCategory :=
         
         B := BasisOfExternalHom( a, b );
         
-        L := List( [ 1 .. Length( coeff ) ], i -> MultiplyWithHomalgRingElement( coeff[ i ], B[ i ] ) );
+        L := List( [ 1 .. Length( coeff ) ], i -> MultiplyWithElementInFieldForHomomorphismStructure( coeff[ i ], B[ i ] ) );
         
         if L = [  ] then
           
@@ -246,7 +246,7 @@ InstallMethod( CoefficientsOfLinearMorphism,
     
     category := CapCategory( phi );
     
-    K := FieldOfExternalHom( category );
+    K := FieldForHomomorphismStructure( category );
    
     S := UnderlyingHomalgGradedRing( phi );
 
@@ -315,7 +315,7 @@ InstallMethod( CoefficientsOfLinearMorphism,
 end );
 
 ##
-InstallMethod( MultiplyWithHomalgRingElement,
+InstallMethod( MultiplyWithElementInFieldForHomomorphismStructure,
             [ IsMultiplicativeElement, IsGradedRowOrColumnMorphism ],
   function( e, alpha )
     local S, mat;
@@ -332,7 +332,7 @@ end );
 #weights := InputFromUser( "weights?" );
 #SetWeightsOfIndeterminates( S, weights );
 #rows := CAPCategoryOfGradedRows( S : FinalizeCategory := false );
-#SetFieldOfExternalHom( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
+#SetFieldForHomomorphismStructure( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
 #AddHomomorphismStructureOnCategory( rows );
 #Finalize( rows );
 

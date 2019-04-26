@@ -8,10 +8,10 @@ Q := HomalgFieldOfRationalsInSingular( );
 #SetWeightsOfIndeterminates( S, [ [ 1, 0 ], [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ] );
 S := KoszulDualRing( GradedRing( Q * "x_0, x_1, x_2, y_0, y_1" ) );
 
-TRY_TO_ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS( S );
+TRY_TO_ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS2( S );
 
 rows := CAPCategoryOfGradedRows( S : FinalizeCategory := false );
-SetFieldOfExternalHom( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
+SetFieldForHomomorphismStructure( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
 AddHomomorphismStructureOnCategory( rows );
 AddRandomMethodsToGradedRows( rows );
 SetIsProjective( DistinguishedObjectOfHomomorphismStructure( rows ), true );
