@@ -1263,7 +1263,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
          CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
            CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
              CanCompute( cat, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-               CanCompute( cat, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
+               CanCompute( cat, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) and
+                 HasRangeCategoryOfHomomorphismStructure( cat ) then
                 
                 range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
                 
