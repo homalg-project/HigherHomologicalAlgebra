@@ -768,6 +768,188 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
     return F;
 end );
 
+InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
+      [ IsCapFunctor ],
+  function( F )
+    local source, cat_1, cat_2, range, ch_range, ch_cat_1, ch_cat_2, ch_cat_1_ch_cat_2, name, U; 
+    source := AsCapCategory( Source( F ) );
+    
+    if not HasComponents( source ) then
+      
+      Error( "The source of the category should be a product category!\n" );
+      
+    fi;
+    
+    if Length( Components( source ) ) <> 2 then
+      
+      Error( "The source should be product of two categories!\n" );
+      
+    fi;
+    
+    cat_1 := Components( source )[ 1 ];
+    
+    cat_2 := Components( source )[ 2 ];
+    
+    range := AsCapCategory( Range( F ) );
+    
+    ch_cat_1 := ChainComplexCategory( cat_1 );
+    
+    ch_cat_2 := ChainComplexCategory( cat_2 );
+    
+    ch_range := ChainComplexCategory( range );
+    
+    ch_cat_1_ch_cat_2 := Product( ch_cat_1, ch_cat_2 );
+    
+    name := Concatenation( "Extension functor from ", Name( ch_cat_1_ch_cat_2 ), " to ", Name( ch_range ) );
+    
+    U := CapFunctor( name, ch_cat_1_ch_cat_2, ch_range );
+    
+    AddObjectFunction( U,
+      function( C_x_D )
+        local C, D, H, V, d;
+        
+        C := Components( C_x_D )[ 1 ];
+        
+        D := Components( C_x_D )[ 2 ];
+        
+        if not ( HasActiveUpperBound( C ) and HasActiveUpperBound( D ) ) then
+          
+          if not ( HasActiveLowerBound( C ) and HasActiveLowerBound( D ) ) then
+            
+            if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( C ) ) then
+              
+              if not ( HasActiveLowerBound( D ) and HasActiveUpperBound( D ) ) then
+                
+                Error( "to be written");
+              
+              fi;
+            
+            fi;
+          
+          fi;
+        
+        fi;
+        
+        H := function( i, j )
+          
+          return ApplyFunctor( F, Product( C^i, IdentityMorphism( D[ j ] ) ) );
+          
+        end;
+        
+        V := function( i, j )
+          
+          if i mod 2 = 0 then
+          
+            return ApplyFunctor( F, Product( IdentityMorphism( C[ i ] ), D^j ) );
+            
+          else
+          
+            return AdditiveInverse( ApplyFunctor( F, Product( IdentityMorphism( C[ i ] ), D^j ) ) );
+          
+          fi;
+        
+        end;
+        
+        d := DoubleChainComplex( range, H, V );
+        
+        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
+          
+          function( )
+            
+            SetRightBound( d, ActiveUpperBound( C ) - 1 );
+            
+        end ) );
+        
+        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
+          
+          function( )
+          
+            SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+            
+        end ) );
+        
+        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ],
+        
+          function( )
+          
+            SetAboveBound( d, ActiveUpperBound( D ) - 1 );
+            
+        end ) );
+        
+        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ],
+        
+          function( )
+          
+            SetBelowBound( d, ActiveLowerBound( D ) + 1 );
+            
+        end ) );
+        
+        return TotalChainComplex( d );
+        
+      end );
+      
+      AddMorphismFunction( U,
+        
+        function( S, phi_x_psi, T )
+          local phi, psi, ss, tt, l;
+          
+          phi := Components( phi_x_psi )[ 1 ];
+          
+          psi := Components( phi_x_psi )[ 2 ];
+          
+          ss := S!.UnderlyingDoubleComplex;
+          
+          tt := T!.UnderlyingDoubleComplex;
+          
+          l := MapLazy( IntegersList,
+            
+            function( m )
+              local ind_s, ind_t, morphisms, obj;
+              
+              # this is important to write the used indices.
+              obj := ObjectAt( S, m );
+              
+              obj := ObjectAt( T, m );
+              
+              ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+              
+              ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+              
+              morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ],
+                
+                function( i )
+                  
+                  return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                    
+                    function( j )
+                      
+                      if i = j then
+                        
+                        return ApplyFunctor( F, Product( phi[ i ], psi[ m - i ] ) );
+                      
+                      else
+                        
+                        return ZeroMorphism( ObjectAt( ss, i, m - i), ObjectAt( tt, j, m - j ) );
+                      
+                      fi;
+                      
+                      end );
+                
+                end );
+              
+              return MorphismBetweenDirectSums( morphisms );
+              
+              end, 1 );
+          
+          return ChainMorphism( S, T, l );
+      
+      end );
+      
+      return U;
+    
+end );
+
+
 # to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
 # InstallMethod( LeftDerivedFunctor, 
 #                [ IsCapFunctor ],

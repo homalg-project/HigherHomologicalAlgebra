@@ -203,6 +203,10 @@ DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ]
 #! @Returns a functor
 DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor ] );
 
+
+DeclareAttribute( "ExtendProductFunctorToChainComplexCategoryProductFunctor", IsCapFunctor );
+DeclareAttribute( "ExtendProductFunctorToCochainComplexCategoryProductFunctor", IsCapFunctor );
+
 #! @Description
 #! The input is a complex category $\mathrm{Com}(A)$ of some Cap category $A$ 
 #! and an integer $n$. 
