@@ -819,6 +819,50 @@ InstallMethod( NaturalProjectionFromMappingCone,
        
 end );
 
+InstallMethodWithCrispCache( MappingConeColift,
+    [ IsChainMorphism, IsChainMorphism ],
+  function( phi, psi )
+    local chains, H, maps;
+    
+    chains := CapCategory( phi );
+    
+    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
+      
+      Error( "The composition of the morphisms in the input should be homotopic to null" );
+      
+    fi;
+    
+    H := HomotopyMorphisms( PreCompose( phi, psi ) );
+    
+    maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ), 1 );
+    
+    return ChainMorphism( MappingCone( phi ), Range( psi ), maps );
+    
+end );
+
+InstallMethodWithCrispCache( MappingConeColift,
+    [ IsCochainMorphism, IsCochainMorphism ],
+  function( phi, psi )
+    local cochains, H, maps;
+    
+    cochains := CapCategory( phi );
+    
+    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
+      
+      Error( "The composition of the morphisms in the input should be homotopic to null" );
+      
+    fi;
+    
+    H := HomotopyMorphisms( PreCompose( phi, psi ) );
+    
+    maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n + 1 ] ], [ psi[ n ] ] ] ), 1 );
+    
+    return CochainMorphism( MappingCone( phi ), Range( psi ), maps );
+    
+end );
+
+
+##
 InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone, 
             [ IsChainOrCochainMorphism ],
     function( phi )

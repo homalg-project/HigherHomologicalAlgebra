@@ -276,6 +276,8 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 #!  @Returns Infinite list
 DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 
+DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
+
 #!  @EndSection
 
 #!  @Section Properties
