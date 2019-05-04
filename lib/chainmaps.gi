@@ -679,6 +679,7 @@ end );
 #
 ########################################
 
+##
 InstallMethod( MappingCone,
             [ IsChainOrCochainMorphism ],
    function( phi )
@@ -765,6 +766,7 @@ InstallMethod( MappingCone,
 
 end );
 
+##
 InstallMethod( NaturalInjectionInMappingCone,
                [ IsChainOrCochainMorphism ],
     function( phi )
@@ -792,6 +794,7 @@ InstallMethod( NaturalInjectionInMappingCone,
        
 end );
 
+##
 InstallMethod( NaturalProjectionFromMappingCone,
                [ IsChainOrCochainMorphism ],
     function( phi )

@@ -7,36 +7,6 @@
 ##
 #############################################################################
 
-
-# DeclareGlobalVariable( "ENOUGH_PROJECTIVES_INJECTIVES_METHODS" );
-# 
-# InstallValue( ENOUGH_PROJECTIVES_INJECTIVES_METHODS, rec( 
-# 
-# EpimorphismFromSomeProjectiveObject := rec( 
-# 
-# installation_name := "EpimorphismFromSomeProjectiveObject", 
-# filter_list := [ "object" ],
-# cache_name := "EpimorphismFromSomeProjectiveObject",
-# return_type := "morphism",
-# post_function := function( object, return_value )
-#         SetIsEpimorphism( return_value, true );
-#         end ),
-# 
-# MonomorphismIntoSomeInjectiveObject := rec(
-# 
-# installation_name := "MonomorphismIntoSomeInjectiveObject",
-# filter_list := [ "object" ],
-# cache_name := "MonomorphismIntoSomeInjectiveObject",
-# return_type := "morphism",
-# post_function := function( object, return_value )
-#         SetIsMonomorphism( return_value, true );
-#         end ),
-# ) );
-# 
-# CAP_INTERNAL_ENHANCE_NAME_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
-# 
-# CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( ENOUGH_PROJECTIVES_INJECTIVES_METHODS );
-
 ###############################
 #
 # Resolutions
@@ -92,71 +62,81 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
                 [ IsBoundedAboveCochainComplex ],
  
 function( C )
- local u, cat, proj, zero, list;
+  local u, cat, proj, zero, list;
   
- cat := UnderlyingCategory( CapCategory( C ) );
- 
- if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+  cat := UnderlyingCategory( CapCategory( C ) );
+  
+  if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+    
     Error( "It is not known whether the underlying category has enough projectives or not" );
- fi;
- 
- if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then 
+    
+  fi;
+  
+  if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+    
     Error( "The underlying category must have enough projectives" );
- fi;
+    
+  fi;
   
- u := ActiveUpperBound( C );
+  u := ActiveUpperBound( C );
   
- zero := ZeroObject( cat );
+  zero := ZeroObject( cat );
   
- list := MapLazy( IntegersList, function( k )
-   local k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
- 
-   if k >= u then
- 
-      return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
- 
-   else
- 
-      k1 := list[ k + 1 ][ 1 ];
- 
-      m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
- 
-      mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
- 
-      mor2 := list[ k + 1 ][ 2 ];
- 
-      mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
- 
-      m2 := PreCompose( [ mor1, mor2, mor3 ] );
- 
-      m := AdditionForMorphisms( m1, m2 );
- 
-      mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
- 
-      ker := KernelEmbedding( m );
- 
-      pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
- 
-      return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
- 
-   fi;
- 
-   end, 1 );
- 
- proj := CochainComplex( cat, MapLazy( list, function( j ) return j[ 1 ]; end, 1 ) );
- 
- SetUpperBound( proj, u );
- 
-return CochainMorphism( proj, C, 
-        MapLazy( IntegersList, 
-            function( j ) 
-            if j mod 2 = 0 then 
-            return  list[ j ][ 2 ]; 
-            else
-            return AdditiveInverse( list[ j ][ 2 ] );
-            fi;
-            end, 1 ) );
- 
+  list := MapLazy( IntegersList,
+    function( k )
+      local k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
+      
+      if k >= u then
+        
+        return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
+      
+      else
+        
+        k1 := list[ k + 1 ][ 1 ];
+        
+        m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
+        
+        mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
+        
+        mor2 := list[ k + 1 ][ 2 ];
+        
+        mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
+        
+        m2 := PreCompose( [ mor1, mor2, mor3 ] );
+        
+        m := AdditionForMorphisms( m1, m2 );
+        
+        mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
+        
+        ker := KernelEmbedding( m );
+        
+        pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
+        
+        return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
+      
+      fi;
+    
+    end, 1 );
+  
+  proj := CochainComplex( cat, MapLazy( list, function( j ) return j[ 1 ]; end, 1 ) );
+  
+  SetUpperBound( proj, u );
+  
+  return CochainMorphism( proj, C, 
+    MapLazy( IntegersList,
+      function( j )
+        if j mod 2 = 0 then
+          
+          return  list[ j ][ 2 ]; 
+        
+        else
+          
+          return AdditiveInverse( list[ j ][ 2 ] );
+        
+        fi;
+      
+      end, 1 ) );
+    
 end );
 
 # version 2, much better than version 1 because it make use of
@@ -255,8 +235,10 @@ end );
 
 InstallMethod( ProjectiveResolution,
       [ IsBoundedAboveCochainComplex ],
-function( C )
-return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+  function( C )
+    
+    return Source( QuasiIsomorphismFromProjectiveResolution( C ) );
+  
 end );
 
 ## fix the bounds, try example where C is direct sum of stalks
@@ -279,27 +261,34 @@ end );
 
 InstallMethod( ProjectiveResolutionWithBounds,
         [ IsBoundedChainComplex, IsInt ],
-    function( C, m )
+  function( C, m )
     local p, i;
     
     if m < ActiveUpperBound( C ) then
-	Error( "The second argument should be greater than the active upper bound of C" );
+      
+      Error( "The second argument should be greater than the active upper bound of C" );
+      
     fi;
     
     p := Source( QuasiIsomorphismFromProjectiveResolution( C ) );
-
-    for i in [ ActiveUpperBound( C ) .. m ] do
-        if IsZeroForObjects( p[ i ] ) then 
-            SetUpperBound( p, i );
-            return p;
-        fi;
-    od;
-
-    Error( "It seems that the upper bound of the projective resolution is greater than ", m );
-
-end );
     
+    for i in [ ActiveUpperBound( C ) .. m ] do
+      
+      if IsZeroForObjects( p[ i ] ) then 
+        
+        SetUpperBound( p, i );
+        
+        return p;
+      
+      fi;
+    
+    od;
+    
+    Error( "It seems that the upper bound of the projective resolution is greater than ", m );
+    
+end );
 
+##
 InstallMethod( QuasiIsomorphismFromProjectiveResolution,
         [ IsBoundedBelowChainComplex ], 
 function( C )
