@@ -3,14 +3,7 @@ LoadPackage( "ComplexesForCAP" );
 LoadPackage( "StableCategoriesForCAP" );
 ZZ := HomalgRingOfIntegers( );
 cat := LeftPresentations( ZZ );
-chains := ChainComplexCategory( cat : FinalizeCategory := false );
-AddMorphismIntoColiftingObject( chains,
-  function( a )
-    return NaturalInjectionInMappingCone( IdentityMorphism( a ) );
-  end );;
-Finalize( chains );
-name := Concatenation( "Homotopy category of ", Name( cat ) );
-stable_cat := StableCategoryByColiftingStructure( chains: Name := name );
+homotopy_category := HomotopyCategory( cat );
 m1 := 7;
 m0 := 6;
 n1 := 9;
@@ -33,8 +26,12 @@ D := ChainComplex( [ d_1 ], 1 );
 phi_1 := PreCompose( c_1, h );
 phi_0 := PreCompose( h, d_1 );
 phi := ChainMorphism( C, D, [ phi_0, phi_1 ], 0 );
-stable_phi := AsStableCategoryMorphism( stable_cat, phi );
-IsZero( stable_phi );
+homotopy_phi := HomotopyCategoryMorphism( homotopy_category, phi );
+IsZero( homotopy_phi );
+
+IsNullHomotopic( phi );
+H := HomotopyMorphisms( phi );  # H[ i ] : Source( phi )[ i ] ----> Range( phi )[ i + 1 ]
+Display( H[ 0 ] );
 
 
 #! gap> LoadPackage( "ModulePresentations" );
@@ -112,7 +109,7 @@ IsZero( stable_phi );
 #! gap> phi := ChainMorphism( C, D, [ phi_0, phi_1 ], 0 );
 #! <A bounded morphism in chain complexes category over category of left presentations of Z\
 #!  with active lower bound -1 and active upper bound 2>
-#! gap> stable_phi := AsStableCategoryMorphism( stable_cat, phi );
+#! gap> stable_phi := StableCategoryMorphism( stable_cat, phi );
 #! <A morphism in Homotopy category of Category of left presentations of Z>
 #! gap> IsZero( stable_phi );
 #! true
