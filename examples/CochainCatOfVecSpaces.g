@@ -349,26 +349,23 @@ p := NaturalProjectionFromMappingCone( psi );
 
 IsZeroForMorphisms( PreCompose( psi, i ) );
 #! false
-
-# temp untill adding the hom structure to this and other packages
-# IsNullHomotopic( PreCompose( psi, i ) );
-# true
-# H := HomotopyMorphisms( PreCompose( psi, i ) );
-# <An infinite list>
-# Display( H[5] );
-# [ [  0,  2 ] ]
-# 
-# A morphism in Category of matrices over Q
-# Display( H[4] );
-# [ [  0,  0 ],
-#   [  0,  0 ] ]
-# 
-# A morphism in Category of matrices over Q
-# Display( H[3] );
-# [ [  0 ] ]
-# 
-# A morphism in Category of matrices over Q
-
+IsNullHomotopic( PreCompose( psi, i ) );
+#! true
+H := HomotopyMorphisms( PreCompose( psi, i ) );
+#! <An infinite list>
+Display( H[ 5 ] );
+#! [ [  0,  2 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( H[ 4 ] );
+#! [ [  0,  0 ],
+#!   [  0,  0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+Display( H[ 3 ] );
+#! [ [  0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
 #! @EndExample
 #! Let us now show that $D$ and $\mathrm{Cyl(\psi)}$ are homotopy equivalent.
 #! @Example
@@ -387,9 +384,9 @@ IsZeroForMorphisms( PreCompose( D_to_cyl_psi, cyl_psi_to_D )
 IsZeroForMorphisms( PreCompose( cyl_psi_to_D, D_to_cyl_psi ) 
                     - IdentityMorphism( cyl_psi ) );
 #! false
-# IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi ) 
-#                    - IdentityMorphism( cyl_psi ) );
-# true
+IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi ) 
+                    - IdentityMorphism( cyl_psi ) );
+#! true
 # Display( D_to_cyl_psi );
 # Display( cyl_psi_to_D );
 #! @EndExample
