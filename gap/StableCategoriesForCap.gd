@@ -15,7 +15,6 @@ DeclareCategory( "IsStableCategoryObject",
 
 DeclareCategory( "IsStableCategoryMorphism",
                  IsQuotientCategoryMorphism );
-
 ##
 ## Stable colifting structure
 
@@ -186,10 +185,10 @@ DeclareOperation( "StableCategory",
             [ IsCapCategory, IsFunction ] );
 
 # These methods call AsQuotientCategory(Object/Morphism)
-DeclareOperation( "AsStableCategoryObject",
+DeclareOperation( "StableCategoryObject",
             [ IsStableCategory, IsCapCategoryObject ] );
 
-DeclareOperation( "AsStableCategoryMorphism",
+DeclareOperation( "StableCategoryMorphism",
             [ IsStableCategory, IsCapCategoryMorphism ] );
 
 DeclareAttribute( "StableCategoryByColiftingStructure", IsCapCategory );
@@ -202,9 +201,16 @@ DeclareAttribute( "CanonicalProjectionFunctor", IsStableCategory );
 
 DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT" );
 
+DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT" );
+
 DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE" );
+
+DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE" );
 
 DeclareGlobalVariable( "CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS" );
 
 DeclareGlobalVariable( "STABLE_CATEGORIES_METHOD_NAME_RECORD" );
 
+DeclareOperation( "HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS", [ IsStableCategoryObject, IsStableCategoryObject ] );
+
+DeclareOperation( "HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS", [ IsStableCategoryObject, IsStableCategoryObject ] );
