@@ -58,7 +58,7 @@ KeyDependentOperation( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY", IsCapCategory, IsInt
 InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             [ IsCapCategory, IsInt ],
   function( cat, shift_index )
-    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc;
+    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache;
     
     if shift_index = -1 then 
       
@@ -132,19 +132,170 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     fi;
     
-    ## This may be changed ...
-    ## changing it to IsEqualForObjects, IsEqualForMorphisms instead 
-    ## of IsIdenticalObj may slow down computations.
+    ##
+    objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
     
-    AddIsEqualForCacheForObjects( complex_cat, IsIdenticalObj );
+    if objects_equality_for_cache = IsIdenticalObj then
+      
+      AddIsEqualForCacheForObjects( complex_cat,
+        function( C1, C2 )
+          
+          return IsIdenticalObj( C1, C2 );
+          
+      end );
+      
+    else
+     
+      AddIsEqualForCacheForObjects( complex_cat,
+        function( C1, C2 )
+          local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
+          
+          if IsIdenticalObj( C1, C2 ) then 
+          
+            return true;
+          
+          fi;
+          
+          if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
+          
+            return false;
+          
+          fi;
+          
+          computed_objects_1 := ComputedObjectAts( C1 );
+
+          computed_objects_2 := ComputedObjectAts( C2 );
+
+          indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
+          
+          indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
+
+          indices := Intersection( indices_1, indices_2 );
+
+          for i in indices do
+            
+            if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
+              
+              return false;
+            
+            fi;
+
+          od;
+          
+          l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+          
+          u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
+          
+          lu := [ l .. u ];
+          
+          SubtractSet( lu, indices );
+
+          if lu = [ ] then
+            
+            return true;
+            
+          fi;
+          
+          # They still may be equal but I don't want to compute components when comparing in Cache.
+          return false;
+        
+      end );
+      
+    fi;
     
-    AddIsEqualForCacheForMorphisms( complex_cat, IsIdenticalObj );
+    morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
+    
+    if morphisms_equality_for_cache = IsIdenticalObj then
+      
+      AddIsEqualForCacheForMorphisms( complex_cat,
+        function( m1, m2 )
+          
+          return IsIdenticalObj( m1, m2 );
+          
+      end );
+    
+    else
+    
+      AddIsEqualForCacheForMorphisms( complex_cat,
+        function( m1, m2 )
+          local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
+          
+          if IsIdenticalObj( m1, m2 ) then 
+            
+            return true;
+          
+          fi;
+          
+          if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+            
+            return false;
+          
+          fi;
+          
+          if not IsEqualForCacheForObjects( Source( m1 ), Source( m2 ) ) then
+            
+            return false;
+            
+          fi;
+          
+          if not IsEqualForCacheForObjects( Range( m1 ), Range( m2 ) ) then
+            
+            return false;
+            
+          fi;
+          
+          computed_morphisms_1 := ComputedMorphismAts( m1 );
+
+          computed_morphisms_2 := ComputedMorphismAts( m2 );
+
+          indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
+          
+          indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
+
+          indices := Intersection( indices_1, indices_2 );
+
+          for i in indices do
+            
+            if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
+              
+              return false;
+            
+            fi;
+
+          od;
+
+          l := Minimum( 
+                Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
+                Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
+                );
+          
+          u := Maximum( 
+                Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
+                Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
+                );
+          
+          lu := [ l .. u ];
+
+          SubtractSet( lu, indices );
+
+          if lu = [ ] then
+            
+            return true;
+            
+          fi;
+          
+          # They still may be equal but I don't want to compute components when comparing in Cache.
+          return false;
+        
+      end );
+      
+    fi;
     
     ##
     
     AddIsEqualForObjects( complex_cat, 
       function( C1, C2 )
-        local l, u, i;
+        local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
         
         if IsIdenticalObj( C1, C2 ) then 
         
@@ -158,28 +309,42 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         fi;
         
+        computed_objects_1 := ComputedObjectAts( C1 );
+
+        computed_objects_2 := ComputedObjectAts( C2 );
+
+        indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
+        
+        indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
+
+        indices := Intersection( indices_1, indices_2 );
+
+        for i in indices do
+          
+          if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
+            
+            return false;
+          
+          fi;
+
+        od;
+
         l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
         
         u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
         
-        for i in [ l .. u ] do
+        lu := [ l .. u ];
+        
+        SubtractSet( lu, indices );
+
+        for i in lu do
           
-          if not IsEqualForObjects( C1[ i ], C2[ i ] ) then
+          if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
             
             return false;
           
           fi;
-        
-        od;
-        
-        for i in [ l .. u ] do
-          
-          if not IsCongruentForMorphisms( C1^i, C2^i ) then
-            
-            return false;
-          
-          fi;
-        
+
         od;
         
         return true;
@@ -188,12 +353,24 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     AddIsEqualForMorphisms( complex_cat, 
       function( m1, m2 )
-        local l, u, i;
+        local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
         
         if IsIdenticalObj( m1, m2 ) then 
           
           return true;
         
+        fi;
+        
+        if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
+          
+          return false;
+          
+        fi;
+        
+        if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
+          
+          return false;
+          
         fi;
         
         if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
@@ -202,11 +379,41 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         fi;
         
-        l := Minimum( ActiveLowerBound( m1 ), ActiveLowerBound( m2 ) );
+        computed_morphisms_1 := ComputedMorphismAts( m1 );
+
+        computed_morphisms_2 := ComputedMorphismAts( m2 );
+
+        indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
         
-        u := Maximum( ActiveUpperBound( m1 ), ActiveUpperBound( m2 ) );
+        indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
+
+        indices := Intersection( indices_1, indices_2 );
+
+        for i in indices do
+          
+          if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
+            
+            return false;
+          
+          fi;
+
+        od;
+
+        l := Minimum( 
+              Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
+              Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
+              );
         
-        for i in [ l .. u ] do
+        u := Maximum( 
+              Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
+              Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
+              );
+        
+        lu := [ l .. u ];
+
+        SubtractSet( lu, indices );
+
+        for i in lu do
         
           if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
             
@@ -222,7 +429,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     AddIsCongruentForMorphisms( complex_cat, 
       function( m1, m2 )
-        local l, u, i;
+        local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
         
         if IsIdenticalObj( m1, m2 ) then 
           
@@ -236,12 +443,54 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         fi;
         
-        l := Minimum( ActiveLowerBound( m1 ), ActiveLowerBound( m2 ) );
-        
-        u := Maximum( ActiveUpperBound( m1 ), ActiveUpperBound( m2 ) );
-        
-        for i in [ l .. u ] do
+        if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
           
+          return false;
+          
+        fi;
+        
+        if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
+          
+          return false;
+          
+        fi;
+ 
+        computed_morphisms_1 := ComputedMorphismAts( m1 );
+
+        computed_morphisms_2 := ComputedMorphismAts( m2 );
+
+        indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
+        
+        indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
+
+        indices := Intersection( indices_1, indices_2 );
+
+        for i in indices do
+          
+          if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
+            
+            return false;
+          
+          fi;
+
+        od;
+
+        l := Minimum( 
+              Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
+              Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
+              );
+        
+        u := Maximum( 
+              Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
+              Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
+              );
+         
+        lu := [ l .. u ];
+
+        indices := SubtractSet( lu, indices );
+
+        for i in indices do
+        
           if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
             
             return false;
@@ -251,7 +500,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         od;
         
         return true;
-    
+        
     end );
       ##
     if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
@@ -394,7 +643,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
               
               if IsZeroForMorphisms( phi[ i ] ) then
-                
+                 
                 SetLowerBound( phi, i );
               
               else
@@ -2054,4 +2303,5 @@ InstallMethodWithCrispCache( DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS,
         return d;
     
 end );
+
 
