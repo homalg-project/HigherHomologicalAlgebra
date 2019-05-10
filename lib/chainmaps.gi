@@ -838,9 +838,43 @@ InstallMethodWithCrispCache( MappingConeColift,
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
     maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ), 1 );
-    
+   
+    # to check how many lifts are there
+    # Error( ColiftInfos( NaturalInjectionInMappingCone( phi ), psi ) );
+    # 
     return ChainMorphism( MappingCone( phi ), Range( psi ), maps );
     
+end );
+
+#    A ----- phi ----> B ----------> Cone( phi )
+#    |                 |
+#    | alpha_0         | alpha_1
+#    |                 |
+#    v                 v 
+#    A' --- psi -----> B' ---------> Cone( psi )
+#  
+InstallMethodWithCrispCache( MappingConePseudoFunctorial,
+   [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
+  function( phi, psi, alpha_0, alpha_1 )
+    local cone_phi, cone_psi, s, maps;
+
+    cone_phi := MappingCone( phi );
+    cone_psi := MappingCone( psi );
+
+    s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
+    
+    maps := MapLazy( IntegersList,  
+            function( i )
+              return MorphismBetweenDirectSums(
+                [
+                  [ alpha_0[ i - 1 ], s[ i - 1 ] ],
+                  [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i - 1 ] ), alpha_1[ i ] ]
+                ] );
+            end, 1 );
+    #Error( ColiftInfos( NaturalInjectionInMappingCone( phi ), PreCompose( alpha_1, NaturalInjectionInMappingCone( psi ) ) ) );
+
+    return ChainMorphism( cone_phi, cone_psi, maps );
+
 end );
 
 InstallMethodWithCrispCache( MappingConeColift,
@@ -863,6 +897,32 @@ InstallMethodWithCrispCache( MappingConeColift,
     return CochainMorphism( MappingCone( phi ), Range( psi ), maps );
     
 end );
+
+InstallMethodWithCrispCache( MappingConePseudoFunctorial,
+   [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],
+  function( phi, psi, alpha_0, alpha_1 )
+    local cone_phi, cone_psi, s, maps;
+
+    cone_phi := MappingCone( phi );
+    cone_psi := MappingCone( psi );
+
+    s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
+    
+    maps := MapLazy( IntegersList,  
+            function( i )
+              return MorphismBetweenDirectSums(
+                [
+                  [ alpha_0[ i + 1 ], s[ i + 1 ] ],
+                  [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
+                ] );
+            end, 1 );
+   
+    #Error( ColiftInfos( NaturalInjectionInMappingCone( phi ), PreCompose( alpha_1, NaturalInjectionInMappingCone( psi ) ) ) );
+
+    return ChainMorphism( cone_phi, cone_psi, maps );
+
+end );
+
 
 
 ##
