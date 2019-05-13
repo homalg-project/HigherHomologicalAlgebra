@@ -3,6 +3,9 @@
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gi");
-ReadPackage( "HomotopyCategories", "gap/functors.gi" );
-# ReadPackage( "HomotopyCategories", "gap/Tools.gi" );
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategories.gi");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/functors.gi" );
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryObjects.gi");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryMorphisms.gi");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/CAP_TOOLS.gi");
+

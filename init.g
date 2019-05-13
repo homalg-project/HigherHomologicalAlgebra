@@ -4,7 +4,8 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gd");
-ReadPackage( "HomotopyCategories", "gap/functors.gd" );
-#! ReadPackage( "HomotopyCategories", "gap/Tools.gd"); 
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategories.gd");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryObjects.gd");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryMorphisms.gd");
+ReadPackage( "HomotopyCategoriesForCAP", "gap/functors.gd" );
 
