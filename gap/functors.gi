@@ -1,421 +1,178 @@
 
-InstallMethod( NaturalQuotientFunctor,
-               [ IsChainOrCochainComplexCategory, IsHomotopyCategory ],
-  function( C, H )
-  local name, functor;
+##
+InstallMethod( HomologyFunctorAt, 
+               [ IsHomotopyCategory, IsCapCategory, IsInt ],
+function( homotopy_category, cat, n )
+  local functor, complex_cat, name, Hn;
 
-  if not IsIdenticalObj( C, UnderlyingCategory( H ) ) then 
-     Error( "The first argument must be the underlying category of the second argument" );
+  if not IsIdenticalObj( UnderlyingCategory( UnderlyingCapCategory( homotopy_category ) ), cat ) then
+
+    Error( "The first argument should be the homotopy category of complex category of the second argument" );
+
   fi;
-
-  name := Concatenation( "Quotient functor from ", Big_to_Small( Name( C ) ), " to ", Big_to_Small( Name( H ) ) );
-
-  functor := CapFunctor( name, C, H );
-
-     AddObjectFunction( functor, 
-
-     function( complex )
-
-        return AsHomotopyCategoryObject( complex );
-
-     end );
-
-     AddMorphismFunction( functor,
-
-     function( new_source, map, new_range )
-
-        return AsHomotopyCategoryMorphism( map );
-
-     end );
-
-
-    return functor;
-
-end );
-
-#
-InstallMethod( HomologyFunctor, 
-               [ IsHomotopyCategory, IsCapCategory, IsInt ],
-function( H_cat, cat, n )
-local functor, complex_cat, name, Hn;
-
-     if not IsIdenticalObj( UnderlyingCategory( UnderlyingCategory( H_cat ) ), cat ) then
-
-        Error( "The first argument should be the homotopy category of complex category of the second argument" );
-
-     fi;
      
-     complex_cat := UnderlyingCategory( H_cat ); 
+  complex_cat := UnderlyingCapCategory( homotopy_category );
 
-     if IsChainComplexCategory( complex_cat ) then
+  Hn := HomologyFunctorAt( complex_cat, cat, n );
 
-       Hn := HomologyFunctor( complex_cat, cat, n );
-
-       name := Concatenation( String( n ), "-th homology functor" );
+  name := Concatenation( String( n ), "-th homology functor from ", Name( homotopy_category ), " to ", Name( cat ) );
      
-     else
-     
-       Error( "the underlying category should be chain complex category, not cochain complex category" );
-
-     fi;
-     
-     functor := CapFunctor( name, H_cat, cat );
+  functor := CapFunctor( name, homotopy_category, cat );
  
-     AddObjectFunction( functor, 
+  AddObjectFunction( functor, 
   
-     function( complex )
+    function( complex )
+    
+      return ApplyFunctor( Hn, UnderlyingCapCategoryObject( complex ) );
   
-     return ApplyFunctor( Hn, UnderlyingComplex_( complex ) );
-  
-     end );
+  end );
      
-     AddMorphismFunction( functor,
+  AddMorphismFunction( functor,
 
-     function( new_source, map, new_range )
+    function( new_source, map, new_range )
 
-     return ApplyFunctor( Hn, UnderlyingMorphism( map ) );
+      return ApplyFunctor( Hn, UnderlyingCapCategoryMorphism( map ) );
 
-     end );
-
-
-    return functor;
+  end );
+  
+  return functor;
 
 end );
 
-#
-InstallMethod( CohomologyFunctor, 
-               [ IsHomotopyCategory, IsCapCategory, IsInt ],
-function( H_cat, cat, n )
-local functor, complex_cat, name, Hn;
-
-     if not IsIdenticalObj( UnderlyingCategory( UnderlyingCategory( H_cat ) ), cat ) then
-
-        Error( "The first argument should be the homotopy category of complex category of the second argument" );
-
-     fi;
-     
-     complex_cat := UnderlyingCategory( H_cat ); 
-
-     if IsCochainComplexCategory( complex_cat ) then
-
-       Hn := CohomologyFunctor( complex_cat, cat, n );
-
-       name := Concatenation( String( n ), "-th cohomology functor" );
-     
-     else
-     
-       Error( "the underlying category should be cochain complex category, not chain complex category" );
-
-     fi;
-     
-     functor := CapFunctor( name, H_cat, cat );
-
-     AddObjectFunction( functor, 
-  
-     function( complex )
-  
-     return ApplyFunctor( Hn, UnderlyingComplex_( complex ) );
-  
-     end );
-     
-     AddMorphismFunction( functor,
-
-     function( new_source, map, new_range )
-
-     return ApplyFunctor( Hn, UnderlyingMorphism( map ) );
-
-     end );
-
-     return functor;
- 
-end );
-
-#
-InstallMethod( ShiftFunctor, 
+##
+InstallMethod( ShiftFunctorAt, 
                [ IsHomotopyCategory, IsInt ],
-function( H_cat, n )
-local functor, complex_cat, name, T;
+function( homotopy_category, n )
+  local functor, complex_cat, name, T;
      
-     complex_cat := UnderlyingCategory( H_cat ); 
+  complex_cat := UnderlyingCapCategory( homotopy_category ); 
 
-     T := ShiftFunctor( complex_cat, n );
+  T := ShiftFunctor( complex_cat, n );
 
-     name := "To Do";
+  name := Concatenation( "Shift by ", String( n ), " autoequivalence on ", Name( homotopy_category ) );
      
-     functor := CapFunctor( name, H_cat, H_cat );
+  functor := CapFunctor( name, homotopy_category, homotopy_category );
 
-     AddObjectFunction( functor, 
+  AddObjectFunction( functor, 
   
-     function( complex )
+    function( complex )
   
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
+      return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryObject( complex ) ) );
   
-     end );
+  end );
      
-     AddMorphismFunction( functor,
+  AddMorphismFunction( functor,
 
-     function( new_source, map, new_range )
+    function( new_source, map, new_range )
 
-       return AsHomotopyCategoryMorphism( ApplyFunctor( T, UnderlyingMorphism( map ) ) );
+      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryMorphism( map ) ) );
 
-     end );
+  end );
 
-     return functor;
+  return functor;
  
 end );
 
-
-#
-InstallMethod( UnsignedShiftFunctor, 
+##
+InstallMethod( UnsignedShiftFunctorAt,
                [ IsHomotopyCategory, IsInt ],
-function( H_cat, n )
-local functor, complex_cat, name, T;
+function( homotopy_category, n )
+  local functor, complex_cat, name, T;
      
-     complex_cat := UnderlyingCategory( H_cat ); 
+  complex_cat := UnderlyingCapCategory( homotopy_category ); 
 
-     T := UnsignedShiftFunctor( complex_cat, n );
+  T := UnsignedShiftFunctor( complex_cat, n );
 
-     name := "To Do";
+  name := Concatenation( "Unsigned Shift by ", String( n ), " autoequivalence on ", Name( homotopy_category ) );
      
-     functor := CapFunctor( name, H_cat, H_cat );
+  functor := CapFunctor( name, homotopy_category, homotopy_category );
 
-     AddObjectFunction( functor, 
+  AddObjectFunction( functor, 
   
-     function( complex )
+  function( complex )
   
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
+    return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryObject( complex ) ) );
   
-     end );
+  end );
      
-     AddMorphismFunction( functor,
+  AddMorphismFunction( functor,
 
-     function( new_source, map, new_range )
+    function( new_source, map, new_range )
 
-       return AsHomotopyCategoryMorphism( ApplyFunctor( T, UnderlyingMorphism( map ) ) );
+      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryMorphism( map ) ) );
 
-     end );
+  end );
 
-     return functor;
+  return functor;
  
 end );
 
-#
-InstallMethod( CochainToChainComplexFunctor,
-               [ IsHomotopyCategory, IsHomotopyCategory ],
-
-function( H1, H2)
-local functor, complex_cat1,complex_cat2, name, T;
-      
-     complex_cat1 := UnderlyingCategory( H1 );
-
-     complex_cat2 := UnderlyingCategory( H2 );
-
-     T := CochainToChainComplexFunctor( complex_cat1, complex_cat2 );
-
-     name := "To Do";
-
-     functor := CapFunctor( name, H1, H2 );
-
-     AddObjectFunction( functor,
-
-     function( complex )
-
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
-
-     end );
-
-     AddMorphismFunction( functor,
-
-     function( new_source, map, new_range )
-
-       return AsHomotopyCategoryMorphism( ApplyFunctor( T, UnderlyingMorphism( map ) ) );
-
-     end );
-
-     return functor;
-
-end );
-
-#
-InstallMethod( ChainToCochainComplexFunctor,
-               [ IsHomotopyCategory, IsHomotopyCategory ],
-
-function( H1, H2)
-local functor, complex_cat1,complex_cat2, name, T;
-      
-     complex_cat1 := UnderlyingCategory( H1 );
-
-     complex_cat2 := UnderlyingCategory( H2 );
-
-     T := ChainToCochainComplexFunctor( complex_cat1, complex_cat2 );
-
-     name := "To Do";
-
-     functor := CapFunctor( name, H1, H2 );
-
-     AddObjectFunction( functor,
-
-     function( complex )
-
-       return AsHomotopyCategoryObject( ApplyFunctor( T, UnderlyingComplex_( complex ) ) );
-
-     end );
-
-     AddMorphismFunction( functor,
-
-     function( new_source, map, new_range )
-
-       return AsHomotopyCategoryMorphism( ApplyFunctor( T, UnderlyingMorphism( map ) ) );
-
-     end );
-
-     return functor;
-
-end );
-
-InstallMethod( ExtendFunctorToChainHomotopyCategoryFunctor, 
-               [ IsCapFunctor ], 
+##
+InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
+               [ IsCapFunctor ],
 function( F )
-local S, T, functor, name;
+  local S, T, functor, name;
 
-   S := HomotopyCategory( ChainComplexCategory( AsCapCategory( Source( F ) ) ) );
+  S := HomotopyCategory( ChainComplexCategory( AsCapCategory( Source( F ) ) ) );
 
-   T := HomotopyCategory( ChainComplexCategory( AsCapCategory(  Range( F ) ) ) );
+  T := HomotopyCategory( ChainComplexCategory( AsCapCategory(  Range( F ) ) ) );
 
-   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
+  name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
 
-   functor := CapFunctor( name, S, T );
+  functor := CapFunctor( name, S, T );
 
-   AddObjectFunction( functor,
-   function( C )
-   local diffs, functor_C;
+  AddObjectFunction( functor,
+    function( C )
+      local diffs, functor_C;
 
-   diffs := MapLazy( Differentials( C ), function( d )
-
-                                         return ApplyFunctor( F, d );
-
-                                         end, 1 );
+      diffs := MapLazy( Differentials( C ), d -> ApplyFunctor( F, d ), 1 );
      
-   functor_C := AsHomotopyCategoryObject( ChainComplex( AsCapCategory( Range( F ) ), diffs ) );
+      functor_C := HomotopyCategoryObject( T, ChainComplex( AsCapCategory( Range( F ) ), diffs ) );
      
-   TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
+      TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
 
-   AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
+      AddToToDoList(
+        ToDoListEntry( [ [ C, "IsZero", true ] ], 
+          function( )
 
-                                                              if not HasIsZero( functor_C ) then 
+            if not HasIsZero( functor_C ) then 
 
-                                                                 SetIsZero( functor_C, true );
+              SetIsZero( functor_C, true );
 
-                                                              fi;
+            fi;
 
-                                                              end ) );
+        end ) );
 
-   return functor_C;
+      return functor_C;
 
-   end );
+    end );
 
-   AddMorphismFunction( functor,
-     function( new_source, phi, new_range ) 
-     local morphisms, functor_phi;
+  AddMorphismFunction( functor,
+    function( new_source, phi, new_range ) 
+      local morphisms, functor_phi;
 
-       morphisms := MapLazy( Morphisms( phi ), function( psi )
-
-                                                return ApplyFunctor( F, psi );
+      morphisms := MapLazy( Morphisms( phi ), d -> ApplyFunctor( F, d ), 1 );
        
-                                               end, 1 );
+      functor_phi := HomotopyCategoryMorphism( T, ChainMorphism( new_source, new_range, morphisms ) );
        
-       functor_phi := AsHomotopyCategoryMorphism( ChainMorphism( new_source, new_range, morphisms ) );
-       
-       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
+      TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
                                                                   
-       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
+      AddToToDoList(
+        ToDoListEntry( [ [ phi, "IsZero", true ] ],
+          function( )
 
-                                                                  if not HasIsZero( functor_phi ) then
+            if not HasIsZero( functor_phi ) then
 
-                                                                     SetIsZero( functor_phi, true );
+              SetIsZero( functor_phi, true );
 
-                                                                  fi;
+            fi;
 
-                                                                  end ) );
+        end ) );
 
-       return functor_phi;
+      return functor_phi;
 
      end );
 
-   return functor;
-
-end );
-
-#####
-InstallMethod( ExtendFunctorToCochainHomotopyCategoryFunctor, 
-               [ IsCapFunctor ], 
-function( F )
-local S, T, functor, name;
-
-   S := HomotopyCategory( CochainComplexCategory( AsCapCategory( Source( F ) ) ) );
-
-   T := HomotopyCategory( CochainComplexCategory( AsCapCategory(  Range( F ) ) ) );
-
-   name := Concatenation( "Extended version of ", Big_to_Small( Name( F ) ), " from ", Big_to_Small( Name( S ) ), " to ", Big_to_Small( Name( T ) ) );
-
-   functor := CapFunctor( name, S, T );
-
-   AddObjectFunction( functor,
-   function( C )
-   local diffs, functor_C;
-
-   diffs := MapLazy( Differentials( C ), function( d )
-
-                                         return ApplyFunctor( F, d );
-
-                                         end, 1 );
-     
-   functor_C := AsHomotopyCategoryObject( CochainComplex( AsCapCategory( Range( F ) ), diffs ) );
-     
-   TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
-
-   AddToToDoList( ToDoListEntry( [ [ C, "IsZero", true ] ], function( )
-
-                                                              if not HasIsZero( functor_C ) then 
-
-                                                                 SetIsZero( functor_C, true );
-
-                                                              fi;
-
-                                                              end ) );
-
-   return functor_C;
-
-   end );
-
-   AddMorphismFunction( functor,
-     function( new_source, phi, new_range ) 
-     local morphisms, functor_phi;
-
-       morphisms := MapLazy( Morphisms( phi ), function( psi )
-
-                                                return ApplyFunctor( F, psi );
-       
-                                               end, 1 );
-       
-       functor_phi := AsHomotopyCategoryMorphism( CochainMorphism( new_source, new_range, morphisms ) );
-       
-       TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
-                                                                  
-       AddToToDoList( ToDoListEntry( [ [ phi, "IsZero", true ] ], function( )
-
-                                                                  if not HasIsZero( functor_phi ) then
-
-                                                                     SetIsZero( functor_phi, true );
-
-                                                                  fi;
-
-                                                                  end ) );
-
-       return functor_phi;
-
-     end );
-
-   return functor;
+  return functor;
 
 end );

@@ -21,389 +21,571 @@ BindGlobal( "TheTypeOfHomotopyCategory",
                 IsHomotopyCategoryRep ) );
 
 
-DeclareRepresentation( "IsHomotopyCategoryObjectRep",
-                       IsCapCategoryObjectRep and IsHomotopyCategoryObject,
-                       [ ] );
-
-BindGlobal( "TheTypeOfHomotopyCategoryObject",
-        NewType( TheFamilyOfCapCategoryObjects,
-                IsHomotopyCategoryObjectRep ) );
-
-DeclareRepresentation( "IsHomotopyCategoryMorphismRep",
-                       IsCapCategoryMorphismRep and IsHomotopyCategoryMorphism,
-                       [ ] );
-
-BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
-        NewType( TheFamilyOfCapCategoryMorphisms,
-                 IsHomotopyCategoryMorphismRep ) );
-
 ##
-DeclareGlobalVariable( "NULL_HOMOTOPIC_METHOD" );
-
-InstallValue( NULL_HOMOTOPIC_METHOD, rec( 
-
-IsNullHomotopic := rec( 
-
-installation_name := "IsNullHomotopic", 
-filter_list := [ IsChainOrCochainMorphism ],
-cache_name := "IsNullHomotopic",
-return_type := "bool" ),
-
-) );
-
-CAP_INTERNAL_ENHANCE_NAME_RECORD( NULL_HOMOTOPIC_METHOD );
-
-CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( NULL_HOMOTOPIC_METHOD );
-
-
-########################
-##
-## Installer
-##
-########################
-
-
-BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY",
-  
-  function( category )
-    local test_function;
-
-    #test_function := TestFunctionForHomotopyCategory(  UnderlyingCategory( category ) );
-    test_function := IsNullHomotopic;
-    ## Equalities
-
-    AddIsEqualForObjects( category, 
-
-       function( obj1, obj2 )
-
-         if IsIdenticalObj( obj1, obj2 ) then return true; fi;
-
-         return IsEqualForObjects( UnderlyingComplex_( obj1 ), UnderlyingComplex_( obj2 ) );
-
-    end );
-
-    ##
-    AddIsEqualForMorphisms( category, 
-
-       function( morphism1, morphism2 )
-
-    return IsEqualForMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
-
-    end );
-
-    ##
-    AddIsCongruentForMorphisms( category, 
-
-       function( morphism1, morphism2 )
-
-       return test_function( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
-
-    end );
-
-    ## PreCompose
-
-    AddPreCompose( category,
-
-    function( morphism1, morphism2 )
-        local composition;
-
-        composition := PreCompose( UnderlyingMorphism( morphism1 ),
-                                   UnderlyingMorphism( morphism2 ) );
-
-        return AsHomotopyCategoryMorphism( composition );
-
-    end );
-
-    ## IdentityMorphism
-
-    AddIdentityMorphism( category,
-
-      function( object )
-
-        return AsHomotopyCategoryMorphism( IdentityMorphism( UnderlyingComplex_( object ) ) );
-
-    end );
-
-    ## Addition for morphisms
-
-    AddAdditionForMorphisms( category,
-
-      function( morphism1, morphism2 )
-        local sum;
-
-        sum := AdditionForMorphisms( UnderlyingMorphism( morphism1 ),
-                                     UnderlyingMorphism( morphism2 ) );
-
-        return AsHomotopyCategoryMorphism( sum );
-
-    end );
-
-    ## IsZeroForMorphisms
-    AddIsZeroForMorphisms( category, 
-
-       function( morphism )
-       local underlying_mor;
-
-       underlying_mor := UnderlyingMorphism( morphism );
-
-       if HasIsZero( underlying_mor ) and IsZero( underlying_mor ) then
-
-          return true;
-
-       else 
-
-          return test_function( UnderlyingMorphism( morphism ) );
-
-       fi;
-
-    end );
-
-    ## IsZeroForObjects
-    AddIsZeroForObjects( category, 
-
-    function( obj )
-    local underlying_obj;
-
-       underlying_obj := UnderlyingComplex_( obj );
-
-       if HasIsZero( underlying_obj ) and IsZero( underlying_obj ) then
-
-          return true;
-
-       else 
-
-          return IsZero( IdentityMorphism( obj ) );
-
-       fi;
-
-    end );
-
-    ## Additive inverse for morphisms
-
-    AddAdditiveInverseForMorphisms( category,
-
-      function( morphism )
-        local new_mor;
-
-        new_mor := AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) );
-
-        return AsHomotopyCategoryMorphism( new_mor );
-
-    end );
-
-    ## Zero morphism
-
-    AddZeroMorphism( category,
-
-      function( source, range )
-        local zero_mor;
-
-        zero_mor := ZeroMorphism( UnderlyingComplex_( source ), UnderlyingComplex_( range ) );
-
-        return AsHomotopyCategoryMorphism( zero_mor );
-
-    end );
-
-    ## Zero object
-
-    AddZeroObject( category,
-
-      function( )
-        local zero_obj;
-        
-        zero_obj := ZeroObject( UnderlyingCategory( category ) );
-        
-        return AsHomotopyCategoryObject( zero_obj );
-        
-    end );
-    
-    ## direct sum
-    
-    AddDirectSum( category,
-      
-      function( obj_list )
-        local underlying_list, underlying_sum;
-        
-        underlying_list := List( obj_list, UnderlyingComplex_ );
-        
-        underlying_sum := CallFuncList( DirectSum, underlying_list );
-        
-        return AsHomotopyCategoryObject( underlying_sum );
-        
-    end );
-
-
-end );
-    
-#########################
-#
-# constructor
-#
-########################
-
 InstallMethod( HomotopyCategory,
-                 [ IsCapCategory ],
-
-function( category )
-    local homotopy_category, gen_category, name, preconditions,
-          category_weight_list, i, to_be_finalized;
-
-    #   IMPORTANT
-    #   if category has test function as attribute ...
-
-    if not HasIsFinalized( category ) or not IsFinalized( category ) then
-
-        Error( "category must be finalized" );
-        return;
-
+      [ IsCapCategory ],
+  function( cat )
+    local chains, name, to_be_finalized, homotopy_category, special_filters;
+    
+    LoadPackage( "ComplexesForCAP" );
+    
+    if not IsPackageMarkedForLoading( "ComplexesForCAP", ">=2019.04.01" ) then
+      
+      Error( "The package ComplexesForCAP is required to run this method" );
+      
     fi;
-
-    ## this may be extended or reduced ...
-
-    preconditions := [ "IsEqualForObjects",
-                       "AdditiveInverseForMorphisms",
-                       "IdentityMorphism",
-                       "ZeroMorphism",
-                       "DirectSum",
-                       "ProjectionInFactorOfDirectSumWithGivenDirectSum",
-                       "InjectionOfCofactorOfDirectSumWithGivenDirectSum",
-                       "UniversalMorphismFromDirectSum",
-                       "UniversalMorphismIntoDirectSum",
-#                       "DirectSumFunctorialWithGivenDirectSums"  (look back to this kamal.)
-                        ];
-
-    category_weight_list := category!.derivations_weight_list;
-
-    for i in preconditions do
-
-        if CurrentOperationWeight( category_weight_list, i ) = infinity then
-
-            Error( Concatenation( "category must be able to compute ", i ) );
-            return;
-
-        fi;
-
-    od;
-
-    name := Name( UnderlyingCategory( category ) );
-
-    if IsChainComplexCategory( category ) then 
-
-       name := Concatenation( "Chain homotopy category of ", Big_to_Small( name ) );
-
-    else
-
-       name := Concatenation( "Cochain homotopy category of ", Big_to_Small( name ) );
-
+    
+    chains := ValueGlobal( "ChainComplexCategory" )( cat : FinalizeCategory := false );
+    
+    AddMorphismIntoColiftingObject( chains,
+      function( a )
+        return ValueGlobal( "NaturalInjectionInMappingCone" )( IdentityMorphism( a ) );
+    end );
+    
+    Finalize( chains );
+    
+    if not CanCompute( chains, "Colift" ) then
+      
+      Error( "Colifts should be computable in ", Name( chains ) );
+      
     fi;
-
-    homotopy_category := CreateCapCategory( name );
-
-    SetFilterObj( homotopy_category, IsHomotopyCategory );
-
-    SetUnderlyingCategory( homotopy_category, category );
-
-    SetIsAdditiveCategory( homotopy_category, true );
-
-    CAP_INTERNAL_INSTALL_OPERATIONS_FOR_HOMOTOPY_CATEGORY( homotopy_category );
-
+    
+    name := Concatenation( "Homotopy category of ", Name( cat ) );
+    
     to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    special_filters := ValueOption( "SpecialFilters" );
+    
+    if special_filters = fail then
+      
+      special_filters := [ IsHomotopyCategory, IsHomotopyCategoryObject, IsHomotopyCategoryMorphism ];
+      
+    fi;
+    
+    homotopy_category := StableCategoryByColiftingStructure( chains: NameOfCategory := name,
+                                                                     FinalizeCategory := false,
+                                                                     WithHomomorphismStructure := true,
+                                                                     SpecialFilters := special_filters );
+    
+    if ValueOption( "WithStandardHomomorphismStructure" ) = false and
+      
+        ValueGlobal( "HasRangeCategoryOfHomomorphismStructure" )( cat ) then
+        
+        ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY( homotopy_category );
+
+    fi;
 
     if to_be_finalized = false then
-
-       return homotopy_category;
-
+      
+      return homotopy_category;
+    
     fi;
 
     Finalize( homotopy_category );
 
     return homotopy_category;
-
+ 
 end );
 
-# HomotopyCategory( category, FinalizeCategory := false );
+###
+### For homotopy category
+###
 
 ##
-InstallMethod( AsHomotopyCategoryMorphism,
-               [ IsChainOrCochainMorphism ],
+InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc;
+       
+    chains := UnderlyingCapCategory( homotopy_category );
+       
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+       
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+        
+    AddDistinguishedObjectOfHomomorphismStructure( homotopy_category,
+      function( )
+           
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+          
+          return DistinguishedObjectOfHomomorphismStructure( cat );
+          
+        else
+          
+          Error( "to do" );
 
-    function( mor )
-    local C1, C2, category, homotopy_morphism;
-
-    category := HomotopyCategory( CapCategory( mor ) );
-
-    C1 := AsHomotopyCategoryObject( Source( mor ) );
+          return 
+          HomotopyCategoryObject( homotopy_category,
+          ValueGlobal( "StalkChainComplex" )( DistinguishedObjectOfHomomorphismStructure( cat ), 0 ) );
+          
+        fi;
+         
+      end );
+     
+ end );
+ 
+##
+InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc;
     
-    C2 := AsHomotopyCategoryObject( Range( mor ) );
-
-    homotopy_morphism := rec( );
-
-    ObjectifyWithAttributes( homotopy_morphism, TheTypeOfHomotopyCategoryMorphism,
-                             Source, C1,
-                             Range,  C2,
-                             Morphisms, Morphisms( mor )
-                             );
-
-    if IsChainMorphism( mor ) then
-
-       SetFilterObj( homotopy_morphism, IsChainMorphism );
-
-    else
-
-       SetFilterObj( homotopy_morphism, IsCochainMorphism );
-
-    fi;
-
-    SetUnderlyingMorphism( homotopy_morphism, mor );
-
-    AddMorphism( category, homotopy_morphism );
-
-     TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED( homotopy_morphism );
-
-     TODO_LIST_TO_PUSH_BOUNDS( C1, homotopy_morphism );
-
-     TODO_LIST_TO_PUSH_BOUNDS( C2, homotopy_morphism );
-
-     TODO_LIST_TO_PUSH_PULL_BOUNDS( mor, homotopy_morphism );
-
-    return homotopy_morphism;
+    chains := UnderlyingCapCategory( homotopy_category );
+    
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+    
+    AddHomomorphismStructureOnObjects( homotopy_category,
+      function ( hC, hD )
+        local C, D, d;
+        
+        C := UnderlyingCapCategoryObject( hC );
+        
+        D := UnderlyingCapCategoryObject( hD );
+        
+        if not (ValueGlobal( "HasActiveLowerBound" )( C ) and ValueGlobal( "HasActiveUpperBound" )( D )) then
+          if not (ValueGlobal( "HasActiveUpperBound" )( C ) and ValueGlobal( "HasActiveLowerBound" )( D )) then
+            if not (ValueGlobal( "HasActiveLowerBound" )( C ) and ValueGlobal( "HasActiveUpperBound" )( C )) then
+              if not (ValueGlobal( "HasActiveLowerBound" )( D ) and ValueGlobal( "HasActiveUpperBound" )( D )) then
+                Error( "The complexes should be bounded" );
+              fi;
+            fi;
+          fi;
+        fi; 
+        
+        d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+        
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+          
+          return ValueGlobal( "HomologyAt" )( ValueGlobal( "TotalChainComplex" )( d ), 0 );
+          
+        else
+          
+          Error( "to do" );
+         
+          return HomotopyCategoryObject( homotopy_category, ValueGlobal( "TotalChainComplex" )( d ) );
+          
+        fi;
+  
+  end );
 
 end );
 
 ##
-InstallMethod( AsHomotopyCategoryObject,
-               [ IsChainOrCochainComplex ],
+InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc, chains_range_cat_of_hom_struc, H0;
+    
+    chains := UnderlyingCapCategory( homotopy_category );
+    
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+    
+    AddHomomorphismStructureOnMorphismsWithGivenObjects( homotopy_category,
+      function( s, h_phi, h_psi, r )
+        local phi, psi, ss, rr, Tot1, Tot2, l, chains_range_cat_of_hom_struc, H0;
+        
+        phi := UnderlyingCapCategoryMorphism( h_phi );
+        
+        psi := UnderlyingCapCategoryMorphism( h_psi );
+        
+        ss := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( Range( phi ), Source( psi ) );
+        
+        rr := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( Source( phi ), Range( psi ) );
+        
+        Tot1 := ValueGlobal( "TotalChainComplex" )( ss );
+        
+        Tot2 := ValueGlobal( "TotalChainComplex" )( rr );
+        
+        l := ValueGlobal( "MapLazy" )( ValueGlobal( "IntegersList" ), function ( m )
+                local ind_s, ind_t, morphisms, obj;
+                
+                obj := ValueGlobal( "ObjectAt" )( Tot1, m );
+                
+                obj := ValueGlobal( "ObjectAt" )( Tot2, m );
+                
+                ind_s := ss!.IndicesOfTotalComplex.(String( m ));
+                
+                ind_t := rr!.IndicesOfTotalComplex.(String( m ));
+                
+                morphisms := List( [ ind_s[1] .. ind_s[2] ],
+                             function ( i )
+                               return List( [ ind_t[1] .. ind_t[2] ],
+                                 function ( j )
+                                   if i = j then
+                                     return HomomorphismStructureOnMorphisms( phi[- i], psi[m - i] );
+                                   else
+                                     return ZeroMorphism( ValueGlobal( "ObjectAt" )( ss, i, m - i ), ValueGlobal( "ObjectAt" )( rr, j, m - j ) );
+                                   fi;
+                                 end );
+                             end );
+                
+                return MorphismBetweenDirectSums( morphisms );
+              
+              end, 1 );
+        
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+          
+          chains_range_cat_of_hom_struc := ValueGlobal( "ChainComplexCategory" )( range_cat_of_hom_struc );
+          
+          H0 := ValueGlobal( "HomologyFunctorAt" )( chains_range_cat_of_hom_struc, range_cat_of_hom_struc, 0 );
+          
+          return ApplyFunctor( H0, ValueGlobal( "ChainMorphism" )( Tot1, Tot2, l ) );
+          
+        else
+           
+         Error( "to do" );
+         
+          return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( Tot1, Tot2, l ) );
+          
+        fi;
 
-    function( obj )
-    local category, homotopy_obj;
+    end );
 
-    category := HomotopyCategory( CapCategory( obj ) );
+end );
 
-    homotopy_obj := rec( );
+##
+InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc;
+    
+    chains := UnderlyingCapCategory( homotopy_category );
+    
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+    
+    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( homotopy_category,
+        function( h_phi )
+          local phi, C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, im, inc, U, i;
+          
+          phi := UnderlyingCapCategoryMorphism( h_phi );
+          
+          C := Source( phi );
+          
+          D := Range( phi );
+          
+          lower_bound := Minimum( ValueGlobal( "ActiveLowerBound" )( C ), ValueGlobal( "ActiveLowerBound" )( D ) ) + 1;
+          
+          upper_bound := Maximum( ValueGlobal( "ActiveUpperBound" )( C ), ValueGlobal( "ActiveUpperBound" )( D ) ) - 1;
+          
+          morphisms_from_distinguished_object := [  ];
+          
+          for i in Reversed( [ lower_bound .. upper_bound ] ) do
+          
+            Add( morphisms_from_distinguished_object,
+              InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
+          
+          od;
+          
+          morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
+          
+          d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+          
+          T := ValueGlobal( "TotalChainComplex" )( d );
+          
+          if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+           
+            im := ValueGlobal( "BoundariesAt" )( T, 0 );
+    
+            inc := KernelLift( T^0, im );
+ 
+            return PreCompose( KernelLift( T^0, morphism ), CokernelProjection( inc ) );
+            
+          else
+            
+            Error( "to do" );
+            
+            U := ValueGlobal( "StalkChainComplex" )( Source( morphism ), 0 );
+            
+            return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( U, T, [ morphism ], 0 ) );
+            
+          fi;
+        
+  end );
 
-    ObjectifyWithAttributes( homotopy_obj, TheTypeOfHomotopyCategoryObject,
-                             Differentials, Differentials( obj ),
-                             UnderlyingComplex_, obj );
+end );
 
-    if IsChainComplex( obj ) then
+##
+InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc;
+    
+    chains := UnderlyingCapCategory( homotopy_category );
+    
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+    
+    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( homotopy_category,
+        function( hC, hD, psi )
+          local C, D, lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
+          
+          C := UnderlyingCapCategoryObject( hC );
+          
+          D := UnderlyingCapCategoryObject( hD );
+          
+          lower_bound := Minimum( ValueGlobal( "ActiveLowerBound" )( C ), ValueGlobal( "ActiveLowerBound" )( D ) ) + 1;
+          
+          upper_bound := Maximum( ValueGlobal( "ActiveUpperBound" )( C ), ValueGlobal( "ActiveUpperBound" )( D ) ) - 1;
+          
+          d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+          
+          T := ValueGlobal( "TotalChainComplex" )( d );
+          
+          if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+            
+            phi := PreCompose( psi, ValueGlobal( "HonestRepresentative" )( ValueGlobal( "GeneralizedEmbeddingOfHomologyAt" )( T, 0 ) ) );
+            
+          else
+            
+            Error( "to do" );
+           
+            phi := psi[ 0 ];
+            
+          fi;
+          
+          struc_on_objects := [  ];
+          
+          indices := Reversed( [ lower_bound .. upper_bound ] );
+          
+          for i in indices do
+            
+            Add( struc_on_objects, HomomorphismStructureOnObjects( C[ i ], D[ i ] ) );
+          
+          od;
+          
+          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
+          
+          L := List( L, l -> PreCompose( phi, l ) );
+          
+          L := List( [ 1 .. Length( indices ) ],
+                 i -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
+          
+          return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( C, D, Reversed( L ), lower_bound ) );
+  
+  end );
 
-       SetFilterObj( homotopy_obj, IsChainComplex );
+end );
+
+InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
+  function( homotopy_category )
+    local chains, cat, range_cat_of_hom_struc;
+
+    chains := UnderlyingCapCategory( homotopy_category );
+
+    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+
+    range_cat_of_hom_struc := ValueGlobal( "RangeCategoryOfHomomorphismStructure" )( cat );
+
+    if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+
+      ValueGlobal( "SetRangeCategoryOfHomomorphismStructure" )( homotopy_category, range_cat_of_hom_struc );
 
     else
-
-       SetFilterObj( homotopy_obj, IsCochainComplex );
+          
+      Error( "to do" );
 
     fi;
+        
+    ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY( homotopy_category );
+    ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGORY( homotopy_category );
+    ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY( homotopy_category );
+    ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY( homotopy_category );
+    ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY( homotopy_category );
 
-    ## here we should add to do list... 
+end );
 
-    AddObject( category, homotopy_obj );
+InstallMethod( TotalComplexUsingMappingCone,
+  [ IsChainComplex ],
+  function( C )
+    local cat, l, u, tau, L;
+  
+    cat := UnderlyingCategory( CapCategory( C ) );
+    
+    l := ActiveLowerBound( C ) + 1;
+    u := ActiveUpperBound( C ) - 1;
+  
+    if l = u then
+    
+      return C;
+    
+    elif l + 1 = u then
+  
+      #return StalkChainComplex( HomotopyCategoryObject( cat, MappingCone( UnderlyingCapCategoryMorphism( C^u ) ) ), u - 1 );
+      return HomotopyCategoryObject( cat, MappingCone( UnderlyingCapCategoryMorphism( C^u ) ) );
 
-    TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( homotopy_obj );
+    else
+    
+      tau := HomotopyCategoryMorphism( cat, MappingConeColift(
+                UnderlyingCapCategoryMorphism( C^u ),
+                UnderlyingCapCategoryMorphism(C^( u - 1 ) ) ) );
+    
+      L := List( [ l + 1 .. u - 2 ], i -> C^i );
+    
+      Add( L, tau );
+    
+      return TotalComplexUsingMappingCone( ChainComplex( L, l + 1 ) );
+    
+    fi;
+  
+end );
 
-    TODO_LIST_TO_PUSH_PULL_BOUNDS( obj, homotopy_obj );
+## This function computes the homotopy by solving the associated two sided linear system of morphisms in the category.
+##
+InstallGlobalFunction( COMPUTE_HOMOTOPY_IN_COMPLEXES_CATEGORY,
+  function( phi )
+    local A, B, m, n, L, K, b, sol;
 
-    return homotopy_obj;
+    A := Source( phi );
+
+    B := Range( phi );
+    
+    # The following is to set better bounds to the complexes if possible
+    ObjectsSupport( A );
+    ObjectsSupport( B );
+    
+    if IsCochainMorphism( phi ) then
+
+      m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );    
+      n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );
+
+      L := Concatenation( 
+          
+            List( [ 1 .. n - m ], 
+              i -> Concatenation(
+                ##
+                List( [ 1 .. i - 1 ],
+                  j -> ZeroMorphism( A[ i + m - 1 ],A[ j + m - 1 ] ) ),
+                ##
+                [ IdentityMorphism( A[ i + m - 1 ] ), A^( i + m - 1 ) ],
+                ##
+                List( [ i + 2 ..n - m + 1 ], 
+                  j -> ZeroMorphism( A[ i + m - 1 ] , A[ j + m - 1 ] ) )
+                                )
+              ),
+
+              [ Concatenation(
+                  List( [ 1 .. n - m ], 
+                    j -> ZeroMorphism( A[ n ], A[ j + m - 1 ] ) ), 
+                
+                  [ IdentityMorphism( A[ n ] ) ] ) ] 
+                  
+            );
+
+      K := Concatenation(
+    
+            List( [ 1 .. n - m ],
+              i -> Concatenation( 
+                
+                List( [ 1 .. i - 1 ], 
+                  j -> ZeroMorphism( B[ j + m - 2 ],B[ i + m - 1 ] ) ),
+                
+                [ B^( i + m - 2 ), IdentityMorphism( B[ i + m - 1 ] ) ],
+                
+                
+                List( [ i + 2 ..n - m + 1 ],
+                  j -> ZeroMorphism( B[ j + m - 2 ], B[ i + m - 1 ]) ) 
+                                ) 
+              ),
+                
+            [ Concatenation(
+                
+                List([ 1 .. n - m ], 
+                  j -> ZeroMorphism( B[ j + m - 2 ], B[ n ] ) ),
+                  
+                [ B^(n - 1) ] ) ] 
+              
+            );
+    
+      b := List( [ m .. n ], i -> phi[ i ] );
+
+      sol := SolveLinearSystemInAbCategory( L, K, b );
+    
+      if sol = fail then
+        
+        return fail;
+      
+      else
+        
+        return [ [ m, n ], sol ];
+      
+      fi;
+      
+    else
+
+      m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );
+      n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );    
+
+      L := Concatenation( 
+          
+            List( [ 1 .. n - m ],
+              i -> Concatenation(
+              
+                List( [ 1 .. i - 1 ], 
+                  j -> ZeroMorphism( A[ -i + n + 1 ], A[ -j + n + 1 ] ) ),
+          
+                [ IdentityMorphism( A[ -i + n + 1 ] ), A^( -i + n + 1 ) ],
+
+                  List( [ i + 2 ..-m + n + 1 ],
+                  j -> ZeroMorphism( A[ -i + n + 1 ] , A[ -j + n + 1 ] ) ) 
+                
+                                )
+              
+                ),
+    
+            [ Concatenation( 
+                
+                List([ 1 .. n - m ],
+                  j -> ZeroMorphism( A[ m ], A[ -j + n + 1 ] ) ),
+                  
+                [ IdentityMorphism( A[ m ] ) ] 
+                
+                ) ] 
+                
+            );
+
+      K := Concatenation(
+          
+            List( [ 1 .. n - m ],
+              i -> Concatenation(
+                
+                List( [ 1 .. i - 1 ],
+                    j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ), 
+                    
+                [ B^( -i + n + 2 ), IdentityMorphism( B[ -i + n + 1 ] ) ],
+                
+                List( [ i + 2 ..n - m + 1 ],
+                  
+                  j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ) ) 
+                
+                ),
+                
+            [ Concatenation(
+              
+                List([ 1 .. n - m ], j -> ZeroMorphism( B[ -j + n + 2 ], B[ m ] ) ),
+              
+                [ B^( m + 1 ) ] ) ] 
+              
+            );
+
+      b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
+     
+      sol := SolveLinearSystemInAbCategory( L, K, b );
+      
+      if sol = fail then
+        
+        return fail;
+      
+      else
+        
+        return [ [ m, n ], Reversed( sol ) ];
+      
+      fi;
+      
+    fi;
+
+    return sol;
 
 end );
 
