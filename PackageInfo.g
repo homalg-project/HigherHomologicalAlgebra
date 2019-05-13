@@ -8,10 +8,10 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "HomotopyCategories",
+PackageName := "HomotopyCategoriesForCAP",
 Subtitle := "Package to create homotopy categories of an additive category",
 Version := "0.1",
-Date := "07/11/2016", # dd/mm/yyyy format
+Date := "10/05/2019", # dd/mm/yyyy format
 
 Persons := [
   rec(
@@ -19,8 +19,8 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Kamal",
     LastName := "Saleh",
-    WWWHome := "Kamal.saleh@rwth-aachen.de",
-    Email := "kamal.saleh@rwth-aachen.de",
+    WWWHome := "Kamal.saleh@uni-siegen.de",
+    Email := "kamal.saleh@uni-siegen.de",
     PostalAddress := "TODO",
     Place := "Siegen",
     Institution := "Reine Mathematik und Informatik",
@@ -33,7 +33,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 #SupportEmail   := "TODO",
-PackageWWWHome  := "https://kamalsaleh.github.io/HomotopyCategories/",
+PackageWWWHome  := "https://kamalsaleh.github.io/HomotopyCategoriesForCAP/",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
@@ -55,7 +55,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "HomotopyCategories",
+  BookName  := "HomotopyCategoriesForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -65,7 +65,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.8",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ], [ "complex", ">=0" ] ],
+  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ], 
+                           [ "ComplexesForCAP", ">=0" ],
+                           [ "StableCategoriesForCAP", ">=0" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
