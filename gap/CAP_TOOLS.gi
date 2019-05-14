@@ -18,7 +18,7 @@ if not IsBound( ColiftUniquenessInfos ) then
       
       if not HasRangeCategoryOfHomomorphismStructure( category ) then
         
-        Error( "" );
+        Error( "The category should have homomorphism structure" );
         
       fi;
       
@@ -26,7 +26,7 @@ if not IsBound( ColiftUniquenessInfos ) then
       
       if not HasRangeCategoryOfHomomorphismStructure( range ) then
         
-        Error( "" );
+        Error( "The range category should also have homomorphism structure" );
       
       fi;
       
