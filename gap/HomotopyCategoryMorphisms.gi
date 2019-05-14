@@ -35,6 +35,102 @@ end );
 ##
 InstallMethod( UnderlyingChainMorphism, [ IsHomotopyCategoryMorphism ], UnderlyingCapCategoryMorphism );
 
+#
+InstallMethod( MappingCone,
+    [ IsHomotopyCategoryMorphism ],
+  function( phi )
+    local homotopy_category, u_phi, cone;
+  
+    homotopy_category := CapCategory( phi );
+  
+    u_phi := UnderlyingChainMorphism( phi );
+  
+    cone := MappingCone( u_phi );
+  
+    return HomotopyCategoryObject( homotopy_category, cone );
+  
+end );
+
+##
+InstallMethod( NaturalInjectionInMappingCone,
+    [ IsHomotopyCategoryMorphism ],
+  function( phi )
+    local homotopy_category, u_phi, i;
+  
+    homotopy_category := CapCategory( phi );
+  
+    u_phi := UnderlyingChainMorphism( phi );
+  
+    i := NaturalInjectionInMappingCone( u_phi );
+  
+    return HomotopyCategoryMorphism( homotopy_category, i );
+  
+end );
+
+##
+InstallMethod( NaturalProjectionFromMappingCone,
+    [ IsHomotopyCategoryMorphism ],
+  function( phi )
+    local homotopy_category, u_phi, p;
+  
+    homotopy_category := CapCategory( phi );
+  
+    u_phi := UnderlyingChainMorphism( phi );
+  
+    p := NaturalProjectionFromMappingCone( u_phi );
+  
+    return HomotopyCategoryMorphism( homotopy_category, p );
+  
+end );
+
+InstallMethod( HomotopyMorphisms,
+    [ IsHomotopyCategoryMorphism ],
+  function( phi )
+  
+    return HomotopyMorphisms( UnderlyingChainMorphism( phi ) );
+    
+end );
+
+InstallMethod( MappingConeColift,
+    [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
+  function( phi, tau )
+    local homotopy_category, l;
+  
+    homotopy_category := CapCategory( phi );
+    
+    l := MappingConeColift( UnderlyingChainMorphism( phi ), UnderlyingChainMorphism( tau ) );
+    
+    return HomotopyCategoryMorphism( homotopy_category, l );
+    
+end );
+
+#    A ----- phi ----> B ----------> Cone( phi )
+#    |                 |
+#    | alpha_0         | alpha_1
+#    |                 |
+#    v                 v 
+#    A' --- psi -----> B' ---------> Cone( psi )
+#  
+InstallMethodWithCrispCache( MappingConePseudoFunctorial,
+   [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism,
+      IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
+      
+  function( phi, psi, alpha_0, alpha_1 )
+    local m;
+    
+    homotopy_category := CapCategory( phi );
+    
+    m := MappingConePseudoFunctorial(
+          UnderlyingChainMorphism( phi ),
+          UnderlyingChainMorphism( psi ),
+          UnderlyingChainMorphism( alpha_0 ),
+          UnderlyingChainMorphism( alpha_1 )
+    );
+    
+    return HomotopyCategoryMorphism( homotopy_category, m );
+    
+end );
+
 ##
 InstallMethod( Display,
             [ IsHomotopyCategoryMorphism ],
