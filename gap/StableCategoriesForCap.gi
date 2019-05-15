@@ -76,6 +76,17 @@ MorphismFromLiftingObject := rec(
   cache_name := "MorphismFromLiftingObject",
   return_type := "morphism" ),
 
+IsLiftableThroughLiftingObject := rec(
+  installation_name := "IsLiftableThroughLiftingObject",
+  filter_list := [ "morphism" ],
+  cache_name := "IsLiftableThroughLiftingObject",
+  return_type := "bool" ),
+
+WitnessForBeingLiftableThroughLiftingObject := rec(
+  installation_name := "WitnessForBeingLiftableThroughLiftingObject",
+  filter_list := [ "morphism" ],
+  cache_name := "WitnessForBeingLiftableThroughLiftingObject",
+  return_type := "morphism" ),
 
 ColiftingObject := rec(
   installation_name := "ColiftingObject",
@@ -106,7 +117,19 @@ MorphismIntoColiftingObject := rec(
   filter_list := [ "object" ],
   cache_name := "MorphismIntoColiftingObject",
   return_type := "morphism" ),
- 
+
+IsColiftableThroughColiftingObject := rec(
+  installation_name := "IsColiftableThroughColiftingObject",
+  filter_list := [ "morphism" ],
+  cache_name := "IsColiftableThroughColiftingObject",
+  return_type := "bool" ),
+
+WitnessForBeingColiftableThroughColiftingObject := rec(
+  installation_name := "WitnessForBeingColiftableThroughColiftingObject",
+  filter_list := [ "morphism" ],
+  cache_name := "WitnessForBeingColiftableThroughColiftingObject",
+  return_type := "morphism" ),
+
 ) );
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
@@ -230,14 +253,8 @@ InstallMethod( StableCategoryByColiftingStructure,
     
     name := ValueOption( "NameOfCategory" );
     
-    can_be_factored_through_colifting_object :=
-      function( alpha )
-        local a, I_a;
-        a := Source( alpha );
-        I_a := MorphismIntoColiftingObject( a );
-        return Colift( I_a, alpha ) <> fail;
-      end;
- 
+    can_be_factored_through_colifting_object := IsColiftableThroughColiftingObject;
+     
     stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
     
     with_hom_structure := ValueOption( "WithHomomorphismStructure" );
@@ -256,8 +273,8 @@ InstallMethod( StableCategoryByColiftingStructure,
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
                   
-                    else
-                    
+                    elif  LoadPackage( "FreydCategoriesForCAP" ) = true then
+                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
                     
                     fi;
@@ -294,16 +311,10 @@ InstallMethod( StableCategoryByLiftingStructure,
       Error( "The method 'Lift' should be added to ", Name( category ) );
     
     fi;
-    
+     
     name := ValueOption( "NameOfCategory" );
     
-    can_be_factored_through_lifting_object :=
-      function( alpha )
-        local b, P_b;
-        b := Range( alpha );
-        P_b := MorphismFromLiftingObject( b );
-        return Lift( alpha, P_b ) <> fail;
-      end;
+    can_be_factored_through_lifting_object := IsLiftableThroughLiftingObject;
     
     stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
     
@@ -323,7 +334,7 @@ InstallMethod( StableCategoryByLiftingStructure,
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
                     
-                    else
+                    elif LoadPackage( "FreydCategoriesForCAP" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
                     
@@ -509,12 +520,12 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
   
   function( stable_category )
     local category, range_category, freyd_cat;
-     
+    
     category := UnderlyingCapCategory( stable_category );
     
     range_category := RangeCategoryOfHomomorphismStructure( category );
     
-    freyd_cat := FreydCategory( range_category );
+    freyd_cat := ValueGlobal( "FreydCategory" )( range_category );
     
     SetRangeCategoryOfHomomorphismStructure( stable_category, freyd_cat );
     
@@ -528,7 +539,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
          
          D := DistinguishedObjectOfHomomorphismStructure( category );
          
-         return AsFreydCategoryObject( D );
+         return ValueGlobal( "AsFreydCategoryObject" )( D );
          
     end );
     
@@ -547,7 +558,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS( stable_a, stable_b );
         
-        return FreydCategoryObject( h );
+        return ValueGlobal( "FreydCategoryObject" )( h );
     
     end );
     
@@ -575,7 +586,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
                 
-        return FreydCategoryMorphism( s, hom_alpha_beta, r );
+        return ValueGlobal( "FreydCategoryMorphism" )( s, hom_alpha_beta, r );
         
     end );
     
@@ -596,7 +607,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
-        return FreydCategoryMorphism( D, i, hom_stable_a_stable_b );
+        return ValueGlobal( "FreydCategoryMorphism" )( D, i, hom_stable_a_stable_b );
         
     end );
     #    
@@ -608,7 +619,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         b := UnderlyingCapCategoryObject( stable_b );
         
-        h := MorphismDatum( iota );
+        h := ValueGlobal( "MorphismDatum" )( iota );
         
         i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
         
@@ -751,7 +762,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
     
     range_category := RangeCategoryOfHomomorphismStructure( category );
     
-    freyd_cat := FreydCategory( range_category );
+    freyd_cat := ValueGlobal( "FreydCategory" )( range_category );
     
     SetRangeCategoryOfHomomorphismStructure( stable_category, freyd_cat );
     
@@ -765,7 +776,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
          
          D := DistinguishedObjectOfHomomorphismStructure( category );
          
-         return AsFreydCategoryObject( D );
+         return ValueGlobal( "AsFreydCategoryObject" )( D );
          
     end );
     
@@ -784,7 +795,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS( stable_a, stable_b );
         
-        return FreydCategoryObject( h );
+        return ValueGlobal( "FreydCategoryObject" )( h );
     
     end );
     
@@ -813,7 +824,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
                 
-        return FreydCategoryMorphism( s, hom_alpha_beta, r );
+        return ValueGlobal( "FreydCategoryMorphism" )( s, hom_alpha_beta, r );
         
     end );
     
@@ -839,7 +850,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
-        return FreydCategoryMorphism( D, i, hom_stable_a_stable_b );
+        return ValueGlobal( "FreydCategoryMorphism" )( D, i, hom_stable_a_stable_b );
         
     end );
     #    
@@ -851,7 +862,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         b := UnderlyingCapCategoryObject( stable_b );
         
-        h := MorphismDatum( iota );
+        h := ValueGlobal( "MorphismDatum" )( iota );
         
         i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
         
@@ -883,17 +894,9 @@ InstallMethod( Display,
       name := "a congruency test function";
     
     fi;
-    
-    if IsHomotopyCategoryObject( a ) then
       
-      Print( "An object in a homotopy category defined by:\n\n" );
-      
-    else
-      
-      Print( "An object in a stable category defined by:\n\n" );
-      
-    fi;
-    
+    Print( "An object in a stable category defined by:\n\n" );
+         
     Display( UnderlyingCapCategoryObject( a ) );
     
     Print( "\nmodulo ", name );
@@ -916,15 +919,7 @@ InstallMethod( Display,
       
     fi;
     
-    if IsHomotopyCategoryMorphism( alpha ) then
-      
-      Print( "A morphism in a homotopy category defined by:\n\n" );
-    
-    else
-      
-      Print( "A morphism in a stable category defined by:\n\n" );
-    
-    fi;
+    Print( "A morphism in a stable category defined by:\n\n" );
     
     Display( UnderlyingCapCategoryMorphism( alpha ) );
     

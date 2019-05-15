@@ -83,6 +83,7 @@ DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
 DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
                   [ IsCapCategory, IsList ] );
 
+##
 DeclareOperation( "ColiftingMorphism",
                   [ IsCapCategoryMorphism ] );
 
@@ -98,6 +99,37 @@ DeclareOperation( "AddColiftingMorphism",
 DeclareOperation( "AddColiftingMorphism",
                   [ IsCapCategory, IsList ] );
 
+##
+DeclareProperty( "IsColiftableThroughColiftingObject",
+                  IsCapCategoryMorphism );
+
+DeclareOperation( "AddIsColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "WitnessForBeingColiftableThroughColiftingObject",
+                  [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+                  [ IsCapCategory, IsList ] );
 
 ## Stable lifting structure
 
@@ -180,6 +212,42 @@ DeclareOperation( "AddLiftingMorphism",
 
 DeclareOperation( "AddLiftingMorphism",
                   [ IsCapCategory, IsList ] );
+
+##
+DeclareProperty( "IsLiftableThroughLiftingObject",
+                  IsCapCategoryMorphism );
+
+DeclareOperation( "AddIsLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "WitnessForBeingLiftableThroughLiftingObject",
+                  [ IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+
+###
+###
 
 DeclareOperation( "StableCategory",
             [ IsCapCategory, IsFunction ] );
