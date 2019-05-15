@@ -70,7 +70,7 @@ Dependencies := rec(
                             [ "TriangulatedCategoriesForCAP", ">= 1" ],
                             [ "FrobeniusCategoriesForCAP", ">= 1" ],
                             [ "QuotientCategoriesForCAP", ">= 0" ],
-                            [ "FreydCategoriesForCAP", ">= 0" ]
+                            #[ "FreydCategoriesForCAP", ">= 0" ]
                           ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
