@@ -923,8 +923,6 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
 
 end );
 
-
-
 ##
 InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone, 
             [ IsChainOrCochainMorphism ],

@@ -107,11 +107,8 @@ DeclareOperation( "AddHomotopyMorphisms",
 # @Arguments phi
 # DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
 
-#! @EndSection
-
 #! @Section Examples
 #! @InsertChunk vec_0
-#! @EndSection
 
 DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES" );
 

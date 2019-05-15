@@ -153,7 +153,6 @@ DeclareOperation( "CochainComplexWithInductiveNegativeSide", [ IsCapCategoryMorp
 #! @Arguments d,F
 #! @Returns a cochain complex
 DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsCapCategoryMorphism, IsFunction ] );
-#! @EndSection
 
 #########################################
 #
@@ -192,7 +191,6 @@ DeclareAttribute( "AsChainComplex", IsCochainComplex );
 #! @Arguments C
 #! @Returns a cochain complex
 DeclareAttribute( "AsCochainComplex", IsChainComplex );
-#! @EndSection
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
 
@@ -510,8 +508,6 @@ DeclareOperation( "ViewComplex", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
 DeclareOperation( "ViewComplex", [ IsBoundedChainOrCochainComplex ] );
 
-#! @EndSection
-
 #! @Section Truncations
 
 #! @Description
@@ -652,12 +648,11 @@ KeyDependentOperation( "BrutalTruncationAbove", IsCochainComplex, IsInt, ReturnT
 #! @Arguments C, n
 #! @Returns chain complex
 KeyDependentOperation( "BrutalTruncationBelow", IsCochainComplex, IsInt, ReturnTrue );
-#! @EndSection
 
 #! @Section Examples
 #! @InsertChunk vec_1
 # @InsertChunk complexes_example_2
-#! @EndSection
+
 
 ##############################################
 #

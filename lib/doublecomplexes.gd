@@ -13,8 +13,6 @@ DeclareCategory( "IsDoubleChainOrCochainComplex", IsObject );
 DeclareCategory( "IsDoubleChainComplex", IsDoubleChainOrCochainComplex );
 DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 
-#! @EndSection
-
 ##############################
 #
 # Creating double  complexes
@@ -169,8 +167,6 @@ DeclareOperation( "DoubleCochainComplex", [ IsCochainComplex ] );
 #! @Arguments C
 #! @Returns a double cochain complex
 DeclareOperation( "DoubleCochainComplex", [ IsDoubleChainComplex ] );
-
-#! @EndSection
 
 ########################################
 #

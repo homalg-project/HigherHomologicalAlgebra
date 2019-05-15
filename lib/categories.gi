@@ -135,7 +135,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     ##
     objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
     
-    if objects_equality_for_cache = IsIdenticalObj then
+    if objects_equality_for_cache in [ fail, 1 ] then
       
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
@@ -144,8 +144,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
       
-    else
-     
+    elif objects_equality_for_cache = 2 then
+      
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
           local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
@@ -163,15 +163,15 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           fi;
           
           computed_objects_1 := ComputedObjectAts( C1 );
-
+          
           computed_objects_2 := ComputedObjectAts( C2 );
-
+          
           indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
           
           indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
-
+          
           indices := Intersection( indices_1, indices_2 );
-
+          
           for i in indices do
             
             if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
@@ -179,7 +179,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               return false;
             
             fi;
-
+          
           od;
           
           l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
@@ -189,7 +189,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           lu := [ l .. u ];
           
           SubtractSet( lu, indices );
-
+          
           if lu = [ ] then
             
             return true;
@@ -201,11 +201,15 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
       end );
       
+    else
+      
+      Error( "ObjectsEqualityForCache option can not be interpreted!" );
+      
     fi;
     
     morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
     
-    if morphisms_equality_for_cache = IsIdenticalObj then
+    if morphisms_equality_for_cache in [ fail, 1 ] then
       
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
@@ -214,8 +218,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
     
-    else
-    
+    elif morphisms_equality_for_cache = 2 then
+      
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
           local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
@@ -245,15 +249,15 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           fi;
           
           computed_morphisms_1 := ComputedMorphismAts( m1 );
-
+          
           computed_morphisms_2 := ComputedMorphismAts( m2 );
-
+          
           indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
           
           indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
-
+          
           indices := Intersection( indices_1, indices_2 );
-
+          
           for i in indices do
             
             if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
@@ -261,9 +265,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               return false;
             
             fi;
-
+          
           od;
-
+          
           l := Minimum( 
                 Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
                 Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
@@ -275,9 +279,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 );
           
           lu := [ l .. u ];
-
+          
           SubtractSet( lu, indices );
-
+          
           if lu = [ ] then
             
             return true;
@@ -289,6 +293,10 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
       end );
       
+    else
+      
+      Error( "MorphismsEqualityForCache option can not be interpreted!" );
+    
     fi;
     
     ##
@@ -298,27 +306,27 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
         
         if IsIdenticalObj( C1, C2 ) then 
-        
+          
           return true;
         
         fi;
         
         if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
-        
+          
           Error( "Complexes must be bounded" );
         
         fi;
         
         computed_objects_1 := ComputedObjectAts( C1 );
-
+        
         computed_objects_2 := ComputedObjectAts( C2 );
-
+        
         indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
         
         indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
-
+        
         indices := Intersection( indices_1, indices_2 );
-
+        
         for i in indices do
           
           if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
@@ -326,9 +334,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             return false;
           
           fi;
-
+        
         od;
-
+        
         l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
         
         u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
@@ -336,7 +344,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         lu := [ l .. u ];
         
         SubtractSet( lu, indices );
-
+        
         for i in lu do
           
           if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
@@ -344,7 +352,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             return false;
           
           fi;
-
+        
         od;
         
         return true;
@@ -380,15 +388,15 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         fi;
         
         computed_morphisms_1 := ComputedMorphismAts( m1 );
-
+        
         computed_morphisms_2 := ComputedMorphismAts( m2 );
-
+        
         indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
         
         indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
-
+        
         indices := Intersection( indices_1, indices_2 );
-
+        
         for i in indices do
           
           if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
@@ -396,9 +404,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             return false;
           
           fi;
-
+        
         od;
-
+        
         l := Minimum( 
               Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
               Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
@@ -410,9 +418,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               );
         
         lu := [ l .. u ];
-
+        
         SubtractSet( lu, indices );
-
+        
         for i in lu do
         
           if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
@@ -1569,20 +1577,34 @@ end );
 #
 ###########################################
 
+##
 InstallMethod( ChainComplexCategory, 
                  [ IsCapCategory ],
   function( cat )
+    local objects_equality, morphisms_equality;
     
-    return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, -1 );
+    objects_equality := ValueOption( "ObjectsEqualityForCache" );
     
+    morphisms_equality := ValueOption( "MorphismsEqualityForCache" );
+     
+    return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, -1 : ObjectsEqualityForCache  := objects_equality,
+                                                        MorphismsEqualityForCache := morphisms_equality );
+  
 end );
 
-InstallMethod( CochainComplexCategory, 
+##
+InstallMethod( CochainComplexCategory,
                  [ IsCapCategory ],
   function( cat )
+    local objects_equality, morphisms_equality;
     
-    return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, 1 );
+    objects_equality := ValueOption( "objects_equality_for_cache" );
     
+    morphisms_equality := ValueOption( "morphisms_equality_for_cache" );
+    
+    return CHAIN_OR_COCHAIN_COMPLEX_CATEGORY( cat, 1: ObjectsEqualityForCache := objects_equality,
+                                                      MorphismsEqualityForCache := morphisms_equality );
+  
 end );
 
 ##########################################

@@ -482,7 +482,6 @@ KeyDependentOperation( "BrutalTruncationBelowFunctor", IsChainOrCochainComplexCa
 # @Returns a functor
 DeclareOperation( "ChainCategoryToCochainCategoryOfOppositeCategory", [ IsCapCategory ] );
 
-#! @EndSection
 #! @Section Examples
 #! @InsertChunk vec_3
 
@@ -504,5 +503,3 @@ DeclareOperation( "CokernelObjectFunctor", [ IsChainOrCochainComplexCategory, Is
 DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
 DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
-
-#! @EndSection

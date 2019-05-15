@@ -20,7 +20,6 @@
 #! It turns out that if $A$ is abelian category that has enough projective, then every above bounded cochain
 #! complex admits a projective resolution.
 #! @EndLatexOnly
-#! @EndSection
 
 #! @Section Computing resolutions
 
@@ -109,7 +108,6 @@ DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochain
 #! @Group 15
 #! @Arguments C
 DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
-#! @EndSection
+
 #! @Section Examples
 #! @InsertChunk Z_0
-#! @EndSection
