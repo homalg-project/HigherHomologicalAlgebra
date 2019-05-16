@@ -1,3 +1,4 @@
+doc/*
 GroupRepresentationsForCAP/examples/doc/D8*.g
 tmp/
 gh-pages
@@ -40,5 +41,6 @@ public_html.version
 doc/*.xml
 */doc/*.xml
 maketest.g
+/tst/bicomplexes*.tst
 parsertest.g
 judgement_test
