@@ -12,4 +12,4 @@ clean:
 	(cd doc ; ./clean)
 
 test:	doc
-	gap maketest.g
+	gap tst/testall.g

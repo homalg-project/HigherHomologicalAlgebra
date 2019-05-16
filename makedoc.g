@@ -3,8 +3,8 @@
 #
 # This file is a script which compiles the package manual.
 #
-if fail = LoadPackage("AutoDoc", "2016.02.16") then
-    Error("AutoDoc version 2016.02.16 or newer is required.");
+if fail = LoadPackage("AutoDoc", "2019.04.10") then
+    Error("AutoDoc version 2019.04.10 or newer is required.");
 fi;
 
 AutoDoc( 
@@ -17,12 +17,15 @@ AutoDoc(
             
             autodoc := rec( files := [ "doc/Doc.autodoc" ] ),
 
-            maketest := rec( folder := ".",
-                             commands :=
-                             [ "LoadPackage( \"Bicomplexes\" );",
-                               "LoadPackage( \"M2\" );",
-                             ],
-                           ),
+#            maketest := rec( folder := ".",
+#                             commands :=
+#                             [ "LoadPackage( \"Bicomplexes\" );",
+#                               "LoadPackage( \"M2\" );",
+#                             ],
+#                             compareFunction := function(s,t) return true;end,
+#                           ),
+
+            extract_examples := rec( units := "Single" ),
             )
 );
 
