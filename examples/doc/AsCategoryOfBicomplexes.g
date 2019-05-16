@@ -60,7 +60,7 @@ LoadPackage( "Bicomplexes" );
 #! @Example
 ZZ := HomalgRingOfIntegers( );
 #! Z
-lp_cat := CategoryOfHomalgLeftModules( ZZ );
+lp_cat := CategoryOfHomalgFinitelyPresentedLeftModules( ZZ );
 #! intrinsic Category of left presentations of Z with ambient objects
 chains_lp_cat := ChainComplexCategory( lp_cat );
 #! Chain complexes category over intrinsic Category
@@ -192,32 +192,38 @@ T;
 #! lower bound 13 and active upper bound 18>
 Display( T, 13, 18 );
 #! 
-#! -----------------------------------------------------------------
-#! In index 13
+#! ------------------------/\--------------------------
+#! In homological degree 13
 #! 
-#! Object is
-#! 0
-#! 
-#! Differential is
+#! Differential:
 #! (an empty 0 x 0 matrix)
 #! 
 #! the map is currently represented by the above 0 x 0 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 14
+#! Object:
+#! 0
 #! 
-#! Object is
-#! Z/< 2 > 
+#! ------------------------/\--------------------------
+#! In homological degree 14
 #! 
-#! Differential is
+#! Differential:
 #! (an empty 1 x 0 matrix)
 #! 
 #! the map is currently represented by the above 1 x 0 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 15
+#! Object:
+#! Z/< 2 > 
 #! 
-#! Object is
+#! ------------------------/\--------------------------
+#! In homological degree 15
+#! 
+#! Differential:
+#! [ [  -1 ],
+#!   [   1 ] ]
+#! 
+#! the map is currently represented by the above 2 x 1 matrix
+#! 
+#! Object:
 #! [ [  0,  4 ] ]
 #! 
 #! Cokernel of the map
@@ -226,43 +232,37 @@ Display( T, 13, 18 );
 #! 
 #! currently represented by the above matrix
 #! 
-#! Differential is
-#! [ [  -1 ],
-#!   [   1 ] ]
+#! ------------------------/\--------------------------
+#! In homological degree 16
 #! 
-#! the map is currently represented by the above 2 x 1 matrix
-#! 
-#! -----------------------------------------------------------------
-#! In index 16
-#! 
-#! Object is
-#! Z^(1 x 2)
-#! 
-#! Differential is
+#! Differential:
 #! [ [  -2,   0 ],
 #!   [   1,   1 ] ]
 #! 
 #! the map is currently represented by the above 2 x 2 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 17
+#! Object:
+#! Z^(1 x 2)
 #! 
-#! Object is
-#! Z^(1 x 1)
+#! ------------------------/\--------------------------
+#! In homological degree 17
 #! 
-#! Differential is
+#! Differential:
 #! [ [  2,  4 ] ]
 #! 
 #! the map is currently represented by the above 1 x 2 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 18
+#! Object:
+#! Z^(1 x 1)
 #! 
-#! Object is
-#! 0
+#! ------------------------/\--------------------------
+#! In homological degree 18
 #! 
-#! Differential is
+#! Differential:
 #! (an empty 0 x 1 matrix)
 #! 
 #! the map is currently represented by the above 0 x 1 matrix
+#! 
+#! Object:
+#! 0
 #! @EndExample
