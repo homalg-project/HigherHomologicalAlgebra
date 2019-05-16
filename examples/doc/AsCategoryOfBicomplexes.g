@@ -1,4 +1,4 @@
-#! @System AsCategoryOfBicomplexes
+#! @Chunk AsCategoryOfBicomplexes
 
 LoadPackage( "M2" );
 LoadPackage( "Bicomplexes" );
