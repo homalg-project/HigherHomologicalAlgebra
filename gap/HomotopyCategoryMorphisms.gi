@@ -94,11 +94,19 @@ end );
 InstallMethod( MappingConeColift,
     [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
   function( phi, tau )
-    local homotopy_category, l;
-  
+    local homotopy_category, l, with_infos;
+    
     homotopy_category := CapCategory( phi );
     
     l := MappingConeColift( UnderlyingChainMorphism( phi ), UnderlyingChainMorphism( tau ) );
+    
+    with_infos := ValueOption( "WithInfos" );
+    
+    if with_infos = true then
+      
+      ColiftUniquenessInfos( NaturalInjectionInMappingCone( phi ), tau );
+      
+    fi;
     
     return HomotopyCategoryMorphism( homotopy_category, l );
     
@@ -108,15 +116,15 @@ end );
 #    |                 |
 #    | alpha_0         | alpha_1
 #    |                 |
-#    v                 v 
+#    v                 v
 #    A' --- psi -----> B' ---------> Cone( psi )
-#  
+#
 InstallMethodWithCrispCache( MappingConePseudoFunctorial,
    [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism,
       IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
-      
+  
   function( phi, psi, alpha_0, alpha_1 )
-    local m;
+    local homotopy_category, m;
     
     homotopy_category := CapCategory( phi );
     
