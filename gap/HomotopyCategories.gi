@@ -20,34 +20,60 @@ BindGlobal( "TheTypeOfHomotopyCategory",
         NewType( TheFamilyOfCapCategories,
                 IsHomotopyCategoryRep ) );
 
-
+# The StandardHomomorphismStructure is the one that comes from the stable structure.
+# There is another way to enhance the homotopy categories with a homomorphism structure,
+# By the use of double complexes.
+#
+# if WithStandardHomomorphismStructure = false then the second way will be used,
+# otherwise, the standard one will be used.
 ##
 InstallMethod( HomotopyCategory,
       [ IsCapCategory ],
   function( cat )
-    local chains, name, to_be_finalized, homotopy_category, special_filters;
+    local chains, coliftable_function, name, to_be_finalized, special_filters, homotopy_category;
     
-    LoadPackage( "ComplexesForCAP" );
+    chains := ChainComplexCategory( cat : FinalizeCategory := false );
     
-    if not IsPackageMarkedForLoading( "ComplexesForCAP", ">=2019.04.01" ) then
+    if HasIsFinalized( chains ) then
       
-      Error( "The package ComplexesForCAP is required to run this method" );
+      if not CanCompute( chains, "MorphismIntoColiftingObject" ) or
+          not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
+          
+          Error( "The chains complex category seems to have been finalized with adding colifting structure" );
+          
+      fi;
+    
+    else
+    
+      AddMorphismIntoColiftingObject( chains,
+        function( a )
       
-    fi;
+          return NaturalInjectionInMappingCone( IdentityMorphism( a ) );
+        
+      end );
     
-    chains := ValueGlobal( "ChainComplexCategory" )( cat : FinalizeCategory := false );
+      coliftable_function := ValueOption( "is_coliftable_through_colifting_object_func" );
     
-    AddMorphismIntoColiftingObject( chains,
-      function( a )
-        return ValueGlobal( "NaturalInjectionInMappingCone" )( IdentityMorphism( a ) );
-    end );
-    
-    Finalize( chains );
-    
-    if not CanCompute( chains, "Colift" ) then
+      if coliftable_function = fail then
       
-      Error( "Colifts should be computable in ", Name( chains ) );
+        if not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
+        
+          Error( "The method IsColiftableThroughColiftingObject should be added to the category of chains!" );
+        
+        fi;
+    
+      elif IsFunction( coliftable_function ) then
+                
+        AddIsColiftableThroughColiftingObject( chains, coliftable_function );
+        
+      else
+        
+        Error( "The optional input is not valid" );
+    
+      fi;
       
+      Finalize( chains );
+    
     fi;
     
     name := Concatenation( "Homotopy category of ", Name( cat ) );
