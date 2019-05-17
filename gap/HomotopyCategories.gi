@@ -425,27 +425,24 @@ end );
 InstallMethod( TotalComplexUsingMappingCone,
   [ IsChainComplex ],
   function( C )
-    local cat, l, u, tau, L;
-  
-    cat := UnderlyingCategory( CapCategory( C ) );
+    local l, u, tau, L, with_infos;
     
     l := ActiveLowerBound( C ) + 1;
     u := ActiveUpperBound( C ) - 1;
-  
-    if l = u then
     
+    if l = u then
+      
       return C;
     
     elif l + 1 = u then
-  
-      #return StalkChainComplex( HomotopyCategoryObject( cat, MappingCone( UnderlyingCapCategoryMorphism( C^u ) ) ), u - 1 );
-      return HomotopyCategoryObject( cat, MappingCone( UnderlyingCapCategoryMorphism( C^u ) ) );
+
+      return MappingCone( C^u );
 
     else
-    
-      tau := HomotopyCategoryMorphism( cat, MappingConeColift(
-                UnderlyingCapCategoryMorphism( C^u ),
-                UnderlyingCapCategoryMorphism(C^( u - 1 ) ) ) );
+      
+      with_infos := ValueOption( "WithInfos" );
+      
+      tau := MappingConeColift( C^u, C^( u - 1 ) : WithInfos := with_infos );
     
       L := List( [ l + 1 .. u - 2 ], i -> C^i );
     
