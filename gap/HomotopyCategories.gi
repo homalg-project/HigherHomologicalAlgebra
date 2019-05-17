@@ -428,14 +428,15 @@ InstallMethod( TotalComplexUsingMappingCone,
       return TotalComplexUsingMappingCone( ChainComplex( L, l + 1 ) );
     
     fi;
+
   
 end );
 
 ## This function computes the homotopy by solving the associated two sided linear system of morphisms in the category.
 ##
-InstallGlobalFunction( COMPUTE_HOMOTOPY_IN_COMPLEXES_CATEGORY,
+InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGORY,
   function( phi )
-    local A, B, m, n, L, K, b, sol;
+    local A, B, m, n, L, K, b, sol, H;
 
     A := Source( phi );
 
@@ -504,11 +505,29 @@ InstallGlobalFunction( COMPUTE_HOMOTOPY_IN_COMPLEXES_CATEGORY,
     
       if sol = fail then
         
-        return fail;
+        SetHomotopyMorphisms( phi, fail );
+        
+        SetIsNullHomotopic( phi, false );
+       
+        return false;
       
       else
+       
+        # This H is not well-defined, we only need the infinite list
         
-        return [ [ m, n ], sol ];
+        if not HasHomotopyMorphisms( phi ) then
+          
+          H := CochainMorphism( A, ShiftLazy( B, -1 ), sol, m );
+        
+          H := Morphisms( H );
+           
+          SetHomotopyMorphisms( phi, H );
+          
+        fi;
+        
+        SetIsNullHomotopic( phi, true );
+        
+        return true;
       
       fi;
       
@@ -575,17 +594,31 @@ InstallGlobalFunction( COMPUTE_HOMOTOPY_IN_COMPLEXES_CATEGORY,
       
       if sol = fail then
         
-        return fail;
+        SetHomotopyMorphisms( phi, fail );
+        
+        SetIsNullHomotopic( phi, false );
+       
+        return false;
       
       else
         
-        return [ [ m, n ], Reversed( sol ) ];
+        if not HasHomotopyMorphisms( phi ) then
+          
+          H := ChainMorphism( A, ShiftLazy( B, 1 ), Reversed( sol ), m );
+        
+          H := Morphisms( H );
+           
+          SetHomotopyMorphisms( phi, H );
+          
+        fi;
+        
+        SetIsNullHomotopic( phi, true );
+        
+        return true;
       
       fi;
       
     fi;
-
-    return sol;
 
 end );
 
