@@ -45,7 +45,9 @@ if not IsBound( ColiftUniquenessInfos ) then
       else
         
         Print( "If there is a colift, it is not unique\n" );
-        
+        Print( "Since the kernel object is: " );
+        Display( K );
+ 
       fi;
 
   end );
@@ -97,6 +99,63 @@ if not IsBound( LiftUniquenessInfos ) then
       else
         
         Print( "If there is a lift, it is not unique\n" );
+        Print( "Since the kernel object is: " );
+        Display( K );
+        
+      fi;
+
+  end );
+  
+fi;
+
+if not IsBound( LiftColiftUniquenessInfos ) then
+
+  DeclareOperation( "LiftColiftUniquenessInfos", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+  ##
+  InstallMethod( LiftColiftUniquenessInfos,
+            [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+    function( alpha, beta, gamma, delta )
+      local category, range, D, h1, h2, h, K, hom_D_K;
+    
+      category := CapCategory( alpha );
+      
+      if not HasRangeCategoryOfHomomorphismStructure( category ) then
+        
+        Error( "" );
+        
+      fi;
+      
+      range := RangeCategoryOfHomomorphismStructure( category );
+      
+      if not HasRangeCategoryOfHomomorphismStructure( range ) then
+        
+        Error( "" );
+      
+      fi;
+      
+      D := DistinguishedObjectOfHomomorphismStructure( category );
+      
+      
+      h1 := HomomorphismStructureOnMorphisms( IdentityMorphism( Source( alpha ) ), beta );
+      
+      h2 := HomomorphismStructureOnMorphisms( gamma, IdentityMorphism( Range( delta ) ) );
+      
+      h := MorphismBetweenDirectSums( [ [ h1, h2 ] ] );
+      
+      K := KernelObject( h );
+      
+      hom_D_K := HomomorphismStructureOnObjects( D, K );
+      
+      if IsZero( hom_D_K ) then
+        
+        Print( "If there is a lift_colift, it is unique\n" );
+        
+      else
+        
+        Print( "If there is a lift_colift, it is not unique\n" );
+        Print( "Since the kernel object is: " );
+        Display( K );
         
       fi;
 
