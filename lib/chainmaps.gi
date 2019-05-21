@@ -672,6 +672,11 @@ InstallMethod( AsCochainMorphism,
     return psi;
 end );
 
+##
+InstallMethod( AsChainMorphism, [ IsChainMorphism ], IdFunc );
+
+##
+InstallMethod( AsCochainMorphism, [ IsCochainMorphism ], IdFunc );
 
 ########################################
 #

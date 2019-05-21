@@ -129,13 +129,13 @@ DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 #! The input is a cochain morphism $\phi$ and the output is the associated chain morphism.
 #! @Arguments phi
 #! @Returns a chain morphism
-DeclareAttribute( "AsChainMorphism", IsCochainMorphism );
+DeclareAttribute( "AsChainMorphism", IsChainOrCochainMorphism );
 
 #! @Description
 #! The input is a chain morphism $\phi$ and the output is the associated cochain morphism.
 #! @Arguments phi
 #! @Returns a cochain morphism
-DeclareAttribute( "AsCochainMorphism", IsChainMorphism );
+DeclareAttribute( "AsCochainMorphism", IsChainOrCochainMorphism );
 
 #! @Description
 #! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 

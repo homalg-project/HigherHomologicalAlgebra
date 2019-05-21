@@ -801,6 +801,12 @@ InstallMethod( AsCochainComplex,
     
 end );
 
+##
+InstallMethod( AsChainComplex, [ IsChainComplex ], IdFunc );
+
+##
+InstallMethod( AsCochainComplex, [ IsCochainComplex ], IdFunc );
+
 ################################################
 #
 #  Constructors of finite (co)chain complexes

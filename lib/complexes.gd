@@ -181,16 +181,18 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
 
 #! @Description
-#! The input is a cochain complex $C$ and the output is the associated chain complex.
+#! If the input is a cochain complex $C$, then the output is the associated chain complex.
+#! Otherwise, the output is $C$.
 #! @Arguments C
 #! @Returns a chain complex
-DeclareAttribute( "AsChainComplex", IsCochainComplex );
+DeclareAttribute( "AsChainComplex", IsChainOrCochainComplex );
 
 #! @Description
-#! The input is a chain complex $C$ and the output is the associated cochain complex.
+#! If the input is a chain complex $C$, then the output is the associated cochain complex.
+#! Otherwise, the output is $C$.
 #! @Arguments C
 #! @Returns a cochain complex
-DeclareAttribute( "AsCochainComplex", IsChainComplex );
+DeclareAttribute( "AsCochainComplex", IsChainOrCochainComplex );
 
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
 
