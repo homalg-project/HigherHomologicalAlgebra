@@ -494,10 +494,10 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               );
          
         lu := [ l .. u ];
+        
+        SubtractSet( lu, indices );
 
-        indices := SubtractSet( lu, indices );
-
-        for i in indices do
+        for i in lu do
         
           if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
             
@@ -510,7 +510,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         return true;
         
     end );
-      ##
+    
+    ##
     if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
       
       AddIsWellDefinedForObjects( complex_cat,
