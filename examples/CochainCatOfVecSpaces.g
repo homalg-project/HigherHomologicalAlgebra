@@ -12,7 +12,7 @@ Q := HomalgFieldOfRationals( );;
 matrix_category := MatrixCategory( Q );
 #! Category of matrices over Q
 cochain_cat := CochainComplexCategory( matrix_category );
-#! Cochain complexes category over category of matrices over Q
+#! Cochain complexes category over Category of matrices over Q
 #! @EndExample
 #! @EndChunk
 
@@ -57,7 +57,7 @@ f := VectorSpaceMorphism( A, HomalgMatrix( [ [ 1, 3 ] ], 1, 2, Q ), B );
 g := VectorSpaceMorphism( B, HomalgMatrix( [ [ 0 ], [ 0 ] ], 2, 1, Q ), A );
 #! <A morphism in Category of matrices over Q>
 C := CochainComplex( [ f, g, 2*f ], 3 );
-#! <A bounded object in cochain complexes category over category of matrices over Q 
+#! <A bounded object in Cochain complexes category over Category of matrices over Q 
 #! with active lower bound 2 and active upper bound 7>
 ActiveUpperBound( C );
 #! 7
@@ -93,23 +93,23 @@ IsExactInIndex( C, 4 );
 IsExactInIndex( C, 3 );
 #! true
 C;
-#! <A not cyclic, bounded object in cochain complexes category over category of 
+#! <A not cyclic, bounded object in Cochain complexes category over Category of 
 #! matrices over Q with active lower bound 2 and active upper bound 7>
 P := CochainComplex( matrix_category, diffs );
-#! <An object in Cochain complexes category over category of matrices over Q>
+#! <An object in Cochain complexes category over Category of matrices over Q>
 SetUpperBound( P, 15 );
 P;
-#! <A bounded from above object in cochain complexes category over category of 
+#! <A bounded from above object in Cochain complexes category over Category of 
 #! matrices over Q with active upper bound 15>
 SetUpperBound( P, 20 );
 P;
-#! <A bounded from above object in cochain complexes category over category of 
+#! <A bounded from above object in Cochain complexes category over Category of 
 #! matrices over Q with active upper bound 15>
 ActiveUpperBound( P );
 #! 15
 SetUpperBound( P, 7 );
 P;
-#! <A bounded from above object in cochain complexes category over category of 
+#! <A bounded from above object in Cochain complexes category over Category of 
 #! matrices over Q with active upper bound 7>
 ActiveUpperBound( P );
 #! 7
@@ -174,10 +174,10 @@ phi4 := g;
 phi5 := 2*h;
 #! <A morphism in Category of matrices over Q>
 D := CochainComplex( [ h ], 4 );
-#! <A bounded object in cochain complexes category over category of matrices 
+#! <A bounded object in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 3 and active upper bound 6>
 phi := CochainMorphism( C, D, [ phi4, phi5 ], 4 );
-#! <A bounded morphism in cochain complexes category over category of matrices
+#! <A bounded morphism in Cochain complexes category over Category of matrices
 #!  over Q with active lower bound 3 and active upper bound 6>
 Display( phi[ 5 ] );
 #! [ [ 10 ] ]
@@ -198,7 +198,7 @@ IsExact( C );
 #! @Example
 #! (continued)
 psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
-#! <A bounded morphism in cochain complexes category over category of matrices 
+#! <A bounded morphism in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 3 and active upper bound 6>
 #! @EndExample
 #! @BeginLatexOnly
@@ -209,7 +209,7 @@ psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
 IsZeroForMorphisms( psi );
 #! false
 psi;
-#! <A bounded morphism in cochain complexes category over category of matrices 
+#! <A bounded morphism in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 4 and active upper bound 6>
 #! @EndExample
 #! @BeginLatexOnly
@@ -331,7 +331,7 @@ psi;
 #! @Example
 #! (continued)
 cone := MappingCone( psi );
-#! <A bounded object in cochain complexes category over category of matrices over 
+#! <A bounded object in Cochain complexes category over Category of matrices over 
 #! Q with active lower bound 1 and active upper bound 6>
 cone^4;
 #! <A morphism in Category of matrices over Q>
@@ -341,10 +341,10 @@ Display( cone^4 );
 #!
 #! A morphism in Category of matrices over Q
 i := NaturalInjectionInMappingCone( psi );
-#! <A bounded morphism in cochain complexes category over category of matrices over
+#! <A bounded morphism in Cochain complexes category over Category of matrices over
 #! Q with active lower bound 3 and active upper bound 6>
 p := NaturalProjectionFromMappingCone( psi );
-#! <A bounded morphism in cochain complexes category over category of matrices over
+#! <A bounded morphism in Cochain complexes category over Category of matrices over
 #! Q with active lower bound 1 and active upper bound 6>
 
 IsZeroForMorphisms( PreCompose( psi, i ) );
@@ -370,13 +370,13 @@ Display( H[ 3 ] );
 #! Let us now show that $D$ and $\mathrm{Cyl(\psi)}$ are homotopy equivalent.
 #! @Example
 cyl_psi := MappingCylinder( psi );
-#! <A bounded object in cochain complexes category over category of matrices over Q
+#! <A bounded object in Cochain complexes category over Category of matrices over Q
 #! with active lower bound 1 and active upper bound 7>
 D_to_cyl_psi := NaturalInjectionOfRangeInMappingCylinder( psi );
-#! <A bounded morphism in cochain complexes category over category of matrices over
+#! <A bounded morphism in Cochain complexes category over Category of matrices over
 #! Q with active lower bound 3 and active upper bound 6>
 cyl_psi_to_D := NaturalMorphismFromMappingCylinderInRange( psi );
-#! <A bounded morphism in cochain complexes category over category of matrices over
+#! <A bounded morphism in Cochain complexes category over Category of matrices over
 #! Q with active lower bound 3 and active upper bound 6>
 IsZeroForMorphisms( PreCompose( D_to_cyl_psi, cyl_psi_to_D ) 
                     - IdentityMorphism( D ) );
@@ -401,10 +401,10 @@ IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi )
 #! @Example
 #! (continued)
 i_o_psi := PreCompose( psi, i );
-#! <A bounded morphism in cochain complexes category over category of matrices
+#! <A bounded morphism in Cochain complexes category over Category of matrices
 #! over Q with active lower bound 4 and active upper bound 6>
 H5 := CohomologyFunctorAt( cochain_cat, matrix_category, 5 );
-#! 5-th cohomology functor in category of matrices over Q
+#! 5-th cohomology functor in Category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
 #! @EndExample
@@ -434,13 +434,13 @@ Display( ApplyFunctor( F, f ) );
 #! 
 #! A morphism in Category of matrices over Q
 Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );
-#! Extended version of double functor from cochain complexes category over category 
-#! of matrices over Q to cochain complexes category over category of matrices over Q
+#! Extended version of double functor from Cochain complexes category over Category 
+#! of matrices over Q to Cochain complexes category over Category of matrices over Q
 psi;
-#! <A bounded morphism in cochain complexes category over category of matrices 
+#! <A bounded morphism in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 4 and active upper bound 6>
 Coch_F_psi := ApplyFunctor( Coch_F, psi );
-#! <A bounded morphism in cochain complexes category over category of matrices 
+#! <A bounded morphism in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 4 and active upper bound 6>
 Display( psi[ 5 ] );
 #! [ [  10 ] ]
@@ -458,13 +458,13 @@ Display( Coch_F_psi[ 5 ] );
 #! @Example
 #! (continued)
 T := ShiftFunctor( cochain_cat, 3 );
-#! Shift (3 times to the left) functor in cochain complexes category over category
+#! Shift (3 times to the left) functor in Cochain complexes category over Category
 #!  of matrices over Q
 C;
-#! <A not cyclic, bounded object in cochain complexes category over category of 
+#! <A not cyclic, bounded object in Cochain complexes category over Category of 
 #! matrices over Q with active lower bound 2 and active upper bound 7>
 C_3 := ApplyFunctor( T, C );
-#! <A not cyclic, bounded object in cochain complexes category over category of 
+#! <A not cyclic, bounded object in Cochain complexes category over Category of 
 #! matrices over Q with active lower bound -1 and active upper bound 4>
 Display( C^3 );
 #! [ [  1,  3 ] ]
@@ -475,10 +475,10 @@ Display( C_3^0 );
 #!
 #! A morphism in Category of matrices over Q
 S := UnsignedShiftFunctor( cochain_cat, 3 );
-#! Unsigned shift (3 times to the left) functor in cochain complexes category over 
-#! category of matrices over Q
+#! Unsigned shift (3 times to the left) functor in Cochain complexes category over 
+#! Category of matrices over Q
 C_3_unsigned := ApplyFunctor( S, C );
-#! <A bounded object in cochain complexes category over category of matrices over 
+#! <A bounded object in Cochain complexes category over Category of matrices over 
 #! Q with active lower bound -1 and active upper bound 4>
 Display( C_3_unsigned^0 );
 #! [ [  1,  3 ] ]
@@ -489,26 +489,26 @@ Display( C_3_unsigned^0 );
 #! @Example
 #! (continued)
 cochain_cat;
-#! Cochain complexes category over category of matrices over Q
+#! Cochain complexes category over Category of matrices over Q
 chain_cat := ChainComplexCategory( matrix_category );
-#! Chain complexes category over category of matrices over Q
+#! Chain complexes category over Category of matrices over Q
 trunc_leq_4 := BrutalTruncationAboveFunctor( cochain_cat, 4 );
 #! Functor of brutal truncation from above (C -> C^<= 4) in Cochain complexes 
-#! category over category of matrices over Q
+#! category over Category of matrices over Q
 trunc_l_4 := BrutalTruncationAboveFunctor( chain_cat, 4 );
 #! Functor of brutal truncation from above (C -> C_< 4) in Chain complexes 
-#! category over category of matrices over Q
+#! category over Category of matrices over Q
 trunc_g_4 := BrutalTruncationBelowFunctor( cochain_cat, 4 );
 #! Functor of brutal truncation from below (C -> C^> 4) in Cochain complexes 
-#! category over category of matrices over Q
+#! category over Category of matrices over Q
 trunc_geq_4 := BrutalTruncationBelowFunctor( chain_cat, 4 );
 #! Functor of brutal truncation from below (C -> C_>= 4) in Chain complexes 
-#! category over category of matrices over Q
+#! category over Category of matrices over Q
 ApplyFunctor( trunc_leq_4, C );
-#! <A bounded object in cochain complexes category over category of matrices over Q \
+#! <A bounded object in Cochain complexes category over Category of matrices over Q \
 #! with active lower bound 2 and active upper bound 5>
 ApplyFunctor( trunc_g_4, C );
-#! <A bounded object in cochain complexes category over category of matrices over Q \
+#! <A bounded object in Cochain complexes category over Category of matrices over Q \
 #! with active lower bound 4 and active upper bound 7>
 #! @EndExample
 #! @EndChunk

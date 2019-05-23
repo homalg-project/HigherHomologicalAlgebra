@@ -62,7 +62,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     if shift_index = -1 then 
       
-      name := Concatenation( "Chain complexes category over ", Big_to_Small( Name( cat ) ) );
+      name := Concatenation( "Chain complexes category over ", Name( cat ) );
       
       complex_cat := CreateCapCategory( name );
       
@@ -75,7 +75,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       
     elif shift_index = 1 then
       
-      name := Concatenation( "Cochain complexes category over ", Big_to_Small( Name( cat ) ) );
+      name := Concatenation( "Cochain complexes category over ", Name( cat ) );
       
       complex_cat := CreateCapCategory( name );
       

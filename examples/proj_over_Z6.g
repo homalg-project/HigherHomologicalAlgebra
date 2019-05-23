@@ -15,8 +15,8 @@ m := HomalgMatrix( "[ [ 3 ] ]", 1, 1, Z6 );
 Z2 := AsLeftPresentation( m );
 #! <An object in Category of left presentations of Z/( 6 )>
 proj_Z2 := ProjectiveResolution( Z2 );
-#! <A bounded from above object in cochain complexes category 
-#! over category of left presentations of Z/( 6 ) with active upper bound 1>
+#! <A bounded from above object in Cochain complexes category 
+#! over Category of left presentations of Z/( 6 ) with active upper bound 1>
 Display( proj_Z2^-1 );
 #! [ [ 3 ] ]
 #! 
