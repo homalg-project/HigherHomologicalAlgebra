@@ -111,3 +111,30 @@ DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainCo
 
 #! @Section Examples
 #! @InsertChunk Z_0
+
+#! @Description
+#! The input is a short exact sequence defined as a chain complex and the 
+#! output is a chain morphism from the Horseshoe resolution (which is a complex of
+#! complexes and each object in this complex is again a complex that consists of
+#! a short exact sequence of projective objects). The total complex of the
+#! resolution is quasi isomorphic to $C$ and both are exact complexes.
+#! @Arguments C
+#! @Returns chain morphism of chain complexes
+DeclareAttribute( "MorphismFromHorseshoeResolution", IsBoundedChainComplex );
+
+#! @Description
+#! @BeginLatexOnly
+#! Draw here the diagram
+#! @EndLatexOnly
+#! The input is a short exact sequence defined as a chain complex and the output
+#! is the source of the morphism from Horseshoe resolution.
+#! @Arguments C
+#! @Returns chain complex of chain complexes
+DeclareAttribute( "HorseshoeResolution", IsBoundedChainComplex );
+
+DeclareAttribute( "MorphismFromCartanResolution", IsBoundedChainComplex );
+DeclareAttribute( "CartanResolution", IsBoundedChainComplex );
+
+DeclareAttribute( "CARTAN_HELPER", IsBoundedChainComplex );
+
+

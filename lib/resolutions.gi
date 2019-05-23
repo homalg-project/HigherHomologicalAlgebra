@@ -518,46 +518,46 @@ end );
 InstallMethod( ProjectiveResolution, 
        [ IsCapCategoryObject ],
 function( obj )
-local func, C, cat, ep, ker, ep_ker, d; 
+  local func, C, cat, ep, ker, ep_ker, d; 
 
-if IsBoundedAboveCochainComplex( obj ) or IsBoundedBelowChainComplex( obj ) then 
+  if IsBoundedAboveCochainComplex( obj ) or IsBoundedBelowChainComplex( obj ) then 
 
    TryNextMethod();
 
-fi;
+  fi;
 
-cat := CapCategory( obj );
+  cat := CapCategory( obj );
 
-if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+  if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
 
    Error( "It is not known whether the category has enough projectives or not" );
 
-fi;
+  fi;
 
-if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
+  if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
 
    Error( "The category must have enough projectives" );
 
-fi;
+  fi;
 
-func := function( mor )
-        local k,p; 
-        k := KernelEmbedding( mor );
-        p := EpimorphismFromSomeProjectiveObject( Source( k ) );
-        return PreCompose( p, k );
-        end;
+  func := function( mor )
+            local k,p; 
+            k := KernelEmbedding( mor );
+            p := EpimorphismFromSomeProjectiveObject( Source( k ) );
+            return PreCompose( p, k );
+          end;
 
-ep := EpimorphismFromSomeProjectiveObject( obj );
+  ep := EpimorphismFromSomeProjectiveObject( obj );
 
-ker := KernelEmbedding( ep );
+  ker := KernelEmbedding( ep );
 
-ep_ker := EpimorphismFromSomeProjectiveObject( Source( ker ) );
+  ep_ker := EpimorphismFromSomeProjectiveObject( Source( ker ) );
 
-d := PreCompose( ep_ker, ker );
+  d := PreCompose( ep_ker, ker );
 
-C := CochainComplexWithInductiveNegativeSide( d, func );
+  C := CochainComplexWithInductiveNegativeSide( d, func );
 
-return ShiftLazy( C, 1 );
+  return ShiftLazy( C, 1 );
 
 end );
 
@@ -728,4 +728,234 @@ function( phi )
 
 end );
 
+BindGlobal( "HORSESHOE_HELPER",
+  function( C )
+    local u, v, t_u, P_u, t_v, P_v, d_v, d_u, t_u_plus_1, i, p, P;
+    
+    if not IsExact( C ) then
+      
+      Error( "The given chain complex should be a short exact sequence" );
+      
+    fi;
+    
+    u := ActiveLowerBound( C ) + 1;
+    
+    v := ActiveUpperBound( C ) - 1;
+   
+    if v - u > 2 then
+      
+      Error( "The given chain complex is longer than expected" );
+      
+    fi;
+    
+    if v - u < 2 then
+      
+      v := u + 2;
+      
+    fi;
+    
+    t_u := EpimorphismFromSomeProjectiveObject( C[ u ] );
+    
+    P_u := Source( t_u );
+    
+    t_v := EpimorphismFromSomeProjectiveObject( C[ v ] );
+    
+    P_v := Source( t_v );
+    
+    d_v := PreCompose( t_v, C ^ v );
+    
+    d_u := ProjectiveLift( t_u, C ^ ( u + 1 ) );
+    
+    t_u_plus_1 := UniversalMorphismFromDirectSum( [ P_u, P_v ], [ d_u, d_v ] );
+    
+    i := InjectionOfCofactorOfDirectSum( [ P_u, P_v ], 2 );
+    
+    p := ProjectionInFactorOfDirectSum( [ P_u, P_v ], 1 );
+    
+    P := ChainComplex( [ p, i ], u + 1 );
+    
+    return ChainMorphism( P, C, [ t_u, t_u_plus_1, t_v ], u );
+    
+end );
+
+##
+InstallMethod( MorphismFromHorseshoeResolution,
+  [ IsBoundedChainComplex ],
+  function( C )
+    local func, ep, ker, ep_ker, d, D;
+  
+    func := function( mor )
+            local k,p; 
+            k := KernelEmbedding( mor );
+            p := HORSESHOE_HELPER( Source( k ) );
+            return PreCompose( p, k );
+          end;
+
+    ep := HORSESHOE_HELPER( C );
+
+    ker := KernelEmbedding( ep );
+
+    ep_ker := HORSESHOE_HELPER( Source( ker ) );
+
+    d := PreCompose( ep_ker, ker );
+
+    D := ChainComplexWithInductivePositiveSide( d, func );
+
+    D := ShiftLazy( D, -1 );
+    
+    if IsPackageMarkedForLoading( "Bicomplexes", ">=0" ) = true then
+      
+      d := ValueGlobal( "HomologicalBicomplex" )( D );
+      
+      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) );
+      
+      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) );
+      
+    fi;
+    
+    d := ChainMorphism( D, StalkChainComplex( C, 0 ), [ ep ], 0 );
+    
+    SetHorseshoeResolution( C, D );
+    
+    return d;
+    
+end );
+
+InstallMethod( HorseshoeResolution,
+  [ IsBoundedChainComplex ],
+  function( C )
+  
+    MorphismFromHorseshoeResolution( C );
+  
+    return HorseshoeResolution( C );
+  
+end );
+ 
+InstallMethodWithCrispCache( CARTAN_HELPER,
+  [ IsBoundedChainComplex ],
+  function( C )
+    local chains, cat, diffs, P, mors, map;
+  
+    chains := CapCategory( C );
+    
+    cat := UnderlyingCategory( chains );
+  
+    diffs := MapLazy( IntegersList,
+      function( i )
+        local iota_1, pi_1, T1, iota_2, pi_2, T2, iota_3, pi_3, T3;
+        
+        iota_1 := KernelEmbedding( C^i );
+        
+        pi_1 := CoastrictionToImage( C^i );
+        
+        T1 := HORSESHOE_HELPER( ChainComplex( [ pi_1, iota_1 ], 1 ) );
+        
+        iota_2 := KernelLift( C^( i - 1 ), ImageEmbedding( C ^ i ) );
+        
+        pi_2 := CokernelProjection( iota_2 );
+        
+        T2 := HORSESHOE_HELPER( ChainComplex( [ pi_2, iota_2 ], 1 ) );
+        
+        iota_3 := KernelEmbedding( C ^ ( i - 1 ) );
+        
+        pi_3 := CoastrictionToImage( C ^ ( i - 1 ) );
+        
+        T3 := HORSESHOE_HELPER( ChainComplex( [ pi_3, iota_3 ], 1 ) );
+        
+        return PreCompose( 
+                      [
+                      
+                        Source( T1 )^( 1 ),
+                        ProjectiveLift( T1[ 0 ], T2[ 2 ]  ),
+                        Source( T2 )^( 2 ),
+                        ProjectiveLift( T2[ 1 ], T3[ 2 ] ),
+                        Source( T3 )^( 2 )
+                      
+                      ] );
+        
+      end, 1 );
+    
+      P := ChainComplex( cat, diffs );
+      
+      SetUpperBound( P, ActiveUpperBound( C ) );
+      SetLowerBound( P, ActiveLowerBound( C ) );
+      
+      mors := MapLazy( IntegersList,
+        function( i )
+          local iota_1, pi_1, T1;
+          
+          iota_1 := KernelEmbedding( C^i );
+        
+          pi_1 := CoastrictionToImage( C^i );
+        
+          T1 := HORSESHOE_HELPER( ChainComplex( [ pi_1, iota_1 ], 1 ) );
+          
+          return T1[ 1 ];
+          
+        end, 1 );
+      
+      map := ChainMorphism( P, C, mors );
+      
+      return map;
+    
+end );
+
+##
+InstallMethodWithCrispCache( MorphismFromCartanResolution,
+    [ IsBoundedChainComplex ],
+  function( C )
+    local func, ep, ker, ep_ker, d, D;
+  
+    func := function( mor )
+            local k,p;
+            
+            k := KernelEmbedding( mor );
+            
+            p := CARTAN_HELPER( Source( k ) );
+            
+            return PreCompose( p, k );
+            
+          end;
+
+    ep := CARTAN_HELPER( C );
+
+    ker := KernelEmbedding( ep );
+
+    ep_ker := CARTAN_HELPER( Source( ker ) );
+
+    d := PreCompose( ep_ker, ker );
+
+    D := ChainComplexWithInductivePositiveSide( d, func );
+
+    D := ShiftLazy( D, -1 );
+    
+    if IsPackageMarkedForLoading( "Bicomplexes", ">=0" ) = true then
+      
+      d := ValueGlobal( "HomologicalBicomplex" )( D );
+      
+      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) );
+      
+      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) );
+      
+    fi;
+    
+    d := ChainMorphism( D, StalkChainComplex( C, 0 ), [ ep ], 0 );
+    
+    SetCartanResolution( C, D );
+    
+    return d;
+    
+end );
+
+##
+InstallMethod( CartanResolution,
+  [ IsBoundedChainComplex ],
+  function( C )
+  
+    MorphismFromCartanResolution( C );
+  
+    return CartanResolution( C );
+  
+end );
+ 
 
