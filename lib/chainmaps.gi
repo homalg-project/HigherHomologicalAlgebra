@@ -345,31 +345,48 @@ end );
 ##
 InstallMethod( Display, 
                [ IsChainOrCochainMorphism, IsInt, IsInt ], 
-    function( map, m, n )
+  function( map, m, n )
     local i, co_homo;
-
+    
     if IsChainMorphism( map ) then
-	    co_homo := "homological";
+      
+      co_homo := "homological";
+      
     else
+      
       co_homo := "cohomological";
+      
     fi;
-
+    
+    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
+    
     for i in [ m .. n ] do
+      
       Print( TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
+      
       Print( TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
+      
       Display( map[ i ] );
+      
       Print( "\n-----------------------------------------------------------------\n" );
-   od;
+      
+    od;
+    
 end );
 
 InstallMethod( Display,
     [ IsBoundedChainOrCochainMorphism ],
     function( phi )
-    if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
-    	Display( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
-    else
- 	    Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
-    fi;
+      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
+        
+        Display( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
+        
+      else
+        
+        Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
+        
+      fi;
+    
 end );
 
 ##
