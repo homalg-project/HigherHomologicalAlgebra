@@ -71,6 +71,55 @@ C^3;
 #! <A morphism in Category of matrices over Q>
 C^3 = f;
 #! true
+Display( C );
+#! An object in Cochain complexes category over Category of matrices over\
+#!  Q given by the data: 
+#! 
+#! ------------------------\/--------------------------
+#! In cohomological degree 3
+#! 
+#! Object:
+#! A vector space object over Q of dimension 1
+#!
+#! Differential:
+#! [ [  1,  3 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! 
+#! ------------------------\/--------------------------
+#! In cohomological degree 4
+#! 
+#! Object:
+#! A vector space object over Q of dimension 2
+#!
+#! Differential:
+#! [ [  0 ],
+#!   [  0 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! 
+#! ------------------------\/--------------------------
+#! In cohomological degree 5
+#! 
+#! Object:
+#! A vector space object over Q of dimension 1
+#!
+#! Differential:
+#! [ [  2,  6 ] ]
+#! 
+#! A morphism in Category of matrices over Q
+#! 
+#! ------------------------\/--------------------------
+#! In cohomological degree 6
+#! 
+#! Object:
+#! A vector space object over Q of dimension 2
+#!
+#! Differential:
+#! (an empty 2 x 0 matrix)
+#! 
+#! A zero, split epimorphism in Category of matrices over Q
+#! 
 Display( CyclesAt( C, 4 ) );
 #! [ [  1,  0 ],
 #!   [  0,  1 ] ]
