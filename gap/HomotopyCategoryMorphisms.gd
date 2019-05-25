@@ -11,6 +11,9 @@ DeclareOperation( "HomotopyCategoryMorphism",
 DeclareAttribute( "UnderlyingChainMorphism", IsHomotopyCategoryMorphism );
 
 ##
+DeclareAttribute( "UnderlyingChainCell", IsHomotopyCategoryMorphism );
+
+##
 DeclareAttribute( "MappingCone", IsHomotopyCategoryMorphism );
 
 ##

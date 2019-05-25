@@ -7,3 +7,6 @@ DeclareOperation( "HomotopyCategoryObject",
 
 DeclareAttribute( "UnderlyingChainComplex", IsHomotopyCategoryObject );
 
+DeclareAttribute( "UnderlyingChainCell",
+IsHomotopyCategoryObject );
+

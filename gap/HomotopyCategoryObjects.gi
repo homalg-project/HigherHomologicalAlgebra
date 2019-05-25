@@ -36,6 +36,10 @@ end );
 ##
 InstallMethod( UnderlyingChainComplex, [ IsHomotopyCategoryObject ], UnderlyingCapCategoryObject );
 
+##
+InstallMethod( UnderlyingChainCell, [ IsHomotopyCategoryObject ], UnderlyingCapCategoryObject );
+
+
 
 ##
 InstallMethod( Display,

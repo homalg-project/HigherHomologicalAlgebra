@@ -35,7 +35,10 @@ end );
 ##
 InstallMethod( UnderlyingChainMorphism, [ IsHomotopyCategoryMorphism ], UnderlyingCapCategoryMorphism );
 
-#
+##
+InstallMethod( UnderlyingChainCell, [ IsHomotopyCategoryMorphism ], UnderlyingCapCategoryMorphism );
+
+##
 InstallMethod( MappingCone,
     [ IsHomotopyCategoryMorphism ],
   function( phi )
