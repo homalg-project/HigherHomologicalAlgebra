@@ -145,16 +145,17 @@ DeclareAttribute( "TrivialExactTriangle", IsCapCategoryObject );
 ####################################
 
 #! @Description
-#! The arguments are four morphisms $\alpha:X \rightarrow Y,\beta:X\rightarrow W,\gamma:Y\rightarrow Z$ 
-#! and $\delta:W\rightarrow Z$. Such that $ \gamma \circ \alpha \sim_{X,Z}  \delta\circ \beta$. The output is a morphism $\lambda:Y\rightarrow W$ that is a colift of
-#! $\beta$ along $\alpha$ and is a lift of $\gamma$ along $\delta$. I.e., 
-#! $\lambda \circ \alpha \sim_{X,W} \beta$ and $\delta \circ \lambda \sim_{Y,Z} \gamma$; or fail if such a morphism doesn't exist.
+#! The arguments are four morphisms $\alpha:Y \rightarrow X,\beta:W\rightarrow X,\gamma:Z\rightarrow Y$ 
+#! and $\delta:Z\rightarrow W$. Such that $ \alpha \circ \gamma \sim_{Z,X}  \beta\circ \delta$.
+#! The output is a morphism $\lambda:Y\rightarrow W$ that is a colift of
+#! $\delta$ along $\gamma$ and is a lift of $\alpha$ along $\beta$. I.e., 
+#! $\lambda \circ \gamma \sim_{Z,W} \delta$ and $\beta \circ \lambda \sim_{Y,X} \alpha$; or fail if such a morphism doesn't exist.
 #! @BeginLatexOnly
 #! \begin{center}
 #! \begin{tikzcd}
-#!  & Y \arrow[rd, "\gamma"] \arrow[dd, "\lambda", dashed] &  \\
-#! X \arrow[ru, "\alpha"] \arrow[rd, "\beta"'] &  & Z \\
-#!  & W \arrow[ru, "\delta"'] & 
+#!   & Y \arrow[ld, "\alpha"'] \arrow[dd, "\lambda" description, dashed] &\\
+#! X &  & Z \arrow[lu, "\gamma"'] \arrow[ld, "\delta"] \\
+#!   & W \arrow[lu, "\beta"]&
 #! \end{tikzcd}
 #! \end{center}
 #! @EndLatexOnly

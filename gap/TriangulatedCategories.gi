@@ -270,7 +270,7 @@ installation_name := "LiftColift",
 filter_list := [ "morphism", "morphism", "morphism", "morphism" ],
 cache_name := "LiftColift",
 pre_function := function( alpha, beta, gamma, delta )
-                if not IsCongruentForMorphisms( PreCompose( alpha, gamma ), PreCompose( beta, delta ) ) then
+                if not IsCongruentForMorphisms( PostCompose( alpha, gamma ), PostCompose( beta, delta ) ) then
                     return [ false, "The commutativity test on the input is not satisfied" ];
                 fi;
                 return [ true ];
@@ -279,10 +279,10 @@ return_type := "morphism_or_fail",
 post_function :=function( alpha, beta, gamma, delta, return_value )
                 # In the language of lifts and colifts we must have
                 # return_value colifts alpha to beta and lifts gamma to delta.
-                if return_value <> fail and not IsCongruentForMorphisms( PreCompose( alpha, return_value ), beta ) then
+                if return_value <> fail and not IsCongruentForMorphisms( PostCompose( beta, return_value ), alpha ) then
                     Error( "The commutativity test on the output is not satisfied" );
                 fi;
-                if return_value <> fail and not IsCongruentForMorphisms( PreCompose( return_value, delta ), gamma ) then
+                if return_value <> fail and not IsCongruentForMorphisms( PostCompose( return_value, gamma ), delta ) then
                     Error( "The commutativity test on the output is not satisfied" );
                 fi;
 end ),

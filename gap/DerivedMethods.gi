@@ -414,7 +414,9 @@ AddDerivationToCAP( Lift,
                     [ UniversalMorphismFromZeroObject, 1 ]
                 ],
     function( alpha, beta )
-    return LiftColift( UniversalMorphismFromZeroObject( Source( alpha ) ), UniversalMorphismFromZeroObject( Source( beta ) ), alpha, beta );
+    
+      return LiftColift( alpha, beta, UniversalMorphismFromZeroObject( Source( alpha ) ), UniversalMorphismFromZeroObject( Source( beta ) ) );
+      
 end );
 
 ##
@@ -424,8 +426,44 @@ AddDerivationToCAP( Colift,
                     [ UniversalMorphismIntoZeroObject, 1 ]
                 ],
     function( alpha, beta )
-    return LiftColift( alpha, beta, UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ) );
+    
+      return LiftColift( UniversalMorphismIntoZeroObject( Range( alpha ) ), UniversalMorphismIntoZeroObject( Range( beta ) ), alpha, beta );
+      
 end );
+
+#                 Y
+#        << alpha    << gamma
+#     X                         Z
+#        << beta     << delta
+#                 W
+##
+AddDerivationToCAP( LiftColift,
+                [
+                  [ SolveLinearSystemInAbCategory, 1 ],
+                  [ IdentityMorphism, 2 ]
+                ],
+  function( alpha, beta, gamma, delta )
+    local left_coeffs, right_coeffs, cons, sol;
+    
+    left_coeffs := [ [ gamma ], [ IdentityMorphism( Source( alpha )  ) ] ];
+    
+    right_coeffs := [ [ IdentityMorphism( Range( delta ) ) ], [ beta ] ];
+    
+    cons := [ delta ,alpha ];
+    
+    sol := SolveLinearSystemInAbCategory( left_coeffs, right_coeffs, cons );
+    
+    if sol = fail then
+      
+      return fail;
+      
+    else
+      
+      return sol[1];
+      
+    fi;
+    
+end: CategoryFilter := IsAbCategory, Description:= "LiftColift using SolveLinearSystemInAbCategory" );
 
 ##
 AddDerivationToCAP( IsSplitEpimorphism,
