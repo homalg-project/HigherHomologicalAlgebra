@@ -16,7 +16,7 @@ DeclareOperation( "\[\]", [ IsCapCategoryTriangle, IsInt ] );
 DeclareOperation( "\[\]", [ IsCapCategoryTrianglesMorphism, IsInt ] );
 
 DeclareAttribute( "ExtendFunctorToTrianglesCategory", IsCapFunctor );
-DeclareAttribute( "MappingCone", IsCapCategoryMorphism );
+DeclareAttribute( "MappingCone", IsCapCategoryTrianglesMorphism );
 
 DeclareAttribute( "UnderlyingLazyMethods", IsCapCategoryCell );
 DeclareOperation( "AddToUnderlyingLazyMethods", [ IsCapCategoryCell, IsOperation, IsFunction, IsList ] );

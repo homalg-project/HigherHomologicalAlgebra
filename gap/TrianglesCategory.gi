@@ -560,7 +560,7 @@ end );
 
 ##
 InstallMethod( MappingCone,
-                [ IsCapCategoryMorphism ],
+                [ IsCapCategoryTrianglesMorphism ],
 
     function( phi )
     local T1, T2, t0, t1, t2;
