@@ -23,6 +23,9 @@ DeclareAttribute( "NaturalInjectionInMappingCone", IsHomotopyCategoryMorphism );
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsHomotopyCategoryMorphism );
 
 ##
+DeclareAttribute( "HomotopyMorphisms", IsChainComplex );
+
+##
 DeclareOperation( "MappingConeColift", [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ] );
 
 ##

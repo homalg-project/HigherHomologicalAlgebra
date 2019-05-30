@@ -94,6 +94,29 @@ InstallMethod( HomotopyMorphisms,
     
 end );
 
+InstallMethod( HomotopyMorphisms,
+    [ IsChainComplex ],
+  function( C )
+    local chains, cat;
+    
+    chains := CapCategory( C );
+    
+    cat := UnderlyingCategory( chains );
+    
+    if IsHomotopyCategory( cat ) then
+      
+      return MapLazy( IntegersList, i -> HomotopyMorphisms( PreCompose( C^i, C^( i - 1 ) ) ), 1 );
+      
+    else
+      
+      Error( "The input should be a chain complex whose objects and morphisms live in a homotopy category" );
+    
+    fi;
+    
+end );
+
+
+
 InstallMethod( MappingConeColift,
     [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
   function( phi, tau )
