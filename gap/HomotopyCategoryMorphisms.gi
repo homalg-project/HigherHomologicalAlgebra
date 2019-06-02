@@ -181,7 +181,7 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
       IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
   
   function( phi, psi, alpha_0, alpha_1 )
-    local homotopy_category, m;
+    local homotopy_category, m, with_infos;
     
     homotopy_category := CapCategory( phi );
     
@@ -191,6 +191,18 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
           UnderlyingChainMorphism( alpha_0 ),
           UnderlyingChainMorphism( alpha_1 )
     );
+    
+    with_infos := ValueOption( "WithInfos" );
+    
+    if with_infos = true then
+      
+      LiftColiftUniquenessInfos( 
+                          NaturalInjectionInMappingCone( phi ),      
+                          PreCompose( alpha_1, NaturalInjectionInMappingCone( psi ) ),
+                          PreCompose( NaturalProjectionFromMappingCone( phi ), ShiftOfMorphism( alpha_0 ) ),
+                          NaturalProjectionFromMappingCone( psi ) );
+      
+    fi;
     
     return HomotopyCategoryMorphism( homotopy_category, m );
     
