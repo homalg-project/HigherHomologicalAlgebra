@@ -115,7 +115,38 @@ InstallMethod( HomotopyMorphisms,
     
 end );
 
+BindGlobal( "AsPseudoHomologicalBicomplex",
+     #[ IsChainComplex ],
+  function( C )
+    local chains, homotopy_category, cat, diffs, complex;
+    
+    chains := CapCategory( C );
+    
+    homotopy_category := UnderlyingCategory( chains );
+    
+    cat := UnderlyingCapCategory( homotopy_category );
+    
+    if IsHomotopyCategory( homotopy_category ) then
+      
+      diffs := Differentials( C );
+      
+      diffs := MapLazy( diffs, UnderlyingChainCell, 1 );
+      
+      complex := ChainComplex( cat, diffs );
+      
+      SetLowerBound( complex, ActiveLowerBound( C ) );
+      
+      SetUpperBound( complex, ActiveUpperBound( C ) );
+      
+      return HomologicalBicomplex( complex );
+      
+    else
+      
+      Error( "The input should be a chain complex whose objects and morphisms live in a homotopy category" );
+    
+    fi;
 
+end );
 
 InstallMethod( MappingConeColift,
     [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
