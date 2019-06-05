@@ -913,7 +913,7 @@ InstallMethod( StalkChainComplex,
                [ IsCapCategoryObject, IsInt ],
   
   function( obj, n )
-    local zero_obj, zero, diffs, complex;
+    local zero_obj, zero, diffs, complex, complex_n;
     
     zero_obj := ZeroObject( CapCategory( obj ) );
     
@@ -927,6 +927,9 @@ InstallMethod( StalkChainComplex,
     
     SetUpperBound( complex, n + 1 );
     
+    # See IsEqualForCacheForObjects to understand why I am adding the next line
+    complex_n := complex[ n ];
+    
     return complex;
   
 end );
@@ -935,7 +938,7 @@ end );
 InstallMethod( StalkCochainComplex,
                     [ IsCapCategoryObject, IsInt ],
   function( obj, n )
-    local zero_obj, zero, diffs, complex;
+    local zero_obj, zero, diffs, complex, complex_n;
     
     zero_obj := ZeroObject( CapCategory( obj ) );
     
@@ -948,6 +951,9 @@ InstallMethod( StalkCochainComplex,
     SetLowerBound( complex, n - 1 );
     
     SetUpperBound( complex, n + 1 );
+    
+    # See IsEqualForCacheForObjects to understand why I am adding the next line
+    complex_n := complex[ n ];
     
     return complex;
   
