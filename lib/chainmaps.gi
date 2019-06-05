@@ -1278,13 +1278,29 @@ end );
 InstallMethod( StalkChainMorphism,
 	[ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
-  return ChainMorphism( StalkChainComplex( Source( f ), n ), StalkChainComplex( Range( f ), n ), [ f ], n );
+    local morphism, morphism_n;
+    
+    morphism := ChainMorphism( StalkChainComplex( Source( f ), n ), StalkChainComplex( Range( f ), n ), [ f ], n );
+   
+    # Doing the following help identifying morphisms for the Cache
+    morphism_n := morphism[ n ];
+    
+    return morphism;
+  
 end );
 
 InstallMethod( StalkCochainMorphism,
 	[ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
-  return CochainMorphism( StalkCochainComplex( Source( f ), n ), StalkCochainComplex( Range( f ), n ), [ f ], n );
+    local morphism, morphism_n;
+    
+    morphism := CochainMorphism( StalkCochainComplex( Source( f ), n ), StalkCochainComplex( Range( f ), n ), [ f ], n );
+    
+    # Doing the following help identifying morphisms for the Cache
+    morphism_n := morphism[ n ];
+    
+    return morphism;
+    
 end );
 
 #####################################
