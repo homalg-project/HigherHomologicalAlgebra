@@ -134,8 +134,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     ##
     objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
-    
-    if objects_equality_for_cache in [ fail, 1 ] then
+     
+    if objects_equality_for_cache in [ 1 ] then
       
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
@@ -144,7 +144,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
       
-    elif objects_equality_for_cache = 2 then
+    elif objects_equality_for_cache in [ fail, 2 ] then
       
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
@@ -182,9 +182,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
           od;
           
-          l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+          l := Minimum( ActiveLowerBound( C1 ) + 1, ActiveLowerBound( C2 ) + 1 );
           
-          u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
+          u := Maximum( ActiveUpperBound( C1 ) - 1, ActiveUpperBound( C2 ) - 1 );
           
           lu := [ l .. u ];
           
@@ -209,7 +209,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
     
-    if morphisms_equality_for_cache in [ fail, 1 ] then
+    if morphisms_equality_for_cache in [ 1 ] then
       
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
@@ -218,7 +218,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
     
-    elif morphisms_equality_for_cache = 2 then
+    elif morphisms_equality_for_cache in [ fail, 2 ] then
       
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
@@ -269,13 +269,13 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           od;
           
           l := Minimum( 
-                Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
-                Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
+                Minimum( ActiveLowerBound( Source( m1 ) ) + 1, ActiveLowerBound( Range( m1 ) ) + 1 ),
+                Minimum( ActiveLowerBound( Source( m2 ) ) + 1, ActiveLowerBound( Range( m2 ) ) + 1 )
                 );
           
           u := Maximum( 
-                Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
-                Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
+                Maximum( ActiveUpperBound( Source( m1 ) ) - 1, ActiveUpperBound( Range( m1 ) ) - 1 ),
+                Maximum( ActiveUpperBound( Source( m2 ) ) - 1, ActiveUpperBound( Range( m2 ) ) -1 )
                 );
           
           lu := [ l .. u ];
