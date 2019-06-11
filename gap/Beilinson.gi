@@ -137,20 +137,43 @@ InstallMethodWithCache( BasisBetweenTwistedStructureSheaves,
       local n, L, l, o_u, o_v, indeterminates;
 
       n := Length( IndeterminatesOfPolynomialRing( S ) );
+      
       if u > v then
+        
           return [ ];
+          
       elif u = v then
+      
           return [ IdentityMorphism( TwistedStructureSheaf( S, u ) ) ];
-      else
-          o_u := GradedFreeLeftPresentation( 1, S, [ -u ] );
+          
+      elif u = 0 then
+      
+          o_u := GradedFreeLeftPresentation( 1, S, [ 0 ] );
+          
           o_v := GradedFreeLeftPresentation( 1, S, [ -v ] );
 
           L := Combinations( [ 1 .. n+v-u-1 ], v-u );
+          
           L := List( L, l -> l - [ 0 .. v-u - 1 ] );
+          
           indeterminates := IndeterminatesOfPolynomialRing( S );
+          
           L := List( L, indices -> Product( List( indices, index -> indeterminates[index] ) ) );
+          
           L := List( L, l -> HomalgMatrix( [[l]], 1, 1, S ) );
+          
           return List( L, mat -> GradedPresentationMorphism( o_u, mat, o_v ) );
+          
+      else
+          
+          o_u := GradedFreeLeftPresentation( 1, S, [ -u ] );
+          
+          o_v := GradedFreeLeftPresentation( 1, S, [ -v ] );
+          
+          L := BasisBetweenTwistedStructureSheaves( S, 0, v - u );
+          
+          return List( L, l -> GradedPresentationMorphism( o_u, UnderlyingMatrix( l ), o_v ) );
+
       fi;
 end );
 
