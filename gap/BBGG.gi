@@ -394,7 +394,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
 end );
 
 ##
-InstallMethod( TateResolution,
+InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsChainComplex ],
     function( C )
     local chains, cat, S, A, lp_cat_ext, reg, R, ChR, B, Tot, ker, diffs, tot_i;
@@ -468,7 +468,16 @@ InstallMethodWithCrispCache( TateResolution,
     return ChainMorphism( new_source, new_range, mors );
 end );
 
-InstallMethod( TateResolution,
+##
+InstallMethodWithCrispCache( TateResolution,
+    [ IsCapCategoryMorphism and IsChainMorphism ],
+    function( phi )
+    
+      return TateResolution( TateResolution( Source( phi ) ), phi, TateResolution( Range( phi ) ) );
+      
+end );
+ 
+InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsGradedLeftPresentation ],
     function( M )
     local R;
@@ -480,7 +489,8 @@ InstallMethod( TateResolution,
     fi;
 end );
 
-InstallMethod( TateResolution,
+##
+InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryMorphism and IsGradedLeftPresentationMorphism ],
     function( phi )
     local R;
@@ -492,7 +502,7 @@ InstallMethod( TateResolution,
     fi;
 end );
 
-InstallMethod( TateResolution,
+InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsGradedLeftPresentation ],
     function( P )
     local R, graded_lp_cat_ext, p, q, diffs;
@@ -520,7 +530,7 @@ InstallMethod( TateResolution,
     fi;
 end );
 
-InstallMethod( TateResolution,
+InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryMorphism and IsGradedLeftPresentationMorphism ],
     function( phi )
     local R, graded_lp_cat_ext, source, range, mors;
