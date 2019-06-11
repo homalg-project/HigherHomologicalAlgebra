@@ -1180,34 +1180,117 @@ end );
 ##
 InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],
-    function( M )
-      local mat, s, i, degrees, n, R;
-      mat := UnderlyingMatrix( M );
-      R := UnderlyingHomalgRing( M );
-      n := Length( Indeterminates( R ) );
-      s := "";
-      if NrRows( mat ) = 0 then
-          degrees := GeneratorDegrees( M );
-          degrees := Collected( degrees );
-          if degrees = [ ] then
-              Print( "0" );
-          fi;
+  function( M )
+    local mat, s, i, degrees, n, R;
+    
+    mat := UnderlyingMatrix( M );
+    
+    R := UnderlyingHomalgRing( M );
+    
+    n := Length( Indeterminates( R ) );
+    
+    s := "";
+    
+    if NrRows( mat ) = 0 then
+      
+      degrees := GeneratorDegrees( M );
+      
+      degrees := Collected( degrees );
+      
+      if degrees = [ ] then
+        
+        Print( "0" );
+        
+      fi;
               
-          if not HasIsExteriorRing( R ) then
-              for i in degrees do
-                  s := Concatenation( s, "S(",String( -i[ 1 ] ),")^", String( i[ 2 ] ), " ⊕ " );
-              od;
-          else
-              for i in degrees do
-                  s := Concatenation( s, "ω(", String( n - i[ 1 ] ), ")^", String( i[ 2 ] ), " ⊕ " );
-              od;
-          fi;
+      if not HasIsExteriorRing( R ) then
+        
+        for i in degrees do
           
-          s := s{ [ 1 .. Length( s ) - 5 ] };
-          Print( s );
+          s := Concatenation( s, "S(", String( -i[ 1 ] ),
+                              ")^", String( i[ 2 ] ), " ⊕ " );
+        
+        od;
       
       else
-          TryNextMethod(  );
+        
+        for i in degrees do
+          
+          s := Concatenation( s, "ω(", String( n - i[ 1 ] ),
+                              ")^", String( i[ 2 ] ), " ⊕ " );
+        
+        od;
+      
       fi;
+          
+      s := s{ [ 1 .. Length( s ) - 5 ] };
+      
+      Print( s );
+      
+      else
+        
+        TryNextMethod(  );
+        
+      fi;
+ 
+end );
+
+##
+InstallMethod( Display, 
+    [ IsGradedLeftPresentation ],
+    5000,
+  function( M )
+    local mat, s, i, degrees, n, R;
+    
+    mat := UnderlyingMatrix( M );
+    
+    R := UnderlyingHomalgRing( M );
+    
+    n := Length( Indeterminates( R ) );
+    
+    s := "";
+    
+    if NrRows( mat ) = 0 then
+      
+      degrees := GeneratorDegrees( M );
+      
+      degrees := Collected( degrees );
+      
+      if degrees = [ ] then
+        
+        Print( "0" );
+        
+      fi;
+              
+      if not HasIsExteriorRing( R ) then
+        
+        for i in degrees do
+          
+          s := Concatenation( s, "S(", String( -i[ 1 ] ),
+                              ")^", String( i[ 2 ] ), " ⊕ " );
+        
+        od;
+      
+      else
+        
+        for i in degrees do
+          
+          s := Concatenation( s, "ω(", String( n - i[ 1 ] ),
+                              ")^", String( i[ 2 ] ), " ⊕ " );
+        
+        od;
+      
+      fi;
+          
+      s := s{ [ 1 .. Length( s ) - 5 ] };
+      
+      Print( s );
+      
+    else
+        
+      TryNextMethod(  );
+        
+    fi;
+  
 end );
 
