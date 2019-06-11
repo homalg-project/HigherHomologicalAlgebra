@@ -985,6 +985,198 @@ InstallMethod( MorphismFromGLPToZerothHomologyOfBeilinsonReplacement,
 
 end );
 
+
+DeclareAttribute( "DECOMPOSE_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES", IsGradedLeftPresentation );
+InstallMethod( DECOMPOSE_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES, [ IsGradedLeftPresentation ],
+function( M )
+  local S, n, L, dimensions, non_zeros, func, non_zero_elements_in_first_row_and_column;
+
+  S := UnderlyingHomalgRing( M );
+  n := Length( Indeterminates( S ) );
+  L := List( [ 1 .. n-1 ], i -> UnderlyingMatrix( TwistedCotangentSheaf( S, i-1 ) ) );
+  Add( L, SyzygiesOfColumns( L[ 1 ] ), 1 );
+  dimensions := List( L, l -> [ NrRows( l ), NrCols( l ) ] );
+  
+  non_zero_elements_in_first_row_and_column :=
+    function( mat )
+      local row_1, col_1;
+      if NrRows( mat ) * NrCols( mat ) = 0 then
+        return [ 0, 0 ];
+      fi;
+      col_1 := EntriesOfHomalgMatrix( CertainColumns( mat, [ 1 ] ) );
+      col_1 := Length( Filtered( col_1, e -> not IsZero( e ) ) );
+      row_1 := EntriesOfHomalgMatrix( CertainRows( mat, [ 1 ] ) );
+      row_1 := Length( Filtered( row_1, e -> not IsZero( e ) ) );
+      return [ col_1, row_1 ];
+  end;
+  
+  non_zeros := List( L, non_zero_elements_in_first_row_and_column );
+
+  func := function( M )
+    local m, non_zeros_m, p, current_m, current_M;
+
+    m := UnderlyingMatrix( M );
+
+    if NrCols( m ) = 0 then
+
+      return [  ];
+
+    fi;
+    
+    non_zeros_m := non_zero_elements_in_first_row_and_column( m );
+
+    if non_zeros_m[ 1 ] = 0 and GeneratorDegrees( M )[ 1 ] = 1 then
+
+      current_m := CertainColumns( m, [ 2 .. NrCols( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [  2 .. NrCols( m ) ] } );
+      return Concatenation( [ n-1 ], func( current_M  ) );
+
+    elif non_zeros_m[ 1 ] = 0 and GeneratorDegrees( M )[ 1 ] = 0 then
+
+      current_m := CertainColumns( m, [ 2 .. NrCols( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [  2 .. NrCols( m ) ] } );
+      return Concatenation( [ 0 ], func( CertainColumns( m, [ 2 .. NrCols( m ) ] ) ) );
+
+    elif non_zeros_m[ 1 ] <> 0 and non_zeros_m[ 2 ] = 0 then
+
+      current_m := CertainRows( m, [ 2 .. NrRows( m ) ] );
+      current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ) );
+      return func( current_M );
+
+    else
+
+      p := Position( non_zeros, non_zeros_m );
+
+      if p <> fail then
+
+        current_m := CertainRows( CertainColumns( m, [ dimensions[p][ 2 ] + 1 .. NrCols( m ) ] ), [ dimensions[p][ 1 ] + 1 .. NrRows( m ) ] );
+        current_M := AsGradedLeftPresentation( current_m, GeneratorDegrees( M ){ [ dimensions[p][ 2 ] + 1 .. NrCols( m ) ] } );
+        return Concatenation(  [ p - 2 ], func( current_M ) );
+
+      else
+
+        return [ fail ];
+
+      fi;
+
+    fi;
+
+  end;
+
+  return func( M );
+
+end );
+
+DeclareAttribute( "CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES", IsGradedLeftPresentation );
+InstallMethod( CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES,
+  [ IsGradedLeftPresentation ],
+  function( M )
+    local mat, dec, S, syz, zero_sheaf, omega_00, n, L, sources, ranges, mor;
+    
+    if IsBound( M!.canonicalized ) and M!.canonicalized = true then
+      
+      return IdentityMorphism( M );
+      
+    fi;
+
+    mat := UnderlyingMatrix( M );
+    
+    dec := DECOMPOSE_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES( M );
+    
+    if dec = [  ] then
+      
+      return UniversalMorphismIntoZeroObject( M );
+      
+    fi;
+
+    S := UnderlyingHomalgRing( M );
+    
+    syz := SyzygiesOfColumns( UnderlyingMatrix( TwistedCotangentSheaf( S, 0 ) ) );
+    
+    zero_sheaf := AsGradedLeftPresentation( syz, [ 1 ] );
+    
+    omega_00 := GradedFreeLeftPresentation( 1, S, [ 0 ] );
+
+    n := Length( dec );
+
+    L := List( [ 1 .. n ],
+    
+          function( i )
+
+            if dec[ i ] = -1 then
+              
+              return UniversalMorphismIntoZeroObject( zero_sheaf );
+              
+            elif dec[ i ] = 0 then
+            
+              return GradedPresentationMorphism( TwistedCotangentSheaf( S, 0 ), syz, omega_00 );
+              
+            else
+              
+              return IdentityMorphism( TwistedCotangentSheaf( S, dec[ i ] ) );
+              
+            fi;
+            
+          end );
+
+    sources := List( L, Source );
+    
+    ranges := List( L, Range );
+    
+    mor := List( [ 1 .. n ], 
+              i -> List( [ 1 .. n ],
+              
+                function( j )
+                
+                   if i = j then
+                     
+                     return L[ i ];
+                     
+                   else
+                     
+                     return ZeroMorphism( sources[ i ], ranges[ j ] );
+                     
+                   fi;
+                   
+                end ) );
+
+    mor := MorphismBetweenDirectSums( mor );
+    
+    mor := GradedPresentationMorphism( M, UnderlyingMatrix( mor ), Range( mor ) );
+
+    Range( mor )!.canonicalized := true;
+
+    return mor;
+
+end );
+
+DeclareAttribute( "CANONICALIZE_FUNCTOR", IsHomalgGradedRing );
+ 
+InstallMethod( CANONICALIZE_FUNCTOR,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local cat, Can;
+    
+    cat := GradedLeftPresentations( S );
+    Can := CapFunctor( "canonicalize direct sums of twisted cotangent sheaves", cat, cat );
+    
+    AddObjectFunction( Can,
+      function( M )
+        return Range( CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES( M ) );
+    end );
+    
+    AddMorphismFunction( Can,
+      function( source, phi, range )
+        local s, r, psi;
+        s := CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES( Source( phi ) );
+        r := CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES( Range( phi ) );
+        return Colift( s, PreCompose( phi, r ) );
+    end );
+    
+    return Can;
+    
+end );
+
 ##
 InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],
