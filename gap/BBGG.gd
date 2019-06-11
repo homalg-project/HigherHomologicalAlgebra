@@ -127,20 +127,27 @@ DeclareGlobalFunction( "RandomGradedPresentationMorphism" );
 #! @EndSection
 
 # to be removed and renamed!
-DeclareOperation( "DimensionOfTateCohomology", [ IsCochainComplex, IsInt, IsInt ] );
+# It returns for ( F,i,k) the dimension of H^i( X, F(k) )
+DeclareOperation( "DimensionOfTateCohomology",
+  [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
 DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsHomalgElement ] );
+
 DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsList ] );
+
 DeclareOperation( "TwistFunctor", [ IsHomalgGradedRing, IsInt ] );
 
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsHomalgElement ] );
+
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsList ] );
+
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentation, IsInt ] );
+
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsHomalgElement ] );
+
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsList ] );
+
 DeclareOperation( "\[\]", [ IsGradedLeftOrRightPresentationMorphism, IsInt ] );
-
-
 
 KeyDependentOperation( "TwistedStructureBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
 KeyDependentOperation( "TwistedCotangentBundle", IsHomalgGradedRing, IsInt, ReturnTrue );
