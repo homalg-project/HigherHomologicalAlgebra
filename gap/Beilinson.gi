@@ -117,16 +117,27 @@ InstallMethod( TwistedCotangentSheafOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       local n, cotangent_sheaf_as_chain;
+      
       n := Length( IndeterminatesOfPolynomialRing( S ) );
+      
       if i < 0 or i > n - 1 then
+        
           Error( Concatenation( "Twisted cotangent sheaves Ω^i(i) are defined only for i = 0,...,", String( n - 1 ) ) );
+      
       fi;
+      
       # NOTICE THIS
+      
       if i = -1 then
+        
           return GradedFreeLeftPresentation( 1, S, [ 0 ] );
+          
       else
-          cotangent_sheaf_as_chain := TwistedCotangentSheafAsChain( S, i );
-          return CokernelObject( cotangent_sheaf_as_chain^1 );
+        
+        cotangent_sheaf_as_chain := TwistedCotangentSheafAsChain( S, i );
+        
+        return CokernelObject( cotangent_sheaf_as_chain^1 );
+        
       fi;
 end );
 
