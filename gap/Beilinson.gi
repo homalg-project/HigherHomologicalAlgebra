@@ -183,14 +183,23 @@ InstallMethodWithCache( BasisBetweenTwistedCotangentSheaves,
     [ IsHomalgGradedRing, IsInt, IsInt ],
     function( S, i, j )
       local L, graded_lp_cat, cochains, Tr, Cok, F, B;
+      
       L := LCochainFunctor( S );
+      
       graded_lp_cat := GradedLeftPresentations( S );
+      
       cochains := CochainComplexCategory( graded_lp_cat );
+      
       Tr := BrutalTruncationAboveFunctor( cochains, -1 );
+      
       Cok := CokernelObjectFunctor( cochains, graded_lp_cat, -2 );
+      
       F := PreCompose( [ L, Tr, Cok ] );
+      
       B := BasisBetweenTwistedOmegaModules( KoszulDualRing( S ), i, j );
+      
       return List( B, b -> ApplyFunctor( F, b ) );
+      
 end );
 
 InstallMethod( BeilinsonReplacement, 
