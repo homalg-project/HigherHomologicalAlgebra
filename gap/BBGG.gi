@@ -834,16 +834,28 @@ end );
 
 ##
 InstallMethod( DimensionOfTateCohomology,
-        [ IsCochainComplex, IsInt, IsInt ],
-    function( T, i, k )
-    local cat, n, j, t, degrees;
-    cat := UnderlyingCategory( CapCategory( T ) );
-    n := Length( IndeterminatesOfExteriorRing( cat!.ring_for_representation_category ) );
+        [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( T, i, k )
+    local cat, U, n, j, t, degrees;
+    
+    U := AsCochainComplex( T );
+    
+    cat := UnderlyingCategory( CapCategory( U ) );
+    
+    n := Length(
+      IndeterminatesOfExteriorRing( 
+        cat!.ring_for_representation_category ) );
+    
     j := i + k;
+    
     t := -n - k;
-    degrees := GeneratorDegrees( T[ j ] );
+    
+    degrees := GeneratorDegrees( U[ j ] );
+    
     degrees := List( degrees, HomalgElementToInteger );
+    
     return Length( Positions( degrees, -t ) );
+    
 end );
 
 # The output here is stable module that correspondes to O(k) [ the sheafification of S(k) ]
