@@ -480,25 +480,117 @@ end );
 InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsGradedLeftPresentation ],
     function( M )
-    local R;
-    R := UnderlyingHomalgRing( M );
-    if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
+      local R;
+    
+      R := UnderlyingHomalgRing( M );
+    
+      if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
+      
         TryNextMethod();
-    else
+      
+      elif NrRows( UnderlyingMatrix( M ) ) = 0 and
+            NrColumns( UnderlyingMatrix( M ) ) = 1 and
+              GeneratorDegrees( M )[ 1 ] <> 0 then
+          # I.e., It is of the form S(n)
+          
+          TryNextMethod( );
+      
+      else
+      
         return TateResolution( StalkChainComplex( M, 0) );
-    fi;
+      
+      fi;
+    
+end );
+
+InstallMethodWithCrispCache( TateResolution,
+    [ IsCapCategoryObject and IsGradedLeftPresentation ],
+    function( M )
+      local R, degree, O, T, F, ChF, U;
+    
+      R := UnderlyingHomalgRing( M );
+    
+      if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
+      
+        TryNextMethod();
+      
+      elif NrRows( UnderlyingMatrix( M ) ) = 0 and
+            NrColumns( UnderlyingMatrix( M ) ) = 1 and
+              GeneratorDegrees( M )[ 1 ] <> 0 then
+          # I.e., It is of the form S(n)
+          
+          degree := GeneratorDegrees( M )[ 1 ];
+          
+          degree := HomalgElementToInteger( degree );
+          
+          O := GradedFreeLeftPresentation( 1, R, [ 0 ] );
+          
+          T := TateResolution( O );
+          
+          F := TwistFunctor( KoszulDualRing( R ), -degree );
+      
+          ChF := ExtendFunctorToChainComplexCategoryFunctor( F );;
+          
+          T := ApplyFunctor( ChF, T );
+         
+          U := UnsignedShiftFunctor( CapCategory( T ), degree );
+
+          T := ApplyFunctor( U, T );
+          
+          SetTateResolution( StalkChainComplex( M, 0 ), T );
+          
+          return T;
+          
+      else
+      
+        TryNextMethod( );
+      
+      fi;
+    
 end );
 
 ##
 InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryMorphism and IsGradedLeftPresentationMorphism ],
-    function( phi )
-    local R;
+  function( phi )
+    local R, degree, T, F, ChF, U;
+    
     R := UnderlyingHomalgRing( phi );
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
         TryNextMethod();
-    else 
-        return TateResolution( StalkChainMorphism( phi, 0 ) );
+    
+    # if the morphism is f: O(i) --> O(j)
+    # Then use f[-i]:O(0) --> O(j-i)
+    elif NrRows( UnderlyingMatrix( Source( phi ) ) ) = 0 and
+            NrColumns( UnderlyingMatrix( Source( phi ) ) ) = 1 and
+              GeneratorDegrees( Source( phi ) )[ 1 ] <> 0 and
+                NrRows( UnderlyingMatrix( Range( phi ) ) ) = 0 and
+                  NrColumns( UnderlyingMatrix( Range( phi ) ) ) = 1 then
+                  
+                  degree := GeneratorDegrees( Source( phi ) )[ 1 ];
+          
+                  degree := HomalgElementToInteger( degree );
+                 
+                  T := TateResolution( phi[ degree ] );
+          
+                  F := TwistFunctor( KoszulDualRing( R ), -degree );
+      
+                  ChF := ExtendFunctorToChainComplexCategoryFunctor( F );
+          
+                  T := ApplyFunctor( ChF, T );
+                  
+                  U := UnsignedShiftFunctor( CapCategory( T ), degree );
+                  
+                  T := ApplyFunctor( U, T );
+                  
+                  SetTateResolution( StalkChainMorphism( phi, 0 ), T );
+                  
+                  return T;
+    
+    else
+      
+      return TateResolution( TateResolution( Source( phi ) ), StalkChainMorphism( phi, 0 ), TateResolution( Range( phi ) ) );
+      
     fi;
 end );
 
