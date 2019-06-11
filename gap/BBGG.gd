@@ -35,6 +35,8 @@ DeclareAttribute( "TateResolution",  IsCapCategoryObject  );
 #! @Returns a chain morphism
 DeclareAttribute( "TateResolution",  IsCapCategoryMorphism );
 
+DeclareOperation( "TateResolution",  [ IsChainComplex, IsChainMorphism, IsChainComplex ] );
+
 #! @Description
 
 #! @Arguments S

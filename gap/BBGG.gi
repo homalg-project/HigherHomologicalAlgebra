@@ -427,11 +427,11 @@ InstallMethod( TateResolution,
     return ChainComplex(  lp_cat_ext, diffs );
 end );
 
-InstallMethod( TateResolution,
-    [ IsCapCategoryMorphism and IsChainMorphism ],
-    function( phi )
+InstallMethodWithCrispCache( TateResolution,
+    [ IsChainComplex, IsCapCategoryMorphism and IsChainMorphism, IsChainComplex ],
+    function( new_source, phi, new_range )
     local chains, cat, S, A, lp_cat_ext, R, ChR, ChR_phi, B, Tot, reg_range, reg_source,
-    new_source, new_range, reg, mors, kernel_lift_1, kernel_lift_2, kernel_functorial;
+      reg, mors, kernel_lift_1, kernel_lift_2, kernel_functorial;
     chains := CapCategory( phi );
     cat := UnderlyingCategory( chains );
     S := cat!.ring_for_representation_category;
@@ -445,8 +445,6 @@ InstallMethod( TateResolution,
     reg_source := CastelnuovoMumfordRegularity( Source( phi ) );
     reg_range := CastelnuovoMumfordRegularity( Range( phi ) );
     reg := Minimum( reg_source, reg_range );
-    new_source := TateResolution( Source( phi ) );
-    new_range := TateResolution( Range( phi ) );
     mors := MapLazy( IntegersList, 
         function( i )
         if i < reg - 1 then
