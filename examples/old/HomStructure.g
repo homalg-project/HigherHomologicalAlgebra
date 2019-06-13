@@ -408,7 +408,7 @@ InstallMethod( CoefficientsOfLinearMorphism,
   function( phi )
     local category, K, S, a, b, U, degrees_a, degrees_b, degrees, hom_a_b, mat, psi, B, A, sol, list_of_entries,
     position_of_non_zero_entry, current_coeff, current_coeff_mat, current_mono, position_in_basis,
-    current_term, current_entry;
+    current_term, current_entry, j;
     
     category := CapCategory( phi );
     
@@ -453,18 +453,26 @@ InstallMethod( CoefficientsOfLinearMorphism,
     # or I fall in recursion trap, because of call of union of rows or cols.
 
     sol := ListWithIdenticalEntries( Length( B ), Zero( K) );
-
+    
+    # the run time depends on how many non-zero elements list_of_entries has.
+    
     while PositionProperty( list_of_entries, a -> not IsZero( a ) ) <> fail do
 
       position_of_non_zero_entry := PositionProperty( list_of_entries, a -> not IsZero( a ) );
       current_entry := list_of_entries[ position_of_non_zero_entry ];
       current_coeff_mat := Coefficients( EvalRingElement( current_entry ) );
-      current_coeff := MatElm( current_coeff_mat, 1, 1 );
-      current_mono := current_coeff_mat!.monomials[1]/S;
-      current_term := current_coeff/S * current_mono;
-      position_in_basis := PositionProperty( B, b -> b[ position_of_non_zero_entry ] = current_mono );
-      sol[ position_in_basis ] := current_coeff/K;
-      list_of_entries[ position_of_non_zero_entry ] := list_of_entries[ position_of_non_zero_entry ] - current_term;
+      
+      for j in [ 1 .. NrRows( current_coeff_mat ) ] do
+        
+        current_coeff := MatElm( current_coeff_mat, j, 1 );
+        current_mono := current_coeff_mat!.monomials[ j ]/S;
+        current_term := current_coeff/S * current_mono;
+        position_in_basis := PositionProperty( B, b -> b[ position_of_non_zero_entry ] = current_mono );
+        sol[ position_in_basis ] := current_coeff/K;
+        
+      od;
+      
+      list_of_entries[ position_of_non_zero_entry ] := Zero( S );
 
     od;
     

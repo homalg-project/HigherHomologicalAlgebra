@@ -685,9 +685,6 @@ canonicalize_functor := function( S )
 
 end;
 
-L := InputFromUser( "P^m_1 x ... x P^m_s, for L = " );
-constructe_categories( L );
-
 LFReplacement := function( cell )
   local S, B, Can;
   S := UnderlyingHomalgRing( cell );
@@ -721,7 +718,7 @@ end;
 
 U_p1_p1_on_objects :=
   function( M )
-    local m, S, G, M_1, M_2, LF_M_1, LF_M_2, ch_p_1_star, ch_p_2_star, L;
+    local m, S, G, M_1, M_2, LF_M_1, LF_M_2, ch_p_1_star, ch_p_2_star, L, summands;
 
     m := UnderlyingMatrix( M );
     S := HomalgRing( m );
@@ -762,18 +759,18 @@ U_p1_p1_on_objects :=
 
     else
 
-      Error( "Wrong input" );
+      summands := List( G, g -> GradedFreeLeftPresentation( 1, S, [ g ] ) );
+      summands := List( summands, U_p1_p1_on_objects );
+      return DirectSum( summands );
 
     fi;
 
 end;
 
-quit;
-
 U_p1_p1_on_morphisms :=
   function( phi )
     local S, cat, M_1, M_2, m_1, m_2, mat, G_1, G_2, mats, 
-      phi_1, phi_2, LF_phi_1, LF_phi_2, ch_p_1_star, ch_p_2_star;
+      phi_1, phi_2, LF_phi_1, LF_phi_2, ch_p_1_star, ch_p_2_star, summands_1, summands_2, maps;
 
     S := UnderlyingHomalgRing( phi );
     cat := GradedLeftPresentations( S );
@@ -835,9 +832,27 @@ U_p1_p1_on_morphisms :=
       phi_2 := ApplyFunctor( ch_p_2_star, LF_phi_2 );
 
       return TensorProductOnMorphisms( phi_1, phi_2 );
+    else
+
+      summands_1 := List( G_1, g -> GradedFreeLeftPresentation( 1, S, [ g ] ) );
+      summands_2 := List( G_2, g -> GradedFreeLeftPresentation( 1, S, [ g ] ) );
+      maps := List( [ 1 .. Length( G_1 ) ], i -> 
+                List( [ 1 .. Length( G_2 ) ], j -> 
+                U_p1_p1_on_morphisms( 
+                GradedPresentationMorphism( 
+                summands_1[ i ],
+                HomalgMatrix( [ MatElm( mat, i, j ) ], 1, 1, S ),
+                summands_2[ j ] ) ) ) );
+      return MorphismBetweenDirectSums( maps );
+
+    fi;
 
 end;
 
+L := InputFromUser( "P^m_1 x ... x P^m_s, for L = " );
+constructe_categories( L );
+
+O := GradedFreeLeftPresentation( 1, S, [ [0,0] ] );
 quit;
 create_delta := function( S, i )
   local T, B, omega_ii, D, o_mi_p_1, delta;
