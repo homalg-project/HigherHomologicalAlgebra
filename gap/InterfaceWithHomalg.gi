@@ -157,6 +157,8 @@ InstallMethod( HomogeneousPartOverCoefficientsRingFunctorOp,
       local field, cat, vec, F, name;
 
       field := CoefficientsRing( R );
+      field := UnderlyingNonGradedRing( field );
+
       cat := GradedLeftPresentations( R );
       vec := MatrixCategory( field );
       name := Concatenation( "Homogeneous part functor from ", Name( cat ), " to ", Name( cat ) );
@@ -175,7 +177,7 @@ InstallMethod( HomogeneousPartOverCoefficientsRingFunctorOp,
         local h_phi;
         h_phi := AsPresentationMorphismInHomalg( phi );
         h_phi := HomogeneousPartOverCoefficientsRing( i, h_phi );
-        return VectorSpaceMorphism( new_source, MatrixOfMap( h_phi ), new_range );
+        return VectorSpaceMorphism( new_source, MatrixOfMap( h_phi ) * field, new_range );
       end );
       
       return F;
