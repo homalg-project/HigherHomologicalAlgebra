@@ -940,9 +940,11 @@ InstallMethod( MorphismFromZerothObjectOfBeilinsonReplacementToGLP,
     function( M )
       local reg;
       
-      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
-
-      return MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP( reg + 1, M );
+      reg := HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) );
+      
+      reg := Maximum( 2, Filtered( [ reg + 1, reg + 2 ], IsEvenInt )[ 1 ] );
+      
+      return MORPHISM_FROM_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT_TO_GLP( reg, M );
 
 end );
 
@@ -953,9 +955,11 @@ InstallMethod( MorphismFromZerothHomologyOfBeilinsonReplacementToGLP,
     function( M )
       local reg;
       
-      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
-
-      return MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP( reg + 1, M );
+      reg := HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) );
+      
+      reg := Maximum( 2, Filtered( [ reg + 1, reg + 2 ], IsEvenInt )[ 1 ] );
+ 
+      return MORPHISM_FROM_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT_TO_GLP( reg, M );
 
 end );
 
@@ -966,9 +970,11 @@ InstallMethod( MorphismFromGLPToZerothObjectOfBeilinsonReplacement,
     function( M )
       local reg;
       
-      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
-
-      return MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT( reg + 1, M );
+      reg := HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) );
+      
+      reg := Maximum( 2, Filtered( [ reg + 1 , reg + 2 ], IsEvenInt )[ 1 ] );
+      
+      return MORPHISM_FROM_GLP_TO_ZEROTH_OBJECT_OF_BEILINSON_REPLACEMENT( reg, M );
 
 end );
 
@@ -979,9 +985,11 @@ InstallMethod( MorphismFromGLPToZerothHomologyOfBeilinsonReplacement,
     function( M )
       local reg;
       
-      reg := Maximum( 0, HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) ) );
+      reg := HomalgElementToInteger( CastelnuovoMumfordRegularity( M ) );
       
-      return MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT( reg + 1, M );
+      reg := Maximum( 2, Filtered( [ reg + 1, reg + 2 ], IsEvenInt )[ 1 ] ); 
+
+      return MORPHISM_FROM_GLP_TO_ZEROTH_HOMOLOGY_OF_BEILINSON_REPLACEMENT( reg, M );
 
 end );
 

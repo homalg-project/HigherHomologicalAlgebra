@@ -189,17 +189,17 @@ InstallMethod( LCochainFunctor,
             source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
             range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
             l := GradedPresentationMorphism( source, l, range );
-            
+            return l;            
             # This is still true because all I am doing is changing the basis of the homogeneous part -i of M
             # by multiplying it with -1.
-            u := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
+            # u := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
             
-            if u[ 1 ] and i = u[ 2 ] - 1 and ( n mod 2 = 0 ) then
-              Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on an object!" );
-              return AdditiveInverse( l );
-            else
-              return l;
-            fi;
+            # if u[ 1 ] and i = u[ 2 ] - 1 and ( n mod 2 = 0 ) then
+            #  Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on an object!" );
+            #  return AdditiveInverse( l );
+            # else
+            # return l;
+            # fi;
 
             end, 1 );
 
@@ -234,26 +234,26 @@ InstallMethod( LCochainFunctor,
                 local l, s, r;
                 l := ApplyFunctor( HomogeneousPartOverCoefficientsRingFunctor( KS, -k ), f );
                 
-                s := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
-                r := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( N );
+                #s := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
+                #r := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( N );
 
-                if n mod 2 = 0 then
+                #if n mod 2 = 0 then
 
-                if ( s[ 1 ] and not r[ 1 ] ) or ( not s[ 1 ] and r[ 1 ] ) then
-                  if ( s[ 1 ] and k = s[ 2 ] ) or ( r[ 1 ] and k = r[ 2 ] ) then
-                    l := AdditiveInverse( l );
-                    Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on a morphism!" );
-                  fi;
-                fi;
-                
-                if s[ 1 ] and r[ 1 ] and s[ 2 ] <> r[ 2 ] then
-                  if ( k = s[ 2 ] ) or ( k = r[ 2 ] ) then
-                    l := AdditiveInverse( l );
-                    Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on a morphism!!" );
-                  fi;
-                fi;
+                #if ( s[ 1 ] and not r[ 1 ] ) or ( not s[ 1 ] and r[ 1 ] ) then
+                #  if ( s[ 1 ] and k = s[ 2 ] ) or ( r[ 1 ] and k = r[ 2 ] ) then
+                #    l := AdditiveInverse( l );
+                #    Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on a morphism!" );
+                #  fi;
+                #fi;
+                #
+                #if s[ 1 ] and r[ 1 ] and s[ 2 ] <> r[ 2 ] then
+                #  if ( k = s[ 2 ] ) or ( k = r[ 2 ] ) then
+                #    l := AdditiveInverse( l );
+                #    Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on a morphism!!" );
+                #  fi;
+                #fi;
 
-                fi;
+                #fi;
 
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 
