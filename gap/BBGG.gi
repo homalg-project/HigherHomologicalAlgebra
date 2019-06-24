@@ -657,32 +657,35 @@ end );
 InstallMethod( TruncationFunctorUsingTateResolutionOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
-      local graded_lp_cat_sym, cochains, L, Tr, Cok, T, F;
-
+      local A, graded_lp_cat_ext, graded_lp_cat_sym, cochains_sym, cochains_ext, Ker, L, Cok, T, F, name;
+      
+      A := KoszulDualRing( S );
+      
+      graded_lp_cat_ext := GradedLeftPresentations( A );
       graded_lp_cat_sym := GradedLeftPresentations( S );
-      cochains := CochainComplexCategory( graded_lp_cat_sym );
       
+      
+      cochains_sym := CochainComplexCategory( graded_lp_cat_sym );
+      cochains_ext := CochainComplexCategory( graded_lp_cat_ext );
+      
+      Ker := KernelObjectFunctor( cochains_ext, graded_lp_cat_ext, i );;
       L := LCochainFunctor( S );
-      Tr := BrutalTruncationAboveFunctor( cochains, -i );
-      Cok := CokernelObjectFunctor( cochains, graded_lp_cat_sym, -i - 1 );
+      Cok := CokernelObjectFunctor( cochains_sym, graded_lp_cat_sym, - i - 1 );
       
-      T := PreCompose( [ L, Tr, Cok ] );
-      F := CapFunctor( "to be named", graded_lp_cat_sym, graded_lp_cat_sym );
+      T := PreCompose( [ Ker, L, Cok ] );
+      
+      name := Concatenation( "Truncation -using Tate resolution- endofunctor on ", Name( graded_lp_cat_sym ) ); 
+      
+      F := CapFunctor( name, graded_lp_cat_sym, graded_lp_cat_sym );
       
       AddObjectFunction( F,
       function( M )
-        local tM, P;
-        tM := AsCochainComplex( TateResolution( M ) );
-        P := Source(  CyclesAt( tM, i ) );
-        return ApplyFunctor( T, P );
+        return ApplyFunctor( T, AsCochainComplex( TateResolution( M ) ) );
       end );
 
       AddMorphismFunction( F,
       function( source, phi, range )
-        local t_phi, psi;
-        t_phi := AsCochainMorphism( TateResolution( phi ) );
-        psi := CyclesFunctorialAt( t_phi, i );
-        return ApplyFunctor( T, psi );
+        return ApplyFunctor( T, AsCochainMorphism( TateResolution( phi ) ) );
       end );
 
       return F;
