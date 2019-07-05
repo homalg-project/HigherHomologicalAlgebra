@@ -428,6 +428,7 @@ InstallMethod( BeilinsonReplacement,
 
 end );
 
+##
 InstallMethod( BeilinsonReplacement,
     [ IsCapCategoryMorphism and IsGradedLeftPresentationMorphism ],
     function( phi )
@@ -478,6 +479,38 @@ InstallMethod( BeilinsonReplacement,
     else
        TryNextMethod(  ); 
     fi;
+end );
+
+##
+InstallMethod( BeilinsonReplacement,
+  [ IsSerreQuotientCategoryByThreeArrowsObject ],
+  function( P )
+    local sheafification, b;
+    sheafification := CanonicalProjection( CapCategory( P ) );
+    sheafification := ExtendFunctorToChainComplexCategoryFunctor( sheafification );
+    b := BeilinsonReplacement( UnderlyingHonestObject( P ) );
+    return ApplyFunctor( sheafification, b );
+end );
+
+##
+InstallMethod( BeilinsonReplacement,
+  [ IsSerreQuotientCategoryByThreeArrowsMorphism ],
+  function( phi )
+    local coh, sheafification, generalized_morphism, b_source_aid, b_arrow, b_range_aid, mors;
+    coh := CapCategory( phi );
+    sheafification := CanonicalProjection( coh );
+    sheafification := ExtendFunctorToChainComplexCategoryFunctor( sheafification );
+    generalized_morphism := UnderlyingGeneralizedMorphism( phi );
+    b_source_aid := BeilinsonReplacement( SourceAid( generalized_morphism ) );
+    b_arrow := BeilinsonReplacement( Arrow( generalized_morphism ) );
+    b_range_aid := BeilinsonReplacement( RangeAid( generalized_morphism ) );
+    b_source_aid := ApplyFunctor( sheafification, b_source_aid );
+    b_arrow := ApplyFunctor( sheafification, b_arrow );
+    b_range_aid := ApplyFunctor( sheafification, b_range_aid );
+    mors := MapLazy( IntegersList,
+      i -> SerreQuotientCategoryByThreeArrowsMorphism(
+        coh, GeneralizedMorphismByThreeArrows( b_source_aid[i], b_arrow[i], b_range_aid[i] ) ), 1 );
+    return ChainMorphism( Range( b_source_aid ), Source( b_range_aid ), mors );
 end );
 
 ##
