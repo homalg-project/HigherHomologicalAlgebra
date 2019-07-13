@@ -115,6 +115,7 @@ InstallMethod( HomotopyMorphisms,
     
 end );
 
+# THIS IS DRAFT
 BindGlobal( "AsPseudoHomologicalBicomplex",
      #[ IsChainComplex ],
   function( C )
@@ -138,7 +139,7 @@ BindGlobal( "AsPseudoHomologicalBicomplex",
       
       SetUpperBound( complex, ActiveUpperBound( C ) );
       
-      return HomologicalBicomplex( complex );
+      return ValueGlobal( "HomologicalBicomplex" )( complex );
       
     else
       
