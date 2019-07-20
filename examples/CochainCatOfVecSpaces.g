@@ -47,7 +47,6 @@ cochain_cat := CochainComplexCategory( matrix_category );
 #! \end{center}
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 A := VectorSpaceObject( 1, Q );
 #! <A vector space object over Q of dimension 1>
 B := VectorSpaceObject( 2, Q );
@@ -215,7 +214,6 @@ ActiveUpperBound( P );
 #! \end{center}
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 h := VectorSpaceMorphism( A, HomalgMatrix( [ [ 5 ] ], 1, 1, Q ), A );
 #! <A morphism in Category of matrices over Q>
 phi4 := g;
@@ -245,7 +243,6 @@ IsExact( C );
 #! Now lets define the previous morphism using the command \texttt{CochainMorphism(c, m, d, n, l, k)}.
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
 #! <A bounded morphism in Cochain complexes category over Category of matrices 
 #! over Q with active lower bound 3 and active upper bound 6>
@@ -254,7 +251,6 @@ psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
 #! In some cases the morphism can change its lower bound when we apply the function \texttt{ IsZeroForMorphisms }.
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 IsZeroForMorphisms( psi );
 #! false
 psi;
@@ -378,7 +374,6 @@ psi;
 #! \end{center}
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 cone := MappingCone( psi );
 #! <A bounded object in Cochain complexes category over Category of matrices over 
 #! Q with active lower bound 1 and active upper bound 6>
@@ -448,7 +443,6 @@ IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi )
 #! induced on cohomologies are all zero.
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in Cochain complexes category over Category of matrices
 #! over Q with active lower bound 4 and active upper bound 6>
@@ -466,7 +460,6 @@ IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! differential or morphism in $C,D$ and $\phi$.
 #! @EndLatexOnly
 #! @Example
-#! (continued)
 F := CapFunctor( "double functor", matrix_category, matrix_category );
 #! double functor
 u := function( obj ) return DirectSum( [ obj, obj ] ); end;;
@@ -505,7 +498,6 @@ Display( Coch_F_psi[ 5 ] );
 #! the sign of the differentials since $d^i_{C[n]}=(-1)^n d^{i+n}_C$. Hence if we don't want the signs to be 
 #! changed we may use the unsigned shift functor.
 #! @Example
-#! (continued)
 T := ShiftFunctor( cochain_cat, 3 );
 #! Shift (3 times to the left) functor in Cochain complexes category over Category
 #!  of matrices over Q
@@ -536,7 +528,6 @@ Display( C_3_unsigned^0 );
 #! @EndExample
 #! Let us demonstrate how to use the brutal truncations functors
 #! @Example
-#! (continued)
 cochain_cat;
 #! Cochain complexes category over Category of matrices over Q
 chain_cat := ChainComplexCategory( matrix_category );
