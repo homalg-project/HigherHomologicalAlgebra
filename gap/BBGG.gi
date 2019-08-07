@@ -6,53 +6,87 @@
 
 InstallMethod( RCochainFunctor,
     [ IsHomalgGradedRing ],
-    function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name; 
-
+  function( S )
+    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name;
+    
     n := Length( IndeterminatesOfPolynomialRing( S ) );
+    
     KS := KoszulDualRing( S );
+    
     cat_lp_sym := GradedLeftPresentations( S );
+    
     cat_lp_ext := GradedLeftPresentations( KS );
+    
     cochains := CochainComplexCategory( cat_lp_ext );
-    name := Concatenation( "R functor from ", Name( cat_lp_sym ), " to ", Name( cochains ) );
-
+    
+    name := Concatenation(
+      "R functor from ",
+      Name( cat_lp_sym ),
+      " to ",
+      Name( cochains )
+    );
+    
     R := CapFunctor( name, cat_lp_sym, cochains );
     
     AddObjectFunction( R, 
-        function( M )
+      function( M )
         local hM, diff, d, C;
+        
         hM := AsPresentationInHomalg( M );
+        
         SetPositionOfTheDefaultPresentation( hM, 1 );
-        diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
+        
+        diff := MapLazy( IntegersList,
+          i -> AsPresentationMorphismInCAP(
+            (-1)^(n+1) * RepresentationMapOfKoszulId( i, hM ) ), 1 );
+        
         C := CochainComplex( cat_lp_ext , diff );
+        
         d := ShallowCopy( GeneratorDegrees( M ) );
-
+        
         # the output of GeneratorDegrees is in general not integer.
+        
         Apply( d, HomalgElementToInteger );
-
+        
         if Length( d ) = 0 then
-            SetLowerBound( C, 0 );
+          
+          SetLowerBound( C, 0 );
+        
         else
-            SetLowerBound( C, Minimum( d ) - 1 );
+          
+          SetLowerBound( C, Minimum( d ) - 1 );
+        
         fi;
         
         return C;
-        end );
-
+        
+      end );
+    
     AddMorphismFunction( R, 
-        function( new_source, f, new_range )
+      function( new_source, f, new_range )
         local mors;
+        
         mors := MapLazy( IntegersList, 
-                function( k )
-                local H, map;
-                H := HomogeneousPartOverCoefficientsRingFunctor( S, k );
-                map := ApplyFunctor( H, f );
-                return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( map )*KoszulDualRing( S ), new_range[ k ] );
-                end, 1 );
+                  function( k )
+                    local H, map;
+                    H := HomogeneousPartOverCoefficientsRingFunctor( S, k );
+                    
+                    map := ApplyFunctor( H, f );
+                    
+                    return
+                      GradedPresentationMorphism(
+                        new_source[ k ],
+                        UnderlyingMatrix( map ) * KoszulDualRing( S ),
+                        new_range[ k ] );
+                    
+                    end, 1 );
+        
         return CochainMorphism( new_source, new_range, mors );
-        end );
-
+        
+      end );
+    
     return R;
+    
 end );
 
 # This is old alternative implementation of the functor R
@@ -396,157 +430,210 @@ end );
 ##
 InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsChainComplex ],
-    function( C )
+  function( C )
     local chains, cat, S, A, lp_cat_ext, reg, R, ChR, B, Tot, ker, diffs, tot_i;
-    # The smalled index where the homology of RR(C) is not zero is s.
+
     chains := CapCategory( C );
+    
     cat := UnderlyingCategory( chains );
+    
     S := cat!.ring_for_representation_category;
+    
     A := KoszulDualRing( S );
+    
     lp_cat_ext := GradedLeftPresentations( A );
+    
     reg := CastelnuovoMumfordRegularity( C );
+    
     R := RChainFunctor( S );
+    
     ChR := ExtendFunctorToChainComplexCategoryFunctor( R );
+    
     B := ApplyFunctor( ChR, C );
+    
     B := HomologicalBicomplex( B );
+    
     Tot := TotalComplex( B );
+    
     diffs := MapLazy( IntegersList, 
-        function( i )
-        if i <= reg - 1 then
-            tot_i := Tot^i;
-            if i = reg - 1 and IsZeroForMorphisms( tot_i ) then
-                return ZeroObjectFunctorial( lp_cat_ext );
-            else
-                return tot_i;
-            fi;
+      function( i )
+        
+        if i <= reg then
+          
+          tot_i := Tot^i;
+          
+          if i = reg and IsZeroForMorphisms( tot_i ) then
+            
+            return ZeroObjectFunctorial( lp_cat_ext );
+          
+          else
+            
+            return tot_i;
+            
+          fi;
+        
         else
-            ker := KernelEmbedding( diffs[ i - 1 ] );
-            return PreCompose( EpimorphismFromSomeProjectiveObject( Source( ker ) ), ker );
+          
+          ker := KernelEmbedding( diffs[ i - 1 ] );
+          
+          return
+            PreCompose(
+              EpimorphismFromSomeProjectiveObject( Source( ker ) ), ker
+                );
+        
         fi;
-        end, 1 );
-    return ChainComplex(  lp_cat_ext, diffs );
+        
+      end, 1 );
+    
+    return ChainComplex( lp_cat_ext, diffs );
+    
 end );
 
 InstallMethodWithCrispCache( TateResolution,
     [ IsChainComplex, IsCapCategoryMorphism and IsChainMorphism, IsChainComplex ],
-    function( new_source, phi, new_range )
+  function( new_source, phi, new_range )
     local chains, cat, S, A, lp_cat_ext, R, ChR, ChR_phi, B, Tot, reg_range, reg_source,
       reg, mors, kernel_lift_1, kernel_lift_2, kernel_functorial;
+    
     chains := CapCategory( phi );
+    
     cat := UnderlyingCategory( chains );
+    
     S := cat!.ring_for_representation_category;
+    
     A := KoszulDualRing( S );
+    
     lp_cat_ext := GradedLeftPresentations( A );
+    
     R := RChainFunctor( S );
+    
     ChR := ExtendFunctorToChainComplexCategoryFunctor( R );
+    
     ChR_phi := ApplyFunctor( ChR, phi );
+    
     B := BicomplexMorphism( ChR_phi );
+    
     Tot := TotalComplexFunctorial( B );
+    
     reg_source := CastelnuovoMumfordRegularity( Source( phi ) );
+    
     reg_range := CastelnuovoMumfordRegularity( Range( phi ) );
+    
     reg := Minimum( reg_source, reg_range );
-    mors := MapLazy( IntegersList, 
-        function( i )
-        if i < reg - 1 then
-            return Tot[ i ];
-        elif i = reg - 1 then
-            if IsZeroForObjects( new_source[ i ] ) or IsZeroForObjects( new_range[ i ] ) then
-                return ZeroMorphism( new_source[ i ], new_range[ i ] );
-            else
-                return Tot[ i ];
-            fi;
-        elif i = reg then
-            kernel_lift_1 := KernelLift( new_source^( i - 1 ), new_source^i );
-            kernel_lift_2 := KernelLift( new_range^( i - 1 ), new_range^i );
-            kernel_functorial := KernelObjectFunctorial( 
-                    new_source^( i - 1 ), mors[ i - 1 ], new_range^( i - 1 ) );
-            return Lift( PreCompose( kernel_lift_1, kernel_functorial ), kernel_lift_2 );
+    
+    mors := MapLazy( IntegersList,
+      function( i )
+        local mor;
+        
+        if i <= reg then
+          
+          mor := Tot[ i ];
+          
+          if i = reg and ( IsZeroForObjects( new_source[ i ] )
+              or IsZeroForObjects( new_range[ i ] ) ) then
+                
+                mor := ZeroMorphism( new_source[ i ], new_range[ i ] );
+          
+          fi;
+          
+          return mor;
+        
         else
-            return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
+          
+          return Lift( PreCompose( new_source^i, mors[ i - 1 ] ), new_range^i );
+        
         fi;
-        end, 1 );
+        
+      end, 1 );
+    
     return ChainMorphism( new_source, new_range, mors );
+    
 end );
 
 ##
 InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryMorphism and IsChainMorphism ],
-    function( phi )
+  function( phi )
     
-      return TateResolution( TateResolution( Source( phi ) ), phi, TateResolution( Range( phi ) ) );
-      
+    return
+      TateResolution(
+        TateResolution( Source( phi ) ),
+        phi,
+        TateResolution( Range( phi ) )
+      );
+    
 end );
  
 InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsGradedLeftPresentation ],
-    function( M )
-      local R;
+  function( M )
+    local R;
     
-      R := UnderlyingHomalgRing( M );
+    R := UnderlyingHomalgRing( M );
     
-      if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
+    if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
       
-        TryNextMethod();
-      
-      elif NrRows( UnderlyingMatrix( M ) ) = 0 and
-            NrColumns( UnderlyingMatrix( M ) ) = 1 and
-              GeneratorDegrees( M )[ 1 ] <> 0 then
+      TryNextMethod();
+    
+    elif NrRows( UnderlyingMatrix( M ) ) = 0 and
+          NrColumns( UnderlyingMatrix( M ) ) = 1 and
+            GeneratorDegrees( M )[ 1 ] <> 0 then
           # I.e., It is of the form S(n)
           
           TryNextMethod( );
-      
-      else
-      
-        return TateResolution( StalkChainComplex( M, 0) );
-      
-      fi;
     
+    else
+      
+      return TateResolution( StalkChainComplex( M, 0) );
+    
+    fi;
+  
 end );
 
 InstallMethodWithCrispCache( TateResolution,
-    [ IsCapCategoryObject and IsGradedLeftPresentation ],
-    function( M )
-      local R, degree, O, T, F, ChF, U;
+  [ IsCapCategoryObject and IsGradedLeftPresentation ],
+  function( M )
+    local R, degree, O, T, F, ChF, U;
     
-      R := UnderlyingHomalgRing( M );
+    R := UnderlyingHomalgRing( M );
     
-      if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
-      
-        TryNextMethod();
-      
-      elif NrRows( UnderlyingMatrix( M ) ) = 0 and
-            NrColumns( UnderlyingMatrix( M ) ) = 1 and
-              GeneratorDegrees( M )[ 1 ] <> 0 then
-          # I.e., It is of the form S(n)
-          
-          degree := GeneratorDegrees( M )[ 1 ];
-          
-          degree := HomalgElementToInteger( degree );
-          
-          O := GradedFreeLeftPresentation( 1, R, [ 0 ] );
-          
-          T := TateResolution( O );
-          
-          F := TwistFunctor( KoszulDualRing( R ), -degree );
-      
-          ChF := ExtendFunctorToChainComplexCategoryFunctor( F );;
-          
-          T := ApplyFunctor( ChF, T );
-         
-          U := UnsignedShiftFunctor( CapCategory( T ), degree );
-
-          T := ApplyFunctor( U, T );
-          
-          SetTateResolution( StalkChainComplex( M, 0 ), T );
-          
-          return T;
-          
-      else
-      
-        TryNextMethod( );
-      
-      fi;
+    if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
     
+      TryNextMethod();
+    
+    elif NrRows( UnderlyingMatrix( M ) ) = 0 and
+          NrColumns( UnderlyingMatrix( M ) ) = 1 and
+            GeneratorDegrees( M )[ 1 ] <> 0 then
+        # I.e., It is of the form S(n)
+        
+        degree := GeneratorDegrees( M )[ 1 ];
+        
+        degree := HomalgElementToInteger( degree );
+        
+        O := GradedFreeLeftPresentation( 1, R, [ 0 ] );
+        
+        T := TateResolution( O );
+        
+        F := TwistFunctor( KoszulDualRing( R ), -degree );
+        
+        ChF := ExtendFunctorToChainComplexCategoryFunctor( F );;
+        
+        T := ApplyFunctor( ChF, T );
+        
+        U := UnsignedShiftFunctor( CapCategory( T ), degree );
+        
+        T := ApplyFunctor( U, T );
+        
+        SetTateResolution( StalkChainComplex( M, 0 ), T );
+        
+        return T;
+        
+    else
+      
+      TryNextMethod( );
+    
+    fi;
+  
 end );
 
 ##
