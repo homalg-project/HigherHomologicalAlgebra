@@ -7,15 +7,19 @@
 InstallMethod( RCochainFunctor,
     [ IsHomalgGradedRing ],
   function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, R, KS, n, name;
+    local cat_lp_ext, cat_lp_sym, cochains, R, A, n, name, ind_S, ind_A;
     
-    n := Length( IndeterminatesOfPolynomialRing( S ) );
+    ind_S := Indeterminates( S );
+
+    n := Length( ind_S );
     
-    KS := KoszulDualRing( S );
+    A := KoszulDualRing( S );
     
+    ind_A := Indeterminates( A );
+   
     cat_lp_sym := GradedLeftPresentations( S );
     
-    cat_lp_ext := GradedLeftPresentations( KS );
+    cat_lp_ext := GradedLeftPresentations( A );
     
     cochains := CochainComplexCategory( cat_lp_ext );
     
@@ -28,7 +32,7 @@ InstallMethod( RCochainFunctor,
     
     R := CapFunctor( name, cat_lp_sym, cochains );
     
-    AddObjectFunction( R, 
+    AddObjectFunction( R,
       function( M )
         local hM, diff, d, C;
         
@@ -37,14 +41,30 @@ InstallMethod( RCochainFunctor,
         SetPositionOfTheDefaultPresentation( hM, 1 );
         
         diff := MapLazy( IntegersList,
-          i -> AsPresentationMorphismInCAP(
-            (-1)^(n+1) * RepresentationMapOfKoszulId( i, hM ) ), 1 );
+                  function( i )
+                    local maps, mats, mat, source, range;
+                    
+                    maps := List( ind_S, x -> RepresentationMapOfRingElement( x, hM, i ) );
+                    
+                    mats := List( maps, map -> MatrixOfMap( map ) * A );
+                    
+                    mat :=  MinusOne( A )^(n+1) * Sum( ListN( mats, ind_A, \* ) );
+                    
+                    source := GradedFreeLeftPresentation( NrRows( mat ), A, ListWithIdenticalEntries( NrRows( mat ), n + i ) );
+                    
+                    range := GradedFreeLeftPresentation( NrCols( mat ), A, ListWithIdenticalEntries( NrCols( mat ), n + i + 1 ) );
+
+                    return GradedPresentationMorphism( source, mat, range );
+                    
+                  end, 1 );
+        
+#        diff := MapLazy( IntegersList,
+#          i -> AsPresentationMorphismInCAP(
+#            (-1)^(n+1) * RepresentationMapOfKoszulId( i, hM ) ), 1 );
         
         C := CochainComplex( cat_lp_ext , diff );
         
         d := ShallowCopy( GeneratorDegrees( M ) );
-        
-        # the output of GeneratorDegrees is in general not integer.
         
         Apply( d, HomalgElementToInteger );
         
