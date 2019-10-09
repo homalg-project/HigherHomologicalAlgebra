@@ -891,6 +891,40 @@ InstallMethod( IsomorphismIntoStandardExactTriangle,
     fi;
 end );
 
+InstallMethod( ShiftOp, [ IsCapCategoryCell, IsInt ],
+  function( cell, n )
+  
+    if n = 0 then
+      
+      return cell;
+      
+    elif n > 0 then
+    
+      if IsCapCategoryObject( cell ) then
+        
+        return ShiftOfObject( Shift( cell, n - 1 ) );
+        
+      else
+        
+        return ShiftOfMorphism( Shift( cell, n - 1 ) );
+        
+      fi;
+      
+    else
+      
+      if IsCapCategoryObject( cell ) then
+        
+        return ReverseShiftOfObject( Shift( cell, n + 1 ) );
+        
+      else
+        
+        return ReverseShiftOfMorphism( Shift( cell, n + 1 ) );
+        
+      fi;
+      
+    fi;
+  
+end );
 
 InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
                IsCapCategory and IsTriangulatedCategory, 

@@ -182,7 +182,7 @@ DeclareOperation( "AddLiftColift", [ IsCapCategory, IsList ] );
 #! The output is $\Sigma X$.
 #! @Returns an object
 #! @Arguments X
-DeclareOperation( "ShiftOfObject", [ IsCapCategoryObject ] );
+DeclareAttribute( "ShiftOfObject", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
@@ -201,7 +201,7 @@ DeclareOperation( "AddShiftOfObject", [ IsCapCategory, IsList ] );
 #! The output is $\Sigma f$.
 #! @Returns a morphism
 #! @Arguments f
-DeclareOperation( "ShiftOfMorphism", [ IsCapCategoryMorphism ] );
+DeclareAttribute( "ShiftOfMorphism", IsCapCategoryMorphism );
  
  #! @Description
 #! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
@@ -220,7 +220,7 @@ DeclareOperation( "AddShiftOfMorphism", [ IsCapCategory, IsList ] );
 #! The output is $\Sigma^{-1} X$.
 #! @Returns an object
 #! @Arguments X
-DeclareOperation( "ReverseShiftOfObject", [ IsCapCategoryObject ] );
+DeclareAttribute( "ReverseShiftOfObject", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
@@ -239,7 +239,7 @@ DeclareOperation( "AddReverseShiftOfObject", [ IsCapCategory, IsList ] );
 #! The output is $\Sigma^{-1} f$.
 #! @Returns a morphism
 #! @Arguments f
-DeclareOperation( "ReverseShiftOfMorphism", [ IsCapCategoryMorphism ] );
+DeclareAttribute( "ReverseShiftOfMorphism", IsCapCategoryMorphism );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
@@ -251,6 +251,9 @@ DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftOfMorphism", [ IsCapCategory, IsList ] );
+
+
+KeyDependentOperation( "Shift", IsCapCategoryCell, IsInt, ReturnTrue );
 
 ##
 #! @Description
