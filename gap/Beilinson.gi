@@ -20,7 +20,7 @@ InstallGlobalFunction( ShowMatrix,
     if NrRows( mat ) * NrColumns( mat ) = 0 then
       Display( mat );
     else
-      Browse( EntriesOfHomalgMatrixAsListList( mat ) );
+      ValueGlobal( "Browse" )( EntriesOfHomalgMatrixAsListList( mat ) );
     fi;
  end );
 
