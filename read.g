@@ -5,4 +5,5 @@
 #
 ReadPackage( "StableCategoriesForCAP", "gap/StableCategoriesForCap.gi" );
 ReadPackage( "StableCategoriesForCAP", "gap/DerivedMethods.gi" );
+ReadPackage( "StableCategoriesForCAP", "gap/CAP_TOOLS.gi" );
 #ReadPackage( "StableCategoriesForCAP", "gap/TriangulatedStructure.gi" );
