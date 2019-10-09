@@ -1,7 +1,7 @@
 LoadPackage( "BBGG" );
 
 TEST_1 := function( f, m )
-  local S, tr_f, L_f_m;
+  local S, tr_f, u, v, L_f_m;
   
   S := UnderlyingHomalgRing( f );
   
@@ -15,10 +15,16 @@ TEST_1 := function( f, m )
   
   tr_f := ApplyFunctor( TruncationFunctorUsingHomalg( S, m ), f );
   
-  L_f_m := ApplyFunctor( LCochainFunctor( S ), AsCochainMorphism( TateResolution(f) )[ m ] )[ -m ];
+  u := EpimorphismFromSomeProjectiveObject( Source( tr_f ) );
   
-  return UnderlyingMatrix( tr_f ) = UnderlyingMatrix( L_f_m );
+  v := EpimorphismFromSomeProjectiveObject( Range( tr_f ) );
   
+  L_f_m := ApplyFunctor( LCochainFunctor( S ), AsCochainMorphism( TateResolution( f ) )[ m ] )[ -m ];
+  
+  return IsCongruentForMorphisms( 
+          PreCompose( u, tr_f ),
+          PreCompose( L_f_m, v )
+          );
 end;
 
 TEST_2 := function( a, m )
