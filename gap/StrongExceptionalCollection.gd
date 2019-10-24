@@ -55,4 +55,10 @@ DeclareAttribute( "UnderlyingObjects", IsStrongExceptionalCollection );
 DeclareOperation( "InterpretListOfMorphismsAsOneMorphism",
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
 
+#! @Description
+#! It returns a right quiver with $m$ vertices and $n$ arrows and whose indecomposable 
+#! projective or injective objects defines an exceptional collection.
+#! @Arguments m, n
+#! @Returns IsRightQuiver
+DeclareGlobalFunction( "RandomQuiverWhoseIndecProjectiveRepsAreExceptionalCollection" );
 

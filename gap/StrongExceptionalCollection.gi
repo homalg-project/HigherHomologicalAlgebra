@@ -107,3 +107,27 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphism,
       
 end );
 
+
+###########################
+##
+## For tests or internal use
+##
+###########################
+
+##
+InstallGlobalFunction( RandomQuiverWhoseIndecProjectiveRepsAreExceptionalCollection,
+  function( m, n )
+    local sources_of_arrows, ranges_of_arrows;
+  
+    sources_of_arrows := List( [ 1 .. n ],
+      i -> Random( [ 1 .. m - 1 ] ) );
+    
+    ranges_of_arrows := List( [ 1 .. n ],
+      i -> Random( [ sources_of_arrows[ i ] + 1 .. m ] ) );
+    
+    return RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
+              MakeLabelsFromPattern( "x1", n ),
+                sources_of_arrows, ranges_of_arrows );
+  
+end );
+
