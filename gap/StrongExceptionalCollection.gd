@@ -46,6 +46,27 @@ DeclareAttribute( "UnderlyingObjects", IsStrongExceptionalCollection );
 #! @Returns IsList
 DeclareOperation( "\[\]", [ IsStrongExceptionalCollection, IsInt ] );
 
+#! @Description
+#! It returns a basis for the vector space of morphisms from $E_i$ to $E_j$ that can not be factored
+#! along any other object in the exceptional collection.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "ArrowsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
+#! @Description
+#! It returns a generating set for the vector space of morphisms from $E_i$ to $E_j$ that can be factored
+#! along at least one object in the exceptional collection.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "OtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
+#! @Description
+#! It returns the union of <A>ArrowsBetweenTwoObjects</A> and <A>OtherPathsBetweenTwoObjects</A> applied
+#! on the same input. In other words it returns a generating set for the vector space Hom$(E_i,E_j)$.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
 ####################################
 ##
 #! @Section General Operations

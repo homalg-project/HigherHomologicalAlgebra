@@ -76,6 +76,91 @@ InstallMethod( \[\],
     return UnderlyingObjects( collection )[ i ];
     
 end );
+
+##
+InstallMethod( ArrowsBetweenTwoObjects,
+    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
+    local cat, n, source, range, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
+    
+    n := NumberOfObjects( collection );
+    
+    if i <= 0 or j <= 0 or i > n or j > n then
+      
+      Error( "Wrong input: some index is less than zero or bigger thanthe number of objects in the strong exceptional collection." );
+      
+    fi;
+ 
+    if i >= j then
+        
+      return [ ];
+        
+    else
+      
+      if IsBound( collection!.arrows.( String( [ i, j ] ) ) ) then
+        
+        return collection!.arrows.( String( [ i, j ] ) );
+      
+      fi;
+       
+      source := collection[ i ];
+    
+      range := collection[ j ];
+      
+      cat := CapCategory( source );
+
+      H := HomomorphismStructureOnObjects( source, range );
+
+      U := DistinguishedObjectOfHomomorphismStructure( cat );
+
+      maps := BasisOfExternalHom( U, H );
+     
+      if j - i = 1 then
+      
+        arrows := List( maps, map ->
+          InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism(
+            source, range, map ) );
+      
+      else
+      
+        paths := OtherPathsBetweenTwoObjects( collection, i, j );
+      
+        one_morphism := InterpretListOfMorphismsAsOneMorphism( source, range, paths );
+        
+        nr_arrows := Dimension( CokernelObject( one_morphism ) );
+        
+        arrows := [ ];
+      
+        for map in maps do
+        
+          if not IsLiftable( map, one_morphism ) then
+                  
+            Add( arrows,
+              InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( 
+                source, range, map ) );
+            
+            one_morphism := MorphismBetweenDirectSums( [ [ map ], [ one_morphism ] ] );
+            
+            if Length( arrows ) = nr_arrows then
+              
+              break;
+              
+            fi;
+         
+          fi;
+        
+        od;
+      
+      fi;
+     
+      collection!.arrows!.( String( [ i, j ] ) ) := arrows;
+      
+      return arrows;
+        
+    fi;
+      
+end );
+
 ## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
 ##
 InstallMethod( InterpretListOfMorphismsAsOneMorphism,
@@ -115,6 +200,72 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphism,
       
 end );
 
+##
+InstallMethod( OtherPathsBetweenTwoObjects,
+    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  
+  function( collection, i, j )
+    local n, paths;
+   
+    n := NumberOfObjects( collection );
+    
+    if i <= 0 or j <= 0 or i > n or j > n then
+      
+      Error( "Wrong input: some index is less than zero or bigger with the number of objects in the strong exceptional collection." );
+      
+    fi;
+    
+    if j - i <= 0 then
+      
+      return [ ];
+    
+    elif j - i = 1 then
+      
+      # should we change this
+      return [ ];
+    
+    else
+     
+      if IsBound( collection!.other_paths!.( String( [ i, j ] ) ) ) then
+        
+        return collection!.other_paths!.( String( [ i, j ] ) );
+        
+      fi;
+
+      paths := List( [ i + 1 .. j - 1 ],
+              u -> ListX( 
+                ArrowsBetweenTwoObjects( collection, i, u ), 
+                  Concatenation(
+                    OtherPathsBetweenTwoObjects( collection, u, j ),
+                      ArrowsBetweenTwoObjects( collection, u, j ) ), PreCompose ) );
+      
+      paths := Concatenation( paths );
+      
+      collection!.other_paths!.( String( [ i, j ] ) ) := paths;
+      
+      return paths;
+    
+    fi; 
+    
+end );
+
+##
+InstallMethod( PathsBetweenTwoObjects,
+    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  
+  function( collection, i, j )
+    local paths;
+    
+    paths := Concatenation( 
+              ArrowsBetweenTwoObjects( collection, i, j ),
+                OtherPathsBetweenTwoObjects( collection, i, j )
+                );
+    
+    collection!.paths!.( String( [ i, j ] ) ) := paths;
+
+    return paths;
+    
+end );
 
 ###########################
 ##
