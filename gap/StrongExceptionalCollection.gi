@@ -123,9 +123,9 @@ end );
 ###########################
 
 ##
-InstallGlobalFunction( RandomQuiverWhoseIndecProjectiveRepsAreExceptionalCollection,
+InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
   function( m, n )
-    local sources_of_arrows, ranges_of_arrows;
+    local sources_of_arrows, ranges_of_arrows, quiver;
   
     sources_of_arrows := List( [ 1 .. n ],
       i -> Random( [ 1 .. m - 1 ] ) );
@@ -133,9 +133,11 @@ InstallGlobalFunction( RandomQuiverWhoseIndecProjectiveRepsAreExceptionalCollect
     ranges_of_arrows := List( [ 1 .. n ],
       i -> Random( [ sources_of_arrows[ i ] + 1 .. m ] ) );
     
-    return RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
+    quiver := RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
               MakeLabelsFromPattern( "x1", n ),
                 sources_of_arrows, ranges_of_arrows );
+  
+    return PathAlgebra( Rationals, quiver );
   
 end );
 
