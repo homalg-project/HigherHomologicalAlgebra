@@ -40,6 +40,12 @@ DeclareAttribute( "NumberOfObjects", IsStrongExceptionalCollection );
 #! @Returns IsList
 DeclareAttribute( "UnderlyingObjects", IsStrongExceptionalCollection );
 
+#! @Description
+#! Returns the $i$'th object in <A>E</A>.
+#! @Arguments E, i
+#! @Returns IsList
+DeclareOperation( "\[\]", [ IsStrongExceptionalCollection, IsInt ] );
+
 ####################################
 ##
 #! @Section General Operations

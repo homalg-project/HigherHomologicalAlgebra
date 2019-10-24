@@ -68,6 +68,14 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
     
 end );
 
+##
+InstallMethod( \[\],
+      [ IsStrongExceptionalCollection, IsInt ],
+  function( collection, i )
+    
+    return UnderlyingObjects( collection )[ i ];
+    
+end );
 ## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
 ##
 InstallMethod( InterpretListOfMorphismsAsOneMorphism,
