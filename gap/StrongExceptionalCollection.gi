@@ -43,16 +43,24 @@ BindGlobal( "TheTypeStrongExceptionalCollection",
 ##
 InstallGlobalFunction( CreateStrongExceptionalCollection,
   function( L )
-    local collection, n, i;
-    
+    local cat, collection, n, i;
+
     L := ShallowCopy( L );
     
     if IsEmpty( L ) then
       
       Error( "The input is empty!" );
-      
+    
     fi;
-        
+    
+    cat := CapCategory( L[ 1 ] );
+    
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      Error( "The category needs homomorphism structure" );
+    
+    fi;
+
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
     collection := rec( arrows := rec( ), other_paths := rec( ), paths := rec( ) );
@@ -67,6 +75,7 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
     return collection;
     
 end );
+
 
 ##
 InstallMethod( \[\],
@@ -167,7 +176,7 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphism,
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
     
   function( source, range, morphisms )
-    local linear_maps, H;
+    local cat, linear_maps, H;
     
     cat := CapCategory( source );
     
@@ -285,9 +294,9 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
       i -> Random( [ sources_of_arrows[ i ] + 1 .. m ] ) );
     
     quiver := RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
-              MakeLabelsFromPattern( "x1", n ),
-                sources_of_arrows, ranges_of_arrows );
-  
+                MakeLabelsFromPattern( "x1", n ),
+                  sources_of_arrows, ranges_of_arrows );
+    
     return PathAlgebra( Rationals, quiver );
   
 end );

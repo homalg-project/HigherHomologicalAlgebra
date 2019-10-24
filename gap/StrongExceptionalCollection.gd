@@ -67,6 +67,9 @@ DeclareOperation( "OtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection
 #! @Returns IsList
 DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
+
+
+
 ####################################
 ##
 #! @Section General Operations
@@ -87,5 +90,5 @@ DeclareOperation( "InterpretListOfMorphismsAsOneMorphism",
 #! projective or injective objects defines an exceptional collection.
 #! @Arguments m, n
 #! @Returns IsRightQuiver
-DeclareGlobalFunction( "RandomQuiverWhoseIndecProjectiveRepsAreExceptionalCollection" );
+DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
