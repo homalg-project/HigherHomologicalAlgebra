@@ -134,7 +134,7 @@ InstallMethod( ArrowsBetweenTwoObjects,
       
         paths := OtherPathsBetweenTwoObjects( collection, i, j );
       
-        one_morphism := InterpretListOfMorphismsAsOneMorphism( source, range, paths );
+        one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, paths );
         
         nr_arrows := Dimension( CokernelObject( one_morphism ) );
         
@@ -172,7 +172,7 @@ end );
 
 ## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
 ##
-InstallMethod( InterpretListOfMorphismsAsOneMorphism,
+InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
     
   function( source, range, morphisms )

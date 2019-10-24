@@ -67,9 +67,6 @@ DeclareOperation( "OtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection
 #! @Returns IsList
 DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
-
-
-
 ####################################
 ##
 #! @Section General Operations
@@ -82,13 +79,13 @@ DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsI
 #! the morphism $\langle \nu(f_1),\nu(f_2),\dots,\nu(f_n)\rangle:\oplus_{i=1}^n 1 \to H(A,B)$.
 #! @Arguments A, B, morphisms
 #! @Returns IsCapCategoryMorphism
-DeclareOperation( "InterpretListOfMorphismsAsOneMorphism",
+DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure",
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
 
 #! @Description
-#! It returns a right quiver with $m$ vertices and $n$ arrows and whose indecomposable 
+#! It returns a quiver algebra with $m$ vertices and $n$ arrows and whose indecomposable 
 #! projective or injective objects defines an exceptional collection.
 #! @Arguments m, n
-#! @Returns IsRightQuiver
+#! @Returns IsQuiverAlgebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
