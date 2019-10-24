@@ -40,4 +40,19 @@ DeclareAttribute( "NumberOfObjects", IsStrongExceptionalCollection );
 #! @Returns IsList
 DeclareAttribute( "UnderlyingObjects", IsStrongExceptionalCollection );
 
+####################################
+##
+#! @Section General Operations
+##
+####################################
+
+#! @Description
+#! The input is a list of morphisms $(f_i:A\to B)$ for $i=1,\dots,n$ that live in 
+#! a category equipped with homomorphism structure $(1,H(-,-),\nu)$. The output is
+#! the morphism $\langle \nu(f_1),\nu(f_2),\dots,\nu(f_n)\rangle:\oplus_{i=1}^n 1 \to H(A,B)$.
+#! @Arguments A, B, morphisms
+#! @Returns IsCapCategoryMorphism
+DeclareOperation( "InterpretListOfMorphismsAsOneMorphism",
+    [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
+
 
