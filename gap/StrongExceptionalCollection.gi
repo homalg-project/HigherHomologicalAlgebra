@@ -16,8 +16,8 @@
 #############################
 
 DeclareRepresentation( "IsStrongExceptionalCollectionRep",
-                         IsStrongExceptionalCollection and IsAttributeStoringRep,
-                         [ ] );
+                          IsStrongExceptionalCollection and IsAttributeStoringRep,
+                            [ ] );
                          
 ##################################
 ##
@@ -43,7 +43,7 @@ BindGlobal( "TheTypeStrongExceptionalCollection",
 ##
 InstallGlobalFunction( CreateStrongExceptionalCollection,
   function( L )
-    local cat, collection, n, i;
+    local collection, n, i;
     
     L := ShallowCopy( L );
     
@@ -52,15 +52,7 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
       Error( "The input is empty!" );
       
     fi;
-    
-    cat := CapCategory( L[ 1 ] );
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
-      
-      Error( "The category needs homomorphism structure" );
-      
-    fi;
-    
+        
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
     collection := rec( arrows := rec( ), other_paths := rec( ), paths := rec( ) );
