@@ -1,5 +1,7 @@
 LoadPackage( "HomotopyCategoriesForCAP" );
-ReadPackage( "HomotopyCategoriesForCAP", "/examples/HomStructureForGradedRows.g" );
+LoadPackage( "RingsForHomalg" );
+LoadPackage( "FreydCategoriesForCAP" );
+ReadPackage( "HomotopyCategoriesForCAP", "/examples/random_methods_for_categories_of_rows.g" );
 
 #R := HomalgFieldOfRationals( );
 R := HomalgRingOfIntegers( );
@@ -10,6 +12,16 @@ AddRandomMethodsToRows( rows );
 Finalize( rows );
 
 homotopy_of_rows := HomotopyCategory( rows );
+
+#                      α1  
+# a:   0 <------ a0 <-------- a1 <------- 0
+#                  \                     
+#                     \
+#                        \ f
+#                           \   
+#                             V
+# b:   0 <------ b0 <-------- b1 <------- 0
+#                      β1
 
 alpha_1 := RandomMorphism( rows, [ 6 .. 12 ] );
 a := ChainComplex( [ alpha_1 ], 1 );
@@ -23,5 +35,3 @@ IsZero( homotopy_phi );
 
 IsNullHomotopic( phi );
 H := HomotopyMorphisms( phi );  # H[ i ] : Source( phi )[ i ] ----> Range( phi )[ i + 1 ]
-Display( H[ 0 ] );
-
