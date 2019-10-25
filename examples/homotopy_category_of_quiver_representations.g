@@ -30,8 +30,7 @@ A := QuotientOfPathAlgebra(
 # 
 # End( Ω^0(0) ⊕ Ω^1(1) ⊕ Ω^2(2) ⊕ Ω^3(3) )
 
-# A :=
-  QuotientOfPathAlgebra(
+B := QuotientOfPathAlgebra(
   Qq,
   [ 
     Qq.x0 * Qq.y0 , Qq.y0 * Qq.z0,
@@ -53,7 +52,9 @@ A := QuotientOfPathAlgebra(
   ]
 );;
 
-cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );;
+cat := CategoryOfQuiverRepresentations( B : FinalizeCategory := false );;
+cat!.compute_basis_of_hom_using_homalg := [ true, 1, HomalgFieldOfRationals() ]; 
+# cat!.compute_basis_of_hom_using_homalg := [ true, 2, HomalgFieldOfRationals() ]; to hid [[#I  Using homalg to compute BasisOfHom(-,-)]]
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
