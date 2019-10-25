@@ -428,10 +428,12 @@ InstallMethod( TotalComplexUsingMappingCone,
   [ IsChainComplex ],
   function( C )
     local l, u, tau, L, with_infos;
-    
+
     l := ActiveLowerBound( C ) + 1;
     u := ActiveUpperBound( C ) - 1;
     
+    Print( "TotalComplexUsingMappingCone has been called on a chain with active lower bound =", l, " and active upper bound =", u, "\n" );
+
     if l = u then
       
       return C;
