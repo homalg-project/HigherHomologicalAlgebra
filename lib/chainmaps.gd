@@ -278,6 +278,7 @@ DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 DeclareOperation( "MappingConePseudoFunctorial", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 
+
 #!  @Section Properties
 
 #!  @Description
@@ -381,6 +382,28 @@ DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 #!  The command checks if the morphism is well defined between $m$ and $n$. 
 #!  @Arguments true or false
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+
+#! @Description
+#! The input is a full subcategory $A$ of some category $B$ and
+#! a chain or cochain morphism $\phi$ in $\mathrm{Ch}(B)$, 
+#! where all objects of the source and range actually lie in $A$.
+#! The output is $\phi$ considered in $\mathrm{Ch}(A)$.
+#! @Arguments A, phi
+#! @Returns a morphism
+DeclareOperation( "AsChainOrCochainMorphismOverCapFullSubcategory",
+      [ IsCapCategory, IsChainOrCochainMorphism ] );
+
+DeclareOperation( "AsChainMorphismOverCapFullSubcategory",
+      [ IsCapCategory, IsChainMorphism ] );
+
+DeclareOperation( "AsCochainMorphismOverCapFullSubcategory",
+      [ IsCapCategory, IsCochainMorphism ] );
+
+DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
+
+DeclareOperation( "MappingConePseudoFunctorial", 
+  [ IsChainOrCochainMorphism, IsChainOrCochainMorphism,
+      IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 
 
 #!  @Section Examples

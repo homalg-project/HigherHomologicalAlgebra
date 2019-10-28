@@ -1335,6 +1335,39 @@ InstallMethod( DifferentialsSupport,
     
 end );
 
+##
+InstallMethod( AsComplexOverCapFullSubcategory,
+      [ IsCapCategory, IsChainOrCochainComplex ],
+  function( full_subcategory, C )
+    local diffs, D;
+    
+    if not ValueGlobal( "IsCapFullSubcategory" )( full ) then
+    
+      Error( "The first argument should a Cap full subcategory" );
+      
+    fi;
+    
+    diffs := Differentials( C );
+    
+    diffs := MapLazy( diffs, diff -> ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, diff ), 1 );
+    
+    if IsChainComplex( C ) then
+      
+      D := ChainComplex( full_subcategory, diffs );
+      
+    else
+      
+      D := CochainComplex( full_subcategory, diffs );
+      
+    fi;
+    
+    TODO_LIST_TO_PUSH_PULL_BOUNDS( C, D );
+    
+    return D;
+    
+end );
+
+##
 InstallMethod( IsWellDefined,
                [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )

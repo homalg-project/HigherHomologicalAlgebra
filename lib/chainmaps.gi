@@ -533,7 +533,6 @@ InstallMethod( SetUpperBound,
 
 end );
 
-
 ##
 InstallMethod( SetLowerBound,
               [ IsChainOrCochainMorphism, IsInt ], 
@@ -567,7 +566,7 @@ InstallMethod( SetLowerBound,
 
 end );
 
-
+##
 InstallMethod( ActiveLowerBound,
                [ IsChainOrCochainMorphism ],
 
@@ -624,6 +623,7 @@ InstallMethod( ActiveLowerBound,
 
 end );
 
+##
 InstallMethod( ActiveUpperBound,
                [ IsChainOrCochainMorphism ],
 
@@ -711,6 +711,36 @@ InstallMethod( AsChainMorphism, [ IsChainMorphism ], IdFunc );
 
 ##
 InstallMethod( AsCochainMorphism, [ IsCochainMorphism ], IdFunc );
+
+##
+InstallMethod( AsChainOrCochainMorphismOverCapFullSubcategory,
+      [ IsCapCategory, IsChainOrCochainMorphism ],
+  function( A, phi )
+    local source, range, morphisms;
+    
+    source := Source( phi );
+    
+    source := AsComplexOverCapFullSubcategory( A, source );
+    
+    range := Range( phi );
+    
+    range := AsComplexOverCapFullSubcategory( A, range );
+    
+    morphisms := Morphisms( phi );
+    
+    morphisms := MapLazy( morphisms, ValueGlobal( "AsFullSubcategoryCell" ), 1 );
+    
+    if IsChainMorphism( phi ) then
+      
+      return ChainMorphism( source, range, morphisms );
+      
+    else
+      
+      return CochainMorphism( source, range, morphisms );
+      
+    fi;
+    
+end );
 
 ########################################
 #

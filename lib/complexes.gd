@@ -194,6 +194,12 @@ DeclareAttribute( "AsChainComplex", IsChainOrCochainComplex );
 #! @Returns a cochain complex
 DeclareAttribute( "AsCochainComplex", IsChainOrCochainComplex );
 
+#! @Description
+#! The input is a bounded chain (resp. cochain) complex $C$ and two integers $m,n$. 
+#! The output is true when $C$ is an exact complex, otherwise the output is
+#! false.
+#! @Arguments C
+#! @Returns a boolian
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
 
 # These two attributes and properties will be used to activate to do lists.
@@ -372,13 +378,16 @@ KeyDependentOperation( "GeneralizedProjectionOntoCohomologyAt", IsCochainComplex
 
 #! @BeginGroup 6
 #! @Description
-#! The input is a chain (resp. cochain) complex $C$ and an integer $n$. The outout is the homology (resp. cohomology)
-#! object of $C$ in index $n$.
+#! The input is a chain (resp. cochain) complex $C$ and an integer $n$. 
+#! The outout is the homology (resp. cohomology) object of $C$ at index $n$.
 #! @Arguments C, n
-#! @Returns a object
+#! @Returns an object
 KeyDependentOperation( "DefectOfExactnessAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+
 #! @Arguments C, n
-#! @Returns a object
+#! The input is a (co)chain complex $C$ and an integer $n$. The outout is the 
+#! (co)homology object of $C$ at index $n$.
+#! @Returns an object
 KeyDependentOperation( "CohomologyAt", IsCochainComplex, IsInt, ReturnTrue );
 #! @EndGroup
 #! @Group 6
@@ -432,10 +441,19 @@ DeclareOperation( "ObjectsSupport", [ IsBoundedChainOrCochainComplex ] );
 DeclareOperation( "DifferentialsSupport", [ IsBoundedChainOrCochainComplex ] );
 
 #! @Description
+#! The input is a full subcategory $A$ of some category $B$ and
+#! a complex $C$ in $\mathrm{Ch}(B)$, where all objects of $C$ actually lie in $A$.
+#! The output is $C$ considered in $\mathrm{Ch}(A)$.
+#! @Arguments A, C
+#! @Returns an object
+DeclareOperation( "AsComplexOverCapFullSubcategory",
+      [ IsCapCategory, IsChainOrCochainComplex ] );
+
+#! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 
 #! The output is true when $C$ is well defined in the interval $[m,\dots,n]$ and false otherwise.
 #! @Arguments C, m, n
-#! @Returns a object
+#! @Returns true or false
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 # DeclareProperty( "IsWellDefined", IsBoundedChainOrCochainComplex );
 
