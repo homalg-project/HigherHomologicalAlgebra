@@ -1341,7 +1341,7 @@ InstallMethod( AsComplexOverCapFullSubcategory,
   function( full_subcategory, C )
     local diffs, D;
     
-    if not ValueGlobal( "IsCapFullSubcategory" )( full ) then
+    if not ValueGlobal( "IsCapFullSubcategory" )( full_subcategory ) then
     
       Error( "The first argument should a Cap full subcategory" );
       
