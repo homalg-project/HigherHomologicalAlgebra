@@ -86,6 +86,46 @@ InstallMethod( \[\],
     
 end );
 
+## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
+##
+InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
+    [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
+    
+  function( source, range, morphisms )
+    local cat, linear_maps, H;
+    
+    cat := CapCategory( source );
+    
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      Error( "The category needs homomorphism structure" );
+      
+    fi;
+
+    if IsEmpty( morphisms ) then
+      
+      H := HomomorphismStructureOnObjects( source, range );
+      
+      return UniversalMorphismFromZeroObject( H );
+      
+    fi;
+    
+    if not ForAll( morphisms,
+        morphism -> IsEqualForObjects( Source( morphism ), source ) and
+          IsEqualForObjects( Range( morphism ), range ) ) then
+          
+          Error( "All morphisms should have the same source and range" );
+    
+    fi;
+    
+    linear_maps := List( morphisms, morphism ->
+      [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( morphism ) ] );
+    
+    return MorphismBetweenDirectSums( linear_maps );
+      
+end );
+
+
 ##
 InstallMethod( ArrowsBetweenTwoObjects,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
@@ -167,45 +207,6 @@ InstallMethod( ArrowsBetweenTwoObjects,
       return arrows;
         
     fi;
-      
-end );
-
-## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
-##
-InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
-    [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
-    
-  function( source, range, morphisms )
-    local cat, linear_maps, H;
-    
-    cat := CapCategory( source );
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
-      
-      Error( "The category needs homomorphism structure" );
-      
-    fi;
-
-    if IsEmpty( morphisms ) then
-      
-      H := HomomorphismStructureOnObjects( source, range );
-      
-      return UniversalMorphismFromZeroObject( H );
-      
-    fi;
-    
-    if not ForAll( morphisms,
-        morphism -> IsEqualForObjects( Source( morphism ), source ) and
-          IsEqualForObjects( Range( morphism ), range ) ) then
-          
-          Error( "All morphisms should have the same source and range" );
-    
-    fi;
-    
-    linear_maps := List( morphisms, morphism ->
-      [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( morphism ) ] );
-    
-    return MorphismBetweenDirectSums( linear_maps );
       
 end );
 
