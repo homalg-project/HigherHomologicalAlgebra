@@ -108,3 +108,8 @@ DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomor
 #! @Returns IsQuiverAlgebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
+
+DeclareGlobalFunction( "QuiverAlgebraFromStrongExceptionalCollection" );
+
+DeclareGlobalFunction( "RelationsBetweenMorphisms" );
+

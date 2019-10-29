@@ -383,6 +383,22 @@ InstallMethod( LabelsOfPathsBetweenTwoObjects,
     
 end );
 
+##
+InstallGlobalFunction( RelationsBetweenMorphisms,
+  function( morphisms )
+    local source, range, map;
+    
+    source := Source( morphisms[ 1 ] );
+    
+    range := Range( morphisms[ 1 ] );
+    
+    map := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, morphisms );
+    
+    return EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( KernelEmbedding( map ) ) );
+  
+end );
+
+
 ###########################
 ##
 ## For tests or internal use
@@ -406,5 +422,64 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     return PathAlgebra( Rationals, quiver );
   
+end );
+
+##
+InstallGlobalFunction( QuiverAlgebraFromStrongExceptionalCollection,
+  function( collection, field )
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j;
+    
+    nr_vertices := NumberOfObjects( collection );
+    
+    arrows := List( [ 1 .. nr_vertices - 1 ],
+                i -> Concatenation( 
+                  
+                  List( [ i + 1 .. nr_vertices ],
+                    j -> LabelsOfArrowsBetweenTwoObjects( collection, i, j )
+                      )
+                                  )
+                  );
+    
+    arrows := Concatenation( arrows );
+    
+    sources := List( arrows, a -> a[ 1 ] );
+    
+    ranges := List( arrows, a -> a[ 2 ] );
+    
+    labels := List( arrows, a -> Concatenation( "v", String( a[ 1 ] ), "_v", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
+    
+    quiver := RightQuiver( "quiver", [ 1 .. nr_vertices ], labels, sources, ranges );
+    
+    A := PathAlgebra( field, quiver );
+    
+    relations := [ ];
+    
+    for i in [ 1 .. nr_vertices - 1 ] do
+      for j in [ i + 1 .. nr_vertices ] do  #TODO can we start from i+2?
+                      
+        paths_in_collection := PathsBetweenTwoObjects( collection, i, j );
+        
+        if IsEmpty( paths_in_collection ) then
+          continue;
+        fi;
+        
+        labels := LabelsOfPathsBetweenTwoObjects( collection, i, j );
+        
+        paths_in_quiver := List( labels,
+          l -> Product(
+            List( l, a -> A.( Concatenation( "v", String( a[1] ), "_v", String( a[2] ), "_", String( a[ 3 ] ) ) ) ) ) );
+      
+        rel := RelationsBetweenMorphisms( paths_in_collection );
+      
+        rel := List( rel, r -> r * paths_in_quiver );
+      
+        relations := Concatenation( relations, rel );
+                      
+      od;
+      
+    od;
+  
+    return QuotientOfPathAlgebra( A, relations ); 
+    
 end );
 
