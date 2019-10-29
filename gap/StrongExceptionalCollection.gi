@@ -63,7 +63,14 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
 
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
-    collection := rec( arrows := rec( ), other_paths := rec( ), paths := rec( ) );
+    collection := rec( 
+                    arrows := rec( ),
+                    other_paths := rec( ),
+                    paths := rec( ),
+                    labels_of_arrows := rec( ),
+                    labels_of_other_paths := rec( ),
+                    labels_of_paths := rec( )
+                    );
     
     n := Length( L );
     
@@ -274,6 +281,105 @@ InstallMethod( PathsBetweenTwoObjects,
     collection!.paths!.( String( [ i, j ] ) ) := paths;
 
     return paths;
+    
+end );
+
+
+InstallMethod( LabelsOfArrowsBetweenTwoObjects,
+    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
+    local nr_arrows, labels;
+    
+    if IsBound( collection!.labels_of_arrows!.( String( [ i, j ] ) ) ) then
+      
+      return collection!.labels_of_arrows!.( String( [ i, j ] ) );
+      
+    fi;
+   
+    nr_arrows := Length( ArrowsBetweenTwoObjects( collection, i, j ) ); 
+   
+    labels := List( [ 1 .. nr_arrows ], k -> [ i, j, k ] );
+    
+    collection!.labels_of_arrows!.( String( [ i, j ] ) ) := labels;
+  
+    return labels;
+    
+end );
+
+##
+InstallMethod( LabelsOfOtherPathsBetweenTwoObjects,
+    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
+    local n, labels;
+    
+    n := NumberOfObjects( collection );
+    
+    if i <= 0 or j <= 0 or i > n or j > n then
+      
+      Error( "Wrong input: some index is less than zero or bigger with the number of objects in the strong exceptional collection." );
+      
+    fi;
+    
+    if j - i <= 0 then
+      
+      return [ ];
+    
+    elif j - i = 1 then
+      
+      # should we change this
+      return [ ];
+    
+    else
+    
+    if IsBound( collection!.labels_of_other_paths!.( String( [ i, j ] ) ) ) then
+      
+      return collection!.labels_of_other_paths!.( String( [ i, j ] ) );
+    
+    fi;
+    
+    labels := List( [ i + 1 .. j - 1 ],
+              u -> ListX( 
+                    
+                    LabelsOfArrowsBetweenTwoObjects( collection, i, u ),
+                    
+                    Concatenation(
+                      LabelsOfOtherPathsBetweenTwoObjects( collection, u, j ),
+                        List( LabelsOfArrowsBetweenTwoObjects( collection, u, j ), a -> [ a ] )
+                                 ),
+                    
+                    {a,b} -> Concatenation( [ a ], b ) )
+              );
+      
+      labels := Concatenation( labels );
+      
+      collection!.labels_of_other_paths!.( String( [ i, j ] ) ) := labels;
+      
+      return labels;
+    
+    fi; 
+  
+end );
+
+##
+InstallMethod( LabelsOfPathsBetweenTwoObjects,
+      [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
+    local labels;
+    
+    if IsBound( collection!.labels_of_paths!.( String( [ i, j ] ) ) ) then
+      
+      return collection!.labels_of_paths!.( String( [ i, j ] ) );
+      
+    fi;
+    
+    labels := Concatenation( 
+              List( LabelsOfArrowsBetweenTwoObjects( collection, i, j ), l -> [ l ] ),
+                LabelsOfOtherPathsBetweenTwoObjects( collection, i, j )
+                );
+    
+    collection!.labels_of_paths!.( String( [ i, j ] ) ) := labels;
+    
+    return labels;
     
 end );
 

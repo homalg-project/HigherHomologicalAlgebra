@@ -67,6 +67,25 @@ DeclareOperation( "OtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection
 #! @Returns IsList
 DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
+
+#! @Description
+#! It returns labels for <A>ArrowsBetweenTwoObjects( E, i, j )</A>.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "LabelsOfArrowsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
+#! @Description
+#! It returns labels for <A>OtherPathsBetweenTwoObjects( E, i, j )</A>.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "LabelsOfOtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
+#! @Description
+#! It returns labels for <A>PathsBetweenTwoObjects( E, i, j )</A>.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "LabelsOfPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
 ####################################
 ##
 #! @Section General Operations
