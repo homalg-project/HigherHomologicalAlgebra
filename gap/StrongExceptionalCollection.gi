@@ -227,7 +227,9 @@ InstallMethod( Arrows,
         od;
       
       fi;
-     
+      
+      MakeImmutable( arrows );
+      
       collection!.arrows!.( String( [ i, j ] ) ) := arrows;
       
       return arrows;
@@ -277,6 +279,8 @@ InstallMethod( OtherPaths,
       
       paths := Concatenation( paths );
       
+      MakeImmutable( paths );
+     
       collection!.other_paths!.( String( [ i, j ] ) ) := paths;
       
       return paths;
@@ -298,6 +302,8 @@ InstallMethod( Paths,
                 );
     
     collection!.paths!.( String( [ i, j ] ) ) := paths;
+    
+    MakeImmutable( paths );
 
     return paths;
     
@@ -308,7 +314,7 @@ InstallMethod( BasisForPaths,
               [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local k, dim, paths, paths_labels, n, p, basis, labels, current_path, current_one_morphism;
-
+    
     if IsBound( collection!.basis_for_paths!.( String( [ i, j ] ) ) ) then
         
         return collection!.basis_for_paths!.( String( [ i, j ] ) );
@@ -371,13 +377,15 @@ InstallMethod( BasisForPaths,
     
 end );
 
+##
+InstallMethod( LabelsForArrows,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local nr_arrows, labels;
     
-    if IsBound( collection!.labels_of_arrows!.( String( [ i, j ] ) ) ) then
+    if IsBound( collection!.labels_for_arrows!.( String( [ i, j ] ) ) ) then
       
-      return collection!.labels_of_arrows!.( String( [ i, j ] ) );
+      return collection!.labels_for_arrows!.( String( [ i, j ] ) );
       
     fi;
    
@@ -385,8 +393,10 @@ end );
    
     labels := List( [ 1 .. nr_arrows ], k -> [ i, j, k ] );
     
-    collection!.labels_of_arrows!.( String( [ i, j ] ) ) := labels;
-  
+    collection!.labels_for_arrows!.( String( [ i, j ] ) ) := labels;
+    
+    MakeImmutable( labels );
+ 
     return labels;
     
 end );
@@ -416,9 +426,9 @@ InstallMethod( LabelsForOtherPaths,
     
     else
     
-    if IsBound( collection!.labels_of_other_paths!.( String( [ i, j ] ) ) ) then
+    if IsBound( collection!.labels_for_other_paths!.( String( [ i, j ] ) ) ) then
       
-      return collection!.labels_of_other_paths!.( String( [ i, j ] ) );
+      return collection!.labels_for_other_paths!.( String( [ i, j ] ) );
     
     fi;
     
@@ -437,7 +447,9 @@ InstallMethod( LabelsForOtherPaths,
       
       labels := Concatenation( labels );
       
-      collection!.labels_of_other_paths!.( String( [ i, j ] ) ) := labels;
+      MakeImmutable( labels );
+
+      collection!.labels_for_other_paths!.( String( [ i, j ] ) ) := labels;
       
       return labels;
     
@@ -451,9 +463,9 @@ InstallMethod( LabelsForPaths,
   function( collection, i, j )
     local labels;
     
-    if IsBound( collection!.labels_of_paths!.( String( [ i, j ] ) ) ) then
+    if IsBound( collection!.labels_for_paths!.( String( [ i, j ] ) ) ) then
       
-      return collection!.labels_of_paths!.( String( [ i, j ] ) );
+      return collection!.labels_for_paths!.( String( [ i, j ] ) );
       
     fi;
     
@@ -462,7 +474,9 @@ InstallMethod( LabelsForPaths,
                 LabelsForOtherPaths( collection, i, j )
                 );
     
-    collection!.labels_of_paths!.( String( [ i, j ] ) ) := labels;
+    MakeImmutable( labels );
+
+    collection!.labels_for_paths!.( String( [ i, j ] ) ) := labels;
     
     return labels;
     
