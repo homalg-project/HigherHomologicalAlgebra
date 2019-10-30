@@ -92,6 +92,15 @@ end );
 InstallMethod( \[\],
       [ IsStrongExceptionalCollection, IsInt ],
   function( collection, i )
+    local n;
+    
+    n := NumberOfObjects( collection );
+    
+    if i > n then
+      
+      Error( "There is only ", n, " objects in the collection!\n" );
+      
+    fi;
     
     return UnderlyingObjects( collection )[ i ];
     
