@@ -601,3 +601,21 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
   
 end );
 
+############################
+##
+## View & Display
+##
+###########################
+
+##
+InstallMethod( ViewObj,
+    [ IsStrongExceptionalCollection ],
+  function( collection )
+    local full;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    Print( "<A strong exceptional collection defined by the objects of the ", Name( full ), ">" );
+    
+end );
+
