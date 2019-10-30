@@ -134,7 +134,7 @@ end );
 
 
 ##
-InstallMethod( ArrowsBetweenTwoObjects,
+InstallMethod( Arrows,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local cat, n, source, range, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
@@ -143,7 +143,7 @@ InstallMethod( ArrowsBetweenTwoObjects,
     
     if i <= 0 or j <= 0 or i > n or j > n then
       
-      Error( "Wrong input: some index is less than zero or bigger thanthe number of objects in the strong exceptional collection." );
+      Error( "Wrong input: some index is less than zero or bigger than the number of objects in the strong exceptional collection." );
       
     fi;
  
@@ -179,7 +179,7 @@ InstallMethod( ArrowsBetweenTwoObjects,
       
       else
       
-        paths := OtherPathsBetweenTwoObjects( collection, i, j );
+        paths := OtherPaths( collection, i, j );
       
         one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, paths );
         
@@ -218,7 +218,7 @@ InstallMethod( ArrowsBetweenTwoObjects,
 end );
 
 ##
-InstallMethod( OtherPathsBetweenTwoObjects,
+InstallMethod( OtherPaths,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
@@ -251,10 +251,10 @@ InstallMethod( OtherPathsBetweenTwoObjects,
 
       paths := List( [ i + 1 .. j - 1 ],
               u -> ListX( 
-                ArrowsBetweenTwoObjects( collection, i, u ), 
+                Arrows( collection, i, u ), 
                   Concatenation(
-                    OtherPathsBetweenTwoObjects( collection, u, j ),
-                      ArrowsBetweenTwoObjects( collection, u, j ) ), PreCompose ) );
+                    OtherPaths( collection, u, j ),
+                      Arrows( collection, u, j ) ), PreCompose ) );
       
       paths := Concatenation( paths );
       
@@ -267,15 +267,15 @@ InstallMethod( OtherPathsBetweenTwoObjects,
 end );
 
 ##
-InstallMethod( PathsBetweenTwoObjects,
+InstallMethod( Paths,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
     local paths;
     
     paths := Concatenation( 
-              ArrowsBetweenTwoObjects( collection, i, j ),
-                OtherPathsBetweenTwoObjects( collection, i, j )
+              Arrows( collection, i, j ),
+                OtherPaths( collection, i, j )
                 );
     
     collection!.paths!.( String( [ i, j ] ) ) := paths;
@@ -296,7 +296,7 @@ InstallMethod( LabelsOfArrowsBetweenTwoObjects,
       
     fi;
    
-    nr_arrows := Length( ArrowsBetweenTwoObjects( collection, i, j ) ); 
+    nr_arrows := Length( Arrows( collection, i, j ) ); 
    
     labels := List( [ 1 .. nr_arrows ], k -> [ i, j, k ] );
     
@@ -307,7 +307,7 @@ InstallMethod( LabelsOfArrowsBetweenTwoObjects,
 end );
 
 ##
-InstallMethod( LabelsOfOtherPathsBetweenTwoObjects,
+InstallMethod( LabelsForOtherPaths,
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local n, labels;
@@ -340,11 +340,11 @@ InstallMethod( LabelsOfOtherPathsBetweenTwoObjects,
     labels := List( [ i + 1 .. j - 1 ],
               u -> ListX( 
                     
-                    LabelsOfArrowsBetweenTwoObjects( collection, i, u ),
+                    LabelsForArrows( collection, i, u ),
                     
                     Concatenation(
-                      LabelsOfOtherPathsBetweenTwoObjects( collection, u, j ),
-                        List( LabelsOfArrowsBetweenTwoObjects( collection, u, j ), a -> [ a ] )
+                      LabelsForOtherPaths( collection, u, j ),
+                        List( LabelsForArrows( collection, u, j ), a -> [ a ] )
                                  ),
                     
                     {a,b} -> Concatenation( [ a ], b ) )
@@ -361,7 +361,7 @@ InstallMethod( LabelsOfOtherPathsBetweenTwoObjects,
 end );
 
 ##
-InstallMethod( LabelsOfPathsBetweenTwoObjects,
+InstallMethod( LabelsForPaths,
       [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local labels;
@@ -373,8 +373,8 @@ InstallMethod( LabelsOfPathsBetweenTwoObjects,
     fi;
     
     labels := Concatenation( 
-              List( LabelsOfArrowsBetweenTwoObjects( collection, i, j ), l -> [ l ] ),
-                LabelsOfOtherPathsBetweenTwoObjects( collection, i, j )
+              List( LabelsForArrows( collection, i, j ), l -> [ l ] ),
+                LabelsForOtherPaths( collection, i, j )
                 );
     
     collection!.labels_of_paths!.( String( [ i, j ] ) ) := labels;
@@ -435,7 +435,7 @@ InstallGlobalFunction( QuiverAlgebraFromStrongExceptionalCollection,
                 i -> Concatenation( 
                   
                   List( [ i + 1 .. nr_vertices ],
-                    j -> LabelsOfArrowsBetweenTwoObjects( collection, i, j )
+                    j -> LabelsForArrows( collection, i, j )
                       )
                                   )
                   );
@@ -457,13 +457,13 @@ InstallGlobalFunction( QuiverAlgebraFromStrongExceptionalCollection,
     for i in [ 1 .. nr_vertices - 1 ] do
       for j in [ i + 1 .. nr_vertices ] do  #TODO can we start from i+2?
                       
-        paths_in_collection := PathsBetweenTwoObjects( collection, i, j );
+        paths_in_collection := Paths( collection, i, j );
         
         if IsEmpty( paths_in_collection ) then
           continue;
         fi;
         
-        labels := LabelsOfPathsBetweenTwoObjects( collection, i, j );
+        labels := LabelsForPaths( collection, i, j );
         
         paths_in_quiver := List( labels,
           l -> Product(

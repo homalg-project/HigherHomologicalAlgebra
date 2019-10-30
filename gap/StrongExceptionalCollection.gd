@@ -51,34 +51,34 @@ DeclareOperation( "\[\]", [ IsStrongExceptionalCollection, IsInt ] );
 #! along any other object in the exceptional collection.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "ArrowsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "Arrows", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
 #! It returns a generating set for the vector space of morphisms from $E_i$ to $E_j$ that can be factored
 #! along at least one object in the exceptional collection.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "OtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "OtherPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
 #! It returns the union of <A>ArrowsBetweenTwoObjects</A> and <A>OtherPathsBetweenTwoObjects</A> applied
 #! on the same input. In other words it returns a generating set for the vector space Hom$(E_i,E_j)$.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "PathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "Paths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 
 #! @Description
-#! It returns labels for <A>ArrowsBetweenTwoObjects( E, i, j )</A>.
+DeclareOperation( "LabelsForArrows", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "LabelsOfArrowsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "LabelsForOtherPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
 #! It returns labels for <A>OtherPathsBetweenTwoObjects( E, i, j )</A>.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "LabelsOfOtherPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "LabelsForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
 #! It returns labels for <A>PathsBetweenTwoObjects( E, i, j )</A>.
