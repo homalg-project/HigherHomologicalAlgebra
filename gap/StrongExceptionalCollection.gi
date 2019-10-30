@@ -63,13 +63,17 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
 
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
+    MakeImmutable( L );
+    
     collection := rec( 
                     arrows := rec( ),
                     other_paths := rec( ),
                     paths := rec( ),
-                    labels_of_arrows := rec( ),
-                    labels_of_other_paths := rec( ),
-                    labels_of_paths := rec( )
+                    basis_for_paths := rec( ),
+                    labels_for_arrows := rec( ),
+                    labels_for_other_paths := rec( ),
+                    labels_for_paths := rec( ),
+                    labels_for_basis_for_paths := rec( ) 
                     );
     
     n := Length( L );
@@ -284,8 +288,74 @@ InstallMethod( Paths,
     
 end );
 
+##
+InstallMethod( BasisForPaths,
+              [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
+    local k, dim, paths, paths_labels, n, p, basis, labels, current_path, current_one_morphism;
 
-InstallMethod( LabelsOfArrowsBetweenTwoObjects,
+    if IsBound( collection!.basis_for_paths!.( String( [ i, j ] ) ) ) then
+        
+        return collection!.basis_for_paths!.( String( [ i, j ] ) );
+    
+    fi;
+   
+    dim := Dimension( HomomorphismStructureOnObjects( collection[ i ], collection[ j ] ) );
+    
+    if IsZero( dim ) then
+      
+      return [ ];
+      
+    fi;
+
+    paths := Paths( collection, i, j );
+    
+    paths_labels := LabelsForPaths( collection, i, j );
+    
+    n := Length( paths );
+    
+    p := PositionProperty( paths, p -> not IsZero( p ) );
+        
+    basis := [ paths[ p ] ];
+    
+    labels := [ paths_labels[ p ] ];
+    
+    for k in [ p + 1 .. n ] do
+      
+      current_path := paths[ k ];
+      
+      current_path := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( current_path );
+      
+      current_one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( collection[ i ], collection[ j ], basis );
+      
+      if not IsLiftable( current_path, current_one_morphism ) then
+        
+        Add( basis, paths[ k ] );
+        
+        Add( labels, paths_labels[ k ] );
+        
+      fi;
+      
+      if Length( basis ) = dim then
+        
+        continue;
+        
+      fi;
+      
+    od;
+    
+    MakeImmutable( basis );
+    
+    MakeImmutable( labels );
+
+    collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
+    
+    collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+   
+    return basis;  
+    
+end );
+
     [ IsStrongExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local nr_arrows, labels;
@@ -384,17 +454,19 @@ InstallMethod( LabelsForPaths,
 end );
 
 ##
-InstallGlobalFunction( RelationsBetweenMorphisms,
-  function( morphisms )
-    local source, range, map;
+InstallMethod( LabelsForBasisForPaths,
+              [ IsStrongExceptionalCollection, IsInt, IsInt ],
+  function( collection, i, j )
     
-    source := Source( morphisms[ 1 ] );
+    if IsBound( collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) ) then
     
-    range := Range( morphisms[ 1 ] );
+      return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
     
-    map := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, morphisms );
+    fi;
     
-    return EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( KernelEmbedding( map ) ) );
+    BasisForPaths( collection, i, j );
+    
+    return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
   
 end );
 

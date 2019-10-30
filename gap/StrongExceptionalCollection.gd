@@ -67,6 +67,11 @@ DeclareOperation( "OtherPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] 
 #! @Returns IsList
 DeclareOperation( "Paths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
+#! @Description
+#! It returns a basis for <A>Paths( E, i, j )</A>.
+#! @Arguments E, i, j
+#! @Returns IsList
+DeclareOperation( "BasisForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
 DeclareOperation( "LabelsForArrows", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
@@ -81,10 +86,10 @@ DeclareOperation( "LabelsForOtherPaths", [ IsStrongExceptionalCollection, IsInt,
 DeclareOperation( "LabelsForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>PathsBetweenTwoObjects( E, i, j )</A>.
+#! It returns labels for <A>Paths( E, i, j )</A>.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "LabelsOfPathsBetweenTwoObjects", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+DeclareOperation( "LabelsForBasisForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 ####################################
 ##
