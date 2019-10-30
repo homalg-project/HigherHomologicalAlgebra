@@ -69,7 +69,7 @@ DeclareOperation( "Arrows", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 DeclareOperation( "OtherPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns the union of <A>ArrowsBetweenTwoObjects</A> and <A>OtherPathsBetweenTwoObjects</A> applied
+#! It returns the union of <A>Arrows</A> and <A>OtherPaths</A> applied
 #! on the same input. In other words it returns a generating set for the vector space Hom$(E_i,E_j)$.
 #! @Arguments E, i, j
 #! @Returns IsList
@@ -82,13 +82,19 @@ DeclareOperation( "Paths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 DeclareOperation( "BasisForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
+#! It returns labels for <A>Arrows( E, i, j )</A>.
+#! @Arguments E, i, j
+#! @Returns IsList
 DeclareOperation( "LabelsForArrows", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
+
+#! @Description
+#! It returns labels for <A>OtherPaths( E, i, j )</A>.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "LabelsForOtherPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>OtherPathsBetweenTwoObjects( E, i, j )</A>.
+#! It returns labels for <A>Paths( E, i, j )</A>.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "LabelsForPaths", [ IsStrongExceptionalCollection, IsInt, IsInt ] );
