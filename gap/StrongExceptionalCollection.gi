@@ -488,40 +488,29 @@ InstallMethod( LabelsForBasisForPaths,
   function( collection, i, j )
     
     if IsBound( collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) ) then
-    
+      
       return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
-    
+      
     fi;
-    
+   
     BasisForPaths( collection, i, j );
     
     return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
-  
+    
 end );
 
-
-###########################
 ##
-## For tests or internal use
-##
-###########################
-
-##
-InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
-  function( m, n )
-    local sources_of_arrows, ranges_of_arrows, quiver;
-  
-    sources_of_arrows := List( [ 1 .. n ],
-      i -> Random( [ 1 .. m - 1 ] ) );
+InstallGlobalFunction( RelationsBetweenMorphisms,
+  function( morphisms )
+    local source, range, map;
     
-    ranges_of_arrows := List( [ 1 .. n ],
-      i -> Random( [ sources_of_arrows[ i ] + 1 .. m ] ) );
+    source := Source( morphisms[ 1 ] );
     
-    quiver := RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
-                MakeLabelsFromPattern( "x1", n ),
-                  sources_of_arrows, ranges_of_arrows );
+    range := Range( morphisms[ 1 ] );
     
-    return PathAlgebra( Rationals, quiver );
+    map := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, morphisms );
+    
+    return EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( KernelEmbedding( map ) ) );
   
 end );
 

@@ -130,5 +130,10 @@ DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptiona
 
 DeclareGlobalFunction( "QuiverAlgebraFromStrongExceptionalCollection" );
 
+
+#! @Description
+#! It returns the relations between the morphisms.
+#! @Arguments morphisms
+#! @Returns IsList
 DeclareGlobalFunction( "RelationsBetweenMorphisms" );
 
