@@ -42,10 +42,18 @@ BindGlobal( "TheTypeStrongExceptionalCollection",
 
 ##
 InstallGlobalFunction( CreateStrongExceptionalCollection,
-  function( L )
-    local cat, collection, n, i;
-
-    L := ShallowCopy( L );
+  function( full )
+    local L, collection, n;
+    
+    if IsList( full ) then
+      
+      full := FullSubcategoryGeneratedByListOfObjects( CapCategory( full[ 1 ] ), full );
+      
+    fi;
+    
+    L := ShallowCopy( full!.Objects );
+    
+    L := List( L, obj -> AsFullSubcategoryCell( full, obj ) );
     
     if IsEmpty( L ) then
       
@@ -53,9 +61,7 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
     
     fi;
     
-    cat := CapCategory( L[ 1 ] );
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+    if not HasRangeCategoryOfHomomorphismStructure( full ) then
       
       Error( "The category needs homomorphism structure" );
     
@@ -81,12 +87,12 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
     ObjectifyWithAttributes(
       collection, TheTypeStrongExceptionalCollection,
         UnderlyingObjects, L,
-        NumberOfObjects, n );
+        NumberOfObjects, n,
+        DefiningFullSubcategory, full );
     
     return collection;
     
 end );
-
 
 ##
 InstallMethod( \[\],
