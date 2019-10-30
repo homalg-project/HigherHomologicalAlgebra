@@ -127,7 +127,11 @@ DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomor
 #! @Returns IsQuiverAlgebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
-
+#! @Description
+#! It returns a quiver algebra whose vertices correspond to the objects of the <A>E</A> and whose elements
+#! correspond to all possible compositions of morphisms between objects in <A>E</A>.
+#! @Arguments E, field
+#! @Returns IsQuiverAlgebra
 DeclareGlobalFunction( "QuiverAlgebraFromStrongExceptionalCollection" );
 
 
