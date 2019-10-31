@@ -15,8 +15,8 @@
 ##
 #############################
 
-DeclareRepresentation( "IsStrongExceptionalCollectionRep",
-                          IsStrongExceptionalCollection and IsAttributeStoringRep,
+DeclareRepresentation( "IsExceptionalCollectionRep",
+                          IsExceptionalCollection and IsAttributeStoringRep,
                             [ ] );
                          
 ##################################
@@ -26,13 +26,13 @@ DeclareRepresentation( "IsStrongExceptionalCollectionRep",
 ##################################
 
 ##
-BindGlobal( "StrongExceptionalCollectionFamily",
-  NewFamily( "StrongExceptionalCollectionFamily", IsObject ) );
+BindGlobal( "ExceptionalCollectionFamily",
+  NewFamily( "ExceptionalCollectionFamily", IsObject ) );
 
 ##
-BindGlobal( "TheTypeStrongExceptionalCollection", 
-  NewType( StrongExceptionalCollectionFamily, 
-                      IsStrongExceptionalCollectionRep ) );
+BindGlobal( "TheTypeExceptionalCollection", 
+  NewType( ExceptionalCollectionFamily, 
+                      IsExceptionalCollectionRep ) );
 
 ##################################
 ##
@@ -41,14 +41,16 @@ BindGlobal( "TheTypeStrongExceptionalCollection",
 ##################################
 
 ##
-InstallGlobalFunction( CreateStrongExceptionalCollection,
+InstallGlobalFunction( CreateExceptionalCollection,
   function( full )
     local L, collection, n;
     
     if IsList( full ) then
       
-      full := FullSubcategoryGeneratedByListOfObjects( CapCategory( full[ 1 ] ), full );
+      full := FullSubcategoryGeneratedByListOfObjects( full );
       
+      SetCachingOfCategoryCrisp( full );
+     
     fi;
     
     L := ShallowCopy( full!.Objects );
@@ -85,7 +87,7 @@ InstallGlobalFunction( CreateStrongExceptionalCollection,
     n := Length( L );
     
     ObjectifyWithAttributes(
-      collection, TheTypeStrongExceptionalCollection,
+      collection, TheTypeExceptionalCollection,
         UnderlyingObjects, L,
         NumberOfObjects, n,
         DefiningFullSubcategory, full );
@@ -96,7 +98,7 @@ end );
 
 ##
 InstallMethod( \[\],
-      [ IsStrongExceptionalCollection, IsInt ],
+      [ IsExceptionalCollection, IsInt ],
   function( collection, i )
     local n;
     
@@ -154,7 +156,7 @@ end );
 
 ##
 InstallMethod( Arrows,
-    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+    [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local cat, n, source, range, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
     
@@ -240,7 +242,7 @@ end );
 
 ##
 InstallMethod( OtherPaths,
-    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+    [ IsExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
     local n, paths;
@@ -291,7 +293,7 @@ end );
 
 ##
 InstallMethod( Paths,
-    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+    [ IsExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
     local paths;
@@ -311,24 +313,52 @@ end );
 
 ##
 InstallMethod( BasisForPaths,
-              [ IsStrongExceptionalCollection, IsInt, IsInt ],
+              [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local k, dim, paths, paths_labels, n, p, basis, labels, current_path, current_one_morphism;
     
     if IsBound( collection!.basis_for_paths!.( String( [ i, j ] ) ) ) then
         
         return collection!.basis_for_paths!.( String( [ i, j ] ) );
-    
+        
     fi;
-   
+    
+    if i > j then
+      
+      basis := [ ];
+      
+      labels := [ ];
+      
+      MakeImmutable( basis );
+      
+      MakeImmutable( labels );
+      
+      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
+      
+      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      
+      return basis;
+      
+    elif i = j then
+      
+      basis := [ IdentityMorphism( collection[ i ] ) ];
+      
+      labels := [ [ i, i, 0 ] ];
+      
+      MakeImmutable( basis );
+      
+      MakeImmutable( labels );
+      
+      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
+      
+      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      
+      return basis;
+      
+    fi;
+    
     dim := Dimension( HomomorphismStructureOnObjects( collection[ i ], collection[ j ] ) );
     
-    if IsZero( dim ) then
-      
-      return [ ];
-      
-    fi;
-
     paths := Paths( collection, i, j );
     
     paths_labels := LabelsForPaths( collection, i, j );
@@ -336,7 +366,13 @@ InstallMethod( BasisForPaths,
     n := Length( paths );
     
     p := PositionProperty( paths, p -> not IsZero( p ) );
-        
+    
+    if p = fail then
+      
+      return [ ];
+      
+    fi;
+    
     basis := [ paths[ p ] ];
     
     labels := [ paths_labels[ p ] ];
@@ -368,18 +404,18 @@ InstallMethod( BasisForPaths,
     MakeImmutable( basis );
     
     MakeImmutable( labels );
-
+    
     collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
     
     collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
-   
-    return basis;  
+    
+    return basis;
     
 end );
 
 ##
 InstallMethod( LabelsForArrows,
-    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+    [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local nr_arrows, labels;
     
@@ -403,7 +439,7 @@ end );
 
 ##
 InstallMethod( LabelsForOtherPaths,
-    [ IsStrongExceptionalCollection, IsInt, IsInt ],
+    [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local n, labels;
     
@@ -459,7 +495,7 @@ end );
 
 ##
 InstallMethod( LabelsForPaths,
-      [ IsStrongExceptionalCollection, IsInt, IsInt ],
+      [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     local labels;
     
@@ -484,7 +520,7 @@ end );
 
 ##
 InstallMethod( LabelsForBasisForPaths,
-              [ IsStrongExceptionalCollection, IsInt, IsInt ],
+              [ IsExceptionalCollection, IsInt, IsInt ],
   function( collection, i, j )
     
     if IsBound( collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) ) then
@@ -515,7 +551,7 @@ InstallGlobalFunction( RelationsBetweenMorphisms,
 end );
 
 ##
-InstallGlobalFunction( QuiverAlgebraFromStrongExceptionalCollection,
+InstallGlobalFunction( QuiverAlgebraFromExceptionalCollection,
   function( collection, field )
     local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j;
     
@@ -574,7 +610,87 @@ InstallGlobalFunction( QuiverAlgebraFromStrongExceptionalCollection,
 end );
 
 ##
-
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
+      [ IsExceptionalCollection, IsAlgebroid ],
+  function( collection, algebroid )
+    local n, full, A, F;
+    
+    n := NumberOfObjects( collection );
+    
+    full := DefiningFullSubcategory( collection );
+    
+    A := UnderlyingAlgebra( algebroid );
+    
+    F := CapFunctor( "to be named", full, algebroid );
+    
+    AddObjectFunction( F,
+      function( e )
+        local p;
+                
+        p := PositionProperty( [ 1 .. n ], i -> IsEqualForObjects( e, collection[ i ] ) );
+        
+        return algebroid.(p);
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, phi, range )
+        local s, i, r, j, basis, labels, dim, paths, rel;
+        
+        s := Source( phi );
+        
+        i := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( s, collection[ k ] ) );
+        
+        r := Range( phi );
+        
+        j := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( r, collection[ k ] ) );
+        
+        basis := BasisForPaths( collection, i, j );
+        
+        labels := LabelsForBasisForPaths( collection, i, j );
+        
+        dim := Length( basis );
+        
+        if i > j then
+          
+          return ZeroMorphism( source, range );
+          
+        elif i = j then
+          
+          paths := [ IdentityMorphism( algebroid.( i ) ) ]; # Because the quiver has no loops.
+          
+        else
+          
+          paths := List( labels, label ->
+                  PreCompose(
+                  List( label, arrow_label ->
+                    algebroid.( Concatenation( 
+                                  "v",
+                                  String( arrow_label[ 1 ] ),
+                                  "_v",
+                                  String( arrow_label[ 2 ] ),
+                                  "_",
+                                  String( arrow_label[ 3 ] ) )
+                              ) ) ) );
+        fi;
+        
+        rel := RelationsBetweenMorphisms( Concatenation( [ phi ], basis ) );
+        
+        if Length( rel ) > 1 then
+          
+          Error( "This should not happen, please report this" );
+          
+        fi;
+        
+        rel := AdditiveInverse( Inverse( rel[ 1 ][ 1 ] ) ) * rel[ 1 ];
+        
+        return rel{ [ 2 .. dim + 1 ] } * paths;
+        
+    end );
+    
+    return F;
+    
+end );
 
 ###########################
 ##
@@ -609,7 +725,7 @@ end );
 
 ##
 InstallMethod( ViewObj,
-    [ IsStrongExceptionalCollection ],
+    [ IsExceptionalCollection ],
   function( collection )
     local full;
     

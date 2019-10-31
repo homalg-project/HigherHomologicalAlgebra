@@ -5,4 +5,4 @@
 #
 
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gd");
-ReadPackage( "DerivedCategories", "gap/StrongExceptionalCollection.gd" );
+ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gd" );

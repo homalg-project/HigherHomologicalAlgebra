@@ -4,4 +4,4 @@
 # Reading the implementation part of the package.
 #
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
-ReadPackage( "DerivedCategories", "gap/StrongExceptionalCollection.gi" );
+ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
