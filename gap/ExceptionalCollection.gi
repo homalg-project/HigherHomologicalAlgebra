@@ -604,7 +604,9 @@ InstallGlobalFunction( QuiverAlgebraFromExceptionalCollection,
       od;
       
     od;
-  
+    
+    relations := ComputeGroebnerBasis( relations );
+    
     return QuotientOfPathAlgebra( A, relations ); 
     
 end );
