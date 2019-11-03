@@ -702,20 +702,55 @@ end );
 
 ##
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
-  function( m, n )
-    local sources_of_arrows, ranges_of_arrows, quiver;
+  function( nr_vertices, nr_arrows, nr_relations )
+    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel;
   
-    sources_of_arrows := List( [ 1 .. n ],
-      i -> Random( [ 1 .. m - 1 ] ) );
+    sources_of_arrows := List( [ 1 .. nr_arrows ],
+      i -> Random( [ 1 .. nr_vertices - 1 ] ) );
     
-    ranges_of_arrows := List( [ 1 .. n ],
-      i -> Random( [ sources_of_arrows[ i ] + 1 .. m ] ) );
+    ranges_of_arrows := List( [ 1 .. nr_arrows ],
+      i -> Random( [ sources_of_arrows[ i ] + 1 .. nr_vertices ] ) );
     
-    quiver := RightQuiver( "QQ", MakeLabelsFromPattern( "1", m ),
-                MakeLabelsFromPattern( "x1", n ),
-                  sources_of_arrows, ranges_of_arrows );
+    arrows := ListN( sources_of_arrows, ranges_of_arrows, {s,r} -> [ s, r ] );
     
-    return PathAlgebra( Rationals, quiver );
+    arrows := Collected( arrows );
+    
+    sources_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 1 ] ) ) );
+    
+    ranges_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 2 ] ) ) );
+   
+    labels := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], 
+      k -> Concatenation( "v", String( a[ 1 ][ 1 ] ), "_v", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
+    
+    quiver := RightQuiver( "QQ", [ 1 .. nr_vertices ],
+                labels, sources_of_arrows, ranges_of_arrows );
+    
+    A := PathAlgebra( Rationals, quiver );
+    
+    G := GeneratorsOfLeftOperatorAdditiveGroup( A );
+    
+    G := List( G, g -> g!.paths[ 1 ] );
+    
+    G := Filtered( G, g -> Length( g ) >= 2 );
+    
+    H := List( G, g -> [ Source( g ), Target( g ) ] );
+    
+    df_H := DuplicateFreeList( H );
+    
+    G := List( df_H, u -> G{ Positions( H, u ) } );
+    
+    if IsEmpty( G ) then
+      
+      return A;
+      
+    fi;
+    
+    rel := List( [ 1 .. nr_relations ], i ->
+      QuiverAlgebraElement(
+        A, List( [ 1 .. Size( G[ i mod Size( G ) ] ) ], k -> Random( [ -2 .. 2 ] ) ),
+        G[ i mod Size( G ) ] ) );
+    
+    return QuotientOfPathAlgebra( A, rel );
   
 end );
 
