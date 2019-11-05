@@ -615,7 +615,7 @@ end );
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
       [ IsExceptionalCollection, IsAlgebroid ],
   function( collection, algebroid )
-    local n, full, A, F;
+    local n, full, A, F, name;
     
     n := NumberOfObjects( collection );
     
@@ -623,7 +623,9 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
     
     A := UnderlyingAlgebra( algebroid );
     
-    F := CapFunctor( "to be named", full, algebroid );
+    name := Concatenation( "Isomorphism functor from ", Name( full ), " into ", Name( algebroid ) );
+    
+    F := CapFunctor( name, full, algebroid );
     
     AddObjectFunction( F,
       function( e )
