@@ -60,7 +60,6 @@ cat!.compute_basis_of_hom_using_homalg := [ true, 1, HomalgFieldOfRationals() ];
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddHomomorphismStructureUsingExternalHom( cat );;
 AddRandomMethodsToQuiverRepresentations( cat );;
 Finalize( cat );;
 
