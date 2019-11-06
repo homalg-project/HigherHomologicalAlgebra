@@ -14,6 +14,5 @@ algebroid := Algebroid( B );
 
 F := IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid( collection );
 G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC( collection );
-
-#G := EmbeddingOfAlgebroidInCategoryOfQuiverRepresentations( algebroid );
-
+I := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );
+ 
