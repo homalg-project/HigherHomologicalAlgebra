@@ -717,8 +717,8 @@ end );
 
 ##
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
-  function( nr_vertices, nr_arrows, nr_relations )
-    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel;
+  function( field, nr_vertices, nr_arrows, nr_relations )
+    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, cat;
   
     sources_of_arrows := List( [ 1 .. nr_arrows ],
       i -> Random( [ 1 .. nr_vertices - 1 ] ) );
@@ -735,12 +735,12 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     ranges_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 2 ] ) ) );
    
     labels := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], 
-      k -> Concatenation( "v", String( a[ 1 ][ 1 ] ), "_v", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
+      k -> Concatenation( "x", String( a[ 1 ][ 1 ] ), "_x", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
     
-    quiver := RightQuiver( "QQ", [ 1 .. nr_vertices ],
+    quiver := RightQuiver( "XX", [ 1 .. nr_vertices ],
                 labels, sources_of_arrows, ranges_of_arrows );
     
-    A := PathAlgebra( Rationals, quiver );
+    A := PathAlgebra( field, quiver );
     
     G := GeneratorsOfLeftOperatorAdditiveGroup( A );
     
@@ -756,16 +756,38 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     if IsEmpty( G ) then
       
-      return A;
+      rel := [ ];
+      
+    else
+    
+      rel := List( [ 1 .. nr_relations ], i ->
+        QuiverAlgebraElement(
+          A, List( [ 1 .. Size( G[ i mod Size( G ) ] ) ], k -> Random( [ -2 .. 2 ] ) ),
+            G[ i mod Size( G ) ] ) );
+    
+      rel := ComputeGroebnerBasis( rel );
       
     fi;
     
-    rel := List( [ 1 .. nr_relations ], i ->
-      QuiverAlgebraElement(
-        A, List( [ 1 .. Size( G[ i mod Size( G ) ] ) ], k -> Random( [ -2 .. 2 ] ) ),
-        G[ i mod Size( G ) ] ) );
+    A := QuotientOfPathAlgebra( A, rel );
     
-    return QuotientOfPathAlgebra( A, rel );
+    Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
+    
+    SetIsAdmissibleQuiverAlgebra( A, true );
+    
+    cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );
+    
+    SetIsLinearCategoryOverCommutativeRing( cat, true );
+    
+    SetCommutativeRingOfLinearCategory( cat, field );
+    
+    if not ( HasIsFieldForHomalg( field ) and IsFieldForHomalg( field ) ) then
+      
+      Info( InfoWarning, 1, "The category of quiver representations for this random quiver algebra may not have homomorphism strucure\n" );
+      
+    fi;
+     
+    return A;
   
 end );
 

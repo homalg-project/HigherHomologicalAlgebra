@@ -129,7 +129,7 @@ DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomor
 #! @Description
 #! It returns a quiver algebra with $m$ vertices and $n$ arrows and whose indecomposable 
 #! projective or injective objects defines an exceptional collection.
-#! @Arguments m, n
+#! @Arguments field, nr_vertices, nr_arrows, nr_relations
 #! @Returns IsQuiverAlgebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
