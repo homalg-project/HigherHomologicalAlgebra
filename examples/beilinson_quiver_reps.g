@@ -2,10 +2,9 @@ LoadPackage( "HomotopyCategoriesForCAP" );
 LoadPackage( "QPA" );
 LoadPackage( "LinearAlgebraForCAP" );
 LoadPackage( "DerivedCategories" );
-ReadPackage( "HomotopyCategoriesForCAP", "/examples/random_methods_for_categories_of_quiver_reps.g" );
 
-
-field := Rationals;;
+#field := Rationals;;
+field := HomalgFieldOfRationals( );
 
 quiver := RightQuiver( "q(4)[x0:1->2,x1:1->2,x2:1->2,x3:1->2,y0:2->3,y1:2->3,y2:2->3,y3:2->3,z0:3->4,z1:3->4,z2:3->4,z3:3->4]" );;
 Qq := PathAlgebra( field, quiver );;
@@ -28,6 +27,8 @@ A := QuotientOfPathAlgebra(
     Qq.y2 * Qq.z3 - Qq.y3 * Qq.z2
   ]
 );;
+
+SetIsAdmissibleQuiverAlgebra( A, true );
 
 # 
 # End( Ω^0(0) ⊕ Ω^1(1) ⊕ Ω^2(2) ⊕ Ω^3(3) )
@@ -54,24 +55,31 @@ B := QuotientOfPathAlgebra(
   ]
 );;
 
+SetIsAdmissibleQuiverAlgebra( B, true );
+
 cat := CategoryOfQuiverRepresentations( B : FinalizeCategory := false );;
-cat!.compute_basis_of_hom_using_homalg := [ true, 1, HomalgFieldOfRationals() ]; 
-# cat!.compute_basis_of_hom_using_homalg := [ true, 2, HomalgFieldOfRationals() ]; to hid [[#I  Using homalg to compute BasisOfHom(-,-)]]
+cat!.compute_basis_of_hom_using_homalg := [ true, 1, field ]; 
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
-SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
-AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddRandomMethodsToQuiverRepresentations( cat );;
+SetCommutativeRingOfLinearCategory( cat, field );;
 Finalize( cat );;
 
 
 full := FullSubcategoryGeneratedByListOfObjects( IndecProjRepresentations( B ) );
 collection := CreateExceptionalCollection( full );
-A := QuiverAlgebraFromExceptionalCollection( collection, HomalgFieldOfRationals( ) );
-algebroid := Algebroid( A );
-F := IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid( collection, algebroid );
-G := ExtendFunctorToAdditiveClosures( F );
-additive_full := AsCapCategory( Source( G ) );
-additive_alg := AsCapCategory( Range( G ) );
+C := EndomorphismAlgebraOfEC( collection );
+algebroid := Algebroid( C );
+
+
+F := IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid( collection );
+G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC( collection );
+
+add_F := ExtendFunctorToAdditiveClosures( F );
+Ho_add_F := ExtendFunctorToHomotopyCategoryFunctor( add_F );
+
+additive_full := AsCapCategory( Source( add_F ) );
+additive_alg := AsCapCategory( Range( add_F ) );
+
 a := AdditiveClosureObject( [ collection[1], collection[2] ], additive_full );
-ApplyFunctor( G, IdentityMorphism( a ) );
+add_F_a := ApplyFunctor( add_F, IdentityMorphism( a ) );
+
 
