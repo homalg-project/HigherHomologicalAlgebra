@@ -36,3 +36,22 @@ gap> for i in [ 1 .. N ] do
 >   fi;
 > fi;
 > od;;
+gap> I := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );;
+gap> vertices := Vertices( QuiverOfAlgebra( B ) );;
+gap> objects := List( vertices, v -> ObjectInAlgebroid( algebroid, v ) );;
+gap> for i in [ 1 .. N ] do
+> A := Random( objects{ [ 1 .. Int( Size( objects )/2 ) + 1 ] } );
+> B := Random( objects{ [ Int( Size( objects )/2 ) + 1 .. Size( objects ) ] } );
+> H := HomomorphismStructureOnObjects( A, B );
+> H := BasisOfExternalHom( DistinguishedObjectOfHomomorphismStructure( algebroid ), H );
+> H := List( H, h -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( A, B, h ) );
+> c := List( [ 1 .. Size( H ) ], k -> Random( [ -100 .. 100 ] ) );
+> if IsEmpty( c ) then
+>   continue;
+> fi;
+> c_H := c * H;
+> I_H := List( H, h -> ApplyFunctor( I, h ) );
+> if not IsEqualForMorphisms( c * I_H, ApplyFunctor( I, c_H ) ) then
+>   Error( "Bug detected!" );
+> fi;
+> od;;
