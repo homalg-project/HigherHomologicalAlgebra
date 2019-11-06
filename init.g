@@ -6,3 +6,4 @@
 
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gd");
 ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gd" );
+ReadPackage( "DerivedCategories", "gap/qpa.gd" );

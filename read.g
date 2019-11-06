@@ -5,3 +5,4 @@
 #
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
 ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
+ReadPackage( "DerivedCategories", "gap/qpa.gi" );
