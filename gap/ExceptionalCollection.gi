@@ -551,7 +551,8 @@ InstallGlobalFunction( RelationsBetweenMorphisms,
 end );
 
 ##
-InstallGlobalFunction( QuiverAlgebraFromExceptionalCollection,
+InstallMethod( QuiverAlgebraFromExceptionalCollection,
+        [ IsExceptionalCollection, IsField ],
   function( collection, field )
     local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j;
     
@@ -609,6 +610,18 @@ InstallGlobalFunction( QuiverAlgebraFromExceptionalCollection,
     
     return QuotientOfPathAlgebra( A, relations ); 
     
+##
+InstallMethod( EndomorphismAlgebraOfEC,
+    [ IsExceptionalCollection ],
+  function( collection )
+    local full, k;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    k := CommutativeRingOfLinearCategory( full );
+    
+    return QuiverAlgebraFromExceptionalCollection( collection, k );
+  
 end );
 
 ##
