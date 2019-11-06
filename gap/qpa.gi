@@ -123,6 +123,12 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
   function( p1, e, p2 )
     local A, quiver, basis, b1, b2, mats;
     
+    if IsZero( e ) then
+      
+      return ZeroMorphism( p1, p2 );
+      
+    fi;
+    
     A := AlgebraOfElement( e );
     
     quiver := QuiverOfAlgebra( A );
