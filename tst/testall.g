@@ -5,6 +5,8 @@
 # metadata in PackageInfo.g.
 #
 LoadPackage( "DerivedCategories" );
+LoadPackage( "LinearAlgebraForCAP" );
+LoadPackage( "GaussForHomalg" );
 
 TestDirectory(DirectoriesPackageLibrary( "DerivedCategories", "tst" ),
   rec(exitGAP := true));
