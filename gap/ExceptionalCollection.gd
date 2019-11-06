@@ -151,6 +151,10 @@ DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid",
 ##
 DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC",
         IsExceptionalCollection );
- 
+
+
+##
+DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra",
+        IsAlgebroid );
 
 

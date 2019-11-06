@@ -814,6 +814,71 @@ InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC,
     
 end );
 
+##
+InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra,
+        [ IsAlgebroid ],
+  function( algebroid )
+    local A, A_op, quiver_op, basis, projs, full, name, F, cat;
+    
+    A := UnderlyingQuiverAlgebra( algebroid );
+        
+    A_op := OppositeAlgebra( A );
+    
+    if IsAdmissibleQuiverAlgebra( A ) then
+      
+      SetIsAdmissibleQuiverAlgebra( A_op, true );
+      
+    fi;
+    
+    quiver_op := QuiverOfAlgebra( A_op );
+    
+    basis := BasisOfProjectives( A_op );
+    
+    projs := IndecProjRepresentations( A_op );
+    
+    cat := CategoryOfQuiverRepresentations( A_op );
+    
+    SetIsLinearCategoryOverCommutativeRing( cat, true );
+    
+    SetCommutativeRingOfLinearCategory( cat, LeftActingDomain( A_op ) );
+    
+    full := FullSubcategoryGeneratedByListOfObjects( projs );
+    
+    name := Concatenation( "Isomorphism from ", Name( algebroid ), " into ", Name( full ) );
+    
+    F := CapFunctor( name, algebroid, full );
+    
+    AddObjectFunction( F,
+      function( a )
+        local i, aa, p;
+        
+        i := VertexIndex( UnderlyingVertex( a ) );
+        
+        aa := basis[ PositionProperty( basis, b -> [ A_op.( String( Vertex( quiver_op, i ) ) ) ] in b ) ];
+        
+        p := projs[ PositionProperty( projs, p -> DimensionVector( p ) = List( aa, Size ) ) ];
+        
+        return AsFullSubcategoryCell( full, p );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        local e, i, j, mor;
+        
+        e := UnderlyingQuiverAlgebraElement( alpha );
+        
+        e := OppositeAlgebraElement( e );
+        
+        mor := MorphismBetweenIndecProjectivesGivenByElement( UnderlyingCell( s ), e, UnderlyingCell( r ) );
+        
+        return AsFullSubcategoryCell( full, mor );
+      
+    end );
+    
+    return F;
+    
+end );
 
 
 ###########################
