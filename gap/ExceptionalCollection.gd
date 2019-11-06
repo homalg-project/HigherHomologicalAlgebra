@@ -145,7 +145,12 @@ DeclareGlobalFunction( "RelationsBetweenMorphisms" );
 
 
 ##
-DeclareOperation( "IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid",
-      [ IsExceptionalCollection, IsAlgebroid ] );
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid",
+        IsExceptionalCollection );
+
+##
+DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC",
+        IsExceptionalCollection );
+ 
 
 

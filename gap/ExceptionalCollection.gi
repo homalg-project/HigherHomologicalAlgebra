@@ -625,16 +625,18 @@ InstallMethod( EndomorphismAlgebraOfEC,
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
-      [ IsExceptionalCollection, IsAlgebroid ],
-  function( collection, algebroid )
-    local n, full, A, F, name;
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid,
+        [ IsExceptionalCollection ],
+  function( collection )
+    local n, full, A, algebroid, name, F;
     
     n := NumberOfObjects( collection );
     
     full := DefiningFullSubcategory( collection );
     
-    A := UnderlyingAlgebra( algebroid );
+    A := EndomorphismAlgebraOfEC( collection );
+    
+    algebroid := Algebroid( A );
     
     name := Concatenation( "Isomorphism functor from ", Name( full ), " into ", Name( algebroid ) );
     
@@ -663,6 +665,12 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
         j := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( r, collection[ k ] ) );
         
         basis := BasisForPaths( collection, i, j );
+        
+        if IsEmpty( basis ) then
+          
+          return ZeroMorphism( source, range );
+          
+        fi;
         
         labels := LabelsForBasisForPaths( collection, i, j );
         
@@ -708,6 +716,85 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECToAlgebroid,
     return F;
     
 end );
+
+
+##
+InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC,
+        [ IsExceptionalCollection ],
+  function( collection )
+    local n, full, A, algebroid, name, F;
+    
+    n := NumberOfObjects( collection );
+    
+    full := DefiningFullSubcategory( collection );
+    
+    A := EndomorphismAlgebraOfEC( collection );
+    
+    algebroid := Algebroid( A );
+    
+    name := Concatenation( "Isomorphism functor from ", Name( algebroid ), " into ", Name( full ) );
+    
+    F := CapFunctor( name, algebroid, full );
+    
+    AddObjectFunction( F,
+      function( e )
+        local p;
+        
+        p := VertexIndex( UnderlyingVertex( e ) );
+        
+        return collection[ p ];
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, phi, range )
+        local s, i, r, j, basis, labels, e, paths, coeffs, arrow_list, paths_list;
+        
+        s := Source( phi );
+        
+        i := VertexIndex( UnderlyingVertex( s ) );
+        
+        r := Range( phi );
+        
+        j := VertexIndex( UnderlyingVertex( r ) );
+              
+        e := Representative( UnderlyingQuiverAlgebraElement( phi ) );
+        
+        if IsZero( e ) then
+          
+          return ZeroMorphism( source, range );
+          
+        fi;
+        
+        paths := Paths( e );
+        
+        coeffs := Coefficients( e );
+
+        arrow_list := List( paths, ArrowList );
+        
+        arrow_list := List( arrow_list, 
+          l -> List( l, arrow -> [
+                                    VertexIndex( Source( arrow ) ),
+                                    VertexIndex( Target( arrow ) ),
+                                    Int( SplitString( Label( arrow ), "_" )[ 3 ] )
+                                 ]
+                   ) );
+        
+        
+        paths_list := List( arrow_list,
+          l -> PreCompose(
+                   List( l, indices -> Arrows( collection, indices[ 1 ], indices[ 2 ] )[ indices[ 3 ] ] )
+                   ) );  
+        
+        return coeffs * paths_list;
+        
+    end );
+    
+    return F;
+    
+end );
+
+
 
 ###########################
 ##
