@@ -369,7 +369,19 @@ InstallMethod( BasisForPaths,
     
     if p = fail then
       
-      return [ ];
+      basis := [ ];
+      
+      labels := [ ];
+      
+      MakeImmutable( basis );
+    
+      MakeImmutable( labels );
+    
+      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
+    
+      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      
+      return basis;
       
     fi;
     
@@ -608,8 +620,16 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     relations := ComputeGroebnerBasis( relations );
     
-    return QuotientOfPathAlgebra( A, relations ); 
+    A := QuotientOfPathAlgebra( A, relations ); 
     
+    Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
+   
+    SetIsAdmissibleQuiverAlgebra( A, true );
+    
+    return A;
+    
+end );
+
 ##
 InstallMethod( EndomorphismAlgebraOfEC,
     [ IsExceptionalCollection ],
