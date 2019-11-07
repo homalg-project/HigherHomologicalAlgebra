@@ -129,7 +129,7 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphis
       Error( "The category needs homomorphism structure" );
       
     fi;
-
+    
     if IsEmpty( morphisms ) then
       
       H := HomomorphismStructureOnObjects( source, range );
@@ -645,7 +645,7 @@ InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid,
+InstallMethod( IsomorphismIntoAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, name, F;
@@ -739,7 +739,7 @@ end );
 
 
 ##
-InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection,
+InstallMethod( IsomorphismFromAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, name, F;
@@ -815,12 +815,19 @@ InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptional
 end );
 
 ##
-BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcategoryGeneratedByIndecProjRepsOverTheOppositeAlgebra",
+InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsAlgebroid ],
   function( algebroid )
-    local A, A_op, quiver_op, nr_vertices, basis, projs, cat, full, name, F, G;
+    local A, A_op, cat, FinalizeCategory, quiver_op, nr_vertices, basis, projs, full;
     
     A := UnderlyingQuiverAlgebra( algebroid );
-        
+    
+    if not IsFiniteDimensional( A ) then
+      
+      Error( "The underlying quiver algebra should be finite dimensional!\n" );
+      
+    fi;
+    
     A_op := OppositeAlgebra( A );
     
     if IsAdmissibleQuiverAlgebra( A ) then
@@ -828,15 +835,39 @@ BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcateg
       SetIsAdmissibleQuiverAlgebra( A_op, true );
       
     fi;
-    
+      
     cat := CategoryOfQuiverRepresentations( A_op : FinalizeCategory := false );
     
     SetIsLinearCategoryOverCommutativeRing( cat, true );
     
     SetCommutativeRingOfLinearCategory( cat, LeftActingDomain( A_op ) );
-
+    
     Finalize( cat );
     
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      Error( "Please check why ", Name( cat ), " has no homomorphism strucutre!\n" );
+      
+    fi;
+    
+    projs := IndecProjRepresentations( A_op );
+    
+    return FullSubcategoryGeneratedByListOfObjects( projs );
+    
+end );
+
+##
+InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsAlgebroid ],
+  function( algebroid )
+    local A, A_op, quiver_op, nr_vertices, basis, projs, full, name, F;
+    
+    A := UnderlyingQuiverAlgebra( algebroid );
+    
+    A_op := OppositeAlgebra( A );
+       
+    full := FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+
     quiver_op := QuiverOfAlgebra( A_op );
     
     nr_vertices := NumberOfVertices( quiver_op );
@@ -845,8 +876,6 @@ BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcateg
     
     projs := IndecProjRepresentations( A_op );
         
-    full := FullSubcategoryGeneratedByListOfObjects( projs );
-    
     name := Concatenation( "Isomorphism from ", Name( algebroid ), " into ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
@@ -862,8 +891,8 @@ BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcateg
         p := projs[ PositionProperty( projs, p -> DimensionVector( p ) = List( aa, Size ) ) ];
         
         return AsFullSubcategoryCell( full, p );
-        
-    end );
+      
+      end );
     
     AddMorphismFunction( F,
       function( s, alpha, r )
@@ -877,8 +906,32 @@ BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcateg
         
         return AsFullSubcategoryCell( full, mor );
       
-    end );
+      end );
     
+    return F;
+    
+end );
+
+##
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsAlgebroid ],
+  function( algebroid )
+    local A, A_op, quiver_op, nr_vertices, basis, projs, full, name, G;
+    
+    A := UnderlyingQuiverAlgebra( algebroid );
+    
+    A_op := OppositeAlgebra( A );
+       
+    full := FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    
+    quiver_op := QuiverOfAlgebra( A_op );
+    
+    nr_vertices := NumberOfVertices( quiver_op );
+    
+    basis := BasisOfProjectives( A_op );
+    
+    projs := IndecProjRepresentations( A_op );
+        
     name := Concatenation( "Isomorphism from ", Name( full ), " into ", Name( algebroid ) );
     
     G := CapFunctor( name, full, algebroid );
@@ -895,62 +948,37 @@ BindGlobal( "Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcateg
         
         return ObjectInAlgebroid( algebroid, Vertex( QuiverOfAlgebra( A ), i ) );
         
-    end );
+      end );
     
     AddMorphismFunction( G,
       function( s, alpha, r )
         local basis, I, images, dim, rel;
-      
+        
         basis := BasisOfExternalHom( s, r );
-      
-        I := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );
-      
+        
+        I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+        
         images := List( basis, b -> ApplyFunctor( I, b ) );
-      
+        
         dim := Size( basis );
-      
+        
         rel := RelationsBetweenMorphisms( Concatenation( [ alpha ], images ) );
-      
+        
         if Size( rel ) > 1 then
         
           Error( "This should not happen!\n" );
         
         fi;
-      
+        
         rel := AdditiveInverse( Inverse( rel[ 1 ][ 1 ] ) ) * rel[ 1 ];
-
+        
         return rel{ [ 2 .. dim + 1 ] } * basis;
       
-    end );
+      end );
     
-    SetIsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid, F );
-    
-    SetIsomorphismIntoAlgebroidFromFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid, G );
+    return G;
     
 end );
-
-##
-InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra,
-    [ IsAlgebroid ],
-  function( algebroid )
-    
-    Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcategoryGeneratedByIndecProjRepsOverTheOppositeAlgebra( algebroid );
-    
-    return IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );
-  
-end );
-
-##
-InstallMethod( IsomorphismIntoAlgebroidFromFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra,
-    [ IsAlgebroid ],
-  function( algebroid )
-    
-    Set_Isomorphisms_From_and_Into_Algebroid_From_and_Into_FullSubcategoryGeneratedByIndecProjRepsOverTheOppositeAlgebra( algebroid );
-    
-    return IsomorphismIntoAlgebroidFromFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );
-  
-end );
-
 
 ###########################
 ##
