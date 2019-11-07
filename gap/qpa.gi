@@ -145,6 +145,258 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
   
 end );
 
+Decompose1 :=
+  function( a )
+    local A, projs, dim_projs, dim, sol, i, B, m, k, l;
+    
+    A := AlgebraOfRepresentation( a );
+    
+    projs := ShallowCopy( IndecProjRepresentations( A ) );
+    
+    Sort( projs, {p1,p2} -> Size( PositionsProperty( DimensionVector( p1 ), IsZero ) ) > Size( PositionsProperty( DimensionVector( p2 ), IsZero ) ) );
+    
+    dim_projs := List( projs, DimensionVector );
+    
+    dim := DimensionVector( a );
+    
+    if IsZero( dim ) then
+      
+      return [ ];
+      
+    fi;
+    
+    sol := SolutionIntMat( dim_projs, dim );
+    
+    i := PositionProperty( sol, s -> not IsZero( s ) );
+    
+    B := BasisOfExternalHom( a, projs[ i ] );
+   
+    m := MorphismBetweenDirectSums( [ B ] );
+    
+    k := KernelEmbedding( m );
+    
+    if IsZero( k ) then
+      
+      return B;
+      
+    else
+      
+      l := Colift( k, IdentityMorphism( Source( k ) ) );
+      
+      return Concatenation( B, List( Decompose1( Source( k ) ), d -> PreCompose( l, d ) ) );
+      
+    fi;
+    
+end;
+
+Decompose2 :=
+  function( a )
+    local A, projs, dim_projs, dim, sol, i, B, m, cok, l;
+    
+    A := AlgebraOfRepresentation( a );
+    
+    projs := ShallowCopy( IndecProjRepresentations( A ) );
+    
+    Sort( projs, {p1,p2} -> Size( PositionsProperty( DimensionVector( p1 ), IsZero ) ) < Size( PositionsProperty( DimensionVector( p2 ), IsZero ) ) );
+    
+    dim_projs := List( projs, DimensionVector );
+    
+    dim := DimensionVector( a );
+    
+    if IsZero( dim ) then
+      
+      return [ ];
+      
+    fi;
+    
+    sol := SolutionIntMat( dim_projs, dim );
+    
+    i := PositionProperty( sol, s -> not IsZero( s ) );
+    
+    B := BasisOfExternalHom( projs[ i ], a );
+   
+    m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
+    
+    cok := CokernelProjection( m );
+    
+    if IsZero( cok ) then
+      
+      return B;
+      
+    else
+      
+      l := Lift( IdentityMorphism( Range( cok ) ), cok );
+      
+      return Concatenation( B, List( Decompose2( Range( cok ) ), d -> PreCompose( d, l ) ) );
+      
+    fi;
+    
+end;
+
+##
+InstallGlobalFunction( CertainRowsOfQPAMatrix,
+  function( mat, L )
+    local dim, rows, l;
+    
+    dim := DimensionsMat( mat );
+    
+    rows := RowsOfMatrix( mat );
+    
+    l := Filtered( L, e -> e in [ 1 .. DimensionsMat( mat )[ 1 ] ] );
+     
+    if l = [ ] then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), 0, dim[ 2 ] );
+      
+    fi;
+    
+    if dim[ 2 ] = 0 then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), Size( l ), 0 );
+      
+    fi;
+    
+    rows := rows{ l };
+   
+    return MatrixByRows( BaseDomain( mat ), [ Size( l ), dim[ 2 ] ], rows );
+  
+end );
+
+##
+InstallGlobalFunction( CertainColumnsOfQPAMatrix,
+  function( mat, L )
+    local cols, dim, l;
+    
+    cols := ColsOfMatrix( mat );
+    
+    dim := DimensionsMat( mat );
+    
+    l := Filtered( L, e -> e in [ 1 .. dim[ 2 ] ] );
+ 
+    if l = [ ] then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), dim[ 1 ], 0 );
+      
+    fi;
+    
+    if dim[ 1 ] = 0 then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( l ) );
+      
+    fi;
+    
+    cols := cols{ l };
+    
+    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( l ) ], cols );
+  
+end );
+
+##
+InstallMethod( DecomposeProjectiveQuiverRepresentation,
+        [ IsQuiverRepresentation ],
+  function( a )
+    local A, quiver, projs, dimension_vectors_of_projs, dimension_vector_of_a, sol, nr_arrows,
+      nr_vertices, mats_of_projs, dims, positions_simple_projs, summands, mats_of_a, F;
+    
+    if IsZero( a ) then
+      
+      return [ a ];
+      
+    fi;
+        
+    A := AlgebraOfRepresentation( a );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    projs := IndecProjRepresentations( A );
+    
+    dimension_vectors_of_projs := List( projs, DimensionVector );
+    
+    dimension_vector_of_a := DimensionVector( a );
+    
+    sol := SolutionIntMat( dimension_vectors_of_projs, dimension_vector_of_a );
+    
+    nr_arrows := NumberOfArrows( quiver );
+    
+    nr_vertices := NumberOfVertices( quiver );
+    
+    mats_of_projs:= List( projs, MatricesOfRepresentation );
+    
+    dims := List( mats_of_projs, mats -> List( mats, DimensionsMat ) );
+    
+    positions_simple_projs := PositionsProperty( dims, IsZero );
+    
+    summands := List( positions_simple_projs, p -> ListWithIdenticalEntries( sol[ p ], projs[ p ] ) );
+    
+    summands := Concatenation( summands );
+    
+    projs := projs{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
+    
+    dims := dims{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
+    
+    mats_of_projs := mats_of_projs{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
+    
+    mats_of_a := MatricesOfRepresentation( a );
+    
+    F := function( matrices )
+      local dims_of_mats, p, d;
+      
+      dims_of_mats := List( matrices, DimensionsMat );
+      
+      p := Positions( dims, dims_of_mats );
+      
+      if Length( p ) = 1 then
+        
+        return [ projs[ p[ 1 ] ] ];
+        
+      elif Length( p ) > 2 then
+      
+        Error( "This should not happen, please report this" );
+      
+      fi;
+      
+      p := PositionProperty( dims,
+        dim -> 
+          ListN( dim, matrices,
+            { l, m } -> CertainColumnsOfQPAMatrix(
+                          CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
+                          [ 1 .. l[ 2 ] ]
+                                                 )
+               ) 
+          = mats_of_projs[ Position( dims, dim ) ] );
+      
+      if p = fail then
+        
+        return fail;
+        
+      fi;
+      
+      matrices := ListN( dims[ p ], matrices,
+        { l, m } -> CertainColumnsOfQPAMatrix(
+                      CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
+                      [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
+                                             )
+                           );
+      
+      d := F( matrices );
+      
+      if d <> fail then
+        
+        return Concatenation( [ projs[ p ] ], d );
+        
+      else
+        
+        return fail;
+        
+      fi;
+    
+    end;
+    
+    return Concatenation( summands, F( mats_of_a ) );
+    
+end );
+
+
 
 #DeclareOperation( "PathsBetweenTwoVertices", [ IsQuiverAlgebra, IsInt, IsInt ] );
 #
