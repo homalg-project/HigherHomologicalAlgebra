@@ -55,14 +55,31 @@ DeclareAttribute( "NumberOfObjects", IsExceptionalCollection );
 DeclareAttribute( "UnderlyingObjects", IsExceptionalCollection );
 
 #! @Description
+#! The input is an exceptional collection $E$ and the output is an isomorphism functor into algebroid defined over the endomorphism algebra of
+#! $\bigoplus_i E_i$ for $E_i\in$<A>E</A>.
+#! @Arguments E
+#! @Returns a functor
+DeclareAttribute( "IsomorphismIntoAlgebroid",
+        IsExceptionalCollection );
+
+#! @Description
+#! The input is an exceptional collection <A>E</A> and the output is an isomorphism functor from algebroid defined over the endomorphism algebra of
+#! $\bigoplus_i E_i$ for $E_i \in$ <A>E</A>.
+#! @Arguments E
+#! @Returns a functor
+DeclareAttribute( "IsomorphismFromAlgebroid",
+        IsExceptionalCollection );
+
+
+#! @Description
 #! Returns the $i$'th object in <A>E</A>.
 #! @Arguments E, i
-#! @Returns IsList
+#! @Returns an object
 DeclareOperation( "\[\]", [ IsExceptionalCollection, IsInt ] );
 
 #! @Description
 #! It returns a basis for the vector space of morphisms from $E_i$ to $E_j$ that can not be factored
-#! along any other object in the exceptional collection.
+#! through any other object in the exceptional collection.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "Arrows", [ IsExceptionalCollection, IsInt, IsInt ] );
@@ -75,40 +92,40 @@ DeclareOperation( "Arrows", [ IsExceptionalCollection, IsInt, IsInt ] );
 DeclareOperation( "OtherPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns the union of <A>Arrows</A> and <A>OtherPaths</A> applied
+#! It returns the union of <C>Arrows</C> and <C>OtherPaths</C> applied
 #! on the same input. In other words it returns a generating set for the vector space Hom$(E_i,E_j)$.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "Paths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns a basis for <A>Paths( E, i, j )</A>.
+#! It returns a basis for <C>Paths( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "BasisForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>Arrows( E, i, j )</A>.
+#! It returns labels for <C>Arrows( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns IsList
 DeclareOperation( "LabelsForArrows", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>OtherPaths( E, i, j )</A>.
+#! It returns labels for <C>OtherPaths( E, i, j )</C>.
 #! @Arguments E, i, j
-#! @Returns IsList
+#! @Returns a list of lists
 DeclareOperation( "LabelsForOtherPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>Paths( E, i, j )</A>.
+#! It returns labels for <C>Paths( E, i, j )</C>.
 #! @Arguments E, i, j
-#! @Returns IsList
+#! @Returns a list of lists
 DeclareOperation( "LabelsForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 #! @Description
-#! It returns labels for <A>Paths( E, i, j )</A>.
+#! It returns labels for <C>Paths( E, i, j )</C>.
 #! @Arguments E, i, j
-#! @Returns IsList
+#! @Returns a list of lists
 DeclareOperation( "LabelsForBasisForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
 
 ####################################
@@ -118,19 +135,20 @@ DeclareOperation( "LabelsForBasisForPaths", [ IsExceptionalCollection, IsInt, Is
 ####################################
 
 #! @Description
-#! The input is a list of morphisms $(f_i:A\to B)$ for $i=1,\dots,n$ that live in 
+#! The arguments are two objects <A>A</A>, <A>B</A> and a list of morphisms <A>L</A>$:=(f_i:A\to B)$ for $i=1,\dots,n$ that live in
 #! a category equipped with homomorphism structure $(1,H(-,-),\nu)$. The output is
 #! the morphism $\langle \nu(f_1),\nu(f_2),\dots,\nu(f_n)\rangle:\oplus_{i=1}^n 1 \to H(A,B)$.
-#! @Arguments A, B, morphisms
-#! @Returns IsCapCategoryMorphism
+#! @Arguments A, B, L
+#! @Returns a morphism in range category of homomorphism structure
 DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure",
     [ IsCapCategoryObject, IsCapCategoryObject, IsList ] );
 
 #! @Description
-#! It returns a quiver algebra with $m$ vertices and $n$ arrows and whose indecomposable 
-#! projective or injective objects defines an exceptional collection.
-#! @Arguments field, nr_vertices, nr_arrows, nr_relations
-#! @Returns IsQuiverAlgebra
+#! The arguments are a field <A>F</A> and three non-negative integers <A>m</A>, <A>n</A> and <A>r</A>
+#! It returns a quiver algebra with <A>m</A> vertices, <A>n</A> arrows and at most <A>r</A> relations; and whose indecomposable 
+#! projective or injective objects define an exceptional collection.
+#! @Arguments F, m, n, r
+#! @Returns a quiver path algebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
 DeclareOperation( "QuiverAlgebraFromExceptionalCollection",
@@ -138,26 +156,20 @@ DeclareOperation( "QuiverAlgebraFromExceptionalCollection",
 
 
 #! @Description
-#! It returns the relations between the morphisms.
-#! @Arguments morphisms
-#! @Returns IsList
+#! The argument is a list of morphism <A>L</A> in some $k$-linear category equipped with homomorphism structure.
+#! The output is the relations between the morphisms.
+#! @Arguments L
+#! @Returns a list of ring elements
 DeclareGlobalFunction( "RelationsBetweenMorphisms" );
 
-
-##
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid",
-        IsExceptionalCollection );
-
-##
-DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection",
-        IsExceptionalCollection );
-
-
-##
-DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra",
+DeclareAttribute( "FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
         IsAlgebroid );
 
 ##
-DeclareAttribute( "IsomorphismIntoAlgebroidFromFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra",
+DeclareAttribute( "IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
+        IsAlgebroid );
+
+##
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
         IsAlgebroid );
 
