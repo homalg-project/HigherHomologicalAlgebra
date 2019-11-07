@@ -40,7 +40,7 @@ DeclareAttribute( "DefiningFullSubcategory", IsExceptionalCollection );
 #! Returns the endomorphism quiver algebra of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns a quiver algebra
-DeclareAttribute( "EndomorphismAlgebraOfEC", IsExceptionalCollection );
+DeclareAttribute( "EndomorphismAlgebraOfExceptionalCollection", IsExceptionalCollection );
 
 #! @Description
 #! Returns the number of objects of the exceptional collection <A>E</A>.
@@ -145,11 +145,11 @@ DeclareGlobalFunction( "RelationsBetweenMorphisms" );
 
 
 ##
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid",
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid",
         IsExceptionalCollection );
 
 ##
-DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC",
+DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection",
         IsExceptionalCollection );
 
 

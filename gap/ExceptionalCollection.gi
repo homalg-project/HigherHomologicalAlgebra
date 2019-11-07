@@ -631,7 +631,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
 end );
 
 ##
-InstallMethod( EndomorphismAlgebraOfEC,
+InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
     [ IsExceptionalCollection ],
   function( collection )
     local full, k;
@@ -645,7 +645,7 @@ InstallMethod( EndomorphismAlgebraOfEC,
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid,
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, name, F;
@@ -654,7 +654,7 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid,
     
     full := DefiningFullSubcategory( collection );
     
-    A := EndomorphismAlgebraOfEC( collection );
+    A := EndomorphismAlgebraOfExceptionalCollection( collection );
     
     algebroid := Algebroid( A );
     
@@ -739,7 +739,7 @@ end );
 
 
 ##
-InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC,
+InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection,
         [ IsExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, name, F;
@@ -748,7 +748,7 @@ InstallMethod( IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC,
     
     full := DefiningFullSubcategory( collection );
     
-    A := EndomorphismAlgebraOfEC( collection );
+    A := EndomorphismAlgebraOfExceptionalCollection( collection );
     
     algebroid := Algebroid( A );
     
