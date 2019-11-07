@@ -11,10 +11,10 @@ gap> while ok = false do
 gap> cat := CategoryOfQuiverRepresentations( A );;
 gap> Finalize( cat );;
 gap> collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );;
-gap> B := EndomorphismAlgebraOfEC( collection );;
+gap> B := EndomorphismAlgebraOfExceptionalCollection( collection );;
 gap> algebroid := Algebroid( B );;
-gap> F := IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid( collection );;
-gap> G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC( collection );;
+gap> F := IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid( collection );;
+gap> G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection( collection );;
 gap> FG := PreCompose( F, G );;
 gap> N := 20;;
 gap> for i in [ 1 .. N ] do

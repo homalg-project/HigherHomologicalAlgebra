@@ -66,12 +66,12 @@ Finalize( cat );;
 
 full := FullSubcategoryGeneratedByListOfObjects( IndecProjRepresentations( B ) );
 collection := CreateExceptionalCollection( full );
-C := EndomorphismAlgebraOfEC( collection );
+C := EndomorphismAlgebraOfExceptionalCollection( collection );
 algebroid := Algebroid( C );
 
 
-F := IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid( collection );
-G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC( collection );
+F := IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid( collection );
+G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection( collection );
 
 add_F := ExtendFunctorToAdditiveClosures( F );
 Ho_add_F := ExtendFunctorToHomotopyCategoryFunctor( add_F );

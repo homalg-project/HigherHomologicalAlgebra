@@ -9,10 +9,10 @@ Finalize( cat );
 collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );
 #collection := CreateExceptionalCollection( IndecInjRepresentations( A ) );
 
-B := EndomorphismAlgebraOfEC( collection );
+B := EndomorphismAlgebraOfExceptionalCollection( collection );
 algebroid := Algebroid( B );
 
-F := IsomorphismFromFullSubcategoryGeneratedByECIntoAlgebroid( collection );
-G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByEC( collection );
+F := IsomorphismFromFullSubcategoryGeneratedByExceptionalCollectionIntoAlgebroid( collection );
+G := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExceptionalCollection( collection );
 I := IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra( algebroid );
  
