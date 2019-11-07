@@ -1052,6 +1052,8 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     SetCommutativeRingOfLinearCategory( cat, field );
     
+    Finalize( cat );
+    
     if not ( HasIsFieldForHomalg( field ) and IsFieldForHomalg( field ) ) then
       
       Info( InfoWarning, 1, "The category of quiver representations for this random quiver algebra may not have homomorphism strucure\n" );
