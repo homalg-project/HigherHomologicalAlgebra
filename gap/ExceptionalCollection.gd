@@ -157,4 +157,7 @@ DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByExcepti
 DeclareAttribute( "IsomorphismFromAlgebroidIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra",
         IsAlgebroid );
 
+##
+DeclareAttribute( "IsomorphismIntoAlgebroidFromFullSubcategoryGeneratedByIndecProjRepresentationsOverTheOppositeAlgebra",
+        IsAlgebroid );
 
