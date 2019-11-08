@@ -1006,9 +1006,9 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     ranges_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 2 ] ) ) );
    
     labels := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], 
-      k -> Concatenation( "x", String( a[ 1 ][ 1 ] ), "_x", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
+      k -> Concatenation( "o", String( a[ 1 ][ 1 ] ), "_o", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
     
-    quiver := RightQuiver( "XX", [ 1 .. nr_vertices ],
+    quiver := RightQuiver( "Q", [ 1 .. nr_vertices ],
                 labels, sources_of_arrows, ranges_of_arrows );
     
     A := PathAlgebra( field, quiver );
