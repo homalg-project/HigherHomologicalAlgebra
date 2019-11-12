@@ -815,18 +815,36 @@ InstallMethod( IsomorphismFromAlgebroid,
 end );
 
 ##
-InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-          [ IsAlgebroid ],
-  function( algebroid )
-    local A, A_op, cat, FinalizeCategory, quiver_op, nr_vertices, basis, projs, full;
+InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
+          [ IsQuiverRepresentationCategory ],
+  function( cat )
+    local A, full_subcategory_by_projs, projs;
     
-    A := UnderlyingQuiverAlgebra( algebroid );
+    A := AlgebraOfCategory( cat );
     
     if not IsFiniteDimensional( A ) then
       
       Error( "The underlying quiver algebra should be finite dimensional!\n" );
       
     fi;
+    
+    full_subcategory_by_projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
+    
+    projs := IndecProjRepresentations( A );
+    
+    projs := List( projs, p -> AsFullSubcategoryCell( full_subcategory_by_projs, p ) );
+    
+    return FullSubcategoryGeneratedByListOfObjects( projs );
+   
+end );
+
+##
+InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsAlgebroid ],
+  function( algebroid )
+    local A, A_op, cat, FinalizeCategory;
+     
+    A := UnderlyingQuiverAlgebra( algebroid );
     
     A_op := OppositeAlgebra( A );
     
@@ -838,21 +856,21 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
       
     cat := CategoryOfQuiverRepresentations( A_op : FinalizeCategory := false );
     
-    SetIsLinearCategoryOverCommutativeRing( cat, true );
-    
-    SetCommutativeRingOfLinearCategory( cat, LeftActingDomain( A_op ) );
-    
-    Finalize( cat );
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+    if not HasIsLinearCategoryOverCommutativeRing( cat ) then
       
-      Error( "Please check why ", Name( cat ), " has no homomorphism strucutre!\n" );
+      SetIsLinearCategoryOverCommutativeRing( cat, true );
       
     fi;
     
-    projs := IndecProjRepresentations( A_op );
+    if not HasCommutativeRingOfLinearCategory( cat ) then
+      
+      SetCommutativeRingOfLinearCategory( cat, LeftActingDomain( A_op ) );
+      
+    fi;
     
-    return FullSubcategoryGeneratedByListOfObjects( projs );
+    Finalize( cat );
+    
+    return FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
     
 end );
 
@@ -860,14 +878,16 @@ end );
 InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
-    local A, A_op, quiver_op, nr_vertices, basis, projs, full, name, F;
+    local A, A_op, full, ambient_cat, quiver_op, nr_vertices, basis, projs, projs_in_subcategory, name, F;
     
     A := UnderlyingQuiverAlgebra( algebroid );
     
     A_op := OppositeAlgebra( A );
        
     full := FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
-
+    
+    ambient_cat := AmbientCategory( full );
+    
     quiver_op := QuiverOfAlgebra( A_op );
     
     nr_vertices := NumberOfVertices( quiver_op );
@@ -875,7 +895,9 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     basis := BasisOfProjectives( A_op );
     
     projs := IndecProjRepresentations( A_op );
-        
+    
+    projs_in_subcategory := List( projs, p -> AsFullSubcategoryCell( ambient_cat, p ) );
+    
     name := Concatenation( "Isomorphism from ", Name( algebroid ), " into ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
@@ -888,7 +910,7 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
         
         aa := basis[ PositionProperty( basis, b -> [ A_op.( String( Vertex( quiver_op, i ) ) ) ] in b ) ];
         
-        p := projs[ PositionProperty( projs, p -> DimensionVector( p ) = List( aa, Size ) ) ];
+        p := projs_in_subcategory[ PositionProperty( projs, p -> DimensionVector( p ) = List( aa, Size ) ) ];
         
         return AsFullSubcategoryCell( full, p );
       
@@ -902,7 +924,12 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
         
         e := OppositeAlgebraElement( e );
         
-        mor := MorphismBetweenIndecProjectivesGivenByElement( UnderlyingCell( s ), e, UnderlyingCell( r ) );
+        mor := MorphismBetweenIndecProjectivesGivenByElement( 
+                UnderlyingCell( UnderlyingCell( s ) ),
+                e,
+                UnderlyingCell( UnderlyingCell( r ) ) );
+        
+        mor := AsFullSubcategoryCell( ambient_cat, mor );
         
         return AsFullSubcategoryCell( full, mor );
       
@@ -940,7 +967,7 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
       function( a )
         local p, i;
         
-        p := UnderlyingCell( a );
+        p := UnderlyingCell( UnderlyingCell( a ) );
         
         p := basis[ PositionProperty( basis, b -> DimensionVector( p ) = List( b, Size ) ) ];
         
@@ -979,6 +1006,78 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     return G;
     
 end );
+
+##
+InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
+          [ IsCapCategory ],
+  function( cat )
+    local full, finalize;
+    
+    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat ) and IsAbelianCategoryWithEnoughProjectives( cat ) ) then
+      
+      Error( "The input should be an abelian category with enough projectives" );
+      
+    fi;
+    
+    full := FullSubcategory( cat, "Full subcategory generated by projective objects in " : FinalizeCategory := false );
+    
+    if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
+      
+      ##
+      AddIsWellDefinedForObjects( full,
+        function( a )
+        
+          return IsWellDefined( UnderlyingCell( a ) ) and IsProjective( UnderlyingCell( a ) );
+    
+      end );
+      
+      ##
+      AddIsWellDefinedForMorphisms( full,
+        function( phi )
+          
+          return IsWellDefined( Source( phi ) ) and IsWellDefined( Range( phi ) ) and IsWellDefined( UnderlyingCell( phi ) );
+      
+      end );
+    
+    fi;
+    
+    if CanCompute( cat, "BasisOfExternalHom" ) and CanCompute( cat, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
+      
+      ##
+      AddBasisOfExternalHom( full,
+        function( a, b )
+          local B;
+          
+          B := BasisOfExternalHom( UnderlyingCell( a ), UnderlyingCell( b ) );
+          
+          return List( B, m -> AsFullSubcategoryCell( full, m ) );
+          
+      end );
+      
+      ##
+      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
+        function( alpha, B )
+          
+          return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
+          
+      end );
+     
+    fi;
+    
+    finalize := ValueOption( "FinalizeCategory" );
+    
+    if finalize = false then
+      
+      return full;
+    
+    fi;
+    
+    Finalize( full );
+    
+    return full;
+
+end );
+
 
 ###########################
 ##
