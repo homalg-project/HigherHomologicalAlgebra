@@ -1,3 +1,0 @@
-
-
-DeclareAttribute( "DecomposeProjectiveObject", IsQuiverRepresentation );
