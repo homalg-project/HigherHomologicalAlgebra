@@ -1,5 +1,6 @@
 
 
+DeclareAttribute( "DecomposeProjectiveQuiverRepresentation", IsQuiverRepresentation );
 
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlgebraElement" );
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement" );
@@ -9,5 +10,3 @@ DeclareOperation( "MorphismBetweenIndecProjectivesGivenByElement",
 DeclareGlobalFunction( "CertainRowsOfQPAMatrix" );
 DeclareGlobalFunction( "CertainColumnsOfQPAMatrix" );
 DeclareGlobalFunction( "StackMatricesDiagonally" );
-
-DeclareAttribute( "DecomposeProjectiveQuiverRepresentation",  IsQuiverRepresentation );
