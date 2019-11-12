@@ -296,7 +296,7 @@ end );
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
   function( a )
-    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, mats, isolated_summands, new_dim_vec, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats, found_part_isomorphic_to_some_proj, current_proj, temp, b, s, d, morphism_into_new_a, dim_projs, dim, p, B, m, k;
+    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, mats, isolated_summands, new_dim_vec, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats, found_part_isomorphic_to_some_proj, current_proj, temp, b, s, d, morphism_from_new_a, dim_projs, dim, p, B, m, k;
     
     if IsZero( a ) then
       
@@ -454,7 +454,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
           
           if IsWellDefined( temp ) then
             
-            b := BasisOfExternalHom( temp, projs[ i ] );
+            b := BasisOfExternalHom( projs[ i ], temp );
           
             if Size( b ) = 1 and IsIsomorphism( b[ 1 ] ) then
             
@@ -509,11 +509,11 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     new_a := LazyQuiverRepresentation( A, new_dim_vec, mats );
     
-    s := Concatenation( List( o, Source ), [ new_a ] );
+    s := Concatenation( List( o, Range ), [ new_a ] );
      
     d := DirectSum( s );
      
-    o := List( [ 1 .. Size( s ) - 1 ], i -> ProjectionInFactorOfDirectSumWithGivenDirectSum( s, i, d ) );
+    o := List( [ 1 .. Size( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
      
     if IsZero( new_a ) then
       
@@ -521,9 +521,9 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
     else
       
-      morphism_into_new_a := ProjectionInFactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
+      morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
       
-      Sort( projs, { a, b } -> IsEmpty( BasisOfExternalHom( b, a ) ) );
+      Sort( projs, { a, b } -> IsEmpty( BasisOfExternalHom( a, b ) ) );
 
       dim_projs := List( projs, DimensionVector );
       
@@ -535,19 +535,19 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
       for i in p do
         
-        B := BasisOfExternalHom( new_a, projs[ i ] );
+        B := BasisOfExternalHom( projs[ i ], new_a );
    
-        o := Concatenation( o, List( B, b -> PreCompose( morphism_into_new_a, b ) ) );
+        o := Concatenation( o, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
         
-        m := MorphismBetweenDirectSums( [ B ] );
+        m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
     
-        k := KernelEmbedding( m );
+        k := CokernelProjection( m );
           
-        new_a := Source( k );
+        new_a := Range( k );
         
-        Info( InfoWarning, 2, "DecomposeProjectiveObject: A colift in quiver representations is being computed" );
+        Info( InfoWarning, 2, "DecomposeProjectiveObject: A lift in quiver representations is being computed" );
         
-        morphism_into_new_a := PreCompose( morphism_into_new_a, Colift( k, IdentityMorphism( Source( k ) ) ) );
+        morphism_from_new_a := PreCompose( Lift( IdentityMorphism( new_a ), k ), morphism_from_new_a );
         
         Info( InfoWarning, 2, "done ..." );
        
