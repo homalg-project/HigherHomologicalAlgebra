@@ -145,106 +145,22 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
   
 end );
 
-Decompose1 :=
-  function( a )
-    local A, projs, dim_projs, dim, sol, i, B, m, k, l;
-    
-    A := AlgebraOfRepresentation( a );
-    
-    projs := ShallowCopy( IndecProjRepresentations( A ) );
-    
-    Sort( projs, {p1,p2} -> Size( PositionsProperty( DimensionVector( p1 ), IsZero ) ) > Size( PositionsProperty( DimensionVector( p2 ), IsZero ) ) );
-    
-    dim_projs := List( projs, DimensionVector );
-    
-    dim := DimensionVector( a );
-    
-    if IsZero( dim ) then
-      
-      return [ ];
-      
-    fi;
-    
-    sol := SolutionIntMat( dim_projs, dim );
-    
-    i := PositionProperty( sol, s -> not IsZero( s ) );
-    
-    B := BasisOfExternalHom( a, projs[ i ] );
-   
-    m := MorphismBetweenDirectSums( [ B ] );
-    
-    k := KernelEmbedding( m );
-    
-    if IsZero( k ) then
-      
-      return B;
-      
-    else
-      
-      l := Colift( k, IdentityMorphism( Source( k ) ) );
-      
-      return Concatenation( B, List( Decompose1( Source( k ) ), d -> PreCompose( l, d ) ) );
-      
-    fi;
-    
-end;
-
-Decompose2 :=
-  function( a )
-    local A, projs, dim_projs, dim, sol, i, B, m, cok, l;
-    
-    A := AlgebraOfRepresentation( a );
-    
-    projs := ShallowCopy( IndecProjRepresentations( A ) );
-    
-    Sort( projs, {p1,p2} -> Size( PositionsProperty( DimensionVector( p1 ), IsZero ) ) < Size( PositionsProperty( DimensionVector( p2 ), IsZero ) ) );
-    
-    dim_projs := List( projs, DimensionVector );
-    
-    dim := DimensionVector( a );
-    
-    if IsZero( dim ) then
-      
-      return [ ];
-      
-    fi;
-    
-    sol := SolutionIntMat( dim_projs, dim );
-    
-    i := PositionProperty( sol, s -> not IsZero( s ) );
-    
-    B := BasisOfExternalHom( projs[ i ], a );
-   
-    m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
-    
-    cok := CokernelProjection( m );
-    
-    if IsZero( cok ) then
-      
-      return B;
-      
-    else
-      
-      l := Lift( IdentityMorphism( Range( cok ) ), cok );
-      
-      return Concatenation( B, List( Decompose2( Range( cok ) ), d -> PreCompose( d, l ) ) );
-      
-    fi;
-    
-end;
-
 ##
 InstallGlobalFunction( CertainRowsOfQPAMatrix,
   function( mat, L )
-    local dim, rows, l;
+    local dim, rows;
     
     dim := DimensionsMat( mat );
     
     rows := RowsOfMatrix( mat );
     
-    l := Filtered( L, e -> e in [ 1 .. DimensionsMat( mat )[ 1 ] ] );
+    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 1 ] ) then
+      
+      Error( "All indices should be less or equal to the number of rows!\n" );
+      
+    fi;
      
-    if l = [ ] then
+    if L = [ ] then
       
       return MakeZeroMatrix( BaseDomain( mat ), 0, dim[ 2 ] );
       
@@ -252,28 +168,32 @@ InstallGlobalFunction( CertainRowsOfQPAMatrix,
     
     if dim[ 2 ] = 0 then
       
-      return MakeZeroMatrix( BaseDomain( mat ), Size( l ), 0 );
+      return MakeZeroMatrix( BaseDomain( mat ), Size( L ), 0 );
       
     fi;
     
-    rows := rows{ l };
+    rows := rows{ L };
    
-    return MatrixByRows( BaseDomain( mat ), [ Size( l ), dim[ 2 ] ], rows );
+    return MatrixByRows( BaseDomain( mat ), [ Size( L ), dim[ 2 ] ], rows );
   
 end );
 
 ##
 InstallGlobalFunction( CertainColumnsOfQPAMatrix,
   function( mat, L )
-    local cols, dim, l;
+    local cols, dim;
     
     cols := ColsOfMatrix( mat );
     
     dim := DimensionsMat( mat );
     
-    l := Filtered( L, e -> e in [ 1 .. dim[ 2 ] ] );
+    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 2 ] ) then
+      
+      Error( "All indices should be less or equal to the number of columns!\n" );
+      
+    fi;
  
-    if l = [ ] then
+    if L = [ ] then
       
       return MakeZeroMatrix( BaseDomain( mat ), dim[ 1 ], 0 );
       
@@ -281,122 +201,52 @@ InstallGlobalFunction( CertainColumnsOfQPAMatrix,
     
     if dim[ 1 ] = 0 then
       
-      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( l ) );
+      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( L ) );
       
     fi;
     
-    cols := cols{ l };
+    cols := cols{ L };
     
-    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( l ) ], cols );
+    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( L ) ], cols );
   
 end );
 
 ##
-InstallMethod( DecomposeProjectiveQuiverRepresentation,
-        [ IsQuiverRepresentation ],
-  function( a )
-    local A, quiver, projs, dimension_vectors_of_projs, dimension_vector_of_a, sol, nr_arrows,
-      nr_vertices, mats_of_projs, dims, positions_simple_projs, summands, mats_of_a, F;
+InstallGlobalFunction( StackMatricesDiagonally,
+  function( mat_1, mat_2 )
+    local d1,d2,F, mat_1_, mat_2_; 
+
+    d1 := DimensionsMat( mat_1 );
     
-    if IsZero( a ) then
+    d2 := DimensionsMat( mat_2 );
+   
+    if d1 = [ 0, 0 ] then
       
-      return [ a ];
+      return mat_2;
       
     fi;
-        
-    A := AlgebraOfRepresentation( a );
     
-    quiver := QuiverOfAlgebra( A );
-    
-    projs := IndecProjRepresentations( A );
-    
-    dimension_vectors_of_projs := List( projs, DimensionVector );
-    
-    dimension_vector_of_a := DimensionVector( a );
-    
-    sol := SolutionIntMat( dimension_vectors_of_projs, dimension_vector_of_a );
-    
-    nr_arrows := NumberOfArrows( quiver );
-    
-    nr_vertices := NumberOfVertices( quiver );
-    
-    mats_of_projs:= List( projs, MatricesOfRepresentation );
-    
-    dims := List( mats_of_projs, mats -> List( mats, DimensionsMat ) );
-    
-    positions_simple_projs := PositionsProperty( dims, IsZero );
-    
-    summands := List( positions_simple_projs, p -> ListWithIdenticalEntries( sol[ p ], projs[ p ] ) );
-    
-    summands := Concatenation( summands );
-    
-    projs := projs{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
-    
-    dims := dims{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
-    
-    mats_of_projs := mats_of_projs{ Difference( [ 1 .. nr_vertices ], positions_simple_projs ) };
-    
-    mats_of_a := MatricesOfRepresentation( a );
-    
-    F := function( matrices )
-      local dims_of_mats, p, d;
+    if d2 = [ 0, 0 ] then
       
-      dims_of_mats := List( matrices, DimensionsMat );
+      return mat_1;
       
-      p := Positions( dims, dims_of_mats );
-      
-      if Length( p ) = 1 then
-        
-        return [ projs[ p[ 1 ] ] ];
-        
-      elif Length( p ) > 2 then
-      
-        Error( "This should not happen, please report this" );
-      
-      fi;
-      
-      p := PositionProperty( dims,
-        dim -> 
-          ListN( dim, matrices,
-            { l, m } -> CertainColumnsOfQPAMatrix(
-                          CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
-                          [ 1 .. l[ 2 ] ]
-                                                 )
-               ) 
-          = mats_of_projs[ Position( dims, dim ) ] );
-      
-      if p = fail then
-        
-        return fail;
-        
-      fi;
-      
-      matrices := ListN( dims[ p ], matrices,
-        { l, m } -> CertainColumnsOfQPAMatrix(
-                      CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
-                      [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
-                                             )
-                           );
-      
-      d := F( matrices );
-      
-      if d <> fail then
-        
-        return Concatenation( [ projs[ p ] ], d );
-        
-      else
-        
-        return fail;
-        
-      fi;
+    fi;
+   
+    F := BaseDomain( mat_1 );
     
-    end;
+    if F <> BaseDomain( mat_2 ) then
+      
+       Error( "matrices over different rings" );
+       
+    fi;
+   
+    mat_1_ := StackMatricesHorizontally( mat_1, MakeZeroMatrix( F, d1[ 1 ], d2[ 2 ] ) );
     
-    return Concatenation( summands, F( mats_of_a ) );
+    mat_2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[ 1 ], d1[ 2 ] ), mat_2 );
+    
+    return StackMatricesVertically( mat_1_, mat_2_ );
     
 end );
-
-
 
 #DeclareOperation( "PathsBetweenTwoVertices", [ IsQuiverAlgebra, IsInt, IsInt ] );
 #

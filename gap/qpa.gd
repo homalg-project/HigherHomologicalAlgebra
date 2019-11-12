@@ -8,5 +8,6 @@ DeclareOperation( "MorphismBetweenIndecProjectivesGivenByElement",
 
 DeclareGlobalFunction( "CertainRowsOfQPAMatrix" );
 DeclareGlobalFunction( "CertainColumnsOfQPAMatrix" );
+DeclareGlobalFunction( "StackMatricesDiagonally" );
 
 DeclareAttribute( "DecomposeProjectiveQuiverRepresentation",  IsQuiverRepresentation );
