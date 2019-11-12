@@ -4,7 +4,6 @@ LoadPackage( "LinearAlgebraForCAP" );
 field := HomalgFieldOfRationals( );
 A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 5, 10, 6 );
 cat := CategoryOfQuiverRepresentations( A );
-Finalize( cat );
 
 collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );
 #collection := CreateExceptionalCollection( IndecInjRepresentations( A ) );
