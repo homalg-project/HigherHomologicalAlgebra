@@ -296,7 +296,7 @@ end );
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
   function( a )
-    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, mats, isolated_summands, new_dim_vec, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats, found_part_isomorphic_to_some_proj, current_proj, temp, b, s, d, morphism_from_new_a, dim_projs, dim, p, B, m, k;
+    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, new_dim_vec, mats, isolated_summands, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats_1, current_mats_2, current_mats_3, current_mats_4, found_part_isomorphic_to_some_proj, temp, b, s, d, morphism_from_new_a, B, m, k, p;
     
     if IsZero( a ) then
       
@@ -322,6 +322,12 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     sol := SolutionIntMat( dim_vectors_of_projs, dim_vector_of_a );
     
+    if ForAny( sol, s -> s < 0 ) then
+      
+      Error( "Please check if the input is realy projective object!\n" );
+      
+    fi;
+    
     nr_arrows := NumberOfArrows( quiver );
     
     nr_vertices := NumberOfVertices( quiver );
@@ -329,6 +335,8 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     positions_isolated_projs := PositionsProperty( dims, d -> IsZero( d ) );
     
     new_a := a;
+    
+    new_dim_vec := dim_vector_of_a;
     
     mats := MatricesOfRepresentation( new_a );
     
@@ -374,7 +382,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                 
         if not ForAny( Concatenation( dims_of_mats - dims[ i ] ), IsNegInt ) then
           
-          current_mats :=
+          current_mats_1 :=
             ListN( dims[ i ], mats,
               { l, m } -> CertainColumnsOfQPAMatrix(
                             CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
@@ -382,25 +390,45 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                                                  )
                );
           
-          if current_mats = mats_of_projs[ i ] then
-            
-            current_mats := ListN( dims[ i ], mats,
+          current_mats_2 :=
+            ListN( dims[ i ], mats,
               { l, m } -> CertainColumnsOfQPAMatrix(
-                    CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
-                      [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
+                            CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
+                              [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
                                                    )
                            );
+           
+          if current_mats_1 = mats_of_projs[ i ] then
             
+            current_mats_3 :=
+              ListN( dims[ i ], mats,
+                { l, m } -> CertainColumnsOfQPAMatrix(
+                              CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
+                                [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
+                                                   )
+                  );
             
-            if ForAll( mats_of_projs[ i ], IsZero ) then
-                
-                if not mats = ListN( mats_of_projs[ i ], current_mats, StackMatricesDiagonally ) then
-                  
-                  i := i + 1;
-                  
-                  continue;
-                
-                fi;
+            if not ForAll( current_mats_3, IsZero ) then
+              
+              i := i + 1;
+              
+              continue; 
+            
+            fi;
+            
+            current_mats_4 :=
+              ListN( dims[ i ], mats,
+                { l, m } -> CertainColumnsOfQPAMatrix(
+                              CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
+                                [ 1 .. l[ 2 ] ]
+                                                   )
+                  );
+            
+            if not ForAll( current_mats_4, IsZero ) then
+              
+              i := i + 1;
+              
+              continue;
             
             fi;
             
@@ -408,7 +436,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
             
             Add( o, IdentityMorphism( projs[ i ] ) );
             
-            mats := current_mats;
+            mats := current_mats_2;
             
             found_part_identical_to_some_proj := true;
             
@@ -440,7 +468,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                
         if not ForAny( Concatenation( dims_of_mats - dims[ i ] ), IsNegInt ) then
         
-          current_mats :=
+          current_mats_1 :=
             ListN( dims[ i ], mats,
               { l, m } -> CertainColumnsOfQPAMatrix(
                             CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
@@ -448,47 +476,70 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                                                  )
                );
           
-          current_proj := projs[ i ];
+          current_mats_2 :=
+            ListN( dims[ i ], mats,
+              { l, m } -> CertainColumnsOfQPAMatrix(
+                            CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
+                              [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
+                                                   )
+                           );
          
-          temp := LazyQuiverRepresentation( A, dim_vectors_of_projs[ i ], current_mats );
+          temp := LazyQuiverRepresentation( A, dim_vectors_of_projs[ i ], current_mats_1 );
           
           if IsWellDefined( temp ) then
             
             b := BasisOfExternalHom( projs[ i ], temp );
           
-            if Size( b ) = 1 and IsIsomorphism( b[ 1 ] ) then
-            
-              current_mats := ListN( dims[ i ], mats,
-                { l, m } -> CertainColumnsOfQPAMatrix(
-                    CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
-                      [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
-                                                   )
-                           );
-                       
-              if ForAll( mats_of_projs[ i ], IsZero ) then
+            if not ( Size( b ) = 1 and IsIsomorphism( b[ 1 ] ) ) then
               
-                if not mats = ListN( mats_of_projs[ i ], current_mats, StackMatricesDiagonally ) then
+                i := i + 1;
               
-                  i := i + 1;
+                continue;
               
-                  continue;
-                  
-                fi;
-              
-              fi;
-                        
-              new_dim_vec := new_dim_vec - dim_vectors_of_projs[ i ];
-            
-              Add( o, b[ 1 ] );
-            
-              mats := current_mats;
-             
-              found_part_isomorphic_to_some_proj := true;
-            
-              check_for_block := false;
-         
             fi;
             
+            current_mats_3 :=
+              ListN( dims[ i ], mats,
+                { l, m } -> CertainColumnsOfQPAMatrix(
+                              CertainRowsOfQPAMatrix( m, [ 1 .. l[ 1 ] ] ),
+                                [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
+                                                   )
+                  );
+            
+            if not ForAll( current_mats_3, IsZero ) then
+              
+              i := i + 1;
+              
+              continue; 
+            
+            fi;
+            
+            current_mats_4 :=
+              ListN( dims[ i ], mats,
+                { l, m } -> CertainColumnsOfQPAMatrix(
+                              CertainRowsOfQPAMatrix( m, [ l[ 1 ] + 1 .. DimensionsMat( m )[ 1 ] ] ),
+                                [ 1 .. l[ 2 ] ]
+                                                   )
+                  );
+            
+            if not ForAll( current_mats_4, IsZero ) then
+              
+              i := i + 1;
+              
+              continue;
+            
+            fi;
+                                   
+            new_dim_vec := new_dim_vec - dim_vectors_of_projs[ i ];
+            
+            Add( o, b[ 1 ] );
+            
+            mats := current_mats_2;
+             
+            found_part_isomorphic_to_some_proj := true;
+            
+            check_for_block := false;
+          
           fi;
         
         fi;
@@ -514,7 +565,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     d := DirectSum( s );
      
     o := List( [ 1 .. Size( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
-     
+    
     if IsZero( new_a ) then
       
       return o;
@@ -524,18 +575,16 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
       
       Sort( projs, { a, b } -> IsEmpty( BasisOfExternalHom( a, b ) ) );
-
-      dim_projs := List( projs, DimensionVector );
-      
-      dim := DimensionVector( new_a );
-      
-      sol := SolutionIntMat( dim_projs, dim );
-      
-      p := PositionsProperty( sol, s -> not IsZero( s ) );
-      
-      for i in p do
+     
+      for p in projs do
         
-        B := BasisOfExternalHom( projs[ i ], new_a );
+        B := BasisOfExternalHom( p, new_a );
+        
+        if IsEmpty( B ) then
+          
+          continue;
+          
+        fi;
    
         o := Concatenation( o, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
         
@@ -555,7 +604,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
     fi;
     
-    if IsZero( new_a ) then
+    if not IsZero( new_a ) then
       
       Error( "Please check if the input is realy projective object!\n" );
       
