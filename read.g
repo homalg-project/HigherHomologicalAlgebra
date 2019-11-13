@@ -7,3 +7,4 @@ ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
 ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
 ReadPackage( "DerivedCategories", "gap/qpa.gi" );
 ReadPackage( "DerivedCategories", "gap/Decomposition.gi" );
+ReadPackage( "DerivedCategories", "gap/convenience.gi" );
