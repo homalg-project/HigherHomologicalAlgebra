@@ -9,7 +9,7 @@ gap> while ok = false do
 > od;;
 gap> cat := CategoryOfQuiverRepresentations( A );;
 gap> full := FullSubcategoryGeneratedByProjectiveObjects( cat );;
-gap> I := IsomorphismFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );;
+gap> I := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );;
 gap> projs := IndecProjRepresentations( A );;
 gap> for k in [ 1 .. 3 ] do
 > L := List( [ 1 .. 5 ], i -> Random( projs ) );; a := DirectSum( L );;

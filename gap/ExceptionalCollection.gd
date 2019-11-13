@@ -184,7 +184,7 @@ DeclareAttribute( "FullSubcategoryGeneratedByIndecProjectiveObjects",
 #! indecomposable projective representations.
 #! @Arguments cat
 #! @Returns a full subcategory
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects",
+DeclareAttribute( "EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects",
         IsQuiverRepresentationCategory );
 
 #! @Description

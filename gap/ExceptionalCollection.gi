@@ -1078,7 +1078,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
 
 end );
 
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects,
+InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects,
           [ IsQuiverRepresentationCategory ],
   function( cat )
     local A, projs, indec_projs, add_indec_projs, name, F;
