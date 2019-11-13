@@ -296,7 +296,7 @@ end );
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
   function( a )
-    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, new_dim_vec, mats, isolated_summands, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats_1, current_mats_2, current_mats_3, current_mats_4, found_part_isomorphic_to_some_proj, temp, b, s, d, morphism_from_new_a, B, m, k, p;
+    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, new_dim_vec, mats, isolated_summands, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats_1, current_mats_2, current_mats_3, current_mats_4, found_part_isomorphic_to_some_proj, temp, b, s, d, output, morphism_from_new_a, B, m, k, p;
     
     if IsZero( a ) then
       
@@ -561,14 +561,18 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     new_a := LazyQuiverRepresentation( A, new_dim_vec, mats );
     
     s := Concatenation( List( o, Range ), [ new_a ] );
-     
+    
     d := DirectSum( s );
-     
-    o := List( [ 1 .. Size( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
+    
+    output := List( [ 1 .. Size( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
     
     if IsZero( new_a ) then
       
-      return o;
+      SetIsomorphismFromCanonicalDecomposition( a, DirectSumFunctorial( o ) );
+      
+      SetIsomorphismIntoCanonicalDecomposition( a, DirectSumFunctorial( List( o, Inverse ) ) );
+      
+      return output;
     
     else
       
@@ -586,7 +590,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
           
         fi;
         
-        o := Concatenation( o, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
+        output := Concatenation( output, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
         
         m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
         
@@ -610,9 +614,46 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     fi;
     
-    return o;
+    return output;
     
 end );
+
+##
+InstallMethod( IsomorphismFromCanonicalDecomposition,
+          [ IsQuiverRepresentation ],
+  function( a )
+    local d;
+    
+    d := DecomposeProjectiveQuiverRepresentation( a );
+    
+    if HasIsomorphismFromCanonicalDecomposition( a ) then
+      
+      return IsomorphismFromCanonicalDecomposition( a );
+      
+    fi;
+    
+    return MorphismBetweenDirectSums( List( d, i -> [ i ] ) );
+    
+end );
+
+##
+InstallMethod( IsomorphismIntoCanonicalDecomposition,
+          [ IsQuiverRepresentation ],
+  function( a )
+    local d;
+    
+    d := DecomposeProjectiveQuiverRepresentation( a );
+    
+    if HasIsomorphismIntoCanonicalDecomposition( a ) then
+      
+      return IsomorphismIntoCanonicalDecomposition( a );
+      
+    fi;
+    
+    return Inverse( IsomorphismFromCanonicalDecomposition( a ) );
+    
+end );
+
 
 # to change the field of a quiver algebra
 InstallMethod( \*,

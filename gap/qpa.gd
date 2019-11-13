@@ -1,6 +1,10 @@
 
 
 DeclareAttribute( "DecomposeProjectiveQuiverRepresentation", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismIntoCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismFromCanonicalDecomposition", IsQuiverRepresentation );
+
+
 
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlgebraElement" );
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement" );
