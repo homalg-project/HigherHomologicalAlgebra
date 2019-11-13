@@ -301,7 +301,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     if IsZero( a ) then
       
       return [ IdentityMorphism( a ) ];
-      
+    
     fi;
     
     A := AlgebraOfRepresentation( a );
@@ -315,7 +315,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     mats_of_projs:= List( projs, MatricesOfRepresentation );
     
     dims := List( mats_of_projs, mats -> List( mats, DimensionsMat ) );
-
+    
     dim_vectors_of_projs := List( projs, DimensionVector );
     
     dim_vector_of_a := DimensionVector( a );
@@ -355,13 +355,13 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       diff := Difference( [ 1 .. nr_vertices ], positions_isolated_projs );
       
       projs := projs{ diff };
-    
+      
       dim_vectors_of_projs := dim_vectors_of_projs{ diff };
       
       mats_of_projs := mats_of_projs{ diff };
       
       dims := dims{ diff };
-     
+    
     fi;
     
     bool := true;
@@ -379,7 +379,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       while check_for_block and i <= Size( dims ) do
         
         dims_of_mats := List( mats, DimensionsMat );
-                
+        
         if not ForAny( Concatenation( dims_of_mats - dims[ i ] ), IsNegInt ) then
           
           current_mats_1 :=
@@ -397,7 +397,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                               [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
                                                    )
                            );
-           
+          
           if current_mats_1 = mats_of_projs[ i ] then
             
             current_mats_3 :=
@@ -455,7 +455,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
         continue;
       
       fi;
-       
+      
       found_part_isomorphic_to_some_proj := false;
       
       check_for_block := true;
@@ -463,9 +463,9 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       i := 1;
       
       while check_for_block and i <= Size( dims ) do
-          
+        
         dims_of_mats := List( mats, DimensionsMat );
-               
+        
         if not ForAny( Concatenation( dims_of_mats - dims[ i ] ), IsNegInt ) then
         
           current_mats_1 :=
@@ -483,19 +483,19 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                               [ l[ 2 ] + 1 .. DimensionsMat( m )[ 2 ] ]
                                                    )
                            );
-         
+          
           temp := LazyQuiverRepresentation( A, dim_vectors_of_projs[ i ], current_mats_1 );
           
           if IsWellDefined( temp ) then
             
             b := BasisOfExternalHom( projs[ i ], temp );
-          
+            
             if not ( Size( b ) = 1 and IsIsomorphism( b[ 1 ] ) ) then
-              
+                
                 i := i + 1;
-              
+                
                 continue;
-              
+            
             fi;
             
             current_mats_3 :=
@@ -529,13 +529,13 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
               continue;
             
             fi;
-                                   
+            
             new_dim_vec := new_dim_vec - dim_vectors_of_projs[ i ];
             
             Add( o, b[ 1 ] );
             
             mats := current_mats_2;
-             
+            
             found_part_isomorphic_to_some_proj := true;
             
             check_for_block := false;
@@ -569,13 +569,13 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     if IsZero( new_a ) then
       
       return o;
-      
+    
     else
       
       morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
       
       Sort( projs, { a, b } -> IsEmpty( BasisOfExternalHom( a, b ) ) );
-     
+      
       for p in projs do
         
         B := BasisOfExternalHom( p, new_a );
@@ -585,13 +585,13 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
           continue;
           
         fi;
-   
+        
         o := Concatenation( o, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
         
         m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
-    
+        
         k := CokernelProjection( m );
-          
+        
         new_a := Range( k );
         
         Info( InfoWarning, 2, "DecomposeProjectiveObject: A lift in quiver representations is being computed" );
@@ -599,97 +599,66 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
         morphism_from_new_a := PreCompose( Lift( IdentityMorphism( new_a ), k ), morphism_from_new_a );
         
         Info( InfoWarning, 2, "done ..." );
-       
-      od;
       
+      od;
+    
     fi;
     
     if not IsZero( new_a ) then
       
       Error( "Please check if the input is realy projective object!\n" );
-      
+    
     fi;
     
     return o;
     
 end );
 
-
-
-#DeclareOperation( "PathsBetweenTwoVertices", [ IsQuiverAlgebra, IsInt, IsInt ] );
-#
-###
-#InstallMethod( PathsBetweenTwoVertices,
-#    [ IsQuiverAlgebra, IsInt, IsInt ],
-#  function( A, i, j )
-#    local quiver, G;
-#    
-#    quiver := QuiverOfAlgebra( A );
-#    
-#    G := GeneratorsOfLeftOperatorAdditiveGroup( A );
-#    
-#    if IsQuotientOfPathAlgebra( A ) then
-#      
-#      return Filtered( G, g -> 
-#        Source( g!.representative!.paths[1] ) = Vertex( quiver, i )
-#          and Target( g!.representative!.paths[1] ) = Vertex( quiver, j ) );
-#    else
-#      
-#      return Filtered( G, g -> 
-#        Source( g!.paths[1] ) = Vertex( quiver, i )
-#          and Target( g!.paths[1] ) = Vertex( quiver, j ) );
-#      
-#    fi;
-#  
-#end );
-
-
-## to change the field of a quiver algebra
-#InstallMethod( \*,
-#    [ IsQuiverAlgebra, IsField ],
-#  function( A, field )
-#    local field_of_A, quiver, relations, n, coeffs_list, paths, path_algebra;
-#    
-#    field_of_A := LeftActingDomain( A );
-#    
-#    if IsIdenticalObj( field, field_of_A ) then
-#      
-#      return A;
-#      
-#    fi;
-#    
-#    quiver := QuiverOfAlgebra( A );
-#    
-#    relations := RelationsOfAlgebra( A );
-#    
-#    n := Length( relations );
-#    
-#    coeffs_list := List( relations, rel -> List( rel!.coefficients, String ) );
-#    
-#    paths := List( relations, rel -> rel!.paths );
-#    
-#    if HasIsRationalsForHomalg( field ) and IsRationalsForHomalg( field ) then
-#      
-#      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> c / field ) );
-#      
-#    elif field = Rationals then
-#      
-#      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> Rat( c ) ) );
-#      
-#    else
-#      
-#      Error( "Unknown field!" );
-#      
-#    fi;
-#    
-#    path_algebra := PathAlgebra( field, quiver );
-#    
-#    relations := List( [ 1 .. n ], i -> QuiverAlgebraElement( path_algebra, coeffs_list[ i ], paths[ i ] ) );
-#    
-#    return QuotientOfPathAlgebra( path_algebra, relations );
-#    
-#end );
-
+# to change the field of a quiver algebra
+InstallMethod( \*,
+    [ IsQuiverAlgebra, IsField ],
+  function( A, field )
+    local field_of_A, quiver, relations, n, coeffs_list, paths, path_algebra;
+    
+    field_of_A := LeftActingDomain( A );
+    
+    if IsIdenticalObj( field, field_of_A ) then
+      
+      return A;
+      
+    fi;
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    relations := RelationsOfAlgebra( A );
+    
+    n := Length( relations );
+    
+    coeffs_list := List( relations, rel -> List( rel!.coefficients, String ) );
+    
+    paths := List( relations, rel -> rel!.paths );
+    
+    if HasIsRationalsForHomalg( field ) and IsRationalsForHomalg( field ) then
+      
+      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> c / field ) );
+      
+    elif field = Rationals then
+      
+      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> Rat( c ) ) );
+      
+    else
+      
+      Error( "Unknown field!" );
+      
+    fi;
+    
+    path_algebra := PathAlgebra( field, quiver );
+    
+    relations := List( [ 1 .. n ], i -> QuiverAlgebraElement( path_algebra, coeffs_list[ i ], paths[ i ] ) );
+    
+    return QuotientOfPathAlgebra( path_algebra, relations );
+    
+end );
 
 #BindGlobal( "IndecProjRepresentationss",
 #  function( A )
