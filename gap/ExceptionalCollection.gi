@@ -1078,6 +1078,71 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
 
 end );
 
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects,
+          [ IsQuiverRepresentationCategory ],
+  function( cat )
+    local A, projs, indec_projs, add_indec_projs, name, F;
+    
+    A := AlgebraOfCategory( cat );
+    
+    projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
+    
+    indec_projs := FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
+    
+    add_indec_projs := AdditiveClosure( indec_projs  );
+    
+    name := Concatenation( "Functor from <projective representations> --> AdditiveClosure( <indecomposable projective representations> ) of ", String( A ) );
+    
+    F := CapFunctor( name, projs, add_indec_projs );
+    
+    AddObjectFunction( F,
+      function( a )
+        local d;
+        
+        d := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( a ) );
+        
+        d := List( d, m -> AsFullSubcategoryCell( projs, Source( m ) ) );
+        
+        d := List( d, o -> AsFullSubcategoryCell( indec_projs, o ) );
+        
+        return AdditiveClosureObject( d, add_indec_projs ); 
+      
+    end );
+    
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        local d_source_cell, d_range_cell, alpha_cell, iso, mat;
+        
+        d_source_cell := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( Source( alpha ) ) );
+        
+        d_range_cell := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( Range( alpha ) ) );
+        
+        alpha_cell := UnderlyingCell( alpha );
+        
+        iso := IsomorphismIntoCanonicalDecomposition( UnderlyingCell( Range( alpha ) ) );
+        
+        d_range_cell := List( d_range_cell, Source );
+        
+        d_range_cell := List( [ 1 .. Size( d_range_cell ) ],
+          i -> PreCompose(
+                  iso,
+                  ProjectionInFactorOfDirectSumWithGivenDirectSum( d_range_cell, i, Range( iso ) )
+                ) );
+        
+        mat := List( d_source_cell, u -> List( d_range_cell, v -> PreCompose( [ u, alpha_cell, v ] ) ) );
+        
+        mat := List( mat, row -> List( row, m -> AsFullSubcategoryCell( projs, m ) ) );
+        
+        mat := List( mat, row -> List( row, m -> AsFullSubcategoryCell( indec_projs, m ) ) );
+        
+        return AdditiveClosureMorphism( s, mat, r );
+        
+    end );
+    
+    return F;
+  
+end );
 
 ###########################
 ##
