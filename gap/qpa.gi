@@ -280,7 +280,81 @@ InstallGlobalFunction( StackMatricesDiagonally,
     
 end );
 
-
+##
+InstallMethod( EpimorphismFromSomeDirectSum,
+          [ IsList, IsCapCategoryObject ],
+  function( projs, a )
+    local output, A, current_a, epimorphism_from_a, b, temp, pi, gamma, p, m;
+     
+    if IsZero( a ) then
+      
+      return UniversalMorphismFromZeroObject( a );
+      
+    fi;
+    
+    output := [ ];
+    
+    current_a := a;
+    
+    epimorphism_from_a := IdentityMorphism( a );
+    
+    projs := ShallowCopy( projs );
+    
+    Sort( projs, {p,q} -> IsEmpty( BasisOfExternalHom( p, q ) ) );
+    
+    while not IsZero( current_a ) do
+       
+      for p in projs do
+        
+        b := BasisOfExternalHom( p, current_a );
+        
+        if not IsEmpty( b ) then
+          
+          projs := projs{ [ Position( projs, p ) + 1 .. Size( projs ) ] };
+          
+          break;
+        
+        fi;
+        
+      od;
+      
+      if IsEmpty( b ) then
+        
+        break;
+        
+      fi;
+           
+      temp := b[ 1 ];
+      
+      for m in b{ [ 2 .. Size( b ) ] } do
+        
+        pi := CokernelProjection( temp );
+        
+        gamma := PreCompose( m, pi );
+         
+        if IsZero( gamma ) then
+          
+          continue;
+          
+        fi;
+         
+        temp := MorphismBetweenDirectSums( [ [ m ], [ temp ] ] );
+        
+      od;
+      
+      Add( output, Lift( temp, epimorphism_from_a ) );
+      
+      pi := CokernelProjection( temp );
+      
+      current_a := Range( pi );
+      
+      epimorphism_from_a := PreCompose( epimorphism_from_a, pi );
+      
+    od;
+    
+    return MorphismBetweenDirectSums( List( output, o -> [ o ] ) );
+    
+end );
 
 ############################
 #

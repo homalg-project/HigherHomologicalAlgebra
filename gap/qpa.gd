@@ -1,10 +1,9 @@
 
-
 DeclareAttribute( "DecomposeProjectiveQuiverRepresentation", IsQuiverRepresentation );
 DeclareAttribute( "IsomorphismIntoCanonicalDecomposition", IsQuiverRepresentation );
 DeclareAttribute( "IsomorphismFromCanonicalDecomposition", IsQuiverRepresentation );
 
-
+DeclareOperation( "EpimorphismFromSomeDirectSum", [ IsList, IsCapCategoryObject ] );
 
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlgebraElement" );
 DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement" );
