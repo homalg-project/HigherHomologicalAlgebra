@@ -1153,7 +1153,7 @@ end );
 ##
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
-    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, cat;
+    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, g, e, cat, i;
   
     sources_of_arrows := List( [ 1 .. nr_arrows ],
       i -> Random( [ 1 .. nr_vertices - 1 ] ) );
@@ -1189,20 +1189,23 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     G := List( df_H, u -> G{ Positions( H, u ) } );
     
-    if IsEmpty( G ) then
+    rel := [ ];
       
-      rel := [ ];
+    if not IsEmpty( G ) then
       
-    else
+      for i in [ 1 .. nr_relations ] do
+        
+        g := Random( G );
+        
+        e := QuiverAlgebraElement( A, List( [ 1 .. Size( g ) ], k -> Random( [ -2 .. 2 ] ) ), g );
+        
+        Add( rel, e );
+        
+      od;
     
-      rel := List( [ 1 .. nr_relations ], i ->
-        QuiverAlgebraElement(
-          A, List( [ 1 .. Size( G[ i mod Size( G ) ] ) ], k -> Random( [ -2 .. 2 ] ) ),
-            G[ i mod Size( G ) ] ) );
-    
-      rel := ComputeGroebnerBasis( rel );
-      
     fi;
+    
+    rel := ComputeGroebnerBasis( rel );
     
     A := QuotientOfPathAlgebra( A, rel );
     
