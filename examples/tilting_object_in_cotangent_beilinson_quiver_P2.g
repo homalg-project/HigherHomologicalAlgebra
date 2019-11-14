@@ -5,8 +5,7 @@ LoadPackage( "DerivedCategories" );
 
 homalg_field := HomalgFieldOfRationals( );
 
-field := Rationals;;
-#field := homalg_field;
+field := homalg_field;
 
 quiver := RightQuiver( "q(3)[x0:1->2,x1:1->2,x2:1->2,y0:2->3,y1:2->3,y2:2->3]" );;
 Qq := PathAlgebra( field, quiver );;
@@ -35,6 +34,7 @@ SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, homalg_field );;
 Finalize( cat );;
 
+# O, O(1), O(2)
 T := [ ];
 
 mats :=
