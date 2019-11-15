@@ -1572,7 +1572,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         mors := MapLazy( mors, m -> MultiplyWithElementOfCommutativeRingForMorphisms( r, m ), 1 );
         
-        return CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( Source( phi ), Range( phi ), mors ); 
+        return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors ); 
         
     end );
     
