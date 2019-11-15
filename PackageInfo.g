@@ -1,5 +1,5 @@
 #
-# TriangulatedCategoriesForCAP: framework for triangulated categories
+# TriangulatedCategories: framework for triangulated categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,7 +8,7 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "TriangulatedCategoriesForCAP",
+PackageName := "TriangulatedCategories",
 Subtitle := "framework for triangulated categories",
 Version := "1.0",
 Date := "14/04/2018", # dd/mm/yyyy format
@@ -31,7 +31,7 @@ Persons := [
 #IssueTrackerURL := "TODO",
 #SupportEmail := "TODO",
 
-PackageWWWHome := "https://github.com/kamalsaleh/TriangulatedCategoriesForCAP",
+PackageWWWHome := "https://github.com/kamalsaleh/TriangulatedCategories",
 
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
@@ -53,7 +53,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "TriangulatedCategoriesForCAP",
+  BookName  := "TriangulatedCategories",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",

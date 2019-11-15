@@ -1,10 +1,10 @@
 #
-# TriangulatedCategoriesForCAP: frame work for triangulated categories
+# TriangulatedCategories: frame work for triangulated categories
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "TriangulatedCategoriesForCAP", "gap/TriangulatedCategories.gi");
+ReadPackage( "TriangulatedCategories", "gap/TriangulatedCategories.gi");
 
-ReadPackage( "TriangulatedCategoriesForCAP", "gap/DerivedMethods.gi");
+ReadPackage( "TriangulatedCategories", "gap/DerivedMethods.gi");
 
-ReadPackage( "TriangulatedCategoriesForCAP", "gap/TrianglesCategory.gi");
+ReadPackage( "TriangulatedCategories", "gap/TrianglesCategory.gi");

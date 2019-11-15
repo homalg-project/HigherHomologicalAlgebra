@@ -1,5 +1,5 @@
 LoadPackage( "LinearAlgebra" );
-LoadPackage( "TriangulatedCategoriesForCAP" );
+LoadPackage( "TriangulatedCategories" );
 
 Q := HomalgFieldOfRationals( );
 

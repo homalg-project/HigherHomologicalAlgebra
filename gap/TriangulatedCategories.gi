@@ -934,7 +934,7 @@ InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
    
    AddPredicateImplicationFileToCategory( category,
       Filename(
-        DirectoriesPackageLibrary( "TriangulatedCategoriesForCAP", "LogicForTriangulatedCategories" ),
+        DirectoriesPackageLibrary( "TriangulatedCategories", "LogicForTriangulatedCategories" ),
         "PredicateImplicationsForTriangulatedCategories.tex" ) );
         
    TryNextMethod( );
