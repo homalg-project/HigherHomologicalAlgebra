@@ -166,9 +166,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
       function ( hC, hD )
         local C, D, d;
         
-        C := UnderlyingCapCategoryObject( hC );
+        C := UnderlyingCell( hC );
         
-        D := UnderlyingCapCategoryObject( hD );
+        D := UnderlyingCell( hD );
         
         if not (ValueGlobal( "HasActiveLowerBound" )( C ) and ValueGlobal( "HasActiveUpperBound" )( D )) then
           if not (ValueGlobal( "HasActiveUpperBound" )( C ) and ValueGlobal( "HasActiveLowerBound" )( D )) then
@@ -213,9 +213,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
       function( s, h_phi, h_psi, r )
         local phi, psi, ss, rr, Tot1, Tot2, l, chains_range_cat_of_hom_struc, H0;
         
-        phi := UnderlyingCapCategoryMorphism( h_phi );
+        phi := UnderlyingCell( h_phi );
         
-        psi := UnderlyingCapCategoryMorphism( h_psi );
+        psi := UnderlyingCell( h_psi );
         
         ss := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( Range( phi ), Source( psi ) );
         
@@ -287,7 +287,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
         function( h_phi )
           local phi, C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, im, inc, U, i;
           
-          phi := UnderlyingCapCategoryMorphism( h_phi );
+          phi := UnderlyingCell( h_phi );
           
           C := Source( phi );
           
@@ -349,9 +349,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
         function( hC, hD, psi )
           local C, D, lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
-          C := UnderlyingCapCategoryObject( hC );
+          C := UnderlyingCell( hC );
           
-          D := UnderlyingCapCategoryObject( hD );
+          D := UnderlyingCell( hD );
           
           lower_bound := Minimum( ValueGlobal( "ActiveLowerBound" )( C ), ValueGlobal( "ActiveLowerBound" )( D ) ) + 1;
           

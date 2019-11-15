@@ -23,7 +23,7 @@ function( homotopy_category, cat, n )
   
     function( complex )
     
-      return ApplyFunctor( Hn, UnderlyingCapCategoryObject( complex ) );
+      return ApplyFunctor( Hn, UnderlyingCell( complex ) );
   
   end );
      
@@ -31,7 +31,7 @@ function( homotopy_category, cat, n )
 
     function( new_source, map, new_range )
 
-      return ApplyFunctor( Hn, UnderlyingCapCategoryMorphism( map ) );
+      return ApplyFunctor( Hn, UnderlyingCell( map ) );
 
   end );
   
@@ -57,7 +57,7 @@ function( homotopy_category, n )
   
     function( complex )
   
-      return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryObject( complex ) ) );
+      return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCell( complex ) ) );
   
   end );
      
@@ -65,7 +65,7 @@ function( homotopy_category, n )
 
     function( new_source, map, new_range )
 
-      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryMorphism( map ) ) );
+      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCell( map ) ) );
 
   end );
 
@@ -91,7 +91,7 @@ function( homotopy_category, n )
   
   function( complex )
   
-    return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryObject( complex ) ) );
+    return HomotopyCategoryObject( homotopy_category, ApplyFunctor( T, UnderlyingCell( complex ) ) );
   
   end );
      
@@ -99,7 +99,7 @@ function( homotopy_category, n )
 
     function( new_source, map, new_range )
 
-      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCapCategoryMorphism( map ) ) );
+      return HomotopyCategoryMorphism( homotopy_category, ApplyFunctor( T, UnderlyingCell( map ) ) );
 
   end );
 

@@ -5,8 +5,3 @@ DeclareCategory( "IsHomotopyCategoryObject",
 DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsCapCategoryObject ] );
 
-DeclareAttribute( "UnderlyingChainComplex", IsHomotopyCategoryObject );
-
-DeclareAttribute( "UnderlyingChainCell",
-IsHomotopyCategoryObject );
-

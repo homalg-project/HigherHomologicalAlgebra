@@ -8,12 +8,6 @@ DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategory, IsCapCategoryMorphism ] );
 
 ##
-DeclareAttribute( "UnderlyingChainMorphism", IsHomotopyCategoryMorphism );
-
-##
-DeclareAttribute( "UnderlyingChainCell", IsHomotopyCategoryMorphism );
-
-##
 DeclareAttribute( "MappingCone", IsHomotopyCategoryMorphism );
 
 ##

@@ -7,8 +7,6 @@ DeclareRepresentation( "IsHomotopyCategoryMorphismRep",
 BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
         NewType( TheFamilyOfCapCategoryMorphisms,
                  IsHomotopyCategoryMorphismRep ) );
-
-
 ##
 InstallMethod( HomotopyCategoryMorphism,
             [ IsHomotopyCategory, IsCapCategoryMorphism ],
@@ -26,17 +24,17 @@ InstallMethod( HomotopyCategoryMorphism,
     
     SetFilterObj( homotopy_phi, IsHomotopyCategoryMorphism );
    
-    SetUnderlyingChainMorphism( homotopy_phi, phi );
+    SetUnderlyingCell( homotopy_phi, phi );
     
     return homotopy_phi;
   
 end );
 
 ##
-InstallMethod( UnderlyingChainMorphism, [ IsHomotopyCategoryMorphism ], UnderlyingCapCategoryMorphism );
-
-##
-InstallMethod( UnderlyingChainCell, [ IsHomotopyCategoryMorphism ], UnderlyingCapCategoryMorphism );
+InstallMethod( \/,
+          [ IsCapCategoryMorphism, IsHomotopyCategory ],
+  {a,H} -> HomotopyCategoryMorphism( H, a )
+);
 
 ##
 InstallMethod( MappingCone,
@@ -46,7 +44,7 @@ InstallMethod( MappingCone,
   
     homotopy_category := CapCategory( phi );
   
-    u_phi := UnderlyingChainMorphism( phi );
+    u_phi := UnderlyingCell( phi );
   
     cone := MappingCone( u_phi );
   
@@ -62,7 +60,7 @@ InstallMethod( NaturalInjectionInMappingCone,
   
     homotopy_category := CapCategory( phi );
   
-    u_phi := UnderlyingChainMorphism( phi );
+    u_phi := UnderlyingCell( phi );
   
     i := NaturalInjectionInMappingCone( u_phi );
   
@@ -78,7 +76,7 @@ InstallMethod( NaturalProjectionFromMappingCone,
   
     homotopy_category := CapCategory( phi );
   
-    u_phi := UnderlyingChainMorphism( phi );
+    u_phi := UnderlyingCell( phi );
   
     p := NaturalProjectionFromMappingCone( u_phi );
   
@@ -90,7 +88,7 @@ InstallMethod( HomotopyMorphisms,
     [ IsHomotopyCategoryMorphism ],
   function( phi )
   
-    return HomotopyMorphisms( UnderlyingChainMorphism( phi ) );
+    return HomotopyMorphisms( UnderlyingCell( phi ) );
     
 end );
 
@@ -131,7 +129,7 @@ BindGlobal( "AsPseudoHomologicalBicomplex",
       
       diffs := Differentials( C );
       
-      diffs := MapLazy( diffs, UnderlyingChainCell, 1 );
+      diffs := MapLazy( diffs, UnderlyingCell, 1 );
       
       complex := ChainComplex( cat, diffs );
       
@@ -156,7 +154,7 @@ InstallMethod( MappingConeColift,
     
     homotopy_category := CapCategory( phi );
     
-    l := MappingConeColift( UnderlyingChainMorphism( phi ), UnderlyingChainMorphism( tau ) );
+    l := MappingConeColift( UnderlyingCell( phi ), UnderlyingCell( tau ) );
     
     with_infos := ValueOption( "WithInfos" );
     
@@ -187,10 +185,10 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
     homotopy_category := CapCategory( phi );
     
     m := MappingConePseudoFunctorial(
-          UnderlyingChainMorphism( phi ),
-          UnderlyingChainMorphism( psi ),
-          UnderlyingChainMorphism( alpha_0 ),
-          UnderlyingChainMorphism( alpha_1 )
+          UnderlyingCell( phi ),
+          UnderlyingCell( psi ),
+          UnderlyingCell( alpha_0 ),
+          UnderlyingCell( alpha_1 )
     );
     
     with_infos := ValueOption( "WithInfos" );
@@ -216,7 +214,7 @@ InstallMethod( Display,
   
     Print( "A morphism in homotopy category defined by:\n\n" );
 
-    Display( UnderlyingChainMorphism( a ) );
+    Display( UnderlyingCell( a ) );
 
 end );
 
@@ -226,7 +224,7 @@ InstallMethod( ViewObj,
     
     Print( "<A morphism in homotopy category defined by: " );
 
-    ViewObj( UnderlyingChainMorphism( a ) );
+    ViewObj( UnderlyingCell( a ) );
     
     Print(">" );
 

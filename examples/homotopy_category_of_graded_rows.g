@@ -36,7 +36,7 @@ AddMorphismIntoColiftingObject( homotopy_of_rows,
   function( stable_C )
     local C, D, phi; 
     
-    C := UnderlyingCapCategoryObject( stable_C );
+    C := UnderlyingCell( stable_C );
     
     D := StalkChainComplex( C[ 1 ], 1 );
     

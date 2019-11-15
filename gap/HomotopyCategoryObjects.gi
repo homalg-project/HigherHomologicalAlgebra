@@ -26,19 +26,16 @@ InstallMethod( HomotopyCategoryObject,
     homotopy_a := StableCategoryObject( homotopy_category, a );
     
     SetFilterObj( homotopy_a, IsHomotopyCategoryObject );
-    
-    SetUnderlyingChainComplex( homotopy_a, a );
-    
+     
     return homotopy_a;
     
 end );
 
 ##
-InstallMethod( UnderlyingChainComplex, [ IsHomotopyCategoryObject ], UnderlyingCapCategoryObject );
-
-##
-InstallMethod( UnderlyingChainCell, [ IsHomotopyCategoryObject ], UnderlyingCapCategoryObject );
-
+InstallMethod( \/,
+          [ IsCapCategoryObject, IsHomotopyCategory ],
+  {a,H} -> HomotopyCategoryObject( H, a )
+);
 
 
 ##
@@ -48,7 +45,7 @@ InstallMethod( Display,
   
     Print( "An object in homotopy category defined by:\n\n" );
 
-    Display( UnderlyingChainComplex( a ) );
+    Display( ChainComplex( a ) );
 
 end );
 
@@ -58,7 +55,7 @@ InstallMethod( ViewObj,
     
     Print( "<An object in homotopy category defined by: " );
 
-    ViewObj( UnderlyingChainComplex( a ) );
+    ViewObj( UnderlyingCell( a ) );
     
     Print(">" );
 

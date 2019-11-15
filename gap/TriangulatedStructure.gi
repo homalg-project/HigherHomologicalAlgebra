@@ -100,13 +100,13 @@ function( homotopy_category )
       function( tr1, tr2, phi, psi )
         local tr1_0, tr2_0, phi_, psi_, s, maps, tau;
         
-        tr1_0 := UnderlyingChainMorphism( tr1^0 );
+        tr1_0 := UnderlyingCell( tr1^0 );
         
-        tr2_0 := UnderlyingChainMorphism( tr2^0 );
+        tr2_0 := UnderlyingCell( tr2^0 );
         
-        phi_ := UnderlyingChainMorphism( phi );
+        phi_ := UnderlyingCell( phi );
         
-        psi_ := UnderlyingChainMorphism( psi );
+        psi_ := UnderlyingCell( psi );
         
         s := HomotopyMorphisms( PreCompose( tr1^0, psi ) - PreCompose( phi, tr2^0 ) );
         
@@ -120,8 +120,8 @@ function( homotopy_category )
                         ] );
                   end, 1 );
         tau := ChainMorphism( 
-                UnderlyingChainComplex( tr1[2] ), 
-                UnderlyingChainComplex( tr2[2] ),
+                UnderlyingCell( tr1[2] ), 
+                UnderlyingCell( tr2[2] ),
                 maps );
         
         tau := HomotopyCategoryMorphism( homotopy_category, tau );
@@ -138,11 +138,11 @@ function( homotopy_category )
       
         standard_rot := CompleteMorphismToStandardExactTriangle( tr^1 );
       
-        f := UnderlyingChainMorphism( tr^0 );
+        f := UnderlyingCell( tr^0 );
       
-        X := UnderlyingChainComplex( tr[ 0 ] );
+        X := UnderlyingCell( tr[ 0 ] );
       
-        Y := UnderlyingChainComplex( tr[ 1 ] );
+        Y := UnderlyingCell( tr[ 1 ] );
       
         maps := MapLazy( IntegersList,  
                 function( i )
@@ -156,8 +156,8 @@ function( homotopy_category )
                 end, 1 );
       
         tau := ChainMorphism( 
-              UnderlyingChainComplex( rot[ 2 ] ),
-                UnderlyingChainComplex( standard_rot[ 2 ] ), maps );
+              UnderlyingCell( rot[ 2 ] ),
+                UnderlyingCell( standard_rot[ 2 ] ), maps );
       
         tau := HomotopyCategoryMorphism( homotopy_category, tau );
       
@@ -178,8 +178,8 @@ function( homotopy_category )
                 end, 1 );
       
         tau := ChainMorphism( 
-              UnderlyingChainComplex( standard_rot[ 2 ] ),
-              UnderlyingChainComplex( rot[ 2 ] ), maps );
+              UnderlyingCell( standard_rot[ 2 ] ),
+              UnderlyingCell( rot[ 2 ] ), maps );
       
         tau := HomotopyCategoryMorphism( homotopy_category, tau );
       
