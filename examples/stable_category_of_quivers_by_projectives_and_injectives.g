@@ -76,6 +76,9 @@ b := RandomObject( cat, 4 );
 i := Random( IndecInjRepresentations( B ) );
 p := Random( IndecProjRepresentations( B ) );
 
+Display( IsEqualForObjects( ApplyFunctor( stable_injs, i ), i/stable_cat_by_injs ) );
+Display( IsEqualForObjects( ApplyFunctor( stable_projs, p ), p/stable_cat_by_projs ) );
+
 Display( IsZero( ApplyFunctor( stable_injs, i ) ) );
 Display( IsZero( ApplyFunctor( stable_projs, p ) ) );
 

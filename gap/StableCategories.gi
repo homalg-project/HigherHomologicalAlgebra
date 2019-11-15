@@ -214,6 +214,13 @@ InstallMethod( StableCategoryObject,
 end );
 
 ##
+InstallMethod( \/,
+          [ IsCapCategoryObject, IsStableCategory ],
+  {a,Q} -> StableCategoryObject( Q, a )
+);
+
+
+##
 InstallMethod( StableCategoryMorphism,
             [ IsStableCategory, IsCapCategoryMorphism ],
   function( stable_category, alpha )
@@ -226,6 +233,13 @@ InstallMethod( StableCategoryMorphism,
     return stable_alpha;
     
 end );
+
+##
+InstallMethod( \/,
+          [ IsCapCategoryMorphism, IsStableCategory ],
+  {a,Q} -> StableCategoryMorphism( Q, a )
+);
+
 
 ########################
 #
@@ -367,9 +381,9 @@ InstallMethodWithCrispCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTI
   function( stable_a, stable_b )
     local a, b, a_to_I_a;
         
-    a := UnderlyingCapCategoryObject( stable_a );
+    a := UnderlyingCell( stable_a );
         
-    b := UnderlyingCapCategoryObject( stable_b );
+    b := UnderlyingCell( stable_b );
         
     a_to_I_a := MorphismIntoColiftingObject( a );
         
@@ -382,9 +396,9 @@ InstallMethodWithCrispCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING
   function( stable_a, stable_b )
     local a, b, P_b_to_b;
         
-    a := UnderlyingCapCategoryObject( stable_a );
+    a := UnderlyingCell( stable_a );
         
-    b := UnderlyingCapCategoryObject( stable_b );
+    b := UnderlyingCell( stable_b );
         
     P_b_to_b := MorphismFromLiftingObject( b );
         
@@ -444,17 +458,17 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
       function( s, stable_alpha, stable_beta, r )
         local a, b, c, d, alpha, beta, hom_b_to_I_b_id_c, hom_a_to_I_a_id_d, hom_alpha_beta;
         
-        a := UnderlyingCapCategoryObject( Source( stable_alpha ) );
+        a := UnderlyingCell( Source( stable_alpha ) );
         
-        b := UnderlyingCapCategoryObject( Range( stable_alpha ) );
+        b := UnderlyingCell( Range( stable_alpha ) );
         
-        c := UnderlyingCapCategoryObject( Source( stable_beta ) );
+        c := UnderlyingCell( Source( stable_beta ) );
         
-        d := UnderlyingCapCategoryObject( Range( stable_beta ) );
+        d := UnderlyingCell( Range( stable_beta ) );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
-        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        beta := UnderlyingCell( stable_beta );
         
         hom_b_to_I_b_id_c := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS( Range( stable_alpha ),  Source( stable_beta ) );
         
@@ -482,7 +496,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
          
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS( stable_a, stable_b );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
@@ -500,9 +514,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
       function( stable_a, stable_b, iota )
         local a, b, h, l, i;
         
-        a := UnderlyingCapCategoryObject( stable_a );
+        a := UnderlyingCell( stable_a );
         
-        b := UnderlyingCapCategoryObject( stable_b );
+        b := UnderlyingCell( stable_b );
         
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS( stable_a, stable_b );
         
@@ -580,9 +594,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
       function( s, stable_alpha, stable_beta, r )
         local alpha, beta, hom_alpha_beta; 
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
-        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        beta := UnderlyingCell( stable_beta );
         
         hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
                 
@@ -603,7 +617,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         D := DistinguishedObjectOfHomomorphismStructure( stable_category );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
@@ -615,9 +629,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
       function( stable_a, stable_b, iota )
         local a, b, h, i;
         
-        a := UnderlyingCapCategoryObject( stable_a );
+        a := UnderlyingCell( stable_a );
         
-        b := UnderlyingCapCategoryObject( stable_b );
+        b := UnderlyingCell( stable_b );
         
         h := ValueGlobal( "MorphismDatum" )( iota );
         
@@ -679,17 +693,17 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
       function( s, stable_alpha, stable_beta, r )
         local a, b, c, d, alpha, beta, hom_id_b_P_c_to_c, hom_id_a_P_d_to_d, hom_alpha_beta;
         
-        a := UnderlyingCapCategoryObject( Source( stable_alpha ) );
+        a := UnderlyingCell( Source( stable_alpha ) );
         
-        b := UnderlyingCapCategoryObject( Range( stable_alpha ) );
+        b := UnderlyingCell( Range( stable_alpha ) );
         
-        c := UnderlyingCapCategoryObject( Source( stable_beta ) );
+        c := UnderlyingCell( Source( stable_beta ) );
         
-        d := UnderlyingCapCategoryObject( Range( stable_beta ) );
+        d := UnderlyingCell( Range( stable_beta ) );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
-        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        beta := UnderlyingCell( stable_beta );
         
         hom_id_b_P_c_to_c := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS( Range( stable_alpha ),  Source( stable_beta ) );
         
@@ -719,7 +733,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS( stable_a, stable_b );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
@@ -737,9 +751,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
       function( stable_a, stable_b, iota )
         local a, b, h, l, i;
         
-        a := UnderlyingCapCategoryObject( stable_a );
+        a := UnderlyingCell( stable_a );
         
-        b := UnderlyingCapCategoryObject( stable_b );
+        b := UnderlyingCell( stable_b );
             
         h := HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS( stable_a, stable_b );
         
@@ -818,9 +832,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
       function( s, stable_alpha, stable_beta, r )
         local alpha, beta, hom_alpha_beta; 
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
-        beta := UnderlyingCapCategoryMorphism( stable_beta );
+        beta := UnderlyingCell( stable_beta );
         
         hom_alpha_beta := HomomorphismStructureOnMorphisms( alpha, beta );
                 
@@ -846,7 +860,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         D := DistinguishedObjectOfHomomorphismStructure( stable_category );
         
-        alpha := UnderlyingCapCategoryMorphism( stable_alpha );
+        alpha := UnderlyingCell( stable_alpha );
         
         i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
         
@@ -858,9 +872,9 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
       function( stable_a, stable_b, iota )
         local a, b, h, i;
         
-        a := UnderlyingCapCategoryObject( stable_a );
+        a := UnderlyingCell( stable_a );
         
-        b := UnderlyingCapCategoryObject( stable_b );
+        b := UnderlyingCell( stable_b );
         
         h := ValueGlobal( "MorphismDatum" )( iota );
         
@@ -897,7 +911,7 @@ InstallMethod( Display,
       
     Print( "An object in a stable category defined by:\n\n" );
          
-    Display( UnderlyingCapCategoryObject( a ) );
+    Display( UnderlyingCell( a ) );
     
     Print( "\nmodulo ", name );
     
@@ -921,7 +935,7 @@ InstallMethod( Display,
     
     Print( "A morphism in a stable category defined by:\n\n" );
     
-    Display( UnderlyingCapCategoryMorphism( alpha ) );
+    Display( UnderlyingCell( alpha ) );
     
     Print( "\nmodulo ", name );
   
