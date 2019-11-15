@@ -3,14 +3,14 @@
 #
 # Reading the declaration part of the package.
 #
-ReadPackage( "ComplexesForCAP", "lib/complexes.gd" );
+ReadPackage( "ComplexesForCAP", "gap/complexes.gd" );
 
-ReadPackage( "ComplexesForCAP", "lib/doublecomplexes.gd" );
+ReadPackage( "ComplexesForCAP", "gap/doublecomplexes.gd" );
 
-ReadPackage( "ComplexesForCAP", "lib/categories.gd" );
+ReadPackage( "ComplexesForCAP", "gap/categories.gd" );
 
-ReadPackage( "ComplexesForCAP", "lib/functors.gd" );
+ReadPackage( "ComplexesForCAP", "gap/functors.gd" );
 
-ReadPackage( "ComplexesForCAP", "lib/chainmaps.gd" );
+ReadPackage( "ComplexesForCAP", "gap/chainmaps.gd" );
 
-ReadPackage( "ComplexesForCAP", "lib/resolutions.gd" );
+ReadPackage( "ComplexesForCAP", "gap/resolutions.gd" );

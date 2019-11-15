@@ -3,17 +3,17 @@
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "ComplexesForCAP", "lib/complexes.gi" );
+ReadPackage( "ComplexesForCAP", "gap/complexes.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/doublecomplexes.gi" );
+ReadPackage( "ComplexesForCAP", "gap/doublecomplexes.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/categories.gi" );
+ReadPackage( "ComplexesForCAP", "gap/categories.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/functors.gi" );
+ReadPackage( "ComplexesForCAP", "gap/functors.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/chainmaps.gi" );
+ReadPackage( "ComplexesForCAP", "gap/chainmaps.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/resolutions.gi" );
+ReadPackage( "ComplexesForCAP", "gap/resolutions.gi" );
 
-ReadPackage( "ComplexesForCAP", "lib/derivations.gi" );
+ReadPackage( "ComplexesForCAP", "gap/derivations.gi" );
 

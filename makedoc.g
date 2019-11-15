@@ -15,7 +15,7 @@ AutoDoc(
                   \\usepackage{amsmath}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{tikz}
-                  \\usetikzlibrary{shapes,arrows,matrix}""" )
+                  \\usetikzgaprary{shapes,arrows,matrix}""" )
             ),
             
             autodoc := rec( files := [ "doc/Intro.autodoc" ] ),
