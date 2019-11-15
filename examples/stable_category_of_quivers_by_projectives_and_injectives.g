@@ -58,7 +58,6 @@ cat!.compute_basis_of_hom_using_homalg := [ true, 2, HomalgFieldOfRationals( ) ]
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddHomomorphismStructureUsingExternalHom( cat );;
 AddRandomMethodsToQuiverRepresentations( cat );;
 AddMorphismIntoColiftingObject( cat, MonomorphismIntoSomeInjectiveObject );
 AddMorphismFromLiftingObject( cat, EpimorphismFromSomeProjectiveObject );
@@ -68,8 +67,8 @@ stable_cat_by_injs := StableCategoryByColiftingStructure( cat );
 stable_cat_by_projs := StableCategoryByLiftingStructure( cat );
 
 
-stable_injs := CanonicalProjectionFunctor( stable_cat_by_injs );
-stable_projs := CanonicalProjectionFunctor( stable_cat_by_projs );
+stable_injs := ProjectionFunctor( stable_cat_by_injs );
+stable_projs := ProjectionFunctor( stable_cat_by_projs );
 
 a := RandomObject( cat, 4 );
 b := RandomObject( cat, 4 );

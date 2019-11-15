@@ -265,7 +265,7 @@ DeclareAttribute( "StableCategoryByLiftingStructure", IsCapCategory );
 
 DeclareAttribute( "CongruencyTestFunctionForStableCategory", IsStableCategory );
 
-DeclareAttribute( "CanonicalProjectionFunctor", IsStableCategory );
+DeclareAttribute( "ProjectionFunctor", IsStableCategory );
 
 DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT" );
 

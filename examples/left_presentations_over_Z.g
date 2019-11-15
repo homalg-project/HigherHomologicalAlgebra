@@ -15,7 +15,7 @@ Finalize( cat );
 #! true
 stable_cat := StableCategoryByLiftingStructure( cat );
 #! The stable category of Category of left presentations of Z by a congruency test function
-stable_functor := CanonicalProjectionFunctor( stable_cat );
+stable_functor := ProjectionFunctor( stable_cat );
 #! Canonical projection functor from Category of left presentations of Z in
 #! The stable category of Category of left presentations of Z by a congruency test function
 a := AsLeftPresentation( HomalgMatrix( "[ [ 0, 0 ], [ 0, 2 ], [ 0, 3 ] ]", 3, 2, ZZ ) );
