@@ -176,3 +176,54 @@ function( F )
   return functor;
 
 end );
+
+InstallMethod( EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects,
+          [ IsCapCategory ],
+  function( cat )
+    local projs, homotopy_category, name, F;
+    
+    if not IsAbelianCategoryWithEnoughProjectives( cat ) then
+      
+      Error( "The input should be abelian with enough projectives!\n" );
+      
+    fi;
+  
+    projs := ValueGlobal( "FullSubcategoryGeneratedByProjectiveObjects" )( cat );
+    
+    homotopy_category := HomotopyCategory( projs );
+    
+    name := "to be named";
+    
+    F := CapFunctor( name, cat, homotopy_category );
+    
+    ##
+    AddObjectFunction( F,
+      function( a )
+        local p;
+        
+        p := AsChainComplex( ProjectiveResolution( a, true ) );
+        
+        p := AsComplexOverCapFullSubcategory( projs, p );
+        
+        return HomotopyCategoryObject( homotopy_category, p );
+        
+    end );
+    
+    ##
+    AddMorphismFunction( F,
+      function( s, phi, r )
+        local psi;
+        
+        psi := MorphismBetweenProjectiveResolutions( phi, true );
+        
+        psi := AsChainMorphism( psi );
+        
+        psi := AsChainMorphismOverCapFullSubcategory( psi );
+        
+        return HomotopyCategoryMorphism( homotopy_category, psi );
+        
+    end );
+    
+    return F;
+    
+end );

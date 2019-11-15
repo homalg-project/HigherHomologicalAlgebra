@@ -16,7 +16,10 @@ DeclareOperation( "ShiftFunctorAt", [ IsHomotopyCategory, IsInt ] );
 
 DeclareOperation( "UnsignedShiftFunctorAt", [ IsHomotopyCategory, IsInt ] );
 
-DeclareOperation( "ExtendFunctorToHomotopyCategoryFunctor", [ IsCapFunctor ] );
+DeclareAttribute( "ExtendFunctorToHomotopyCategoryFunctor", IsCapFunctor );
+
+DeclareAttribute( "EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects", IsCapCategory );
+
 
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
