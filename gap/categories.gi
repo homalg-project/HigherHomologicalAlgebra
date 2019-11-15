@@ -101,6 +101,14 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     fi;
     
+    if HasIsLinearCategoryOverCommutativeRing( cat ) and
+        HasCommutativeRingOfLinearCategory( cat ) then
+        
+        SetIsLinearCategoryOverCommutativeRing( complex_cat, IsLinearCategoryOverCommutativeRing( cat ) );
+        
+        SetCommutativeRingOfLinearCategory( complex_cat, CommutativeRingOfLinearCategory( cat ) );
+    
+    fi;
     
     if HasIsStrictMonoidalCategory( cat ) and IsStrictMonoidalCategory( cat ) then
       
@@ -1245,72 +1253,73 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
   # This monoidal structure is yet only for chain complex categories ( shift_index = -1 )
   #
   if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
-
+    
     ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
-
+    
     ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
-
+    
     ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
-
+    
     ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
-
+    
     ADD_TENSOR_UNIT_CHAIN( complex_cat );
-
+    
     if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then 
-
+        
         ADD_BRAIDING_FOR_CHAINS( complex_cat );
-
+    
     fi;
-
+    
     if IsSymmetricClosedMonoidalCategory( complex_cat ) then
-
-        ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
-
-        ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
-
+      
+      ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
+      
+      ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
+    
     fi;
-
+  
   fi;
-
-  if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
+  
+  if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and
+      CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
     
     AddIsProjective( complex_cat,
       
       function( C )
-      
+        
         local i;
-      
+        
         if not IsBoundedChainOrCochainComplex( C ) then 
-      
+          
           Error( "The complex must be bounded" );
           
         fi;
-      
+        
         if not IsExact( C ) then 
-      
+          
           return false;
           
         fi;
-      
+        
         for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do 
-      
+          
           if not IsProjective( C[ i ] ) then
-      
+            
             return false;
           
           fi;
-      
+        
         od;
-      
+        
         return true;
       
       end );
     
     AddProjectiveLift( complex_cat,
       function( phi, pi )
-    
+        
         local P, H, l, XX; 
-          
+        
         P := Source( phi );
         
         XX := Source( pi );
@@ -1318,37 +1327,34 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         H := MapLazy( IntegersList,
           
           function( i )
-        
-                                    local id, m, n; 
-                                    
-                                    id := IdentityMorphism( P );
-                                    
-                                    if i <= ActiveLowerBound( P ) then 
-                                    
-                                    return ZeroMorphism( P[ i ], P[ i + 1 ] );
-                                    
-                                    elif i = ActiveLowerBound( P ) + 1 then 
-                                    
-                                    return ProjectiveLift( id[ i ], P^(i+1) );
-                                    
-                                    fi;
-                                    
-                                    m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
-                                    
-                                    n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
-                                    
-                                    return ProjectiveLift( m, n );
-                                    
-                                    end, 1 );
+            local id, m, n; 
+            
+            id := IdentityMorphism( P );
+            
+            if i <= ActiveLowerBound( P ) then 
+              
+              return ZeroMorphism( P[ i ], P[ i + 1 ] );
+            
+            elif i = ActiveLowerBound( P ) + 1 then 
+              
+              return ProjectiveLift( id[ i ], P^(i+1) );
+            
+            fi;
+            
+            m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
+            
+            n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
+            
+            return ProjectiveLift( m, n );
+            
+          end, 1 );
                                     
         l := MapLazy( IntegersList, 
-        
             function( i )
+              
+              return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] )
+                      + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
             
-              return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] ) 
-            
-                    + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
-                    
             end, 1 );
             
         return ChainMorphism( P, XX, l );
@@ -1358,7 +1364,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
   fi;
   
   if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
-  
+      
       HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = -1 then
       
       AddLift( complex_cat,
@@ -1554,6 +1560,22 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 
                 ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
   
+  fi;
+  
+  if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat,
+      function( r, phi )
+        local mors;
+        
+        mors := Morphisms( phi );
+        
+        mors := MapLazy( mors, m -> MultiplyWithElementOfCommutativeRingForMorphisms( r, m ), 1 );
+        
+        return CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( Source( phi ), Range( phi ), mors ); 
+        
+    end );
+    
   fi;
   
   to_be_finalized := ValueOption( "FinalizeCategory" );
