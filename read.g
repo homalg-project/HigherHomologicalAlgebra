@@ -1,9 +1,9 @@
 #
-# StableCategoriesForCap: Gap packge for constructing stable category of a given Cap category
+# StableCategories: Gap packge for constructing stable category of a given Cap category
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "StableCategoriesForCAP", "gap/StableCategoriesForCap.gi" );
-ReadPackage( "StableCategoriesForCAP", "gap/DerivedMethods.gi" );
-ReadPackage( "StableCategoriesForCAP", "gap/CAP_TOOLS.gi" );
-#ReadPackage( "StableCategoriesForCAP", "gap/TriangulatedStructure.gi" );
+ReadPackage( "StableCategories", "gap/StableCategories.gi" );
+ReadPackage( "StableCategories", "gap/DerivedMethods.gi" );
+ReadPackage( "StableCategories", "gap/CAP_TOOLS.gi" );
+#ReadPackage( "StableCategories", "gap/TriangulatedStructure.gi" );

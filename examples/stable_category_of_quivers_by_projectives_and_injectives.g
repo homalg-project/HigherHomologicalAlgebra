@@ -1,7 +1,7 @@
-LoadPackage( "StableCategoriesForCAP" );
+LoadPackage( "StableCategories" );
 LoadPackage( "QPA" );
-LoadPackage( "LinearAlgebraForCAP" );
-ReadPackage( "StableCategoriesForCAP", "/examples/random_methods_for_categories_of_quiver_reps.g" );
+LoadPackage( "LinearAlgebra" );
+ReadPackage( "StableCategories", "/examples/random_methods_for_categories_of_quiver_reps.g" );
 
 field := Rationals;;
 

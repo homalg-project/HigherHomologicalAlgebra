@@ -1,5 +1,5 @@
 LoadPackage( "ModulePresentations" );;
-LoadPackage( "StableCategoriesForCAP" );;
+LoadPackage( "StableCategories" );;
 
 ZZ := HomalgRingOfIntegers( );
 #! Z

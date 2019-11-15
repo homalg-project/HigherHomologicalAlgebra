@@ -2,7 +2,7 @@ LoadPackage( "GradedRingForHomalg" );
 LoadPackage( "Freyd" );
 LoadPackage( "GradedModulePresentations" );
 
-ReadPackage( "StableCategoriesForCAP", "/examples/HomStructureForGradedRows.g" );
+ReadPackage( "StableCategories", "/examples/HomStructureForGradedRows.g" );
 
 
 CoxRingOfProductOfProjectiveSpaces := function( L )

@@ -273,7 +273,7 @@ InstallMethod( StableCategoryByColiftingStructure,
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
                   
-                    elif  LoadPackage( "FreydCategoriesForCAP" ) = true then
+                    elif  LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
                     
@@ -334,7 +334,7 @@ InstallMethod( StableCategoryByLiftingStructure,
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
                     
-                    elif LoadPackage( "FreydCategoriesForCAP" ) = true then
+                    elif LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
                     

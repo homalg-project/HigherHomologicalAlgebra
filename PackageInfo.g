@@ -8,7 +8,7 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "StableCategoriesForCap",
+PackageName := "StableCategories",
 Subtitle := "Gap package for constructing stable category of a given Cap category",
 Version := "1.0",
 Date := "14/04/2018", # dd/mm/yyyy format
@@ -67,9 +67,9 @@ Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "CAP", ">= 1.0" ],
                            [ "GAPDoc", ">= 1.5" ],
-                            [ "TriangulatedCategoriesForCAP", ">= 1" ],
-                            [ "FrobeniusCategoriesForCAP", ">= 1" ],
-                            [ "QuotientCategoriesForCAP", ">= 0" ],
+                            [ "TriangulatedCategories", ">= 1" ],
+                            [ "FrobeniusCategories", ">= 1" ],
+                            [ "QuotientCategories", ">= 0" ],
                             #[ "FreydCategoriesForCAP", ">= 0" ]
                           ],
   SuggestedOtherPackages := [ ],
