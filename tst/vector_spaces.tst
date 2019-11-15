@@ -258,4 +258,3 @@ with active lower bound 2 and active upper bound 5>
 gap> ApplyFunctor( trunc_g_4, C );
 <A bounded object in Cochain complexes category over Category of matrices over Q \
 with active lower bound 4 and active upper bound 7>
-gap> STOP_TEST("complexesforcap01.tst", 1 );
