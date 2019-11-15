@@ -1,7 +1,7 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
 LoadPackage( "QPA" );
-LoadPackage( "LinearAlgebraForCAP" );
-ReadPackage( "HomotopyCategoriesForCAP", "/examples/random_methods_for_categories_of_quiver_reps.g" );
+LoadPackage( "LinearAlgebra" );
+ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_quiver_reps.g" );
 
 field := Rationals;;
 
@@ -58,7 +58,6 @@ cat!.compute_basis_of_hom_using_homalg := [ true, 1, HomalgFieldOfRationals() ];
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddHomomorphismStructureUsingExternalHom( cat );;
 AddRandomMethodsToQuiverRepresentations( cat );;
 Finalize( cat );;
 

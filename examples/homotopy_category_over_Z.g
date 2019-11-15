@@ -1,4 +1,4 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
 LoadPackage( "ModulePresentations" );
 
 ZZ := HomalgRingOfIntegers( );

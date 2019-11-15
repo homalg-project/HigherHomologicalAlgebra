@@ -8,7 +8,7 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "HomotopyCategoriesForCAP",
+PackageName := "HomotopyCategories",
 Subtitle := "Package to create homotopy categories of an additive category",
 Version := "0.1",
 Date := "10/05/2019", # dd/mm/yyyy format
@@ -33,7 +33,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 #SupportEmail   := "TODO",
-PackageWWWHome  := "https://kamalsaleh.github.io/HomotopyCategoriesForCAP/",
+PackageWWWHome  := "https://kamalsaleh.github.io/HomotopyCategories/",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
@@ -55,7 +55,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "HomotopyCategoriesForCAP",
+  BookName  := "HomotopyCategories",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -68,7 +68,7 @@ Dependencies := rec(
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
                            [ "CAP", ">= 2019.10.24" ],
                            [ "ComplexesForCAP", ">=0" ],
-                           [ "StableCategoriesForCAP", ">=0" ] ],
+                           [ "StableCategories", ">=0" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),

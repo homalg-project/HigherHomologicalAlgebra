@@ -1,8 +1,8 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
-LoadPackage( "FreydCategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
+LoadPackage( "FreydCategories" );
 LoadPackage( "4ti2Interface" ); # or NConvex
-LoadPackage( "LinearAlgebraForCAP" );
-ReadPackage( "HomotopyCategoriesForCAP", "/examples/random_methods_for_categories_of_graded_rows.g" );
+LoadPackage( "LinearAlgebra" );
+ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_graded_rows.g" );
 
 Q := HomalgFieldOfRationalsInSingular( );;
 S := GradedRing( Q * "x_0, x_1, x_2, y_0, y_1" );;
@@ -17,20 +17,17 @@ AddRandomMethodsToGradedRows( rows );;
 
 ## Adding the external hom methods
 AddBasisOfExternalHom( rows, BasisOfExternalHomBetweenGradedRows );;
-AddCoefficientsOfMorphismWRTBasisOfExternalHom( rows, CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom );;
+AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( rows,
+  CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom );;
 
 ## Defining rows as linear category
 SetIsLinearCategoryOverCommutativeRing( rows, true );;
 SetCommutativeRingOfLinearCategory( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( rows, 
   {r,phi} -> GradedRowOrColumnMorphism( Source( phi ), r*UnderlyingHomalgMatrix( phi ), Range( phi ) ) );;
-
-## Adding homomorphism structure
-AddHomomorphismStructureUsingExternalHom( rows );;
-##
-SetIsProjective( DistinguishedObjectOfHomomorphismStructure( rows ), true );;
-
 Finalize( rows );;
+
+SetIsProjective( DistinguishedObjectOfHomomorphismStructure( rows ), true );;
 
 homotopy_of_rows := HomotopyCategory( rows : FinalizeCategory := false );;
 
@@ -67,5 +64,5 @@ H_aabb := HomomorphismStructureOnObjects( aa, bb );;
 aaa := StableCategoryObject( stable_homotopy_cat_of_rows, aa );;
 bbb := StableCategoryObject( stable_homotopy_cat_of_rows, bb );;
 H_aaabbb := HomomorphismStructureOnObjects( aaa, bbb );;
-IsEqualForObjects( H_fr_a_fr_b, H_aaabbb );;
+Display( IsEqualForObjects( H_fr_a_fr_b, H_aaabbb ) );
 

@@ -1,10 +1,10 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
-LoadPackage( "FreydCategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
+LoadPackage( "FreydCategories" );
 LoadPackage( "4ti2Interface" ); # or NConvex
-LoadPackage( "LinearAlgebraForCAP" );
+LoadPackage( "LinearAlgebra" );
 LoadPackage( "GradedModulePresentations" );
 LoadPackage( "Bialgebroid" );
-ReadPackage( "HomotopyCategoriesForCAP", "/examples/random_methods_for_categories_of_graded_rows.g" );
+ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_graded_rows.g" );
 
 Q := HomalgFieldOfRationalsInSingular( );;
 S := GradedRing( Q * "x_0, x_1, x_2, y_0, y_1" );;
@@ -19,20 +19,16 @@ AddRandomMethodsToGradedRows( graded_rows );;
 
 ## Adding the external hom methods
 AddBasisOfExternalHom( graded_rows, BasisOfExternalHomBetweenGradedRows );;
-AddCoefficientsOfMorphismWRTBasisOfExternalHom( graded_rows, CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom );;
+AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( graded_rows, CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom );;
 
 ## Defining graded_rows as linear category
 SetIsLinearCategoryOverCommutativeRing( graded_rows, true );;
 SetCommutativeRingOfLinearCategory( graded_rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );;
 AddMultiplyWithElementOfCommutativeRingForMorphisms( graded_rows, 
   {r,phi} -> GradedRowOrColumnMorphism( Source( phi ), r*UnderlyingHomalgMatrix( phi ), Range( phi ) ) );;
-
-## Adding homomorphism structure
-AddHomomorphismStructureUsingExternalHom( graded_rows );;
-##
-SetIsProjective( DistinguishedObjectOfHomomorphismStructure( graded_rows ), true );;
-
 Finalize( graded_rows );;
+
+SetIsProjective( DistinguishedObjectOfHomomorphismStructure( graded_rows ), true );;
 
 homotopy_of_graded_rows := HomotopyCategory( graded_rows );
 

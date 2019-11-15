@@ -4,10 +4,10 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "HomotopyCategoriesForCAP", "gap/TriangulatedStructure.gi" );
-ReadPackage( "HomotopyCategoriesForCAP", "gap/CAP_TOOLS.gi" );
-ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategories.gi" );
-ReadPackage( "HomotopyCategoriesForCAP", "gap/functors.gi" );
-ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryObjects.gi" );
-ReadPackage( "HomotopyCategoriesForCAP", "gap/HomotopyCategoryMorphisms.gi" );
+ReadPackage( "HomotopyCategories", "gap/TriangulatedStructure.gi" );
+ReadPackage( "HomotopyCategories", "gap/CAP_TOOLS.gi" );
+ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gi" );
+ReadPackage( "HomotopyCategories", "gap/functors.gi" );
+ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gi" );
+ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gi" );
 

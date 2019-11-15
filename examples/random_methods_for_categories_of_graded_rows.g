@@ -571,7 +571,7 @@ end;
 
 ##
 CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom :=
-  function( phi )
+  function( phi, basis )
     local category, K, S, a, b, U, degrees_a, degrees_b, degrees, hom_a_b, mat, psi, B, A, sol, list_of_entries,
     position_of_non_zero_entry, current_coeff, current_coeff_mat, current_mono, position_in_basis,
     current_term, current_entry, j;
@@ -645,5 +645,4 @@ CoefficientsOfMorphismOfGradedRowsWRTBasisOfExternalHom :=
     return sol;
 
 end;
-
 
