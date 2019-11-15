@@ -30,9 +30,16 @@
 #! its projective resolution in the classical sense
 #! , i.e., complex $P^\bullet$ which is exact everywhere but in index $0$,
 #! where $H^0(P^\bullet)\cong M$.
-#! @Arguments arg
+#! @Arguments C
 #! @Returns a (co)chain complex
 DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
+
+#! @Description
+#! The arguments are an object <A>C</A> and a boolian <A>bool</A>. If <A>bool</A> = <K>false</K> then the ouput is 
+#! <C>ProjectiveResolution</C>(<A>C</A>), otherwise the output is <C>ProjectiveResolution</C>(<A>C</A>) after trying to find its bounds.
+#! @Arguments C, bool
+#! @Returns a (co)chain complex
+DeclareOperation( "ProjectiveResolution", [ IsCapCategoryObject, IsBool ] );
 
 #! @Description
 #! The input is a morphism $\alpha$ whose category is abelian with enough projectives. The output is the induced
@@ -41,11 +48,13 @@ DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 #! @Returns a (co)chain morphism
 DeclareAttribute( "MorphismBetweenProjectiveResolutions", IsCapCategoryMorphism );
 
-DeclareOperation( "ProjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
-
-# DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedBelowChainComplex );
-
-# DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject and IsBoundedAboveCochainComplex );
+#! @Description
+#! The arguments are a morphism $\alpha$ and a boolian <A>bool</A>. If <A>bool</A> = <K>false</K> then the ouput is 
+#! <C>MorphismBetweenProjectiveResolutions</C>($\alpha$), otherwise the output is 
+#! <C>MorphismBetweenProjectiveResolutions</C>($\alpha$) after trying to find its bounds.
+#! @Arguments alpha, bool
+#! @Returns a (co)chain morphism
+DeclareOperation( "MorphismBetweenProjectiveResolutions", [ IsCapCategoryMorphism, IsBool ] );
 
 #! @Description
 #! If the input is bounded above chain complex or bounded below cochain complex then the 
@@ -59,6 +68,13 @@ DeclareOperation( "ProjectiveResolutionWithBounds", [ IsBoundedChainOrCochainCom
 DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 
 #! @Description
+#! The arguments are an object <A>C</A> and a boolian <A>bool</A>. If <A>bool</A> = <K>false</K> then the ouput is 
+#! <C>InjectiveResolution</C>(<A>C</A>), otherwise the output is <C>InjectiveResolution</C>(<A>C</A>) after trying to find its bounds.
+#! @Arguments C, bool
+#! @Returns a (co)chain complex
+DeclareOperation( "InjectiveResolution", [ IsCapCategoryObject, IsBool ] );
+
+#! @Description
 #! The input is a morphism $\alpha$ whose category is abelian with enough injectives. The output is the induced
 #! cochain morphism between the injective resolutions of the source and range of $\alpha$.
 #! This morphism is unique up to homotopy.
@@ -66,12 +82,13 @@ DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 #! @Returns a (co)chain morphism
 DeclareAttribute( "MorphismBetweenInjectiveResolutions", IsCapCategoryMorphism );
 
-DeclareOperation( "InjectiveResolutionWithBounds", [ IsBoundedChainOrCochainComplex, IsInt ] );
-
-# DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedAboveChainComplex );
-
-# DeclareAttribute( "InjectiveResolution", IsCapCategoryObject and IsBoundedBelowCochainComplex );
-
+#! @Description
+#! The arguments are a morphism $\alpha$ and a boolian <A>bool</A>. If <A>bool</A> = <K>false</K> then the ouput is 
+#! <C>MorphismBetweenInjectiveResolutions</C>($\alpha$), otherwise the output is 
+#! <C>MorphismBetweenInjectiveResolutions</C>($\alpha$) after trying to find its bounds.
+#! @Arguments alpha, bool
+#! @Returns a (co)chain morphism
+DeclareOperation( "MorphismBetweenInjectiveResolutions", [ IsCapCategoryMorphism, IsBool ] );
 
 #! @BeginGroup 5
 #! @Description

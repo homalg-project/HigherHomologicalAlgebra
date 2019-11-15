@@ -4,7 +4,7 @@ LoadPackage( "GradedModulePresentations" );;
 LoadPackage( "RingsForHomalg" );;
 
 R := HomalgFieldOfRationalsInSingular( )*"x,y,z";;
-cat := LeftPresentations( R: FinalizeCategory := false );
+cat := LeftPresentations( R );
 M := AsLeftPresentation( HomalgMatrix( "[ [ x ], [ y ], [ z ] ]", 3, 1, R ) );
 #! <An object in Category of left presentations of Q[x,y,z]>
 CM := StalkCochainComplex( M, 0 );
