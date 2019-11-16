@@ -124,8 +124,8 @@ function( F )
   AddObjectFunction( functor,
     function( C )
       local diffs, functor_C;
-
-      diffs := MapLazy( Differentials( C ), d -> ApplyFunctor( F, d ), 1 );
+      
+      diffs := MapLazy( Differentials( UnderlyingCell( C ) ), d -> ApplyFunctor( F, d ), 1 );
      
       functor_C := HomotopyCategoryObject( T, ChainComplex( AsCapCategory( Range( F ) ), diffs ) );
      
@@ -150,8 +150,8 @@ function( F )
   AddMorphismFunction( functor,
     function( new_source, phi, new_range ) 
       local morphisms, functor_phi;
-
-      morphisms := MapLazy( Morphisms( phi ), d -> ApplyFunctor( F, d ), 1 );
+      
+      morphisms := MapLazy( Morphisms( UnderlyingCell( phi ) ), d -> ApplyFunctor( F, d ), 1 );
        
       functor_phi := HomotopyCategoryMorphism( T, ChainMorphism( new_source, new_range, morphisms ) );
        
