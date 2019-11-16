@@ -113,9 +113,9 @@ InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
 function( F )
   local S, T, functor, name;
 
-  S := HomotopyCategory( ChainComplexCategory( AsCapCategory( Source( F ) ) ) );
+  S := HomotopyCategory( AsCapCategory( Source( F ) ) );
 
-  T := HomotopyCategory( ChainComplexCategory( AsCapCategory(  Range( F ) ) ) );
+  T := HomotopyCategory( AsCapCategory(  Range( F ) ) );
 
   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
 
