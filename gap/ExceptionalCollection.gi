@@ -45,6 +45,12 @@ InstallGlobalFunction( CreateExceptionalCollection,
   function( full )
     local L, collection, n;
     
+    if HasExceptionalCollection( full ) then
+      
+      return ExceptionalCollection( full );
+      
+    fi;
+    
     if IsList( full ) then
       
       full := FullSubcategoryGeneratedByListOfObjects( full );
@@ -92,7 +98,37 @@ InstallGlobalFunction( CreateExceptionalCollection,
         NumberOfObjects, n,
         DefiningFullSubcategory, full );
     
+    SetExceptionalCollection( full, collection );
+    
     return collection;
+    
+end );
+
+InstallMethod( ExceptionalCollection,
+          [ IsCapFullSubcategory ],
+  function( full )
+    
+    CreateExceptionalCollection( full );
+    
+    return ExceptionalCollection( full );
+  
+end );
+
+##
+InstallMethod( TiltingObject,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local full, I, objs;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    I := InclusionFunctor( full );
+    
+    objs := UnderlyingObjects( collection );
+    
+    objs := List( objs, o -> ApplyFunctor( I, o ) );
+    
+    return DirectSum( objs );
     
 end );
 
