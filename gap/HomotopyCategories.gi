@@ -45,35 +45,22 @@ InstallMethod( HomotopyCategory,
     
     else
     
-      AddMorphismIntoColiftingObject( chains,
-        function( a )
-      
-          return NaturalInjectionInMappingCone( IdentityMorphism( a ) );
-        
-      end );
-    
       coliftable_function := ValueOption( "is_coliftable_through_colifting_object_func" );
     
-      if coliftable_function = fail then
-      
-        if not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
-        
-          Error( "The method IsColiftableThroughColiftingObject should be added to the category of chains!" );
-        
-        fi;
-    
-      elif IsFunction( coliftable_function ) then
+      if IsFunction( coliftable_function ) then
                 
         AddIsColiftableThroughColiftingObject( chains, coliftable_function );
         
-      else
-        
-        Error( "The optional input is not valid" );
-    
       fi;
       
       Finalize( chains );
-    
+      
+      if not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
+        
+        Error( "The method IsColiftableThroughColiftingObject should be added to the category of chains!" );
+        
+      fi;
+
     fi;
     
     name := Concatenation( "Homotopy category of ", Name( cat ) );
