@@ -141,6 +141,7 @@ function( F )
 
 end );
 
+##
 InstallMethod( EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects,
           [ IsCapCategory ],
   function( cat )
@@ -156,8 +157,10 @@ InstallMethod( EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProject
     
     homotopy_category := HomotopyCategory( projs );
     
-    name := "to be named";
+    name := Random( List( [ 1 .. 6 ], i -> TextAttr.(i) ) );
     
+    name := Concatenation( "Embedding functor ", name, "from\033[0m ", Name( cat ), name, " into\033[0m ", Name( homotopy_category ) );
+   
     F := CapFunctor( name, cat, homotopy_category );
     
     ##
@@ -168,6 +171,60 @@ InstallMethod( EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProject
         p := AsChainComplex( ProjectiveResolution( a, true ) );
         
         p := AsComplexOverCapFullSubcategory( projs, p );
+        
+        return HomotopyCategoryObject( homotopy_category, p );
+        
+    end );
+    
+    ##
+    AddMorphismFunction( F,
+      function( s, phi, r )
+        local psi;
+        
+        psi := MorphismBetweenProjectiveResolutions( phi, true );
+        
+        psi := AsChainMorphism( psi );
+        
+        psi := AsChainMorphismOverCapFullSubcategory( psi );
+        
+        return HomotopyCategoryMorphism( homotopy_category, psi );
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByInjectiveObjects,
+          [ IsCapCategory ],
+  function( cat )
+    local injs, homotopy_category, name, F;
+    
+    if not IsAbelianCategoryWithEnoughInjectives( cat ) then
+      
+      Error( "The input should be abelian with enough injectives!\n" );
+      
+    fi;
+  
+    injs := ValueGlobal( "FullSubcategoryGeneratedByInjectiveObjects" )( cat );
+    
+    homotopy_category := HomotopyCategory( injs );
+    
+    name := Random( List( [ 1 .. 6 ], i -> TextAttr.(i) ) );
+     
+    name := Concatenation( "Embedding functor ", name, "from\033[0m ", Name( cat ), name, " into\033[0m ", Name( homotopy_category ) );
+   
+    F := CapFunctor( name, cat, homotopy_category );
+    
+    ##
+    AddObjectFunction( F,
+      function( a )
+        local p;
+        
+        p := AsChainComplex( InjectiveResolution( a, true ) );
+        
+        p := AsComplexOverCapFullSubcategory( injs, p );
         
         return HomotopyCategoryObject( homotopy_category, p );
         

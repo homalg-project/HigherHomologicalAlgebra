@@ -20,6 +20,7 @@ DeclareAttribute( "ExtendFunctorToHomotopyCategoryFunctor", IsCapFunctor );
 
 DeclareAttribute( "EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects", IsCapCategory );
 
+DeclareAttribute( "EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByInjectiveObjects", IsCapCategory );
 
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
