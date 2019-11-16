@@ -280,6 +280,9 @@ InstallGlobalFunction( StackMatricesDiagonally,
     
 end );
 
+
+## This is somehow clean and works whenever we have a indecomposable generating projectives.
+## BUT: it is VERY slow, since it uses lifts.
 ##
 InstallMethod( EpimorphismFromSomeDirectSum,
           [ IsList, IsCapCategoryObject ],
