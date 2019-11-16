@@ -10,4 +10,5 @@ ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gi" );
 ReadPackage( "HomotopyCategories", "gap/functors.gi" );
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gi" );
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gi" );
+ReadPackage( "HomotopyCategories", "gap/DerivedMethods.gi" );
 
