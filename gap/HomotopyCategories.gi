@@ -80,7 +80,7 @@ InstallMethod( HomotopyCategory,
                                                                      WithHomomorphismStructure := true,
                                                                      SpecialFilters := special_filters );
     
-    if ValueOption( "WithStandardHomomorphismStructure" ) = false and
+    if ValueOption( "WithStandardHomomorphismStructure" ) <> true and
       
         ValueGlobal( "HasRangeCategoryOfHomomorphismStructure" )( cat ) then
         
