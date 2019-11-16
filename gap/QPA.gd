@@ -1,7 +1,12 @@
 
 DeclareAttribute( "DecomposeProjectiveQuiverRepresentation", IsQuiverRepresentation );
-DeclareAttribute( "IsomorphismIntoCanonicalDecomposition", IsQuiverRepresentation );
-DeclareAttribute( "IsomorphismFromCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "DecomposeInjectiveQuiverRepresentation", IsQuiverRepresentation );
+
+DeclareAttribute( "IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismFromProjectiveRepresentationIntoCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
+
 
 DeclareOperation( "EpimorphismFromSomeDirectSum", [ IsList, IsCapCategoryObject ] );
 
