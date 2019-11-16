@@ -111,66 +111,30 @@ end );
 InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
                [ IsCapFunctor ],
 function( F )
-  local S, T, functor, name;
+  local S, T, ChF, name, functor;
 
   S := HomotopyCategory( AsCapCategory( Source( F ) ) );
 
   T := HomotopyCategory( AsCapCategory(  Range( F ) ) );
-
+  
+  ChF := ExtendFunctorToChainComplexCategoryFunctor( F );
+  
   name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
 
   functor := CapFunctor( name, S, T );
 
   AddObjectFunction( functor,
     function( C )
-      local diffs, functor_C;
       
-      diffs := MapLazy( Differentials( UnderlyingCell( C ) ), d -> ApplyFunctor( F, d ), 1 );
-     
-      functor_C := HomotopyCategoryObject( T, ChainComplex( AsCapCategory( Range( F ) ), diffs ) );
-     
-      TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
-
-      AddToToDoList(
-        ToDoListEntry( [ [ C, "IsZero", true ] ], 
-          function( )
-
-            if not HasIsZero( functor_C ) then 
-
-              SetIsZero( functor_C, true );
-
-            fi;
-
-        end ) );
-
-      return functor_C;
-
+      return ApplyFunctor( ChF, UnderlyingCell( C ) ) / T;
+      
     end );
 
   AddMorphismFunction( functor,
     function( new_source, phi, new_range ) 
-      local morphisms, functor_phi;
-      
-      morphisms := MapLazy( Morphisms( UnderlyingCell( phi ) ), d -> ApplyFunctor( F, d ), 1 );
        
-      functor_phi := HomotopyCategoryMorphism( T, ChainMorphism( new_source, new_range, morphisms ) );
-       
-      TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
-                                                                  
-      AddToToDoList(
-        ToDoListEntry( [ [ phi, "IsZero", true ] ],
-          function( )
-
-            if not HasIsZero( functor_phi ) then
-
-              SetIsZero( functor_phi, true );
-
-            fi;
-
-        end ) );
-
-      return functor_phi;
-
+      return ApplyFunctor( ChF, UnderlyingCell( phi ) ) / T;
+     
      end );
 
   return functor;
