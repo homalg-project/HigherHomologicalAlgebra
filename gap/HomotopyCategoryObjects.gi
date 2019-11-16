@@ -45,7 +45,7 @@ InstallMethod( Display,
   
     Print( "An object in homotopy category defined by:\n\n" );
 
-    Display( ChainComplex( a ) );
+    Display( UnderlyingCell( a ) );
 
 end );
 
