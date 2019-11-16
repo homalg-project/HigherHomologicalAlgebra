@@ -1,4 +1,4 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
 LoadPackage( "QPA" );
 LoadPackage( "LinearAlgebraForCAP" );
 LoadPackage( "DerivedCategories" );
@@ -26,8 +26,6 @@ A :=
     ]
 );;
 
-SetIsAdmissibleQuiverAlgebra( A, true );
-
 cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );;
 cat!.compute_basis_of_hom_using_homalg := [ true, 1, homalg_field ]; 
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
@@ -38,7 +36,6 @@ Finalize( cat );;
 T := [ ];
 
 mats :=
-  
   [ [ [ 1, 0, 0 ] ], [ [ 0, 1, 0 ] ], [ [ 0, 0, 1 ] ], [ [ 0, 0, 0 ], [ -1, 0, 0 ], [ 0, -1, 0 ] ], [ [ 1, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, -1 ] ], 
     [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 0, 0, 0 ] ] ];
   
@@ -47,7 +44,6 @@ mats := List( mats, m -> MatrixByRows( field, m ) );
 Add( T, QuiverRepresentation( A, [ 1, 3, 3 ], mats ) );
 
 mats :=
-
 [ [ [ 0, 0, 0, -1, 0, 0, 0, -1 ], [ 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0 ] ], 
   [ [ 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0 ] ], 
   [ [ 0, 1, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1 ] ], 
@@ -62,7 +58,6 @@ mats := List( mats, m -> MatrixByRows( field, m ) );
 Add( T, QuiverRepresentation( A, [ 3, 8, 6 ], mats ) );
 
 mats :=
-
 [ [ [ 0, 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1 ],
       [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ] ], 
   [ [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
@@ -86,4 +81,15 @@ mats := List( mats, m -> MatrixByRows( field, m ) );
 
 Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );
 
+I := EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects( cat );
+
+T1 := List( T, E -> ApplyFunctor( I, E ) );
+
+J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );
+
+J := ExtendFunctorToHomotopyCategoryFunctor( J );
+
+U := PreCompose( I, J );
+
+T2 := List( T, E -> ApplyFunctor( U, E ) );
 
