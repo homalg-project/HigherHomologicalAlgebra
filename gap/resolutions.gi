@@ -18,7 +18,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
                 [ IsBoundedAboveCochainComplex ],
   
   function( C )
-    local u, cat, proj, zero, list;
+    local cat, u, zero, maps, r;
     
     cat := UnderlyingCategory( CapCategory( C ) );
     
@@ -38,9 +38,9 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     
     zero := ZeroObject( cat );
     
-    list := MapLazy( IntegersList,
+    maps := MapLazy( IntegersList,
       function( k )
-        local k1, m1, mor4, mor2, mor3, m2, m, mor1, ker, pk;
+        local temp, m, p1, p2, ker, pk;
         
         if k >= u then
           
@@ -48,46 +48,43 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
         
         else
           
-          k1 := list[ k + 1 ][ 1 ];
+          temp := maps[ k + 1 ][ 1 ];
           
-          m1 := DirectSumFunctorial( [ AdditiveInverse( k1 ), C^k ] );
+          m := MorphismBetweenDirectSums(
+                        [
+                          [ AdditiveInverse( temp ), maps[ k + 1 ][ 2 ] ],
+                          [ ZeroMorphism( C[ k ], Range( temp ) ), C^k ]
+                        ]
+                      );
           
-          mor1 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 1 );
+          p1 := ProjectionInFactorOfDirectSum( [ Source( temp ), C[ k ] ], 1 );
           
-          mor2 := list[ k + 1 ][ 2 ];
-          
-          mor3 := InjectionOfCofactorOfDirectSum( [ Range( k1 ), C[ k + 1 ] ], 2 );
-          
-          m2 := PreCompose( [ mor1, mor2, mor3 ] );
-          
-          m := AdditionForMorphisms( m1, m2 );
-          
-          mor4 := ProjectionInFactorOfDirectSum( [ Source( k1 ), C[ k ] ], 2 );
+          p2 := ProjectionInFactorOfDirectSum( [ Source( temp ), C[ k ] ], 2 );
           
           ker := KernelEmbedding( m );
           
           pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
           
-          return [ PreCompose( [ pk, ker, mor1 ] ), PreCompose( [ pk, ker, mor4 ] ) ];
+          return [ PreCompose( [ pk, ker, p1 ] ), PreCompose( [ pk, ker, p2 ] ) ];
         
         fi;
       
       end, 1 );
     
-    proj := CochainComplex( cat, MapLazy( list, function( j ) return j[ 1 ]; end, 1 ) );
+    r := CochainComplex( cat, MapLazy( maps, function( j ) return j[ 1 ]; end, 1 ) );
     
-    SetUpperBound( proj, u );
+    SetUpperBound( r, u );
     
-    return CochainMorphism( proj, C, 
+    return CochainMorphism( r, C, 
       MapLazy( IntegersList,
         function( j )
           if j mod 2 = 0 then
             
-            return  list[ j ][ 2 ]; 
+            return  maps[ j ][ 2 ]; 
           
           else
             
-            return AdditiveInverse( list[ j ][ 2 ] );
+            return AdditiveInverse( maps[ j ][ 2 ] );
           
           fi;
         
