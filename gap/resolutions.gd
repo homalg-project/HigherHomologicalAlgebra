@@ -127,18 +127,18 @@ DeclareOperation( "QuasiIsomorphismFromProjectiveResolution", [ IsBoundedChainOr
 #! are injective in the underlying abelian category.
 #! @Arguments C
 #! @Returns a (co)chain epimorphism
-DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochainComplex );
+DeclareAttribute( "QuasiIsomorphismIntoInjectiveResolution", IsBoundedBelowCochainComplex );
 #! @EndGroup
 #! @Group 15
 #! @Arguments C
-DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
+DeclareAttribute( "QuasiIsomorphismIntoInjectiveResolution", IsBoundedAboveChainComplex );
 
 #! @Description
 #! The input is chain or cochain complex and the output is a quasi-isomorphism into its injective resolution,
 #! after trying to find its bounds.
 #! @Arguments C
 #! @Returns a bounded (co)chain epimorphism
-DeclareOperation( "QuasiIsomorphismInInjectiveResolution", [ IsBoundedChainOrCochainComplex, IsBool ] );
+DeclareOperation( "QuasiIsomorphismIntoInjectiveResolution", [ IsBoundedChainOrCochainComplex, IsBool ] );
 
 
 #! @Section Examples

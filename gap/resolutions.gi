@@ -186,7 +186,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
         [ IsCapCategoryMorphism and IsBoundedBelowChainComplex ],
   function( phi )
     
-    return AsChainMorphism( MorphismBetweenProjectiveResolutions( AsCochainComplex( phi ) ) );
+    return AsChainMorphism( MorphismBetweenProjectiveResolutions( AsCochainMorphism( phi ) ) );
     
 end );
 
@@ -379,7 +379,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
     
     if IsChainOrCochainMorphism( phi ) then
       
-      Error( "Not yet implemented!" );
+      TryNextMethod( );
     
     fi;
     
@@ -453,7 +453,7 @@ end );
 ##############################
 
 ##
-InstallMethod( QuasiIsomorphismInInjectiveResolution,
+InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
           [ IsBoundedBelowCochainComplex ],
  
   function( C )
@@ -518,11 +518,11 @@ InstallMethod( QuasiIsomorphismInInjectiveResolution,
  end );
 
 ##
-InstallMethod( QuasiIsomorphismInInjectiveResolution,
+InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
         [ IsBoundedAboveChainComplex ], 
 function( C )
   
-  return AsChainMorphism( QuasiIsomorphismInInjectiveResolution( AsCochainComplex( C ) ) );
+  return AsChainMorphism( QuasiIsomorphismIntoInjectiveResolution( AsCochainComplex( C ) ) );
   
 end );
 
@@ -530,14 +530,14 @@ end );
 InstallMethod( InjectiveResolution,
       [ IsBoundedBelowCochainComplex ],
 function( C )
-  return Range( QuasiIsomorphismInInjectiveResolution( C ) );
+  return Range( QuasiIsomorphismIntoInjectiveResolution( C ) );
 end );
 
 ##
 InstallMethod( InjectiveResolution,
       [ IsBoundedAboveChainComplex ],
 function( C )
-  return Range( QuasiIsomorphismInInjectiveResolution( C ) );
+  return Range( QuasiIsomorphismIntoInjectiveResolution( C ) );
 end );
 
 
@@ -551,11 +551,11 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
     
     D := Range( phi );
     
-    q_C := QuasiIsomorphismInInjectiveResolution( C );
+    q_C := QuasiIsomorphismIntoInjectiveResolution( C );
     
     i_C := Range( q_C );
     
-    q_D := QuasiIsomorphismInInjectiveResolution( D );
+    q_D := QuasiIsomorphismIntoInjectiveResolution( D );
     
     i_D := Range( q_D );
     
@@ -603,6 +603,16 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
     
 end );
 
+##
+InstallMethod( MorphismBetweenInjectiveResolutions,
+        [ IsCapCategoryMorphism and IsBoundedAboveChainMorphism ],
+  function( phi )
+    
+    return AsChainMorphism(
+            MorphismBetweenInjectiveResolutions(
+              AsCochainMorphism( phi ) ) );
+    
+end );
 
 ##
 InstallMethod( InjectiveResolution,
@@ -670,6 +680,21 @@ InstallMethod( InjectiveResolution,
     
     return p;
     
+end );
+
+##
+InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
+                [ IsBoundedChainOrCochainComplex, IsBool ],
+  
+  function( C, bool )
+    local q;
+    
+    q := QuasiIsomorphismIntoInjectiveResolution( C );
+    
+    InjectiveResolution( C, bool );
+    
+    return q;
+
 end );
 
 #######################################
@@ -781,7 +806,7 @@ function( phi )
   
   if IsChainOrCochainMorphism( phi ) then
     
-    Error( "Not yet implemented!" );
+    TryNextMethod( );
   
   fi;
   
@@ -1176,7 +1201,7 @@ end );
 # end );
 
 ##
-# InstallMethod( QuasiIsomorphismInInjectiveResolution,
+# InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
 #         [ IsBoundedBelowCochainComplex ],
 # 
 # function( C )
@@ -1200,7 +1225,7 @@ end );
 # 
 # if IsZeroForObjects( C[ u + 1 ] ) then 
 #     SetLowerBound( C, u + 1 );
-#     return QuasiIsomorphismInInjectiveResolution( C );
+#     return QuasiIsomorphismIntoInjectiveResolution( C );
 # fi;
 # 
 # zero := ZeroObject( cat );
