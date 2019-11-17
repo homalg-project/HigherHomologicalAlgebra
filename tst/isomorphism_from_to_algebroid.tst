@@ -8,7 +8,6 @@ gap> while ok = false do
 > fi;
 > od;;
 gap> cat := CategoryOfQuiverRepresentations( A );;
-gap> Finalize( cat );;
 gap> collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );;
 gap> B := EndomorphismAlgebraOfExceptionalCollection( collection );;
 gap> algebroid := Algebroid( B );;
