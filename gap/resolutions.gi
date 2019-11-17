@@ -452,29 +452,33 @@ end );
 #
 ##############################
 
-# version 0
- InstallMethod( QuasiIsomorphismInInjectiveResolution,
-[ IsBoundedBelowCochainComplex ],
+##
+InstallMethod( QuasiIsomorphismInInjectiveResolution,
+          [ IsBoundedBelowCochainComplex ],
  
   function( C )
-    local u, cat, inj, zero, inductive_list;
+    local cat, u, zero, maps, inj;
     
     cat := UnderlyingCategory( CapCategory( C ) );
     
     if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
+       
        Error( "It is not known whether the underlying category has enough injectives or not" );
+    
     fi;
     
-    if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then 
-       Error( "The underlying category must have enough injectives" );
+    if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
+      
+      Error( "The underlying category must have enough injectives" );
+    
     fi;
     
     u := ActiveLowerBound( C );
     
     zero := ZeroObject( cat );
     
-    inductive_list := MapLazy( IntegersList, function( k )
-      local k1, m1, mor4, mor2, mor3, m2, m, mor1, coker, pk;
+    maps := MapLazy( IntegersList, function( k )
+      local temp, m, coker, iota, mor1, mor2;
       
       if k <= u then
         
@@ -482,37 +486,34 @@ end );
       
       else
         
-        k1 := inductive_list[ k - 1 ][ 1 ];
-        
-        m1 := DirectSumFunctorial( [ AdditiveInverse( C^( k - 1 ) ), k1 ] );
-        
-        mor1 := ProjectionInFactorOfDirectSum( [ C[ k - 1 ], Source( k1 ) ], 1 );
-        
-        mor2 := inductive_list[ k - 1 ][ 2 ];
-        
-        mor3 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( k1 ) ], 2 );
-        
-        m2 := PreCompose( [ mor1, mor2, mor3 ] );
-        
-        m := AdditionForMorphisms( m1, m2 );
-        
-        mor4 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( k1 ) ], 1 );
-        
+        temp := maps[ k - 1 ][ 1 ];
+         
+        m := MorphismBetweenDirectSums(
+                            [
+                              [ AdditiveInverse( C^( k - 1 ) ), maps[ k - 1 ][ 2 ] ],
+                              [ ZeroMorphism( Source( temp ), C[ k ] ), temp ]
+                            ]
+                        );
+               
         coker := CokernelProjection( m );
         
-        pk := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
+        iota := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
+        
+        mor1 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 1 );
+        
+        mor2 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 2 );
           
-          return [ PostCompose( [ pk, coker, mor3 ] ), PostCompose( [ pk, coker, mor4 ] ) ];
+        return [ PostCompose( [ iota, coker, mor2 ] ), PostCompose( [ iota, coker, mor1 ] ) ];
       
       fi;
       
     end, 1 );
     
-    inj := CochainComplex( cat, ShiftLazy( MapLazy( inductive_list, function( j ) return j[ 1 ]; end, 1 ), 1 ) );
+    inj := CochainComplex( cat, ShiftLazy( MapLazy( maps, j -> j[ 1 ], 1 ), 1 ) );
     
     SetLowerBound( inj, u );
     
-    return CochainMorphism( C, inj, MapLazy( inductive_list, function( j ) return j[ 2 ]; end, 1 ) );
+    return CochainMorphism( C, inj, MapLazy( maps, j -> j[ 2 ], 1 ) );
     
  end );
 
@@ -538,6 +539,70 @@ InstallMethod( InjectiveResolution,
 function( C )
   return Range( QuasiIsomorphismInInjectiveResolution( C ) );
 end );
+
+
+##
+InstallMethod( MorphismBetweenInjectiveResolutions,
+        [ IsCapCategoryMorphism and IsBoundedBelowCochainMorphism ],
+  function( phi )
+    local C, D, q_C, i_C, q_D, i_D, u, maps;
+    
+    C := Source( phi );
+    
+    D := Range( phi );
+    
+    q_C := QuasiIsomorphismInInjectiveResolution( C );
+    
+    i_C := Range( q_C );
+    
+    q_D := QuasiIsomorphismInInjectiveResolution( D );
+    
+    i_D := Range( q_D );
+    
+    u := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
+    
+    maps := MapLazy( IntegersList,
+      function( k )
+        local temp_C, temp_D, m, kappa, mo_C, mo_D;
+        
+        if k <= u then
+          
+          return ZeroMorphism( i_C[ k ], i_D[ k ] );
+          
+        else
+          
+          temp_C := MorphismBetweenDirectSums(
+                            [
+                              [ AdditiveInverse( C^( k - 1 ) ), q_C[ k - 1 ] ],
+                              [ ZeroMorphism( i_C[ k - 2 ], C[ k ] ), i_C^( k - 2 ) ]
+                            ]
+                        );
+          
+          temp_D := MorphismBetweenDirectSums(
+                            [
+                              [ AdditiveInverse( D^( k - 1 ) ), q_D[ k - 1 ] ],
+                              [ ZeroMorphism( i_D[ k - 2 ], D[ k ] ), i_D^( k - 2 ) ]
+                            ]
+                        );
+                
+          m := DirectSumFunctorial( [ phi[ k ], maps[ k - 1 ] ] );
+          
+          kappa := CokernelObjectFunctorial( temp_C, m, temp_D );
+          
+          mo_C := MonomorphismIntoSomeInjectiveObject( Source( kappa ) );
+          
+          mo_D := MonomorphismIntoSomeInjectiveObject( Range( kappa ) );
+          
+          return InjectiveColift( mo_C, PreCompose( kappa, mo_D ) );
+         
+         fi;
+         
+      end, 1 );
+    
+    return CochainMorphism( i_C, i_D, maps );
+    
+end );
+
 
 ##
 InstallMethod( InjectiveResolution,
@@ -742,7 +807,7 @@ function( phi )
   
   func := function( i )
             local a, b, c;
-            Print( i );
+            
             if i < 0 then
               c := ZeroMorphism( P[i], Q[i] );
             elif i = 0 then
