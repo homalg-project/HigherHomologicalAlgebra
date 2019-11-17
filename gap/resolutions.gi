@@ -120,6 +120,77 @@ InstallMethod( ProjectiveResolution,
 end );
 
 ##
+InstallMethod( MorphismBetweenProjectiveResolutions,
+        [ IsCapCategoryMorphism and IsBoundedAboveCochainMorphism ],
+  function( phi )
+    local C, D, q_C, p_C, q_D, p_D, u, maps;
+    
+    C := Source( phi );
+    
+    D := Range( phi );
+    
+    q_C := QuasiIsomorphismFromProjectiveResolution( C );
+    
+    p_C := Source( q_C );
+    
+    q_D := QuasiIsomorphismFromProjectiveResolution( D );
+    
+    p_D := Source( q_D );
+    
+    u := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
+    
+    maps := MapLazy( IntegersList,
+      function( k )
+        local temp_C, temp_D, m, kappa, ep_C, ep_D;
+        
+        if k >= u then
+          
+          return ZeroMorphism( p_C[ k ], p_D[ k ] );
+          
+        else
+          
+          temp_C := MorphismBetweenDirectSums(
+                        [
+                          [ AdditiveInverse( p_C^( k + 1) ), q_C[ k + 1 ] ],
+                          [ ZeroMorphism( C[ k ], p_C[ k + 2 ] ), C^k ]
+                        ]
+                      );
+          
+          temp_D := MorphismBetweenDirectSums(
+                        [
+                          [ AdditiveInverse( p_D^( k + 1) ), q_D[ k + 1 ] ],
+                          [ ZeroMorphism( D[ k ], p_D[ k + 2 ] ), D^k ]
+                        ]
+                      );
+        
+          m := DirectSumFunctorial( [ maps[ k + 1 ], phi[ k ] ] );
+          
+          kappa := KernelObjectFunctorial( temp_C, m, temp_D );
+          
+          ep_C := EpimorphismFromSomeProjectiveObject( Source( kappa ) );
+          
+          ep_D := EpimorphismFromSomeProjectiveObject( Range( kappa ) );
+          
+          return ProjectiveLift( PreCompose( ep_C, kappa ), ep_D );
+         
+         fi;
+         
+      end, 1 );
+    
+    return CochainMorphism( p_C, p_D, maps );
+    
+end );
+
+##
+InstallMethod( MorphismBetweenProjectiveResolutions,
+        [ IsCapCategoryMorphism and IsBoundedBelowChainComplex ],
+  function( phi )
+    
+    return AsChainMorphism( MorphismBetweenProjectiveResolutions( AsCochainComplex( phi ) ) );
+    
+end );
+
+##
 InstallMethod( ProjectiveResolution,
       [ IsBoundedCochainComplex, IsBool ],
   function( C, bool )
@@ -185,6 +256,21 @@ InstallMethod( ProjectiveResolution,
     
     return p;
     
+end );
+
+##
+InstallMethod( QuasiIsomorphismFromProjectiveResolution,
+                [ IsBoundedChainOrCochainComplex, IsBool ],
+  
+  function( C, bool )
+    local q;
+    
+    q := QuasiIsomorphismFromProjectiveResolution( C );
+    
+    ProjectiveResolution( C, bool );
+    
+    return q;
+
 end );
 
 #######################################

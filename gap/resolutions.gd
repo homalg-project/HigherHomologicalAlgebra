@@ -108,6 +108,13 @@ DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedAboveCoch
 #! @Arguments C
 DeclareAttribute( "QuasiIsomorphismFromProjectiveResolution", IsBoundedBelowChainComplex );
 
+#! @Description
+#! The input is chain or cochain complex and the output is a quasi-isomorphism from its projective resolution,
+#! after trying to find its bounds.
+#! @Arguments C
+#! @Returns a bounded (co)chain epimorphism
+DeclareOperation( "QuasiIsomorphismFromProjectiveResolution", [ IsBoundedChainOrCochainComplex, IsBool ] );
+
 #! @BeginGroup 15
 #! @Description
 #! The input is a below bounded cochain complex $C^\bullet$. The output is
@@ -125,6 +132,14 @@ DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedBelowCochain
 #! @Group 15
 #! @Arguments C
 DeclareAttribute( "QuasiIsomorphismInInjectiveResolution", IsBoundedAboveChainComplex );
+
+#! @Description
+#! The input is chain or cochain complex and the output is a quasi-isomorphism into its injective resolution,
+#! after trying to find its bounds.
+#! @Arguments C
+#! @Returns a bounded (co)chain epimorphism
+DeclareOperation( "QuasiIsomorphismInInjectiveResolution", [ IsBoundedChainOrCochainComplex, IsBool ] );
+
 
 #! @Section Examples
 #! @InsertChunk Z_0
