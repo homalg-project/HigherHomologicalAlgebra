@@ -1,6 +1,4 @@
 
-
-
 ################################
 #
 # Tools for qpa
@@ -9,15 +7,15 @@
 
 ##
 BindGlobal( "LazyQuiverRepresentation",
-
+  
   function( A, dimensions, matrices )
     local cat, Q, objects, m, morphisms, i, a, source, range;
-
+    
     cat := CategoryOfQuiverRepresentations( A );
     Q := QuiverOfAlgebra( A );
-
+    
     objects := List( dimensions, VectorSpaceConstructor( cat ) );
-
+    
     m := LinearTransformationConstructor( cat );
     
     morphisms := [];
@@ -28,8 +26,320 @@ BindGlobal( "LazyQuiverRepresentation",
       range := objects[ VertexIndex( Target( a ) ) ];
       morphisms[ i ] := m( source, range, matrices[ i ] );
     od;
-
+    
     return QuiverRepresentationNC( cat, objects, morphisms );
+end );
+
+
+BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
+  function( f, g )
+    local hom_basis, Q, k, V, hom_basis_composed_with_g, L, vector, mat, sol, lift, h;
+    
+    if IsZeroForObjects( Range( f ) ) then
+      
+      return ZeroMorphism( Source( f ), Source( g ) );
+    
+    fi;
+    
+    hom_basis := BasisOfExternalHom( Source( f ), Source( g ) );
+    
+    if IsZeroForMorphisms( f ) then
+      
+      return ZeroMorphism( Source( f ), Source( g ) );
+    
+    fi;
+    
+    if hom_basis = [ ] then
+      
+      return fail;
+    
+    fi;
+    
+    Q := QuiverOfRepresentation( Source( f ) );
+    
+    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    
+    V := Vertices( Q );
+    
+    hom_basis_composed_with_g := List( hom_basis, m -> PreCompose( m, g ) );
+    
+    L := List( V, v -> Concatenation( 
+          [ RightMatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
+            List( hom_basis_composed_with_g,
+              h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
+    
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+    
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    
+    vector := StandardVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+    
+    sol := SolutionMat( mat, vector );
+    
+    if sol = fail then
+      
+      return fail;
+    
+    else
+      
+      sol := ShallowCopy( AsList( sol ) );
+      
+      lift := ZeroMorphism( Source( f ), Source( g ) );
+      
+      for h in hom_basis do
+        
+        if not IsZero( sol[ 1 ] ) then
+          
+          lift := lift + sol[ 1 ]*h;
+        
+        fi;
+        
+        Remove( sol, 1 );
+      
+      od;
+    
+    fi;
+    
+    return lift;
+    
+end );
+
+##
+BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
+  function( f, g )
+    local hom_basis, Q, k, V, hom_basis_composed_with_f, L, vector, mat, sol, colift, h;
+    
+    hom_basis := BasisOfExternalHom( Range( f ), Range( g ) );
+    
+    # if hom_basis = [] then there is only the zero morphism between range(f) and range(g)
+    # Thus g must be zero in order for colift to exist.
+    
+    if IsZeroForMorphisms( g ) then
+      
+      return ZeroMorphism( Range( f ), Range( g ) );
+    
+    fi;
+    
+    if hom_basis = [ ] then
+      
+      return fail;
+    
+    fi;
+    
+    Q := QuiverOfRepresentation( Source( f ) );
+    
+    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    
+    V := Vertices( Q );
+    
+    hom_basis_composed_with_f := List( hom_basis, m -> PreCompose( f, m ) );
+    
+    L := List( V, v -> Concatenation( 
+            [ RightMatrixOfLinearTransformation( MapForVertex( g, v ) ) ],
+              List( hom_basis_composed_with_f, 
+                h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
+    
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+    
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    
+    vector := StandardVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+    
+    sol := SolutionMat( mat, vector );
+    
+    if sol = fail then
+      
+      return fail;
+    
+    else
+      
+      sol := ShallowCopy( AsList( sol ) );
+      
+      colift := ZeroMorphism( Range( f ), Range( g ) );
+      
+      for h in hom_basis do
+        
+        if not IsZero( sol[ 1 ] ) then
+          
+          colift := colift + sol[ 1 ] * h;
+        
+        fi;
+        
+        Remove( sol, 1 );
+        
+      od;
+    
+    fi;
+    
+    return colift;
+    
+end );
+
+##
+BindGlobal( "STACK_LISTLIST_QPA_MATRICES",
+  function( matrices )
+    
+    if matrices = [] or matrices[ 1 ] = [ ] then
+      
+      Error( "The input should not be or contain empty lists of qpa matrices!\n" );
+    
+    else
+      
+      return StackMatricesVertically( List( matrices, StackMatricesHorizontally ) );
+      
+    fi;
+    
+end );
+
+
+##
+InstallMethod( CategoryOfQuiverRepresentations,
+              [ IsQuiverAlgebra and IsRightQuiverAlgebra ],
+              1000,
+  function( A )
+    local add_extra_methods, cat, to_be_finalized, domain;
+    
+    add_extra_methods := ValueOption( "AddExtraMethods" );
+    
+    if add_extra_methods = false then
+      
+      TryNextMethod( );
+    
+    fi;
+    
+    cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, AddExtraMethods := false );
+    
+    domain := LeftActingDomain( A );
+    
+    SetIsLinearCategoryOverCommutativeRing( cat, true );
+    
+    SetCommutativeRingOfLinearCategory( cat, domain );
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );
+    
+    # quicker than the lift and colift derived by hom structure
+    
+    AddLift( cat, COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
+    
+    AddColift( cat, COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
+    
+    AddIsProjective( cat, IsProjectiveRepresentation );
+    
+    AddIsInjective( cat, IsInjectiveRepresentation );
+    
+    AddIsWellDefinedForObjects( cat,
+      function( R )
+        local A, relations;
+        
+        A := AlgebraOfRepresentation( R );
+        
+        relations := RelationsOfAlgebra( A );
+        
+        return ForAll( relations, rel -> IsZero( MapForAlgebraElement( R, rel ) ) );
+    
+    end );
+    
+    AddIsWellDefinedForMorphisms( cat,
+      function( alpha )
+        local S, R, arrows;
+        
+        S := Source( alpha );
+        
+        R := Range( alpha );
+        
+        arrows := Arrows( QuiverOfRepresentation( S ) );
+        
+        return ForAll( arrows, arrow ->
+                            IsEqualForMorphisms(
+                              PreCompose( MapForArrow( S, arrow ), MapForVertex( alpha, Target( arrow ) ) ),
+                                PreCompose( MapForVertex( alpha, Source( arrow ) ), MapForArrow( R, arrow ) )
+                                               )
+                   );
+    
+    end );
+    
+    AddDirectSum( cat,
+      function( summands )
+        local dimension_vector, matrices, d, l, N, d1, d2;
+        
+        if Length( summands ) = 1 then
+          
+          return summands[ 1 ];
+          
+        elif Length( summands ) = 2 then
+          
+          dimension_vector := Sum( List( summands, DimensionVector ) );
+          
+          matrices := List( summands, MatricesOfRepresentation );
+          
+          matrices := List( Transpose( matrices ), StackMatricesDiagonally );
+          
+          d := LazyQuiverRepresentation( A, dimension_vector, matrices );
+          
+          l := List( summands, i -> [ i, "IsProjective", true ] );
+          
+          return d;
+        
+        else
+          
+          N := Length( summands );
+          
+          d1 := DirectSum( summands{ [ 1 .. Int( N/2 ) ] } );
+          
+          d2 := DirectSum( summands{ [ Int( N/2 ) + 1 .. N ] } );
+          
+          return DirectSum( d1, d2 );
+        
+        fi;
+    
+    end );
+    
+    AddDirectSumFunctorialWithGivenDirectSums( cat,      
+      function( D1, morphisms, D2 )
+        local matrices;
+        
+        matrices := List( morphisms, MatricesOfRepresentationHomomorphism );
+        
+        matrices := List( Transpose( matrices ), StackMatricesDiagonally );
+        
+        return QuiverRepresentationHomomorphism( D1, D2, matrices );
+        
+      end );
+    
+    AddMorphismBetweenDirectSums( cat,
+      function( D1, morphisms, D2 )
+        local matrices;
+        
+        matrices := List( [ 1 .. NumberOfVertices( QuiverOfAlgebra( A ) ) ],
+                      i -> STACK_LISTLIST_QPA_MATRICES(
+                        List( morphisms,
+                          row -> List( row,
+                            morphism -> MatricesOfRepresentationHomomorphism( morphism )[ i ] ) ) ) );
+        
+        return QuiverRepresentationHomomorphism( D1, D2, matrices );
+        
+      end );
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    if to_be_finalized = false then
+      
+      return cat;
+    
+    fi;
+    
+    Finalize( cat );
+    
+    return cat;
+  
 end );
 
 #         e                   s                   r=compose(e,s)
@@ -244,7 +554,8 @@ InstallGlobalFunction( CertainColumnsOfQPAMatrix,
 end );
 
 ##
-InstallGlobalFunction( StackMatricesDiagonally,
+InstallMethod( StackMatricesDiagonally,
+        [ IsQPAMatrix, IsQPAMatrix ],
   function( mat_1, mat_2 )
     local d1,d2,F, mat_1_, mat_2_; 
 
@@ -280,6 +591,14 @@ InstallGlobalFunction( StackMatricesDiagonally,
     
 end );
 
+##
+InstallMethod( StackMatricesDiagonally,
+          [ IsDenseList ],
+  function( L )
+        
+    return Iterated( L, StackMatricesDiagonally );
+  
+end );
 
 ## This is somehow clean and works whenever we have a indecomposable generating projectives.
 ## BUT: it is VERY slow, since it uses lifts.

@@ -17,4 +17,6 @@ DeclareOperation( "MorphismBetweenIndecProjectivesGivenByElement",
 
 DeclareGlobalFunction( "CertainRowsOfQPAMatrix" );
 DeclareGlobalFunction( "CertainColumnsOfQPAMatrix" );
-DeclareGlobalFunction( "StackMatricesDiagonally" );
+
+DeclareOperation( "StackMatricesDiagonally", [ IsQPAMatrix, IsQPAMatrix ] );
+DeclareOperation( "StackMatricesDiagonally", [ IsDenseList ] );
