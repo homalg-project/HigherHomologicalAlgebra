@@ -235,6 +235,27 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     AddIsInjective( cat, IsInjectiveRepresentation );
     
+    AddIsMonomorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsMonomorphism );
+        
+    end );
+    
+    AddIsEpimorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsEpimorphism );
+        
+    end ); 
+    
+    AddIsIsomorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsIsomorphism );
+        
+    end ); 
+   
     AddIsWellDefinedForObjects( cat,
       function( R )
         local A, relations;
