@@ -65,7 +65,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
           
           pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
           
-          return [ PreCompose( [ pk, ker, p1 ] ), PreCompose( [ pk, ker, p2 ] ) ];
+          return [ PreCompose( [ pk, ker, p1 ] ), PreCompose( [ pk, ker, p2 ] ), m ];
         
         fi;
       
@@ -149,20 +149,24 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
           
         else
           
-          temp_C := MorphismBetweenDirectSums(
-                        [
-                          [ AdditiveInverse( p_C^( k + 1) ), q_C[ k + 1 ] ],
-                          [ ZeroMorphism( C[ k ], p_C[ k + 2 ] ), C^k ]
-                        ]
-                      );
+          #temp_C := MorphismBetweenDirectSums(
+          #              [
+          #                [ AdditiveInverse( p_C^( k + 1) ), q_C[ k + 1 ] ],
+          #                [ ZeroMorphism( C[ k ], p_C[ k + 2 ] ), C^k ]
+          #              ]
+          #            );
           
-          temp_D := MorphismBetweenDirectSums(
-                        [
-                          [ AdditiveInverse( p_D^( k + 1) ), q_D[ k + 1 ] ],
-                          [ ZeroMorphism( D[ k ], p_D[ k + 2 ] ), D^k ]
-                        ]
-                      );
-        
+          #temp_D := MorphismBetweenDirectSums(
+          #              [
+          #                [ AdditiveInverse( p_D^( k + 1) ), q_D[ k + 1 ] ],
+          #                [ ZeroMorphism( D[ k ], p_D[ k + 2 ] ), D^k ]
+          #              ]
+          #            );
+          
+          temp_C := BaseList( Differentials( p_C ) )[ k ][ 3 ];
+          
+          temp_D := BaseList( Differentials( p_D ) )[ k ][ 3 ];
+         
           m := DirectSumFunctorial( [ maps[ k + 1 ], phi[ k ] ] );
           
           kappa := KernelObjectFunctorial( temp_C, m, temp_D );
@@ -503,7 +507,7 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
         
         mor2 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 2 );
           
-        return [ PostCompose( [ iota, coker, mor2 ] ), PostCompose( [ iota, coker, mor1 ] ) ];
+        return [ PostCompose( [ iota, coker, mor2 ] ), PostCompose( [ iota, coker, mor1 ] ), m ];
       
       fi;
       
@@ -571,20 +575,24 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
           
         else
           
-          temp_C := MorphismBetweenDirectSums(
-                            [
-                              [ AdditiveInverse( C^( k - 1 ) ), q_C[ k - 1 ] ],
-                              [ ZeroMorphism( i_C[ k - 2 ], C[ k ] ), i_C^( k - 2 ) ]
-                            ]
-                        );
+          #temp_C := MorphismBetweenDirectSums(
+          #                  [
+          #                    [ AdditiveInverse( C^( k - 1 ) ), q_C[ k - 1 ] ],
+          #                    [ ZeroMorphism( i_C[ k - 2 ], C[ k ] ), i_C^( k - 2 ) ]
+          #                  ]
+          #              );
           
-          temp_D := MorphismBetweenDirectSums(
-                            [
-                              [ AdditiveInverse( D^( k - 1 ) ), q_D[ k - 1 ] ],
-                              [ ZeroMorphism( i_D[ k - 2 ], D[ k ] ), i_D^( k - 2 ) ]
-                            ]
-                        );
-                
+          #temp_D := MorphismBetweenDirectSums(
+          #                  [
+          #                    [ AdditiveInverse( D^( k - 1 ) ), q_D[ k - 1 ] ],
+          #                    [ ZeroMorphism( i_D[ k - 2 ], D[ k ] ), i_D^( k - 2 ) ]
+          #                  ]
+          #              );
+          
+          temp_C := BaseList( Differentials( i_C ) )[ k ][ 3 ];
+          
+          temp_D := BaseList( Differentials( i_D ) )[ k ][ 3 ];
+          
           m := DirectSumFunctorial( [ phi[ k ], maps[ k - 1 ] ] );
           
           kappa := CokernelObjectFunctorial( temp_C, m, temp_D );
