@@ -34,6 +34,21 @@ BindGlobal( "TheTypeExceptionalCollection",
   NewType( ExceptionalCollectionFamily, 
                       IsExceptionalCollectionRep ) );
 
+
+##################################
+##
+## Global function for display text
+##
+##################################
+  
+##
+InstallGlobalFunction( RANDOM_TEXT_ATTR,
+    function (  )
+      return [ Random( [ "\033[30m", "\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m",
+                #"\033[41m", "\033[42m", "\033[43m", "\033[44m", "\033[45m", "\033[46m", "\033[4m"
+                ] ), "\033[0m" ];
+end );
+
 ##################################
 ##
 ## Constructors
@@ -129,6 +144,31 @@ InstallMethod( TiltingObject,
     objs := List( objs, o -> ApplyFunctor( I, o ) );
     
     return DirectSum( objs );
+    
+end );
+
+##
+InstallMethod( InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject,
+              [ IsExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
+  function( collection, phi )
+    local nr_objects, objs, p_source, p_range, L;
+    
+    nr_objects := NumberOfObjects( collection );
+    
+    objs := UnderlyingObjects( collection );
+        
+    p_source := Position( objs, Source( phi ) );
+        
+    p_range := Position( objs, Range( phi ) );
+        
+    objs := List( objs, UnderlyingCell );
+        
+    L := List( [ 1 .. nr_objects ],
+      i -> List( [ 1 .. nr_objects ], j -> ZeroMorphism( objs[ i ], objs[ j ] ) ) );
+        
+    L[ p_source ][ p_range ] := UnderlyingCell( phi );
+        
+    return MorphismBetweenDirectSums( L );
     
 end );
 
@@ -684,7 +724,7 @@ end );
 InstallMethod( IsomorphismIntoAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
-    local n, full, A, algebroid, name, F;
+    local n, full, A, algebroid, r, name, F;
     
     n := NumberOfObjects( collection );
     
@@ -694,7 +734,9 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
     algebroid := Algebroid( A );
     
-    name := Concatenation( "Isomorphism functor from ", Name( full ), " into ", Name( algebroid ) );
+    r := RANDOM_TEXT_ATTR( );
+     
+    name := Concatenation( "Isomorphism functor ", r[1], "from", r[2], " ", Name( full ), " ", r[1], "into", r[2], " ", Name( algebroid ) );
     
     F := CapFunctor( name, full, algebroid );
     
@@ -773,12 +815,11 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
 end );
 
-
 ##
 InstallMethod( IsomorphismFromAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
-    local n, full, A, algebroid, name, F;
+    local n, full, A, algebroid, r, name, F;
     
     n := NumberOfObjects( collection );
     
@@ -788,7 +829,9 @@ InstallMethod( IsomorphismFromAlgebroid,
     
     algebroid := Algebroid( A );
     
-    name := Concatenation( "Isomorphism functor from ", Name( algebroid ), " into ", Name( full ) );
+    r := RANDOM_TEXT_ATTR( );
+     
+    name := Concatenation( "Isomorphism functor ", r[1], "from", r[2], " ", Name( algebroid ), " ", r[1], "into", r[2], " ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
     
@@ -939,7 +982,7 @@ end );
 InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
-    local A, A_op, full, ambient_cat, quiver_op, nr_vertices, basis, projs, projs_in_subcategory, name, F;
+    local A, A_op, full, ambient_cat, quiver_op, nr_vertices, basis, projs, projs_in_subcategory, r, name, F;
     
     A := UnderlyingQuiverAlgebra( algebroid );
     
@@ -959,7 +1002,9 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     
     projs_in_subcategory := List( projs, p -> AsFullSubcategoryCell( ambient_cat, p ) );
     
-    name := Concatenation( "Isomorphism from ", Name( algebroid ), " into ", Name( full ) );
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Isomorphism functor ", r[1], "from", r[2], " ", Name( algebroid ), " ", r[1], "into", r[2], " ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
     
@@ -1004,7 +1049,7 @@ end );
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
-    local A, A_op, quiver_op, nr_vertices, basis, projs, full, name, G;
+    local A, A_op, full, quiver_op, nr_vertices, basis, projs, r, name, G;
     
     A := UnderlyingQuiverAlgebra( algebroid );
     
@@ -1019,8 +1064,10 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     basis := BasisOfProjectives( A_op );
     
     projs := IndecProjRepresentations( A_op );
-        
-    name := Concatenation( "Isomorphism from ", Name( full ), " into ", Name( algebroid ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Isomorphism functor ", r[1], "from", r[2], " ", Name( full ), " ", r[1], "into", r[2], " ", Name( algebroid ) );
     
     G := CapFunctor( name, full, algebroid );
     
@@ -1217,7 +1264,7 @@ end );
 InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects,
           [ IsQuiverRepresentationCategory ],
   function( cat )
-    local A, projs, indec_projs, add_indec_projs, name, F;
+    local A, projs, indec_projs, add_indec_projs, r, name, F;
     
     A := AlgebraOfCategory( cat );
     
@@ -1227,7 +1274,9 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     
     add_indec_projs := AdditiveClosure( indec_projs  );
     
-    name := Concatenation( "Functor from <projective representations> --> AdditiveClosure( <indecomposable projective representations> ) of ", String( A ) );
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Equivalence functor ", r[1], "from", r[2], " ", Name( projs ), " ", r[1], "into", r[2], " ", Name( add_indec_projs ) );
     
     F := CapFunctor( name, projs, add_indec_projs );
     
