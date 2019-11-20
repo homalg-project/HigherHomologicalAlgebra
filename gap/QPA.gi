@@ -876,7 +876,7 @@ end );
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
   function( a )
-    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, new_dim_vec, mats, isolated_summands, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats_1, current_mats_2, current_mats_3, current_mats_4, found_part_isomorphic_to_some_proj, temp, b, s, d, output, morphism_from_new_a, B, m, k, p;
+    local A, quiver, field, projs, mats_of_projs, dims, dim_vectors_of_projs, dim_vector_of_a, sol, nr_arrows, nr_vertices, positions_isolated_projs, new_a, new_dim_vec, mats, isolated_summands, diff, bool, o, found_part_identical_to_some_proj, check_for_block, i, dims_of_mats, current_mats_1, current_mats_2, current_mats_3, current_mats_4, found_part_isomorphic_to_some_proj, temp, b, s, d, output, morphism_from_new_a, mingen;
     
     if IsZero( a ) then
       
@@ -1156,41 +1156,12 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     else
       
+      # the following three lines can do the job, but it may take forever, hence we use them only if there is no better way.
       morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
       
-      Sort( projs, { a, b } -> IsEmpty( BasisOfExternalHom( a, b ) ) );
+      mingen := MinimalGeneratingSet( new_a );
       
-      for p in projs do
-        
-        B := BasisOfExternalHom( p, new_a );
-        
-        if IsEmpty( B ) then
-          
-          continue;
-          
-        fi;
-        
-        output := Concatenation( output, List( B, b -> PreCompose( b, morphism_from_new_a ) ) );
-        
-        m := MorphismBetweenDirectSums( List( B, b -> [ b ] ) );
-        
-        k := CokernelProjection( m );
-        
-        new_a := Range( k );
-        
-        Info( InfoWarning, 2, "DecomposeProjectiveObject: A lift in quiver representations is being computed" );
-        
-        morphism_from_new_a := PreCompose( Lift( IdentityMorphism( new_a ), k ), morphism_from_new_a );
-        
-        Info( InfoWarning, 2, "done ..." );
-      
-      od;
-    
-    fi;
-    
-    if not IsZero( new_a ) then
-      
-      Error( "Please check if the input is realy projective object!\n" );
+      output := Concatenation( output, List( mingen, x -> PreCompose( HomFromProjective( x, new_a ), morphism_from_new_a ) ) );
     
     fi;
     
