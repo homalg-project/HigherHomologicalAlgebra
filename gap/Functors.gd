@@ -1,0 +1,5 @@
+
+
+
+DeclareAttribute( "HomFunctorByExceptionalCollection", IsExceptionalCollection );
+
