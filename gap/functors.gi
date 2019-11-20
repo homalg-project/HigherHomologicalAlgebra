@@ -488,13 +488,15 @@ end );
 InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
                [ IsCapFunctor ],
   function( F )
-    local S, T, functor, name;
+    local S, T, functor, name, r;
     
     S := ChainComplexCategory( AsCapCategory( Source( F ) ) );
     
     T := ChainComplexCategory( AsCapCategory(  Range( F ) ) );
     
-    name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to chain complex categories", r[ 2 ] );
     
     functor := CapFunctor( name, S, T );
     
@@ -566,13 +568,15 @@ end );
 InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
                [ IsCapFunctor ],
   function( F )
-    local S, T, functor, name;
+    local S, T, functor, name, r;
     
     S := CochainComplexCategory( AsCapCategory( Source( F ) ) );
     
     T := CochainComplexCategory( AsCapCategory(  Range( F ) ) );
     
-    name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to cochain complex categories", r[ 2 ] );
     
     functor := CapFunctor( name, S, T );
     

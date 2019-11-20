@@ -157,3 +157,18 @@ DeclareOperation( "AddGeneratorsOfExternalHom",
 DeclareOperation( "AddGeneratorsOfExternalHom",
                    [ IsCapCategory, IsList ] );
 
+if not IsBound( RANDOM_TEXT_ATTR ) then
+  
+  ##
+  DeclareGlobalFunction( "RANDOM_TEXT_ATTR" );
+  
+  ##
+  InstallGlobalFunction( RANDOM_TEXT_ATTR,
+    function (  )
+      return [ Random( [ "\033[31m", "\033[32m", "\033[33m", "\033[34m", "\033[35m",
+                #" \033[41m", " \033[42m", " \033[43m", " \033[44m", " \033[45m", " \033[46m", " \033[4m"
+                ] ), "\033[0m" ];
+  end );
+  
+fi;
+

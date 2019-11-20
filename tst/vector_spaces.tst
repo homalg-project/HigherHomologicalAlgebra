@@ -191,9 +191,7 @@ gap> Display( ApplyFunctor( F, f ) );
   [  0,  0,  1,  3 ] ]
 
 A morphism in Category of matrices over Q
-gap> Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );
-Extended version of double functor from Cochain complexes category over Category 
-of matrices over Q to Cochain complexes category over Category of matrices over Q
+gap> Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );;
 gap> psi;
 <A bounded morphism in Cochain complexes category over Category of matrices 
 over Q with active lower bound 4 and active upper bound 6>
