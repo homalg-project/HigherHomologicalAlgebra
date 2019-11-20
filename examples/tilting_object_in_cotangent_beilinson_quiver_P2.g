@@ -27,7 +27,7 @@ A :=
 );;
 
 cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );;
-cat!.compute_basis_of_hom_using_homalg := [ true, 1, homalg_field ]; 
+cat!.compute_basis_of_hom_using_homalg := [ true, 2, homalg_field ]; # 1 to print info when using homalg 
 SetIsLinearCategoryOverCommutativeRing( cat, true );;
 SetCommutativeRingOfLinearCategory( cat, homalg_field );;
 Finalize( cat );;
