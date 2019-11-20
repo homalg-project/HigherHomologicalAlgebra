@@ -111,7 +111,7 @@ end );
 InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
                [ IsCapFunctor ],
 function( F )
-  local S, T, ChF, name, functor;
+  local S, T, ChF, name, functor, r;
 
   S := HomotopyCategory( AsCapCategory( Source( F ) ) );
 
@@ -119,7 +119,9 @@ function( F )
   
   ChF := ExtendFunctorToChainComplexCategoryFunctor( F );
   
-  name := Concatenation( "Extended version of ", Name( F ), " from ", Name( S ), " to ", Name( T ) );
+  r := RANDOM_TEXT_ATTR();
+  
+  name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to homotopy categories.", r[ 2 ] );
 
   functor := CapFunctor( name, S, T );
 
