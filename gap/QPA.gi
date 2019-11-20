@@ -380,6 +380,8 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     domain := LeftActingDomain( A );
     
+    cat!.compute_basis_of_hom_using_homalg := [ true, 2, domain ];
+    
     SetIsLinearCategoryOverCommutativeRing( cat, true );
     
     SetCommutativeRingOfLinearCategory( cat, domain );

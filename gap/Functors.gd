@@ -70,3 +70,5 @@ DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentat
         IsAlgebroid );
 
 
+DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
+        [ IsCapFunctor, IsCapFullSubcategory ] );

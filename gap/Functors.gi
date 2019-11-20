@@ -622,4 +622,22 @@ InstallMethod( IsomorphismFromAlgebroid,
     
 end );
 
-
+##
+InstallMethod( RestrictFunctorIterativelyToFullSubcategoryOfSource,
+              [ IsCapFunctor, IsCapFullSubcategory ],
+  function( F, full )
+    local G;
+    
+    if IsIdenticalObj( AsCapCategory( Source( F ) ), AmbientCategory( full ) ) then
+      
+      return RestrictFunctorToFullSubcategoryOfSource( F, full );
+    
+    else
+      
+      G := RestrictFunctorIterativelyToFullSubcategoryOfSource( F, AmbientCategory( full ) );
+      
+      return RestrictFunctorToFullSubcategoryOfSource( G, full );
+      
+    fi;
+    
+end );
