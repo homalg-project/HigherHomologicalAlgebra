@@ -706,21 +706,15 @@ InstallMethod( AsCochainMorphism, [ IsCochainMorphism ], IdFunc );
 
 ##
 InstallMethod( AsChainOrCochainMorphismOverCapFullSubcategory,
-      [ IsCapCategory, IsChainOrCochainMorphism ],
-  function( A, phi )
-    local source, range, morphisms;
+      [ IsChainOrCochainComplex, IsChainOrCochainMorphism, IsChainOrCochainComplex ],
+  function( source, phi, range )
+    local full_subcategory, morphisms;
     
-    source := Source( phi );
-    
-    source := AsComplexOverCapFullSubcategory( A, source );
-    
-    range := Range( phi );
-    
-    range := AsComplexOverCapFullSubcategory( A, range );
+    full_subcategory := UnderlyingCategory( CapCategory( source ) );
     
     morphisms := Morphisms( phi );
     
-    morphisms := MapLazy( morphisms, ValueGlobal( "AsFullSubcategoryCell" ), 1 );
+    morphisms := MapLazy( morphisms, m -> ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, m ), 1 );
     
     if IsChainMorphism( phi ) then
       
@@ -733,6 +727,16 @@ InstallMethod( AsChainOrCochainMorphismOverCapFullSubcategory,
     fi;
     
 end );
+
+##
+InstallMethod( AsChainMorphismOverCapFullSubcategory,
+      [ IsChainComplex, IsChainMorphism, IsChainComplex ],
+        AsChainOrCochainMorphismOverCapFullSubcategory );
+
+##
+InstallMethod( AsCochainMorphismOverCapFullSubcategory,
+      [ IsCochainComplex, IsCochainMorphism, IsCochainComplex ],
+        AsChainOrCochainMorphismOverCapFullSubcategory );
 
 ########################################
 #

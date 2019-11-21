@@ -383,21 +383,18 @@ DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 #!  @Arguments true or false
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
-#! @Description
-#! The input is a full subcategory $A$ of some category $B$ and
-#! a chain or cochain morphism $\phi$ in $\mathrm{Ch}(B)$, 
-#! where all objects of the source and range actually lie in $A$.
-#! The output is $\phi$ considered in $\mathrm{Ch}(A)$.
-#! @Arguments A, phi
-#! @Returns a morphism
+# @Description
+#TODO
+# @Arguments C, phi, D
+# @Returns a morphism
 DeclareOperation( "AsChainOrCochainMorphismOverCapFullSubcategory",
-      [ IsCapCategory, IsChainOrCochainMorphism ] );
+    [ IsChainOrCochainComplex, IsChainOrCochainMorphism, IsChainOrCochainComplex ] );
 
 DeclareOperation( "AsChainMorphismOverCapFullSubcategory",
-      [ IsCapCategory, IsChainMorphism ] );
+    [ IsChainComplex, IsChainMorphism, IsChainComplex ] );
 
 DeclareOperation( "AsCochainMorphismOverCapFullSubcategory",
-      [ IsCapCategory, IsCochainMorphism ] );
+    [ IsCochainComplex, IsCochainMorphism, IsCochainComplex ] );
 
 DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 
