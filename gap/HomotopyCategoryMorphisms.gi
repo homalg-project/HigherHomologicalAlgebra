@@ -113,6 +113,12 @@ InstallMethod( HomotopyMorphisms,
     
 end );
 
+##
+InstallMethod( IsQuasiIsomorphism,
+          [ IsHomotopyCategoryMorphism ],
+  alpha -> IsQuasiIsomorphism( UnderlyingCell( alpha ) )
+);
+
 # THIS IS DRAFT
 BindGlobal( "AsPseudoHomologicalBicomplex",
      #[ IsChainComplex ],

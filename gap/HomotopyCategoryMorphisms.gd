@@ -7,6 +7,9 @@ DeclareCategory( "IsHomotopyCategoryMorphism",
 DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategory, IsCapCategoryMorphism ] );
 
+
+DeclareProperty( "IsQuasiIsomorphism", IsHomotopyCategoryMorphism );
+
 ##
 DeclareAttribute( "MappingCone", IsHomotopyCategoryMorphism );
 
