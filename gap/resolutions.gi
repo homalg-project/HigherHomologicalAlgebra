@@ -149,20 +149,6 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
           
         else
           
-          #temp_C := MorphismBetweenDirectSums(
-          #              [
-          #                [ AdditiveInverse( p_C^( k + 1) ), q_C[ k + 1 ] ],
-          #                [ ZeroMorphism( C[ k ], p_C[ k + 2 ] ), C^k ]
-          #              ]
-          #            );
-          
-          #temp_D := MorphismBetweenDirectSums(
-          #              [
-          #                [ AdditiveInverse( p_D^( k + 1) ), q_D[ k + 1 ] ],
-          #                [ ZeroMorphism( D[ k ], p_D[ k + 2 ] ), D^k ]
-          #              ]
-          #            );
-          
           temp_C := BaseList( Differentials( p_C ) )[ k ][ 3 ];
           
           temp_D := BaseList( Differentials( p_D ) )[ k ][ 3 ];
@@ -187,10 +173,19 @@ end );
 
 ##
 InstallMethod( MorphismBetweenProjectiveResolutions,
-        [ IsCapCategoryMorphism and IsBoundedBelowChainComplex ],
+        [ IsCapCategoryMorphism and IsBoundedBelowChainMorphism ],
   function( phi )
+    local p_C, p_D, morphism, morphisms;
     
-    return AsChainMorphism( MorphismBetweenProjectiveResolutions( AsCochainMorphism( phi ) ) );
+    p_C := ProjectiveResolution( Source( phi ) );
+    
+    p_D := ProjectiveResolution( Range( phi ) );
+    
+    morphism := AsChainMorphism( MorphismBetweenProjectiveResolutions( AsCochainMorphism( phi ) ) );
+    
+    morphisms := Morphisms( morphism );
+    
+    return ChainMorphism( p_C, p_D, morphisms );
     
 end );
 
@@ -574,20 +569,6 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
           return ZeroMorphism( i_C[ k ], i_D[ k ] );
           
         else
-          
-          #temp_C := MorphismBetweenDirectSums(
-          #                  [
-          #                    [ AdditiveInverse( C^( k - 1 ) ), q_C[ k - 1 ] ],
-          #                    [ ZeroMorphism( i_C[ k - 2 ], C[ k ] ), i_C^( k - 2 ) ]
-          #                  ]
-          #              );
-          
-          #temp_D := MorphismBetweenDirectSums(
-          #                  [
-          #                    [ AdditiveInverse( D^( k - 1 ) ), q_D[ k - 1 ] ],
-          #                    [ ZeroMorphism( i_D[ k - 2 ], D[ k ] ), i_D^( k - 2 ) ]
-          #                  ]
-          #              );
           
           temp_C := BaseList( Differentials( i_C ) )[ k ][ 3 ];
           
