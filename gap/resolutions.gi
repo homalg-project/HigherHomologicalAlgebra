@@ -596,11 +596,18 @@ end );
 InstallMethod( MorphismBetweenInjectiveResolutions,
         [ IsCapCategoryMorphism and IsBoundedAboveChainMorphism ],
   function( phi )
+    local i_C, i_D, morphism, morphisms;
     
-    return AsChainMorphism(
-            MorphismBetweenInjectiveResolutions(
-              AsCochainMorphism( phi ) ) );
+    i_C := InjectiveResolution( Source( phi ) );
     
+    i_D := InjectiveResolution( Range( phi ) );
+    
+    morphism := AsChainMorphism( MorphismBetweenInjectiveResolutions( AsCochainMorphism( phi ) ) );
+    
+    morphisms := Morphisms( morphism );
+    
+    return ChainMorphism( i_C, i_D, morphisms );
+       
 end );
 
 ##
