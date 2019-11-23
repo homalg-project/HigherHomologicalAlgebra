@@ -69,6 +69,16 @@ DeclareAttribute( "IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentat
 DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
         IsAlgebroid );
 
+#! @Description
+#! The input is a homotopy category <A>H</A> := <C>HomotopyCategory</C>($C$) of some abelian category $C$. The output is the localization
+#! functor $L$ from <A>H</A> into <C>DerivedCategory</C>($C$).
+#! @Arguments H
+#! @Returns a functor
+DeclareAttribute( "LocalizationFunctor", IsHomotopyCategory );
+
+DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByProjectiveObjects", IsDerivedCategory );
+
+DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByInjectiveObjects", IsDerivedCategory );
 
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
