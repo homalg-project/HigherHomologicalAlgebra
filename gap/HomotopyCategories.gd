@@ -14,6 +14,8 @@ DeclareCategory( "IsHomotopyCategory",
 
 DeclareAttribute( "HomotopyCategory", IsCapCategory );
 
+DeclareAttribute( "DefiningCategory", IsHomotopyCategory );
+
 DeclareAttribute( "TotalComplexUsingMappingCone", IsChainComplex );
 
 DeclareGlobalFunction( "ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY" );
