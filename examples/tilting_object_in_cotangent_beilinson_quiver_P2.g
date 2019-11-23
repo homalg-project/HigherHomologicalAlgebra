@@ -25,8 +25,11 @@ A :=
 
 cat := CategoryOfQuiverRepresentations( A );
 
+
 pp := IndecProjRepresentations( A );
 ii := IndecInjRepresentations( A );
+
+matrix_cat := RangeCategoryOfHomomorphismStructure( cat );
 
 cat_projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
 cat_indec_projs := FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
@@ -118,10 +121,19 @@ add_r_F := ExtendFunctorToAdditiveClosureOfSource( r_F );
 
 F_on_injs_2 := PreCompose( dec_inj_func, add_r_F );
 
-L := List( [ 1 .. 30 ], i -> Random( ii ) );
-a := DirectSum(L);
+# none, weak or crisp
+list_for_caches :=
+  [
+    [ cat, "none" ],
+    [ matrix_cat, "none" ],
+  ];
+
+Apply( list_for_caches, function(l) SetCachingOfCategory( l[1], l[2] ); return true; end );
 
 quit;
+
+L := List( [ 1 .. 30 ], i -> Random( ii ) );
+a := DirectSum(L);
 
 b1 := ApplyFunctor( F_on_injs_1, a/cat_injs );time;
 # 218.000
