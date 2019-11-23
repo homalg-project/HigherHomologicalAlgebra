@@ -68,13 +68,13 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
             List( hom_basis_composed_with_g,
               h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
     
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
     
     L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
     
     L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
     
-    vector := StandardVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
     
     mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
     
@@ -143,13 +143,13 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
               List( hom_basis_composed_with_f, 
                 h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
     
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ]*DimensionsMat( m )[ 2 ] ) ) );
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
     
     L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
     
     L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
     
-    vector := StandardVector( k, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
     
     mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
     
@@ -218,37 +218,30 @@ end
 
 BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
   function( cat )
-    local A, field;
+    local A, field, rs;
     
     A := AlgebraOfCategory( cat );
     
     field := UnderlyingField( VectorSpaceCategory( cat ) );
     
+    rs := RandomSource(IsMersenneTwister, NanosecondsSinceEpoch( ) );
+    
     AddRandomObjectByList( cat,
     
       function( C, l )
-        local indec_proj, s, r, source, range, L;
+        local indec_proj, indec_injs, simples, ind, s;
         
         indec_proj := IndecProjRepresentations( A );
         
-        s := l[ 1 ];
+        indec_injs := IndecInjRepresentations( A );
         
-        r := l[ 2 ];
+        simples := SimpleRepresentations( A );
         
-        source := List( [ 1 .. s ], i -> Random( indec_proj ) );
+        ind := Concatenation( indec_injs, indec_proj, simples );
         
-        range := List( [ 1 .. r ], i -> Random( indec_proj ) );
+        s := List( [ 1 .. Random( l ) ], i -> Random( rs, ind ) );
         
-        L := List( [ 1 .. s ],
-          i -> List( [ 1 .. r ],
-            j -> Random(
-              Concatenation(
-                BasisOfExternalHom( source[ i ], range[ j ] ),
-                [ ZeroMorphism(source[ i ], range[ j ] ) ]
-                           )
-              ) ) );
-        
-        return CokernelObject( MorphismBetweenDirectSums( L ) );
+        return DirectSum( s );
         
     end );
 
@@ -467,8 +460,6 @@ InstallMethod( CategoryOfQuiverRepresentations,
           matrices := List( Transpose( matrices ), StackMatricesDiagonally );
           
           d := LazyQuiverRepresentation( A, dimension_vector, matrices );
-          
-          l := List( summands, i -> [ i, "IsProjective", true ] );
           
           return d;
         
@@ -780,14 +771,521 @@ end );
 ##
 InstallMethod( StackMatricesDiagonally,
           [ IsDenseList ],
+          1000,
   function( L )
         
-    return Iterated( L, StackMatricesDiagonally );
+    if Size( L ) = 1 then
+      return L[1];
+    elif Size( L ) = 2 then
+      return StackMatricesDiagonally( L[ 1 ], L[ 2 ] );
+    else
+      return StackMatricesDiagonally(
+                StackMatricesDiagonally( L{ [ 1 .. Int( Size( L ) / 2 ) ] } ),
+                StackMatricesDiagonally( L{ [ Int( Size( L ) / 2 ) + 1 .. Size( L ) ] } )
+            );
+    fi; 
+end );
+
+#
+InstallOtherMethod( CategoryOfVectorSpaces,
+        [ IsFieldForHomalg ],
+        
+  function( F )
+    
+    return CategoryOfVectorSpaces( F!.ring );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
+        
+  function( F, dimensions, mat )
+    
+    return MatrixByRows( F!.ring, dimensions, mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsFieldForHomalg, IsList ],
+        
+  function( F, mat )
+    
+    return MatrixByRows( F!.ring, mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
+        
+  function( F, dimensions, mat )
+    
+    return MatrixByCols( F!.ring, dimensions, mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsFieldForHomalg, IsList ],
+        
+  function( F, mat )
+    
+    return MatrixByCols( F!.ring, mat );
+    
+end );
+
+##
+InstallOtherMethod( EmptyVector,
+        [ IsFieldForHomalg ],
+  
+  function( F )
+    
+    return EmptyVector( F!.ring );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByRows,
+          [ IsRing, IsDenseList, IsDenseList ],
+          1000,
+  function( R, dim, rows )
+    local matrix;
+       
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+         
+    if ForAny( dim, IsZero ) then
+      
+      rows := ListWithIdenticalEntries( dim[ 1 ], [ ] );
+      
+    fi;
+    
+    if not IsEmpty( rows ) and not IsList( rows[ 1 ] ) then
+      
+      if not Length( rows ) = dim[ 1 ] * dim[ 2 ] then
+        
+        Error( "wronge input" );
+        
+      fi;
+      
+      rows := List( [ 1 .. dim[ 1 ] ], i -> rows{ [ ( i - 1) * dim[ 2 ] + 1 .. i * dim[ 2 ] ] } );
+      
+    fi;
+    
+    matrix := rec( rows := rows );
+    
+    ObjectifyWithAttributes( matrix,
+      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsRowMatrixRep ),
+      BaseDomain, R,
+      DimensionsMat, dim
+    );
+    
+    if ForAny( dim, IsZero ) then
+      SetIsZeroMatrix( matrix, true );
+    fi;
+  
+    return matrix;
+  
+end );
+
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsRing, IsMatrix ],
+        1000,
+  function( R, mat )
+  
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return MatrixByRows( R, DimensionsMat( mat ), mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsRing, IsMatrix ],
+        1000,
+  function( R, mat )
+  
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return MatrixByCols( R, Reversed( DimensionsMat( mat ) ), mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+          [ IsRing, IsDenseList, IsDenseList ],
+          1000,
+  function( R, dim, cols )
+    local matrix;
+     
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+      
+    if ForAny( dim, IsZero ) then
+      
+      cols := ListWithIdenticalEntries( dim[ 2 ], [ ] );
+      
+    fi;
+    
+    if not IsEmpty( cols ) and not IsList( cols[ 1 ] ) then
+      
+      if not Length( cols ) = dim[ 1 ] * dim[ 2 ] then
+        
+        Error( "wronge input" );
+        
+      fi;
+      
+      cols := List( [ 1 .. dim[ 2 ] ], i -> cols{ [ ( i - 1) * dim[ 1 ] + 1 .. i * dim[ 1 ] ] } );
+      
+    fi;
+
+    
+    matrix := rec( cols := cols );
+    
+    ObjectifyWithAttributes( matrix,
+      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsColMatrixRep ),
+      BaseDomain, R,
+      DimensionsMat, dim
+    );
+    
+    if ForAny( dim, IsZero ) then
+      SetIsZeroMatrix( matrix, true );
+    fi;
+   
+  return matrix;
+  
+end );
+
+InstallOtherMethod( ViewObj, "for QPA matrix",
+               [ IsQPAMatrix ],
+               1000,
+function( M )
+  local dim;
+  
+  dim := DimensionsMat( M );
+  
+  Print( "<", dim[ 1 ], "x", dim[ 2 ], " qpa-matrix over ", Name( BaseDomain( M ) ), ">" );
+  
+end );
+
+##
+InstallOtherMethod( RowsOfMatrix, "for QPA matrix",
+               [ IsQPAMatrix ],
+               1000,
+  function( M )
+    
+    if IsRowMatrixRep( M ) then
+      
+      return M!.rows;
+      
+    elif IsColMatrixRep( M ) then
+      
+      return TransposedMat( M!.cols );
+      
+    else
+      
+      Info( InfoWarning, 2, "I am using external method to compute the rows of a qpa matrix" );
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( ColsOfMatrix, "for QPA matrix",
+               [ IsQPAMatrix ],
+               1000,
+  function( M )
+    
+    if IsColMatrixRep( M ) then
+      
+      return M!.cols;
+      
+    elif IsRowMatrixRep( M ) then
+      
+      return TransposedMat( M!.rows );
+      
+    else
+      
+      Info( InfoWarning, 2, "I am using external method to compute the cols of a qpa matrix" );
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( MakeZeroMatrix,
+              [ IsField, IsInt, IsInt ],
+              1000,
+  function( F, m, n )
+    local l, matrix;
+    
+    if m < 0 or n < 0 then
+      
+      Error( "The integers should be positive!\n" );
+      
+    fi;
+    
+    if m = 0 then
+      
+      l := [ ];
+      
+    elif n = 0 then
+      
+      l := ListWithIdenticalEntries( m, [ ] );
+      
+    else
+      
+      l := ListWithIdenticalEntries( m, ListWithIdenticalEntries( n, Zero( F ) ) );
+      
+    fi;
+    
+    matrix := MatrixByRows( F, [ m, n ], l );
+    
+    SetIsZeroMatrix( matrix, true );
+    
+    return matrix;
+    
+end );
+
+##
+InstallOtherMethod( IdentityMatrix, "for ring and integer",
+               [ IsRing, IsInt ],
+               1000,
+function( R, n )
+  local rows, matrix, i;
+  
+  if n < 0 then
+    Error( "negative matrix dimension" );
+  fi;
+  
+  rows := IdentityMat( n, R );
+  
+  matrix := MatrixByRows( R, [ n, n ], rows );
+  
+  SetIsIdentityMatrix( matrix, true );
+  
+  SetIsZeroMatrix( matrix, n = 0 );
+  
+  return matrix;
+  
+end );
+
+##
+InstallMethod( TransposedMat,
+          [ IsQPAMatrix ],
+          1000,
+  function( M )
+    local tM;
+    
+    if IsRowMatrixRep( M ) then
+      
+      tM := MatrixByCols( BaseDomain( M ), Reversed( DimensionsMat( M ) ), RowsOfMatrix( M ) );
+      
+    elif IsColMatrixRep( M ) then
+      
+      tM := MatrixByRows( BaseDomain( M ), Reversed( DimensionsMat( M ) ), ColsOfMatrix( M ) );
+     
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+      
+      SetIsZeroMatrix( tM, true );
+      
+    fi;
+    
+    if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+      
+      SetIsIdentityMatrix( tM, true );
+      
+    fi;
+   
+    return tM;
+    
+end );
+
+##
+InstallMethod( IsZeroMatrix,
+          [ IsQPAMatrix ],
+          1000,
+  function( M )
+    
+    if IsRowMatrixRep( M ) then
+      
+      return IsZero( RowsOfMatrix( M ) );
+      
+    elif IsColMatrixRep( M ) then
+    
+      return IsZero( ColsOfMatrix( M ) );
+      
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+InstallMethod( IsZero, [ IsQPAMatrix ], 1000, IsZeroMatrix );
+##
+InstallMethod( IsIdentityMatrix,
+          [ IsQPAMatrix ],
+          1000,
+  function( M )
+    local dim, id;
+    
+    dim := DimensionsMat( M );
+    
+    if dim[ 1 ] <> dim[ 2 ] then
+      
+      return false;
+      
+    fi;
+    
+    id := IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+    
+    return M = id;
+  
+end );
+
+
+InstallMethod( \*,
+          [ IsQPAMatrix, IsQPAMatrix ],
+function( M1, M2 )
+  local R, dim1, dim2;
+  
+  R := BaseDomain( M1 );
+  dim1 := DimensionsMat( M1 );
+  dim2 := DimensionsMat( M2 );
+  
+  if R <> BaseDomain( M2 ) then
+    Error( "matrices over different rings" );
+  elif dim1[ 2 ] <> dim2[ 1 ] then
+    Error( "dimensions of matrices do not match" );
+  elif ( HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) ) 
+          or ( HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) ) then
+    return MakeZeroMatrix( R, dim1[ 1 ], dim2[ 2 ] );
+  elif IsIdentityMatrix( M1 ) then
+    return M2;
+  elif IsIdentityMatrix( M2 ) then
+    return M1;
+  elif IsColMatrixRep( M1 ) then
+    return MatrixByCols( R, [ dim1[ 1 ], dim2[ 2 ] ], ColsOfMatrix( M2 ) * ColsOfMatrix( M1 ) );
+  else
+    return MatrixByRows( R, [ dim1[ 1 ], dim2[ 2 ] ], RowsOfMatrix( M1 ) * RowsOfMatrix( M2 ) );
+  fi;
+end );
+
+InstallMethod( \+,
+          [ IsQPAMatrix, IsQPAMatrix ],
+function( M1, M2 )
+  local R, dim;
+  R := BaseDomain( M1 );
+  dim := DimensionsMat( M1 );
+  if R <> BaseDomain( M2 ) then
+    Error( "matrices over different rings" );
+  elif dim <> DimensionsMat( M2 ) then
+    Error( "dimensions of matrices do not match" );
+  elif HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) then
+    return M2;
+  elif HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
+    return M1;
+  elif IsColMatrixRep( M1 ) or IsColMatrixRep( M2 ) then
+    return MatrixByCols( R, dim, ColsOfMatrix( M1 ) + ColsOfMatrix( M2 ) );
+  else
+    return MatrixByRows( R, dim, RowsOfMatrix( M1 ) + RowsOfMatrix( M2 ) );
+  fi;
+end );
+
+InstallMethod( \*, [ IsMultiplicativeElement, IsQPAMatrix ],
+function( a, M )
+  local dim;
+  if not a in BaseDomain( M ) then
+    TryNextMethod( );
+  fi;
+  
+  dim := DimensionsMat( M );
+  
+  if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+    return M;
+  elif IsColMatrixRep( M ) then
+    return MatrixByCols( BaseDomain( M ), dim, a * ColsOfMatrix( M ) );
+  else
+    return MatrixByRows( BaseDomain( M ), dim, a * RowsOfMatrix( M ) );
+  fi;
+ 
+end );
+
+
+InstallMethod( AdditiveInverseMutable,
+          [ IsQPAMatrix ],
+function( M )
+  local R, dim;
+  R := BaseDomain( M );
+  dim := DimensionsMat( M );
+  if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+    return M;
+  elif IsColMatrixRep( M ) then
+    return MatrixByCols( R, dim, - ColsOfMatrix( M ) );
+  else
+    return MatrixByRows( R, dim, - RowsOfMatrix( M ) );
+  fi;
+end );
+
+InstallMethod( \=, "for QPA matrices",
+               [ IsQPAMatrix, IsQPAMatrix ],
+function( M1, M2 )
+  local dim, i, j;
+  dim := DimensionsMat( M1 );
+  
+  if dim <> DimensionsMat( M2 ) then
+    return false;
+  fi;
+  
+  if HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 )
+      and HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
+    return true;
+  fi;
+  
+  if HasIsIdentityMatrix( M1 ) and IsIdentityMatrix( M1 )
+      and HasIsIdentityMatrix( M2 ) and IsIdentityMatrix( M2 ) then
+    return true;
+  fi;
+  
+  if IsColMatrixRep( M1 ) then
+    return ColsOfMatrix( M1 ) = ColsOfMatrix( M2 );
+  else
+    return RowsOfMatrix( M1 ) = RowsOfMatrix( M2 );
+  fi;
   
 end );
 
 ## This is somehow clean and works whenever we have a indecomposable generating projectives.
-## BUT: it is VERY slow, since it uses lifts.
+## BUT: it is VERY slow, since it uses lifts. It is not used in the package.
 ##
 InstallMethod( EpimorphismFromSomeDirectSum,
           [ IsList, IsCapCategoryObject ],
