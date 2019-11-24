@@ -214,7 +214,6 @@ end );
 #
 ######################
 
-
 ##
 InstallMethod( ViewObj,
           [ IsRoof ],
@@ -224,4 +223,64 @@ InstallMethod( ViewObj,
     
 end );
 
+##
+InstallMethod( Display,
+          [ IsRoof ],
+  function( roof )
+  
+    Print( "A roof s <~~ a --> r, defined over ", Name( CapCategory( SourceMorphism( roof ) ) ), " by the following data:\n\n" );
+  
+    Print( TextAttr.b4, "Source Morphism:", TextAttr.reset, "\n\n" );
+    Display( SourceMorphism( roof ) );
+  
+    Print( TextAttr.b4, "Range Morphism:", TextAttr.reset, "\n\n" );
+    Display( RangeMorphism( roof ) );
+  
+end );
+
+##
+InstallMethod( Display,
+          [ IsDerivedCategoryObject ],
+  function( a )
+  
+    Print( "An object in derived category defined by:\n\n" );
+
+    Display( UnderlyingCell( a ) );
+
+end );
+
+InstallMethod( ViewObj,
+          [ IsDerivedCategoryObject ],
+  function( a )
+    
+    Print( "<An object in derived category defined by: " );
+
+    ViewObj( UnderlyingCell( a ) );
+    
+    Print(">" );
+
+end );
+ 
+##
+InstallMethod( Display,
+          [ IsDerivedCategoryMorphism ],
+  function( a )
+  
+    Print( "A morphism in derived category defined by:\n\n" );
+
+    Display( UnderlyingRoof( a ) );
+
+end );
+
+InstallMethod( ViewObj,
+          [ IsDerivedCategoryMorphism ],
+  function( a )
+    
+    Print( "<A morphism in derived category defined by: " );
+
+    ViewObj( UnderlyingRoof( a ) );
+    
+    Print(">" );
+
+end );
 
