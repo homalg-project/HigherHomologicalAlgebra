@@ -401,8 +401,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
 
     else
           
-      Error( "to do" );
-
+      #Error( "to do" );
+      return;
+      
     fi;
         
     ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY( homotopy_category );

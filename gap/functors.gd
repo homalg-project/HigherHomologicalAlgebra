@@ -10,17 +10,17 @@
 #! the third argument is an integer <A>n</A>. The output is the $n$'th homology (resp. cohomology) functor $:\mathrm{H}(A) \rightarrow A$.
 #! @Arguments H(A), A, n
 #! @Returns a functor
-DeclareOperation( "HomologyFunctorAt", [ IsHomotopyCategory, IsCapCategory, IsInt  ] );
+KeyDependentOperation( "HomologyFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
-DeclareOperation( "ShiftFunctorAt", [ IsHomotopyCategory, IsInt ] );
+KeyDependentOperation( "ShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
-DeclareOperation( "UnsignedShiftFunctorAt", [ IsHomotopyCategory, IsInt ] );
+KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
 DeclareAttribute( "ExtendFunctorToHomotopyCategoryFunctor", IsCapFunctor );
 
-DeclareAttribute( "EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByProjectiveObjects", IsCapCategory );
+DeclareAttribute( "LocalizationFunctorByProjectiveObjects", IsHomotopyCategory );
 
-DeclareAttribute( "EmbeddingInHomotopyCategoryOfTheFullSubcategoryGeneratedByInjectiveObjects", IsCapCategory );
+DeclareAttribute( "LocalizationFunctorByInjectiveObjects", IsHomotopyCategory );
 
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 

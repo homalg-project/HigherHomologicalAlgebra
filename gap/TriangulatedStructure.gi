@@ -12,7 +12,7 @@ function( homotopy_category )
     function( C )
       local twist_functor;
       
-      twist_functor := ShiftFunctorAt( homotopy_category, -1 );
+      twist_functor := ShiftFunctor( homotopy_category, -1 );
     
       return ApplyFunctor( twist_functor, C );
       
@@ -23,7 +23,7 @@ function( homotopy_category )
       function( phi )
         local twist_functor;
         
-        twist_functor := ShiftFunctorAt( homotopy_category, -1 );
+        twist_functor := ShiftFunctor( homotopy_category, -1 );
   
       return ApplyFunctor( twist_functor, phi );
   
@@ -34,7 +34,7 @@ function( homotopy_category )
       function( C )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctorAt( homotopy_category, 1 );
+        reverse_twist_functor := ShiftFunctor( homotopy_category, 1 );
    
         return ApplyFunctor( reverse_twist_functor, C );
   
@@ -45,7 +45,7 @@ function( homotopy_category )
       function( phi )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctorAt( homotopy_category, 1 );
+        reverse_twist_functor := ShiftFunctor( homotopy_category, 1 );
       
         return ApplyFunctor( reverse_twist_functor, phi );
   
