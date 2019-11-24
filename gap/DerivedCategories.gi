@@ -31,7 +31,10 @@ InstallMethod( Roof,
     
     ObjectifyWithAttributes( roof, TheTypeRoof,
           SourceMorphism, quasi_isomorphism,
-          RangeMorphism, morphism
+          RangeMorphism, morphism,
+          Source, Range( quasi_isomorphism ),
+          Range, Range( morphism ),
+          MiddleObject, Source( morphism )
         );
     
     return roof;
@@ -203,4 +206,22 @@ InstallMethod( DerivedCategory,
     return D;
     
 end );
+
+
+#######################
+#
+# View & Display
+#
+######################
+
+
+##
+InstallMethod( ViewObj,
+          [ IsRoof ],
+  function( roof )
+    
+    Print( "<A roof s <~~ a --> r, defined over ", Name( CapCategory( SourceMorphism( roof ) ) ), ">" );
+    
+end );
+
 

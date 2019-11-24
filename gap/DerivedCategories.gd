@@ -16,13 +16,19 @@ DeclareOperation( "Roof", [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphi
 
 DeclareAttribute( "SourceMorphism", IsRoof );
 
+DeclareSynonym( "QuasiIsomorphism", SourceMorphism );
+
 DeclareAttribute( "RangeMorphism", IsRoof );
 
-DeclareProperty( "IsHonest", IsRoof );
+DeclareAttribute( "Source", IsRoof );
+
+DeclareAttribute( "Range", IsRoof );
+
+DeclareAttribute( "MiddleObject", IsRoof );
 
 DeclareAttribute( "AsHonestMorphism", IsRoof );
 
-DeclareSynonym( "QuasiIsomorphism", SourceMorphism );
+DeclareProperty( "IsHonest", IsRoof );
 
 DeclareOperation( "DerivedCategoryObject", [ IsDerivedCategory, IsHomotopyCategoryObject ] );
 
