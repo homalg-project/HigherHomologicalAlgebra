@@ -44,7 +44,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
         
         if k >= u then
           
-          return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ) ];
+          return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ), ZeroMorphism( zero, zero ) ];
         
         else
           
@@ -481,7 +481,7 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
       
       if k <= u then
         
-        return [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ k ], zero ) ];
+        return [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ k ], zero ), ZeroMorphism( zero, zero ) ];
       
       else
         
@@ -570,9 +570,9 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
           
         else
           
-          temp_C := BaseList( Differentials( i_C ) )[ k ][ 3 ];
+          temp_C := BaseList( BaseList( Differentials( i_C ) ) )[ k ][ 3 ];
           
-          temp_D := BaseList( Differentials( i_D ) )[ k ][ 3 ];
+          temp_D := BaseList( BaseList( Differentials( i_D ) ) )[ k ][ 3 ];
           
           m := DirectSumFunctorial( [ phi[ k ], maps[ k - 1 ] ] );
           
