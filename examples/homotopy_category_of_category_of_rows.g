@@ -30,7 +30,7 @@ b := ChainComplex( [ beta_1 ], 1 );
 f := RandomMorphismWithFixedSourceAndRange( a[0], b[1], [1] );
 phi := ChainMorphism( a, b, [ PreCompose( f, b^1 ), PreCompose( a^1, f ) ], 0 );
 homotopy_phi := HomotopyCategoryMorphism( homotopy_of_rows, phi );
-IsZero( homotopy_phi );
+Display( IsZero( homotopy_phi ) );
 # true
 
 IsNullHomotopic( phi );

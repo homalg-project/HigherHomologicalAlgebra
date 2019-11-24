@@ -84,7 +84,7 @@ InstallMethod( HomotopyCategory,
     
     if ValueOption( "WithStandardHomomorphismStructure" ) <> true and
       
-        ValueGlobal( "HasRangeCategoryOfHomomorphismStructure" )( cat ) then
+        HasRangeCategoryOfHomomorphismStructure( cat ) then
         
         ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY( homotopy_category );
 
@@ -115,7 +115,7 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
        
     chains := UnderlyingCapCategory( homotopy_category );
        
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
        
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
         
@@ -132,7 +132,7 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
 
           return 
           HomotopyCategoryObject( homotopy_category,
-          ValueGlobal( "StalkChainComplex" )( DistinguishedObjectOfHomomorphismStructure( cat ), 0 ) );
+          StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 ) );
           
         fi;
          
@@ -147,7 +147,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
     
     chains := UnderlyingCapCategory( homotopy_category );
     
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
@@ -159,27 +159,27 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
         
         D := UnderlyingCell( hD );
         
-        if not (ValueGlobal( "HasActiveLowerBound" )( C ) and ValueGlobal( "HasActiveUpperBound" )( D )) then
-          if not (ValueGlobal( "HasActiveUpperBound" )( C ) and ValueGlobal( "HasActiveLowerBound" )( D )) then
-            if not (ValueGlobal( "HasActiveLowerBound" )( C ) and ValueGlobal( "HasActiveUpperBound" )( C )) then
-              if not (ValueGlobal( "HasActiveLowerBound" )( D ) and ValueGlobal( "HasActiveUpperBound" )( D )) then
+        if not (HasActiveLowerBound( C ) and HasActiveUpperBound( D )) then
+          if not (HasActiveUpperBound( C ) and HasActiveLowerBound( D )) then
+            if not (HasActiveLowerBound( C ) and HasActiveUpperBound( C )) then
+              if not (HasActiveLowerBound( D ) and HasActiveUpperBound( D )) then
                 Error( "The complexes should be bounded" );
               fi;
             fi;
           fi;
         fi; 
         
-        d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+        d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
         
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
-          return ValueGlobal( "HomologyAt" )( ValueGlobal( "TotalChainComplex" )( d ), 0 );
+          return HomologyAt( TotalChainComplex( d ), 0 );
           
         else
           
           Error( "to do" );
          
-          return HomotopyCategoryObject( homotopy_category, ValueGlobal( "TotalChainComplex" )( d ) );
+          return HomotopyCategoryObject( homotopy_category, TotalChainComplex( d ) );
           
         fi;
   
@@ -194,7 +194,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
     
     chains := UnderlyingCapCategory( homotopy_category );
     
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
@@ -206,20 +206,20 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
         
         psi := UnderlyingCell( h_psi );
         
-        ss := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( Range( phi ), Source( psi ) );
+        ss := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Range( phi ), Source( psi ) );
         
-        rr := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( Source( phi ), Range( psi ) );
+        rr := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Source( phi ), Range( psi ) );
         
-        Tot1 := ValueGlobal( "TotalChainComplex" )( ss );
+        Tot1 := TotalChainComplex( ss );
         
-        Tot2 := ValueGlobal( "TotalChainComplex" )( rr );
+        Tot2 := TotalChainComplex( rr );
         
-        l := ValueGlobal( "MapLazy" )( ValueGlobal( "IntegersList" ), function ( m )
+        l := MapLazy( IntegersList, function ( m )
                 local ind_s, ind_t, morphisms, obj;
                 
-                obj := ValueGlobal( "ObjectAt" )( Tot1, m );
+                obj := ObjectAt( Tot1, m );
                 
-                obj := ValueGlobal( "ObjectAt" )( Tot2, m );
+                obj := ObjectAt( Tot2, m );
                 
                 ind_s := ss!.IndicesOfTotalComplex.(String( m ));
                 
@@ -232,7 +232,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
                                    if i = j then
                                      return HomomorphismStructureOnMorphisms( phi[- i], psi[m - i] );
                                    else
-                                     return ZeroMorphism( ValueGlobal( "ObjectAt" )( ss, i, m - i ), ValueGlobal( "ObjectAt" )( rr, j, m - j ) );
+                                     return ZeroMorphism( ObjectAt( ss, i, m - i ), ObjectAt( rr, j, m - j ) );
                                    fi;
                                  end );
                              end );
@@ -243,17 +243,17 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
         
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
-          chains_range_cat_of_hom_struc := ValueGlobal( "ChainComplexCategory" )( range_cat_of_hom_struc );
+          chains_range_cat_of_hom_struc := ChainComplexCategory( range_cat_of_hom_struc );
           
-          H0 := ValueGlobal( "HomologyFunctorAt" )( chains_range_cat_of_hom_struc, range_cat_of_hom_struc, 0 );
+          H0 := HomologyFunctor( chains_range_cat_of_hom_struc, 0 );
           
-          return ApplyFunctor( H0, ValueGlobal( "ChainMorphism" )( Tot1, Tot2, l ) );
+          return ApplyFunctor( H0, ChainMorphism( Tot1, Tot2, l ) );
           
         else
            
          Error( "to do" );
          
-          return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( Tot1, Tot2, l ) );
+          return HomotopyCategoryMorphism( homotopy_category, ChainMorphism( Tot1, Tot2, l ) );
           
         fi;
 
@@ -268,7 +268,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     chains := UnderlyingCapCategory( homotopy_category );
     
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
@@ -282,9 +282,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           D := Range( phi );
           
-          lower_bound := Minimum( ValueGlobal( "ActiveLowerBound" )( C ), ValueGlobal( "ActiveLowerBound" )( D ) ) + 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
           
-          upper_bound := Maximum( ValueGlobal( "ActiveUpperBound" )( C ), ValueGlobal( "ActiveUpperBound" )( D ) ) - 1;
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
           
           morphisms_from_distinguished_object := [  ];
           
@@ -297,13 +297,13 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
           
-          d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
-          T := ValueGlobal( "TotalChainComplex" )( d );
+          T := TotalChainComplex( d );
           
           if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
            
-            im := ValueGlobal( "BoundariesAt" )( T, 0 );
+            im := BoundariesAt( T, 0 );
     
             inc := KernelLift( T^0, im );
  
@@ -313,9 +313,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
             
             Error( "to do" );
             
-            U := ValueGlobal( "StalkChainComplex" )( Source( morphism ), 0 );
+            U := StalkChainComplex( Source( morphism ), 0 );
             
-            return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( U, T, [ morphism ], 0 ) );
+            return HomotopyCategoryMorphism( homotopy_category, ChainMorphism( U, T, [ morphism ], 0 ) );
             
           fi;
         
@@ -330,7 +330,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     chains := UnderlyingCapCategory( homotopy_category );
     
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
@@ -342,17 +342,17 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           D := UnderlyingCell( hD );
           
-          lower_bound := Minimum( ValueGlobal( "ActiveLowerBound" )( C ), ValueGlobal( "ActiveLowerBound" )( D ) ) + 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
           
-          upper_bound := Maximum( ValueGlobal( "ActiveUpperBound" )( C ), ValueGlobal( "ActiveUpperBound" )( D ) ) - 1;
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
           
-          d := ValueGlobal( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS" )( C, D );
+          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
-          T := ValueGlobal( "TotalChainComplex" )( d );
+          T := TotalChainComplex( d );
           
           if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
             
-            phi := PreCompose( psi, ValueGlobal( "HonestRepresentative" )( ValueGlobal( "GeneralizedEmbeddingOfHomologyAt" )( T, 0 ) ) );
+            phi := PreCompose( psi, HonestRepresentative( GeneralizedEmbeddingOfHomologyAt( T, 0 ) ) );
             
           else
             
@@ -379,7 +379,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           L := List( [ 1 .. Length( indices ) ],
                  i -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
           
-          return HomotopyCategoryMorphism( homotopy_category, ValueGlobal( "ChainMorphism" )( C, D, Reversed( L ), lower_bound ) );
+          return HomotopyCategoryMorphism( homotopy_category, ChainMorphism( C, D, Reversed( L ), lower_bound ) );
   
   end );
 
@@ -391,13 +391,13 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
 
     chains := UnderlyingCapCategory( homotopy_category );
 
-    cat := ValueGlobal( "UnderlyingCategory" )( chains );
+    cat := UnderlyingCategory( chains );
 
-    range_cat_of_hom_struc := ValueGlobal( "RangeCategoryOfHomomorphismStructure" )( cat );
+    range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
 
     if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
 
-      ValueGlobal( "SetRangeCategoryOfHomomorphismStructure" )( homotopy_category, range_cat_of_hom_struc );
+      SetRangeCategoryOfHomomorphismStructure( homotopy_category, range_cat_of_hom_struc );
 
     else
           
