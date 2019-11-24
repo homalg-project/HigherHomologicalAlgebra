@@ -34,3 +34,26 @@ end: CategoryFilter := IsChainOrCochainComplexCategory,
       Description:= "IsColiftableThroughColiftingObject by IsColiftable"
       );
 
+##
+AddFinalDerivation( IsColiftableThroughColiftingObject,
+                    [ 
+                      [ Colift, 1 ]
+                    ],
+                    
+                    [ 
+                      IsColiftableThroughColiftingObject,
+                      MorphismIntoColiftingObject  
+                    ],
+  function( alpha )
+    local a, I_a;
+    
+    a := Source( alpha );
+
+    I_a := NaturalInjectionInMappingCone( IdentityMorphism( a ) );
+
+    return Colift( I_a, alpha ) <> fail;
+  
+end: CategoryFilter := IsChainOrCochainComplexCategory,
+      Description:= "IsColiftableThroughColiftingObject by Colift"
+      );
+
