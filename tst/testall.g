@@ -5,6 +5,7 @@
 # metadata in PackageInfo.g.
 #
 LoadPackage( "HomotopyCategories" );
+LoadPackage( "ModulePresentations" );
 
 TestDirectory(DirectoriesPackageLibrary( "HomotopyCategories", "tst" ),
   rec(exitGAP := true));
