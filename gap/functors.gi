@@ -120,7 +120,7 @@ InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
     
     T := HomotopyCategory( AsCapCategory(  Range( F ) ) );
     
-    ChF := ExtendFunctorToChainComplexCategoryFunctor( F );
+    ChF := ExtendFunctorToChainComplexCategories( F );
     
     r := RANDOM_TEXT_ATTR();
     
