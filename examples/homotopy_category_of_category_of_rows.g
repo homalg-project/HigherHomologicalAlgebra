@@ -1,7 +1,7 @@
 LoadPackage( "HomotopyCategories" );
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "FreydCategories" );
-ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_rows.g" );
+ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_rows.g" );
 
 #R := HomalgFieldOfRationals( );
 R := HomalgRingOfIntegers( );

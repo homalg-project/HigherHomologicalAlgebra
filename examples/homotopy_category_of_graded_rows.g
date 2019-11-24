@@ -2,7 +2,7 @@ LoadPackage( "HomotopyCategories" );
 LoadPackage( "FreydCategories" );
 LoadPackage( "4ti2Interface" ); # or NConvex
 LoadPackage( "LinearAlgebra" );
-ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_graded_rows.g" );
+ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_graded_rows.g" );
 
 Q := HomalgFieldOfRationalsInSingular( );;
 S := GradedRing( Q * "x_0, x_1, x_2, y_0, y_1" );;

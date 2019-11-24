@@ -1,7 +1,7 @@
 LoadPackage( "HomotopyCategories" );
 LoadPackage( "QPA" );
 LoadPackage( "LinearAlgebra" );
-ReadPackage( "HomotopyCategories", "/examples/random_methods_for_categories_of_quiver_reps.g" );
+ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_quiver_reps.g" );
 
 field := Rationals;;
 
