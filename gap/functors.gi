@@ -431,25 +431,31 @@ InstallMethod( CokernelObjectFunctor,
 end );
 
 ##
-InstallMethod( HomologyFunctorAt, 
-               [ IsChainComplexCategory, IsCapCategory, IsInt ],
-  function( complex_cat, cat, i )
+InstallMethod( HomologyFunctorOp, 
+               [ IsChainComplexCategory, IsInt ],
+  function( complex_cat, i )
+    local cat;
+    
+    cat := UnderlyingCategory( complex_cat );
     
     return HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR( cat, i, "Homology" );
   
 end );
 
 ##
-InstallMethod( CohomologyFunctorAt, 
-               [ IsCochainComplexCategory, IsCapCategory, IsInt ],
-  function( complex_cat, cat, i )
+InstallMethod( CohomologyFunctorOp, 
+               [ IsCochainComplexCategory, IsInt ],
+  function( complex_cat, i )
+    local cat;
+    
+    cat := UnderlyingCategory( complex_cat );
     
     return HOMOLOGY_OR_COHOMOLOGY_AS_FUNCTOR( cat, i, "Cohomology" );
     
 end );
 
 ##
-InstallMethod( ShiftFunctor, 
+InstallMethod( ShiftFunctorOp, 
                 [ IsChainOrCochainComplexCategory, IsInt ], 
   function( complex_cat, n )
     
@@ -458,7 +464,7 @@ InstallMethod( ShiftFunctor,
 end );
 
 ##
-InstallMethod( UnsignedShiftFunctor, 
+InstallMethod( UnsignedShiftFunctorOp,
                 [ IsChainOrCochainComplexCategory, IsInt ],
   function( complex_cat, n )
     

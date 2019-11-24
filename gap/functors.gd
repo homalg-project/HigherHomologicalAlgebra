@@ -11,17 +11,16 @@
 
 #! @Group f1
 #! @Description
-#! The first argument in the input must be the chain (resp. cochain) complex category of an abelian category $A$, the second argument is <A>A</A> and 
-#! the third argument is an integer <A>n</A>. 
+#! The first argument in the input must be the chain (resp. cochain) complex category of an abelian category $A$, the second argument is an integer <A>n</A>. 
 #! The output is the $n$'th homology (resp. cohomology) functor $\mathrm{Ch}_\bullet(A) \rightarrow A$
 #! ( resp. $\mathrm{Ch}^\bullet(A) \rightarrow A$)
 #! @Arguments Ch_\bullet(A), A, n
 #! @Returns a functor
-DeclareOperation( "HomologyFunctorAt", [ IsChainComplexCategory, IsCapCategory, IsInt  ] );
+KeyDependentOperation( "HomologyFunctor", IsChainComplexCategory, IsInt, ReturnTrue );
 #! @EndGroup
 #! @Group f1
 #! @Arguments Ch^\bullet(A), A, n
-DeclareOperation( "CohomologyFunctorAt", [ IsCochainComplexCategory, IsCapCategory, IsInt ] );
+KeyDependentOperation( "CohomologyFunctor", IsCochainComplexCategory, IsInt, ReturnTrue );
 
 #! @Description
 #! The inputs are complex category $\mathrm{Comp}(A)$ and an integer. The output is a the endofunctor $T[n]$ that sends any complex $C$ to $C[n]$ and any complex morphism
@@ -30,7 +29,7 @@ DeclareOperation( "CohomologyFunctorAt", [ IsCochainComplexCategory, IsCapCatego
 #! chain complex morphisms, i.e., $\phi[n]_i=\phi_{n+i}$. The same holds for cochain complexes and morphisms.
 #! @Arguments Comp(A), n
 #! @Returns a functor
-DeclareOperation( "ShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
+KeyDependentOperation( "ShiftFunctor", IsChainOrCochainComplexCategory, IsInt, ReturnTrue );
 
 
 #! @Description
@@ -40,7 +39,7 @@ DeclareOperation( "ShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
 #! chain complex morphisms, i.e., $\phi[n]_i=\phi_{n+i}$. The same holds for cochain complexes and morphisms.
 #! @Arguments Comp(A), n
 #! @Returns a functor
-DeclareOperation( "UnsignedShiftFunctor", [ IsChainOrCochainComplexCategory, IsInt ] );
+KeyDependentOperation( "UnsignedShiftFunctor", IsChainOrCochainComplexCategory, IsInt, ReturnTrue );
 
 #! @Description
 #! The arguments are $\mathrm{Ch}_\bullet(A)$ and $\mathrm{Ch}^\bullet(A)$ for some category $A$. 
@@ -499,7 +498,3 @@ KeyDependentOperation( "GoodTruncationBelowFunctor", IsCapCategory, IsInt, Retur
 DeclareOperation( "KernelObjectFunctor",   [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
 DeclareOperation( "CokernelObjectFunctor", [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
 
-
-DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
-
-DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
