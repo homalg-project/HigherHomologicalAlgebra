@@ -1248,349 +1248,395 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
 
           fi;
 
-  fi;
+    fi;
   
-  # This monoidal structure is yet only for chain complex categories ( shift_index = -1 )
-  #
-  if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
-    
-    ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
-    
-    ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
-    
-    ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
-    
-    ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
-    
-    ADD_TENSOR_UNIT_CHAIN( complex_cat );
-    
-    if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then 
+    # This monoidal structure is yet only for chain complex categories ( shift_index = -1 )
+    #
+    if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
+      
+      ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
+      
+      ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
+      
+      ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
+      
+      ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
+      
+      ADD_TENSOR_UNIT_CHAIN( complex_cat );
+      
+      if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then 
+          
+          ADD_BRAIDING_FOR_CHAINS( complex_cat );
+      
+      fi;
+      
+      if IsSymmetricClosedMonoidalCategory( complex_cat ) then
         
-        ADD_BRAIDING_FOR_CHAINS( complex_cat );
+        ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
+        
+        ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
+      
+      fi;
     
     fi;
     
-    if IsSymmetricClosedMonoidalCategory( complex_cat ) then
+    if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and
+        CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
       
-      ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
-      
-      ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
-    
-    fi;
-  
-  fi;
-  
-  if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and
-      CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
-    
-    AddIsProjective( complex_cat,
-      
-      function( C )
+      AddIsProjective( complex_cat,
         
-        local i;
-        
-        if not IsBoundedChainOrCochainComplex( C ) then 
+        function( C )
           
-          Error( "The complex must be bounded" );
+          local i;
           
-        fi;
-        
-        if not IsExact( C ) then 
+          if not IsBoundedChainOrCochainComplex( C ) then 
+            
+            Error( "The complex must be bounded" );
+            
+          fi;
           
-          return false;
-          
-        fi;
-        
-        for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do 
-          
-          if not IsProjective( C[ i ] ) then
+          if not IsExact( C ) then 
             
             return false;
-          
+            
           fi;
-        
-        od;
-        
-        return true;
-      
-      end );
-    
-    AddProjectiveLift( complex_cat,
-      function( phi, pi )
-        
-        local P, H, l, XX; 
-        
-        P := Source( phi );
-        
-        XX := Source( pi );
-        
-        H := MapLazy( IntegersList,
           
-          function( i )
-            local id, m, n; 
+          for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do 
             
-            id := IdentityMorphism( P );
-            
-            if i <= ActiveLowerBound( P ) then 
+            if not IsProjective( C[ i ] ) then
               
-              return ZeroMorphism( P[ i ], P[ i + 1 ] );
+              return false;
             
-            elif i = ActiveLowerBound( P ) + 1 then 
+            fi;
+          
+          od;
+          
+          return true;
+        
+        end );
+      
+      AddProjectiveLift( complex_cat,
+        function( phi, pi )
+          
+          local P, H, l, XX; 
+          
+          P := Source( phi );
+          
+          XX := Source( pi );
+          
+          H := MapLazy( IntegersList,
+            
+            function( i )
+              local id, m, n; 
               
-              return ProjectiveLift( id[ i ], P^(i+1) );
+              id := IdentityMorphism( P );
+              
+              if i <= ActiveLowerBound( P ) then 
+                
+                return ZeroMorphism( P[ i ], P[ i + 1 ] );
+              
+              elif i = ActiveLowerBound( P ) + 1 then 
+                
+                return ProjectiveLift( id[ i ], P^(i+1) );
+              
+              fi;
+              
+              m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
+              
+              n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
+              
+              return ProjectiveLift( m, n );
+              
+            end, 1 );
+                                      
+          l := MapLazy( IntegersList, 
+              function( i )
+                
+                return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] )
+                        + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
+              
+              end, 1 );
+              
+          return ChainMorphism( P, XX, l );
+          
+        end );
+        
+    fi;
+    
+    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
+        
+        HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = -1 then
+        
+        AddLift( complex_cat,
+          function( alpha, beta )
+            local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_P_N, internal_hom_id_P_beta, k_internal_hom_id_P_beta_0, alpha_1, lift;
+            cat := CapCategory( alpha );
+            
+            U := TensorUnit( cat );
+            
+            P := Source( alpha );
+            
+            N := Range( alpha );
+            
+            M := Source( beta );
+            
+            alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
+            
+            beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
+            
+            internal_hom_id_P_beta := InternalHomOnMorphisms( IdentityMorphism( P ), beta );
+            
+            internal_hom_P_M := Source( internal_hom_id_P_beta );
+            
+            internal_hom_P_N := Range( internal_hom_id_P_beta );
+            
+            k_internal_hom_id_P_beta_0 := KernelLift( internal_hom_P_N^0,
+              
+            PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_id_P_beta[ 0 ]  ) );
+            
+            alpha_1 := KernelLift( internal_hom_P_N^0, alpha_[0] );
+            
+            lift := Lift( alpha_1, k_internal_hom_id_P_beta_0 );
+            
+            if lift = fail then
+              
+              return fail;
+              
+            else
+              
+              lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
+              
+              return InternalHomToTensorProductAdjunctionMap( P, M, lift );
+            
+            fi;
+          
+          end );
+        
+        AddColift( complex_cat,
+            
+          function( alpha, beta )
+            local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_N_M, internal_hom_alpha_id_M, k_internal_hom_alpha_id_M_0, beta_1, lift;
+            
+            cat := CapCategory( alpha );
+            
+            U := TensorUnit( cat );
+            
+            P := Range( alpha );
+            
+            N := Source( alpha );
+            
+            M := Range( beta );
+            
+            alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
+            
+            beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
+            
+            internal_hom_alpha_id_M := InternalHomOnMorphisms( alpha, IdentityMorphism( M ) );
+            
+            internal_hom_P_M := Source( internal_hom_alpha_id_M );
+            
+            internal_hom_N_M := Range( internal_hom_alpha_id_M );
+            
+            k_internal_hom_alpha_id_M_0 := KernelLift( internal_hom_N_M^0,
+            
+            PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_alpha_id_M[ 0 ]  ) );
+            
+            beta_1 := KernelLift( internal_hom_N_M^0, beta_[0] );
+            
+            lift := Lift( beta_1, k_internal_hom_alpha_id_M_0 );
+            
+            if lift = fail then
+              
+              return fail;
+              
+            else
+              
+              lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
+              
+              return InternalHomToTensorProductAdjunctionMap( P, M, lift );
+              
+            fi;
+          
+          end );
+      
+    fi;
+    
+    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
+        HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = 1 then
+        
+        AddLift( complex_cat,
+          function( alpha, beta )
+            
+            local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+            
+            cat := UnderlyingCategory( complex_cat );
+            
+            chains_cat := ChainComplexCategory( cat );
+            
+            cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
+            
+            chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
+            
+            l := Lift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+            
+            if l = fail then
+              
+              return fail;
+            
+            else
+              
+              return ApplyFunctor( chains_to_cochains, l );
+            
+            fi;
+          
+          end );
+        
+        AddColift( complex_cat,
+            
+          function( alpha, beta )
+            
+            local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+            
+            cat := UnderlyingCategory( complex_cat );
+            
+            chains_cat := ChainComplexCategory( cat );
+            
+            cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
+            
+            chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
+            
+            l := Colift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+            
+            if l = fail then
+              
+              return fail;
+              
+            else
+              
+              return ApplyFunctor( chains_to_cochains, l );
             
             fi;
             
-            m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
-            
-            n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
-            
-            return ProjectiveLift( m, n );
-            
-          end, 1 );
-                                    
-        l := MapLazy( IntegersList, 
-            function( i )
-              
-              return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] )
-                      + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
-            
-            end, 1 );
-            
-        return ChainMorphism( P, XX, l );
-        
-      end );
-      
-  fi;
-  
-  if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
-      
-      HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = -1 then
-      
-      AddLift( complex_cat,
-        function( alpha, beta )
-          local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_P_N, internal_hom_id_P_beta, k_internal_hom_id_P_beta_0, alpha_1, lift;
-          cat := CapCategory( alpha );
-          
-          U := TensorUnit( cat );
-          
-          P := Source( alpha );
-          
-          N := Range( alpha );
-          
-          M := Source( beta );
-          
-          alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
-          
-          beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
-          
-          internal_hom_id_P_beta := InternalHomOnMorphisms( IdentityMorphism( P ), beta );
-          
-          internal_hom_P_M := Source( internal_hom_id_P_beta );
-          
-          internal_hom_P_N := Range( internal_hom_id_P_beta );
-          
-          k_internal_hom_id_P_beta_0 := KernelLift( internal_hom_P_N^0,
-            
-          PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_id_P_beta[ 0 ]  ) );
-          
-          alpha_1 := KernelLift( internal_hom_P_N^0, alpha_[0] );
-          
-          lift := Lift( alpha_1, k_internal_hom_id_P_beta_0 );
-          
-          if lift = fail then
-            
-            return fail;
-            
-          else
-            
-            lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
-            
-            return InternalHomToTensorProductAdjunctionMap( P, M, lift );
-          
-          fi;
-        
-        end );
-      
-      AddColift( complex_cat,
-          
-        function( alpha, beta )
-          local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_N_M, internal_hom_alpha_id_M, k_internal_hom_alpha_id_M_0, beta_1, lift;
-          
-          cat := CapCategory( alpha );
-          
-          U := TensorUnit( cat );
-          
-          P := Range( alpha );
-          
-          N := Source( alpha );
-          
-          M := Range( beta );
-          
-          alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
-          
-          beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
-          
-          internal_hom_alpha_id_M := InternalHomOnMorphisms( alpha, IdentityMorphism( M ) );
-          
-          internal_hom_P_M := Source( internal_hom_alpha_id_M );
-          
-          internal_hom_N_M := Range( internal_hom_alpha_id_M );
-          
-          k_internal_hom_alpha_id_M_0 := KernelLift( internal_hom_N_M^0,
-          
-          PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_alpha_id_M[ 0 ]  ) );
-          
-          beta_1 := KernelLift( internal_hom_N_M^0, beta_[0] );
-          
-          lift := Lift( beta_1, k_internal_hom_alpha_id_M_0 );
-          
-          if lift = fail then
-            
-            return fail;
-            
-          else
-            
-            lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
-            
-            return InternalHomToTensorProductAdjunctionMap( P, M, lift );
-            
-          fi;
-        
-        end );
+          end );
     
-  fi;
-  
-  if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
-      HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = 1 then
-      
-      AddLift( complex_cat,
-        function( alpha, beta )
-          
-          local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
-          
-          cat := UnderlyingCategory( complex_cat );
-          
-          chains_cat := ChainComplexCategory( cat );
-          
-          cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
-          
-          chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
-          
-          l := Lift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
-          
-          if l = fail then
-            
-            return fail;
-          
-          else
-            
-            return ApplyFunctor( chains_to_cochains, l );
-          
-          fi;
-        
-        end );
-      
-      AddColift( complex_cat,
-          
-        function( alpha, beta )
-          
-          local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
-          
-          cat := UnderlyingCategory( complex_cat );
-          
-          chains_cat := ChainComplexCategory( cat );
-          
-          cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
-          
-          chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
-          
-          l := Colift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
-          
-          if l = fail then
-            
-            return fail;
-            
-          else
-            
-            return ApplyFunctor( chains_to_cochains, l );
-          
-          fi;
-          
-        end );
-  
-  fi;
-  
-  if shift_index = -1 and
-     CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
-       CanCompute( cat, "HomomorphismStructureOnObjects" ) and
-         CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
-           CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
-             CanCompute( cat, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-               CanCompute( cat, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) and
-                 HasRangeCategoryOfHomomorphismStructure( cat ) then
-                
-                range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-                
-                if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+    fi;
+    
+    if shift_index = -1 and
+       CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
+         CanCompute( cat, "HomomorphismStructureOnObjects" ) and
+           CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
+             CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
+               CanCompute( cat, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
+                 CanCompute( cat, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) and
+                   HasRangeCategoryOfHomomorphismStructure( cat ) then
                   
-                  SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
+                  range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
                   
-                else
-                  
-                  if IsIdenticalObj( range_cat_of_hom_struc, cat ) then
+                  if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
                     
-                    SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
-                  
+                    SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
+                    
                   else
                     
-                    SetRangeCategoryOfHomomorphismStructure( complex_cat, ChainComplexCategory( range_cat_of_hom_struc ) );
+                    if IsIdenticalObj( range_cat_of_hom_struc, cat ) then
+                      
+                      SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
+                    
+                    else
+                      
+                      SetRangeCategoryOfHomomorphismStructure( complex_cat, ChainComplexCategory( range_cat_of_hom_struc ) );
+                    
+                    fi;
                   
                   fi;
-                
-                fi;
-                
-                ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE( complex_cat );
-                
-                ADD_HOM_STRUCTURE_ON_CHAINS( complex_cat );
-                
-                ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS( complex_cat );
-                
-                ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE( complex_cat );
-                
-                ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
-  
-  fi;
-  
-  if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
+                  
+                  ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE( complex_cat );
+                  
+                  ADD_HOM_STRUCTURE_ON_CHAINS( complex_cat );
+                  
+                  ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS( complex_cat );
+                  
+                  ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE( complex_cat );
+                  
+                  ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
     
-    AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat,
-      function( r, phi )
-        local mors;
-        
-        mors := Morphisms( phi );
-        
-        mors := MapLazy( mors, m -> MultiplyWithElementOfCommutativeRingForMorphisms( r, m ), 1 );
-        
-        return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors ); 
-        
-    end );
+    fi;
     
-  fi;
-  
-  to_be_finalized := ValueOption( "FinalizeCategory" );
-  
-  if to_be_finalized = false then
+    if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
+      
+      AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat,
+        function( r, phi )
+          local mors;
+          
+          mors := Morphisms( phi );
+          
+          mors := MapLazy( mors, m -> MultiplyWithElementOfCommutativeRingForMorphisms( r, m ), 1 );
+          
+          return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors ); 
+          
+      end );
+      
+    fi;
+    
+    if CanCompute( cat, "IsIsomorphism" ) then
+    
+      AddIsIsomorphism( complex_cat,
+        function( phi )
+          local u, v;
+          
+          if not IsBoundedChainOrCochainMorphism( phi ) then
+            
+            Error( "The morphism should be bounded" );
+            
+          fi;
+          
+          u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
+          
+          v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
+          
+          return ForAll( [ u .. v ], i -> IsIsomorphism( phi[ i ] ) );
+          
+      end );
+    
+    fi;
+    
+    if CanCompute( cat, "InverseImmutable" ) then
+    
+      AddInverseImmutable( complex_cat,
+        function( phi )
+          local u, v, list_of_inverses;
+          
+          if not IsBoundedChainOrCochainMorphism( phi ) then
+            
+            Error( "The morphism should be bounded" );
+            
+          fi;
+          
+          u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
+          
+          v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
+          
+          list_of_inverses := List( [ u .. v ], i -> Inverse( phi[ i ] ) );
+          
+          return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST" )( Range( phi ), Source( phi ), list_of_inverses, u );
+          
+      end );
+    
+    fi;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    if to_be_finalized = false then
+      
+      return complex_cat;
+    
+    else
+      
+      Finalize( complex_cat );
+    
+    fi;
     
     return complex_cat;
-  
-  else
-    
-    Finalize( complex_cat );
-  
-  fi;
-  
-  return complex_cat;
   
 end );
 
