@@ -733,7 +733,7 @@ InstallMethod( LDerivedFunctor,
     local H_1, cat_1, D_1, H_2, cat_2, D_2, name, LF;
     
     H_1 := AsCapCategory( Source( F ) );
-        
+    
     H_2 := AsCapCategory( Range( F ) );
     
     if not ( IsHomotopyCategory( H_1 ) and IsHomotopyCategory( H_2 ) ) then
@@ -750,7 +750,7 @@ InstallMethod( LDerivedFunctor,
     
     D_2 := DerivedCategory( cat_2 );
     
-    if not IsAbelianCategoryWithEnoughProjectives( cat_1 ) then
+    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat_1 ) and IsAbelianCategoryWithEnoughProjectives( cat_1 ) ) then
       
       Error( Name( cat_1 ), " should be abelian with enough projectives!\n" );
       
@@ -769,7 +769,7 @@ InstallMethod( LDerivedFunctor,
         Fp := ApplyFunctor( F, p );
         
         return DerivedCategoryObject( D_2, Fp );
-      
+        
     end );
     
     AddMorphismFunction( LF,
@@ -801,6 +801,26 @@ InstallMethod( LDerivedFunctor,
 end );
 
 ##
+InstallMethod( LDerivedFunctor,
+          [ IsCapFunctor ],
+  function( F )
+    local cat_1;
+    
+    cat_1 := AsCapCategory( Source( F ) );
+    
+    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat_1 ) and IsAbelianCategoryWithEnoughProjectives( cat_1 ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return LDerivedFunctor( ExtendFunctorToHomotopyCategoryFunctor( F ) );
+    
+end );
+
+InstallMethod( LeftDerivedFunctor, [ IsCapFunctor ], LDerivedFunctor );
+
+##
 InstallMethod( RDerivedFunctor,
           [ IsCapFunctor ],
   function( F )
@@ -824,7 +844,7 @@ InstallMethod( RDerivedFunctor,
     
     D_2 := DerivedCategory( cat_2 );
     
-    if not IsAbelianCategoryWithEnoughInjectives( cat_1 ) then
+    if not ( HasIsAbelianCategoryWithEnoughInjectives( cat_1 ) and IsAbelianCategoryWithEnoughInjectives( cat_1 ) ) then
       
       Error( Name( cat_1 ), " should be abelian with enough injectives!\n" );
       
@@ -843,7 +863,7 @@ InstallMethod( RDerivedFunctor,
         Fi := ApplyFunctor( F, i );
         
         return DerivedCategoryObject( D_2, Fi );
-      
+        
     end );
     
     AddMorphismFunction( RF,
@@ -873,4 +893,25 @@ InstallMethod( RDerivedFunctor,
     return RF;
     
 end );
+
+##
+InstallMethod( RDerivedFunctor,
+          [ IsCapFunctor ],
+  function( F )
+    local cat_1;
+    
+    cat_1 := AsCapCategory( Source( F ) );
+    
+    if not ( HasIsAbelianCategoryWithEnoughInjectives( cat_1 ) and IsAbelianCategoryWithEnoughInjectives( cat_1 ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return RDerivedFunctor( ExtendFunctorToHomotopyCategoryFunctor( F ) );
+    
+end );
+
+##
+InstallMethod( RightDerivedFunctor, [ IsCapFunctor ], RDerivedFunctor );
 

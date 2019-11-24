@@ -84,9 +84,15 @@ DeclareAttribute( "LocalizationFunctor", IsHomotopyCategory );
 #! @Returns a functor
 DeclareAttribute( "UniversalFunctorFromDerivedCategory", IsCapFunctor );
 
-DeclareAttribute( "RDerivedFunctor", IsCapFunctor );
+# I can not declare them as attributes since they are installed in homalg as operations.
+# Hence, this trick
 
+DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
+DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
+
+DeclareAttribute( "RDerivedFunctor", IsCapFunctor );
 DeclareAttribute( "LDerivedFunctor", IsCapFunctor );
+
 
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
