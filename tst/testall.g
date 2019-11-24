@@ -6,7 +6,10 @@
 #
 LoadPackage( "DerivedCategories" );
 LoadPackage( "LinearAlgebraForCAP" );
+LoadPackage( "RingsForHomalg" );
 LoadPackage( "GaussForHomalg" );
+
+S := HomalgFieldOfRationalsInSingular( ) * "x,y,z,t";
 
 TestDirectory(DirectoriesPackageLibrary( "DerivedCategories", "tst" ),
   rec(exitGAP := true));
