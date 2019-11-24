@@ -24,7 +24,9 @@ A :=
 );;
 
 cat := CategoryOfQuiverRepresentations( A );
-
+chains_cat := ChainComplexCategory( cat );
+homotopy_cat := HomotopyCategory( cat );
+derived_cat := DerivedCategory( cat );
 
 pp := IndecProjRepresentations( A );
 ii := IndecInjRepresentations( A );
