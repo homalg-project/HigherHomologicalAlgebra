@@ -16,7 +16,7 @@ KeyDependentOperation( "ShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
 KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
-DeclareAttribute( "ExtendFunctorToHomotopyCategoryFunctor", IsCapFunctor );
+DeclareAttribute( "ExtendFunctorToHomotopyCategories", IsCapFunctor );
 
 DeclareAttribute( "LocalizationFunctorByProjectiveObjects", IsHomotopyCategory );
 

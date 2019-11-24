@@ -111,7 +111,7 @@ function( homotopy_category, n )
 end );
 
 ##
-InstallMethod( ExtendFunctorToHomotopyCategoryFunctor,
+InstallMethod( ExtendFunctorToHomotopyCategories,
                [ IsCapFunctor ],
   function( F )
     local S, T, ChF, name, functor, r;
