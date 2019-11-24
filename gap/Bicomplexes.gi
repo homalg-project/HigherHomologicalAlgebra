@@ -282,7 +282,8 @@ InstallMethod( AsCategoryOfBicomplexes,
                 func := create_func_morphism( name );
             fi;
         else
-            Error( "unkown return type of the operation ", name );
+          continue;  
+          #Error( "unkown return type of the operation ", name );
         fi;
 
         add := ValueGlobal( Concatenation( "Add", name ) );
@@ -893,8 +894,8 @@ InstallMethod( ExtendFunctorToCohomologicalBicomplexCategoryFunctor,
             [ IsCapFunctor ],
     function( F )
     local functor, name;
-    functor := ExtendFunctorToCochainComplexCategoryFunctor( F );
-    functor := ExtendFunctorToCochainComplexCategoryFunctor( functor );
+    functor := ExtendFunctorToCochainComplexCategories( F );
+    functor := ExtendFunctorToCochainComplexCategories( functor );
     name := Concatenation( "Extension of ", Name( F ), " to cohomological bicomplexes functor" );
     return AssociatedBicomplexFunctor( functor, name );
 end );
@@ -904,8 +905,8 @@ InstallMethod( ExtendFunctorToHomologicalBicomplexCategoryFunctor,
             [ IsCapFunctor ],
     function( F )
     local functor, name;
-    functor := ExtendFunctorToChainComplexCategoryFunctor( F );
-    functor := ExtendFunctorToChainComplexCategoryFunctor( functor );
+    functor := ExtendFunctorToChainComplexCategories( F );
+    functor := ExtendFunctorToChainComplexCategories( functor );
     name := Concatenation( "Extension of ", Name( F ), " to homological bicomplexes functor" );
     return AssociatedBicomplexFunctor( functor, name );
 end );
