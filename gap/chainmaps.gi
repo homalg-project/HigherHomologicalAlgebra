@@ -142,19 +142,14 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
   function( C1, C2, mor, n )
   local all_morphisms;
 
-  all_morphisms := MapLazy( IntegersList, function( i )
-
-                                              if i >= n and i <= n + Length( mor ) - 1 then 
-
-                                                 return mor[ i - n + 1 ];
-
-                                              else
-
-                                                 return ZeroMorphism( C1[ i ], C2[ i ] );
-
-                                              fi;
-
-                                           end, 1 );
+  all_morphisms := MapLazy( IntegersList,
+        function( i )
+          if i >= n and i <= n + Length( mor ) - 1 then 
+            return mor[ i - n + 1 ];
+          else
+            return ZeroMorphism( C1[ i ], C2[ i ] );
+          fi;
+         end, 1 );
 
   all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
 
@@ -383,6 +378,7 @@ InstallMethod( Display,
     
 end );
 
+##
 InstallMethod( Display,
     [ IsBoundedChainOrCochainMorphism ],
     function( phi )
@@ -1306,11 +1302,11 @@ InstallMethod( IsQuasiIsomorphism,
 
    if IsChainMorphism( phi ) then
 
-      h_functor := HomologyFunctorAt;
+      h_functor := HomologyFunctor;
 
    else 
 
-      h_functor := CohomologyFunctorAt;
+      h_functor := CohomologyFunctor;
 
    fi;
 
@@ -1345,11 +1341,11 @@ InstallMethod( IsQuasiIsomorphism,
 
    if IsChainMorphism( phi ) then
 
-      h_functor := HomologyFunctorAt;
+      h_functor := HomologyFunctor;
 
    else 
 
-      h_functor := CohomologyFunctorAt;
+      h_functor := CohomologyFunctor;
 
    fi;
 

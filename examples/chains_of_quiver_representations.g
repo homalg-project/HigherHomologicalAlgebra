@@ -6,7 +6,7 @@ LoadPackage( "ComplexesForCAP" );
 DeclareOperation( "LinearQuiver", [ IsDirection, IsObject, IsInt, IsInt ] );
 DeclareOperation( "LinearRightQuiver", [ IsObject, IsInt, IsInt ] );
 DeclareOperation( "LinearLeftQuiver", [ IsObject, IsInt, IsInt ] );
-DeclareOperation( "ArrowsBetweenTwoVertices", [ IsVertex, IsVertex ] );
+DeclareOperation( "ArrowsBetweenTwoVertices", [ IsQuiverVertex, IsQuiverVertex ] );
 
 InstallMethod( LinearQuiver, 
 	[ IsDirection, IsObject, IsInt, IsInt ],
@@ -62,7 +62,7 @@ InstallMethod( LinearLeftQuiver,
 end );
 
 InstallMethod( ArrowsBetweenTwoVertices, 
-		[ IsVertex, IsVertex ],
+		[ IsQuiverVertex, IsQuiverVertex ],
   function( v1, v2 )
     return Intersection( OutgoingArrows( v1 ), IncomingArrows( v2 ) );
 end );

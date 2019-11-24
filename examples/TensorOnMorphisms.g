@@ -4,7 +4,7 @@ ZZ := HomalgRingOfIntegers( );
 #! Z
 F1 := FreeLeftPresentation( 1, ZZ );
 #! <An object in Category of left presentations of Z>
-f := 12*IdentityMorphism( F1 );
+f := Sum( ListWithIdenticalEntries( 12, IdentityMorphism( F1 ) ) );
 #! <A morphism in Category of left presentations of Z>
 phi3 := CokernelProjection( f );
 #! <An epimorphism in Category of left presentations of Z>
@@ -14,7 +14,7 @@ YY := StalkChainComplex( CokernelObject( f ), 3 );
 #! <A bounded object in chain complexes category over category of left presentations of Z with active lower bound 2 and active upper bound 4>
 phi := ChainMorphism( XX, YY, [ phi3 ], 3 );
 #! <A bounded morphism in chain complexes category over category of left presentations of Z with active lower bound 2 and active upper bound 4>
-g := 4*IdentityMorphism( F1 );
+g := Sum( ListWithIdenticalEntries( 4, IdentityMorphism( F1 ) ) );
 #! <A morphism in Category of left presentations of Z>
 psi3 := CokernelProjection( g );
 #! <An epimorphism in Category of left presentations of Z>
@@ -37,5 +37,5 @@ Display( ObjectAt( d, 3, 3 ) );
 #!   [  12 ] ]
 #! 
 #! An object in Category of left presentations of Z
-IsZeroForObjects( ObjectAt( d, 3, 3 ) );
+Display( IsZeroForObjects( ObjectAt( d, 3, 3 ) ) );
 #! false

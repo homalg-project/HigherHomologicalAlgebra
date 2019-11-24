@@ -31,9 +31,9 @@ Display( CA^3 );
 %
 Display( CA, 0, 5 );
 %
-H3 := HomologyFunctorAt( chains_lp_cat, lp_cat, 3 );
+H3 := HomologyFunctor( chains_lp_cat, lp_cat, 3 );
 %
-H4 := HomologyFunctorAt( chains_lp_cat, lp_cat, 4 );
+H4 := HomologyFunctor( chains_lp_cat, lp_cat, 4 );
 %
 H3_CA := ApplyFunctor( H3, CA );
 %

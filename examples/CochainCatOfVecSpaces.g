@@ -446,7 +446,7 @@ IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi )
 i_o_psi := PreCompose( psi, i );
 #! <A bounded morphism in Cochain complexes category over Category of matrices
 #! over Q with active lower bound 4 and active upper bound 6>
-H5 := CohomologyFunctorAt( cochain_cat, matrix_category, 5 );
+H5 := CohomologyFunctor( cochain_cat, 5 );
 #! 5-th cohomology functor in Category of matrices over Q
 IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
 #! true
