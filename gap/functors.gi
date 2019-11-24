@@ -491,7 +491,7 @@ InstallMethod( CochainToChainComplexFunctor,
 end );
 
 ##
-InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
+InstallMethod( ExtendFunctorToChainComplexCategories,
                [ IsCapFunctor ],
   function( F )
     local S, T, functor, name, r;
@@ -571,7 +571,7 @@ InstallMethod( ExtendFunctorToChainComplexCategoryFunctor,
 
 end );
 
-InstallMethod( ExtendFunctorToCochainComplexCategoryFunctor,
+InstallMethod( ExtendFunctorToCochainComplexCategories,
                [ IsCapFunctor ],
   function( F )
     local S, T, functor, name, r;

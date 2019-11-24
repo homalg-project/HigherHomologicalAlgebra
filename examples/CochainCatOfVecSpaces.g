@@ -475,7 +475,7 @@ Display( ApplyFunctor( F, f ) );
 #!   [  0,  0,  1,  3 ] ]
 #! 
 #! A morphism in Category of matrices over Q
-Coch_F := ExtendFunctorToCochainComplexCategoryFunctor( F );
+Coch_F := ExtendFunctorToCochainComplexCategories( F );
 #! Extended version of double functor from Cochain complexes category over Category 
 #! of matrices over Q to Cochain complexes category over Category of matrices over Q
 psi;

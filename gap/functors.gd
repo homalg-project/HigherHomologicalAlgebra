@@ -131,7 +131,7 @@ DeclareOperation( "CochainToChainComplexFunctor", [ IsCochainComplexCategory, Is
 #! @EndLatexOnly
 #! @Arguments F
 #! @Returns a functor
-DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ] );
+DeclareOperation( "ExtendFunctorToChainComplexCategories", [ IsCapFunctor ] );
 
 #! @Description
 #! The input is a functor $F:A\rightarrow B$. The output is its extention functor 
@@ -200,7 +200,7 @@ DeclareOperation( "ExtendFunctorToChainComplexCategoryFunctor", [ IsCapFunctor ]
 #! @EndLatexOnly
 #! @Arguments F
 #! @Returns a functor
-DeclareOperation( "ExtendFunctorToCochainComplexCategoryFunctor", [ IsCapFunctor ] );
+DeclareOperation( "ExtendFunctorToCochainComplexCategories", [ IsCapFunctor ] );
 
 
 DeclareAttribute( "ExtendProductFunctorToChainComplexCategoryProductFunctor", IsCapFunctor );

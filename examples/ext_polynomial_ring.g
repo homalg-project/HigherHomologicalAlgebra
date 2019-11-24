@@ -49,9 +49,9 @@ n := HomalgMatrix( "[ x*y,y,z,y*x*z,x,-y,y*z,x ]", 4, 2, R );
 
 N := AsLeftPresentation( n );
 
-# Tensor_product_with_M_in_chains := ExtendFunctorToChainComplexCategoryFunctor( tensor_functor( M ) );
+# Tensor_product_with_M_in_chains := ExtendFunctorToChainComplexCategories( tensor_functor( M ) );
 hom_to_N := hom_functor( N );
-Hom_Obj_N_from_cochains_to_cochains := ExtendFunctorToCochainComplexCategoryFunctor( hom_to_N );
+Hom_Obj_N_from_cochains_to_cochains := ExtendFunctorToCochainComplexCategories( hom_to_N );
 Hom_Obj_N_from_chains_to_cochains := 
     PreCompose( ChainCategoryToCochainCategoryOfOppositeCategory( cat ), Hom_Obj_N_from_cochains_to_cochains );
 
