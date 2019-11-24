@@ -48,7 +48,7 @@ F := IsomorphismIntoAlgebroid( collection );
 G := IsomorphismFromAlgebroid( collection );
 
 add_F := ExtendFunctorToAdditiveClosures( F );
-Ho_add_F := ExtendFunctorToHomotopyCategoryFunctor( add_F );
+Ho_add_F := ExtendFunctorToHomotopyCategories( add_F );
 
 additive_full := AsCapCategory( Source( add_F ) );
 additive_alg := AsCapCategory( Range( add_F ) );

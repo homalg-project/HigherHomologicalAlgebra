@@ -814,7 +814,7 @@ InstallMethod( LDerivedFunctor,
       
     fi;
     
-    return LDerivedFunctor( ExtendFunctorToHomotopyCategoryFunctor( F ) );
+    return LDerivedFunctor( ExtendFunctorToHomotopyCategories( F ) );
     
 end );
 
@@ -908,7 +908,7 @@ InstallMethod( RDerivedFunctor,
       
     fi;
     
-    return RDerivedFunctor( ExtendFunctorToHomotopyCategoryFunctor( F ) );
+    return RDerivedFunctor( ExtendFunctorToHomotopyCategories( F ) );
     
 end );
 
