@@ -2349,4 +2349,55 @@ InstallMethodWithCrispCache( DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS,
     
 end );
 
+##
+InstallMethod( \/,
+          [ IsCapCategoryObject, IsChainComplexCategory ],
+  function( a, chains )
+    
+    if not IsIdenticalObj( CapCategory( a ), UnderlyingCategory( chains ) ) then
+      Error( "wronge input!\n" );
+    fi;
+    
+    return StalkChainComplex( a, 0 );
+    
+end );
+
+##
+InstallMethod( \/,
+          [ IsCapCategoryObject, IsCochainComplexCategory ],
+  function( a, cochains )
+    
+    if not IsIdenticalObj( CapCategory( a ), UnderlyingCategory( cochains ) ) then
+      Error( "wronge input!\n" );
+    fi;
+    
+    return StalkCochainComplex( a, 0 );
+    
+end );
+
+##
+InstallMethod( \/,
+          [ IsCapCategoryMorphism, IsChainComplexCategory ],
+  function( alpha, chains )
+    
+    if not IsIdenticalObj( CapCategory( alpha ), UnderlyingCategory( chains ) ) then
+      Error( "wronge input!\n" );
+    fi;
+    
+    return StalkChainMorphism( alpha, 0 );
+    
+end );
+
+##
+InstallMethod( \/,
+          [ IsCapCategoryMorphism, IsCochainComplexCategory ],
+  function( alpha, cochains )
+    
+    if not IsIdenticalObj( CapCategory( alpha ), UnderlyingCategory( cochains ) ) then
+      Error( "wronge input!\n" );
+    fi;
+    
+    return StalkCochainMorphism( alpha, 0 );
+    
+end );
 

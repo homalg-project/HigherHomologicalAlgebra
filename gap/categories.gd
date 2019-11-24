@@ -100,6 +100,11 @@ DeclareOperation( "AddHomotopyMorphisms",
                    [ IsCapCategory, IsList ] );
 
 
+DeclareOperation( "\/", [ IsCapCategoryObject, IsChainOrCochainComplexCategory ] );
+DeclareOperation( "\/", [ IsCapCategoryMorphism, IsChainOrCochainComplexCategory ] );
+
+
+
 # this is taken to chains morphisms file
 # @Description
 # The input is a chain or cochain morphism 
