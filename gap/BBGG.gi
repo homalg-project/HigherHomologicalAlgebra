@@ -467,7 +467,7 @@ InstallMethodWithCrispCache( TateResolution,
     
     R := RChainFunctor( S );
     
-    ChR := ExtendFunctorToChainComplexCategoryFunctor( R );
+    ChR := ExtendFunctorToChainComplexCategories( R );
     
     B := ApplyFunctor( ChR, C );
     
@@ -527,7 +527,7 @@ InstallMethodWithCrispCache( TateResolution,
     
     R := RChainFunctor( S );
     
-    ChR := ExtendFunctorToChainComplexCategoryFunctor( R );
+    ChR := ExtendFunctorToChainComplexCategories( R );
     
     ChR_phi := ApplyFunctor( ChR, phi );
     
@@ -636,7 +636,7 @@ InstallMethodWithCrispCache( TateResolution,
         
         F := TwistFunctor( KoszulDualRing( R ), -degree );
         
-        ChF := ExtendFunctorToChainComplexCategoryFunctor( F );;
+        ChF := ExtendFunctorToChainComplexCategories( F );;
         
         T := ApplyFunctor( ChF, T );
         
@@ -682,7 +682,7 @@ InstallMethodWithCrispCache( TateResolution,
           
                   F := TwistFunctor( KoszulDualRing( R ), -degree );
       
-                  ChF := ExtendFunctorToChainComplexCategoryFunctor( F );
+                  ChF := ExtendFunctorToChainComplexCategories( F );
           
                   T := ApplyFunctor( ChF, T );
                   

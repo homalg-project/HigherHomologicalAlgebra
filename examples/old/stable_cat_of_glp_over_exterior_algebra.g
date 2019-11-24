@@ -359,8 +359,8 @@ SetIsBicomplexCategoryWithCommutativeSquares( bicomplexes_of_coh, with_commutati
 
 # The sheafification functor
 Sh := CanonicalProjection( coh );
-CochSh := ExtendFunctorToCochainComplexCategoryFunctor(Sh);
-ChSh := ExtendFunctorToChainComplexCategoryFunctor(Sh);
+CochSh := ExtendFunctorToCochainComplexCategories(Sh);
+ChSh := ExtendFunctorToChainComplexCategories(Sh);
 BiSh := ExtendFunctorToCohomologicalBicomplexCategoryFunctor(Sh);
 
 
@@ -394,9 +394,9 @@ w_A := function(k)
 end;
 
 RR := RFunctor( S );
-ChRR := ExtendFunctorToCochainComplexCategoryFunctor( RR );
+ChRR := ExtendFunctorToCochainComplexCategories( RR );
 LL := LFunctor( S );
-ChLL := ExtendFunctorToCochainComplexCategoryFunctor( LL );
+ChLL := ExtendFunctorToCochainComplexCategories( LL );
 TT := TateFunctor( S );
 
 Trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;
@@ -416,7 +416,7 @@ InstallMethod( _Trunc_g_rm1Op,
     return BrutalTruncationBelowFunctor( cochains_graded_lp_cat_ext, r - 1 );
 end );
 
-ChTrunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor( Trunc_leq_m1 );;
+ChTrunc_leq_m1 := ExtendFunctorToCochainComplexCategories( Trunc_leq_m1 );;
 
 # the functor from the category of bicomplexes to cochains that returns the cochain of vertical cohomologies
 # at row -1
@@ -992,7 +992,7 @@ L := MorphismBetweenDirectSums( L );
 return L;
 end );
 
-Canonicalize := ExtendFunctorToCochainComplexCategoryFunctor( Canonicalize );
+Canonicalize := ExtendFunctorToCochainComplexCategories( Canonicalize );
 
 DeclareOperation( "BasisBetweenCotangentBundles", [ IsHomalgGradedRing, IsInt, IsInt ] );
 InstallMethodWithCache( BasisBetweenCotangentBundles, 

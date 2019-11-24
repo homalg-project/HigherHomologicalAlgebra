@@ -487,7 +487,7 @@ InstallMethod( BeilinsonReplacement,
   function( P )
     local sheafification, b;
     sheafification := CanonicalProjection( CapCategory( P ) );
-    sheafification := ExtendFunctorToChainComplexCategoryFunctor( sheafification );
+    sheafification := ExtendFunctorToChainComplexCategories( sheafification );
     b := BeilinsonReplacement( UnderlyingHonestObject( P ) );
     return ApplyFunctor( sheafification, b );
 end );
@@ -499,7 +499,7 @@ InstallMethod( BeilinsonReplacement,
     local coh, sheafification, generalized_morphism, b_source_aid, b_arrow, b_range_aid, mors;
     coh := CapCategory( phi );
     sheafification := CanonicalProjection( coh );
-    sheafification := ExtendFunctorToChainComplexCategoryFunctor( sheafification );
+    sheafification := ExtendFunctorToChainComplexCategories( sheafification );
     generalized_morphism := UnderlyingGeneralizedMorphism( phi );
     b_source_aid := BeilinsonReplacement( SourceAid( generalized_morphism ) );
     b_arrow := BeilinsonReplacement( Arrow( generalized_morphism ) );

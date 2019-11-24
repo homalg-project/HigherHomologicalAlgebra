@@ -690,7 +690,7 @@ LFReplacement := function( cell )
   S := UnderlyingHomalgRing( cell );
   B := BeilinsonReplacement( cell );
   Can := canonicalize_functor( S );
-  Can := ExtendFunctorToChainComplexCategoryFunctor( Can );
+  Can := ExtendFunctorToChainComplexCategories( Can );
   B := ApplyFunctor( Can, B );
   return B;
 end;
@@ -749,8 +749,8 @@ U_p1_p1_on_objects :=
       LF_M_1 := ApplyFunctor( LF(S_1), M_1 );
       LF_M_2 := ApplyFunctor( LF(S_2), M_2 );
 
-      ch_p_1_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 1 ) );
-      ch_p_2_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 2 ) );
+      ch_p_1_star := ExtendFunctorToChainComplexCategories( p_i_star( S, 1 ) );
+      ch_p_2_star := ExtendFunctorToChainComplexCategories( p_i_star( S, 2 ) );
 
       M_1 := ApplyFunctor( ch_p_1_star, LF_M_1 );
       M_2 := ApplyFunctor( ch_p_2_star, LF_M_2 );
@@ -825,8 +825,8 @@ U_p1_p1_on_morphisms :=
       LF_phi_1 := ApplyFunctor( LF(S_1), phi_1 );
       LF_phi_2 := ApplyFunctor( LF(S_2), phi_2 );
 
-      ch_p_1_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 1 ) );
-      ch_p_2_star := ExtendFunctorToChainComplexCategoryFunctor( p_i_star( S, 2 ) );
+      ch_p_1_star := ExtendFunctorToChainComplexCategories( p_i_star( S, 1 ) );
+      ch_p_2_star := ExtendFunctorToChainComplexCategories( p_i_star( S, 2 ) );
 
       phi_1 := ApplyFunctor( ch_p_1_star, LF_phi_1 );
       phi_2 := ApplyFunctor( ch_p_2_star, LF_phi_2 );

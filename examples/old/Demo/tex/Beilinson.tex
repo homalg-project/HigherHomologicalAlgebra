@@ -128,12 +128,12 @@
     \textcolor{my_color}{trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;}
     \textcolor{my_color}{T := TateFunctor(S);;}
     \textcolor{my_color}{trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;}
-    \textcolor{my_color}{ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;}
+    \textcolor{my_color}{ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategories(trunc_leq_m1 );;}
     \textcolor{my_color}{complexes_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );;}
     \textcolor{my_color}{bicomplxes_sym := AsCategoryOfBicomplexes(complexes_sym);;}
     \textcolor{my_color}{complexes_to_bicomplex := ComplexOfComplexesToBicomplexFunctor(complexes_sym, bicomplxes_sym );;}
     \textcolor{my_color}{L := LFunctor(S);;}
-    \textcolor{my_color}{chL := ExtendFunctorToCochainComplexCategoryFunctor(L);;}
+    \textcolor{my_color}{chL := ExtendFunctorToCochainComplexCategories(L);;}
     \textcolor{my_color}{trunc_leq_rm1_TM_geq_r := ApplyFunctor( PreCompose(T,trunc_leq_rm1), M_geq_r );;}
     \textcolor{my_color}{phi := CochainMorphism(}
         \textcolor{my_color}{trunc_leq_rm1_TM_geq_r,}

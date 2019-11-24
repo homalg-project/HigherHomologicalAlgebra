@@ -388,12 +388,12 @@ AddNaturalTransformationFunction( Nat,
     trunc_leq_rm1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_ext, r-1 );;
     T := TateFunctor(S);;
     trunc_leq_m1 := BrutalTruncationAboveFunctor( cochains_graded_lp_cat_sym, -1 );;
-    ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategoryFunctor(trunc_leq_m1 );;
+    ch_trunc_leq_m1 := ExtendFunctorToCochainComplexCategories(trunc_leq_m1 );;
     complexes_sym := CochainComplexCategory( cochains_graded_lp_cat_sym );;
     bicomplxes_sym := AsCategoryOfBicomplexes(complexes_sym);;
     complexes_to_bicomplex := ComplexOfComplexesToBicomplexFunctor(complexes_sym, bicomplxes_sym );;
     L := LFunctor(S);;
-    chL := ExtendFunctorToCochainComplexCategoryFunctor(L);;
+    chL := ExtendFunctorToCochainComplexCategories(L);;
     trunc_leq_rm1_TM_geq_r := ApplyFunctor( PreCompose(T,trunc_leq_rm1), M_geq_r );;
     phi := CochainMorphism(
     trunc_leq_rm1_TM_geq_r,
