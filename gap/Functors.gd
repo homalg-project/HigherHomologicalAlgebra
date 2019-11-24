@@ -76,11 +76,13 @@ DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentat
 #! @Returns a functor
 DeclareAttribute( "LocalizationFunctor", IsHomotopyCategory );
 
+#! @Description
+#! The input is a localization functor for some homotopy category <A>H</A> := <C>HomotopyCategory</C>($C$) of some abelian category $C$ in
+#! some category $B$, i.e., send quasi-isomorphisms in <A>H</A> to isomorphisms in $B$. The output is the universal functor
+#! from <C>DerivedCategory</C>($C$) into $B$.
+#! @Arguments H
+#! @Returns a functor
 DeclareAttribute( "UniversalFunctorFromDerivedCategory", IsCapFunctor );
-
-DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByProjectiveObjects", IsDerivedCategory );
-
-DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByInjectiveObjects", IsDerivedCategory );
 
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
