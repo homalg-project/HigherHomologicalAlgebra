@@ -655,7 +655,7 @@ InstallMethod( LocalizationFunctor,
     
     r := RANDOM_TEXT_ATTR( );
     
-    name := Concatenation( "Localization functor ", r[ 1 ], "form", r[ 2 ], " ", Name( homotopy ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
+    name := Concatenation( "Localization functor ", r[ 1 ], "from", r[ 2 ], " ", Name( homotopy ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
     
     F := CapFunctor( name, homotopy, D );
     
@@ -678,115 +678,51 @@ InstallMethod( LocalizationFunctor,
 end );
 
 ##
-InstallMethod( EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByProjectiveObjects,
-          [ IsDerivedCategory ],
-  function( derived_cat )
-    local cat, projs, homotopy, name, F;
+InstallMethod( UniversalFunctorFromDerivedCategory,
+          [ IsCapFunctor ],
+  function( F )
+    local homotopy_cat, C, cat, D, r, name, U;
+  
+    homotopy_cat := AsCapCategory( Source( F ) );
     
-    cat := UnderlyingCategory( derived_cat );
+    C := AsCapCategory( Range( F ) );
     
-    projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
+    if not IsHomotopyCategory( homotopy_cat ) then
+      
+      Error( "The input be a functor from homotopy category of some abelian category" );
+      
+    fi;
     
-    homotopy := HomotopyCategory( projs );
+    cat := DefiningCategory( homotopy_cat );
     
-    name := "D --> H(projs)";
+    D := DerivedCategory( cat );
     
-    F := CapFunctor( name, derived_cat, homotopy );
+    r := RANDOM_TEXT_ATTR( );
     
-    AddObjectFunction( F,
+    name := Concatenation( "Universal functor ", r[ 1 ], "from", r[ 2 ], " ", Name( D ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( C ) );
+    
+    U := CapFunctor( name, D, C );
+    
+    AddObjectFunction( U,
       function( a )
-        local p;
         
-        p := ProjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true );
-        
-        return AsComplexOverCapFullSubcategory( projs, p ) / homotopy;
+        return ApplyFunctor( F, UnderlyingCell( a ) );
         
     end );
     
-    AddMorphismFunction( F,
+    AddMorphismFunction( U,
       function( s, alpha, r )
-        local quasi_iso, range_mor, a, p_a;
+        local i, j;
         
-        quasi_iso := QuasiIsomorphism( UnderlyingRoof( alpha ) );
+        i := ApplyFunctor( F, SourceMorphism( UnderlyingRoof( alpha ) ) );
         
-        range_mor := RangeMorphism( UnderlyingRoof( alpha ) );
+        j := ApplyFunctor( F, RangeMorphism( UnderlyingRoof( alpha ) ) );
         
-        a := UnderlyingCell( Source( quasi_iso ) );
-        
-        p_a := ProjectiveResolution( a, true );
-        
-        p_a := AsComplexOverCapFullSubcategory( projs, p_a );
-        
-        quasi_iso := MorphismBetweenProjectiveResolutions( UnderlyingCell( quasi_iso ), true );
-        
-        quasi_iso := AsChainMorphismOverCapFullSubcategory( p_a, quasi_iso, UnderlyingCell( s ) ) / homotopy;
-        
-        range_mor := MorphismBetweenProjectiveResolutions( UnderlyingCell( range_mor ), true );
-        
-        range_mor := AsChainMorphismOverCapFullSubcategory( p_a, range_mor, UnderlyingCell( r ) ) / homotopy;
-        
-        return PreCompose( Inverse( quasi_iso ), range_mor );
+        return PreCompose( Inverse( i ), j );
         
     end );
     
-    return F;
-    
-end );
-
-
-##
-InstallMethod( EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByInjectiveObjects,
-          [ IsDerivedCategory ],
-  function( derived_cat )
-    local cat, injs, homotopy, name, F;
-    
-    cat := UnderlyingCategory( derived_cat );
-    
-    injs := FullSubcategoryGeneratedByInjectiveObjects( cat );
-    
-    homotopy := HomotopyCategory( injs );
-    
-    name := "D --> H(injs)";
-    
-    F := CapFunctor( name, derived_cat, homotopy );
-    
-    AddObjectFunction( F,
-      function( a )
-        local p;
-        
-        p := InjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true );
-        
-        return AsComplexOverCapFullSubcategory( injs, p ) / homotopy;
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-        local quasi_iso, range_mor, a, i_a;
-        
-        quasi_iso := QuasiIsomorphism( UnderlyingRoof( alpha ) );
-        
-        range_mor := RangeMorphism( UnderlyingRoof( alpha ) );
-        
-        a := UnderlyingCell( Source( quasi_iso ) );
-        
-        i_a := InjectiveResolution( a, true );
-        
-        i_a := AsComplexOverCapFullSubcategory( injs, i_a );
-        
-        quasi_iso := MorphismBetweenInjectiveResolutions( UnderlyingCell( quasi_iso ), true );
-        
-        quasi_iso := AsChainMorphismOverCapFullSubcategory( i_a, quasi_iso, UnderlyingCell( s ) ) / homotopy;
-        
-        range_mor := MorphismBetweenInjectiveResolutions( UnderlyingCell( range_mor ), true );
-        
-        range_mor := AsChainMorphismOverCapFullSubcategory( i_a, range_mor, UnderlyingCell( r ) ) / homotopy;
-        
-        return PreCompose( Inverse( quasi_iso ), range_mor );
-               
-    end );
-    
-    return F;
+    return U;
     
 end );
 

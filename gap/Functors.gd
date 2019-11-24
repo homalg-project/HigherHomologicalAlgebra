@@ -76,6 +76,8 @@ DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentat
 #! @Returns a functor
 DeclareAttribute( "LocalizationFunctor", IsHomotopyCategory );
 
+DeclareAttribute( "UniversalFunctorFromDerivedCategory", IsCapFunctor );
+
 DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByProjectiveObjects", IsDerivedCategory );
 
 DeclareAttribute( "EquivalenceIntoHomotopyCategoryOfFullSubcategoryGeneratedByInjectiveObjects", IsDerivedCategory );
