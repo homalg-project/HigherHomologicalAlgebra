@@ -726,3 +726,151 @@ InstallMethod( UniversalFunctorFromDerivedCategory,
     
 end );
 
+##
+InstallMethod( LDerivedFunctor,
+          [ IsCapFunctor ],
+  function( F )
+    local H_1, cat_1, D_1, H_2, cat_2, D_2, name, LF;
+    
+    H_1 := AsCapCategory( Source( F ) );
+        
+    H_2 := AsCapCategory( Range( F ) );
+    
+    if not ( IsHomotopyCategory( H_1 ) and IsHomotopyCategory( H_2 ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    cat_1 := DefiningCategory( H_1 );
+    
+    D_1 := DerivedCategory( cat_1 );
+    
+    cat_2 := DefiningCategory( H_2 );
+    
+    D_2 := DerivedCategory( cat_2 );
+    
+    if not IsAbelianCategoryWithEnoughProjectives( cat_1 ) then
+      
+      Error( Name( cat_1 ), " should be abelian with enough projectives!\n" );
+      
+    fi;
+    
+    name := Concatenation( "Left derived functor of ", Name( F ) );
+    
+    LF := CapFunctor( name, D_1, D_2 );
+    
+    AddObjectFunction( LF,
+      function( a )
+        local p, Fp;
+        
+        p := ProjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true ) / H_1;
+        
+        Fp := ApplyFunctor( F, p );
+        
+        return DerivedCategoryObject( D_2, Fp );
+      
+    end );
+    
+    AddMorphismFunction( LF,
+      function( s, alpha, r )
+        local roof, quasi_iso, morphism, F_quasi_iso, F_morphism;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        quasi_iso := SourceMorphism( roof );
+        
+        quasi_iso := MorphismBetweenProjectiveResolutions( UnderlyingCell( quasi_iso ), true ) / H_1;
+        
+        morphism := RangeMorphism( roof );
+        
+        morphism := MorphismBetweenProjectiveResolutions( UnderlyingCell( morphism ), true ) / H_1;
+        
+        F_quasi_iso := ApplyFunctor( F, quasi_iso );
+        
+        F_morphism := ApplyFunctor( F, morphism );
+        
+        roof := Roof( F_quasi_iso, F_morphism );
+        
+        return DerivedCategoryMorphism( s, roof, r );
+        
+    end );
+    
+    return LF;
+    
+end );
+
+##
+InstallMethod( RDerivedFunctor,
+          [ IsCapFunctor ],
+  function( F )
+    local H_1, cat_1, D_1, H_2, cat_2, D_2, name, RF;
+    
+    H_1 := AsCapCategory( Source( F ) );
+    
+    H_2 := AsCapCategory( Range( F ) );
+    
+    if not ( IsHomotopyCategory( H_1 ) and IsHomotopyCategory( H_2 ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    cat_1 := DefiningCategory( H_1 );
+    
+    D_1 := DerivedCategory( cat_1 );
+    
+    cat_2 := DefiningCategory( H_2 );
+    
+    D_2 := DerivedCategory( cat_2 );
+    
+    if not IsAbelianCategoryWithEnoughInjectives( cat_1 ) then
+      
+      Error( Name( cat_1 ), " should be abelian with enough injectives!\n" );
+      
+    fi;
+    
+    name := Concatenation( "Right derived functor of ", Name( F ) );
+    
+    RF := CapFunctor( name, D_1, D_2 );
+    
+    AddObjectFunction( RF,
+      function( a )
+        local i, Fi;
+        
+        i := InjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true ) / H_1;
+        
+        Fi := ApplyFunctor( F, i );
+        
+        return DerivedCategoryObject( D_2, Fi );
+      
+    end );
+    
+    AddMorphismFunction( RF,
+      function( s, alpha, r )
+        local roof, quasi_iso, morphism, F_quasi_iso, F_morphism;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        quasi_iso := SourceMorphism( roof );
+        
+        quasi_iso := MorphismBetweenInjectiveResolutions( UnderlyingCell( quasi_iso ), true ) / H_1;
+        
+        morphism := RangeMorphism( roof );
+        
+        morphism := MorphismBetweenInjectiveResolutions( UnderlyingCell( morphism ), true ) / H_1;
+        
+        F_quasi_iso := ApplyFunctor( F, quasi_iso );
+        
+        F_morphism := ApplyFunctor( F, morphism );
+        
+        roof := Roof( F_quasi_iso, F_morphism );
+        
+        return DerivedCategoryMorphism( s, roof, r );
+        
+    end );
+    
+    return RF;
+    
+end );
+

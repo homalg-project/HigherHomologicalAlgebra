@@ -84,5 +84,9 @@ DeclareAttribute( "LocalizationFunctor", IsHomotopyCategory );
 #! @Returns a functor
 DeclareAttribute( "UniversalFunctorFromDerivedCategory", IsCapFunctor );
 
+DeclareAttribute( "RDerivedFunctor", IsCapFunctor );
+
+DeclareAttribute( "LDerivedFunctor", IsCapFunctor );
+
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
