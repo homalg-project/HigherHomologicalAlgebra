@@ -378,6 +378,24 @@ DeclareOperation( "MorphismsSupport", [ IsChainOrCochainMorphism, IsInt, IsInt ]
 #!  @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
+##
+DeclareOperation( "ViewChainOrCochainMorphism", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
+
+##
+DeclareOperation( "ViewChainOrCochainMorphism", [ IsBoundedChainOrCochainMorphism ] );
+
+##
+DeclareOperation( "ViewChainMorphism", [ IsChainMorphism, IsInt, IsInt ] );
+
+##
+DeclareOperation( "ViewChainMorphism", [ IsBoundedChainMorphism ] );
+
+##
+DeclareOperation( "ViewCochainMorphism", [ IsCochainMorphism, IsInt, IsInt ] );
+
+##
+DeclareOperation( "ViewCochainMorphism", [ IsBoundedCochainMorphism ] );
+
 #!  @Description
 #!  The command checks if the morphism is well defined between $m$ and $n$. 
 #!  @Arguments true or false

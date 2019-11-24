@@ -399,6 +399,75 @@ InstallMethod( Display,
 end );
 
 ##
+InstallMethod( ViewChainOrCochainMorphism, 
+               [ IsChainOrCochainMorphism, IsInt, IsInt ], 
+  function( map, m, n )
+    local i, co_homo;
+    
+    if IsChainMorphism( map ) then
+      
+      co_homo := "homological";
+      
+    else
+      
+      co_homo := "cohomological";
+      
+    fi;
+    
+    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
+    
+    for i in [ m .. n ] do
+      
+      Print( TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
+      
+      Print( TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
+      
+      ViewObj( map[ i ] );
+      
+      Print( "\n-----------------------------------------------------------------\n" );
+      
+    od;
+    
+end );
+
+##
+InstallMethod( ViewChainOrCochainMorphism,
+    [ IsBoundedChainOrCochainMorphism ],
+    function( phi )
+      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
+        
+        ViewChainOrCochainMorphism( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
+        
+      else
+        
+        Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
+        
+      fi;
+    
+end );
+
+##
+InstallMethod( ViewChainMorphism,
+          [ IsChainMorphism, IsInt, IsInt ],
+  ViewChainOrCochainMorphism );
+
+##
+InstallMethod( ViewChainMorphism,
+          [ IsBoundedChainMorphism ],
+  ViewChainOrCochainMorphism );
+
+##
+InstallMethod( ViewCochainMorphism,
+          [ IsCochainMorphism, IsInt, IsInt ],
+  ViewChainOrCochainMorphism );
+
+##
+InstallMethod( ViewCochainMorphism,
+          [ IsBoundedCochainMorphism ],
+  ViewChainOrCochainMorphism );
+
+
+##
 InstallMethod( MorphismsSupport,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( phi, m, n )
