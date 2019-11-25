@@ -750,7 +750,7 @@ InstallMethod( LDerivedFunctor,
     
     D_2 := DerivedCategory( cat_2 );
     
-    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat_1 ) and IsAbelianCategoryWithEnoughProjectives( cat_1 ) ) then
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat_1 ) then
       
       Error( Name( cat_1 ), " should be abelian with enough projectives!\n" );
       
@@ -808,7 +808,7 @@ InstallMethod( LDerivedFunctor,
     
     cat_1 := AsCapCategory( Source( F ) );
     
-    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat_1 ) and IsAbelianCategoryWithEnoughProjectives( cat_1 ) ) then
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat_1 ) then
       
       TryNextMethod( );
       
@@ -844,7 +844,7 @@ InstallMethod( RDerivedFunctor,
     
     D_2 := DerivedCategory( cat_2 );
     
-    if not ( HasIsAbelianCategoryWithEnoughInjectives( cat_1 ) and IsAbelianCategoryWithEnoughInjectives( cat_1 ) ) then
+    if not IsAbelianCategoryWithComputableEnoughInjectives( cat_1 ) then
       
       Error( Name( cat_1 ), " should be abelian with enough injectives!\n" );
       
@@ -902,7 +902,7 @@ InstallMethod( RDerivedFunctor,
     
     cat_1 := AsCapCategory( Source( F ) );
     
-    if not ( HasIsAbelianCategoryWithEnoughInjectives( cat_1 ) and IsAbelianCategoryWithEnoughInjectives( cat_1 ) ) then
+    if not IsAbelianCategoryWithComputableEnoughInjectives( cat_1 ) then
       
       TryNextMethod( );
       

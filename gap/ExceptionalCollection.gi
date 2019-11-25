@@ -796,9 +796,9 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
   function( cat )
     local full, finalize;
     
-    if not ( HasIsAbelianCategoryWithEnoughProjectives( cat ) and IsAbelianCategoryWithEnoughProjectives( cat ) ) then
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
       
-      Error( "The input should be an abelian category with enough projectives" );
+      Error( "The input should be an abelian category with computable enough projectives" );
       
     fi;
     
@@ -868,10 +868,9 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
   function( cat )
     local full, finalize;
     
-    if not ( HasIsAbelianCategoryWithEnoughInjectives( cat ) and 
-        IsAbelianCategoryWithEnoughProjectives( cat ) ) then
+    if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
       
-      Error( "The input should be an abelian category with enough injectives" );
+      Error( "The input should be an abelian category with computable enough injectives" );
       
     fi;
     
