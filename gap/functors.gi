@@ -154,9 +154,9 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
     
     cat := DefiningCategory( homotopy_category );
     
-    if not IsAbelianCategoryWithEnoughProjectives( cat ) then
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
       
-      Error( "The input should be abelian with enough projective objects!\n" );
+      Error( "The input should be abelian with computable enough projective objects!\n" );
       
     fi;
     
@@ -209,9 +209,9 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
     
     cat := DefiningCategory( homotopy_category );
     
-    if not IsAbelianCategoryWithEnoughInjectives( cat ) then
+    if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
       
-      Error( "The input should be abelian with enough injective objects!\n" );
+      Error( "The input should be abelian with computable enough injective objects!\n" );
       
     fi;
     
