@@ -1312,7 +1312,7 @@ InstallMethod( IsQuasiIsomorphism,
 
    for i in [ min .. max ] do
 
-     functor := h_functor( CapCategory( phi ), UnderlyingCategory( CapCategory( phi ) ), i );
+     functor := h_functor( CapCategory( phi ), i );
 
      if not IsIsomorphism( ApplyFunctor( functor, phi ) ) then
 
@@ -1351,7 +1351,7 @@ InstallMethod( IsQuasiIsomorphism,
 
    for i in [ min .. max ] do
 
-     functor := h_functor( CapCategory( phi ), UnderlyingCategory( CapCategory( phi ) ), i );
+     functor := h_functor( CapCategory( phi ), i );
 
      if not IsIsomorphism( ApplyFunctor( functor, phi ) ) then
 
