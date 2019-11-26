@@ -24,6 +24,22 @@
 #! @Section Computing resolutions
 
 #! @Description
+#! The argument is a category <A>C</A>. The output is whether the <A>C</A> is abelian and have the following methods
+#! <C>IsProjective</C>, <C>SomeProjectiveObject</C>, <C>EpimorphismFromSomeProjectiveObject</C> and <C>ProjectiveLift</C>
+#! are installed.
+#! @Arguments C
+#! @Returns true or false
+DeclareProperty( "IsAbelianCategoryWithComputableEnoughProjectives", IsCapCategory );
+
+#! @Description
+#! The argument is a category <A>C</A>. The output is whether the <A>C</A> is abelian and have the following methods
+#! <C>IsInjective</C>, <C>SomeInjectiveObject</C>, <C>MonomorphismIntoSomeInjectiveObject</C> and <C>InjectiveColift</C>
+#! are installed.
+#! @Arguments C
+#! @Returns true or false
+DeclareProperty( "IsAbelianCategoryWithComputableEnoughInjectives", IsCapCategory );
+
+#! @Description
 #! If the input is bounded above cochain complex or bounded below chain complex then the 
 #! output is projective resolution in the sense of the above definition. If the input is
 #! an object $M$ which is not a complex and its category has enough projectives, then the output is 
@@ -42,6 +58,34 @@ DeclareAttribute( "ProjectiveResolution", IsCapCategoryObject );
 DeclareOperation( "ProjectiveResolution", [ IsCapCategoryObject, IsBool ] );
 
 #! @Description
+#! The input is an object $M$ in an abelian category with enough projectives. The output is 
+#! <C>ProjectiveResolution</C>(<A>M</A>) as a cochain complex.
+#! @Arguments M
+#! @Returns a cochain complex
+DeclareAttribute( "ProjectiveCochainResolution", IsCapCategoryObject );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough projectives. The output is 
+#! <C>ProjectiveResolution</C>(<A>M</A>) as a cochain complex after trying to set its bounds.
+#! @Arguments M
+#! @Returns a cochain complex
+DeclareOperation( "ProjectiveCochainResolution", [ IsCapCategoryObject, IsBool ] );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough projectives. The output is 
+#! <C>ProjectiveResolution</C>(<A>M</A>) as a chain complex.
+#! @Arguments M
+#! @Returns a chain complex
+DeclareAttribute( "ProjectiveChainResolution", IsCapCategoryObject );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough projectives. The output is 
+#! <C>ProjectiveResolution</C>(<A>M</A>) as a chain complex after trying to set its bounds.
+#! @Arguments M
+#! @Returns a chain complex
+DeclareOperation( "ProjectiveChainResolution", [ IsCapCategoryObject, IsBool ] );
+
+#! @Description
 #! The input is a morphism $\alpha$ whose category is abelian with enough projectives. The output is the induced
 #! cochain morphism between the projective resolutions of the source and range of $\alpha$. This morphism is unique up to homotopy.
 #! @Arguments alpha
@@ -55,6 +99,31 @@ DeclareAttribute( "MorphismBetweenProjectiveResolutions", IsCapCategoryMorphism 
 #! @Arguments alpha, bool
 #! @Returns a (co)chain morphism
 DeclareOperation( "MorphismBetweenProjectiveResolutions", [ IsCapCategoryMorphism, IsBool ] );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha
+#! @Returns a cochain morphism
+DeclareAttribute( "MorphismBetweenProjectiveCochainResolutions", IsCapCategoryMorphism );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha, bool
+#! @Returns a cochain morphism
+DeclareOperation( "MorphismBetweenProjectiveCochainResolutions", [ IsCapCategoryMorphism, IsBool ] );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha
+#! @Returns a chain morphism
+DeclareAttribute( "MorphismBetweenProjectiveChainResolutions", IsCapCategoryMorphism );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha, bool
+#! @Returns a chain morphism
+DeclareOperation( "MorphismBetweenProjectiveChainResolutions", [ IsCapCategoryMorphism, IsBool ] );
+
 
 #! @Description
 #! If the input is bounded above chain complex or bounded below cochain complex then the 
@@ -75,6 +144,34 @@ DeclareAttribute( "InjectiveResolution", IsCapCategoryObject );
 DeclareOperation( "InjectiveResolution", [ IsCapCategoryObject, IsBool ] );
 
 #! @Description
+#! The input is an object $M$ in an abelian category with enough injectives. The output is 
+#! <C>InjectiveResolution</C>(<A>M</A>) as a cochain complex.
+#! @Arguments M
+#! @Returns a cochain complex
+DeclareAttribute( "InjectiveCochainResolution", IsCapCategoryObject );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough injectives. The output is 
+#! <C>InjectiveResolution</C>(<A>M</A>) as a cochain complex after trying to set its bounds.
+#! @Arguments M
+#! @Returns a cochain complex
+DeclareOperation( "InjectiveCochainResolution", [ IsCapCategoryObject, IsBool ] );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough injectives. The output is
+#! <C>InjectiveResolution</C>(<A>M</A>) as a chain complex after trying to set its bounds.
+#! @Arguments M
+#! @Returns a chain complex
+DeclareAttribute( "InjectiveChainResolution", IsCapCategoryObject );
+
+#! @Description
+#! The input is an object $M$ in an abelian category with enough injectives. The output is
+#! <C>InjectiveResolution</C>(<A>M</A>) as a chain complex after trying to set its bounds.
+#! @Arguments M
+#! @Returns a chain complex
+DeclareOperation( "InjectiveChainResolution", [ IsCapCategoryObject, IsBool ] );
+
+#! @Description
 #! The input is a morphism $\alpha$ whose category is abelian with enough injectives. The output is the induced
 #! cochain morphism between the injective resolutions of the source and range of $\alpha$.
 #! This morphism is unique up to homotopy.
@@ -89,6 +186,30 @@ DeclareAttribute( "MorphismBetweenInjectiveResolutions", IsCapCategoryMorphism )
 #! @Arguments alpha, bool
 #! @Returns a (co)chain morphism
 DeclareOperation( "MorphismBetweenInjectiveResolutions", [ IsCapCategoryMorphism, IsBool ] );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha
+#! @Returns a cochain morphism
+DeclareAttribute( "MorphismBetweenInjectiveCochainResolutions", IsCapCategoryMorphism );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha, bool
+#! @Returns a cochain morphism
+DeclareOperation( "MorphismBetweenInjectiveCochainResolutions", [ IsCapCategoryMorphism, IsBool ] );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha
+#! @Returns a chain morphism
+DeclareAttribute( "MorphismBetweenInjectiveChainResolutions", IsCapCategoryMorphism );
+
+#! @Description
+#! #TODO
+#! @Arguments alpha, bool
+#! @Returns a chain morphism
+DeclareOperation( "MorphismBetweenInjectiveChainResolutions", [ IsCapCategoryMorphism, IsBool ] );
 
 #! @BeginGroup 5
 #! @Description

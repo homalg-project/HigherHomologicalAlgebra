@@ -7,6 +7,31 @@
 ##
 #############################################################################
 
+##
+InstallMethod( IsAbelianCategoryWithComputableEnoughProjectives,
+          [ IsCapCategory ],
+  function( cat );
+    
+    return IsAbelianCategory( cat )
+            and CanCompute( cat, "IsProjective" )
+              and CanCompute( cat, "SomeProjectiveObject" )
+                and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
+                  and CanCompute( cat, "ProjectiveLift" );
+end );
+
+##
+InstallMethod( IsAbelianCategoryWithComputableEnoughInjectives,
+          [ IsCapCategory ],
+  function( cat );
+    
+    return IsAbelianCategory( cat )
+            and CanCompute( cat, "IsInjective" )
+              and CanCompute( cat, "SomeInjectiveObject" )
+                and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
+                  and CanCompute( cat, "InjectiveColift" );
+end );
+
+
 ###############################
 #
 # Resolutions
@@ -21,16 +46,10 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     local cat, u, zero, maps, r;
     
     cat := UnderlyingCategory( CapCategory( C ) );
-    
-    if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+       
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
       
-      Error( "It is not known whether the underlying category has enough projectives or not" );
-    
-    fi;
-    
-    if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
-      
-      Error( "The underlying category must have enough projectives" );
+      Error( "The underlying category must be abelian with computable enough projectives" );
     
     fi;
     
@@ -290,16 +309,10 @@ function( obj )
   fi;
   
   cat := CapCategory( obj );
-  
-  if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+   
+  if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then 
     
-    Error( "It is not known whether the category has enough projectives or not" );
-  
-  fi;
-  
-  if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
-    
-    Error( "The category must have enough projectives" );
+    Error( "The category must be abelian with computable enough projectives" );
   
   fi;
   
@@ -371,6 +384,58 @@ InstallMethod( ProjectiveResolution,
 end );
 
 ##
+InstallMethod( ProjectiveCochainResolution, 
+          [ IsCapCategoryObject ],
+  function( obj )
+      
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+  
+    return ProjectiveResolution( obj );
+  
+end );
+
+##
+InstallMethod( ProjectiveCochainResolution,
+          [ IsCapCategoryObject, IsBool ],
+  function( obj, bool )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return ProjectiveResolution( obj, bool );
+    
+end );
+
+##
+InstallMethod( ProjectiveChainResolution,
+          [ IsCapCategoryObject ],
+  function( obj )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainComplex( ProjectiveResolution( obj ) );
+     
+end );
+
+##
+InstallMethod( ProjectiveChainResolution,
+          [ IsCapCategoryObject, IsBool ],
+  function( obj, bool )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainComplex( ProjectiveResolution( obj, bool ) );
+    
+end );
+
+##
 InstallMethod( MorphismBetweenProjectiveResolutions,
        [ IsCapCategoryMorphism ],
   function( phi )
@@ -383,16 +448,10 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
     fi;
     
     cat := CapCategory( phi );
-    
-    if not HasIsAbelianCategoryWithEnoughProjectives( cat ) then
+       
+    if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then 
       
-      Error( "It is not known whether the category has enough projectives or not" );
-    
-    fi;
-    
-    if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
-      
-      Error( "The category must have enough projectives" );
+      Error( "The category must be abelian with computable enough projectives" );
     
     fi;
     
@@ -445,6 +504,60 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
     
 end );
 
+##
+InstallMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsCapCategoryMorphism ],
+  function( phi )
+      
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+  
+    return MorphismBetweenProjectiveResolutions( phi );
+  
+end );
+
+##
+InstallMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsCapCategoryMorphism, IsBool ],
+  function( phi, bool )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return MorphismBetweenProjectiveResolutions( phi, bool );
+    
+end );
+
+##
+InstallMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsCapCategoryMorphism ],
+  function( phi )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainMorphism( MorphismBetweenProjectiveResolutions( phi ) );
+     
+end );
+
+##
+InstallMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsCapCategoryMorphism, IsBool ],
+  function( phi, bool )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainMorphism( MorphismBetweenProjectiveResolutions( phi, bool ) );
+    
+end );
+
+
+
 ##############################
 #
 # Injective resolutions
@@ -459,16 +572,10 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
     local cat, u, zero, maps, inj;
     
     cat := UnderlyingCategory( CapCategory( C ) );
-    
-    if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
        
-       Error( "It is not known whether the underlying category has enough injectives or not" );
-    
-    fi;
-    
-    if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
+    if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
       
-      Error( "The underlying category must have enough injectives" );
+      Error( "The underlying category must be abelian with enough injectives" );
     
     fi;
     
@@ -711,16 +818,10 @@ function( obj )
   fi;
   
   cat := CapCategory( obj );
-  
-  if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
     
-    Error( "It is not known whether the category has enough injectives or not" );
-  
-  fi;
-  
-  if not IsAbelianCategoryWithEnoughInjectives( cat ) then 
+  if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
     
-    Error( "The category must have enough injectives" );
+    Error( "The category must be abelian with computable enough injectives" );
   
   fi;
   
@@ -792,6 +893,57 @@ InstallMethod( InjectiveResolution,
     
 end );
 
+##
+InstallMethod( InjectiveCochainResolution, 
+          [ IsCapCategoryObject ],
+  function( obj )
+      
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+  
+    return InjectiveResolution( obj );
+  
+end );
+
+##
+InstallMethod( InjectiveCochainResolution,
+          [ IsCapCategoryObject, IsBool ],
+  function( obj, bool )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return InjectiveResolution( obj, bool );
+    
+end );
+
+##
+InstallMethod( InjectiveChainResolution,
+          [ IsCapCategoryObject ],
+  function( obj )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainComplex( InjectiveResolution( obj ) );
+     
+end );
+
+##
+InstallMethod( InjectiveChainResolution,
+          [ IsCapCategoryObject, IsBool ],
+  function( obj, bool )
+    
+    if IsChainOrCochainComplex( obj ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainComplex( InjectiveResolution( obj, bool ) );
+    
+end );
 
 
 # TODO
@@ -808,18 +960,12 @@ function( phi )
   
   cat := CapCategory( phi );
   
-  if not HasIsAbelianCategoryWithEnoughInjectives( cat ) then
+  if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
     
-    Error( "It is not known whether the category has enough injectives or not" );
+    Error( "The category must be abelian with computable enough injectives" );
   
   fi;
-  
-  if not IsAbelianCategoryWithEnoughProjectives( cat ) then 
-  
-     Error( "The category must have enough injectives" );
-  
-  fi;
-  
+ 
   P := InjectiveResolution( Source( phi ) );
   
   Q := InjectiveResolution( Range( phi ) );
@@ -870,6 +1016,59 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
     
 end );
 
+##
+InstallMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsCapCategoryMorphism ],
+  function( phi )
+      
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+  
+    return MorphismBetweenInjectiveResolutions( phi );
+  
+end );
+
+##
+InstallMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsCapCategoryMorphism, IsBool ],
+  function( phi, bool )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return MorphismBetweenInjectiveResolutions( phi, bool );
+    
+end );
+
+##
+InstallMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsCapCategoryMorphism ],
+  function( phi )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainMorphism( MorphismBetweenInjectiveResolutions( phi ) );
+     
+end );
+
+##
+InstallMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsCapCategoryMorphism, IsBool ],
+  function( phi, bool )
+    
+    if IsChainOrCochainMorphism( phi ) then
+      TryNextMethod( );
+    fi;
+    
+    return AsChainMorphism( MorphismBetweenInjectiveResolutions( phi, bool ) );
+    
+end );
+
+##
 BindGlobal( "HORSESHOE_HELPER",
   function( C )
     local u, v, t_u, P_u, t_v, P_v, d_v, d_u, t_u_plus_1, i, p, P;
