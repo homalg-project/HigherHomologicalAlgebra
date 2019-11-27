@@ -26,6 +26,7 @@ homotopy_cat := HomotopyCategory( cat );
 derived_cat := DerivedCategory( cat );
 
 pp := IndecProjRepresentations( A );
+
 ii := IndecInjRepresentations( A );
 
 matrix_cat := RangeCategoryOfHomomorphismStructure( cat );
@@ -133,7 +134,11 @@ list_for_caches :=
     [ add_cat_indec_injs, "weak" ],
   ];
 
-Apply( list_for_caches, function(l) SetCachingOfCategory( l[1], l[2] ); return true; end );
+Apply( list_for_caches,
+  function( l ) 
+    SetCachingOfCategory( l[1], l[2] );
+    return true;
+end );
 
 quit;
 
