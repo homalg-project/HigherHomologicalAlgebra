@@ -1,4 +1,25 @@
 
+##
+DeclareGlobalVariable( "GLOBAL_FIELD_FOR_QPA" );
+
+##
+InstallValue( GLOBAL_FIELD_FOR_QPA, rec( ) );
+
+BindGlobal( "SET_GLOBAL_FIELD_FOR_QPA",
+  function( field, info_level )
+    
+    GLOBAL_FIELD_FOR_QPA!.field := field;
+    GLOBAL_FIELD_FOR_QPA!.info_level := info_level;
+    
+end );
+
+BindGlobal( "RESET_GLOBAL_FIELD_FOR_QPA",
+  function( )
+    
+    Unbind( GLOBAL_FIELD_FOR_QPA!.field );
+    
+end );
+
 ################################
 #
 # Tools for qpa
@@ -373,8 +394,6 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     domain := LeftActingDomain( A );
     
-    cat!.compute_basis_of_hom_using_homalg := [ true, 2, domain ];
-    
     SetIsLinearCategoryOverCommutativeRing( cat, true );
     
     SetCommutativeRingOfLinearCategory( cat, domain );
@@ -500,6 +519,20 @@ InstallMethod( CategoryOfQuiverRepresentations,
                             morphism -> MatricesOfRepresentationHomomorphism( morphism )[ i ] ) ) ) );
         
         return QuiverRepresentationHomomorphism( D1, D2, matrices );
+        
+      end );
+    
+    AddBasisOfExternalHom( cat,
+      function( R1, R2 )
+      
+        return BasisVectors( CanonicalBasis( Hom( R1, R2 ) ) );
+        
+      end );
+    
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
+      function( alpha, B )
+      
+        return Coefficients( CanonicalBasis( Hom( Source( alpha ), Range( alpha ) ) ), alpha );
         
       end );
     
@@ -1283,6 +1316,102 @@ function( M1, M2 )
   fi;
   
 end );
+
+
+##
+InstallMethod( SolutionMat, "for QPA matrix and standard vector",
+	       [ IsQPAMatrix, IsStandardVector ],
+         5000,
+function( M, v )
+  local dim, V, solution_as_list;
+
+  dim := DimensionsMat( M );
+  if dim[ 2 ] <> Length( v ) then
+    Error("a row vector of length ",Length( v )," cannot be in the image of a ",
+          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
+  fi;
+  if dim[ 1 ] = 0 then
+    if IsZero( v ) then
+      return EmptyVector( BaseDomain( M ) );
+    else
+      return fail;
+    fi;
+  fi;
+  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+    return AsList( v );
+  elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+    if IsZero( v ) then
+      return v;
+    else
+      return fail;
+    fi;
+  fi;
+  V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
+  if dim[ 2 ] = 0 then
+    return Zero( V );
+  else
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+      solution_as_list := SolutionMat( RowsOfMatrix( M ), AsList( v ) );
+    else
+      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level,
+        Concatenation( "Using global field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( v ) ), " -vector )" ) );
+      M := HomalgMatrix( RowsOfMatrix( M ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
+      v := HomalgMatrix( AsList( v ), 1, Length( v ), GLOBAL_FIELD_FOR_QPA!.field );
+      solution_as_list := RightDivide( v, M );
+      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
+      if solution_as_list <> fail then
+        if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
+          solution_as_list := ConvertHomalgMatrix( solution_as_list, HomalgFieldOfRationals() );
+        fi;
+        solution_as_list := EntriesOfHomalgMatrix( solution_as_list );
+      fi;
+    fi;
+    
+    if solution_as_list = fail then
+      return fail;
+    else
+      return Vector( V, solution_as_list );
+    fi;
+  fi;
+end 
+);
+
+##
+InstallMethod( NullspaceMat, "for QPA matrix",
+          [ IsQPAMatrix ],
+          5000,
+function( M )
+  local dim, domain;
+  dim := DimensionsMat( M );
+  
+  domain := BaseDomain( M );
+  
+  if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
+    return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+  else
+    
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+      M := NullspaceMat( RowsOfMatrix( M ) );
+    else
+      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level,
+        Concatenation( "Using global field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
+      M := HomalgMatrix( RowsOfMatrix( M ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
+      M := SyzygiesOfRows( M );
+      if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
+        M := ConvertHomalgMatrix( M, HomalgFieldOfRationals() );
+      fi;
+      M := EntriesOfHomalgMatrixAsListList( M );
+      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
+    fi;
+ 
+    if Length( M ) = 0 then
+      return MakeZeroMatrix( domain, 0, dim[ 1 ] );
+    else
+      return MatrixByRows( domain, M );
+    fi;
+  fi;
+end 
+);
 
 ## This is somehow clean and works whenever we have a indecomposable generating projectives.
 ## BUT: it is VERY slow, since it uses lifts. It is not used in the package.
