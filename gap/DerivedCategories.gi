@@ -179,6 +179,7 @@ InstallMethod( DerivedCategory,
     
     AddMorphismRepresentation( D, IsDerivedCategoryMorphism );
     
+    ##
     AddIsEqualForObjects( D,
       function( a1, a2 )
         
@@ -186,6 +187,7 @@ InstallMethod( DerivedCategory,
         
     end );
     
+    ##
     AddIsEqualForMorphisms( D,
       function( alpha, beta )
         local roof_alpha, roof_beta;
@@ -198,6 +200,16 @@ InstallMethod( DerivedCategory,
                 IsEqualForMorphisms( RangeMorphism( roof_alpha ), RangeMorphism( roof_beta ) );
                 
     end );
+    
+    ##
+    AddIdentityMorphism( D,
+      function( a )
+        
+        return IdentityMorphism( UnderlyingCell( a ) ) / D;
+        
+    end );
+    
+    ##TODO add PreCompose
     
     D!.is_computable := false;
     
