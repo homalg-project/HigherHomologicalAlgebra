@@ -15,6 +15,12 @@ DeclareGlobalFunction( "MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlg
 DeclareOperation( "MorphismBetweenIndecProjectivesGivenByElement",
   [ IsQuiverRepresentation, IsQuiverAlgebraElement, IsQuiverRepresentation ] );
 
+DeclareOperation( "SolutionMat", [ IsQPAMatrix, IsDenseList ] );
+
+#DeclareOperation( "PreImagesRepresentative", [ IsQPAMatrix, IsDenseList ] );
+#DeclareOperation( "PreImagesRepresentative", [ IsQuiverRepresentationHomomorphism, IsDenseList ] );
+
+
 DeclareGlobalFunction( "CertainRowsOfQPAMatrix" );
 DeclareGlobalFunction( "CertainColumnsOfQPAMatrix" );
 
