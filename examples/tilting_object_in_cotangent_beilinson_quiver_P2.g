@@ -1,6 +1,3 @@
-LoadPackage( "HomotopyCategories" );
-LoadPackage( "QPA" );
-LoadPackage( "LinearAlgebraForCAP" );
 LoadPackage( "DerivedCategories" );
 
 field := HomalgFieldOfRationals( );
@@ -127,7 +124,13 @@ F_on_injs_2 := PreCompose( dec_inj_func, add_r_F );
 list_for_caches :=
   [
     [ cat, "none" ],
-    [ matrix_cat, "none" ],
+    [ matrix_cat, "weak" ],
+    [ cat_projs, "weak" ],
+    [ cat_injs, "weak" ],
+    [ cat_indec_projs, "crisp" ],
+    [ cat_indec_injs, "crisp" ],
+    [ add_cat_indec_projs, "weak" ],
+    [ add_cat_indec_injs, "weak" ],
   ];
 
 Apply( list_for_caches, function(l) SetCachingOfCategory( l[1], l[2] ); return true; end );
