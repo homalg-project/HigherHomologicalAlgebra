@@ -423,6 +423,12 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
         top_basis := TopBasis( P );
         
+        if IsEmpty( top_basis ) then
+          
+          return ZeroMorphism( P, B );
+          
+        fi;
+        
         images := PreImagesRepresentative( epsilon, List( top_basis, elm -> ImageElm( pi, elm ) ) );
         
         return QuiverRepresentationHomomorphismByImages( P, B, top_basis, images );
@@ -439,6 +445,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
     end );
     
+    ##
     AddIsMonomorphism( cat,
       function( alpha )
         
@@ -446,6 +453,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
     end );
     
+    ##
     AddIsEpimorphism( cat,
       function( alpha )
         
@@ -453,6 +461,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
     end ); 
     
+    ##
     AddIsIsomorphism( cat,
       function( alpha )
         
@@ -460,6 +469,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
     end ); 
    
+    ##
     AddIsWellDefinedForObjects( cat,
       function( R )
         local A, relations;
@@ -472,6 +482,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     end );
     
+    ##
     AddIsWellDefinedForMorphisms( cat,
       function( alpha )
         local S, R, arrows;
@@ -491,6 +502,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     end );
     
+    ##
     AddDirectSum( cat,
       function( summands )
         local dimension_vector, matrices, d, l, N, d1, d2;
@@ -525,6 +537,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     end );
     
+    ##
     AddDirectSumFunctorialWithGivenDirectSums( cat,      
       function( D1, morphisms, D2 )
         local matrices;
@@ -537,6 +550,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
       end );
     
+    ##
     AddMorphismBetweenDirectSums( cat,
       function( D1, morphisms, D2 )
         local matrices;
@@ -551,6 +565,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
       end );
     
+    ##
     AddBasisOfExternalHom( cat,
       function( R1, R2 )
       
@@ -558,6 +573,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
       end );
     
+    ##
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
       function( alpha, B )
       
@@ -565,6 +581,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
       end );
     
+    ##
     ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
@@ -1510,15 +1527,17 @@ function( M, list_of_vectors )
     
     positions := PositionsProperty( [ 1 .. NrRows( v ) ], i -> IsZero( CertainRows( D, [ i ] ) ) );
     
-    sol := RightDivide( CertainRows( v, positions ), M );
-    
+    sol := RightDivide( v, M, D );
+       
     Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
     
     if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
       sol := ConvertHomalgMatrix( sol, HomalgFieldOfRationals() );
     fi;
     
-    sol := ShallowCopy( EntriesOfHomalgMatrixAsListList( sol ) );
+    sol := EntriesOfHomalgMatrixAsListList( sol );
+    
+    sol := sol{ positions };
     
     for p in positions do
       
@@ -1607,6 +1626,12 @@ function( f, list_of_elements )
   if not ForAll( list_of_elements, m -> m in Range( f ) ) then
     
     Error("Some elements are not in the range for the entered homomorphism,\n");
+    
+  fi;
+  
+  if IsEmpty( list_of_elements ) then
+    
+    Error( "The list of elements is empty" );
     
   fi;
   
