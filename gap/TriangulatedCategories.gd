@@ -700,15 +700,6 @@ DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList ] );
 
-############## to remove ##########
-# DeclareAttribute( "Testtt", IsCapCategory );
-# 
-# DeclareOperation( "AddTesttt", [ IsCapCategory, IsFunction, IsInt ] );
-# DeclareOperation( "AddTesttt", [ IsCapCategory, IsFunction ] );
-# DeclareOperation( "AddTesttt", [ IsCapCategory, IsList, IsInt ] );
-# DeclareOperation( "AddTesttt", [ IsCapCategory, IsList ] );
-############## to remove ##########
-
 ###############################
 ##
 ## Attributes
