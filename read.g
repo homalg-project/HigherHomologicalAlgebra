@@ -17,3 +17,5 @@ ReadPackage( "ComplexesForCAP", "gap/resolutions.gi" );
 
 ReadPackage( "ComplexesForCAP", "gap/derivations.gi" );
 
+ReadPackage( "ComplexesForCAP", "gap/tools.gi" );
+

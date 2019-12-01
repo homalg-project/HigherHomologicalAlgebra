@@ -14,3 +14,5 @@ ReadPackage( "ComplexesForCAP", "gap/functors.gd" );
 ReadPackage( "ComplexesForCAP", "gap/chainmaps.gd" );
 
 ReadPackage( "ComplexesForCAP", "gap/resolutions.gd" );
+
+ReadPackage( "ComplexesForCAP", "gap/tools.gd" );
