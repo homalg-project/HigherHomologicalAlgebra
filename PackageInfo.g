@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesForCAP",
 Subtitle := "Gap package to create (co)chain complexes category of a given Cap category",
-Version := "2019.04.01",
-Date := "01/04/2019", # dd/mm/yyyy format
+Version := "2019.12.01",
+Date := "01/12/2019", # dd/mm/yyyy format
 
 Persons := [
   rec(
