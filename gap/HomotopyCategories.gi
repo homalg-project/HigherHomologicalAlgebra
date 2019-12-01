@@ -414,41 +414,6 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
 
 end );
 
-InstallMethod( TotalComplexUsingMappingCone,
-  [ IsChainComplex ],
-  function( C )
-    local l, u, tau, L, with_infos;
-
-    l := ActiveLowerBound( C ) + 1;
-    u := ActiveUpperBound( C ) - 1;
-    
-    Print( "TotalComplexUsingMappingCone has been called on a chain with active lower bound =", l, " and active upper bound =", u, "\n" );
-
-    if l = u then
-      
-      return C;
-    
-    elif l + 1 = u then
-
-      return MappingCone( C^u );
-
-    else
-      
-      with_infos := ValueOption( "WithInfos" );
-      
-      tau := MappingConeColift( C^u, C^( u - 1 ) : WithInfos := with_infos );
-    
-      L := List( [ l + 1 .. u - 2 ], i -> C^i );
-    
-      Add( L, tau );
-    
-      return TotalComplexUsingMappingCone( ChainComplex( L, l + 1 ) );
-    
-    fi;
-
-  
-end );
-
 ## This function computes the homotopy by solving the associated two sided linear system of morphisms in the category.
 ##
 InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGORY,
