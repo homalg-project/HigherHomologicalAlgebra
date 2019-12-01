@@ -4,6 +4,10 @@
 # Declarations
 #
 
+InfoDerivedCategories := NewInfoClass( "InfoDerivedCategories" );
+
+SetInfoLevel( InfoDerivedCategories, 1 );
+
 DeclareCategory( "IsDerivedCategory", IsCapCategory );
 
 DeclareCategory( "IsRoof", IsObject );

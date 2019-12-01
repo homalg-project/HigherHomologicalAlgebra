@@ -74,7 +74,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
       Error( "The category needs homomorphism structure" );
     
     fi;
-
+    
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
     MakeImmutable( L );
@@ -944,7 +944,7 @@ end );
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
     local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, g, e, cat, i;
-  
+    
     sources_of_arrows := List( [ 1 .. nr_arrows ],
       i -> Random( [ 1 .. nr_vertices - 1 ] ) );
     
@@ -958,7 +958,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     sources_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 1 ] ) ) );
     
     ranges_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 2 ] ) ) );
-   
+    
     labels := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], 
       k -> Concatenation( "o", String( a[ 1 ][ 1 ] ), "_o", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
     
@@ -1013,7 +1013,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     if not ( HasIsFieldForHomalg( field ) and IsFieldForHomalg( field ) ) then
       
-      Info( InfoWarning, 1, "The category of quiver representations for this random quiver algebra may not have homomorphism strucure\n" );
+      Info( InfoDerivedCategories, 1, "The category of quiver representations for this random quiver algebra may not have homomorphism strucure\n" );
       
     fi;
      

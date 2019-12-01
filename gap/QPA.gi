@@ -3,13 +3,29 @@
 DeclareGlobalVariable( "GLOBAL_FIELD_FOR_QPA" );
 
 ##
-InstallValue( GLOBAL_FIELD_FOR_QPA, rec( default_field := HomalgFieldOfRationals( ) ) );
+InstallValue( GLOBAL_FIELD_FOR_QPA, rec( is_locked := false, default_field := HomalgFieldOfRationals( ) ) );
 
 BindGlobal( "SET_GLOBAL_FIELD_FOR_QPA",
-  function( field, info_level )
+  function( arg )
     
-    GLOBAL_FIELD_FOR_QPA!.field := field;
-    GLOBAL_FIELD_FOR_QPA!.info_level := info_level;
+    if GLOBAL_FIELD_FOR_QPA!.is_locked then
+      
+      Error( "Setting the GLOBAL_FIELD_FOR_QPA should be done only once per session!\n" );
+      
+    fi;
+    
+    if Size( arg ) = 2 then
+      
+      GLOBAL_FIELD_FOR_QPA!.field := arg[ 1 ];
+      GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom := arg[ 2 ];
+    
+    else
+      
+      GLOBAL_FIELD_FOR_QPA!.field := arg[ 1 ];
+      
+    fi;
+      
+    GLOBAL_FIELD_FOR_QPA!.is_locked := true;
     
 end );
 
@@ -17,9 +33,12 @@ BindGlobal( "RESET_GLOBAL_FIELD_FOR_QPA",
   function( )
     
     Unbind( GLOBAL_FIELD_FOR_QPA!.field );
-    Unbind( GLOBAL_FIELD_FOR_QPA!.info_level );
+    Unbind( GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom );
     
 end );
+
+
+#SET_GLOBAL_FIELD_FOR_QPA( GLOBAL_FIELD_FOR_QPA!.default_field, GLOBAL_FIELD_FOR_QPA!.default_field, 2 );
 
 ################################
 #
@@ -398,7 +417,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     SetIsLinearCategoryOverCommutativeRing( cat, true );
     
     SetCommutativeRingOfLinearCategory( cat, domain );
-    
+       
     AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );
     
     # quicker than the lift and colift derived by hom structure
@@ -624,7 +643,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlge
     
     if not ForAll( List( paths, Source ), s -> Target( Representative( e )!.paths[ 1 ] ) = s ) then
       
-      Info( InfoWarning, 1, "This is not expected usage of the method\n" );
+      Info( InfoDerivedCategories, 2, "This is not expected usage of the method\n" );
       
     fi;
     
@@ -646,7 +665,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlge
     
     if not ForAll( List( paths, Source ), s -> s = Source( Representative( e )!.paths[ 1 ] ) ) then
       
-      Info( InfoWarning, 1, "This is not expected usage of the method\n" );
+      Info( InfoDerivedCategories, 2, "This is not expected usage of the method\n" );
       
     fi;
     
@@ -683,7 +702,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlg
     
     if not ForAll( List( paths, Target ), t -> t = Source( Representative( e )!.paths[ 1 ] ) ) then
       
-      Info( InfoWarning, 1, "This is not expected usage of the method\n" );
+      Info( InfoDerivedCategories, 2, "This is not expected usage of the method\n" );
             
     fi;
     
@@ -703,7 +722,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlg
     
     if not ForAll( List( paths, Target ), t -> t = Target( Representative( e )!.paths[ 1 ] ) ) then
       
-      Info( InfoWarning, 1, "This is not expected usage of the method\n" );
+      Info( InfoDerivedCategories, 2, "This is not expected usage of the method\n" );
  
     fi;
     
@@ -1080,7 +1099,7 @@ InstallOtherMethod( RowsOfMatrix, "for QPA matrix",
       
     else
       
-      Info( InfoWarning, 2, "I am using external method to compute the rows of a qpa matrix" );
+      Info( InfoDerivedCategories, 2, "I am using external method to compute the rows of a qpa matrix" );
       
       TryNextMethod( );
       
@@ -1104,7 +1123,7 @@ InstallOtherMethod( ColsOfMatrix, "for QPA matrix",
       
     else
       
-      Info( InfoWarning, 2, "I am using external method to compute the cols of a qpa matrix" );
+      Info( InfoDerivedCategories, 2, "I am using external method to compute the cols of a qpa matrix" );
       
       TryNextMethod( );
       
@@ -1766,6 +1785,8 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     fi;
     
+    Info( InfoDerivedCategories, 2, "Decomposition of a projective object the hard way" );
+
     A := AlgebraOfRepresentation( a );
     
     quiver := QuiverOfAlgebra( A );
@@ -2038,6 +2059,8 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     else
       
+      Info( InfoDerivedCategories, 2, "Decomposition of a projective object the very hard way" );
+
       # the following three lines can do the job, but it may take forever, hence we use them only if there is no better way.
       morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
       
@@ -2057,6 +2080,8 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
   function( a )
     local d;
     
+    Info( InfoDerivedCategories, 2, "Decomposition of a injective object the hard way" );
+   
     d := DecomposeProjectiveQuiverRepresentation( DualOfRepresentation( a ) );
     
     return List( d, DualOfRepresentationHomomorphism );
