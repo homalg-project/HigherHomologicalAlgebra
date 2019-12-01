@@ -100,7 +100,7 @@ InstallMethod( HomFunctorByExceptionalCollection,
         
         od;
         
-        r := LazyQuiverRepresentation( A_op, dim_vec, mats );
+        r := QuiverRepresentationNoCheck( A_op, dim_vec, mats );
         
         MakeImmutable( bases );
         
@@ -148,6 +148,115 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
     return F;
     
+end );
+
+##
+InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local H, ambient_cat, reps, inj_indec, name, G;
+    
+    H := HomFunctorByExceptionalCollection( collection );
+    
+    ambient_cat := AsCapCategory( Source( H ) );
+    
+    reps := AsCapCategory( Range( H ) );
+    
+    inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
+    
+    name := "Kamal";
+    
+    G := CapFunctor( name, inj_indec, reps );
+    
+    AddObjectFunction( G,
+      function( a )
+        local aa, p;
+        
+        if not IsBound( G!.ValuesForObjects ) then
+          
+          aa := ApplyFunctor( H, UnderlyingCell( UnderlyingCell( a ) ) );
+          
+          G!.ValuesForObjects := [ [ a, aa ] ];
+          
+          return aa;
+          
+        else
+          
+          p := PositionProperty( G!.ValuesForObjects,
+                v -> String( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( a ) ) )
+                  );
+         
+          if p = fail then
+            
+            aa := ApplyFunctor( H, UnderlyingCell( UnderlyingCell( a ) ) );
+            
+            Add( G!.ValuesForObjects, [ a, aa ] );
+            
+            return aa;
+            
+          else
+            
+            return G!.ValuesForObjects[ p ][ 2 ];
+            
+          fi;
+          
+        fi;
+        
+    end );
+      
+    AddMorphismFunction( G,
+      function( s, alpha, r )
+        local a, b, coeffs, basis, images, p;
+        
+        a := Source( alpha );
+        
+        b := Range( alpha );
+               
+        if not IsBound( G!.GeneratingValuesForMorphisms ) then
+          
+          basis := BasisOfExternalHom( a, b );
+        
+          images := List( basis, phi -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( phi ) ) ) );
+          
+          G!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
+          
+        else
+          
+          p := PositionProperty( G!.GeneratingValuesForMorphisms,
+            v -> String( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( a ) ) )
+                  and String( UnderlyingCell( UnderlyingCell( v[ 2 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( b ) ) )
+                  );
+          
+          if p = fail then
+            
+            basis := BasisOfExternalHom( a, b );
+        
+            images := List( basis, phi -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( phi ) ) ) );
+          
+            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
+            
+          else
+            
+            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
+            
+          fi;
+          
+        fi; 
+        
+        if IsEmpty( images ) then
+          
+          return ZeroMorphism( s, r );
+          
+        fi;
+ 
+        coeffs := CoefficientsOfMorphism( alpha );
+        
+        return coeffs * images;
+        
+    end );
+    
+    return G;
+   
 end );
 
 ##
