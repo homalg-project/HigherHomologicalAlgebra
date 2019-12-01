@@ -1,6 +1,4 @@
 
-
-
 if not IsBound( Time ) then
   
   DeclareGlobalFunction( "Time" );
@@ -22,3 +20,15 @@ if not IsBound( Time ) then
   
 fi;
 
+##
+InstallMethod( FinalizeCategory,
+          [ IsCapCategory, IsBool ],
+  function( cat, bool )
+    
+    if bool then
+      
+      Finalize( cat );
+      
+    fi;
+    
+end );
