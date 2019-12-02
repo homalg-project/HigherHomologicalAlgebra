@@ -22,6 +22,8 @@ DeclareOperation( "SolutionMat", [ IsQPAMatrix, IsDenseList ] );
 #DeclareOperation( "PreImagesRepresentative", [ IsQPAMatrix, IsDenseList ] );
 #DeclareOperation( "PreImagesRepresentative", [ IsQuiverRepresentationHomomorphism, IsDenseList ] );
 
+DeclareAttribute( "Homalg_to_QPA_Matrix", IsHomalgMatrix );
+DeclareAttribute( "QPA_to_Homalg_Matrix", IsQPAMatrix );
 
 DeclareGlobalFunction( "CertainRowsOfQPAMatrix" );
 DeclareGlobalFunction( "CertainColumnsOfQPAMatrix" );

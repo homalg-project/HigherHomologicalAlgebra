@@ -1438,6 +1438,81 @@ function( M1, M2 )
   
 end );
 
+
+#############################
+#
+# Interface to homalg
+#
+##############################
+
+##
+InstallMethod( QPA_to_Homalg_Matrix,
+          [ IsQPAMatrix ],
+  function( qpa_mat )
+    local dim, homalg_mat;
+    
+    dim := DimensionsMat( qpa_mat );
+    
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+      
+      Error( "no global field is set" );
+      
+    else
+      
+      homalg_mat := HomalgMatrix( RowsOfMatrix( qpa_mat ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
+      
+      SetHomalg_to_QPA_Matrix( homalg_mat, qpa_mat );
+      
+      return homalg_mat;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( Homalg_to_QPA_Matrix,
+          [ IsHomalgMatrix ],
+  function( homalg_mat )
+    local dim, qpa_mat;
+    
+    dim := [ NrRows( homalg_mat ), NrCols( homalg_mat ) ];
+    
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+      
+      Error( "no global field is set" );
+      
+    else
+      
+      if ForAny( dim, IsZero ) then
+        
+        qpa_mat := MakeZeroMatrix( Rationals, dim[ 1 ], dim[ 2 ] );
+        
+      else
+        
+        if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
+          
+          homalg_mat := ConvertHomalgMatrix( homalg_mat, GLOBAL_FIELD_FOR_QPA!.default_field );
+          
+        fi;
+        
+        qpa_mat := MatrixByRows( Rationals, dim, EntriesOfHomalgMatrixAsListList( homalg_mat ) );
+        
+      fi;
+      
+      SetQPA_to_Homalg_Matrix( qpa_mat, homalg_mat );
+      
+      return qpa_mat;
+      
+    fi;
+    
+end );
+
+##############################
+#
+# solve linear equations
+#
+#############################
+
 ##
 InstallMethod( SolutionMat, "for QPA matrix and standard vector",
 	       [ IsQPAMatrix, IsStandardVector ],
