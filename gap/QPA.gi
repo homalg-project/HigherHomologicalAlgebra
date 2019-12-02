@@ -1575,6 +1575,47 @@ end
 );
 
 ##
+InstallMethod( NullspaceMat, "for QPA matrix",
+          [ IsQPAMatrix ],
+          5000,
+function( M )
+  local dim, domain;
+  dim := DimensionsMat( M );
+  
+  domain := BaseDomain( M );
+  
+  if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
+    
+    return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+    
+  else
+    
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+           
+      TryNextMethod( );
+      
+    else
+      
+      Info( InfoDerivedCategories, 3,
+        Concatenation( "Using global field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
+      
+      M := QPA_to_Homalg_Matrix( M );
+      
+      M := SyzygiesOfRows( M );
+      
+      M := Homalg_to_QPA_Matrix( M );
+      
+      Info( InfoDerivedCategories, 3, "Done!" );
+      
+      return M;
+      
+    fi;
+    
+  fi;
+
+end );
+
+##
 InstallMethod( SolutionMat, "for QPA matrix and a list of standard vector",
 	       [ IsQPAMatrix, IsDenseList ],
          5000,
