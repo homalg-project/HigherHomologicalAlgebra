@@ -1,6 +1,8 @@
 LoadPackage( "DerivedCategories" );
 
 field := HomalgFieldOfRationals( );
+SET_GLOBAL_FIELD_FOR_QPA( HomalgFieldOfRationalsInMAGMA( ), field );
+
 quiver := RightQuiver( "q(3)[x0:1->2,x1:1->2,x2:1->2,y0:2->3,y1:2->3,y2:2->3]" );;
 Qq := PathAlgebra( field, quiver );;
 
@@ -33,12 +35,10 @@ matrix_cat := RangeCategoryOfHomomorphismStructure( cat );
 
 cat_projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
 cat_indec_projs := FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
-#SetCachingOfCategory( cat_indec_projs, "crisp" );
 add_cat_indec_projs := AdditiveClosure( cat_indec_projs );
 
 cat_injs := FullSubcategoryGeneratedByInjectiveObjects( cat );
 cat_indec_injs := FullSubcategoryGeneratedByIndecInjectiveObjects( cat );
-#SetCachingOfCategory( cat_indec_injs, "crisp" );
 add_cat_indec_injs := AdditiveClosure( cat_indec_injs );
 
 # decomposition functor: cat_projs ---> add_cat_indec_projs
@@ -121,17 +121,22 @@ add_r_F := ExtendFunctorToAdditiveClosureOfSource( r_F );
 
 F_on_injs_2 := PreCompose( dec_inj_func, add_r_F );
 
+G := RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects( collection );
+add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+
+F_on_injs_3 := PreCompose( dec_inj_func, add_G );
+
 # none, weak or crisp
 list_for_caches :=
   [
-    [ cat, "none" ],
-    [ matrix_cat, "weak" ],
-    [ cat_projs, "weak" ],
-    [ cat_injs, "weak" ],
+    [ cat, "weak" ],
+    [ matrix_cat, "none" ],
+    [ cat_projs, "none" ],
+    [ cat_injs, "none" ],
     [ cat_indec_projs, "crisp" ],
     [ cat_indec_injs, "crisp" ],
-    [ add_cat_indec_projs, "weak" ],
-    [ add_cat_indec_injs, "weak" ],
+    [ add_cat_indec_projs, "none" ],
+    [ add_cat_indec_injs, "none" ],
   ];
 
 Apply( list_for_caches,
@@ -142,11 +147,12 @@ end );
 
 quit;
 
-L := List( [ 1 .. 30 ], i -> Random( ii ) );
-a := DirectSum(L);
+L := List( [ 1 .. 15 ], i -> Random( ii ) );
+a := DirectSum( L );
 
 b1 := ApplyFunctor( F_on_injs_1, a/cat_injs );time;
-# 218.000
+
 b2 := ApplyFunctor( F_on_injs_2, a/cat_injs );time;
-# 11.000
+
+b3 := ApplyFunctor( F_on_injs_3, a/cat_injs );time;
 
