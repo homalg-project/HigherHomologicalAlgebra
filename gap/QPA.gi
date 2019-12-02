@@ -1549,25 +1549,21 @@ function( M, v )
     return Zero( V );
   else
     if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      solution_as_list := SolutionMat( RowsOfMatrix( M ), AsList( v ) );
+      TryNextMethod( );
     else
-      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level,
+      Info( InfoDerivedCategories, 3,
         Concatenation( "Using global field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( v ) ), " -vector )" ) );
-      M := HomalgMatrix( RowsOfMatrix( M ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
+      M := QPA_to_Homalg_Matrix( M ) * GLOBAL_FIELD_FOR_QPA!.field;
       v := HomalgMatrix( AsList( v ), 1, Length( v ), GLOBAL_FIELD_FOR_QPA!.field );
       solution_as_list := RightDivide( v, M );
-      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
-      if solution_as_list <> fail then
-        if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
-          solution_as_list := ConvertHomalgMatrix( solution_as_list, HomalgFieldOfRationals() );
-        fi;
-        solution_as_list := EntriesOfHomalgMatrix( solution_as_list );
-      fi;
+      Info( InfoDerivedCategories, 3, "Done!" );
     fi;
     
     if solution_as_list = fail then
       return fail;
     else
+      solution_as_list := Homalg_to_QPA_Matrix( solution_as_list );
+      solution_as_list := RowsOfMatrix( solution_as_list )[ 1 ];
       return Vector( V, solution_as_list );
     fi;
   fi;
