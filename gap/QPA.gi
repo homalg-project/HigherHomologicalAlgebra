@@ -1620,7 +1620,8 @@ InstallMethod( SolutionMat, "for QPA matrix and a list of standard vector",
 	       [ IsQPAMatrix, IsDenseList ],
          5000,
 function( M, list_of_vectors )
-  local dim, list, nr_vectors, solution, V, reset, v, D, positions, sol, p;
+  local dim, list, nr_vectors, solution, V, v, sol, D, entries, positions, p;
+  
   dim := DimensionsMat( M );
     
   if ForAll( list_of_vectors, v -> dim[ 2 ] <> Length( v ) ) then
@@ -1682,45 +1683,45 @@ function( M, list_of_vectors )
     
   fi;
   
-  if dim[ 2 ] = 0 then
+  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+    
+    return List( list_of_vectors, v -> SolutionMat( M, v ) );
+    
+  elif dim[ 2 ] = 0 then
     
     return ListWithIdenticalEntries( nr_vectors, Zero( V ) );
     
   else
-    
-    reset := false;
-    
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      
-      SET_GLOBAL_FIELD_FOR_QPA( GLOBAL_FIELD_FOR_QPA!.default_field, 2 );
-      
-      reset := true;
-      
-    fi;
-    
-    Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level,
+        
+    Info( InfoDerivedCategories, 3,
       Concatenation( "Using global field to compute SolutionMat( ", String( dim ),
         " -matrix, list of ", String( Length( list_of_vectors ) ), " -vectors )" ) );
     
-    M := HomalgMatrix( RowsOfMatrix( M ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
+    M := QPA_to_Homalg_Matrix( M );
     
     v := HomalgMatrix( list, nr_vectors, Size( list[ 1 ] ), GLOBAL_FIELD_FOR_QPA!.field );
     
     solution := List( [ 1 .. nr_vectors ], i -> fail );
     
-    D := DecideZeroRows( v, M );
+    sol := HomalgVoidMatrix( GLOBAL_FIELD_FOR_QPA!.field );
     
-    positions := PositionsProperty( [ 1 .. NrRows( v ) ], i -> IsZero( CertainRows( D, [ i ] ) ) );
+    D := DecideZeroRowsEffectively( v, M, sol );
     
-    sol := RightDivide( v, M, D );
-       
-    Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
+    if not IsZero( D ) then
+      
+      entries := EntriesOfHomalgMatrixAsListList( D );
     
-    if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
-      sol := ConvertHomalgMatrix( sol, HomalgFieldOfRationals() );
+      positions := PositionsProperty( [ 1 .. NrRows( v ) ], i -> IsZero( entries[ i ] ) );
+      
+    else
+      
+      positions := [ 1 .. NrRows( v ) ];
+      
     fi;
+       
+    Info( InfoDerivedCategories, 3, "Done!" );
     
-    sol := EntriesOfHomalgMatrixAsListList( sol );
+    sol := RowsOfMatrix( Homalg_to_QPA_Matrix( -sol ) );
     
     sol := sol{ positions };
     
@@ -1732,54 +1733,11 @@ function( M, list_of_vectors )
       
     od;
     
-    if reset then
-      
-      RESET_GLOBAL_FIELD_FOR_QPA( );
-      
-    fi;
-    
   fi;
-  
+    
   return solution;
   
 end );
-
-##
-InstallMethod( NullspaceMat, "for QPA matrix",
-          [ IsQPAMatrix ],
-          5000,
-function( M )
-  local dim, domain;
-  dim := DimensionsMat( M );
-  
-  domain := BaseDomain( M );
-  
-  if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
-    return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
-  else
-    
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      M := NullspaceMat( RowsOfMatrix( M ) );
-    else
-      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level,
-        Concatenation( "Using global field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
-      M := HomalgMatrix( RowsOfMatrix( M ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
-      M := SyzygiesOfRows( M );
-      if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
-        M := ConvertHomalgMatrix( M, HomalgFieldOfRationals() );
-      fi;
-      M := EntriesOfHomalgMatrixAsListList( M );
-      Info( InfoWarning, GLOBAL_FIELD_FOR_QPA!.info_level, "Done!" );
-    fi;
- 
-    if Length( M ) = 0 then
-      return MakeZeroMatrix( domain, 0, dim[ 1 ] );
-    else
-      return MatrixByRows( domain, M );
-    fi;
-  fi;
-end 
-);
 
 ##
 InstallMethod( PreImagesRepresentative, [ IsLinearTransformation, IsDenseList ],
