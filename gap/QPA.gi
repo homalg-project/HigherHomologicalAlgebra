@@ -2457,31 +2457,83 @@ InstallMethod( \*,
     
 end );
 
-#BindGlobal( "IndecProjRepresentationss",
-#  function( A )
-#    local B, quiver, nr_arrows, F, projs;
-#  
-#    B := BasisOfProjectives( A );
-#  
-#    quiver := QuiverOfAlgebra( A );
-#  
-#    nr_arrows := NumberOfArrows( quiver );
-#  
-#    F := function( L, arrow )
-#          local i, j, e;
-#        
-#          i := VertexIndex( Source( arrow ) );
-#        
-#          j := VertexIndex( Target( arrow ) );
-#        
-#          e := PathAsAlgebraElement( A, arrow );
-#        
-#        return MatrixOfLinearMapDefinedByRightMultiplicationWithAlgebraElement( L[ i ], L[ j ], e );
-#        
-#    end;
+
+### This is somehow clean and works whenever we have a indecomposable generating projectives.
+### BUT: it is VERY slow, since it uses lifts. It is not used in the package.
+###
+#InstallMethod( EpimorphismFromSomeDirectSum,
+#          [ IsList, IsCapCategoryObject ],
+#  function( projs, a )
+#    local output, A, current_a, epimorphism_from_a, b, temp, pi, gamma, p, m;
+#     
+#    if IsZero( a ) then
+#      
+#      return UniversalMorphismFromZeroObject( a );
+#      
+#    fi;
 #    
-#    projs := List( B, L -> [ List( L, Size ), List( Arrows( quiver ), arrow -> F( L, arrow ) ) ] );
-#
-#    return List( projs, p -> QuiverRepresentation( A, p[ 1 ], p[ 2 ] ) );
+#    output := [ ];
+#    
+#    current_a := a;
+#    
+#    epimorphism_from_a := IdentityMorphism( a );
+#    
+#    projs := ShallowCopy( projs );
+#    
+#    Sort( projs, {p,q} -> IsEmpty( BasisOfExternalHom( p, q ) ) );
+#    
+#    while not IsZero( current_a ) do
+#       
+#      for p in projs do
+#        
+#        b := BasisOfExternalHom( p, current_a );
+#        
+#        if not IsEmpty( b ) then
+#          
+#          projs := projs{ [ Position( projs, p ) + 1 .. Size( projs ) ] };
+#          
+#          break;
+#        
+#        fi;
+#        
+#      od;
+#      
+#      if IsEmpty( b ) then
+#        
+#        break;
+#        
+#      fi;
+#           
+#      temp := b[ 1 ];
+#      
+#      for m in b{ [ 2 .. Size( b ) ] } do
+#        
+#        pi := CokernelProjection( temp );
+#        
+#        gamma := PreCompose( m, pi );
+#         
+#        if IsZero( gamma ) then
+#          
+#          continue;
+#          
+#        fi;
+#         
+#        temp := MorphismBetweenDirectSums( [ [ m ], [ temp ] ] );
+#        
+#      od;
+#      
+#      Add( output, Lift( temp, epimorphism_from_a ) );
+#      
+#      pi := CokernelProjection( temp );
+#      
+#      current_a := Range( pi );
+#      
+#      epimorphism_from_a := PreCompose( epimorphism_from_a, pi );
+#      
+#    od;
+#    
+#    return MorphismBetweenDirectSums( List( output, o -> [ o ] ) );
 #    
 #end );
+
+
