@@ -25,7 +25,7 @@ gap> ConstructIsomorphicQuiverRepresentation :=
 >        Add( new_mats, RightMatrixOfLinearTransformation( MapForArrow( a, arrow ) ) );
 >      fi;
 >    od;
->    return LazyQuiverRepresentation( A, DimensionVector( a ), new_mats );
+>    return QuiverRepresentation( A, DimensionVector( a ), new_mats );
 > end;;
 gap> N := NanosecondsSinceEpoch( );; 
 gap> field := HomalgFieldOfRationals( );;

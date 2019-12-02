@@ -47,7 +47,7 @@ end );
 ################################
 
 ##
-BindGlobal( "LazyQuiverRepresentation",
+BindGlobal( "QuiverRepresentationNoCheck",
   
   function( A, dimensions, matrices )
     local cat, Q, objects, m, morphisms, i, a, source, range;
@@ -538,7 +538,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
           
           matrices := List( Transpose( matrices ), StackMatricesDiagonally );
           
-          d := LazyQuiverRepresentation( A, dimension_vector, matrices );
+          d := QuiverRepresentationNoCheck( A, dimension_vector, matrices );
           
           return d;
         
@@ -1829,7 +1829,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
       new_dim_vec := dim_vector_of_a - Sum( List( positions_isolated_projs, p -> sol[ p ] * dim_vectors_of_projs[ p ] ) );
       
-      new_a := LazyQuiverRepresentation( A, new_dim_vec, mats );     
+      new_a := QuiverRepresentationNoCheck( A, new_dim_vec, mats );     
       
       isolated_summands := List( positions_isolated_projs, p -> ListWithIdenticalEntries( sol[ p ], projs[ p ] ) );
       
@@ -1967,7 +1967,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                                                    )
                            );
           
-          temp := LazyQuiverRepresentation( A, dim_vectors_of_projs[ i ], current_mats_1 );
+          temp := QuiverRepresentationNoCheck( A, dim_vectors_of_projs[ i ], current_mats_1 );
           
           if IsWellDefined( temp ) then
             
@@ -2041,7 +2041,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
     od;
     
-    new_a := LazyQuiverRepresentation( A, new_dim_vec, mats );
+    new_a := QuiverRepresentationNoCheck( A, new_dim_vec, mats );
     
     s := Concatenation( List( o, Range ), [ new_a ] );
     
@@ -2220,4 +2220,3 @@ end );
 #    return List( projs, p -> QuiverRepresentation( A, p[ 1 ], p[ 2 ] ) );
 #    
 #end );
-
