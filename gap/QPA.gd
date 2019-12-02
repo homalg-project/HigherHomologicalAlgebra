@@ -7,6 +7,8 @@ DeclareAttribute( "IsomorphismFromProjectiveRepresentationIntoCanonicalDecomposi
 DeclareAttribute( "IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition", IsQuiverRepresentation );
 DeclareAttribute( "IsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
 
+DeclareAttribute( "UnderlyingProjectiveSummands", IsQuiverRepresentation );
+DeclareAttribute( "UnderlyingInjectiveSummands", IsQuiverRepresentation );
 
 DeclareOperation( "EpimorphismFromSomeDirectSum", [ IsList, IsCapCategoryObject ] );
 

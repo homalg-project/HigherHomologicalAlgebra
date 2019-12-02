@@ -398,7 +398,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
               [ IsQuiverAlgebra and IsRightQuiverAlgebra ],
               1000,
   function( A )
-    local add_extra_methods, cat, to_be_finalized, domain;
+    local add_extra_methods, cat, to_be_finalized, domain, indec_proj, indec_inj;
     
     add_extra_methods := ValueOption( "AddExtraMethods" );
     
@@ -538,6 +538,22 @@ InstallMethod( CategoryOfQuiverRepresentations,
           
           d := QuiverRepresentationNoCheck( A, dimension_vector, matrices );
           
+          if ForAll( summands, s -> HasIsProjective( s ) and IsProjective( s ) ) then
+            
+            SetIsProjective( d, true );
+            
+            SetUnderlyingProjectiveSummands( d, Concatenation( List( summands, UnderlyingProjectiveSummands ) ) );
+            
+          fi;
+          
+          if ForAll( summands, s -> HasIsInjective( s ) and IsInjective( s ) ) then
+            
+            SetIsInjective( d, true );
+            
+            SetUnderlyingInjectiveSummands( d, Concatenation( List( summands, UnderlyingInjectiveSummands ) ) );
+            
+          fi;
+           
           return d;
         
         else
@@ -600,19 +616,55 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     ##
     ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
+       
+    FinalizeCategory( cat, true );
     
-    to_be_finalized := ValueOption( "FinalizeCategory" );
+    ## setting projective & injective indecomposable 
     
-    if to_be_finalized = false then
-      
-      return cat;
+    indec_proj := IndecProjRepresentations( A );
     
-    fi;
+    indec_inj := IndecInjRepresentations( A );
     
-    Finalize( cat );
+    Perform( indec_proj, function( p ) SetIsProjective( p, true ); SetUnderlyingProjectiveSummands( p, [ p ] ); end );
     
+    Perform( indec_inj, function( i ) SetIsInjective( i, true ); SetUnderlyingInjectiveSummands( i, [ i ] ); end );
+ 
     return cat;
   
+end );
+
+##
+InstallMethod( UnderlyingProjectiveSummands,
+          [ IsQuiverRepresentation and IsProjective ],
+  function( a )
+    
+    if IsZero( a ) then
+      
+      return [ ];
+      
+    else
+      
+      return [ a ];
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( UnderlyingInjectiveSummands,
+          [ IsQuiverRepresentation and IsInjective ],
+  function( a )
+    
+    if IsZero( a ) then
+      
+      return [ ];
+      
+    else
+      
+      return [ a ];
+      
+    fi;
+    
 end );
 
 #         e                   s                   r=compose(e,s)
