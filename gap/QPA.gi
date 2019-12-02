@@ -259,16 +259,14 @@ end
 
 BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
   function( cat )
-    local A, field, rs;
+    local A, field;
     
     A := AlgebraOfCategory( cat );
     
     field := UnderlyingField( VectorSpaceCategory( cat ) );
     
-    rs := RandomSource(IsMersenneTwister, NanosecondsSinceEpoch( ) );
-    
     AddRandomObjectByList( cat,
-    
+      
       function( C, l )
         local indec_proj, indec_injs, simples, ind, s;
         
@@ -280,20 +278,20 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         
         ind := Concatenation( indec_injs, indec_proj, simples );
         
-        s := List( [ 1 .. Random( l ) ], i -> Random( rs, ind ) );
+        s := List( [ 1 .. Random( l ) ], i -> Random( ind ) );
         
         return DirectSum( s );
         
     end );
-
-    AddRandomObjectByInteger( cat,
     
+    AddRandomObjectByInteger( cat,
+      
       function( C, n )
         
         return RandomObjectByList( C, [ n, n ] );
         
     end );
-   
+    
     AddRandomMorphismWithFixedRangeByList( cat,
     
       function( M, L )
@@ -319,12 +317,12 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         
         H := Concatenation( H, [ ZeroMorphism( K, M ) ] );
         
-        return Sum( List( L, l -> l * Random( H ) ) );
+        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
         
      end );
     
     AddRandomMorphismWithFixedRangeByInteger( cat,
-     
+      
       function( M, n )
         
         return RandomMorphismWithFixedRangeByList( M, [ 1 .. n ] * One( field ) );
@@ -332,7 +330,7 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
     end );
     
     AddRandomMorphismWithFixedSourceByList( cat,
-    
+      
       function( M, L )
         local iota, K, H;
         
@@ -356,12 +354,12 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         
         H := Concatenation( H, [ ZeroMorphism( M, K ) ] );
         
-        return Sum( List( L, l -> l * Random( H ) ) );
+        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
         
     end );
     
     AddRandomMorphismWithFixedSourceByInteger( cat,
-     
+      
       function( M, n )
         
         return RandomMorphismWithFixedSourceByList( M, [ 1 .. n ] * One( field ) );
@@ -392,7 +390,7 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         return RandomMorphismWithFixedSourceAndRangeByList( M, N, [ 1 .. n ] * One( field ) );
         
     end );
-
+    
 end );
 
 ##
