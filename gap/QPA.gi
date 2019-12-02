@@ -618,18 +618,54 @@ InstallMethod( CategoryOfQuiverRepresentations,
     ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
        
     FinalizeCategory( cat, true );
-    
-    ## setting projective & injective indecomposable 
-    
-    indec_proj := IndecProjRepresentations( A );
-    
-    indec_inj := IndecInjRepresentations( A );
-    
-    Perform( indec_proj, function( p ) SetIsProjective( p, true ); SetUnderlyingProjectiveSummands( p, [ p ] ); end );
-    
-    Perform( indec_inj, function( i ) SetIsInjective( i, true ); SetUnderlyingInjectiveSummands( i, [ i ] ); end );
- 
+     
     return cat;
+  
+end );
+
+##
+InstallMethod( IndecProjRepresentations,
+          [ IsQuiverAlgebra ],
+          100,
+  function( A )
+    local with_setting_properties, projs;
+    
+    with_setting_properties := ValueOption( "SetProperties" );
+    
+    if with_setting_properties = false then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    projs := IndecProjRepresentations( A : SetProperties := false );
+    
+    Perform( projs, function( i ) SetIsProjective( i, true ); end );
+
+    return projs;
+  
+end );
+
+##
+InstallMethod( IndecInjRepresentations,
+          [ IsQuiverAlgebra ],
+          100,
+  function( A )
+    local with_setting_properties, injs;
+    
+    with_setting_properties := ValueOption( "SetProperties" );
+    
+    if with_setting_properties = false then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    injs := IndecInjRepresentations( A : SetProperties := false );
+    
+    Perform( injs, function( i ) SetIsInjective( i, true ); end );
+   
+    return injs;
   
 end );
 
