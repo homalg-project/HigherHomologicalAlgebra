@@ -12,6 +12,9 @@
 ##
 ################################################
 
+## Homotopy methods
+
+##
 AddDerivationToCAP( IsNullHomotopic,
                 [
                     [ Colift, 1 ],
@@ -23,6 +26,7 @@ AddDerivationToCAP( IsNullHomotopic,
     end: CategoryFilter := IsChainOrCochainComplexCategory, 
          Description := "compute if a morphism is homotopic to zero using colifts" );
 
+##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
                     [ IsNullHomotopic, 1 ],
@@ -47,6 +51,7 @@ AddDerivationToCAP( HomotopyMorphisms,
 end: CategoryFilter := IsChainComplexCategory,
          Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
+##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
                     [ IsNullHomotopic, 1 ],
@@ -71,6 +76,10 @@ AddDerivationToCAP( HomotopyMorphisms,
 end: CategoryFilter := IsCochainComplexCategory,
          Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
+
+## Lift in case chains has homomorphism structure over category of chains
+
+##
 AddDerivationToCAP( Lift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
@@ -95,7 +104,7 @@ AddDerivationToCAP( Lift,
     
     PM_to_PN := HomomorphismStructureOnMorphisms( IdentityMorphism( P ), beta );
     
-    m1 := [ [ D_to_hom_PN[ 0 ], ZeroMorphism( D[0], Source( PM_to_PN )[ -1 ] ) ] ];
+    m1 := [ [ D_to_hom_PN[ 0 ], ZeroMorphism( D[ 0 ], Source( PM_to_PN )[ -1 ] ) ] ];
     
     m1 := MorphismBetweenDirectSums( m1 );
     
@@ -117,7 +126,6 @@ AddDerivationToCAP( Lift,
     
     fi;
 
-    
 end: ConditionsListComplete := true,
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
@@ -172,7 +180,10 @@ CategoryFilter := function( chains )
 end,
 Description := "Lift in chain complexes using the homomorphism structure"
 );
-   
+
+## Colift in case chains has homomorphism structure over category of chains
+
+##
 AddDerivationToCAP( Colift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
@@ -218,8 +229,7 @@ AddDerivationToCAP( Colift,
       return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( N, I, lift );
     
     fi;
-
-    
+   
 end: ConditionsListComplete := true,
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
@@ -276,80 +286,107 @@ Description := "Colift in chain complexes using the homomorphism structure"
 );
 
 ##
-AddDerivationToCAP( SolveLinearSystemInAbCategory,
-                    [ [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
-                      [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-                      [ HomomorphismStructureOnObjects, 1 ],
-                      [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ] ],
-  function( left_coefficients, right_coefficients, right_side )
-    local m, n, nu, H, lift, summands, list;
+AddDerivationToCAP( Lift,
+            [
+              [ IdentityMorphism, 1 ],
+              [ DistinguishedObjectOfHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
+              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+            ],
+  function( alpha, beta )
+    local f, g, l;
     
-    m := Size( left_coefficients );
+    f := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
     
-    n := Size( left_coefficients[1] );
+    g := HomomorphismStructureOnMorphisms( IdentityMorphism( Source( alpha ) ), beta );
     
-    ## create lift diagram
+    l := Lift( f, g );
     
-    nu :=
-      UniversalMorphismIntoDirectSum(
-        List( [ 1 .. m ],
-        i -> InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( right_side[i] ) )
-    );
+    if l = fail then
+      
+      return fail;
     
-    list := 
-      List( [ 1 .. n ],
-      j -> List( [ 1 .. m ], i -> HomomorphismStructureOnMorphisms( left_coefficients[i][j], right_coefficients[i][j] ) ) 
-    );
+    else
+      
+      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( Source( alpha ), Source( beta ), l );
     
-    H := MorphismBetweenDirectSums( list );
-    
-    ## the actual computation of the solution
-    lift := Lift( nu, H );
-    
-    if lift = fail then
-        
-        return fail;
-        
     fi;
     
-    ## reinterpretation of the solution
-    summands := List( [ 1 .. n ], j -> HomomorphismStructureOnObjects( Range( left_coefficients[1][j] ), Source( right_coefficients[1][j] ) ) );
+end: ConditionsListComplete := true,
+CategoryFilter :=
+  function( cat )
+    local range_cat;
     
-    return
-      List( [ 1 .. n ], j -> 
-        InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism(
-          Range( left_coefficients[1][j] ),
-          Source( right_coefficients[1][j] ),
-          PreCompose( lift, ProjectionInFactorOfDirectSum( summands, j ) )
-        )
-      );
-  end :
-  ConditionsListComplete := true,
-  CategoryFilter := function( cat )
-    local B, conditions;
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      return false;
     
-    if HasIsAbCategory( cat ) and IsAbCategory( cat ) and HasRangeCategoryOfHomomorphismStructure( cat ) then
-        
-        B := RangeCategoryOfHomomorphismStructure( cat );
-        
-        conditions := [
-          "UniversalMorphismIntoDirectSum",
-          "MorphismBetweenDirectSums",
-          "Lift",
-          "PreCompose"
-        ];
-        
-        if ForAll( conditions, c -> CanCompute( B, c ) ) then
-            
-            return true;
-            
-        fi;
-        
+    fi;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    
+    if CanCompute( range_cat, "Lift" ) then
+      
+      return true;
+    
     fi;
     
     return false;
     
-  end,
-  Description := "SolveLinearSystemInAbCategory using the homomorphism structure" 
+  end, Description := "Lift using the homomorphism structure"
 );
+
+##
+AddDerivationToCAP( Colift,
+            [
+              [ IdentityMorphism, 1 ],
+              [ DistinguishedObjectOfHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
+              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+            ],
+  function( alpha, beta )
+    local f, g, l;
+    
+    f := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( beta );
+    
+    g := HomomorphismStructureOnMorphisms( alpha, IdentityMorphism( Range( beta ) ) );
+    
+    l := Lift( f, g );
+    
+    if l = fail then
+      
+      return fail;
+    
+    else
+      
+      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( Range( alpha ), Range( beta ), l );
+    
+    fi;
+  
+end: ConditionsListComplete := true,
+CategoryFilter :=
+  function( cat )
+    local range_cat;
+    
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      return false;
+      
+    fi;
+      
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    
+    if CanCompute( range_cat, "Lift" ) then
+      
+      return true;
+      
+    fi;
+    
+    return false;
+ 
+end, Description := "Colift using the homomorphism structure"
+);
+
 
