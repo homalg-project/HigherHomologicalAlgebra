@@ -208,7 +208,7 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphis
     fi;
     
     linear_maps := List( morphisms, morphism ->
-      [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( morphism ) ] );
+      [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( morphism ) ] );
     
     return MorphismBetweenDirectSums( linear_maps );
       
@@ -256,7 +256,7 @@ InstallMethod( Arrows,
       if j - i = 1 then
       
         arrows := List( maps, map ->
-          InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism(
+          InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(
             source, range, map ) );
       
       else
@@ -274,7 +274,7 @@ InstallMethod( Arrows,
           if not IsLiftable( map, one_morphism ) then
                   
             Add( arrows,
-              InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( 
+              InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( 
                 source, range, map ) );
             
             one_morphism := MorphismBetweenDirectSums( [ [ map ], [ one_morphism ] ] );
@@ -454,7 +454,7 @@ InstallMethod( BasisForPaths,
       
       current_path := paths[ k ];
       
-      current_path := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( current_path );
+      current_path := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( current_path );
       
       current_one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( collection[ i ], collection[ j ], basis );
       
@@ -855,7 +855,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       return full;
     
     fi;
-    
+        
     Finalize( full );
     
     return full;
