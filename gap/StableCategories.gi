@@ -278,8 +278,8 @@ InstallMethod( StableCategoryByColiftingStructure,
            CanCompute( category, "HomomorphismStructureOnObjects" ) and
              CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
                CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-                 CanCompute( category, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-                   CanCompute( category, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
+                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
                    
                     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
                    
@@ -339,8 +339,8 @@ InstallMethod( StableCategoryByLiftingStructure,
            CanCompute( category, "HomomorphismStructureOnObjects" ) and
              CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
                CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-                 CanCompute( category, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-                   CanCompute( category, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
+                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
                     
                     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
                     
@@ -486,7 +486,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
     ##   _hom_(_a_,_b_ ) <<-----  hom(a,b) <---- hom(I(a),b)
     ##
 
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( stable_category,
       function( stable_alpha )
         local stable_a, stable_b, h, alpha, i;
         
@@ -498,7 +498,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         alpha := UnderlyingCell( stable_alpha );
         
-        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        i := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
         
         return PreCompose( i, CokernelProjection( h ) );
         
@@ -510,7 +510,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
     ##   _hom_(_a_,_b_ ) <<-----  hom(a,b) <---- hom(I(a),b)
     ##
 
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
       function( stable_a, stable_b, iota )
         local a, b, h, l, i;
         
@@ -522,7 +522,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         l := Lift( iota, CokernelProjection( h ) );
         
-        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
+        i := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
         
         return StableCategoryMorphism( stable_category, i );
         
@@ -605,7 +605,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
     end );
     
     ##
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( stable_category,
       function( stable_alpha )
         local stable_a, stable_b, hom_stable_a_stable_b, D, alpha, i;
         
@@ -619,13 +619,13 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         alpha := UnderlyingCell( stable_alpha );
         
-        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        i := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
         
         return ValueGlobal( "FreydCategoryMorphism" )( D, i, hom_stable_a_stable_b );
         
     end );
     #    
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
       function( stable_a, stable_b, iota )
         local a, b, h, i;
         
@@ -635,7 +635,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
         
         h := ValueGlobal( "MorphismDatum" )( iota );
         
-        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
+        i := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
         
         return StableCategoryMorphism( stable_category, i );
         
@@ -721,7 +721,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
     ##  _hom_(_a_,_b_ ) <<-----   hom(a,b) <---- hom(a,P(b))
     ##
     
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( stable_category,
       function( stable_alpha )
         local stable_a, stable_b, hom_stable_a_stable_b, h, alpha, i;
         
@@ -735,7 +735,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         alpha := UnderlyingCell( stable_alpha );
         
-        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        i := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
         
         return PreCompose( i, CokernelProjection( h ) );
         
@@ -747,7 +747,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
     ##  _hom_(_a_,_b_ ) <<-----   hom(a,b) <---- hom(a,P(b))
     ##
     
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
       function( stable_a, stable_b, iota )
         local a, b, h, l, i;
         
@@ -759,7 +759,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         l := Lift( iota, CokernelProjection( h ) );
         
-        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
+        i := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( a, b, l );
         
         return StableCategoryMorphism( stable_category, i );
         
@@ -848,7 +848,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
     ##  _hom_(_a_,_b_ )  := Freyd( hom(a,b) <---- hom(a,P(b)) )
     ##
  
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( stable_category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( stable_category,
       function( stable_alpha )
         local stable_a, stable_b, hom_stable_a_stable_b, D, alpha, i;
         
@@ -862,13 +862,13 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         alpha := UnderlyingCell( stable_alpha );
         
-        i := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+        i := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
         
         return ValueGlobal( "FreydCategoryMorphism" )( D, i, hom_stable_a_stable_b );
         
     end );
     #    
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( stable_category,
       function( stable_a, stable_b, iota )
         local a, b, h, i;
         
@@ -878,7 +878,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
         
         h := ValueGlobal( "MorphismDatum" )( iota );
         
-        i := InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
+        i := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( a, b, h );
         
         return StableCategoryMorphism( stable_category, i );
         
