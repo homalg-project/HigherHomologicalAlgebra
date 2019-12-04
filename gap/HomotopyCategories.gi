@@ -272,7 +272,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( homotopy_category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( homotopy_category,
         function( h_phi )
           local phi, C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, im, inc, U, i;
           
@@ -291,7 +291,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           for i in Reversed( [ lower_bound .. upper_bound ] ) do
           
             Add( morphisms_from_distinguished_object,
-              InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
+              InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi[ i ] ) );
           
           od;
           
@@ -334,7 +334,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( homotopy_category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( homotopy_category,
         function( hC, hD, psi )
           local C, D, lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
@@ -377,7 +377,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           L := List( L, l -> PreCompose( phi, l ) );
           
           L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
+                 i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
           
           return HomotopyCategoryMorphism( homotopy_category, ChainMorphism( C, D, Reversed( L ), lower_bound ) );
   
