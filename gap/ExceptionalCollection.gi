@@ -709,7 +709,7 @@ end );
 InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
           [ IsQuiverRepresentationCategory ],
   function( cat )
-    local A, full_subcategory_by_projs, projs;
+    local A, full, full_subcategory_by_projs, projs;
     
     A := AlgebraOfCategory( cat );
     
@@ -725,7 +725,15 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     projs := List( projs, p -> AsFullSubcategoryCell( full_subcategory_by_projs, p ) );
     
-    return FullSubcategoryGeneratedByListOfObjects( projs );
+    full := FullSubcategoryGeneratedByListOfObjects( projs );
+    
+    CapCategorySwitchLogicOff( full );
+    
+    DisableSanityChecks( full );
+    
+    SetCachingOfCategory( full, "none" ); 
+    
+    return full;
    
 end );
 
@@ -733,7 +741,7 @@ end );
 InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
           [ IsQuiverRepresentationCategory ],
   function( cat )
-    local A, full_subcategory_by_injs, injs;
+    local A, full, full_subcategory_by_injs, injs;
     
     A := AlgebraOfCategory( cat );
     
@@ -749,8 +757,16 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     
     injs := List( injs, p -> AsFullSubcategoryCell( full_subcategory_by_injs, p ) );
     
-    return FullSubcategoryGeneratedByListOfObjects( injs );
-   
+    full := FullSubcategoryGeneratedByListOfObjects( injs );
+    
+    CapCategorySwitchLogicOff( full );
+    
+    DisableSanityChecks( full );
+    
+    SetCachingOfCategory( full, "none" ); 
+    
+    return full;
+    
 end );
 
 
@@ -848,6 +864,12 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
      
     fi;
     
+    CapCategorySwitchLogicOff( full );
+    
+    DisableSanityChecks( full );
+    
+    SetCachingOfCategory( full, "none" ); 
+    
     finalize := ValueOption( "FinalizeCategory" );
     
     if finalize = false then
@@ -920,6 +942,12 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
      
     fi;
     
+    CapCategorySwitchLogicOff( full );
+    
+    DisableSanityChecks( full );
+    
+    SetCachingOfCategory( full, "none" ); 
+   
     finalize := ValueOption( "FinalizeCategory" );
     
     if finalize = false then
