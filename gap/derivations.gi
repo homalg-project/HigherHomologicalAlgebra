@@ -83,9 +83,9 @@ end: CategoryFilter := IsCochainComplexCategory,
 AddDerivationToCAP( Lift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
-              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
   function( alpha, beta )
     local cat, P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
@@ -100,7 +100,7 @@ AddDerivationToCAP( Lift,
     
     D := DistinguishedObjectOfHomomorphismStructure( cat );
     
-    D_to_hom_PN := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+    D_to_hom_PN := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
     
     PM_to_PN := HomomorphismStructureOnMorphisms( IdentityMorphism( P ), beta );
     
@@ -122,7 +122,7 @@ AddDerivationToCAP( Lift,
       
       lift := ChainMorphism( D, Source( PM_to_PN ), [ lift ], 0 );
       
-      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( P, M, lift );
+      return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( P, M, lift );
     
     fi;
 
@@ -187,9 +187,9 @@ Description := "Lift in chain complexes using the homomorphism structure"
 AddDerivationToCAP( Colift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
-              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
   function( alpha, beta )
     local cat, M, N, I, D, D_to_hom_MI, NI_to_MI, m1, m2, lift;
@@ -204,7 +204,7 @@ AddDerivationToCAP( Colift,
     
     D := DistinguishedObjectOfHomomorphismStructure( cat );
     
-    D_to_hom_MI := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( beta );
+    D_to_hom_MI := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( beta );
     
     NI_to_MI := HomomorphismStructureOnMorphisms( alpha, IdentityMorphism( I ) );
     
@@ -226,7 +226,7 @@ AddDerivationToCAP( Colift,
       
       lift := ChainMorphism( D, Source( NI_to_MI ), [ lift ], 0 );
       
-      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( N, I, lift );
+      return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( N, I, lift );
     
     fi;
    
@@ -290,14 +290,14 @@ AddDerivationToCAP( Lift,
             [
               [ IdentityMorphism, 1 ],
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
-              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
   function( alpha, beta )
     local f, g, l;
     
-    f := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( alpha );
+    f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
     
     g := HomomorphismStructureOnMorphisms( IdentityMorphism( Source( alpha ) ), beta );
     
@@ -309,7 +309,7 @@ AddDerivationToCAP( Lift,
     
     else
       
-      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( Source( alpha ), Source( beta ), l );
+      return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( Source( alpha ), Source( beta ), l );
     
     fi;
     
@@ -342,14 +342,14 @@ AddDerivationToCAP( Colift,
             [
               [ IdentityMorphism, 1 ],
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
-              [ InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure, 1 ],
+              [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
   function( alpha, beta )
     local f, g, l;
     
-    f := InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( beta );
+    f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( beta );
     
     g := HomomorphismStructureOnMorphisms( alpha, IdentityMorphism( Range( beta ) ) );
     
@@ -361,7 +361,7 @@ AddDerivationToCAP( Colift,
     
     else
       
-      return InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( Range( alpha ), Range( beta ), l );
+      return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( Range( alpha ), Range( beta ), l );
     
     fi;
   

@@ -1526,8 +1526,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
          CanCompute( cat, "HomomorphismStructureOnObjects" ) and
            CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
              CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
-               CanCompute( cat, "InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure" ) and
-                 CanCompute( cat, "InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism" ) and
+               CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
+                 CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) and
                    HasRangeCategoryOfHomomorphismStructure( cat ) then
                   
                   range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
@@ -2215,7 +2215,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    AddInterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( category,
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
         function( phi )
           local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i, U;
           
@@ -2231,7 +2231,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           for i in Reversed( [ lower_bound .. upper_bound ] ) do
           
             Add( morphisms_from_distinguished_object,
-              InterpretMorphismAsMorphismFromDinstinguishedObjectToHomomorphismStructure( phi[ i ] ) );
+              InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi[ i ] ) );
           
           od;
           
@@ -2266,7 +2266,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
     
-    AddInterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( category,
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
         function( C, D, psi )
           local lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
@@ -2302,7 +2302,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           L := List( L, l -> PreCompose( phi, l ) );
           
           L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
+                 i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( C[ indices[i] ], D[ indices[i] ], L[i] ) );
           
           return ChainMorphism( C, D, Reversed( L ), lower_bound );
   
