@@ -5,6 +5,7 @@ field := GLOBAL_FIELD_FOR_QPA!.default_field;
 magma := field;
 
 SET_GLOBAL_FIELD_FOR_QPA( magma );
+SetInfoLevel( InfoDerivedCategories, 3 );
 
 quiver := RightQuiver( "q(3)[x0:1->2,x1:1->2,x2:1->2,y0:2->3,y1:2->3,y2:2->3]" );;
 Qq := PathAlgebra( field, quiver );;
