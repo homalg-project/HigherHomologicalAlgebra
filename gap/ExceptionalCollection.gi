@@ -671,7 +671,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
       
         rel := RelationsBetweenMorphisms( paths_in_collection );
       
-        rel := List( rel, r -> r * paths_in_quiver );
+        rel := List( rel, r -> List( r, e -> e / field ) * paths_in_quiver );
       
         relations := Concatenation( relations, rel );
                       
@@ -695,13 +695,8 @@ end );
 InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
     [ IsExceptionalCollection ],
   function( collection )
-    local full, k;
     
-    full := DefiningFullSubcategory( collection );
-    
-    k := CommutativeRingOfLinearCategory( full );
-    
-    return QuiverAlgebraFromExceptionalCollection( collection, k );
+    return QuiverAlgebraFromExceptionalCollection( collection, GLOBAL_FIELD_FOR_QPA!.default_field );
   
 end );
 
@@ -787,19 +782,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
     fi;
       
     cat := CategoryOfQuiverRepresentations( A_op : FinalizeCategory := false );
-    
-    if not HasIsLinearCategoryOverCommutativeRing( cat ) then
-      
-      SetIsLinearCategoryOverCommutativeRing( cat, true );
-      
-    fi;
-    
-    if not HasCommutativeRingOfLinearCategory( cat ) then
-      
-      SetCommutativeRingOfLinearCategory( cat, LeftActingDomain( A_op ) );
-      
-    fi;
-    
+       
     Finalize( cat );
     
     return FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
@@ -1026,25 +1009,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     rel := ComputeGroebnerBasis( rel );
     
     A := QuotientOfPathAlgebra( A, rel );
-    
-    Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
-    
-    SetIsAdmissibleQuiverAlgebra( A, true );
-    
-    cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );
-    
-    SetIsLinearCategoryOverCommutativeRing( cat, true );
-    
-    SetCommutativeRingOfLinearCategory( cat, field );
-    
-    Finalize( cat );
-    
-    if not ( HasIsFieldForHomalg( field ) and IsFieldForHomalg( field ) ) then
-      
-      Info( InfoDerivedCategories, 1, "The category of quiver representations for this random quiver algebra may not have homomorphism strucure\n" );
-      
-    fi;
-     
+        
     return A;
   
 end );
