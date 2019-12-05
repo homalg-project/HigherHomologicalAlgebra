@@ -1863,152 +1863,124 @@ end );
 
 ##
 BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
-  function( f, g )
-    local hom_basis, Q, k, V, hom_basis_composed_with_g, L, vector, mat, sol, lift, h;
+  function( alpha, beta )
+    local cat, field, partitions, mats_alpha, mats_beta, matrices, vector, sol, positions, l;
     
-    if IsZeroForObjects( Range( f ) ) then
-      
-      return ZeroMorphism( Source( f ), Source( g ) );
+    cat := CapCategory( alpha );
     
-    fi;
+    field := CommutativeRingOfLinearCategory( cat );
     
-    hom_basis := BasisOfExternalHom( Source( f ), Source( g ) );
+    partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Source( beta ) );
     
-    if IsZeroForMorphisms( f ) then
-      
-      return ZeroMorphism( Source( f ), Source( g ) );
+    mats_alpha := MatricesOfRepresentationHomomorphism( alpha );
     
-    fi;
+    mats_alpha := List( mats_alpha, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
     
-    if hom_basis = [ ] then
-      
-      return fail;
+    mats_beta := MatricesOfRepresentationHomomorphism( beta );
     
-    fi;
+    mats_beta := List( mats_beta, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
     
-    Q := QuiverOfRepresentation( Source( f ) );
+    matrices := List( partitions, part -> ListN( part, mats_beta, \* ) );
     
-    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    matrices := List( matrices,
+              mats -> UnionOfRows(
+                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                                 )
+                );
     
-    V := Vertices( Q );
+    matrices := UnionOfColumns( matrices );
     
-    hom_basis_composed_with_g := List( hom_basis, m -> PreCompose( m, g ) );
+    vector := Filtered( mats_alpha, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    L := List( V, v -> Concatenation( 
-          [ RightMatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
-            List( hom_basis_composed_with_g,
-              h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
+              
+    vector := UnionOfRows( vector );
     
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
+    Info( InfoDerivedCategories, 3, "computing LeftDivide of ",
+            NrRows( matrices ), " x ", NrCols( matrices ),
+              " & ", NrRows( vector ), " x ", NrCols( vector ), " -homalg matrices" );
+ 
+    sol := LeftDivide( matrices, vector );
     
-    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
-    
-    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
-    
-    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
-    
-    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
-    
-    sol := SolutionMat( mat, vector );
+    Info( InfoDerivedCategories, 3, "Done!" );
     
     if sol = fail then
       
       return fail;
-    
-    else
       
-      sol := ShallowCopy( AsList( sol ) );
-      
-      lift := ZeroMorphism( Source( f ), Source( g ) );
-      
-      for h in hom_basis do
-        
-        if not IsZero( sol[ 1 ] ) then
-          
-          lift := lift + sol[ 1 ]*h;
-        
-        fi;
-        
-        Remove( sol, 1 );
-      
-      od;
-    
     fi;
     
-    return lift;
+    sol := EntriesOfHomalgMatrix( sol );
+    
+    positions := PositionsProperty( sol, s -> not IsZero( s ) );
+    
+    l := Sum( ListN( sol{ positions }, partitions{ positions }, { s, p } -> s * p ) );
+    
+    l := List( l, Homalg_to_QPA_Matrix );
+    
+    return QuiverRepresentationHomomorphismNoCheck( Source( alpha ), Source( beta ), l );
     
 end );
 
 ##
 BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
-  function( f, g )
-    local hom_basis, Q, k, V, hom_basis_composed_with_f, L, vector, mat, sol, colift, h;
+  function( beta, alpha )
+    local cat, field, partitions, mats_alpha, mats_beta, matrices, vector, sol, positions, l;
     
-    hom_basis := BasisOfExternalHom( Range( f ), Range( g ) );
-       
-    if IsZeroForMorphisms( g ) then
-      
-      return ZeroMorphism( Range( f ), Range( g ) );
+    cat := CapCategory( alpha );
     
-    fi;
+    field := CommutativeRingOfLinearCategory( cat );
     
-    if hom_basis = [ ] then
-      
-      return fail;
+    partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Range( beta ), Range( alpha ) );
     
-    fi;
+    mats_alpha := MatricesOfRepresentationHomomorphism( alpha );
     
-    Q := QuiverOfRepresentation( Source( f ) );
+    mats_alpha := List( mats_alpha, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
     
-    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    mats_beta := MatricesOfRepresentationHomomorphism( beta );
     
-    V := Vertices( Q );
+    mats_beta := List( mats_beta, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
     
-    hom_basis_composed_with_f := List( hom_basis, m -> PreCompose( f, m ) );
+    matrices := List( partitions, part -> ListN( mats_beta, part, \* ) );
     
-    L := List( V, v -> Concatenation( 
-            [ RightMatrixOfLinearTransformation( MapForVertex( g, v ) ) ],
-              List( hom_basis_composed_with_f, 
-                h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    matrices := List( matrices,
+              mats -> UnionOfRows(
+                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                                 )
+                );
     
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
+    matrices := UnionOfColumns( matrices );
     
-    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+    vector := Filtered( mats_alpha, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
+              
+    vector := UnionOfRows( vector );
     
-    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    Info( InfoDerivedCategories, 3, "computing LeftDivide of ",
+            NrRows( matrices ), " x ", NrCols( matrices ),
+              " & ", NrRows( vector ), " x ", NrCols( vector ), " -homalg matrices" );
     
-    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+    sol := LeftDivide( matrices, vector );
     
-    sol := SolutionMat( mat, vector );
-    
+    Info( InfoDerivedCategories, 3, "Done!" );
+   
     if sol = fail then
       
       return fail;
-    
-    else
       
-      sol := ShallowCopy( AsList( sol ) );
-      
-      colift := ZeroMorphism( Range( f ), Range( g ) );
-      
-      for h in hom_basis do
-        
-        if not IsZero( sol[ 1 ] ) then
-          
-          colift := colift + sol[ 1 ] * h;
-        
-        fi;
-        
-        Remove( sol, 1 );
-        
-      od;
-    
     fi;
     
-    return colift;
+    sol := EntriesOfHomalgMatrix( sol );
     
+    positions := PositionsProperty( sol, s -> not IsZero( s ) );
+    
+    l := Sum( ListN( sol{ positions }, partitions{ positions }, { s, p } -> s * p ) );
+    
+    l := List( l, Homalg_to_QPA_Matrix );
+    
+    return QuiverRepresentationHomomorphismNoCheck( Range( beta ), Range( alpha ), l );
+        
 end );
 
 #
@@ -2146,7 +2118,7 @@ InstallMethodWithCache( AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM,
       
     od;
     
-    Info( InfoDerivedCategories, 3, "computing syzygies of cols of ", NrRows( mat ), " x ", NrCols( mat ) );
+    Info( InfoDerivedCategories, 3, "computing SyzygiesOfColumns of ", NrRows( mat ), " x ", NrCols( mat ) );
     
     mat := SyzygiesOfColumns( mat );
     
@@ -2241,7 +2213,7 @@ InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS,
     
     if IsHomalgExternalRingRep( field ) then
       
-      Info( InfoDerivedCategories, 3, "converting ..." );
+      Info( InfoDerivedCategories, 3, "converting a ", NrRows( mat ), " x ", NrCols( mat ), " - matrix ..." );
       
       mat := ConvertHomalgMatrix( mat, GLOBAL_FIELD_FOR_QPA!.default_field );
       
@@ -2299,19 +2271,7 @@ InstallGlobalFunction( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM,
     
     vector := Filtered( vector, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    vector := List( vector, 
-                function( m )
-                  
-                  if NrCols( m ) = 0 then
-                    
-                    return HomalgZeroMatrix( NrRows( m ), 0, field );
-                    
-                  else
-                    
-                    return UnionOfRows( List( [ 1 .. NrCols( m ) ], j -> CertainColumns( m, [ j ] ) ) );
-                    
-                  fi;
-              end );
+    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
               
     vector := UnionOfRows( vector );
     
@@ -2357,25 +2317,9 @@ InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH
     partitions := List( partitions, mats -> ListN( mats_alpha, mats, mats_beta, { x, y, z } -> x * y * z ) );
     
     mats := List( partitions,
-              mats -> UnionOfRows(
-                        
-                        List( mats,
-                          
-                          function( mat )
-                            
-                            if NrCols( mat ) = 0 then
-                              
-                              return HomalgZeroMatrix( NrRows( mat ), 0, field );
-                              
-                            else
-                              
-                              return UnionOfRows( List( [ 1 .. NrCols( mat ) ], j -> CertainColumns( mat, [ j ] ) ) );
-                            
-                            fi;
-                            
-                          end
-                        )
-                      )
+              mats -> UnionOfRows(      
+                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                                 )
                 );
     
     mats := UnionOfColumns( mats );
