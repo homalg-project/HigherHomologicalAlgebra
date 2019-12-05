@@ -3,13 +3,13 @@
 InstallMethod( HomFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],
   function( collection )
-    local full, field, A, A_op, quiver, arrows, labels, ambient_cat, reps, r, name, F;
+    local full, A, field, A_op, quiver, arrows, labels, ambient_cat, reps, r, name, F;
     
     full := DefiningFullSubcategory( collection );
     
-    field := CommutativeRingOfLinearCategory( full );
-    
     A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    
+    field := LeftActingDomain( A );
     
     A_op := OppositeAlgebra( A );
     
@@ -34,7 +34,7 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
     fi;
     
-    reps := CategoryOfQuiverRepresentations( A_op );
+    reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
     
     r := RANDOM_TEXT_ATTR();
     
@@ -90,7 +90,9 @@ InstallMethod( HomFunctorByExceptionalCollection,
             
             rel := RelationsBetweenMorphisms( Concatenation( [ alpha ], bases[ i ] ) );
             
-            rel := AdditiveInverse( Inverse( rel[ 1 ][ 1 ] ) ) * rel[ 1 ];
+            rel := List( rel[ 1 ], r -> r / field );
+            
+            rel := AdditiveInverse( Inverse( rel[ 1 ] ) ) * rel;
             
             Add( current_mat, rel{ [ 2 .. dim_vec[ i ] + 1 ] } );
           
@@ -132,7 +134,9 @@ InstallMethod( HomFunctorByExceptionalCollection,
             
             rel := RelationsBetweenMorphisms( Concatenation( [ b ], bases_2[ i ] ) );
             
-            rel := AdditiveInverse( Inverse( rel[ 1 ][ 1 ] ) ) * rel[ 1 ];
+            rel := List( rel[ 1 ], r -> r / field );
+            
+            rel := AdditiveInverse( Inverse( rel[ 1 ] ) ) * rel;
             
             Add( current_mat, rel{ [ 2 .. Size( rel ) ] } );
           
