@@ -21,7 +21,7 @@ gap> for i in [ 1 .. N ] do
 > B := Random( objects{ [ Int( Size( objects )/2 ) + 1 .. Size( objects ) ] } );
 > H := HomomorphismStructureOnObjects( A, B );
 > H := BasisOfExternalHom( DistinguishedObjectOfHomomorphismStructure( algebroid ), H );
-> H := List( H, h -> InterpretMorphismFromDinstinguishedObjectToHomomorphismStructureAsMorphism( A, B, h ) );
+> H := List( H, h -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( A, B, h ) );
 > c := List( [ 1 .. Size( H ) ], k -> Random( [ -100 .. 100 ] ) );
 > if IsEmpty( c ) then
 >   continue;
