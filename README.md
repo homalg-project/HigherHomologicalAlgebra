@@ -1,7 +1,7 @@
 The ComplexesForCAP package
 =========================
 
-version 01/12/2019.
+version 02/12/2019.
 
 Introduction
 ------------
