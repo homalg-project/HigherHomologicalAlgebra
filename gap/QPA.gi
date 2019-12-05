@@ -2313,6 +2313,12 @@ InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH
     
     partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Range( alpha ), Source( beta ) );
     
+    if IsEmpty( partitions ) then
+      
+      return ZeroMorphism( s, r );
+      
+    fi;
+    
     # This assumes that the quiver is right!
     partitions := List( partitions, mats -> ListN( mats_alpha, mats, mats_beta, { x, y, z } -> x * y * z ) );
     
@@ -2507,7 +2513,7 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
       
       function( C, n )
         
-        return RandomObjectByList( C, [ n, n ] );
+        return RandomObjectByList( C, [ 1 .. n ] );
         
     end );
     
