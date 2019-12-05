@@ -1,12 +1,9 @@
 
 ##
-DeclareGlobalVariable( "GLOBAL_FIELD_FOR_QPA" );
-
-##
 InstallValue( GLOBAL_FIELD_FOR_QPA, rec( is_locked := false, default_field := HomalgFieldOfRationals( ) ) );
 
-BindGlobal( "SET_GLOBAL_FIELD_FOR_QPA",
-  function( arg )
+InstallGlobalFunction( SET_GLOBAL_FIELD_FOR_QPA,
+  function( field )
     
     if GLOBAL_FIELD_FOR_QPA!.is_locked then
       
@@ -14,214 +11,139 @@ BindGlobal( "SET_GLOBAL_FIELD_FOR_QPA",
       
     fi;
     
-    if Size( arg ) = 2 then
-      
-      GLOBAL_FIELD_FOR_QPA!.field := arg[ 1 ];
-      GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom := arg[ 2 ];
     
-    else
-      
-      GLOBAL_FIELD_FOR_QPA!.field := arg[ 1 ];
-      
-    fi;
+    GLOBAL_FIELD_FOR_QPA!.field := field;
       
     GLOBAL_FIELD_FOR_QPA!.is_locked := true;
     
 end );
 
-BindGlobal( "RESET_GLOBAL_FIELD_FOR_QPA",
-  function( )
-    
-    Unbind( GLOBAL_FIELD_FOR_QPA!.field );
-    Unbind( GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom );
-    
-end );
-
-
-#SET_GLOBAL_FIELD_FOR_QPA( GLOBAL_FIELD_FOR_QPA!.default_field, GLOBAL_FIELD_FOR_QPA!.default_field, 2 );
-
-################################
+###############################
 #
-# Tools for qpa
+# Interface to qpa matrices
 #
-################################
+###############################
 
 ##
-BindGlobal( "QuiverRepresentationNoCheck",
+InstallGlobalFunction( CertainRowsOfQPAMatrix,
+  function( mat, L )
+    local dim, rows;
+    
+    dim := DimensionsMat( mat );
+    
+    rows := RowsOfMatrix( mat );
+    
+    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 1 ] ) then
+      
+      Error( "All indices should be less or equal to the number of rows!\n" );
+      
+    fi;
+     
+    if L = [ ] then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), 0, dim[ 2 ] );
+      
+    fi;
+    
+    if dim[ 2 ] = 0 then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), Size( L ), 0 );
+      
+    fi;
+    
+    rows := rows{ L };
+   
+    return MatrixByRows( BaseDomain( mat ), [ Size( L ), dim[ 2 ] ], rows );
   
-  function( A, dimensions, matrices )
-    local cat, Q, objects, m, morphisms, i, a, source, range;
-    
-    cat := CategoryOfQuiverRepresentations( A );
-    Q := QuiverOfAlgebra( A );
-    
-    objects := List( dimensions, VectorSpaceConstructor( cat ) );
-    
-    m := LinearTransformationConstructor( cat );
-    
-    morphisms := [];
-    
-    for i in [ 1 .. Size( matrices ) ] do
-      a := Arrow( Q, i );
-      source := objects[ VertexIndex( Source( a ) ) ];
-      range := objects[ VertexIndex( Target( a ) ) ];
-      morphisms[ i ] := m( source, range, matrices[ i ] );
-    od;
-    
-    return QuiverRepresentationNC( cat, objects, morphisms );
 end );
 
+##
+InstallGlobalFunction( CertainColumnsOfQPAMatrix,
+  function( mat, L )
+    local cols, dim;
+    
+    cols := ColsOfMatrix( mat );
+    
+    dim := DimensionsMat( mat );
+    
+    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 2 ] ) then
+      
+      Error( "All indices should be less or equal to the number of columns!\n" );
+      
+    fi;
+ 
+    if L = [ ] then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), dim[ 1 ], 0 );
+      
+    fi;
+    
+    if dim[ 1 ] = 0 then
+      
+      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( L ) );
+      
+    fi;
+    
+    cols := cols{ L };
+    
+    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( L ) ], cols );
+  
+end );
 
-BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
-  function( f, g )
-    local hom_basis, Q, k, V, hom_basis_composed_with_g, L, vector, mat, sol, lift, h;
+##
+InstallMethod( StackMatricesDiagonally,
+        [ IsQPAMatrix, IsQPAMatrix ],
+  function( mat_1, mat_2 )
+    local d1,d2,F, mat_1_, mat_2_; 
+
+    d1 := DimensionsMat( mat_1 );
     
-    if IsZeroForObjects( Range( f ) ) then
+    d2 := DimensionsMat( mat_2 );
+   
+    if d1 = [ 0, 0 ] then
       
-      return ZeroMorphism( Source( f ), Source( g ) );
-    
+      return mat_2;
+      
     fi;
     
-    hom_basis := BasisOfExternalHom( Source( f ), Source( g ) );
-    
-    if IsZeroForMorphisms( f ) then
+    if d2 = [ 0, 0 ] then
       
-      return ZeroMorphism( Source( f ), Source( g ) );
-    
+      return mat_1;
+      
     fi;
+   
+    F := BaseDomain( mat_1 );
     
-    if hom_basis = [ ] then
+    if F <> BaseDomain( mat_2 ) then
       
-      return fail;
-    
+       Error( "matrices over different rings" );
+       
     fi;
+   
+    mat_1_ := StackMatricesHorizontally( mat_1, MakeZeroMatrix( F, d1[ 1 ], d2[ 2 ] ) );
     
-    Q := QuiverOfRepresentation( Source( f ) );
+    mat_2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[ 1 ], d1[ 2 ] ), mat_2 );
     
-    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
-    
-    V := Vertices( Q );
-    
-    hom_basis_composed_with_g := List( hom_basis, m -> PreCompose( m, g ) );
-    
-    L := List( V, v -> Concatenation( 
-          [ RightMatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
-            List( hom_basis_composed_with_g,
-              h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
-    
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
-    
-    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
-    
-    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
-    
-    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
-    
-    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
-    
-    sol := SolutionMat( mat, vector );
-    
-    if sol = fail then
-      
-      return fail;
-    
-    else
-      
-      sol := ShallowCopy( AsList( sol ) );
-      
-      lift := ZeroMorphism( Source( f ), Source( g ) );
-      
-      for h in hom_basis do
-        
-        if not IsZero( sol[ 1 ] ) then
-          
-          lift := lift + sol[ 1 ]*h;
-        
-        fi;
-        
-        Remove( sol, 1 );
-      
-      od;
-    
-    fi;
-    
-    return lift;
+    return StackMatricesVertically( mat_1_, mat_2_ );
     
 end );
 
 ##
-BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
-  function( f, g )
-    local hom_basis, Q, k, V, hom_basis_composed_with_f, L, vector, mat, sol, colift, h;
-    
-    hom_basis := BasisOfExternalHom( Range( f ), Range( g ) );
-    
-    # if hom_basis = [] then there is only the zero morphism between range(f) and range(g)
-    # Thus g must be zero in order for colift to exist.
-    
-    if IsZeroForMorphisms( g ) then
-      
-      return ZeroMorphism( Range( f ), Range( g ) );
-    
-    fi;
-    
-    if hom_basis = [ ] then
-      
-      return fail;
-    
-    fi;
-    
-    Q := QuiverOfRepresentation( Source( f ) );
-    
-    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
-    
-    V := Vertices( Q );
-    
-    hom_basis_composed_with_f := List( hom_basis, m -> PreCompose( f, m ) );
-    
-    L := List( V, v -> Concatenation( 
-            [ RightMatrixOfLinearTransformation( MapForVertex( g, v ) ) ],
-              List( hom_basis_composed_with_f, 
-                h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
-    
-    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
-    
-    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
-    
-    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
-    
-    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
-    
-    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
-    
-    sol := SolutionMat( mat, vector );
-    
-    if sol = fail then
-      
-      return fail;
-    
+InstallMethod( StackMatricesDiagonally,
+          [ IsDenseList ],
+          5000,
+  function( L )
+        
+    if Size( L ) = 1 then
+      return L[1];
+    elif Size( L ) = 2 then
+      return StackMatricesDiagonally( L[ 1 ], L[ 2 ] );
     else
-      
-      sol := ShallowCopy( AsList( sol ) );
-      
-      colift := ZeroMorphism( Range( f ), Range( g ) );
-      
-      for h in hom_basis do
-        
-        if not IsZero( sol[ 1 ] ) then
-          
-          colift := colift + sol[ 1 ] * h;
-        
-        fi;
-        
-        Remove( sol, 1 );
-        
-      od;
-    
-    fi;
-    
-    return colift;
-    
+      return StackMatricesDiagonally(
+                StackMatricesDiagonally( L{ [ 1 .. Int( Size( L ) / 2 ) ] } ),
+                StackMatricesDiagonally( L{ [ Int( Size( L ) / 2 ) + 1 .. Size( L ) ] } )
+            );
+    fi; 
 end );
 
 ##
@@ -240,472 +162,113 @@ BindGlobal( "STACK_LISTLIST_QPA_MATRICES",
     
 end );
 
+
+#####################################
+#
+# Constructors without check
+#
+####################################
+
+## Modified version of a similar method in QPA.
+## Aim: reduce any checks.
 ##
-InstallMethod( ProjectiveCover, "for a quiver representation",
-               [ IsQuiverRepresentation ],
-               1000,
-function( R )
-  local   mingen,  maps,  PR,  projections;
-
-  if Sum( DimensionVector( R ) ) = 0 then
-    return ZeroMorphism( ZeroObject( CapCategory( R ) ), R);
-  else
-    mingen := MinimalGeneratingSet( R );
-    maps := List( mingen, x -> HomFromProjective( x, R ) );
-    return MorphismBetweenDirectSums( List( maps, map -> [ map ] ) );
-  fi;
-end
-);
-
-BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
-  function( cat )
-    local A, field;
+InstallGlobalFunction( QuiverRepresentationNoCheck,
+  
+  function( A, dimensions, matrices )
+    local cat, Q, objects, m, morphisms, i, a, source, range;
     
-    A := AlgebraOfCategory( cat );
+    cat := CategoryOfQuiverRepresentations( A );
     
-    field := UnderlyingField( VectorSpaceCategory( cat ) );
+    Q := QuiverOfAlgebra( A );
     
-    AddRandomObjectByList( cat,
+    objects := List( dimensions, VectorSpaceConstructor( cat ) );
+    
+    m := LinearTransformationConstructor( cat );
+    
+    morphisms := [];
+    
+    for i in [ 1 .. Size( matrices ) ] do
       
-      function( C, l )
-        local indec_proj, indec_injs, simples, ind, s;
-        
-        indec_proj := IndecProjRepresentations( A );
-        
-        indec_injs := IndecInjRepresentations( A );
-        
-        simples := SimpleRepresentations( A );
-        
-        ind := Concatenation( indec_injs, indec_proj, simples );
-        
-        s := List( [ 1 .. Random( l ) ], i -> Random( ind ) );
-        
-        return DirectSum( s );
-        
-    end );
-    
-    AddRandomObjectByInteger( cat,
+      a := Arrow( Q, i );
       
-      function( C, n )
-        
-        return RandomObjectByList( C, [ n, n ] );
-        
-    end );
-    
-    AddRandomMorphismWithFixedRangeByList( cat,
-    
-      function( M, L )
-        local pi, K, H;
-        
-        if not ForAll( L, l -> l in field ) then
-          
-          Error( "All entries should belong to the acting field of the algebra" );
-          
-        fi;
-        
-        pi := ProjectiveCover( M );
-        
-        K := KernelObject( pi );
-        
-        if IsZero( K ) then
-          
-          K := Source( pi );
-          
-        fi;
-        
-        H := BasisOfExternalHom( K, M );
-        
-        H := Concatenation( H, [ ZeroMorphism( K, M ) ] );
-        
-        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
-        
-     end );
-    
-    AddRandomMorphismWithFixedRangeByInteger( cat,
+      source := objects[ VertexIndex( Source( a ) ) ];
       
-      function( M, n )
-        
-        return RandomMorphismWithFixedRangeByList( M, [ 1 .. n ] * One( field ) );
-        
-    end );
-    
-    AddRandomMorphismWithFixedSourceByList( cat,
+      range := objects[ VertexIndex( Target( a ) ) ];
       
-      function( M, L )
-        local iota, K, H;
-        
-        if not ForAll( L, l -> l in field ) then
-          
-          Error( "All entries should belong to the acting field of the algebra" );
-          
-        fi;
-        
-        iota := InjectiveEnvelope( M );
-        
-        K := CokernelObject( iota );
-        
-        if IsZero( K ) then
-          
-          K := Range( iota );
-          
-        fi;
-        
-        H := BasisOfExternalHom( M, K );
-        
-        H := Concatenation( H, [ ZeroMorphism( M, K ) ] );
-        
-        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
-        
-    end );
-    
-    AddRandomMorphismWithFixedSourceByInteger( cat,
+      morphisms[ i ] := m( source, range, matrices[ i ] );
       
-      function( M, n )
-        
-        return RandomMorphismWithFixedSourceByList( M, [ 1 .. n ] * One( field ) );
-        
-    end );
+    od;
     
-    AddRandomMorphismWithFixedSourceAndRangeByList( cat,
-      
-      function( M, N, L )
-        local H;
-        
-        H := BasisOfExternalHom( M, N );
-        
-        if H = [ ] then
-          
-          return ZeroMorphism( M, N );
-          
-        fi;
-        
-        return Sum( List( H, h -> Random( L ) * h ) );
-        
-    end );
-    
-    AddRandomMorphismWithFixedSourceAndRangeByInteger( cat,
-      
-      function( M, N, n )
-        
-        return RandomMorphismWithFixedSourceAndRangeByList( M, N, [ 1 .. n ] * One( field ) );
-        
-    end );
+    return QuiverRepresentationNC( cat, objects, morphisms );
     
 end );
 
+## Modified version of a similar method in QPA.
+## Aim: reduce any checks.
 ##
-InstallMethod( CategoryOfQuiverRepresentations,
-              [ IsQuiverAlgebra and IsRightQuiverAlgebra ],
-              1000,
-  function( A )
-    local add_extra_methods, cat, to_be_finalized, domain, indec_proj, indec_inj;
+InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck,
+
+  function( R1, R2, maps )
+    local cat, ucat, Q, morphisms, V1, V2, morphism, m, i;
+ 
+    cat := CapCategory( R1 );
+  
+    if not IsIdenticalObj( cat, CapCategory( R2 ) ) then
     
-    add_extra_methods := ValueOption( "AddExtraMethods" );
-    
-    if add_extra_methods = false then
-      
-      TryNextMethod( );
+      Error( "representations in different categories" );
     
     fi;
+  
+    ucat := VectorSpaceCategory( cat );
+
+    Q := QuiverOfRepresentation( R1 );
+  
+    morphisms := [];
+  
+    for i in [ 1 .. NumberOfVertices( Q ) ] do
     
-    cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, AddExtraMethods := false );
+      V1 := VectorSpaceOfRepresentation( R1, i );
     
-    domain := LeftActingDomain( A );
+      V2 := VectorSpaceOfRepresentation( R2, i );
     
-    SetIsLinearCategoryOverCommutativeRing( cat, true );
-    
-    SetCommutativeRingOfLinearCategory( cat, domain );
-       
-    AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );
-    
-    # quicker than the lift and colift derived by hom structure
-    
-    AddLift( cat, COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
-    
-    AddColift( cat, COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
-    
-    AddIsProjective( cat, IsProjectiveRepresentation );
-    
-    AddIsInjective( cat, IsInjectiveRepresentation );
-    
-    AddProjectiveLift( cat,
-      function( pi, epsilon )
-        local P, A, B, top_basis, images;
-        
-        P := Source( pi );
-        
-        A := Range( pi );
-        
-        B := Source( epsilon );
-        
-        top_basis := TopBasis( P );
-        
-        if IsEmpty( top_basis ) then
-          
-          return ZeroMorphism( P, B );
-          
-        fi;
-        
-        images := PreImagesRepresentative( epsilon, List( top_basis, elm -> ImageElm( pi, elm ) ) );
-        
-        return QuiverRepresentationHomomorphismByImages( P, B, top_basis, images );
-        
-    end );
-    
-    ##
-    AddInjectiveColift( cat,
-      function( iota, beta )
-        
-        return DualOfRepresentationHomomorphism(
-                  ProjectiveLift( DualOfRepresentationHomomorphism( beta ), DualOfRepresentationHomomorphism( iota ) )
-                );
-        
-    end );
-    
-    ##
-    AddIsMonomorphism( cat,
-      function( alpha )
-        
-        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsMonomorphism );
-        
-    end );
-    
-    ##
-    AddIsEpimorphism( cat,
-      function( alpha )
-        
-        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsEpimorphism );
-        
-    end ); 
-    
-    ##
-    AddIsIsomorphism( cat,
-      function( alpha )
-        
-        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsIsomorphism );
-        
-    end ); 
-   
-    ##
-    AddIsWellDefinedForObjects( cat,
-      function( R )
-        local A, relations;
-        
-        A := AlgebraOfRepresentation( R );
-        
-        relations := RelationsOfAlgebra( A );
-        
-        return ForAll( relations, rel -> IsZero( MapForAlgebraElement( R, rel ) ) );
-    
-    end );
-    
-    ##
-    AddIsWellDefinedForMorphisms( cat,
-      function( alpha )
-        local S, R, arrows;
-        
-        S := Source( alpha );
-        
-        R := Range( alpha );
-        
-        arrows := Arrows( QuiverOfRepresentation( S ) );
-        
-        return ForAll( arrows, arrow ->
-                            IsEqualForMorphisms(
-                              PreCompose( MapForArrow( S, arrow ), MapForVertex( alpha, Target( arrow ) ) ),
-                                PreCompose( MapForVertex( alpha, Source( arrow ) ), MapForArrow( R, arrow ) )
-                                               )
-                   );
-    
-    end );
-    
-    ##
-    AddDirectSum( cat,
-      function( summands )
-        local dimension_vector, matrices, d, l, N, d1, d2;
-        
-        if Length( summands ) = 1 then
-          
-          return summands[ 1 ];
-          
-        elif Length( summands ) = 2 then
-          
-          dimension_vector := Sum( List( summands, DimensionVector ) );
-          
-          matrices := List( summands, MatricesOfRepresentation );
-          
-          matrices := List( Transpose( matrices ), StackMatricesDiagonally );
-          
-          d := QuiverRepresentationNoCheck( A, dimension_vector, matrices );
-          
-          if ForAll( summands, s -> HasIsProjective( s ) and IsProjective( s ) ) then
-            
-            SetIsProjective( d, true );
-            
-            SetUnderlyingProjectiveSummands( d, Concatenation( List( summands, UnderlyingProjectiveSummands ) ) );
-            
-          fi;
-          
-          if ForAll( summands, s -> HasIsInjective( s ) and IsInjective( s ) ) then
-            
-            SetIsInjective( d, true );
-            
-            SetUnderlyingInjectiveSummands( d, Concatenation( List( summands, UnderlyingInjectiveSummands ) ) );
-            
-          fi;
-           
-          return d;
+      if not IsBound( maps[ i ] ) then
+      
+        morphism := ZeroMorphism( V1, V2 );
+      
+      else
+      
+        m := maps[ i ];
+      
+        if IsCapCategoryMorphism( m ) then
+               
+          morphism := m;
         
         else
-          
-          N := Length( summands );
-          
-          d1 := DirectSum( summands{ [ 1 .. Int( N/2 ) ] } );
-          
-          d2 := DirectSum( summands{ [ Int( N/2 ) + 1 .. N ] } );
-          
-          return DirectSum( d1, d2 );
+        
+          morphism := LinearTransformationConstructor( cat )( V1, V2, m );
         
         fi;
-    
-    end );
-    
-    ##
-    AddDirectSumFunctorialWithGivenDirectSums( cat,      
-      function( D1, morphisms, D2 )
-        local matrices;
-        
-        matrices := List( morphisms, MatricesOfRepresentationHomomorphism );
-        
-        matrices := List( Transpose( matrices ), StackMatricesDiagonally );
-        
-        return QuiverRepresentationHomomorphism( D1, D2, matrices );
-        
-      end );
-    
-    ##
-    AddMorphismBetweenDirectSums( cat,
-      function( D1, morphisms, D2 )
-        local matrices;
-        
-        matrices := List( [ 1 .. NumberOfVertices( QuiverOfAlgebra( A ) ) ],
-                      i -> STACK_LISTLIST_QPA_MATRICES(
-                        List( morphisms,
-                          row -> List( row,
-                            morphism -> MatricesOfRepresentationHomomorphism( morphism )[ i ] ) ) ) );
-        
-        return QuiverRepresentationHomomorphism( D1, D2, matrices );
-        
-      end );
-    
-    ##
-    AddBasisOfExternalHom( cat,
-      function( R1, R2 )
       
-        return BasisVectors( CanonicalBasis( Hom( R1, R2 ) ) );
-        
-      end );
+      fi;
     
-    ##
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
-      function( alpha, B )
-      
-        return Coefficients( CanonicalBasis( Hom( Source( alpha ), Range( alpha ) ) ), alpha );
-        
-      end );
+      Add( morphisms, morphism );
     
-    ##
-    ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
-       
-    FinalizeCategory( cat, true );
-     
-    return cat;
+    od;
+
+    return QuiverRepresentationHomomorphismNC( R1, R2, morphisms );
   
 end );
 
-##
-InstallMethod( IndecProjRepresentations,
-          [ IsQuiverAlgebra ],
-          100,
-  function( A )
-    local with_setting_properties, projs;
-    
-    with_setting_properties := ValueOption( "SetProperties" );
-    
-    if with_setting_properties = false then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    projs := IndecProjRepresentations( A : SetProperties := false );
-    
-    Perform( projs, function( i ) SetIsProjective( i, true ); end );
-
-    return projs;
-  
-end );
-
-##
-InstallMethod( IndecInjRepresentations,
-          [ IsQuiverAlgebra ],
-          100,
-  function( A )
-    local with_setting_properties, injs;
-    
-    with_setting_properties := ValueOption( "SetProperties" );
-    
-    if with_setting_properties = false then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    injs := IndecInjRepresentations( A : SetProperties := false );
-    
-    Perform( injs, function( i ) SetIsInjective( i, true ); end );
-   
-    return injs;
-  
-end );
-
-##
-InstallMethod( UnderlyingProjectiveSummands,
-          [ IsQuiverRepresentation and IsProjective ],
-  function( a )
-    
-    if IsZero( a ) then
-      
-      return [ ];
-      
-    else
-      
-      return [ a ];
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( UnderlyingInjectiveSummands,
-          [ IsQuiverRepresentation and IsInjective ],
-  function( a )
-    
-    if IsZero( a ) then
-      
-      return [ ];
-      
-    else
-      
-      return [ a ];
-      
-    fi;
-    
-end );
+#######################################
+#
+# Operations for homological algebra
+#
+#######################################
 
 #         e                   s                   r=compose(e,s)
 #    V_k --> V_m    x    V_m ---> V_n   ===> V_k ----------------> V_n
 #
+
 InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement,
   
   function( source_list, range_list, e )
@@ -844,1159 +407,89 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
     
     mats := ListN( b1, b2, { bb1 , bb2 } -> MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement( bb1, bb2, e ) );
     
-    return QuiverRepresentationHomomorphism( p1, p2, mats );
+    return QuiverRepresentationHomomorphismNoCheck( p1, p2, mats );
+    
+end );
+
+##
+InstallMethod( IndecProjRepresentations,
+          [ IsQuiverAlgebra ],
+          100,
+  function( A )
+    local with_setting_properties, projs;
+    
+    with_setting_properties := ValueOption( "ipr_derived_cats" );
+    
+    if with_setting_properties = false then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    projs := IndecProjRepresentations( A : ipr_derived_cats := false );
+    
+    Perform( projs, function( i ) SetIsProjective( i, true ); end );
+    
+    return projs;
   
 end );
 
 ##
-InstallGlobalFunction( CertainRowsOfQPAMatrix,
-  function( mat, L )
-    local dim, rows;
+InstallMethod( IndecInjRepresentations,
+          [ IsQuiverAlgebra ],
+          100,
+  function( A )
+    local with_setting_properties, injs;
     
-    dim := DimensionsMat( mat );
+    with_setting_properties := ValueOption( "iir_derived_cats" );
     
-    rows := RowsOfMatrix( mat );
-    
-    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 1 ] ) then
+    if with_setting_properties = false then
       
-      Error( "All indices should be less or equal to the number of rows!\n" );
-      
-    fi;
-     
-    if L = [ ] then
-      
-      return MakeZeroMatrix( BaseDomain( mat ), 0, dim[ 2 ] );
+      TryNextMethod( );
       
     fi;
     
-    if dim[ 2 ] = 0 then
-      
-      return MakeZeroMatrix( BaseDomain( mat ), Size( L ), 0 );
-      
-    fi;
+    injs := IndecInjRepresentations( A : iir_derived_cats := false );
     
-    rows := rows{ L };
+    Perform( injs, function( i ) SetIsInjective( i, true ); end );
    
-    return MatrixByRows( BaseDomain( mat ), [ Size( L ), dim[ 2 ] ], rows );
+    return injs;
   
 end );
 
 ##
-InstallGlobalFunction( CertainColumnsOfQPAMatrix,
-  function( mat, L )
-    local cols, dim;
+InstallMethod( UnderlyingProjectiveSummands,
+          [ IsQuiverRepresentation and IsProjective ],
+  function( a )
     
-    cols := ColsOfMatrix( mat );
-    
-    dim := DimensionsMat( mat );
-    
-    if not ForAll( L, i -> IsPosInt( i ) and i <= dim[ 2 ] ) then
+    if IsZero( a ) then
       
-      Error( "All indices should be less or equal to the number of columns!\n" );
-      
-    fi;
- 
-    if L = [ ] then
-      
-      return MakeZeroMatrix( BaseDomain( mat ), dim[ 1 ], 0 );
-      
-    fi;
-    
-    if dim[ 1 ] = 0 then
-      
-      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( L ) );
-      
-    fi;
-    
-    cols := cols{ L };
-    
-    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( L ) ], cols );
-  
-end );
-
-##
-InstallMethod( StackMatricesDiagonally,
-        [ IsQPAMatrix, IsQPAMatrix ],
-  function( mat_1, mat_2 )
-    local d1,d2,F, mat_1_, mat_2_; 
-
-    d1 := DimensionsMat( mat_1 );
-    
-    d2 := DimensionsMat( mat_2 );
-   
-    if d1 = [ 0, 0 ] then
-      
-      return mat_2;
-      
-    fi;
-    
-    if d2 = [ 0, 0 ] then
-      
-      return mat_1;
-      
-    fi;
-   
-    F := BaseDomain( mat_1 );
-    
-    if F <> BaseDomain( mat_2 ) then
-      
-       Error( "matrices over different rings" );
-       
-    fi;
-   
-    mat_1_ := StackMatricesHorizontally( mat_1, MakeZeroMatrix( F, d1[ 1 ], d2[ 2 ] ) );
-    
-    mat_2_ := StackMatricesHorizontally( MakeZeroMatrix( F, d2[ 1 ], d1[ 2 ] ), mat_2 );
-    
-    return StackMatricesVertically( mat_1_, mat_2_ );
-    
-end );
-
-##
-InstallMethod( StackMatricesDiagonally,
-          [ IsDenseList ],
-          1000,
-  function( L )
-        
-    if Size( L ) = 1 then
-      return L[1];
-    elif Size( L ) = 2 then
-      return StackMatricesDiagonally( L[ 1 ], L[ 2 ] );
-    else
-      return StackMatricesDiagonally(
-                StackMatricesDiagonally( L{ [ 1 .. Int( Size( L ) / 2 ) ] } ),
-                StackMatricesDiagonally( L{ [ Int( Size( L ) / 2 ) + 1 .. Size( L ) ] } )
-            );
-    fi; 
-end );
-
-#
-InstallOtherMethod( CategoryOfVectorSpaces,
-        [ IsFieldForHomalg ],
-        
-  function( F )
-    
-    return CategoryOfVectorSpaces( F!.ring );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByRows,
-        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
-        
-  function( F, dimensions, mat )
-    
-    return MatrixByRows( F!.ring, dimensions, mat );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByRows,
-        [ IsFieldForHomalg, IsList ],
-        
-  function( F, mat )
-    
-    return MatrixByRows( F!.ring, mat );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByCols,
-        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
-        
-  function( F, dimensions, mat )
-    
-    return MatrixByCols( F!.ring, dimensions, mat );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByCols,
-        [ IsFieldForHomalg, IsList ],
-        
-  function( F, mat )
-    
-    return MatrixByCols( F!.ring, mat );
-    
-end );
-
-##
-InstallOtherMethod( EmptyVector,
-        [ IsFieldForHomalg ],
-  
-  function( F )
-    
-    return EmptyVector( F!.ring );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByRows,
-          [ IsRing, IsDenseList, IsDenseList ],
-          1000,
-  function( R, dim, rows )
-    local matrix;
-       
-    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
-      
-      TryNextMethod( );
-      
-    fi;
-         
-    if ForAny( dim, IsZero ) then
-      
-      rows := ListWithIdenticalEntries( dim[ 1 ], [ ] );
-      
-    fi;
-    
-    if not IsEmpty( rows ) and not IsList( rows[ 1 ] ) then
-      
-      if not Length( rows ) = dim[ 1 ] * dim[ 2 ] then
-        
-        Error( "wronge input" );
-        
-      fi;
-      
-      rows := List( [ 1 .. dim[ 1 ] ], i -> rows{ [ ( i - 1) * dim[ 2 ] + 1 .. i * dim[ 2 ] ] } );
-      
-    fi;
-    
-    matrix := rec( rows := rows );
-    
-    ObjectifyWithAttributes( matrix,
-      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsRowMatrixRep ),
-      BaseDomain, R,
-      DimensionsMat, dim
-    );
-    
-    if ForAny( dim, IsZero ) then
-      SetIsZeroMatrix( matrix, true );
-    fi;
-  
-    return matrix;
-  
-end );
-
-##
-InstallOtherMethod( MatrixByRows,
-        [ IsRing, IsMatrix ],
-        1000,
-  function( R, mat )
-  
-    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    return MatrixByRows( R, DimensionsMat( mat ), mat );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByCols,
-        [ IsRing, IsMatrix ],
-        1000,
-  function( R, mat )
-  
-    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    return MatrixByCols( R, Reversed( DimensionsMat( mat ) ), mat );
-    
-end );
-
-##
-InstallOtherMethod( MatrixByCols,
-          [ IsRing, IsDenseList, IsDenseList ],
-          1000,
-  function( R, dim, cols )
-    local matrix;
-     
-    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
-      
-      TryNextMethod( );
-      
-    fi;
-      
-    if ForAny( dim, IsZero ) then
-      
-      cols := ListWithIdenticalEntries( dim[ 2 ], [ ] );
-      
-    fi;
-    
-    if not IsEmpty( cols ) and not IsList( cols[ 1 ] ) then
-      
-      if not Length( cols ) = dim[ 1 ] * dim[ 2 ] then
-        
-        Error( "wronge input" );
-        
-      fi;
-      
-      cols := List( [ 1 .. dim[ 2 ] ], i -> cols{ [ ( i - 1) * dim[ 1 ] + 1 .. i * dim[ 1 ] ] } );
-      
-    fi;
-
-    
-    matrix := rec( cols := cols );
-    
-    ObjectifyWithAttributes( matrix,
-      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsColMatrixRep ),
-      BaseDomain, R,
-      DimensionsMat, dim
-    );
-    
-    if ForAny( dim, IsZero ) then
-      SetIsZeroMatrix( matrix, true );
-    fi;
-   
-  return matrix;
-  
-end );
-
-InstallOtherMethod( ViewObj, "for QPA matrix",
-               [ IsQPAMatrix ],
-               1000,
-function( M )
-  local dim;
-  
-  dim := DimensionsMat( M );
-  
-  Print( "<", dim[ 1 ], "x", dim[ 2 ], " qpa-matrix over ", Name( BaseDomain( M ) ), ">" );
-  
-end );
-
-##
-InstallOtherMethod( RowsOfMatrix, "for QPA matrix",
-               [ IsQPAMatrix ],
-               1000,
-  function( M )
-    
-    if IsRowMatrixRep( M ) then
-      
-      return M!.rows;
-      
-    elif IsColMatrixRep( M ) then
-      
-      return TransposedMat( M!.cols );
+      return [ ];
       
     else
       
-      Info( InfoDerivedCategories, 2, "I am using external method to compute the rows of a qpa matrix" );
-      
-      TryNextMethod( );
+      return [ a ];
       
     fi;
     
 end );
 
 ##
-InstallOtherMethod( ColsOfMatrix, "for QPA matrix",
-               [ IsQPAMatrix ],
-               1000,
-  function( M )
+InstallMethod( UnderlyingInjectiveSummands,
+          [ IsQuiverRepresentation and IsInjective ],
+  function( a )
     
-    if IsColMatrixRep( M ) then
+    if IsZero( a ) then
       
-      return M!.cols;
-      
-    elif IsRowMatrixRep( M ) then
-      
-      return TransposedMat( M!.rows );
+      return [ ];
       
     else
       
-      Info( InfoDerivedCategories, 2, "I am using external method to compute the cols of a qpa matrix" );
-      
-      TryNextMethod( );
+      return [ a ];
       
     fi;
     
 end );
-
-##
-InstallOtherMethod( MakeZeroMatrix,
-              [ IsField, IsInt, IsInt ],
-              1000,
-  function( F, m, n )
-    local l, matrix;
-    
-    if m < 0 or n < 0 then
-      
-      Error( "The integers should be positive!\n" );
-      
-    fi;
-    
-    if m = 0 then
-      
-      l := [ ];
-      
-    elif n = 0 then
-      
-      l := ListWithIdenticalEntries( m, [ ] );
-      
-    else
-      
-      l := ListWithIdenticalEntries( m, ListWithIdenticalEntries( n, Zero( F ) ) );
-      
-    fi;
-    
-    matrix := MatrixByRows( F, [ m, n ], l );
-    
-    SetIsZeroMatrix( matrix, true );
-    
-    return matrix;
-    
-end );
-
-
-##
-InstallOtherMethod( IdentityMatrix, "for ring and integer",
-               [ IsRing, IsInt ],
-               1000,
-function( R, n )
-  local rows, matrix, i;
-  
-  if n < 0 then
-    Error( "negative matrix dimension" );
-  fi;
-  
-  rows := IdentityMat( n, R );
-  
-  matrix := MatrixByRows( R, [ n, n ], rows );
-  
-  SetIsIdentityMatrix( matrix, true );
-  
-  SetIsZeroMatrix( matrix, n = 0 );
-  
-  SetTransposedMat( matrix, matrix );
-  
-  return matrix;
-  
-end );
-
-##
-InstallMethod( TransposedMat,
-          [ IsQPAMatrix ],
-          1000,
-  function( M )
-    local tM;
-    
-    if IsRowMatrixRep( M ) then
-      
-      tM := MatrixByCols( BaseDomain( M ), Reversed( DimensionsMat( M ) ), RowsOfMatrix( M ) );
-      
-    elif IsColMatrixRep( M ) then
-      
-      tM := MatrixByRows( BaseDomain( M ), Reversed( DimensionsMat( M ) ), ColsOfMatrix( M ) );
-     
-    else
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
-      
-      SetIsZeroMatrix( tM, true );
-      
-    fi;
-    
-    if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
-      
-      SetIsIdentityMatrix( tM, true );
-      
-    fi;
-   
-    return tM;
-    
-end );
-
-##
-InstallMethod( IsZeroMatrix,
-          [ IsQPAMatrix ],
-          1000,
-  function( M )
-    
-    if IsRowMatrixRep( M ) then
-      
-      return IsZero( RowsOfMatrix( M ) );
-      
-    elif IsColMatrixRep( M ) then
-    
-      return IsZero( ColsOfMatrix( M ) );
-      
-    else
-      
-      TryNextMethod( );
-      
-    fi;
-    
-end );
-
-#
-InstallMethod( IsZero, [ IsQPAMatrix ], 1000, IsZeroMatrix );
-
-##
-InstallMethod( IsIdentityMatrix,
-          [ IsQPAMatrix ],
-          1000,
-  function( M )
-    local dim, id;
-    
-    dim := DimensionsMat( M );
-    
-    if dim[ 1 ] <> dim[ 2 ] then
-      
-      return false;
-      
-    fi;
-    
-    id := IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
-    
-    return M = id;
-  
-end );
-#
-
-InstallMethod( \*,
-          [ IsQPAMatrix, IsQPAMatrix ],
-function( M1, M2 )
-  local R, dim1, dim2;
-  
-  R := BaseDomain( M1 );
-  dim1 := DimensionsMat( M1 );
-  dim2 := DimensionsMat( M2 );
-  
-  if R <> BaseDomain( M2 ) then
-    Error( "matrices over different rings" );
-  elif dim1[ 2 ] <> dim2[ 1 ] then
-    Error( "dimensions of matrices do not match" );
-  elif ( HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) ) 
-          or ( HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) ) then
-    return MakeZeroMatrix( R, dim1[ 1 ], dim2[ 2 ] );
-  elif IsIdentityMatrix( M1 ) then
-    return M2;
-  elif IsIdentityMatrix( M2 ) then
-    return M1;
-  elif IsColMatrixRep( M1 ) then
-    return MatrixByCols( R, [ dim1[ 1 ], dim2[ 2 ] ], ColsOfMatrix( M2 ) * ColsOfMatrix( M1 ) );
-  else
-    return MatrixByRows( R, [ dim1[ 1 ], dim2[ 2 ] ], RowsOfMatrix( M1 ) * RowsOfMatrix( M2 ) );
-  fi;
-end );
-#
-InstallMethod( \+,
-          [ IsQPAMatrix, IsQPAMatrix ],
-function( M1, M2 )
-  local R, dim;
-  R := BaseDomain( M1 );
-  dim := DimensionsMat( M1 );
-  if R <> BaseDomain( M2 ) then
-    Error( "matrices over different rings" );
-  elif dim <> DimensionsMat( M2 ) then
-    Error( "dimensions of matrices do not match" );
-  elif HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) then
-    return M2;
-  elif HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
-    return M1;
-  elif IsColMatrixRep( M1 ) or IsColMatrixRep( M2 ) then
-    return MatrixByCols( R, dim, ColsOfMatrix( M1 ) + ColsOfMatrix( M2 ) );
-  else
-    return MatrixByRows( R, dim, RowsOfMatrix( M1 ) + RowsOfMatrix( M2 ) );
-  fi;
-end );
-#
-InstallMethod( \*, [ IsMultiplicativeElement, IsQPAMatrix ],
-function( a, M )
-  local dim;
-  if not a in BaseDomain( M ) then
-    TryNextMethod( );
-  fi;
-  
-  dim := DimensionsMat( M );
-  
-  if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
-    return M;
-  elif IsColMatrixRep( M ) then
-    return MatrixByCols( BaseDomain( M ), dim, a * ColsOfMatrix( M ) );
-  else
-    return MatrixByRows( BaseDomain( M ), dim, a * RowsOfMatrix( M ) );
-  fi;
- 
-end );
-
-##
-InstallMethod( AdditiveInverseMutable,
-          [ IsQPAMatrix ],
-  function( M )
-    local R, dim;
-    R := BaseDomain( M );
-    dim := DimensionsMat( M );
-    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
-      return M;
-    elif IsColMatrixRep( M ) then
-      return MatrixByCols( R, dim, - ColsOfMatrix( M ) );
-    else
-      return MatrixByRows( R, dim, - RowsOfMatrix( M ) );
-    fi;
-end );
-
-##
-InstallMethod( \=, "for QPA matrices",
-               [ IsQPAMatrix, IsQPAMatrix ],
-function( M1, M2 )
-  local dim, i, j;
-  dim := DimensionsMat( M1 );
-  
-  if dim <> DimensionsMat( M2 ) then
-    return false;
-  fi;
-  
-  if HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 )
-      and HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
-    return true;
-  fi;
-  
-  if HasIsIdentityMatrix( M1 ) and IsIdentityMatrix( M1 )
-      and HasIsIdentityMatrix( M2 ) and IsIdentityMatrix( M2 ) then
-    return true;
-  fi;
-  
-  if IsColMatrixRep( M1 ) then
-    return ColsOfMatrix( M1 ) = ColsOfMatrix( M2 );
-  else
-    return RowsOfMatrix( M1 ) = RowsOfMatrix( M2 );
-  fi;
-  
-end );
-
-
-#############################
-#
-# Interface to homalg
-#
-##############################
-
-##
-InstallMethod( QPA_to_Homalg_Matrix,
-          [ IsQPAMatrix ],
-  function( qpa_mat )
-    local dim, homalg_mat;
-    
-    dim := DimensionsMat( qpa_mat );
-    
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      
-      Error( "no global field is set" );
-      
-    else
-      
-      homalg_mat := HomalgMatrix( RowsOfMatrix( qpa_mat ), dim[ 1 ], dim[ 2 ], GLOBAL_FIELD_FOR_QPA!.field );
-      
-      SetHomalg_to_QPA_Matrix( homalg_mat, qpa_mat );
-      
-      return homalg_mat;
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( Homalg_to_QPA_Matrix,
-          [ IsHomalgMatrix ],
-  function( homalg_mat )
-    local dim, qpa_mat;
-    
-    dim := [ NrRows( homalg_mat ), NrCols( homalg_mat ) ];
-    
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      
-      Error( "no global field is set" );
-      
-    else
-      
-      if ForAny( dim, IsZero ) then
-        
-        qpa_mat := MakeZeroMatrix( Rationals, dim[ 1 ], dim[ 2 ] );
-        
-      else
-        
-        if IsHomalgExternalRingRep( GLOBAL_FIELD_FOR_QPA!.field ) then
-          
-          homalg_mat := ConvertHomalgMatrix( homalg_mat, GLOBAL_FIELD_FOR_QPA!.default_field );
-          
-        fi;
-        
-        qpa_mat := MatrixByRows( Rationals, dim, EntriesOfHomalgMatrixAsListList( homalg_mat ) );
-        
-      fi;
-      
-      SetQPA_to_Homalg_Matrix( qpa_mat, homalg_mat );
-      
-      return qpa_mat;
-      
-    fi;
-    
-end );
-
-##############################
-#
-# solve linear equations
-#
-#############################
-
-##
-InstallMethod( SolutionMat, "for QPA matrix and standard vector",
-	       [ IsQPAMatrix, IsStandardVector ],
-         5000,
-function( M, v )
-  local dim, V, solution_as_list;
-  
-  dim := DimensionsMat( M );
-  if dim[ 2 ] <> Length( v ) then
-    Error("a row vector of length ",Length( v )," cannot be in the image of a ",
-          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
-  fi;
-  if dim[ 1 ] = 0 then
-    if IsZero( v ) then
-      return EmptyVector( BaseDomain( M ) );
-    else
-      return fail;
-    fi;
-  fi;
-  
-  V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
-
-  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
-    return AsList( v );
-  elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
-    if IsZero( v ) then
-      return Zero( V );
-    else
-      return fail;
-    fi;
-  fi;
-  
-  if dim[ 2 ] = 0 then
-    return Zero( V );
-  else
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-      TryNextMethod( );
-    else
-      Info( InfoDerivedCategories, 3,
-        Concatenation( "Using global field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( v ) ), " -vector )" ) );
-      M := QPA_to_Homalg_Matrix( M ) * GLOBAL_FIELD_FOR_QPA!.field;
-      v := HomalgMatrix( AsList( v ), 1, Length( v ), GLOBAL_FIELD_FOR_QPA!.field );
-      solution_as_list := RightDivide( v, M );
-      Info( InfoDerivedCategories, 3, "Done!" );
-    fi;
-    
-    if solution_as_list = fail then
-      return fail;
-    else
-      solution_as_list := Homalg_to_QPA_Matrix( solution_as_list );
-      solution_as_list := RowsOfMatrix( solution_as_list )[ 1 ];
-      return Vector( V, solution_as_list );
-    fi;
-  fi;
-end 
-);
-
-##
-InstallMethod( NullspaceMat, "for QPA matrix",
-          [ IsQPAMatrix ],
-          5000,
-function( M )
-  local dim, domain;
-  dim := DimensionsMat( M );
-  
-  domain := BaseDomain( M );
-  
-  if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
-    
-    return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
-    
-  else
-    
-    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-           
-      TryNextMethod( );
-      
-    else
-      
-      Info( InfoDerivedCategories, 3,
-        Concatenation( "Using global field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
-      
-      M := QPA_to_Homalg_Matrix( M );
-      
-      M := SyzygiesOfRows( M );
-      
-      M := Homalg_to_QPA_Matrix( M );
-      
-      Info( InfoDerivedCategories, 3, "Done!" );
-      
-      return M;
-      
-    fi;
-    
-  fi;
-
-end );
-
-##
-InstallMethod( SolutionMat, "for QPA matrix and a list of standard vector",
-	       [ IsQPAMatrix, IsDenseList ],
-         5000,
-function( M, list_of_vectors )
-  local dim, list, nr_vectors, solution, V, v, sol, D, entries, positions, p;
-  
-  dim := DimensionsMat( M );
-    
-  if ForAll( list_of_vectors, v -> dim[ 2 ] <> Length( v ) ) then
-    Error("a row vector of length ", Length( v[1] )," cannot be in the image of a ",
-          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
-  fi;
-  
-  list := List( list_of_vectors, AsList );
-  
-  nr_vectors := Size( list );
-
-  if dim[ 1 ] = 0 then
-    
-    solution := [ ];
-    
-    for v in list_of_vectors do
-      
-      if IsZero( v ) then
-        
-        Add( solution, EmptyVector( BaseDomain( M ) ) );
-        
-      else
-        
-        Add( solution, fail );
-        
-      fi;
-      
-    od;
-    
-    return solution;
-    
-  fi;
-  
-  V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
-
-  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
-    
-    return list;
-    
-  elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
-  
-    solution := [ ];
-    
-    for v in list_of_vectors do
-      
-      if IsZero( v ) then
-        
-        Add( solution, Zero( V ) );
-        
-      else
-        
-        Add( solution, fail );
-        
-      fi;
-      
-    od;
-    
-    return solution;
-    
-  fi;
-  
-  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
-    
-    return List( list_of_vectors, v -> SolutionMat( M, v ) );
-    
-  elif dim[ 2 ] = 0 then
-    
-    return ListWithIdenticalEntries( nr_vectors, Zero( V ) );
-    
-  else
-        
-    Info( InfoDerivedCategories, 3,
-      Concatenation( "Using global field to compute SolutionMat( ", String( dim ),
-        " -matrix, list of ", String( Length( list_of_vectors ) ), " -vectors )" ) );
-    
-    M := QPA_to_Homalg_Matrix( M );
-    
-    v := HomalgMatrix( list, nr_vectors, Size( list[ 1 ] ), GLOBAL_FIELD_FOR_QPA!.field );
-    
-    solution := List( [ 1 .. nr_vectors ], i -> fail );
-    
-    sol := HomalgVoidMatrix( GLOBAL_FIELD_FOR_QPA!.field );
-    
-    D := DecideZeroRowsEffectively( v, M, sol );
-    
-    if not IsZero( D ) then
-      
-      entries := EntriesOfHomalgMatrixAsListList( D );
-    
-      positions := PositionsProperty( [ 1 .. NrRows( v ) ], i -> IsZero( entries[ i ] ) );
-      
-    else
-      
-      positions := [ 1 .. NrRows( v ) ];
-      
-    fi;
-       
-    Info( InfoDerivedCategories, 3, "Done!" );
-    
-    sol := RowsOfMatrix( Homalg_to_QPA_Matrix( -sol ) );
-    
-    sol := sol{ positions };
-    
-    for p in positions do
-      
-      solution[ p ] := Vector( V, sol[ 1 ] );
-      
-      Remove( sol, 1 );
-      
-    od;
-    
-  fi;
-    
-  return solution;
-  
-end );
-
-##
-InstallMethod( PreImagesRepresentative, [ IsLinearTransformation, IsDenseList ],
-  function( T, list_of_vectors )
-    local x, i;
-    
-    x := ShallowCopy( SolutionMat( RightMatrixOfLinearTransformation( T ), list_of_vectors ) );
-    
-    for i in [ 1 .. Size( x ) ] do
-      
-      if x[ i ] <> fail then
-        
-        x[ i ] := Vector( Source( T ), x[ i ] );
-        
-      fi;
-      
-    od;
-    
-    return x;
-    
-end );
-
-##
-InstallMethod( PreImagesRepresentative, "for a representation homomorphism and a representation element",
-               [ IsQuiverRepresentationHomomorphism, IsDenseList ],
-function( f, list_of_elements )
-  local elements_vectors, maps, preimages, output, preimage;
-  
-  if not ForAll( list_of_elements, m -> m in Range( f ) ) then
-    
-    Error("Some elements are not in the range for the entered homomorphism,\n");
-    
-  fi;
-  
-  if IsEmpty( list_of_elements ) then
-    
-    Error( "The list of elements is empty" );
-    
-  fi;
-  
-  elements_vectors := List( list_of_elements, m -> ElementVectors( m ) );
-  
-  elements_vectors := TransposedMat( elements_vectors );
-  
-  maps := MapsOfRepresentationHomomorphism( f );
-  
-  preimages := ListN( maps, elements_vectors, PreImagesRepresentative );
-  
-  preimages := TransposedMat( preimages );
-  
-  output := [ ];
-  
-  for preimage in preimages do
-    
-    if ForAll( preimage, p -> p <> fail ) then
-    
-      Add( output, QuiverRepresentationElement( Source( f ), preimage ) );
-    
-    else
-    
-      Add( output, fail );
-    
-    fi;
-    
-  od;
-  
-  return output;
-  
-end );
-
-
-
-## The following method is taken from qpa, hom.gi with tiny modification to be able to solve over homalg fields
-InstallMethod( BasisOfHom,
-        "for two representations of a quiver",
-        [ IsQuiverRepresentation, IsQuiverRepresentation ],
-        function( R1, R2 )
-
-  local   A,  F,  vertices,  dim_R1,  dim_R2,  num_vert,  support_R1,  
-          support_R2,  i,  num_cols,  num_rows,  block_intervals,  
-          block_rows,  block_cols,  prev_col,  prev_row,  a,  
-          source_arrow,  target_arrow,  equations,  arrows,  mats_R1,  
-          mats_R2,  j,  row_start_pos, row_end_pos, col_start_pos, col_end_pos,
-          m, n, b, homs, dim_hom, hom_basis, map, k, y, x, mat;
-  
-  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom ) then
-    
-    TryNextMethod();
-    
-  fi;
-  
-  A := AlgebraOfRepresentation( R1 ); 
-  if A <> AlgebraOfRepresentation( R2 ) then
-    Print("The two modules entered are not modules over the same algebra.");
-    return fail;
-  fi;
-  F := LeftActingDomain(A);
-  #
-  # Finding the support of R1 and R2 
-  # 
-  vertices := Vertices( QuiverOfAlgebra( A ) );
-  dim_R1 := DimensionVector( R1 );
-  dim_R2 := DimensionVector( R2 );
-  num_vert := Length( dim_R1 );   
-  support_R1 := [];
-  support_R2 := [];
-  for i in [ 1..num_vert ] do
-    if ( dim_R1[ i ] <> 0 ) then 
-      AddSet( support_R1, i );
-    fi;
-    if ( dim_R2[ i ] <> 0 ) then 
-      AddSet( support_R2, i );
-    fi;
-  od;
-  #
-  # Deciding the size of the equations, 
-  # number of columns and rows
-  #
-  num_cols := 0;
-  num_rows := 0;
-  block_intervals := [];
-  block_rows := [];
-  block_cols := [];
-  prev_col := 0;
-  prev_row := 0;
-  for i in support_R1 do
-    num_rows := num_rows + dim_R1[ i ] * dim_R2[ i ];
-    block_rows[ i ] := prev_row + 1;
-    prev_row := num_rows;
-    for a in OutgoingArrows( vertices[ i ] ) do
-      source_arrow := VertexIndex( Source( a ) );
-      target_arrow := VertexIndex( Target( a ) );
-      if ( target_arrow in support_R2 ) and 
-         ( ( source_arrow in support_R2 ) or ( target_arrow in support_R1 ) ) then 
-        num_cols := num_cols + dim_R1[ source_arrow ] * dim_R2[ target_arrow ];
-        Add( block_cols, [ a, prev_col + 1, num_cols ] );
-      fi;
-      prev_col := num_cols; 
-    od;
-  od;
-  if num_rows = 0 then
-    return [];
-  fi;
-  #
-  # Finding the linear equations for the maps between M and N
-  #
-  equations := MutableNullMat( num_rows, num_cols, F);
-  arrows := Arrows( QuiverOfAlgebra( A ) );
-  mats_R1 := List( MapsOfRepresentation( R1 ), m -> RowsOfMatrix( RightMatrixOfLinearTransformation( m ) ) ); 
-  mats_R2 := List( MapsOfRepresentation( R2 ), m -> RowsOfMatrix( RightMatrixOfLinearTransformation( m ) ) ); 
-  prev_col := 0;
-  prev_row := 0;
-  for i in support_R1 do
-    for a in OutgoingArrows( vertices[i] ) do
-      source_arrow := VertexIndex( Source( a ) );
-      target_arrow := VertexIndex( Target( a ) );
-      if ( target_arrow in support_R2 ) and 
-         ( ( source_arrow in support_R2 ) or ( target_arrow in support_R1 ) ) then
-        for j in [ 1..dim_R1[ source_arrow ] ] do
-          row_start_pos := block_rows[ source_arrow ] + ( j - 1 ) * dim_R2[ source_arrow ]; 
-          row_end_pos := block_rows[ source_arrow ] - 1 + j * dim_R2[ source_arrow ];
-          col_start_pos := prev_col + 1 + ( j-1 ) * dim_R2[ target_arrow ];
-          col_end_pos := prev_col + j * dim_R2[ target_arrow ];
-          if ( source_arrow in support_R2 ) then 
-            equations{ [ row_start_pos..row_end_pos ] }{ [ col_start_pos..col_end_pos ] } := 
-              mats_R2[ ArrowIndex( a ) ];
-          fi;
-          if ( target_arrow in support_R1 ) then 
-            for m in [ 1..DimensionsMat( mats_R1[ ArrowIndex( a ) ] )[ 2 ] ] do
-              for n in [ 1..dim_R2[ target_arrow ] ] do
-                b := block_rows[ target_arrow ] + (m - 1) * dim_R2[ target_arrow ];
-                equations[ b + n - 1 ][ col_start_pos + n - 1 ] := 
-                  equations[ b + n - 1 ][ col_start_pos + n - 1 ] + (-1) * mats_R1[ ArrowIndex( a ) ][ j ][ m ];
-              od;
-            od;
-          fi;
-        od;
-        prev_col := prev_col + dim_R1[ source_arrow ] * dim_R2[ target_arrow ];
-      fi;
-    od;
-  od;
-  #
-  # Creating the maps between the module M and N
-  #
-  if num_cols = 0 then 
-    equations := NullMat( num_rows, num_cols + 1, F);
-  fi;
-  homs := [];
-  dim_hom := 0;
-  
-  Info( InfoDerivedCategories, 3,
-    "Applying SyzygiesOfRows on homalg ", Size( equations ), " x ", Size( equations[1] ), "-matrix" );
-   
-  hom_basis := SyzygiesOfRows( HomalgMatrix( equations, GLOBAL_FIELD_FOR_QPA!.field_for_basis_of_hom ) );
-  
-  hom_basis := RowsOfMatrix( Homalg_to_QPA_Matrix( hom_basis ) );
-  
-  Info( InfoDerivedCategories, 3, "Done!" );
- 
-  for b in hom_basis do
-    map := [];
-    dim_hom := dim_hom + 1;
-    k := 1;
-    for i in [ 1..num_vert ] do 
-      if ( dim_R1[ i ] <> 0 ) and ( dim_R2[ i ] <> 0 ) then 
-        mat := MutableNullMat( dim_R1[ i ], dim_R2[ i ], F );
-        for y in [ 1..dim_R1[ i ] ] do 
-          for x in [ 1..dim_R2[ i ] ] do 
-            mat[ y ][ x ] := b[ k ];
-            k := k + 1;
-          od;
-        od;
-        map[ i ] := MatrixByRows( F, mat );
-      fi;
-    od;
-    homs[dim_hom] := QuiverRepresentationHomomorphism( R1, R2, map );
-  od;
-  
-  return homs;
-end
-  );
-
-############################
-#
-# Operations
-#
-###########################
 
 ##
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
@@ -2034,9 +527,6 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
 end );
 
-# The following method is correct only if the indecomposable projectives of the algebra form an exceptional collection.
-# i.e., arrows go in one-direction.
-
 ##
 InstallMethod( DecomposeProjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
@@ -2050,7 +540,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     fi;
     
     Info( InfoDerivedCategories, 2, "Decomposition of a projective object the hard way" );
-
+    
     A := AlgebraOfRepresentation( a );
     
     quiver := QuiverOfAlgebra( A );
@@ -2374,7 +864,6 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
       
 end );
 
-
 ##
 InstallMethod( DecomposeInjectiveQuiverRepresentation,
           [ IsQuiverRepresentation ],
@@ -2447,129 +936,2007 @@ InstallMethod( IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition,
     
 end );
 
-# to change the field of a quiver algebra
-InstallMethod( \*,
-    [ IsQuiverAlgebra, IsField ],
-  function( A, field )
-    local field_of_A, quiver, relations, n, coeffs_list, paths, path_algebra;
+## Modified version of a similar method in QPA.
+## Aim: imorove performance.
+InstallMethod( ProjectiveCover, "for a quiver representation",
+          [ IsQuiverRepresentation ],
+          5000,
+function( R )
+  local   mingen,  maps,  PR,  projections;
+  
+  if Sum( DimensionVector( R ) ) = 0 then
+    return ZeroMorphism( ZeroObject( CapCategory( R ) ), R);
+  else
+    mingen := MinimalGeneratingSet( R );
+    maps := List( mingen, x -> HomFromProjective( x, R ) );
+    return MorphismBetweenDirectSums( List( maps, map -> [ map ] ) );
+  fi;
+end );
+
+##############################
+#
+# QPA matrices
+#
+##############################
+
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
+        
+  function( F, dimensions, mat )
     
-    field_of_A := LeftActingDomain( A );
+    return MatrixByRows( F!.ring, dimensions, mat );
     
-    if IsIdenticalObj( field, field_of_A ) then
-      
-      return A;
-      
-    fi;
+end );
+
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsFieldForHomalg, IsList ],
+        
+  function( F, mat )
     
-    quiver := QuiverOfAlgebra( A );
+    return MatrixByRows( F!.ring, mat );
     
-    relations := RelationsOfAlgebra( A );
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsFieldForHomalg, IsDenseList, IsDenseList ],
+        
+  function( F, dimensions, mat )
     
-    n := Length( relations );
+    return MatrixByCols( F!.ring, dimensions, mat );
     
-    coeffs_list := List( relations, rel -> List( rel!.coefficients, String ) );
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsFieldForHomalg, IsList ],
+        
+  function( F, mat )
     
-    paths := List( relations, rel -> rel!.paths );
+    return MatrixByCols( F!.ring, mat );
     
-    if HasIsRationalsForHomalg( field ) and IsRationalsForHomalg( field ) then
-      
-      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> c / field ) );
-      
-    elif field = Rationals then
-      
-      coeffs_list := List( coeffs_list, coeff_list -> List( coeff_list, c -> Rat( c ) ) );
-      
-    else
-      
-      Error( "Unknown field!" );
-      
-    fi;
+end );
+
+##
+InstallOtherMethod( EmptyVector,
+        [ IsFieldForHomalg ],
+  
+  function( F )
     
-    path_algebra := PathAlgebra( field, quiver );
-    
-    relations := List( [ 1 .. n ], i -> QuiverAlgebraElement( path_algebra, coeffs_list[ i ], paths[ i ] ) );
-    
-    return QuotientOfPathAlgebra( path_algebra, relations );
+    return EmptyVector( F!.ring );
     
 end );
 
 
-### This is somehow clean and works whenever we have a indecomposable generating projectives.
-### BUT: it is VERY slow, since it uses lifts. It is not used in the package.
-###
-#InstallMethod( EpimorphismFromSomeDirectSum,
-#          [ IsList, IsCapCategoryObject ],
-#  function( projs, a )
-#    local output, A, current_a, epimorphism_from_a, b, temp, pi, gamma, p, m;
-#     
-#    if IsZero( a ) then
-#      
-#      return UniversalMorphismFromZeroObject( a );
-#      
-#    fi;
-#    
-#    output := [ ];
-#    
-#    current_a := a;
-#    
-#    epimorphism_from_a := IdentityMorphism( a );
-#    
-#    projs := ShallowCopy( projs );
-#    
-#    Sort( projs, {p,q} -> IsEmpty( BasisOfExternalHom( p, q ) ) );
-#    
-#    while not IsZero( current_a ) do
-#       
-#      for p in projs do
-#        
-#        b := BasisOfExternalHom( p, current_a );
-#        
-#        if not IsEmpty( b ) then
-#          
-#          projs := projs{ [ Position( projs, p ) + 1 .. Size( projs ) ] };
-#          
-#          break;
-#        
-#        fi;
-#        
-#      od;
-#      
-#      if IsEmpty( b ) then
-#        
-#        break;
-#        
-#      fi;
-#           
-#      temp := b[ 1 ];
-#      
-#      for m in b{ [ 2 .. Size( b ) ] } do
-#        
-#        pi := CokernelProjection( temp );
-#        
-#        gamma := PreCompose( m, pi );
-#         
-#        if IsZero( gamma ) then
-#          
-#          continue;
-#          
-#        fi;
-#         
-#        temp := MorphismBetweenDirectSums( [ [ m ], [ temp ] ] );
-#        
-#      od;
-#      
-#      Add( output, Lift( temp, epimorphism_from_a ) );
-#      
-#      pi := CokernelProjection( temp );
-#      
-#      current_a := Range( pi );
-#      
-#      epimorphism_from_a := PreCompose( epimorphism_from_a, pi );
-#      
-#    od;
-#    
-#    return MorphismBetweenDirectSums( List( output, o -> [ o ] ) );
-#    
-#end );
+##
+InstallOtherMethod( MatrixByRows,
+          [ IsRing, IsDenseList, IsDenseList ],
+          5000,
+  function( R, dim, rows )
+    local matrix;
+       
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+         
+    if ForAny( dim, IsZero ) then
+      
+      rows := ListWithIdenticalEntries( dim[ 1 ], [ ] );
+      
+    fi;
+    
+    if not IsEmpty( rows ) and not IsList( rows[ 1 ] ) then
+      
+      if not Length( rows ) = dim[ 1 ] * dim[ 2 ] then
+        
+        Error( "wronge input" );
+        
+      fi;
+      
+      rows := List( [ 1 .. dim[ 1 ] ], i -> rows{ [ ( i - 1) * dim[ 2 ] + 1 .. i * dim[ 2 ] ] } );
+      
+    fi;
+    
+    matrix := rec( rows := rows );
+    
+    ObjectifyWithAttributes( matrix,
+      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsRowMatrixRep ),
+      BaseDomain, R,
+      DimensionsMat, dim
+    );
+    
+    if ForAny( dim, IsZero ) then
+      SetIsZeroMatrix( matrix, true );
+    fi;
+  
+    return matrix;
+  
+end );
 
+##
+InstallOtherMethod( MatrixByRows,
+        [ IsRing, IsMatrix ],
+        5000,
+  function( R, mat )
+  
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return MatrixByRows( R, DimensionsMat( mat ), mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+        [ IsRing, IsMatrix ],
+        5000,
+  function( R, mat )
+  
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return MatrixByCols( R, Reversed( DimensionsMat( mat ) ), mat );
+    
+end );
+
+##
+InstallOtherMethod( MatrixByCols,
+          [ IsRing, IsDenseList, IsDenseList ],
+          5000,
+  function( R, dim, cols )
+    local matrix;
+     
+    if HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) then
+      
+      TryNextMethod( );
+      
+    fi;
+      
+    if ForAny( dim, IsZero ) then
+      
+      cols := ListWithIdenticalEntries( dim[ 2 ], [ ] );
+      
+    fi;
+    
+    if not IsEmpty( cols ) and not IsList( cols[ 1 ] ) then
+      
+      if not Length( cols ) = dim[ 1 ] * dim[ 2 ] then
+        
+        Error( "wronge input" );
+        
+      fi;
+      
+      cols := List( [ 1 .. dim[ 2 ] ], i -> cols{ [ ( i - 1) * dim[ 1 ] + 1 .. i * dim[ 1 ] ] } );
+      
+    fi;
+    
+    matrix := rec( cols := cols );
+    
+    ObjectifyWithAttributes( matrix,
+      NewType( FamilyOfQPAMatrices, IsQPAMatrix and IsColMatrixRep ),
+      BaseDomain, R,
+      DimensionsMat, dim
+    );
+    
+    if ForAny( dim, IsZero ) then
+      SetIsZeroMatrix( matrix, true );
+    fi;
+   
+  return matrix;
+  
+end );
+
+InstallOtherMethod( ViewObj, "for QPA matrix",
+               [ IsQPAMatrix ],
+               5000,
+function( M )
+  local dim;
+  
+  dim := DimensionsMat( M );
+  
+  Print( "<", dim[ 1 ], " x ", dim[ 2 ], " QPA-matrix over ", Name( BaseDomain( M ) ), ">" );
+  
+end );
+
+##
+InstallOtherMethod( RowsOfMatrix, "for QPA matrix",
+               [ IsQPAMatrix ],
+               5000,
+  function( M )
+    
+    if IsRowMatrixRep( M ) then
+      
+      return M!.rows;
+      
+    elif IsColMatrixRep( M ) then
+      
+      return TransposedMat( M!.cols );
+      
+    else
+      
+      Info( InfoDerivedCategories, 3, "I am using external method to compute the rows of a qpa matrix" );
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( ColsOfMatrix, "for QPA matrix",
+               [ IsQPAMatrix ],
+               5000,
+  function( M )
+    
+    if IsColMatrixRep( M ) then
+      
+      return M!.cols;
+      
+    elif IsRowMatrixRep( M ) then
+      
+      return TransposedMat( M!.rows );
+      
+    else
+      
+      Info( InfoDerivedCategories, 3, "I am using external method to compute the cols of a qpa matrix" );
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( MakeZeroMatrix,
+              [ IsField, IsInt, IsInt ],
+              5000,
+  function( F, m, n )
+    local l, matrix;
+    
+    if m < 0 or n < 0 then
+      
+      Error( "The integers should be positive!\n" );
+      
+    fi;
+    
+    if m = 0 then
+      
+      l := [ ];
+      
+    elif n = 0 then
+      
+      l := ListWithIdenticalEntries( m, [ ] );
+      
+    else
+      
+      l := ListWithIdenticalEntries( m, ListWithIdenticalEntries( n, Zero( F ) ) );
+      
+    fi;
+    
+    matrix := MatrixByRows( F, [ m, n ], l );
+    
+    SetIsZeroMatrix( matrix, true );
+    
+    return matrix;
+    
+end );
+
+
+##
+InstallOtherMethod( IdentityMatrix, "for ring and integer",
+               [ IsRing, IsInt ],
+               5000,
+function( R, n )
+  local rows, matrix, i;
+  
+  if n < 0 then
+    Error( "negative matrix dimension" );
+  fi;
+  
+  rows := IdentityMat( n, R );
+  
+  matrix := MatrixByRows( R, [ n, n ], rows );
+  
+  SetIsIdentityMatrix( matrix, true );
+  
+  SetIsZeroMatrix( matrix, n = 0 );
+  
+  SetTransposedMat( matrix, matrix );
+  
+  return matrix;
+  
+end );
+
+##
+InstallMethod( TransposedMat,
+          [ IsQPAMatrix ],
+          5000,
+  function( M )
+    local tM;
+    
+    if IsRowMatrixRep( M ) then
+      
+      tM := MatrixByCols( BaseDomain( M ), Reversed( DimensionsMat( M ) ), RowsOfMatrix( M ) );
+      
+    elif IsColMatrixRep( M ) then
+      
+      tM := MatrixByRows( BaseDomain( M ), Reversed( DimensionsMat( M ) ), ColsOfMatrix( M ) );
+     
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+      
+      SetIsZeroMatrix( tM, true );
+      
+    fi;
+    
+    if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+      
+      SetIsIdentityMatrix( tM, true );
+      
+    fi;
+   
+    return tM;
+    
+end );
+
+##
+InstallMethod( IsZeroMatrix,
+          [ IsQPAMatrix ],
+          5000,
+  function( M )
+    
+    if IsRowMatrixRep( M ) then
+      
+      return IsZero( RowsOfMatrix( M ) );
+      
+    elif IsColMatrixRep( M ) then
+      
+      return IsZero( ColsOfMatrix( M ) );
+      
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( IsZero, [ IsQPAMatrix ], 5000, IsZeroMatrix );
+
+##
+InstallMethod( IsIdentityMatrix,
+          [ IsQPAMatrix ],
+          5000,
+  function( M )
+    local dim, id;
+    
+    dim := DimensionsMat( M );
+    
+    if dim[ 1 ] <> dim[ 2 ] then
+      
+      return false;
+      
+    fi;
+    
+    id := IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+    
+    return M = id;
+  
+end );
+
+##
+InstallMethod( \*,
+          [ IsQPAMatrix, IsQPAMatrix ],
+          5000,
+function( M1, M2 )
+  local R, dim1, dim2;
+  
+  R := BaseDomain( M1 );
+  dim1 := DimensionsMat( M1 );
+  dim2 := DimensionsMat( M2 );
+  
+  if R <> BaseDomain( M2 ) then
+    Error( "matrices over different rings" );
+  elif dim1[ 2 ] <> dim2[ 1 ] then
+    Error( "dimensions of matrices do not match" );
+  elif ( HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) ) 
+          or ( HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) ) then
+    return MakeZeroMatrix( R, dim1[ 1 ], dim2[ 2 ] );
+  elif IsIdentityMatrix( M1 ) then
+    return M2;
+  elif IsIdentityMatrix( M2 ) then
+    return M1;
+  elif IsColMatrixRep( M1 ) then
+    return MatrixByCols( R, [ dim1[ 1 ], dim2[ 2 ] ], ColsOfMatrix( M2 ) * ColsOfMatrix( M1 ) );
+  else
+    return MatrixByRows( R, [ dim1[ 1 ], dim2[ 2 ] ], RowsOfMatrix( M1 ) * RowsOfMatrix( M2 ) );
+  fi;
+end );
+
+##
+InstallMethod( \+,
+          [ IsQPAMatrix, IsQPAMatrix ],
+          5000,
+  function( M1, M2 )
+    local R, dim;
+    R := BaseDomain( M1 );
+    dim := DimensionsMat( M1 );
+    if R <> BaseDomain( M2 ) then
+      Error( "matrices over different rings" );
+    elif dim <> DimensionsMat( M2 ) then
+      Error( "dimensions of matrices do not match" );
+    elif HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 ) then
+      return M2;
+    elif HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
+      return M1;
+    elif IsColMatrixRep( M1 ) or IsColMatrixRep( M2 ) then
+      return MatrixByCols( R, dim, ColsOfMatrix( M1 ) + ColsOfMatrix( M2 ) );
+    else
+      return MatrixByRows( R, dim, RowsOfMatrix( M1 ) + RowsOfMatrix( M2 ) );
+    fi;
+end );
+
+##
+InstallMethod( \*,
+          [ IsMultiplicativeElement, IsQPAMatrix ],
+  function( a, M )
+    local dim;
+    if not a in BaseDomain( M ) then
+      TryNextMethod( );
+    fi;
+    
+    dim := DimensionsMat( M );
+    
+    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+      return M;
+    elif IsColMatrixRep( M ) then
+      return MatrixByCols( BaseDomain( M ), dim, a * ColsOfMatrix( M ) );
+    else
+      return MatrixByRows( BaseDomain( M ), dim, a * RowsOfMatrix( M ) );
+    fi;
+    
+end );
+
+##
+InstallMethod( AdditiveInverseMutable,
+          [ IsQPAMatrix ],
+          5000,
+  function( M )
+    local R, dim;
+    R := BaseDomain( M );
+    dim := DimensionsMat( M );
+    if HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+      return M;
+    elif IsColMatrixRep( M ) then
+      return MatrixByCols( R, dim, - ColsOfMatrix( M ) );
+    else
+      return MatrixByRows( R, dim, - RowsOfMatrix( M ) );
+    fi;
+end );
+
+##
+InstallMethod( \=, "for QPA matrices",
+               [ IsQPAMatrix, IsQPAMatrix ],
+               5000,
+function( M1, M2 )
+  local dim, i, j;
+  dim := DimensionsMat( M1 );
+  
+  if dim <> DimensionsMat( M2 ) then
+    return false;
+  fi;
+  
+  if HasIsZeroMatrix( M1 ) and IsZeroMatrix( M1 )
+      and HasIsZeroMatrix( M2 ) and IsZeroMatrix( M2 ) then
+    return true;
+  fi;
+  
+  if HasIsIdentityMatrix( M1 ) and IsIdentityMatrix( M1 )
+      and HasIsIdentityMatrix( M2 ) and IsIdentityMatrix( M2 ) then
+    return true;
+  fi;
+  
+  if IsColMatrixRep( M1 ) then
+    return ColsOfMatrix( M1 ) = ColsOfMatrix( M2 );
+  else
+    return RowsOfMatrix( M1 ) = RowsOfMatrix( M2 );
+  fi;
+  
+end );
+
+###########################################
+#
+# Methods in case there is a global field
+#
+###########################################
+
+#############################
+#
+# Interface to homalg
+#
+##############################
+
+##
+InstallGlobalFunction( QPA_to_Homalg_Matrix_With_Given_Homalg_Field,
+  
+  function( qpa_mat, field )
+    local dim;
+     
+    dim := DimensionsMat( qpa_mat );
+    
+    return HomalgMatrix( RowsOfMatrix( qpa_mat ), dim[ 1 ], dim[ 2 ], field );
+    
+end );
+
+##
+InstallGlobalFunction( QPA_to_Homalg_Matrix,
+  
+  function( qpa_mat )
+   
+    if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+      
+      Error( "No global field is set" );
+      
+    fi;
+      
+    return QPA_to_Homalg_Matrix_With_Given_Homalg_Field( qpa_mat, GLOBAL_FIELD_FOR_QPA!.field );
+    
+end );
+ 
+##
+InstallGlobalFunction( Homalg_to_QPA_Matrix,
+
+  function( homalg_mat )
+    local underlying_field, dim, qpa_mat;
+    
+    underlying_field := HomalgRing( homalg_mat );
+    
+    if not IsRationalsForHomalg( underlying_field ) then
+      
+      Error( "The matrix should be defined over rationals field for homalg" );
+      
+    fi;
+    
+    dim := [ NrRows( homalg_mat ), NrCols( homalg_mat ) ];
+    
+    if ForAny( dim, IsZero ) then
+      
+      qpa_mat := MakeZeroMatrix( Rationals, dim[ 1 ], dim[ 2 ] );
+      
+    else
+      
+      if IsHomalgExternalRingRep( underlying_field ) then
+        
+        homalg_mat := ConvertHomalgMatrix( homalg_mat, GLOBAL_FIELD_FOR_QPA!.default_field );
+        
+      fi;
+      
+      qpa_mat := MatrixByRows( Rationals, dim, EntriesOfHomalgMatrixAsListList( homalg_mat ) );
+      
+    fi;
+    
+    return qpa_mat;
+    
+end );
+
+##############################
+#
+# solve linear equations
+#
+#############################
+
+##
+InstallMethod( SolutionMat, "for QPA matrix and standard vector",
+          [ IsQPAMatrix, IsStandardVector ],
+          5000,
+function( M, vec )
+  local dim, V, v, sol, m;
+  
+  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+    TryNextMethod( );
+  fi;
+  
+  dim := DimensionsMat( M );
+  if dim[ 2 ] <> Length( vec ) then
+    Error("a row vector of length ",Length( vec )," cannot be in the image of a ",
+          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
+  fi;
+  if dim[ 1 ] = 0 then
+    if IsZero( vec ) then
+      return EmptyVector( BaseDomain( M ) );
+    else
+      return fail;
+    fi;
+  fi;
+  
+  V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
+  
+  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+    return AsList( vec );
+  elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+    if IsZero( vec ) then
+      return Zero( V );
+    else
+      return fail;
+    fi;
+  fi;
+  
+  if dim[ 2 ] = 0 then
+    return Zero( V );
+  else
+    
+    Info( InfoDerivedCategories, 3,
+      Concatenation( "Using global field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( vec ) ), " -vector )" ) );
+      
+    m := QPA_to_Homalg_Matrix( M );
+    
+    v := HomalgMatrix( AsList( vec ), 1, Length( vec ), GLOBAL_FIELD_FOR_QPA!.field );
+    
+    sol := RightDivide( v, m );
+    
+    Info( InfoDerivedCategories, 3, "Done!" );
+    
+    if sol = fail then
+      
+      return fail;
+      
+    else
+      
+      sol := Homalg_to_QPA_Matrix( sol );
+      
+      sol := RowsOfMatrix( sol )[ 1 ];
+      
+      sol := Vector( V, sol );
+      
+      Assert( 2, sol * M = vec );
+      
+      return sol;
+      
+    fi;
+    
+  fi;
+  
+end 
+);
+
+##
+InstallMethod( NullspaceMat, "for QPA matrix",
+          [ IsQPAMatrix ],
+          5000,
+function( M )
+  local dim, domain, syz;
+  
+  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+    
+    TryNextMethod( );
+  
+  fi;
+  
+  dim := DimensionsMat( M );
+  
+  domain := BaseDomain( M );
+  
+  if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
+    
+    return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+    
+  else
+    
+    Info( InfoDerivedCategories, 3,
+      Concatenation( "Using global field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
+    
+    M := QPA_to_Homalg_Matrix( M );
+    
+    syz := SyzygiesOfRows( M );
+    
+    Assert( 2, IsZero( syz * M ) );
+    
+    syz := Homalg_to_QPA_Matrix( syz );
+    
+    Info( InfoDerivedCategories, 3, "Done!" );
+    
+    return syz;
+    
+  fi;
+  
+end );
+
+##
+InstallMethod( SolutionMat, "for QPA matrix and a list of standard vector",
+          [ IsQPAMatrix, IsDenseList ],
+          5000,
+function( M, list_of_vectors )
+  local dim, list, nr_vectors, solution, V, v, sol, D, entries, positions, p, m;
+  
+  dim := DimensionsMat( M );
+  
+  if ForAll( list_of_vectors, v -> dim[ 2 ] <> Length( v ) ) then
+    Error("a row vector of length ", Length( v[1] )," cannot be in the image of a ",
+          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
+  fi;
+  
+  list := List( list_of_vectors, AsList );
+  
+  nr_vectors := Size( list );
+  
+  if dim[ 1 ] = 0 then
+    
+    solution := [ ];
+    
+    for v in list_of_vectors do
+      
+      if IsZero( v ) then
+        
+        Add( solution, EmptyVector( BaseDomain( M ) ) );
+        
+      else
+        
+        Add( solution, fail );
+        
+      fi;
+      
+    od;
+    
+    return solution;
+    
+  fi;
+  
+  V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
+  
+  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+    
+    return list;
+    
+  elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
+    
+    solution := [ ];
+    
+    for v in list_of_vectors do
+      
+      if IsZero( v ) then
+        
+        Add( solution, Zero( V ) );
+        
+      else
+        
+        Add( solution, fail );
+        
+      fi;
+      
+    od;
+    
+    return solution;
+    
+  fi;
+  
+  if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
+    
+    return List( list_of_vectors, v -> SolutionMat( M, v ) );
+    
+  elif dim[ 2 ] = 0 then
+    
+    return ListWithIdenticalEntries( nr_vectors, Zero( V ) );
+    
+  else
+    
+    Info( InfoDerivedCategories, 3,
+      Concatenation( "Using global field to compute SolutionMat( ", String( dim ),
+        " -matrix, list of ", String( Length( list_of_vectors ) ), " -vectors )" ) );
+    
+    m := QPA_to_Homalg_Matrix( M );
+    
+    v := HomalgMatrix( list, nr_vectors, Size( list[ 1 ] ), GLOBAL_FIELD_FOR_QPA!.field );
+    
+    solution := List( [ 1 .. nr_vectors ], i -> fail );
+    
+    sol := HomalgVoidMatrix( GLOBAL_FIELD_FOR_QPA!.field );
+    
+    D := DecideZeroRowsEffectively( v, m, sol );
+    
+    if not IsZero( D ) then
+      
+      entries := EntriesOfHomalgMatrixAsListList( D );
+      
+      positions := PositionsProperty( [ 1 .. NrRows( v ) ], i -> IsZero( entries[ i ] ) );
+      
+    else
+      
+      positions := [ 1 .. NrRows( v ) ];
+      
+    fi;
+    
+    Info( InfoDerivedCategories, 3, "Done!" );
+    
+    sol := RowsOfMatrix( Homalg_to_QPA_Matrix( sol ) );
+    
+    sol := sol{ positions };
+    
+    for p in positions do
+      
+      solution[ p ] := Vector( V, -sol[ 1 ] );
+      
+      Assert( 2, solution[ p ] * M = list_of_vectors[ p ] );
+      
+      Remove( sol, 1 );
+      
+    od;
+    
+  fi;
+  
+  return solution;
+  
+end );
+
+##
+InstallMethod( PreImagesRepresentative,
+          [ IsLinearTransformation, IsDenseList ],
+          5000,
+  function( T, list_of_vectors )
+    local x, i;
+    
+    x := ShallowCopy( SolutionMat( RightMatrixOfLinearTransformation( T ), list_of_vectors ) );
+    
+    for i in [ 1 .. Size( x ) ] do
+      
+      if x[ i ] <> fail then
+        
+        x[ i ] := Vector( Source( T ), x[ i ] );
+        
+      fi;
+      
+    od;
+    
+    return x;
+    
+end );
+
+##
+InstallMethod( PreImagesRepresentative, "for a representation homomorphism and a representation element",
+               [ IsQuiverRepresentationHomomorphism, IsDenseList ],
+               5000,
+function( f, list_of_elements )
+  local elements_vectors, maps, preimages, output, preimage;
+  
+  if not ForAll( list_of_elements, m -> m in Range( f ) ) then
+    
+    Error("Some elements are not in the range for the entered homomorphism,\n");
+    
+  fi;
+  
+  if IsEmpty( list_of_elements ) then
+    
+    Error( "The list of elements is empty" );
+    
+  fi;
+  
+  elements_vectors := List( list_of_elements, m -> ElementVectors( m ) );
+  
+  elements_vectors := TransposedMat( elements_vectors );
+  
+  maps := MapsOfRepresentationHomomorphism( f );
+  
+  preimages := ListN( maps, elements_vectors, PreImagesRepresentative );
+  
+  preimages := TransposedMat( preimages );
+  
+  output := [ ];
+  
+  for preimage in preimages do
+    
+    if ForAll( preimage, p -> p <> fail ) then
+    
+      Add( output, QuiverRepresentationElement( Source( f ), preimage ) );
+    
+    else
+    
+      Add( output, fail );
+    
+    fi;
+    
+  od;
+  
+  return output;
+  
+end );
+
+############################################
+#
+# Lift and Colift in quiver representations
+#
+############################################
+
+##
+BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
+  function( f, g )
+    local hom_basis, Q, k, V, hom_basis_composed_with_g, L, vector, mat, sol, lift, h;
+    
+    if IsZeroForObjects( Range( f ) ) then
+      
+      return ZeroMorphism( Source( f ), Source( g ) );
+    
+    fi;
+    
+    hom_basis := BasisOfExternalHom( Source( f ), Source( g ) );
+    
+    if IsZeroForMorphisms( f ) then
+      
+      return ZeroMorphism( Source( f ), Source( g ) );
+    
+    fi;
+    
+    if hom_basis = [ ] then
+      
+      return fail;
+    
+    fi;
+    
+    Q := QuiverOfRepresentation( Source( f ) );
+    
+    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    
+    V := Vertices( Q );
+    
+    hom_basis_composed_with_g := List( hom_basis, m -> PreCompose( m, g ) );
+    
+    L := List( V, v -> Concatenation( 
+          [ RightMatrixOfLinearTransformation( MapForVertex( f, v ) ) ],
+            List( hom_basis_composed_with_g,
+              h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
+    
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+    
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    
+    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+    
+    sol := SolutionMat( mat, vector );
+    
+    if sol = fail then
+      
+      return fail;
+    
+    else
+      
+      sol := ShallowCopy( AsList( sol ) );
+      
+      lift := ZeroMorphism( Source( f ), Source( g ) );
+      
+      for h in hom_basis do
+        
+        if not IsZero( sol[ 1 ] ) then
+          
+          lift := lift + sol[ 1 ]*h;
+        
+        fi;
+        
+        Remove( sol, 1 );
+      
+      od;
+    
+    fi;
+    
+    return lift;
+    
+end );
+
+##
+BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
+  function( f, g )
+    local hom_basis, Q, k, V, hom_basis_composed_with_f, L, vector, mat, sol, colift, h;
+    
+    hom_basis := BasisOfExternalHom( Range( f ), Range( g ) );
+       
+    if IsZeroForMorphisms( g ) then
+      
+      return ZeroMorphism( Range( f ), Range( g ) );
+    
+    fi;
+    
+    if hom_basis = [ ] then
+      
+      return fail;
+    
+    fi;
+    
+    Q := QuiverOfRepresentation( Source( f ) );
+    
+    k := LeftActingDomain( AlgebraOfRepresentation( Source( f ) ) );
+    
+    V := Vertices( Q );
+    
+    hom_basis_composed_with_f := List( hom_basis, m -> PreCompose( f, m ) );
+    
+    L := List( V, v -> Concatenation( 
+            [ RightMatrixOfLinearTransformation( MapForVertex( g, v ) ) ],
+              List( hom_basis_composed_with_f, 
+                h -> RightMatrixOfLinearTransformation( MapForVertex( h, v ) ) ) ) );
+    
+    L := Filtered( L, l -> ForAll( l, m -> not IsZero( DimensionsMat( m )[ 1 ] * DimensionsMat( m )[ 2 ] ) ) );
+    
+    L := List( L, l ->  List( l, m -> MatrixByCols( k, [ Concatenation( ColsOfMatrix( m ) ) ] ) ) );
+    
+    L := List( TransposedMat( L ), l -> StackMatricesVertically( l ) );
+    
+    vector := StandardVector( k!.ring, ColsOfMatrix( L[ 1 ] )[ 1 ] );
+    
+    mat := TransposedMat( StackMatricesHorizontally( List( [ 2 .. Length( L ) ], i -> L[ i ] ) ) );
+    
+    sol := SolutionMat( mat, vector );
+    
+    if sol = fail then
+      
+      return fail;
+    
+    else
+      
+      sol := ShallowCopy( AsList( sol ) );
+      
+      colift := ZeroMorphism( Range( f ), Range( g ) );
+      
+      for h in hom_basis do
+        
+        if not IsZero( sol[ 1 ] ) then
+          
+          colift := colift + sol[ 1 ] * h;
+        
+        fi;
+        
+        Remove( sol, 1 );
+        
+      od;
+    
+    fi;
+    
+    return colift;
+    
+end );
+
+#
+#####################################
+#
+# For Homomorphism structure
+#
+#####################################
+
+InstallMethodWithCache( AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM,
+          [ IsQuiverRepresentation, IsQuiverRepresentation ],
+  function( S, R )
+    local cat, field, A, domain, quiver, nr_of_vertices, S_dimensions, R_dimensions, mat, nr_of_arrows, source_of_arrow, range_of_arrow, S_i, R_i, id_1, id_2, nr_rows_of_block, u, v, nr_cols_in_block1, block_1, block_2, nr_cols_in_block3, block_3, block_4, nr_cols_in_block5, block_5, block, i;
+    
+    cat := CapCategory( S );
+    
+    if not HasIsLinearCategoryOverCommutativeRing( cat ) then
+      
+      Error( "The category should be linear over some homalg field of rationals!\n" );
+      
+    fi;
+    
+    field := CommutativeRingOfLinearCategory( cat );
+    
+    if not IsFieldForHomalg( field ) then
+      
+      Error( "The category should be linear over some homalg field of rationals!\n" );
+      
+    fi;
+    
+    Info( InfoDerivedCategories, 3,
+      "computing AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( <", String( S ), ">, <", String( R ), "> )" 
+      );
+    
+    A := AlgebraOfRepresentation( S );
+    
+    domain := LeftActingDomain( A );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    nr_of_vertices := NumberOfVertices( quiver );
+    
+    S_dimensions := DimensionVector( S );
+    
+    R_dimensions := DimensionVector( R );
+    
+    mat := HomalgZeroMatrix( 0, S_dimensions * R_dimensions, field );
+    
+    nr_of_arrows := NumberOfArrows( quiver );
+    
+    for i in [ 1 .. nr_of_arrows ] do
+      
+      source_of_arrow := VertexIndex( Source( Arrow( quiver, i ) ) );
+      
+      range_of_arrow := VertexIndex( Target( Arrow( quiver, i ) ) );
+      
+      S_i := RightMatrixOfLinearTransformation( MapForArrow( S, i ) );
+      
+      S_i := HomalgMatrix( RowsOfMatrix( S_i ), DimensionsMat( S_i )[ 1 ], DimensionsMat( S_i )[ 2 ], field );
+      
+      R_i := RightMatrixOfLinearTransformation( MapForArrow( R, i ) );
+      
+      R_i := HomalgMatrix( RowsOfMatrix( R_i ), DimensionsMat( R_i )[ 1 ], DimensionsMat( R_i )[ 2 ], field );
+      
+      id_1 := HomalgIdentityMatrix( NrRows( S_i ), field );
+      
+      id_2 := HomalgIdentityMatrix( NrCols( R_i ), field );
+      
+      nr_rows_of_block := NrRows( S_i ) * NrCols( R_i );
+      
+      u := Minimum( source_of_arrow, range_of_arrow );
+      
+      v := Maximum( source_of_arrow, range_of_arrow );
+      
+      if u = 1 then
+        
+        nr_cols_in_block1 := 0;
+      
+      else
+        
+        nr_cols_in_block1 := S_dimensions{ [ 1 .. u - 1 ] } * R_dimensions{ [ 1 .. u - 1 ] };
+      
+      fi;
+      
+      block_1 := HomalgZeroMatrix( nr_rows_of_block,  nr_cols_in_block1, field );
+      
+      if u = source_of_arrow then
+        
+        block_2 := - KroneckerMat( TransposedMatrix( R_i ), id_1 );
+        
+      elif u = range_of_arrow then
+        
+        block_2 := KroneckerMat( id_2, S_i );
+        
+      fi;
+      
+      if v - u in [ 0, 1 ] then
+        
+        nr_cols_in_block3 := 0;
+        
+      else
+        
+        nr_cols_in_block3 := S_dimensions{ [ u + 1 .. v - 1 ] } * R_dimensions{ [ u + 1 .. v - 1 ] };
+        
+      fi;
+      
+      block_3 := HomalgZeroMatrix( nr_rows_of_block,  nr_cols_in_block3, field );
+      
+      if v = source_of_arrow then
+        
+        block_4 := - KroneckerMat( TransposedMatrix( R_i ), id_1 );
+        
+      elif v = range_of_arrow then
+        
+        block_4 := KroneckerMat( id_2, S_i );
+        
+      fi;
+      
+      if v = nr_of_vertices then
+        
+        nr_cols_in_block5 := 0;
+        
+      else
+        
+        nr_cols_in_block5 := S_dimensions{ [ v + 1 .. nr_of_vertices ] }
+                              * R_dimensions{ [ v + 1 .. nr_of_vertices ] };
+        
+      fi;
+      
+      block_5 := HomalgZeroMatrix( nr_rows_of_block,  nr_cols_in_block5, field );
+      
+      block := UnionOfColumns( [ block_1, block_2, block_3, block_4, block_5 ] );
+      
+      mat := UnionOfRows( mat, block );
+      
+    od;
+    
+    Info( InfoDerivedCategories, 3, "computing syzygies of cols of ", NrRows( mat ), " x ", NrCols( mat ) );
+    
+    mat := SyzygiesOfColumns( mat );
+    
+    Info( InfoDerivedCategories, 3, "Done!" );
+    
+    Info( InfoDerivedCategories, 3, "Done!" ) ;
+    
+    return mat;
+    
+end );
+
+##
+InstallMethodWithCache( PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM,
+          [ IsQuiverRepresentation, IsQuiverRepresentation ],
+  
+  function( S, R )
+    local cat, p, A, quiver, nr_of_vertices, S_dimensions, R_dimensions, mat, matrices, nr_cols, i, field;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
+    
+    field := HomalgRing( mat );
+    
+    cat := CapCategory( S );
+    
+    A := AlgebraOfRepresentation( S );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    nr_of_vertices := NumberOfVertices( quiver );
+    
+    S_dimensions := DimensionVector( S );
+    
+    R_dimensions := DimensionVector( R );
+    
+    matrices := [ ];
+    
+    for i in [ 1 .. nr_of_vertices ] do
+      
+      Add( matrices, CertainRows( mat, [ 1 .. S_dimensions[ i ] * R_dimensions[ i ] ] ) );
+      
+      mat := CertainRows( mat, [ S_dimensions[ i ] * R_dimensions[ i ] + 1 .. NrRows( mat ) ] );
+      
+    od;
+     
+    nr_cols := NrCols( mat );
+     
+    matrices := List( [ 1 .. nr_cols ], i -> List( matrices, m -> CertainColumns( m, [ i ] ) ) );
+    
+    matrices := List( matrices,
+      mats -> List( [ 1 .. nr_of_vertices ],
+        function( i )
+          
+          if R_dimensions[ i ] <> 0 then
+            
+            return UnionOfColumns( List( [ 1 .. R_dimensions[ i ] ],
+                      r -> CertainRows( mats[ i ], [ ( r - 1 ) * S_dimensions[ i ] + 1 .. r * S_dimensions[ i ] ] ) )
+                    );
+          else
+            
+            return HomalgZeroMatrix( S_dimensions[ i ], 0, field );
+            
+          fi;
+          
+        end ) );
+        
+    return matrices;
+    
+end );
+
+# TODO we can use the partitions, but I think this is quicker!
+#
+InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS,
+  
+  function( S, R )
+    local mat, field, A, domain, quiver, nr_of_vertices, S_dimensions, R_dimensions, cols, homs, dim_hom, map, k, current_mat, b, i, x, y;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
+    
+    field := HomalgRing( mat );
+    
+    A := AlgebraOfRepresentation( S );
+    
+    domain := LeftActingDomain( A );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    nr_of_vertices := NumberOfVertices( quiver );
+    
+    S_dimensions := DimensionVector( S );
+    
+    R_dimensions := DimensionVector( R );
+    
+    if IsHomalgExternalRingRep( field ) then
+      
+      Info( InfoDerivedCategories, 3, "converting ..." );
+      
+      mat := ConvertHomalgMatrix( mat, GLOBAL_FIELD_FOR_QPA!.default_field );
+      
+      Info( InfoDerivedCategories, 3, "Done!" );
+      
+    fi;
+    
+    cols := TransposedMat( EntriesOfHomalgMatrixAsListList( mat ) );
+    
+    homs := [ ];
+    
+    dim_hom := 0;
+    
+    for b in cols do
+      map := [ ];
+      dim_hom := dim_hom + 1;
+      k := 1;
+      for i in [ 1 .. nr_of_vertices ] do
+        if ( S_dimensions[ i ] <> 0 ) and ( R_dimensions[ i ] <> 0 ) then 
+          current_mat := MutableNullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
+          for x in [ 1..R_dimensions[ i ] ] do
+            for y in [ 1..S_dimensions[ i ] ] do
+              current_mat[ y ][ x ] := b[ k ];
+              k := k + 1;
+            od;
+          od;
+          map[ i ] := MatrixByRows( domain, current_mat );
+        fi;
+      od;
+      homs[ dim_hom ] := QuiverRepresentationHomomorphismNoCheck( S, R, map );
+    od;
+    
+    return homs;
+  
+end );
+
+##
+InstallGlobalFunction( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM,
+  
+  function( alpha )
+    local mat, vector, field;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Range( alpha ) );
+    
+    field := HomalgRing( mat ); 
+    
+    if IsZero( NrCols( mat ) ) then
+      
+      return HomalgZeroMatrix( 0, 1, field );
+      
+    fi;
+     
+    vector := List( MatricesOfRepresentationHomomorphism( alpha ),
+                m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
+    
+    vector := Filtered( vector, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
+    
+    vector := List( vector, 
+                function( m )
+                  
+                  if NrCols( m ) = 0 then
+                    
+                    return HomalgZeroMatrix( NrRows( m ), 0, field );
+                    
+                  else
+                    
+                    return UnionOfRows( List( [ 1 .. NrCols( m ) ], j -> CertainColumns( m, [ j ] ) ) );
+                    
+                  fi;
+              end );
+              
+    vector := UnionOfRows( vector );
+    
+    return LeftDivide( mat, vector );
+    
+end );
+
+##
+InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATIONS,
+  
+  function( S, R )
+    local mat, field;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
+    
+    field := HomalgRing( mat );
+    
+    return VectorSpaceObject( NrCols( mat ), field );
+    
+end );
+
+##
+InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH_GIVEN_OBJECTS,
+          
+  function( s, alpha, beta, r )
+    local cat, field, mats_alpha, mats_beta, partitions, mats, B, sol;
+    
+    cat := CapCategory( alpha );
+    
+    field := CommutativeRingOfLinearCategory( cat );
+    
+    mats_alpha := MatricesOfRepresentationHomomorphism( alpha );
+    
+    mats_alpha := List( mats_alpha, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
+    
+    mats_beta := MatricesOfRepresentationHomomorphism( beta );
+    
+    mats_beta := List( mats_beta, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
+    
+    partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Range( alpha ), Source( beta ) );
+    
+    # This assumes that the quiver is right!
+    partitions := List( partitions, mats -> ListN( mats_alpha, mats, mats_beta, { x, y, z } -> x * y * z ) );
+    
+    mats := List( partitions,
+              mats -> UnionOfRows(
+                        
+                        List( mats,
+                          
+                          function( mat )
+                            
+                            if NrCols( mat ) = 0 then
+                              
+                              return HomalgZeroMatrix( NrRows( mat ), 0, field );
+                              
+                            else
+                              
+                              return UnionOfRows( List( [ 1 .. NrCols( mat ) ], j -> CertainColumns( mat, [ j ] ) ) );
+                            
+                            fi;
+                            
+                          end
+                        )
+                      )
+                );
+    
+    mats := UnionOfColumns( mats );
+    
+    B := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Range( beta ) );
+    
+    sol := TransposedMatrix( LeftDivide( B, mats ) );
+    
+    return VectorSpaceMorphism( s, sol, r );
+    
+end );
+
+##
+InstallGlobalFunction( INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE,
+  
+  function( alpha )
+    local cat, field, U, mat;
+    
+    cat := CapCategory( alpha );
+    
+    field := CommutativeRingOfLinearCategory( cat );
+    
+    U := DistinguishedObjectOfHomomorphismStructure( cat );
+    
+    mat := COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha );
+    
+    return VectorSpaceMorphism( U, TransposedMatrix( mat ), HomStructure( Source( alpha ), Range( alpha ) ) );
+    
+end );
+
+##
+InstallGlobalFunction( INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM,
+  
+  function( S, R, iota )
+    local A, domain, quiver, nr_of_vertices, S_dimensions, R_dimensions, B, c, b, map, k, current_mat, i, x, y;
+    
+    A := AlgebraOfRepresentation( S );
+    
+    domain := LeftActingDomain( A );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    nr_of_vertices := NumberOfVertices( quiver );
+    
+    S_dimensions := DimensionVector( S );
+    
+    R_dimensions := DimensionVector( R );
+    
+    B := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
+    
+    c := TransposedMatrix( UnderlyingMatrix( iota ) );
+    
+    b := B * c;
+    
+    b := Homalg_to_QPA_Matrix( b );
+    
+    b := ColsOfMatrix( b )[ 1 ];
+    
+    map := [ ];
+    
+    k := 1;
+    
+    for i in [ 1 .. nr_of_vertices ] do
+      
+      if ( S_dimensions[ i ] <> 0 ) and ( R_dimensions[ i ] <> 0 ) then
+        
+        current_mat := MutableNullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
+        
+        for x in [ 1..R_dimensions[ i ] ] do
+          
+          for y in [ 1..S_dimensions[ i ] ] do
+            
+            current_mat[ y ][ x ] := b[ k ];
+            
+            k := k + 1;
+            
+          od;
+          
+        od;
+        
+        map[ i ] := MatrixByRows( domain, current_mat );
+        
+      fi;
+    
+    od;
+    
+    return QuiverRepresentationHomomorphismNoCheck( S, R, map );
+    
+end );
+
+
+#####################################
+#
+# QPA categorical methods
+#
+#####################################
+
+## It can be derived from BasisOfExternalHom & CoefficientsOfMorphism
+## But this is much much quicker :)
+##
+BindGlobal( "ADD_HOMOMORPHISM_STRUCTURE_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
+  
+  function( cat )
+    local field;
+    
+    if not (  
+        
+            HasIsLinearCategoryOverCommutativeRing( cat ) and
+            IsLinearCategoryOverCommutativeRing( cat ) and
+            HasCommutativeRingOfLinearCategory( cat ) and
+            IsFieldForHomalg( CommutativeRingOfLinearCategory( cat ) ) 
+              
+          ) then
+      
+      Info( InfoDerivedCategories, 2, "Since the category is not linear, I couldn't add the homomorphism structure methods" );
+      
+      return;
+      
+    fi;
+    
+    ##
+    field := CommutativeRingOfLinearCategory( cat );
+    
+    ##
+    SetRangeCategoryOfHomomorphismStructure( cat, MatrixCategory( field ) );
+    
+    ##
+    AddDistinguishedObjectOfHomomorphismStructure( cat,
+      function( )
+        
+        return VectorSpaceObject( 1, field );
+        
+    end );
+    
+    ##
+    AddHomomorphismStructureOnObjects( cat,
+      HOM_STRUCTURE_ON_QUIVER_REPRESENTATIONS );
+    
+    ##
+    AddHomomorphismStructureOnMorphismsWithGivenObjects( cat,
+      HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH_GIVEN_OBJECTS );
+      
+    ##
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( cat,
+      INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE );
+      
+    ##
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( cat,
+      INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM );
+    
+    return;
+    
+end );
+
+
+##
+BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
+  function( cat )
+    local A, field;
+    
+    A := AlgebraOfCategory( cat );
+    
+    field := UnderlyingField( VectorSpaceCategory( cat ) );
+    
+    AddRandomObjectByList( cat,
+      
+      function( C, l )
+        local indec_proj, indec_injs, simples, ind, s;
+        
+        indec_proj := IndecProjRepresentations( A );
+        
+        indec_injs := IndecInjRepresentations( A );
+        
+        simples := SimpleRepresentations( A );
+        
+        ind := Concatenation( indec_injs, indec_proj, simples );
+        
+        s := List( [ 1 .. Random( l ) ], i -> Random( ind ) );
+        
+        return DirectSum( s );
+        
+    end );
+    
+    AddRandomObjectByInteger( cat,
+      
+      function( C, n )
+        
+        return RandomObjectByList( C, [ n, n ] );
+        
+    end );
+    
+    AddRandomMorphismWithFixedRangeByList( cat,
+    
+      function( M, L )
+        local pi, K, H;
+        
+        if not ForAll( L, l -> l in field ) then
+          
+          Error( "All entries should belong to the acting field of the algebra" );
+          
+        fi;
+        
+        pi := ProjectiveCover( M );
+        
+        K := KernelObject( pi );
+        
+        if IsZero( K ) then
+          
+          K := Source( pi );
+          
+        fi;
+        
+        H := BasisOfExternalHom( K, M );
+        
+        H := Concatenation( H, [ ZeroMorphism( K, M ) ] );
+        
+        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
+        
+     end );
+    
+    AddRandomMorphismWithFixedRangeByInteger( cat,
+      
+      function( M, n )
+        
+        return RandomMorphismWithFixedRangeByList( M, [ 1 .. n ] * One( field ) );
+        
+    end );
+    
+    AddRandomMorphismWithFixedSourceByList( cat,
+      
+      function( M, L )
+        local iota, K, H;
+        
+        if not ForAll( L, l -> l in field ) then
+          
+          Error( "All entries should belong to the acting field of the algebra" );
+          
+        fi;
+        
+        iota := InjectiveEnvelope( M );
+        
+        K := CokernelObject( iota );
+        
+        if IsZero( K ) then
+          
+          K := Range( iota );
+          
+        fi;
+        
+        H := BasisOfExternalHom( M, K );
+        
+        H := Concatenation( H, [ ZeroMorphism( M, K ) ] );
+        
+        return Sum( List( L, l -> Random( L ) * Random( H ) ) );
+        
+    end );
+    
+    AddRandomMorphismWithFixedSourceByInteger( cat,
+      
+      function( M, n )
+        
+        return RandomMorphismWithFixedSourceByList( M, [ 1 .. n ] * One( field ) );
+        
+    end );
+    
+    AddRandomMorphismWithFixedSourceAndRangeByList( cat,
+      
+      function( M, N, L )
+        local H;
+        
+        H := BasisOfExternalHom( M, N );
+        
+        if H = [ ] then
+          
+          return ZeroMorphism( M, N );
+          
+        fi;
+        
+        return Sum( List( H, h -> Random( L ) * h ) );
+        
+    end );
+    
+    AddRandomMorphismWithFixedSourceAndRangeByInteger( cat,
+      
+      function( M, N, n )
+        
+        return RandomMorphismWithFixedSourceAndRangeByList( M, N, [ 1 .. n ] * One( field ) );
+        
+    end );
+    
+    return;
+    
+end );
+
+
+#
+InstallOtherMethod( CategoryOfVectorSpaces,
+        [ IsFieldForHomalg ],
+         
+  function( F )
+    
+    return CategoryOfVectorSpaces( F!.ring );
+    
+end );
+
+##
+InstallMethod( CategoryOfQuiverRepresentations,
+              [ IsQuiverAlgebra and IsRightQuiverAlgebra, IsRationalsForHomalg ],
+              1000,
+  function( A, field )
+    local cat, domain;
+    
+    if HasCategoryOfQuiverRepresentations( A ) then
+      
+      cat := CategoryOfQuiverRepresentations( A );
+      
+      if not IsIdenticalObj( CommutativeRingOfLinearCategory( cat ), field ) then
+        
+        Error( "The category has been already created over a different homalg field!\n" );
+        
+      fi;
+      
+    fi;
+    
+    cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, coqr_derived_cats := false );
+    
+    domain := LeftActingDomain( A );
+    
+    SetIsLinearCategoryOverCommutativeRing( cat, true );
+    
+    SetCommutativeRingOfLinearCategory( cat, field );
+    
+    AddIsEqualForCacheForObjects( cat, IsIdenticalObj );
+    
+    AddIsEqualForCacheForMorphisms( cat, IsIdenticalObj );
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( cat,
+      function( r, alpha )
+        
+        return ( r / domain ) * alpha;
+        
+    end );
+    
+    # quicker than the lift and colift derived by hom structure
+     
+    AddLift( cat, COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
+    
+    AddColift( cat, COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE );
+    
+    AddIsProjective( cat, IsProjectiveRepresentation );
+    
+    AddIsInjective( cat, IsInjectiveRepresentation );
+    
+    AddProjectiveLift( cat,
+      function( pi, epsilon )
+        local P, A, B, top_basis, images;
+        
+        P := Source( pi );
+        
+        A := Range( pi );
+        
+        B := Source( epsilon );
+        
+        top_basis := TopBasis( P );
+        
+        if IsEmpty( top_basis ) then
+          
+          return ZeroMorphism( P, B );
+          
+        fi;
+        
+        images := PreImagesRepresentative( epsilon, List( top_basis, elm -> ImageElm( pi, elm ) ) );
+        
+        return QuiverRepresentationHomomorphismByImages( P, B, top_basis, images );
+        
+    end );
+    
+    ##
+    AddInjectiveColift( cat,
+      function( iota, beta )
+        
+        return DualOfRepresentationHomomorphism(
+                  ProjectiveLift( DualOfRepresentationHomomorphism( beta ), DualOfRepresentationHomomorphism( iota ) )
+                );
+        
+    end );
+    
+    ##
+    AddIsMonomorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsMonomorphism );
+        
+    end );
+    
+    ##
+    AddIsEpimorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsEpimorphism );
+        
+    end ); 
+    
+    ##
+    AddIsIsomorphism( cat,
+      function( alpha )
+        
+        return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsIsomorphism );
+        
+    end ); 
+   
+    ##
+    AddIsWellDefinedForObjects( cat,
+      function( R )
+        local A, relations;
+        
+        A := AlgebraOfRepresentation( R );
+        
+        relations := RelationsOfAlgebra( A );
+        
+        return ForAll( relations, rel -> IsZero( MapForAlgebraElement( R, rel ) ) );
+    
+    end );
+    
+    ##
+    AddIsWellDefinedForMorphisms( cat,
+      function( alpha )
+        local S, R, arrows;
+        
+        S := Source( alpha );
+        
+        R := Range( alpha );
+        
+        arrows := Arrows( QuiverOfRepresentation( S ) );
+        
+        return ForAll( arrows, arrow ->
+                            IsEqualForMorphisms(
+                              PreCompose( MapForArrow( S, arrow ), MapForVertex( alpha, Target( arrow ) ) ),
+                                PreCompose( MapForVertex( alpha, Source( arrow ) ), MapForArrow( R, arrow ) )
+                                               )
+                   );
+    
+    end );
+    
+    ##
+    AddDirectSum( cat,
+      function( summands )
+        local dimension_vector, matrices, d, l, N, d1, d2;
+        
+        if Length( summands ) = 1 then
+          
+          return summands[ 1 ];
+          
+        elif Length( summands ) = 2 then
+          
+          dimension_vector := Sum( List( summands, DimensionVector ) );
+          
+          matrices := List( summands, MatricesOfRepresentation );
+          
+          matrices := List( Transpose( matrices ), StackMatricesDiagonally );
+          
+          d := QuiverRepresentationNoCheck( A, dimension_vector, matrices );
+          
+          if ForAll( summands, s -> HasIsProjective( s ) and IsProjective( s ) ) then
+            
+            SetIsProjective( d, true );
+            
+            SetUnderlyingProjectiveSummands( d, Concatenation( List( summands, UnderlyingProjectiveSummands ) ) );
+            
+          fi;
+          
+          if ForAll( summands, s -> HasIsInjective( s ) and IsInjective( s ) ) then
+            
+            SetIsInjective( d, true );
+            
+            SetUnderlyingInjectiveSummands( d, Concatenation( List( summands, UnderlyingInjectiveSummands ) ) );
+            
+          fi;
+           
+          return d;
+        
+        else
+          
+          N := Length( summands );
+          
+          d1 := DirectSum( summands{ [ 1 .. Int( N/2 ) ] } );
+          
+          d2 := DirectSum( summands{ [ Int( N/2 ) + 1 .. N ] } );
+          
+          return DirectSum( d1, d2 );
+        
+        fi;
+    
+    end );
+    
+    ##
+    AddDirectSumFunctorialWithGivenDirectSums( cat,      
+      function( D1, morphisms, D2 )
+        local matrices;
+        
+        matrices := List( morphisms, MatricesOfRepresentationHomomorphism );
+        
+        matrices := List( Transpose( matrices ), StackMatricesDiagonally );
+        
+        return QuiverRepresentationHomomorphismNoCheck( D1, D2, matrices );
+        
+      end );
+    
+    ##
+    AddMorphismBetweenDirectSums( cat,
+      function( D1, morphisms, D2 )
+        local matrices;
+        
+        matrices := List( [ 1 .. NumberOfVertices( QuiverOfAlgebra( A ) ) ],
+                      i -> STACK_LISTLIST_QPA_MATRICES(
+                        List( morphisms,
+                          row -> List( row,
+                            morphism -> MatricesOfRepresentationHomomorphism( morphism )[ i ] ) ) ) );
+        
+        return QuiverRepresentationHomomorphismNoCheck( D1, D2, matrices );
+        
+      end );
+     
+    ##
+    ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
+    
+    ##
+    ADD_HOMOMORPHISM_STRUCTURE_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE( cat );
+    
+    ##
+    AddBasisOfExternalHom( cat,
+      BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS );
+    
+    ##
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
+      { alpha, B } -> EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
+      );
+    
+    ##
+    FinalizeCategory( cat, true );
+     
+    return cat;
+  
+end );
+
+##
+InstallMethod( CategoryOfQuiverRepresentations,
+              [ IsQuiverAlgebra and IsRightQuiverAlgebra ],
+              1000,
+  function( A )
+    local v;
+    
+    v := ValueOption( "coqr_derived_cats" );
+    
+    if v = false then
+      
+      TryNextMethod( );
+      
+    fi;
+     
+    return CategoryOfQuiverRepresentations( A, GLOBAL_FIELD_FOR_QPA!.default_field );
+    
+end );
 
