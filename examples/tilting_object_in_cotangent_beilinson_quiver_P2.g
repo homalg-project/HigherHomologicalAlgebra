@@ -1,7 +1,10 @@
 LoadPackage( "DerivedCategories" );
 
-field := HomalgFieldOfRationals( );
-SET_GLOBAL_FIELD_FOR_QPA( HomalgFieldOfRationalsInMAGMA( ), field );
+field := GLOBAL_FIELD_FOR_QPA!.default_field;
+#magma := HomalgFieldOfRationalsInMAGMA( );
+magma := field;
+
+SET_GLOBAL_FIELD_FOR_QPA( magma );
 
 quiver := RightQuiver( "q(3)[x0:1->2,x1:1->2,x2:1->2,y0:2->3,y1:2->3,y2:2->3]" );;
 Qq := PathAlgebra( field, quiver );;
@@ -22,7 +25,7 @@ A :=
     ]
 );;
 
-cat := CategoryOfQuiverRepresentations( A );
+cat := CategoryOfQuiverRepresentations( A, magma );
 chains_cat := ChainComplexCategory( cat );
 homotopy_cat := HomotopyCategory( cat );
 derived_cat := DerivedCategory( cat );
@@ -133,10 +136,10 @@ list_for_caches :=
     [ matrix_cat, "none" ],
     [ cat_projs, "none" ],
     [ cat_injs, "none" ],
-    [ cat_indec_projs, "crisp" ],
-    [ cat_indec_injs, "crisp" ],
-    [ add_cat_indec_projs, "none" ],
-    [ add_cat_indec_injs, "none" ],
+    [ cat_indec_projs, "weak" ],
+    [ cat_indec_injs, "weak" ],
+    [ add_cat_indec_projs, "weak" ],
+    [ add_cat_indec_injs, "weak" ],
   ];
 
 Apply( list_for_caches,

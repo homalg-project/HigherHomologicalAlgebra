@@ -1,9 +1,14 @@
 LoadPackage( "DerivedCategories" );
 LoadPackage( "LinearAlgebraForCAP" );
 
+
 field := HomalgFieldOfRationals( );
+
 A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 3, 3, 3 );
 cat := CategoryOfQuiverRepresentations( A );
+
+CapCategorySwitchLogicOff( cat );
+DisableSanityChecks( cat );
 
 collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );
 #collection := CreateExceptionalCollection( IndecInjRepresentations( A ) );
