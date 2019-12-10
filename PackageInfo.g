@@ -10,8 +10,10 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
 Subtitle := "framework for triangulated categories",
-Version := "1.0",
-Date := "14/04/2018", # dd/mm/yyyy format
+Version := "2019.12.06",
+Date := ~.Version{[ 1 .. 10 ]},
+Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
@@ -19,17 +21,18 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Kamal",
     LastName := "Saleh",
-    WWWHome := "Kamal.saleh@uni-siegen.de",
+    WWWHome := "https://github.com/kamalsaleh",
     Email := "kamal.saleh@uni-siegen.de",
-    PostalAddress := "Siegen",
+    PostalAddress := Concatenation(
+                       "Department Mathematik\n",
+                       "Universität Siegen\n",
+                       "Walter-Flex-Straße 3\n",
+                       "57072 Siegen\n",
+                       "Germany" ),
     Place := "Siegen",
-    Institution := "Mathematik Fakultät, Uni Siegen",
+    Institution := "Universität Siegen",
   ),
 ],
-
-#SourceRepository := rec( Type := "TODO", URL := "URL" ),
-#IssueTrackerURL := "TODO",
-#SupportEmail := "TODO",
 
 PackageWWWHome := "https://github.com/kamalsaleh/TriangulatedCategories",
 
