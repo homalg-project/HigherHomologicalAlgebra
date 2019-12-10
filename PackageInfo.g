@@ -10,8 +10,10 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Gap package for constructing stable category of a given Cap category",
-Version := "1.0",
-Date := "14/04/2018", # dd/mm/yyyy format
+Version := "2019.12.04",
+Date := ~.Version{[ 1 .. 10 ]},
+Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
@@ -19,11 +21,16 @@ Persons := [
     IsMaintainer := true,
     FirstNames := "Kamal",
     LastName := "Saleh",
-    WWWHome := "Kamal.saleh@rwth-aachen.de",
-    Email := "kamal.saleh@rwth-aachen.de",
-    PostalAddress := "57068",
+    WWWHome := "https://github.com/kamalsaleh",
+    Email := "kamal.saleh@uni-siegen.de",
+    PostalAddress := Concatenation(
+                       "Department Mathematik\n",
+                       "Universität Siegen\n",
+                       "Walter-Flex-Straße 3\n",
+                       "57072 Siegen\n",
+                       "Germany" ),
     Place := "Siegen",
-    Institution := "Reine Mathematik und Informatik",
+    Institution := "Universität Siegen",
   ),
 ],
 
@@ -33,7 +40,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 #SupportEmail   := "TODO",
-PackageWWWHome  := "https://github.com/kamalsaleh/StableCategoriesForCap",
+PackageWWWHome  := "https://github.com/kamalsaleh/StableCategories",
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL,
