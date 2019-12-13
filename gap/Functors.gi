@@ -158,7 +158,7 @@ end );
 InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, inj_indec, name, G;
+    local H, ambient_cat, reps, inj_indec, name, G, r;
     
     H := HomFunctorByExceptionalCollection( collection );
     
@@ -168,7 +168,9 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
     
     inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
     
-    name := "Kamal";
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( inj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
     
     G := CapFunctor( name, inj_indec, reps );
     
