@@ -1,17 +1,16 @@
 # The GAP package DerivedCategories
 
-TODO: add a description of your package; perhaps also instructions how how to
-install and use it, resp. where to find out more
+A Gap/Cap package to create derived categories and equivalences between them.
 
 
-## Contact
+# Contact
 
-TODO: add info on how to contact you and/or how to report issues with your
-package
+Of course you are welcome to e-mail me if there are any questions, remarks, suggestions
 
-## License
+Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
 
-TODO: Provide information on the license of your package. A license is
-important as it determines who has a right to distribute your package. The
-"default" license to consider is GNU General Public License v2 or later, as
-that is the license of GAP itself.
+# License
+
+DerivedCategories is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
