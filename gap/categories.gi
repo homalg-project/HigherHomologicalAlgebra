@@ -89,6 +89,12 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     SetUnderlyingCategory( complex_cat, cat );
     
+    if HasIsAbCategory( cat ) and IsAbCategory( cat ) then
+      
+      SetIsAbCategory( complex_cat, true );
+      
+    fi;
+    
     if HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) then
       
       SetIsAdditiveCategory( complex_cat, true );
