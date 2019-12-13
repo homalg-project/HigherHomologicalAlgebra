@@ -2648,6 +2648,12 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
       fi;
       
+      if HasIsFinalized( cat ) then
+        
+        return cat;
+        
+      fi;
+      
     fi;
     
     cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, coqr_derived_cats := false );
