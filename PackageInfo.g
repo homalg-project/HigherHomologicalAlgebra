@@ -34,9 +34,9 @@ Persons := [
   ),
 ],
 
-#SourceRepository := rec( Type := "TODO", URL := "URL" ),
-#IssueTrackerURL := "TODO",
-PackageWWWHome := "https://TODO/",
+SourceRepository := rec( Type := "git", URL := "https://github.com/kamalsaleh/DerivedCategories" ),
+IssueTrackerURL := "https://github.com/kamalsaleh/DerivedCategories/issues",
+PackageWWWHome := "https://github.com/kamalsaleh/DerivedCategories",
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
 ArchiveURL     := Concatenation( ~.PackageWWWHome,
