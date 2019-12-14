@@ -38,11 +38,7 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
     r := RANDOM_TEXT_ATTR();
     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-    
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-    
-    name := Concatenation( "Hom(T,-) functor", r[ 1 ], "from", r[ 2 ], Name( ambient_cat ), r[ 1 ], "into", r[ 2 ], Name( reps ) );
+    name := Concatenation( "Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( ambient_cat ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
     
     F := CapFunctor( name, ambient_cat, reps );
     
@@ -281,11 +277,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     
     r := RANDOM_TEXT_ATTR( );
     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-    
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-    
-    name := Concatenation( "Equivalence functor", r[1], "from", r[2], Name( projs ), r[1], "into", r[2], Name( add_indec_projs ) );
+    name := Concatenation( "Equivalence functor ", r[ 1 ], "from", r[2], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( add_indec_projs ) );
     
     F := CapFunctor( name, projs, add_indec_projs );
     
@@ -354,11 +346,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
     
     r := RANDOM_TEXT_ATTR( );
     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-    
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-    
-    name := Concatenation( "Equivalence functor", r[1], "from", r[2], Name( injs ), r[1], "into", r[2], Name( add_indec_injs ) );
+    name := Concatenation( "Equivalence functor", " ", r[ 1 ], "from", r[ 2 ], " ", Name( injs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( add_indec_injs ) );
     
     F := CapFunctor( name, injs, add_indec_injs );
     
@@ -437,11 +425,7 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     
     r := RANDOM_TEXT_ATTR( );
     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-    
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-    
-    name := Concatenation( "Isomorphism functor", r[1], "from", r[2], Name( algebroid ), r[1], "into", r[2], Name( full ) );
+    name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( algebroid ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
     
@@ -504,11 +488,7 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     
     r := RANDOM_TEXT_ATTR( );
     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-    
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-    
-    name := Concatenation( "Isomorphism functor", r[1], "from", r[2], Name( full ), r[1], "into", r[2], Name( algebroid ) );
+    name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( algebroid ) );
     
     G := CapFunctor( name, full, algebroid );
     
@@ -571,12 +551,8 @@ InstallMethod( IsomorphismIntoAlgebroid,
     algebroid := Algebroid( A );
     
     r := RANDOM_TEXT_ATTR( );
-     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-     
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-     
-    name := Concatenation( "Isomorphism functor", r[1], "from", r[2], Name( full ), r[1], "into", r[2], Name( algebroid ) );
+    
+    name := Concatenation( "Isomorphism functor ", r[1], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( algebroid ) );
     
     F := CapFunctor( name, full, algebroid );
     
@@ -670,12 +646,8 @@ InstallMethod( IsomorphismFromAlgebroid,
     algebroid := Algebroid( A );
     
     r := RANDOM_TEXT_ATTR( );
-     
-    r[ 1 ] := Concatenation( " ", r[ 1 ] );
-     
-    r[ 2 ] := Concatenation( r[ 2 ], " " );
-     
-    name := Concatenation( "Isomorphism functor", r[1], "from", r[2], Name( algebroid ), r[1], "into", r[2], Name( full ) );
+    
+    name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( algebroid ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( full ) );
     
     F := CapFunctor( name, algebroid, full );
     
@@ -797,7 +769,7 @@ InstallMethod( UniversalFunctorFromDerivedCategory,
           [ IsCapFunctor ],
   function( F )
     local homotopy_cat, C, cat, D, r, name, U;
-  
+    
     homotopy_cat := AsCapCategory( Source( F ) );
     
     C := AsCapCategory( Range( F ) );
