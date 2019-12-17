@@ -287,6 +287,12 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
         
         d := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( a ) );
         
+        if Size( d ) = 1 and IsZero( d[ 1 ] ) then
+          
+          return ZeroObject( add_indec_projs );
+          
+        fi;
+        
         d := List( d, m -> AsFullSubcategoryCell( projs, Source( m ) ) );
         
         d := List( d, o -> AsFullSubcategoryCell( indec_projs, o ) );
@@ -299,6 +305,12 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     AddMorphismFunction( F,
       function( s, alpha, r )
         local d_source_cell, d_range_cell, alpha_cell, iso, mat;
+        
+        if ( HasIsZero( s ) and IsZero( s ) ) or ( HasIsZero( r ) and IsZero( r ) ) then
+          
+          return ZeroMorphism( s, r );
+          
+        fi;
         
         d_source_cell := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( Source( alpha ) ) );
         
@@ -356,6 +368,12 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
         
         d := DecomposeInjectiveQuiverRepresentation( UnderlyingCell( a ) );
         
+        if Size( d ) = 1 and IsZero( d[ 1 ] ) then
+          
+          return ZeroObject( add_indec_injs );
+          
+        fi;
+        
         d := List( d, m -> AsFullSubcategoryCell( injs, Range( m ) ) );
         
         d := List( d, o -> AsFullSubcategoryCell( indec_injs, o ) );
@@ -369,6 +387,12 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
       function( s, alpha, r )
         local d_source_cell, d_range_cell, alpha_cell, iso, mat;
         
+        if ( HasIsZero( s ) and IsZero( s ) ) or ( HasIsZero( r ) and IsZero( r ) ) then
+          
+          return ZeroMorphism( s, r );
+          
+        fi;
+      
         d_source_cell := DecomposeInjectiveQuiverRepresentation( UnderlyingCell( Source( alpha ) ) );
         
         d_range_cell := DecomposeInjectiveQuiverRepresentation( UnderlyingCell( Range( alpha ) ) );
