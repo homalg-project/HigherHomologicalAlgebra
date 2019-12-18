@@ -718,7 +718,13 @@ InstallMethod( IsomorphismFromAlgebroid,
         paths := Paths( e );
         
         coeffs := Coefficients( e );
-
+        
+        if Size( paths ) = 1 and Source( paths[ 1 ] ) = Target( paths[ 1 ] ) then
+          
+          return coeffs * [ IdentityMorphism( source ) ];
+        
+        fi;
+        
         arrow_list := List( paths, ArrowList );
         
         arrow_list := List( arrow_list, 
