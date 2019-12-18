@@ -306,12 +306,12 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
       function( s, alpha, r )
         local d_source_cell, d_range_cell, alpha_cell, iso, mat;
         
-        if ( HasIsZero( s ) and IsZero( s ) ) or ( HasIsZero( r ) and IsZero( r ) ) then
+        if ( HasIsZeroForObjects( s ) and IsZeroForObjects( s ) ) or ( HasIsZeroForObjects( r ) and IsZeroForObjects( r ) ) then
           
           return ZeroMorphism( s, r );
           
         fi;
-        
+         
         d_source_cell := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( Source( alpha ) ) );
         
         d_range_cell := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( Range( alpha ) ) );
@@ -387,7 +387,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
       function( s, alpha, r )
         local d_source_cell, d_range_cell, alpha_cell, iso, mat;
         
-        if ( HasIsZero( s ) and IsZero( s ) ) or ( HasIsZero( r ) and IsZero( r ) ) then
+        if ( HasIsZeroForObjects( s ) and IsZeroForObjects( s ) ) or ( HasIsZeroForObjects( r ) and IsZeroForObjects( r ) ) then
           
           return ZeroMorphism( s, r );
           
@@ -552,7 +552,17 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
         
         rel := AdditiveInverse( Inverse( rel[ 1 ][ 1 ] ) ) * rel[ 1 ];
         
-        return rel{ [ 2 .. dim + 1 ] } * basis;
+        rel := rel{ [ 2 .. dim + 1 ] };
+        
+        if IsEmpty( rel ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return rel * basis;
+          
+        fi;
       
       end );
     
