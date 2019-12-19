@@ -1,7 +1,7 @@
-
 ##
 InstallMethod( HomFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],
+    
   function( collection )
     local full, A, field, A_op, quiver, arrows, labels, ambient_cat, reps, r, name, F;
     
