@@ -262,6 +262,204 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
 end );
 
 ##
+InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local cat, G, add_G, can, can_add_G, injs, reps, r, name, R;
+    
+    cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    
+    G := RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects( collection );
+    
+    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    
+    can := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( cat );
+    
+    can_add_G := PreCompose( can, add_G );
+    
+    injs := AsCapCategory( Source( can_add_G ) );
+    
+    reps := AsCapCategory( Range( can_add_G ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( injs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
+    
+    R := CapFunctor( name, injs, reps );
+    
+    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
+    
+    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
+    
+    return R;
+
+end );
+
+##
+InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local full, ambient_cat, inc, iso2, A, iso1, iso, indec_projs, r, name, F;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    inc := InclusionFunctor( full );
+     
+    iso2 := IsomorphismFromAlgebroid( collection );
+    
+    A := AsCapCategory( Source( iso2 ) );
+    
+    iso1 := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( A );
+    
+    iso := PreCompose( [ iso1, iso2, inc ] );
+    
+    indec_projs := AsCapCategory( Source( iso ) );
+    
+    r := RANDOM_TEXT_ATTR();
+    
+    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", 
+              Name( indec_projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ambient_cat ) );
+    
+    F := CapFunctor( name, indec_projs, ambient_cat );
+    
+    AddObjectFunction( F,
+      function( r )
+        local rr, p;
+        
+        if not IsBound( F!.ValuesForObjects ) then
+          
+          rr := ApplyFunctor( iso, r );
+          
+          F!.ValuesForObjects := [ [ r, rr ] ];
+          
+          return rr;
+          
+        else
+          
+          p := PositionProperty( F!.ValuesForObjects, v -> IsIdenticalObj( v[ 1 ], r ) or 
+                DimensionVector( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) )
+                  = DimensionVector( UnderlyingCell( UnderlyingCell( r ) ) )
+                );
+         
+          if p = fail then
+            
+            rr := ApplyFunctor( iso, r );
+            
+            Add( F!.ValuesForObjects, [ r, rr ] );
+            
+            return rr;
+            
+          else
+            
+            return F!.ValuesForObjects[ p ][ 2 ];
+            
+          fi;
+          
+        fi;
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, alpha, range )
+        local a, b, basis, images, p, coeffs;
+        
+        a := Source( alpha );
+        
+        b := Range( alpha );
+               
+        if not IsBound( F!.GeneratingValuesForMorphisms ) then
+          
+          basis := BasisOfExternalHom( a, b );
+        
+          images := List( basis, phi -> ApplyFunctor( iso, phi ) );
+          
+          F!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
+          
+        else
+          
+          p := PositionProperty( F!.GeneratingValuesForMorphisms,
+            v -> ( 
+                IsIdenticalObj( v[ 1 ], a ) or 
+                 DimensionVector( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) 
+                  = DimensionVector( UnderlyingCell( UnderlyingCell( a ) ) )
+                 )
+              and
+                 (
+                IsIdenticalObj( v[ 2 ], b ) or
+                  DimensionVector( UnderlyingCell( UnderlyingCell( v[ 2 ] ) ) ) 
+                  = DimensionVector( UnderlyingCell( UnderlyingCell( b ) ) ) 
+                 )
+              );
+          
+          if p = fail then
+            
+            basis := BasisOfExternalHom( a, b );
+        
+            images := List( basis, phi -> ApplyFunctor( iso, phi ) );
+          
+            Add( F!.GeneratingValuesForMorphisms, [ a, b, images ] );
+            
+          else
+            
+            images := F!.GeneratingValuesForMorphisms[ p ][ 3 ];
+            
+          fi;
+          
+        fi; 
+        
+        if IsEmpty( images ) then
+          
+          return ZeroMorphism( source, range );
+          
+        fi;
+        
+        coeffs := CoefficientsOfMorphism( alpha );
+        
+        return coeffs * images;
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local G, add_G, C, can, can_add_G, projs, D, r, name, R;
+    
+    G := RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
+    
+    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    
+    C := AmbientCategory( AmbientCategory( AsCapCategory( Source( G ) ) ) );
+    
+    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
+    
+    can_add_G := PreCompose( can, add_G );
+    
+    projs := AsCapCategory( Source( can_add_G ) );
+    
+    D := AsCapCategory( Range( can_add_G ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Restriction of - ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
+    
+    R := CapFunctor( name, projs, D );
+    
+    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
+    
+    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
+    
+    return R;
+
+end );
+
+##
 InstallMethod( TensorFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],
     
