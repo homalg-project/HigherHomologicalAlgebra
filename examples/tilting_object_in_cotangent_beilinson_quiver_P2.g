@@ -26,30 +26,13 @@ A :=
     ]
 );;
 
-cat := CategoryOfQuiverRepresentations( A, magma );
-chains_cat := ChainComplexCategory( cat );
-homotopy_cat := HomotopyCategory( cat );
-derived_cat := DerivedCategory( cat );
-
-pp := IndecProjRepresentations( A );
+C := CategoryOfQuiverRepresentations( A, magma );
+C_injs := FullSubcategoryGeneratedByInjectiveObjects( C );
+chains_C := ChainComplexCategory( C );
+homotopy_C := HomotopyCategory( C );
+derived_C := DerivedCategory( C );
 
 ii := IndecInjRepresentations( A );
-
-matrix_cat := RangeCategoryOfHomomorphismStructure( cat );
-
-cat_projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
-cat_indec_projs := FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
-add_cat_indec_projs := AdditiveClosure( cat_indec_projs );
-
-cat_injs := FullSubcategoryGeneratedByInjectiveObjects( cat );
-cat_indec_injs := FullSubcategoryGeneratedByIndecInjectiveObjects( cat );
-add_cat_indec_injs := AdditiveClosure( cat_indec_injs );
-
-# decomposition functor: cat_projs ---> add_cat_indec_projs
-dec_proj_func := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );
-
-# decomposition functor: cat_injs ---> add_cat_indec_injs
-dec_inj_func := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( cat );
 
 
 # O, O(1), O(2)
@@ -104,59 +87,29 @@ Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );
 
 collection := CreateExceptionalCollection( T );
 
-# right A-representations -> right End(T)-representations
-# i.e., cat ---> right End(T)-representations
-F := HomFunctorByExceptionalCollection( collection );
+HH := HomFunctorByExceptionalCollection( collection );
+HI := RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects( collection );
 
-# if we want to apply F only on injective objects we can compute the restriction to injective objects
-# i.e., cat_injs -> right End(T)-representations
+TT := TensorFunctorByExceptionalCollection( collection );
+TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
 
-F_on_injs_1 := RestrictFunctorToFullSubcategoryOfSource( F, cat_injs );
+D := AsCapCategory( Source( TT ) );
+D_projs := FullSubcategoryGeneratedByProjectiveObjects( D );
 
-# to compute faster, we can restrict the functor to cat_indec_injs
-# i.e., cat_indec_injs ---> right End(T)-representations
-r_F := RestrictFunctorToFullSubcategoryOfSource( F_on_injs_1, cat_indec_injs );
-
-# and then extend to the additive closure of the source
-# i.e., add_cat_indec_injs ---> right End(T)-representations
-add_r_F := ExtendFunctorToAdditiveClosureOfSource( r_F );
-
-# now we precompose with dec_inj_func
-
-F_on_injs_2 := PreCompose( dec_inj_func, add_r_F );
-
-G := RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects( collection );
-add_G := ExtendFunctorToAdditiveClosureOfSource( G );
-
-F_on_injs_3 := PreCompose( dec_inj_func, add_G );
-
-# none, weak or crisp
-list_for_caches :=
-  [
-    [ cat, "weak" ],
-    [ matrix_cat, "none" ],
-    [ cat_projs, "none" ],
-    [ cat_injs, "none" ],
-    [ cat_indec_projs, "weak" ],
-    [ cat_indec_injs, "weak" ],
-    [ add_cat_indec_projs, "weak" ],
-    [ add_cat_indec_injs, "weak" ],
-  ];
-
-Apply( list_for_caches,
-  function( l ) 
-    SetCachingOfCategory( l[1], l[2] );
-    return true;
-end );
+pp := IndecProjRepresentations( AlgebraOfCategory( D ) );
 
 quit;
 
 L := List( [ 1 .. 15 ], i -> Random( ii ) );
 a := DirectSum( L );
 
-b1 := ApplyFunctor( F_on_injs_1, a/cat_injs );time;
+Time( ApplyFunctor, [ HH, a ] );
+Time( ApplyFunctor, [ HI, a / C_injs ] );
 
-b2 := ApplyFunctor( F_on_injs_2, a/cat_injs );time;
+L := List( [ 1 .. 15 ], i -> Random( pp ) );
+b := DirectSum( L );
 
-b3 := ApplyFunctor( F_on_injs_3, a/cat_injs );time;
+Time( ApplyFunctor, [ TT, b ] );
+Time( ApplyFunctor, [ TP, b / D_projs ] );
+
 
