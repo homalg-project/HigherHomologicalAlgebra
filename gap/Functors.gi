@@ -185,7 +185,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
         else
           
           p := PositionProperty( G!.ValuesForObjects,
-                v -> String( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( a ) ) )
+                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
                   );
          
           if p = fail then
@@ -225,9 +225,9 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
         else
           
           p := PositionProperty( G!.GeneratingValuesForMorphisms,
-            v -> String( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( a ) ) )
-                  and String( UnderlyingCell( UnderlyingCell( v[ 2 ] ) ) ) = String( UnderlyingCell( UnderlyingCell( b ) ) )
-                  );
+            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
+                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
+                );
           
           if p = fail then
             
