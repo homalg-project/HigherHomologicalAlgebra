@@ -726,7 +726,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "none" ); 
+    SetCachingOfCategory( full, "crisp" );
     
     return full;
    
@@ -758,7 +758,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "none" ); 
+    SetCachingOfCategory( full, "crisp" ); 
     
     return full;
     
@@ -851,7 +851,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "none" ); 
+    DeactivateCachingOfCategory( full );
     
     finalize := ValueOption( "FinalizeCategory" );
     
@@ -929,7 +929,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "none" ); 
+    DeactivateCachingOfCategory( full );
    
     finalize := ValueOption( "FinalizeCategory" );
     
