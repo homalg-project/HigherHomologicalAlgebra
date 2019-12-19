@@ -262,6 +262,72 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
 end );
 
 ##
+InstallMethod( TensorFunctorByExceptionalCollection,
+    [ IsExceptionalCollection ],
+    
+  function( collection )
+    local full, inc, iso2, A, iso1, iso, ambient_cat, A_op, reps, can, projs, r, name, F;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    inc := InclusionFunctor( full );
+    
+    inc := ExtendFunctorToAdditiveClosureOfSource( inc );
+    
+    iso2 := IsomorphismFromAlgebroid( collection );
+    
+    A := AsCapCategory( Source( iso2 ) );
+    
+    iso1 := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( A );
+    
+    iso := PreCompose( iso1, iso2 );
+    
+    iso := ExtendFunctorToAdditiveClosures( iso );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    A_op := OppositeAlgebra( UnderlyingQuiverAlgebra( A ) );
+    
+    reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
+    
+    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps );
+    
+    projs := AsCapCategory( Source( can ) );
+    
+    r := RANDOM_TEXT_ATTR();
+    
+    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( reps ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ambient_cat ) );
+    
+    F := CapFunctor( name, reps, ambient_cat );
+    
+    AddObjectFunction( F,
+      function( r )
+        local P;
+        
+        P := ProjectiveChainResolution( r );
+        
+        P := P^1;
+        
+        P := ApplyFunctor( can, P / projs );
+        
+        P := ApplyFunctor( iso, P );
+        
+        P := ApplyFunctor( inc, P );
+        
+        return CokernelObject( P );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( r1, alpha, r2 )
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
 InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects,
           [ IsQuiverRepresentationCategory ],
   function( cat )
