@@ -319,7 +319,20 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     end );
     
     AddMorphismFunction( F,
-      function( r1, alpha, r2 )
+      function( source, alpha, range )
+        local gamma;
+        
+        gamma := MorphismBetweenProjectiveChainResolutions( alpha );
+        
+        gamma := [ Source( gamma ) ^ 1, gamma[ 0 ], Range( gamma ) ^ 1 ];
+        
+        gamma := List( gamma, g -> ApplyFunctor( can, g / projs ) );
+        
+        gamma := List( gamma, g -> ApplyFunctor( iso, g ) );
+        
+        gamma := List( gamma, g -> ApplyFunctor( inc, g ) );
+        
+        return CallFuncList( CokernelObjectFunctorial, gamma );
         
     end );
     
