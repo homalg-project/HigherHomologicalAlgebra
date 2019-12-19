@@ -2845,6 +2845,12 @@ InstallMethod( CategoryOfQuiverRepresentations,
       function( D1, morphisms, D2 )
         local matrices;
         
+        if IsEmpty( morphisms ) or IsEmpty( morphisms[ 1 ] ) then
+          
+          return ZeroMorphism( D1, D2 );
+          
+        fi;
+        
         matrices := List( [ 1 .. NumberOfVertices( QuiverOfAlgebra( A ) ) ],
                       i -> STACK_LISTLIST_QPA_MATRICES(
                         List( morphisms,
