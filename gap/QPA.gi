@@ -2511,7 +2511,7 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
     AddRandomObjectByList( cat,
       
       function( C, l )
-        local indec_proj, indec_injs, simples, ind, s;
+        local indec_proj, indec_injs, simples, ind, s1, s2, alpha;
         
         indec_proj := IndecProjRepresentations( A );
         
@@ -2521,9 +2521,13 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         
         ind := Concatenation( indec_injs, indec_proj, simples );
         
-        s := List( [ 1 .. Random( l ) ], i -> Random( ind ) );
+        s1 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
         
-        return DirectSum( s );
+        s2 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
+        
+        alpha := Sum( BasisOfExternalHom( s1, s2 ) );
+        
+        return CokernelObject( alpha );
         
     end );
     
@@ -2531,8 +2535,37 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
       
       function( C, n )
         
-        return RandomObjectByList( C, [ 1 .. n ] );
+        return RandomObjectByList( C, [ n ] );
         
+    end );
+    
+    AddRandomMorphismByList( cat,
+      
+      function( C, L )
+        local a, b, B;
+        
+        a := RandomObjectByList( C, L );
+        
+        b := RandomObjectByList( C, L );
+        
+        B := BasisOfExternalHom( a, b );
+        
+        if IsEmpty( B ) then
+          
+          return ZeroMorphism( a, b );
+          
+        fi;
+        
+        return Sum( B );
+        
+    end );
+    
+    AddRandomMorphismByInteger( cat,
+      
+      function( C, n )
+        
+        return RandomMorphismByList( C, [ n ] );
+    
     end );
     
     AddRandomMorphismWithFixedRangeByList( cat,
