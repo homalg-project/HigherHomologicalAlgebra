@@ -1,7 +1,7 @@
-LoadPackage( "HomotopyCategoriesForCAP" );
+LoadPackage( "DerivedCategories" );
+LoadPackage( "HomotopyCategories" );
 LoadPackage( "QPA" );
 LoadPackage( "LinearAlgebraForCAP" );
-LoadPackage( "DerivedCategories" );
 
 homalg_field := HomalgFieldOfRationals( );
 
@@ -36,14 +36,6 @@ A :=
       Qq.y2 * Qq.z3 + Qq.y3 * Qq.z2
     ]
 );;
-
-SetIsAdmissibleQuiverAlgebra( A, true );
-
-cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false );;
-cat!.compute_basis_of_hom_using_homalg := [ true, 1, homalg_field ]; 
-SetIsLinearCategoryOverCommutativeRing( cat, true );;
-SetCommutativeRingOfLinearCategory( cat, homalg_field );;
-Finalize( cat );;
 
 T := [ ];
 

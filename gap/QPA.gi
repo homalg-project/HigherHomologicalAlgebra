@@ -435,7 +435,7 @@ InstallMethod( IndecProjRepresentations,
 end );
 
 ##
-InstallOtherMethod( IndecProjRepresentations,
+InstallOtherMethod( IndecProjectiveObjects,
     [ IsQuiverRepresentationCategory ],
   function( cat )
   
@@ -467,7 +467,7 @@ InstallMethod( IndecInjRepresentations,
 end );
 
 ##
-InstallOtherMethod( IndecInjRepresentations,
+InstallOtherMethod( IndecInjectiveObjects,
     [ IsQuiverRepresentationCategory ],
   function( cat )
   

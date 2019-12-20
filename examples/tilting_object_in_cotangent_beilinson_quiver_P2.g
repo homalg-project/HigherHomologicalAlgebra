@@ -32,7 +32,7 @@ chains_C := ChainComplexCategory( C );
 homotopy_C := HomotopyCategory( C );
 derived_C := DerivedCategory( C );
 
-ii := IndecInjRepresentations( C );
+ii := IndecInjectiveObjects( C );
 
 
 # O, O(1), O(2)
@@ -96,7 +96,7 @@ TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( coll
 D := AsCapCategory( Source( TT ) );
 D_projs := FullSubcategoryGeneratedByProjectiveObjects( D );
 
-pp := IndecProjRepresentations( D );
+pp := IndecProjectiveObjects( D );
 
 quit;
 

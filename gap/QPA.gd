@@ -70,3 +70,6 @@ DeclareGlobalFunction( "INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORP
 DeclareOperation( "CategoryOfQuiverRepresentations",
   [ IsQuiverAlgebra, IsRationalsForHomalg ] );
 
+DeclareAttribute( "IndecProjectiveObjects", IsQuiverRepresentationCategory );
+DeclareAttribute( "IndecInjectiveObjects", IsQuiverRepresentationCategory );
+
