@@ -2682,6 +2682,12 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     SetCommutativeRingOfLinearCategory( cat, field );
     
+    DisableSanityChecks( cat ); 
+    
+    CapCategorySwitchLogicOff( cat );
+    
+    DisableAddForCategoricalOperations( cat );
+    
     AddIsEqualForCacheForObjects( cat, IsIdenticalObj );
     
     AddIsEqualForCacheForMorphisms( cat, IsIdenticalObj );
