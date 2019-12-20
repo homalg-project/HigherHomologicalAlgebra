@@ -464,39 +464,21 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],
     
   function( collection )
-    local full, inc, iso2, A, iso1, iso, ambient_cat, A_op, reps, can, projs, r, name, F;
+    local R, r, projs, reps, cat, name, F;
     
-    full := DefiningFullSubcategory( collection );
+    R := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
     
-    inc := InclusionFunctor( full );
+    projs := AsCapCategory( Source( R ) );
     
-    inc := ExtendFunctorToAdditiveClosureOfSource( inc );
+    reps := AmbientCategory( projs  );
     
-    iso2 := IsomorphismFromAlgebroid( collection );
+    cat := AsCapCategory( Range( R ) );
     
-    A := AsCapCategory( Source( iso2 ) );
+    r := RANDOM_TEXT_ATTR( );
     
-    iso1 := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( A );
+    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( reps ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( cat ) );
     
-    iso := PreCompose( iso1, iso2 );
-    
-    iso := ExtendFunctorToAdditiveClosures( iso );
-    
-    ambient_cat := AmbientCategory( full );
-    
-    A_op := OppositeAlgebra( UnderlyingQuiverAlgebra( A ) );
-    
-    reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
-    
-    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps );
-    
-    projs := AsCapCategory( Source( can ) );
-    
-    r := RANDOM_TEXT_ATTR();
-    
-    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( reps ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ambient_cat ) );
-    
-    F := CapFunctor( name, reps, ambient_cat );
+    F := CapFunctor( name, reps, cat );
     
     AddObjectFunction( F,
       function( r )
@@ -506,11 +488,7 @@ InstallMethod( TensorFunctorByExceptionalCollection,
         
         P := P^1;
         
-        P := ApplyFunctor( can, P / projs );
-        
-        P := ApplyFunctor( iso, P );
-        
-        P := ApplyFunctor( inc, P );
+        P := ApplyFunctor( R, P / projs );
         
         return CokernelObject( P );
         
@@ -524,11 +502,7 @@ InstallMethod( TensorFunctorByExceptionalCollection,
         
         gamma := [ Source( gamma ) ^ 1, gamma[ 0 ], Range( gamma ) ^ 1 ];
         
-        gamma := List( gamma, g -> ApplyFunctor( can, g / projs ) );
-        
-        gamma := List( gamma, g -> ApplyFunctor( iso, g ) );
-        
-        gamma := List( gamma, g -> ApplyFunctor( inc, g ) );
+        gamma := List( gamma, g -> ApplyFunctor( R, g / projs ) );
         
         return CallFuncList( CokernelObjectFunctorial, gamma );
         
