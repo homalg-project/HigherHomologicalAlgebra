@@ -552,6 +552,8 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     
     add_indec_projs := AdditiveClosure( indec_projs  );
     
+    DeactivateCachingOfCategory( add_indec_projs );
+    
     r := RANDOM_TEXT_ATTR( );
     
     name := Concatenation( "Equivalence functor ", r[ 1 ], "from", r[2], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( add_indec_projs ) );
@@ -632,6 +634,8 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
     indec_injs := FullSubcategoryGeneratedByIndecInjectiveObjects( cat );
     
     add_indec_injs := AdditiveClosure( indec_injs  );
+    
+    DeactivateCachingOfCategory( add_indec_injs );
     
     r := RANDOM_TEXT_ATTR( );
     
