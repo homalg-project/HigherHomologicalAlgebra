@@ -2671,6 +2671,10 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
     
 end );
 
+##
+InstallOtherMethod( Representative,
+          [ IsPathAlgebraElement ],
+  IdFunc );
 
 #
 InstallOtherMethod( CategoryOfVectorSpaces,
