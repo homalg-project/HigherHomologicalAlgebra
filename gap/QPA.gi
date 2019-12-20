@@ -435,6 +435,15 @@ InstallMethod( IndecProjRepresentations,
 end );
 
 ##
+InstallOtherMethod( IndecProjRepresentations,
+    [ IsQuiverRepresentationCategory ],
+  function( cat )
+  
+    return IndecProjRepresentations( AlgebraOfCategory( cat ) );
+    
+end );
+
+##
 InstallMethod( IndecInjRepresentations,
           [ IsQuiverAlgebra ],
           100,
@@ -455,6 +464,15 @@ InstallMethod( IndecInjRepresentations,
    
     return injs;
   
+end );
+
+##
+InstallOtherMethod( IndecInjRepresentations,
+    [ IsQuiverRepresentationCategory ],
+  function( cat )
+  
+    return IndecInjRepresentations( AlgebraOfCategory( cat ) );
+    
 end );
 
 ##
