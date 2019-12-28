@@ -728,7 +728,13 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
          DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
       );
     
-    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    AddIsEqualForMorphisms( full,
+      { alpha_1, alpha_2 } ->
+        IsEqualForObjects( Source( alpha_1 ), Source( alpha_2 ) ) and 
+          IsEqualForObjects( Range( alpha_1 ), Range( alpha_2 ) ) and
+            MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
+              MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
+            );
     
     CapCategorySwitchLogicOff( full );
     
@@ -768,7 +774,13 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
          DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
       );
     
-    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    AddIsEqualForMorphisms( full,
+      { alpha_1, alpha_2 } ->
+        IsEqualForObjects( Source( alpha_1 ), Source( alpha_2 ) ) and 
+          IsEqualForObjects( Range( alpha_1 ), Range( alpha_2 ) ) and
+            MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
+              MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
+            );
     
     CapCategorySwitchLogicOff( full );
     
