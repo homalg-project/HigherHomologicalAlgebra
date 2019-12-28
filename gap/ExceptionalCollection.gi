@@ -1048,3 +1048,23 @@ InstallMethod( ViewObj,
     
 end );
 
+##
+InstallMethod( Display,
+    [ IsExceptionalCollection ],
+  function( collection )
+    local N, i;
+    
+    N := NumberOfObjects( collection );
+    
+    Print( "A strong exceptional collection defined by ", N, " objects:\n\n" );
+    
+    for i in [ 1 .. N ] do
+      
+      Print( "\033[33m\033[4mObject ", i, ":\033[0m\n" );
+      
+      Display( collection[ i ] );
+      
+    od;
+    
+end );
+
