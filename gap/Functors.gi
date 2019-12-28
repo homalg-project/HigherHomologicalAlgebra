@@ -365,14 +365,20 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
       function( source, alpha, range )
         local a, b, basis, images, p, coeffs;
         
+        if HasIsZero( alpha ) and IsZero( alpha ) then
+          
+          return ZeroMorphism( source, range );
+          
+        fi;
+        
         a := Source( alpha );
         
         b := Range( alpha );
-               
+        
         if not IsBound( F!.GeneratingValuesForMorphisms ) then
           
           basis := BasisOfExternalHom( a, b );
-        
+          
           images := List( basis, phi -> ApplyFunctor( iso, phi ) );
           
           F!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
@@ -396,9 +402,9 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
           if p = fail then
             
             basis := BasisOfExternalHom( a, b );
-        
+            
             images := List( basis, phi -> ApplyFunctor( iso, phi ) );
-          
+            
             Add( F!.GeneratingValuesForMorphisms, [ a, b, images ] );
             
           else
@@ -482,21 +488,25 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     
     AddObjectFunction( F,
       function( r )
-        local P;
+        local P, cok;
         
         P := ProjectiveChainResolution( r );
         
-        P := P^1;
+        P := P ^ 1;
         
         P := ApplyFunctor( R, P / projs );
         
-        return CokernelObject( P );
+        cok := CokernelObject( P );
+        
+        cok!.defining_morphism_of_cokernel_object := P;
+        
+        return cok;
         
     end );
     
     AddMorphismFunction( F,
       function( source, alpha, range )
-        local gamma;
+        local gamma, cok_func;
         
         gamma := MorphismBetweenProjectiveChainResolutions( alpha );
         
@@ -504,7 +514,11 @@ InstallMethod( TensorFunctorByExceptionalCollection,
         
         gamma := List( gamma, g -> ApplyFunctor( R, g / projs ) );
         
-        return CallFuncList( CokernelObjectFunctorial, gamma );
+        cok_func := CallFuncList( CokernelObjectFunctorial, gamma );
+        
+        cok_func!.defining_morphism_of_cokernel_object := gamma[ 2 ];
+        
+        return cok_func;
         
     end );
     
