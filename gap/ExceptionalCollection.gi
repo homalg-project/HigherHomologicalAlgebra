@@ -720,13 +720,21 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     projs := List( projs, p -> AsFullSubcategoryCell( full_subcategory_by_projs, p ) );
     
-    full := FullSubcategoryGeneratedByListOfObjects( projs );
+    full := FullSubcategoryGeneratedByListOfObjects( projs : FinalizeCategory := false );
+    
+    AddIsEqualForObjects( full,
+      { r1, r2 } ->
+        DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
+         DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
+      );
+    
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
     
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "crisp" );
+    Finalize( full );
     
     return full;
    
@@ -752,13 +760,21 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     
     injs := List( injs, p -> AsFullSubcategoryCell( full_subcategory_by_injs, p ) );
     
-    full := FullSubcategoryGeneratedByListOfObjects( injs );
+    full := FullSubcategoryGeneratedByListOfObjects( injs : FinalizeCategory := false );
+    
+    AddIsEqualForObjects( full,
+      { r1, r2 } ->
+        DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
+         DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
+      );
+    
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
     
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
     
-    SetCachingOfCategory( full, "crisp" ); 
+    Finalize( full );
     
     return full;
     
@@ -770,7 +786,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
           [ IsAlgebroid ],
   function( algebroid )
     local A, A_op, cat, FinalizeCategory;
-     
+    
     A := UnderlyingQuiverAlgebra( algebroid );
     
     A_op := OppositeAlgebra( A );
@@ -780,9 +796,9 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
       SetIsAdmissibleQuiverAlgebra( A_op, true );
       
     fi;
-      
+    
     cat := CategoryOfQuiverRepresentations( A_op : FinalizeCategory := false );
-       
+    
     Finalize( cat );
     
     return FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
@@ -844,7 +860,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
           return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
           
       end );
-     
+    
     fi;
     
     CapCategorySwitchLogicOff( full );
@@ -860,7 +876,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       return full;
     
     fi;
-        
+    
     Finalize( full );
     
     return full;
