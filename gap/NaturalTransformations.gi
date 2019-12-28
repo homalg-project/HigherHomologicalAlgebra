@@ -19,19 +19,30 @@ BindGlobal( "NAT",
     
     AddNaturalTransformationFunction( nat,
       function( ht_a, a, id_a )
-        local ha, min_gen, positions, vectors, mor;
+        local ha, min_gen, positions, vectors, positions_of_non_zeros, mor;
         
         ha := ApplyFunctor( HH, a );
         
         min_gen := MinimalGeneratingSet( ha );
+        
+        if IsEmpty( min_gen ) then
+          
+          return ZeroMorphism( ht_a, id_a );
+          
+        fi;
         
         min_gen := List( min_gen, g -> ElementVectors( g ) );
         
         positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
         
         vectors := ListN( min_gen, positions, { g, p } -> AsList( g[ p ] ) );
-          
-        mor := List( [ 1 .. Size( min_gen ) ], i -> vectors[ i ] * BasisOfExternalHom( UnderlyingCell( collection[ positions[ i ] ] ), a ) );
+        
+        positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
+        
+        mor := List( [ 1 .. Size( min_gen ) ],
+          i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
+                  BasisOfExternalHom( UnderlyingCell( collection[ positions[ i ] ] ), a ){ positions_of_non_zeros[ i ] }
+              );
         
         mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
         
