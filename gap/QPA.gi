@@ -2803,7 +2803,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsIsomorphism );
         
     end ); 
-   
+    
     ##
     AddIsWellDefinedForObjects( cat,
       function( R )
