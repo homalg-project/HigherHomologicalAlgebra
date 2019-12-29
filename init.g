@@ -7,6 +7,6 @@
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gd");
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gd");
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gd");
-ReadPackage( "HomotopyCategories", "gap/functors.gd" );
+ReadPackage( "HomotopyCategories", "gap/Functors.gd" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gd" );
 
