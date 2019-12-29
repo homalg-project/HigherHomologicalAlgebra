@@ -730,17 +730,21 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     AddIsEqualForMorphisms( full,
       { alpha_1, alpha_2 } ->
-        IsEqualForObjects( Source( alpha_1 ), Source( alpha_2 ) ) and 
-          IsEqualForObjects( Range( alpha_1 ), Range( alpha_2 ) ) and
             MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
               MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
             );
+    
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    
+    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
     
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
     
     Finalize( full );
+    
+    SetCachingOfCategoryCrisp( full );
     
     return full;
    
@@ -776,22 +780,25 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     
     AddIsEqualForMorphisms( full,
       { alpha_1, alpha_2 } ->
-        IsEqualForObjects( Source( alpha_1 ), Source( alpha_2 ) ) and 
-          IsEqualForObjects( Range( alpha_1 ), Range( alpha_2 ) ) and
             MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
               MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
             );
     
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    
+    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
     
     Finalize( full );
     
+    SetCachingOfCategoryCrisp( full );
+    
     return full;
     
 end );
-
 
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
@@ -809,9 +816,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
       
     fi;
     
-    cat := CategoryOfQuiverRepresentations( A_op : FinalizeCategory := false );
-    
-    Finalize( cat );
+    cat := CategoryOfQuiverRepresentations( A_op );
     
     return FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
     
@@ -879,8 +884,6 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
     
     DisableSanityChecks( full );
     
-    DeactivateCachingOfCategory( full );
-    
     finalize := ValueOption( "FinalizeCategory" );
     
     if finalize = false then
@@ -890,7 +893,9 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
     fi;
     
     Finalize( full );
-    
+       
+    DeactivateCachingOfCategory( full );
+ 
     return full;
 
 end );
@@ -956,9 +961,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
-    
-    DeactivateCachingOfCategory( full );
-   
+     
     finalize := ValueOption( "FinalizeCategory" );
     
     if finalize = false then
@@ -966,6 +969,8 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       return full;
     
     fi;
+    
+    DeactivateCachingOfCategory( full );
     
     Finalize( full );
     
