@@ -36,6 +36,10 @@ DeclareProperty( "IsHonest", IsRoof );
 
 DeclareOperation( "DerivedCategoryObject", [ IsDerivedCategory, IsHomotopyCategoryObject ] );
 
+DeclareOperation( "\[\]", [ IsDerivedCategoryObject, IsInt ] );
+
+DeclareOperation( "\^", [ IsDerivedCategoryObject, IsInt ] );
+
 DeclareOperation( "\/", [ IsHomotopyCategoryObject, IsDerivedCategory ] );
 
 DeclareAttribute( "UnderlyingCell", IsDerivedCategoryObject );

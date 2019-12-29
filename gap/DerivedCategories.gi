@@ -59,7 +59,6 @@ InstallMethod( AsHonestMorphism,
     
 end );
 
-
 ##
 InstallMethod( DerivedCategoryObject,
           [ IsDerivedCategory, IsHomotopyCategoryObject ],
@@ -82,6 +81,16 @@ InstallMethod( DerivedCategoryObject,
     return o;
     
 end );
+
+##
+InstallMethod( \[\],
+          [ IsDerivedCategoryObject, IsInt ],
+  { a, i } -> UnderlyingCell( a )[ i ] );
+
+##
+InstallMethod( \^,
+          [ IsDerivedCategoryObject, IsInt ],
+  { a, i } -> UnderlyingCell( a ) ^ i );
 
 ##
 InstallMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ], { a, D } -> DerivedCategoryObject( D, a ) );
