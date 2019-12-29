@@ -7,6 +7,8 @@ DeclareCategory( "IsHomotopyCategoryMorphism",
 DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategory, IsCapCategoryMorphism ] );
 
+DeclareOperation( "\[\]",
+            [ IsHomotopyCategoryMorphism, IsInt ] );
 
 DeclareProperty( "IsQuasiIsomorphism", IsHomotopyCategoryMorphism );
 

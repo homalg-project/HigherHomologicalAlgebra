@@ -5,3 +5,9 @@ DeclareCategory( "IsHomotopyCategoryObject",
 DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsCapCategoryObject ] );
 
+DeclareOperation( "\[\]",
+            [ IsHomotopyCategoryObject, IsInt ] );
+
+DeclareOperation( "\^",
+            [ IsHomotopyCategoryObject, IsInt ] );
+

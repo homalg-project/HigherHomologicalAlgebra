@@ -7,6 +7,7 @@ DeclareRepresentation( "IsHomotopyCategoryMorphismRep",
 BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
         NewType( TheFamilyOfCapCategoryMorphisms,
                  IsHomotopyCategoryMorphismRep ) );
+
 ##
 InstallMethod( HomotopyCategoryMorphism,
             [ IsHomotopyCategory, IsCapCategoryMorphism ],
@@ -29,6 +30,11 @@ InstallMethod( HomotopyCategoryMorphism,
     return homotopy_phi;
   
 end );
+
+##
+InstallMethod( \[\],
+  [ IsHomotopyCategoryMorphism, IsInt ],
+    { a, i } -> UnderlyingCell( a )[ i ] );
 
 ##
 InstallMethod( \/,

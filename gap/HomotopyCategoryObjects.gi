@@ -32,6 +32,16 @@ InstallMethod( HomotopyCategoryObject,
 end );
 
 ##
+InstallMethod( \[\],
+  [ IsHomotopyCategoryObject, IsInt ],
+    { a, i } -> UnderlyingCell( a )[ i ] );
+
+##
+InstallMethod( \^,
+  [ IsHomotopyCategoryObject, IsInt ],
+    { a, i } -> UnderlyingCell( a ) ^ i );
+
+##
 InstallMethod( \/,
           [ IsCapCategoryObject, IsHomotopyCategory ],
   {a,H} -> HomotopyCategoryObject( H, a )
