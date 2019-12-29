@@ -365,12 +365,6 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
       function( source, alpha, range )
         local a, b, basis, images, p, coeffs;
         
-        if HasIsZero( alpha ) and IsZero( alpha ) then
-          
-          return ZeroMorphism( source, range );
-          
-        fi;
-        
         a := Source( alpha );
         
         b := Range( alpha );
@@ -1204,7 +1198,9 @@ InstallMethod( LDerivedFunctor,
     
     cat_1 := AsCapCategory( Source( F ) );
     
-    if not IsAbelianCategoryWithComputableEnoughProjectives( cat_1 ) then
+    if not ( HasIsAbelianCategory( cat_1 )
+                and IsAbelianCategory( cat_1 )
+                  and IsAbelianCategoryWithComputableEnoughProjectives( cat_1 ) ) then
       
       TryNextMethod( );
       
@@ -1298,7 +1294,9 @@ InstallMethod( RDerivedFunctor,
     
     cat_1 := AsCapCategory( Source( F ) );
     
-    if not IsAbelianCategoryWithComputableEnoughInjectives( cat_1 ) then
+    if not ( HasIsAbelianCategory( cat_1 )
+                and IsAbelianCategory( cat_1 )
+                  and IsAbelianCategoryWithComputableEnoughInjectives( cat_1 ) ) then
       
       TryNextMethod( );
       
