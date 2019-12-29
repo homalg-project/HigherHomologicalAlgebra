@@ -517,58 +517,58 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
         
         end, 1 );
         
-    functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
-    
-    TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
-    
-    AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
-      function( )
+        functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
         
-        if not HasIsZeroForObjects( functor_C ) then 
-          
-          SetIsZeroForObjects( functor_C, true );
+        TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
         
-        fi;
-      
-      end ) );
-    
-    return functor_C;
-  
-  end );
-  
-  AddMorphismFunction( functor, 
-    function( new_source, phi, new_range ) 
-      local morphisms, functor_phi;
-      
-      morphisms := MapLazy( Morphisms( phi ),
-        function( psi )
-          
-          return ApplyFunctor( F, psi );
-        
-        end, 1 );
-      
-      functor_phi := ChainMorphism( new_source, new_range, morphisms );
-      
-      TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
-      
-      AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ],
-        
-        function( )
-          
-          if not HasIsZeroForMorphisms( functor_phi ) then
+        AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
+          function( )
             
-            SetIsZeroForMorphisms( functor_phi, true );
+            if not HasIsZeroForObjects( functor_C ) then 
+              
+              SetIsZeroForObjects( functor_C, true );
+            
+            fi;
           
-          fi; 
+          end ) );
         
-        end ) );
-      
-      return functor_phi;
-      
+        return functor_C;
+        
       end );
     
+    AddMorphismFunction( functor, 
+      function( new_source, phi, new_range ) 
+        local morphisms, functor_phi;
+        
+        morphisms := MapLazy( Morphisms( phi ),
+          function( psi )
+            
+            return ApplyFunctor( F, psi );
+          
+          end, 1 );
+        
+        functor_phi := ChainMorphism( new_source, new_range, morphisms );
+        
+        TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
+        
+        AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ],
+          
+          function( )
+            
+            if not HasIsZeroForMorphisms( functor_phi ) then
+              
+              SetIsZeroForMorphisms( functor_phi, true );
+            
+            fi; 
+          
+          end ) );
+        
+        return functor_phi;
+        
+        end );
+      
     return functor;
-
+    
 end );
 
 InstallMethod( ExtendFunctorToCochainComplexCategories,
@@ -591,32 +591,33 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
         local diffs, functor_C;
         
         diffs := MapLazy( Differentials( C ),
+          
           function( d )
             
             return ApplyFunctor( F, d );
           
           end, 1 );
-    
-    functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
-    
-    TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
-    
-    AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
-      function( )
         
-        if not HasIsZeroForObjects( functor_C ) then
+        functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
+        
+        TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
+        
+        AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
+          function( )
+            
+            if not HasIsZeroForObjects( functor_C ) then
+              
+              SetIsZeroForObjects( functor_C, true );
+            
+            fi;
           
-          SetIsZeroForObjects( functor_C, true );
+          end ) );
         
-        fi;
+        return functor_C;
       
-      end ) );
+      end );
     
-    return functor_C;
-    
-    end );
-    
-    AddMorphismFunction( functor, 
+    AddMorphismFunction( functor,
       function( new_source, phi, new_range ) 
         local morphisms, functor_phi;
         
@@ -624,8 +625,8 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
           function( psi )
             
             return ApplyFunctor( F, psi );
-        
-        end, 1 );
+          
+          end, 1 );
         
         functor_phi := CochainMorphism( new_source, new_range, morphisms );
         
@@ -646,8 +647,8 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
         return functor_phi;
     
     end );
-  
-   return functor;
+    
+    return functor;
   
 end );
 
