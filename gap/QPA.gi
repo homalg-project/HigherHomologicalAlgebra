@@ -955,7 +955,7 @@ InstallMethod( IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition,
 end );
 
 ## Modified version of a similar method in QPA.
-## Aim: imorove performance.
+## Aim: improve performance.
 InstallMethod( ProjectiveCover, "for a quiver representation",
           [ IsQuiverRepresentation ],
           5000,
