@@ -1,7 +1,7 @@
 
 
 
-BindGlobal( "NAT",
+BindGlobal( "CounitOfTensorHomAdjunction",
   function( collection )
     local HH, TT, C, k, name, nat;
     
@@ -13,7 +13,7 @@ BindGlobal( "NAT",
     
     k := CommutativeRingOfLinearCategory( C );
     
-    name := "Hom(T,N)⊗T --> N";
+    name := "-⊗T o Hom(T,-) --> Id";
     
     nat := NaturalTransformation( name, PreCompose( HH, TT ), IdentityFunctor( C ) );
     
@@ -53,3 +53,4 @@ BindGlobal( "NAT",
     return nat;
   
 end );
+
