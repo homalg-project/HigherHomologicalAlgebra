@@ -18,6 +18,8 @@ KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, Return
 
 DeclareAttribute( "ExtendFunctorToHomotopyCategories", IsCapFunctor );
 
+DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategories", IsCapNaturalTransformation );
+
 DeclareAttribute( "LocalizationFunctorByProjectiveObjects", IsHomotopyCategory );
 
 DeclareAttribute( "LocalizationFunctorByInjectiveObjects", IsHomotopyCategory );

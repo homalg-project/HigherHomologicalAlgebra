@@ -147,6 +147,39 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
 end );
 
 ##
+InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
+          [ IsCapNaturalTransformation ],
+  function( eta )
+    local F, G, homotopy_cat, HF, HG, C_eta, name, H_eta, ationToChain;
+    
+    F := Source( eta );
+    
+    G := Range( eta );
+    
+    homotopy_cat := HomotopyCategory( AsCapCategory( Range( G ) ) );
+    
+    HF := ExtendFunctorToHomotopyCategories( F );
+    
+    HG := ExtendFunctorToHomotopyCategories( G );
+    
+    C_eta := ExtendNaturalTransformationToChainComplexCategories( eta );
+    
+    name := Concatenation( "Extention of ", Name( eta ), " to homotopy categories" );
+
+    H_eta := NaturalTransformation( name, HF, HG );
+    
+    AddNaturalTransformationFunction( H_eta,
+      function( HF_a, a, HG_a )
+        
+        return ApplyNaturalTransformation( C_eta, UnderlyingCell( a ) ) / homotopy_cat;
+      
+    end );
+    
+    return H_eta;
+    
+end );
+
+##
 InstallMethod( LocalizationFunctorByProjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
