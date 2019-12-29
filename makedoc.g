@@ -7,20 +7,22 @@ if fail = LoadPackage("AutoDoc", ">= 2019.09.04") then
 fi;
 
 AutoDoc( 
-        rec(
-            scaffold := rec( 
-              entities := [ "GAP4", "homalg" ],
-              gapdoc_latex_options := rec( 
-                  LateExtraPreamble := """
-                  \\usepackage{amsmath}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{tikz}
-                  \\usetikzgaprary{shapes,arrows,matrix}""" )
-            ),
+      rec(
             
-            autodoc := rec( files := [ "doc/Intro.autodoc" ] ),
-            #extract_examples := rec( units := "Single" )
-            ) 
-        );
+        gapdoc := rec(
+          LaTeXOptions := rec( EarlyExtraPreamble :="""
+                  \usepackage{amsmath}
+                  \usepackage[T1]{fontenc}
+                  \usepackage{tikz}
+                  \usetikzlibrary{shapes,arrows,matrix}
+              """ ) ),
+
+        scaffold := rec( 
+          entities := [ "GAP4", "homalg" ],       
+        ),
+            
+        autodoc := rec( files := [ "doc/Intro.autodoc" ] ),
+        )
+      );
 
 QUIT;
