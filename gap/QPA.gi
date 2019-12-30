@@ -1877,6 +1877,18 @@ function( f, list_of_elements )
   
 end );
 
+InstallMethod( MinimalGeneratingSet, "for a quiver representation",
+               [ IsQuiverRepresentation ],
+               5000,
+function( R )
+  local f;
+
+  f := TopProjection( R );
+   
+  return PreImagesRepresentative( f, BasisVectors( Basis( Range( f ) ) ) );
+  
+end
+);
 
 ######################################################
 #
@@ -1922,7 +1934,7 @@ end );
 #
 # Lift and Colift in quiver representations
 #
-############################################
+###########################################
 
 ##
 BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
