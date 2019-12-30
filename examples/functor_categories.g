@@ -5,22 +5,26 @@ LoadPackage( "FunctorCategories" );
 field := HomalgFieldOfRationals( );
 
 A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 3, 3, 3 );
-
 algebroid := Algebroid( A );
 
 C := Hom( algebroid, MatrixCategory( field ) );
+chains_C := ChainComplexCategory( C );
+homotopy_C := HomotopyCategory( C );
+derived_C := DerivedCategory( C );
 
 indec_projs := IndecProjectiveObjects( C );
+indec_injs := IndecInjectiveObjects( C );
 
 collection := CreateExceptionalCollection( indec_projs );
 
 HH := HomFunctorByExceptionalCollection( collection );
-
 TT := TensorFunctorByExceptionalCollection( collection );
 
-D := AsCapCategory( Source( TT ) );
+RHH := RightDerivedFunctor( HH );
+LTT := LeftDerivedFunctor( TT );
 
-r := RandomObject( D, 10 );
+s := DirectSum( List( [ 1 .. 8 ], i -> Random( Concatenation( indec_projs, indec_injs ) ) ) );
+r := DirectSum( List( [ 1 .. 8 ], i -> Random( Concatenation( indec_projs, indec_injs ) ) ) );
+a := CokernelObject( Sum( BasisOfExternalHom( s, r ) ) );
 
-ht_r := ApplyFunctor( PreCompose( TT, HH ), r );
 
