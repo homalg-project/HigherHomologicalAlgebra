@@ -1585,7 +1585,7 @@ function( M, vec )
   
   V := StandardVectorSpace( BaseDomain( M ), dim[ 1 ] );
   
-  if HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+  if dim[ 1 ] = dim[ 2 ] and IsIdentityMatrix( M ) then
     return AsList( vec );
   elif HasIsZeroMatrix( M ) and IsZeroMatrix( M ) then
     if IsZero( vec ) then
@@ -1601,7 +1601,7 @@ function( M, vec )
     
     Info( InfoDerivedCategories, 3,
       Concatenation( "Using global field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( vec ) ), " -vector )" ) );
-      
+    
     m := QPA_to_Homalg_Matrix( M );
     
     v := HomalgMatrix( AsList( vec ), 1, Length( vec ), GLOBAL_FIELD_FOR_QPA!.field );
@@ -1653,6 +1653,10 @@ function( M )
   if dim[ 1 ] = 0 or dim[ 2 ] = 0 then
     
     return IdentityMatrix( BaseDomain( M ), dim[ 1 ] );
+    
+  elif HasIsIdentityMatrix( M ) and IsIdentityMatrix( M ) then
+    
+    return MakeZeroMatrix( domain, 0, dim[ 1 ] );
     
   else
     
