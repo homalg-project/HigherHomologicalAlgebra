@@ -109,18 +109,6 @@ pp := IndecProjectiveObjects( D );
 
 quit;
 
-L := List( [ 1 .. 15 ], i -> Random( ii ) );
-a := DirectSum( L );
-
-Time( ApplyFunctor, [ HH, a ] );
-Time( ApplyFunctor, [ HI, a / C_injs ] );
-
-L := List( [ 1 .. 15 ], i -> Random( pp ) );
-b := DirectSum( L );
-
-Time( ApplyFunctor, [ TT, b ] );
-Time( ApplyFunctor, [ TP, b / D_projs ] );
-
 a := RandomObject( C, 7 );
 
 # Computing with the right and left derived functors -- slow
@@ -142,6 +130,7 @@ homotopy_TT_homotopy_HH_a := ApplyFunctor( homotopy_TT, homotopy_HH_a );
 e := UnderlyingCell( homotopy_TT_homotopy_HH_a );
 ViewComplex( e );
 HomologyAt( e, 0 );
+e = c;
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 2 );
 ObjectsSupport( b );
