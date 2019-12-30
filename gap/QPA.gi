@@ -1877,7 +1877,48 @@ function( f, list_of_elements )
   
 end );
 
-############################################
+
+######################################################
+#
+# Overload some categorical methods for vector spaces
+# They should eventually, maybe?, to QPA
+#
+######################################################
+
+##
+InstallMethod( LiftAlongMonomorphism,
+          [ IsLinearTransformation, IsLinearTransformation ],
+          5000,
+  function( i, test )
+    local matrix, F;
+    if IsZero( Source( i ) ) or IsZero( Source( test ) ) then
+      return ZeroMorphism( Source( test ), Source( i ) );
+    fi;
+    F := UnderlyingField( CapCategory( i ) );
+    matrix := PreImagesRepresentative( i, List( Basis( Source( test ) ), v -> ImageElm( test, v ) ) );
+    matrix := List( matrix, AsList );
+    return LinearTransformationByRightMatrix
+           ( Source( test ), Source( i ),
+             MatrixByRows( F, matrix ) );
+end );
+
+##
+InstallMethod( ColiftAlongEpimorphism,
+          [ IsLinearTransformation, IsLinearTransformation ],
+          5000,
+  function( e, test )
+    local matrix, F;
+    if IsZero( Range( e ) ) or IsZero( Range( test ) ) then
+      return ZeroMorphism( Range( e ), Range( test ) );
+    fi;
+    F := UnderlyingField( CapCategory( e ) );
+    matrix := List( PreImagesRepresentative( e, Basis( Range( e ) ) ), v -> AsList( ImageElm( test, v ) ) );
+    return LinearTransformationByRightMatrix
+           ( Range( e ), Range( test ),
+             MatrixByRows( F, matrix ) );
+end );
+
+###########################################
 #
 # Lift and Colift in quiver representations
 #
