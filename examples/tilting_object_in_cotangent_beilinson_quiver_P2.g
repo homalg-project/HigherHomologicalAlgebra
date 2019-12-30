@@ -89,9 +89,13 @@ collection := CreateExceptionalCollection( T );
 
 HH := HomFunctorByExceptionalCollection( collection );
 HI := RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects( collection );
+RHH := RightDerivedFunctor( HH );
 
 TT := TensorFunctorByExceptionalCollection( collection );
 TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+LTT := LeftDerivedFunctor( TT );
+
+eta := CounitOfTensorHomAdjunction( collection );
 
 D := AsCapCategory( Source( TT ) );
 D_projs := FullSubcategoryGeneratedByProjectiveObjects( D );
@@ -115,4 +119,10 @@ b := DirectSum( L );
 Time( ApplyFunctor, [ TT, b ] );
 Time( ApplyFunctor, [ TP, b / D_projs ] );
 
-
+a := RandomObject( C, 3 );
+RHH_a := ApplyFunctor( RHH, a / chains_C / homotopy_C / derived_C );
+LTT_RHH_a := ApplyFunctor( LTT, RHH_a );
+Display( LTT_RHH_a );
+c := UnderlyingCell( UnderlyingCell( LTT_RHH_a ) );
+HomologyAt( c, 0 );
+a;
