@@ -89,11 +89,11 @@ collection := CreateExceptionalCollection( T );
 
 HH := HomFunctorByExceptionalCollection( collection );
 HI := RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects( collection );
-RHH := RightDerivedFunctor( HH );
+R_HH := RightDerivedFunctor( HH );
 
 TT := TensorFunctorByExceptionalCollection( collection );
 TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
-LTT := LeftDerivedFunctor( TT );
+L_TT := LeftDerivedFunctor( TT );
 
 eta := CounitOfTensorHomAdjunction( collection );
 
@@ -120,9 +120,11 @@ Time( ApplyFunctor, [ TT, b ] );
 Time( ApplyFunctor, [ TP, b / D_projs ] );
 
 a := RandomObject( C, 3 );
-RHH_a := ApplyFunctor( RHH, a / chains_C / homotopy_C / derived_C );
-LTT_RHH_a := ApplyFunctor( LTT, RHH_a );
-Display( LTT_RHH_a );
-c := UnderlyingCell( UnderlyingCell( LTT_RHH_a ) );
+R_HH_a := ApplyFunctor( R_HH, a / chains_C / homotopy_C / derived_C );
+Display( R_HH_a );
+L_TT_R_HH_a := ApplyFunctor( L_TT, R_HH_a );
+Display( L_TT_R_HH_a );
+c := UnderlyingCell( UnderlyingCell( L_TT_R_HH_a ) );
+ViewComplex( c );
 HomologyAt( c, 0 );
 a;
