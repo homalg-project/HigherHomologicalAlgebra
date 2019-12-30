@@ -34,4 +34,17 @@ homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ),
 ii := IndecInjectiveObjects( C );
 pp := IndecProjectiveObjects( D );
 
+b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 2 );
+ObjectsSupport( b );
+homotopy_HH_b := ApplyFunctor( homotopy_HH, b / homotopy_C );
+Display( homotopy_HH_b );
+homotopy_TT_homotopy_HH_b := ApplyFunctor( homotopy_TT, homotopy_HH_b );
+r := UnderlyingCell( homotopy_TT_homotopy_HH_b );
+ViewComplex( r );
+HomologyAt( b, 0 ); HomologyAt( r, 0 );
+HomologyAt( b, -1 ); HomologyAt( r, -1 );
+HomologyAt( b, -2 ); HomologyAt( r, -2 );
+HomologyAt( b, 0 ); HomologyAt( r, 0 );
+HomologyAt( b, 1 ); HomologyAt( r, 1 );
+HomologyAt( b, 2 ); HomologyAt( r, 2 );
 
