@@ -2622,11 +2622,23 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
         
         ind := Concatenation( indec_injs, indec_proj, simples );
         
-        s1 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
-        
-        s2 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
-        
-        alpha := Sum( BasisOfExternalHom( s1, s2 ) );
+        while true do
+          
+          s1 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
+          
+          s2 := DirectSum( List( [ 1 .. Random( l ) ], i -> Random( ind ) ) );
+          
+          B := BasisOfExternalHom( s1, s2 );
+          
+          alpha := Sum( B );
+          
+          if not IsEmpty( B ) then
+            
+            break;
+            
+          fi;
+          
+        od;
         
         return CokernelObject( alpha );
         
