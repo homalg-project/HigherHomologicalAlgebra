@@ -975,6 +975,46 @@ function( R )
   fi;
 end );
 
+## Modified version of a similar method in QPA.
+## Aim: improve performance.
+InstallMethod ( DualOfRepresentation,
+"for a IsQuiverRepresentation",
+[ IsQuiverRepresentation ], 5000,
+function( R )
+    
+    local C, D;
+    
+    C := CapCategory( R );
+    D := DualFunctor( C );
+    
+    D := ApplyFunctor( D, R );
+    SetDualOfRepresentation( D, R );
+       
+    return D;
+end
+  );
+
+## Modified version of a similar method in QPA.
+## Aim: improve performance.
+InstallMethod ( DualOfRepresentationHomomorphism,
+"for a map between two representations of a quiver",
+[ IsQuiverRepresentationHomomorphism ],
+function( f )
+
+    local   C,  D;
+    
+    C := CapCategory( f );
+    D := DualFunctor( C );
+    
+    D := ApplyFunctor( D, f );
+    SetDualOfRepresentationHomomorphism( D, f );
+    SetDualOfRepresentation( Source( D ), Range( f ) );
+    SetDualOfRepresentation( Range( D ), Source( f ) );
+   
+    return D;
+end
+  );
+
 ##############################
 #
 # QPA matrices
