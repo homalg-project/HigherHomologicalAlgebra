@@ -48,7 +48,7 @@ BindGlobal( "CounitOfTensorHomAdjunction",
         
         return CokernelColift( ht_a!.defining_morphism_of_cokernel_object, mor );
         
-    end );
+      end );
     
     return nat;
   
