@@ -700,43 +700,69 @@ InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
   
 end );
 
+BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
+  function( full )
+    local ambient_cat;
+    
+    ambient_cat := AmbientCategory( AmbientCategory( full ) );
+    
+    if IsQuiverRepresentationCategory( ambient_cat ) then
+      
+      AddIsEqualForObjects( full,
+        { r1, r2 } ->
+          DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) )[ 1 ] =
+           DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )[ 1 ]
+        );
+      
+      AddIsEqualForMorphisms( full,
+        { alpha_1, alpha_2 } ->
+              MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
+                MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
+              );
+    
+    else # i.e., it is the category of functors into matrix category of some homalg field
+      
+      AddIsEqualForObjects( full,
+        { r1, r2 } ->
+          ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r1 ) ) )[ 1 ] =
+           ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r2 ) ) )[ 1 ]
+        );
+      
+      AddIsEqualForMorphisms( full,
+        { alpha_1, alpha_2 } ->
+              ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
+                ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
+              );
+    
+    fi;;
+    
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    
+    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+    
+end );
+
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
-          [ IsQuiverRepresentationCategory ],
+          [ IsCapCategory ],
   function( cat )
-    local A, full, full_subcategory_by_projs, projs;
+    local full, full_subcategory_by_projs, projs;
     
-    A := AlgebraOfCategory( cat );
-    
-    if not IsFiniteDimensional( A ) then
+    if ApplicableMethod( IndecProjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The underlying quiver algebra should be finite dimensional!\n" );
+      Error( "The method 'IndecProjectiveObjects' should be applicable on the input category" );
       
     fi;
     
     full_subcategory_by_projs := FullSubcategoryGeneratedByProjectiveObjects( cat );
     
-    projs := IndecProjRepresentations( A );
+    projs := IndecProjectiveObjects( cat );
     
     projs := List( projs, p -> AsFullSubcategoryCell( full_subcategory_by_projs, p ) );
     
     full := FullSubcategoryGeneratedByListOfObjects( projs : FinalizeCategory := false );
     
-    AddIsEqualForObjects( full,
-      { r1, r2 } ->
-        DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
-         DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
-      );
-    
-    AddIsEqualForMorphisms( full,
-      { alpha_1, alpha_2 } ->
-            MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
-              MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
-            );
-    
-    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
-    
-    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+    ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
     
     CapCategorySwitchLogicOff( full );
     
@@ -752,42 +778,26 @@ end );
 
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
-          [ IsQuiverRepresentationCategory ],
+          [ IsCapCategory ],
   function( cat )
-    local A, full, full_subcategory_by_injs, injs;
+    local full, full_subcategory_by_injs, injs;
     
-    A := AlgebraOfCategory( cat );
-    
-    if not IsFiniteDimensional( A ) then
+    if ApplicableMethod( IndecInjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The underlying quiver algebra should be finite dimensional!\n" );
+      Error( "The method 'IndecInjectiveObjects' should be applicable on the input category" );
       
     fi;
     
     full_subcategory_by_injs := FullSubcategoryGeneratedByInjectiveObjects( cat );
     
-    injs := IndecInjRepresentations( A );
+    injs := IndecInjectiveObjects( cat );
     
     injs := List( injs, p -> AsFullSubcategoryCell( full_subcategory_by_injs, p ) );
     
     full := FullSubcategoryGeneratedByListOfObjects( injs : FinalizeCategory := false );
     
-    AddIsEqualForObjects( full,
-      { r1, r2 } ->
-        DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
-         DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
-      );
+    ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
     
-    AddIsEqualForMorphisms( full,
-      { alpha_1, alpha_2 } ->
-            MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_1 ) ) ) =
-              MatricesOfRepresentationHomomorphism( UnderlyingCell( UnderlyingCell( alpha_2 ) ) )
-            );
-    
-    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
-    
-    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
-
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
