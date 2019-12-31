@@ -710,8 +710,8 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
       
       AddIsEqualForObjects( full,
         { r1, r2 } ->
-          DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) )[ 1 ] =
-           DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )[ 1 ]
+          DimensionVector( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
+           DimensionVector( UnderlyingCell( UnderlyingCell( r2 ) ) )
         );
       
       AddIsEqualForMorphisms( full,
@@ -724,8 +724,8 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
       
       AddIsEqualForObjects( full,
         { r1, r2 } ->
-          ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r1 ) ) )[ 1 ] =
-           ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r2 ) ) )[ 1 ]
+          ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r1 ) ) ) =
+           ValueGlobal( "ValuesOnAllObjects" )( UnderlyingCell( UnderlyingCell( r2 ) ) )
         );
       
       AddIsEqualForMorphisms( full,
