@@ -448,17 +448,11 @@ InstallMethod( IndecInjRepresentations,
           [ IsQuiverAlgebra ],
           100,
   function( A )
-    local with_setting_properties, injs;
+    local injs;
     
-    with_setting_properties := ValueOption( "iir_derived_cats" );
+    injs := IndecProjRepresentations( OppositeAlgebra( A ) );
     
-    if with_setting_properties = false then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    injs := IndecInjRepresentations( A : iir_derived_cats := false );
+    injs := List( injs, DualOfRepresentation );
     
     Perform( injs, function( i ) SetIsInjective( i, true ); end );
    
@@ -855,7 +849,17 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
     
     if not HasUnderlyingInjectiveSummands( a ) then
       
-      TryNextMethod( );
+      if HasDualOfRepresentation( a ) and HasUnderlyingProjectiveSummands( DualOfRepresentation( a ) ) then
+        
+        summands := List( UnderlyingProjectiveSummands( DualOfRepresentation( a ) ), DualOfRepresentation );
+        
+        SetUnderlyingInjectiveSummands( a, summands );
+        
+      else
+        
+        TryNextMethod( );
+        
+      fi;
       
     fi;
     
@@ -2568,7 +2572,7 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
     AddRandomObjectByList( cat,
       
       function( C, l )
-        local indec_proj, indec_injs, simples, ind, s1, s2, alpha;
+        local indec_proj, indec_injs, simples, ind, s1, s2, alpha, B;
         
         indec_proj := IndecProjRepresentations( A );
         
