@@ -139,7 +139,6 @@ Display( homotopy_HH_b );
 homotopy_TT_homotopy_HH_b := ApplyFunctor( homotopy_TT, homotopy_HH_b );
 r := UnderlyingCell( homotopy_TT_homotopy_HH_b );
 ViewComplex( r );
-HomologyAt( b, 0 ); HomologyAt( r, 0 );
 HomologyAt( b, -1 ); HomologyAt( r, -1 );
 HomologyAt( b, -2 ); HomologyAt( r, -2 );
 HomologyAt( b, 0 ); HomologyAt( r, 0 );
