@@ -433,7 +433,7 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObje
     
     G := RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
     
-    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    add_G := ExtendFunctorToAdditiveClosures( G ); # or add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
     C := AmbientCategory( AmbientCategory( AsCapCategory( Source( G ) ) ) );
     
@@ -443,20 +443,57 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObje
     
     projs := AsCapCategory( Source( can_add_G ) );
     
-    D := AsCapCategory( Range( can_add_G ) );
+    D := AsCapCategory( Range( G ) );
     
     r := RANDOM_TEXT_ATTR( );
     
-    name := Concatenation( "Restriction of - ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
+    name := Concatenation( "Restriction of - ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ",
+              Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
     
     R := CapFunctor( name, projs, D );
     
-    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
+    AddObjectFunction( R, # FunctorObjectOperation( can_add_G ) );
+      function( r )
+        local a, summands;
+        
+        a := ApplyFunctor( can_add_G, r );
+        
+        summands := ObjectList( a );
+        
+        if IsEmpty( summands ) then
+          
+          a := ZeroObject( D );
+          
+        else
+          
+          a := DirectSum( summands );
+          
+        fi;
+        
+        a!.object_list := summands;
+        
+        return a;
+        
+    end );
     
-    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
+    AddMorphismFunction( R, # FunctorMorphismOperation( can_add_G ) );
+      function( s, alpha, r )
+        local beta, morphism_matrix;
+        
+        beta := ApplyFunctor( can_add_G, alpha );
+        
+        morphism_matrix := MorphismMatrix( beta );
+        
+        beta := MorphismBetweenDirectSums( s, morphism_matrix, r );
+        
+        beta!.morphism_matrix := morphism_matrix;
+        
+        return beta;
+        
+    end );
     
     return R;
-
+    
 end );
 
 ##
