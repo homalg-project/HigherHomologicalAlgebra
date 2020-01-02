@@ -1,3 +1,12 @@
+#############################################################################
+##
+## DerivedCategories: Derived categories for abelian categories
+##
+## Copyright 2020, Kamal Saleh, University of Siegen
+##
+## Some qpa tweaks to improve performance and functionality
+##
+#############################################################################
 
 ##
 InstallValue( GLOBAL_FIELD_FOR_QPA, rec( is_locked := false, default_field := HomalgFieldOfRationals( ) ) );

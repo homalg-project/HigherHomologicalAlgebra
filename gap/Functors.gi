@@ -1,3 +1,13 @@
+#############################################################################
+##
+## DerivedCategories: Derived categories for abelian categories
+##
+## Copyright 2020, Kamal Saleh, University of Siegen
+##
+##  Functors
+##
+#############################################################################
+
 ##
 InstallMethod( HomFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],

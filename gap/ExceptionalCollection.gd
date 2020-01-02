@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##  DerivedCategories: Derived categories for additive categories
+##  DerivedCategories: Derived categories for abelian categories
 ##
-##  Copyright 2019, Kamal Saleh, University of Siegen
+##  Copyright 2020, Kamal Saleh, University of Siegen
 ##
 #! @Chapter Exceptional collections
 #!

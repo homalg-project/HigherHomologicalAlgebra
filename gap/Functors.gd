@@ -2,9 +2,9 @@
 ##
 ##  DerivedCategories: Derived categories for additive categories
 ##
-##  Copyright 2019, Kamal Saleh, University of Siegen
+##  Copyright 2020, Kamal Saleh, University of Siegen
 ##
-#! @Chapter Exceptional collections
+#! @Chapter Functors and natural transformations
 #! @Section Functors
 ##
 ############################################################################
