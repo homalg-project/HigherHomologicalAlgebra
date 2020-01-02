@@ -2502,6 +2502,12 @@ InstallGlobalFunction( INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPH
     
     R_dimensions := DimensionVector( R );
     
+    if IsZero( S_dimensions ) or IsZero( R_dimensions ) then
+      
+      return ZeroMorphism( S, R );
+      
+    fi;
+    
     B := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
     
     c := TransposedMatrix( UnderlyingMatrix( iota ) );
