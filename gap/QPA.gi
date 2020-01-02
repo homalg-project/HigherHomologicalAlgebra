@@ -1896,7 +1896,7 @@ function( f, list_of_elements )
   
   if IsEmpty( list_of_elements ) then
     
-    Error( "The list of elements is empty" );
+    return [ ];
     
   fi;
   
