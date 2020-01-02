@@ -166,7 +166,7 @@ BindGlobal( "SHIFT_AS_FUNCTOR",
       
       return IdentityFunctor( complex_cat );
     
-    elif n>0 then 
+    elif n > 0 then
       
       name := Concatenation( "Shift (", String( n ), " times to the left) functor in ", Name( complex_cat ) );
     
@@ -385,11 +385,8 @@ BindGlobal( "CHAIN_TO_COCHAIN_OR_COCHAIN_TO_CHAIN_FUNCTOR",
    
 end );
 
-BindGlobal( "FUNCTORS_INSTALLER",
-  function( )
-  
-  ##
-  InstallMethod( KernelObjectFunctor, 
+##
+InstallMethod( KernelObjectFunctor, 
                [ IsChainOrCochainComplexCategory, IsCapCategory, IsInt ],
   function( complex_cat, cat, i )
     
@@ -1080,28 +1077,4 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
       return U;
     
 end );
-
-
-# to do this you need to construct chain morphism between resolutions of A, B for every f : A --> B.
-# InstallMethod( LeftDerivedFunctor, 
-#                [ IsCapFunctor ],
-#   function( F )
-#   local
-#   S := AsCapCategory( Source( F ) );
-# 
-#   T := AsCapCategory(  Range( F ) );
-# 
-#   name := Concatenation( "Left derived functor of ", Name( F ) );
-#   
-#   dF := CapFunctor( name, S, T );
-#   
-#   AddObjectFunction( dF, function( obj )
-#                          local C;
-#                          C := StalkCochainComplex( obj, 0 );
-# 
-#   dF := 
-
-end );
-
-FUNCTORS_INSTALLER( );
 
