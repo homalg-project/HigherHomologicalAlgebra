@@ -9,6 +9,10 @@
 
 #! @Section Basic functors for complex categories.
 
+KeyDependentOperation( "StalkChainFunctor", IsCapCategory, IsInt, ReturnTrue );
+KeyDependentOperation( "StalkCochainFunctor", IsCapCategory, IsInt, ReturnTrue );
+
+
 #! @Group f1
 #! @Description
 #! The first argument in the input must be the chain (resp. cochain) complex category of an abelian category $A$, the second argument is an integer <A>n</A>. 

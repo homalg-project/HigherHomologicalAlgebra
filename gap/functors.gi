@@ -1078,3 +1078,63 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
     
 end );
 
+##
+InstallMethod( StalkChainFunctorOp,
+          [ IsCapCategory, IsInt ],
+  function( cat, n )
+    local complexes, name, F;
+    
+    complexes := ChainComplexCategory( cat );
+    
+    name := Concatenation( "Stalk chain functor from ", Name( cat ), " to ", Name( complexes ) );
+    
+    F := CapFunctor( name, cat, complexes );
+    
+    AddObjectFunction( F,
+      function( c )
+        
+        return StalkChainComplex( c, n );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        
+        return StalkChainMorphism( alpha, n );
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( StalkCochainFunctorOp,
+          [ IsCapCategory, IsInt ],
+  function( cat, n )
+    local complexes, name, F;
+    
+    complexes := CochainComplexCategory( cat );
+    
+    name := Concatenation( "Stalk cochain functor from ", Name( cat ), " to ", Name( complexes ) );
+    
+    F := CapFunctor( name, cat, complexes );
+    
+    AddObjectFunction( F,
+      function( c )
+        
+        return StalkCochainComplex( c, n );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        
+        return StalkCochainMorphism( alpha, n );
+        
+    end );
+    
+    return F;
+    
+end );
+
