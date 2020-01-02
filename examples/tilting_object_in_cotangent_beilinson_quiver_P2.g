@@ -104,6 +104,7 @@ TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( coll
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
 eta := CounitOfTensorHomAdjunction( collection );
+lambda := UnitOfTensorHomAdjunction( collection );
 
 pp := IndecProjectiveObjects( D );
 
