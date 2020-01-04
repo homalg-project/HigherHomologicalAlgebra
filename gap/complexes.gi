@@ -755,6 +755,7 @@ InstallMethod( ObjectAtOp,
     
 end );
 
+##
 InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], ObjectAt );
 
 ##
@@ -866,7 +867,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
   
 end );
 
-#n
+##
 InstallMethod( ChainComplex,
                [ IsDenseList, IsInt ],
   function( diffs, n )
@@ -878,6 +879,7 @@ InstallMethod( ChainComplex,
   
 end );
 
+##
 InstallMethod( CochainComplex,
                [ IsDenseList, IsInt ],
   
@@ -1108,14 +1110,19 @@ InstallMethod( HomologyAtOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_O
 ##
 InstallMethod( CohomologyAtOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
+##
 InstallMethod( GeneralizedProjectionOntoHomologyAtOp, [ IsChainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
+##
 InstallMethod( GeneralizedEmbeddingOfHomologyAtOp, [ IsChainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+
 ##
 InstallMethod( GeneralizedProjectionOntoCohomologyAtOp, [ IsCochainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
+##
 InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp, [ IsCochainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
+##
 InstallMethod( DefectOfExactnessAtOp, 
                [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
@@ -1150,6 +1157,7 @@ InstallMethod( IsExactInIndexOp,
   
 end );
 
+##
 InstallMethod( IsExact,
                [ IsChainOrCochainComplex ], 
   function( C )
@@ -1251,7 +1259,6 @@ InstallMethod( ObjectsSupport,
     
     return l;
 end );
-
 
 ##
 InstallMethod( DifferentialsSupport, 
@@ -1395,6 +1402,7 @@ InstallMethod( IsWellDefined,
     return true;
 end );
 
+##
 InstallMethod( IsWellDefined,
                [ IsChainComplex, IsInt, IsInt ],
   function( C, m, n )
@@ -1420,6 +1428,7 @@ InstallMethod( IsWellDefined,
   
 end );
 
+##
 InstallMethod( IsWellDefined,
             [ IsBoundedChainOrCochainComplex ],
   
@@ -1429,7 +1438,7 @@ InstallMethod( IsWellDefined,
   
 end );
 
-
+##
 BindGlobal( "RANDOM_CHAIN_COMPLEX",
   function( chains, m, n, c )
     local cat, f, L, g, i, stop;

@@ -1365,7 +1365,7 @@ InstallMethod( IsQuasiIsomorphism,
 
 end );
 
-
+##
 InstallMethod( StalkChainMorphism,
 	[ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
@@ -1380,6 +1380,7 @@ InstallMethod( StalkChainMorphism,
   
 end );
 
+##
 InstallMethod( StalkCochainMorphism,
 	[ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
@@ -1393,6 +1394,12 @@ InstallMethod( StalkCochainMorphism,
     return morphism;
     
 end );
+
+##
+InstallMethod( HomologyFunctorialAtOp, [ IsChainMorphism, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL );
+
+##
+InstallMethod( CohomologyFunctorialAtOp, [ IsCochainMorphism, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL );
 
 #####################################
 #

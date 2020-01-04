@@ -111,6 +111,18 @@ DeclareOperation( "StalkChainMorphism", [ IsCapCategoryMorphism, IsInt ] );
 #! @Arguments f, n
 DeclareOperation( "StalkCochainMorphism", [ IsCapCategoryMorphism, IsInt ] );
 
+#! @BeginGroup 42
+#! @Description
+#! The input is a (co)chain complex morphism $\phi:C\to D$ and an integer $n$. The outout is the 
+#! associated morphism between the (co)homology objects of $C$ resp. $D$ at index $n$.
+#! @Arguments phi, n
+#! @Returns a morphism
+KeyDependentOperation( "HomologyFunctorialAt", IsChainMorphism, IsInt, ReturnTrue );
+#! @EndGroup
+#! @Group 42
+#! @Arguments phi, n
+KeyDependentOperation( "CohomologyFunctorialAt", IsCochainMorphism, IsInt, ReturnTrue );
+
 ######################################
 #
 #  Attribtes, Operations ..
