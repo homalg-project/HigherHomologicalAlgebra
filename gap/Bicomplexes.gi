@@ -919,7 +919,7 @@ InstallMethod( ComplexOfVerticalCohomologiesAtOp,
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
-    Coh := CohomologyFunctorAt( cochains, cat, n );
+    Coh := CohomologyFunctor( cochains, n );
     C := UnderlyingCapCategoryCell( B );
 
     if HasIsBicomplexCategoryWithCommutativeSquares( bicomplexes ) and IsBicomplexCategoryWithCommutativeSquares( bicomplexes )then 
@@ -953,7 +953,7 @@ InstallMethod( ComplexMorphismOfVerticalCohomologiesAtOp,
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
-    Coh := CohomologyFunctorAt( cochains, cat, n );
+    Coh := CohomologyFunctor( cochains, n );
     psi := UnderlyingCapCategoryCell( phi );
     maps := MapLazy( IntegersList, function( i )
                                     local s,r, p;
@@ -998,7 +998,7 @@ InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
-    Coh := CohomologyFunctorAt( cochains, cat, m );
+    Coh := CohomologyFunctor( cochains, m );
     diffs := MapLazy( IntegersList, function( i )
                                     local current_source, current_range, current_mor, maps;
                                     current_source := RowAsComplex( B, i );
@@ -1022,7 +1022,7 @@ InstallMethod( ComplexMorphismOfHorizontalCohomologiesAtOp,
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
-    Coh := CohomologyFunctorAt( cochains, cat, m );
+    Coh := CohomologyFunctor( cochains, m );
     maps := MapLazy( IntegersList,  function( i )
                                     local current_source, current_range, current_mor, current_maps;
                                     current_source := RowAsComplex( Source( phi ), i );
