@@ -10,8 +10,10 @@ SetPackageInfo( rec(
 
 PackageName := "BBGG",
 Subtitle := "BBG correspondence and Beilinson monad",
-Version := "0.1",
-Date := "27/04/2018", # dd/mm/yyyy format
+Version := "2019.12.06",
+Date := ~.Version{[ 1 .. 10 ]},
+Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
@@ -72,7 +74,7 @@ Dependencies := rec(
 			    [ "GradedRingForHomalg", ">= 2018.02.04" ],
           [ "ComplexesForCAP", ">= 2018.09.10" ],
 			    [ "Bicomplexes", ">= 2018.06.15" ],
-          [ "StableCategoriesForCAP", ">= 0" ],
+          [ "StableCategories", ">= 0" ],
           [ "LinearAlgebraForCAP", ">= 0" ]
                ],
   SuggestedOtherPackages := [ ],
