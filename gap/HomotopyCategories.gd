@@ -1,13 +1,16 @@
 ############################################################################
 #                                     GAP package
 #
-#  Copyright 2017,                    Kamal Saleh
+#  Copyright 2020,                    Kamal Saleh
 #                                     Siegen University
 #
 #! @Chapter HomotopyCategories
 #
 #############################################################################
 
+InfoHomotopyCategories := NewInfoClass( "InfoHomotopyCategories" );
+
+SetInfoLevel( InfoHomotopyCategories, 1 );
 
 DeclareCategory( "IsHomotopyCategory",
                  IsStableCategory );

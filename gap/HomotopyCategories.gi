@@ -42,11 +42,11 @@ InstallMethod( HomotopyCategory,
           Error( "The chains complex category seems to have been finalized without adding colifting structure" );
           
       fi;
-    
+      
     else
     
       coliftable_function := ValueOption( "is_coliftable_through_colifting_object_func" );
-    
+      
       if IsFunction( coliftable_function ) then
                 
         AddIsColiftableThroughColiftingObject( chains, coliftable_function );
@@ -60,7 +60,7 @@ InstallMethod( HomotopyCategory,
         Error( "The method IsColiftableThroughColiftingObject should be added to the category of chains!" );
         
       fi;
-
+    
     fi;
     
     name := Concatenation( "Homotopy category of ", Name( cat ) );
@@ -83,13 +83,15 @@ InstallMethod( HomotopyCategory,
     SetDefiningCategory( homotopy_category, cat );
     
     if ValueOption( "WithStandardHomomorphismStructure" ) <> true and
-      
+        
         HasRangeCategoryOfHomomorphismStructure( cat ) then
         
+        Info( InfoHomotopyCategories, 2, "The classical methods will be installed for the homomorphism structure on homotopy categories" );
+        
         ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY( homotopy_category );
-
+        
     fi;
-
+    
     ADD_TRIANGULATED_STRUCUTRE( homotopy_category );
     
     if to_be_finalized = false then
@@ -97,11 +99,11 @@ InstallMethod( HomotopyCategory,
       return homotopy_category;
     
     fi;
-
+    
     Finalize( homotopy_category );
-
+    
     return homotopy_category;
- 
+    
 end );
 
 ###
@@ -112,16 +114,16 @@ end );
 InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
-       
+    
     chains := UnderlyingCapCategory( homotopy_category );
-       
+    
     cat := UnderlyingCategory( chains );
-       
+    
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-        
+    
     AddDistinguishedObjectOfHomomorphismStructure( homotopy_category,
       function( )
-           
+        
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
           return DistinguishedObjectOfHomomorphismStructure( cat );
@@ -129,7 +131,7 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
         else
           
           Error( "to do" );
-
+          
           return 
           HomotopyCategoryObject( homotopy_category,
           StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 ) );
@@ -178,7 +180,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
         else
           
           Error( "to do" );
-         
+          
           return HomotopyCategoryObject( homotopy_category, TotalChainComplex( d ) );
           
         fi;
