@@ -9,5 +9,5 @@ ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gd");
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gd");
 ReadPackage( "HomotopyCategories", "gap/Functors.gd" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gd" );
-ReadPackage( "HomotopyCategories", "gap/Resolutions.gd" );
+ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gd" );
 

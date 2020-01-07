@@ -108,3 +108,58 @@ InstallOtherMethod( QuasiIsomorphismIntoInjectiveResolution,
     
 end );
 
+##
+InstallOtherMethod( HomologyAt,
+          [ IsHomotopyCategoryObject, IsInt ],
+  function( a, i )
+    
+    return HomologyAt( UnderlyingCell( a ), i );
+    
+end );
+
+##
+InstallOtherMethod( HomologyFunctorialAt,
+          [ IsHomotopyCategoryMorphism, IsInt ],
+  function( alpha, i )
+    
+    return HomologyFunctorialAt( UnderlyingCell( alpha ), i );
+    
+end );
+
+##
+InstallOtherMethod( ObjectsSupport,
+          [ IsHomotopyCategoryObject ],
+  function( a )
+  
+    return ObjectsSupport( UnderlyingCell( a ) );
+    
+end );
+
+##
+InstallOtherMethod( MorphismsSupport,
+          [ IsHomotopyCategoryMorphism ],
+  function( alpha )
+  
+    return MorphismsSupport( UnderlyingCell( alpha ) );
+    
+end );
+
+##
+InstallOtherMethod( DifferentialsSupport,
+          [ IsHomotopyCategoryObject ],
+ function( a )
+  
+    return DifferentialsSupport( UnderlyingCell( a ) );
+    
+end );
+
+##
+InstallOtherMethod( HomologySupport,
+          [ IsHomotopyCategoryObject ],
+  function( a )
+  
+    return HomologySupport( UnderlyingCell( a ) );
+    
+end );
+
+
