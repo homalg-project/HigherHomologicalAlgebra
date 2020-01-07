@@ -3,163 +3,124 @@
 ##
 InstallOtherMethod( ProjectiveResolution,
           [ IsHomotopyCategoryObject ],
-  function( a )
-    
-    return ProjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a );
-    
-end );
+    a -> ProjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( ProjectiveResolution,
           [ IsHomotopyCategoryObject, IsBool ],
-  function( a, bool )
-    
-    return ProjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a );
-    
-end );
+    { a, bool } -> ProjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( QuasiIsomorphismFromProjectiveResolution,
           [ IsHomotopyCategoryObject ],
-  function( a )
-    
-    return QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a );
-    
-end );
+    a -> QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( QuasiIsomorphismFromProjectiveResolution,
           [ IsHomotopyCategoryObject, IsBool ],
-  function( a, bool )
-    
-    return QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a );
-    
-end );
+    { a, bool } -> QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( MorphismBetweenProjectiveResolutions,
           [ IsHomotopyCategoryMorphism ],
-  function( alpha )
-    
-    return MorphismBetweenProjectiveResolutions( UnderlyingCell( alpha ) ) / CapCategory( alpha );
-    
-end );
+    alpha -> MorphismBetweenProjectiveResolutions( UnderlyingCell( alpha ) ) / CapCategory( alpha )
+);
 
 ##
 InstallOtherMethod( MorphismBetweenProjectiveResolutions,
           [ IsHomotopyCategoryMorphism, IsBool ],
-  function( alpha, bool )
-    
-    return MorphismBetweenProjectiveResolutions( UnderlyingCell( alpha ), bool ) / CapCategory( alpha );
-    
-end );
+    { alpha, bool } -> MorphismBetweenProjectiveResolutions( UnderlyingCell( alpha ), bool ) / CapCategory( alpha )
+);
 
 ##
 InstallOtherMethod( InjectiveResolution,
           [ IsHomotopyCategoryObject ],
-  function( a )
-    
-    return InjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a );
-    
-end );
+    a -> InjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( InjectiveResolution,
           [ IsHomotopyCategoryObject, IsBool ],
-  function( a, bool )
-    
-    return InjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a );
-    
-end );
+    { a, bool } -> InjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( MorphismBetweenInjectiveResolutions,
           [ IsHomotopyCategoryMorphism ],
-  function( alpha )
-    
-    return MorphismBetweenInjectiveResolutions( UnderlyingCell( alpha ) ) / CapCategory( alpha );
-    
-end );
+    alpha -> MorphismBetweenInjectiveResolutions( UnderlyingCell( alpha ) ) / CapCategory( alpha )
+);
 
 ##
 InstallOtherMethod( MorphismBetweenInjectiveResolutions,
           [ IsHomotopyCategoryMorphism, IsBool ],
-  function( alpha, bool )
-    
-    return MorphismBetweenInjectiveResolutions( UnderlyingCell( alpha ), bool ) / CapCategory( alpha );
-    
-end );
+    { alpha, bool } -> MorphismBetweenInjectiveResolutions( UnderlyingCell( alpha ), bool ) / CapCategory( alpha )
+);
 
 ##
 InstallOtherMethod( QuasiIsomorphismIntoInjectiveResolution,
           [ IsHomotopyCategoryObject ],
-  function( a )
-    
-    return QuasiIsomorphismIntoInjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a );
-    
-end );
+    a -> QuasiIsomorphismIntoInjectiveResolution( UnderlyingCell( a ) ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( QuasiIsomorphismIntoInjectiveResolution,
           [ IsHomotopyCategoryObject, IsBool ],
-  function( a, bool )
-    
-    return QuasiIsomorphismIntoInjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a );
-    
-end );
+    { a, bool } -> QuasiIsomorphismIntoInjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a )
+);
 
 ##
 InstallOtherMethod( HomologyAt,
           [ IsHomotopyCategoryObject, IsInt ],
-  function( a, i )
-    
-    return HomologyAt( UnderlyingCell( a ), i );
-    
-end );
+    { a, i } -> HomologyAt( UnderlyingCell( a ), i )
+);
 
 ##
 InstallOtherMethod( HomologyFunctorialAt,
           [ IsHomotopyCategoryMorphism, IsInt ],
-  function( alpha, i )
-    
-    return HomologyFunctorialAt( UnderlyingCell( alpha ), i );
-    
-end );
+    { alpha, i } -> HomologyFunctorialAt( UnderlyingCell( alpha ), i )
+);
 
 ##
 InstallOtherMethod( ObjectsSupport,
           [ IsHomotopyCategoryObject ],
-  function( a )
-  
-    return ObjectsSupport( UnderlyingCell( a ) );
-    
-end );
+    a -> ObjectsSupport( UnderlyingCell( a ) )
+);
 
 ##
 InstallOtherMethod( MorphismsSupport,
           [ IsHomotopyCategoryMorphism ],
-  function( alpha )
-  
-    return MorphismsSupport( UnderlyingCell( alpha ) );
-    
-end );
+    alpha -> MorphismsSupport( UnderlyingCell( alpha ) )
+);
 
 ##
 InstallOtherMethod( DifferentialsSupport,
           [ IsHomotopyCategoryObject ],
- function( a )
-  
-    return DifferentialsSupport( UnderlyingCell( a ) );
-    
-end );
+  a -> DifferentialsSupport( UnderlyingCell( a ) ));
 
 ##
 InstallOtherMethod( HomologySupport,
           [ IsHomotopyCategoryObject ],
+    a -> HomologySupport( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( ViewComplex,
+              [ IsHomotopyCategoryObject ],
   function( a )
-  
-    return HomologySupport( UnderlyingCell( a ) );
+    
+    ViewComplex( UnderlyingCell( a ) );
     
 end );
 
-
+##
+InstallOtherMethod( ViewChainMorphism,
+              [ IsHomotopyCategoryMorphism ],
+  function( alpha )
+    
+    ViewChainMorphism( UnderlyingCell( alpha ) );
+    
+end );
