@@ -436,6 +436,43 @@ InstallMethod( ProjectiveChainResolution,
 end );
 
 ##
+InstallOtherMethod( ProjectiveChainResolution,
+          [ IsChainComplex ], ProjectiveResolution );
+
+##
+InstallOtherMethod( ProjectiveChainResolution,
+          [ IsChainComplex, IsBool ], ProjectiveResolution );
+
+##
+InstallOtherMethod( ProjectiveChainResolution,
+          [ IsCochainComplex ], C -> AsChainComplex( ProjectiveResolution( C ) ) );
+
+##
+InstallOtherMethod( ProjectiveChainResolution,
+          [ IsCochainComplex, IsBool ],
+  { C, bool } -> AsChainComplex( ProjectiveResolution( C, bool ) )
+);
+
+##
+InstallOtherMethod( ProjectiveCochainResolution,
+          [ IsCochainComplex ], ProjectiveResolution );
+
+##
+InstallOtherMethod( ProjectiveCochainResolution,
+          [ IsCochainComplex, IsBool ], ProjectiveResolution );
+
+##
+InstallOtherMethod( ProjectiveCochainResolution,
+          [ IsChainComplex ], C -> AsCochainComplex( ProjectiveResolution( C ) ) );
+
+##
+InstallOtherMethod( ProjectiveCochainResolution,
+          [ IsChainComplex, IsBool ],
+  { C, bool } -> AsCochainComplex( ProjectiveResolution( C, bool ) )
+);
+
+
+##
 InstallMethod( MorphismBetweenProjectiveResolutions,
        [ IsCapCategoryMorphism ],
   function( phi )
@@ -556,7 +593,41 @@ InstallMethod( MorphismBetweenProjectiveChainResolutions,
     
 end );
 
+##
+InstallOtherMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsChainMorphism ], MorphismBetweenProjectiveResolutions );
 
+##
+InstallOtherMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsChainMorphism, IsBool ], MorphismBetweenProjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsCochainMorphism ], phi -> AsChainMorphism( MorphismBetweenProjectiveResolutions( phi ) ) );
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveChainResolutions,
+          [ IsCochainMorphism, IsBool ],
+  { phi, bool } -> AsChainMorphism( MorphismBetweenProjectiveResolutions( phi, bool ) )
+);
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsCochainMorphism ], MorphismBetweenProjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsCochainMorphism, IsBool ], MorphismBetweenProjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsChainMorphism ], phi -> AsCochainMorphism( MorphismBetweenProjectiveResolutions( phi ) ) );
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveCochainResolutions,
+          [ IsChainMorphism, IsBool ],
+  { phi, bool } -> AsCochainMorphism( MorphismBetweenProjectiveResolutions( phi, bool ) )
+);
 
 ##############################
 #
@@ -846,7 +917,6 @@ function( obj )
   
 end );
 
-
 ##
 InstallMethod( InjectiveResolution,
        [ IsCapCategoryObject, IsBool ],
@@ -944,6 +1014,42 @@ InstallMethod( InjectiveChainResolution,
     return AsChainComplex( InjectiveResolution( obj, bool ) );
     
 end );
+
+##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsChainComplex ], InjectiveResolution );
+
+##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsChainComplex, IsBool ], InjectiveResolution );
+
+##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsCochainComplex ], C -> AsChainComplex( InjectiveResolution( C ) ) );
+
+##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsCochainComplex, IsBool ],
+  { C, bool } -> AsChainComplex( InjectiveResolution( C, bool ) )
+);
+
+##
+InstallOtherMethod( InjectiveCochainResolution,
+          [ IsCochainComplex ], InjectiveResolution );
+
+##
+InstallOtherMethod( InjectiveCochainResolution,
+          [ IsCochainComplex, IsBool ], InjectiveResolution );
+
+##
+InstallOtherMethod( InjectiveCochainResolution,
+          [ IsChainComplex ], C -> AsCochainComplex( InjectiveResolution( C ) ) );
+
+##
+InstallOtherMethod( InjectiveCochainResolution,
+          [ IsChainComplex, IsBool ],
+  { C, bool } -> AsCochainComplex( InjectiveResolution( C, bool ) )
+);
 
 
 # TODO
@@ -1067,6 +1173,43 @@ InstallMethod( MorphismBetweenInjectiveChainResolutions,
     return AsChainMorphism( MorphismBetweenInjectiveResolutions( phi, bool ) );
     
 end );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsChainMorphism ], MorphismBetweenInjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsChainMorphism, IsBool ], MorphismBetweenInjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsCochainMorphism ], phi -> AsChainMorphism( MorphismBetweenInjectiveResolutions( phi ) ) );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveChainResolutions,
+          [ IsCochainMorphism, IsBool ],
+  { phi, bool } -> AsChainMorphism( MorphismBetweenInjectiveResolutions( phi, bool ) )
+);
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsCochainMorphism ], MorphismBetweenInjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsCochainMorphism, IsBool ], MorphismBetweenInjectiveResolutions );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsChainMorphism ], phi -> AsCochainMorphism( MorphismBetweenInjectiveResolutions( phi ) ) );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveCochainResolutions,
+          [ IsChainMorphism, IsBool ],
+  { phi, bool } -> AsCochainMorphism( MorphismBetweenInjectiveResolutions( phi, bool ) )
+);
+
 
 ##
 BindGlobal( "HORSESHOE_HELPER",
