@@ -20,6 +20,10 @@ if not IsBound( Reasons ) then
                                 end );
 fi;
 
+InfoComplexCategoriesForCAP := NewInfoClass( "InfoComplexCategoriesForCAP" );
+
+SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
+
 #! @Section Constructing chain and cochain categories
 
 

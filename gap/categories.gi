@@ -149,7 +149,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     ##
     objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
      
-    if objects_equality_for_cache in [ 1 ] then
+    if objects_equality_for_cache in [ 1, fail ] then
+      
+      Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for objects in ", Name( complex_cat ) );
       
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
@@ -158,7 +160,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
       
-    elif objects_equality_for_cache in [ fail, 2 ] then
+    elif objects_equality_for_cache in [ 2 ] then
       
       AddIsEqualForCacheForObjects( complex_cat,
         function( C1, C2 )
@@ -223,7 +225,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     
     morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
     
-    if morphisms_equality_for_cache in [ 1 ] then
+    if morphisms_equality_for_cache in [ fail, 1 ] then
+      
+      Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for morphisms in ", Name( complex_cat ) );
       
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
@@ -232,7 +236,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           
       end );
     
-    elif morphisms_equality_for_cache in [ fail, 2 ] then
+    elif morphisms_equality_for_cache in [ 2 ] then
       
       AddIsEqualForCacheForMorphisms( complex_cat,
         function( m1, m2 )
