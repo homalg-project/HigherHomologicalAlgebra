@@ -801,6 +801,121 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
 end );
 
 ##
+InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, G;
+    
+    full := DefiningFullSubcategory( collection );
+     
+    iso_1 := IsomorphismIntoAlgebroid( collection );
+    
+    algebroid := AsCapCategory( Range( iso_1 ) );
+    
+    iso_2 := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    
+    iso := PreCompose( iso_1, iso_2 );
+    
+    ind_projs := AsCapCategory( Range( iso ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ind_projs ) );
+    
+    G := CapFunctor( name, full, ind_projs );
+    
+    AddObjectFunction( G,
+      function( a )
+        local aa, p;
+        
+        if not IsBound( G!.ValuesForObjects ) then
+          
+          aa := ApplyFunctor( iso, a );
+          
+          G!.ValuesForObjects := [ [ a, aa ] ];
+          
+          return aa;
+          
+        else
+          
+          p := PositionProperty( G!.ValuesForObjects,
+                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
+                  );
+                  
+          if p = fail then
+            
+            aa := ApplyFunctor( iso, a );
+            
+            Add( G!.ValuesForObjects, [ a, aa ] );
+            
+            return aa;
+            
+          else
+            
+            return G!.ValuesForObjects[ p ][ 2 ];
+            
+          fi;
+          
+        fi;
+        
+    end );
+   
+    AddMorphismFunction( G,
+      function( s, alpha, r )
+        local a, b, coeffs, basis, images, p;
+        
+        a := Source( alpha );
+        
+        b := Range( alpha );
+        
+        if not IsBound( G!.GeneratingValuesForMorphisms ) then
+          
+          basis := BasisOfExternalHom( a, b );
+          
+          images := List( basis, phi -> ApplyFunctor( iso, phi ) );
+          
+          G!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
+          
+        else
+          
+          p := PositionProperty( G!.GeneratingValuesForMorphisms,
+            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
+                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
+                );
+                
+          if p = fail then
+            
+            basis := BasisOfExternalHom( a, b );
+            
+            images := List( basis, phi -> ApplyFunctor( iso, phi ) );
+            
+            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
+            
+          else
+            
+            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
+            
+          fi;
+          
+        fi;
+        
+        if IsEmpty( images ) then
+          
+          return ZeroMorphism( UnderlyingCell( s ), UnderlyingCell( r ) ) / ind_projs;
+          
+        fi;
+        
+        coeffs := CoefficientsOfMorphism( alpha );
+        
+        return coeffs * images;
+        
+    end );
+   
+    return G;
+    
+end );
+
+##
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
