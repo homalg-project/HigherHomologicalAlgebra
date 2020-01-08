@@ -73,7 +73,7 @@ Dependencies := rec(
         [ "Bialgebroids", ">= 2019.09.06" ],
         [ "HomotopyCategories", ">= 2019.11.20" ]
           ],
-  SuggestedOtherPackages := [ ],
+  SuggestedOtherPackages := [ [ "BBGG", ">= 2019.12.06" ] ],
   ExternalConditions := [ ],
 ),
 
