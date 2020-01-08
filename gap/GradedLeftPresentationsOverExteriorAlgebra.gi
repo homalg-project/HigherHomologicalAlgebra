@@ -1,7 +1,4 @@
 
-LoadPackage( "FrobeniusCategoriesForCAP" );
-LoadPackage( "GradedModulePresentations" );
-
 BindGlobal( "ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA", 
 
 function( cat )
