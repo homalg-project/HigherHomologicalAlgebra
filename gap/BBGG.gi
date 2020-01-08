@@ -1106,7 +1106,7 @@ InstallMethod( TwistedCotangentBundleOp,
 	mat := UnderlyingMatrix( cM );
 	id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
 	for i in [ 1 .. NrColumns( mat ) ] do
-		SetMatElm( id, i, NrColumns( mat )-i+1, One(A) );
+		id[ i, NrColumns( mat ) - i + 1 ] := One( A );
 	od;
 	return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
 end );

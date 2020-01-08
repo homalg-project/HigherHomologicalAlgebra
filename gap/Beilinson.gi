@@ -677,12 +677,11 @@ InstallMethod( MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS,
             
               source_factors[ u ],
               
-              HomalgMatrix( [ [ MatElm( matrix, u, v ) ] ], 1, 1, K ),
+              HomalgMatrix( [ matrix[ u, v ] ], 1, 1, K ),
               
               range_factors[ v ]
               
           ) ) );
-        
         
       fi;
 
