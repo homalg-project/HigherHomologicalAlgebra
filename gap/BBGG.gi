@@ -176,20 +176,30 @@ InstallMethod( RChainFunctor,
     [ IsHomalgGradedRing ],
     function( S )
     local A, cat_ext, chains_ext, cochains_ext, cochains_to_chains;
-
+    
     if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
       Error( "The input should be a graded polynomial ring" );
     fi;
- 
+    
     A := KoszulDualRing( S );
+    
     cat_ext := GradedLeftPresentations( A );
-
+    
     chains_ext := ChainComplexCategory( cat_ext );
+    
     cochains_ext := CochainComplexCategory( cat_ext );
-
+    
+    DeactivateCachingOfCategory( chains_ext );
+    CapCategorySwitchLogicOff( chains_ext );
+    DisableSanityChecks( chains_ext );
+    
+    DeactivateCachingOfCategory( cochains_ext );
+    CapCategorySwitchLogicOff( cochains_ext );
+    DisableSanityChecks( cochains_ext ); 
+    
     cochains_to_chains := CochainToChainComplexFunctor( cochains_ext, chains_ext );
-
-    return PreCompose( [ RCochainFunctor(S),  cochains_to_chains ] );
+    
+    return PreCompose( [ RCochainFunctor( S ),  cochains_to_chains ] );
 
 end );
 

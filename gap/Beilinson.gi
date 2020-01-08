@@ -365,6 +365,7 @@ InstallMethod( BeilinsonReplacement,
     S := KoszulDualRing( R );
 
     cat := GradedLeftPresentations( S );
+    
     chains := ChainComplexCategory( cat );
     cochains := CochainComplexCategory( cat );
     n := Length( IndeterminatesOfExteriorRing( R ) );
