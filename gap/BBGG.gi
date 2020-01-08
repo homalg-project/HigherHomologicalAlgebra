@@ -10,13 +10,13 @@ InstallMethod( RCochainFunctor,
     local cat_lp_ext, cat_lp_sym, cochains, R, A, n, name, ind_S, ind_A;
     
     ind_S := Indeterminates( S );
-
+    
     n := Length( ind_S );
     
     A := KoszulDualRing( S );
     
     ind_A := Indeterminates( A );
-   
+    
     cat_lp_sym := GradedLeftPresentations( S );
     
     cat_lp_ext := GradedLeftPresentations( A );
@@ -57,11 +57,7 @@ InstallMethod( RCochainFunctor,
                     return GradedPresentationMorphism( source, mat, range );
                     
                   end, 1 );
-        
-#        diff := MapLazy( IntegersList,
-#          i -> AsPresentationMorphismInCAP(
-#            (-1)^(n+1) * RepresentationMapOfKoszulId( i, hM ) ), 1 );
-        
+                
         C := CochainComplex( cat_lp_ext , diff );
         
         d := ShallowCopy( GeneratorDegrees( M ) );
@@ -104,7 +100,7 @@ InstallMethod( RCochainFunctor,
         return CochainMorphism( new_source, new_range, mors );
         
       end );
-    
+       
     return R;
     
 end );
@@ -175,7 +171,7 @@ end );
 InstallMethod( RChainFunctor,
     [ IsHomalgGradedRing ],
     function( S )
-    local A, cat_ext, chains_ext, cochains_ext, cochains_to_chains;
+    local A, cat_ext, chains_ext, cochains_ext, cochains_to_chains, R;
     
     if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
       Error( "The input should be a graded polynomial ring" );
@@ -185,22 +181,16 @@ InstallMethod( RChainFunctor,
     
     cat_ext := GradedLeftPresentations( A );
     
-    chains_ext := ChainComplexCategory( cat_ext );
+    chains_ext := ChainComplexCategory( cat_ext : ObjectsEqualityForCache := 1, MorphismsEqualityForCache := 1 );
     
-    cochains_ext := CochainComplexCategory( cat_ext );
-    
-    DeactivateCachingOfCategory( chains_ext );
-    CapCategorySwitchLogicOff( chains_ext );
-    DisableSanityChecks( chains_ext );
-    
-    DeactivateCachingOfCategory( cochains_ext );
-    CapCategorySwitchLogicOff( cochains_ext );
-    DisableSanityChecks( cochains_ext ); 
+    cochains_ext := CochainComplexCategory( cat_ext : ObjectsEqualityForCache := 1, MorphismsEqualityForCache := 1 );
     
     cochains_to_chains := CochainToChainComplexFunctor( cochains_ext, chains_ext );
     
-    return PreCompose( [ RCochainFunctor( S ),  cochains_to_chains ] );
-
+    R := PreCompose( [ RCochainFunctor( S ),  cochains_to_chains ] );
+    
+    return R;
+    
 end );
 
 
@@ -268,12 +258,12 @@ InstallMethod( LCochainFunctor,
             end, 1 );
 
         C :=  CochainComplex( cat_lp_sym, diffs );
-
+        
         d := ShallowCopy( GeneratorDegrees( M ) );
-
+        
         # the output of GeneratorDegrees is in general not integer.
         Apply( d, HomalgElementToInteger );
-
+        
         if Length( d ) = 0 then
             SetLowerBound( C, 0 );
             SetUpperBound( C, 0 );
@@ -283,13 +273,13 @@ InstallMethod( LCochainFunctor,
         fi;
         
         return C;
-
+        
         end );
-
+    
     AddMorphismFunction( L, 
         function( new_source, f, new_range )
         local M, N, mors;
-
+        
         M := Source( f );
         N := Range( f );
         
@@ -300,9 +290,9 @@ InstallMethod( LCochainFunctor,
                 
                 #s := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
                 #r := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( N );
-
+                
                 #if n mod 2 = 0 then
-
+                
                 #if ( s[ 1 ] and not r[ 1 ] ) or ( not s[ 1 ] and r[ 1 ] ) then
                 #  if ( s[ 1 ] and k = s[ 2 ] ) or ( r[ 1 ] and k = r[ 2 ] ) then
                 #    l := AdditiveInverse( l );
@@ -316,18 +306,18 @@ InstallMethod( LCochainFunctor,
                 #    Info( InfoBBGG, 1, "Basis change is applied when applying the functor L on a morphism!!" );
                 #  fi;
                 #fi;
-
+                
                 #fi;
-
+                
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 
                 end, 1 );
-
+                
         return CochainMorphism( new_source, new_range, mors );
         end );
-
+        
     return L;
-
+    
 end );
 
 ##
@@ -335,23 +325,21 @@ InstallMethod( LChainFunctor,
     [ IsHomalgGradedRing ],
     function( S )
     local cat_sym, chains_sym, cochains_sym, cochains_to_chains;
-
+    
     if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
       Error( "The input should be a graded polynomial ring" );
     fi;
- 
+    
     cat_sym := GradedLeftPresentations( S );
-
+    
     chains_sym := ChainComplexCategory( cat_sym );
     cochains_sym := CochainComplexCategory( cat_sym );
-
+    
     cochains_to_chains := CochainToChainComplexFunctor( cochains_sym, chains_sym );
-
+    
     return PreCompose( [ LCochainFunctor( S ),  cochains_to_chains ] );
-
+    
 end );
-
-
 
 ##
 # Can be very slow comparing to the new one.
@@ -359,7 +347,7 @@ end );
 BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
     function( S )
     local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
-
+    
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
     ind_ext := IndeterminatesOfExteriorRing( KS );
@@ -386,12 +374,12 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
             return GradedPresentationMorphism( source, l, range );
             end, 1 );
         C :=  CochainComplex( cat_lp_sym, diffs );
-
+        
         d := ShallowCopy( GeneratorDegrees( M ) );
-
+        
         # the output of GeneratorDegrees is in general not integer.
         Apply( d, HomalgElementToInteger );
-
+        
         if Length( d ) = 0 then
             SetLowerBound( C, 0 );
             SetUpperBound( C, 0 );
@@ -401,13 +389,13 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
         fi;
         
         return C;
-
+        
         end );
-
+        
     AddMorphismFunction( L, 
         function( new_source, f, new_range )
         local M, N, mors;
-
+        
         M := Source( f );
         N := Range( f );
         
@@ -424,17 +412,17 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
                 if not IsMonomorphism( iNk ) then
                   Error( "Very serious: You think something is mono, but it is not" );
                 fi;
-
+                
                 l := LiftAlongMonomorphism( iNk, PreCompose( iMk, f ) );
-
+                
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
-                end, 1 );
-
+              end, 1 );
+        
         return CochainMorphism( new_source, new_range, mors );
-        end );
-
+      end );
+      
     return L;
-
+    
 end );
 
 ##
@@ -462,7 +450,7 @@ InstallMethodWithCrispCache( TateResolution,
     [ IsCapCategoryObject and IsChainComplex ],
   function( C )
     local chains, cat, S, A, lp_cat_ext, reg, R, ChR, B, Tot, ker, diffs, tot_i;
-
+    
     chains := CapCategory( C );
     
     cat := UnderlyingCategory( chains );
@@ -514,7 +502,7 @@ InstallMethodWithCrispCache( TateResolution,
         fi;
         
       end, 1 );
-    
+      
     return ChainComplex( lp_cat_ext, diffs );
     
 end );
@@ -611,7 +599,7 @@ InstallMethodWithCrispCache( TateResolution,
           # I.e., It is of the form S(n)
           
           TryNextMethod( );
-    
+          
     else
       
       return TateResolution( StalkChainComplex( M, 0) );
@@ -628,7 +616,7 @@ InstallMethodWithCrispCache( TateResolution,
     R := UnderlyingHomalgRing( M );
     
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
-    
+      
       TryNextMethod();
     
     elif NrRows( UnderlyingMatrix( M ) ) = 0 and
@@ -640,7 +628,7 @@ InstallMethodWithCrispCache( TateResolution,
         
         degree := HomalgElementToInteger( degree );
         
-        O := GradedFreeLeftPresentation( 1, R, [ 0 ] );
+        O := TwistedStructureSheaf( R, 0 );
         
         T := TateResolution( O );
         
@@ -717,7 +705,7 @@ InstallMethodWithCrispCache( TateResolution,
     local R, graded_lp_cat_ext, p, q, diffs;
     
     R := UnderlyingHomalgRing( P );
-
+    
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
         graded_lp_cat_ext := GradedLeftPresentations( R );
         p := ProjectiveResolution( P );
@@ -733,7 +721,7 @@ InstallMethodWithCrispCache( TateResolution,
             fi;
             end, 1 );
         return ChainComplex( graded_lp_cat_ext, diffs );
-
+    
     else
         TryNextMethod();
     fi;
@@ -745,7 +733,7 @@ InstallMethodWithCrispCache( TateResolution,
     local R, graded_lp_cat_ext, source, range, mors;
     
     R := UnderlyingHomalgRing( phi );
-
+    
     if HasIsExteriorRing( R ) and IsExteriorRing( R ) then
         graded_lp_cat_ext := GradedLeftPresentations( R );
         source := TateResolution( Source( phi ) );
@@ -764,7 +752,7 @@ InstallMethodWithCrispCache( TateResolution,
                                         fi;
                                         end, 1 );
         return ChainMorphism( source, range, mors );
-
+        
     else
         TryNextMethod();
     fi;
@@ -799,59 +787,59 @@ InstallMethod( TruncationFunctorUsingTateResolutionOp,
       function( M )
         return ApplyFunctor( T, AsCochainComplex( TateResolution( M ) ) );
       end );
-
+      
       AddMorphismFunction( F,
       function( source, phi, range )
         return ApplyFunctor( T, AsCochainMorphism( TateResolution( phi ) ) );
       end );
-
+      
       return F;
 end );
 
 BindGlobal( "NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg_old",
     function( S, i )
       local graded_lp_cat, T1, T2, name, nat;
-
+      
       graded_lp_cat := GradedLeftPresentations( S );
       
       T1 := TruncationFunctorUsingTateResolutionOp( S, i );
       T2 := TruncationFunctorUsingHomalg( S, i );
       name := Concatenation( "A natural transformation from ", Name( T1 ), " to ", Name( T2 ) );
       nat := NaturalTransformation( name, T1, T2 );
-
+      
       AddNaturalTransformationFunction( nat,
       function( source, M, range )
         local A, L, tM, f, P, glp_i, nat_i, Mi, emb_Mi, emb_Mi_in_P, Pi, emb_Pi_in_P, lift, LP, mat, mor, colift;
-
+        
         A := KoszulDualRing( S );
         L := LCochainFunctor( S );
-
+        
         tM := AsCochainComplex( TateResolution( M ) );
-
+        
         f := tM^i;
         P := KernelObject( f );
         glp_i := GLPGeneratedByHomogeneousPartFunctor( A, i );
         nat_i := NatTransFromGLPGeneratedByHomogeneousPartToIdentityFunctor( A, i );
-
+        
         Mi := ApplyFunctor( glp_i, tM[ i ] );
         
         emb_Mi := ApplyNaturalTransformation( nat_i, tM[ i ] );
         emb_Mi_in_P := KernelLift( f, emb_Mi );
         
         Pi := ApplyFunctor( glp_i, P );
-
+        
         emb_Pi_in_P := ApplyNaturalTransformation(  nat_i,  P );
-
+        
         lift := LiftAlongMonomorphism( emb_Mi_in_P, emb_Pi_in_P );
         
         LP := ApplyFunctor( L, P );
         mat := UnderlyingMatrix( lift ) * S;
         mor := GradedPresentationMorphism( LP[ -i ], mat, range );
         colift := CokernelColift( LP^( -i - 1 ), mor );
-
+        
         return colift;
       end );
-
+      
       return nat;
 end );
 
@@ -939,49 +927,80 @@ BindGlobal( "NatTransFromTruncationUsingTateResolutionToIdentityFunctor_old",
 #    [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       local graded_lp_cat, T, Id, name, nat, nat_tate, nat_homalg;
-
+      
       graded_lp_cat := GradedLeftPresentations( S );
       
       T := TruncationFunctorUsingTateResolutionOp( S, i );
       Id := IdentityFunctor( graded_lp_cat );
       name := Concatenation( "A natural transformation from ", Name( T ), " to ", Name( Id ) );
       nat := NaturalTransformation( name, T, Id );
-
+      
       nat_tate   := NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg( S, i );
       nat_homalg := NatTransFromTruncationUsingHomalgToIdentityFunctor( S, i );
       
       AddNaturalTransformationFunction( nat,
       function( source, M, range )
         local nat_tate_M, nat_homalg_M;
-
+        
         nat_tate_M := ApplyNaturalTransformation( nat_tate, M );
         nat_homalg_M := ApplyNaturalTransformation( nat_homalg, M );
         return PreCompose( nat_tate_M, nat_homalg_M );
-
+        
       end );
-
+      
       return nat;
 end );
 
 ##
 InstallMethod( TwistFunctor,
-	[ IsHomalgGradedRing, IsHomalgElement ],
-	function( S, degree )
-      local cat, F;
-	  cat := GradedLeftPresentations( S );
-	  F := CapFunctor( Concatenation( String( degree ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
-
-	  AddObjectFunction( F,
-		function( M )
-		return AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
-		end );
-        
-	  AddMorphismFunction( F,
-		function( source, f, range )
-		return GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
-		end );
-
-	  return F;
+          [ IsHomalgGradedRing, IsHomalgElement ],
+  function( S, degree )
+    local cat, F;
+    
+    cat := GradedLeftPresentations( S );
+    F := CapFunctor( Concatenation( String( degree ), "-twist endofunctor in ", Name( cat ) ), cat, cat );
+    
+    ##
+    AddObjectFunction( F,
+      function( M )
+        local twist;
+        if not IsBound( M!.ComputedTwists ) then
+          M!.ComputedTwists := rec( );
+        twist := AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
+          M!.ComputedTwists!.( String( degree ) ) := twist;
+          return twist;
+        else    
+          if not String( degree ) in NamesOfComponents( M!.ComputedTwists ) then
+          twist := AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
+            M!.ComputedTwists!.( String( degree ) ) := twist;
+            return twist;
+          else
+            return M!.ComputedTwists!.( String( degree ) );
+          fi;
+        fi;
+    end );
+    
+    ##
+    AddMorphismFunction( F,
+      function( source, f, range )
+        local twist;
+        if not IsBound( f!.ComputedTwists ) then
+          f!.ComputedTwists := rec( );
+        twist := GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
+          f!.ComputedTwists!.( String( degree ) ) := twist;
+          return twist;
+        else    
+          if not String( degree ) in NamesOfComponents( f!.ComputedTwists ) then
+            twist := GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
+            f!.ComputedTwists!.( String( degree ) ) := twist;
+            return twist;
+          else
+            return f!.ComputedTwists!.( String( degree ) );
+          fi;
+        fi;
+    end );
+      
+    return F;
 end );
 
 ##
@@ -1003,7 +1022,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentation, IsHomalgElement ],
-    function( M, degree )
+  function( M, degree )
     local ring;
     ring := UnderlyingHomalgRing( M );
     return ApplyFunctor( TwistFunctor( ring, degree ), M );
@@ -1012,7 +1031,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentation, IsList ],
-    function( M, list )
+  function( M, list )
     local ring;
     ring := UnderlyingHomalgRing( M );
     return ApplyFunctor( TwistFunctor( ring, list ), M );
@@ -1021,7 +1040,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentation, IsInt ],
-    function( M, n )
+  function( M, n )
     local ring;
     ring := UnderlyingHomalgRing( M );
     return ApplyFunctor( TwistFunctor( ring, n ), M );
@@ -1030,7 +1049,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentationMorphism, IsHomalgElement ],
-    function( phi, degree )
+  function( phi, degree )
     local ring;
     ring := UnderlyingHomalgRing( phi );
     return ApplyFunctor( TwistFunctor( ring, degree ), phi );
@@ -1039,7 +1058,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentationMorphism, IsList ],
-    function( phi, list )
+  function( phi, list )
     local ring;
     ring := UnderlyingHomalgRing( phi );
     return ApplyFunctor( TwistFunctor( ring, list ), phi );
@@ -1048,7 +1067,7 @@ end );
 ##
 InstallMethod( \[\],
     [ IsGradedLeftOrRightPresentationMorphism, IsInt ],
-    function( phi, n )
+  function( phi, n )
     local ring;
     ring := UnderlyingHomalgRing( phi );
     return ApplyFunctor( TwistFunctor( ring, n ), phi );
@@ -1082,39 +1101,39 @@ end );
 
 # The output here is stable module that correspondes to O(k) [ the sheafification of S(k) ]
 InstallMethod( TwistedStructureBundleOp,
-	[ IsHomalgGradedRing, IsInt ],
-	function( Sym, k )
-	local F;
-    	F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
-    	return Source( CyclesAt( TateResolution( F ), 0 ) );
+          [ IsHomalgGradedRing, IsInt ],
+  function( Sym, k )
+    local F;
+    F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
+      return Source( CyclesAt( TateResolution( F ), 0 ) );
 end );
 
 # See Appendix of Vector Bundels over complex projective spaces
 InstallMethod( TwistedCotangentBundleOp,
-	[ IsHomalgGradedRing, IsInt ],
-	function( A, k )
-	local n, F, hF, hM, cM, id, i, mat;
-	n := Length( IndeterminatesOfExteriorRing( A ) );
+          [ IsHomalgGradedRing, IsInt ],
+  function( A, k )
+    local n, F, hF, hM, cM, id, i, mat;
+    n := Length( IndeterminatesOfExteriorRing( A ) );
     if k < 0 or k > n - 1 then
-        Error( Concatenation( "Cotangent bundels are defined only for 0,1,...,", String( n - 1 ) ) );
+      Error( Concatenation( "Cotangent bundels are defined only for 0,1,...,", String( n - 1 ) ) );
     fi;
-	F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
-	hF := AsPresentationInHomalg( F );
-	hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
-	hM := UnderlyingObject( hM );
-	cM := AsPresentationInCAP( hM );
-	mat := UnderlyingMatrix( cM );
-	id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
-	for i in [ 1 .. NrColumns( mat ) ] do
-		id[ i, NrColumns( mat ) - i + 1 ] := One( A );
-	od;
-	return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
+    F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
+    hF := AsPresentationInHomalg( F );
+    hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
+    hM := UnderlyingObject( hM );
+    cM := AsPresentationInCAP( hM );
+    mat := UnderlyingMatrix( cM );
+    id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
+    for i in [ 1 .. NrColumns( mat ) ] do
+      id[ i, NrColumns( mat ) - i + 1 ] := One( A );
+    od;
+    return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
 end );
 
 # See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
 InstallMethod( KoszulSyzygyModuleOp,
-	[ IsHomalgGradedRing, IsInt ],
-    function( S, k )
+        [ IsHomalgGradedRing, IsInt ],
+  function( S, k )
     local ind, K, koszul_resolution, n;
     ind := Reversed( IndeterminatesOfPolynomialRing( S ) );
     K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
