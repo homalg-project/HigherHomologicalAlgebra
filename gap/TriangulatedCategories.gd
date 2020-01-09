@@ -706,8 +706,12 @@ DeclareOperation( "AddOctahedralAxiom", [ IsCapCategory, IsList ] );
 ##
 ###############################
 
-DeclareAttribute( "ShiftFunctor", IsCapCategory );
+DeclareAttribute( "ShiftFunctorAttr", IsCapCategory );
 
+
+if not IsBound( ShiftFunctor ) then
+  DeclareOperation( "ShiftFunctor", [ IsCapCategory ] );
+fi;
 
 DeclareAttribute( "ReverseShiftFunctor", IsCapCategory );
 

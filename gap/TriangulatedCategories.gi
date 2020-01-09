@@ -656,7 +656,7 @@ InstallMethod( ReverseShiftFactoringIsomorphism,
 end );
 
 ##
-InstallMethod( ShiftFunctor,
+InstallMethod( ShiftFunctorAttr,
                   [ IsCapCategory and IsTriangulatedCategory ],
                   
     function( category )
@@ -691,8 +691,13 @@ InstallMethod( ShiftFunctor,
      return functor;
   
 end );
-     
- 
+
+##
+InstallOtherMethod( ShiftFunctor,
+          [ IsCapCategory and IsTriangulatedCategory ],
+  ShiftFunctorAttr
+);
+
 InstallMethod( ReverseShiftFunctor,
                   [ IsCapCategory and IsTriangulatedCategory ],
                   

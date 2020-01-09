@@ -489,7 +489,7 @@ AddDerivationToCAP( IsEpimorphism,
                     [ IsSplitEpimorphism, 1 ]
                 ],
     function( alpha )
-    return IsSplitEpimorphism( alpha );
+      return IsSplitEpimorphism( alpha );
 end:  CategoryFilter := IsTriangulatedCategory, Description:= "a morphism is triangulated categories is epi iff it is split epi" );
 
 ##
