@@ -21,6 +21,6 @@ if not IsBound( Time ) then
   
 fi;
 
-DeclareOperation( "\/", [ IsCapCategoryCell, IsCapFullSubcategory ] );
+#DeclareOperation( "\/", [ IsCapCategoryCell, IsCapFullSubcategory ] );
 ##
-InstallMethod( \/, [ IsCapCategoryCell, IsCapFullSubcategory ], {cell, cat} -> AsFullSubcategoryCell( cat, cell ) );
+#InstallMethod( \/, [ IsCapCategoryCell, IsCapFullSubcategory ], {cell, cat} -> AsFullSubcategoryCell( cat, cell ) );
