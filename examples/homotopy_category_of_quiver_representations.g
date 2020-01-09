@@ -1,9 +1,9 @@
-LoadPackage( "HomotopyCategories" );
-LoadPackage( "QPA" );
-LoadPackage( "LinearAlgebra" );
-ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_quiver_reps.g" );
+LoadPackage( "DerivedCategories" );
 
-field := Rationals;;
+field := HomalgFieldOfRationals( );;
+SET_GLOBAL_FIELD_FOR_QPA( field );
+SetInfoLevel( InfoDerivedCategories, 3 );
+
 
 quiver := RightQuiver( "q(4)[x0:1->2,x1:1->2,x2:1->2,x3:1->2,y0:2->3,y1:2->3,y2:2->3,y3:2->3,z0:3->4,z1:3->4,z2:3->4,z3:3->4]" );;
 Qq := PathAlgebra( field, quiver );;
@@ -52,14 +52,7 @@ B := QuotientOfPathAlgebra(
   ]
 );;
 
-cat := CategoryOfQuiverRepresentations( B : FinalizeCategory := false );;
-cat!.compute_basis_of_hom_using_homalg := [ true, 1, HomalgFieldOfRationals() ]; 
-# cat!.compute_basis_of_hom_using_homalg := [ true, 2, HomalgFieldOfRationals() ]; to hid [[#I  Using homalg to compute BasisOfHom(-,-)]]
-SetIsLinearCategoryOverCommutativeRing( cat, true );;
-SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
-AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddRandomMethodsToQuiverRepresentations( cat );;
-Finalize( cat );;
+cat := CategoryOfQuiverRepresentations( B );
 
 homotopy_of_quiver_reps := HomotopyCategory( cat );;
 
