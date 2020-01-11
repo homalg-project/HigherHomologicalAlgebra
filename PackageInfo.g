@@ -74,7 +74,10 @@ Dependencies := rec(
         [ "SubcategoriesForCAP", ">= 2019.11.01" ],
         [ "HomotopyCategories", ">= 2019.11.20" ]
           ],
-  SuggestedOtherPackages := [ [ "BBGG", ">= 2019.12.06" ] ],
+  SuggestedOtherPackages := [
+            [ "BBGG", ">= 2019.12.06" ],
+            [ "NConvex", ">= 2019.12.06" ],
+            ],
   ExternalConditions := [ ],
 ),
 
