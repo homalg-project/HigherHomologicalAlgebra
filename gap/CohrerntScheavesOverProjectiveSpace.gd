@@ -6,8 +6,13 @@
 ##
 #############################################################################
 
+DeclareOperation( "MonomialsOfDegree", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
 
 DeclareAttribute( "FullSubcategoryGeneratedByTwistedOmegaModules", IsExteriorRing );
+
+DeclareAttribute( "FullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
+
+DeclareAttribute( "FullSubcategoryGeneratedByDirectSumsOfTwistsOfStructureSheaf", IsHomalgGradedRing );
 
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
  
