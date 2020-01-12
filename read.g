@@ -11,4 +11,5 @@ ReadPackage( "DerivedCategories", "gap/Decomposition.gi" );
 ReadPackage( "DerivedCategories", "gap/Convenience.gi" );
 ReadPackage( "DerivedCategories", "gap/Functors.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
+ReadPackage( "DerivedCategories", "gap/tools.gi" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );

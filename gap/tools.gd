@@ -1,0 +1,3 @@
+
+##
+DeclareOperation( "MonomialsOfDegree", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
