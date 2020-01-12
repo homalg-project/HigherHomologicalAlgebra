@@ -12,7 +12,10 @@ DeclareAttribute( "FullSubcategoryGeneratedByTwistedOmegaModules", IsExteriorRin
 
 DeclareAttribute( "FullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
 
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentSheaves", IsHomalgGradedRing );
+
 DeclareAttribute( "FullSubcategoryGeneratedByDirectSumsOfTwistsOfStructureSheaf", IsHomalgGradedRing );
 
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
- 
+
+DeclareAttribute( "RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
