@@ -1,3 +1,0 @@
-
-##
-DeclareOperation( "MonomialsOfDegree", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
