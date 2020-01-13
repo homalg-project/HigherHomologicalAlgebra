@@ -58,7 +58,7 @@ KeyDependentOperation( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY", IsCapCategory, IsInt
 InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             [ IsCapCategory, IsInt ],
   function( cat, shift_index )
-    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache;
+    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache, chains_range_cat;
     
     if shift_index = -1 then 
       
@@ -1554,7 +1554,17 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                     
                     else
                       
-                      SetRangeCategoryOfHomomorphismStructure( complex_cat, ChainComplexCategory( range_cat_of_hom_struc ) );
+                      chains_range_cat := ChainComplexCategory( range_cat_of_hom_struc );
+                      
+                      if not HasIsFinalized( chains_range_cat ) then
+                        
+                        Info( InfoWarning, 2, "For some reason the category", Name( chains_range_cat ), " has not been finalized!\n" );
+                        
+                        Finalize( chains_range_cat );
+                        
+                      fi;
+                      
+                      SetRangeCategoryOfHomomorphismStructure( complex_cat, chains_range_cat );
                     
                     fi;
                   
