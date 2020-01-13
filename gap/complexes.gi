@@ -1354,6 +1354,12 @@ InstallMethod( AsComplexOverCapFullSubcategory,
       
     fi;
     
+    if not IsIdenticalObj( ValueGlobal( "AmbientCategory" )( full_subcategory ), UnderlyingCategory( CapCategory( C ) ) ) then
+      
+      Error( "wrong input!\n" );
+      
+    fi;
+    
     diffs := Differentials( C );
     
     diffs := MapLazy( diffs, diff -> ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, diff ), 1 );
