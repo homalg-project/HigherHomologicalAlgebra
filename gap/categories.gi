@@ -1545,6 +1545,12 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                   if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
                     
                     SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
+                  
+                  elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+                        ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                            ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
+                        
+                    SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat_of_hom_struc ) );
                     
                   else
                     
@@ -2128,7 +2134,7 @@ end );
 ##
 InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
   function( category )
-    local cat, range_cat_of_hom_struc, V, d;
+    local I, cat, range_cat_of_hom_struc, V, d;
     
     cat := UnderlyingCategory( category );
     
@@ -2153,12 +2159,22 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
           return Source(  CyclesAt( TotalChainComplex( d ), 0 ) );
-          
-        else
-          
-          return TotalChainComplex( d );
-          
+        
         fi;
+        
+        if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+            ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
+            
+            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat_of_hom_struc );
+            
+            I := ExtendFunctorToChainComplexCategories( I );
+            
+            return Source( CyclesAt( ApplyFunctor( I, TotalChainComplex( d ) ), 0 ) );
+            
+        fi;
+        
+        return TotalChainComplex( d );
   
   end );
 
@@ -2175,7 +2191,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
     
     AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
       function( s, phi, psi, r )
-        local ss, Tot1, rr, Tot2, l;
+        local I, ss, Tot1, rr, Tot2, l;
         
         ss := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Range( phi ), Source( psi ) );
         
@@ -2215,13 +2231,22 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
           return CyclesFunctorialAt( ChainMorphism( Tot1, Tot2, l ), 0 );
-          
-        else
-          
-          return ChainMorphism( Tot1, Tot2, l );
+        
+        fi;
+        
+        if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+            ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
+            
+            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat_of_hom_struc );
+            I := ExtendFunctorToChainComplexCategories( I );
+            
+            return CyclesFunctorialAt( ApplyFunctor( I, ChainMorphism( Tot1, Tot2, l ) ), 0 );
           
         fi;
-
+        
+        return ChainMorphism( Tot1, Tot2, l );
+        
     end );
 
 end );
@@ -2237,7 +2262,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
     
     AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
         function( phi )
-          local C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i, U;
+          local I, C, D, lower_bound, upper_bound, morphisms_from_distinguished_object, morphism, d, T, i, U;
           
           C := Source( phi );
           D := Range( phi );
@@ -2265,13 +2290,21 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
             
             return KernelLift( T^0, morphism );
             
-          else
-            
-            U := StalkChainComplex( Source( morphism ), 0 );
-            
-            return ChainMorphism( U, T, [ morphism ], 0 );
+          fi;
+          
+          if IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+              ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                  ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
+              
+              I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat_of_hom_struc );
+              
+              return KernelLift( ApplyFunctor( I, T^0 ), ApplyFunctor( I, morphism ) );
             
           fi;
+          
+          U := StalkChainComplex( Source( morphism ), 0 );
+          
+          return ChainMorphism( U, T, [ morphism ], 0 );
         
   end );
 
@@ -2288,7 +2321,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
     
     AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
         function( C, D, psi )
-          local lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
+          local I, lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
           lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
           upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
@@ -2301,6 +2334,15 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
             
             phi := PreCompose( psi, CyclesAt( T, 0 ) );
             
+          elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+            ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
+            
+            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat_of_hom_struc );
+            I := ExtendFunctorToChainComplexCategories( I );
+            
+            phi := ValueGlobal( "MorphismDatum" )( PreCompose( psi, CyclesAt( ApplyFunctor( I, T ), 0 ) ) );
+         
           else
             
             phi := psi[ 0 ];
@@ -2341,11 +2383,20 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE,
        
       AddDistinguishedObjectOfHomomorphismStructure( category,
         function( )
+          local I;
           
           if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
             
             return DistinguishedObjectOfHomomorphismStructure( cat );
+          
+          elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
+            ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
+                ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
             
+            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat_of_hom_struc );
+            
+            return ApplyFunctor( I, DistinguishedObjectOfHomomorphismStructure( cat ) );
+          
           else
             
             return StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 );
