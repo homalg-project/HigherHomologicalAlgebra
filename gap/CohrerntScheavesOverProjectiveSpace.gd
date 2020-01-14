@@ -19,3 +19,5 @@ DeclareAttribute( "FullSubcategoryGeneratedByDirectSumsOfTwistsOfStructureSheaf"
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
 
 DeclareAttribute( "RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
+
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );

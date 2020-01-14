@@ -263,6 +263,82 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   end );
   
   ##
+  #InstallMethod( 
+  BindGlobal( "BeilinsonFunctor2",
+     #       [ IsHomalgGradedRing ],
+    function( S )
+      local n, A, cat, full, add_full, iso, add_cotangent_sheaves, homotopy_cat, r, name, BB;
+      
+      n := Size( Indeterminates( S ) );
+      
+      A := KoszulDualRing( S );
+      
+      cat := GradedLeftPresentations( S );
+      
+      full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+      
+      add_full := AdditiveClosure( full );
+      
+      DeactivateCachingOfCategory( add_full );
+      
+      CapCategorySwitchLogicOff( add_full );
+      
+      DisableSanityChecks( add_full );
+           
+      iso := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves( S );
+      
+      iso := ExtendFunctorToAdditiveClosures( iso );
+      
+      add_cotangent_sheaves := AsCapCategory( Range( iso ) );
+      
+      homotopy_cat := HomotopyCategory( add_cotangent_sheaves );
+      
+      r := RANDOM_TEXT_ATTR( );
+      
+      name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
+                  r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
+      
+      BB := CapFunctor( name, cat, homotopy_cat );
+      
+      AddObjectFunction( BB,
+        function( a )
+          local T, diffs, C;
+          
+          T := TateResolution( a );
+          
+          diffs := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T ^ i ) ), 1 );
+          
+          C := ChainComplex( add_cotangent_sheaves, diffs );
+          
+          SetLowerBound( C, -n );
+          
+          SetUpperBound( C, n );
+          
+          return C / homotopy_cat;
+          
+      end );
+      
+      AddMorphismFunction( BB,
+        function( s, alpha, r )
+          local T, maps;
+          
+          s := UnderlyingCell( s );
+          
+          r := UnderlyingCell( r );
+          
+          T := TateResolution( alpha );
+          
+          maps := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T[ i ] ) ), 1 );
+          
+          return ChainMorphism( s, r, maps ) / homotopy_cat;
+          
+      end );
+      
+      return BB;
+      
+  end );
+  
+  ##
   InstallMethod( RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf,
             [ IsHomalgGradedRing ],
     function( S )
@@ -306,6 +382,11 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       graded_pres := GradedLeftPresentations( S );
       
+      DisableSanityChecks( graded_pres );
+      DeactivateCachingOfCategory( graded_pres );
+      CapCategorySwitchLogicOff( graded_pres );
+      
+      graded_pres := GradedLeftPresentations( KoszulDualRing( S ) );
       DisableSanityChecks( graded_pres );
       DeactivateCachingOfCategory( graded_pres );
       CapCategorySwitchLogicOff( graded_pres );
@@ -542,6 +623,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       Finalize( full );
       
       DisableSanityChecks( full );
+      SetCachingOfCategoryCrisp( full );
       #DeactivateCachingOfCategory( full );
       CapCategorySwitchLogicOff( full );
      
@@ -557,6 +639,11 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       graded_pres := GradedLeftPresentations( S );
       
+      DisableSanityChecks( graded_pres );
+      DeactivateCachingOfCategory( graded_pres );
+      CapCategorySwitchLogicOff( graded_pres );
+      
+      graded_pres := GradedLeftPresentations( KoszulDualRing( S ) );
       DisableSanityChecks( graded_pres );
       DeactivateCachingOfCategory( graded_pres );
       CapCategorySwitchLogicOff( graded_pres );
@@ -754,20 +841,100 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       return full;
       
   end );
-
+  
+  InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves,
+            [ IsHomalgGradedRing and IsFreePolynomialRing ],
+    function( S )
+      local A, omegas, objects_omegas, Omegas, objects_Omegas, F;
+      
+      A := KoszulDualRing( S );
+      
+      omegas := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+      
+      objects_omegas := SetOfKnownObjects( omegas );
+      
+      Omegas := FullSubcategoryGeneratedByTwistedCotangentSheaves( S );
+      
+      objects_Omegas := SetOfKnownObjects( Omegas );
+      
+      F := CapFunctor( "name", omegas, Omegas );
+      
+      AddObjectFunction( F,
+        function( o )
+          local p;
+          
+          p := Position( objects_omegas, o );
+          
+          if p = fail then
+            
+            Error( "This should not happen!\n" );
+            
+          fi;
+          
+          return objects_Omegas[ p ];
+          
+      end );
+      
+      AddMorphismFunction( F,
+        function( s, alpha, r )
+          local coeff;
+          
+          coeff := CoefficientsOfMorphism( alpha );
+          
+          if IsEmpty( coeff ) then
+            
+            return ZeroMorphism( UnderlyingCell( s ), UnderlyingCell( r ) ) / Omegas;
+            
+          fi;
+          
+          return coeff * BasisOfExternalHom( s, r );
+          
+      end );
+      
+      return F;
+      
+  end );
+  
   ########################################
   #
   # View & Display methods
   #
   #######################################
   
-  ## 𝒪, 𝓞, 𝛀, 𝛚, ⨁,, ⊕
+  ## 𝒪, 𝓞, 𝛀, 𝛚 ⨁,, ⊕, Ω
+  
+  ##
   InstallMethod( ViewObj,
             [ IsSerreQuotientCategoryObject ],
-    function( o )
-      local twists, c, p;
+    function( M )
+      local o, S, n, omegas, p;
+       
+      o := UnderlyingHonestObject( M );
       
-      o := UnderlyingHonestObject( o );
+      S := UnderlyingHomalgRing( o );
+      
+      n := Size( Indeterminates( S ) );
+      
+      omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentSheaf( S, i ) );
+      
+      p := Position( omegas, o );
+      
+      if p = fail then
+        
+        TryNextMethod( );
+        
+      fi;
+      
+      Print( "Ω^", p - 1, "(", p - 1, ")" );
+      
+  end );
+
+  InstallMethod( ViewObj,
+            [ IsSerreQuotientCategoryObject ],
+    function( M )
+      local o, twists, c, p;
+      
+      o := UnderlyingHonestObject( M );
       
       if not IsZero( NrRows( UnderlyingMatrix( o ) ) ) then
         
@@ -829,19 +996,23 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( ViewObj,
             [ IsSerreQuotientCategoryMorphism ],
     function( alpha )
-      local s, r;
-     
+      local s, mat_s, r, mat_r;
+      
       s := Source( alpha );
-    
-      if not IsZero( NrRows( UnderlyingMatrix( UnderlyingHonestObject( s ) ) ) ) then
+      
+      mat_s := UnderlyingMatrix( UnderlyingHonestObject( s ) );
+      
+      if not IsZero( NrRows( mat_s ) ) then
       
         TryNextMethod( );
       
       fi;
       
       r := Range( alpha );
-    
-      if not IsZero( NrRows( UnderlyingMatrix( UnderlyingHonestObject( r ) ) ) ) then
+      
+      mat_r := UnderlyingMatrix( UnderlyingHonestObject( r ) );
+   
+      if not IsZero( NrRows( mat_r ) ) then
       
         TryNextMethod( );
       
@@ -849,7 +1020,15 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
 
       ViewObj( s );
       
-      Print( " ---> " );
+      Print( "--" );
+      
+      if NrCols( mat_s ) = 1 and NrCols( mat_r ) = 1 then
+        
+        Print( "{",UnderlyingMatrix( HonestRepresentative( UnderlyingGeneralizedMorphism( alpha ) ) )[ 1, 1 ],"}" );
+        
+      fi;
+       
+      Print( "--> " );
       
       ViewObj( r );
       
