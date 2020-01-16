@@ -87,7 +87,7 @@ InstallMethod( CoherentSheavesOverProjectiveSpace,
 end );
 
 ##
-InstallMethod( TwistedStructureSheafOp,
+InstallMethod( TwistedGradedFreeModuleOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       return GradedFreeLeftPresentation( 1, S, [ -i ] );
@@ -95,7 +95,7 @@ end );
 
 
 ##
-InstallMethod( TwistedCotangentSheafAsCochainOp,
+InstallMethod( TwistedCotangentModuleAsCochainOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       local L, graded_lp_cat, cochains, Tr;
@@ -107,13 +107,13 @@ InstallMethod( TwistedCotangentSheafAsCochainOp,
 end );
 
 ##
-InstallMethod( TwistedCotangentSheafAsChainOp,
+InstallMethod( TwistedCotangentModuleAsChainOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
-      return AsChainComplex( TwistedCotangentSheafAsCochain( S, i ) );
+      return AsChainComplex( TwistedCotangentModuleAsCochain( S, i ) );
 end );
 
-InstallMethod( TwistedCotangentSheafOp,
+InstallMethod( TwistedCotangentModuleOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       local n, cotangent_sheaf_as_chain;
@@ -134,7 +134,7 @@ InstallMethod( TwistedCotangentSheafOp,
           
       else
         
-        cotangent_sheaf_as_chain := TwistedCotangentSheafAsChain( S, i );
+        cotangent_sheaf_as_chain := TwistedCotangentModuleAsChain( S, i );
         
         return CokernelObject( cotangent_sheaf_as_chain^1 );
         
@@ -142,7 +142,7 @@ InstallMethod( TwistedCotangentSheafOp,
 end );
 
 ##
-InstallMethodWithCache( BasisBetweenTwistedStructureSheaves,
+InstallMethodWithCache( BasisBetweenTwistedGradedFreeModules,
     [ IsHomalgGradedRing, IsInt, IsInt ],
     function( S, u, v )
       local n, L, l, o_u, o_v, indeterminates;
@@ -155,7 +155,7 @@ InstallMethodWithCache( BasisBetweenTwistedStructureSheaves,
           
       elif u = v then
       
-          return [ IdentityMorphism( TwistedStructureSheaf( S, u ) ) ];
+          return [ IdentityMorphism( TwistedGradedFreeModule( S, u ) ) ];
           
       elif u = 0 then
       
@@ -181,7 +181,7 @@ InstallMethodWithCache( BasisBetweenTwistedStructureSheaves,
           
           o_v := GradedFreeLeftPresentation( 1, S, [ -v ] );
           
-          L := BasisBetweenTwistedStructureSheaves( S, 0, v - u );
+          L := BasisBetweenTwistedGradedFreeModules( S, 0, v - u );
           
           return List( L, l -> GradedPresentationMorphism( o_u, UnderlyingMatrix( l ), o_v ) );
 
@@ -189,7 +189,7 @@ InstallMethodWithCache( BasisBetweenTwistedStructureSheaves,
 end );
 
 ##
-InstallMethodWithCache( BasisBetweenTwistedCotangentSheaves, 
+InstallMethodWithCache( BasisBetweenTwistedCotangentModules, 
     "this should return the basis of Hom( omega^i(i),omega^j(j) )",
     [ IsHomalgGradedRing, IsInt, IsInt ],
     function( S, i, j )
@@ -528,18 +528,18 @@ InstallMethodWithCache( RECORD_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES,
     if u = -1 and v = -1 then
         return ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) );
     elif v = -1 then
-        return UniversalMorphismIntoZeroObject( TwistedCotangentSheaf( S, u ) );
+        return UniversalMorphismIntoZeroObject( TwistedCotangentModule( S, u ) );
     elif  u = -1 then
-        return UniversalMorphismFromZeroObject( TwistedCotangentSheaf( S, v ) );
+        return UniversalMorphismFromZeroObject( TwistedCotangentModule( S, v ) );
     fi;
 
     if record!.coefficients = [] then
-        source := TwistedCotangentSheaf( S, u );
-        range :=  TwistedCotangentSheaf( S, v );
+        source := TwistedCotangentModule( S, u );
+        range :=  TwistedCotangentModule( S, v );
         return ZeroMorphism( source, range );
     else
         coefficients := List( record!.coefficients, c -> String( c )/S );
-        return coefficients*BasisBetweenTwistedCotangentSheaves( S, u, v );
+        return coefficients*BasisBetweenTwistedCotangentModules( S, u, v );
     fi;                     
 
 end );
@@ -1034,7 +1034,7 @@ function( M )
 
   S := UnderlyingHomalgRing( M );
   n := Length( Indeterminates( S ) );
-  L := List( [ 1 .. n-1 ], i -> UnderlyingMatrix( TwistedCotangentSheaf( S, i-1 ) ) );
+  L := List( [ 1 .. n-1 ], i -> UnderlyingMatrix( TwistedCotangentModule( S, i-1 ) ) );
   Add( L, SyzygiesOfColumns( L[ 1 ] ), 1 );
   dimensions := List( L, l -> [ NrRows( l ), NrCols( l ) ] );
   
@@ -1132,7 +1132,7 @@ InstallMethod( CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES,
 
     S := UnderlyingHomalgRing( M );
     
-    syz := SyzygiesOfColumns( UnderlyingMatrix( TwistedCotangentSheaf( S, 0 ) ) );
+    syz := SyzygiesOfColumns( UnderlyingMatrix( TwistedCotangentModule( S, 0 ) ) );
     
     zero_sheaf := AsGradedLeftPresentation( syz, [ 1 ] );
     
@@ -1150,11 +1150,11 @@ InstallMethod( CANONICALIZE_MORPHISM_OF_DIRECT_SUM_OF_TWISTED_COTANGENT_SHEAVES,
               
             elif dec[ i ] = 0 then
             
-              return GradedPresentationMorphism( TwistedCotangentSheaf( S, 0 ), syz, omega_00 );
+              return GradedPresentationMorphism( TwistedCotangentModule( S, 0 ), syz, omega_00 );
               
             else
               
-              return IdentityMorphism( TwistedCotangentSheaf( S, dec[ i ] ) );
+              return IdentityMorphism( TwistedCotangentModule( S, dec[ i ] ) );
               
             fi;
             

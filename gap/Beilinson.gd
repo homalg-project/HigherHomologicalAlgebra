@@ -17,27 +17,27 @@ KeyDependentOperation("TwistedOmegaModule", IsExteriorRing, IsInt, ReturnTrue );
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the graded  $S$-lp $S(i)$.
 #! The sheafification of $S(i)$ is the structure sheaf $\mathcal{O}_{\mathbb{P}^m}(i)$.
 #! @Returns graded lp
-KeyDependentOperation( "TwistedStructureSheaf", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "TwistedGradedFreeModule", IsHomalgGradedRing, IsInt, ReturnTrue );
 
 #! @Arguments S, i
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the graded  $S$-lp $\Omega^i(i)$.
 #! The sheafification of $\Omega^i(i)$ is the twisted cotangent sheaf $\Omega^i_{\mathbb{P}^m}(i)$.
 #! @Returns graded lp
-KeyDependentOperation( "TwistedCotangentSheaf", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "TwistedCotangentModule", IsHomalgGradedRing, IsInt, ReturnTrue );
 
 #! @Arguments S, i
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the chain complex of  $S$-lp's
 #! whose objects are direct sums of twists of $S$ and its homology at $0$ is $\Omega^i(i)$. I.e., a chain complex that is
 #! quasi-isomorphic to $\Omega^i(i)$.
 #! @Returns chain complex
-KeyDependentOperation( "TwistedCotangentSheafAsChain", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "TwistedCotangentModuleAsChain", IsHomalgGradedRing, IsInt, ReturnTrue );
 
 #! @Arguments S, i
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the chain complex of  $S$-lp's
 #! whose objects are direct sums of twists of $S$ and its homology at $0$ is $\Omega^i(i)$. I.e., a chain complex that is
 #! quasi-isomorphic to $\Omega^i(i)$.
 #! @Returns cochain complex
-KeyDependentOperation( "TwistedCotangentSheafAsCochain", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "TwistedCotangentModuleAsCochain", IsHomalgGradedRing, IsInt, ReturnTrue );
 
 #! @Arguments A, i, j
 #! The input is a graded exterior ring <C>A := KoszulDualRing(S)</C> with $S:=k[x_0,\dots,x_m]$ and two integers $i,j$ with 
@@ -56,7 +56,7 @@ DeclareOperation( "BasisBetweenTwistedOmegaModules", [ IsExteriorRing, IsInt, Is
 #! $\psi_{i-1,i}^{\ell}=x_{\ell-1}$, thus 
 #! $\psi_{i-1,i}^{\ell_1} \psi_{i,i+1}^{\ell_2}= \psi_{i-1,i}^{\ell_2} \psi_{i,i+1}^{\ell_1}$.
 #! @Returns a list
-DeclareOperation( "BasisBetweenTwistedStructureSheaves", [ IsHomalgGradedRing, IsInt, IsInt ] );
+DeclareOperation( "BasisBetweenTwistedGradedFreeModules", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
 #! @Arguments S, i, j
 #! The input is a graded polynomial ring $S=k[x_0, \dots, x_m]$ and two integers $0\leq j \leq i \leq m$. 
@@ -65,10 +65,10 @@ DeclareOperation( "BasisBetweenTwistedStructureSheaves", [ IsHomalgGradedRing, I
 #! $\varphi_{i+1,i}^{\ell} \varphi_{i,i-1}^{\ell}=0$ and 
 #! $\varphi_{i+1,i}^{\ell_1} \varphi_{i,i-1}^{\ell_2}= -\varphi_{i+1,i}^{\ell_2} \varphi_{i,i-1}^{\ell_1}$.
 #! @Returns a list
-DeclareOperation( "BasisBetweenTwistedCotangentSheaves", [ IsHomalgGradedRing, IsInt, IsInt ] );
+DeclareOperation( "BasisBetweenTwistedCotangentModules", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
 
-DeclareOperation( "BasisBetweenTwistedCotangentSheavesAsChains", [ IsHomalgGradedRing, IsInt, IsInt ] );
+DeclareOperation( "BasisBetweenTwistedCotangentModulesAsChains", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
 #! @Description
 #! @Arguments M

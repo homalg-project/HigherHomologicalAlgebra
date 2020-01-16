@@ -628,7 +628,7 @@ InstallMethodWithCrispCache( TateResolution,
         
         degree := HomalgElementToInteger( degree );
         
-        O := TwistedStructureSheaf( R, 0 );
+        O := TwistedGradedFreeModule( R, 0 );
         
         T := TateResolution( O );
         
