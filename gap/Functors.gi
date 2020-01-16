@@ -218,7 +218,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
       
     AddMorphismFunction( G,
       function( s, alpha, r )
-        local a, b, coeffs, basis, images, p;
+        local a, b, coeffs, basis, images, p, pos;
         
         a := Source( alpha );
         
@@ -263,7 +263,166 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
  
         coeffs := CoefficientsOfMorphism( alpha );
         
-        return coeffs * images;
+        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
+        
+        if IsEmpty( pos ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return coeffs{ pos } * images{ pos };
+          
+        fi;
+        
+    end );
+    
+    return G;
+   
+end );
+
+##
+InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local H, ambient_cat, reps, C, chains_C, proj, proj_indec, I, r, name, G;
+    
+    H := HomFunctorByExceptionalCollection( collection );
+    
+    ambient_cat := AsCapCategory( Source( H ) );
+    
+    if not IsHomotopyCategory( ambient_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    reps := AsCapCategory( Range( H ) );
+    
+    C := DefiningCategory( ambient_cat );
+    
+    chains_C := ChainComplexCategory( C );
+    
+    proj := FullSubcategoryGeneratedByProjectiveObjects( C );
+    
+    proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
+    
+    I := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ), StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ) ] );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( proj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
+    
+    G := CapFunctor( name, proj_indec, reps );
+    
+    AddObjectFunction( G,
+      function( a )
+        local aa, p;
+        
+        if not IsBound( G!.ValuesForObjects ) then
+          
+          aa := ApplyFunctor( PreCompose( I, H ), a );
+          
+          G!.ValuesForObjects := [ [ a, aa ] ];
+          
+          return aa;
+          
+        else
+          
+          p := PositionProperty( G!.ValuesForObjects,
+                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
+                  );
+         
+          if p = fail then
+            
+            aa := ApplyFunctor( PreCompose( I, H ), a );
+            
+            Add( G!.ValuesForObjects, [ a, aa ] );
+            
+            return aa;
+            
+          else
+            
+            return G!.ValuesForObjects[ p ][ 2 ];
+            
+          fi;
+          
+        fi;
+        
+    end );
+      
+    AddMorphismFunction( G,
+      function( s, alpha, r )
+        local a, b, coeffs, basis, images, p, pos;
+        
+        a := Source( alpha );
+        
+        b := Range( alpha );
+                 
+        if not IsBound( G!.GeneratingValuesForMorphisms ) then
+                  
+          G!.GeneratingValuesForMorphisms := [ ];
+          
+        fi;
+          
+        p := PositionProperty( G!.GeneratingValuesForMorphisms,
+            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
+                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
+                );
+          
+        if p = fail then
+            
+            basis := BasisOfExternalHom( a, b );
+            
+            if IsEmpty( basis ) then
+              
+              images := [ ];
+              
+            else
+              
+              if ( IsIdenticalObj( a, b ) or IsEqualForObjects( a, b ) ) then
+                
+                images := [ IdentityMorphism( s ) ];
+                
+              else
+                
+                Info( InfoDerivedCategories, 1, "\033[5mcomputing Hom(T,-) of the basis\033[0m" );
+            
+                images := List( basis, phi -> ApplyFunctor( PreCompose( I, H ), phi ) );
+            
+                Info( InfoDerivedCategories, 1, "Done!" );
+                
+              fi;
+            
+            fi;
+            
+            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
+            
+        else
+            
+            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
+            
+        fi;
+        
+        if IsEmpty( images ) then
+          
+          return ZeroMorphism( s, r );
+          
+        fi;
+ 
+        coeffs := CoefficientsOfMorphism( alpha );
+        
+        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
+        
+        if IsEmpty( pos ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return coeffs{ pos } * images{ pos };
+          
+        fi;
         
     end );
     
@@ -304,6 +463,49 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
     return R;
 
 end );
+
+##
+InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local cat, G, add_G, can, can_add_G, projs, reps, r, name, R;
+    
+    cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    
+    if not IsHomotopyCategory( cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    cat := DefiningCategory( cat );
+    
+    G := RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
+    
+    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    
+    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );
+    
+    can_add_G := PreCompose( can, add_G );
+    
+    projs := AsCapCategory( Source( can_add_G ) );
+    
+    reps := AsCapCategory( Range( can_add_G ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
+    
+    R := CapFunctor( name, projs, reps );
+    
+    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
+    
+    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
+    
+    return R;
+
+end );
+
 
 ##
 InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects,
@@ -373,7 +575,7 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
     
     AddMorphismFunction( F,
       function( source, alpha, range )
-        local a, b, basis, images, p, coeffs;
+        local a, b, basis, images, p, coeffs, pos;
         
         a := Source( alpha );
         
@@ -427,7 +629,17 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
         
         coeffs := CoefficientsOfMorphism( alpha );
         
-        return coeffs * images;
+        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
+        
+        if IsEmpty( pos ) then
+          
+          return ZeroMorphism( source, range );
+          
+        else
+          
+          return coeffs{ pos } * images{ pos };
+          
+        fi;
         
     end );
     
