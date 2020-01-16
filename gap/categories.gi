@@ -2254,11 +2254,13 @@ end );
 ##
 InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE,
   function( category )
-    local cat, range_cat_of_hom_struc;
+    local cat, range_cat_of_hom_struc, distinguished_object;
     
     cat := UnderlyingCategory( category );
     
     range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+    
+    distinguished_object := DistinguishedObjectOfHomomorphismStructure( cat );
     
     AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
         function( phi )
@@ -2280,7 +2282,15 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           od;
           
-          morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
+          if IsEmpty( morphisms_from_distinguished_object ) then
+            
+            morphism := UniversalMorphismIntoZeroObject( distinguished_object );
+            
+          else
+            
+            morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
+            
+          fi;
           
           d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
