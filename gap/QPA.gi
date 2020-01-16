@@ -1533,7 +1533,7 @@ end );
 
 ###########################################
 #
-# Methods in case there is a homlag field
+# Methods in case there is a homalg field
 #
 ###########################################
 
@@ -1562,7 +1562,7 @@ InstallGlobalFunction( QPA_to_Homalg_Matrix,
    
     if not IsBound( GLOBAL_FIELD_FOR_QPA!.field ) then
       
-      Error( "No homlag field is set" );
+      Error( "No homalg field is set" );
       
     fi;
       
@@ -1653,7 +1653,7 @@ function( M, vec )
   else
     
     Info( InfoDerivedCategories, 3,
-      Concatenation( "Using homlag field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( vec ) ), " -vector )" ) );
+      Concatenation( "Using homalg field to compute SolutionMat( ", String( dim ), " -matrix, ", String( Length( vec ) ), " -vector )" ) );
     
     m := QPA_to_Homalg_Matrix( M );
     
@@ -1714,7 +1714,7 @@ function( M )
   else
     
     Info( InfoDerivedCategories, 3,
-      Concatenation( "Using homlag field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
+      Concatenation( "Using homalg field to compute NullspaceMat( ", String( dim ), " -matrix )" ) );
     
     M := QPA_to_Homalg_Matrix( M );
     
@@ -1811,7 +1811,7 @@ function( M, list_of_vectors )
   else
     
     Info( InfoDerivedCategories, 3,
-      Concatenation( "Using homlag field to compute SolutionMat( ", String( dim ),
+      Concatenation( "Using homalg field to compute SolutionMat( ", String( dim ),
         " -matrix, list of ", String( Length( list_of_vectors ) ), " -vectors )" ) );
     
     m := QPA_to_Homalg_Matrix( M );
