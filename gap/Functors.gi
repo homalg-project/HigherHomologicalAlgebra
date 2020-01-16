@@ -164,7 +164,7 @@ end );
 InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, inj_indec, name, G, r;
+    local H, ambient_cat, reps, inj_indec, r, name, cell_func;
     
     H := HomFunctorByExceptionalCollection( collection );
     
@@ -176,108 +176,13 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
     
     r := RANDOM_TEXT_ATTR( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( inj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
+    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from",
+              r[ 2 ], " ", Name( inj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps )
+            );
     
-    G := CapFunctor( name, inj_indec, reps );
+    cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
-    AddObjectFunction( G,
-      function( a )
-        local aa, p;
-        
-        if not IsBound( G!.ValuesForObjects ) then
-          
-          aa := ApplyFunctor( H, UnderlyingCell( UnderlyingCell( a ) ) );
-          
-          G!.ValuesForObjects := [ [ a, aa ] ];
-          
-          return aa;
-          
-        else
-          
-          p := PositionProperty( G!.ValuesForObjects,
-                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
-                  );
-         
-          if p = fail then
-            
-            aa := ApplyFunctor( H, UnderlyingCell( UnderlyingCell( a ) ) );
-            
-            Add( G!.ValuesForObjects, [ a, aa ] );
-            
-            return aa;
-            
-          else
-            
-            return G!.ValuesForObjects[ p ][ 2 ];
-            
-          fi;
-          
-        fi;
-        
-    end );
-      
-    AddMorphismFunction( G,
-      function( s, alpha, r )
-        local a, b, coeffs, basis, images, p, pos;
-        
-        a := Source( alpha );
-        
-        b := Range( alpha );
-               
-        if not IsBound( G!.GeneratingValuesForMorphisms ) then
-          
-          basis := BasisOfExternalHom( a, b );
-        
-          images := List( basis, phi -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( phi ) ) ) );
-          
-          G!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
-          
-        else
-          
-          p := PositionProperty( G!.GeneratingValuesForMorphisms,
-            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
-                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
-                );
-          
-          if p = fail then
-            
-            basis := BasisOfExternalHom( a, b );
-        
-            images := List( basis, phi -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( phi ) ) ) );
-          
-            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
-            
-          else
-            
-            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
-            
-          fi;
-          
-        fi; 
-        
-        if IsEmpty( images ) then
-          
-          return ZeroMorphism( s, r );
-          
-        fi;
- 
-        coeffs := CoefficientsOfMorphism( alpha );
-        
-        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
-        
-        if IsEmpty( pos ) then
-          
-          return ZeroMorphism( s, r );
-          
-        else
-          
-          return coeffs{ pos } * images{ pos };
-          
-        fi;
-        
-    end );
-    
-    return G;
+    return FunctorFromLinearCategoryByTwoFunctions( name, inj_indec, reps, cell_func, cell_func );
    
 end );
 
@@ -285,7 +190,7 @@ end );
 InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, C, chains_C, proj, proj_indec, I, r, name, G;
+    local H, ambient_cat, reps, C, chains_C, proj, proj_indec, r, name, cell_func;
     
     H := HomFunctorByExceptionalCollection( collection );
     
@@ -307,126 +212,15 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
     
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
     
-    I := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ), StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ) ] );
+    H := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ), StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
     
     r := RANDOM_TEXT_ATTR( );
     
     name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( proj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
     
-    G := CapFunctor( name, proj_indec, reps );
+    cell_func := c -> ApplyFunctor( H, c );
     
-    AddObjectFunction( G,
-      function( a )
-        local aa, p;
-        
-        if not IsBound( G!.ValuesForObjects ) then
-          
-          aa := ApplyFunctor( PreCompose( I, H ), a );
-          
-          G!.ValuesForObjects := [ [ a, aa ] ];
-          
-          return aa;
-          
-        else
-          
-          p := PositionProperty( G!.ValuesForObjects,
-                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
-                  );
-         
-          if p = fail then
-            
-            aa := ApplyFunctor( PreCompose( I, H ), a );
-            
-            Add( G!.ValuesForObjects, [ a, aa ] );
-            
-            return aa;
-            
-          else
-            
-            return G!.ValuesForObjects[ p ][ 2 ];
-            
-          fi;
-          
-        fi;
-        
-    end );
-      
-    AddMorphismFunction( G,
-      function( s, alpha, r )
-        local a, b, coeffs, basis, images, p, pos;
-        
-        a := Source( alpha );
-        
-        b := Range( alpha );
-                 
-        if not IsBound( G!.GeneratingValuesForMorphisms ) then
-                  
-          G!.GeneratingValuesForMorphisms := [ ];
-          
-        fi;
-          
-        p := PositionProperty( G!.GeneratingValuesForMorphisms,
-            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
-                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
-                );
-          
-        if p = fail then
-            
-            basis := BasisOfExternalHom( a, b );
-            
-            if IsEmpty( basis ) then
-              
-              images := [ ];
-              
-            else
-              
-              if ( IsIdenticalObj( a, b ) or IsEqualForObjects( a, b ) ) then
-                
-                images := [ IdentityMorphism( s ) ];
-                
-              else
-                
-                Info( InfoDerivedCategories, 1, "\033[5mcomputing Hom(T,-) of the basis\033[0m" );
-            
-                images := List( basis, phi -> ApplyFunctor( PreCompose( I, H ), phi ) );
-            
-                Info( InfoDerivedCategories, 1, "Done!" );
-                
-              fi;
-            
-            fi;
-            
-            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
-            
-        else
-            
-            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
-            
-        fi;
-        
-        if IsEmpty( images ) then
-          
-          return ZeroMorphism( s, r );
-          
-        fi;
- 
-        coeffs := CoefficientsOfMorphism( alpha );
-        
-        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
-        
-        if IsEmpty( pos ) then
-          
-          return ZeroMorphism( s, r );
-          
-        else
-          
-          return coeffs{ pos } * images{ pos };
-          
-        fi;
-        
-    end );
-    
-    return G;
+    return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
    
 end );
 
@@ -506,12 +300,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
 
 end );
 
-
 ##
 InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local full, ambient_cat, inc, iso2, A, iso1, iso, indec_projs, r, name, F;
+    local full, ambient_cat, inc, iso2, A, iso1, iso, indec_projs, r, name, cell_func;
     
     full := DefiningFullSubcategory( collection );
     
@@ -534,116 +327,9 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
     name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", 
               Name( indec_projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ambient_cat ) );
     
-    F := CapFunctor( name, indec_projs, ambient_cat );
+    cell_func := c -> ApplyFunctor( iso, c );
     
-    AddObjectFunction( F,
-      function( r )
-        local rr, p;
-        
-        if not IsBound( F!.ValuesForObjects ) then
-          
-          rr := ApplyFunctor( iso, r );
-          
-          F!.ValuesForObjects := [ [ r, rr ] ];
-          
-          return rr;
-          
-        else
-          
-          p := PositionProperty( F!.ValuesForObjects, v -> IsIdenticalObj( v[ 1 ], r ) or 
-                DimensionVector( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) )
-                  = DimensionVector( UnderlyingCell( UnderlyingCell( r ) ) )
-                );
-         
-          if p = fail then
-            
-            rr := ApplyFunctor( iso, r );
-            
-            Add( F!.ValuesForObjects, [ r, rr ] );
-            
-            return rr;
-            
-          else
-            
-            return F!.ValuesForObjects[ p ][ 2 ];
-            
-          fi;
-          
-        fi;
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( source, alpha, range )
-        local a, b, basis, images, p, coeffs, pos;
-        
-        a := Source( alpha );
-        
-        b := Range( alpha );
-        
-        if not IsBound( F!.GeneratingValuesForMorphisms ) then
-          
-          basis := BasisOfExternalHom( a, b );
-          
-          images := List( basis, phi -> ApplyFunctor( iso, phi ) );
-          
-          F!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
-          
-        else
-          
-          p := PositionProperty( F!.GeneratingValuesForMorphisms,
-            v -> ( 
-                IsIdenticalObj( v[ 1 ], a ) or 
-                 DimensionVector( UnderlyingCell( UnderlyingCell( v[ 1 ] ) ) ) 
-                  = DimensionVector( UnderlyingCell( UnderlyingCell( a ) ) )
-                 )
-              and
-                 (
-                IsIdenticalObj( v[ 2 ], b ) or
-                  DimensionVector( UnderlyingCell( UnderlyingCell( v[ 2 ] ) ) ) 
-                  = DimensionVector( UnderlyingCell( UnderlyingCell( b ) ) ) 
-                 )
-              );
-          
-          if p = fail then
-            
-            basis := BasisOfExternalHom( a, b );
-            
-            images := List( basis, phi -> ApplyFunctor( iso, phi ) );
-            
-            Add( F!.GeneratingValuesForMorphisms, [ a, b, images ] );
-            
-          else
-            
-            images := F!.GeneratingValuesForMorphisms[ p ][ 3 ];
-            
-          fi;
-          
-        fi; 
-        
-        if IsEmpty( images ) then
-          
-          return ZeroMorphism( source, range );
-          
-        fi;
-        
-        coeffs := CoefficientsOfMorphism( alpha );
-        
-        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
-        
-        if IsEmpty( pos ) then
-          
-          return ZeroMorphism( source, range );
-          
-        else
-          
-          return coeffs{ pos } * images{ pos };
-          
-        fi;
-        
-    end );
-    
-    return F;
+    return FunctorFromLinearCategoryByTwoFunctions( name, indec_projs, ambient_cat, cell_func, cell_func );
     
 end );
 
@@ -1016,7 +702,7 @@ end );
 InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsExceptionalCollection ],
   function( collection )
-    local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, G;
+    local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
     
     full := DefiningFullSubcategory( collection );
      
@@ -1034,104 +720,16 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     
     name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ind_projs ) );
     
-    G := CapFunctor( name, full, ind_projs );
+    cell_func := c -> ApplyFunctor( iso, c );
     
-    AddObjectFunction( G,
-      function( a )
-        local aa, p;
-        
-        if not IsBound( G!.ValuesForObjects ) then
-          
-          aa := ApplyFunctor( iso, a );
-          
-          G!.ValuesForObjects := [ [ a, aa ] ];
-          
-          return aa;
-          
-        else
-          
-          p := PositionProperty( G!.ValuesForObjects,
-                v -> IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a )
-                  );
-                  
-          if p = fail then
-            
-            aa := ApplyFunctor( iso, a );
-            
-            Add( G!.ValuesForObjects, [ a, aa ] );
-            
-            return aa;
-            
-          else
-            
-            return G!.ValuesForObjects[ p ][ 2 ];
-            
-          fi;
-          
-        fi;
-        
-    end );
-   
-    AddMorphismFunction( G,
-      function( s, alpha, r )
-        local a, b, coeffs, basis, images, p;
-        
-        a := Source( alpha );
-        
-        b := Range( alpha );
-        
-        if not IsBound( G!.GeneratingValuesForMorphisms ) then
-          
-          basis := BasisOfExternalHom( a, b );
-          
-          images := List( basis, phi -> ApplyFunctor( iso, phi ) );
-          
-          G!.GeneratingValuesForMorphisms := [ [ a, b, images ] ];
-          
-        else
-          
-          p := PositionProperty( G!.GeneratingValuesForMorphisms,
-            v -> ( IsIdenticalObj( v[ 1 ], a ) or IsEqualForObjects( v[ 1 ], a ) ) and
-                  ( IsIdenticalObj( v[ 2 ], b ) or IsEqualForObjects( v[ 2 ], b ) )
-                );
-                
-          if p = fail then
-            
-            basis := BasisOfExternalHom( a, b );
-            
-            images := List( basis, phi -> ApplyFunctor( iso, phi ) );
-            
-            Add( G!.GeneratingValuesForMorphisms, [ a, b, images ] );
-            
-          else
-            
-            images := G!.GeneratingValuesForMorphisms[ p ][ 3 ];
-            
-          fi;
-          
-        fi;
-        
-        if IsEmpty( images ) then
-          
-          return ZeroMorphism( UnderlyingCell( s ), UnderlyingCell( r ) ) / ind_projs;
-          
-        fi;
-        
-        coeffs := CoefficientsOfMorphism( alpha );
-        
-        return coeffs * images;
-        
-    end );
-   
-    return G;
-    
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
 end );
 
 ##
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
-    local A, A_op, full, quiver_op, nr_vertices, basis, projs, r, name, G;
+    local A, A_op, full, quiver_op, nr_vertices, basis, projs, r, name, object_func, morphism_func;
     
     A := UnderlyingQuiverAlgebra( algebroid );
     
@@ -1150,10 +748,8 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     r := RANDOM_TEXT_ATTR( );
     
     name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( algebroid ) );
-    
-    G := CapFunctor( name, full, algebroid );
-    
-    AddObjectFunction( G,
+     
+    object_func :=
       function( a )
         local p, i;
         
@@ -1165,11 +761,15 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
         
         return ObjectInAlgebroid( algebroid, Vertex( QuiverOfAlgebra( A ), i ) );
         
-      end );
+      end;
     
-    AddMorphismFunction( G,
-      function( s, alpha, r )
-        local basis, I, images, dim, rel;
+    morphism_func :=
+      function( alpha )
+        local s, r, basis, I, images, dim, rel;
+        
+        s := object_func( Source( alpha ) );
+        
+        r := object_func( Range( alpha ) );
         
         basis := BasisOfExternalHom( s, r );
         
@@ -1201,9 +801,9 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
           
         fi;
       
-      end );
+      end;
     
-    return G;
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, algebroid, object_func, morphism_func );
     
 end );
 
@@ -1211,7 +811,7 @@ end );
 InstallMethod( IsomorphismIntoAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
-    local n, full, A, algebroid, r, name, F;
+    local n, full, A, algebroid, r, name, object_func, morphism_func;
     
     n := NumberOfObjects( collection );
     
@@ -1225,9 +825,7 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
     name := Concatenation( "Isomorphism functor ", r[1], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( algebroid ) );
     
-    F := CapFunctor( name, full, algebroid );
-    
-    AddObjectFunction( F,
+    object_func :=
       function( e )
         local p;
                 
@@ -1235,17 +833,21 @@ InstallMethod( IsomorphismIntoAlgebroid,
         
         return algebroid.(p);
         
-    end );
+    end;
     
-    AddMorphismFunction( F,
-      function( source, phi, range )
-        local s, i, r, j, basis, labels, dim, paths, rel;
-        
+    morphism_func :=
+      function( phi )
+        local s, source, i, r, range, j, basis, labels, dim, paths, rel;
+         
         s := Source( phi );
+        
+        source := object_func( s );
         
         i := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( s, collection[ k ] ) );
         
         r := Range( phi );
+         
+        range := object_func( r );
         
         j := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( r, collection[ k ] ) );
         
@@ -1296,9 +898,9 @@ InstallMethod( IsomorphismIntoAlgebroid,
         
         return rel{ [ 2 .. dim + 1 ] } * paths;
         
-    end );
+    end;
     
-    return F;
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, algebroid, object_func, morphism_func );
     
 end );
 
@@ -1306,7 +908,7 @@ end );
 InstallMethod( IsomorphismFromAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
-    local n, full, A, algebroid, r, name, F;
+    local n, full, A, algebroid, r, name, object_func, morphism_func;
     
     n := NumberOfObjects( collection );
     
@@ -1320,9 +922,7 @@ InstallMethod( IsomorphismFromAlgebroid,
     
     name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ], " ", Name( algebroid ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( full ) );
     
-    F := CapFunctor( name, algebroid, full );
-    
-    AddObjectFunction( F,
+    object_func :=
       function( e )
         local p;
         
@@ -1330,11 +930,15 @@ InstallMethod( IsomorphismFromAlgebroid,
         
         return collection[ p ];
         
-    end );
+    end;
     
-    AddMorphismFunction( F,
-      function( source, phi, range )
-        local s, i, r, j, basis, labels, e, paths, coeffs, arrow_list, paths_list;
+    morphism_func :=
+      function( phi )
+        local source, range, s, i, r, j, e, paths, coeffs, arrow_list, paths_list;
+        
+        source := object_func( Source( phi ) );
+        
+        range := object_func( Range( phi ) );
         
         s := Source( phi );
         
@@ -1380,9 +984,9 @@ InstallMethod( IsomorphismFromAlgebroid,
         
         return coeffs * paths_list;
         
-    end );
+    end;
     
-    return F;
+    return FunctorFromLinearCategoryByTwoFunctions( name, algebroid, full, object_func, morphism_func );
     
 end );
 
@@ -1682,4 +1286,121 @@ end );
 
 ##
 InstallMethod( RightDerivedFunctor, [ IsCapFunctor ], RDerivedFunctor );
+
+##########################
+#
+#  Tools
+#
+#########################
+
+##
+InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
+          [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ],
+  function( name, source_cat, range_cat, object_func, morphism_func )
+    local F;
+    
+    if not ( HasIsLinearCategoryOverCommutativeRing( source_cat )
+        and IsLinearCategoryOverCommutativeRing( source_cat ) ) or
+          not ( HasIsLinearCategoryOverCommutativeRing( range_cat )
+            and IsLinearCategoryOverCommutativeRing( range_cat ) )
+              #or
+              #not IsIdenticalObj( CommutativeRingOfLinearCategory( source_cat ),
+              #                      CommutativeRingOfLinearCategory( range_cat ) )  
+              then
+        Error( "Wrong input!\n" );
+        
+    fi;
+    
+    #object_func := FunctionWithCache( object_func );
+    #morphism_func := FunctionWithCache( morphism_func );
+    
+    F := CapFunctor( name, source_cat, range_cat );
+    
+    F!.ValuesForObjects := [ [ ], [ ] ];
+    F!.ValuesForMorphisms := [ [ ], [ ] ];
+    
+    AddObjectFunction( F,
+      function( a )
+        local p, Fa;
+        
+        p := Position( F!.ValuesForObjects[ 1 ], a );
+         
+        if p = fail then
+          
+          Fa := object_func( a );
+          
+          Add( F!.ValuesForObjects[ 1 ], a );
+          Add( F!.ValuesForObjects[ 2 ], Fa );
+          
+          return Fa;
+          
+        else
+          
+          return F!.ValuesForObjects[ 2 ][ p ];
+          
+        fi;
+        
+    end );
+      
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        local a, b, p, basis, images, coeffs, pos;
+        
+        a := Source( alpha );
+        
+        b := Range( alpha );
+        
+        p := Position( F!.ValuesForMorphisms[ 1 ], [ a, b ] );
+        
+        if p = fail then
+          
+          basis := BasisOfExternalHom( a, b );
+          
+          images := [ ];
+          
+          if not IsEmpty( basis ) then
+            
+            Info( InfoDerivedCategories, 3, "\033[5mApplying the functor on a basis ...\033[0m" );
+            
+            images := List( basis, morphism_func );
+            
+            Info( InfoDerivedCategories, 3, "Done!" );
+            
+          fi;
+          
+          Add( F!.ValuesForMorphisms[ 1 ], [ a, b ] );
+          
+          Add( F!.ValuesForMorphisms[ 2 ], images );
+          
+        else
+          
+          images := F!.ValuesForMorphisms[ 2 ][ p ];
+          
+        fi; 
+        
+        if IsEmpty( images ) then
+          
+          return ZeroMorphism( s, r );
+          
+        fi;
+        
+        coeffs := CoefficientsOfMorphism( alpha );
+        
+        pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
+        
+        if IsEmpty( pos ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return coeffs{ pos } * images{ pos };
+          
+        fi;
+        
+    end );
+    
+    return F;
+    
+end );
 

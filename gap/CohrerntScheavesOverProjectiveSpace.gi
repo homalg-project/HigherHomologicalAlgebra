@@ -975,7 +975,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules,
             [ IsHomalgGradedRing and IsFreePolynomialRing ],
     function( S )
-      local A, omegas, objects_omegas, Omegas, objects_Omegas, F;
+      local A, omegas, objects_omegas, Omegas, objects_Omegas, object_func, morphism_func, name;
       
       A := KoszulDualRing( S );
       
@@ -987,41 +987,15 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       objects_Omegas := SetOfKnownObjects( Omegas );
       
-      F := CapFunctor( "name", omegas, Omegas );
+      object_func := w -> objects_Omegas[ Position( objects_omegas, w ) ];
       
-      AddObjectFunction( F,
-        function( o )
-          local p;
+      morphism_func := alpha -> 
+        BasisOfExternalHom( object_func( Source( alpha ) ), object_func( Range( alpha ) ) )
+          [ Position( BasisOfExternalHom( Source( alpha ), Range( alpha ) ), alpha ) ];
           
-          p := Position( objects_omegas, o );
-          
-          if p = fail then
-            
-            Error( "This should not happen!\n" );
-            
-          fi;
-          
-          return objects_Omegas[ p ];
-          
-      end );
+      name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀^i(i)'s";
       
-      AddMorphismFunction( F,
-        function( s, alpha, r )
-          local coeff;
-          
-          coeff := CoefficientsOfMorphism( alpha );
-          
-          if IsEmpty( coeff ) then
-            
-            return ZeroMorphism( UnderlyingCell( s ), UnderlyingCell( r ) ) / Omegas;
-            
-          fi;
-          
-          return coeff * BasisOfExternalHom( s, r );
-          
-      end );
-      
-      return F;
+      return FunctorFromLinearCategoryByTwoFunctions( name, omegas, Omegas, object_func, morphism_func );
       
   end );
   
