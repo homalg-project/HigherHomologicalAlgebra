@@ -71,28 +71,11 @@ InstallMethod( BasisBetweenTwistedOmegaModules,
 end );
 
 ##
-BindGlobal( "IS_ZERO_SHEAF",
-    function( N )
-      return IsZero( HilbertPolynomial( AsPresentationInHomalg( N ) ) );
-end );
-
-##
-InstallMethod( CoherentSheavesOverProjectiveSpace, 
-    [ IsHomalgGradedRing ],
-    function( S )
-      local graded_lp_cat_sym, sub_cat;
-      graded_lp_cat_sym := GradedLeftPresentations( S );
-      sub_cat := FullSubcategoryByMembershipFunction( graded_lp_cat_sym, IS_ZERO_SHEAF );
-      return graded_lp_cat_sym / sub_cat;
-end );
-
-##
 InstallMethod( TwistedGradedFreeModuleOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
       return GradedFreeLeftPresentation( 1, S, [ -i ] );
 end );
-
 
 ##
 InstallMethod( TwistedCotangentModuleAsCochainOp,

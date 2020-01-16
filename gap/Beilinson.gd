@@ -3,11 +3,6 @@
 
 #! @Section Operations
 
-#! @Arguments S
-#! The input is a graded polynomial ring $S=k[x_0,\dots,x_m]$ and the output is the category of coherent sheaves over $\mathbb{P}^m$. 
-#! @Returns a CAP category
-DeclareAttribute( "CoherentSheavesOverProjectiveSpace", IsHomalgGradedRing );
-
 #! @Arguments A, i
 #! The input is a graded exterior algebra $A$ and an integer $i$. The output is the graded  $A$-lp $\omega_A(i)$.
 #! @Returns graded lp
