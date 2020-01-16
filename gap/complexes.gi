@@ -463,11 +463,11 @@ InstallMethod( ViewObj,
       
       if IsExact( C ) then 
         
-        is_exact := " cyclic, ";
+        is_exact := " exact, ";
       
       else
         
-        is_exact := " not cyclic, ";
+        is_exact := " not exact, ";
       
       fi;
     
