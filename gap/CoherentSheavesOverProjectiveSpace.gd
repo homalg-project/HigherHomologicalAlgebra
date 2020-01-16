@@ -5,3 +5,15 @@
 #! @Returns a CAP category
 DeclareAttribute( "CoherentSheavesOverProjectiveSpace", IsHomalgGradedRing );
 
+DeclareAttribute( "SheafificationFunctor", IsCapCategory );
+
+KeyDependentOperation( "TwistedStructureSheaf", IsHomalgGradedRing, IsInt, ReturnTrue );
+
+DeclareOperation( "BasisBetweenTwistedStructureSheaves",
+      [ IsHomalgGradedRing, IsInt, IsInt ] );
+
+KeyDependentOperation( "TwistedCotangentSheaf", IsHomalgGradedRing, IsInt, ReturnTrue );
+
+DeclareOperation( "BasisBetweenTwistedCotangentSheaves",
+      [ IsHomalgGradedRing, IsInt, IsInt ] );
+
