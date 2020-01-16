@@ -43,10 +43,20 @@ InstallOtherMethod( InjectiveResolution,
 );
 
 ##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsHomotopyCategoryObject ],
+  InjectiveResolution );
+
+##
 InstallOtherMethod( InjectiveResolution,
           [ IsHomotopyCategoryObject, IsBool ],
     { a, bool } -> InjectiveResolution( UnderlyingCell( a ), bool ) / CapCategory( a )
 );
+
+##
+InstallOtherMethod( InjectiveChainResolution,
+          [ IsHomotopyCategoryObject, IsBool ],
+  InjectiveResolution );
 
 ##
 InstallOtherMethod( MorphismBetweenInjectiveResolutions,
