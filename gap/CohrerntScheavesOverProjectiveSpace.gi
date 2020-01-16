@@ -166,7 +166,13 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       matrix := CertainColumns( CertainRows( matrix, pos_a ), pos_b );
       
-      matrix := List( [ 1 .. NrRows( matrix ) ],
+      if NrCols( matrix ) = 0 then
+        
+        matrix := [ ];
+        
+      else
+        
+        matrix := List( [ 1 .. NrRows( matrix ) ],
                   i -> List( [ 1 .. NrCols( matrix ) ],
                     j ->
                       GradedPresentationMorphism(
@@ -174,6 +180,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
                           HomalgMatrix( [ [ matrix[ i, j ] ] ], 1, 1, A ),
                           TwistedOmegaModule( A, degrees_b[ j ] ) ) / full
                         ) );
+     fi;
      
      return AdditiveClosureMorphism( can_a, matrix, can_b );
      
@@ -267,7 +274,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   BindGlobal( "BeilinsonFunctor2",
      #       [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, add_full, iso, add_cotangent_sheaves, homotopy_cat, r, name, BB;
+      local n, A, cat, full, add_full, iso, add_cotangent_modules, homotopy_cat, r, name, BB;
       
       n := Size( Indeterminates( S ) );
       
@@ -285,13 +292,13 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       DisableSanityChecks( add_full );
            
-      iso := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves( S );
+      iso := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S );
       
       iso := ExtendFunctorToAdditiveClosures( iso );
       
-      add_cotangent_sheaves := AsCapCategory( Range( iso ) );
+      add_cotangent_modules:= AsCapCategory( Range( iso ) );
       
-      homotopy_cat := HomotopyCategory( add_cotangent_sheaves );
+      homotopy_cat := HomotopyCategory( add_cotangent_modules);
       
       r := RANDOM_TEXT_ATTR( );
       
@@ -308,7 +315,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           diffs := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T ^ i ) ), 1 );
           
-          C := ChainComplex( add_cotangent_sheaves, diffs );
+          C := ChainComplex( add_cotangent_modules, diffs );
           
           SetLowerBound( C, -n );
           
@@ -630,7 +637,130 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       return full;
       
   end );
-  
+
+  ##
+  InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
+            [ IsHomalgGradedRing and IsFreePolynomialRing ],
+    function( S )
+      local graded_pres, k, coh, generalized_morphism_cat, sh, indeterminates, n, omegas, mats, dims, full;
+      
+      graded_pres := GradedLeftPresentations( S );
+      
+      DisableSanityChecks( graded_pres );
+      DeactivateCachingOfCategory( graded_pres );
+      CapCategorySwitchLogicOff( graded_pres );
+      
+      graded_pres := GradedLeftPresentations( KoszulDualRing( S ) );
+      DisableSanityChecks( graded_pres );
+      DeactivateCachingOfCategory( graded_pres );
+      CapCategorySwitchLogicOff( graded_pres );
+      
+      k := UnderlyingNonGradedRing( CoefficientsRing( S ) );
+      
+      if not IsRationalsForHomalg( k ) then
+        
+        Error( "The coefficient ring should be a rational homalg field" );
+        
+      fi;
+      
+      k := GLOBAL_FIELD_FOR_QPA!.default_field;
+           
+      indeterminates := Indeterminates( S );
+      
+      n := Size( indeterminates );
+      
+      omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentSheaf( S, i ) );
+      
+      mats := List( omegas, UnderlyingMatrix );
+      
+      dims := List( mats, d -> [ NrRows( d ), NrCols( d ) ] );
+      
+      if not IsDuplicateFree( dims ) then
+        
+        Error( "This should not happen, please report this!\n" );
+        
+      fi;
+      
+      full := FullSubcategoryGeneratedByListOfObjects( omegas : FinalizeCategory := false );
+                 
+      SetIsLinearCategoryOverCommutativeRing( full, true );
+      
+      SetCommutativeRingOfLinearCategory( full, k );
+      
+      AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
+        function( r, alpha )
+          local coeff, beta;
+                   
+          beta := UnderlyingCell( alpha );
+          
+          beta := GradedPresentationMorphism( Source( beta ), ( r / S ) * UnderlyingMatrix( beta ), Range( beta ) );
+          
+          beta := beta / full;
+                    
+          return beta;
+          
+      end, 99 );
+     
+      AddBasisOfExternalHom( full,
+        function( M, N )
+          local mat_M, dim_M, index_M, mat_N, dim_N, index_N, B;
+          
+          mat_M := UnderlyingMatrix( UnderlyingCell( M ) );
+          dim_M := [ NrRows( mat_M ), NrCols( mat_M ) ];
+          index_M := Position( dims, dim_M ) - 1;
+          
+          mat_N := UnderlyingMatrix( UnderlyingCell( N ) );
+          dim_N := [ NrRows( mat_N ), NrCols( mat_N ) ];
+          index_N := Position( dims, dim_N ) - 1;
+          
+          if index_M = fail or index_N = fail then
+            
+            Error( "This should not happen!" );
+            
+          fi;
+          
+          B := BasisBetweenTwistedCotangentSheaves( S, index_M, index_N );
+          
+          B := List( B, b -> b / full );
+          
+          return B;
+          
+      end, 99 );
+      
+      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
+        function( phi, B )
+          local mat, sol;
+          
+          if B = [  ] then
+            
+            return [  ];
+            
+          fi;
+          
+          phi := UnderlyingCell( phi );
+          
+          mat := UnderlyingMatrix( phi ) * k;
+          
+          mat := ConvertMatrixToRow( mat );
+          
+          B := List( B, UnderlyingCell );
+          
+          B := List( B, b -> UnderlyingMatrix( b ) * k );
+          
+          B := UnionOfRows( List( B, ConvertMatrixToRow ) );
+          
+          sol := RightDivide( mat, B );
+          
+          return EntriesOfHomalgMatrix( sol );
+          
+      end );
+      
+      Finalize( full );
+      
+      return full;
+      
+  end );
+
   ##
   InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
             [ IsHomalgGradedRing and IsFreePolynomialRing ],
@@ -842,7 +972,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
   end );
   
-  InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves,
+  InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules,
             [ IsHomalgGradedRing and IsFreePolynomialRing ],
     function( S )
       local A, omegas, objects_omegas, Omegas, objects_Omegas, F;
@@ -853,7 +983,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       objects_omegas := SetOfKnownObjects( omegas );
       
-      Omegas := FullSubcategoryGeneratedByTwistedCotangentSheaves( S );
+      Omegas := FullSubcategoryGeneratedByTwistedCotangentModules( S );
       
       objects_Omegas := SetOfKnownObjects( Omegas );
       

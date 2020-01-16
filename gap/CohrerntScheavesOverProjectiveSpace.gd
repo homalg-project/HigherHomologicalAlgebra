@@ -14,10 +14,12 @@ DeclareAttribute( "FullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGr
 
 DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentSheaves", IsHomalgGradedRing );
 
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentModules", IsHomalgGradedRing );
+
 DeclareAttribute( "FullSubcategoryGeneratedByDirectSumsOfTwistsOfStructureSheaf", IsHomalgGradedRing );
 
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
 
 DeclareAttribute( "RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules", IsHomalgGradedRing );
