@@ -1100,43 +1100,43 @@ InstallMethod( DimensionOfTateCohomology,
 end );
 
 # The output here is stable module that correspondes to O(k) [ the sheafification of S(k) ]
-InstallMethod( TwistedStructureBundleOp,
-          [ IsHomalgGradedRing, IsInt ],
-  function( Sym, k )
-    local F;
-    F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
-      return Source( CyclesAt( TateResolution( F ), 0 ) );
-end );
+#InstallMethod( TwistedStructureBundleOp,
+#          [ IsHomalgGradedRing, IsInt ],
+#  function( Sym, k )
+#    local F;
+#    F := GradedFreeLeftPresentation( 1, Sym, [ -k ] );
+#      return Source( CyclesAt( TateResolution( F ), 0 ) );
+#end );
 
 # See Appendix of Vector Bundels over complex projective spaces
-InstallMethod( TwistedCotangentBundleOp,
-          [ IsHomalgGradedRing, IsInt ],
-  function( A, k )
-    local n, F, hF, hM, cM, id, i, mat;
-    n := Length( IndeterminatesOfExteriorRing( A ) );
-    if k < 0 or k > n - 1 then
-      Error( Concatenation( "Cotangent bundels are defined only for 0,1,...,", String( n - 1 ) ) );
-    fi;
-    F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
-    hF := AsPresentationInHomalg( F );
-    hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
-    hM := UnderlyingObject( hM );
-    cM := AsPresentationInCAP( hM );
-    mat := UnderlyingMatrix( cM );
-    id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
-    for i in [ 1 .. NrColumns( mat ) ] do
-      id[ i, NrColumns( mat ) - i + 1 ] := One( A );
-    od;
-    return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
-end );
-
-# See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
-InstallMethod( KoszulSyzygyModuleOp,
-        [ IsHomalgGradedRing, IsInt ],
-  function( S, k )
-    local ind, K, koszul_resolution, n;
-    ind := Reversed( IndeterminatesOfPolynomialRing( S ) );
-    K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
-    koszul_resolution := ProjectiveResolution( K );
-    return CokernelObject( koszul_resolution^( -k - 2 ) );
-end );
+#InstallMethod( TwistedCotangentBundleOp,
+#          [ IsHomalgGradedRing, IsInt ],
+#  function( A, k )
+#    local n, F, hF, hM, cM, id, i, mat;
+#    n := Length( IndeterminatesOfExteriorRing( A ) );
+#    if k < 0 or k > n - 1 then
+#      Error( Concatenation( "Cotangent bundels are defined only for 0,1,...,", String( n - 1 ) ) );
+#    fi;
+#    F := GradedFreeLeftPresentation( 1, A, [ n - k ] );
+#    hF := AsPresentationInHomalg( F );
+#    hM := SubmoduleGeneratedByHomogeneousPart( 0, hF );
+#    hM := UnderlyingObject( hM );
+#    cM := AsPresentationInCAP( hM );
+#    mat := UnderlyingMatrix( cM );
+#    id := HomalgInitialMatrix( NrColumns( mat ), NrColumns( mat ), A );
+#    for i in [ 1 .. NrColumns( mat ) ] do
+#      id[ i, NrColumns( mat ) - i + 1 ] := One( A );
+#    od;
+#    return AsGradedLeftPresentation( mat*id, Reversed( GeneratorDegrees( cM ) ) );
+#end );
+#
+## See chapter 5, Sheaf cohomology and free resolutions over exterior algebra
+#InstallMethod( KoszulSyzygyModuleOp,
+#        [ IsHomalgGradedRing, IsInt ],
+#  function( S, k )
+#    local ind, K, koszul_resolution, n;
+#    ind := Reversed( IndeterminatesOfPolynomialRing( S ) );
+#    K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
+#    koszul_resolution := ProjectiveResolution( K );
+#    return CokernelObject( koszul_resolution^( -k - 2 ) );
+#end );
