@@ -1,3 +1,0 @@
-To run demo file in gap, make sure the browse package is installed then
-try: "gap read.g" then use page up, down to choose which demo file 
-you want to run.

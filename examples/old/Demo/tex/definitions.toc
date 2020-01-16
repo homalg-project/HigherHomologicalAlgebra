@@ -1,4 +1,0 @@
-\contentsline {section}{\numberline {1}Koszul Syzygies modules}{1}{section.1}
-\contentsline {section}{\numberline {2}Twisted cotangent bundles}{3}{section.2}
-\contentsline {section}{\numberline {3}Relation between $\Omega ^i_S(i)$ and $\Omega ^i_A(i)$}{4}{section.3}
-\contentsline {section}{\numberline {4}Beilinson Monad}{8}{section.4}
