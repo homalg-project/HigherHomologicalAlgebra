@@ -250,7 +250,7 @@ CategoryFilter := function( chains )
   
   range_cat := RangeCategoryOfHomomorphismStructure( cat );
   
-  if IsChainComplexCategory( range_cat ) then
+  if not IsChainComplexCategory( range_cat ) then
     
     return false;
     
