@@ -146,6 +146,12 @@ CategoryFilter := function( chains )
   
   range_cat := RangeCategoryOfHomomorphismStructure( cat );
   
+  if not IsChainComplexCategory( range_cat ) then
+    
+    return false;
+    
+  fi;
+
   if HasIsAbCategory( chains ) and IsAbCategory( chains ) and HasRangeCategoryOfHomomorphismStructure( chains ) then
 
       range_chains := RangeCategoryOfHomomorphismStructure( chains );
@@ -242,7 +248,7 @@ CategoryFilter := function( chains )
   
   cat := UnderlyingCategory( chains );
   
-  if not  ( HasIsAbCategory( cat ) and IsAbCategory( cat ) and HasRangeCategoryOfHomomorphismStructure( cat ) ) then
+  if not ( HasIsAbCategory( cat ) and IsAbCategory( cat ) and HasRangeCategoryOfHomomorphismStructure( cat ) ) then
     
     return false;
     
@@ -394,5 +400,4 @@ CategoryFilter :=
  
 end, Description := "Colift using the homomorphism structure"
 );
-
 
