@@ -340,6 +340,84 @@ end );
  
 AddIsInjective( cat, IsProjective );
 
+
+######################################
+#
+# View methods
+#
+#####################################
+
+##
+InstallMethod( ViewObj, 
+    [ IsGradedLeftPresentation ],
+  function( o )
+    local A, twists, c, p;
+    
+    if not IsZero( NrRows( UnderlyingMatrix( o ) ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    A := UnderlyingHomalgRing( o );
+    
+    if not ( HasIsExteriorRing( A ) and IsExteriorRing( A ) ) then
+      
+      TryNextMethod( );
+      
+    fi; 
+    
+    twists := List( -GeneratorDegrees( o ), d -> Size( Indeterminates( A ) ) + d );
+     
+    #Print( "An object in Serre quotient category defined by: " );
+    
+    if IsEmpty( twists ) then
+      
+      Print( "0" );
+      
+    fi;
+    
+    c := [ ];
+    
+    while true do
+      
+      p := PositionProperty( twists, i -> i <> twists[ 1 ] );
+      
+      if p = fail then
+        
+        if Size( twists ) > 1 then
+          
+          Print( "𝛚(", twists[ 1 ], ")^", Size( twists ) );
+          
+        else
+          
+          Print( "𝛚(", twists[ 1 ], ")" );
+          
+        fi;
+        
+        break;
+        
+      else
+        
+        if p > 2 then
+          
+          Print( "𝛚(", twists[ 1 ], ")^", p - 1, "⊕" );
+        
+        else
+          
+          Print( "𝛚(", twists[ 1 ], ")⊕" );
+          
+        fi;
+       
+        twists := twists{ [ p .. Size( twists ) ] };
+      
+      fi;
+      
+    od;
+    
+end );
+
+
 #AddCanBeFactoredThroughExactProjective( cat,  
 #    function( mor )
 #    local m;
