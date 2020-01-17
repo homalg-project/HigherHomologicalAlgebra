@@ -17,3 +17,10 @@ KeyDependentOperation( "TwistedCotangentSheaf", IsHomalgGradedRing, IsInt, Retur
 DeclareOperation( "BasisBetweenTwistedCotangentSheaves",
       [ IsHomalgGradedRing, IsInt, IsInt ] );
 
+
+DeclareAttribute( "FullSubcategoryGeneratedByTwistsOfStructureSheaf",
+      IsHomalgGradedRing );
+
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentSheaves",
+      IsHomalgGradedRing );
+
