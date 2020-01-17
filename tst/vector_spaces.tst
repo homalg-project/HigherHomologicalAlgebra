@@ -62,7 +62,7 @@ false
 gap> IsExactInIndex( C, 3 );
 true
 gap> C;
-<A not cyclic, bounded object in Cochain complexes category over Category of 
+<A not exact, bounded object in Cochain complexes category over Category of 
 matrices over Q with active lower bound 2 and active upper bound 7>
 gap> P := CochainComplex( matrix_category, diffs );
 <An object in Cochain complexes category over Category of matrices over Q>
@@ -211,10 +211,10 @@ gap> T := ShiftFunctor( cochain_cat, 3 );
 Shift (3 times to the left) functor in Cochain complexes category over Category
  of matrices over Q
 gap> C;
-<A not cyclic, bounded object in Cochain complexes category over Category of 
+<A not exact, bounded object in Cochain complexes category over Category of 
 matrices over Q with active lower bound 2 and active upper bound 7>
 gap> C_3 := ApplyFunctor( T, C );
-<A not cyclic, bounded object in Cochain complexes category over Category of 
+<A not exact, bounded object in Cochain complexes category over Category of 
 matrices over Q with active lower bound -1 and active upper bound 4>
 gap> Display( C^3 );
 [ [  1,  3 ] ]
