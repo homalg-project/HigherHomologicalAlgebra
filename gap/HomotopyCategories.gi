@@ -34,6 +34,12 @@ InstallMethod( HomotopyCategory,
     
     chains := ChainComplexCategory( cat : FinalizeCategory := false );
     
+    if not ( HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) ) then
+    
+      Error( "The input category should be at least additive category" );
+      
+    fi;
+    
     if HasIsFinalized( chains ) then
       
       if not CanCompute( chains, "MorphismIntoColiftingObject" ) or
