@@ -759,6 +759,106 @@ InstallMethodWithCrispCache( TateResolution,
 end );
 
 ##
+BindGlobal( "CAN_TWISTED_OMEGA_OBJECT",
+  function( a )
+    local A, full, add_full, n, degrees, pos;
+    
+    A := UnderlyingHomalgRing( a );
+    
+    full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+    
+    add_full := AdditiveClosure( full );
+    
+    n := Length( Indeterminates( A ) );
+    
+    degrees := GeneratorDegrees( a );
+    
+    degrees := List( degrees, HomalgElementToInteger );
+    
+    pos := PositionsProperty( degrees, d -> d in [ 1 .. n ] );
+    
+    degrees := List( degrees{ pos }, d -> - d + n );
+    
+    return AdditiveClosureObject( List( degrees, d -> TwistedOmegaModule( A, d ) / full ), add_full );
+    
+end );
+
+##
+BindGlobal( "CAN_TWISTED_OMEGA_MORPHISM",
+  function( alpha )
+    local A, full, n, a, can_a, b, can_b, degrees_a, pos_a, degrees_b, pos_b, matrix;
+    
+    A := UnderlyingHomalgRing( alpha );
+    
+    full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+    
+    n := Length( Indeterminates( A ) );
+    
+    a := Source( alpha );
+    
+    can_a := CAN_TWISTED_OMEGA_OBJECT( a );
+    
+    b := Range( alpha );
+    
+    can_b := CAN_TWISTED_OMEGA_OBJECT( b );
+    
+    degrees_a := GeneratorDegrees( a );
+    
+    degrees_a := List( degrees_a, HomalgElementToInteger );
+    
+    pos_a := PositionsProperty( degrees_a, d -> d in [ 1 .. n ] );
+    
+    degrees_a := List( degrees_a{ pos_a }, d -> - d + n );
+   
+    degrees_b := GeneratorDegrees( b );
+    
+    degrees_b := List( degrees_b, HomalgElementToInteger );
+    
+    pos_b := PositionsProperty( degrees_b, d -> d in [ 1 .. n ] );
+    
+    degrees_b := List( degrees_b{ pos_b }, d -> - d + n );
+   
+    matrix := UnderlyingMatrix( alpha );
+    
+    matrix := CertainColumns( CertainRows( matrix, pos_a ), pos_b );
+    
+    if NrCols( matrix ) = 0 then
+      
+      matrix := [ ];
+      
+    else
+      
+      matrix := List( [ 1 .. NrRows( matrix ) ],
+                i -> List( [ 1 .. NrCols( matrix ) ],
+                  j ->
+                    GradedPresentationMorphism(
+                        TwistedOmegaModule( A, degrees_a[ i ] ),
+                        HomalgMatrix( [ [ matrix[ i, j ] ] ], 1, 1, A ),
+                        TwistedOmegaModule( A, degrees_b[ j ] ) ) / full
+                      ) );
+   fi;
+   
+   return AdditiveClosureMorphism( can_a, matrix, can_b );
+   
+end );
+
+##
+BindGlobal( "CAN_TWISTED_OMEGA_CELL",
+  function( cell )
+  
+    if IsCapCategoryObject( cell ) then
+      
+      return CAN_TWISTED_OMEGA_OBJECT( cell );
+      
+    else
+      
+      return CAN_TWISTED_OMEGA_MORPHISM( cell );
+      
+    fi;
+    
+end );
+
+##
 InstallMethod( TruncationFunctorUsingTateResolutionOp,
     [ IsHomalgGradedRing, IsInt ],
     function( S, i )
