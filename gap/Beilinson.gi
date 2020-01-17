@@ -1,4 +1,8 @@
 
+
+BindGlobal( "BBGG", rec( ) );
+BBGG!.QQ := HomalgFieldOfRationals( );
+
 InstallGlobalFunction( ShowMatrix,
  function( C )
     local mat;
@@ -26,49 +30,154 @@ InstallGlobalFunction( ShowMatrix,
 
  ##
 InstallMethod( TwistedOmegaModuleOp,
-    [ IsExteriorRing, IsInt ],
-    function( A, i )
-      return GradedFreeLeftPresentation( 1, A, [ Length( IndeterminatesOfExteriorRing( A ) ) - i ] );
- end );
+          [ IsExteriorRing, IsInt ],
+  function( A, i )
+    
+    return GradedFreeLeftPresentation( 1, A, [ Length( IndeterminatesOfExteriorRing( A ) ) - i ] );
+    
+end );
 
 ##
 InstallMethod( BasisBetweenTwistedOmegaModules,
-    [ IsExteriorRing, IsInt, IsInt ],
-    function( A, i, j )
-      local n, omega_i, omega_j, G, indeterminates, combinations, index, L;
+          [ IsExteriorRing, IsInt, IsInt ],
+  function( A, i, j )
+    local n, omega_i, omega_j, G, indeterminates, combinations, index, L;
+    
+    omega_i :=TwistedOmegaModule( A, i );
+    
+    omega_j :=TwistedOmegaModule( A, j );
+    
+    indeterminates := IndeterminatesOfExteriorRing( A );
+    
+    n := Length( indeterminates );
 
-      omega_i :=TwistedOmegaModule( A, i );
-      omega_j :=TwistedOmegaModule( A, j );
+    if i < j then
+        return [  ];
+    fi;
 
-      indeterminates := IndeterminatesOfExteriorRing( A );
-      
-      n := Length( indeterminates );
+    if i = j then
+        return [ IdentityMorphism( TwistedOmegaModule( A, i ) ) ];
+    fi;
 
-      if i < j then
-          return [  ];
-      fi;
-
-      if i = j then
-          return [ IdentityMorphism( TwistedOmegaModule( A, i ) ) ];
-      fi;
-
-      if i = j + 1 then
-          G := List( indeterminates, ind -> HomalgMatrix( [ [ ind ] ], 1, 1, A ) );
-          return List( G, g -> GradedPresentationMorphism( omega_i, g, omega_j ) );
-      elif i = j + n then
-          G := HomalgMatrix( [ [ Product( indeterminates ) ] ], 1, 1, A );
-          return [ GradedPresentationMorphism( omega_i, G, omega_j ) ];
-      elif i > j + n then
-          return [  ];
-      else
-          G := Reversed( List( [ 1 .. n-1 ], k -> BasisBetweenTwistedOmegaModules( A, k, k - 1 ) ) );
-          index := n - i;
-          combinations := Combinations( [ 1 .. n ], i - j );
-          L := List( combinations, comb -> List( [ 1 .. i - j ], k-> G[index+k-1][comb[k]] ) );
-          return List( L, l -> PreCompose(l) );
-      fi;
+    if i = j + 1 then
+        G := List( indeterminates, ind -> HomalgMatrix( [ [ ind ] ], 1, 1, A ) );
+        return List( G, g -> GradedPresentationMorphism( omega_i, g, omega_j ) );
+    elif i = j + n then
+        G := HomalgMatrix( [ [ Product( indeterminates ) ] ], 1, 1, A );
+        return [ GradedPresentationMorphism( omega_i, G, omega_j ) ];
+    elif i > j + n then
+        return [  ];
+    else
+        G := Reversed( List( [ 1 .. n - 1 ], k -> BasisBetweenTwistedOmegaModules( A, k, k - 1 ) ) );
+        index := n - i;
+        combinations := Combinations( [ 1 .. n ], i - j );
+        L := List( combinations, comb -> List( [ 1 .. i - j ], k-> G[ index + k - 1][ comb[ k ] ] ) );
+        return List( L, l -> PreCompose( l ) );
+    fi;
 
 end );
+
+##
+InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
+          [ IsExteriorRing ],
+  function( A )
+    local k, n, cat, omegas, full, FinalizeCategory;
+    
+    k := UnderlyingNonGradedRing( CoefficientsRing( A ) );
+    
+    if IsRationalsForHomalg( k ) then
+      
+      k := BBGG!.QQ;
+      
+    else
+      
+      Error( "This should not happen!" );
+      
+    fi;
+    
+    n := Size( Indeterminates( A ) );
+    
+    cat := GradedLeftPresentations( A );
+    
+    omegas := List( [ 0 .. n - 1 ], i -> TwistedOmegaModule( A, i ) );
+    
+    full := FullSubcategoryGeneratedByListOfObjects( omegas : FinalizeCategory := false );
+    
+    SetIsLinearCategoryOverCommutativeRing( full, true );
+    
+    SetCommutativeRingOfLinearCategory( full, k );
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
+      function( e, alpha )
+        local mat;
+        
+        alpha := UnderlyingCell( alpha );
+        
+        mat := UnderlyingMatrix( alpha );
+        
+        mat := ( e / A ) * mat;
+        
+        return GradedPresentationMorphism( Source( alpha ), mat, Range( alpha ) ) / full;
+        
+    end );
+    
+    ##
+    AddBasisOfExternalHom( full,
+      function( a, b )
+        local cell_a, cell_b, twist_a, twist_b, B; 
+        
+        cell_a := UnderlyingCell( a );
+        
+        cell_b := UnderlyingCell( b );
+        
+        twist_a := HomalgElementToInteger( - GeneratorDegrees( cell_a )[ 1 ] ) + n;
+        
+        twist_b := HomalgElementToInteger( - GeneratorDegrees( cell_b )[ 1 ] ) + n;
+        
+        B := BasisBetweenTwistedOmegaModules( A, twist_a, twist_b );
+        
+        return List( B, m -> m / full );
+        
+    end );
+    
+    ##
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
+      function( alpha, B )
+        
+        if IsEmpty( B ) then
+          
+          return [ ];
+          
+        fi;
+        
+        alpha := UnderlyingMatrix( UnderlyingCell( alpha ) );
+        
+        if IsZero( alpha ) then
+          
+          return ListWithIdenticalEntries( Size( B ), Zero( k ) );
+          
+        fi;
+        
+        B := List( B, UnderlyingCell );
+        
+        B := List( B, UnderlyingMatrix );
+        
+        B := UnionOfRows( B );
+        
+        return EntriesOfHomalgMatrix( RightDivide( alpha, B ) * k );
+
+    end );
+    
+    #SetCachingOfCategoryCrisp( full );
+    #DeactivateCachingOfCategory( full );
+    CapCategorySwitchLogicOff( full );
+    DisableSanityChecks( full );
+    
+    Finalize( full );
+    
+    return full;
+    
+end );  
 
 ##
 InstallMethod( TwistedGradedFreeModuleOp,

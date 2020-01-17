@@ -8,6 +8,8 @@
 #! @Returns graded lp
 KeyDependentOperation("TwistedOmegaModule", IsExteriorRing, IsInt, ReturnTrue );
 
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedOmegaModules", IsExteriorRing );
+
 #! @Arguments S, i
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the graded  $S$-lp $S(i)$.
 #! The sheafification of $S(i)$ is the structure sheaf $\mathcal{O}_{\mathbb{P}^m}(i)$.
