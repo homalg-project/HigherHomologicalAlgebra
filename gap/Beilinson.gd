@@ -67,6 +67,17 @@ DeclareOperation( "BasisBetweenTwistedCotangentModules", [ IsHomalgGradedRing, I
 
 DeclareOperation( "BasisBetweenTwistedCotangentModulesAsChains", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
+
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentModules", IsHomalgGradedRing );
+
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules", IsHomalgGradedRing );
+
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+
+DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+
+
+
 #! @Description
 #! @Arguments M
 #! The input is graded $S$-lp, graded $A$-lp, chain complex or cochain complex of $S$-lp's. The output is a Beilinson monad of $M$.

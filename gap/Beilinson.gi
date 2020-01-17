@@ -1310,120 +1310,297 @@ InstallMethod( CANONICALIZE_FUNCTOR,
     
 end );
 
+######################################
+#
+# Full subcategories
+#
+######################################
+
 ##
-InstallMethod( ViewObj, 
-    [ IsGradedLeftPresentation ],
-  function( M )
-    local mat, s, i, degrees, n, R;
+InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
+          [ IsHomalgGradedRing and IsFreePolynomialRing ],
+  function( S )
+    local graded_pres, k, coh, generalized_morphism_cat, sh, indeterminates, n, omegas, mats, dims, full;
     
-    mat := UnderlyingMatrix( M );
+    graded_pres := GradedLeftPresentations( S );
     
-    R := UnderlyingHomalgRing( M );
+    DisableSanityChecks( graded_pres );
+    DeactivateCachingOfCategory( graded_pres );
+    CapCategorySwitchLogicOff( graded_pres );
     
-    n := Length( Indeterminates( R ) );
+    graded_pres := GradedLeftPresentations( KoszulDualRing( S ) );
+    DisableSanityChecks( graded_pres );
+    DeactivateCachingOfCategory( graded_pres );
+    CapCategorySwitchLogicOff( graded_pres );
     
-    s := "";
+    k := UnderlyingNonGradedRing( CoefficientsRing( S ) );
     
-    if NrRows( mat ) = 0 then
+    if not IsRationalsForHomalg( k ) then
       
-      degrees := GeneratorDegrees( M );
+      Error( "The coefficient ring should be a rational homalg field" );
       
-      degrees := Collected( degrees );
+    fi;
+    
+    k := BBGG!.QQ;
+         
+    indeterminates := Indeterminates( S );
+    
+    n := Size( indeterminates );
+    
+    omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
+    
+    mats := List( omegas, UnderlyingMatrix );
+    
+    dims := List( mats, d -> [ NrRows( d ), NrCols( d ) ] );
+    
+    if not IsDuplicateFree( dims ) then
       
-      if degrees = [ ] then
+      Error( "This should not happen, please report this!\n" );
+      
+    fi;
+    
+    full := FullSubcategoryGeneratedByListOfObjects( omegas : FinalizeCategory := false );
+               
+    SetIsLinearCategoryOverCommutativeRing( full, true );
+    
+    SetCommutativeRingOfLinearCategory( full, k );
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
+      function( r, alpha )
+        local coeff, beta;
+                 
+        beta := UnderlyingCell( alpha );
         
-        Print( "0" );
+        beta := GradedPresentationMorphism( Source( beta ), ( r / S ) * UnderlyingMatrix( beta ), Range( beta ) );
         
-      fi;
-              
-      if not HasIsExteriorRing( R ) then
+        beta := beta / full;
+                  
+        return beta;
         
-        for i in degrees do
+    end, 99 );
+   
+    AddBasisOfExternalHom( full,
+      function( M, N )
+        local mat_M, dim_M, index_M, mat_N, dim_N, index_N, B;
+        
+        mat_M := UnderlyingMatrix( UnderlyingCell( M ) );
+        dim_M := [ NrRows( mat_M ), NrCols( mat_M ) ];
+        index_M := Position( dims, dim_M ) - 1;
+        
+        mat_N := UnderlyingMatrix( UnderlyingCell( N ) );
+        dim_N := [ NrRows( mat_N ), NrCols( mat_N ) ];
+        index_N := Position( dims, dim_N ) - 1;
+        
+        if index_M = fail or index_N = fail then
           
-          s := Concatenation( s, "S(", String( -i[ 1 ] ),
-                              ")^", String( i[ 2 ] ), " ⊕ " );
-        
-        od;
-      
-      else
-        
-        for i in degrees do
+          Error( "This should not happen!" );
           
-          s := Concatenation( s, "ω(", String( n - i[ 1 ] ),
-                              ")^", String( i[ 2 ] ), " ⊕ " );
+        fi;
         
-        od;
-      
-      fi;
+        B := BasisBetweenTwistedCotangentModules( S, index_M, index_N );
+        
+        B := List( B, b -> b / full );
+        
+        return B;
+        
+    end, 99 );
+    
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
+      function( phi, B )
+        local mat, sol;
+        
+        if B = [  ] then
           
-      s := s{ [ 1 .. Length( s ) - 5 ] };
-      
-      Print( s );
-      
-      else
+          return [  ];
+          
+        fi;
         
-        TryNextMethod(  );
+        phi := UnderlyingCell( phi );
         
-      fi;
- 
+        mat := UnderlyingMatrix( phi ) * k;
+        
+        mat := ConvertMatrixToRow( mat );
+        
+        B := List( B, UnderlyingCell );
+        
+        B := List( B, b -> UnderlyingMatrix( b ) * k );
+        
+        B := UnionOfRows( List( B, ConvertMatrixToRow ) );
+        
+        sol := RightDivide( mat, B );
+        
+        return EntriesOfHomalgMatrix( sol );
+        
+    end );
+    
+    Finalize( full );
+    
+    return full;
+    
 end );
 
 ##
-InstallMethod( Display, 
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules,
+          [ IsHomalgGradedRing and IsFreePolynomialRing ],
+  function( S )
+    local A, omegas, objects_omegas, Omegas, objects_Omegas, object_func, morphism_func, name;
+    
+    A := KoszulDualRing( S );
+    
+    omegas := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+    
+    objects_omegas := SetOfKnownObjects( omegas );
+    
+    Omegas := FullSubcategoryGeneratedByTwistedCotangentModules( S );
+    
+    objects_Omegas := SetOfKnownObjects( Omegas );
+    
+    object_func := w -> objects_Omegas[ Position( objects_omegas, w ) ];
+    
+    morphism_func := alpha -> 
+      BasisOfExternalHom( object_func( Source( alpha ) ), object_func( Range( alpha ) ) )
+        [ Position( BasisOfExternalHom( Source( alpha ), Range( alpha ) ), alpha ) ];
+        
+    name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀^i(i)'s as modules";
+    
+    return ValueGlobal( "FunctorFromLinearCategoryByTwoFunctions" )( name, omegas, Omegas, object_func, morphism_func );
+    
+end );
+
+##
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves,
+          [ IsHomalgGradedRing and IsFreePolynomialRing ],
+  function( S )
+    local coh, sh, modules, sheaves, name, cell_func;
+    
+    coh := CoherentSheavesOverProjectiveSpace( S );
+    
+    sh := SheafificationFunctor( coh );
+    
+    modules := FullSubcategoryGeneratedByTwistedCotangentModules( S );
+    
+    sheaves := FullSubcategoryGeneratedByTwistedCotangentSheaves( S );
+        
+    name := "Isomorphism functor from 𝛀^i(i)'s as modules to 𝛀^i(i)'s as sheaves";
+    
+    cell_func := c -> ApplyFunctor( sh, UnderlyingCell( c ) ) / sheaves;
+    
+    return ValueGlobal( "FunctorFromLinearCategoryByTwoFunctions" )( name, modules, sheaves, cell_func, cell_func );
+    
+end );
+
+##
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves,
+          [ IsHomalgGradedRing and IsFreePolynomialRing ],
+    S -> PreCompose( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S ),
+            IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves( S ) )
+);
+
+######################################
+#
+# ViewObj
+#
+####################################
+
+##
+InstallMethod( ViewObj,
+          [ IsGradedLeftPresentation ],
+  function( o )
+    local S, n, omegas, p;
+    
+    S := UnderlyingHomalgRing( o );
+    
+    if not ( HasIsFreePolynomialRing( S ) and IsFreePolynomialRing( S ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+   
+    S := UnderlyingHomalgRing( o );
+    
+    n := Size( Indeterminates( S ) );
+    
+    omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
+    
+    p := Position( omegas, o );
+    
+    if p = fail then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    Print( "Ω^", p - 1, "(", p - 1, ")" );
+    
+end );
+
+##
+InstallMethod( ViewObj, 
     [ IsGradedLeftPresentation ],
-    5000,
-  function( M )
-    local mat, s, i, degrees, n, R;
+  function( o )
+    local S, twists, c, p;
     
-    mat := UnderlyingMatrix( M );
-    
-    R := UnderlyingHomalgRing( M );
-    
-    n := Length( Indeterminates( R ) );
-    
-    s := "";
-    
-    if NrRows( mat ) = 0 then
+    if not IsZero( NrRows( UnderlyingMatrix( o ) ) ) then
       
-      degrees := GeneratorDegrees( M );
+      TryNextMethod( );
       
-      degrees := Collected( degrees );
+    fi;
+    
+    S := UnderlyingHomalgRing( o );
+    
+    if not ( HasIsFreePolynomialRing( S ) and IsFreePolynomialRing( S ) ) then
       
-      if degrees = [ ] then
+      TryNextMethod( );
+      
+    fi;
+    
+    twists := -GeneratorDegrees( o );
+    
+    #Print( "An object in Serre quotient category defined by: " );
+    
+    if IsEmpty( twists ) then
+      
+      Print( "0" );
+      return; 
+    fi;
+    
+    c := [ ];
+    
+    while true do
+      
+      p := PositionProperty( twists, i -> i <> twists[ 1 ] );
+      
+      if p = fail then
         
-        Print( "0" );
-        
-      fi;
-              
-      if not HasIsExteriorRing( R ) then
-        
-        for i in degrees do
+        if Size( twists ) > 1 then
           
-          s := Concatenation( s, "S(", String( -i[ 1 ] ),
-                              ")^", String( i[ 2 ] ), " ⊕ " );
+          Print( "S(", twists[ 1 ], ")^", Size( twists ) );
+          
+        else
+          
+          Print( "S(", twists[ 1 ], ")" );
+          
+        fi;
         
-        od;
-      
+        break;
+        
       else
         
-        for i in degrees do
+        if p > 2 then
           
-          s := Concatenation( s, "ω(", String( n - i[ 1 ] ),
-                              ")^", String( i[ 2 ] ), " ⊕ " );
+          Print( "S(", twists[ 1 ], ")^", p - 1, "⊕" );
         
-        od;
+        else
+          
+          Print( "S(", twists[ 1 ], ")⊕" );
+          
+        fi;
+       
+        twists := twists{ [ p .. Size( twists ) ] };
       
       fi;
-          
-      s := s{ [ 1 .. Length( s ) - 5 ] };
       
-      Print( s );
-      
-    else
-        
-      TryNextMethod(  );
-        
-    fi;
-  
+    od;
+
 end );
 
