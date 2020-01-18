@@ -8,7 +8,7 @@ SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
-o := TwistedStructureSheaf( S, 0 );
+o := TwistedGradedFreeModule( S, 0 );
 
 BB := BeilinsonFunctor( S );
 
