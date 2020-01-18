@@ -2252,8 +2252,6 @@ InstallMethodWithCache( AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM,
     
     Info( InfoDerivedCategories, 3, "Done!" );
     
-    Info( InfoDerivedCategories, 3, "Done!" ) ;
-    
     return mat;
     
 end );

@@ -176,6 +176,10 @@ DeclareAttribute( "RDerivedFunctor",
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
 
-DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
-  [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
+if not IsBound( FunctorFromLinearCategoryByTwoFunctions ) then
+  
+  DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
+    [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
+
+fi;
 
