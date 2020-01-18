@@ -3,6 +3,7 @@
 #
 # Reading the implementation part of the package.
 #
+ReadPackage( "DerivedCategories", "gap/tools.gi" );
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
 ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
 ReadPackage( "DerivedCategories", "gap/QPA.gi" );
@@ -11,5 +12,4 @@ ReadPackage( "DerivedCategories", "gap/Decomposition.gi" );
 ReadPackage( "DerivedCategories", "gap/Convenience.gi" );
 ReadPackage( "DerivedCategories", "gap/Functors.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
-ReadPackage( "DerivedCategories", "gap/tools.gi" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
