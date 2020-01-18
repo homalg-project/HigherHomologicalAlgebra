@@ -476,6 +476,8 @@ InstallMethodWithCrispCache( TateResolution,
     diffs := MapLazy( IntegersList, 
       function( i )
         
+        Info( InfoBBGG, 3, "Computing Tate resolution at index ", i );
+        
         if i <= reg then
           
           tot_i := Tot^i;
@@ -542,6 +544,8 @@ InstallMethodWithCrispCache( TateResolution,
     mors := MapLazy( IntegersList,
       function( i )
         local mor;
+        
+        Info( InfoBBGG, 3, "Computing Tate resolution morphism at index ", i );
         
         if i <= reg then
           
@@ -845,7 +849,7 @@ end );
 ##
 BindGlobal( "CAN_TWISTED_OMEGA_CELL",
   function( cell )
-  
+     
     if IsCapCategoryObject( cell ) then
       
       return CAN_TWISTED_OMEGA_OBJECT( cell );
