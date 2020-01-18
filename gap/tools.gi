@@ -41,6 +41,22 @@ if not IsBound( CheckNaturality ) then
   
 fi;
 
+if not IsBound( CheckFunctoriality ) then
+
+  DeclareGlobalFunction( "CheckFunctoriality" );
+  
+  ##
+  InstallGlobalFunction( CheckFunctoriality,
+    function( F, alpha, beta )
+      
+      return IsCongruentForMorphisms(
+              ApplyFunctor( F, PreCompose( alpha, beta ) ),
+              PreCompose( ApplyFunctor( F, alpha ), ApplyFunctor( F, beta ) )
+              );
+  end );
+
+fi;
+
 ##
 InstallMethod( FinalizeCategory,
           [ IsCapCategory, IsBool ],
