@@ -1297,20 +1297,30 @@ InstallMethod( RightDerivedFunctor, [ IsCapFunctor ], RDerivedFunctor );
 InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ],
   function( name, source_cat, range_cat, object_func, morphism_func )
-    local F;
+    local source_ring, range_ring, conv, F;
     
     if not ( HasIsLinearCategoryOverCommutativeRing( source_cat )
         and IsLinearCategoryOverCommutativeRing( source_cat ) ) or
           not ( HasIsLinearCategoryOverCommutativeRing( range_cat )
-            and IsLinearCategoryOverCommutativeRing( range_cat ) )
-              #or
-              #not IsIdenticalObj( CommutativeRingOfLinearCategory( source_cat ),
-              #                      CommutativeRingOfLinearCategory( range_cat ) )  
-              then
+            and IsLinearCategoryOverCommutativeRing( range_cat ) ) then
         Error( "Wrong input!\n" );
         
     fi;
     
+    source_ring := CommutativeRingOfLinearCategory( source_cat );
+    
+    range_ring := CommutativeRingOfLinearCategory( range_cat );
+    
+    if not IsIdenticalObj( source_ring, range_ring ) then
+       
+      conv := a -> a / range_ring;
+      
+    else
+      
+      conv := IdFunc;
+      
+    fi;
+ 
     #object_func := FunctionWithCache( object_func );
     #morphism_func := FunctionWithCache( morphism_func );
     
@@ -1394,7 +1404,7 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           
         else
           
-          return coeffs{ pos } * images{ pos };
+          return List( coeffs{ pos }, conv ) * images{ pos };
           
         fi;
         
