@@ -51,13 +51,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           T := TateResolution( a );
           
-          diffs := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T ^ i ) ), 1 );
+          diffs := List( [ - n + 2 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T ^ i ) ) );
           
-          C := ChainComplex( reps, diffs );
-          
-          SetLowerBound( C, -n );
-          
-          SetUpperBound( C, n );
+          C := ChainComplex( diffs, - n + 2 );
           
           return C / homotopy_reps;
           
@@ -73,9 +69,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           T := TateResolution( alpha );
           
-          maps := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T[ i ] ) ), 1 );
+          maps := List( [ - n + 1 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T[ i ] ) ) );
           
-          return ChainMorphism( s, r, maps ) / homotopy_reps;
+          return ChainMorphism( s, r, maps, - n + 1 ) / homotopy_reps;
           
       end );
       
@@ -127,13 +123,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           T := TateResolution( a );
           
-          diffs := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T ^ i ) ), 1 );
+          diffs := List( [ - n + 2 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T ^ i ) ) );
           
-          C := ChainComplex( add_cotangent_modules, diffs );
-          
-          SetLowerBound( C, -n );
-          
-          SetUpperBound( C, n );
+          C := ChainComplex( diffs, - n + 2 );
           
           return C / homotopy_cat;
           
@@ -149,9 +141,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           T := TateResolution( alpha );
           
-          maps := MapLazy( IntegersList, i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_MORPHISM( T[ i ] ) ), 1 );
+          maps := List( [ - n + 1 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T[ i ] ) ) );
           
-          return ChainMorphism( s, r, maps ) / homotopy_cat;
+          return ChainMorphism( s, r, maps, - n + 1 ) / homotopy_cat;
           
       end );
       
