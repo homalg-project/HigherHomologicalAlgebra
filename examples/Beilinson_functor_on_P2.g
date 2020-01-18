@@ -6,6 +6,8 @@ magma := field;
 
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
+SetInfoLevel( InfoHomotopyCategories, 3 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
 o := TwistedGradedFreeModule( S, 0 );
