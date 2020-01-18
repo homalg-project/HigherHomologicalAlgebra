@@ -2321,6 +2321,12 @@ InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS,
   function( S, R )
     local mat, field, A, domain, quiver, nr_of_vertices, S_dimensions, R_dimensions, cols, homs, dim_hom, map, k, current_mat, b, i, x, y;
     
+    if IsZero( S ) or IsZero( R ) then
+      
+      return [ ];
+      
+    fi;
+    
     mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
     
     field := HomalgRing( mat );
@@ -2382,16 +2388,22 @@ InstallGlobalFunction( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM,
   function( alpha )
     local mat, vector, field;
     
-    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Range( alpha ) );
+    field := CommutativeRingOfLinearCategory( CapCategory( alpha ) );
     
-    field := HomalgRing( mat ); 
+    if IsZero( Source( alpha ) ) or IsZero( Range( alpha ) ) then
+      
+      return HomalgZeroMatrix( 0, 1, field );
+      
+    fi;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Range( alpha ) );
     
     if IsZero( NrCols( mat ) ) then
       
       return HomalgZeroMatrix( 0, 1, field );
       
     fi;
-     
+    
     vector := List( MatricesOfRepresentationHomomorphism( alpha ),
                 m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
     
@@ -2411,9 +2423,15 @@ InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATIONS,
   function( S, R )
     local mat, field;
     
-    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
+    field := CommutativeRingOfLinearCategory( CapCategory( S ) );
     
-    field := HomalgRing( mat );
+    if IsZero( S ) or IsZero( R ) then
+      
+      return VectorSpaceObject( 0, field );
+      
+    fi;
+    
+    mat := AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( S, R );
     
     return VectorSpaceObject( NrCols( mat ), field );
     
@@ -2425,6 +2443,12 @@ InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH
   function( s, alpha, beta, r )
     local cat, field, mats_alpha, mats_beta, partitions, mats, B, sol;
     
+    if IsZero( s ) or IsZero( r ) then
+        
+      return ZeroMorphism( s, r );
+    
+    fi;
+     
     cat := CapCategory( alpha );
     
     field := CommutativeRingOfLinearCategory( cat );
@@ -2487,6 +2511,12 @@ InstallGlobalFunction( INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPH
   
   function( S, R, iota )
     local A, domain, quiver, nr_of_vertices, S_dimensions, R_dimensions, B, c, b, map, k, current_mat, i, x, y;
+    
+    if IsZero( iota ) then
+      
+      return ZeroMorphism( S, R );
+      
+    fi;
     
     A := AlgebraOfRepresentation( S );
     
@@ -2807,8 +2837,15 @@ InstallOtherMethod( CategoryOfVectorSpaces,
         [ IsFieldForHomalg ],
          
   function( F )
+    local vec;
     
-    return CategoryOfVectorSpaces( F!.ring );
+    vec := CategoryOfVectorSpaces( F!.ring );
+        
+    DisableSanityChecks( vec ); 
+    CapCategorySwitchLogicOff( vec );
+    DisableAddForCategoricalOperations( vec );
+    
+    return vec;
     
 end );
 
@@ -3001,7 +3038,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
           return d;
         
         else
-          
+           
           N := Length( summands );
           
           d1 := DirectSum( summands{ [ 1 .. Int( N/2 ) ] } );
@@ -3060,7 +3097,8 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     ##
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
-      { alpha, B } -> EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
+      { alpha, B } ->
+        EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
       );
     
     ##
