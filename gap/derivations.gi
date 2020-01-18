@@ -32,14 +32,24 @@ AddDerivationToCAP( HomotopyMorphisms,
                     [ IsNullHomotopic, 1 ],
                     [ Colift, 1 ]
                 ],
-    function( phi )
+  function( phi )
     local C, D, colift;
-    if not IsNullHomotopic( phi ) then
-        return fail;
-    fi;
+    #if not IsNullHomotopic( phi ) then
+        #return fail;
+    #fi;
     C := Source( phi );
     D := Range( phi );
+    
+    if IsZero( phi ) then
+      Info( InfoComplexCategoriesForCAP, 2, "Computing Homotopy morphisms the easy way ..." );
+      return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n + 1 ] ), 1 );
+      Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    fi;
+    
+    Info( InfoComplexCategoriesForCAP, 2, "Computing Homotopy morphisms the hard way ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
+    Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    
     if colift = fail then 
       return fail;
     else
@@ -57,11 +67,11 @@ AddDerivationToCAP( HomotopyMorphisms,
                     [ IsNullHomotopic, 1 ],
                     [ Colift, 1 ]
                 ],
-    function( phi )
+  function( phi )
     local C, D, colift;
-    if not IsNullHomotopic( phi ) then
-        return fail;
-    fi;
+    #if not IsNullHomotopic( phi ) then
+        #return fail;
+    #fi;
     C := Source( phi );
     D := Range( phi );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
