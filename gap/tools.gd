@@ -14,6 +14,7 @@ DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
 DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
     [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
 
+DeclareGlobalFunction( "DeactivateCachingForCertainOperations" );
 
 DeclareOperation( "FinalizeCategory", [ IsCapCategory, IsBool ] );
 

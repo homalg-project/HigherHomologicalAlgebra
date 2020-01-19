@@ -541,6 +541,18 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
     -> FunctorFromLinearCategoryByTwoFunctions( name, source_cat, range_cat, object_func, morphism_func, 3 )
 );
 
+##
+InstallGlobalFunction( DeactivateCachingForCertainOperations,
+  function( category, list_of_operations )
+    local current_name;
+    
+    for current_name in list_of_operations do
+      
+      SetCaching( category, current_name, "none" );
+      
+    od;
+    
+end );
 
 ##
 InstallMethod( FinalizeCategory,
