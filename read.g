@@ -11,5 +11,7 @@ ReadPackage( "DerivedCategories", "gap/OtherQPATweaks.gi" );
 ReadPackage( "DerivedCategories", "gap/Decomposition.gi" );
 ReadPackage( "DerivedCategories", "gap/Convenience.gi" );
 ReadPackage( "DerivedCategories", "gap/Functors.gi" );
+ReadPackage( "DerivedCategories", "gap/Hom.gi" );
+ReadPackage( "DerivedCategories", "gap/Tensor.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
