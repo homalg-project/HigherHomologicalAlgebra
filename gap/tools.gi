@@ -15,15 +15,48 @@ InstallGlobalFunction( Time,
     
 end );
 
+##
+InstallGlobalFunction( CheckNaturality,
+  function( eta, alpha )
+    local S, R;
+    
+    S := Source( eta );
+    
+    R := Range( eta );
+    
+    return IsCongruentForMorphisms(
+              PreCompose( ApplyFunctor( S, alpha ), ApplyNaturalTransformation( eta, Range( alpha ) ) ),
+              PreCompose( ApplyNaturalTransformation( eta, Source( alpha ) ), ApplyFunctor( R, alpha ) )
+            );
+end );
   
-  ##
-  InstallGlobalFunction( Time,
-    function( command, arguments )
-      local t0, t1;
+
+##
+InstallGlobalFunction( CheckFunctoriality,
+  function( F, alpha, beta )
+    local bool, source_cat;
+          
+    bool := IsCongruentForMorphisms(
+            ApplyFunctor( F, PreCompose( alpha, beta ) ),
+            PreCompose( ApplyFunctor( F, alpha ), ApplyFunctor( F, beta ) )
+            );
+    
+    source_cat := AsCapCategory( Source( F ) );
+    
+    if HasIsAbCategory( source_cat ) and IsAbCategory( source_cat ) then
       
-      t0 := NanosecondsSinceEpoch( );
+      if IsZero( alpha ) or IsZero( beta ) then
+        
+        Info( InfoWarning, 1, "Be carefull: At least one of the morphisms is zero!" );
+        
+      fi;
       
-      CallFuncList( command, arguments );
+    fi;
+    
+    return bool;
+    
+end );
+
       
       t1 := NanosecondsSinceEpoch( );
       
