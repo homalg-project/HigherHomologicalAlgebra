@@ -627,7 +627,7 @@ end );
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j;
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -683,6 +683,12 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     A := QuotientOfPathAlgebra( A, relations ); 
     
+    algebroid := Algebroid( A );
+    
+    DisableSanityChecks( algebroid );
+    DeactivateCachingOfCategory( algebroid );
+    CapCategorySwitchLogicOff( algebroid );
+
     Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
    
     SetIsAdmissibleQuiverAlgebra( A, true );
