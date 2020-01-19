@@ -4,6 +4,14 @@ field := GLOBAL_FIELD_FOR_QPA!.default_field;
 #magma := HomalgFieldOfRationalsInMAGMA( );
 magma := field;
 
+list_of_operations := [
+                        #"PreCompose",
+                        "AdditionForMorphisms",
+                        "AdditiveInverse",
+                        "MultiplyWithElementOfCommutativeRingForMorphisms",
+                        "IsZeroForObjects"
+                      ];
+
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
@@ -26,8 +34,11 @@ CapCategorySwitchLogicOff( chains_C );
 
 C := DefiningCategory( homotopy_C );
 DisableSanityChecks( C );
-DeactivateCachingOfCategory( C );
+#DeactivateCachingOfCategory( C );
 CapCategorySwitchLogicOff( C );
+
+indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
+DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
 
 L := List( [ -3, -2, -1 ], i -> ApplyFunctor( BB, o[ i ] ) );
@@ -58,5 +69,4 @@ TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( coll
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 4 ) / homotopy_C;
-
 
