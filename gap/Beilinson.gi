@@ -107,6 +107,26 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     
     SetCommutativeRingOfLinearCategory( full, k );
     
+    AddIsEqualForObjects( full,
+      function( a, b )
+      
+        return GeneratorDegrees( UnderlyingCell( a ) ) = GeneratorDegrees( UnderlyingCell( b ) );
+        
+    end );
+   
+    AddIsEqualForMorphisms( full,
+      function( alpha, beta )
+        
+        return IsEqualForObjects( Source( alpha ), Source( beta ) ) and
+                  IsEqualForObjects( Range( alpha ), Range( beta ) ) and
+                    UnderlyingMatrix( UnderlyingCell( alpha ) ) = UnderlyingMatrix( UnderlyingCell( beta ) );
+        
+    end );
+    
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+    
+    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+    
     AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
       function( e, alpha )
         local mat;
@@ -168,7 +188,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
 
     end );
     
-    #SetCachingOfCategoryCrisp( full );
+    SetCachingOfCategoryCrisp( full );
     #DeactivateCachingOfCategory( full );
     CapCategorySwitchLogicOff( full );
     DisableSanityChecks( full );
