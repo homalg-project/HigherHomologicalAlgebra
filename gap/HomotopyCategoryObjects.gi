@@ -62,10 +62,19 @@ end );
 InstallMethod( ViewObj,
             [ IsHomotopyCategoryObject ],
   function( a )
+    local c;
     
-    Print( "<An object in homotopy category defined by: " );
-
-    ViewObj( UnderlyingCell( a ) );
+    c := UnderlyingCell( a );
+    
+    Print( "<An object in ", Name( CapCategory( a ) ) );
+    
+    if HasActiveLowerBound( c ) then
+      Print( " with active lower bound ", ActiveLowerBound( c ) );
+    fi;
+    
+    if HasActiveUpperBound( c ) then
+      Print( " and active upper bound ", ActiveUpperBound( c ) );
+    fi;
     
     Print(">" );
 
