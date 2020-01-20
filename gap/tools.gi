@@ -16,6 +16,12 @@ InstallGlobalFunction( Time,
 end );
 
 ##
+InstallMethod( CallFuncList,
+          [ IsCapFunctor, IsList ],
+  { F, a } -> ApplyFunctor( F, a[ 1 ] )
+);
+
+##
 InstallGlobalFunction( CheckNaturality,
   function( eta, alpha )
     local S, R;
@@ -30,6 +36,11 @@ InstallGlobalFunction( CheckNaturality,
             );
 end );
   
+##
+InstallMethod( CallFuncList,
+          [ IsCapNaturalTransformation, IsList ],
+  { nat, a } -> ApplyNaturalTransformation( nat, a[ 1 ] )
+);
 
 ##
 InstallGlobalFunction( CheckFunctoriality,
