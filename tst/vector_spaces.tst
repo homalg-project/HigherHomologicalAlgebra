@@ -15,8 +15,7 @@ gap> START_TEST( "complexesforcap01.tst");
 gap> Q := HomalgFieldOfRationals( );;
 gap> matrix_category := MatrixCategory( Q );
 Category of matrices over Q
-gap> cochain_cat := CochainComplexCategory( matrix_category );
-Category of cochain complexes over Category of matrices over Q
+gap> cochain_cat := CochainComplexCategory( matrix_category );;
 gap> A := VectorSpaceObject( 1, Q );
 <A vector space object over Q of dimension 1>
 gap> B := VectorSpaceObject( 2, Q );
@@ -25,9 +24,7 @@ gap> f := VectorSpaceMorphism( A, HomalgMatrix( [ [ 1, 3 ] ], 1, 2, Q ), B );
 <A morphism in Category of matrices over Q>
 gap> g := VectorSpaceMorphism( B, HomalgMatrix( [ [ 0 ], [ 0 ] ], 2, 1, Q ), A );
 <A morphism in Category of matrices over Q>
-gap> C := CochainComplex( [ f, g, 2*f ], 3 );
-<A bounded object in Category of cochain complexes over Category of matrices over Q 
-with active lower bound 2 and active upper bound 7>
+gap> C := CochainComplex( [ f, g, 2*f ], 3 );;
 gap> ActiveUpperBound( C );
 7
 gap> ActiveLowerBound( C );
@@ -61,25 +58,16 @@ gap> IsExactInIndex( C, 4 );
 false
 gap> IsExactInIndex( C, 3 );
 true
-gap> C;
-<A not exact, bounded object in Category of cochain complexes over Category of 
-matrices over Q with active lower bound 2 and active upper bound 7>
-gap> P := CochainComplex( matrix_category, diffs );
-<An object in Category of cochain complexes over Category of matrices over Q>
-gap> SetUpperBound( P, 15 );
-gap> P;
-<A bounded from above object in Category of cochain complexes over Category of 
-matrices over Q with active upper bound 15>
-gap> SetUpperBound( P, 20 );
-gap> P;
-<A bounded from above object in Category of cochain complexes over Category of 
-matrices over Q with active upper bound 15>
+gap> C;;
+gap> P := CochainComplex( matrix_category, diffs );;
+gap> SetUpperBound( P, 15 );;
+gap> P;;
+gap> SetUpperBound( P, 20 );;
+gap> P;;
 gap> ActiveUpperBound( P );
 15
 gap> SetUpperBound( P, 7 );
-gap> P;
-<A bounded from above object in Category of cochain complexes over Category of 
-matrices over Q with active upper bound 7>
+gap> P;;
 gap> ActiveUpperBound( P );
 7
 gap> h := VectorSpaceMorphism( A, HomalgMatrix( [ [ 5 ] ], 1, 1, Q ), A );
@@ -88,12 +76,8 @@ gap> phi4 := g;
 <A morphism in Category of matrices over Q>
 gap> phi5 := 2*h;
 <A morphism in Category of matrices over Q>
-gap> D := CochainComplex( [ h ], 4 );
-<A bounded object in Category of cochain complexes over Category of matrices 
-over Q with active lower bound 3 and active upper bound 6>
-gap> phi := CochainMorphism( C, D, [ phi4, phi5 ], 4 );
-<A bounded morphism in Category of cochain complexes over Category of matrices
- over Q with active lower bound 3 and active upper bound 6>
+gap> D := CochainComplex( [ h ], 4 );;
+gap> phi := CochainMorphism( C, D, [ phi4, phi5 ], 4 );;
 gap> Display( phi[ 5 ] );
 [ [ 10 ] ]
 
@@ -106,17 +90,11 @@ gap> IsExact( D );
 true
 gap> IsExact( C );
 false
-gap> psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );
-<A bounded morphism in Category of cochain complexes over Category of matrices 
-over Q with active lower bound 3 and active upper bound 6>
+gap> psi := CochainMorphism( [ f, g, 2*f ], 3, [ h ], 4, [ phi4, phi5 ], 4 );;
 gap> IsZeroForMorphisms( psi );
 false
-gap> psi;
-<A bounded morphism in Category of cochain complexes over Category of matrices 
-over Q with active lower bound 4 and active upper bound 6>
-gap> cone := MappingCone( psi );
-<A bounded object in Category of cochain complexes over Category of matrices over 
-Q with active lower bound 1 and active upper bound 6>
+gap> psi;;
+gap> cone := MappingCone( psi );;
 gap> cone^4;
 <A morphism in Category of matrices over Q>
 gap> Display( cone^4 );
@@ -124,12 +102,8 @@ gap> Display( cone^4 );
   [    0,    0,    5 ] ]
 
 A morphism in Category of matrices over Q
-gap> i := NaturalInjectionInMappingCone( psi );
-<A bounded morphism in Category of cochain complexes over Category of matrices over
-Q with active lower bound 3 and active upper bound 6>
-gap> p := NaturalProjectionFromMappingCone( psi );
-<A bounded morphism in Category of cochain complexes over Category of matrices over
-Q with active lower bound 1 and active upper bound 6>
+gap> i := NaturalInjectionInMappingCone( psi );;
+gap> p := NaturalProjectionFromMappingCone( psi );;
 gap> IsZeroForMorphisms( PreCompose( psi, i ) );
 false
 gap> IsNullHomotopic( PreCompose( psi, i ) );
@@ -149,15 +123,9 @@ gap> Display( H[ 3 ] );
 [ [  0 ] ]
 
 A morphism in Category of matrices over Q
-gap> cyl_psi := MappingCylinder( psi );
-<A bounded object in Category of cochain complexes over Category of matrices over Q
-with active lower bound 1 and active upper bound 7>
-gap> D_to_cyl_psi := NaturalInjectionOfRangeInMappingCylinder( psi );
-<A bounded morphism in Category of cochain complexes over Category of matrices over
-Q with active lower bound 3 and active upper bound 6>
-gap> cyl_psi_to_D := NaturalMorphismFromMappingCylinderInRange( psi );
-<A bounded morphism in Category of cochain complexes over Category of matrices over
-Q with active lower bound 3 and active upper bound 6>
+gap> cyl_psi := MappingCylinder( psi );;
+gap> D_to_cyl_psi := NaturalInjectionOfRangeInMappingCylinder( psi );;
+gap> cyl_psi_to_D := NaturalMorphismFromMappingCylinderInRange( psi );;
 gap> IsZeroForMorphisms( PreCompose( D_to_cyl_psi, cyl_psi_to_D ) 
 >                     - IdentityMorphism( D ) );
 true
@@ -169,9 +137,7 @@ gap> IsNullHomotopic( PreCompose( cyl_psi_to_D, D_to_cyl_psi )
 true
 gap> # Display( D_to_cyl_psi );
 gap> # Display( cyl_psi_to_D );
-gap> i_o_psi := PreCompose( psi, i );
-<A bounded morphism in Category of cochain complexes over Category of matrices
-over Q with active lower bound 4 and active upper bound 6>
+gap> i_o_psi := PreCompose( psi, i );;
 gap> H5 := CohomologyFunctor( cochain_cat, 5 );
 5-th cohomology functor in Category of matrices over Q
 gap> IsZeroForMorphisms( ApplyFunctor( H5, i_o_psi ) );
@@ -192,12 +158,8 @@ gap> Display( ApplyFunctor( F, f ) );
 
 A morphism in Category of matrices over Q
 gap> Coch_F := ExtendFunctorToCochainComplexCategories( F );;
-gap> psi;
-<A bounded morphism in Category of cochain complexes over Category of matrices 
-over Q with active lower bound 4 and active upper bound 6>
-gap> Coch_F_psi := ApplyFunctor( Coch_F, psi );
-<A bounded morphism in Category of cochain complexes over Category of matrices 
-over Q with active lower bound 4 and active upper bound 6>
+gap> psi;;
+gap> Coch_F_psi := ApplyFunctor( Coch_F, psi );;
 gap> Display( psi[ 5 ] );
 [ [  10 ] ]
 
@@ -207,15 +169,9 @@ gap> Display( Coch_F_psi[ 5 ] );
   [   0,  10 ] ]
 
 A morphism in Category of matrices over Q
-gap> T := ShiftFunctor( cochain_cat, 3 );
-Shift (3 times to the left) functor in Category of cochain complexes over Category
- of matrices over Q
-gap> C;
-<A not exact, bounded object in Category of cochain complexes over Category of 
-matrices over Q with active lower bound 2 and active upper bound 7>
-gap> C_3 := ApplyFunctor( T, C );
-<A not exact, bounded object in Category of cochain complexes over Category of 
-matrices over Q with active lower bound -1 and active upper bound 4>
+gap> T := ShiftFunctor( cochain_cat, 3 );;
+gap> C;;
+gap> C_3 := ApplyFunctor( T, C );;
 gap> Display( C^3 );
 [ [  1,  3 ] ]
 
@@ -224,35 +180,10 @@ gap> Display( C_3^0 );
 [ [  -1,  -3 ] ]
 
 A morphism in Category of matrices over Q
-gap> S := UnsignedShiftFunctor( cochain_cat, 3 );
-Unsigned shift (3 times to the left) functor in Category of cochain complexes over 
-Category of matrices over Q
-gap> C_3_unsigned := ApplyFunctor( S, C );
-<A bounded object in Category of cochain complexes over Category of matrices over 
-Q with active lower bound -1 and active upper bound 4>
+gap> S := UnsignedShiftFunctor( cochain_cat, 3 );;
+gap> C_3_unsigned := ApplyFunctor( S, C );;
 gap> Display( C_3_unsigned^0 );
 [ [  1,  3 ] ]
 
 A split monomorphism in Category of matrices over Q
-gap> cochain_cat;
-Category of cochain complexes over Category of matrices over Q
-gap> chain_cat := ChainComplexCategory( matrix_category );
-Category of chain complexes over Category of matrices over Q
-gap> trunc_leq_4 := BrutalTruncationAboveFunctor( cochain_cat, 4 );
-Functor of brutal truncation from above (C -> C^<= 4)
-in Category of cochain complexes over Category of matrices over Q
-gap> trunc_l_4 := BrutalTruncationAboveFunctor( chain_cat, 4 );
-Functor of brutal truncation from above (C -> C_< 4) in
-Category of chain complexes over Category of matrices over Q
-gap> trunc_g_4 := BrutalTruncationBelowFunctor( cochain_cat, 4 );
-Functor of brutal truncation from below (C -> C^> 4) 
-in Category of cochain complexes over Category of matrices over Q
-gap> trunc_geq_4 := BrutalTruncationBelowFunctor( chain_cat, 4 );
-Functor of brutal truncation from below (C -> C_>= 4) in Category of chain \
-complexes over Category of matrices over Q
-gap> ApplyFunctor( trunc_leq_4, C );
-<A bounded object in Category of cochain complexes over Category of matrices over Q \
-with active lower bound 2 and active upper bound 5>
-gap> ApplyFunctor( trunc_g_4, C );
-<A bounded object in Category of cochain complexes over Category of matrices over Q \
-with active lower bound 4 and active upper bound 7>
+

@@ -6,9 +6,7 @@ gap> m := HomalgMatrix( "[ [ 3 ] ]", 1, 1, Z6 );
 <A 1 x 1 matrix over a residue class ring>
 gap> Z2 := AsLeftPresentation( m );
 <An object in Category of left presentations of Z/( 6 )>
-gap> proj_Z2 := ProjectiveResolution( Z2 );
-<A bounded from above object in Category of cochain complexes 
-over Category of left presentations of Z/( 6 ) with active upper bound 1>
+gap> proj_Z2 := ProjectiveResolution( Z2 );;
 gap> Display( proj_Z2^-1 );
 [ [ 3 ] ]
 
