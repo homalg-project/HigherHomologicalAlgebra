@@ -67,52 +67,25 @@ InstallTrueMethod( IsBoundedCochainComplex, IsBoundedChainOrCochainComplex and I
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
 function( cat, diffs, make_assertions, type )
   local C, assertion, f, msg;
-
+  
   C := rec( );
 
   if type = "TheTypeOfChainComplexes" then
 
-     ObjectifyWithAttributes( C, ValueGlobal( type ),
+    ObjectifyWithAttributes( C, ValueGlobal( type ),
                            CatOfComplex, cat,
                            Differentials, diffs );
 
-     if make_assertions then
-#        To Do: Take care of this code!
-#        for assertion in ComplexSingleAssertions do
-#        f := assertion[ 1 ];
-#        msg := assertion[ 2 ];
-#        AddAssertion( diffs, MakeSingleAssertion( C, f, msg ) );
-#        od;
-#        for assertion in ComplexDoubleAssertions do
-#        f := assertion[ 1 ];
-#        msg := assertion[ 2 ];
-#        AddAssertion( diffs, MakeDoubleAssertion( C, f, msg ) );
-#        od;
-     fi;
-
-     Add( ChainComplexCategory( cat ), C );
+    
+    Add( ChainComplexCategory( cat ), C );
 
   elif type = "TheTypeOfCochainComplexes" then
 
-     ObjectifyWithAttributes( C, ValueGlobal( type ),
+    ObjectifyWithAttributes( C, ValueGlobal( type ),
                               CatOfComplex, cat,
                               Differentials, diffs );
-
-     if make_assertions then
-#         This code need to be modified for the case of cochain complexes.
-#         for assertion in ComplexSingleAssertions do
-#         f := assertion[ 1 ];
-#         msg := assertion[ 2 ];
-#         AddAssertion( diffs, MakeSingleAssertion( C, f, msg ) );
-#         od;
-#         for assertion in ComplexDoubleAssertions do
-#         f := assertion[ 1 ];
-#         msg := assertion[ 2 ];
-#         AddAssertion( diffs, MakeDoubleAssertion( C, f, msg ) );
-#         od;
-     fi;
-
-     Add( CochainComplexCategory( cat ), C );
+    
+    Add( CochainComplexCategory( cat ), C );
 
   fi;
 
