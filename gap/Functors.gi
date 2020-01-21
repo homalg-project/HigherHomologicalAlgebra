@@ -270,6 +270,35 @@ end );
 
 ##
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
+    
+    full := DefiningFullSubcategory( collection );
+     
+    iso_1 := IsomorphismFromAlgebroid( collection );
+    
+    algebroid := AsCapCategory( Source( iso_1 ) );
+    
+    iso_2 := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    
+    iso := PostCompose( iso_1, iso_2 );
+    
+    ind_projs := AsCapCategory( Source( iso ) );
+    
+    r := RANDOM_TEXT_ATTR( );
+    
+    name := Concatenation( "Isomorphism functor ", r[ 1 ], "from", r[ 2 ],
+              " ", Name( ind_projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( full ) );
+    
+    cell_func := c -> ApplyFunctor( iso, c );
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, ind_projs, full, cell_func, cell_func );
+    
+end );
+
+##
+InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
     local A, A_op, full, quiver_op, nr_vertices, basis, projs, r, name, object_func, morphism_func;
