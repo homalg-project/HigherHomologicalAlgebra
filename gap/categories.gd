@@ -147,25 +147,6 @@ DeclareGlobalFunction( "ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE" );
 
 DeclareOperation( "DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS", [ IsChainComplex, IsChainComplex ] );
 
-# DeclareProperty( "HasEnoughProjectives", IsCapCategory );
-# DeclareProperty( "HasEnoughInjectives", IsCapCategory );
-
-
-# THIS IS TEMPORARILY, IT SHOULD BE INTRODUCED IN CONTEXT OF K OR R-LINEAR CATEGORIES AS IN QUIVERS.
-DeclareOperation( "GeneratorsOfExternalHom", [ IsCapCategoryObject, IsCapCategoryObject ] );
-
-DeclareOperation( "AddGeneratorsOfExternalHom",
-                   [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddGeneratorsOfExternalHom",
-                   [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddGeneratorsOfExternalHom",
-                   [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddGeneratorsOfExternalHom",
-                   [ IsCapCategory, IsList ] );
-
 if not IsBound( RANDOM_TEXT_ATTR ) then
   
   ##
