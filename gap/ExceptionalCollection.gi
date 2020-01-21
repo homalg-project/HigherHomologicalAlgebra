@@ -42,8 +42,19 @@ BindGlobal( "TheTypeExceptionalCollection",
 
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
-  function( full )
-    local L, collection, n;
+  function( arg )
+    local full, cache, L, collection, n; 
+    full := arg[ 1 ];
+    
+    if Size( arg ) = 1 then
+      
+      cache := "weak";
+      
+    else
+      
+      cache := arg[ 2 ];
+      
+    fi;
     
     if HasExceptionalCollection( full ) then
       
@@ -55,7 +66,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
       
       full := FullSubcategoryGeneratedByListOfObjects( full );
       
-      SetCachingOfCategoryCrisp( full );
+      SetCachingOfCategory( full, cache );
      
     fi;
     
