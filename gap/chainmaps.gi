@@ -311,7 +311,7 @@ InstallMethod( ViewObj,
     if IsBoundedChainOrCochainMorphism( phi ) then
       
       Print(
-        "<A bounded morphism in ", 
+        "<A morphism in ", 
         Name( CapCategory( phi ) ),
         " with active lower bound ",
         ActiveLowerBound( phi ),
@@ -322,7 +322,7 @@ InstallMethod( ViewObj,
     elif IsBoundedBelowChainOrCochainMorphism( phi ) then
       
       Print(
-        "<A bounded from below morphism in ",
+        "<A morphism in ",
         Name( CapCategory( phi ) ),
         " with active lower bound ",
         ActiveLowerBound( phi ), ">" 
@@ -331,7 +331,7 @@ InstallMethod( ViewObj,
     elif IsBoundedAboveChainOrCochainMorphism( phi ) then
       
       Print(
-        "<A bounded from above morphism in ",
+        "<A morphism in ",
         Name( CapCategory( phi ) ),
         " with active upper bound ",
         ActiveUpperBound( phi ), ">"
