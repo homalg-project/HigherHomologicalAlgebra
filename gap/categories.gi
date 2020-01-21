@@ -58,11 +58,13 @@ KeyDependentOperation( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY", IsCapCategory, IsInt
 InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             [ IsCapCategory, IsInt ],
   function( cat, shift_index )
-    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache, chains_range_cat;
+    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache, chains_range_cat, r;
+    
+    r := RANDOM_TEXT_ATTR( );
     
     if shift_index = -1 then 
       
-      name := Concatenation( "Category of chain complexes over ", Name( cat ) );
+      name := Concatenation( r[ 1 ], "Chain complexes( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
       
       complex_cat := CreateCapCategory( name );
       
@@ -75,7 +77,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       
     elif shift_index = 1 then
       
-      name := Concatenation( "Category of cochain complexes over ", Name( cat ) );
+      name := Concatenation( r[ 1 ], "Cochain complexes( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
       
       complex_cat := CreateCapCategory( name );
       
