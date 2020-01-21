@@ -12,6 +12,8 @@ list_of_operations := [
                         "IsZeroForObjects"
                       ];
 
+DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
+DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
@@ -23,25 +25,19 @@ o := TwistedGradedFreeModule( S, 0 );
 BB := BeilinsonFunctor( S );
 
 homotopy_C := AsCapCategory( Range( BB ) );
-DisableSanityChecks( homotopy_C );
 DeactivateCachingOfCategory( homotopy_C );
-CapCategorySwitchLogicOff( homotopy_C );
 
 chains_C := UnderlyingCapCategory( homotopy_C );
-DisableSanityChecks( chains_C );
 DeactivateCachingOfCategory( chains_C );
-CapCategorySwitchLogicOff( chains_C );
 
 C := DefiningCategory( homotopy_C );
-DisableSanityChecks( C );
-#DeactivateCachingOfCategory( C );
-CapCategorySwitchLogicOff( C );
+DeactivateCachingOfCategory( C );
 
 indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
 DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
 
-L := List( [ -3, -2, -1 ], i -> ApplyFunctor( BB, o[ i ] ) );
+L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
 collection := CreateExceptionalCollection( L );
 
 HH := HomFunctorByExceptionalCollection( collection );
@@ -49,24 +45,18 @@ HP := RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects( collect
 homotopy_HH := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_C ), ExtendFunctorToHomotopyCategories( HP ) );
 
 D := AsCapCategory( Range( HH ) );
-DisableSanityChecks( D );
 DeactivateCachingOfCategory( D );
-CapCategorySwitchLogicOff( D );
 
 homotopy_D := HomotopyCategory( D );
-DisableSanityChecks( homotopy_D );
 DeactivateCachingOfCategory( homotopy_D );
-CapCategorySwitchLogicOff( homotopy_D );
 
 chains_D := UnderlyingCapCategory( homotopy_D );
-DisableSanityChecks( chains_D );
 DeactivateCachingOfCategory( chains_D );
-CapCategorySwitchLogicOff( chains_D );
 
 
 TT := TensorFunctorByExceptionalCollection( collection );
 TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
-b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 4 ) / homotopy_C;
+b := RANDOM_CHAIN_COMPLEX( chains_C, -2, 1, 3 ) / homotopy_C;
 
