@@ -1,4 +1,4 @@
-BindGlobal( "DISABLE_ALL_SANITY_CHECKS_AND_LOGIC", [ false ] );
+BindGlobal( "DISABLE_ALL_SANITY_CHECKS_AND_LOGIC", [ false, false ] );
 
 ##
 InstallGlobalFunction( Time,
@@ -86,13 +86,14 @@ InstallMethod( Finalize,
     
     if DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] = false then
       return;
+    else
+      DisableSanityChecks( category );
     fi;
     
-    DisableSanityChecks( category );
-    CapCategorySwitchLogicOff( category );
-    
-    if category!.default_cache_type = "weak" then
-      DeactivateCachingOfCategory( category );
+    if DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] = false then
+      return;
+    else
+      CapCategorySwitchLogicOff( category );
     fi;
     
 end, 5000 );
