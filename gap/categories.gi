@@ -47,1616 +47,820 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATE
 KeyDependentOperation( "CHAIN_OR_COCHAIN_COMPLEX_CATEGORY", IsCapCategory, IsInt, ReturnTrue );
 
 InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
-            [ IsCapCategory, IsInt ],
-  function( cat, shift_index )
-    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, morphisms_equality_for_cache, chains_range_cat, r;
-    
-    r := RANDOM_TEXT_ATTR( );
-    
-    if shift_index = -1 then 
-      
-      name := Concatenation( r[ 1 ], "Chain complexes( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
-      
-      complex_cat := CreateCapCategory( name );
-      
-      SetFilterObj( complex_cat, IsChainComplexCategory );
-      
-      complex_constructor := ChainComplex;
-      
-      morphism_constructor := ChainMorphism;
-      
-      
+          [ IsCapCategory, IsInt ],
+  function ( cat, shift_index )
+    local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, 
+    morphisms_equality_for_cache, chains_range_cat, r;
+    r := RANDOM_TEXT_ATTR(  );
+    if shift_index = -1 then
+        name := Concatenation( r[1], "Chain complexes( ", r[2], Name( cat ), r[1], " )", r[2] );
+        complex_cat := CreateCapCategory( name );
+        SetFilterObj( complex_cat, IsChainComplexCategory );
+        complex_constructor := ChainComplex;
+        morphism_constructor := ChainMorphism;
     elif shift_index = 1 then
-      
-      name := Concatenation( r[ 1 ], "Cochain complexes( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
-      
-      complex_cat := CreateCapCategory( name );
-      
-      SetFilterObj( complex_cat, IsCochainComplexCategory );
-      
-      complex_constructor := CochainComplex;
-      
-      morphism_constructor := CochainMorphism;
-      
+        name := Concatenation( r[1], "Cochain complexes( ", r[2], Name( cat ), r[1], " )", r[2] );
+        complex_cat := CreateCapCategory( name );
+        SetFilterObj( complex_cat, IsCochainComplexCategory );
+        complex_constructor := CochainComplex;
+        morphism_constructor := CochainMorphism;
     fi;
-    
     SetUnderlyingCategory( complex_cat, cat );
-    
     if HasIsAbCategory( cat ) and IsAbCategory( cat ) then
-      
-      SetIsAbCategory( complex_cat, true );
-      
+        SetIsAbCategory( complex_cat, true );
     fi;
-    
     if HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) then
-      
-      SetIsAdditiveCategory( complex_cat, true );
-    
+        SetIsAdditiveCategory( complex_cat, true );
     fi;
-    
     if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) then
-      
-      SetIsAbelianCategory( complex_cat, true );
-    
+        SetIsAbelianCategory( complex_cat, true );
     fi;
-    
-    if HasIsLinearCategoryOverCommutativeRing( cat ) and
-        HasCommutativeRingOfLinearCategory( cat ) then
-        
+    if HasIsLinearCategoryOverCommutativeRing( cat ) and HasCommutativeRingOfLinearCategory( cat ) then
         SetIsLinearCategoryOverCommutativeRing( complex_cat, IsLinearCategoryOverCommutativeRing( cat ) );
-        
         SetCommutativeRingOfLinearCategory( complex_cat, CommutativeRingOfLinearCategory( cat ) );
-    
     fi;
-    
     if HasIsStrictMonoidalCategory( cat ) and IsStrictMonoidalCategory( cat ) then
-      
-      SetIsStrictMonoidalCategory( complex_cat, true );
-    
+        SetIsStrictMonoidalCategory( complex_cat, true );
     fi;
-    
     if HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) then
-      
-      SetIsMonoidalCategory( complex_cat, true );
-    
+        SetIsMonoidalCategory( complex_cat, true );
     fi;
-    
     if HasIsBraidedMonoidalCategory( cat ) and IsBraidedMonoidalCategory( cat ) then
-      
-      SetIsBraidedMonoidalCategory( complex_cat, true );
-    
+        SetIsBraidedMonoidalCategory( complex_cat, true );
     fi;
-    
     if HasIsSymmetricMonoidalCategory( cat ) and IsSymmetricMonoidalCategory( cat ) then
-      
-      SetIsSymmetricMonoidalCategory( complex_cat, true );
-    
+        SetIsSymmetricMonoidalCategory( complex_cat, true );
     fi;
-    
     if HasIsSymmetricClosedMonoidalCategory( cat ) and IsSymmetricClosedMonoidalCategory( cat ) then
-      
-      SetIsSymmetricClosedMonoidalCategory( complex_cat, true );
-    
+        SetIsSymmetricClosedMonoidalCategory( complex_cat, true );
     fi;
-    
-    ##
     objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
-     
     if objects_equality_for_cache in [ 1, fail ] then
-      
-      Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for objects in ", Name( complex_cat ) );
-      
-      AddIsEqualForCacheForObjects( complex_cat,
-        function( C1, C2 )
-          
-          return IsIdenticalObj( C1, C2 );
-          
-      end );
-      
+        Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for objects in ", Name( complex_cat ) );
+        AddIsEqualForCacheForObjects( complex_cat, function ( C1, C2 )
+              return IsIdenticalObj( C1, C2 );
+          end );
     elif objects_equality_for_cache in [ 2 ] then
-      
-      AddIsEqualForCacheForObjects( complex_cat,
-        function( C1, C2 )
-          local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
-          
-          if IsIdenticalObj( C1, C2 ) then 
-          
-            return true;
-          
-          fi;
-          
-          if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
-          
-            return false;
-          
-          fi;
-          
-          computed_objects_1 := ComputedObjectAts( C1 );
-          
-          computed_objects_2 := ComputedObjectAts( C2 );
-          
-          indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
-          
-          indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
-          
-          indices := Intersection( indices_1, indices_2 );
-          
-          for i in indices do
-            
-            if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
-              
-              return false;
-            
-            fi;
-          
-          od;
-          
-          l := Minimum( ActiveLowerBound( C1 ) + 1, ActiveLowerBound( C2 ) + 1 );
-          
-          u := Maximum( ActiveUpperBound( C1 ) - 1, ActiveUpperBound( C2 ) - 1 );
-          
-          lu := [ l .. u ];
-          
-          SubtractSet( lu, indices );
-          
-          if lu = [ ] then
-            
-            return true;
-            
-          fi;
-          
-          # They still may be equal but I don't want to compute components when comparing in Cache.
-          return false;
-        
-      end );
-      
-    else
-      
-      Error( "ObjectsEqualityForCache option can not be interpreted!" );
-      
-    fi;
-    
-    morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
-    
-    if morphisms_equality_for_cache in [ fail, 1 ] then
-      
-      Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for morphisms in ", Name( complex_cat ) );
-      
-      AddIsEqualForCacheForMorphisms( complex_cat,
-        function( m1, m2 )
-          
-          return IsIdenticalObj( m1, m2 );
-          
-      end );
-    
-    elif morphisms_equality_for_cache in [ 2 ] then
-      
-      AddIsEqualForCacheForMorphisms( complex_cat,
-        function( m1, m2 )
-          local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
-          
-          if IsIdenticalObj( m1, m2 ) then 
-            
-            return true;
-          
-          fi;
-          
-          if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
-            
-            return false;
-          
-          fi;
-          
-          if not IsEqualForCacheForObjects( Source( m1 ), Source( m2 ) ) then
-            
-            return false;
-            
-          fi;
-          
-          if not IsEqualForCacheForObjects( Range( m1 ), Range( m2 ) ) then
-            
-            return false;
-            
-          fi;
-          
-          computed_morphisms_1 := ComputedMorphismAts( m1 );
-          
-          computed_morphisms_2 := ComputedMorphismAts( m2 );
-          
-          indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
-          
-          indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
-          
-          indices := Intersection( indices_1, indices_2 );
-          
-          for i in indices do
-            
-            if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
-              
-              return false;
-            
-            fi;
-          
-          od;
-          
-          l := Minimum( 
-                Minimum( ActiveLowerBound( Source( m1 ) ) + 1, ActiveLowerBound( Range( m1 ) ) + 1 ),
-                Minimum( ActiveLowerBound( Source( m2 ) ) + 1, ActiveLowerBound( Range( m2 ) ) + 1 )
-                );
-          
-          u := Maximum( 
-                Maximum( ActiveUpperBound( Source( m1 ) ) - 1, ActiveUpperBound( Range( m1 ) ) - 1 ),
-                Maximum( ActiveUpperBound( Source( m2 ) ) - 1, ActiveUpperBound( Range( m2 ) ) -1 )
-                );
-          
-          lu := [ l .. u ];
-          
-          SubtractSet( lu, indices );
-          
-          if lu = [ ] then
-            
-            return true;
-            
-          fi;
-          
-          # They still may be equal but I don't want to compute components when comparing in Cache.
-          return false;
-        
-      end );
-      
-    else
-      
-      Error( "MorphismsEqualityForCache option can not be interpreted!" );
-    
-    fi;
-    
-    ##
-    
-    AddIsEqualForObjects( complex_cat, 
-      function( C1, C2 )
-        local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
-        
-        if IsIdenticalObj( C1, C2 ) then 
-          
-          return true;
-        
-        fi;
-        
-        if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
-          
-          Error( "Complexes must be bounded" );
-        
-        fi;
-        
-        computed_objects_1 := ComputedObjectAts( C1 );
-        
-        computed_objects_2 := ComputedObjectAts( C2 );
-        
-        indices_1 := List( [ 1 .. Length( computed_objects_1 )/2 ], i -> computed_objects_1[ 2 * i - 1 ] );
-        
-        indices_2 := List( [ 1 .. Length( computed_objects_2 )/2 ], i -> computed_objects_2[ 2 * i - 1 ] );
-        
-        indices := Intersection( indices_1, indices_2 );
-        
-        for i in indices do
-          
-          if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
-            
-            return false;
-          
-          fi;
-        
-        od;
-        
-        l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
-        
-        u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
-        
-        lu := [ l .. u ];
-        
-        SubtractSet( lu, indices );
-        
-        for i in lu do
-          
-          if not IsEqualForObjects( C1[ i ], C2[ i ] ) or not IsEqualForMorphismsOnMor( C1^i, C2^i ) then
-            
-            return false;
-          
-          fi;
-        
-        od;
-        
-        return true;
-    
-    end );
-    
-    AddIsEqualForMorphisms( complex_cat, 
-      function( m1, m2 )
-        local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
-        
-        if IsIdenticalObj( m1, m2 ) then 
-          
-          return true;
-        
-        fi;
-        
-        if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
-          
-          return false;
-          
-        fi;
-        
-        if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
-          
-          return false;
-          
-        fi;
-        
-        if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
-          
-          Error( "Complex morphisms must be bounded" );
-        
-        fi;
-        
-        computed_morphisms_1 := ComputedMorphismAts( m1 );
-        
-        computed_morphisms_2 := ComputedMorphismAts( m2 );
-        
-        indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
-        
-        indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
-        
-        indices := Intersection( indices_1, indices_2 );
-        
-        for i in indices do
-          
-          if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
-            
-            return false;
-          
-          fi;
-        
-        od;
-        
-        l := Minimum( 
-              Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
-              Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
-              );
-        
-        u := Maximum( 
-              Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
-              Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
-              );
-        
-        lu := [ l .. u ];
-        
-        SubtractSet( lu, indices );
-        
-        for i in lu do
-        
-          if not IsEqualForMorphisms( m1[ i ], m2[ i ] ) then
-            
-            return false;
-          
-          fi;
-        
-        od;
-        
-        return true;
-        
-    end );
-    
-    AddIsCongruentForMorphisms( complex_cat, 
-      function( m1, m2 )
-        local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
-        
-        if IsIdenticalObj( m1, m2 ) then 
-          
-          return true;
-        
-        fi;
-        
-        if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
-          
-          Error( "Complex morphisms must be bounded" );
-        
-        fi;
-        
-        if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
-          
-          return false;
-          
-        fi;
-        
-        if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
-          
-          return false;
-          
-        fi;
- 
-        computed_morphisms_1 := ComputedMorphismAts( m1 );
-
-        computed_morphisms_2 := ComputedMorphismAts( m2 );
-
-        indices_1 := List( [ 1 .. Length( computed_morphisms_1 )/2 ], i -> computed_morphisms_1[ 2 * i - 1 ] );
-        
-        indices_2 := List( [ 1 .. Length( computed_morphisms_2 )/2 ], i -> computed_morphisms_2[ 2 * i - 1 ] );
-
-        indices := Intersection( indices_1, indices_2 );
-
-        for i in indices do
-          
-          if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
-            
-            return false;
-          
-          fi;
-
-        od;
-
-        l := Minimum( 
-              Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
-              Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
-              );
-        
-        u := Maximum( 
-              Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
-              Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
-              );
-         
-        lu := [ l .. u ];
-        
-        SubtractSet( lu, indices );
-
-        for i in lu do
-        
-          if not IsCongruentForMorphisms( m1[ i ], m2[ i ] ) then
-            
-            return false;
-          
-          fi;
-        
-        od;
-        
-        return true;
-        
-    end );
-    
-    ##
-    if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
-      
-      AddIsWellDefinedForObjects( complex_cat,
-          function( C )
-            
-            if not IsBoundedChainOrCochainComplex( C ) then
-              
-              Error( "The complex must be bounded" );
-            
-            else
-              
-              return IsWellDefined( C, ActiveLowerBound( C  ), ActiveUpperBound( C ) );
-            
-            fi;
-            
-          end );
-    fi;
-    ##
-    if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
-      
-      AddIsWellDefinedForMorphisms( complex_cat,
-          
-          function( phi )
-              
-              if not IsBoundedChainOrCochainMorphism( phi ) then
-                
-                Error( "The morphism must be bounded" );
-                
-              else
-                
-                return IsWellDefined( phi, ActiveLowerBound( phi  ), ActiveUpperBound( phi ) );
-                
+        AddIsEqualForCacheForObjects( complex_cat, function ( C1, C2 )
+              local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
+              if IsIdenticalObj( C1, C2 ) then
+                  return true;
               fi;
-              
-          end );
-    
-    fi;
-    
-    if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then 
-    
-      if CanCompute( cat, "ZeroObject" ) then
-          AddZeroObject( complex_cat, 
-              function( )
-              local C;
-              
-              C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
-              
-              SetUpperBound( C, 0 );
-              
-              SetLowerBound( C, 0 );
-              
-              return C;
-              
-              end );
-      fi;
-      
-      if CanCompute( cat, "IsZeroForObjects" ) then
-          
-          AddIsZeroForObjects( complex_cat, 
-              function( C )
-              local obj, i;
-              
-              if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then 
-                  
-                  Error( "The complex must have lower and upper bounds" );
-              
-              fi;
-              
-              for obj in ComputedObjectAts( C ) do
-                  
-                  if IsCapCategoryObject( obj ) and not IsZeroForObjects( obj ) then
-                      
-                      return false;
-                  
-                  fi;
-              
-              od;
-              
-              for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do
-                  
-                  if not IsZeroForObjects( C[ i ] ) then 
-                  
-                  SetLowerBound( C, i - 1 );
-                  
+              if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
                   return false;
-                  
+              fi;
+              computed_objects_1 := ComputedObjectAts( C1 );
+              computed_objects_2 := ComputedObjectAts( C2 );
+              indices_1 := List( [ 1 .. Length( computed_objects_1 ) / 2 ], function ( i )
+                      return computed_objects_1[2 * i - 1];
+                  end );
+              indices_2 := List( [ 1 .. Length( computed_objects_2 ) / 2 ], function ( i )
+                      return computed_objects_2[2 * i - 1];
+                  end );
+              indices := Intersection( indices_1, indices_2 );
+              for i in indices do
+                  if not IsEqualForObjects( C1[i], C2[i] ) or not IsEqualForMorphismsOnMor( C1 ^ i, C2 ^ i ) then
+                      return false;
                   fi;
-              
               od;
-              
-              return true;
-              
-              end );
-      
-      fi;
-      
-      if CanCompute( cat, "ZeroMorphism" ) then
-          
-          AddZeroMorphism( complex_cat, function( C1, C2 )
-              local morphisms;
-              
-              morphisms := MapLazy( [ Objects( C1 ), Objects( C2 ) ], ZeroMorphism, 2 );
-              
-              morphisms := morphism_constructor( C1, C2, morphisms );
-              
-              SetUpperBound( morphisms, 0 );
-              
-              SetLowerBound( morphisms, 0 );
-              
-              return morphisms;
-          
-          end );
-      
-      fi;
-      
-      if CanCompute( cat, "IsZeroForMorphisms" ) then
-        
-        AddIsZeroForMorphisms( complex_cat, 
-          function( phi )
-            local mor, i;
-            
-            if not HasActiveLowerBound( phi ) or not HasActiveUpperBound( phi ) then
-              
-              Error( "The morphism must have lower and upper bounds" );
-            
-            fi;
-            
-            for mor in ComputedMorphismAts( phi ) do
-              
-              if IsCapCategoryMorphism( mor ) and not IsZeroForMorphisms( mor ) then
-                
-                return false;
-                
+              l := Minimum( ActiveLowerBound( C1 ) + 1, ActiveLowerBound( C2 ) + 1 );
+              u := Maximum( ActiveUpperBound( C1 ) - 1, ActiveUpperBound( C2 ) - 1 );
+              lu := [ l .. u ];
+              SubtractSet( lu, indices );
+              if lu = [  ] then
+                  return true;
               fi;
-            
-            od;
-            
-            for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
-              
-              if IsZeroForMorphisms( phi[ i ] ) then
-                 
-                SetLowerBound( phi, i );
-              
-              else
-                
-                return false;
-              
-              fi;
-            
-            od;
-            
-            return true;
-          
-          end );
-      
-      fi;
-      
-      if CanCompute( cat, "AdditionForMorphisms" ) then
-        
-        AddAdditionForMorphisms( complex_cat, 
-          function( m1, m2 )
-          local phi;
-          
-          phi:= morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ],AdditionForMorphisms, 2 ));
-          
-          AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAU_BOUND", true ],  [ m2, "HAS_FAU_BOUND", true ] ], 
-
-                          function( )
-
-                            if not HasFAU_BOUND( phi ) then 
-
-                              SetUpperBound( phi, Minimum( FAU_BOUND( m1 ), FAU_BOUND( m2 ) ) );
-
-                            fi;
-
-                          end ) );
-          
-          AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAL_BOUND", true ],  [ m2, "HAS_FAL_BOUND", true ] ], 
-
-                          function( )
-
-                            if not HasFAL_BOUND( phi ) then 
-
-                              SetLowerBound( phi, Maximum( FAL_BOUND( m1 ), FAL_BOUND( m2 ) ) );
-
-                            fi;
-
-                          end ) );
-          return phi;
-
-          end );
-
-      fi;
-
-      if CanCompute( cat, "AdditiveInverseForMorphisms" ) then
-
-        AddAdditiveInverseForMorphisms( complex_cat, 
-
-          function( m )
-
-            local phi;
-
-            phi := morphism_constructor( Source( m ), Range( m ), MapLazy( Morphisms( m ), AdditiveInverseForMorphisms, 1 ) );
-
-            TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
-
-            return phi;
-
-          end );
-
-      fi;
-
-      
-
-      if CanCompute( cat, "PreCompose" ) then
-
-        AddPreCompose( complex_cat, 
-
-          function( m1, m2 )
-
-            local phi;
-
-            phi := morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose, 2 ) );
-
-            TODO_LIST_TO_PUSH_BOUNDS( m1, phi );
-
-            TODO_LIST_TO_PUSH_BOUNDS( m2, phi );
-
-            return phi;
-
-          end );
-
-      fi;
-
-      
-      if CanCompute( cat, "IdentityMorphism" ) then
-
-             AddIdentityMorphism( complex_cat, 
-
-                  function( C )
-
-                  return morphism_constructor( C, C, MapLazy( Objects( C ), IdentityMorphism, 1 ) );
-
-                  end );
-
-      fi;
-
-      if CanCompute( cat, "InverseImmutable" ) then
-
-              AddInverse( complex_cat, 
-
-                  function( m )
-
-                  local phi;
-
-                  phi := morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse, 1 ) );
-
-                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
-
-                  return phi;
-
-                  end );
-
-      fi;
-
-      
-      if CanCompute( cat, "LiftAlongMonomorphism" ) then
-
-              AddLiftAlongMonomorphism( complex_cat, 
-
-                  function( mono, test )
-
-                  local morphisms;
-
-                  morphisms := MapLazy( [ Morphisms( mono ), Morphisms( test ) ], LiftAlongMonomorphism, 2 );
-
-                  return morphism_constructor( Source( test ), Source( mono ), morphisms );
-
-                  end );
-
-      fi;
-
-      if CanCompute( cat, "ColiftAlongEpimorphism" ) then
-
-              AddColiftAlongEpimorphism( complex_cat, 
-
-                  function( epi, test )
-
-                  local morphisms;
-
-                  morphisms := MapLazy( [ Morphisms( epi ), Morphisms( test ) ], ColiftAlongEpimorphism, 2 );
-
-                  return morphism_constructor( Range( epi ), Range( test ), morphisms );
-
-                  end );
-
-      fi;
-
-      if CanCompute( cat, "DirectSum" ) then
-
-              AddDirectSum( complex_cat, 
-
-                  function( L )
-
-                  local diffs, complex, u, l;
-
-                  diffs := MapLazy( List( L, Differentials ), DirectSumFunctorial, 1 );
-
-                  complex := complex_constructor( cat, diffs );
-
-                  u := List( L, i-> [ i, "HAS_FAU_BOUND", true ] );
-
-                  AddToToDoList( ToDoListEntry( u, 
-
-                          function( )
-
-                          local b;
-
-                          b := Maximum( List( L, i-> ActiveUpperBound( i ) ) );
-
-                          SetUpperBound( complex, b );
-
-                          end ) );
-
-                  l := List( L, i-> [ i, "HAS_FAL_BOUND", true ] ); 
-
-                  AddToToDoList( ToDoListEntry( l, 
-
-                          function( )
-
-                          local b;
-
-                          b := Minimum( List( L, i-> ActiveLowerBound( i ) ) );
-
-                          SetLowerBound( complex, b );
-
-                          end ) );
-
-                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], 
-
-                          function( )
-
-                          local i;
-
-                          for i in L do
-
-                          SetUpperBound( i, ActiveUpperBound( complex ) );
-
-                          od;
-
-                          end ) );
-
-                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], 
-
-                          function( )
-
-                          local i;
-
-                          for i in L do
-
-                          SetLowerBound( i, ActiveLowerBound( complex ) );
-
-                          od;
-
-                          end ) );
-
-                  return complex;
-
-                  end );
-
-          fi;
-
-          if CanCompute( cat, "DirectSumFunctorialWithGivenDirectSums" ) then
-
-              AddDirectSumFunctorialWithGivenDirectSums( complex_cat, 
-
-                  function( source, L, range )
-
-                  local maps, morphism, u, l;
-
-                  maps := MapLazy( List( L, Morphisms ), DirectSumFunctorial, 1 );
-
-                  morphism := morphism_constructor( source, range, maps );
-
-                  u := List( L, i-> [ i, "HAS_FAU_BOUND", true ] ); 
-
-                  AddToToDoList( ToDoListEntry( u, 
-
-                          function( )
-
-                          local b;
-
-                          b := Maximum( List( L, i-> ActiveUpperBound( i ) ) );
-
-                          SetUpperBound( morphism, b );
-
-                          end ) );
-
-                  l := List( L, i-> [ i, "HAS_FAL_BOUND", true ] ); 
-
-                  AddToToDoList( ToDoListEntry( l, 
-
-                          function( )
-
-                          local b;
-
-                          b := Minimum( List( L, i-> ActiveLowerBound( i ) ) );
-
-                          SetLowerBound( morphism, b );
-
-                          end ) );
-
-                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAU_BOUND", true ] ], 
-
-                        function( )
-
-                          local i;
-
-                          for i in L do
-
-                          SetUpperBound( i, ActiveUpperBound( morphism ) );
-
-                          od;
-
-                        end ) );
-
-                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAL_BOUND", true ] ], 
-
-                        function( )
-
-                          local i;
-
-                          for i in L do
-
-                          SetLowerBound( i, ActiveLowerBound( morphism ) );
-
-                          od;
-
-                        end ) );
-
-                  return morphism;
-
-                  end );
-
-          fi;
-
-          if CanCompute( cat, "InjectionOfCofactorOfDirectSum" ) then
-
-              AddInjectionOfCofactorOfDirectSum( complex_cat, 
-
-                          function( L, n )
-
-                          local objects, list, morphisms;
-
-                          objects := CombineZLazy( List( L, Objects ) );
-
-                          morphisms := MapLazy( objects, 
-
-                                  function( l )
-
-                                    return InjectionOfCofactorOfDirectSum( l, n );
-
-                                  end, 1 );
-
-                          return morphism_constructor( L[ n ], DirectSum( L ), morphisms );
-
-                          end );
-
-          fi;
-
-          if CanCompute( cat, "ProjectionInFactorOfDirectSum" ) then
-
-              AddProjectionInFactorOfDirectSum( complex_cat, 
-
-                  function( L, n )
-
-                  local objects, list, morphisms;
-
-                  objects := CombineZLazy( List( L, Objects ) );
-
-                  morphisms := MapLazy( objects, 
-
-                                  function( l )
-
-                                  return ProjectionInFactorOfDirectSum( l, n );
-
-                                  end, 1 );
-
-                  return morphism_constructor( DirectSum( L ), L[ n ], morphisms );
-
-                  end );
-
-          fi;
-
-          
-
-          if CanCompute( cat, "TerminalObject" ) and CanCompute( cat, "TerminalObjectFunctorial" ) then
-
-              AddTerminalObject( complex_cat, 
-
-                  function( )
-
-                  local complex;
-
-                  complex := complex_constructor( cat, RepeatListZ( [ TerminalObjectFunctorial( cat ) ] ) );
-
-                  if HasZeroObject( cat ) and IsEqualForObjects( TerminalObject( cat ), ZeroObject( cat ) ) then
-
-                      SetUpperBound( complex, 0 );
-
-                      SetLowerBound( complex, 0 );
-
-                  fi;
-
-                  return complex;
-
-                  end );
-
-          fi;
-
-          if CanCompute( cat, "UniversalMorphismIntoTerminalObjectWithGivenTerminalObject" ) then
-
-              AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( complex_cat, 
-
-                function( complex, terminal_object )
-
-                  local objects, universal_maps;
-
-                  objects := Objects( complex );
-
-                  universal_maps := MapLazy( objects,  UniversalMorphismIntoTerminalObject, 1 );
-
-                  return morphism_constructor( complex, terminal_object, universal_maps );
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "InitialObject" ) and CanCompute( cat, "InitialObjectFunctorial" ) then
-
-              AddInitialObject( complex_cat, 
-
-                function( )
-
-                  local complex;
-
-                  complex := complex_constructor( cat, RepeatListZ( [ InitialObjectFunctorial( cat ) ] ) );
-
-                  if HasZeroObject( cat ) and IsEqualForObjects( InitialObject( cat ), ZeroObject( cat ) ) then
-
-                      SetUpperBound( complex, 0 );
-
-                      SetLowerBound( complex, 0 );
-
-                  fi;
-
-                  return complex;
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "UniversalMorphismFromInitialObjectWithGivenInitialObject" ) then
-
-              AddUniversalMorphismFromInitialObjectWithGivenInitialObject( complex_cat, 
-
-                function( complex, initial_object )
-
-                  local objects, universal_maps;
-
-                  objects := Objects( complex );
-
-                  universal_maps := MapLazy( objects,  UniversalMorphismFromInitialObject, 1 );
-
-                  return morphism_constructor( initial_object, complex, universal_maps );
-
-                end );
-
-          fi;
-
-    fi;
-
-    if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
-
-          if CanCompute( cat, "KernelEmbedding" ) then
-
-              AddKernelEmbedding( complex_cat, 
-
-                function( phi )
-
-                  local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
-
-                  embeddings := MapLazy( Morphisms( phi ), KernelEmbedding, 1 );
-
-                  kernel_to_next_source := MapLazy( [ embeddings, Differentials( Source( phi ) ) ], PreCompose, 2 );
-
-                  diffs := MapLazy( [ ShiftLazy( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift, 2 );
-
-                  kernel_complex := complex_constructor( cat, diffs );
-
-                  kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
-
-                  TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
-
-                  return kernel_emb;
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "KernelLift" ) then
-
-              AddKernelLift( complex_cat,  
-
-                function( phi, tau )
-
-                  local morphisms, K;
-
-                  K := KernelObject( phi );
-
-                  morphisms := MapLazy( IntegersList, 
-
-                          function( i )
-
-                            return KernelLift( phi[ i ], tau[ i ] );
-
-                          end, 1 );
-
-                  return morphism_constructor( Source( tau ), K, morphisms );
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "KernelLiftWithGivenKernelObject" ) then
-
-              AddKernelLiftWithGivenKernelObject( complex_cat, 
-
-                function( phi, tau, K )
-
-                  local morphisms;
-
-                  morphisms := MapLazy( IntegersList, 
-
-                          function( i )
-
-                          return KernelLift( phi[ i ], tau[ i ] );
-
-                          end, 1 );
-
-                  return morphism_constructor( Source( tau ), K, morphisms );
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "CokernelProjection" ) then
-
-              AddCokernelProjection( complex_cat, 
-
-                function( phi )
-
-                  local   projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
-
-                  projections := MapLazy( Morphisms( phi ), CokernelProjection, 1 );
-
-                  range_to_next_cokernel := MapLazy( [ Differentials( Range( phi ) ), ShiftLazy( projections, shift_index ) ], PreCompose, 2 );
-
-                  diffs := MapLazy( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift, 2 );
-
-                  cokernel_complex := complex_constructor( cat, diffs );
-
-                  cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
-
-                  TODO_LIST_TO_PUSH_BOUNDS( Range( phi ), cokernel_complex );
-
-                  return cokernel_proj;
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "CokernelColift" ) then
-
-              AddCokernelColift( complex_cat,  
-
-                function( phi, tau )
-
-                  local morphisms, K;
-
-                  K := CokernelObject( phi );
-
-                  morphisms := MapLazy( IntegersList, 
-
-                          function( i )
-
-                            return CokernelColift( phi[ i ], tau[ i ] );
-
-                          end, 1 );
-
-                  return morphism_constructor( K, Range( tau ), morphisms );
-
-                end );
-
-          fi;
-
-          if CanCompute( cat, "CokernelColiftWithGivenCokernelObject" ) then
-
-              AddCokernelColiftWithGivenCokernelObject( complex_cat, 
-
-                  function( phi, tau, K )
-
-                  local morphisms;
-
-                  morphisms := MapLazy( IntegersList, 
-
-                          function( i )
-
-                            return CokernelColift( phi[ i ], tau[ i ] );
-
-                          end, 1 );
-
-                  return morphism_constructor( K, Range( tau ), morphisms );
-
-                  end );
-
-          fi;
-
-    fi;
-  
-    # This monoidal structure is yet only for chain complex categories ( shift_index = -1 )
-    #
-    if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
-      
-      ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
-      
-      ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
-      
-      ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
-      
-      ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
-      
-      ADD_TENSOR_UNIT_CHAIN( complex_cat );
-      
-      if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then 
-          
-          ADD_BRAIDING_FOR_CHAINS( complex_cat );
-      
-      fi;
-      
-      if IsSymmetricClosedMonoidalCategory( complex_cat ) then
-        
-        ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
-        
-        ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
-      
-      fi;
-    
-    fi;
-    
-    if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and
-        CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
-      
-      AddIsProjective( complex_cat,
-        
-        function( C )
-          
-          local i;
-          
-          if not IsBoundedChainOrCochainComplex( C ) then 
-            
-            Error( "The complex must be bounded" );
-            
-          fi;
-          
-          if not IsExact( C ) then 
-            
-            return false;
-            
-          fi;
-          
-          for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do 
-            
-            if not IsProjective( C[ i ] ) then
-              
               return false;
-            
-            fi;
-          
-          od;
-          
-          return true;
-        
-        end );
-      
-      AddProjectiveLift( complex_cat,
-        function( phi, pi )
-          
-          local P, H, l, XX; 
-          
-          P := Source( phi );
-          
-          XX := Source( pi );
-          
-          H := MapLazy( IntegersList,
-            
-            function( i )
-              local id, m, n; 
-              
-              id := IdentityMorphism( P );
-              
-              if i <= ActiveLowerBound( P ) then 
-                
-                return ZeroMorphism( P[ i ], P[ i + 1 ] );
-              
-              elif i = ActiveLowerBound( P ) + 1 then 
-                
-                return ProjectiveLift( id[ i ], P^(i+1) );
-              
-              fi;
-              
-              m := KernelLift( P^i, id[ i ] - PreCompose( P^i, H[ i - 1 ] ) );
-              
-              n := PreCompose( CoastrictionToImage( P^(i+1) ), KernelLift( P^i, ImageEmbedding( P^(i+1) ) ) );
-              
-              return ProjectiveLift( m, n );
-              
-            end, 1 );
-                                      
-          l := MapLazy( IntegersList, 
-              function( i )
-                
-                return PreCompose( [ H[ i ], ProjectiveLift( phi[ i + 1 ], pi[ i + 1 ] ), XX^(i+1) ] )
-                        + PreCompose( [ P^i,  H[ i -1 ], ProjectiveLift( phi[ i ], pi[ i ] ) ] );
-              
-              end, 1 );
-              
-          return ChainMorphism( P, XX, l );
-          
-        end );
-        
-    fi;
-    
-    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
-        
-        HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = -1 then
-        
-        AddLift( complex_cat,
-          function( alpha, beta )
-            local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_P_N, internal_hom_id_P_beta, k_internal_hom_id_P_beta_0, alpha_1, lift;
-            cat := CapCategory( alpha );
-            
-            U := TensorUnit( cat );
-            
-            P := Source( alpha );
-            
-            N := Range( alpha );
-            
-            M := Source( beta );
-            
-            alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
-            
-            beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
-            
-            internal_hom_id_P_beta := InternalHomOnMorphisms( IdentityMorphism( P ), beta );
-            
-            internal_hom_P_M := Source( internal_hom_id_P_beta );
-            
-            internal_hom_P_N := Range( internal_hom_id_P_beta );
-            
-            k_internal_hom_id_P_beta_0 := KernelLift( internal_hom_P_N^0,
-              
-            PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_id_P_beta[ 0 ]  ) );
-            
-            alpha_1 := KernelLift( internal_hom_P_N^0, alpha_[0] );
-            
-            lift := Lift( alpha_1, k_internal_hom_id_P_beta_0 );
-            
-            if lift = fail then
-              
-              return fail;
-              
-            else
-              
-              lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
-              
-              return InternalHomToTensorProductAdjunctionMap( P, M, lift );
-            
-            fi;
-          
           end );
-        
-        AddColift( complex_cat,
-            
-          function( alpha, beta )
-            local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_N_M, internal_hom_alpha_id_M, k_internal_hom_alpha_id_M_0, beta_1, lift;
-            
-            cat := CapCategory( alpha );
-            
-            U := TensorUnit( cat );
-            
-            P := Range( alpha );
-            
-            N := Source( alpha );
-            
-            M := Range( beta );
-            
-            alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
-            
-            beta_  := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
-            
-            internal_hom_alpha_id_M := InternalHomOnMorphisms( alpha, IdentityMorphism( M ) );
-            
-            internal_hom_P_M := Source( internal_hom_alpha_id_M );
-            
-            internal_hom_N_M := Range( internal_hom_alpha_id_M );
-            
-            k_internal_hom_alpha_id_M_0 := KernelLift( internal_hom_N_M^0,
-            
-            PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_alpha_id_M[ 0 ]  ) );
-            
-            beta_1 := KernelLift( internal_hom_N_M^0, beta_[0] );
-            
-            lift := Lift( beta_1, k_internal_hom_alpha_id_M_0 );
-            
-            if lift = fail then
-              
-              return fail;
-              
-            else
-              
-              lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
-              
-              return InternalHomToTensorProductAdjunctionMap( P, M, lift );
-              
-            fi;
-          
-          end );
-      
-    fi;
-    
-    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and 
-        HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and  shift_index = 1 then
-        
-        AddLift( complex_cat,
-          function( alpha, beta )
-            
-            local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
-            
-            cat := UnderlyingCategory( complex_cat );
-            
-            chains_cat := ChainComplexCategory( cat );
-            
-            cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
-            
-            chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
-            
-            l := Lift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
-            
-            if l = fail then
-              
-              return fail;
-            
-            else
-              
-              return ApplyFunctor( chains_to_cochains, l );
-            
-            fi;
-          
-          end );
-        
-        AddColift( complex_cat,
-            
-          function( alpha, beta )
-            
-            local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
-            
-            cat := UnderlyingCategory( complex_cat );
-            
-            chains_cat := ChainComplexCategory( cat );
-            
-            cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
-            
-            chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
-            
-            l := Colift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
-            
-            if l = fail then
-              
-              return fail;
-              
-            else
-              
-              return ApplyFunctor( chains_to_cochains, l );
-            
-            fi;
-            
-          end );
-    
-    fi;
-    
-    if shift_index = -1 and
-       CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
-         CanCompute( cat, "HomomorphismStructureOnObjects" ) and
-           CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
-             CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and
-               CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
-                 CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) and
-                   HasRangeCategoryOfHomomorphismStructure( cat ) then
-                  
-                  range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
-                  
-                  if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
-                    
-                    SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
-                  
-                  elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and
-                        ( ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) or 
-                            ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc ) ) then
-                        
-                    SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat_of_hom_struc ) );
-                    
-                  else
-                    
-                    if IsIdenticalObj( range_cat_of_hom_struc, cat ) then
-                      
-                      SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
-                    
-                    else
-                      
-                      chains_range_cat := ChainComplexCategory( range_cat_of_hom_struc );
-                      
-                      if not HasIsFinalized( chains_range_cat ) then
-                        
-                        Info( InfoWarning, 2, "For some reason the category", Name( chains_range_cat ), " has not been finalized!\n" );
-                        
-                        Finalize( chains_range_cat );
-                        
-                      fi;
-                      
-                      SetRangeCategoryOfHomomorphismStructure( complex_cat, chains_range_cat );
-                    
-                    fi;
-                  
-                  fi;
-                  
-                  ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE( complex_cat );
-                  
-                  ADD_HOM_STRUCTURE_ON_CHAINS( complex_cat );
-                  
-                  ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS( complex_cat );
-                  
-                  ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE( complex_cat );
-                  
-                  ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
-    
-    fi;
-    
-    if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
-      
-      AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat,
-        function( r, phi )
-          local mors;
-          
-          mors := Morphisms( phi );
-          
-          mors := MapLazy( mors, m -> MultiplyWithElementOfCommutativeRingForMorphisms( r, m ), 1 );
-          
-          return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors ); 
-          
-      end );
-      
-    fi;
-    
-    if CanCompute( cat, "IsIsomorphism" ) then
-    
-      AddIsIsomorphism( complex_cat,
-        function( phi )
-          local u, v;
-          
-          if not IsBoundedChainOrCochainMorphism( phi ) then
-            
-            Error( "The morphism should be bounded" );
-            
-          fi;
-          
-          u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
-          
-          v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
-          
-          return ForAll( [ u .. v ], i -> IsIsomorphism( phi[ i ] ) );
-          
-      end );
-    
-    fi;
-    
-    if CanCompute( cat, "InverseImmutable" ) then
-    
-      AddInverseImmutable( complex_cat,
-        function( phi )
-          local u, v, list_of_inverses;
-          
-          if not IsBoundedChainOrCochainMorphism( phi ) then
-            
-            Error( "The morphism should be bounded" );
-            
-          fi;
-          
-          u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
-          
-          v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
-          
-          list_of_inverses := List( [ u .. v ], i -> Inverse( phi[ i ] ) );
-          
-          return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST" )( Range( phi ), Source( phi ), list_of_inverses, u );
-          
-      end );
-    
-    fi;
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
-    if to_be_finalized = false then
-      
-      return complex_cat;
-    
     else
-      
-      Finalize( complex_cat );
-    
+        Error( "ObjectsEqualityForCache option can not be interpreted!" );
     fi;
-    
+    morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
+    if morphisms_equality_for_cache in [ fail, 1 ] then
+        Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for morphisms in ", Name( complex_cat ) );
+        AddIsEqualForCacheForMorphisms( complex_cat, function ( m1, m2 )
+              return IsIdenticalObj( m1, m2 );
+          end );
+    elif morphisms_equality_for_cache in [ 2 ] then
+        AddIsEqualForCacheForMorphisms( complex_cat, function ( m1, m2 )
+              local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
+              if IsIdenticalObj( m1, m2 ) then
+                  return true;
+              fi;
+              if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+                  return false;
+              fi;
+              if not IsEqualForCacheForObjects( Source( m1 ), Source( m2 ) ) then
+                  return false;
+              fi;
+              if not IsEqualForCacheForObjects( Range( m1 ), Range( m2 ) ) then
+                  return false;
+              fi;
+              computed_morphisms_1 := ComputedMorphismAts( m1 );
+              computed_morphisms_2 := ComputedMorphismAts( m2 );
+              indices_1 := List( [ 1 .. Length( computed_morphisms_1 ) / 2 ], function ( i )
+                      return computed_morphisms_1[2 * i - 1];
+                  end );
+              indices_2 := List( [ 1 .. Length( computed_morphisms_2 ) / 2 ], function ( i )
+                      return computed_morphisms_2[2 * i - 1];
+                  end );
+              indices := Intersection( indices_1, indices_2 );
+              for i in indices do
+                  if not IsEqualForMorphisms( m1[i], m2[i] ) then
+                      return false;
+                  fi;
+              od;
+              l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ) + 1, ActiveLowerBound( Range( m1 ) ) + 1 ), 
+                 Minimum( ActiveLowerBound( Source( m2 ) ) + 1, ActiveLowerBound( Range( m2 ) ) + 1 ) );
+              u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ) - 1, ActiveUpperBound( Range( m1 ) ) - 1 ), 
+                 Maximum( ActiveUpperBound( Source( m2 ) ) - 1, ActiveUpperBound( Range( m2 ) ) - 1 ) );
+              lu := [ l .. u ];
+              SubtractSet( lu, indices );
+              if lu = [  ] then
+                  return true;
+              fi;
+              return false;
+          end );
+    else
+        Error( "MorphismsEqualityForCache option can not be interpreted!" );
+    fi;
+    AddIsEqualForObjects( complex_cat, function ( C1, C2 )
+          local computed_objects_1, computed_objects_2, indices_1, indices_2, indices, l, u, lu, i;
+          if IsIdenticalObj( C1, C2 ) then
+              return true;
+          fi;
+          if not ForAll( [ C1, C2 ], IsBoundedChainOrCochainComplex ) then
+              Error( "Complexes must be bounded" );
+          fi;
+          computed_objects_1 := ComputedObjectAts( C1 );
+          computed_objects_2 := ComputedObjectAts( C2 );
+          indices_1 := List( [ 1 .. Length( computed_objects_1 ) / 2 ], function ( i )
+                  return computed_objects_1[2 * i - 1];
+              end );
+          indices_2 := List( [ 1 .. Length( computed_objects_2 ) / 2 ], function ( i )
+                  return computed_objects_2[2 * i - 1];
+              end );
+          indices := Intersection( indices_1, indices_2 );
+          for i in indices do
+              if not IsEqualForObjects( C1[i], C2[i] ) or not IsEqualForMorphismsOnMor( C1 ^ i, C2 ^ i ) then
+                  return false;
+              fi;
+          od;
+          l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+          u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
+          lu := [ l .. u ];
+          SubtractSet( lu, indices );
+          for i in lu do
+              if not IsEqualForObjects( C1[i], C2[i] ) or not IsEqualForMorphismsOnMor( C1 ^ i, C2 ^ i ) then
+                  return false;
+              fi;
+          od;
+          return true;
+      end );
+    AddIsEqualForMorphisms( complex_cat, function ( m1, m2 )
+          local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
+          if IsIdenticalObj( m1, m2 ) then
+              return true;
+          fi;
+          if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
+              return false;
+          fi;
+          if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
+              return false;
+          fi;
+          if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+              Error( "Complex morphisms must be bounded" );
+          fi;
+          computed_morphisms_1 := ComputedMorphismAts( m1 );
+          computed_morphisms_2 := ComputedMorphismAts( m2 );
+          indices_1 := List( [ 1 .. Length( computed_morphisms_1 ) / 2 ], function ( i )
+                  return computed_morphisms_1[2 * i - 1];
+              end );
+          indices_2 := List( [ 1 .. Length( computed_morphisms_2 ) / 2 ], function ( i )
+                  return computed_morphisms_2[2 * i - 1];
+              end );
+          indices := Intersection( indices_1, indices_2 );
+          for i in indices do
+              if not IsEqualForMorphisms( m1[i], m2[i] ) then
+                  return false;
+              fi;
+          od;
+          l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ), Minimum( ActiveLowerBound( Source( m2 ) ), 
+               ActiveLowerBound( Range( m2 ) ) ) );
+          u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ), Maximum( ActiveUpperBound( Source( m2 ) ), 
+               ActiveUpperBound( Range( m2 ) ) ) );
+          lu := [ l .. u ];
+          SubtractSet( lu, indices );
+          for i in lu do
+              if not IsEqualForMorphisms( m1[i], m2[i] ) then
+                  return false;
+              fi;
+          od;
+          return true;
+      end );
+    AddIsCongruentForMorphisms( complex_cat, function ( m1, m2 )
+          local computed_morphisms_1, computed_morphisms_2, indices_1, indices_2, indices, l, u, lu, i;
+          if IsIdenticalObj( m1, m2 ) then
+              return true;
+          fi;
+          if not ForAll( [ m1, m2 ], IsBoundedChainOrCochainMorphism ) then
+              Error( "Complex morphisms must be bounded" );
+          fi;
+          if not IsEqualForObjects( Source( m1 ), Source( m2 ) ) then
+              return false;
+          fi;
+          if not IsEqualForObjects( Range( m1 ), Range( m2 ) ) then
+              return false;
+          fi;
+          computed_morphisms_1 := ComputedMorphismAts( m1 );
+          computed_morphisms_2 := ComputedMorphismAts( m2 );
+          indices_1 := List( [ 1 .. Length( computed_morphisms_1 ) / 2 ], function ( i )
+                  return computed_morphisms_1[2 * i - 1];
+              end );
+          indices_2 := List( [ 1 .. Length( computed_morphisms_2 ) / 2 ], function ( i )
+                  return computed_morphisms_2[2 * i - 1];
+              end );
+          indices := Intersection( indices_1, indices_2 );
+          for i in indices do
+              if not IsCongruentForMorphisms( m1[i], m2[i] ) then
+                  return false;
+              fi;
+          od;
+          l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ), Minimum( ActiveLowerBound( Source( m2 ) ), 
+               ActiveLowerBound( Range( m2 ) ) ) );
+          u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ), Maximum( ActiveUpperBound( Source( m2 ) ), 
+               ActiveUpperBound( Range( m2 ) ) ) );
+          lu := [ l .. u ];
+          SubtractSet( lu, indices );
+          for i in lu do
+              if not IsCongruentForMorphisms( m1[i], m2[i] ) then
+                  return false;
+              fi;
+          od;
+          return true;
+      end );
+    if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
+        AddIsWellDefinedForObjects( complex_cat, function ( C )
+              if not IsBoundedChainOrCochainComplex( C ) then
+                  Error( "The complex must be bounded" );
+              else
+                  return IsWellDefined( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+              fi;
+              return;
+          end );
+    fi;
+    if CanCompute( cat, "IsWellDefinedForObjects" ) and CanCompute( cat, "IsWellDefinedForMorphisms" ) then
+        AddIsWellDefinedForMorphisms( complex_cat, function ( phi )
+              if not IsBoundedChainOrCochainMorphism( phi ) then
+                  Error( "The morphism must be bounded" );
+              else
+                  return IsWellDefined( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
+              fi;
+              return;
+          end );
+    fi;
+    if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then
+        if CanCompute( cat, "ZeroObject" ) then
+            AddZeroObject( complex_cat, function (  )
+                  local C;
+                  C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+                  SetUpperBound( C, 0 );
+                  SetLowerBound( C, 0 );
+                  return C;
+              end );
+        fi;
+        if CanCompute( cat, "IsZeroForObjects" ) then
+            AddIsZeroForObjects( complex_cat, function ( C )
+                  local obj, i;
+                  if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then
+                      Error( "The complex must have lower and upper bounds" );
+                  fi;
+                  for obj in ComputedObjectAts( C ) do
+                      if IsCapCategoryObject( obj ) and not IsZeroForObjects( obj ) then
+                          return false;
+                      fi;
+                  od;
+                  for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do
+                      if not IsZeroForObjects( C[i] ) then
+                          SetLowerBound( C, i - 1 );
+                          return false;
+                      fi;
+                  od;
+                  return true;
+              end );
+        fi;
+        if CanCompute( cat, "ZeroMorphism" ) then
+            AddZeroMorphism( complex_cat, function ( C1, C2 )
+                  local morphisms;
+                  morphisms := MapLazy( [ Objects( C1 ), Objects( C2 ) ], ZeroMorphism, 2 );
+                  morphisms := morphism_constructor( C1, C2, morphisms );
+                  SetUpperBound( morphisms, 0 );
+                  SetLowerBound( morphisms, 0 );
+                  return morphisms;
+              end );
+        fi;
+        if CanCompute( cat, "IsZeroForMorphisms" ) then
+            AddIsZeroForMorphisms( complex_cat, function ( phi )
+                  local mor, i;
+                  if not HasActiveLowerBound( phi ) or not HasActiveUpperBound( phi ) then
+                      Error( "The morphism must have lower and upper bounds" );
+                  fi;
+                  for mor in ComputedMorphismAts( phi ) do
+                      if IsCapCategoryMorphism( mor ) and not IsZeroForMorphisms( mor ) then
+                          return false;
+                      fi;
+                  od;
+                  for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
+                      if IsZeroForMorphisms( phi[i] ) then
+                          SetLowerBound( phi, i );
+                      else
+                          return false;
+                      fi;
+                  od;
+                  return true;
+              end );
+        fi;
+        if CanCompute( cat, "AdditionForMorphisms" ) then
+            AddAdditionForMorphisms( complex_cat, function ( m1, m2 )
+                  local phi;
+                  phi := morphism_constructor( Source( m1 ), Range( m1 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms, 2 ) );
+                  AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAU_BOUND", true ], [ m2, "HAS_FAU_BOUND", true ] ], function (  )
+                          if not HasFAU_BOUND( phi ) then
+                              SetUpperBound( phi, Minimum( FAU_BOUND( m1 ), FAU_BOUND( m2 ) ) );
+                          fi;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAL_BOUND", true ], [ m2, "HAS_FAL_BOUND", true ] ], function (  )
+                          if not HasFAL_BOUND( phi ) then
+                              SetLowerBound( phi, Maximum( FAL_BOUND( m1 ), FAL_BOUND( m2 ) ) );
+                          fi;
+                          return;
+                      end ) );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "AdditiveInverseForMorphisms" ) then
+            AddAdditiveInverseForMorphisms( complex_cat, function ( m )
+                  local phi;
+                  phi := morphism_constructor( Source( m ), Range( m ), MapLazy( Morphisms( m ), AdditiveInverseForMorphisms, 1 ) );
+                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "PreCompose" ) then
+            AddPreCompose( complex_cat, function ( m1, m2 )
+                  local phi;
+                  phi := morphism_constructor( Source( m1 ), Range( m2 ), MapLazy( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose, 2 ) );
+                  TODO_LIST_TO_PUSH_BOUNDS( m1, phi );
+                  TODO_LIST_TO_PUSH_BOUNDS( m2, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "IdentityMorphism" ) then
+            AddIdentityMorphism( complex_cat, function ( C )
+                  return morphism_constructor( C, C, MapLazy( Objects( C ), IdentityMorphism, 1 ) );
+              end );
+        fi;
+        if CanCompute( cat, "InverseImmutable" ) then
+            AddInverse( complex_cat, function ( m )
+                  local phi;
+                  phi := morphism_constructor( Range( m ), Source( m ), MapLazy( Morphisms( m ), Inverse, 1 ) );
+                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "LiftAlongMonomorphism" ) then
+            AddLiftAlongMonomorphism( complex_cat, function ( mono, test )
+                  local morphisms;
+                  morphisms := MapLazy( [ Morphisms( mono ), Morphisms( test ) ], LiftAlongMonomorphism, 2 );
+                  return morphism_constructor( Source( test ), Source( mono ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "ColiftAlongEpimorphism" ) then
+            AddColiftAlongEpimorphism( complex_cat, function ( epi, test )
+                  local morphisms;
+                  morphisms := MapLazy( [ Morphisms( epi ), Morphisms( test ) ], ColiftAlongEpimorphism, 2 );
+                  return morphism_constructor( Range( epi ), Range( test ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "DirectSum" ) then
+            AddDirectSum( complex_cat, function ( L )
+                  local diffs, complex, u, l;
+                  diffs := MapLazy( List( L, Differentials ), DirectSumFunctorial, 1 );
+                  complex := complex_constructor( cat, diffs );
+                  u := List( L, function ( i )
+                          return [ i, "HAS_FAU_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( u, function (  )
+                          local b;
+                          b := Maximum( List( L, function ( i )
+                                    return ActiveUpperBound( i );
+                                end ) );
+                          SetUpperBound( complex, b );
+                          return;
+                      end ) );
+                  l := List( L, function ( i )
+                          return [ i, "HAS_FAL_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( l, function (  )
+                          local b;
+                          b := Minimum( List( L, function ( i )
+                                    return ActiveLowerBound( i );
+                                end ) );
+                          SetLowerBound( complex, b );
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetUpperBound( i, ActiveUpperBound( complex ) );
+                          od;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetLowerBound( i, ActiveLowerBound( complex ) );
+                          od;
+                          return;
+                      end ) );
+                  return complex;
+              end );
+        fi;
+        if CanCompute( cat, "DirectSumFunctorialWithGivenDirectSums" ) then
+            AddDirectSumFunctorialWithGivenDirectSums( complex_cat, function ( source, L, range )
+                  local maps, morphism, u, l;
+                  maps := MapLazy( List( L, Morphisms ), DirectSumFunctorial, 1 );
+                  morphism := morphism_constructor( source, range, maps );
+                  u := List( L, function ( i )
+                          return [ i, "HAS_FAU_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( u, function (  )
+                          local b;
+                          b := Maximum( List( L, function ( i )
+                                    return ActiveUpperBound( i );
+                                end ) );
+                          SetUpperBound( morphism, b );
+                          return;
+                      end ) );
+                  l := List( L, function ( i )
+                          return [ i, "HAS_FAL_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( l, function (  )
+                          local b;
+                          b := Minimum( List( L, function ( i )
+                                    return ActiveLowerBound( i );
+                                end ) );
+                          SetLowerBound( morphism, b );
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAU_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetUpperBound( i, ActiveUpperBound( morphism ) );
+                          od;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAL_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetLowerBound( i, ActiveLowerBound( morphism ) );
+                          od;
+                          return;
+                      end ) );
+                  return morphism;
+              end );
+        fi;
+        if CanCompute( cat, "InjectionOfCofactorOfDirectSum" ) then
+            AddInjectionOfCofactorOfDirectSum( complex_cat, function ( L, n )
+                  local objects, list, morphisms;
+                  objects := CombineZLazy( List( L, Objects ) );
+                  morphisms := MapLazy( objects, function ( l )
+                          return InjectionOfCofactorOfDirectSum( l, n );
+                      end, 1 );
+                  return morphism_constructor( L[n], DirectSum( L ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "ProjectionInFactorOfDirectSum" ) then
+            AddProjectionInFactorOfDirectSum( complex_cat, function ( L, n )
+                  local objects, list, morphisms;
+                  objects := CombineZLazy( List( L, Objects ) );
+                  morphisms := MapLazy( objects, function ( l )
+                          return ProjectionInFactorOfDirectSum( l, n );
+                      end, 1 );
+                  return morphism_constructor( DirectSum( L ), L[n], morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "TerminalObject" ) and CanCompute( cat, "TerminalObjectFunctorial" ) then
+            AddTerminalObject( complex_cat, function (  )
+                  local complex;
+                  complex := complex_constructor( cat, RepeatListZ( [ TerminalObjectFunctorial( cat ) ] ) );
+                  if HasZeroObject( cat ) and IsEqualForObjects( TerminalObject( cat ), ZeroObject( cat ) ) then
+                      SetUpperBound( complex, 0 );
+                      SetLowerBound( complex, 0 );
+                  fi;
+                  return complex;
+              end );
+        fi;
+        if CanCompute( cat, "UniversalMorphismIntoTerminalObjectWithGivenTerminalObject" ) then
+            AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( complex_cat, function ( complex, terminal_object )
+                  local objects, universal_maps;
+                  objects := Objects( complex );
+                  universal_maps := MapLazy( objects, UniversalMorphismIntoTerminalObject, 1 );
+                  return morphism_constructor( complex, terminal_object, universal_maps );
+              end );
+        fi;
+        if CanCompute( cat, "InitialObject" ) and CanCompute( cat, "InitialObjectFunctorial" ) then
+            AddInitialObject( complex_cat, function (  )
+                  local complex;
+                  complex := complex_constructor( cat, RepeatListZ( [ InitialObjectFunctorial( cat ) ] ) );
+                  if HasZeroObject( cat ) and IsEqualForObjects( InitialObject( cat ), ZeroObject( cat ) ) then
+                      SetUpperBound( complex, 0 );
+                      SetLowerBound( complex, 0 );
+                  fi;
+                  return complex;
+              end );
+        fi;
+        if CanCompute( cat, "UniversalMorphismFromInitialObjectWithGivenInitialObject" ) then
+            AddUniversalMorphismFromInitialObjectWithGivenInitialObject( complex_cat, function ( complex, initial_object )
+                  local objects, universal_maps;
+                  objects := Objects( complex );
+                  universal_maps := MapLazy( objects, UniversalMorphismFromInitialObject, 1 );
+                  return morphism_constructor( initial_object, complex, universal_maps );
+              end );
+        fi;
+    fi;
+    if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
+        if CanCompute( cat, "KernelEmbedding" ) then
+            AddKernelEmbedding( complex_cat, function ( phi )
+                  local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
+                  embeddings := MapLazy( Morphisms( phi ), KernelEmbedding, 1 );
+                  kernel_to_next_source := MapLazy( [ embeddings, Differentials( Source( phi ) ) ], PreCompose, 2 );
+                  diffs := MapLazy( [ ShiftLazy( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift, 2 );
+                  kernel_complex := complex_constructor( cat, diffs );
+                  kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
+                  TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
+                  return kernel_emb;
+              end );
+        fi;
+        if CanCompute( cat, "KernelLift" ) then
+            AddKernelLift( complex_cat, function ( phi, tau )
+                  local morphisms, K;
+                  K := KernelObject( phi );
+                  morphisms := MapLazy( IntegersList, function ( i )
+                          return KernelLift( phi[i], tau[i] );
+                      end, 1 );
+                  return morphism_constructor( Source( tau ), K, morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "KernelLiftWithGivenKernelObject" ) then
+            AddKernelLiftWithGivenKernelObject( complex_cat, function ( phi, tau, K )
+                  local morphisms;
+                  morphisms := MapLazy( IntegersList, function ( i )
+                          return KernelLift( phi[i], tau[i] );
+                      end, 1 );
+                  return morphism_constructor( Source( tau ), K, morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "CokernelProjection" ) then
+            AddCokernelProjection( complex_cat, function ( phi )
+                  local projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
+                  projections := MapLazy( Morphisms( phi ), CokernelProjection, 1 );
+                  range_to_next_cokernel := MapLazy( [ Differentials( Range( phi ) ), ShiftLazy( projections, shift_index ) ], PreCompose, 2 );
+                  diffs := MapLazy( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift, 2 );
+                  cokernel_complex := complex_constructor( cat, diffs );
+                  cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
+                  TODO_LIST_TO_PUSH_BOUNDS( Range( phi ), cokernel_complex );
+                  return cokernel_proj;
+              end );
+        fi;
+        if CanCompute( cat, "CokernelColift" ) then
+            AddCokernelColift( complex_cat, function ( phi, tau )
+                  local morphisms, K;
+                  K := CokernelObject( phi );
+                  morphisms := MapLazy( IntegersList, function ( i )
+                          return CokernelColift( phi[i], tau[i] );
+                      end, 1 );
+                  return morphism_constructor( K, Range( tau ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "CokernelColiftWithGivenCokernelObject" ) then
+            AddCokernelColiftWithGivenCokernelObject( complex_cat, function ( phi, tau, K )
+                  local morphisms;
+                  morphisms := MapLazy( IntegersList, function ( i )
+                          return CokernelColift( phi[i], tau[i] );
+                      end, 1 );
+                  return morphism_constructor( K, Range( tau ), morphisms );
+              end );
+        fi;
+    fi;
+    if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
+        ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
+        ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
+        ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS( complex_cat );
+        ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS( complex_cat );
+        ADD_TENSOR_UNIT_CHAIN( complex_cat );
+        if HasIsBraidedMonoidalCategory( complex_cat ) and IsBraidedMonoidalCategory( complex_cat ) then
+            ADD_BRAIDING_FOR_CHAINS( complex_cat );
+        fi;
+        if IsSymmetricClosedMonoidalCategory( complex_cat ) then
+            ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP( complex_cat );
+            ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP( complex_cat );
+        fi;
+    fi;
+    if HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) and CanCompute( cat, "IsProjective" ) and CanCompute( cat, "ProjectiveLift" ) then
+        AddIsProjective( complex_cat, function ( C )
+              local i;
+              if not IsBoundedChainOrCochainComplex( C ) then
+                  Error( "The complex must be bounded" );
+              fi;
+              if not IsExact( C ) then
+                  return false;
+              fi;
+              for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do
+                  if not IsProjective( C[i] ) then
+                      return false;
+                  fi;
+              od;
+              return true;
+          end );
+        AddProjectiveLift( complex_cat, function ( phi, pi )
+              local P, H, l, XX;
+              P := Source( phi );
+              XX := Source( pi );
+              H := MapLazy( IntegersList, function ( i )
+                      local id, m, n;
+                      id := IdentityMorphism( P );
+                      if i <= ActiveLowerBound( P ) then
+                          return ZeroMorphism( P[i], P[i + 1] );
+                      elif i = ActiveLowerBound( P ) + 1 then
+                          return ProjectiveLift( id[i], P ^ (i + 1) );
+                      fi;
+                      m := KernelLift( P ^ i, id[i] - PreCompose( P ^ i, H[(i - 1)] ) );
+                      n := PreCompose( CoastrictionToImage( P ^ (i + 1) ), KernelLift( P ^ i, ImageEmbedding( P ^ (i + 1) ) ) );
+                      return ProjectiveLift( m, n );
+                  end, 1 );
+              l := MapLazy( IntegersList, function ( i )
+                      return PreCompose( [ H[i], ProjectiveLift( phi[i + 1], pi[i + 1] ), XX ^ (i + 1) ] ) 
+                        + PreCompose( [ P ^ i, H[(i - 1)], ProjectiveLift( phi[i], pi[i] ) ] );
+                  end, 1 );
+              return ChainMorphism( P, XX, l );
+          end );
+    fi;
+    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and HasIsAbelianCategory( cat ) and IsAbelianCategory( cat )
+        and shift_index = -1 then
+        AddLift( complex_cat, function ( alpha, beta )
+              local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_P_N, internal_hom_id_P_beta, k_internal_hom_id_P_beta_0, alpha_1, lift;
+              cat := CapCategory( alpha );
+              U := TensorUnit( cat );
+              P := Source( alpha );
+              N := Range( alpha );
+              M := Source( beta );
+              alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
+              beta_ := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
+              internal_hom_id_P_beta := InternalHomOnMorphisms( IdentityMorphism( P ), beta );
+              internal_hom_P_M := Source( internal_hom_id_P_beta );
+              internal_hom_P_N := Range( internal_hom_id_P_beta );
+              k_internal_hom_id_P_beta_0 := KernelLift( internal_hom_P_N ^ 0, PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_id_P_beta[0] ) );
+              alpha_1 := KernelLift( internal_hom_P_N ^ 0, alpha_[0] );
+              lift := Lift( alpha_1, k_internal_hom_id_P_beta_0 );
+              if lift = fail then
+                  return fail;
+              else
+                  lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
+                  return InternalHomToTensorProductAdjunctionMap( P, M, lift );
+              fi;
+              return;
+          end );
+        AddColift( complex_cat, function ( alpha, beta )
+              local cat, U, P, N, M, alpha_, beta_, internal_hom_P_M, internal_hom_N_M, internal_hom_alpha_id_M, k_internal_hom_alpha_id_M_0, beta_1, lift;
+              cat := CapCategory( alpha );
+              U := TensorUnit( cat );
+              P := Range( alpha );
+              N := Source( alpha );
+              M := Range( beta );
+              alpha_ := TensorProductToInternalHomAdjunctionMap( U, Source( alpha ), alpha );
+              beta_ := TensorProductToInternalHomAdjunctionMap( U, Source( beta ), beta );
+              internal_hom_alpha_id_M := InternalHomOnMorphisms( alpha, IdentityMorphism( M ) );
+              internal_hom_P_M := Source( internal_hom_alpha_id_M );
+              internal_hom_N_M := Range( internal_hom_alpha_id_M );
+              k_internal_hom_alpha_id_M_0 := KernelLift( internal_hom_N_M ^ 0, PreCompose( CyclesAt( internal_hom_P_M, 0 ), internal_hom_alpha_id_M[0] ) );
+              beta_1 := KernelLift( internal_hom_N_M ^ 0, beta_[0] );
+              lift := Lift( beta_1, k_internal_hom_alpha_id_M_0 );
+              if lift = fail then
+                  return fail;
+              else
+                  lift := ChainMorphism( U, internal_hom_P_M, [ PreCompose( lift, CyclesAt( internal_hom_P_M, 0 ) ) ], 0 );
+                  return InternalHomToTensorProductAdjunctionMap( P, M, lift );
+              fi;
+              return;
+          end );
+    fi;
+    if CanCompute( cat, "Lift" ) and HasIsMonoidalCategory( cat ) and IsMonoidalCategory( cat ) and HasIsAbelianCategory( cat ) and IsAbelianCategory( cat )
+        and shift_index = 1 then
+        AddLift( complex_cat, function ( alpha, beta )
+              local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+              cat := UnderlyingCategory( complex_cat );
+              chains_cat := ChainComplexCategory( cat );
+              cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
+              chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
+              l := Lift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+              if l = fail then
+                  return fail;
+              else
+                  return ApplyFunctor( chains_to_cochains, l );
+              fi;
+              return;
+          end );
+        AddColift( complex_cat, function ( alpha, beta )
+              local chains_cat, cat, cochains_to_chains, chains_to_cochains, l;
+              cat := UnderlyingCategory( complex_cat );
+              chains_cat := ChainComplexCategory( cat );
+              cochains_to_chains := CochainToChainComplexFunctor( complex_cat, chains_cat );
+              chains_to_cochains := ChainToCochainComplexFunctor( chains_cat, complex_cat );
+              l := Colift( ApplyFunctor( cochains_to_chains, alpha ), ApplyFunctor( cochains_to_chains, beta ) );
+              if l = fail then
+                  return fail;
+              else
+                  return ApplyFunctor( chains_to_cochains, l );
+              fi;
+              return;
+          end );
+    fi;
+    if
+     shift_index = -1 and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and CanCompute( cat, "HomomorphismStructureOnObjects" ) 
+                and CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" 
+                 ) and CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) 
+          and CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) 
+        and HasRangeCategoryOfHomomorphismStructure( cat ) then
+        range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
+        if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
+            SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
+        elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and (ValueGlobal( "IsCategoryOfRows" )( range_cat_of_hom_struc ) 
+              or ValueGlobal( "IsCategoryOfColumns" )( range_cat_of_hom_struc )) then
+            SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat_of_hom_struc ) );
+        else
+            if IsIdenticalObj( range_cat_of_hom_struc, cat ) then
+                SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
+            else
+                chains_range_cat := ChainComplexCategory( range_cat_of_hom_struc );
+                if not HasIsFinalized( chains_range_cat ) then
+                    Info( InfoWarning, 2, "For some reason the category", Name( chains_range_cat ), " has not been finalized!\n" );
+                    Finalize( chains_range_cat );
+                fi;
+                SetRangeCategoryOfHomomorphismStructure( complex_cat, chains_range_cat );
+            fi;
+        fi;
+        ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE( complex_cat );
+        ADD_HOM_STRUCTURE_ON_CHAINS( complex_cat );
+        ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS( complex_cat );
+        ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE( complex_cat );
+        ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
+    fi;
+    if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
+        AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat, function ( r, phi )
+              local mors;
+              mors := Morphisms( phi );
+              mors := MapLazy( mors, function ( m )
+                      return MultiplyWithElementOfCommutativeRingForMorphisms( r, m );
+                  end, 1 );
+              return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors );
+          end );
+    fi;
+    if CanCompute( cat, "IsIsomorphism" ) then
+        AddIsIsomorphism( complex_cat, function ( phi )
+              local u, v;
+              if not IsBoundedChainOrCochainMorphism( phi ) then
+                  Error( "The morphism should be bounded" );
+              fi;
+              u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
+              v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
+              return ForAll( [ u .. v ], function ( i )
+                      return IsIsomorphism( phi[i] );
+                  end );
+          end );
+    fi;
+    if CanCompute( cat, "InverseImmutable" ) then
+        AddInverseImmutable( complex_cat, function ( phi )
+              local u, v, list_of_inverses;
+              if not IsBoundedChainOrCochainMorphism( phi ) then
+                  Error( "The morphism should be bounded" );
+              fi;
+              u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
+              v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
+              list_of_inverses := List( [ u .. v ], function ( i )
+                      return Inverse( phi[i] );
+                  end );
+              return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST" )( Range( phi ), Source( phi ), list_of_inverses, u );
+          end );
+    fi;
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    if to_be_finalized = false then
+        return complex_cat;
+    else
+        Finalize( complex_cat );
+    fi;
     return complex_cat;
-  
 end );
 
 ###########################################
