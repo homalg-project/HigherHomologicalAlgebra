@@ -35,10 +35,14 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
         local d;
         
         d := DecomposeProjectiveQuiverRepresentation( UnderlyingCell( a ) );
-        
+         
         if Size( d ) = 1 and IsZero( d[ 1 ] ) then
           
-          return ZeroObject( add_indec_projs );
+          d := ZeroObject( add_indec_projs );
+          
+          SetIsZeroForObjects( d, true );
+          
+          return d;
           
         fi;
         
@@ -54,7 +58,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     AddMorphismFunction( F,
       function( s, alpha, r )
         local d_source_cell, d_range_cell, alpha_cell, iso, mat;
-        
+         
         if ( HasIsZeroForObjects( s ) and IsZeroForObjects( s ) ) or ( HasIsZeroForObjects( r ) and IsZeroForObjects( r ) ) then
           
           return ZeroMorphism( s, r );
