@@ -1,4 +1,4 @@
-
+BindGlobal( "DISABLE_ALL_SANITY_CHECKS_AND_LOGIC", [ false ] );
 
 ##
 InstallGlobalFunction( Time,
@@ -67,6 +67,38 @@ InstallGlobalFunction( CheckFunctoriality,
     return bool;
     
 end );
+
+
+#############################################
+
+InstallMethod( Finalize,
+          [ IsCapCategory ],
+  function( category )
+    local o;
+    
+    o := ValueOption( "disable_sanity_checks_and_logic" );
+    
+    if o = false then
+      TryNextMethod( );
+    fi;
+    
+    Finalize( category: disable_sanity_checks_and_logic := false );
+    
+    if DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] = false then
+      return;
+    fi;
+    
+    DisableSanityChecks( category );
+    CapCategorySwitchLogicOff( category );
+    
+    if category!.default_cache_type = "weak" then
+      DeactivateCachingOfCategory( category );
+    fi;
+    
+end, 5000 );
+
+
+#############################################
 
 ## Try number 0
 InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
