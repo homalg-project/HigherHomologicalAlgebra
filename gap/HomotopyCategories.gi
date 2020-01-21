@@ -30,7 +30,7 @@ BindGlobal( "TheTypeOfHomotopyCategory",
 InstallMethod( HomotopyCategory,
       [ IsCapCategory ],
   function( cat )
-    local chains, coliftable_function, name, to_be_finalized, special_filters, homotopy_category;
+    local chains, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
     
     chains := ChainComplexCategory( cat : FinalizeCategory := false );
     
@@ -69,8 +69,10 @@ InstallMethod( HomotopyCategory,
     
     fi;
     
-    name := Concatenation( "Homotopy category of ", Name( cat ) );
+    r := RANDOM_TEXT_ATTR( );
     
+    name := Concatenation( r[ 1 ], "Homotopy category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
+   
     to_be_finalized := ValueOption( "FinalizeCategory" );
     
     special_filters := ValueOption( "SpecialFilters" );
