@@ -2365,7 +2365,7 @@ InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS,
       k := 1;
       for i in [ 1 .. nr_of_vertices ] do
         if ( S_dimensions[ i ] <> 0 ) and ( R_dimensions[ i ] <> 0 ) then 
-          current_mat := MutableNullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
+          current_mat := NullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
           for x in [ 1..R_dimensions[ i ] ] do
             for y in [ 1..S_dimensions[ i ] ] do
               current_mat[ y ][ x ] := b[ k ];
@@ -2554,7 +2554,7 @@ InstallGlobalFunction( INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPH
       
       if ( S_dimensions[ i ] <> 0 ) and ( R_dimensions[ i ] <> 0 ) then
         
-        current_mat := MutableNullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
+        current_mat := NullMat( S_dimensions[ i ], R_dimensions[ i ], domain );
         
         for x in [ 1..R_dimensions[ i ] ] do
           
