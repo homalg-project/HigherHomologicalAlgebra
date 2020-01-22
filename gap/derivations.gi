@@ -17,72 +17,307 @@
 ##
 AddDerivationToCAP( IsNullHomotopic,
                 [
-                    [ Colift, 1 ],
-                    [ IsZeroForMorphisms, 1 ]
+                    [ HomotopyMorphisms, 1 ],
                 ],
     function( phi )
-    return  IsZeroForMorphisms( phi ) or
-            Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi ) <> fail;
-    end: CategoryFilter := IsChainOrCochainComplexCategory, 
+    
+      return HomotopyMorphisms( phi ) <> fail;
+      
+   end: CategoryFilter := IsChainOrCochainComplexCategory, 
          Description := "compute if a morphism is homotopic to zero using colifts" );
 
 ##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
-                    [ IsNullHomotopic, 1 ],
+                    #[ IdentityMorphism, 1 ] # this should be modified!
+                ],
+  function( phi )
+    local A, B, m, n, L, K, b, sol, H;
+    
+    A := Source( phi );
+    
+    B := Range( phi );
+    
+    m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );    
+    
+    n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );
+    
+    L := Concatenation( 
+           
+          List( [ 1 .. n - m ],
+            i -> Concatenation(
+              ##
+              List( [ 1 .. i - 1 ],
+                j -> ZeroMorphism( A[ i + m - 1 ],A[ j + m - 1 ] ) ),
+              ##
+              [ IdentityMorphism( A[ i + m - 1 ] ), A^( i + m - 1 ) ],
+              ##
+              List( [ i + 2 ..n - m + 1 ], 
+                j -> ZeroMorphism( A[ i + m - 1 ] , A[ j + m - 1 ] ) )
+                              )
+            ),
+            
+            [ Concatenation(
+                List( [ 1 .. n - m ], 
+                  j -> ZeroMorphism( A[ n ], A[ j + m - 1 ] ) ), 
+              
+                [ IdentityMorphism( A[ n ] ) ] ) ] 
+                
+          );
+          
+    K := Concatenation(
+          
+          List( [ 1 .. n - m ],
+            i -> Concatenation( 
+              
+              List( [ 1 .. i - 1 ], 
+                j -> ZeroMorphism( B[ j + m - 2 ],B[ i + m - 1 ] ) ),
+              
+              [ B^( i + m - 2 ), IdentityMorphism( B[ i + m - 1 ] ) ],
+              
+              
+              List( [ i + 2 ..n - m + 1 ],
+                j -> ZeroMorphism( B[ j + m - 2 ], B[ i + m - 1 ]) ) 
+                              ) 
+            ),
+              
+          [ Concatenation(
+              
+              List([ 1 .. n - m ], 
+                j -> ZeroMorphism( B[ j + m - 2 ], B[ n ] ) ),
+                
+              [ B^(n - 1) ] ) ] 
+            
+          );
+    
+    b := List( [ m .. n ], i -> phi[ i ] );
+    
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
+    sol := SolveLinearSystemInAbCategory( L, K, b );
+    Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    
+    if sol = fail then
+      
+      SetIsNullHomotopic( phi, false );
+      
+      return fail;
+      
+    else
+      
+      # This H is not well-defined, we only need the infinite list
+      
+      SetIsNullHomotopic( phi, true );
+      
+      H := CochainMorphism( A, ShiftLazy( B, -1 ), sol, m );
+      
+      return Morphisms( H );
+      
+    fi;
+    
+end:
+CategoryFilter := function( cochains )
+  local cat;
+  
+  if not IsCochainComplexCategory( cochains ) then
+    
+    return false;
+  
+  fi;
+  
+  cat := UnderlyingCategory( cochains );
+  
+  if CanCompute( cat, "SolveLinearSystemInAbCategory" ) then
+    
+    return true;
+    
+  fi;
+  
+  return false;
+
+end,
+Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
+
+##
+AddDerivationToCAP( HomotopyMorphisms,
+                [
+                    #[ IdentityMorphism, 1 ]
+                ],
+  function( phi )
+    local A, B, m, n, L, K, b, sol, H;
+    
+    A := Source( phi );
+    
+    B := Range( phi );
+    
+    m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );
+    
+    n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );    
+    
+    L := Concatenation( 
+          
+          List( [ 1 .. n - m ],
+            i -> Concatenation(
+              
+              List( [ 1 .. i - 1 ], 
+                j -> ZeroMorphism( A[ -i + n + 1 ], A[ -j + n + 1 ] ) ),
+              
+              [ IdentityMorphism( A[ -i + n + 1 ] ), A^( -i + n + 1 ) ],
+                List( [ i + 2 ..-m + n + 1 ],
+                  j -> ZeroMorphism( A[ -i + n + 1 ] , A[ -j + n + 1 ] ) ) 
+                  
+                              )
+                              
+              ),
+              
+          [ Concatenation( 
+              
+              List([ 1 .. n - m ],
+                j -> ZeroMorphism( A[ m ], A[ -j + n + 1 ] ) ),
+                
+              [ IdentityMorphism( A[ m ] ) ] 
+              
+              ) ] 
+              
+          );
+          
+    K := Concatenation(
+          
+          List( [ 1 .. n - m ],
+            i -> Concatenation(
+              
+              List( [ 1 .. i - 1 ],
+                  j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ), 
+                  
+              [ B^( -i + n + 2 ), IdentityMorphism( B[ -i + n + 1 ] ) ],
+              
+              List( [ i + 2 ..n - m + 1 ],
+                
+                j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ) ) 
+                
+              ),
+              
+          [ Concatenation(
+              
+              List([ 1 .. n - m ], j -> ZeroMorphism( B[ -j + n + 2 ], B[ m ] ) ),
+              
+              [ B^( m + 1 ) ] ) ] 
+              
+          );
+          
+    b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
+    
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
+    sol := SolveLinearSystemInAbCategory( L, K, b );
+    Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    
+    if sol = fail then
+      
+      SetIsNullHomotopic( phi, false );
+      
+      return fail;
+      
+    else
+      
+      SetIsNullHomotopic( phi, true );
+      
+      H := ChainMorphism( A, ShiftLazy( B, 1 ), Reversed( sol ), m );
+      
+      return Morphisms( H );
+      
+    fi;
+    
+end:
+CategoryFilter := function( chains )
+  local cat;
+  
+  if not IsChainComplexCategory( chains ) then
+    
+    return false;
+    
+  fi;
+  
+  cat := UnderlyingCategory( chains );
+  
+  if CanCompute( cat, "SolveLinearSystemInAbCategory" ) then
+    
+    return true;
+    
+  fi;
+  
+  return false;
+  
+end,
+Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
+
+##
+AddDerivationToCAP( HomotopyMorphisms,
+                [
                     [ Colift, 1 ]
                 ],
   function( phi )
     local C, D, colift;
-    #if not IsNullHomotopic( phi ) then
-        #return fail;
-    #fi;
+    
     C := Source( phi );
+    
     D := Range( phi );
     
-    if IsZero( phi ) then
-      Info( InfoComplexCategoriesForCAP, 2, "Computing Homotopy morphisms the easy way ..." );
+    if IsIdenticalToZeroMorphism( phi ) then
+      Info( InfoComplexCategoriesForCAP, 2, "Computing evidence for being null-homotopic the easy way ..." );
       return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n + 1 ] ), 1 );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
-    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m Homotopy morphisms the hard way ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: Colift ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
-    if colift = fail then 
+    if colift = fail then
+      SetIsNullHomotopic( phi, false );
       return fail;
     else
+      SetIsNullHomotopic( phi, true );
       return MapLazy( IntegersList, 
-      		n -> PreCompose( 
-		MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n + 1 ] ) ] ] ),
-		colift[ n + 1 ] ), 1 );
+          n -> PreCompose( 
+            MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n + 1 ] ) ] ] ),
+              colift[ n + 1 ] ), 1 );
     fi;
+    
 end: CategoryFilter := IsChainComplexCategory,
          Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
 ##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
-                    [ IsNullHomotopic, 1 ],
                     [ Colift, 1 ]
                 ],
   function( phi )
     local C, D, colift;
-    #if not IsNullHomotopic( phi ) then
-        #return fail;
-    #fi;
+    
     C := Source( phi );
+    
     D := Range( phi );
+    
+    if IsIdenticalToZeroMorphism( phi ) then
+      Info( InfoComplexCategoriesForCAP, 2, "Computing evidence for being null-homotopic the easy way ..." );
+      return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n - 1 ] ), 1 );
+      Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    fi;
+    
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
+    Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    
     if colift = fail then 
+      SetIsNullHomotopic( phi, false );
       return fail;
     else
+      SetIsNullHomotopic( phi, true );
       return MapLazy( IntegersList, 
-      		n -> PreCompose( 
-		MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n - 1 ] ) ] ] ),
-		colift[ n - 1 ] ), 1 );
+          n -> PreCompose(
+            MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n - 1 ] ) ] ] ),
+              colift[ n - 1 ] ), 1 );
     fi;
+    
 end: CategoryFilter := IsCochainComplexCategory,
          Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
@@ -99,7 +334,7 @@ AddDerivationToCAP( Lift,
             ],
   function( alpha, beta )
     local cat, P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
-  
+    
     cat := CapCategory( alpha );
     
     P := Source( alpha );
@@ -410,4 +645,5 @@ CategoryFilter :=
  
 end, Description := "Colift using the homomorphism structure"
 );
+
 
