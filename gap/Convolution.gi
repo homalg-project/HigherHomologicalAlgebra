@@ -55,11 +55,11 @@ InstallMethod( MappingConeColift,
     
     chains := CapCategory( phi );
     
-    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
-      
-      Error( "The composition of the morphisms in the input should be homotopic to null" );
-      
-    fi;
+#    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
+#      
+#      Error( "The composition of the morphisms in the input should be homotopic to null" );
+#      
+#    fi;
     
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
@@ -108,11 +108,11 @@ InstallMethod( MappingConeColift,
     
     cochains := CapCategory( phi );
     
-    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
-      
-      Error( "The composition of the morphisms in the input should be homotopic to null" );
-      
-    fi;
+#    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
+#      
+#      Error( "The composition of the morphisms in the input should be homotopic to null" );
+#      
+#    fi;
     
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
