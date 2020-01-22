@@ -60,3 +60,14 @@ homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ),
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -2, 1, 3 ) / homotopy_C;
 
+quit;
+
+hb := homotopy_HH( b );
+Display( hb );
+
+thb := homotopy_TT( hb );
+Display( thb );
+      
+conv := Convolution( UnderlyingCell( thb ) );
+
+
