@@ -72,7 +72,7 @@ Dependencies := rec(
         [ "CAP", ">= 2020.01.10" ],
         [ "Bialgebroids", ">= 2019.09.06" ],
         [ "SubcategoriesForCAP", ">= 2019.11.01" ],
-        [ "HomotopyCategories", ">= 2019.11.20" ]
+        [ "HomotopyCategories", ">= 2020.01.20" ]
           ],
   SuggestedOtherPackages := [
             [ "BBGG", ">= 2020.01.20" ],
