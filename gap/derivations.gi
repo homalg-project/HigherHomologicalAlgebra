@@ -46,7 +46,7 @@ AddDerivationToCAP( HomotopyMorphisms,
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
-    Info( InfoComplexCategoriesForCAP, 2, "Computing Homotopy morphisms the hard way ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m Homotopy morphisms the hard way ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
