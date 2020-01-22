@@ -98,8 +98,6 @@ Display( thb );
 
 conv := Convolution( UnderlyingCell( thb ) );
 
-conv := inc( conv );
-
-HomologySupport( conv );
-HomologySupport( b );
+HomologySupport( inc( conv ) );
+HomologySupport( inc( b ) );
 
