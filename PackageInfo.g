@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesForCAP",
 Subtitle := "Gap package to create (co)chain complexes category of a given Cap category",
-Version := "2019.12.02",
+Version := "2020.01.22",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -69,7 +69,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "CAP", ">= 2019.12.01" ],
+                           [ "CAP", ">= 2020.01.10" ],
                            [ "GeneralizedMorphismsForCAP", ">= 2018.06.15" ],
                            [ "InfiniteLists", ">= 2017.08.01"] ],
   SuggestedOtherPackages := [ ],
