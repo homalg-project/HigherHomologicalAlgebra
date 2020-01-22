@@ -48,7 +48,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     if Size( arg ) = 1 then
       
-      cache := "weak";
+      cache := "crisp";
       
     else
       
