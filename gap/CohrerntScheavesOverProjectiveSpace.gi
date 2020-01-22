@@ -150,7 +150,69 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       return BB;
       
   end );
-  
+
+  ##
+  #InstallMethod( 
+  BindGlobal( "BeilinsonFunctor3",
+     #       [ IsHomalgGradedRing ],
+    function( S )
+      local n, A, cat, full, add_full, homotopy_cat, r, name, BB;
+      
+      n := Size( Indeterminates( S ) );
+      
+      A := KoszulDualRing( S );
+      
+      cat := GradedLeftPresentations( S );
+      
+      full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+      
+      add_full := AdditiveClosure( full );
+      
+      DeactivateCachingOfCategory( add_full );
+       
+      homotopy_cat := HomotopyCategory( add_full );
+      
+      r := RANDOM_TEXT_ATTR( );
+      
+      name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
+                  r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
+      
+      BB := CapFunctor( name, cat, homotopy_cat );
+      
+      AddObjectFunction( BB,
+        function( a )
+          local T, diffs, C;
+          
+          T := TateResolution( a );
+          
+          diffs := List( [ - n + 2 .. n - 1 ], i -> CAN_TWISTED_OMEGA_CELL( T ^ i ) );
+          
+          C := ChainComplex( diffs, - n + 2 );
+          
+          return C / homotopy_cat;
+          
+      end );
+      
+      AddMorphismFunction( BB,
+        function( s, alpha, r )
+          local T, maps;
+          
+          s := UnderlyingCell( s );
+          
+          r := UnderlyingCell( r );
+          
+          T := TateResolution( alpha );
+          
+          maps := List( [ - n + 1 .. n - 1 ], i -> CAN_TWISTED_OMEGA_CELL( T[ i ] ) );
+          
+          return ChainMorphism( s, r, maps, - n + 1 ) / homotopy_cat;
+          
+      end );
+      
+      return BB;
+      
+  end );
+
   ##
   InstallMethod( RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf,
             [ IsHomalgGradedRing ],
