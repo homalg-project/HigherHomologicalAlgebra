@@ -48,19 +48,13 @@ InstallMethod( NaturalProjectionFromMappingCone,
     
 end );
 
-InstallMethod( MappingConeColift,
+InstallMethodWithCache( MappingConeColift,
           [ IsChainMorphism, IsChainMorphism ],
   function( phi, psi )
     local chains, H, maps;
     
     chains := CapCategory( phi );
-    
-#    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
-#      
-#      Error( "The composition of the morphisms in the input should be homotopic to null" );
-#      
-#    fi;
-    
+        
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
     maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ), 1 );
@@ -101,19 +95,13 @@ InstallMethod( MappingConePseudoFunctorial,
     
 end );
 
-InstallMethod( MappingConeColift,
+InstallMethodWithCache( MappingConeColift,
           [ IsCochainMorphism, IsCochainMorphism ],
   function( phi, psi )
     local cochains, H, maps;
     
     cochains := CapCategory( phi );
-    
-#    if not IsNullHomotopic( PreCompose( phi, psi ) ) then
-#      
-#      Error( "The composition of the morphisms in the input should be homotopic to null" );
-#      
-#    fi;
-    
+        
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
     maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n + 1 ] ], [ psi[ n ] ] ] ), 1 );
@@ -228,7 +216,7 @@ InstallMethod( Convolution,
 end );
 
 ##
-InstallMethod( ConvolutionMorphism,
+InstallMethod( Convolution,
           [ IsChainMorphism ],
   function( alpha )
     local chains_category, homotopy_category, C, D, l, u, m, tau_C, d_C, new_C, tau_D, d_D, new_D, L, new_alpha;
@@ -251,7 +239,7 @@ InstallMethod( ConvolutionMorphism,
       
     elif l + 1 = u then
       
-      m := MappingConeColift( C ^ u, PreCompose( alpha[ u - 1 ], NaturalInjectionInMappingCone( D ^ u ) ) );
+      m := MappingConePseudoFunctorial( C ^ u, D ^ u, alpha[ u ], alpha[ u - 1 ] );
       
       return ApplyFunctor( ShiftFunctor( homotopy_category, -l ), m );
       
@@ -275,15 +263,14 @@ InstallMethod( ConvolutionMorphism,
       
       L := List( [ l .. u - 2 ], i -> alpha[ i ] );
       
-      m := MappingConeColift( C ^ u, PreCompose( alpha[ u - 1 ], NaturalInjectionInMappingCone( D ^ u ) ) );
+      m := MappingConePseudoFunctorial( C ^ u, D ^ u, alpha[ u ], alpha[ u - 1 ] );
       
       Add( L, m );
       
       new_alpha := ChainMorphism( new_C, new_D, L, l );
-      
-      return ConvolutionMorphism( new_alpha );
+       
+      return Convolution( new_alpha );
       
     fi;
   
 end );
-

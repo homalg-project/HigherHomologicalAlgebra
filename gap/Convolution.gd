@@ -3,5 +3,5 @@
 DeclareAttribute( "Convolution", IsChainComplex );
 
 ##
-DeclareAttribute( "ConvolutionMorphism", IsChainMorphism );
+DeclareAttribute( "Convolution", IsChainMorphism );
 
