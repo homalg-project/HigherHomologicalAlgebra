@@ -103,7 +103,7 @@ end );
 InstallMethod( StackMatricesDiagonally,
         [ IsQPAMatrix, IsQPAMatrix ],
   function( mat_1, mat_2 )
-    local d1,d2,F, mat_1_, mat_2_; 
+    local d1,d2,F, mat_1_, mat_2_;
 
     d1 := DimensionsMat( mat_1 );
     
@@ -152,7 +152,7 @@ InstallMethod( StackMatricesDiagonally,
                 StackMatricesDiagonally( L{ [ 1 .. Int( Size( L ) / 2 ) ] } ),
                 StackMatricesDiagonally( L{ [ Int( Size( L ) / 2 ) + 1 .. Size( L ) ] } )
             );
-    fi; 
+    fi;
 end );
 
 ##
@@ -212,7 +212,7 @@ InstallMethod( QuiverRepresentation,
     
 end, 5000 );
 
-InstallGlobalFunction( QuiverRepresentationNoCheck, { A, dim, l } -> QuiverRepresentation( A, dim, l ) );
+#InstallGlobalFunction( QuiverRepresentationNoCheck, { A, dim, l } -> QuiverRepresentation( A, dim, l ) );
 
 ## Modified version of a similar method in QPA.
 ## Aim: reduce any checks.
@@ -270,7 +270,7 @@ InstallMethod( QuiverRepresentationHomomorphism,
   
 end, 5000 );
 
-InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck, { r1, r2, l } -> QuiverRepresentationHomomorphism( r1, r2, l ) );
+#InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck, { r1, r2, l } -> QuiverRepresentationHomomorphism( r1, r2, l ) );
 
 #######################################
 #
@@ -420,7 +420,7 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
     
     mats := ListN( b1, b2, { bb1 , bb2 } -> MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement( bb1, bb2, e ) );
     
-    return QuiverRepresentationHomomorphismNoCheck( p1, p2, mats );
+    return QuiverRepresentationHomomorphism( p1, p2, mats );
     
 end );
 
@@ -608,7 +608,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
       new_dim_vec := dim_vector_of_a - Sum( List( positions_isolated_projs, p -> sol[ p ] * dim_vectors_of_projs[ p ] ) );
       
-      new_a := QuiverRepresentationNoCheck( A, new_dim_vec, mats );     
+      new_a := QuiverRepresentation( A, new_dim_vec, mats );
       
       isolated_summands := List( positions_isolated_projs, p -> ListWithIdenticalEntries( sol[ p ], projs[ p ] ) );
       
@@ -674,7 +674,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
               
               i := i + 1;
               
-              continue; 
+              continue;
             
             fi;
             
@@ -746,7 +746,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
                                                    )
                            );
           
-          temp := QuiverRepresentationNoCheck( A, dim_vectors_of_projs[ i ], current_mats_1 );
+          temp := QuiverRepresentation( A, dim_vectors_of_projs[ i ], current_mats_1 );
           
           if IsWellDefined( temp ) then
             
@@ -772,7 +772,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
               
               i := i + 1;
               
-              continue; 
+              continue;
             
             fi;
             
@@ -820,7 +820,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
     od;
     
-    new_a := QuiverRepresentationNoCheck( A, new_dim_vec, mats );
+    new_a := QuiverRepresentation( A, new_dim_vec, mats );
     
     s := Concatenation( List( o, Range ), [ new_a ] );
     
@@ -1630,7 +1630,7 @@ function( M, vec )
   dim := DimensionsMat( M );
   if dim[ 2 ] <> Length( vec ) then
     Error("a row vector of length ",Length( vec )," cannot be in the image of a ",
-          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
+          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n");
   fi;
   if dim[ 1 ] = 0 then
     if IsZero( vec ) then
@@ -1747,7 +1747,7 @@ function( M, list_of_vectors )
   
   if ForAll( list_of_vectors, v -> dim[ 2 ] <> Length( v ) ) then
     Error("a row vector of length ", Length( v[1] )," cannot be in the image of a ",
-          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n"); 
+          dim[ 1 ]," x ",dim[ 2 ],"-matrix,\n");
   fi;
   
   list := List( list_of_vectors, AsList );
@@ -2056,7 +2056,7 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     l := List( l, Homalg_to_QPA_Matrix );
     
-    return QuiverRepresentationHomomorphismNoCheck( Source( alpha ), Source( beta ), l );
+    return QuiverRepresentationHomomorphism( Source( alpha ), Source( beta ), l );
     
 end );
 
@@ -2123,7 +2123,7 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     l := List( l, Homalg_to_QPA_Matrix );
     
-    return QuiverRepresentationHomomorphismNoCheck( Range( beta ), Range( alpha ), l );
+    return QuiverRepresentationHomomorphism( Range( beta ), Range( alpha ), l );
         
 end );
 
@@ -2391,7 +2391,7 @@ InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS,
           map[ i ] := MatrixByRows( domain, current_mat );
         fi;
       od;
-      homs[ dim_hom ] := QuiverRepresentationHomomorphismNoCheck( S, R, map );
+      homs[ dim_hom ] := QuiverRepresentationHomomorphism( S, R, map );
     od;
     
     return homs;
@@ -2590,7 +2590,7 @@ InstallGlobalFunction( INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPH
     
     od;
     
-    return QuiverRepresentationHomomorphismNoCheck( S, R, map );
+    return QuiverRepresentationHomomorphism( S, R, map );
     
 end );
 
@@ -2857,7 +2857,7 @@ InstallOtherMethod( CategoryOfVectorSpaces,
     
     vec := CategoryOfVectorSpaces( F!.ring );
         
-    DisableSanityChecks( vec ); 
+    DisableSanityChecks( vec );
     CapCategorySwitchLogicOff( vec );
     DisableAddForCategoricalOperations( vec );
     
@@ -2898,7 +2898,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     SetCommutativeRingOfLinearCategory( cat, field );
     
-    DisableSanityChecks( cat ); 
+    DisableSanityChecks( cat );
     
     CapCategorySwitchLogicOff( cat );
     
@@ -2973,7 +2973,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
         return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsEpimorphism );
         
-    end ); 
+    end );
     
     ##
     AddIsIsomorphism( cat,
@@ -2981,7 +2981,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
         return ForAll( MapsOfRepresentationHomomorphism( alpha ), IsIsomorphism );
         
-    end ); 
+    end );
     
     ##
     AddIsWellDefinedForObjects( cat,
@@ -3033,7 +3033,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
           
           matrices := List( Transpose( matrices ), StackMatricesDiagonally );
           
-          d := QuiverRepresentationNoCheck( A, dimension_vector, matrices );
+          d := QuiverRepresentation( A, dimension_vector, matrices );
           
           if ForAll( summands, s -> HasIsProjective( s ) and IsProjective( s ) ) then
             
@@ -3076,7 +3076,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
         
         matrices := List( Transpose( matrices ), StackMatricesDiagonally );
         
-        return QuiverRepresentationHomomorphismNoCheck( D1, D2, matrices );
+        return QuiverRepresentationHomomorphism( D1, D2, matrices );
         
       end );
     
@@ -3097,7 +3097,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
                           row -> List( row,
                             morphism -> MatricesOfRepresentationHomomorphism( morphism )[ i ] ) ) ) );
         
-        return QuiverRepresentationHomomorphismNoCheck( D1, D2, matrices );
+        return QuiverRepresentationHomomorphism( D1, D2, matrices );
         
       end );
      

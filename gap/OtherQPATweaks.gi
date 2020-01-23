@@ -154,7 +154,7 @@ BindGlobal( "CONVERT_COMPLEX_OF_QUIVER_REPS_TO_QUIVER_REP",
       
       matrices := Concatenation( matrices1, matrices2 );
       
-      return QuiverRepresentationNoCheck( A, dimension_vector, matrices );
+      return QuiverRepresentation( A, dimension_vector, matrices );
     
     else
       
@@ -168,7 +168,7 @@ BindGlobal( "CONVERT_COMPLEX_OF_QUIVER_REPS_TO_QUIVER_REP",
       
       matrices := Concatenation( matrices1, matrices2 );
       
-      return QuiverRepresentationNoCheck( A, dimension_vector, matrices );
+      return QuiverRepresentation( A, dimension_vector, matrices );
       
     fi;
     
@@ -194,7 +194,7 @@ BindGlobal( "CONVERT_COMPLEX_MORPHISM_OF_QUIVER_REPS_TO_QUIVER_REP_MORPHISM",
     
     r2 := CONVERT_COMPLEX_OF_QUIVER_REPS_TO_QUIVER_REP( Range( phi ), A );
     
-    return QuiverRepresentationHomomorphismNoCheck( r1, r2, matrices );
+    return QuiverRepresentationHomomorphism( r1, r2, matrices );
     
 end );
 
@@ -223,7 +223,7 @@ BindGlobal( "CONVERT_QUIVER_REP_MORPHISM_TO_COMPLEX_MORPHISM_OF_QUIVER_REPS",
                 i -> List( [ 1 .. NumberOfVertices( q ) ],
                         j-> mats[ ( i - 1 ) * NumberOfVertices( q ) + j ] ) );
     
-    mats := List( [ m .. n ], k -> QuiverRepresentationHomomorphismNoCheck( C1[ k ], C2[ k ], mats[ k - m + 1 ] ) );
+    mats := List( [ m .. n ], k -> QuiverRepresentationHomomorphism( C1[ k ], C2[ k ], mats[ k - m + 1 ] ) );
     
     if IsChainComplex( C1 ) then
       

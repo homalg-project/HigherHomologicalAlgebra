@@ -109,7 +109,7 @@ InstallMethod( HomFunctorByExceptionalCollection,
         
         od;
         
-        r := QuiverRepresentationNoCheck( A_op, dim_vec, mats );
+        r := QuiverRepresentation( A_op, dim_vec, mats );
         
         MakeImmutable( bases );
         
