@@ -2046,6 +2046,12 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     positions := PositionsProperty( sol, s -> not IsZero( s ) );
     
+    if IsEmpty( positions ) then
+      
+      return ZeroMorphism( Source( alpha ), Source( beta ) );
+    
+    fi;
+    
     l := Sum( ListN( sol{ positions }, partitions{ positions }, { s, p } -> s * p ) );
     
     l := List( l, Homalg_to_QPA_Matrix );
@@ -2106,6 +2112,12 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     sol := EntriesOfHomalgMatrix( sol );
     
     positions := PositionsProperty( sol, s -> not IsZero( s ) );
+    
+    if IsEmpty( positions ) then
+      
+      return ZeroMorphism( Range( beta ), Range( alpha ) );
+      
+    fi;
     
     l := Sum( ListN( sol{ positions }, partitions{ positions }, { s, p } -> s * p ) );
     
