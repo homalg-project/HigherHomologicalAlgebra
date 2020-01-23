@@ -12,11 +12,12 @@ InstallMethod( IsAbelianCategoryWithComputableEnoughProjectives,
           [ IsCapCategory ],
   function( cat );
     
-    return IsAbelianCategory( cat )
-            and CanCompute( cat, "IsProjective" )
-              and CanCompute( cat, "SomeProjectiveObject" )
-                and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
-                  and CanCompute( cat, "ProjectiveLift" );
+    return HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "IsProjective" )
+                  and CanCompute( cat, "SomeProjectiveObject" )
+                    and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
+                      and CanCompute( cat, "ProjectiveLift" );
 end );
 
 ##
@@ -24,11 +25,12 @@ InstallMethod( IsAbelianCategoryWithComputableEnoughInjectives,
           [ IsCapCategory ],
   function( cat );
     
-    return IsAbelianCategory( cat )
-            and CanCompute( cat, "IsInjective" )
-              and CanCompute( cat, "SomeInjectiveObject" )
-                and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
-                  and CanCompute( cat, "InjectiveColift" );
+    return HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "IsInjective" )
+                  and CanCompute( cat, "SomeInjectiveObject" )
+                    and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
+                      and CanCompute( cat, "InjectiveColift" );
 end );
 
 
