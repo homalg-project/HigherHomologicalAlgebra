@@ -11,7 +11,7 @@ function( homotopy_category, n )
   
   Hn := HomologyFunctor( complex_cat, n );
   
-  r := RANDOM_TEXT_ATTR();
+  r := RandomTextColor();
   
   name := Concatenation( String( n ), "-th homology functor ", r[ 1 ], "from", r[ 2 ], " ",
             Name( homotopy_category ), " ", r[ 1 ], "to", r[ 2 ], " ", Name( cat ) );
@@ -122,7 +122,7 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
     
     ChF := ExtendFunctorToChainComplexCategories( F );
     
-    r := RANDOM_TEXT_ATTR();
+    r := RandomTextColor();
     
     name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to homotopy categories.", r[ 2 ] );
     
@@ -197,7 +197,7 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
     
     homotopy_category_projs := HomotopyCategory( projs );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomTextColor( );
     
     name := Concatenation( "Localization functor ", r[ 1 ], "from", r[ 2 ], 
                  " ", Name( homotopy_category ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_category_projs ) );
@@ -252,7 +252,7 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
     
     homotopy_category_injs := HomotopyCategory( injs );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomTextColor( );
     
     name := Concatenation( "Localization functor ", r[ 1 ], "from", r[ 2 ], 
                  " ", Name( homotopy_category ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_category_injs ) );

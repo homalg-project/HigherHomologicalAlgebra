@@ -69,7 +69,7 @@ InstallMethod( HomotopyCategory,
     
     fi;
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomTextColor( );
     
     name := Concatenation( r[ 1 ], "Homotopy category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
    
