@@ -24,7 +24,7 @@ SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
 SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 
-S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
+S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0,x1" );
 o := TwistedGradedFreeModule( S, 0 );
 
 BB := BeilinsonFunctor( S );
@@ -78,8 +78,6 @@ DeactivateCachingOfCategory( chains_D );
 inc := PreCompose( InclusionFunctor( indec_C ), InclusionFunctor( AsCapCategory( Range( InclusionFunctor( indec_C ) ) ) ) );
 inc := ExtendFunctorToAdditiveClosureOfSource( inc );
 inc := ExtendFunctorToHomotopyCategories( inc );
-# embedd in a category where homology makes sence.
-
 ##########################################################
 
 ################### Tensor ###############################
@@ -90,7 +88,8 @@ homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ),
 # this can be applied on objects and morphisms
 cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
 
-b := RANDOM_CHAIN_COMPLEX( chains_C, -1, 2, 2 );
+
+b := RANDOM_CHAIN_COMPLEX( chains_C, -4, 4, 3 );
 b := ApplyFunctor( Loc, b/homotopy_C );
 
 quit;
@@ -103,5 +102,4 @@ inc_conv_b := inc( conv_b );
 
 HomologySupport( inc_conv_b );
 HomologySupport( inc_b );
-
 
