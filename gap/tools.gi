@@ -611,3 +611,24 @@ InstallMethod( FinalizeCategory,
     
 end );
 
+
+##
+InstallGlobalFunction( RandomTextColor,
+  function (  )
+    return [ Random( [ "\033[32m", "\033[33m", "\033[34m", "\033[35m", #"\033[31m"
+              ] ), "\033[0m" ];
+end );
+
+##
+InstallGlobalFunction( RandomBoldTextColor,
+  function (  )
+    return [ Random( [ "\033[1m\033[31m" #, "\033[1m\033[32m", "\033[1m\033[33m", "\033[1m\033[34m", "\033[1m\033[35m",
+              ] ), "\033[0m" ];
+end );
+
+##
+InstallGlobalFunction( RandomBackgroundColor,
+  function (  )
+    return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
+end );
+

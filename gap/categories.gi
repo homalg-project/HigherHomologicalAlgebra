@@ -51,7 +51,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
   function ( cat, shift_index )
     local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, 
     morphisms_equality_for_cache, chains_range_cat, r;
-    r := RANDOM_TEXT_ATTR(  );
+    r := RandomTextColor(  );
     if shift_index = -1 then
         name := Concatenation( r[1], "Chain complexes( ", r[2], Name( cat ), r[1], " )", r[2] );
         complex_cat := CreateCapCategory( name );
