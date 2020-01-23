@@ -181,8 +181,8 @@ end );
 ## Modified version of a similar method in QPA.
 ## Aim: reduce any checks.
 ##
-InstallGlobalFunction( QuiverRepresentationNoCheck,
-  
+InstallMethod( QuiverRepresentation,
+          [ IsQuiverAlgebra, IsDenseList, IsDenseList ],
   function( A, dimensions, matrices )
     local cat, Q, objects, m, morphisms, i, a, source, range;
     
@@ -210,13 +210,15 @@ InstallGlobalFunction( QuiverRepresentationNoCheck,
     
     return QuiverRepresentationNC( cat, objects, morphisms );
     
-end );
+end, 5000 );
+
+InstallGlobalFunction( QuiverRepresentationNoCheck, { A, dim, l } -> QuiverRepresentation( A, dim, l ) );
 
 ## Modified version of a similar method in QPA.
 ## Aim: reduce any checks.
 ##
-InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck,
-
+InstallMethod( QuiverRepresentationHomomorphism,
+          [ IsQuiverRepresentation, IsQuiverRepresentation, IsDenseList ],
   function( R1, R2, maps )
     local cat, ucat, Q, morphisms, V1, V2, morphism, m, i;
  
@@ -266,7 +268,9 @@ InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck,
 
     return QuiverRepresentationHomomorphismNC( R1, R2, morphisms );
   
-end );
+end, 5000 );
+
+InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck, { r1, r2, l } -> QuiverRepresentationHomomorphism( r1, r2, l ) );
 
 #######################################
 #
