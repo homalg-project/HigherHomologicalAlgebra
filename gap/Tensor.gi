@@ -30,10 +30,10 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
     
     indec_projs := AsCapCategory( Source( iso ) );
     
-    r := RANDOM_TEXT_ATTR();
-    
-    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", 
-              Name( indec_projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( ambient_cat ) );
+    r := RandomBoldTextColor( );
+
+    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+              Name( indec_projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( ambient_cat ) );
     
     cell_func := c -> ApplyFunctor( iso, c );
     
@@ -61,11 +61,11 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObje
     
     D := AsCapCategory( Range( G ) );
     
-    r := RANDOM_TEXT_ATTR( );
-    
-    name := Concatenation( "Restriction of - ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ",
-              Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( D ) );
-    
+    r := RandomBoldTextColor( );
+
+    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( D ) );
+        
     R := CapFunctor( name, projs, D );
     
     AddObjectFunction( R, # FunctorObjectOperation( can_add_G ) );
