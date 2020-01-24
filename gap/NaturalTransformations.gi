@@ -14,7 +14,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
   function( collection )
     local HH, TT, D, k, name, nat;
     
-    HH := HomFunctorByExceptionalCollection( collection );
+    HH := HomFunctor( collection );
     
     TT := TensorFunctorByExceptionalCollection( collection );
     
@@ -96,7 +96,7 @@ InstallMethod( CounitOfTensorHomAdjunction,
   function( collection )
     local HH, TT, C, k, name, nat;
     
-    HH := HomFunctorByExceptionalCollection( collection );
+    HH := HomFunctor( collection );
     
     TT := TensorFunctorByExceptionalCollection( collection );
     

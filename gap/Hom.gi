@@ -9,7 +9,7 @@
 #############################################################################
 
 ##
-InstallMethod( HomFunctorByExceptionalCollection,
+InstallMethod( HomFunctorAttr,
     [ IsExceptionalCollection ],
     
   function( collection )
@@ -48,7 +48,7 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( ambient_cat ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
        
     F := CapFunctor( name, ambient_cat, reps );
@@ -161,6 +161,9 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
 end );
 
+##
+InstallMethod( HomFunctor, [ IsExceptionalCollection ], HomFunctorAttr );
+
 ########################################################
 #
 # if the collection is defined by subcategory
@@ -169,12 +172,12 @@ end );
 #########################################################
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects,
+InstallMethod( HomFunctorOnIndecInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local H, ambient_cat, reps, inj_indec, r, name, cell_func;
     
-    H := HomFunctorByExceptionalCollection( collection );
+    H := HomFunctor( collection );
     
     ambient_cat := AsCapCategory( Source( H ) );
     
@@ -190,7 +193,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( inj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
     
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
@@ -200,7 +203,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
 end );
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
+InstallMethod( HomFunctorOnInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local cat, G, add_G, can, can_add_G, injs, reps, r, name, R;
@@ -213,7 +216,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
       
     fi;
     
-    G := RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects( collection );
+    G := HomFunctorOnIndecInjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
@@ -227,7 +230,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( injs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
        
     R := CapFunctor( name, injs, reps );
@@ -241,12 +244,12 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
 end );
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects,
+InstallMethod( HomFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local H, ambient_cat, reps, proj_indec, r, name, cell_func;
     
-    H := HomFunctorByExceptionalCollection( collection );
+    H := HomFunctor( collection );
     
     ambient_cat := AsCapCategory( Source( H ) );
     
@@ -262,7 +265,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
         
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
@@ -272,7 +275,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
 end );
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects,
+InstallMethod( HomFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local cat, G, add_G, can, can_add_G, projs, reps, r, name, R;
@@ -285,7 +288,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
       
     fi;
     
-    G := RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
+    G := HomFunctorOnIndecProjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
@@ -299,7 +302,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
         
     R := CapFunctor( name, projs, reps );
@@ -321,12 +324,12 @@ end );
 ###############################################
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects,
+InstallMethod( HomFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local H, ambient_cat, reps, C, chains_C, proj, proj_indec, r, name, cell_func;
     
-    H := HomFunctorByExceptionalCollection( collection );
+    H := HomFunctor( collection );
     
     ambient_cat := AsCapCategory( Source( H ) );
     
@@ -357,7 +360,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
    
     cell_func := c -> ApplyFunctor( H, c );
@@ -367,7 +370,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
 end );
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects,
+InstallMethod( HomFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local cat, C, G, add_G, can, can_add_G, projs, reps, r, name, R;
@@ -382,7 +385,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
     
     C := DefiningCategory( cat );
     
-    G := RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
+    G := HomFunctorOnIndecProjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
@@ -396,7 +399,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
        
     R := CapFunctor( name, projs, reps );
@@ -419,12 +422,12 @@ end );
 ###############################################
 
 ##
-InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure,
+InstallMethod( HomFunctorOnAdditiveClosure,
           [ IsExceptionalCollection ],
   function( collection )
     local H, ambient_cat, C, chains_C, indec_C, reps, cell_func, r, name, F;
     
-    H := HomFunctorByExceptionalCollection( collection );
+    H := HomFunctor( collection );
     
     ambient_cat := AsCapCategory( Source( H ) );
     
@@ -459,7 +462,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure,
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
               Name( indec_C ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
 
     

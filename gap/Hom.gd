@@ -15,8 +15,11 @@
 #!  $\mathrm{Hom}(\oplus_i E_i,-):C \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareAttribute( "HomFunctorByExceptionalCollection",
+DeclareAttribute( "HomFunctorAttr",
         IsExceptionalCollection );
+
+DeclareOperation( "HomFunctor",
+        [ IsExceptionalCollection ] );
 
 #! @Description
 #!  The argument is an exceptional collection <A>E</A> which is defined by some full
@@ -26,7 +29,7 @@ DeclareAttribute( "HomFunctorByExceptionalCollection",
 #!  \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObjects",
+DeclareAttribute( "HomFunctorOnIndecInjectiveObjects",
         IsExceptionalCollection );
 
 #! @Description
@@ -37,17 +40,17 @@ DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiv
 #!  \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects",
+DeclareAttribute( "HomFunctorOnInjectiveObjects",
         IsExceptionalCollection );
 
 
-DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveObjects",
+DeclareAttribute( "HomFunctorOnIndecProjectiveObjects",
         IsExceptionalCollection );
 
-DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects",
+DeclareAttribute( "HomFunctorOnProjectiveObjects",
         IsExceptionalCollection );
 
-DeclareAttribute( "RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure",
+DeclareAttribute( "HomFunctorOnAdditiveClosure",
         IsExceptionalCollection );
 
 
