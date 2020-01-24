@@ -4,7 +4,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( BeilinsonFunctor,
             [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, add_full, collection, iso, inc_1, inc_2, reps, homotopy_reps, name, BB, r;
+      local n, A, cat, full, add_full, collection, iso, inc_1, inc_2, reps, homotopy_reps, name, BB, r, i;
       
       n := Size( Indeterminates( S ) );
       
@@ -22,7 +22,21 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       DisableSanityChecks( add_full );
       
-      collection := CreateExceptionalCollection( full );
+      name := "quiver{";
+      
+      for i in [ 0 .. n - 1 ] do
+        
+        if i <> n - 1 then
+          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , ")," );
+        else
+          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , ")" );
+        fi;
+        
+      od;
+      
+      name := Concatenation( name, "}" );
+      
+      collection := CreateExceptionalCollection( full : name_for_underlying_quiver := name );
       
       iso := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
       
@@ -38,7 +52,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       homotopy_reps := HomotopyCategory( reps );
       
-      r := RANDOM_TEXT_ATTR( );
+      r := RandomTextColor( );
       
       name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
                   r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_reps ) );
@@ -110,7 +124,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       homotopy_cat := HomotopyCategory( add_cotangent_modules);
       
-      r := RANDOM_TEXT_ATTR( );
+      r := RandomTextColor( );
       
       name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
                   r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
@@ -172,7 +186,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
        
       homotopy_cat := HomotopyCategory( add_full );
       
-      r := RANDOM_TEXT_ATTR( );
+      r := RandomTextColor( );
       
       name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
                   r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
@@ -225,7 +239,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       full := FullSubcategoryGeneratedByTwistsOfStructureSheaf( S );
       
-      r := RANDOM_TEXT_ATTR( );
+      r := RandomTextColor( );
       
       name := Concatenation( "Restriction of Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_reps ) );
       
