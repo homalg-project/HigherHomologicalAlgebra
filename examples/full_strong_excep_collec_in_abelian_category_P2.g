@@ -7,7 +7,7 @@ magma := field;
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
 DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
-DISABLE_COLORS[ 1 ] := true; #false;
+DISABLE_COLORS[ 1 ] := false;
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
 SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
