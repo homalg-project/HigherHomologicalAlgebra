@@ -21,8 +21,8 @@ DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
 DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 3 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
+SetInfoLevel( InfoHomotopyCategories, 1 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0,x1" );
 o := TwistedGradedFreeModule( S, 0 );
