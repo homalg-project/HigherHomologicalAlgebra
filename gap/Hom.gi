@@ -46,11 +46,11 @@ InstallMethod( HomFunctorByExceptionalCollection,
     
     reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
     
-    r := RANDOM_TEXT_ATTR();
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ],
-              " ", Name( ambient_cat ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( ambient_cat ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+       
     F := CapFunctor( name, ambient_cat, reps );
     
     AddObjectFunction( F,
@@ -188,11 +188,10 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecInjectiveObj
     
     inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from",
-              r[ 2 ], " ", Name( inj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps )
-            );
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( inj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
     
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
@@ -226,11 +225,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from",
-              r[ 2 ], " ", Name( injs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( injs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+       
     R := CapFunctor( name, injs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -261,12 +260,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
     
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( ambient_cat );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from",
-              r[ 2 ], " ", Name( proj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps )
-            );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+        
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
@@ -299,11 +297,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from",
-              r[ 2 ], " ", Name( projs ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+        
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -357,11 +355,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToIndecProjectiveOb
     H := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ),
             StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ],
-              " ", Name( proj_indec ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+   
     cell_func := c -> ApplyFunctor( H, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
@@ -396,11 +394,11 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RANDOM_TEXT_ATTR( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Restriction of Hom(T,-) functor ", r[ 1 ], "from", r[ 2 ], " ", Name( projs ),
-              " ", r[ 1 ], "into", r[ 2 ], " ", Name( reps ) );
-    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+       
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -424,7 +422,7 @@ end );
 InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, C, chains_C, indec_C, reps, cell_func, F;
+    local H, ambient_cat, C, chains_C, indec_C, reps, cell_func, r, name, F;
     
     H := HomFunctorByExceptionalCollection( collection );
     
@@ -459,7 +457,13 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure,
     
     cell_func := c -> ApplyFunctor( H, c );
     
-    F := FunctorFromLinearCategoryByTwoFunctions( "Hom(T,-) functor", indec_C, reps, cell_func, cell_func );
+    r := RandomBoldTextColor( );
+    
+    name := Concatenation( "\033[1mHom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
+              Name( indec_C ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
+
+    
+    F := FunctorFromLinearCategoryByTwoFunctions( name, indec_C, reps, cell_func, cell_func );
     
     return ExtendFunctorToAdditiveClosureOfSource( F );
    
