@@ -96,7 +96,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     fi;
     objects_equality_for_cache := ValueOption( "ObjectsEqualityForCache" );
     if objects_equality_for_cache in [ 1, fail ] then
-        Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for objects in ", Name( complex_cat ) );
+        Info( InfoComplexCategoriesForCAP, 3, "Setting the default Caching for objects in ", Name( complex_cat ) );
         AddIsEqualForCacheForObjects( complex_cat, function ( C1, C2 )
               return IsIdenticalObj( C1, C2 );
           end );
@@ -137,7 +137,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     fi;
     morphisms_equality_for_cache := ValueOption( "MorphismsEqualityForCache" );
     if morphisms_equality_for_cache in [ fail, 1 ] then
-        Info( InfoComplexCategoriesForCAP, 2, "Setting the default Caching for morphisms in ", Name( complex_cat ) );
+        Info( InfoComplexCategoriesForCAP, 3, "Setting the default Caching for morphisms in ", Name( complex_cat ) );
         AddIsEqualForCacheForMorphisms( complex_cat, function ( m1, m2 )
               return IsIdenticalObj( m1, m2 );
           end );
