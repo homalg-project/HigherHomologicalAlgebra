@@ -413,7 +413,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
   function( stable_category )
     local category, category_of_hom_structure;
     
-    category := UnderlyingCapCategory( stable_category );
+    category := UnderlyingCategory( stable_category );
     
     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
     
@@ -535,7 +535,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTIN
   function( stable_category )
     local category, range_category, freyd_cat;
     
-    category := UnderlyingCapCategory( stable_category );
+    category := UnderlyingCategory( stable_category );
     
     range_category := RangeCategoryOfHomomorphismStructure( category );
     
@@ -648,7 +648,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
   function( stable_category )
     local category, category_of_hom_structure;
     
-    category := UnderlyingCapCategory( stable_category );
+    category := UnderlyingCategory( stable_category );
     
     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
     
@@ -772,7 +772,7 @@ InstallGlobalFunction( ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_
   function( stable_category )
     local category, range_category, freyd_cat;
      
-    category := UnderlyingCapCategory( stable_category );
+    category := UnderlyingCategory( stable_category );
     
     range_category := RangeCategoryOfHomomorphismStructure( category );
     
