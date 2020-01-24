@@ -37,7 +37,7 @@ DeactivateCachingOfCategory( C );
 indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
 DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
-name := "quiver{𝓞 (-2),𝓞 (-1),𝓞 }";
+name := "quiver{ 𝓞 (-2), 𝓞 (-1), 𝓞 }";
 L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
 collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
 
@@ -55,7 +55,10 @@ chains_D := UnderlyingCategory( homotopy_D );
 DeactivateCachingOfCategory( chains_D );
 
 TP := TensorFunctorOnProjectiveObjects( collection );
-homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
+homotopy_TT := PreCompose( 
+                  LocalizationFunctorByProjectiveObjects( homotopy_D ), 
+                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
+                  );
 
 cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
 
