@@ -16,7 +16,7 @@ derived_C := DerivedCategory( C );
 collection := CreateExceptionalCollection( IndecProjectiveObjects( C ) );
 
 HH := HomFunctorByExceptionalCollection( collection );
-HI := RestrictionOfHomFunctorByExceptionalCollectionToInjectiveObjects( collection );
+HI := HomFunctorOnInjectiveObjects( collection );
 homotopy_HH := PreCompose( LocalizationFunctorByInjectiveObjects( homotopy_C ), ExtendFunctorToHomotopyCategories( HI ) );
 
 

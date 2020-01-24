@@ -52,8 +52,8 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
 
 
 ################# Hom #################################
-HH := HomFunctorByExceptionalCollection( collection );
-HP := RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure( collection );
+HH := HomFunctor( collection );
+HP := HomFunctorOnAdditiveClosure( collection );
 homotopy_HH := ExtendFunctorToHomotopyCategories( HP );
 ########################################################
 
@@ -84,7 +84,7 @@ inc := ExtendFunctorToHomotopyCategories( inc );
 ##########################################################
 
 ################### Tensor ###############################
-TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 ##########################################################
 
