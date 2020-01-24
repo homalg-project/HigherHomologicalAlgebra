@@ -27,7 +27,7 @@ BB := BeilinsonFunctor( S );
 homotopy_C := AsCapCategory( Range( BB ) );
 DeactivateCachingOfCategory( homotopy_C );
 
-chains_C := UnderlyingCapCategory( homotopy_C );
+chains_C := UnderlyingCategory( homotopy_C );
 DeactivateCachingOfCategory( chains_C );
 
 C := DefiningCategory( homotopy_C );
@@ -51,7 +51,7 @@ DeactivateCachingOfCategory( D );
 homotopy_D := HomotopyCategory( D );
 DeactivateCachingOfCategory( homotopy_D );
 
-chains_D := UnderlyingCapCategory( homotopy_D );
+chains_D := UnderlyingCategory( homotopy_D );
 DeactivateCachingOfCategory( chains_D );
 
 

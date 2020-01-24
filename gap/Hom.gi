@@ -442,7 +442,7 @@ InstallMethod( RestrictionOfHomFunctorByExceptionalCollectionToAdditiveClosure,
       
     fi;
     
-    chains_C := UnderlyingCapCategory( ambient_cat );
+    chains_C := UnderlyingCategory( ambient_cat );
     
     indec_C := UnderlyingCategory( C );
     

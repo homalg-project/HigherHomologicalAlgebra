@@ -598,7 +598,7 @@ InstallMethod( LocalizationFunctor,
   function( homotopy )
     local complexes, cat, D, r, name, F;
     
-    complexes := UnderlyingCapCategory( homotopy );
+    complexes := UnderlyingCategory( homotopy );
     
     cat := UnderlyingCategory( complexes );
     
