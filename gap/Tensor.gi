@@ -117,6 +117,54 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     [ IsExceptionalCollection ],
     
   function( collection )
+    local TP, reps, C, chains_reps, homotopy_reps, T, r, name, F;
+    
+    TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+    
+    reps := AmbientCategory( AsCapCategory( Source( TP ) ) );
+    
+    C := AsCapCategory( Range( TP ) );
+       
+    if not IsHomotopyCategory( C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    chains_reps := ChainComplexCategory( reps );
+    
+    homotopy_reps := HomotopyCategory( reps );
+    
+    T := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_reps ), ExtendFunctorToHomotopyCategories( TP ) );
+    
+    r := RandomBoldTextColor( );
+
+    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( C ) );
+  
+    F := CapFunctor( name, reps, C );
+    
+    AddObjectFunction( F,
+      function( r )
+        
+        return Convolution( UnderlyingCell( T( IdentityMorphism ( r )/ chains_reps / homotopy_reps ) ) );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, alpha, range )
+        
+        return Convolution( UnderlyingCell( T( IdentityMorphism ( alpha )/ chains_reps / homotopy_reps ) ) );
+        
+    end );
+    
+    return F;
+    
+end );
+InstallMethod( TensorFunctorByExceptionalCollection,
+    [ IsExceptionalCollection ],
+    
+  function( collection )
     local R, r, projs, reps, cat, name, F;
     
     R := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
@@ -127,10 +175,17 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     
     cat := AsCapCategory( Range( R ) );
     
-    r := RANDOM_TEXT_ATTR( );
+    if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
     
-    name := Concatenation( "- ⊗_{End T} T functor ", r[ 1 ], "from", r[ 2 ], " ", Name( reps ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( cat ) );
-    
+    r := RandomBoldTextColor( );
+
+    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( cat ) );
+  
     F := CapFunctor( name, reps, cat );
     
     AddObjectFunction( F,
@@ -173,4 +228,71 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     
 end );
 
+##
+InstallMethod( TensorFunctorByExceptionalCollection,
+    [ IsExceptionalCollection ],
+    
+  function( collection )
+    local R, r, projs, reps, cat, name, F;
+    
+    R := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+    
+    projs := AsCapCategory( Source( R ) );
+    
+    reps := AmbientCategory( projs  );
+    
+    cat := AsCapCategory( Range( R ) );
+    
+    if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    r := RandomBoldTextColor( );
+
+    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( cat ) );
+  
+    F := CapFunctor( name, reps, cat );
+    
+    AddObjectFunction( F,
+      function( r )
+        local P, cok;
+        
+        P := ProjectiveChainResolution( r );
+        
+        P := P ^ 1;
+        
+        P := ApplyFunctor( R, P / projs );
+        
+        cok := CokernelObject( P );
+        
+        cok!.defining_morphism_of_cokernel_object := P;
+        
+        return cok;
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( source, alpha, range )
+        local gamma, cok_func;
+        
+        gamma := MorphismBetweenProjectiveChainResolutions( alpha );
+        
+        gamma := [ Source( gamma ) ^ 1, gamma[ 0 ], Range( gamma ) ^ 1 ];
+        
+        gamma := List( gamma, g -> ApplyFunctor( R, g / projs ) );
+        
+        cok_func := CallFuncList( CokernelObjectFunctorial, gamma );
+        
+        cok_func!.defining_morphism_of_cokernel_object := gamma[ 2 ];
+        
+        return cok_func;
+        
+    end );
+    
+    return F;
+    
+end );
 
