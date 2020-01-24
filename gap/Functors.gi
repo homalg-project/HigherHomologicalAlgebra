@@ -123,9 +123,10 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
     ChF := ExtendFunctorToChainComplexCategories( F );
     
     r1 := RandomBoldTextColor( );
+    
     r2 := RandomTextColor( );
     
-    name := Concatenation( r2[ 1 ], "Extention functor ( ", r2[ 2 ], Name( F ), " ", r2[ 1 ], ") ",
+    name := Concatenation( r2[ 1 ], "Extention of functor ( ", r2[ 2 ], Name( F ), " ", r2[ 1 ], ") ",
               r1[ 1 ], ":", r1[ 2 ], " ", Name( S ), " ", r1[ 1 ], "--->", r1[ 2 ], " ", Name( T ) );
     
     functor := CapFunctor( name, S, T );
@@ -152,7 +153,7 @@ end );
 InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
           [ IsCapNaturalTransformation ],
   function( eta )
-    local F, G, homotopy_cat, HF, HG, C_eta, name, H_eta, ationToChain;
+    local F, G, homotopy_cat, HF, HG, C_eta, r1, r2, name, H_eta;
     
     F := Source( eta );
     
@@ -166,7 +167,12 @@ InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
     
     C_eta := ExtendNaturalTransformationToChainComplexCategories( eta );
     
-    name := Concatenation( "Extention of ", Name( eta ), " to homotopy categories" );
+    r1 := RandomBoldTextColor( );
+    
+    r2 := RandomTextColor( );
+    
+    name := Concatenation( r2[ 1 ], "Extention of natural transformation ( ", r2[ 2 ], Name( eta ), " ", r2[ 1 ], ") ",
+              r1[ 1 ], ":", r1[ 2 ], " ", Name( HF ), " ", r1[ 1 ], "===>", r1[ 2 ], " ", Name( HG ) );
 
     H_eta := NaturalTransformation( name, HF, HG );
     
