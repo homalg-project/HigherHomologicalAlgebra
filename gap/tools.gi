@@ -1,4 +1,5 @@
 BindGlobal( "DISABLE_ALL_SANITY_CHECKS_AND_LOGIC", [ false, false ] );
+BindGlobal( "DISABLE_COLORS", [ true ] );
 
 ##
 InstallGlobalFunction( Time,
@@ -615,15 +616,21 @@ end );
 ##
 InstallGlobalFunction( RandomTextColor,
   function (  )
-    return [ Random( [ "\033[32m", "\033[33m", "\033[34m", "\033[35m", #"\033[31m"
-              ] ), "\033[0m" ];
+    if DISABLE_COLORS[ 1 ] then
+      return [ "", "" ];
+    else
+      return [ Random( [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ] ), "\033[0m" ];
+    fi;
 end );
 
 ##
 InstallGlobalFunction( RandomBoldTextColor,
   function (  )
-    return [ Random( [ "\033[1m\033[31m" #, "\033[1m\033[32m", "\033[1m\033[33m", "\033[1m\033[34m", "\033[1m\033[35m",
-              ] ), "\033[0m" ];
+    if DISABLE_COLORS[ 1 ] then
+      return [ "", "" ];
+    else
+      return [ Random( [ "\033[1m\033[31m" ] ), "\033[0m" ];
+    fi;
 end );
 
 ##
