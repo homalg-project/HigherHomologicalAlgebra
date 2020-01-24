@@ -16,7 +16,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
     
     HH := HomFunctor( collection );
     
-    TT := TensorFunctorByExceptionalCollection( collection );
+    TT := TensorFunctor( collection );
     
     D := AsCapCategory( Source( TT ) );
     
@@ -98,7 +98,7 @@ InstallMethod( CounitOfTensorHomAdjunction,
     
     HH := HomFunctor( collection );
     
-    TT := TensorFunctorByExceptionalCollection( collection );
+    TT := TensorFunctor( collection );
     
     C := AsCapCategory( Source( HH ) );
     

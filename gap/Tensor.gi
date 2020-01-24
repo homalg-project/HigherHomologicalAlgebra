@@ -9,7 +9,7 @@
 #############################################################################
 
 ##
-InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects,
+InstallMethod( TensorFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local full, ambient_cat, inc, iso2, A, iso1, iso, indec_projs, r, name, cell_func;
@@ -32,7 +32,7 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
     
     r := RandomBoldTextColor( );
 
-    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
               Name( indec_projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( ambient_cat ) );
     
     cell_func := c -> ApplyFunctor( iso, c );
@@ -42,12 +42,12 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiv
 end );
 
 ##
-InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects,
+InstallMethod( TensorFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
     local G, add_G, C, can, can_add_G, projs, D, r, name, R;
     
-    G := RestrictionOfTensorFunctorByExceptionalCollectionToIndecProjectiveObjects( collection );
+    G := TensorFunctorOnIndecProjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosures( G ); # or add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
@@ -63,7 +63,7 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObje
     
     r := RandomBoldTextColor( );
 
-    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
               Name( projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( D ) );
         
     R := CapFunctor( name, projs, D );
@@ -113,13 +113,13 @@ InstallMethod( RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObje
 end );
 
 ##
-InstallMethod( TensorFunctorByExceptionalCollection,
+InstallMethod( TensorFunctor,
     [ IsExceptionalCollection ],
     
   function( collection )
     local TP, reps, C, chains_reps, homotopy_reps, T, r, name, F;
     
-    TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+    TP := TensorFunctorOnProjectiveObjects( collection );
     
     reps := AmbientCategory( AsCapCategory( Source( TP ) ) );
     
@@ -139,7 +139,7 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     
     r := RandomBoldTextColor( );
 
-    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
               Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( C ) );
   
     F := CapFunctor( name, reps, C );
@@ -161,81 +161,15 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     return F;
     
 end );
-InstallMethod( TensorFunctorByExceptionalCollection,
-    [ IsExceptionalCollection ],
-    
-  function( collection )
-    local R, r, projs, reps, cat, name, F;
-    
-    R := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
-    
-    projs := AsCapCategory( Source( R ) );
-    
-    reps := AmbientCategory( projs  );
-    
-    cat := AsCapCategory( Range( R ) );
-    
-    if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    r := RandomBoldTextColor( );
-
-    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
-              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( cat ) );
-  
-    F := CapFunctor( name, reps, cat );
-    
-    AddObjectFunction( F,
-      function( r )
-        local P, cok;
-        
-        P := ProjectiveChainResolution( r );
-        
-        P := P ^ 1;
-        
-        P := ApplyFunctor( R, P / projs );
-        
-        cok := CokernelObject( P );
-        
-        cok!.defining_morphism_of_cokernel_object := P;
-        
-        return cok;
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( source, alpha, range )
-        local gamma, cok_func;
-        
-        gamma := MorphismBetweenProjectiveChainResolutions( alpha );
-        
-        gamma := [ Source( gamma ) ^ 1, gamma[ 0 ], Range( gamma ) ^ 1 ];
-        
-        gamma := List( gamma, g -> ApplyFunctor( R, g / projs ) );
-        
-        cok_func := CallFuncList( CokernelObjectFunctorial, gamma );
-        
-        cok_func!.defining_morphism_of_cokernel_object := gamma[ 2 ];
-        
-        return cok_func;
-        
-    end );
-    
-    return F;
-    
-end );
 
 ##
-InstallMethod( TensorFunctorByExceptionalCollection,
+InstallMethod( TensorFunctor,
     [ IsExceptionalCollection ],
     
   function( collection )
     local R, r, projs, reps, cat, name, F;
     
-    R := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
+    R := TensorFunctorOnProjectiveObjects( collection );
     
     projs := AsCapCategory( Source( R ) );
     
@@ -251,7 +185,7 @@ InstallMethod( TensorFunctorByExceptionalCollection,
     
     r := RandomBoldTextColor( );
 
-    name := Concatenation( "\033[1m- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
+    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
               Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( cat ) );
   
     F := CapFunctor( name, reps, cat );
