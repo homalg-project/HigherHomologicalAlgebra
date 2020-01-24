@@ -14,6 +14,7 @@ list_of_operations := [
 
 DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
 DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
+DISABLE_COLORS[ 1 ] := true; #false;
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 1 );
