@@ -114,7 +114,7 @@ end );
 InstallMethod( ExtendFunctorToHomotopyCategories,
                [ IsCapFunctor ],
   function( F )
-    local S, T, ChF, name, functor, r;
+    local S, T, ChF, r1, r2, name, functor;
     
     S := HomotopyCategory( AsCapCategory( Source( F ) ) );
     
@@ -122,9 +122,11 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
     
     ChF := ExtendFunctorToChainComplexCategories( F );
     
-    r := RandomTextColor();
+    r1 := RandomBoldTextColor( );
+    r2 := RandomTextColor( );
     
-    name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to homotopy categories.", r[ 2 ] );
+    name := Concatenation( r2[ 1 ], "Extention functor ( ", r2[ 2 ], Name( F ), " ", r2[ 1 ], ") ",
+              r1[ 1 ], ":", r1[ 2 ], " ", Name( S ), " ", r1[ 1 ], "--->", r1[ 2 ], " ", Name( T ) );
     
     functor := CapFunctor( name, S, T );
     
@@ -197,10 +199,10 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
     
     homotopy_category_projs := HomotopyCategory( projs );
     
-    r := RandomTextColor( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Localization functor ", r[ 1 ], "from", r[ 2 ], 
-                 " ", Name( homotopy_category ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_category_projs ) );
+    name := Concatenation( "Localization functor by projectives ", r[ 1 ], ":", r[ 2 ],
+                 " ", Name( homotopy_category ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( homotopy_category_projs ) );
     
     F := CapFunctor( name, homotopy_category, homotopy_category_projs );
     
@@ -252,10 +254,10 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
     
     homotopy_category_injs := HomotopyCategory( injs );
     
-    r := RandomTextColor( );
+    r := RandomBoldTextColor( );
     
-    name := Concatenation( "Localization functor ", r[ 1 ], "from", r[ 2 ], 
-                 " ", Name( homotopy_category ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_category_injs ) );
+    name := Concatenation( "Localization functor by injectives ", r[ 1 ], ":", r[ 2 ], 
+                 " ", Name( homotopy_category ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( homotopy_category_injs ) );
     
     F := CapFunctor( name, homotopy_category, homotopy_category_injs );
     
