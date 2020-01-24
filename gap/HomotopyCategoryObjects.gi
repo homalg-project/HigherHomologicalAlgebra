@@ -17,7 +17,7 @@ InstallMethod( HomotopyCategoryObject,
   function( homotopy_category, a )
     local homotopy_a;
     
-    if not IsIdenticalObj( UnderlyingCapCategory( homotopy_category ), CapCategory( a ) ) then
+    if not IsIdenticalObj( UnderlyingCategory( homotopy_category ), CapCategory( a ) ) then
       
       Error( "The input is not compatible!\n" );
       

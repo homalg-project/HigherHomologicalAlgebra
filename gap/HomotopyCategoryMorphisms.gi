@@ -15,7 +15,7 @@ InstallMethod( HomotopyCategoryMorphism,
   function( homotopy_category, phi )
     local homotopy_phi;
     
-    if not IsIdenticalObj( UnderlyingCapCategory( homotopy_category ), CapCategory( phi ) ) then
+    if not IsIdenticalObj( UnderlyingCategory( homotopy_category ), CapCategory( phi ) ) then
       
       Error( "The input is not compatible!\n" );
       
@@ -87,7 +87,7 @@ BindGlobal( "AsPseudoHomologicalBicomplex",
     
     homotopy_category := UnderlyingCategory( chains );
     
-    cat := UnderlyingCapCategory( homotopy_category );
+    cat := UnderlyingCategory( homotopy_category );
     
     if IsHomotopyCategory( homotopy_category ) then
       

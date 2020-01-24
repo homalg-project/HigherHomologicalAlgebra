@@ -123,7 +123,7 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
     
     cat := UnderlyingCategory( chains );
     
@@ -155,7 +155,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
     
     cat := UnderlyingCategory( chains );
     
@@ -202,7 +202,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc, chains_range_cat_of_hom_struc, H0;
     
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
     
     cat := UnderlyingCategory( chains );
     
@@ -276,7 +276,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
     
     cat := UnderlyingCategory( chains );
     
@@ -338,7 +338,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
     
     cat := UnderlyingCategory( chains );
     
@@ -399,7 +399,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
 
-    chains := UnderlyingCapCategory( homotopy_category );
+    chains := UnderlyingCategory( homotopy_category );
 
     cat := UnderlyingCategory( chains );
 
