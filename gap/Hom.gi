@@ -46,7 +46,7 @@ InstallMethod( HomFunctorAttr,
     
     reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", ambient_cat, reps );
+    name := "Hom(T,-) functor";
           
     F := CapFunctor( name, ambient_cat, reps );
     
@@ -188,7 +188,7 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
     
     inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", inj_indec, reps );
+    name := "Hom(T,-) functor on indecomposable injective objects";
        
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
@@ -222,8 +222,8 @@ InstallMethod( HomFunctorOnInjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", injs, reps );
-          
+    name := "Hom(T,-) functor on injective objects";
+     
     R := CapFunctor( name, injs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -254,7 +254,7 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( ambient_cat );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", proj_indec, reps );
+    name := "Hom(T,-) functor on indecomposable projective objects";
            
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
@@ -288,8 +288,8 @@ InstallMethod( HomFunctorOnProjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", projs, reps );
-           
+    name := "Hom(T,-) functor on projective objects";
+  
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -343,8 +343,8 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     H := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ),
             StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", proj_indec, reps );
-      
+    name := "Hom(T,-) functor on indecomposable projective objects";
+    
     cell_func := c -> ApplyFunctor( H, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
@@ -379,8 +379,8 @@ InstallMethod( HomFunctorOnProjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", projs, reps );
-          
+    name := "Hom(T,-) functor on projective objects";
+    
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -439,7 +439,7 @@ InstallMethod( HomFunctorOnAdditiveClosure,
     
     cell_func := c -> ApplyFunctor( H, c );
     
-    name := CreateNameWithColorsForFunctor( "Hom(T,-)", indec_C, reps );
+    name := "Hom(T,-) functor";
     
     F := FunctorFromLinearCategoryByTwoFunctions( name, indec_C, reps, cell_func, cell_func );
     

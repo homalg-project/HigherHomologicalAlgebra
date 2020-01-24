@@ -18,7 +18,7 @@ DISABLE_COLORS[ 1 ] := false;
 SET_GLOBAL_FIELD_FOR_QPA( magma );
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 1 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
 o := TwistedGradedFreeModule( S, 0 );
