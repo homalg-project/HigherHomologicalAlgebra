@@ -24,11 +24,8 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
     
     DeactivateCachingOfCategory( add_indec_projs );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Equivalence functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( add_indec_projs ) );
-    
+    name := CreateNameWithColorsForFunctor( "Equivalence functor", projs, add_indec_projs ); 
+   
     F := CapFunctor( name, projs, add_indec_projs );
     
     AddObjectFunction( F,
@@ -114,9 +111,8 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "Equivalence functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( injs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( add_indec_injs ) );
-      
+    name := CreateNameWithColorsForFunctor( "Equivalence functor", injs, add_indec_injs );
+         
     F := CapFunctor( name, injs, add_indec_injs );
     
     AddObjectFunction( F,
@@ -206,9 +202,8 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     
     r := RandomBoldTextColor( );
     
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( algebroid ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( full ) );
-     
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", algebroid, full );
+        
     F := CapFunctor( name, algebroid, full );
     
     AddObjectFunction( F,
@@ -266,11 +261,8 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
     
     ind_projs := AsCapCategory( Range( iso ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( full ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( ind_projs ) );
-     
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", full, ind_projs );
+        
     cell_func := c -> ApplyFunctor( iso, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
@@ -294,11 +286,8 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     
     ind_projs := AsCapCategory( Source( iso ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( ind_projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( full ) );
-        
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", ind_projs, full );
+           
     cell_func := c -> ApplyFunctor( iso, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, ind_projs, full, cell_func, cell_func );
@@ -325,11 +314,8 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
     
     projs := IndecProjRepresentations( A_op );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( full ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( algebroid ) );
-    
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", full, algebroid );
+       
     object_func :=
       function( a )
         local p, i;
@@ -402,11 +388,8 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
     algebroid := Algebroid( A );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( full ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( algebroid ) );
-        
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", full, algebroid );
+           
     object_func :=
       function( e )
         local p;
@@ -500,11 +483,8 @@ InstallMethod( IsomorphismFromAlgebroid,
     
     algebroid := Algebroid( A );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Isomorphism functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( algebroid ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( full ) );
-        
+    name := CreateNameWithColorsForFunctor( "Isomorphism functor", algebroid, full );
+           
     object_func :=
       function( e )
         local p;
@@ -604,11 +584,8 @@ InstallMethod( LocalizationFunctor,
     
     D := DerivedCategory( cat );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Localization functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( homotopy ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( D ) );
-       
+    name := CreateNameWithColorsForFunctor( "Localization functor", homotopy, D );
+          
     F := CapFunctor( name, homotopy, D );
     
     AddObjectFunction( F,
@@ -649,11 +626,7 @@ InstallMethod( UniversalFunctorFromDerivedCategory,
     
     D := DerivedCategory( cat );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Universal functor from derived category ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( D ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( C ) );
-   
+    name := CreateNameWithColorsForFunctor( "Universal functor from derived category", D, C );  
    
     U := CapFunctor( name, D, C );
     
@@ -710,11 +683,8 @@ InstallMethod( LDerivedFunctor,
       
     fi;
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( r[ 1 ], "Left derived functor", r[ 2 ], "( ", Name( F ), ") ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( D_1 ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( D_2 ) );
-    
+    name := CreateNameWithColorsForFunctor( "Left derived functor", D_1, D_2 );
+       
     LF := CapFunctor( name, D_1, D_2 );
     
     AddObjectFunction( LF,
@@ -809,11 +779,8 @@ InstallMethod( RDerivedFunctor,
       
     fi;
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( r[ 1 ], "Right derived functor", r[ 2 ], "( ", Name( F ), ") ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( D_1 ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( D_2 ) );
-    
+    name := CreateNameWithColorsForFunctor( "Right derived functor", D_1, D_2 );
+       
     RF := CapFunctor( name, D_1, D_2 );
     
     AddObjectFunction( RF,

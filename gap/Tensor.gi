@@ -30,11 +30,8 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
     
     indec_projs := AsCapCategory( Source( iso ) );
     
-    r := RandomBoldTextColor( );
-
-    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
-              Name( indec_projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( ambient_cat ) );
-    
+    name := CreateNameWithColorsForFunctor( "- ⊗_{End T} T", indec_projs, ambient_cat );
+       
     cell_func := c -> ApplyFunctor( iso, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, indec_projs, ambient_cat, cell_func, cell_func );
@@ -61,11 +58,8 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     D := AsCapCategory( Range( G ) );
     
-    r := RandomBoldTextColor( );
-
-    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
-              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( D ) );
-        
+    name := CreateNameWithColorsForFunctor( "- ⊗_{End T} T", projs, D );
+    
     R := CapFunctor( name, projs, D );
     
     AddObjectFunction( R, # FunctorObjectOperation( can_add_G ) );
@@ -137,13 +131,13 @@ InstallMethod( TensorFunctor,
     
     homotopy_reps := HomotopyCategory( reps );
     
-    T := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_reps ), ExtendFunctorToHomotopyCategories( TP ) );
+    T := PreCompose(
+                  LocalizationFunctorByProjectiveObjects( homotopy_reps ),
+                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
+                );
     
-    r := RandomBoldTextColor( );
-
-    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
-              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( C ) );
-  
+    name := CreateNameWithColorsForFunctor( "- ⊗_{End T} T", reps, C );
+ 
     F := CapFunctor( name, reps, C );
     
     AddObjectFunction( F,
@@ -185,11 +179,8 @@ InstallMethod( TensorFunctor,
       
     fi;
     
-    r := RandomBoldTextColor( );
-
-    name := Concatenation( "- ⊗_{End T} T", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ", 
-              Name( reps ), " ", r[ 1 ], "--->", r[ 2 ], " ", Name( cat ) );
-  
+    name := CreateNameWithColorsForFunctor( "- ⊗_{End T} T", reps, cat );
+    
     F := CapFunctor( name, reps, cat );
     
     AddObjectFunction( F,

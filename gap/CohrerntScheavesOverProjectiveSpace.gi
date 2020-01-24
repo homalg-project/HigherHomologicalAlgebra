@@ -27,7 +27,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       for i in [ 0 .. n - 1 ] do
         
         if i <> n - 1 then
-          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , ")," );
+          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , "), " );
         else
           name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , ")" );
         fi;

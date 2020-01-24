@@ -46,11 +46,8 @@ InstallMethod( HomFunctorAttr,
     
     reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( ambient_cat ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-       
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", ambient_cat, reps );
+          
     F := CapFunctor( name, ambient_cat, reps );
     
     AddObjectFunction( F,
@@ -191,11 +188,8 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
     
     inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( inj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-    
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", inj_indec, reps );
+       
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, inj_indec, reps, cell_func, cell_func );
@@ -228,11 +222,8 @@ InstallMethod( HomFunctorOnInjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( injs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-       
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", injs, reps );
+          
     R := CapFunctor( name, injs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -263,11 +254,8 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( ambient_cat );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-        
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", proj_indec, reps );
+           
     cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
@@ -300,11 +288,8 @@ InstallMethod( HomFunctorOnProjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-        
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", projs, reps );
+           
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -358,11 +343,8 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     H := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ),
             StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( proj_indec ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-   
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", proj_indec, reps );
+      
     cell_func := c -> ApplyFunctor( H, c );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
@@ -397,11 +379,8 @@ InstallMethod( HomFunctorOnProjectiveObjects,
     
     reps := AsCapCategory( Range( can_add_G ) );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( projs ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-       
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", projs, reps );
+          
     R := CapFunctor( name, projs, reps );
     
     AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
@@ -460,11 +439,7 @@ InstallMethod( HomFunctorOnAdditiveClosure,
     
     cell_func := c -> ApplyFunctor( H, c );
     
-    r := RandomBoldTextColor( );
-    
-    name := Concatenation( "Hom(T,-)", r[ 2 ], " functor ", r[ 1 ], ":", r[ 2 ], " ",
-              Name( indec_C ), " ", r[ 1 ], "--->", r[ 2 ] , " ", Name( reps ) );
-
+    name := CreateNameWithColorsForFunctor( "Hom(T,-)", indec_C, reps );
     
     F := FunctorFromLinearCategoryByTwoFunctions( name, indec_C, reps, cell_func, cell_func );
     
