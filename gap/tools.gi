@@ -639,3 +639,12 @@ InstallGlobalFunction( RandomBackgroundColor,
     return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
 end );
 
+##
+InstallGlobalFunction( CreateNameWithColorsForFunctor,
+  function( name, source, range )
+    local r;
+    
+    r := RandomBoldTextColor( );
+    return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n", Name( source ), "\n", r[ 1 ], "  |\n  V", r[ 2 ], "\n", Name( range ), "\n" );
+  
+end );

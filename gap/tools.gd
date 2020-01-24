@@ -25,3 +25,4 @@ DeclareGlobalFunction( "RandomBoldTextColor" );
 
 DeclareGlobalFunction( "RandomBackgroundColor" );
 
+DeclareGlobalFunction( "CreateNameWithColorsForFunctor" );
