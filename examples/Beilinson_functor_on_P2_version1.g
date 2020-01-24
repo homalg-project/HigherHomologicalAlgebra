@@ -36,9 +36,9 @@ DeactivateCachingOfCategory( C );
 indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
 DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
-
+name := "quiver{𝓞 (-2),𝓞 (-1),𝓞 }";
 L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
-collection := CreateExceptionalCollection( L );
+collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
 
 HH := HomFunctorByExceptionalCollection( collection );
 HP := RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects( collection );

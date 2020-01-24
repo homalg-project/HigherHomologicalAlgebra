@@ -38,7 +38,8 @@ DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
 
 L := List( [ -3, -2 ], i -> ApplyFunctor( BB, o[ i ] ) );
-collection := CreateExceptionalCollection( L );
+name := "quiver{𝓞 (-3),𝓞 (-2)}";
+collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
 
 HH := HomFunctorByExceptionalCollection( collection );
 HP := RestrictionOfHomFunctorByExceptionalCollectionToProjectiveObjects( collection );

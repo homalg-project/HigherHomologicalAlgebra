@@ -45,8 +45,9 @@ eq := ExtendFunctorToHomotopyCategories( eq );
 Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( C ) ), eq );
 
 ################ create the collection o(-2), o(-1), o(0) #####################
-L := List( [ -2, -1, 0 ], i -> ApplyFunctor( PreCompose( BB, Loc ), o[ i ] ) );
-collection := CreateExceptionalCollection( L );
+name := "quiver{𝓞 (-2),𝓞 (-1)}";
+L := List( [ -2, -1 ], i -> ApplyFunctor( PreCompose( BB, Loc ), o[ i ] ) );
+collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
 ################################################################################
 
 
