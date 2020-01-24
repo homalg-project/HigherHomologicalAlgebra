@@ -119,6 +119,8 @@ InstallMethod( TensorFunctor,
   function( collection )
     local TP, reps, C, chains_reps, homotopy_reps, T, r, name, F;
     
+    Info( InfoWarning, 1, "This method TensorFunctor on collection defined by full subcategory of a homotopy category still needs a mathematical proof!" );
+    
     TP := TensorFunctorOnProjectiveObjects( collection );
     
     reps := AmbientCategory( AsCapCategory( Source( TP ) ) );
