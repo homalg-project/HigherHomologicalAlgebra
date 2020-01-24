@@ -43,7 +43,8 @@ BindGlobal( "TheTypeExceptionalCollection",
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
   function( arg )
-    local full, cache, L, collection, n; 
+    local full, cache, L, collection, n, name; 
+    
     full := arg[ 1 ];
     
     if Size( arg ) = 1 then
@@ -90,6 +91,14 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     MakeImmutable( L );
     
+    name := ValueOption( "name_for_underlying_quiver" );
+     
+    if name = fail then
+      
+      name := "quiver";
+      
+    fi;
+    
     collection := rec( 
                     arrows := rec( ),
                     other_paths := rec( ),
@@ -98,7 +107,8 @@ InstallGlobalFunction( CreateExceptionalCollection,
                     labels_for_arrows := rec( ),
                     labels_for_other_paths := rec( ),
                     labels_for_paths := rec( ),
-                    labels_for_basis_for_paths := rec( ) 
+                    labels_for_basis_for_paths := rec( ),
+                    name_for_underlying_quiver := name
                     );
     
     n := Length( L );
@@ -118,8 +128,11 @@ end );
 InstallMethod( ExceptionalCollection,
           [ IsCapFullSubcategory ],
   function( full )
+    local name;
     
-    CreateExceptionalCollection( full );
+    name := ValueOption( "name_for_underlying_quiver" );
+    
+    CreateExceptionalCollection( full : name_for_underlying_quiver := name );
     
     return ExceptionalCollection( full );
   
@@ -659,7 +672,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     labels := List( arrows, a -> Concatenation( "v", String( a[ 1 ] ), "_v", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
     
-    quiver := RightQuiver( "quiver", [ 1 .. nr_vertices ], labels, sources, ranges );
+    quiver := RightQuiver( collection!.name_for_underlying_quiver, [ 1 .. nr_vertices ], labels, sources, ranges );
     
     A := PathAlgebra( field, quiver );
     
