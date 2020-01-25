@@ -4,7 +4,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( BeilinsonFunctor,
             [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, add_full, collection, iso, inc_1, inc_2, reps, homotopy_reps, name, BB, r, i;
+      local n, A, cat, full, add_full, collection, iso, inc_1, inc_2, reps, homotopy_reps, name_for_algebra, name_for_quiver, BB, r, i;
       
       n := Size( Indeterminates( S ) );
       
@@ -22,21 +22,26 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       DisableSanityChecks( add_full );
       
-      name := "quiver{";
+      name_for_quiver := "quiver{";
       
-      for i in [ 0 .. n - 1 ] do
+      for i in Reversed( [ 0 .. n - 1 ] ) do
         
-        if i <> n - 1 then
-          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , "), " );
+        if i <> 0 then
+          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ") -{", String( n - 1 ), "}-> " );
         else
-          name := Concatenation( name, "Ω^", String( i ),"(", String( i ) , ")" );
+          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ")" );
         fi;
         
       od;
       
-      name := Concatenation( name, "}" );
+      name_for_quiver := Concatenation( name_for_quiver, "}" );
       
-      collection := CreateExceptionalCollection( full : name_for_underlying_quiver := name );
+      name_for_algebra := Concatenation( "End(⊕ {Ω^i(i)|i=0,...,", String( n - 1 ), "})" );
+      
+      collection := CreateExceptionalCollection( full : 
+                                                  name_for_underlying_quiver := name_for_quiver,
+                                                  name_for_endomorphism_algebra := name_for_algebra
+                                                );
       
       iso := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
       
@@ -54,10 +59,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       r := RandomTextColor( );
       
-      name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
-                  r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_reps ) );
-      
-      BB := CapFunctor( name, cat, homotopy_reps );
+      BB := CapFunctor( "Beilinson functor", cat, homotopy_reps );
       
       AddObjectFunction( BB,
         function( a )
