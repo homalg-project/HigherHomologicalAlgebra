@@ -1,5 +1,14 @@
-BindGlobal( "DISABLE_ALL_SANITY_CHECKS_AND_LOGIC", [ false, false ] );
-BindGlobal( "DISABLE_COLORS", [ true ] );
+DeclareGlobalVariable( "DISABLE_ALL_SANITY_CHECKS" );
+DeclareGlobalVariable( "SWITCH_LOGIC_OFF" );
+DeclareGlobalVariable( "ENABLE_COLORS" );
+
+MakeReadWriteGlobal( "DISABLE_ALL_SANITY_CHECKS" );
+MakeReadWriteGlobal( "SWITCH_LOGIC_OFF" );
+MakeReadWriteGlobal( "ENABLE_COLORS" );
+
+DISABLE_ALL_SANITY_CHECKS := false;
+SWITCH_LOGIC_OFF := false;
+ENABLE_COLORS := false;
 
 ##
 InstallGlobalFunction( Time,
@@ -85,13 +94,13 @@ InstallMethod( Finalize,
     
     Finalize( category: disable_sanity_checks_and_logic := false );
     
-    if DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] = false then
+    if DISABLE_ALL_SANITY_CHECKS <> true then
       return;
     else
       DisableSanityChecks( category );
     fi;
     
-    if DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] = false then
+    if SWITCH_LOGIC_OFF <> true then
       return;
     else
       CapCategorySwitchLogicOff( category );
@@ -616,7 +625,7 @@ end );
 ##
 InstallGlobalFunction( RandomTextColor,
   function (  )
-    if DISABLE_COLORS[ 1 ] then
+    if ENABLE_COLORS <> true then
       return [ "", "" ];
     else
       return [ Random( [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ] ), "\033[0m" ];
@@ -626,7 +635,7 @@ end );
 ##
 InstallGlobalFunction( RandomBoldTextColor,
   function (  )
-    if DISABLE_COLORS[ 1 ] then
+    if ENABLE_COLORS <> true then
       return [ "", "" ];
     else
       return [ Random( [ "\033[1m\033[31m" ] ), "\033[0m" ];
@@ -636,7 +645,11 @@ end );
 ##
 InstallGlobalFunction( RandomBackgroundColor,
   function (  )
-    return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
+    if ENABLE_COLORS <> true then
+      return [ "", "" ];
+    else
+      return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
+    fi;
 end );
 
 ##
@@ -645,6 +658,10 @@ InstallGlobalFunction( CreateNameWithColorsForFunctor,
     local r;
     
     r := RandomBoldTextColor( );
-    return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n", Name( source ), "\n", r[ 1 ], "  |\n  V", r[ 2 ], "\n", Name( range ), "\n" );
+    
+    return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n",
+                          Name( source ), "\n", r[ 1 ],
+                          "  |\n  V", r[ 2 ], "\n",
+                          Name( range ), "\n" );
   
 end );
