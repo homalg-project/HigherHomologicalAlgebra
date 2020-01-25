@@ -656,7 +656,7 @@ end );
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name;
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -713,15 +713,18 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     A := QuotientOfPathAlgebra( A, relations ); 
     
     if collection!.name_for_endomorphism_algebra <> fail then
+      
       name := collection!.name_for_endomorphism_algebra;
       
       A!.alternative_name := name;
       
       OppositeAlgebra( A )!.alternative_name := Concatenation( name, "^op" );
       
+      r := RandomTextColor( );
+      
+      Algebroid( A )!.Name := Concatenation( r[ 1 ], "Algebroid (", r[ 2 ], " ", name, " ", r[ 1 ], ")", r[ 2 ] );;
+      
     fi;
-    
-    algebroid := Algebroid( A );
     
     Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
    
@@ -740,6 +743,13 @@ InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
   
 end );
 
+##
+InstallMethod( Algebroid,
+          [ IsExceptionalCollection ],
+  collection -> Algebroid( EndomorphismAlgebraOfExceptionalCollection( collection ) )
+);
+
+##
 BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
   function( full )
     local ambient_cat;

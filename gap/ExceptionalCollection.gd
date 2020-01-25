@@ -52,6 +52,12 @@ DeclareAttribute( "DefiningFullSubcategory", IsExceptionalCollection );
 DeclareAttribute( "EndomorphismAlgebraOfExceptionalCollection", IsExceptionalCollection );
 
 #! @Description
+#!  Returns the algebroid defined by the endomorphism quiver algebra of the exceptional collection <A>E</A>.
+#! @Arguments E
+#! @Returns an algebroid
+DeclareAttribute( "Algebroid", IsExceptionalCollection );
+
+#! @Description
 #!  Returns the direct sum of the objects of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns an object
