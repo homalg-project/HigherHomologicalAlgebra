@@ -114,7 +114,7 @@ end );
 InstallMethod( ExtendFunctorToHomotopyCategories,
                [ IsCapFunctor ],
   function( F )
-    local S, T, ChF, r1, r2, name, functor;
+    local S, T, ChF, name, functor;
     
     S := HomotopyCategory( AsCapCategory( Source( F ) ) );
     
@@ -122,19 +122,13 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
     
     ChF := ExtendFunctorToChainComplexCategories( F );
     
-    r1 := RandomBoldTextColor( );
-    
-    r2 := RandomTextColor( );
-    
     name := ValueOption( "name_for_functor" );
     
     if name = fail then
       
-      name := "Extension of a functor";
+      name := "Extension of a functor to homotopy categories";
       
     fi;
-    
-    name := CreateNameWithColorsForFunctor( name, S, T );
     
     functor := CapFunctor( name, S, T );
     
@@ -180,7 +174,7 @@ InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
     
     name := Concatenation( r2[ 1 ], "Extention of natural transformation ( ", r2[ 2 ], Name( eta ), " ", r2[ 1 ], ") ",
               r1[ 1 ], ":", r1[ 2 ], " ", Name( HF ), " ", r1[ 1 ], "===>", r1[ 2 ], " ", Name( HG ) );
-
+    
     H_eta := NaturalTransformation( name, HF, HG );
     
     AddNaturalTransformationFunction( H_eta,
@@ -198,7 +192,7 @@ end );
 InstallMethod( LocalizationFunctorByProjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
-    local cat, projs, homotopy_category_projs, r, name, F;
+    local cat, projs, homotopy_category_projs, name, F;
     
     cat := DefiningCategory( homotopy_category );
     
@@ -212,9 +206,7 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
     
     homotopy_category_projs := HomotopyCategory( projs );
     
-    r := RandomBoldTextColor( );
-   
-    name := CreateNameWithColorsForFunctor( "Localization functor by projective objects", homotopy_category, homotopy_category_projs );
+    name := "Localization functor by projective objects";
     
     F := CapFunctor( name, homotopy_category, homotopy_category_projs );
     
@@ -252,7 +244,7 @@ end );
 InstallMethod( LocalizationFunctorByInjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
-    local cat, injs, homotopy_category_injs, r, name, F;
+    local cat, injs, homotopy_category_injs, name, F;
     
     cat := DefiningCategory( homotopy_category );
     
@@ -266,10 +258,8 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
     
     homotopy_category_injs := HomotopyCategory( injs );
     
-    r := RandomBoldTextColor( );
+    name := "Localization functor by injective objects";
     
-    name := CreateNameWithColorsForFunctor( "Localization functor by injective objects", homotopy_category, homotopy_category_injs );
-  
     F := CapFunctor( name, homotopy_category, homotopy_category_injs );
     
     ##
