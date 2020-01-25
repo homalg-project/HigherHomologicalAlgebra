@@ -656,7 +656,7 @@ end );
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid;
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -712,12 +712,17 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     A := QuotientOfPathAlgebra( A, relations ); 
     
+    if collection!.name_for_endomorphism_algebra <> fail then
+      name := collection!.name_for_endomorphism_algebra;
+      
+      A!.alternative_name := name;
+      
+      OppositeAlgebra( A )!.alternative_name := Concatenation( name, "^op" );
+      
+    fi;
+    
     algebroid := Algebroid( A );
     
-    DisableSanityChecks( algebroid );
-    DeactivateCachingOfCategory( algebroid );
-    CapCategorySwitchLogicOff( algebroid );
-
     Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
    
     SetIsAdmissibleQuiverAlgebra( A, true );
@@ -1154,7 +1159,7 @@ InstallMethod( Display,
     
     for i in [ 1 .. N ] do
       
-      Print( "\033[33m\033[4mObject ", i, ":\033[0m\n" );
+      Print( "\n\033[33m\033[4mObject ", i, ":\033[0m\n" );
       
       Display( collection[ i ] );
       
