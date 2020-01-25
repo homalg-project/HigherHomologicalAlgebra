@@ -140,9 +140,8 @@ HomologyAt( UnderlyingCell( a ), 0 );
 homotopy_HH_a := ApplyFunctor( homotopy_HH, UnderlyingCell( a ) );
 Display( homotopy_HH_a );
 homotopy_TT_homotopy_HH_a := ApplyFunctor( homotopy_TT, homotopy_HH_a );
-e := UnderlyingCell( homotopy_TT_homotopy_HH_a );
-ViewComplex( e );
-HomologyAt( e, 0 );
+ViewComplex( homotopy_TT_homotopy_HH_a );
+HomologyAt( homotopy_TT_homotopy_HH_a, 0 );
 HomologyAt( UnderlyingCell( a ), 0 );
 
 # counit and unit

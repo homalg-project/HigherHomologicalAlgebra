@@ -87,7 +87,7 @@ chains_D := UnderlyingCategory( homotopy_D );
 DeactivateCachingOfCategory( chains_D );
 
 ##########################################################
-inc := PreCompose( InclusionFunctor( indec_C ), InclusionFunctor( AsCapCategory( Range( InclusionFunctor( indec_C ) ) ) ) );
+inc := InclusionFunctor( indec_C );
 inc := ExtendFunctorToAdditiveClosureOfSource( inc );
 inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension the inclusion functor to homotopy categories" );
 # embedd in a category where homology makes sence.
