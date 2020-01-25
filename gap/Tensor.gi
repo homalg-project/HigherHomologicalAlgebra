@@ -30,7 +30,7 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
     
     indec_projs := AsCapCategory( Source( iso ) );
     
-    name := "- ⊗_{End T} T on indecomposable projective objects";
+    name := "- ⊗_{End T} T functor on indecomposable projective objects";
        
     cell_func := c -> ApplyFunctor( iso, c );
     
@@ -58,7 +58,7 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     D := AsCapCategory( Range( G ) );
     
-    name := "- ⊗_{End T} T on projective objects";
+    name := "- ⊗_{End T} T functor on projective objects";
     
     R := CapFunctor( name, projs, D );
     
@@ -136,7 +136,7 @@ InstallMethod( TensorFunctor,
                   ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
                 );
     
-    name := "- ⊗_{End T} T functor";
+    name := "- ⊗_{End T} T functor on quiver representations";
  
     F := CapFunctor( name, reps, C );
     
@@ -179,7 +179,7 @@ InstallMethod( TensorFunctor,
       
     fi;
     
-    name := "- ⊗_{End T} T functor";
+    name := "- ⊗_{End T} T functor on quiver representations";
     
     F := CapFunctor( name, reps, cat );
     
