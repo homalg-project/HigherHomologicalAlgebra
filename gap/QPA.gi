@@ -2849,7 +2849,7 @@ InstallOtherMethod( Name,
     if IsBound( A!.alternative_name ) then
       return A!.alternative_name;
     else
-      return StringView( A );
+      return String( A );
     fi;
 end );
 
