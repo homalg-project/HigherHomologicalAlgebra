@@ -190,7 +190,7 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
     
     name := "Hom(T,-) functor on indecomposable injective objects";
        
-    cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
+    cell_func := c -> ApplyFunctor( H, UnderlyingCell( c ) );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, inj_indec, reps, cell_func, cell_func );
    
@@ -312,7 +312,7 @@ end );
 InstallMethod( HomFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, C, chains_C, proj, proj_indec, r, name, cell_func;
+    local H, ambient_cat, C, chains_C, proj_indec, reps, name, cell_func;
     
     H := HomFunctor( collection );
     
@@ -334,14 +334,11 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     
     chains_C := ChainComplexCategory( C );
     
-    proj := FullSubcategoryGeneratedByProjectiveObjects( C );
-    
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
     
     reps := AsCapCategory( Range( H ) );
     
-    H := PreCompose( [ InclusionFunctor( proj_indec ), InclusionFunctor( proj ),
-            StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
+    H := PreCompose( [ InclusionFunctor( proj_indec ), StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
     
     name := "Hom(T,-) functor on indecomposable projective objects";
     

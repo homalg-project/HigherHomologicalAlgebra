@@ -47,9 +47,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       inc_1 := InclusionFunctor( AsCapCategory( Range( iso ) ) );
       
-      inc_2 := InclusionFunctor( AsCapCategory( Range( inc_1 ) ) );
-      
-      iso := PreCompose( [ iso, inc_1, inc_2 ] );
+      iso := PreCompose( [ iso, inc_1 ] );
       
       iso := ExtendFunctorToAdditiveClosureOfSource( iso );
       

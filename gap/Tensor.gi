@@ -48,7 +48,7 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     add_G := ExtendFunctorToAdditiveClosures( G ); # or add_G := ExtendFunctorToAdditiveClosureOfSource( G );
     
-    C := AmbientCategory( AmbientCategory( AsCapCategory( Source( G ) ) ) );
+    C := AmbientCategory( AsCapCategory( Source( G ) ) );
     
     can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
     
