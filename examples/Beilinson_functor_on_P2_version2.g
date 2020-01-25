@@ -65,7 +65,7 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
 ################# Hom #################################
 HH := HomFunctor( collection );
 HP := HomFunctorOnAdditiveClosure( collection );
-homotopy_HH := ExtendFunctorToHomotopyCategories( HP : name_for_functor := "Extension of Hom(T,) to homotopy categories" );
+homotopy_HH := ExtendFunctorToHomotopyCategories( HP : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );
 ########################################################
 
 Ho_C := AsCapCategory( Source( HH ) );
