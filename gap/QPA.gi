@@ -2843,6 +2843,16 @@ BindGlobal( "ADD_RANDOM_METHODS_TO_QUIVER_REPRESENTATIONS_DERIVED_CATS_PACKAGE",
     
 end );
 
+InstallOtherMethod( Name,
+        [ IsQuiverAlgebra ],
+  function( A )
+    if IsBound( A!.alternative_name ) then
+      return A!.alternative_name;
+    else
+      return "none";
+    fi;
+end );
+
 ##
 InstallOtherMethod( Representative,
           [ IsPathAlgebraElement ],
