@@ -665,3 +665,13 @@ InstallGlobalFunction( CreateNameWithColorsForFunctor,
                           Name( range ), "\n" );
   
 end );
+
+##
+InstallMethod( Display,
+          [ IsCapFunctor ],
+  function( F )
+    
+    Print( CreateNameWithColorsForFunctor( Name( F ), AsCapCategory( Source( F ) ), AsCapCategory( Range( F ) ) ) );
+    
+end );
+
