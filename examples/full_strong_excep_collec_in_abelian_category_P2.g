@@ -121,7 +121,7 @@ pp := IndecProjectiveObjects( D );
 
 quit;
 
-a := RandomObject( C, 7 )/chains_C/homotopy_C/derived_C;
+a := RandomObject( C, 3 )/chains_C/homotopy_C/derived_C;
 #a := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 2 )/homotopy_C/derived_C;
 
 # Computing with the right and left derived functors -- slow
@@ -130,7 +130,7 @@ R_HH_a := ApplyFunctor( R_HH, a );
 Display( R_HH_a );
 L_TT_R_HH_a := ApplyFunctor( L_TT, R_HH_a );
 Display( L_TT_R_HH_a );
-c := UnderlyingCell( UnderlyingCell( L_TT_R_HH_a ) );
+c := UnderlyingCell( L_TT_R_HH_a );
 ViewComplex( c );
 HomologyAt( c, 0 );
 HomologyAt( UnderlyingCell( a ), 0 );
@@ -146,7 +146,7 @@ HomologyAt( e, 0 );
 HomologyAt( UnderlyingCell( a ), 0 );
 
 # counit and unit
-alpha := RandomMorphism( C, 4 );
+alpha := RandomMorphism( C, 3 );
 CheckNaturality( eta, alpha );
 beta := RandomMorphism( D, 4 );
 CheckNaturality( lambda, beta );
