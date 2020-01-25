@@ -180,9 +180,11 @@ InstallMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ], {alpha,D} 
 InstallMethod( DerivedCategory,
           [ IsCapCategory ],
   function( C )
-    local name, D;
+    local r, name, D;
     
-    name := Concatenation( "The derived category of ", Name( C ) );
+    r := RandomTextColor( );
+    
+    name := Concatenation( r[ 1 ], "Derived category (", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
     
     D := CreateCapCategory( name );
     
