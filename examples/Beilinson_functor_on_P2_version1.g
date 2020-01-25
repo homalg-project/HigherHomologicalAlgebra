@@ -1,8 +1,7 @@
 LoadPackage( "DerivedCategories" );
+LoadPackage( "BBGG" );
 
-field := GLOBAL_FIELD_FOR_QPA!.default_field;
-#magma := HomalgFieldOfRationalsInMAGMA( );
-magma := field;
+##########################################
 
 list_of_operations := [
                         #"PreCompose",
@@ -11,17 +10,27 @@ list_of_operations := [
                         "MultiplyWithElementOfCommutativeRingForMorphisms",
                         "IsZeroForObjects"
                       ];
-
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
-DISABLE_COLORS[ 1 ] := false;
-SET_GLOBAL_FIELD_FOR_QPA( magma );
+                      
+########################### global options ###############################
+#
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 1 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
+SetInfoLevel( InfoHomotopyCategories, 2 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 2 );
+#
+DISABLE_ALL_SANITY_CHECKS := true;
+SWITCH_LOGIC_OFF := true;
+ENABLE_COLORS := true;
+#
+field := GLOBAL_FIELD_FOR_QPA!.default_field;
+#homalg_field := HomalgFieldOfRationalsInSingular( );
+#homalg_field := HomalgFieldOfRationalsInMAGMA( );
+homalg_field := field;
+SET_GLOBAL_FIELD_FOR_QPA( homalg_field );
+#
+########################################################################
+
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
-o := TwistedGradedFreeModule( S, 0 );
 
 BB := BeilinsonFunctor( S );
 
@@ -37,9 +46,14 @@ DeactivateCachingOfCategory( C );
 indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
 DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
 
-name := "quiver{ 𝓞 (-2), 𝓞 (-1), 𝓞 }";
+
+o := TwistedGradedFreeModule( S, 0 );
 L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
-collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
+name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 }";
+name_for_algebra := "End(⊕ {𝓞 (i)|i=-2,-1,0})";
+collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name_for_quiver,
+                                              name_for_endomorphism_algebra := name_for_algebra
+                                          );
 
 HH := HomFunctor( collection );
 HP := HomFunctorOnProjectiveObjects( collection );

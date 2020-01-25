@@ -1,5 +1,5 @@
 LoadPackage( "DerivedCategories" );
-
+LoadPackage( "BBGG" );
 
 ##########################################
 
@@ -11,22 +11,28 @@ list_of_operations := [
                         "IsZeroForObjects"
                       ];
                       
-##########################################
-
-field := GLOBAL_FIELD_FOR_QPA!.default_field;
-#magma := HomalgFieldOfRationalsInMAGMA( );
-magma := field;
-
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
-DISABLE_COLORS[ 1 ] := false;
-SET_GLOBAL_FIELD_FOR_QPA( magma );
+########################### global options ###############################
+#
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 1 );
+SetInfoLevel( InfoHomotopyCategories, 2 );
 SetInfoLevel( InfoComplexCategoriesForCAP, 2 );
+#
+DISABLE_ALL_SANITY_CHECKS := true;
+SWITCH_LOGIC_OFF := true;
+ENABLE_COLORS := true;
+#
+field := GLOBAL_FIELD_FOR_QPA!.default_field;
+#homalg_field := HomalgFieldOfRationalsInSingular( );
+#homalg_field := HomalgFieldOfRationalsInMAGMA( );
+homalg_field := field;
+SET_GLOBAL_FIELD_FOR_QPA( homalg_field );
+#
+########################################################################
+
+
+######################### start example #################################
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
-o := TwistedGradedFreeModule( S, 0 );
 
 BB := BeilinsonFunctor( S );
 
@@ -46,9 +52,13 @@ eq := ExtendFunctorToHomotopyCategories( eq );
 Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( C ) ), eq );
 
 ################ create the collection o(-2), o(-1), o(0) #####################
-name := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 }";
+name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 }";
+name_for_algebra := "End(⊕ {𝓞 (i)|i=-2,-1,0})";
+o := TwistedGradedFreeModule( S, 0 );
 L := List( [ -2, -1, 0 ], i -> ApplyFunctor( PreCompose( BB, Loc ), o[ i ] ) );
-collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name );
+collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name_for_quiver,
+                                              name_for_endomorphism_algebra := name_for_algebra
+                                          );
 ################################################################################
 
 
@@ -88,7 +98,7 @@ inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension t
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose(
                   LocalizationFunctorByProjectiveObjects( homotopy_D ),
-                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
+                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T functor to homotopy categories" )
                 );
 
 ##########################################################

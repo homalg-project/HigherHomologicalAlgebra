@@ -1,19 +1,20 @@
 LoadPackage( "DerivedCategories" );
 
-field := GLOBAL_FIELD_FOR_QPA!.default_field;
-#magma := HomalgFieldOfRationalsInMAGMA( );
-magma := field;
-
-SET_GLOBAL_FIELD_FOR_QPA( magma );
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 1 ] := true;
-DISABLE_ALL_SANITY_CHECKS_AND_LOGIC[ 2 ] := true;
-DISABLE_COLORS[ 1 ] := false;
+DISABLE_ALL_SANITY_CHECKS := true;
+SWITCH_LOGIC_OFF := true;
+ENABLE_COLORS := true;
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
 SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
 
-quiver := RightQuiver( "q", 3, [ [ "x0", 1, 2 ], [ "x1", 1, 2 ], [ "x2", 1, 2 ],
-                                                                [ "y0", 2, 3 ], [ "y1", 2, 3 ], [ "y2", 2, 3 ] ] );;
+field := GLOBAL_FIELD_FOR_QPA!.default_field;
+#homalg_field := HomalgFieldOfRationalsInSingular( );
+#homalg_field := HomalgFieldOfRationalsInMAGMA( );
+homalg_field := field;
+SET_GLOBAL_FIELD_FOR_QPA( homalg_field );
+
+quiver := RightQuiver( "quiver", 3, [ [ "x0", 1, 2 ], [ "x1", 1, 2 ], [ "x2", 1, 2 ],
+                                  [ "y0", 2, 3 ], [ "y1", 2, 3 ], [ "y2", 2, 3 ] ] );;
 # "quiver{Ω^0(0),Ω^1(1),Ω^2(2)}"
 
 Qq := PathAlgebra( field, quiver );;
@@ -34,7 +35,7 @@ A :=
     ]
 );;
 
-C := CategoryOfQuiverRepresentations( A, magma );
+C := CategoryOfQuiverRepresentations( A, homalg_field );
 C_injs := FullSubcategoryGeneratedByInjectiveObjects( C );
 chains_C := ChainComplexCategory( C );
 homotopy_C := HomotopyCategory( C );
@@ -92,8 +93,10 @@ mats := List( mats, m -> MatrixByRows( field, m ) );
 
 Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );
 
-
-collection := CreateExceptionalCollection( T : name_for_underlying_quiver := "{𝓞, 𝓞 (1), 𝓞 (2)}" );
+name_for_quiver := "quiver{𝓞 -{3}-> 𝓞 (1) -{3}-> 𝓞 (2) }";
+name_for_algebra := "End(⊕ {𝓞 (i)|i=0,1,2})";
+collection := CreateExceptionalCollection( T : name_for_underlying_quiver := name_for_quiver,
+                                                name_for_endomorphism_algebra := name_for_algebra );
 
 HH := HomFunctor( collection );
 R_HH := RightDerivedFunctor( HH );
@@ -142,5 +145,9 @@ ViewComplex( e );
 HomologyAt( e, 0 );
 HomologyAt( UnderlyingCell( a ), 0 );
 
-
+# counit and unit
+alpha := RandomMorphism( C, 4 );
+CheckNaturality( eta, alpha );
+beta := RandomMorphism( D, 4 );
+CheckNaturality( lambda, beta );
 
