@@ -2880,7 +2880,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
               [ IsQuiverAlgebra and IsRightQuiverAlgebra, IsRationalsForHomalg ],
               1000,
   function( A, field )
-    local cat, domain;
+    local cat, domain, r;
     
     if HasCategoryOfQuiverRepresentations( A ) then
       
@@ -2901,6 +2901,14 @@ InstallMethod( CategoryOfQuiverRepresentations,
     fi;
     
     cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, coqr_derived_cats := false );
+    
+    if Name( A ) <> "none" then
+      
+      r := RandomTextColor( );
+      
+      cat!.Name := Concatenation( r[ 1 ], "Quiver representations (", r[ 2 ], " ", Name( A ), " ", r[ 1 ], ")", r[ 2 ] );
+      
+    fi;
     
     domain := LeftActingDomain( A );
     
