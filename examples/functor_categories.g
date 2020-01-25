@@ -17,8 +17,8 @@ indec_injs := IndecInjectiveObjects( C );
 
 collection := CreateExceptionalCollection( indec_projs );
 
-HH := HomFunctorByExceptionalCollection( collection );
-TT := TensorFunctorByExceptionalCollection( collection );
+HH := HomFunctor( collection );
+TT := TensorFunctor( collection );
 
 RHH := RightDerivedFunctor( HH );
 LTT := LeftDerivedFunctor( TT );
