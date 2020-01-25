@@ -43,7 +43,7 @@ BindGlobal( "TheTypeExceptionalCollection",
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
   function( arg )
-    local full, cache, L, collection, n, name; 
+    local full, cache, L, collection, n, name_for_quiver, name_for_algebra; 
     
     full := arg[ 1 ];
     
@@ -91,13 +91,15 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     MakeImmutable( L );
     
-    name := ValueOption( "name_for_underlying_quiver" );
+    name_for_quiver := ValueOption( "name_for_underlying_quiver" );
      
-    if name = fail then
+    if name_for_quiver = fail then
       
-      name := "quiver";
+      name_for_quiver := "quiver";
       
     fi;
+    
+    name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
     
     collection := rec( 
                     arrows := rec( ),
@@ -108,7 +110,8 @@ InstallGlobalFunction( CreateExceptionalCollection,
                     labels_for_other_paths := rec( ),
                     labels_for_paths := rec( ),
                     labels_for_basis_for_paths := rec( ),
-                    name_for_underlying_quiver := name
+                    name_for_underlying_quiver := name_for_quiver,
+                    name_for_endomorphism_algebra := name_for_algebra
                     );
     
     n := Length( L );
@@ -128,11 +131,13 @@ end );
 InstallMethod( ExceptionalCollection,
           [ IsCapFullSubcategory ],
   function( full )
-    local name;
+    local name_for_quiver, name_for_algebra;
     
-    name := ValueOption( "name_for_underlying_quiver" );
+    name_for_quiver := ValueOption( "name_for_underlying_quiver" );
+    name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
     
-    CreateExceptionalCollection( full : name_for_underlying_quiver := name );
+    CreateExceptionalCollection( full : name_for_underlying_quiver := name_for_quiver,
+                                        name_for_endomorphism_algebra := name_for_algebra );
     
     return ExceptionalCollection( full );
   
