@@ -282,11 +282,7 @@ InstallMethod( ViewObj,
           [ IsDerivedCategoryObject ],
   function( a )
     
-    Print( "<An object in derived category defined by: " );
-
-    ViewObj( UnderlyingCell( a ) );
-    
-    Print(">" );
+    Print( "<An object in ", Name( CapCategory( a ) ), ">" );
 
 end );
  
@@ -305,11 +301,7 @@ InstallMethod( ViewObj,
           [ IsDerivedCategoryMorphism ],
   function( a )
     
-    Print( "<A morphism in derived category defined by: " );
-
-    ViewObj( UnderlyingRoof( a ) );
+    Print( "<A morphism in ", Name( CapCategory( a ) ), ">" );
     
-    Print(">" );
-
 end );
 
