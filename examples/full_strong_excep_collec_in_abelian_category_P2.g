@@ -3,6 +3,16 @@ LoadPackage( "DerivedCategories" );
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;
 ENABLE_COLORS := true;
+DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
+  [ IsChainComplexCategory,
+    IsCochainComplexCategory,
+    IsHomotopyCategory,
+    IsAdditiveClosureCategory,
+    IsQuiverRepresentationCategory,
+    IsDerivedCategory
+    # or some function
+  ];
+
 SetInfoLevel( InfoDerivedCategories, 3 );
 SetInfoLevel( InfoHomotopyCategories, 3 );
 SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
@@ -36,19 +46,15 @@ A :=
 );;
 
 C := CategoryOfQuiverRepresentations( A, homalg_field );
-DeactivateCachingOfCategory( C );
 
 C_injs := FullSubcategoryGeneratedByInjectiveObjects( C );
 DeactivateCachingOfCategory( C_injs );
 
 chains_C := ChainComplexCategory( C );
-DeactivateCachingOfCategory( chains_C );
 
 homotopy_C := HomotopyCategory( C );
-DeactivateCachingOfCategory( homotopy_C );
 
 derived_C := DerivedCategory( C );
-DeactivateCachingOfCategory( derived_C );
 
 ii := IndecInjectiveObjects( C );
 
@@ -113,19 +119,15 @@ HI := HomFunctorOnInjectiveObjects( collection );
 homotopy_HH := PreCompose( LocalizationFunctorByInjectiveObjects( homotopy_C ), ExtendFunctorToHomotopyCategories( HI ) );
 
 D := AsCapCategory( Range( HH ) );
-DeactivateCachingOfCategory( D );
 
 D_projs := FullSubcategoryGeneratedByProjectiveObjects( D );
 DeactivateCachingOfCategory( D_projs );
 
 chains_D := ChainComplexCategory( D );
-DeactivateCachingOfCategory( chains_D );
 
 homotopy_D := HomotopyCategory( D );
-DeactivateCachingOfCategory( homotopy_D );
 
 derived_D := DerivedCategory( D );
-DeactivateCachingOfCategory( derived_D );
 
 
 TT := TensorFunctor( collection );

@@ -20,6 +20,15 @@ SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;
 ENABLE_COLORS := true;
+DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
+  [ IsChainComplexCategory,
+    IsCochainComplexCategory,
+    IsHomotopyCategory,
+    IsAdditiveClosureCategory,
+    IsQuiverRepresentationCategory,
+    # or some function
+  ];
+
 #
 field := GLOBAL_FIELD_FOR_QPA!.default_field;
 #homalg_field := HomalgFieldOfRationalsInSingular( );
@@ -34,13 +43,10 @@ S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0,x1" );
 BB := BeilinsonFunctor( S );
 
 homotopy_C := AsCapCategory( Range( BB ) );
-DeactivateCachingOfCategory( homotopy_C );
 
 chains_C := UnderlyingCategory( homotopy_C );
-DeactivateCachingOfCategory( chains_C );
 
 C := DefiningCategory( homotopy_C );
-DeactivateCachingOfCategory( C );
 
 #################################
 
@@ -67,22 +73,17 @@ homotopy_HH := ExtendFunctorToHomotopyCategories( HP );
 ########################################################
 
 Ho_C := AsCapCategory( Source( HH ) );
-DeactivateCachingOfCategory( Ho_C );
 
 C := DefiningCategory( Ho_C ); # or AsCapCategory( Source( HP ) );
-DeactivateCachingOfCategory( C );
 
 indec_C := UnderlyingCategory( C ); # caching for this is crisp
 DeactivateCachingForCertainOperations( indec_C, list_of_operations );
 
 D := AsCapCategory( Range( HH ) );
-DeactivateCachingOfCategory( D );
 
 homotopy_D := HomotopyCategory( D );
-DeactivateCachingOfCategory( homotopy_D );
 
 chains_D := UnderlyingCategory( homotopy_D );
-DeactivateCachingOfCategory( chains_D );
 
 ##########################################################
 inc := InclusionFunctor( indec_C );
