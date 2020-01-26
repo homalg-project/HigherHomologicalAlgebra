@@ -14,8 +14,8 @@ list_of_operations := [
 ########################### global options ###############################
 #
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 2 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 2 );
+SetInfoLevel( InfoHomotopyCategories, 3 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 #
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;
@@ -85,7 +85,7 @@ chains_D := UnderlyingCategory( homotopy_D );
 DeactivateCachingOfCategory( chains_D );
 
 ##########################################################
-inc := PreCompose( InclusionFunctor( indec_C ), InclusionFunctor( AsCapCategory( Range( InclusionFunctor( indec_C ) ) ) ) );
+inc := InclusionFunctor( indec_C );
 inc := ExtendFunctorToAdditiveClosureOfSource( inc );
 inc := ExtendFunctorToHomotopyCategories( inc );
 ##########################################################

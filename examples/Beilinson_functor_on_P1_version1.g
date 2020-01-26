@@ -14,8 +14,8 @@ list_of_operations := [
 ########################### global options ###############################
 #
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 2 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 2 );
+SetInfoLevel( InfoHomotopyCategories, 3 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 #
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;
@@ -66,14 +66,12 @@ DeactivateCachingOfCategory( homotopy_D );
 chains_D := UnderlyingCategory( homotopy_D );
 DeactivateCachingOfCategory( chains_D );
 
-
-TT := TensorFunctor( collection );
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
 cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
 
-b := RANDOM_CHAIN_COMPLEX( chains_C, -4, 4, 3 ) / homotopy_C;
+b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 5 ) / homotopy_C;
 
 quit;
 b;

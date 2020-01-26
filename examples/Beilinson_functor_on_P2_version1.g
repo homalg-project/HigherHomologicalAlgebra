@@ -14,8 +14,8 @@ list_of_operations := [
 ########################### global options ###############################
 #
 SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 2 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 2 );
+SetInfoLevel( InfoHomotopyCategories, 3 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
 #
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;
