@@ -1,14 +1,17 @@
 DeclareGlobalVariable( "DISABLE_ALL_SANITY_CHECKS" );
 DeclareGlobalVariable( "SWITCH_LOGIC_OFF" );
+DeclareGlobalVariable( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );
 DeclareGlobalVariable( "ENABLE_COLORS" );
 
 MakeReadWriteGlobal( "DISABLE_ALL_SANITY_CHECKS" );
 MakeReadWriteGlobal( "SWITCH_LOGIC_OFF" );
+MakeReadWriteGlobal( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );
 MakeReadWriteGlobal( "ENABLE_COLORS" );
 
 DISABLE_ALL_SANITY_CHECKS := false;
 SWITCH_LOGIC_OFF := false;
 ENABLE_COLORS := false;
+DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
 
 ##
 InstallGlobalFunction( Time,
@@ -104,6 +107,10 @@ InstallMethod( Finalize,
       return;
     else
       CapCategorySwitchLogicOff( category );
+    fi;
+    
+    if ForAny( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, func -> func( category ) ) then
+      DeactivateCachingOfCategory( category );
     fi;
     
 end, 5000 );
