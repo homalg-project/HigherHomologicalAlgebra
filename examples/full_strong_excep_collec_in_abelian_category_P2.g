@@ -138,10 +138,11 @@ lambda := UnitOfTensorHomAdjunction( collection );
 
 pp := IndecProjectiveObjects( D );
 
-quit;
-
 a := RandomObject( C, 3 )/chains_C/homotopy_C/derived_C;
 #a := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 2 )/homotopy_C/derived_C;
+
+
+quit;
 
 # Computing with the right and left derived functors -- slow
 # we use the derived category
