@@ -752,7 +752,44 @@ InstallMethod( Algebroid,
 ##
 BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
   function( full )
-    return;
+    local ambient;
+    
+    ambient := AmbientCategory( full );
+    
+    ## full is subcategory in quiver reps
+    
+    if IsQuiverRepresentationCategory( ambient ) then
+      AddIsEqualForObjects( full,
+        { a, b } -> IsIdenticalObj( a, b ) or
+          DimensionVector( UnderlyingCell( a ) ) = DimensionVector( UnderlyingCell( b ) )
+      );
+      
+      AddIsEqualForMorphisms( full,
+        function( alpha, beta )
+          return
+          DimensionVector( Source( UnderlyingCell( alpha ) ) )
+            = DimensionVector( Source( UnderlyingCell( beta ) ) ) and
+          DimensionVector( Range( UnderlyingCell( alpha ) ) )
+            = DimensionVector( Range( UnderlyingCell( beta ) ) ) and
+          MatricesOfRepresentationHomomorphism( UnderlyingCell( alpha ) )
+            { Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
+              = MatricesOfRepresentationHomomorphism( UnderlyingCell( beta ) )
+                { Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) };
+                
+        end );
+              
+      AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+      
+      AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+    
+    else
+    
+      Info( InfoWarning, 1, "Maybe you can optimize the equality methods?" );
+    
+      return;
+    
+    fi;
+    
 end );
 
 ##
