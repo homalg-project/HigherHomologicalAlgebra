@@ -772,9 +772,10 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
           DimensionVector( Range( UnderlyingCell( alpha ) ) )
             = DimensionVector( Range( UnderlyingCell( beta ) ) ) and
           MatricesOfRepresentationHomomorphism( UnderlyingCell( alpha ) )
-            { Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
+            #{ Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
               = MatricesOfRepresentationHomomorphism( UnderlyingCell( beta ) )
-                { Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) };
+                #{ Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
+                ;
                 
         end );
               
