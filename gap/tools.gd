@@ -26,3 +26,6 @@ DeclareGlobalFunction( "RandomBoldTextColor" );
 DeclareGlobalFunction( "RandomBackgroundColor" );
 
 DeclareGlobalFunction( "CreateNameWithColorsForFunctor" );
+
+DeclareGlobalFunction( "CurrentCaching" );
+

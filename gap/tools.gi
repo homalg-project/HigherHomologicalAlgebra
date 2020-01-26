@@ -667,6 +667,14 @@ InstallGlobalFunction( CreateNameWithColorsForFunctor,
 end );
 
 ##
+InstallGlobalFunction( CurrentCaching,
+  function( cat )
+  
+    Display( cat!.default_cache_type );
+    
+end );
+
+##
 InstallMethod( Display,
           [ IsCapFunctor ],
   function( F )
