@@ -89,6 +89,13 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
+    # to set better bounds
+    if IsHomotopyCategory( AmbientCategory( full ) ) then
+      
+      Perform( L, obj -> ObjectsSupport( UnderlyingCell( obj ) ) );
+      
+    fi;
+    
     MakeImmutable( L );
     
     name_for_quiver := ValueOption( "name_for_underlying_quiver" );
