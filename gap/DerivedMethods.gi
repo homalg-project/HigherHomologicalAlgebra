@@ -330,11 +330,15 @@ AddDerivationToCAP( ReverseShiftExpandingIsomorphismWithGivenObjects,
  end );
 
 ##
+
 # See categories and homological algebra (schapira)
-AddDerivationToCAP( IsIsomorphism,
+AddFinalDerivation( IsIsomorphism,
                 [
                     [ ConeObject, 1 ],
                     [ IsZeroForObjects,  1 ]
+                ],
+                [
+                    IsIsomorphism
                 ],
     function( mor )
     return IsZeroForObjects( ConeObject( mor ) );
