@@ -42,6 +42,12 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );
     
+    if IsIdenticalToZeroMorphism( phi ) or m > n then
+      Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
+      return MapLazy( IntegersList, n -> ZeroMorphism( A[ n ], B[ n - 1 ] ), 1 );
+      Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    fi;
+   
     L := Concatenation( 
            
           List( [ 1 .. n - m ],
@@ -92,7 +98,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     b := List( [ m .. n ], i -> phi[ i ] );
     
-    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
     sol := SolveLinearSystemInAbCategory( L, K, b );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
@@ -153,6 +159,12 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );    
     
+    if IsIdenticalToZeroMorphism( phi ) or m > n then
+      Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
+      return MapLazy( IntegersList, n -> ZeroMorphism( A[ n ], B[ n + 1 ] ), 1 );
+      Info( InfoComplexCategoriesForCAP, 2, "Done!" );
+    fi;
+   
     L := Concatenation( 
           
           List( [ 1 .. n - m ],
@@ -206,7 +218,7 @@ AddDerivationToCAP( HomotopyMorphisms,
           
     b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
     
-    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
     sol := SolveLinearSystemInAbCategory( L, K, b );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
@@ -262,12 +274,12 @@ AddDerivationToCAP( HomotopyMorphisms,
     D := Range( phi );
     
     if IsIdenticalToZeroMorphism( phi ) then
-      Info( InfoComplexCategoriesForCAP, 2, "Computing evidence for being null-homotopic the easy way ..." );
+      Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
       return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n + 1 ] ), 1 );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
-    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way: Colift ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: Colift ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
@@ -298,12 +310,12 @@ AddDerivationToCAP( HomotopyMorphisms,
     D := Range( phi );
     
     if IsIdenticalToZeroMorphism( phi ) then
-      Info( InfoComplexCategoriesForCAP, 2, "Computing evidence for being null-homotopic the easy way ..." );
+      Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
       return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n - 1 ] ), 1 );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
-    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m evidence for being null-homotopic the hard way ..." );
+    Info( InfoComplexCategoriesForCAP, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     
