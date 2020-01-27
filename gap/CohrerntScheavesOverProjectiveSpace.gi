@@ -57,7 +57,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       r := RandomTextColor( );
       
-      BB := CapFunctor( "Beilinson functor", cat, homotopy_reps );
+      BB := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_reps );
       
       AddObjectFunction( BB,
         function( a )
@@ -126,8 +126,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       r := RandomTextColor( );
       
-      name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
-                  r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
+      name := "Cotangent Beilinson functor";
       
       BB := CapFunctor( name, cat, homotopy_cat );
       
@@ -188,8 +187,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       r := RandomTextColor( );
       
-      name := Concatenation( "Cotangent Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( cat ), " ",
-                  r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_cat ) );
+      name := "Cotangent Beilinson functor";
       
       BB := CapFunctor( name, cat, homotopy_cat );
       
@@ -241,7 +239,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       r := RandomTextColor( );
       
-      name := Concatenation( "Restriction of Beilinson functor ", r[ 1 ], "from", r[ 2 ], " ", Name( full ), " ", r[ 1 ], "into", r[ 2 ], " ", Name( homotopy_reps ) );
+      name := "Cotangent Beilinson functor";
       
       F := CapFunctor( name, full, homotopy_reps );
       
