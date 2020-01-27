@@ -2858,6 +2858,20 @@ InstallOtherMethod( Representative,
           [ IsPathAlgebraElement ],
   IdFunc );
 
+##
+InstallMethod( \=,
+          [ IsQuotientOfPathAlgebraElement, IsQuotientOfPathAlgebraElement ],
+  function( e1, e2 )
+    local bool;
+    
+    bool := String( e1 ) = String( e2 );
+    
+    Assert( 3, bool = ( Representative( e1 ) = Representative( e2 ) ) );
+    
+    return bool;
+    
+end, 5000 );
+
 #
 InstallOtherMethod( CategoryOfVectorSpaces,
         [ IsFieldForHomalg ],
