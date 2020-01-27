@@ -87,12 +87,17 @@ inc := ExtendFunctorToHomotopyCategories( inc );
 
 quit;
 
-a := RandomObject( graded_lp, 8 );
+a := "0,0,0,0,0,-2,-x0*x1-x1^2, 0,2,-x0-2*x2,-5,2*x0*x1,-3*x2,0,0, 2,0,3*x0,-2*x0^2-x0*x1,0,2,-x0-x1,-2,-x0^2, x0^2,1,-1,-x0,2,3*x0*x1,-x0,0,0,-1,0,x0";
+a := HomalgMatrix( a, 6, 6, S );
+a := AsGradedLeftPresentation( a, [ 0, 2, 2, 1, 2, 0 ] );
+
+# or
+# a := RandomObject( graded_lp, 8 );
+
 
 a := BB( a );
 conv_a := Convolution( UnderlyingCell( TT( HH( a ) ) ) );
 
 a := inc( a );
 conv_a := inc( conv_a );
-
 
