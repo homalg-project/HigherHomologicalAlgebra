@@ -15,3 +15,4 @@ ReadPackage( "DerivedCategories", "gap/Hom.gi" );
 ReadPackage( "DerivedCategories", "gap/Tensor.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
+ReadPackage( "DerivedCategories", "gap/Combinatoric.gi" );
