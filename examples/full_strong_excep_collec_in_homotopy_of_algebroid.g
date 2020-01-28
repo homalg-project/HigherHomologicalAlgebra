@@ -42,6 +42,10 @@ omegas := UnderlyingCategory( DefiningCategory( AsCapCategory( Range( BB ) ) ) )
 collection := CreateExceptionalCollection( omegas : name_for_underlying_quiver := "quiver{Ω^2(2)-{3}->Ω^1(1)-{3}->Ω^0(0)}",
                                                     name_for_endomorphism_algebra := "End(⊕ {Ω^i(i)|i=0,1,2})"
                                                   );
+
+algebroid := Algebroid( collection );
+DeactivateCachingForCertainOperations( algebroid, list_of_operations );
+
 iso := IsomorphismIntoAlgebroid( collection );
 iso := ExtendFunctorToAdditiveClosures( iso );
 iso := ExtendFunctorToHomotopyCategories( iso );
@@ -57,6 +61,7 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
                                           );
 
 algebroid := Algebroid( collection );
+DeactivateCachingForCertainOperations( algebroid, list_of_operations );
 iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
 iso := ExtendFunctorToAdditiveClosures( iso );
 iso := ExtendFunctorToHomotopyCategories( iso );
@@ -93,7 +98,7 @@ a := AsGradedLeftPresentation( a, [ 0, 2, 2, 1, 2, 0 ] );
 
 # or
 # a := RandomObject( graded_lp, 8 );
-
+# a := TwistedGradedFreeModule( S, -4 );
 
 a := BB( a );
 conv_a := Convolution( UnderlyingCell( TT( HH( a ) ) ) );
