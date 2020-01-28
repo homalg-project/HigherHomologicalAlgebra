@@ -171,6 +171,30 @@ BindGlobal( "STACK_LISTLIST_QPA_MATRICES",
     
 end );
 
+##
+InstallMethod( KroneckerProduct, "for two QPA matrices",
+    [ IsQPAMatrix, IsQPAMatrix ],
+  function( M1, M2 )
+    local k, dim1, dim2, mat;
+  
+    k := BaseDomain( M1 );
+  
+    if not IsIdenticalObj( k, BaseDomain( M2 ) ) then
+      Error( "Base domains of the given matrices are not identical" );
+    fi;
+  
+    dim1 := DimensionsMat( M1 );
+    dim2 := DimensionsMat( M2 );
+  
+    if dim1[ 1 ] * dim2[ 1 ] = 0 or dim1[ 2 ] * dim2[ 2 ] = 0 then
+      return MatrixByRows( k, [ dim1[ 1 ] * dim2[ 1 ], dim1[ 2 ] * dim2[ 2 ] ], [ ] );
+    fi;
+  
+    mat := KroneckerProduct( RowsOfMatrix( M1 ), RowsOfMatrix( M2 ) );
+  
+    return MatrixByRows( k, [ dim1[ 1 ] * dim2[ 1 ], dim1[ 2 ] * dim2[ 2 ] ], mat );
+  
+end );
 
 #####################################
 #
