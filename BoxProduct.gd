@@ -1,0 +1,4 @@
+
+
+##
+DeclareAttribute( "BoxProductFunctor", IsQuiverAlgebra );

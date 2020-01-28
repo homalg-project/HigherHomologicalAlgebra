@@ -16,3 +16,4 @@ ReadPackage( "DerivedCategories", "gap/Tensor.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
 ReadPackage( "DerivedCategories", "gap/Combinatoric.gi" );
+ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
