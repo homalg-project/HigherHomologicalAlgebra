@@ -16,7 +16,11 @@ KeyDependentOperation( "ShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
 KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
+DeclareAttribute( "InclusionFunctorInHomotopyCategory", IsCapCategory );
+
 DeclareAttribute( "ExtendFunctorToHomotopyCategories", IsCapFunctor );
+
+DeclareAttribute( "ExtendProductFunctorToHomotopyCategories", IsCapFunctor );
 
 DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategories", IsCapNaturalTransformation );
 

@@ -3,7 +3,7 @@
 InstallMethod( HomologyFunctorOp, 
                [ IsHomotopyCategory, IsInt ],
 function( homotopy_category, n )
-  local cat, complex_cat, Hn, r, name, functor;
+  local cat, complex_cat, Hn, name, functor;
   
   cat := DefiningCategory( homotopy_category );
   
@@ -11,10 +11,7 @@ function( homotopy_category, n )
   
   Hn := HomologyFunctor( complex_cat, n );
   
-  r := RandomTextColor();
-  
-  name := Concatenation( String( n ), "-th homology functor ", r[ 1 ], "from", r[ 2 ], " ",
-            Name( homotopy_category ), " ", r[ 1 ], "to", r[ 2 ], " ", Name( cat ) );
+  name := Concatenation( String( n ), "-th homology functor" );
   
   functor := CapFunctor( name, homotopy_category, cat );
   
@@ -50,7 +47,7 @@ function( homotopy_category, n )
   
   T := ShiftFunctor( complex_cat, n );
   
-  name := Concatenation( "Shift by ", String( n ), " autoequivalence on ", Name( homotopy_category ) );
+  name := Concatenation( "Shift by ", String( n ), " autoequivalence on " );
   
   functor := CapFunctor( name, homotopy_category, homotopy_category );
   
@@ -86,7 +83,7 @@ function( homotopy_category, n )
   
   T := UnsignedShiftFunctor( complex_cat, n );
   
-  name := Concatenation( "Unsigned Shift by ", String( n ), " autoequivalence on ", Name( homotopy_category ) );
+  name := Concatenation( "Unsigned Shift by ", String( n ), " autoequivalence on " );
   
   functor := CapFunctor( name, homotopy_category, homotopy_category );
   
@@ -108,6 +105,34 @@ function( homotopy_category, n )
   
   return functor;
   
+end );
+
+##
+InstallMethod( InclusionFunctorInHomotopyCategory,
+          [ IsCapCategory ],
+  function( cat )
+    local homotopy_cat, chains_cat, name, inc;
+    
+    if not ( HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) ) then
+      Error( "The argument should be at least additive category" );
+    fi;
+    
+    homotopy_cat := HomotopyCategory( cat );
+    
+    chains_cat := ChainComplexCategory( cat );
+    
+    name := "Inclusion functor in homotopy category";
+    
+    inc := CapFunctor( name, cat, homotopy_cat );
+    
+    AddObjectFunction( inc,
+      o -> o/chains_cat/homotopy_cat );
+    
+    AddMorphismFunction( inc,
+      { s, alpha, r } -> alpha/chains_cat/homotopy_cat );
+    
+    return inc;
+    
 end );
 
 ##
@@ -148,6 +173,62 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
       
     return functor;
     
+end );
+
+##
+InstallMethod( ExtendProductFunctorToHomotopyCategories,
+          [ IsCapFunctor ],
+  function( F )
+    local source, cat_1, cat_2, range, ChF, homotopy_cat_1, homotopy_cat_2, homotopy_cat_1_cat_2, homotopy_range, name, U;
+    
+    source := AsCapCategory( Source( F ) );
+    
+    cat_1 := Components( source )[ 1 ];
+    
+    cat_2 := Components( source )[ 2 ];
+    
+    range := AsCapCategory( Range( F ) );
+    
+    ChF := ExtendProductFunctorToChainComplexCategoryProductFunctor( F );
+    
+    homotopy_cat_1 := HomotopyCategory( cat_1 );
+    
+    homotopy_cat_2 := HomotopyCategory( cat_2 );
+    
+    homotopy_cat_1_cat_2 := Product( homotopy_cat_1, homotopy_cat_2 );
+     
+    homotopy_range := HomotopyCategory( range );
+    
+    name := "Extension of product functor to homotopy categories";
+    
+    U := CapFunctor( name, homotopy_cat_1_cat_2, homotopy_range );
+    
+    AddObjectFunction( U,
+      function( C_x_D )
+        local C, D;
+        
+        C := UnderlyingCell( Components( C_x_D )[ 1 ] );
+        
+        D := UnderlyingCell( Components( C_x_D )[ 2 ] );
+        
+        return ApplyFunctor( ChF, Product( C, D ) ) / homotopy_range;
+        
+    end );
+    
+    AddObjectFunction( U,
+      function( S, phi_x_psi, R )
+        local phi, psi;
+        
+        phi := UnderlyingCell( Components( phi_x_psi )[ 1 ] );
+        
+        psi := UnderlyingCell( Components( phi_x_psi )[ 2 ] );
+        
+        return ApplyFunctor( ChF, Product( phi, psi ) ) / homotopy_range;
+        
+    end );
+   
+   return U;
+   
 end );
 
 ##
