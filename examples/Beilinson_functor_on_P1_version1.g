@@ -72,7 +72,9 @@ chains_D := UnderlyingCategory( homotopy_D );
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
-cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
+Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
+
+cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 5 ) / homotopy_C;
 

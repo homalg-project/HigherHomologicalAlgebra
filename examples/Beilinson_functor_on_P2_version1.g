@@ -77,7 +77,11 @@ homotopy_TT := PreCompose(
                   ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
                   );
 
-cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
+Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
+
+#################################
+
+cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -2, 1, 3 ) / homotopy_C;
 
@@ -85,4 +89,7 @@ quit;
 
 b;
 conv_b := cell_func( b );
+
+HomologySupport( b );
+HomologySupport( conv_b );
 

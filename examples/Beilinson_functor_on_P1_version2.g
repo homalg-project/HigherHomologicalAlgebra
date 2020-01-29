@@ -91,13 +91,17 @@ inc := ExtendFunctorToAdditiveClosureOfSource( inc );
 inc := ExtendFunctorToHomotopyCategories( inc );
 ##########################################################
 
+
 ################### Tensor ###############################
 TP := TensorFunctorOnProjectiveObjects( collection );
+
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
+
+Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
 ##########################################################
 
 # this can be applied on objects and morphisms
-cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
+cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -4, 4, 3 );

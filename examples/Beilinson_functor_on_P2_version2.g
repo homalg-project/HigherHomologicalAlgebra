@@ -95,6 +95,7 @@ inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension t
 
 ##########################################################
 
+
 ################### Tensor ###############################
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose(
@@ -102,10 +103,11 @@ homotopy_TT := PreCompose(
                   ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T functor to homotopy categories" )
                 );
 
+Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
 ##########################################################
 
 # this can be applied on objects and morphisms
-cell_func := cell -> Convolution( UnderlyingCell( PreCompose( homotopy_HH, homotopy_TT )( cell ) ) );
+cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
 b := RANDOM_CHAIN_COMPLEX( chains_C, -1, 2, 2 );
 b := ApplyFunctor( Loc, b/homotopy_C );
