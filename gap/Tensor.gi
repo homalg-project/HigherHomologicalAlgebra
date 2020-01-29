@@ -36,11 +36,11 @@ end );
 InstallMethod( TensorFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local G, add_G, C, can, can_add_G, projs, D, r, name, R;
+    local G, add_G, C, can, can_add_G, projs, D, name, R;
     
     G := TensorFunctorOnIndecProjectiveObjects( collection );
     
-    add_G := ExtendFunctorToAdditiveClosures( G ); # or add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    add_G := ExtendFunctorToAdditiveClosures( G );
     
     C := AmbientCategory( AsCapCategory( Source( G ) ) );
     
@@ -50,51 +50,15 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     projs := AsCapCategory( Source( can_add_G ) );
     
-    D := AsCapCategory( Range( G ) );
+    D := AsCapCategory( Range( can_add_G ) );
     
     name := "- ⊗_{End T} T functor on projective objects";
     
     R := CapFunctor( name, projs, D );
     
-    AddObjectFunction( R, # FunctorObjectOperation( can_add_G ) );
-      function( r )
-        local a, summands;
+    AddObjectFunction( R, can_add_G!.object_function_list[ 1 ][ 1 ] );
         
-        a := ApplyFunctor( can_add_G, r );
-        
-        summands := ObjectList( a );
-        
-        if IsEmpty( summands ) then
-          
-          a := ZeroObject( D );
-          
-        else
-          
-          a := DirectSum( summands );
-          
-        fi;
-        
-        a!.object_list := summands;
-        
-        return a;
-        
-    end );
-    
-    AddMorphismFunction( R, # FunctorMorphismOperation( can_add_G ) );
-      function( s, alpha, r )
-        local beta, morphism_matrix;
-        
-        beta := ApplyFunctor( can_add_G, alpha );
-        
-        morphism_matrix := MorphismMatrix( beta );
-        
-        beta := MorphismBetweenDirectSums( s, morphism_matrix, r );
-        
-        beta!.morphism_matrix := morphism_matrix;
-        
-        return beta;
-        
-    end );
+    AddMorphismFunction( R, can_add_G!.morphism_function_list[ 1 ][ 1 ] );
     
     return R;
     
