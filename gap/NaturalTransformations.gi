@@ -36,11 +36,13 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         tr := ApplyFunctor( TT, r );
          
-        defining_morphism := tr!.defining_morphism_of_cokernel_object;
+        defining_morphism := tr!.embedded_defining_morphism_of_cokernel_object;
         
         coker_epi := CokernelProjection( defining_morphism );
         
-        a := Range( defining_morphism )!.object_list;
+        a := ObjectList( Range( tr!.defining_morphism_of_cokernel_object ) );
+        
+        a := List( a, UnderlyingCell );
         
         a := List( [ 1 .. Size( a ) ], i -> InjectionOfCofactorOfDirectSum( a, i ) );
         
@@ -137,7 +139,7 @@ InstallMethod( CounitOfTensorHomAdjunction,
         
         mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
         
-        return CokernelColift( ht_a!.defining_morphism_of_cokernel_object, mor );
+        return CokernelColift( ht_a!.embedded_defining_morphism_of_cokernel_object, mor );
         
       end );
     
