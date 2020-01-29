@@ -121,15 +121,11 @@ InstallMethod( TensorFunctor,
     [ IsExceptionalCollection ],
     
   function( collection )
-    local R, r, projs, reps, cat, name, F;
+    local full, cat, T, I, TI, projs, reps, name, F;
     
-    R := TensorFunctorOnProjectiveObjects( collection );
+    full := DefiningFullSubcategory( collection );
     
-    projs := AsCapCategory( Source( R ) );
-    
-    reps := AmbientCategory( projs  );
-    
-    cat := AsCapCategory( Range( R ) );
+    cat := AmbientCategory( full );
     
     if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
       
@@ -137,23 +133,33 @@ InstallMethod( TensorFunctor,
       
     fi;
     
+    T := TensorFunctorOnProjectiveObjects( collection );
+    
+    I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( full ) );
+    
+    projs := AsCapCategory( Source( T ) );
+    
+    reps := AmbientCategory( projs  );
+     
     name := "- ⊗_{End T} T functor on quiver representations";
     
     F := CapFunctor( name, reps, cat );
     
     AddObjectFunction( F,
       function( r )
-        local P, cok;
+        local p, ip, cok; 
         
-        P := ProjectiveChainResolution( r );
+        p := ProjectiveChainResolution( r );
         
-        P := P ^ 1;
+        p := ApplyFunctor( T, p ^ 1 / projs );
         
-        P := ApplyFunctor( R, P / projs );
+        ip := ApplyFunctor( I, p );
         
-        cok := CokernelObject( P );
+        cok := CokernelObject( ip );
         
-        cok!.defining_morphism_of_cokernel_object := P;
+        cok!.defining_morphism_of_cokernel_object := p;
+        
+        cok!.embedded_defining_morphism_of_cokernel_object := ip;
         
         return cok;
         
@@ -161,17 +167,21 @@ InstallMethod( TensorFunctor,
     
     AddMorphismFunction( F,
       function( source, alpha, range )
-        local gamma, cok_func;
+        local gamma, i_gamma, cok_func;
         
         gamma := MorphismBetweenProjectiveChainResolutions( alpha );
         
         gamma := [ Source( gamma ) ^ 1, gamma[ 0 ], Range( gamma ) ^ 1 ];
         
-        gamma := List( gamma, g -> ApplyFunctor( R, g / projs ) );
+        gamma := List( gamma, g -> ApplyFunctor( T, g / projs ) );
         
-        cok_func := CallFuncList( CokernelObjectFunctorial, gamma );
+        i_gamma := List( gamma, g -> ApplyFunctor( I, g ) );
+        
+        cok_func := CallFuncList( CokernelObjectFunctorial, i_gamma );
         
         cok_func!.defining_morphism_of_cokernel_object := gamma[ 2 ];
+        
+        cok_func!.embedded_defining_morphism_of_cokernel_object := i_gamma[ 2 ];
         
         return cok_func;
         
