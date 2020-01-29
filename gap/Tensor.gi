@@ -12,29 +12,23 @@
 InstallMethod( TensorFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local full, ambient_cat, inc, iso2, A, iso1, iso, indec_projs, r, name, cell_func;
+    local full, iso, indec_projs, name, T;
     
     full := DefiningFullSubcategory( collection );
     
-    ambient_cat := AmbientCategory( full );
-    
-    inc := InclusionFunctor( full );
-     
-    iso2 := IsomorphismFromAlgebroid( collection );
-    
-    A := AsCapCategory( Source( iso2 ) );
-    
-    iso1 := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( A );
-    
-    iso := PreCompose( [ iso1, iso2, inc ] );
+    iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
     
     indec_projs := AsCapCategory( Source( iso ) );
     
     name := "- ⊗_{End T} T functor on indecomposable projective objects";
-       
-    cell_func := c -> ApplyFunctor( iso, c );
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, indec_projs, ambient_cat, cell_func, cell_func );
+    T := CapFunctor( name, indec_projs, full );
+    
+    AddObjectFunction( T, iso!.object_function_list[ 1 ][ 1 ] );
+    
+    AddMorphismFunction( T, iso!.morphism_function_list[ 1 ][ 1 ] );
+    
+    return T;
     
 end );
 
