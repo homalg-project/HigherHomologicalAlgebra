@@ -1017,60 +1017,60 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
         
       end );
       
-      AddMorphismFunction( U,
+    AddMorphismFunction( U,
+      
+      function( S, phi_x_psi, T )
+        local phi, psi, ss, tt, l;
         
-        function( S, phi_x_psi, T )
-          local phi, psi, ss, tt, l;
+        phi := Components( phi_x_psi )[ 1 ];
+        
+        psi := Components( phi_x_psi )[ 2 ];
+        
+        ss := S!.UnderlyingDoubleComplex;
+        
+        tt := T!.UnderlyingDoubleComplex;
+        
+        l := MapLazy( IntegersList,
           
-          phi := Components( phi_x_psi )[ 1 ];
-          
-          psi := Components( phi_x_psi )[ 2 ];
-          
-          ss := S!.UnderlyingDoubleComplex;
-          
-          tt := T!.UnderlyingDoubleComplex;
-          
-          l := MapLazy( IntegersList,
+          function( m )
+            local ind_s, ind_t, morphisms, obj;
             
-            function( m )
-              local ind_s, ind_t, morphisms, obj;
+            # this is important to write the used indices.
+            obj := ObjectAt( S, m );
+            
+            obj := ObjectAt( T, m );
+            
+            ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+            
+            ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+            
+            morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ],
               
-              # this is important to write the used indices.
-              obj := ObjectAt( S, m );
-              
-              obj := ObjectAt( T, m );
-              
-              ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
-              
-              ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
-              
-              morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ],
+              function( i )
                 
-                function( i )
+                return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
                   
-                  return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ], 
+                  function( j )
                     
-                    function( j )
+                    if i = j then
                       
-                      if i = j then
-                        
-                        return ApplyFunctor( F, Product( phi[ i ], psi[ m - i ] ) );
+                      return ApplyFunctor( F, Product( phi[ i ], psi[ m - i ] ) );
+                    
+                    else
                       
-                      else
-                        
-                        return ZeroMorphism( ObjectAt( ss, i, m - i), ObjectAt( tt, j, m - j ) );
-                      
-                      fi;
-                      
-                      end );
-                
-                end );
+                      return ZeroMorphism( ObjectAt( ss, i, m - i), ObjectAt( tt, j, m - j ) );
+                    
+                    fi;
+                    
+                    end );
               
-              return MorphismBetweenDirectSums( morphisms );
-              
-              end, 1 );
-          
-          return ChainMorphism( S, T, l );
+              end );
+            
+            return MorphismBetweenDirectSums( morphisms );
+            
+            end, 1 );
+        
+        return ChainMorphism( S, T, l );
       
       end );
       
