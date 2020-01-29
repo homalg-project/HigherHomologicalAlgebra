@@ -390,7 +390,7 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
     morphism_func :=
       function( phi )
-        local s, source, i, r, range, j, basis, labels, dim, paths, rel;
+        local s, source, i, r, range, j, basis, labels, dim, paths, rel, v;
          
         s := Source( phi );
         
@@ -405,6 +405,8 @@ InstallMethod( IsomorphismIntoAlgebroid,
         j := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( r, collection[ k ] ) );
         
         basis := BasisForPaths( collection, i, j );
+        
+        v := collection!.char;
         
         if IsEmpty( basis ) then
           
@@ -430,9 +432,9 @@ InstallMethod( IsomorphismIntoAlgebroid,
                   PreCompose(
                   List( label, arrow_label ->
                     algebroid.( Concatenation( 
-                                  "v",
+                                  v,
                                   String( arrow_label[ 1 ] ),
-                                  "_v",
+                                  "_", v,
                                   String( arrow_label[ 2 ] ),
                                   "_",
                                   String( arrow_label[ 3 ] ) )

@@ -108,7 +108,8 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
     
-    collection := rec( 
+    collection := rec(
+                    char := Random( [ "v", "u", "s", "t" ] ),
                     arrows := rec( ),
                     other_paths := rec( ),
                     paths := rec( ),
@@ -663,7 +664,7 @@ end );
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r;
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r, v;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -682,16 +683,21 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     ranges := List( arrows, a -> a[ 2 ] );
     
-    labels := List( arrows, a -> Concatenation( "v", String( a[ 1 ] ), "_v", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
+    v := collection!.char;
     
-    quiver := RightQuiver( collection!.name_for_underlying_quiver, [ 1 .. nr_vertices ], labels, sources, ranges );
+    labels := List( arrows,
+      a -> Concatenation( v, String( a[ 1 ] ),
+              "_", v, String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
+    
+    quiver := RightQuiver( collection!.name_for_underlying_quiver,
+                [ 1 .. nr_vertices ], labels, sources, ranges );
     
     A := PathAlgebra( field, quiver );
     
     relations := [ ];
     
     for i in [ 1 .. nr_vertices - 1 ] do
-      for j in [ i + 1 .. nr_vertices ] do  #TODO can we start from i+2?
+      for j in [ i + 1 .. nr_vertices ] do
                       
         paths_in_collection := Paths( collection, i, j );
         
@@ -703,12 +709,15 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
         
         paths_in_quiver := List( labels,
           l -> Product(
-            List( l, a -> A.( Concatenation( "v", String( a[1] ), "_v", String( a[2] ), "_", String( a[ 3 ] ) ) ) ) ) );
-      
+            List( l, a -> A.(
+              Concatenation( v, String( a[1] ),
+                "_", v, String( a[2] ), "_", String( a[ 3 ] ) ) ) ) )
+              );
+        
         rel := RelationsBetweenMorphisms( paths_in_collection );
-      
+        
         rel := List( rel, r -> List( r, e -> e / field ) * paths_in_quiver );
-      
+        
         relations := Concatenation( relations, rel );
                       
       od;
@@ -729,7 +738,9 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
       
       r := RandomTextColor( );
       
-      Algebroid( A )!.Name := Concatenation( r[ 1 ], "Algebroid (", r[ 2 ], " ", name, " ", r[ 1 ], ")", r[ 2 ] );;
+      Algebroid( A )!.Name := Concatenation( r[ 1 ],
+                                "Algebroid (", r[ 2 ], " ", name,
+                                  " ", r[ 1 ], ")", r[ 2 ] );;
       
     fi;
     
