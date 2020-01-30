@@ -43,14 +43,12 @@ S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
 
 BB := BeilinsonFunctor( S );
 
-homotopy_C := AsCapCategory( Range( BB ) );
+Ho_C := AsCapCategory( Range( BB ) );
+Ch_C := UnderlyingCategory( Ho_C );
+C := DefiningCategory( Ho_C );
 
-chains_C := UnderlyingCategory( homotopy_C );
-
-C := DefiningCategory( homotopy_C );
-
-indec_proj_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
-DeactivateCachingForCertainOperations( indec_proj_C, list_of_operations );
+indec_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
+DeactivateCachingForCertainOperations( indec_C, list_of_operations );
 
 
 o := TwistedGradedFreeModule( S, 0 );
@@ -63,27 +61,25 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
 
 HH := HomFunctor( collection );
 HP := HomFunctorOnProjectiveObjects( collection );
-homotopy_HH := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_C ), ExtendFunctorToHomotopyCategories( HP ) );
+homotopy_HH := PreCompose( LocalizationFunctorByProjectiveObjects( Ho_C ), ExtendFunctorToHomotopyCategories( HP ) );
 
 D := AsCapCategory( Range( HH ) );
-
-homotopy_D := HomotopyCategory( D );
-
-chains_D := UnderlyingCategory( homotopy_D );
+Ho_D := HomotopyCategory( D );
+Ch_D := UnderlyingCategory( Ho_D );
 
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose( 
-                  LocalizationFunctorByProjectiveObjects( homotopy_D ), 
+                  LocalizationFunctorByProjectiveObjects( Ho_D ), 
                   ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
                   );
 
-Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
+Inc := InclusionFunctorOfHomotopyCategory( collection );
 
 #################################
 
 cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
-b := RANDOM_CHAIN_COMPLEX( chains_C, -2, 1, 3 ) / homotopy_C;
+b := RANDOM_CHAIN_COMPLEX( Ch_C, -2, 1, 3 ) / Ho_C;
 
 quit;
 

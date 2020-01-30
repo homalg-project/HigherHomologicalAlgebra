@@ -42,17 +42,15 @@ S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0,x1" );
 
 BB := BeilinsonFunctor( S );
 
-homotopy_C := AsCapCategory( Range( BB ) );
-
-chains_C := UnderlyingCategory( homotopy_C );
-
-C := DefiningCategory( homotopy_C );
+Ho_reps := AsCapCategory( Range( BB ) );
+Ch_reps := UnderlyingCategory( Ho_reps );
+reps := DefiningCategory( Ho_reps );
 
 #################################
 
-eq := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
+eq := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps );
 eq := ExtendFunctorToHomotopyCategories( eq );
-Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( C ) ), eq );
+Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( reps ) ), eq );
 
 ################ create the collection o(-2), o(-1) #####################
 
@@ -69,26 +67,24 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
 ################# Hom #################################
 HH := HomFunctor( collection );
 HP := HomFunctorOnAdditiveClosure( collection );
-homotopy_HH := ExtendFunctorToHomotopyCategories( HP );
+homotopy_HH := ExtendFunctorToHomotopyCategories( HP : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );
 ########################################################
 
 Ho_C := AsCapCategory( Source( HH ) );
-
+Ch_C := UnderlyingCategory( Ho_C );
 C := DefiningCategory( Ho_C ); # or AsCapCategory( Source( HP ) );
 
 indec_C := UnderlyingCategory( C ); # caching for this is crisp
 DeactivateCachingForCertainOperations( indec_C, list_of_operations );
 
 D := AsCapCategory( Range( HH ) );
-
 homotopy_D := HomotopyCategory( D );
-
 chains_D := UnderlyingCategory( homotopy_D );
 
 ##########################################################
 inc := InclusionFunctor( indec_C );
 inc := ExtendFunctorToAdditiveClosureOfSource( inc );
-inc := ExtendFunctorToHomotopyCategories( inc );
+inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension the inclusion functor to homotopy categories" );
 ##########################################################
 
 
@@ -104,8 +100,8 @@ Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource
 cell_func := cell -> Convolution( UnderlyingCell( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) ) );
 
 
-b := RANDOM_CHAIN_COMPLEX( chains_C, -4, 4, 3 );
-b := ApplyFunctor( Loc, b/homotopy_C );
+b := RANDOM_CHAIN_COMPLEX( Ch_reps, -4, 4, 3 );
+b := ApplyFunctor( Loc, b/Ho_reps );
 
 quit;
 
