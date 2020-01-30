@@ -75,7 +75,18 @@ DeclareAttribute( "NumberOfObjects", IsExceptionalCollection );
 #! @Returns IsList
 DeclareAttribute( "UnderlyingObjects", IsExceptionalCollection );
 
+#! @Description
+#!  Returns the homotopy category of the additive closure of <C>DefiningFullSubcategory</C>(<A>E</A>).
+#! @Arguments E
+#! @Returns a category
 DeclareAttribute( "HomotopyCategory", IsExceptionalCollection );
+
+#! @Description
+#!  Returns the inclusion functor from the homotopy category of the additive closure of <C>DefiningFullSubcategory</C>(<A>E</A>)
+#!  in the homotopy category of the ambient category of <C>DefiningFullSubcategory</C>(<A>E</A>).
+#! @Arguments E
+#! @Returns a functor
+DeclareAttribute( "InclusionFunctorOfHomotopyCategory", IsExceptionalCollection );
 
 #! @Description
 #!  Returns the embedding functor of <C>DefiningFullSubcategory</C>(<A>E</A>) in <C>TiltingObjectAsCategory</C>(<A>E</A>).

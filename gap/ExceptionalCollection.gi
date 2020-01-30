@@ -774,6 +774,18 @@ InstallMethod( HomotopyCategory,
 );
 
 ##
+InstallMethod( InclusionFunctorOfHomotopyCategory,
+          [ IsExceptionalCollection ],
+  collection -> ExtendFunctorToHomotopyCategories(
+                  ExtendFunctorToAdditiveClosureOfSource(
+                    InclusionFunctor(
+                      DefiningFullSubcategory( collection )
+                    )
+                  ) : name_for_functor := "Inclusion functor between homotopy categories"
+                )
+);
+
+##
 BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
   function( full )
     local ambient;
