@@ -437,22 +437,22 @@ InstallMethod( ViewObj,
       if IsExact( C ) then 
         
         is_exact := " exact, ";
-      
+        
       else
         
         is_exact := " not exact, ";
-      
+        
       fi;
-    
+      
     else
       
       is_exact := " ";
-    
+      
     fi;
     
     if IsBoundedChainOrCochainComplex( C ) then
       
-       Print(
+      Print(
         "<An", is_exact, "object in ",
         Name( CapCategory( C ) ),
         " with active lower bound ",
@@ -460,7 +460,7 @@ InstallMethod( ViewObj,
         " and active upper bound ",
         ActiveUpperBound( C ), ">"
         );
-    
+        
     elif IsBoundedBelowChainOrCochainComplex( C ) then
       
       Print(
@@ -469,7 +469,7 @@ InstallMethod( ViewObj,
         " with active lower bound ",
         ActiveLowerBound( C ), ">"
         );
-    
+        
     elif IsBoundedAboveChainOrCochainComplex( C ) then
       
       Print(
@@ -478,11 +478,11 @@ InstallMethod( ViewObj,
         " with active upper bound ",
         ActiveUpperBound( C ), ">"
         );
-    
+        
     else
       
-       TryNextMethod( );
-    
+      TryNextMethod( );
+      
     fi;
     
 end );
@@ -491,56 +491,58 @@ end );
 InstallMethod( Display, 
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
-    local i, co_homo, dashes;
+    local r, co_homo, s, dashes, i;
     
-    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n" );
+    r := RandomTextColor( );
+    
+    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
     if IsChainComplex( C ) then
       
-      co_homo := "homological";
+      for i in [ m .. n ] do
+        
+        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        Display( C^i );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        Print( s );
+        Print( "\n" ); 
+        Display( C[ i ] );
+        Print( "\n" );
+        Print( Concatenation( 
+          ListWithIdenticalEntries(
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
+          );
+        Print( "\n\n" ); 
+      od;
       
-        dashes := "\n------------------------/\\--------------------------\n";
-        
-        for i in [ m .. n ] do
-          
-          Print( dashes );
-          
-          Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-          
-          Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-          
-          Display( C^i );
-          
-          Print( "\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-          
-          Display( C[ i ] );
-        
-        od;
-        
     else
-      
-      co_homo := "cohomological";
-      
-      dashes := "\n------------------------\\/--------------------------\n";
       
       for i in [ m .. n ] do
         
-        Print( dashes );
-        
-        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-        
-        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-        
+        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        Print( s );
+        Print( "\n" ); 
         Display( C[ i ] );
+        Print( "\n" );
+        Print( Concatenation(
+          ListWithIdenticalEntries(
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
+          );
+          
+        Print( "\n\n" ); 
         
-        Print( "\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-        
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
         Display( C^i );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
+        Print( "\n" ); 
         
       od;
-    
+      
     fi;
-  
+    
 end );
 
 ##
@@ -548,76 +550,79 @@ InstallMethod( Display,
       [ IsBoundedChainOrCochainComplex ],
   function( C )
     
-    if ActiveUpperBound( C ) -  ActiveLowerBound( C ) >= 2 then
+    if ActiveUpperBound( C ) - ActiveLowerBound( C ) >= 0 then
       
-      Display( C, ActiveLowerBound( C ) + 1 , ActiveUpperBound( C ) - 1 );
-    
+      Display( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+      
     else
       
       Print( "A zero complex in ", Name( CapCategory( C ) ) );
-    
+      
     fi;
-  
+    
 end );
 
 InstallMethod( DisplayComplex, [ IsChainOrCochainComplex, IsInt, IsInt ], Display );
-InstallMethod( DisplayComplex, [ IsBoundedChainOrCochainComplex ], Display );
 
+InstallMethod( DisplayComplex, [ IsBoundedChainOrCochainComplex ], Display );
 
 ##
 InstallMethod( ViewComplex, 
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
-    local i, co_homo, dashes;
+    local r, co_homo, s, dashes, i;
     
-    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n" );
+    r := RandomTextColor( );
+    
+    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
     if IsChainComplex( C ) then
       
-      co_homo := "homological";
-      
-      dashes := "\n------------------------/\\--------------------------\n";
-        
       for i in [ m .. n ] do
         
-        Print( dashes );
-        
-        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-        
-        Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-        
-        View( C^i );
-        
-        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-        
-        View( C[ i ] );
-      
+        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        ViewObj( C^i );
+        Print( "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        Print( s );
+        Print( "\n" );
+        ViewObj( C[ i ] );
+        Print( "\n" );
+        Print( Concatenation(
+          ListWithIdenticalEntries(
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
+          );
+        Print( "\n\n" );
       od;
-    
+      
     else
       
-      co_homo := "cohomological";
-        
-      dashes := "\n------------------------\\/--------------------------\n";
-        
       for i in [ m .. n ] do
         
-        Print( dashes );
+        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        Print( s );
+        Print( "\n" ); 
+        ViewObj( C[ i ] );
+        Print( "\n" );
+        Print( Concatenation(
+          ListWithIdenticalEntries(
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
+          );
+        Print( "\n\n" );
         
-        Print( TextAttr.(2),  "In ", co_homo," degree ", String( i ) , TextAttr.reset );
-        
-        Print( "\n\n", TextAttr.(2), "Object:", TextAttr.reset, "\n" );
-        
-        View( C[ i ] );
-        
-        Print( "\n\n", TextAttr.(2), "Differential:", TextAttr.reset, "\n" );
-        
-        View( C^i );
-        
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        ViewObj( C^i );
+        Print( "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
+        Print( "\n" ); 
+       
       od;
-    
+      
     fi;
-  
+     
 end );
 
 ##
@@ -626,9 +631,9 @@ InstallMethod( ViewComplex,
   
   function( C )
     
-    if ActiveUpperBound( C ) -  ActiveLowerBound( C ) >= 2 then
+    if ActiveUpperBound( C ) - ActiveLowerBound( C ) >= 0 then
       
-      ViewComplex( C, ActiveLowerBound( C ) + 1 , ActiveUpperBound( C ) - 1 );
+      ViewComplex( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
       
     else
       
@@ -650,7 +655,7 @@ InstallMethod( Objects,
   function( C )
     
     return MapLazy( Differentials( C ), Source, 1 );
-  
+    
 end );
 
 ##
