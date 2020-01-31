@@ -102,14 +102,14 @@ BindGlobal( "TheTypeCohomologicalBicomplexMorphism",
 InstallMethod( UnderlyingCapCategoryCell,
         "for a list",
         [ IsList ],
-
+        
   L -> List( L, UnderlyingCapCategoryCell ) );
-
+  
 ##
 InstallMethod( UnderlyingCapCategoryCell,
         "fallback method for an arbitrary GAP object",
         [ IsObject ],
-
+  
   IdFunc );
 
 ####################################
@@ -121,34 +121,34 @@ InstallMethod( UnderlyingCapCategoryCell,
 ##
 InstallMethod( AsCategoryOfBicomplexes,
         [ IsCapCategory ],
-
+        
   function( C )
     local name, BC, recnames, func, pos, create_func_bool,
           create_func_object0, create_func_object, create_func_morphism,
           create_func_universal_morphism, info, add;
-
+          
     if HasName( C ) then
         name := Concatenation( Name( C ), " as bicomplexes" );
         BC := CreateCapCategory( name );
     else
         BC := CreateCapCategory( );
     fi;
-
+    
     ## TODO: should be replaced later by a sync process
     if HasIsAbelianCategory( C ) then
         SetIsAbelianCategory( BC, IsAbelianCategory( C ) );
     fi;
-
+    
     SetUnderlyingCategoryOfComplexesOfComplexes( BC, C );
-
+    
     for name in ListKnownCategoricalProperties( C ) do
         name := ValueGlobal( name );
         Setter( name )( BC, true );
     od;
-
+    
     ## TODO: remove `Primitively' for performance?
     recnames := ShallowCopy( ListPrimitivelyInstalledOperationsOfCategory( C ) );
-
+    
     create_func_bool :=
       function( name )
         local oper;
@@ -250,9 +250,9 @@ InstallMethod( AsCategoryOfBicomplexes,
       end;
 
     for name in recnames do
-
+      
         info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
-
+        
         if info.return_type = "bool" then
             func := create_func_bool( name );
         elif info.return_type = "object" and info.filter_list = [ "category" ] then
@@ -285,52 +285,52 @@ InstallMethod( AsCategoryOfBicomplexes,
           continue;  
           #Error( "unkown return type of the operation ", name );
         fi;
-
+        
         add := ValueGlobal( Concatenation( "Add", name ) );
-
+        
         add( BC, func );
-
+        
     od;
-
+    
     Finalize( BC );
-
+    
     IdentityFunctor( BC )!.UnderlyingFunctor := IdentityFunctor( C );
-
+    
     return BC;
-
+    
 end );
 
 ##
 InstallMethod( AssociatedBicomplexObject,
                [ IsChainOrCochainComplex ],
-   function( C )
-   local B, cat, type;
-
-   cat := CapCategory( C );
-
-   if IsChainComplexCategory( cat ) and IsChainComplexCategory( UnderlyingCategory( cat ) ) then
+  function( C )
+    local B, cat, type;
+    
+    cat := CapCategory( C );
+    
+    if IsChainComplexCategory( cat ) and IsChainComplexCategory( UnderlyingCategory( cat ) ) then
       type := TheTypeHomologicalBicomplexObject;
-   elif IsCochainComplexCategory( cat ) and IsCochainComplexCategory( UnderlyingCategory( cat ) ) then
+    elif IsCochainComplexCategory( cat ) and IsCochainComplexCategory( UnderlyingCategory( cat ) ) then
       type := TheTypeCohomologicalBicomplexObject;
-   else
+    else
       Error( "not yet implemented" );
-   fi;
-
-   B := rec( IndicesOfTotalComplex := rec( ) );
-
-   ObjectifyWithAttributes(
+    fi;
+    
+    B := rec( IndicesOfTotalComplex := rec( ) );
+    
+    ObjectifyWithAttributes(
             B, type,
             UnderlyingCapCategoryCell, C
             );
-
-   cat := AsCategoryOfBicomplexes( cat );
-
-   Add( cat, B );
-
-   TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES( C, B );
-
-   return B;
-
+    
+    cat := AsCategoryOfBicomplexes( cat );
+    
+    Add( cat, B );
+    
+    TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES( C, B );
+    
+    return B;
+    
 end );
 
 ##
@@ -338,6 +338,7 @@ InstallMethod( HomologicalBicomplex,
                [ IsChainComplex ],
     AssociatedBicomplexObject );
 
+##
 InstallMethod( CohomologicalBicomplex,
                [ IsCochainComplex ],
     AssociatedBicomplexObject );
@@ -345,9 +346,9 @@ InstallMethod( CohomologicalBicomplex,
 ##
 InstallMethod( HomologicalBicomplex,
                [ IsCapCategory, IsZList, IsZList ],
-    function( A, h, v )
+  function( A, h, v )
     local chains_cat, C;
-
+    
     chains_cat := ChainComplexCategory( A );
     C := ChainComplex( chains_cat, 
         MapLazy( IntegersList,
@@ -371,7 +372,7 @@ InstallMethod( CohomologicalBicomplex,
                [ IsCapCategory, IsZList, IsZList ],
     function( A, h, v )
     local cochains_cat, C;
-
+    
     cochains_cat := CochainComplexCategory( A );
     C := CochainComplex( cochains_cat, 
         MapLazy( IntegersList,
@@ -393,46 +394,51 @@ end );
 ##
 InstallMethod( HomologicalBicomplex,
                [ IsCapCategory, IsFunction, IsFunction ],
-    function( A, H, V )
+  function( A, H, V )
     local h, v;
-
+    
     h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
-
+    
     v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
-
+    
     return HomologicalBicomplex( A, h, v );
-
+    
 end );
 
 ##
 InstallMethod( CohomologicalBicomplex,
                [ IsCapCategory, IsFunction, IsFunction ],
-    function( A, H, V )
+  function( A, H, V )
     local h, v;
-
+    
     h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
-
+    
     v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
-
+    
     return CohomologicalBicomplex( A, h, v );
-
+    
 end );
 
 
 ##
 InstallOtherMethod( ObjectAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
-       return UnderlyingCapCategoryCell( B )[ i ][ j ];
+  function( B, i, j )
+    
+    return UnderlyingCapCategoryCell( B )[ i ][ j ];
+    
 end );
 
 ##
 InstallMethod( HorizontalDifferentialAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local d;
-    d := UnderlyingCapCategoryCell( B )^i;
+    
+    d := UnderlyingCapCategoryCell( B ) ^ i;
+    
     return d[ j ];
+    
 end );
 
 ##
@@ -440,10 +446,10 @@ DeclareProperty( "IsBicomplexCategoryWithCommutativeSquares", IsCapCategory );
 
 InstallMethod( VerticalDifferentialAt,
                [ IsCapCategoryBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local cat;
     cat := CapCategory( B );
-
+    
     if i mod 2 = 0 then
        return UnderlyingCapCategoryCell( B )[ i ]^j;
     fi;
@@ -458,21 +464,21 @@ end );
 ##
 InstallMethod( VerticalCohomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return CohomologyAt( col, j );
 end );
 
 InstallMethod( GeneralizedProjectionOntoVerticalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return GeneralizedProjectionOntoCohomologyAt( col, j );
 end );
 
 InstallMethod( GeneralizedEmbeddingOfVerticalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return GeneralizedEmbeddingOfCohomologyAt( col, j );
@@ -480,46 +486,44 @@ end );
 
 InstallMethod( HorizontalCohomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return CohomologyAt( row, i );
 end );
 
-
 InstallMethod( GeneralizedProjectionOntoHorizontalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return GeneralizedProjectionOntoCohomologyAt( row, i );
 end );
 
 InstallMethod( GeneralizedEmbeddingOfHorizontalCohomologyAt, [ IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return GeneralizedEmbeddingOfCohomologyAt( row, i );
 end );
 
-
 ##
 InstallMethod( VerticalHomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return HomologyAt( col, j );
 end );
 
 InstallMethod( GeneralizedProjectionOntoVerticalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return GeneralizedProjectionOntoHomologyAt( col, j );
 end );
 
 InstallMethod( GeneralizedEmbeddingOfVerticalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local col;
     col := ColumnAsComplex( B, i );
     return GeneralizedEmbeddingOfHomologyAt( col, j );
@@ -528,7 +532,7 @@ end );
 ##
 InstallMethod( HorizontalHomologyAt,
         [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return HomologyAt( row, i );
@@ -537,14 +541,14 @@ end );
 ## Methods for Generalized Morphisms
 
 InstallMethod( GeneralizedProjectionOntoHorizontalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return GeneralizedProjectionOntoHomologyAt( row, i );
 end );
 
 InstallMethod( GeneralizedEmbeddingOfHorizontalHomologyAt, [ IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt ],
-    function( B, i, j )
+  function( B, i, j )
     local row;
     row := RowAsComplex( B, j );
     return GeneralizedEmbeddingOfHomologyAt( row, i );
@@ -553,12 +557,12 @@ end );
 ##
 InstallMethod( RowAsComplexOp,
                [ IsCapCategoryBicomplexObject, IsInt ],
-    function( B, j )
+  function( B, j )
     local C, A;
     C := UnderlyingCapCategoryCell( B );
-
+    
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     if IsCapCategoryHomologicalBicomplexObject( B ) then
        return ChainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
     else
@@ -572,9 +576,9 @@ InstallMethod( ColumnAsComplexOp,
     function( B, i )
     local C, A;
     C := UnderlyingCapCategoryCell( B );
-
+    
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     if IsCapCategoryHomologicalBicomplexObject( B ) then
        return ChainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
     else
@@ -591,39 +595,53 @@ end );
 InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES,
    function( C, B )
 
-   AddToToDoList( ToDoListEntry( [ [ C, "FAU_BOUND" ] ], function( )
-                                                         SetRight_Bound( B, ActiveUpperBound( C ) );
-                                                         end ) );
+   AddToToDoList( ToDoListEntry( [ [ C, "FAU_BOUND" ] ],
+      function( )
+        SetRight_Bound( B, ActiveUpperBound( C ) + 1 );
+      end ) );
 
-   AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ] ], function( )
-                                                         SetLeft_Bound( B, ActiveLowerBound( C ) );
-                                                         end ) );
+   AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ] ],
+      function( )
+        SetLeft_Bound( B, ActiveLowerBound( C ) - 1 );
+      end ) );
+   
    # This code trigers computations
    # look at the demo file in BBGG examples
    AddToToDoList( ToDoListEntry( [ [ C, "FAL_BOUND" ], [ C, "FAU_BOUND" ] ],
+      function( )
+        local l, ll, lu;
+        if ActiveLowerBound( C ) - 1 >= ActiveUpperBound( C ) + 1 then
+            SetAbove_Bound( B, 0 );
+            SetBelow_Bound( B, 0 );
+        fi;
+            
+        l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
+        
+			  if l = [ ] then
+          
+          l := [ ActiveLowerBound( C ) - 1.. ActiveUpperBound( C ) ];
+          
+        fi;
+            
+        lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
+          
+        ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
+          
+        if l <> [ ] then
+            
+          AddToToDoList( ToDoListEntry( lu, 
             function( )
-            local l, ll, lu;
-            if ActiveLowerBound( C ) >= ActiveUpperBound( C ) then
-                        SetAbove_Bound( B, 0 );
-                        SetBelow_Bound( B, 0 );
-            fi;
-            l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
-			if l = [ ] then
-               l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) - 1 ];
-            fi;
-            lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
-            ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
-            if l <> [] then
-            AddToToDoList( ToDoListEntry( lu, 
-                function( )
-                    SetAbove_Bound( B, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
-                end ) );
-            AddToToDoList( ToDoListEntry( ll, 
-                function( )
-                    SetBelow_Bound( B, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
-                end ) );
-            fi;            
+              SetAbove_Bound( B, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) + 1 );
             end ) );
+          
+          AddToToDoList( ToDoListEntry( ll, 
+            function( )
+              SetBelow_Bound( B, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) - 1 );
+            end ) );
+          
+        fi;            
+        
+      end ) );
 
 end );
 
@@ -637,9 +655,9 @@ InstallMethod( AssociatedBicomplexMorphism,
                [ IsChainOrCochainMorphism ],
    function( phi )
    local cat, type, psi;
-
+    
    cat := CapCategory( phi );
-
+    
    if IsChainComplexCategory( cat ) and IsChainComplexCategory( UnderlyingCategory( cat ) ) then
       type := TheTypeHomologicalBicomplexMorphism;
    elif IsCochainComplexCategory( cat ) and IsCochainComplexCategory( UnderlyingCategory( cat ) ) then
@@ -647,24 +665,24 @@ InstallMethod( AssociatedBicomplexMorphism,
    else
       Error( "not yet implemented" );
    fi;
-
+    
    psi := rec( );
-
+    
    ObjectifyWithAttributes(
             psi, type,
             Source, AssociatedBicomplexObject( Source( phi ) ),
             Range, AssociatedBicomplexObject( Range( phi ) ),
             UnderlyingCapCategoryCell, phi
             );
-
+    
    cat := AsCategoryOfBicomplexes( CapCategory( phi ) );
-
+    
    AddMorphism( cat, psi );
-
+    
    TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES( phi, psi );
-
+    
    return psi;
-
+    
 end );
 
 ##
@@ -677,19 +695,19 @@ InstallMethod( BicomplexMorphism,
                [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ],
     function( s, t, l )
     local ss, tt, phi;
-
+    
     if not IsIdenticalObj( CapCategory( s ), CapCategory( t ) ) then
        Error( "The source and range should be in the same category" );
     fi;
-
+    
     if IsCapCategoryHomologicalBicomplexObject( s ) then
        phi := ChainMorphism( UnderlyingCapCategoryCell( s ), UnderlyingCapCategoryCell( t ), l );
     else
        phi := CochainMorphism( UnderlyingCapCategoryCell( s ), UnderlyingCapCategoryCell( t ), l );
     fi;
-
+    
     return AssociatedBicomplexMorphism( phi );
-
+    
 end );
 
 ##
@@ -697,15 +715,15 @@ InstallMethod( BicomplexMorphism,
                [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsFunction ],
     function( s, t, f )
     local l, ss, tt, phi;
-
+    
     if not IsIdenticalObj( CapCategory( s ), CapCategory( t ) ) then
        Error( "The source and range should be in the same category" );
     fi;
-
+    
     l := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> f( i, j ), 1 ), 1 );
-
+    
     return BicomplexMorphism( s, t, l );
-
+    
 end );
 
 
@@ -720,30 +738,30 @@ InstallMethod( AssociatedBicomplexFunctor,
                [ IsCapFunctor, IsString ],
     function( F, name )
     local S, R, BF;
-
+    
     S := AsCategoryOfBicomplexes( AsCapCategory( Source( F ) ) );
     R := AsCategoryOfBicomplexes( AsCapCategory( Range( F ) ) );
-
+    
     BF := CapFunctor( name, S, R );
-
+    
     AddObjectFunction( BF, 
         function( obj )
             return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( obj ) ) );
         end );
-
+        
     AddMorphismFunction( BF, 
         function( s, phi, r )
             return AssociatedBicomplexObject( ApplyFunctor( F, UnderlyingCapCategoryCell( phi ) ) );
         end );
         
     return BF;
-
+    
 end );
 
 ##
 InstallMethod( AssociatedBicomplexFunctor,
                [ IsCapFunctor ],
-    function( F )
+  function( F )
     local name;
     name := Concatenation( "Associated bicomplex functor of ", Name( F ) );
     return AssociatedBicomplexFunctor( F, name );
@@ -760,21 +778,21 @@ InstallMethod( CohomologicalToHomologicalBicomplexsFunctor,
                 [ IsCapCategory, IsCapCategory ],
     function( CohCat, HoCat )
     local A, F;
-
+    
     A := UnderlyingCategoryOfComplexesOfComplexes( CohCat );
     A := UnderlyingCategory( A );
     A := UnderlyingCategory( A );
-
+    
     F := CapFunctor( "Cohomological to homological bicomplexes functor", CohCat, HoCat );
-
+    
     AddObjectFunction( F,
         function( CohB )
         local H, V, HB;
-
+        
         H := function( i, j ) return HorizontalDifferentialAt( CohB, -i, -j ); end;
         V := function( i, j ) return VerticalDifferentialAt( CohB, -i, -j ); end;
         HB := HomologicalBicomplex( A, H, V );
-
+        
         AddToToDoList( ToDoListEntry(
                 [ [ CohB, "Above_Bound" ] ],
                     function( )
@@ -797,16 +815,16 @@ InstallMethod( CohomologicalToHomologicalBicomplexsFunctor,
                     end ) );
 
         return HB;
-
+        
     end );
-
+    
     AddMorphismFunction( F,
         function( new_source, f, new_range )
         local mor;
         mor := function( i, j ) return MorphismAt( f, -i, -j ); end;
         return BicomplexMorphism( new_source, new_range, mor );
     end );
-
+    
     return F;
 end );
 
@@ -815,21 +833,21 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
                 [ IsCapCategory, IsCapCategory ],
     function( HoCat, CohCat )
     local A, F;
-
+    
     A := UnderlyingCategoryOfComplexesOfComplexes( CohCat );
     A := UnderlyingCategory( A );
     A := UnderlyingCategory( A );
-
+    
     F := CapFunctor( "Homological to cohomological bicomplexes functor",HoCat, CohCat );
-
+    
     AddObjectFunction( F,
         function( HB )
         local H, V, CohB;
-
+        
         H := function( i, j ) return HorizontalDifferentialAt( HB, -i, -j ); end;
         V := function( i, j ) return VerticalDifferentialAt( HB, -i, -j ); end;
         CohB := CohomologicalBicomplex( A, H, V );
-
+        
         AddToToDoList( ToDoListEntry(
                 [ [ HB, "Above_Bound" ] ],
                     function( )
@@ -852,22 +870,22 @@ InstallMethod( HomologicalToCohomologicalBicomplexsFunctor,
                     end ) );
 
         return CohB;
-
+        
     end );
-
+    
     AddMorphismFunction( F,
         function( new_source, f, new_range )
         local mor;
         mor := function( i, j ) return MorphismAt( f, -i, -j ); end;
         return BicomplexMorphism( new_source, new_range, mor );
     end );
-
+    
     return F;
 end );
 
 InstallMethod( ComplexOfComplexesToBicomplexFunctor,
         [ IsCapCategory, IsCapCategory ],
-    function( complexes, bicomplexes )
+  function( complexes, bicomplexes )
     local F, obj_map, name;
     name := "Functor from Complex of complexes category to the associated Bicomplex category";
     F := CapFunctor( name, complexes, bicomplexes );
@@ -876,7 +894,7 @@ InstallMethod( ComplexOfComplexesToBicomplexFunctor,
     elif IsChainComplexCategory( complexes ) then
         obj_map := HomologicalBicomplex;
     fi;
-
+    
     AddObjectFunction( F,
         function( C )
         return obj_map( C );
@@ -892,7 +910,7 @@ end );
 ##
 InstallMethod( ExtendFunctorToCohomologicalBicomplexCategoryFunctor,
             [ IsCapFunctor ],
-    function( F )
+  function( F )
     local functor, name;
     functor := ExtendFunctorToCochainComplexCategories( F );
     functor := ExtendFunctorToCochainComplexCategories( functor );
@@ -903,7 +921,7 @@ end );
 ##
 InstallMethod( ExtendFunctorToHomologicalBicomplexCategoryFunctor,
             [ IsCapFunctor ],
-    function( F )
+  function( F )
     local functor, name;
     functor := ExtendFunctorToChainComplexCategories( F );
     functor := ExtendFunctorToChainComplexCategories( functor );
@@ -921,7 +939,7 @@ InstallMethod( ComplexOfVerticalCohomologiesAtOp,
     cat := UnderlyingCategory( cochains );
     Coh := CohomologyFunctor( cochains, n );
     C := UnderlyingCapCategoryCell( B );
-
+    
     if HasIsBicomplexCategoryWithCommutativeSquares( bicomplexes ) and IsBicomplexCategoryWithCommutativeSquares( bicomplexes )then 
     diffs := MapLazy( IntegersList, 
         function( i )
@@ -973,10 +991,10 @@ InstallMethod( ComplexOfVerticalCohomologiesFunctorAtOp,
     local F, cochains, name;
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
     cochains := UnderlyingCategory( cochains );
-
+    
     name := Concatenation( " Complex of vertical cohomologies at ", String( n ), " from ", Name( bicomplexes),
     " to ", Name( cochains ) );
-
+    
     F := CapFunctor( name, bicomplexes, cochains );
     AddObjectFunction( F,
         function( bicomplex )
@@ -992,7 +1010,7 @@ end );
 
 InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
         [ IsCapCategoryCohomologicalBicomplexObject, IsInt ],
-    function( B, m )
+  function( B, m )
     local bicomplexes, cochains, cat, Coh, C, diffs;
     bicomplexes := CapCategory( B );
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
@@ -1016,7 +1034,7 @@ end );
 ##
 InstallMethod( ComplexMorphismOfHorizontalCohomologiesAtOp,
         [ IsCapCategoryCohomologicalBicomplexMorphism, IsInt ],
-    function( phi, m )
+  function( phi, m )
     local bicomplexes, cochains, cat, Coh, C, maps, psi;
     bicomplexes := CapCategory( phi );
     cochains := UnderlyingCategoryOfComplexesOfComplexes( bicomplexes );
@@ -1258,30 +1276,32 @@ InstallMethod( SupportInWindow,
     function( phi, left, right, below, above )
     local i, j;
     for j in Reversed( [ below .. above ] ) do
-    for i in [ left .. right ] do
-    if IsZeroForMorphisms( MorphismAt( phi, i, j ) ) then
-	Print( ". ");
-    else
-	Print( "* ");
-    fi;
+      for i in [ left .. right ] do
+        if IsZeroForMorphisms( MorphismAt( phi, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      
+      Print( "  |", j, "\n" );
     od;
-    Print( "  |", j, "\n" );
-    od;
+    
 end );
 
 InstallMethod( HorizontalCohomologySupportInWindow,
-    [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
-    function( b, left, right, below, above )
+          [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
+  function( b, left, right, below, above )
     local i, j;
     for j in Reversed( [ below .. above ] ) do
-    for i in [ left .. right ] do
-    if IsZeroForObjects( HorizontalCohomologyAt( b, i, j ) ) then
-	Print( ". ");
-    else
-	Print( "* ");
-    fi;
-    od;
-    Print( "  |", j, "\n" );
+      for i in [ left .. right ] do
+        if IsZeroForObjects( HorizontalCohomologyAt( b, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      Print( "  |", j, "\n" );
     od;
 end );
 
@@ -1290,46 +1310,46 @@ InstallMethod( VerticalCohomologySupportInWindow,
     function( b, left, right, below, above )
     local i, j;
     for j in Reversed( [ below .. above ] ) do
-    for i in [ left .. right ] do
-    if IsZeroForObjects( VerticalCohomologyAt( b, i, j ) ) then
-	Print( ". ");
-    else
-	Print( "* ");
-    fi;
-    od;
-    Print( "  |", j, "\n" );
+      for i in [ left .. right ] do
+        if IsZeroForObjects( VerticalCohomologyAt( b, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      Print( "  |", j, "\n" );
     od;
 end );
 
 InstallMethod( HorizontalHomologySupportInWindow,
     [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
-    function( b, left, right, below, above )
+  function( b, left, right, below, above )
     local i, j;
     for j in Reversed( [ below .. above ] ) do
-    for i in [ left .. right ] do
-    if IsZeroForObjects( HorizontalHomologyAt( b, i, j ) ) then
-	Print( ". ");
-    else
-	Print( "* ");
-    fi;
-    od;
-    Print( "  |", j, "\n" );
+      for i in [ left .. right ] do
+        if IsZeroForObjects( HorizontalHomologyAt( b, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      Print( "  |", j, "\n" );
     od;
 end );
 
 InstallMethod( VerticalHomologySupportInWindow,
     [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject, IsInt, IsInt, IsInt, IsInt ],
-    function( b, left, right, below, above )
+  function( b, left, right, below, above )
     local i, j;
     for j in Reversed( [ below .. above ] ) do
-    for i in [ left .. right ] do
-    if IsZeroForObjects( VerticalHomologyAt( b, i, j ) ) then
-	Print( ". ");
-    else
-	Print( "* ");
-    fi;
-    od;
-    Print( "  |", j, "\n" );
+      for i in [ left .. right ] do
+        if IsZeroForObjects( VerticalHomologyAt( b, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      Print( "  |", j, "\n" );
     od;
 end );
 
@@ -1341,47 +1361,47 @@ end );
 
 InstallMethod( ViewObj,
                [ IsCapCategoryBicomplexCell ],
- function( B )
-
- if IsCapCategoryHomologicalBicomplexObject( B ) then
-    Print( "<A homological bicomplex in " );
- elif IsCapCategoryCohomologicalBicomplexObject( B ) then
-    Print( "<A cohomological bicomplex in " );
- elif IsCapCategoryHomologicalBicomplexMorphism( B ) then
-    Print( "<A homological bicomplex morphism in " );
- elif IsCapCategoryCohomologicalBicomplexMorphism( B ) then
-    Print( "<A cohomological bicomplex morphism in " );
- else
-    Error( "Unexpected error occurred!" );
- fi;
-
- Print( Name( UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( B ) ) ) ) ) );
- Print( " concentrated in window [ " );
-
- if HasLeft_Bound( B ) then
-    Print( Left_Bound( B ), " .. " );
- else
-    Print( "-inf", " .. " );
- fi;
-
- if HasRight_Bound( B ) then
-    Print( Right_Bound( B ), " ] x " );
- else
-    Print( "inf", " ] x " );
- fi;
-
- Print( "[ " );
- if HasBelow_Bound( B ) then
-    Print( Below_Bound( B ), " .. " );
- else
-    Print( "-inf", " .. " );
- fi;
-
- if HasAbove_Bound( B ) then
-    Print( Above_Bound( B ), " ]" );
- else
-    Print( "inf", " ]" );
- fi;
-
- Print( ">" );
+  function( B )
+    
+    if IsCapCategoryHomologicalBicomplexObject( B ) then
+      Print( "<A homological bicomplex in " );
+    elif IsCapCategoryCohomologicalBicomplexObject( B ) then
+      Print( "<A cohomological bicomplex in " );
+    elif IsCapCategoryHomologicalBicomplexMorphism( B ) then
+      Print( "<A homological bicomplex morphism in " );
+    elif IsCapCategoryCohomologicalBicomplexMorphism( B ) then
+      Print( "<A cohomological bicomplex morphism in " );
+    else
+      Error( "Unexpected error occurred!" );
+    fi;
+    
+    Print( Name( UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( B ) ) ) ) ) );
+    Print( " concentrated in window [ " );
+    
+    if HasLeft_Bound( B ) then
+       Print( Left_Bound( B ), " .. " );
+    else
+       Print( "-inf", " .. " );
+    fi;
+    
+    if HasRight_Bound( B ) then
+       Print( Right_Bound( B ), " ] x " );
+    else
+       Print( "inf", " ] x " );
+    fi;
+    
+    Print( "[ " );
+    if HasBelow_Bound( B ) then
+       Print( Below_Bound( B ), " .. " );
+    else
+       Print( "-inf", " .. " );
+    fi;
+    
+    if HasAbove_Bound( B ) then
+       Print( Above_Bound( B ), " ]" );
+    else
+       Print( "inf", " ]" );
+    fi;
+    
+    Print( ">" );
  end );
