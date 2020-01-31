@@ -4,7 +4,7 @@ LoadPackage( "ModulePresentations" );
 ##
 ## Random methods
 ##
-RANDOM_OBJECT :=
+RRANDOM_OBJECT :=
   function( category, L, left_or_right )
     local homalg_ring, mat;
     
@@ -45,7 +45,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of rows and colms of the matrix of the object is less or equal to n.
-ADD_RANDOM_OBJECT :=
+ADD_RRANDOM_OBJECT :=
 
   function( category, left_or_right )
     
@@ -61,11 +61,11 @@ ADD_RANDOM_OBJECT :=
         
         if left_or_right = "left" then
           
-          return RANDOM_OBJECT( C, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
+          return RRANDOM_OBJECT( C, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
         
         else
           
-          return RANDOM_OBJECT( C, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
+          return RRANDOM_OBJECT( C, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
         
         fi;
       
@@ -76,7 +76,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of relations of the range of the created random morphism is n.
-ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT :=
     function( category )
       local homalg_ring;
       
@@ -115,7 +115,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of generators of the source of the created random morphism is n.
-ADD_RANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT :=
     function( category )
       local homalg_ring;
       
@@ -157,7 +157,7 @@ ADD_RANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT :=
 end;
 
 ##
-ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
     function( category )
       local homalg_ring;
       
@@ -195,7 +195,7 @@ ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
 end;
 
 ##
-ADD_RANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT := 
+ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT := 
     function( category )
       local homalg_ring;
       
@@ -238,7 +238,7 @@ end;
 ## In this method: we find a random linear combination of random elements in Hom(M,N) with coefficients |n|-powers of random ring elements.
 ##
 
-ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE :=
     function( category, left_or_right )
       local homalg_ring;
       
@@ -289,7 +289,7 @@ ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE :=
 end;
 
 ##
-TRY_TO_ENHANCE_HOMALG_RING_WITH_RANDOM_FUNCTIONS :=
+TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS :=
   function( R )
     local random_element_func, random_matrix_func;
     
@@ -378,27 +378,27 @@ TRY_TO_ENHANCE_HOMALG_RING_WITH_RANDOM_FUNCTIONS :=
 end;
 
 
-ADD_RANDOM_METHODS_TO_MODULE_PRESENTATIONS := function( category, left_or_right )
+ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS := function( category, left_or_right )
   local S;
 
   S := category!.ring_for_representation_category;
   
-  TRY_TO_ENHANCE_HOMALG_RING_WITH_RANDOM_FUNCTIONS( S );
+  TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS( S );
   
   if left_or_right = "left"  then
     
     if IsBound( category!.ring_for_representation_category!.random_element_func ) and 
          IsBound( category!.ring_for_representation_category!.random_matrix_func ) then
       
-      ADD_RANDOM_OBJECT( category, "left" );
+      ADD_RRANDOM_OBJECT( category, "left" );
       
-      ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT( category );
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT( category );
       
-      ADD_RANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT( category );
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT( category );
       
       if HasIsCommutative( category!.ring_for_representation_category ) and IsCommutative( category!.ring_for_representation_category ) then
         
-        ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "left" );
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "left" );
       
       fi;
     
@@ -409,15 +409,15 @@ ADD_RANDOM_METHODS_TO_MODULE_PRESENTATIONS := function( category, left_or_right 
     if IsBound( category!.ring_for_representation_category!.random_element_func ) and
          IsBound( category!.ring_for_representation_category!.random_matrix_func ) then
       
-      ADD_RANDOM_OBJECT( category, "right" );
+      ADD_RRANDOM_OBJECT( category, "right" );
       
-      ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT( category );
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT( category );
       
-      ADD_RANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT( category );
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT( category );
       
       if HasIsCommutative( category!.ring_for_representation_category ) and IsCommutative( category!.ring_for_representation_category ) then
         
-        ADD_RANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "right" );
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "right" );
       
       fi;
     

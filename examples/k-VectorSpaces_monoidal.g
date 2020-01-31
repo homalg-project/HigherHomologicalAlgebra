@@ -1,5 +1,6 @@
 LoadPackage( "LinearAlgebra" );
 LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "RingsForHom" );
 
 Q := HomalgFieldOfRationals( );
 cat := MatrixCategory( Q );

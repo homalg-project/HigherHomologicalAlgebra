@@ -59,9 +59,9 @@ C := CochainComplex( [ f, g, 2*f ], 3 );
 #! <A bounded object in Cochain complexes category over Category of matrices over Q 
 #! with active lower bound 2 and active upper bound 7>
 ActiveUpperBound( C );
-#! 7
+#! 6
 ActiveLowerBound( C );
-#! 2
+#! 3
 C[ 1 ];
 #! <A vector space object over Q of dimension 0>
 C[ 3 ];
@@ -231,7 +231,7 @@ Display( phi[ 5 ] );
 #! 
 #! A morphism in Category of matrices over Q
 ActiveLowerBound( phi );
-#! 3
+#! 4
 IsZeroForMorphisms( phi );
 #! false
 IsExact( D );

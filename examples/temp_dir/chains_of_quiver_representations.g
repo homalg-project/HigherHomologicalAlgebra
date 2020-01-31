@@ -149,8 +149,8 @@ basis_of_hom :=
     function( C1, C2 )
     local m, n, A, R1, R2, B; 
     
-    m := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) ) + 1;
-    n := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) ) - 1;
+    m := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+    n := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
     if IsChainComplex( C1 ) then
         A := product_of_algebras( AlgebraOfRepresentation( C1[m] ), n, m );
     else
@@ -278,8 +278,8 @@ end;
 compute_lifts_in_complexes := 
     function( f, g )
     local m, n, A, f_, g_, lift; 
-    m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) ) + 1;
-    n := Maximum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) ) - 1;
+    m := Minimum( ActiveLowerBound( Source(f) ), ActiveLowerBound( Source(g) ) );
+    n := Maximum( ActiveUpperBound( Source(f) ), ActiveUpperBound( Source(g) ) );
     
     if IsChainMorphism( f ) then
         A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
@@ -302,8 +302,8 @@ end;
 compute_colifts_in_complexes := 
     function( f, g )
     local m, n, A, f_, g_, colift; 
-    m := Minimum( ActiveLowerBound( Range(f) ), ActiveLowerBound( Range(g) ) ) + 1;
-    n := Maximum( ActiveUpperBound( Range(f) ), ActiveUpperBound( Range(g) ) ) - 1;
+    m := Minimum( ActiveLowerBound( Range(f) ), ActiveLowerBound( Range(g) ) );
+    n := Maximum( ActiveUpperBound( Range(f) ), ActiveUpperBound( Range(g) ) );
     
     if IsChainMorphism( f ) then
         A := product_of_algebras( AlgebraOfRepresentation( Source(f[ m ]) ), n, m );
@@ -341,7 +341,6 @@ compute_homotopy_chain_morphisms_for_null_homotopic_morphism :=
 end;
 
 ########################################################
-quit;
 
 LoadPackage( "RingsForHomalg" );
 F := HomalgFieldOfRationals( );
