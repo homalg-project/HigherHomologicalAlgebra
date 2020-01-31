@@ -350,29 +350,19 @@ end );
 InstallMethod( Display, 
                [ IsChainOrCochainMorphism, IsInt, IsInt ], 
   function( map, m, n )
-    local i, co_homo;
+    local r, s, i;
     
-    if IsChainMorphism( map ) then
-      
-      co_homo := "homological";
-      
-    else
-      
-      co_homo := "cohomological";
-      
-    fi;
-    
+    r := RandomTextColor( );
+     
     Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
-    
+    Print( "\n" );
     for i in [ m .. n ] do
       
-      Print( TextAttr.(2), "In ", co_homo, " degree ", String( i ) );
-      
-      Print( TextAttr.(2), "\n\nMorphism:\n", TextAttr.reset );
-      
+      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      Print( s );
+      Print( "\n" ); 
       Display( map[ i ] );
-      
-      Print( "\n-----------------------------------------------------------------\n" );
+      Print( "\n" );
       
     od;
     
@@ -382,9 +372,9 @@ end );
 InstallMethod( Display,
     [ IsBoundedChainOrCochainMorphism ],
     function( phi )
-      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
+      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 0 then
         
-        Display( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
+        Display( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
         
       else
         
@@ -430,9 +420,9 @@ end );
 InstallMethod( ViewChainOrCochainMorphism,
     [ IsBoundedChainOrCochainMorphism ],
     function( phi )
-      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 2 then
+      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 0 then
         
-        ViewChainOrCochainMorphism( phi, ActiveLowerBound( phi ) + 1, ActiveUpperBound( phi ) - 1 );
+        ViewChainOrCochainMorphism( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
         
       else
         
