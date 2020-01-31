@@ -26,9 +26,9 @@ gap> g := VectorSpaceMorphism( B, HomalgMatrix( [ [ 0 ], [ 0 ] ], 2, 1, Q ), A )
 <A morphism in Category of matrices over Q>
 gap> C := CochainComplex( [ f, g, 2*f ], 3 );;
 gap> ActiveUpperBound( C );
-7
+6
 gap> ActiveLowerBound( C );
-2
+3
 gap> C[ 1 ];
 <A vector space object over Q of dimension 0>
 gap> C[ 3 ];
@@ -83,7 +83,7 @@ gap> Display( phi[ 5 ] );
 
 A morphism in Category of matrices over Q
 gap> ActiveLowerBound( phi );
-3
+4
 gap> IsZeroForMorphisms( phi );
 false
 gap> IsExact( D );

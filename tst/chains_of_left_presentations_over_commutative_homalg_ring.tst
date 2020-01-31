@@ -1,5 +1,5 @@
 gap> cat := LeftPresentations( S : FinalizeCategory := false );;
-gap> ADD_RANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "left" );;
+gap> ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "left" );;
 gap> chains := ChainComplexCategory( cat );;
 gap> M := AsLeftPresentation( HomalgMatrix( "x,y,z,t", 4, 1, S ) );;
 gap> N := AsLeftPresentation( HomalgMatrix( "x-y,y+t,z+x,t^2", 4, 1, S ) );;
