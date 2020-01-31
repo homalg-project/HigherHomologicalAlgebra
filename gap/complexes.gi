@@ -65,66 +65,69 @@ InstallTrueMethod( IsBoundedCochainComplex, IsBoundedChainOrCochainComplex and I
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
-function( cat, diffs, make_assertions, type )
-  local C, assertion, f, msg;
-  
-  C := rec( );
-
-  if type = "TheTypeOfChainComplexes" then
-
-    ObjectifyWithAttributes( C, ValueGlobal( type ),
-                           CatOfComplex, cat,
-                           Differentials, diffs );
-
+  function( cat, diffs, make_assertions, type )
+    local C, assertion, f, msg;
     
-    Add( ChainComplexCategory( cat ), C );
-
-  elif type = "TheTypeOfCochainComplexes" then
-
-    ObjectifyWithAttributes( C, ValueGlobal( type ),
-                              CatOfComplex, cat,
-                              Differentials, diffs );
+    C := rec( );
     
-    Add( CochainComplexCategory( cat ), C );
-
-  fi;
-
-  TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( C );
-
-  return C;
-
+    if type = "TheTypeOfChainComplexes" then
+      
+      ObjectifyWithAttributes( C, ValueGlobal( type ),
+                            CatOfComplex, cat,
+                            Differentials, diffs );
+                            
+      Add( ChainComplexCategory( cat ), C );
+      
+    elif type = "TheTypeOfCochainComplexes" then
+      
+      ObjectifyWithAttributes( C, ValueGlobal( type ),
+                            CatOfComplex, cat,
+                            Differentials, diffs );
+      
+      Add( CochainComplexCategory( cat ), C );
+      
+    fi;
+    
+    TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED( C );
+    
+    return C;
+    
 end );
 
 ##
 InstallMethod( ChainComplex, [ IsCapCategory, IsZList, IsBool ],
   function( cat, diffs, make_assertions )
-
-  return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST( cat, diffs, make_assertions, "TheTypeOfChainComplexes" );
-
+    
+    return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST(
+            cat, diffs, make_assertions, "TheTypeOfChainComplexes"
+              );
+              
 end );
 
 ##
 InstallMethod( ChainComplex, [ IsCapCategory, IsZList ],
   function( cat, diffs )
-
-  return ChainComplex( cat, diffs, false );
-
+    
+    return ChainComplex( cat, diffs, false );
+    
 end );
 
 ##
 InstallMethod( CochainComplex, [ IsCapCategory, IsZList, IsBool ],
   function( cat, diffs, make_assertions )
-
-  return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST( cat, diffs, make_assertions, "TheTypeOfCochainComplexes" );
-
+    
+    return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST(
+            cat, diffs, make_assertions, "TheTypeOfCochainComplexes"
+              );
+              
 end );
 
 ##
 InstallMethod( CochainComplex, [ IsCapCategory, IsZList ],
   function( cat, diffs )
-
-  return CochainComplex( cat, diffs, false );
-
+    
+    return CochainComplex( cat, diffs, false );
+    
 end );
 
 ################################################
@@ -136,164 +139,181 @@ end );
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
   function( d0, negative_part_function, positive_part_function, string )
-  local complex_constructor, negative_part, positive_part, cat, diffs;
-
-  cat := CapCategory( d0 ); 
-
-  if string = "chain" then 
-
-     complex_constructor := ChainComplex;
-
-  elif string = "cochain" then
-
-     complex_constructor := CochainComplex;
-
-  else
-
-     Error( "string must be either chain or cochain" );
-
-  fi;
-
-  negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
-
-  positive_part := InductiveList( d0, positive_part_function );
-
-  diffs := Concatenate( negative_part, positive_part );
-
-  return complex_constructor( cat, diffs );
-
+    local complex_constructor, negative_part, positive_part, cat, diffs;
+    
+    cat := CapCategory( d0 ); 
+    
+    if string = "chain" then 
+      
+      complex_constructor := ChainComplex;
+      
+    elif string = "cochain" then
+      
+      complex_constructor := CochainComplex;
+      
+    else
+      
+      Error( "string must be either chain or cochain" );
+      
+    fi;
+    
+    negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
+    
+    positive_part := InductiveList( d0, positive_part_function );
+    
+    diffs := Concatenate( negative_part, positive_part );
+    
+    return complex_constructor( cat, diffs );
+    
 end );
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE",
   function( d0, negative_part_function, string )
-  local complex_constructor, negative_part, positive_part, cat, diffs, d1, zero_part, complex, upper_bound;
-
-  cat := CapCategory( d0 ); 
-
-  zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
-
-  if string = "chain" then 
-
-     complex_constructor := ChainComplex;
-
-     d1 := UniversalMorphismFromZeroObject( Source( d0 ) );
-
-     upper_bound := 1;
-
-  elif string = "cochain" then
-
-     complex_constructor := CochainComplex;
-
-     d1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
-
-     upper_bound := 2;
-
-  else
-
-     Error( "string must be either chain or cochain" );
-
-  fi;
-
-  negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
-
-  positive_part := Concatenate( [ d0, d1 ], zero_part );
-
-  diffs := Concatenate( negative_part, positive_part );
-
-  complex :=  complex_constructor( cat, diffs );
-
-  SetUpperBound( complex, upper_bound );
-
-  return complex;
-
+    local complex_constructor, negative_part, positive_part,
+            cat, diffs, d1, zero_part, complex, upper_bound;
+            
+    cat := CapCategory( d0 ); 
+    
+    zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
+    
+    if string = "chain" then 
+      
+      complex_constructor := ChainComplex;
+      
+      d1 := UniversalMorphismFromZeroObject( Source( d0 ) );
+      
+      upper_bound := 1;
+      
+    elif string = "cochain" then
+      
+      complex_constructor := CochainComplex;
+      
+      d1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
+      
+      upper_bound := 2;
+      
+    else
+      
+      Error( "string must be either chain or cochain" );
+      
+    fi;
+    
+    negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
+    
+    positive_part := Concatenate( [ d0, d1 ], zero_part );
+    
+    diffs := Concatenate( negative_part, positive_part );
+    
+    complex :=  complex_constructor( cat, diffs );
+    
+    SetUpperBound( complex, upper_bound - 1 );
+    
+    return complex;
+    
 end );
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE",
   function( d0, positive_part_function, string )
-  local complex_constructor, negative_part, positive_part, cat, diffs, d_minus_1, zero_part, complex, lower_bound;
-
-  cat := CapCategory( d0 ); 
-
-  zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
-
-  if string = "chain" then 
-
-     complex_constructor := ChainComplex;
-
-     d_minus_1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
-
-     lower_bound := -2;
-
-  elif string = "cochain" then
-
-     complex_constructor := CochainComplex;
-
-     d_minus_1 := UniversalMorphismFromZeroObject( Source( d0 ) );
-
-     lower_bound := -1;
-
-  else
-
-     Error( "string must be either chain or cochain" );
-
-  fi;
-
-  positive_part := InductiveList( d0, positive_part_function );
-
-  negative_part := Concatenate( [ d_minus_1 ], zero_part );
-
-  diffs := Concatenate( negative_part, positive_part );
-
-  complex :=  complex_constructor( cat, diffs );
-
-  SetLowerBound( complex, lower_bound );
-
-  return complex;
-
+    local complex_constructor, negative_part, positive_part, cat,
+            diffs, d_minus_1, zero_part, complex, lower_bound;
+    
+    cat := CapCategory( d0 ); 
+    
+    zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
+    
+    if string = "chain" then 
+      
+      complex_constructor := ChainComplex;
+      
+      d_minus_1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
+      
+      lower_bound := -2;
+      
+    elif string = "cochain" then
+      
+      complex_constructor := CochainComplex;
+      
+      d_minus_1 := UniversalMorphismFromZeroObject( Source( d0 ) );
+      
+      lower_bound := -1;
+      
+    else
+      
+      Error( "string must be either chain or cochain" );
+      
+    fi;
+    
+    positive_part := InductiveList( d0, positive_part_function );
+    
+    negative_part := Concatenate( [ d_minus_1 ], zero_part );
+    
+    diffs := Concatenate( negative_part, positive_part );
+    
+    complex :=  complex_constructor( cat, diffs );
+    
+    SetLowerBound( complex, lower_bound + 1 );
+    
+    return complex;
+    
 end );
 
 ##
 InstallMethod( ChainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
-   function( d0, negative_part_function, positive_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( d0, negative_part_function, positive_part_function, "chain" );
+  function( d0, negative_part_function, positive_part_function )
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
+              d0, negative_part_function, positive_part_function,
+                "chain" );
+    
 end );
 
 ##
 InstallMethod( CochainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
-   function( d0, negative_part_function, positive_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( d0, negative_part_function, positive_part_function, "cochain" );
+  function( d0, negative_part_function, positive_part_function )
+    
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
+              d0, negative_part_function, positive_part_function,
+                "cochain" );
+    
 end );
 
 ##
 InstallMethod( ChainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
-   function( d0, negative_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "chain" );
-   end );
+  function( d0, negative_part_function )
+    
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "chain" );
+    
+end );
 
 ##
 InstallMethod( ChainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
-   function( d0, positive_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "chain" );
+  function( d0, positive_part_function )
+    
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "chain" );
+    
 end );
 
 ##
 InstallMethod( CochainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
-   function( d0, negative_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "cochain" );
-   end );
+  function( d0, negative_part_function )
+    
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "cochain" );
+    
+end );
 
 ##
 InstallMethod( CochainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
-   function( d0, positive_part_function )
-   return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "cochain" );
+  function( d0, positive_part_function )
+    
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "cochain" );
+    
 end );
 
 ########################################
@@ -305,118 +325,117 @@ end );
 ##
 InstallMethod( SetUpperBound,
               [ IsChainOrCochainComplex, IsInt ],
-   function( C, upper_bound )
-
-   if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
-
+  function( C, upper_bound )
+    
+    if IsBound( C!.UpperBound ) and C!.UpperBound < upper_bound then
+      
       return;
-
-   elif IsBound( C!.LowerBound ) and C!.LowerBound > upper_bound then
-
+      
+    elif IsBound( C!.LowerBound ) and C!.LowerBound > upper_bound then
+      
       C!.UpperBound := C!.LowerBound;
-
+      
       if not HasIsZeroForObjects( C ) then SetIsZeroForObjects( C, true ); fi;
-
-   else
-
+      
+    else
+      
       C!.UpperBound := upper_bound;
-
-   fi;
-
-   if not HasFAU_BOUND( C ) then
-
+      
+    fi;
+    
+    if not HasFAU_BOUND( C ) then
+      
       SetFAU_BOUND( C, upper_bound );
-
+      
       SetHAS_FAU_BOUND( C, true );
-
-   fi;
-
+      
+    fi;
+    
 end );
 
 ##
 InstallMethod( SetLowerBound,
               [ IsChainOrCochainComplex, IsInt ],
-   function( C, lower_bound )
-
-   if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
-
+  function( C, lower_bound )
+    
+    if IsBound( C!.LowerBound ) and C!.LowerBound > lower_bound then
+      
       return;
-
-   fi;
-
-   if IsBound( C!.UpperBound ) and C!.UpperBound < lower_bound then
-
+      
+    fi;
+    
+    if IsBound( C!.UpperBound ) and C!.UpperBound < lower_bound then
+      
       C!.LowerBound := C!.UpperBound;
-
+      
       if not HasIsZeroForObjects( C ) then SetIsZeroForObjects( C, true ); fi;
-
-   else
-
+      
+    else
+      
       C!.LowerBound := lower_bound;
-
-   fi;
-
-   if not HasFAL_BOUND( C ) then
-
+      
+    fi;
+    
+    if not HasFAL_BOUND( C ) then
+      
       SetFAL_BOUND( C, lower_bound );
-
+      
       SetHAS_FAL_BOUND( C, true );
-
-   fi;
-
+      
+    fi;
+    
 end );
-
 
 ##
 InstallMethod( ActiveUpperBound,
                [ IsChainOrCochainComplex ],
   function( C )
-
-  if not IsBound( C!.UpperBound ) then
-
-     Error( "The complex does not have yet an upper bound" );
-
-  else
-
-     return C!.UpperBound;
-
-  fi;
-
+    
+    if not IsBound( C!.UpperBound ) then
+      
+      Error( "The complex does not have yet an upper bound" );
+      
+    else
+      
+      return C!.UpperBound;
+      
+    fi;
+    
 end );
 
 ##
 InstallMethod( ActiveLowerBound,
                [ IsChainOrCochainComplex ],
   function( C )
-
-  if not IsBound( C!.LowerBound ) then
-
-     Error( "The complex does not have yet an lower bound" );
-
-  else
-
-     return C!.LowerBound;
-
-  fi;
-
+    
+    if not IsBound( C!.LowerBound ) then
+      
+      Error( "The complex does not have yet an lower bound" );
+      
+    else
+      
+      return C!.LowerBound;
+      
+    fi;
+    
 end );
 
 ##
 InstallMethod( HasActiveUpperBound,
                [ IsChainOrCochainComplex ],
   function( C )
-
-  return IsBound( C!.UpperBound );
-
+    
+    return IsBound( C!.UpperBound );
+    
 end );
 
 ##
 InstallMethod( HasActiveLowerBound,
                [ IsChainOrCochainComplex ],
   function( C )
-
-  return IsBound( C!.LowerBound );
-
+    
+    return IsBound( C!.LowerBound );
+    
 end );
 
 #########################################
@@ -428,7 +447,7 @@ end );
 ##
 InstallMethod( ViewObj,
         [ IsChainOrCochainComplex ],
-  
+        
   function( C )
     local is_exact;
     
@@ -673,11 +692,11 @@ InstallMethod( DifferentialAtOp,
         if not HasIsZeroForObjects( C ) then
           
           SetIsZeroForObjects( C, false );
-        
+          
         fi;
-      
+        
       end ) );
-  
+      
   AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
       
       function( )
@@ -685,11 +704,11 @@ InstallMethod( DifferentialAtOp,
         if not HasIsZeroForObjects( d ) then
           
           SetIsZeroForObjects( d, true );
-        
+          
         fi;
-      
+        
       end ) );
-  
+      
   return d;
   
 end );
@@ -712,11 +731,11 @@ InstallMethod( ObjectAtOp,
         if not HasIsZeroForObjects( C ) then
           
           SetIsZeroForObjects( C, false );
-        
+          
         fi;
-      
+        
       end ) );
-    
+      
     AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
       
       function( )
@@ -724,11 +743,11 @@ InstallMethod( ObjectAtOp,
         if not HasIsZeroForObjects( Obj ) then
           
           SetIsZeroForObjects( Obj, true );
-        
+          
         fi;
-      
+        
       end ) );
-    
+      
     return Obj;
     
 end );
@@ -739,7 +758,7 @@ InstallMethod( \[\], [ IsChainOrCochainComplex, IsInt ], ObjectAt );
 ##
 InstallMethod( AsChainComplex,
       [ IsCochainComplex ],
-  
+      
   function( C )
     
     local F, cochains, chains, D;
@@ -806,14 +825,14 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
     if not ForAll( list, mor -> cat = CapCategory( mor ) ) then
       
       Error( "All morphisms in the list should live in the same category" );
-    
+      
     fi;
     
     if string = "chain" then
       
       new_list := Concatenation(
         [ ZeroMorphism( Range( list[ 1 ] ), zero ) ], list, [ ZeroMorphism( zero, Source( list[ n ] ) ) ] );
-      
+        
       diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
       
       complex := ChainComplex( cat, diffs );
@@ -826,72 +845,71 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
       
       new_list := Concatenation(
         [ ZeroMorphism( zero, Source( list[ 1 ] ) ) ], list, [ ZeroMorphism( Range( list[ n ] ), zero ) ] );
-        
-        diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
-        
-        complex := CochainComplex( cat, diffs );
-        
-        lower_bound := index - 1;
-        
-        upper_bound := index + Length( list ) + 1;
-    
+      
+      diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
+      
+      complex := CochainComplex( cat, diffs );
+      
+      lower_bound := index - 1;
+      
+      upper_bound := index + Length( list ) + 1;
+      
     fi;
     
-    SetLowerBound( complex, lower_bound );
+    SetLowerBound( complex, lower_bound + 1 );
     
-    SetUpperBound( complex, upper_bound );
+    SetUpperBound( complex, upper_bound - 1 );
     
     return complex;
-  
+    
 end );
 
 ##
 InstallMethod( ChainComplex,
-               [ IsDenseList, IsInt ],
+          [ IsDenseList, IsInt ],
   function( diffs, n )
     local cat;
     
     cat := CapCategory( diffs[ 1 ] );
     
     return FINITE_CHAIN_OR_COCHAIN_COMPLEX( cat, diffs, n, "chain" );
-  
+    
 end );
 
 ##
 InstallMethod( CochainComplex,
-               [ IsDenseList, IsInt ],
-  
+          [ IsDenseList, IsInt ],
+          
   function( diffs, n )
     local cat;
     
     cat := CapCategory( diffs[ 1 ] );
     
     return FINITE_CHAIN_OR_COCHAIN_COMPLEX( cat, diffs, n, "cochain" );
-  
+    
 end );
 
 ##
 InstallMethod( ChainComplex,
-               [ IsDenseList ],
+          [ IsDenseList ],
   function( diffs )
-  
-  return ChainComplex( diffs, 0 );
-  
+    
+    return ChainComplex( diffs, 0 );
+    
 end );
 
 ##
 InstallMethod( CochainComplex,
-               [ IsDenseList ],
+          [ IsDenseList ],
   function( diffs )
     
     return CochainComplex( diffs, 0 );
-  
+    
 end );
 
 ##
 InstallMethod( StalkChainComplex,
-               [ IsCapCategoryObject, IsInt ],
-  
+          [ IsCapCategoryObject, IsInt ],
   function( obj, n )
     local zero_obj, zero, diffs, complex, complex_n;
     
@@ -903,20 +921,20 @@ InstallMethod( StalkChainComplex,
     
     complex := ChainComplex( CapCategory( obj ), diffs );
     
-    SetLowerBound( complex, n - 1 );
+    SetLowerBound( complex, n );
     
-    SetUpperBound( complex, n + 1 );
+    SetUpperBound( complex, n );
     
     # See IsEqualForCacheForObjects to understand why I am adding the next line
     complex_n := complex[ n ];
     
     return complex;
-  
+    
 end );
 
 ##
 InstallMethod( StalkCochainComplex,
-                    [ IsCapCategoryObject, IsInt ],
+          [ IsCapCategoryObject, IsInt ],
   function( obj, n )
     local zero_obj, zero, diffs, complex, complex_n;
     
@@ -924,19 +942,22 @@ InstallMethod( StalkCochainComplex,
     
     zero := RepeatListN( [ ZeroMorphism( zero_obj, zero_obj ) ] );
     
-    diffs := Concatenate( zero, n - 1, [ ZeroMorphism( zero_obj, obj ), ZeroMorphism( obj, zero_obj ) ], zero );
-    
+    diffs := Concatenate( zero, n - 1,
+              [ ZeroMorphism( zero_obj, obj ),
+                ZeroMorphism( obj, zero_obj ) ],
+              zero );
+              
     complex := CochainComplex( CapCategory( obj ), diffs );
     
-    SetLowerBound( complex, n - 1 );
+    SetLowerBound( complex, n );
     
-    SetUpperBound( complex, n + 1 );
+    SetUpperBound( complex, n );
     
     # See IsEqualForCacheForObjects to understand why I am adding the next line
     complex_n := complex[ n ];
     
     return complex;
-  
+    
 end );
 
 #############################################
@@ -950,7 +971,7 @@ InstallMethod( CyclesAtOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
     
     return KernelEmbedding( C^i );
-  
+    
 end );
 
 ##
@@ -960,13 +981,13 @@ InstallMethod( BoundariesAtOp, [ IsChainOrCochainComplex, IsInt ],
     if IsChainComplex( C ) then
       
       return ImageEmbedding( C^( i + 1 )  );
-    
+      
     else
       
       return ImageEmbedding( C^( i - 1 )  );
-    
+      
     fi;
-  
+    
 end );
 
 ##
@@ -986,13 +1007,13 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
         if not HasIsExact( C ) then
           
           SetIsExact( C, false );
-        
+          
         fi;
         
       end ) );
-    
+      
     return im;
-  
+    
 end );
 
 ##
@@ -1014,13 +1035,13 @@ BindGlobal( "PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
         if not HasIsExact( C ) then
           
           SetIsExact( C, false );
-        
+          
         fi;
-      
+        
       end ) );
-    
+      
     return GeneralizedMorphismBySpan( cyc, pi );
-  
+    
 end );
 
 ##
@@ -1042,11 +1063,11 @@ BindGlobal( "INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
         if not HasIsExact( C ) then
           
           SetIsExact( C, false );
-        
+          
         fi;
-      
+        
       end ) );
-    
+      
     return GeneralizedMorphismBySpan( pi, cyc );
     
 end );
@@ -1083,43 +1104,55 @@ BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL",
 end );
 
 ##
-InstallMethod( HomologyAtOp, [ IsChainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( HomologyAtOp,
+          [ IsChainComplex, IsInt ],
+  HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( CohomologyAtOp, [ IsCochainComplex, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( CohomologyAtOp,
+          [ IsCochainComplex, IsInt ],
+  HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( GeneralizedProjectionOntoHomologyAtOp, [ IsChainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedProjectionOntoHomologyAtOp,
+          [ IsChainComplex, IsInt ],
+  PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( GeneralizedEmbeddingOfHomologyAtOp, [ IsChainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedEmbeddingOfHomologyAtOp,
+          [ IsChainComplex, IsInt ],
+  INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( GeneralizedProjectionOntoCohomologyAtOp, [ IsCochainComplex, IsInt ], PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedProjectionOntoCohomologyAtOp,
+          [ IsCochainComplex, IsInt ],
+  PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp, [ IsCochainComplex, IsInt ], INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
+InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp,
+          [ IsCochainComplex, IsInt ],
+  INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
 InstallMethod( DefectOfExactnessAtOp, 
-               [ IsChainOrCochainComplex, IsInt ],
+          [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
     
     if IsChainComplex( C ) then 
       
       return HomologyAt( C, n );
-    
+      
     else
       
       return CohomologyAt( C, n );
-    
+      
     fi;
-  
+    
 end );
 
 ##
 InstallMethod( IsExactInIndexOp, 
-               [ IsChainOrCochainComplex, IsInt ],
+          [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
     local bool;
     
@@ -1128,42 +1161,42 @@ InstallMethod( IsExactInIndexOp,
     if bool = false then 
       
       SetIsExact( C, false );
-    
+      
     fi;
     
     return bool;
-  
+    
 end );
 
 ##
 InstallMethod( IsExact,
-               [ IsChainOrCochainComplex ], 
+          [ IsChainOrCochainComplex ], 
   function( C )
     local i;
     
     if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then 
       
       Error( "The complex must have upper and lower bounds" );
-    
+      
     fi;
     
-    for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do 
+    for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do
       
       if not IsExactInIndex( C, i ) then 
         
         return false;
-      
+        
       fi;
-    
+      
     od;
-  
-  return true;
-  
+    
+    return true;
+    
 end );
 
 ##
 InstallMethod( CohomologySupport, 
-               [ IsCochainComplex, IsInt, IsInt ],
+          [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
@@ -1174,18 +1207,18 @@ InstallMethod( CohomologySupport,
       if not IsZeroForObjects( CohomologyAt( C, i ) ) then
         
         Add( l, i );
-      
+        
       fi;
       
     od;
-  
-  return l;
-  
+    
+    return l;
+    
 end );
 
 ##
 InstallMethod( HomologySupport, 
-               [ IsChainComplex, IsInt, IsInt ],
+          [ IsChainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
@@ -1196,9 +1229,9 @@ InstallMethod( HomologySupport,
       if not IsZeroForObjects( HomologyAt( C, i ) ) then
         
         Add( l, i );
-      
+        
       fi;
-    
+      
     od;
     
     return l;
@@ -1207,7 +1240,7 @@ end );
 
 ##
 InstallMethod( ObjectsSupport, 
-               [ IsChainOrCochainComplex, IsInt, IsInt ],
+          [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
@@ -1218,20 +1251,20 @@ InstallMethod( ObjectsSupport,
       if not IsZeroForObjects( C[i] ) then
         
         Add( l, i );
-      
+        
       fi;
       
     od;
     
     if l = [ ] then
       
-      SetUpperBound( C, ActiveLowerBound(C) );
-    
+      SetUpperBound( C, ActiveLowerBound( C ) );
+      
     else
       
-      SetLowerBound( C, l[1]-1 );
+      SetLowerBound( C, l[ 1 ] );
       
-      SetUpperBound( C, l[Length(l)] + 1 );
+      SetUpperBound( C, l[ Length( l ) ] );
       
     fi;
     
@@ -1240,7 +1273,7 @@ end );
 
 ##
 InstallMethod( DifferentialsSupport, 
-               [ IsChainOrCochainComplex, IsInt, IsInt ],
+          [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
@@ -1251,18 +1284,18 @@ InstallMethod( DifferentialsSupport,
       if not IsZeroForMorphisms( C^i ) then
         
         Add( l, i );
-      
+        
       fi;
       
     od;
     
     return l;
-  
+    
 end );
 
 ##
 InstallMethod( CohomologySupport,
-               [ IsBoundedCochainComplex ],
+          [ IsBoundedCochainComplex ],
   function( C )
     
     if not IsBoundedAboveCochainComplex(C) or not IsBoundedBelowCochainComplex(C) then
@@ -1272,12 +1305,12 @@ InstallMethod( CohomologySupport,
     fi;
     
     return CohomologySupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
-  
+    
 end );
 
 ##
 InstallMethod( HomologySupport,
-               [ IsBoundedChainComplex ],
+          [ IsBoundedChainComplex ],
   function( C )
     
     if not IsBoundedAboveChainComplex(C) or not IsBoundedBelowChainComplex(C) then
@@ -1292,7 +1325,7 @@ end );
 
 ##
 InstallMethod( ObjectsSupport,
-               [ IsBoundedChainOrCochainComplex ],
+          [ IsBoundedChainOrCochainComplex ],
   function( C )
     
     if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
@@ -1307,40 +1340,44 @@ end );
 
 ##
 InstallMethod( DifferentialsSupport,
-               [ IsBoundedChainOrCochainComplex ],
+          [ IsBoundedChainOrCochainComplex ],
   function( C )
-  
+    
     if not IsBoundedBelowChainOrCochainComplex(C) or not IsBoundedAboveChainOrCochainComplex(C) then
       
       Error( "The (co)chain complex must be bounded, you can  still use: DifferentialsSupport(C,m,n)" );
       
     fi;
     
-    return DifferentialsSupport( C, ActiveLowerBound(C), ActiveUpperBound(C) );
+    return DifferentialsSupport( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
     
 end );
 
 ##
 InstallMethod( AsComplexOverCapFullSubcategory,
-      [ IsCapCategory, IsChainOrCochainComplex ],
+          [ IsCapCategory, IsChainOrCochainComplex ],
   function( full_subcategory, C )
     local diffs, D;
     
     if not ValueGlobal( "IsCapFullSubcategory" )( full_subcategory ) then
-    
+      
       Error( "The first argument should a Cap full subcategory" );
       
     fi;
     
-    if not IsIdenticalObj( ValueGlobal( "AmbientCategory" )( full_subcategory ), UnderlyingCategory( CapCategory( C ) ) ) then
-      
+    if not IsIdenticalObj(
+        ValueGlobal( "AmbientCategory" )( full_subcategory ),
+          UnderlyingCategory( CapCategory( C ) ) ) then
+          
       Error( "wrong input!\n" );
       
     fi;
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( diffs, diff -> ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, diff ), 1 );
+    diffs := MapLazy( diffs,
+              diff -> 
+                ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, diff ), 1 );
     
     if IsChainComplex( C ) then
       
@@ -1360,7 +1397,7 @@ end );
 
 ##
 InstallMethod( IsWellDefined,
-               [ IsCochainComplex, IsInt, IsInt ],
+          [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local i;
     
@@ -1381,14 +1418,16 @@ InstallMethod( IsWellDefined,
         return false;
         
       fi;
-    
+      
     od;
+    
     return true;
+    
 end );
 
 ##
 InstallMethod( IsWellDefined,
-               [ IsChainComplex, IsInt, IsInt ],
+          [ IsChainComplex, IsInt, IsInt ],
   function( C, m, n )
     local i;
     
@@ -1397,29 +1436,29 @@ InstallMethod( IsWellDefined,
       if not IsZeroForMorphisms( PostCompose( C^i, C^(i+1) ) ) then
         
         return false;
-      
+        
       fi;
       
       if not IsWellDefined( C[ i ] ) then
         
         return false;
-      
+        
       fi;
       
     od;
     
     return true;
-  
+    
 end );
 
 ##
 InstallMethod( IsWellDefined,
-            [ IsBoundedChainOrCochainComplex ],
+          [ IsBoundedChainOrCochainComplex ],
   
   function( C )
     
-    return IsWellDefined( C, ActiveLowerBound( C ) + 1, ActiveUpperBound( C ) - 1 );
-  
+    return IsWellDefined( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+    
 end );
 
 ##
@@ -1442,15 +1481,15 @@ BindGlobal( "RANDOM_CHAIN_COMPLEX",
       stop := false;
       
       while not stop do
-      
+        
         f := RandomMorphism( cat, c );
-      
+        
         if not IsEpimorphism( f ) then
-        
+          
           stop := true;
-        
+          
         fi;
-      
+        
       od;
       
       L := [ f ];
@@ -1460,7 +1499,7 @@ BindGlobal( "RANDOM_CHAIN_COMPLEX",
         g := PreCompose(
               CokernelProjection( L[ 1 ] ),
                 RandomMorphismWithFixedSource( CokernelObject( L[1] ), c ) );
-        
+                
         Add( L, g, 1 );
         
       od;
@@ -1468,7 +1507,7 @@ BindGlobal( "RANDOM_CHAIN_COMPLEX",
       return ChainComplex( L, m + 2 );
       
     fi;
-      
+    
 end );
 
 ######################################
@@ -1478,7 +1517,8 @@ end );
 ######################################
 
 ##
-InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
+InstallMethod( ShiftLazyOp,
+          [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
     local newDifferentials, complex;
     
@@ -1487,17 +1527,17 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
     if i mod 2 = 1 then
       
       newDifferentials := MapLazy( newDifferentials, d -> -d, 1 );
-    
+      
     fi;
     
     if IsChainComplex( C ) then
       
       complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
-    
+      
     else
       
       complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
-    
+      
     fi;
     
     SetComputedObjectAts( complex, List( ComputedObjectAts( C ), 
@@ -1506,14 +1546,14 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
         if IsInt( u ) then 
           
           return u - i; 
-        
+          
         else
           
           return u;
-        
+          
         fi;
-      
-      end ) );
+        
+    end ) );
     
     SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ), 
       function( u )
@@ -1521,22 +1561,22 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
         if IsInt( u ) then
           
           return u - i;
-        
+          
         else
           
           if i mod 2 = 0 then
             
             return u;
-          
+            
           else
             
             return AdditiveInverse( u );
             
           fi;
-        
+          
         fi;
         
-      end ) );
+    end ) );
     
     AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
     
@@ -1553,7 +1593,7 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
         fi;
       
       end ) );
-    
+      
     AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ],
       function( )
         
@@ -1562,16 +1602,16 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
           SetUpperBound( C, FAU_BOUND( complex ) + i );
         
         fi;
-      
+        
       end ) );
-    
+      
     AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
       function( )
         
         if not HasFAL_BOUND( complex ) then
-        
+          
           SetLowerBound( complex, FAL_BOUND( C ) - i );
-        
+          
         fi;
         
       end ) );
@@ -1582,13 +1622,13 @@ InstallMethod( ShiftLazyOp, [ IsChainOrCochainComplex, IsInt ],
         if not HasFAL_BOUND( C ) then
           
           SetLowerBound( C, FAL_BOUND( complex ) + i );
-        
+          
         fi;
         
       end ) );
-    
+      
     return complex;
-   
+    
 end );
 
 ##
@@ -1601,11 +1641,11 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
     if IsChainComplex( C ) then 
       
       complex := ChainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
-    
+      
     else
       
       complex := CochainComplex( UnderlyingCategory( CapCategory( C ) ), newDifferentials );
-    
+      
     fi;
     
     SetComputedObjectAts( complex, List( ComputedObjectAts( C ),
@@ -1620,11 +1660,10 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
           return u;
           
         fi;
-      
+        
       end ) );
-    
-    SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ),
       
+    SetComputedDifferentialAts( complex, List( ComputedDifferentialAts( C ),
       function( u )
         
         if IsInt( u ) then
@@ -1639,56 +1678,55 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
         
       end ) );
       
-      AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
+    AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsZeroForObjects", complex, "IsZeroForObjects" ) );
       
-      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
-        function( )
+    AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
+      function( )
           
           if not HasFAU_BOUND( complex ) then
             
             SetUpperBound( complex, ActiveUpperBound( C ) - i );
             
           fi;
-        
+          
         end ) );
-    
+        
     AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ],
       function( )
         
         if not HasFAU_BOUND( C ) then
           
           SetUpperBound( C, ActiveUpperBound( complex ) + i );
-        
+          
         fi;
         
       end ) );
-    
+      
     AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
       function( )
         
         if not HasFAL_BOUND( complex ) then
           
           SetLowerBound( complex, ActiveLowerBound( C ) - i );
-        
+          
         fi;
         
       end ) );
-    
+      
     AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ],
       function( )
         
         if not HasFAL_BOUND( C ) then
           
           SetLowerBound( C, ActiveLowerBound( complex ) + i );
-        
+          
         fi;
         
       end ) );
-    
+      
     return complex;
-  
+    
 end );
-
 
 #####################################
 #
@@ -1701,182 +1739,181 @@ InstallMethod( GoodTruncationBelowOp,
                [ IsChainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
     
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i < n  then 
-
+          
           return ZeroMorphism( zero, zero );
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( KernelObject( C^n ), zero );
-
+          
         elif i = n+1 then
-
+          
           return KernelLift( C^n, C^( n + 1 ) );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
-        end, 1 );
-
+        
+      end, 1 );
+      
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
-
-    SetLowerBound( tr_C, n - 1 );
-
+    
+    SetLowerBound( tr_C, n );
+    
     return tr_C;
-
+    
 end );
 
 ##
 InstallMethod( GoodTruncationBelowOp,
           [ IsCochainComplex, IsInt ],
-
+  
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       
       function( i )
         if i < n - 1 then
-
+          
           return ZeroMorphism( zero, zero );
-
+          
         elif i = n - 1 then
-
+          
           return ZeroMorphism( zero, CokernelObject( KernelEmbedding( C^n ) ) );
-
+          
         elif i = n then
-
+          
           return CokernelColift( KernelEmbedding( C^n ), C^n );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
+      
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
-
-    SetLowerBound( tr_C, n - 1 );
-
+    
+    SetLowerBound( tr_C, n );
+    
     return tr_C;
-  
+    
 end );
 
 ##
 InstallMethod( GoodTruncationAboveOp,
-               [ IsChainComplex, IsInt ],
-
+          [ IsChainComplex, IsInt ],
+  
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
     
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i > n + 1  then
-
+          
           return ZeroMorphism( zero, zero );
-
+        
         elif i = n + 1 then
-
+          
           return ZeroMorphism( zero, CokernelObject( KernelEmbedding( C^n ) ) );
-
+          
         elif i = n then
-
+          
           return CokernelColift( KernelEmbedding( C^n ), C^n  );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
+    
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-
-    SetUpperBound( tr_C, n + 1 );
-
+    
+    SetUpperBound( tr_C, n );
+    
     return tr_C;
-
+    
 end );
 
 ##
 InstallMethod( GoodTruncationAboveOp,
-               [ IsCochainComplex, IsInt ],
-
+          [ IsCochainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
         
         if i > n  then
-
+          
           return ZeroMorphism( zero, zero );
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( KernelObject( C^n ), zero );
-
+          
         elif i = n -1 then
-
+          
           return KernelLift( C^n, C^(n-1)  );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
+    
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-
-    SetUpperBound( tr_C, n + 1 );
-
+    
+    SetUpperBound( tr_C, n );
+    
     return tr_C;
-
+    
 end );
 
 ## sigma_>= n 
@@ -1884,44 +1921,44 @@ end );
 ##  <------  0    <---- C_n <---- C_n+1 <-----
 
 InstallMethod( BrutalTruncationBelowOp,
-               [ IsChainComplex, IsInt ],
+          [ IsChainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i < n  then
-
+          
           return ZeroMorphism( zero, zero ); 
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( C[ n ], zero );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
+      
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     # tr_C may get better lower bound than n - 1.
     TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
-
-    SetLowerBound( tr_C, n - 1 );
-
+    
+    SetLowerBound( tr_C, n );
+    
     return tr_C;
-
+    
 end );
 
 ## sigma_>n =
@@ -1929,89 +1966,88 @@ end );
 ##  <------ C_n-1 <----  0  <----   0   <-----
 
 InstallMethod( BrutalTruncationAboveOp,
-               [ IsChainComplex, IsInt ],
+          [ IsChainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i >= n + 1  then
-
+          
           return ZeroMorphism( zero, zero );
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( zero, C[ n-1 ]  );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
-
+      
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     #G this.
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-
-    SetUpperBound( tr_C, n );
-
+    
+    SetUpperBound( tr_C, n - 1 );
+    
     return tr_C;
-
+    
 end );
 
 ##  -------> C_n-1 -----> C_n -----> C_n+1 ------>
 ##  -------> 0     ----->  0 -----> C_n+1 ------>
 
 InstallMethod( BrutalTruncationBelowOp,
-              [ IsCochainComplex, IsInt ],
+          [ IsCochainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i < n  then
-
+          
           return ZeroMorphism( zero, zero ); 
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( zero, C[ n + 1 ] );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
+        
       end, 1 );
-
+    
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-
+    
     #G this.
     TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
-  
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
-
-    SetLowerBound( tr_C, n );
-
+    
+    SetLowerBound( tr_C, n + 1 );
+    
     return tr_C;
- 
+    
 end );
 
 ##  ------> C_i-1 -----> C_i -----> C_i+1 ------>
@@ -2021,44 +2057,42 @@ InstallMethod( BrutalTruncationAboveOp,
                [ IsCochainComplex, IsInt ],
   function( C, n )
     local zero, diffs, tr_C;
-
+    
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
-
+    
     diffs := Differentials( C );
-
+    
     diffs := MapLazy( IntegersList,
       function( i )
-
+        
         if i > n   then
-
+          
           return ZeroMorphism( zero, zero );
-
+          
         elif i = n then
-
+          
           return ZeroMorphism( C[ n ], zero  );
-
+          
         else
-
+          
           return C^i;
-
+          
         fi;
-
-        end, 1 );
-
-
+        
+      end, 1 );
+      
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
-  
+    
     #G this.
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
-
+    
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
-
-    SetUpperBound( tr_C, n + 1 );
-
+    
+    SetUpperBound( tr_C, n );
+    
     return tr_C;
-
+    
 end );
-
 
 #####################################
 #
@@ -2068,79 +2102,85 @@ end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_CHANGE_COMPLEX_FILTERS_WHEN_NEEDED,
-
+  
   function( C )
-
-  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function() SetFilterObj( C, IsBoundedBelowChainOrCochainComplex ); end ) );
-
-  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function() SetFilterObj( C, IsBoundedAboveChainOrCochainComplex ); end ) );
-
+    
+    AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
+        function( ) 
+          SetFilterObj( C, IsBoundedBelowChainOrCochainComplex );
+        end )
+    );
+    
+    AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
+        function( )
+          SetFilterObj( C, IsBoundedAboveChainOrCochainComplex );
+        end )
+    );
+    
 end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND,
-
+  
   function( arg1, arg2 )
-
-  AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAU_BOUND", true ] ], function( )
-
-                                                                        SetUpperBound( arg2, ActiveUpperBound( arg1 ) );
-
-                                                                     end ) );
-
+    
+    AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAU_BOUND", true ] ],
+      function( )
+        SetUpperBound( arg2, ActiveUpperBound( arg1 ) );
+      end )
+    );
+    
 end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND,
   function( arg1, arg2 )
-
-  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg1, arg2 );
-
-  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg2, arg1 );
-
+    
+    TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg1, arg2 );
+    
+    TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg2, arg1 );
+    
 end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND,
-
+  
   function( arg1, arg2 )
-
-  AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAL_BOUND", true ] ], function( )
-
-                                                                        SetLowerBound( arg2, ActiveLowerBound( arg1 ) );
-
-                                                                     end ) );
-
+    
+    AddToToDoList( ToDoListEntry( [ [ arg1, "HAS_FAL_BOUND", true ] ],
+      function( )
+         SetLowerBound( arg2, ActiveLowerBound( arg1 ) );
+      end )
+    );
+    
 end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND,
   function( arg1, arg2 )
-
-  TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg1, arg2 );
-
-  TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg2, arg1 );
-
+    
+    TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg1, arg2 );
+    
+    TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg2, arg1 );
+    
 end );
 
 ##
 InstallGlobalFunction( TODO_LIST_TO_PUSH_BOUNDS,
-  
   function( arg1, arg2 )
-
-  TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg1, arg2 );
-
-  TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg1, arg2 );
-
+    
+    TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( arg1, arg2 );
+    
+    TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( arg1, arg2 );
+    
 end );
 
 InstallGlobalFunction( TODO_LIST_TO_PUSH_PULL_BOUNDS,
   function( arg1, arg2 )
-
-  TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( arg1, arg2 );
-
-  TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( arg1, arg2 );
-
+    
+    TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( arg1, arg2 );
+    
+    TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( arg1, arg2 );
+    
 end );
-
 

@@ -153,9 +153,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
 
   all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
 
-  SetLowerBound( all_morphisms, n - 1 );
+  SetLowerBound( all_morphisms, n );
 
-  SetUpperBound( all_morphisms, n + Length( mor ) );
+  SetUpperBound( all_morphisms, n + Length( mor ) - 1 );
 
   return all_morphisms;
 
@@ -189,7 +189,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
    C2 := complex_constructor( l2, m2 );
 
-   base_list := [ Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) ) + 1 .. Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) ) - 1 ];
+   base_list := [ Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) ) .. Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) ) ];
 
    maps := List( base_list,      function( i )
 
@@ -457,19 +457,19 @@ InstallMethod( ViewCochainMorphism,
 InstallMethod( MorphismsSupport,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( phi, m, n )
-  local l, i;
-  l := [ ];
-  for i in [ m .. n ] do
-  if not IsZeroForMorphisms( phi[i] ) then
-     Add( l, i );
-  fi;
-  od;
-  return l;
+    local l, i;
+    l := [ ];
+    for i in [ m .. n ] do
+    if not IsZeroForMorphisms( phi[i] ) then
+       Add( l, i );
+    fi;
+    od;
+    return l;
 end );
 
 InstallMethod( IsWellDefined,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
-   function( phi, m, n )
+  function( phi, m, n )
     local i, S, T;
     S := Source( phi );
     T := Range( phi );
@@ -662,7 +662,11 @@ InstallMethod( ActiveLowerBound,
 
         phi!.LowerBound := phi!.UpperBound;
 
-        if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
+        if not HasIsZeroForMorphisms( phi ) then
+          
+          SetIsZeroForMorphisms( phi, true );
+          
+        fi;
 
   fi;
 
@@ -719,7 +723,11 @@ InstallMethod( ActiveUpperBound,
 
         phi!.UpperBound := phi!.LowerBound;
 
-        if not HasIsZeroForMorphisms( phi ) then SetIsZeroForMorphisms( phi, true ); fi;
+        if not HasIsZeroForMorphisms( phi ) then
+          
+          SetIsZeroForMorphisms( phi, true );
+          
+        fi;
 
   fi;
 
@@ -827,7 +835,7 @@ InstallMethod( MappingCone,
 
                                   if not HasFAL_BOUND( complex ) then
 
-                                     SetLowerBound( complex, Minimum( FAL_BOUND( B ) + 1, FAL_BOUND( C ) ) );
+                                     SetLowerBound( complex, Minimum( FAL_BOUND( B ), FAL_BOUND( C ) ) );
 
                                   fi;
 
@@ -1286,9 +1294,9 @@ InstallMethod( IsQuasiIsomorphism,
 
    fi;
 
-   min := Minimum( ActiveLowerBound(  Source( phi ) ), ActiveLowerBound(  Range( phi ) ) ) + 1;
+   min := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
 
-   max := Maximum( ActiveUpperBound(  Source( phi ) ), ActiveUpperBound(  Range( phi ) ) ) - 1;
+   max := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
 
    if IsChainMorphism( phi ) then
 

@@ -34,13 +34,11 @@ InstallMethod( YonedaExtension,
 
    ex := rec( );
    
-   n := ActiveUpperBound( C ) - ActiveLowerBound( C ) - 2;
+   n := ActiveUpperBound( C ) - ActiveLowerBound( C );
 
    ObjectifyWithAttributes( ex, TheTypeCapCategoryExtension,
    			    Length, n,
-			    UnderlyingChainComplex, ShiftUnsignedLazy( C, ActiveLowerBound( C ) + 1 ) );
+			    UnderlyingChainComplex, ShiftUnsignedLazy( C, ActiveLowerBound( C ) ) );
    return ex;
 
-end );
-
-   			    
+end );		    

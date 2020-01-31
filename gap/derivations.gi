@@ -38,9 +38,9 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     B := Range( phi );
     
-    m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );    
+    m := Minimum( ActiveLowerBound( A ), ActiveLowerBound( B ) );
     
-    n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );
+    n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
     if IsIdenticalToZeroMorphism( phi ) or m > n then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
@@ -155,16 +155,16 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     B := Range( phi );
     
-    m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );
+    m := Minimum( ActiveLowerBound( A ), ActiveLowerBound( B ) );
     
-    n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );    
+    n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
     if IsIdenticalToZeroMorphism( phi ) or m > n then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
       return MapLazy( IntegersList, n -> ZeroMorphism( A[ n ], B[ n + 1 ] ), 1 );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
-   
+     
     L := Concatenation( 
           
           List( [ 1 .. n - m ],

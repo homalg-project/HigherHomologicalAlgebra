@@ -136,24 +136,24 @@ InstallMethod( DoubleChainComplex,
  d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleChainComplex" );
 
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
-                                                                 SetRightBound( d, ActiveUpperBound( C ) - 1 );
+                                                                 SetRightBound( d, ActiveUpperBound( C ) );
                                                                  end ) );
 
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
-                                                                 SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+                                                                 SetLeftBound( d, ActiveLowerBound( C ) );
                                                                  end ) );
 
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
                                  function( ) 
                                  local l, ll, lu;
-                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+                                 l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
                                  lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
                                  ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
                                  AddToToDoList( ToDoListEntry( lu, function( ) 
-                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
                                                                    end ) );
                                  AddToToDoList( ToDoListEntry( ll, function( ) 
-                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
                                                                    end ) );
                                  end ) );
 
@@ -170,24 +170,24 @@ InstallMethod( DoubleCochainComplex,
  d :=  DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleCochainComplex" );
  
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
-                                                                 SetRightBound( d, ActiveUpperBound( C ) - 1 );
+                                                                 SetRightBound( d, ActiveUpperBound( C ) );
                                                                  end ) );
 
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
-                                                                 SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+                                                                 SetLeftBound( d, ActiveLowerBound( C ) );
                                                                  end ) );
 
  AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
                                  function( ) 
                                  local l, ll, lu;
-                                 l := [ ActiveLowerBound( C ) + 1.. ActiveUpperBound( C ) - 1];
+                                 l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
                                  lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
                                  ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
-                                 AddToToDoList( ToDoListEntry( lu, function( ) 
-                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) - 1 );
+                                 AddToToDoList( ToDoListEntry( lu, function( )
+                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
                                                                    end ) );
                                  AddToToDoList( ToDoListEntry( ll, function( ) 
-                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) + 1 );
+                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
                                                                    end ) );
                                  end ) );
 
@@ -397,7 +397,7 @@ complex := ChainComplex( cat, diff );
 
 complex!.UnderlyingDoubleComplex := C;
 
-SetLowerBound( complex, x0 + y0 - 1 );
+SetLowerBound( complex, x0 + y0 );
 
 #AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
 
@@ -445,7 +445,7 @@ complex := ChainComplex( cat, diff );
 
 complex!.UnderlyingDoubleComplex := C;
 
-SetUpperBound( complex, x0 + y0 + 1 );
+SetUpperBound( complex, x0 + y0 );
 
 #AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
 

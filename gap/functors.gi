@@ -985,7 +985,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
           
           function( )
             
-            SetRightBound( d, ActiveUpperBound( C ) - 1 );
+            SetRightBound( d, ActiveUpperBound( C ) );
             
         end ) );
         
@@ -993,7 +993,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
           
           function( )
           
-            SetLeftBound( d, ActiveLowerBound( C ) + 1 );
+            SetLeftBound( d, ActiveLowerBound( C ) );
             
         end ) );
         
@@ -1001,7 +1001,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
         
           function( )
           
-            SetAboveBound( d, ActiveUpperBound( D ) - 1 );
+            SetAboveBound( d, ActiveUpperBound( D ) );
             
         end ) );
         
@@ -1009,7 +1009,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
         
           function( )
           
-            SetBelowBound( d, ActiveLowerBound( D ) + 1 );
+            SetBelowBound( d, ActiveLowerBound( D ) );
             
         end ) );
         

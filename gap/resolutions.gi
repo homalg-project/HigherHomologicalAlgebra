@@ -55,7 +55,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     
     fi;
     
-    u := ActiveUpperBound( C );
+    u := ActiveUpperBound( C ) + 1;
     
     zero := ZeroObject( cat );
     
@@ -94,7 +94,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     
     r := CochainComplex( cat, MapLazy( maps, function( j ) return j[ 1 ]; end, 1 ) );
     
-    SetUpperBound( r, u );
+    SetUpperBound( r, u - 1 );
     
     return CochainMorphism( r, C, 
       MapLazy( IntegersList,
@@ -164,7 +164,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
       function( k )
         local temp_C, temp_D, m, kappa, ep_C, ep_D;
         
-        if k >= u then
+        if k >= u + 1 then
           
           return ZeroMorphism( p_C[ k ], p_D[ k ] );
           
@@ -224,13 +224,13 @@ InstallMethod( ProjectiveResolution,
     
     fi;
     
-    i := ActiveLowerBound( C );
+    i := ActiveLowerBound( C ) - 1;
     
     while bool do
       
       if IsZeroForObjects( p[ i ] ) then
         
-        SetLowerBound( p, i );
+        SetLowerBound( p, i + 1 );
         
         return p;
       
@@ -258,13 +258,13 @@ InstallMethod( ProjectiveResolution,
     
     fi;
     
-    i := ActiveUpperBound( C );
+    i := ActiveUpperBound( C ) + 1;
     
     while bool do
         
       if IsZeroForObjects( p[ i ] ) then
         
-        SetUpperBound( p, i );
+        SetUpperBound( p, i - 1 );
         
         return p;
       
@@ -365,7 +365,7 @@ InstallMethod( ProjectiveResolution,
       
       if IsZero( p[ i ] ) then
         
-        SetLowerBound( p, i );
+        SetLowerBound( p, i + 1 );
         
         return p;
         
@@ -652,7 +652,7 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
     
     fi;
     
-    u := ActiveLowerBound( C );
+    u := ActiveLowerBound( C ) - 1;
     
     zero := ZeroObject( cat );
     
@@ -690,7 +690,7 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
     
     inj := CochainComplex( cat, ShiftLazy( MapLazy( maps, j -> j[ 1 ], 1 ), 1 ) );
     
-    SetLowerBound( inj, u );
+    SetLowerBound( inj, u + 1 );
     
     return CochainMorphism( C, inj, MapLazy( maps, j -> j[ 2 ], 1 ) );
     
@@ -738,7 +738,7 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
     
     i_D := Range( q_D );
     
-    u := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
+    u := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) - 1;
     
     maps := MapLazy( IntegersList,
       function( k )
@@ -804,13 +804,13 @@ InstallMethod( InjectiveResolution,
     
     fi;
     
-    i := ActiveUpperBound( C );
+    i := ActiveUpperBound( C ) + 1;
     
     while bool do
           
       if IsZeroForObjects( p[ i ] ) then
         
-        SetUpperBound( p, i );
+        SetUpperBound( p, i - 1 );
         
         return p;
       
@@ -838,13 +838,13 @@ InstallMethod( InjectiveResolution,
     
     fi;
     
-    i := ActiveLowerBound( C );
+    i := ActiveLowerBound( C ) - 1;
     
     while bool do
         
       if IsZeroForObjects( p[ i ] ) then
         
-        SetLowerBound( p, i );
+        SetLowerBound( p, i + 1 );
         
         return p;
       
@@ -945,7 +945,7 @@ InstallMethod( InjectiveResolution,
        
       if IsZero( p[ i ] ) then
         
-        SetUpperBound( p, i );
+        SetUpperBound( p, i - 1 );
         
         return p;
         
@@ -1234,7 +1234,7 @@ BindGlobal( "QuasiIsomorphismFromProjectiveResolution2",
     
     fi;
     
-    u := ActiveUpperBound( C );
+    u := ActiveUpperBound( C ) + 1;
     
     zero := ZeroObject( cat );
     
@@ -1278,7 +1278,7 @@ BindGlobal( "QuasiIsomorphismFromProjectiveResolution2",
     
     r := CochainComplex( cat, MapLazy( maps, function( j ) return j[ 1 ]; end, 1 ) );
     
-    SetUpperBound( r, u );
+    SetUpperBound( r, u - 1 );
     
     return CochainMorphism( r, C,
             MapLazy( IntegersList, j -> maps[ j ][ 2 ], 1 ) );
@@ -1302,9 +1302,9 @@ BindGlobal( "HORSESHOE_HELPER",
       
     fi;
     
-    u := ActiveLowerBound( C ) + 1;
+    u := ActiveLowerBound( C );
     
-    v := ActiveUpperBound( C ) - 1;
+    v := ActiveUpperBound( C );
    
     if v - u > 2 then
       
@@ -1371,9 +1371,9 @@ InstallMethod( MorphismFromHorseshoeResolution,
       
       d := ValueGlobal( "HomologicalBicomplex" )( D );
       
-      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) );
+      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) + 1 );
       
-      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) );
+      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) - 1 );
       
     fi;
     
@@ -1497,9 +1497,9 @@ InstallMethodWithCrispCache( MorphismFromCartanResolution,
       
       d := ValueGlobal( "HomologicalBicomplex" )( D );
       
-      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) );
+      ValueGlobal( "SetAbove_Bound" )( d, ActiveUpperBound( C ) + 1 );
       
-      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) );
+      ValueGlobal( "SetBelow_Bound" )( d, ActiveLowerBound( C ) - 1 );
       
     fi;
     

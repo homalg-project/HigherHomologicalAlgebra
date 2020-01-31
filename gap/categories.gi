@@ -123,8 +123,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                       return false;
                   fi;
               od;
-              l := Minimum( ActiveLowerBound( C1 ) + 1, ActiveLowerBound( C2 ) + 1 );
-              u := Maximum( ActiveUpperBound( C1 ) - 1, ActiveUpperBound( C2 ) - 1 );
+              l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
+              u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
               lu := [ l .. u ];
               SubtractSet( lu, indices );
               if lu = [  ] then
@@ -170,10 +170,10 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                       return false;
                   fi;
               od;
-              l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ) + 1, ActiveLowerBound( Range( m1 ) ) + 1 ), 
-                 Minimum( ActiveLowerBound( Source( m2 ) ) + 1, ActiveLowerBound( Range( m2 ) ) + 1 ) );
-              u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ) - 1, ActiveUpperBound( Range( m1 ) ) - 1 ), 
-                 Maximum( ActiveUpperBound( Source( m2 ) ) - 1, ActiveUpperBound( Range( m2 ) ) - 1 ) );
+              l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ), 
+                 Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) ) );
+              u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
+                 Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) ) );
               lu := [ l .. u ];
               SubtractSet( lu, indices );
               if lu = [  ] then
@@ -208,7 +208,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           od;
           l := Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) );
           u := Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) );
-          lu := [ l .. u ];
+          lu := [ l - 1 .. u + 1 ];
           SubtractSet( lu, indices );
           for i in lu do
               if not IsEqualForObjects( C1[i], C2[i] ) or not IsEqualForMorphismsOnMor( C1 ^ i, C2 ^ i ) then
@@ -248,8 +248,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ), Minimum( ActiveLowerBound( Source( m2 ) ), 
                ActiveLowerBound( Range( m2 ) ) ) );
           u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ), Maximum( ActiveUpperBound( Source( m2 ) ), 
-               ActiveUpperBound( Range( m2 ) ) ) );
-          lu := [ l .. u ];
+                ActiveUpperBound( Range( m2 ) ) ) );
+          lu := [ l - 1 .. u + 1 ];
           SubtractSet( lu, indices );
           for i in lu do
               if not IsEqualForMorphisms( m1[i], m2[i] ) then
@@ -286,11 +286,17 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                   return false;
               fi;
           od;
-          l := Minimum( Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ), Minimum( ActiveLowerBound( Source( m2 ) ), 
-               ActiveLowerBound( Range( m2 ) ) ) );
-          u := Maximum( Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ), Maximum( ActiveUpperBound( Source( m2 ) ), 
-               ActiveUpperBound( Range( m2 ) ) ) );
-          lu := [ l .. u ];
+          l := Minimum(
+                  Minimum( ActiveLowerBound( Source( m1 ) ), ActiveLowerBound( Range( m1 ) ) ),
+                  Minimum( ActiveLowerBound( Source( m2 ) ), ActiveLowerBound( Range( m2 ) ) )
+                );
+          
+          u := Maximum(
+                  Maximum( ActiveUpperBound( Source( m1 ) ), ActiveUpperBound( Range( m1 ) ) ),
+                  Maximum( ActiveUpperBound( Source( m2 ) ), ActiveUpperBound( Range( m2 ) ) )
+                );
+          
+          lu := [ l - 1 .. u + 1 ];
           SubtractSet( lu, indices );
           for i in lu do
               if not IsCongruentForMorphisms( m1[i], m2[i] ) then
@@ -304,7 +310,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               if not IsBoundedChainOrCochainComplex( C ) then
                   Error( "The complex must be bounded" );
               else
-                  return IsWellDefined( C, ActiveLowerBound( C ), ActiveUpperBound( C ) );
+                  return IsWellDefined( C, -1 + ActiveLowerBound( C ), 1 + ActiveUpperBound( C ) );
               fi;
               return;
           end );
@@ -314,7 +320,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               if not IsBoundedChainOrCochainMorphism( phi ) then
                   Error( "The morphism must be bounded" );
               else
-                  return IsWellDefined( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
+                  return IsWellDefined( phi, -1 + ActiveLowerBound( phi ), 1 + ActiveUpperBound( phi ) );
               fi;
               return;
           end );
@@ -340,9 +346,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                           return false;
                       fi;
                   od;
-                  for i in [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ] do
+                  for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do
                       if not IsZeroForObjects( C[i] ) then
-                          SetLowerBound( C, i - 1 );
+                          SetLowerBound( C, i );
                           return false;
                       fi;
                   od;
@@ -370,9 +376,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                           return false;
                       fi;
                   od;
-                  for i in [ ActiveLowerBound( phi ) + 1 .. ActiveUpperBound( phi ) - 1 ] do
-                      if IsZeroForMorphisms( phi[i] ) then
-                          SetLowerBound( phi, i );
+                  for i in [ ActiveLowerBound( phi ) .. ActiveUpperBound( phi ) ] do
+                      if IsZeroForMorphisms( phi[ i ] ) then
+                          SetLowerBound( phi, i + 1 );
                       else
                           return false;
                       fi;
@@ -691,9 +697,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               H := MapLazy( IntegersList, function ( i )
                       local id, m, n;
                       id := IdentityMorphism( P );
-                      if i <= ActiveLowerBound( P ) then
+                      if i < ActiveLowerBound( P ) then
                           return ZeroMorphism( P[i], P[i + 1] );
-                      elif i = ActiveLowerBound( P ) + 1 then
+                      elif i = ActiveLowerBound( P ) then
                           return ProjectiveLift( id[i], P ^ (i + 1) );
                       fi;
                       m := KernelLift( P ^ i, id[i] - PreCompose( P ^ i, H[(i - 1)] ) );
@@ -835,7 +841,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               fi;
               u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
               v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
-              return ForAll( [ u .. v ], function ( i )
+              return ForAll( [ u - 1 .. v + 1 ], function ( i )
                       return IsIsomorphism( phi[i] );
                   end );
           end );
@@ -848,7 +854,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               fi;
               u := Minimum( ActiveLowerBound( Source( phi ) ), ActiveLowerBound( Range( phi ) ) );
               v := Maximum( ActiveUpperBound( Source( phi ) ), ActiveUpperBound( Range( phi ) ) );
-              list_of_inverses := List( [ u .. v ], function ( i )
+              list_of_inverses := List( [ u - 1 .. v + 1 ], function ( i )
                       return Inverse( phi[i] );
                   end );
               return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST" )( Range( phi ), Source( phi ), list_of_inverses, u );
@@ -945,13 +951,13 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES,
 
         d := DoubleChainComplex( UnderlyingCategory( category ), H, V );
 
-        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetRightBound( d, ActiveUpperBound( C ) - 1 ); end ) );
+        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetRightBound( d, ActiveUpperBound( C ) ); end ) );
         
-        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetLeftBound( d, ActiveLowerBound( C ) + 1 ); end ) );
+        AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetLeftBound( d, ActiveLowerBound( C ) ); end ) );
         
-        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) - 1 ); end ) );
+        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) ); end ) );
         
-        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) + 1 ); end ) );
+        AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) ); end ) );
 
         return TotalChainComplex( d );
 
@@ -999,13 +1005,13 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES,
       
       d := DoubleChainComplex( UnderlyingCategory( category), H, V );
       
-      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetLeftBound( d, -ActiveUpperBound( C ) + 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) SetLeftBound( d, - ActiveUpperBound( C ) ); end ) );
       
-      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetRightBound( d, -ActiveLowerBound( C ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) SetRightBound( d, - ActiveLowerBound( C ) ); end ) );
       
-      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) - 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function( ) SetAboveBound( d, ActiveUpperBound( D ) ); end ) );
       
-      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) + 1 ); end ) );
+      AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function( ) SetBelowBound( d, ActiveLowerBound( D ) ); end ) );
       
       return TotalChainComplex( d );
       
@@ -1466,9 +1472,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           C := Source( phi );
           D := Range( phi );
           
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
           
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
           morphisms_from_distinguished_object := [  ];
           
@@ -1530,8 +1536,8 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
         function( C, D, psi )
           local I, lower_bound, upper_bound, d, T, phi, struc_on_objects, indices, L, i;
           
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
           d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
@@ -1650,22 +1656,22 @@ InstallMethodWithCrispCache( DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS,
         d := DoubleChainComplex( range_cat_of_hom_struc, H, V );
         
         AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function (  )
-                SetLeftBound( d, - ActiveUpperBound( C ) + 1 );
+                SetLeftBound( d, - ActiveUpperBound( C ) );
                 return;
             end ) );
         
         AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function (  )
-                SetRightBound( d, - ActiveLowerBound( C ) - 1 );
+                SetRightBound( d, - ActiveLowerBound( C ) );
                 return;
             end ) );
         
         AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAU_BOUND", true ] ], function (  )
-                SetAboveBound( d, ActiveUpperBound( D ) - 1 );
+                SetAboveBound( d, ActiveUpperBound( D ) );
                 return;
             end ) );
         
         AddToToDoList( ToDoListEntry( [ [ D, "HAS_FAL_BOUND", true ] ], function (  )
-                SetBelowBound( d, ActiveLowerBound( D ) + 1 );
+                SetBelowBound( d, ActiveLowerBound( D ) );
                 return;
             end ) );
         
