@@ -217,6 +217,12 @@ end );
 
 ##
 InstallMethod( Convolution,
+          [ IsHomotopyCategoryObject ],
+  C -> Convolution( UnderlyingCell( C ) )
+);
+
+##
+InstallMethod( Convolution,
           [ IsChainMorphism ],
   function( alpha )
     local chains_category, homotopy_category, C, D, l, u, m, tau_C, d_C, new_C, tau_D, d_D, new_D, L, new_alpha;
@@ -274,3 +280,10 @@ InstallMethod( Convolution,
     fi;
   
 end );
+
+##
+InstallMethod( Convolution,
+          [ IsHomotopyCategoryMorphism ],
+  alpha -> Convolution( UnderlyingCell( alpha ) )
+);
+
