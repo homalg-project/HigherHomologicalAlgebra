@@ -352,7 +352,7 @@ InstallMethod( Display,
   function( map, m, n )
     local r, s, i;
     
-    r := RandomTextColor( );
+    r := RandomTextColor( "" );
      
     Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
     Print( "\n" );

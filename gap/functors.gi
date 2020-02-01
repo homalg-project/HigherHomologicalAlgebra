@@ -497,7 +497,7 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
     
     T := ChainComplexCategory( AsCapCategory(  Range( F ) ) );
     
-    r := RandomTextColor( );
+    r := RandomTextColor( Name( F ) );
     
     name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to chain complex categories", r[ 2 ] );
     
@@ -577,7 +577,7 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
     
     T := CochainComplexCategory( AsCapCategory(  Range( F ) ) );
     
-    r := RandomTextColor( );
+    r := RandomTextColor( Name( F ) );
     
     name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to cochain complex categories", r[ 2 ] );
     

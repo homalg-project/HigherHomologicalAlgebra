@@ -512,7 +512,7 @@ InstallMethod( Display,
   function( C, m, n )
     local r, co_homo, s, dashes, i;
     
-    r := RandomTextColor( );
+    r := RandomTextColor( "" );
     
     Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
@@ -591,7 +591,7 @@ InstallMethod( ViewComplex,
   function( C, m, n )
     local r, co_homo, s, dashes, i;
     
-    r := RandomTextColor( );
+    r := RandomTextColor( "" );
     
     Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
