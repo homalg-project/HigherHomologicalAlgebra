@@ -628,16 +628,27 @@ InstallMethod( FinalizeCategory,
     
 end );
 
-
 ##
 InstallGlobalFunction( RandomTextColor,
-  function (  )
+  function ( name )
+    local colors, colors_in_name, pos;
     if ENABLE_COLORS <> true then
       return [ "", "" ];
     else
-      return [ Random( [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ] ), "\033[0m" ];
+      colors := [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ];
+      colors_in_name := List( colors, c -> PositionSublist( name, c ) );
+      pos := Positions( colors_in_name, fail );
+      if Size( pos ) = 1 then
+        pos := [ ];
+      fi;
+      if not IsEmpty( pos ) then
+        return [ colors[ Random( pos ) ], "\033[0m" ];
+      else
+        return [ colors[ Position( colors_in_name, Maximum( colors_in_name ) ) ], "\033[0m" ];
+      fi;
     fi;
 end );
+
 
 ##
 InstallGlobalFunction( RandomBoldTextColor,

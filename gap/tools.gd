@@ -18,7 +18,6 @@ DeclareGlobalFunction( "DeactivateCachingForCertainOperations" );
 
 DeclareOperation( "FinalizeCategory", [ IsCapCategory, IsBool ] );
 
-##
 DeclareGlobalFunction( "RandomTextColor" );
 
 DeclareGlobalFunction( "RandomBoldTextColor" );
