@@ -66,11 +66,11 @@ InstallMethod( RCochainFunctor,
         
         if Length( d ) = 0 then
           
-          SetLowerBound( C, 0 );
+          SetLowerBound( C, 1 );
         
         else
           
-          SetLowerBound( C, Minimum( d ) - 1 );
+          SetLowerBound( C, Minimum( d ) );
         
         fi;
         
@@ -133,9 +133,11 @@ BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
         Apply( d, HomalgElementToInteger );
 
         if Length( d ) = 0 then
-            SetLowerBound( C, 0 );
+          
+            SetLowerBound( C, 1 );
+            
         else
-            SetLowerBound( C, Minimum( d ) - 1 );
+            SetLowerBound( C, Minimum( d ) );
         fi;
         
         return C;
@@ -268,8 +270,8 @@ InstallMethod( LCochainFunctor,
             SetLowerBound( C, 0 );
             SetUpperBound( C, 0 );
         else
-            SetLowerBound( C, -Maximum( d ) - 1 );
-            SetUpperBound( C, -Minimum( d ) + n + 1);
+            SetLowerBound( C, - Maximum( d ) );
+            SetUpperBound( C, - Minimum( d ) + n );
         fi;
         
         return C;
@@ -384,8 +386,8 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
             SetLowerBound( C, 0 );
             SetUpperBound( C, 0 );
         else
-            SetLowerBound( C, -Maximum( d ) - 1 );
-            SetUpperBound( C, -Minimum( d ) + n + 1);
+            SetLowerBound( C, - Maximum( d ) );
+            SetUpperBound( C, - Minimum( d ) + n );
         fi;
         
         return C;
@@ -430,7 +432,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
                 [ IsCapCategoryObject and IsCochainComplex ],
     function( C )
     local reg;
-    reg := Maximum( List( [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ], 
+    reg := Maximum( List( [ ActiveLowerBound( C )  .. ActiveUpperBound( C ) ],
                         i -> i + CastelnuovoMumfordRegularity( C[ i ] ) ) );
     return Int( String( reg ) );
 end );
@@ -440,7 +442,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
                 [ IsCapCategoryObject and IsChainComplex ],
     function( C )
     local reg;
-    reg := Minimum( List( [ ActiveLowerBound( C ) + 1 .. ActiveUpperBound( C ) - 1 ], 
+    reg := Minimum( List( [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ], 
                         i -> i - CastelnuovoMumfordRegularity( C[ i ] ) ) );
     return Int( String( reg ) );
 end );

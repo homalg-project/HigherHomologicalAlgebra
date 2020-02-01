@@ -359,9 +359,9 @@ InstallMethod( BeilinsonReplacement,
               #  b := B^( i + 1 );
               fi;
               
-              if i> ActiveUpperBound( B ) + 1 then
+              if i> ActiveUpperBound( B ) + 2 then
                   return UniversalMorphismFromZeroObject( Source( B^( i - 1 ) ) );
-              elif i<= ActiveLowerBound( B ) and not i > reg then
+              elif i<= ActiveLowerBound( B ) + 1 and not i > reg then
                   return UniversalMorphismIntoZeroObject( Range( B^( i + 1 ) ) );
               else
                   if i-1 in ComputedDifferentialAts( TC ) then
@@ -371,7 +371,7 @@ InstallMethod( BeilinsonReplacement,
                       # Tate is minimal because I am using homalg to compute the projective cover.
                       if ForAll( d, j -> j <= 1 ) then
                           u := UniversalMorphismFromZeroObject( TC[ i - 1 ] );
-                          SetUpperBound( B, i );
+                          SetUpperBound( B, i - 1 );
                           return ApplyFunctor( BB, u );
                       else
                           return ApplyFunctor( BB, TC^i );
@@ -382,7 +382,7 @@ InstallMethod( BeilinsonReplacement,
                       # Same as above
                       if ForAll( d, j -> j >= n ) then
                           u := UniversalMorphismIntoZeroObject( TC[ i ] );
-                          SetLowerBound( B, i - 1 );
+                          SetLowerBound( B, i );
                           return ApplyFunctor( BB, u );
                       else
                           return ApplyFunctor( BB, TC^i );
@@ -395,8 +395,8 @@ InstallMethod( BeilinsonReplacement,
               end;
       diffs := MapLazy( IntegersList, diff, 1 );
       rep := ChainComplex( cat, diffs );
-      SetUpperBound( rep, ActiveUpperBound(C)+n-1 );
-      SetLowerBound( rep, ActiveLowerBound(C)-n+1 );
+      SetUpperBound( rep, ActiveUpperBound( C ) + n - 1 );
+      SetLowerBound( rep, ActiveLowerBound( C ) - n + 1 );
       rep!.underlying_chain_complex := C;
       return rep;
 end );
@@ -425,8 +425,8 @@ InstallMethod( BeilinsonReplacement,
             a := source[ i ];
             b := range[ i ];
 
-            l := Maximum( ActiveLowerBound( source ), ActiveLowerBound( range ) );
-            u := Minimum( ActiveUpperBound( source ), ActiveUpperBound( range ) );
+            l := Maximum( ActiveLowerBound( source ), ActiveLowerBound( range ) ) - 1;
+            u := Minimum( ActiveUpperBound( source ), ActiveUpperBound( range ) ) + 1;
 
             if i >= u or i <= l then
                 return ZeroMorphism( a, b );
@@ -435,9 +435,13 @@ InstallMethod( BeilinsonReplacement,
             fi;
 
             end;
+            
     mors := MapLazy( IntegersList, mor, 1 );
+    
     rep := ChainMorphism( source, range, mors );
+    
     return rep;
+    
 end );
 
 InstallMethod( BeilinsonReplacement,
@@ -498,18 +502,18 @@ InstallMethod( BeilinsonReplacement,
                 b := B^( i - 1 );
             fi;
 
-            if ( HasActiveUpperBound( B ) and i> ActiveUpperBound( B ) + 1 ) or 
-                ( HasActiveLowerBound( B ) and i<= ActiveLowerBound( B ) ) then
+            if ( HasActiveUpperBound( B ) and i >= ActiveUpperBound( B ) + 1 ) or
+                ( HasActiveLowerBound( B ) and i <= ActiveLowerBound( B ) - 1 ) then
                 return ZeroObjectFunctorial( cat );
             else
-                if i-1 in ComputedDifferentialAts( TP ) then
-                    d := GeneratorDegrees( TP[ i-1 ] );
+                if i - 1 in ComputedDifferentialAts( TP ) then
+                    d := GeneratorDegrees( TP[ i - 1 ] );
                     # It would be more secure to write j<1, but since the Tate res is minimal,
                     # there is no units in differentials matrices. Hence it is ok to write i<=1
                     # Tate is minimal because I am using homalg to compute the projective cover.
                     if ForAll( d, j -> j <= 1 ) then
                         u := UniversalMorphismFromZeroObject( TP[ i - 1 ] );
-                        SetUpperBound( B, i );
+                        SetUpperBound( B, i - 1 );
                         return ApplyFunctor( BB, u );
                     else
                         return ApplyFunctor( BB, TP^i );
@@ -520,7 +524,7 @@ InstallMethod( BeilinsonReplacement,
                     # Same as above
                     if ForAll( d, j -> j >= n ) then
                         u := UniversalMorphismIntoZeroObject( TP[ i ] );
-                        SetLowerBound( B, i - 1 );
+                        SetLowerBound( B, i );
                         return ApplyFunctor( BB, u );
                     else
                         return ApplyFunctor( BB, TP^i );
@@ -573,11 +577,11 @@ InstallMethod( BeilinsonReplacement,
                 u := infinity;
 
                 if HasActiveLowerBound( source ) and HasActiveLowerBound( range ) then
-                    l := Maximum( ActiveLowerBound( source ), ActiveLowerBound( range ) );
+                    l := Maximum( ActiveLowerBound( source ), ActiveLowerBound( range ) ) - 1;
                 fi;
             
                 if HasActiveUpperBound( source ) and HasActiveUpperBound( range ) then
-                    u := Minimum( ActiveUpperBound( source ), ActiveUpperBound( range ) );
+                    u := Minimum( ActiveUpperBound( source ), ActiveUpperBound( range ) ) + 1;
                 fi;
 
                 if i >= u or i <= l then
@@ -585,12 +589,19 @@ InstallMethod( BeilinsonReplacement,
                 else
                    return ApplyFunctor( BB, Tphi[i] );
                 fi;
-                end;
+              
+              end;
+                
         mors := MapLazy( IntegersList, mor, 1 );
+        
         rep := ChainMorphism( source, range, mors );
+        
         return rep;
+      
     else
-       TryNextMethod(  ); 
+        
+      TryNextMethod(  );
+       
     fi;
 end );
 
