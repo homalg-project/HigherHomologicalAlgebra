@@ -189,9 +189,9 @@ InstallMethod( Convolution,
     
     homotopy_category := UnderlyingCategory( chains_category );
     
-    l := ActiveLowerBound( C ) + 1;
+    l := ActiveLowerBound( C );
     
-    u := ActiveUpperBound( C ) - 1;
+    u := ActiveUpperBound( C );
     
     if l = u then
       
@@ -229,9 +229,9 @@ InstallMethod( Convolution,
     
     D := Range( alpha );
     
-    l := Minimum( ActiveLowerBound( C ) + 1, ActiveLowerBound( D ) + 1 );
+    l := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
     
-    u := Maximum( ActiveUpperBound( C ) - 1, ActiveUpperBound( D ) - 1 );
+    u := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
     
     if l = u then
       

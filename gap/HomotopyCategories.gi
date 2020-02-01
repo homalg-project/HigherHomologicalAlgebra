@@ -169,7 +169,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
         
         D := UnderlyingCell( hD );
         
-        if not (HasActiveLowerBound( C ) and HasActiveUpperBound( D )) then
+        if not ( HasActiveLowerBound( C ) and HasActiveUpperBound( D )) then
           if not (HasActiveUpperBound( C ) and HasActiveLowerBound( D )) then
             if not (HasActiveLowerBound( C ) and HasActiveUpperBound( C )) then
               if not (HasActiveLowerBound( D ) and HasActiveUpperBound( D )) then
@@ -292,9 +292,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           D := Range( phi );
           
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
           
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
           morphisms_from_distinguished_object := [  ];
           
@@ -352,9 +352,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           D := UnderlyingCell( hD );
           
-          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) + 1;
+          lower_bound := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
           
-          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) ) - 1;
+          upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
           d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
           
@@ -440,8 +440,8 @@ InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGO
     
     if IsCochainMorphism( phi ) then
 
-      m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );    
-      n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );
+      m := Minimum( ActiveLowerBound( A ), ActiveLowerBound( B ) );
+      n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
 
       L := Concatenation( 
           
@@ -525,8 +525,8 @@ InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGO
       
     else
 
-      m := Minimum( ActiveLowerBound( A ) + 1, ActiveLowerBound( B ) + 1 );
-      n := Maximum( ActiveUpperBound( A ) - 1, ActiveUpperBound( B ) - 1 );    
+      m := Minimum( ActiveLowerBound( A ), ActiveLowerBound( B ) );
+      n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );    
 
       L := Concatenation( 
           
