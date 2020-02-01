@@ -12,8 +12,18 @@
 InstallMethod( UnitOfTensorHomAdjunction,
           [ IsExceptionalCollection ],
   function( collection )
-    local HH, TT, D, k, name, nat;
+    local full, ambient_cat, HH, TT, D, k, name, nat;
     
+    full := DefiningFullSubcategory( collection );
+    
+    ambient_cat := AmbientCategory( full );
+   
+    if not ( HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+   
     HH := HomFunctor( collection );
     
     TT := TensorFunctor( collection );
@@ -96,7 +106,17 @@ end );
 InstallMethod( CounitOfTensorHomAdjunction,
           [ IsExceptionalCollection ],
   function( collection )
-    local HH, TT, C, k, name, nat;
+    local full, ambient_cat, HH, TT, C, k, name, nat;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    if not ( HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
     
     HH := HomFunctor( collection );
     
@@ -134,7 +154,9 @@ InstallMethod( CounitOfTensorHomAdjunction,
         
         mor := List( [ 1 .. Size( min_gen ) ],
           i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
-                  BasisOfExternalHom( UnderlyingCell( collection[ positions[ i ] ] ), a ){ positions_of_non_zeros[ i ] }
+                  BasisOfExternalHom(
+                    UnderlyingCell( collection[ positions[ i ] ] ), a )
+                      { positions_of_non_zeros[ i ] }
               );
         
         mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
