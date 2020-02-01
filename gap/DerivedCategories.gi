@@ -182,7 +182,7 @@ InstallMethod( DerivedCategory,
   function( C )
     local r, name, D;
     
-    r := RandomTextColor( );
+    r := RandomTextColor( Name( C ) );
     
     name := Concatenation( r[ 1 ], "Derived category (", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
     

@@ -55,8 +55,6 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       homotopy_reps := HomotopyCategory( reps );
       
-      r := RandomTextColor( );
-      
       BB := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_reps );
       
       AddObjectFunction( BB,
@@ -124,8 +122,6 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       homotopy_cat := HomotopyCategory( add_cotangent_modules);
       
-      r := RandomTextColor( );
-      
       name := "Cotangent Beilinson functor";
       
       BB := CapFunctor( name, cat, homotopy_cat );
@@ -185,8 +181,6 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
        
       homotopy_cat := HomotopyCategory( add_full );
       
-      r := RandomTextColor( );
-      
       name := "Cotangent Beilinson functor";
       
       BB := CapFunctor( name, cat, homotopy_cat );
@@ -236,8 +230,6 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       homotopy_reps := AsCapCategory( Range( BB ) );
       
       full := FullSubcategoryGeneratedByTwistsOfStructureSheaf( S );
-      
-      r := RandomTextColor( );
       
       name := "Cotangent Beilinson functor";
       
