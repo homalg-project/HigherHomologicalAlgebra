@@ -16,6 +16,8 @@ DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
 
 DeclareGlobalFunction( "DeactivateCachingForCertainOperations" );
 
+DeclareGlobalFunction( "ActivateCachingForCertainOperations" );
+
 DeclareOperation( "FinalizeCategory", [ IsCapCategory, IsBool ] );
 
 DeclareGlobalFunction( "RandomTextColor" );

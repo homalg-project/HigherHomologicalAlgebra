@@ -616,6 +616,35 @@ InstallGlobalFunction( DeactivateCachingForCertainOperations,
 end );
 
 ##
+InstallGlobalFunction( ActivateCachingForCertainOperations,
+  function( category, list_of_operations )
+    local equality_operations, current_name;
+    
+    equality_operations := [
+                  "IsEqualForMorphisms",
+                  "IsEqualForObjects",
+                  "IsEqualForMorphismsOnMor",
+                  "IsEqualForCacheForMorphisms",
+                  "IsEqualForCacheForObjects"
+                  ];
+                  
+    list_of_operations := Concatenation( equality_operations, list_of_operations );
+    
+    for current_name in RecNames( category!.caches ) do
+      
+      if current_name in list_of_operations then
+        
+        continue;
+        
+      fi;
+      
+      SetCaching( category, current_name, "none" );
+      
+    od;
+    
+end );
+
+##
 InstallMethod( FinalizeCategory,
           [ IsCapCategory, IsBool ],
   function( cat, bool )
