@@ -1,35 +1,4 @@
-LoadPackage( "DerivedCategories" );
-LoadPackage( "BBGG" );
-
-##########################################
-
-list_of_operations := [
-                        #"PreCompose",
-                        "AdditionForMorphisms",
-                        "AdditiveInverse",
-                        "MultiplyWithElementOfCommutativeRingForMorphisms",
-                        "IsZeroForObjects"
-                      ];
-                      
-########################### global options ###############################
-#
-SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 3 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
-#
-DISABLE_ALL_SANITY_CHECKS := true;
-SWITCH_LOGIC_OFF := true;
-ENABLE_COLORS := true;
-DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
-  [ IsChainComplexCategory,
-    IsCochainComplexCategory,
-    IsHomotopyCategory,
-    IsAdditiveClosureCategory,
-    IsQuiverRepresentationCategory,
-    # or some function
-  ];
-
-#
+ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 ######################### start example #################################
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
@@ -44,7 +13,7 @@ collection := CreateExceptionalCollection( omegas : name_for_underlying_quiver :
                                                   );
 
 algebroid := Algebroid( collection );
-DeactivateCachingForCertainOperations( algebroid, list_of_operations );
+DeactivateCachingForCertainOperations( algebroid, operations_to_deactivate );
 
 iso := IsomorphismIntoAlgebroid( collection );
 iso := ExtendFunctorToAdditiveClosures( iso );
@@ -61,7 +30,7 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
                                           );
 
 algebroid := Algebroid( collection );
-DeactivateCachingForCertainOperations( algebroid, list_of_operations );
+DeactivateCachingForCertainOperations( algebroid, operations_to_deactivate );
 iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
 iso := ExtendFunctorToAdditiveClosures( iso );
 iso := ExtendFunctorToHomotopyCategories( iso );
@@ -101,7 +70,7 @@ a := AsGradedLeftPresentation( a, [ 0, 2, 2, 1, 2, 0 ] );
 # a := TwistedGradedFreeModule( S, -4 );
 
 a := BB( a );
-conv_a := Convolution( UnderlyingCell( TT( HH( a ) ) ) );
+conv_a := Convolution( TT( HH( a ) ) );
 
 a := inc( a );
 conv_a := inc( conv_a );
