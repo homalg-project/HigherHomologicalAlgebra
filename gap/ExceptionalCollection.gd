@@ -46,6 +46,12 @@ DeclareAttribute( "ExceptionalCollection", IsCapFullSubcategory );
 DeclareAttribute( "DefiningFullSubcategory", IsExceptionalCollection );
 
 #! @Description
+#!  Returns the ambient category of <C>DefiningFullSubcategory</C>(<A>E</A>).
+#! @Arguments E
+#! @Returns 
+DeclareAttribute( "AmbientCategory", IsExceptionalCollection );
+
+#! @Description
 #!  Returns the endomorphism quiver algebra of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns a quiver algebra

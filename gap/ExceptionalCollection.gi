@@ -762,6 +762,12 @@ InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
 end );
 
 ##
+InstallMethod( AmbientCategory,
+          [ IsExceptionalCollection ],
+  collection -> AmbientCategory( DefiningFullSubcategory( collection ) )
+);
+
+##
 InstallMethod( Algebroid,
           [ IsExceptionalCollection ],
   collection -> Algebroid( EndomorphismAlgebraOfExceptionalCollection( collection ) )
