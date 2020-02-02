@@ -136,6 +136,22 @@ InstallMethod( InclusionFunctorInHomotopyCategory,
 end );
 
 ##
+InstallMethod( EquivalenceIntoFullSubcategoryGeneratedByObjectsConcentratedInDegreeOp,
+          [ IsHomotopyCategory, IsInt ],
+  function( homotopy_cat, i )
+    local C, I, full;
+    
+    C := DefiningCategory( homotopy_cat );
+    
+    I := InclusionFunctorInHomotopyCategory( C );
+    
+    full := FullSubcategoryGeneratedByObjectsConcentratedInDegree( homotopy_cat, i );
+    
+    return ValueGlobal( "RestrictFunctorToFullSubcategoryOfRange" )( I, full );
+    
+end );
+
+##
 InstallMethod( ExtendFunctorToHomotopyCategories,
                [ IsCapFunctor ],
   function( F )

@@ -132,7 +132,7 @@ InstallMethod( FullSubcategoryGeneratedByObjectsConcentratedInDegreeOp,
       function( a )
         local c;
         
-        c := UnderlyingCell( a );
+        c := UnderlyingCell( UnderlyingCell( a ) );
         
         return IsWellDefined( c ) and ActiveUpperBound( c ) = ActiveLowerBound( c ) and ActiveLowerBound( c ) = i;
         
@@ -142,7 +142,7 @@ InstallMethod( FullSubcategoryGeneratedByObjectsConcentratedInDegreeOp,
       function( alpha )
         local c;
         
-        c := UnderlyingCell( alpha );
+        c := UnderlyingCell( UnderlyingCell( alpha ) );
         
         return IsWellDefined( c ) and ActiveUpperBound( c ) = ActiveLowerBound( c ) and ActiveLowerBound( c ) = i;
         
