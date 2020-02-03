@@ -385,6 +385,8 @@ DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt
 #!  @Arguments phi, m, n
 DeclareOperation( "MorphismsSupport", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
+DeclareOperation( "MorphismsSupport", [ IsBoundedChainOrCochainMorphism ] );
+
 #!  @Description
 #!  The command displays the components of the morphism between $m$ and $n$. 
 #!  @Arguments phi, m, n

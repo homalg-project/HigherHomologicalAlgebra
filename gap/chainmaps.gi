@@ -452,7 +452,6 @@ InstallMethod( ViewCochainMorphism,
           [ IsBoundedCochainMorphism ],
   ViewChainOrCochainMorphism );
 
-
 ##
 InstallMethod( MorphismsSupport,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
@@ -467,6 +466,16 @@ InstallMethod( MorphismsSupport,
     return l;
 end );
 
+##
+InstallMethod( MorphismsSupport,
+               [ IsBoundedChainOrCochainMorphism ],
+  function( phi )
+    
+    return MorphismsSupport( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
+    
+end );
+
+##
 InstallMethod( IsWellDefined,
                [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( phi, m, n )
