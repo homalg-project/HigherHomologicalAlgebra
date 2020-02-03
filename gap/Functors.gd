@@ -119,6 +119,10 @@ DeclareOperation( "RightDerivedFunctor",
 DeclareAttribute( "RDerivedFunctor",
         IsCapFunctor );
 
+DeclareAttribute( "ConvolutionFunctor",
+        IsHomotopyCategory );
+
+
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
 
