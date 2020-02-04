@@ -902,6 +902,25 @@ InstallMethod( EmbeddingFunctorFromHomotopyCategory,
   collection -> ExtendFunctorToHomotopyCategories( EmbeddingFunctorFromAdditiveClosure( collection ) )
 );
 
+##
+InstallMethod( ConvolutionFunctor,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local I, Ho_C, conv;
+    
+    I := IsomorphismFunctorFromHomotopyCategory( collection );
+    
+    Ho_C := AsCapCategory( Range( I ) );
+    
+    conv := ConvolutionFunctor( Ho_C );
+    
+    conv := PreCompose( I, conv );
+    
+    conv!.Name := "Convolution functor";
+    
+    return conv;
+    
+end );
 
 ##
 InstallMethod( ConvolutionFunctor,

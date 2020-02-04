@@ -126,6 +126,7 @@ DeclareAttribute( "IsomorphismFunctorFromAdditiveClosure", IsExceptionalCollecti
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsExceptionalCollection );
 DeclareAttribute( "IsomorphismFunctorFromHomotopyCategory", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsExceptionalCollection );
+DeclareAttribute( "ConvolutionFunctor", IsExceptionalCollection );
 
 DeclareAttribute( "ConvolutionFunctor",
         IsHomotopyCategory );
