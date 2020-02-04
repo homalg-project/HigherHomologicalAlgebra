@@ -780,15 +780,42 @@ InstallMethod( HomotopyCategory,
 );
 
 ##
-InstallMethod( InclusionFunctorOfHomotopyCategory,
+InstallMethod( AdditiveClosureAsFullSubcategory,
+          [ IsCapFullSubcategory ],
+  function( full )
+    local ambient_cat, r, name, A;
+  
+    if HasIsAdditiveCategory( full ) and IsAdditiveCategory( full ) then
+      
+      Error( "Bad input!\n" );
+      
+    fi;
+    
+    ambient_cat := AmbientCategory( full );
+    
+    if not ( HasIsAdditiveCategory( ambient_cat ) and IsAdditiveCategory( ambient_cat ) ) then
+      
+      Error( "Bad input!\n" );
+      
+    fi;
+    
+    r := RandomTextColor( Name( full) );
+    
+    name := Concatenation( r[ 1 ], "Additive closure as full subcategory ( ", r[ 2 ],
+              Name( full ), r[ 1 ], " )", r[ 2 ] );
+    
+    A := FullSubcategory( ambient_cat, name : is_additive := true );
+    
+    A!.DefiningFullSubcategory := full;
+    
+    return A;
+    
+end );
+
+##
+InstallMethod( AdditiveClosureAsFullSubcategory,
           [ IsExceptionalCollection ],
-  collection -> ExtendFunctorToHomotopyCategories(
-                  ExtendFunctorToAdditiveClosureOfSource(
-                    InclusionFunctor(
-                      DefiningFullSubcategory( collection )
-                    )
-                  ) : name_for_functor := "Inclusion functor between homotopy categories"
-                )
+  collection -> AdditiveClosureAsFullSubcategory( DefiningFullSubcategory( collection ) )
 );
 
 ##
