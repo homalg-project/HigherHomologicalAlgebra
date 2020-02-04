@@ -842,6 +842,68 @@ InstallMethod( RightDerivedFunctor, [ IsCapFunctor ], RDerivedFunctor );
 #
 ########################################
 
+##
+InstallMethod( IsomorphismFunctorFromAdditiveClosure,
+          [ IsCapFullSubcategory ],
+  function( full )
+    local I, add_closure_full;
+    
+    I := InclusionFunctor( full );
+    
+    I := ExtendFunctorToAdditiveClosureOfSource( I );
+    
+    add_closure_full := AdditiveClosureAsFullSubcategory( full );
+    
+    I := RestrictFunctorToFullSubcategoryOfRange( I, add_closure_full );
+    
+    I!.Name := "Isomorphism functor from formal additive closure into additive colsure as full subcategory";
+    
+    return I;
+    
+end );
+
+##
+InstallMethod( IsomorphismFunctorFromAdditiveClosure,
+          [ IsExceptionalCollection ],
+  collection -> IsomorphismFunctorFromAdditiveClosure( DefiningFullSubcategory( collection ) )
+);
+
+##
+InstallMethod( IsomorphismFunctorFromHomotopyCategory,
+          [ IsExceptionalCollection ],
+  collection -> ExtendFunctorToHomotopyCategories( IsomorphismFunctorFromAdditiveClosure( collection ) )
+);
+
+##
+InstallMethod( EmbeddingFunctorFromAdditiveClosure,
+          [ IsCapFullSubcategory ],
+  function( full )
+    local I, add_closure_full;
+    
+    I := InclusionFunctor( full );
+    
+    I := ExtendFunctorToAdditiveClosureOfSource( I );
+       
+    I!.Name := "Embedding functor from formal additive closure into the ambient category";
+    
+    return I;
+    
+end );
+
+##
+InstallMethod( EmbeddingFunctorFromAdditiveClosure,
+          [ IsExceptionalCollection ],
+  collection -> EmbeddingFunctorFromAdditiveClosure( DefiningFullSubcategory( collection ) )
+);
+
+##
+InstallMethod( EmbeddingFunctorFromHomotopyCategory,
+          [ IsExceptionalCollection ],
+  collection -> ExtendFunctorToHomotopyCategories( EmbeddingFunctorFromAdditiveClosure( collection ) )
+);
+
+
+##
 InstallMethod( ConvolutionFunctor,
           [ IsHomotopyCategory ],
   function( Ho_Ho_0_C )
@@ -886,3 +948,4 @@ InstallMethod( ConvolutionFunctor,
     return conv;
     
 end );
+
