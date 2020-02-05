@@ -56,11 +56,12 @@ TP := TensorFunctorOnProjectiveObjects( collection );
 
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
-Inc := ExtendFunctorToHomotopyCategories( ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) ) );
+Conv := ConvolutionFunctor( collection );
+
 ##########################################################
 
 # this can be applied on objects and morphisms
-cell_func := cell -> Convolution( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) );
+cell_func := cell -> PreCompose( [ homotopy_HH, homotopy_TT, Conv ] )( cell );
 
 
 b := RANDOM_CHAIN_COMPLEX( Ch_reps, -4, 4, 3 );

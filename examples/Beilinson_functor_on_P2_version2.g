@@ -62,13 +62,15 @@ homotopy_TT := PreCompose(
                   ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T functor to homotopy categories" )
                 );
 
-Inc := InclusionFunctorOfHomotopyCategory( collection );
+Conv := ConvolutionFunctor( collection );
+
+Inc := EmbeddingFunctorFromHomotopyCategory( collection );
 ##########################################################
 
 # this can be applied on objects and morphisms
-cell_func := cell -> Convolution( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) );
+cell_func := cell -> PreCompose( [ homotopy_HH, homotopy_TT, Conv ] )( cell );
 
-b := RANDOM_CHAIN_COMPLEX( Ch_reps, -1, 2, 2 );
+b := RANDOM_CHAIN_COMPLEX( Ch_reps, -1, 2, 3 );
 b := ApplyFunctor( Loc, b/Ho_reps );
 
 quit;

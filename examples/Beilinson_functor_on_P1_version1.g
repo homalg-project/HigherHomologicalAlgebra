@@ -31,9 +31,9 @@ Ch_D := UnderlyingCategory( Ho_D );
 TP := TensorFunctorOnProjectiveObjects( collection );
 homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( Ho_D ), ExtendFunctorToHomotopyCategories( TP ) );
 
-Inc := InclusionFunctorOfHomotopyCategory( collection );
+Conv := ConvolutionFunctor( collection );
 
-cell_func := cell -> Convolution( PreCompose( [ homotopy_HH, homotopy_TT, Inc ] )( cell ) );
+cell_func := cell -> PreCompose( [ homotopy_HH, homotopy_TT, Conv ] )( cell );
 
 b := RANDOM_CHAIN_COMPLEX( Ch_C, -3, 3, 5 ) / Ho_C;
 
