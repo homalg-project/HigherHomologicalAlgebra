@@ -10,9 +10,11 @@ InstallMethod( MappingCone,
     
     u_phi := UnderlyingCell( phi );
     
-    cone := MappingCone( u_phi );
+    cone := MappingCone( u_phi ) / homotopy_category;
     
-    return HomotopyCategoryObject( homotopy_category, cone );
+    cone!.UnderlyingMorphismForMappingCone := phi;
+    
+    return cone;
     
 end );
 
