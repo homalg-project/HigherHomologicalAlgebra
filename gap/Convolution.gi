@@ -194,14 +194,10 @@ InstallMethod( Convolution,
     l := ActiveLowerBound( C );
     
     u := ActiveUpperBound( C );
-    
-    if l = u then
-      
-      return ApplyFunctor( ShiftFunctor( homotopy_category, -l ), C[ u ] );
-      
-    elif l + 1 = u then
-      
-      return ApplyFunctor( ShiftFunctor( homotopy_category, -l ), MappingCone( C ^ u ) );
+     
+    if u - l in [ 0, 1 ] then
+       
+      return ApplyFunctor( ShiftFunctor( homotopy_category, -l ), MappingCone( C ^ ( l + 1 ) ) );
       
     else
       
