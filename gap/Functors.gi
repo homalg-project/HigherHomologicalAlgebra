@@ -679,13 +679,11 @@ InstallMethod( LDerivedFunctor,
     
     AddObjectFunction( LF,
       function( a )
-        local p, Fp;
+        local p;
         
         p := ProjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true ) / H_1;
         
-        Fp := ApplyFunctor( F, p );
-        
-        return DerivedCategoryObject( D_2, Fp );
+        return ApplyFunctor( F, p ) / D_2;
         
     end );
     
@@ -775,13 +773,11 @@ InstallMethod( RDerivedFunctor,
     
     AddObjectFunction( RF,
       function( a )
-        local i, Fi;
+        local i;
         
         i := InjectiveResolution( UnderlyingCell( UnderlyingCell( a ) ), true ) / H_1;
         
-        Fi := ApplyFunctor( F, i );
-        
-        return DerivedCategoryObject( D_2, Fi );
+        return ApplyFunctor( F, i ) / D_2;
         
     end );
     
