@@ -49,6 +49,12 @@ function( homotopy_category, n )
   
   name := Concatenation( "Shift by ", String( n ), " autoequivalence on " );
   
+  if n = 0 then
+    
+    return IdentityFunctor( homotopy_category );
+    
+  fi;
+  
   functor := CapFunctor( name, homotopy_category, homotopy_category );
   
   AddObjectFunction( functor,
