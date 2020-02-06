@@ -169,3 +169,85 @@ InstallMethod( CounitOfTensorHomAdjunction,
   
 end );
 
+
+#######################
+
+BindGlobal( "CounitOnIndecProjectiveObjects",
+  function( collection )
+    local full, ambient_cat, C, B, inc_1, inc_2, Inc, Rep, name, eta, H;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    if not IsHomotopyCategory( ambient_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    C := DefiningCategory( ambient_cat );
+    
+    if not IsAdditiveClosureCategory( C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    B := UnderlyingCategory( C );
+    
+    inc_1 := InclusionFunctorInAdditiveClosure( B );
+    
+    inc_2 := InclusionFunctorInHomotopyCategory( C );
+    
+    Inc := PreCompose( inc_1, inc_2 );
+    
+    Rep := ReplacementFunctorOnIndecProjectiveObjects( collection );
+    
+    H := HomFunctor( collection );
+    
+    name := "Counit natural transformation";
+    
+    eta := NaturalTransformation( name, Rep, Inc );
+    
+    AddNaturalTransformationFunction( eta,
+      function( rep_a, a, inc_a )
+        local H_a, min_gen, positions, vectors, positions_of_non_zeros, mor, alpha;
+        
+        H_a := ApplyFunctor( H, inc_a );
+        
+        min_gen := MinimalGeneratingSet( H_a );
+        
+        if IsEmpty( min_gen ) then
+          
+          return ZeroMorphism( rep_a, inc_a );
+          
+        fi;
+        
+        min_gen := List( min_gen, g -> ElementVectors( g ) );
+        
+        positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
+        
+        vectors := ListN( min_gen, positions, { g, p } -> AsList( g[ p ] ) );
+        
+        positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
+        
+        mor := List( [ 1 .. Size( min_gen ) ],
+          i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
+                  BasisOfExternalHom(
+                    UnderlyingCell( collection[ positions[ i ] ] ), inc_a )
+                      { positions_of_non_zeros[ i ] }
+              );
+        
+        mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
+        
+        alpha := rep_a!.UnderlyingMorphismForMappingCone;
+         
+        return MappingConeColift( alpha, mor );
+                
+      end );
+    
+    return eta;
+     
+end );
+
