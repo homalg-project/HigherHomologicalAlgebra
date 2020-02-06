@@ -819,6 +819,12 @@ InstallMethod( AdditiveClosureAsFullSubcategory,
 );
 
 ##
+InstallMethod( AdditiveClosure,
+          [ IsExceptionalCollection ],
+  collection -> AdditiveClosure( DefiningFullSubcategory( collection ) )
+);
+
+##
 BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
   function( full )
     local ambient;

@@ -82,6 +82,12 @@ DeclareAttribute( "NumberOfObjects", IsExceptionalCollection );
 DeclareAttribute( "UnderlyingObjects", IsExceptionalCollection );
 
 #! @Description
+#!  Returns the additive closure of the <C>DefiningFullSubcategory</C>(<A>E</A>).
+#! @Arguments E
+#! @Returns an additive category
+DeclareAttribute( "AdditiveClosure", IsExceptionalCollection );
+
+#! @Description
 #!  Returns the homotopy category of the additive closure of <C>DefiningFullSubcategory</C>(<A>E</A>).
 #! @Arguments E
 #! @Returns a category
@@ -91,7 +97,7 @@ DeclareAttribute( "HomotopyCategory", IsExceptionalCollection );
 #!  Returns the additive closure of the <C>DefiningFullSubcategory</C>(<A>E</A>) as an additive
 #!  full subcategory in <C>AmbientCategory</C>(<A>E</A>).
 #! @Arguments E
-#! @Returns a category
+#! @Returns an additive category
 DeclareAttribute( "AdditiveClosureAsFullSubcategory", IsExceptionalCollection );
 
 #! @Description
