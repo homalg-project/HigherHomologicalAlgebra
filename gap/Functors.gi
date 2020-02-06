@@ -839,7 +839,7 @@ InstallMethod( RightDerivedFunctor, [ IsCapFunctor ], RDerivedFunctor );
 ########################################
 
 ##
-InstallMethod( IsomorphismFunctorFromAdditiveClosure,
+InstallMethod( EquivalenceFunctorFromAdditiveClosure,
           [ IsCapFullSubcategory ],
   function( full )
     local I, add_closure_full;
@@ -859,15 +859,15 @@ InstallMethod( IsomorphismFunctorFromAdditiveClosure,
 end );
 
 ##
-InstallMethod( IsomorphismFunctorFromAdditiveClosure,
+InstallMethod( EquivalenceFunctorFromAdditiveClosure,
           [ IsExceptionalCollection ],
-  collection -> IsomorphismFunctorFromAdditiveClosure( DefiningFullSubcategory( collection ) )
+  collection -> EquivalenceFunctorFromAdditiveClosure( DefiningFullSubcategory( collection ) )
 );
 
 ##
-InstallMethod( IsomorphismFunctorFromHomotopyCategory,
+InstallMethod( EquivalenceFunctorFromHomotopyCategory,
           [ IsExceptionalCollection ],
-  collection -> ExtendFunctorToHomotopyCategories( IsomorphismFunctorFromAdditiveClosure( collection ) )
+  collection -> ExtendFunctorToHomotopyCategories( EquivalenceFunctorFromAdditiveClosure( collection ) )
 );
 
 ##
@@ -904,7 +904,7 @@ InstallMethod( ConvolutionFunctor,
   function( collection )
     local I, Ho_C, conv;
     
-    I := IsomorphismFunctorFromHomotopyCategory( collection );
+    I := EquivalenceFunctorFromHomotopyCategory( collection );
     
     Ho_C := AsCapCategory( Range( I ) );
     
@@ -1004,7 +1004,7 @@ BindGlobal( "ReplacementFunctorOnIndecProjectiveObjects",
     
     Inc := PreCompose( inc_1, inc_2 );
     
-    HP := HomFunctorOnAdditiveClosure( collection );
+    HP := HomFunctorOnDefiningCategory( collection );
     
     HH := ExtendFunctorToHomotopyCategories( HP
             : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );

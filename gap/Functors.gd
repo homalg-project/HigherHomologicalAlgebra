@@ -119,17 +119,16 @@ DeclareOperation( "RightDerivedFunctor",
 DeclareAttribute( "RDerivedFunctor",
         IsCapFunctor );
 
-DeclareAttribute( "IsomorphismFunctorFromAdditiveClosure", IsCapFullSubcategory );
+DeclareAttribute( "EquivalenceFunctorFromAdditiveClosure", IsCapFullSubcategory );
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsCapFullSubcategory );
 
-DeclareAttribute( "IsomorphismFunctorFromAdditiveClosure", IsExceptionalCollection );
+DeclareAttribute( "EquivalenceFunctorFromAdditiveClosure", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsExceptionalCollection );
-DeclareAttribute( "IsomorphismFunctorFromHomotopyCategory", IsExceptionalCollection );
+DeclareAttribute( "EquivalenceFunctorFromHomotopyCategory", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsExceptionalCollection );
 DeclareAttribute( "ConvolutionFunctor", IsExceptionalCollection );
 
-DeclareAttribute( "ConvolutionFunctor",
-        IsHomotopyCategory );
+DeclareAttribute( "ConvolutionFunctor", IsHomotopyCategory );
 
 
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
