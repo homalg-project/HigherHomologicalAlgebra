@@ -993,7 +993,15 @@ end );
 ##
 BindGlobal( "HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
-    local im, inc;
+    local cat, im, inc;
+    
+    cat := UnderlyingCategory( CapCategory( C ) );
+    
+    if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
+      
+      Error( "(Co)homology is computable only in complexes over abelian categories!\n" );
+      
+    fi;
     
     im := BoundariesAt( C, i );
     
