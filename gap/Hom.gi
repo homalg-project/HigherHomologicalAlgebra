@@ -9,6 +9,7 @@
 #############################################################################
 
 ##
+##
 InstallMethod( HomFunctorAttr,
     [ IsExceptionalCollection ],
     
@@ -172,17 +173,17 @@ InstallMethod( HomFunctor, [ IsExceptionalCollection ], HomFunctorAttr );
 InstallMethod( HomFunctorOnIndecInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, inj_indec, r, name, cell_func;
+    local ambient_cat, H, reps, inj_indec, name, cell_func;
+     
+    ambient_cat := AmbientCategory( collection );
     
-    H := HomFunctor( collection );
-    
-    ambient_cat := AsCapCategory( Source( H ) );
-    
-    if not IsQuiverRepresentationCategory( ambient_cat ) then
+    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) = fail then
       
-      TryNextMethod( );
+      Error( "The method 'IndecInjectiveObjects' should be applicable on the ambient category" );
       
     fi;
+    
+    H := HomFunctor( collection );
     
     reps := AsCapCategory( Range( H ) );
     
@@ -200,37 +201,29 @@ end );
 InstallMethod( HomFunctorOnInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local cat, G, add_G, can, can_add_G, injs, reps, r, name, R;
+    local ambient_cat, H, can, can_H, name;
     
-    cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    ambient_cat := AmbientCategory( collection );
     
-    if not IsQuiverRepresentationCategory( cat ) then
+    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) = fail then
       
       TryNextMethod( );
       
     fi;
+   
+    H := HomFunctorOnIndecInjectiveObjects( collection );
     
-    G := HomFunctorOnIndecInjectiveObjects( collection );
+    H := ExtendFunctorToAdditiveClosureOfSource( H );
     
-    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    can := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( cat );
-    
-    can_add_G := PreCompose( can, add_G );
-    
-    injs := AsCapCategory( Source( can_add_G ) );
-    
-    reps := AsCapCategory( Range( can_add_G ) );
+    can_H := PreCompose( can, H );
     
     name := "Hom(T,-) functor on injective objects";
-     
-    R := CapFunctor( name, injs, reps );
     
-    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
+    can_H!.Name := name;
     
-    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
-    
-    return R;
+    return can_H;
 
 end );
 
@@ -238,17 +231,17 @@ end );
 InstallMethod( HomFunctorOnIndecProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, reps, proj_indec, r, name, cell_func;
+    local ambient_cat, H, reps, proj_indec, name, cell_func;
+     
+    ambient_cat := AmbientCategory( collection );
     
-    H := HomFunctor( collection );
-    
-    ambient_cat := AsCapCategory( Source( H ) );
-    
-    if not IsQuiverRepresentationCategory( ambient_cat ) then
+    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) = fail then
       
-      TryNextMethod( );
+      Error( "The method 'IndecProjectiveObjects' should be applicable on the ambient category" );
       
     fi;
+   
+    H := HomFunctor( collection );
     
     reps := AsCapCategory( Range( H ) );
     
@@ -256,7 +249,7 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
     
     name := "Hom(T,-) functor on indecomposable projective objects";
            
-    cell_func := c -> ApplyFunctor( H, UnderlyingCell( UnderlyingCell( c ) ) );
+    cell_func := c -> ApplyFunctor( H, UnderlyingCell( c ) );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
    
@@ -266,154 +259,127 @@ end );
 InstallMethod( HomFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local cat, G, add_G, can, can_add_G, projs, reps, r, name, R;
+    local ambient_cat, H, can, can_H, name;
     
-    cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    ambient_cat := AmbientCategory( collection );
     
-    if not IsQuiverRepresentationCategory( cat ) then
+    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) = fail then
       
       TryNextMethod( );
       
     fi;
+       
+    H := HomFunctorOnIndecProjectiveObjects( collection );
     
-    G := HomFunctorOnIndecProjectiveObjects( collection );
+    H := ExtendFunctorToAdditiveClosureOfSource( H );
     
-    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient_cat );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( cat );
-    
-    can_add_G := PreCompose( can, add_G );
-    
-    projs := AsCapCategory( Source( can_add_G ) );
-    
-    reps := AsCapCategory( Range( can_add_G ) );
-    
+    can_H := PreCompose( can, H );
+        
     name := "Hom(T,-) functor on projective objects";
   
-    R := CapFunctor( name, projs, reps );
+    can_H!.Name := name;
     
-    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
-    
-    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
-    
-    return R;
+    return can_H;
 
 end );
 
 ###############################################
 #
 # if the collection is defined by subcategory
-# which lives in some homotopy category
-# of quiver representations
+# which lives in abelian category with enough
+# projectives or injectives
 #
 ###############################################
 
 ##
-InstallMethod( HomFunctorOnIndecProjectiveObjects,
+InstallMethod( HomFunctorOnInjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, C, chains_C, proj_indec, reps, name, cell_func;
+    local ambient_cat, H, projs;
+    
+    ambient_cat := AmbientCategory( collection );
+    
+    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) <> fail then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if not IsAbelianCategoryWithComputableEnoughInjectives( ambient_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
     
     H := HomFunctor( collection );
     
-    ambient_cat := AsCapCategory( Source( H ) );
+    projs := FullSubcategoryGeneratedByInjectiveObjects( ambient_cat );
     
-    if not IsHomotopyCategory( ambient_cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-     
-    C := DefiningCategory( ambient_cat );
+    H := RestrictFunctorToFullSubcategoryOfSource( H, projs );
     
-    if not IsQuiverRepresentationCategory( C ) then
-      
-      TryNextMethod( );
-      
-    fi;
+    H!.Name := "Hom(T,-) functor on injective objects";
     
-    chains_C := ChainComplexCategory( C );
+    return H;
     
-    proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
-    
-    reps := AsCapCategory( Range( H ) );
-    
-    H := PreCompose( [ InclusionFunctor( proj_indec ), StalkChainFunctor( C, 0 ), ProjectionFunctor( ambient_cat ), H ] );
-    
-    name := "Hom(T,-) functor on indecomposable projective objects";
-    
-    cell_func := c -> ApplyFunctor( H, c );
-    
-    return FunctorFromLinearCategoryByTwoFunctions( name, proj_indec, reps, cell_func, cell_func );
-   
 end );
 
 ##
 InstallMethod( HomFunctorOnProjectiveObjects,
           [ IsExceptionalCollection ],
   function( collection )
-    local cat, C, G, add_G, can, can_add_G, projs, reps, r, name, R;
+    local ambient_cat, H, projs;
     
-    cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    ambient_cat := AmbientCategory( collection );
     
-    if not IsHomotopyCategory( cat ) then
+    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) <> fail then
+      
+      TryNextMethod( );
+      
+    fi;
+   
+    if not IsAbelianCategoryWithComputableEnoughProjectives( ambient_cat ) then
       
       TryNextMethod( );
       
     fi;
     
-    C := DefiningCategory( cat );
+    H := HomFunctor( collection );
     
-    G := HomFunctorOnIndecProjectiveObjects( collection );
+    projs := FullSubcategoryGeneratedByProjectiveObjects( ambient_cat );
     
-    add_G := ExtendFunctorToAdditiveClosureOfSource( G );
+    H := RestrictFunctorToFullSubcategoryOfSource( H, projs );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
+    H!.Name := "Hom(T,-) functor on projective objects";
     
-    can_add_G := PreCompose( can, add_G );
+    return H;
     
-    projs := AsCapCategory( Source( can_add_G ) );
-    
-    reps := AsCapCategory( Range( can_add_G ) );
-    
-    name := "Hom(T,-) functor on projective objects";
-    
-    R := CapFunctor( name, projs, reps );
-    
-    AddObjectFunction( R, FunctorObjectOperation( can_add_G ) );
-    
-    AddMorphismFunction( R, FunctorMorphismOperation( can_add_G ) );
-    
-    return R;
-
 end );
 
-
-###############################################
+########################################################
 #
-# if the collection is defined by subcategory
-# which lives in some homotopy category
-# of some additive closure category
+# If the collection lives in some homotopy categpry
 #
-###############################################
+########################################################
 
 ##
-InstallMethod( HomFunctorOnAdditiveClosure,
+InstallMethod( HomFunctorOnDefiningCategory,
           [ IsExceptionalCollection ],
   function( collection )
-    local H, ambient_cat, C, chains_C, indec_C, reps, cell_func, r, name, F;
+    local H, Ho_C, C, Ch_C, B, reps, cell_func, name, HH;
     
     H := HomFunctor( collection );
     
-    ambient_cat := AsCapCategory( Source( H ) );
+    Ho_C := AmbientCategory( collection );
     
-    if not IsHomotopyCategory( ambient_cat ) then
+    if not IsHomotopyCategory( Ho_C ) then
       
       TryNextMethod( );
       
     fi;
      
-    C := DefiningCategory( ambient_cat );
+    C := DefiningCategory( Ho_C );
     
     if not IsAdditiveClosureCategory( C ) then
       
@@ -421,16 +387,16 @@ InstallMethod( HomFunctorOnAdditiveClosure,
       
     fi;
     
-    chains_C := UnderlyingCategory( ambient_cat );
+    Ch_C := UnderlyingCategory( Ho_C );
     
-    indec_C := UnderlyingCategory( C );
+    B := UnderlyingCategory( C );
     
     reps := AsCapCategory( Range( H ) );
     
     H := PreCompose( [
-                      InclusionFunctorInAdditiveClosure( indec_C ),
+                      InclusionFunctorInAdditiveClosure( B ),
                       StalkChainFunctor( C, 0 ),
-                      ProjectionFunctor( ambient_cat ),
+                      ProjectionFunctor( Ho_C ),
                       H
                      ] );
     
@@ -438,9 +404,43 @@ InstallMethod( HomFunctorOnAdditiveClosure,
     
     name := "Hom(T,-) functor";
     
-    F := FunctorFromLinearCategoryByTwoFunctions( name, indec_C, reps, cell_func, cell_func );
+    HH := FunctorFromLinearCategoryByTwoFunctions( name, B, reps, cell_func, cell_func );
     
-    return ExtendFunctorToAdditiveClosureOfSource( F );
+    return ExtendFunctorToAdditiveClosureOfSource( HH );
    
+end );
+
+##
+InstallMethod( HomFunctorOnDefiningCategory,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local H, Ho_C, C, I;
+    
+    H := HomFunctor( collection );
+    
+    Ho_C := AmbientCategory( collection );
+    
+    if not IsHomotopyCategory( Ho_C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+     
+    C := DefiningCategory( Ho_C );
+    
+    if IsAdditiveClosureCategory( C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    I := InclusionFunctorInHomotopyCategory( C );
+    
+    H := PreCompose( I, H );
+    
+    H!.Name := "Hom(T,-) functor";
+    
+    return H;
+    
 end );
 
