@@ -64,58 +64,7 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
 end );
 
-##
-InstallMethod( TensorFunctor,
-    [ IsExceptionalCollection ],
-    
-  function( collection )
-    local TP, reps, C, chains_reps, homotopy_reps, T, r, name, F;
-    
-    Info( InfoWarning, 1, "This method TensorFunctor on collection defined by full subcategory of a homotopy category still needs a mathematical proof!" );
-    
-    TP := TensorFunctorOnProjectiveObjects( collection );
-    
-    reps := AmbientCategory( AsCapCategory( Source( TP ) ) );
-    
-    C := AsCapCategory( Range( TP ) );
-       
-    if not IsHomotopyCategory( C ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    chains_reps := ChainComplexCategory( reps );
-    
-    homotopy_reps := HomotopyCategory( reps );
-    
-    T := PreCompose(
-                  LocalizationFunctorByProjectiveObjects( homotopy_reps ),
-                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T to homotopy categories" )
-                );
-    
-    name := "- ⊗_{End T} T functor on quiver representations";
- 
-    F := CapFunctor( name, reps, C );
-    
-    AddObjectFunction( F,
-      function( r )
-        
-        return Convolution( UnderlyingCell( T( IdentityMorphism ( r )/ chains_reps / homotopy_reps ) ) );
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( source, alpha, range )
-        
-        return Convolution( UnderlyingCell( T( IdentityMorphism ( alpha )/ chains_reps / homotopy_reps ) ) );
-        
-    end );
-    
-    return F;
-    
-end );
-
+## In case the ambient category of the collection is abelian
 ##
 InstallMethod( TensorFunctor,
     [ IsExceptionalCollection ],
@@ -125,7 +74,7 @@ InstallMethod( TensorFunctor,
     
     full := DefiningFullSubcategory( collection );
     
-    cat := AmbientCategory( full );
+    cat := AmbientCategory( collection );
     
     if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat ) ) then
       
@@ -190,4 +139,43 @@ InstallMethod( TensorFunctor,
     return F;
     
 end );
+
+
+## In case the ambient category of the collection is homotopy category
+##
+InstallMethod( TensorFunctor,
+    [ IsExceptionalCollection ],
+    
+  function( collection )
+    local ambient_cat, A, D, Ho_D, T;
+    
+    ambient_cat := AmbientCategory( collection );
+    
+    if HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat) then
+      
+      TryNextMethod( );
+      
+    fi;
+   
+    A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    
+    A := OppositeAlgebra( A );
+    
+    D := CategoryOfQuiverRepresentations( A );
+    
+    Ho_D := HomotopyCategory( D );
+    
+    T := TensorFunctorOnProjectiveObjects( collection );
+    
+    T := PreCompose(
+                  LocalizationFunctorByProjectiveObjects( Ho_D ),
+                  ExtendFunctorToHomotopyCategories( T )
+                );
+    
+    T!.Name := "- ⊗_{End T} T functor";
+    
+    return T;
+    
+end );
+
 
