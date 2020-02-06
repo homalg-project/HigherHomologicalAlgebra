@@ -964,3 +964,77 @@ InstallMethod( ConvolutionFunctor,
     
 end );
 
+##
+BindGlobal( "ReplacementFunctorOnIndecProjectiveObjects",
+  function( collection )
+    local full, ambient_cat, Ho_ambient_cat, C, B, inc_1, inc_2, Inc, HP, HH, name_for_functor,
+            TP, D, Ho_D, TT, Conv, Rep, cell_func, name;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    Ho_ambient_cat := HomotopyCategory( ambient_cat );
+    
+    if not IsHomotopyCategory( ambient_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    C := DefiningCategory( ambient_cat );
+    
+    if not IsAdditiveClosureCategory( C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    B := UnderlyingCategory( C );
+    
+    if not IsQuiverRepresentationCategory( AmbientCategory( B ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    inc_1 := InclusionFunctorInAdditiveClosure( B );
+    
+    inc_2 := InclusionFunctorInHomotopyCategory( C );
+    
+    Inc := PreCompose( inc_1, inc_2 );
+    
+    HP := HomFunctorOnAdditiveClosure( collection );
+    
+    HH := ExtendFunctorToHomotopyCategories( HP
+            : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );
+    
+    TP := TensorFunctorOnProjectiveObjects( collection );
+    
+    D := AsCapCategory( Range( HP ) );
+    
+    Ho_D := HomotopyCategory( D );
+    
+    TT := PreCompose(
+                [
+                  LocalizationFunctorByProjectiveObjects( Ho_D ),
+                  ExtendFunctorToHomotopyCategories( TP
+                    : name_for_functor :=
+                      "Extension of - ⊗_{End T} T functor to homotopy categories" )
+                ] );
+    
+    Conv := ConvolutionFunctor( collection );
+    
+    Rep := PreCompose( [ Inc, HH, TT, Conv ] );
+    
+    cell_func := c -> ApplyFunctor( Rep, c );
+    
+    name := "Replacement functor on indecomposable projective objects in terms of exceptional collection";
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, B, ambient_cat, cell_func, cell_func );
+
+end );
+
+
+
+
