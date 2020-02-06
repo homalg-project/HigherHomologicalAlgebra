@@ -34,7 +34,7 @@ DeactivateCachingForCertainOperations( algebroid, operations_to_deactivate );
 iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
 iso := ExtendFunctorToAdditiveClosures( iso );
 iso := ExtendFunctorToHomotopyCategories( iso );
-HA := HomFunctorOnAdditiveClosure( collection );
+HA := HomFunctorOnDefiningCategory( collection );
 HH := ExtendFunctorToHomotopyCategories( HA );
 
 D := AsCapCategory( Range( HA ) );
@@ -46,9 +46,13 @@ Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( D )
 HH := PreCompose( [ HH, Loc, iso ] );
 
 TT := IsomorphismFromAlgebroid( collection );
-TT := PreCompose( TT, InclusionFunctor( DefiningFullSubcategory( collection ) ) );
-TT := ExtendFunctorToAdditiveClosureOfSource( TT );
+TT := ExtendFunctorToAdditiveClosures( TT );
 TT := ExtendFunctorToHomotopyCategories( TT );
+
+Conv := ConvolutionFunctor( collection );
+
+# replacement functor in terms of the exceptional collection
+Rep := PreCompose( [ HH, TT, Conv ] );
 
 # to embedd in some category with homologies
 
@@ -70,8 +74,8 @@ a := AsGradedLeftPresentation( a, [ 0, 2, 2, 1, 2, 0 ] );
 # a := TwistedGradedFreeModule( S, -4 );
 
 a := BB( a );
-conv_a := Convolution( TT( HH( a ) ) );
+rep_a := Rep( a );
 
 a := inc( a );
-conv_a := inc( conv_a );
+rep_a := inc( rep_a );
 

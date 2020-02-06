@@ -1,50 +1,30 @@
-LoadPackage( "DerivedCategories" );
-LoadPackage( "LinearAlgebraForCAP" );
-
-field := HomalgFieldOfRationals( );
-SET_GLOBAL_FIELD_FOR_QPA( field );
-SetInfoLevel( InfoDerivedCategories, 3 );
+ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
+######################### start example #################################
 
 A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 4, 5, 2 );
 
 C := CategoryOfQuiverRepresentations( A );
-C_injs := FullSubcategoryGeneratedByInjectiveObjects( C );
-chains_C := ChainComplexCategory( C );
-homotopy_C := HomotopyCategory( C );
-derived_C := DerivedCategory( C );
+Ho_C := HomotopyCategory( C );
+Ch_C := UnderlyingCategory( Ho_C );
+Der_C := DerivedCategory( C );
 
 collection := CreateExceptionalCollection( IndecProjectiveObjects( C ) );
 
-HH := HomFunctorByExceptionalCollection( collection );
+H := HomFunctor( collection );
+R_H := RightDerivedFunctor( H );
 HI := HomFunctorOnInjectiveObjects( collection );
-homotopy_HH := PreCompose( LocalizationFunctorByInjectiveObjects( homotopy_C ), ExtendFunctorToHomotopyCategories( HI ) );
+homotopy_H := PreCompose( LocalizationFunctorByInjectiveObjects( Ho_C ), ExtendFunctorToHomotopyCategories( HI ) );
 
+D := AsCapCategory( Range( H ) );
+Ho_D := HomotopyCategory( D );
 
-TT := TensorFunctorByExceptionalCollection( collection );
+T := TensorFunctor( collection );
+L_T := LeftDerivedFunctor( T );
 
-D := AsCapCategory( Source( TT ) );
-D_projs := FullSubcategoryGeneratedByProjectiveObjects( D );
-chains_D := ChainComplexCategory( D );
-homotopy_D := HomotopyCategory( D );
-derived_D := DerivedCategory( D );
+TP := TensorFunctorOnProjectiveObjects( collection );
+I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( DefiningFullSubcategory( collection ) ) );
+T := PreCompose( TP, I );
+homotopy_T := PreCompose( LocalizationFunctorByProjectiveObjects( Ho_D ), ExtendFunctorToHomotopyCategories( T ) );
 
-TP := RestrictionOfTensorFunctorByExceptionalCollectionToProjectiveObjects( collection );
-homotopy_TT := PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_D ), ExtendFunctorToHomotopyCategories( TP ) );
-
-ii := IndecInjectiveObjects( C );
-pp := IndecProjectiveObjects( D );
-
-b := RANDOM_CHAIN_COMPLEX( chains_C, -3, 3, 2 );
-ObjectsSupport( b );
-homotopy_HH_b := ApplyFunctor( homotopy_HH, b / homotopy_C );
-Display( homotopy_HH_b );
-homotopy_TT_homotopy_HH_b := ApplyFunctor( homotopy_TT, homotopy_HH_b );
-r := UnderlyingCell( homotopy_TT_homotopy_HH_b );
-ViewComplex( r );
-HomologyAt( b, 0 ); HomologyAt( r, 0 );
-HomologyAt( b, -1 ); HomologyAt( r, -1 );
-HomologyAt( b, -2 ); HomologyAt( r, -2 );
-HomologyAt( b, 0 ); HomologyAt( r, 0 );
-HomologyAt( b, 1 ); HomologyAt( r, 1 );
-HomologyAt( b, 2 ); HomologyAt( r, 2 );
+a := RANDOM_CHAIN_COMPLEX( Ch_C, -3, 3, 2 )/Ho_C/Der_C;
 

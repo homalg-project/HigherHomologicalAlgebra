@@ -29,22 +29,17 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
 
 
 ################# Hom #################################
-HH := HomFunctor( collection );
-HP := HomFunctorOnAdditiveClosure( collection );
-homotopy_HH := ExtendFunctorToHomotopyCategories( HP : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );
+H := HomFunctorOnDefiningCategory( collection );
+H := ExtendFunctorToHomotopyCategories( H : name_for_functor := "Extension of Hom(T,-) to homotopy categories" );
 ########################################################
 
-Ho_C := AsCapCategory( Source( HH ) );
+Ho_C := AsCapCategory( Source( H ) );
 Ch_C := UnderlyingCategory( Ho_C );
 C := DefiningCategory( Ho_C ); # or AsCapCategory( Source( HP ) );
 
 indec_C := UnderlyingCategory( C ); # caching for this is crisp
 DeactivateCachingForCertainOperations( indec_C, operations_to_deactivate );
 #ActivateCachingForCertainOperations( indec_C, operations_to_activate );
-
-D := AsCapCategory( Range( HH ) );
-Ho_D := HomotopyCategory( D );
-ch_D := UnderlyingCategory( Ho_D );
 
 ##########################################################
 inc := InclusionFunctor( indec_C );
@@ -56,32 +51,24 @@ inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension t
 
 
 ################### Tensor ###############################
-TP := TensorFunctorOnProjectiveObjects( collection );
-homotopy_TT := PreCompose(
-                  LocalizationFunctorByProjectiveObjects( Ho_D ),
-                  ExtendFunctorToHomotopyCategories( TP : name_for_functor := "Extension of - ⊗_{End T} T functor to homotopy categories" )
-                );
 
+T := TensorFunctor( collection );
 Conv := ConvolutionFunctor( collection );
 
-Inc := EmbeddingFunctorFromHomotopyCategory( collection );
 ##########################################################
 
-# this can be applied on objects and morphisms
-cell_func := cell -> PreCompose( [ homotopy_HH, homotopy_TT, Conv ] )( cell );
+# to compute replacement in terms of the collection
+Rep := PreCompose( [ H, T, Conv ] );
 
-b := RANDOM_CHAIN_COMPLEX( Ch_reps, -1, 2, 3 );
-b := ApplyFunctor( Loc, b/Ho_reps );
+b := Loc( RANDOM_CHAIN_COMPLEX( Ch_reps, -2, 2, 2 ) / Ho_reps );
 
 quit;
 
 b;
-conv_b := cell_func( b );
+rep_b := Rep( b );
 
 inc_b := inc( b );
-inc_conv_b := inc( conv_b );
+inc_rep_b := inc( rep_b );
 
-HomologySupport( inc_conv_b );
 HomologySupport( inc_b );
-
-
+HomologySupport( inc_rep_b );
