@@ -204,7 +204,7 @@ InstallMethod( \[\],
     
     if i > n then
       
-      Error( "There is only ", n, " objects in the collection!\n" );
+      Error( "There are only ", n, " objects in the collection!\n" );
       
     fi;
     
