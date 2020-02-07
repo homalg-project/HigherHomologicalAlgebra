@@ -134,4 +134,6 @@ DeclareAttribute( "ConvolutionFunctor", IsHomotopyCategory );
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
         [ IsCapFunctor, IsCapFullSubcategory ] );
 
+DeclareAttribute( "ImageOfFullyFaithfullFunctor", IsCapFunctor );
 
+DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
