@@ -965,7 +965,7 @@ InstallMethod( ConvolutionFunctor,
 end );
 
 ##
-BindGlobal( "ReplacementFunctorOnIndecProjectiveObjects",
+BindGlobal( "ReplacementFunctorOnBaseCategory",
   function( collection )
     local full, ambient_cat, Ho_ambient_cat, C, B, inc_1, inc_2, Inc, HP, HH, name_for_functor,
             TP, D, Ho_D, TT, Conv, Rep, cell_func, name;

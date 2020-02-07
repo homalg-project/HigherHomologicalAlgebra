@@ -172,7 +172,7 @@ end );
 
 #######################
 
-BindGlobal( "CounitOnIndecProjectiveObjects",
+BindGlobal( "CounitOnBaseCategory",
   function( collection )
     local full, ambient_cat, C, B, inc_1, inc_2, Inc, Rep, name, eta, H;
     
@@ -202,7 +202,7 @@ BindGlobal( "CounitOnIndecProjectiveObjects",
     
     Inc := PreCompose( inc_1, inc_2 );
     
-    Rep := ReplacementFunctorOnIndecProjectiveObjects( collection );
+    Rep := ReplacementFunctorOnBaseCategory( collection );
     
     H := HomFunctor( collection );
     
