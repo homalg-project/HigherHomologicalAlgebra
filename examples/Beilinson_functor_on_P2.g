@@ -60,7 +60,7 @@ Conv := ConvolutionFunctor( collection );
 # to compute replacement in terms of the collection
 Rep := PreCompose( [ H, T, Conv ] );
 
-b := Loc( RANDOM_CHAIN_COMPLEX( Ch_reps, -2, 2, 2 ) / Ho_reps );
+b := Loc( RANDOM_CHAIN_COMPLEX( Ch_reps, -1, 2, 2 ) / Ho_reps );
 
 quit;
 
