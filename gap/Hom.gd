@@ -53,4 +53,6 @@ DeclareAttribute( "HomFunctorOnProjectiveObjects",
 DeclareAttribute( "HomFunctorOnDefiningCategory",
         IsExceptionalCollection );
 
+DeclareAttribute( "HomFunctorOnBaseCategory",
+        IsExceptionalCollection );
 
