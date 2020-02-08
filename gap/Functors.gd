@@ -136,4 +136,7 @@ DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",
 
 DeclareAttribute( "ImageOfFullyFaithfullFunctor", IsCapFunctor );
 
+DeclareAttribute( "IsomorphismIntoImageOfFullyFaithfulFunctor", IsCapFunctor );
+
 DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
+

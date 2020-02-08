@@ -1043,6 +1043,7 @@ end );
 #
 ####################################
 
+##
 InstallMethod( ImageOfFullyFaithfullFunctor,
           [ IsCapFunctor ],
   function( I )
@@ -1069,6 +1070,37 @@ InstallMethod( ImageOfFullyFaithfullFunctor,
     
 end );
 
+##
+InstallMethod( IsomorphismIntoImageOfFullyFaithfulFunctor,
+          [ IsCapFunctor ],
+  function( I )
+    local C, D, r, name;
+    
+    C := AsCapCategory( Source( I ) );
+    
+    if not IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    D := ImageOfFullyFaithfullFunctor( I );
+    
+    r := RandomTextColor( Name( I ) );
+    
+    name := Concatenation( r[ 1 ], "Isomorphism functor into the image ( ", r[ 2 ],
+              Name( I ), r[ 1 ], " ) ", r[ 2 ]
+              );
+    
+    I := RestrictFunctorToFullSubcategoryOfRange( I, D );
+    
+    I!.Name := name;
+    
+    return I;
+    
+end );
+
+##
 InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
           [ IsCapFunctor ],
   function( I )
@@ -1083,7 +1115,7 @@ InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
     fi;
     
     D := ImageOfFullyFaithfullFunctor( I );
-
+    
     object_func := o -> C[ Position( SetOfKnownObjects( D ), o ) ];
     
     images_of_morphisms_D := [ [ ], [ ] ];
@@ -1131,8 +1163,12 @@ InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
     
     r := RandomTextColor( Name( I ) );
     
-    name := Concatenation( r[ 1 ], "Isomorphism functor from the image ( ", r[ 2 ], Name( I ), r[ 1 ], " ) ", r[ 2 ] );
+    name := Concatenation( r[ 1 ], "Isomorphism functor from the image ( ", r[ 2 ],
+              Name( I ), r[ 1 ], " ) ", r[ 2 ]
+              );
     
     return FunctorFromLinearCategoryByTwoFunctions( name, D, C, object_func, morphism_func );
     
 end );
+
+
