@@ -774,6 +774,12 @@ InstallMethod( Algebroid,
 );
 
 ##
+InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
+          [ IsExceptionalCollection ],
+  collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebraOfExceptionalCollection( collection ) ) )
+);
+
+##
 InstallMethod( HomotopyCategory,
           [ IsExceptionalCollection ],
   collection -> HomotopyCategory( AdditiveClosure( DefiningFullSubcategory( collection ) ) )

@@ -88,6 +88,13 @@ DeclareAttribute( "UnderlyingObjects", IsExceptionalCollection );
 DeclareAttribute( "AdditiveClosure", IsExceptionalCollection );
 
 #! @Description
+#!  Returns the category of right quiver representations over the opposite algebra of the endomorphism algebra
+#!  of the collection.
+#! @Arguments E
+#! @Returns an abelian category
+DeclareAttribute( "CategoryOfQuiverRepresentationsOverOppositeAlgebra", IsExceptionalCollection );
+
+#! @Description
 #!  Returns the homotopy category of the additive closure of <C>DefiningFullSubcategory</C>(<A>E</A>).
 #! @Arguments E
 #! @Returns a category
