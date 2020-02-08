@@ -50,7 +50,7 @@ InstallMethod( NaturalProjectionFromMappingCone,
     
 end );
 
-InstallMethodWithCache( MappingConeColift,
+InstallMethod( MappingConeColift,
           [ IsChainMorphism, IsChainMorphism ],
   function( phi, psi )
     local chains, H, maps;
@@ -97,7 +97,7 @@ InstallMethod( MappingConePseudoFunctorial,
     
 end );
 
-InstallMethodWithCache( MappingConeColift,
+InstallMethod( MappingConeColift,
           [ IsCochainMorphism, IsCochainMorphism ],
   function( phi, psi )
     local cochains, H, maps;
@@ -131,8 +131,6 @@ InstallMethod( MappingConePseudoFunctorial,
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
                 ] );
             end, 1 );
-    
-    #Error( ColiftInfos( NaturalInjectionInMappingCone( phi ), PreCompose( alpha_1, NaturalInjectionInMappingCone( psi ) ) ) );
     
     return ChainMorphism( cone_phi, cone_psi, maps );
     
