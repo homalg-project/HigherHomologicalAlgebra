@@ -44,7 +44,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
           
         fi;
         
-        d := List( d, m -> AsFullSubcategoryCell( indec_projs, Source( m ) ) );
+        d := List( d, m -> AsSubcategoryCell( indec_projs, Source( m ) ) );
         
         return AdditiveClosureObject( d, add_indec_projs ); 
       
@@ -79,7 +79,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdd
                 
         mat := List( d_source_cell, u -> List( d_range_cell, v -> PreCompose( [ u, alpha_cell, v ] ) ) );
         
-        mat := List( mat, row -> List( row, m -> AsFullSubcategoryCell( indec_projs, m ) ) );
+        mat := List( mat, row -> List( row, m -> AsSubcategoryCell( indec_projs, m ) ) );
         
         return AdditiveClosureMorphism( s, mat, r );
         
@@ -145,7 +145,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
           
         fi;
         
-        d := List( d, m -> AsFullSubcategoryCell( indec_injs, Range( m ) ) );
+        d := List( d, m -> AsSubcategoryCell( indec_injs, Range( m ) ) );
         
         return AdditiveClosureObject( d, add_indec_injs ); 
         
@@ -179,7 +179,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
                 
         mat := List( d_source_cell, u -> List( d_range_cell, v -> PreCompose( [ u, alpha_cell, v ] ) ) );
         
-        mat := List( mat, row -> List( row, m -> AsFullSubcategoryCell( indec_injs, m ) ) );
+        mat := List( mat, row -> List( row, m -> AsSubcategoryCell( indec_injs, m ) ) );
         
         return AdditiveClosureMorphism( s, mat, r );
         
@@ -249,7 +249,7 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
         
         p := projs[ PositionProperty( projs, p -> DimensionVector( p ) = List( aa, Size ) ) ];
         
-        return AsFullSubcategoryCell( full, p );
+        return AsSubcategoryCell( full, p );
         
       end );
       
@@ -266,7 +266,7 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
                 e,
                 UnderlyingCell( r ) );
                 
-        return AsFullSubcategoryCell( full, mor );
+        return AsSubcategoryCell( full, mor );
         
       end );
       
