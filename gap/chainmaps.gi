@@ -797,7 +797,7 @@ InstallMethod( AsChainOrCochainMorphismOverCapFullSubcategory,
     
     morphisms := Morphisms( phi );
     
-    morphisms := MapLazy( morphisms, m -> ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, m ), 1 );
+    morphisms := MapLazy( morphisms, m -> ValueGlobal( "AsSubcategoryCell" )( full_subcategory, m ), 1 );
     
     if IsChainMorphism( phi ) then
       

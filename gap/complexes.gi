@@ -1385,7 +1385,7 @@ InstallMethod( AsComplexOverCapFullSubcategory,
     
     diffs := MapLazy( diffs,
               diff -> 
-                ValueGlobal( "AsFullSubcategoryCell" )( full_subcategory, diff ), 1 );
+                ValueGlobal( "AsSubcategoryCell" )( full_subcategory, diff ), 1 );
     
     if IsChainComplex( C ) then
       
