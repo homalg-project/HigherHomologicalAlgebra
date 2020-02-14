@@ -73,7 +73,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     L := ShallowCopy( full!.Objects );
     
-    L := List( L, obj -> AsFullSubcategoryCell( full, obj ) );
+    L := List( L, obj -> AsSubcategoryCell( full, obj ) );
     
     if IsEmpty( L ) then
       
@@ -890,7 +890,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     projs := IndecProjectiveObjects( cat );
     
-    projs := List( projs, p -> AsFullSubcategoryCell( full_subcategory_by_projs, p ) );
+    projs := List( projs, p -> AsSubcategoryCell( full_subcategory_by_projs, p ) );
     
     r := RandomTextColor( Name( full_subcategory_by_projs ) );
     
@@ -970,7 +970,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     
     injs := IndecInjectiveObjects( cat );
     
-    injs := List( injs, p -> AsFullSubcategoryCell( full_subcategory_by_injs, p ) );
+    injs := List( injs, p -> AsSubcategoryCell( full_subcategory_by_injs, p ) );
     
     r := RandomTextColor( Name( full_subcategory_by_injs ) );
     
@@ -1105,7 +1105,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
           
           B := BasisOfExternalHom( UnderlyingCell( a ), UnderlyingCell( b ) );
           
-          return List( B, m -> AsFullSubcategoryCell( full, m ) );
+          return List( B, m -> AsSubcategoryCell( full, m ) );
           
       end );
       
@@ -1186,7 +1186,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
           
           B := BasisOfExternalHom( UnderlyingCell( a ), UnderlyingCell( b ) );
           
-          return List( B, m -> AsFullSubcategoryCell( full, m ) );
+          return List( B, m -> AsSubcategoryCell( full, m ) );
           
       end );
       
