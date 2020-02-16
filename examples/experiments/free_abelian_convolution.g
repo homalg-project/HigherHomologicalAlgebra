@@ -1,4 +1,5 @@
 LoadPackage( "Bialgebroids");
+LoadPackage( "DerivedCategories" );
 
 create_vertrex_labels :=
   function( left_bound, horizontal_distance, below_bound, vertical_distance )
@@ -168,7 +169,6 @@ quiver_algebra :=
   
 end;
 
-
 ############################### start #############################################
 
 field := HomalgFieldOfRationals( );
@@ -183,12 +183,20 @@ Aoid := Algebroid( A );;
 SetIsProjective( DistinguishedObjectOfHomomorphismStructure( Aoid ), true );;
 add_Aoid := AdditiveClosure( Aoid );;
 adelman := AdelmanCategory( add_Aoid );;
+Ch_adelman := ChainComplexCategory( adelman );
+Ho_adelman := HomotopyCategory( adelman );
+
+##
 ob := SetOfObjects( Aoid );
 for o in ob do
   s := LabelAsString( UnderlyingVertex( o ) );
   s := ReplacedString( s, "-", "m" );
   BindGlobal( s, o/add_Aoid/adelman );
 od;
+
+#2x0;
+
+##
 gm := SetOfGeneratingMorphisms( Aoid );;
 for m in gm do
   s := LabelAsString( Paths( Representative( UnderlyingQuiverAlgebraElement( m ) ) )[ 1 ] );
@@ -196,10 +204,48 @@ for m in gm do
   BindGlobal( s, m/add_Aoid/adelman );
 od;
 
-m2x5;
-2x0;
+#m2x5;
 
-Ch_adelman := ChainComplexCategory( adelman );
-Ho_adelman := HomotopyCategory( adelman );
+##
+for i in [ below_bound .. below_bound + vertical_distance - 1 ] do
+  current_diffs := [ ];
+  for j in [ left_bound + 1 .. left_bound + horizontal_distance - 1 ] do
+    s := Concatenation( "d_", String( j ), "x", String( i ), "_0" );
+    s := ReplacedString( s, "-", "m" );
+    Add( current_diffs, ValueGlobal( s ) );
+  od;
+  s := Concatenation( "C_", String( i ) );
+  BindGlobal( s, ChainComplex( current_diffs, left_bound + 1 ) );
+od;
 
+#C_0;
 
+##
+for i in [ below_bound + 1 .. below_bound + vertical_distance - 1 ] do
+  current_maps := [ ];
+  for j in [ left_bound .. left_bound + horizontal_distance - 1 ] do
+    s := Concatenation( "d_", String( j ), "x", String( i ), "_1" );
+    s := ReplacedString( s, "-", "m" );
+    if ( i + j ) mod 2 = 0 then
+      Add( current_maps, ValueGlobal( s ) );
+    else
+      Add( current_maps, -ValueGlobal( s ) );
+    fi;
+  od;
+  s := Concatenation( "alpha_", String( i ) );
+  BindGlobal( s, ChainMorphism(
+                    ValueGlobal( Concatenation( "C_", String( i ) ) ),
+                    ValueGlobal( Concatenation( "C_", String( i - 1 ) ) ),
+                    current_maps, left_bound
+                              ) / Ho_adelman
+                    );
+od;
+
+#alpha_1
+
+alphas := List( [ below_bound + 1 .. below_bound + vertical_distance - 1 ],
+            i -> ValueGlobal( Concatenation( "alpha_", String( i ) ) )
+          );
+
+C := ChainComplex( alphas, below_bound + 1 );
+conv_C := Convolution( C );
