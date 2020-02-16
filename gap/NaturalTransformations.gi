@@ -175,7 +175,7 @@ end );
 BindGlobal( "CounitOnBaseCategory",
   function( collection )
     local full, ambient_cat, C, B, inc_1, inc_2, Inc, Rep, name, eta, H;
-    
+    Error( "not finished" );
     full := DefiningFullSubcategory( collection );
     
     ambient_cat := AmbientCategory( full );
@@ -202,8 +202,8 @@ BindGlobal( "CounitOnBaseCategory",
     
     Inc := PreCompose( inc_1, inc_2 );
     
-    Rep := ReplacementFunctorOnBaseCategory( collection );
-    
+    #Rep := ReplacementFunctorOnBaseCategory( collection );
+    Rep := 0;
     H := HomFunctor( collection );
     
     name := "Counit natural transformation";
