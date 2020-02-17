@@ -1,6 +1,10 @@
 
+
+DeclareCategory( "IsHomotopyCategoryCell",
+                 IsStableCategoryCell );
+
 DeclareCategory( "IsHomotopyCategoryObject",
-                 IsStableCategoryObject );
+                 IsHomotopyCategoryCell and IsStableCategoryObject );
 
 DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsCapCategoryObject ] );

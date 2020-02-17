@@ -71,7 +71,7 @@ InstallMethod( HomotopyCategory,
     
     r := RandomTextColor( Name( cat ) );
     
-    name := Concatenation( r[ 1 ], "Homotopy category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
+    name := Concatenation( r[ 1 ], "Homotopy category ( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
    
     to_be_finalized := ValueOption( "FinalizeCategory" );
     

@@ -1,7 +1,7 @@
 
 
 DeclareCategory( "IsHomotopyCategoryMorphism",
-                 IsStableCategoryMorphism );
+                 IsHomotopyCategoryCell and IsStableCategoryMorphism );
 
 
 DeclareOperation( "HomotopyCategoryMorphism",
