@@ -1,17 +1,21 @@
 LoadPackage( "Bialgebroids");
 LoadPackage( "DerivedCategories" );
 
+##
+SetInfoLevel( InfoHomotopyCategories, 3 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
+
 create_vertrex_labels :=
   function( left_bound, horizontal_distance, below_bound, vertical_distance )
     
-    return Cartesian( 
+    return Cartesian(
                 [ left_bound .. left_bound + horizontal_distance - 1 ],
                 Reversed( [ below_bound .. below_bound + vertical_distance - 1 ] )
               );
 end;
 
 create_differentials_of_degree :=
-  function( vertex_labels, degree )
+  function( name, vertex_labels, degree )
     local labels, sources, ranges, V, U, p, i;
     
     if degree < 0 then
@@ -29,7 +33,7 @@ create_differentials_of_degree :=
       
       if p <> fail then
         
-        Add( labels, Concatenation( "d_", String( V[ 1 ] ), "x", String( V[ 2 ] ), "_", String( degree ) ) );
+        Add( labels, Concatenation( name, "_", String( V[ 1 ] ), "x", String( V[ 2 ] ), "_", String( degree ) ) );
         
         Add( sources, i );
         
@@ -59,7 +63,7 @@ create_quiver :=
     
     while true do
       
-      diffs := create_differentials_of_degree( vertex_labels, degree );
+      diffs := create_differentials_of_degree( "d", vertex_labels, degree );
       
       if IsEmpty( diffs[ 1 ] ) then
         
@@ -127,18 +131,18 @@ relation_by_vertex_of_given_degree :=
       
       b := Concatenation( "d_", String( U[ 1 ] ), "x", String( U[ 2 ] ), "_", String( N - degree ) );
       
-      e := e + A.(a) * A.(b);
+      e := e + A.( a ) * A.( b );
       
     od;
     
     return e;
-  
+    
 end;
 
 quiver_algebra :=
   function( field, left_bound, horizontal_distance, below_bound, vertical_distance )
     local quiver, A, N, vertices, relations, rel, V, i;
-     
+    
     quiver := create_quiver( left_bound, horizontal_distance, below_bound, vertical_distance );
     
     A := PathAlgebra( field, quiver );
@@ -166,7 +170,7 @@ quiver_algebra :=
     od;
     
     return A / relations;
-  
+    
 end;
 
 ############################### start #############################################
@@ -248,4 +252,7 @@ alphas := List( [ below_bound + 1 .. below_bound + vertical_distance - 1 ],
           );
 
 C := ChainComplex( alphas, below_bound + 1 );
+
+quit;
+
 conv_C := Convolution( C );
