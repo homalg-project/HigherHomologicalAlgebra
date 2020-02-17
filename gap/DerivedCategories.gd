@@ -15,9 +15,11 @@ DeclareCategory( "IsDerivedCategory", IsCapCategory );
 
 DeclareCategory( "IsRoof", IsObject );
 
-DeclareCategory( "IsDerivedCategoryObject", IsCapCategoryObject );
+DeclareCategory( "IsDerivedCategoryCell", IsCapCategoryCell );
 
-DeclareCategory( "IsDerivedCategoryMorphism", IsCapCategoryMorphism );
+DeclareCategory( "IsDerivedCategoryObject", IsCapCategoryObject and IsDerivedCategoryCell );
+
+DeclareCategory( "IsDerivedCategoryMorphism", IsCapCategoryMorphism and IsDerivedCategoryCell );
 
 DeclareOperation( "Roof", [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ] );
 
