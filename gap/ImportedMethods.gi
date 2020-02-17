@@ -118,6 +118,18 @@ InstallOtherMethod( HomologySupport,
 );
 
 ##
+InstallOtherMethod( ActiveLowerBound,
+          [ IsHomotopyCategoryCell ],
+    a -> ActiveLowerBound( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( ActiveUpperBound,
+          [ IsHomotopyCategoryCell ],
+    a -> ActiveUpperBound( UnderlyingCell( a ) )
+);
+
+##
 InstallOtherMethod( ViewComplex,
               [ IsHomotopyCategoryObject ],
   function( a )
