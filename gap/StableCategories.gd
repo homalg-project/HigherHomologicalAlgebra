@@ -9,12 +9,15 @@
 
 DeclareCategory( "IsStableCategory",
                  IsQuotientCategory );
-                 
+
+DeclareCategory( "IsStableCategoryCell",
+                 IsQuotientCategoryCell );
+
 DeclareCategory( "IsStableCategoryObject",
-                 IsQuotientCategoryObject );
+                 IsStableCategoryCell and IsQuotientCategoryObject );
 
 DeclareCategory( "IsStableCategoryMorphism",
-                 IsQuotientCategoryMorphism );
+                 IsStableCategoryCell and IsQuotientCategoryMorphism );
 ##
 ## Stable colifting structure
 
