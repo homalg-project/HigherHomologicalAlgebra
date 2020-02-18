@@ -1,6 +1,6 @@
 
 ##
-InstallMethod( HomologyFunctorOp, 
+InstallOtherMethod( HomologyFunctorOp,
                [ IsHomotopyCategory, IsInt ],
 function( homotopy_category, n )
   local cat, complex_cat, Hn, name, functor;
