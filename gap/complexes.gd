@@ -469,20 +469,18 @@ KeyDependentOperation( "ShiftUnsignedLazy", IsChainOrCochainComplex, IsInt, Retu
 
 #! @Description
 #! The command sets an upper bound $n$ to the chain (resp. cochain) complex $C$. 
-#! This means $C_{i\geq n}=0(C^{\geq n}=0)$. This upper bound will be called $\textit{active}$ upper bound of $C$. 
+#! This means $C_{i}=0(C^{i}=0)$ for $i>n$. This upper bound will be called $\textit{active}$ upper bound of $C$. 
 #! If $C$ already has an active upper bound $m$, then $m$ will be replaced by $n$ only if $n$ is better upper bound 
-#! than $m$, i.e., $n\leq m$. If $C$ has an active lower bound $l$
-#! and $n\leq l$ then the upper bound will set to equal $l$ and as a consequence $C$ will be set to zero.
+#! than $m$, i.e., $m>n$.
 #! @Arguments C, n
 #! @Returns Side effect
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainComplex, IsInt ] );
 
 #! @Description
 #! The command sets an lower bound $n$ to the chain (resp. cochain) complex $C$. 
-#! This means $C_{i\leq n}=0(C^{\leq n}=0)$. This lower bound will be called $\textit{active}$ lower bound of $C$. 
+#! This means $C_{i}=0(C^{i}=0)$ for $n>i$. This lower bound will be called $\textit{active}$ lower bound of $C$. 
 #! If $C$ already has an active lower bound $m$, then $m$ will be replaced by $n$ only if $n$ is better lower
-#! bound than $m$, i.e., $n\geq m$. If $C$ has an active upper bound $u$
-#! and $n\geq u$ then the lower bound will set to equal $u$ and as a consequence $C$ will be set to zero.
+#! bound than $m$, i.e., $n>m$.
 #! @Arguments C, n
 #! @Returns Side effect
 DeclareOperation( "SetLowerBound", [ IsChainOrCochainComplex, IsInt ] );

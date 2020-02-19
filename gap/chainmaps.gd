@@ -312,16 +312,16 @@ DeclareProperty( "IsNullHomotopic", IsCapCategoryMorphism );
 
 #!  @Description
 #!  The command sets an upper bound to the morphism $\phi$. An upper bound of $\phi$ is an integer $u$
-#!  with $\phi_{i\geq u}= 0$. The integer $u$ will be called **active** upper bound of $\phi$. If $\phi$ already has an
-#!  active upper bound, say $u^\prime$, then $u^\prime$ will be replaced by $u$ only if $u\leq u^\prime$.
+#!  with $\phi_{i}= 0$ for $i>n$. The integer $u$ will be called **active** upper bound of $\phi$. If $\phi$ already has an
+#!  active upper bound, say $u^\prime$, then $u^\prime$ will be replaced by $u$ only if $u^\prime>u$.
 #!  @Arguments phi, n
 #!  @Returns a side effect
 DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
 
 #!  @Description
 #!  The command sets an lower bound to the morphism $\phi$. A lower bound of $\phi$ is an integer $l$
-#!  with $\phi_{i\leq l}= 0$. The integer $l$ will be called **active** lower bound of $\phi$. If $\phi$ already has an
-#!  active lower bound, say $l^\prime$, then $l^\prime$ will be replaced by $l$ only if $l\geq l^\prime$.
+#!  with $\phi_{i}= 0$ for $l>i$. The integer $l$ will be called **active** lower bound of $\phi$. If $\phi$ already has an
+#!  active lower bound, say $l^\prime$, then $l^\prime$ will be replaced by $l$ only if $l>l^\prime$.
 #!  @Arguments phi, n
 #!  @Returns a side effect
 DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
