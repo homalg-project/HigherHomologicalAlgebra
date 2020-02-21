@@ -940,71 +940,71 @@ InstallMethod( EmbeddingFunctorFromHomotopyCategory,
   collection -> ExtendFunctorToHomotopyCategories( EmbeddingFunctorFromAdditiveClosure( collection ) )
 );
 
-###
-#InstallMethod( ConvolutionFunctor,
-#          [ IsExceptionalCollection ],
-#  function( collection )
-#    local I, Ho_C, conv;
-#    
-#    I := EquivalenceFunctorFromHomotopyCategory( collection );
-#    
-#    Ho_C := AsCapCategory( Range( I ) );
-#    
-#    conv := ConvolutionFunctor( Ho_C );
-#    
-#    conv := PreCompose( I, conv );
-#    
-#    conv!.Name := "Convolution functor";
-#    
-#    return conv;
-#    
-#end );
-#
-###
-#InstallMethod( ConvolutionFunctor,
-#          [ IsHomotopyCategory ],
-#  function( Ho_Ho_0_C )
-#    local Ho_0_C, Ho_C, Inc, name, conv;
-#    
-#    if not IsHomotopyCategory( Ho_Ho_0_C ) then
-#      
-#      Error( "The input should be a homotopy category!\n" );
-#      
-#    fi;
-#    
-#    Ho_0_C := DefiningCategory( Ho_Ho_0_C );
-#    
-#    if not IsCapFullSubcategory( Ho_0_C ) then
-#      
-#      TryNextMethod( );
-#      
-#    fi;
-#    
-#    Ho_C := AmbientCategory( Ho_0_C );
-#    
-#    if not IsHomotopyCategory( Ho_C ) then
-#      
-#      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
-#      
-#    fi;
-#    
-#    Inc := ExtendFunctorToHomotopyCategories( InclusionFunctor( Ho_0_C ) );
-#    
-#    name := "Convolution functor";
-#    
-#    conv := CapFunctor( name, Ho_Ho_0_C, Ho_C );
-#    
-#    AddObjectFunction( conv,
-#      a -> Convolution( ApplyFunctor( Inc, a ) )
-#    );
-#    
-#    AddMorphismFunction( conv,
-#      { s, alpha, r } -> Convolution( ApplyFunctor( Inc, alpha ) )
-#    );
-#   
-#    return conv;
-#    
-#end );
+##
+InstallMethod( ConvolutionFunctor,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local I, Ho_C, conv;
+    
+    I := EquivalenceFunctorFromHomotopyCategory( collection );
+    
+    Ho_C := AsCapCategory( Range( I ) );
+    
+    conv := ConvolutionFunctor( Ho_C );
+    
+    conv := PreCompose( I, conv );
+    
+    conv!.Name := "Convolution functor";
+    
+    return conv;
+    
+end );
+
+##
+InstallMethod( ConvolutionFunctor,
+          [ IsHomotopyCategory ],
+  function( Ho_Ho_0_C )
+    local Ho_0_C, Ho_C, Inc, name, conv;
+    
+    if not IsHomotopyCategory( Ho_Ho_0_C ) then
+      
+      Error( "The input should be a homotopy category!\n" );
+      
+    fi;
+    
+    Ho_0_C := DefiningCategory( Ho_Ho_0_C );
+    
+    if not IsCapFullSubcategory( Ho_0_C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    Ho_C := AmbientCategory( Ho_0_C );
+    
+    if not IsHomotopyCategory( Ho_C ) then
+      
+      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
+      
+    fi;
+    
+    Inc := ExtendFunctorToHomotopyCategories( InclusionFunctor( Ho_0_C ) );
+    
+    name := "Convolution functor";
+    
+    conv := CapFunctor( name, Ho_Ho_0_C, Ho_C );
+    
+    AddObjectFunction( conv,
+      a -> Convolution( ApplyFunctor( Inc, a ) )
+    );
+    
+    AddMorphismFunction( conv,
+      { s, alpha, r } -> Convolution( ApplyFunctor( Inc, alpha ) )
+    );
+   
+    return conv;
+    
+end );
 
 ####################################
 #
