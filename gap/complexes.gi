@@ -1029,6 +1029,12 @@ BindGlobal( "PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
     local im, inc, pi, cyc;
     
+    if not IsPackageMarkedForLoading( "GeneralizedMorphismsForCAP", ">= 2019.01.16" ) then
+      
+      Error( "The package GeneralizedMorphismsForCAP is needed for this operation!" );
+      
+    fi;
+    
     im := BoundariesAt( C, i );
     
     inc := KernelLift( C^i, im );
@@ -1048,7 +1054,7 @@ BindGlobal( "PROJECTION_ONTO_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
         
       end ) );
       
-    return GeneralizedMorphismBySpan( cyc, pi );
+    return ValueGlobal( "GeneralizedMorphismBySpan" )( cyc, pi );
     
 end );
 
@@ -1057,6 +1063,12 @@ BindGlobal( "INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
   function( C, i )
     local im, inc, pi, cyc;
     
+    if not IsPackageMarkedForLoading( "GeneralizedMorphismsForCAP", ">= 2019.01.16" ) then
+      
+      Error( "The package GeneralizedMorphismsForCAP is needed for this operation!" );
+      
+    fi;
+   
     im := BoundariesAt( C, i );
     
     inc := KernelLift( C^i, im );
@@ -1076,7 +1088,7 @@ BindGlobal( "INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX",
         
       end ) );
       
-    return GeneralizedMorphismBySpan( pi, cyc );
+    return ValueGlobal( "GeneralizedMorphismBySpan" )( pi, cyc );
     
 end );
 
