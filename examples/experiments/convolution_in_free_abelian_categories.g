@@ -103,7 +103,7 @@ create_quiver :=
       
       maps := create_maps_of_degree( vertex_labels, degree );
       
-      if IsEmpty( maps[ 1 ] ) then
+      if IsEmpty( maps[ 1 ] ) and degree > 0 then
         
         break;
         
@@ -125,7 +125,7 @@ create_quiver :=
       
       diffs := create_differentials_of_degree( "d", vertex_labels, degree );
       
-      if IsEmpty( diffs[ 1 ] ) then
+      if IsEmpty( diffs[ 1 ] ) and degree > 0 then
         
         break;
         
@@ -147,7 +147,7 @@ create_quiver :=
       
       diffs := create_differentials_of_degree( "c", vertex_labels, degree );
       
-      if IsEmpty( diffs[ 1 ] ) then
+      if IsEmpty( diffs[ 1 ] ) and degree > 0 then
         
         break;
         
@@ -355,10 +355,10 @@ end;
 
 field := HomalgFieldOfRationals( );
 
-horizontal_distance := 7;
-vertical_distance := 7;
-below_bound := -3;
-left_bound := -3;
+horizontal_distance := 6;
+vertical_distance := 6;
+below_bound := 0;
+left_bound := 0;
 
 A := quiver_algebra( field, left_bound, horizontal_distance, below_bound, vertical_distance );;
 Aoid := Algebroid( A );;
@@ -400,7 +400,11 @@ for i in [ below_bound .. below_bound + vertical_distance - 1 ] do
     Add( current_diffs, ValueGlobal( s ) );
   od;
   s := Concatenation( "C_", String( i ) );
-  BindGlobal( s, ChainComplex( current_diffs, left_bound + 1 ) );
+  if not IsEmpty( current_diffs ) then
+    BindGlobal( s, ChainComplex( current_diffs, left_bound + 1 ) );
+  else
+    BindGlobal( s, StalkChainComplex( ValueGlobal( Concatenation( "P_", String( below_bound ), "x", String( i ) ) ), below_bound ) );
+  fi;
 od;
 
 #C_0;
@@ -441,7 +445,11 @@ for i in [ below_bound .. below_bound + vertical_distance - 1 ] do
     Add( current_diffs, ValueGlobal( s ) );
   od;
   s := Concatenation( "B_", String( i ) );
-  BindGlobal( s, ChainComplex( current_diffs, left_bound + 1 ) );
+  if not IsEmpty( current_diffs ) then
+    BindGlobal( s, ChainComplex( current_diffs, left_bound + 1 ) );
+  else
+    BindGlobal( s, StalkChainComplex( ValueGlobal( Concatenation( "Q_", String( below_bound ), "x", String( i ) ) ), below_bound ) );
+  fi;
 od;
 
 ##
