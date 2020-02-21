@@ -27,26 +27,53 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
                                           );
 
 indec_C := UnderlyingCategory( DefiningCategory( AmbientCategory( collection ) ) );
+DeactivateCachingForCertainOperations( indec_C, operations_to_deactivate );
 
-inc := InclusionFunctor( indec_C );
-inc := ExtendFunctorToAdditiveClosureOfSource( inc );
-inc := ExtendFunctorToHomotopyCategories( inc : name_for_functor := "Extension the inclusion functor to homotopy categories" );
-# embedd in a category where homology makes sence.
+D := CategoryOfQuiverRepresentationsOverOppositeAlgebra( collection );
+Ch_D := ChainComplexCategory( D );
+Ho_D := HomotopyCategory( D );
 
-
-Rep := ReplacementFunctor( collection );
+L := LocalizationFunctorByProjectiveObjects( HomotopyCategory( D ) );
+T := ExtendFunctorToHomotopyCategories( TensorFunctorOnProjectiveObjects( collection ) );
 Conv := ConvolutionFunctor( collection );
 
-b := Loc( RANDOM_CHAIN_COMPLEX( Ch_reps, -1, 2, 2 ) / Ho_reps );
+equivalence := PreCompose( [ L, T, Conv ] );
 
-quit;
-
-b;
-rep_b := Rep( b );
-conv_b := Conv( rep_b );
-
-inc_b := inc( b );
-inc_conv_b := inc( conv_b );
-
-HomologySupport( inc_b );
-HomologySupport( inc_conv_b );
+while true do
+  
+  while true do
+    a := RANDOM_CHAIN_COMPLEX( Ch_D, -1, 2, 1 ) / Ho_D;
+    if not IsZero( a ) then
+      break;
+    fi;
+  od;
+  
+  while true do
+    b := RANDOM_CHAIN_COMPLEX( Ch_D, -2, 1, 1 ) / Ho_D;
+    hom_a_b := BasisOfExternalHom( a, b );
+    if not IsEmpty( hom_a_b ) then
+      break;
+    fi;
+  od;
+  
+  while true do
+    c := RANDOM_CHAIN_COMPLEX( Ch_D, -2, 1, 1 ) / Ho_D;
+    hom_b_c := BasisOfExternalHom( b, c );
+    hom_a_c := BasisOfExternalHom( a, c );
+    if not IsEmpty( hom_a_c ) and not IsEmpty( hom_b_c ) then
+      break; 
+    fi;
+  od;
+  
+  for i in [ 1 .. 10 ] do
+    alpha := List( [ 1 .. Size( hom_a_b ) ], i -> Random( [ -1, 0, 1 ] ) ) * hom_a_b;
+    beta :=  List( [ 1 .. Size( hom_a_b ) ], i -> Random( [ -1, 0, 1 ] ) ) * hom_b_c;
+    bool := CheckFunctoriality( equivalence, alpha, beta );
+    if bool = false then
+      Error( "Counter example has been found!" );
+    else
+      Print( "\n\n\n\nIT SEEMS FUNCTORIAL!!\n\n\n" );
+    fi;
+  od;
+  
+od;
