@@ -730,3 +730,19 @@ InstallMethod( Display,
     
 end );
 
+##
+InstallMethod( _WeakKernelEmbedding,
+          [ IsCapCategoryMorphism ],
+  function( alpha )
+    local cat;
+    
+    cat := CapCategory( alpha );
+    
+    if CanCompute( cat, "KernelEmbedding" ) then
+      return KernelEmbedding( alpha );
+    else
+      TryNextMethod( );
+    fi;
+  
+end, 5000 );
+

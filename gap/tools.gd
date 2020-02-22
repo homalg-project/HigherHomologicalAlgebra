@@ -30,3 +30,5 @@ DeclareGlobalFunction( "CreateNameWithColorsForFunctor" );
 
 DeclareGlobalFunction( "CurrentCaching" );
 
+DeclareOperation( "_WeakKernelEmbedding", [ IsCapCategoryMorphism ] );
+
