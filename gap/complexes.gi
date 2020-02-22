@@ -1504,7 +1504,7 @@ BindGlobal( "RandomChainComplex",
         
         for k in [ 1 .. 5 ] do
           
-          j := RandomMorphismWithFixedRange( Source( i ), c + Random( [ 0 .. 5 ] ) );
+          j := RandomMorphismWithFixedRange( Source( i ), c + Random( [ 0, 1 ] ) );
         
           map := PreCompose( j, i );
           
