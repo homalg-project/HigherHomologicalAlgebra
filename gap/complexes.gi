@@ -1482,52 +1482,50 @@ InstallMethod( IsWellDefined,
 end );
 
 ##
-BindGlobal( "RANDOM_CHAIN_COMPLEX",
+BindGlobal( "RandomChainComplex",
   function( chains, m, n, c )
-    local cat, f, L, g, i, stop;
+    local cat, diffs, o, map, i, j;
     
     cat := UnderlyingCategory( chains );
     
-    if n - m < 2 then
-      
-      Error( "wrong input" );
-      
-    elif n - m = 2 then
+    diffs := [ ];
     
-      return StalkChainComplex( RandomObject( cat, c ), m + 1 );
-      
-    else
-      
-      stop := false;
-      
-      while not stop do
-        
-        f := RandomMorphism( cat, c );
-        
-        if not IsEpimorphism( f ) then
-          
-          stop := true;
-          
-        fi;
-        
-      od;
-      
-      L := [ f ];
-      
-      for i in [ 1 .. n - m - 3 ] do
-        
-        g := PreCompose(
-              CokernelProjection( L[ 1 ] ),
-                RandomMorphismWithFixedSource( CokernelObject( L[1] ), c ) );
-                
-        Add( L, g, 1 );
-        
-      od;
-      
-      return ChainComplex( L, m + 2 );
-      
-    fi;
+    o := RandomObject( cat, c );
     
+    map := UniversalMorphismIntoZeroObject( o );
+    
+    for i in [ m .. n ] do
+      
+      i := _WeakKernelEmbedding( map );
+      
+      if not IsZeroForMorphisms( i ) then
+        
+        for k in [ 1 .. 5 ] do
+          
+          j := RandomMorphismWithFixedRange( Source( i ), c + Random( [ 0 .. 5 ] ) );
+        
+          map := PreCompose( j, i );
+          
+          if not IsZeroForMorphisms( map ) then
+            
+            break;
+            
+          fi;
+          
+        od;
+      
+      else
+        
+        map := ZeroMorphism( RandomObject( cat, c ), Source( map ) );
+        
+      fi;
+      
+      Add( diffs, map );
+      
+    od;
+    
+    return ChainComplex( diffs, m + 1 );
+      
 end );
 
 ######################################
