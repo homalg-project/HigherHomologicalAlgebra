@@ -1486,7 +1486,7 @@ end );
 ##
 BindGlobal( "RandomChainComplex",
   function( chains, m, n, c )
-    local cat, diffs, o, map, i, j;
+    local cat, diffs, o, map, i, j, k;
     
     cat := UnderlyingCategory( chains );
     
