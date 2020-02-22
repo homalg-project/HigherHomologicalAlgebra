@@ -2,6 +2,8 @@
 
 ## Constructors with out any check
 
+######## for quiver reps ##################
+
 #
 BindGlobal( "LINEAR_QUIVER",
   function( d, field, m, n )
@@ -310,4 +312,35 @@ BindGlobal( "COMPUTE_COLIFT_IN_COMPLEXES_OF_QUIVER_REPS",
     
 end );
 
+####### for additive closures ########################
 
+InstallMethod( _WeakKernelEmbedding,
+          [ IsAdditiveClosureMorphism ],
+  function( alpha )
+    local cat, algebroid, I, Inc, reps_cat, J;
+    
+    cat := CapCategory( alpha );
+    
+    algebroid := UnderlyingCategory( cat );
+    
+    if not IsAlgebroid( algebroid ) then
+      TryNextMethod( );
+    fi;
+    
+    I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    Inc := InclusionFunctor( AsCapCategory( Range( I ) ) );
+    I := ExtendFunctorToAdditiveClosureOfSource( PreCompose( I, Inc ) );
+     
+    reps_cat := AsCapCategory( Range( I ) );
+    
+    alpha := I( alpha );
+    alpha := KernelEmbedding( alpha );
+    alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
+    
+    J := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    J := ExtendFunctorToAdditiveClosures( J );
+    J := PreCompose( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps_cat ), J );
+    
+    return J( alpha/ AsCapCategory( Source(J) ) );
+    
+end );
