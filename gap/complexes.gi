@@ -523,6 +523,7 @@ InstallMethod( Display,
         Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
         Display( C^i );
+        Print( "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
@@ -554,6 +555,7 @@ InstallMethod( Display,
         
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
         Display( C^i );
+        Print( "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
         Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
         Print( "\n" ); 
