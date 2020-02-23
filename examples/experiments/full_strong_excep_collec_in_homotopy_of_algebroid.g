@@ -1,5 +1,8 @@
 ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 ######################### start example #################################
+SetInfoLevel( InfoDerivedCategories, 0 );
+SetInfoLevel( InfoHomotopyCategories, 0 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 0 );
 
 S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
 graded_lp := GradedLeftPresentations( S );
@@ -34,60 +37,23 @@ I := ExtendFunctorToHomotopyCategories(
         ExtendFunctorToAdditiveClosures(
             IsomorphismFromAlgebroid( collection )
               ) );
+
 Conv := ConvolutionFunctor( collection );
 F := PreCompose( I, Conv );
 
-quit;
 
-l := -1;
-u := 1;
-i := 1;
-N := 1;
-
+N := 0;
 while true do
-  
-  while true do
-    a := RandomChainComplex( ch_add_algebroid, l, u, i ) / ho_add_algebroid;
-    if not IsZero( a ) then
-      Display( "a = " );
-      Display( a );
-      break;
-    fi;
-  od;
-  
-  while true do
-    b := RandomChainComplex( ch_add_algebroid, l, u, i ) / ho_add_algebroid;
-    hom_a_b := BasisOfExternalHom( a, b );
-    if not IsEmpty( hom_a_b ) then
-      Display( "b = " );
-      Display( b );
-      break;
-    fi;
-  od;
-  
-  while true do
-    c := RandomChainComplex( ch_add_algebroid, l, u, i ) / ho_add_algebroid;
-    hom_b_c := BasisOfExternalHom( b, c );
-    hom_a_c := BasisOfExternalHom( a, c );
-    if not IsEmpty( hom_a_c ) and not IsEmpty( hom_b_c ) then
-      Display( "c = " );
-      Display( c );
-      break; 
-    fi;
-  od;
-  
-  for i in [ 1 .. 10 ] do
-    alpha := List( [ 1 .. Size( hom_a_b ) ], i -> Random( [ -1, 0, 1 ] ) ) * hom_a_b;
-    beta :=  List( [ 1 .. Size( hom_a_b ) ], i -> Random( [ -1, 0, 1 ] ) ) * hom_b_c;
-    bool := CheckFunctoriality( F, alpha, beta );
-    if bool = false then
-      Error( "Counter example has been found!" );
-    else
-      Print( "N = ", N );
-      Print( "\nIT STILL SEEMS FUNCTORIAL!!\n" );
-      N := N + 1;
-    fi;
-    
-  od;
-  
+  a := RandomObject( ch_add_algebroid, [ -3, 3, 2 ] );
+  alpha := RandomMorphismWithFixedSource( a, [ [ -3, 3, 2 ], [ 3 ] ] );
+  #Display( alpha );
+  beta := RandomMorphismWithFixedSource( Range( alpha ), [ [ -3, 3, 2 ], [ 3 ] ] );
+  #Display( beta );
+  if CheckFunctoriality( F, alpha/ho_add_algebroid, beta/ho_add_algebroid ) then 
+    N := N + 1;
+    Print( "N = ", N );
+    Print( "  STILL SEEMS FUNCTORIAL!\n" );
+  else
+    Error( ":/ COUNTER EXAMPLE FOUND!\n" );
+  fi;
 od;
