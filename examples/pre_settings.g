@@ -37,6 +37,7 @@ DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
     IsHomotopyCategory,
     IsAdditiveClosureCategory,
     IsQuiverRepresentationCategory,
+    IsAlgebroid
     # or some function
   ];
 
