@@ -98,6 +98,7 @@ InstallMethod( RandomObjectByInteger,
     
 end );
 
+## L is list with one integer entry
 ##
 InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
           [ IsBoundedChainComplex, IsBoundedChainComplex, IsList ],
@@ -115,6 +116,15 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
 end );
 
 ##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
+          [ IsBoundedChainComplex, IsBoundedChainComplex, IsInt ],
+  function( C, D, n )
+    
+    return RandomMorphismWithFixedSourceAndRangeByList( C, D, [ n ] );
+    
+end );
+
+##
 InstallMethod( RandomMorphismWithFixedSourceByList,
           [ IsBoundedChainComplex, IsList ],
   function( C, L )
@@ -127,14 +137,60 @@ InstallMethod( RandomMorphismWithFixedSourceByList,
 end );
 
 ##
+InstallMethod( RandomMorphismWithFixedSourceByInteger,
+          [ IsBoundedChainComplex, IsInt ],
+  function( C, n )
+    
+    return RandomMorphismWithFixedSourceByList( C,
+            [ [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ], [ Int( n / 2 ) + 1 ] ]
+              );
+    
+end );
+
+##
 InstallMethod( RandomMorphismWithFixedRangeByList,
           [ IsBoundedChainComplex, IsList ],
   function( D, L )
     local C;
     
-    C := RandomObjectByList( CapCategory( C ), L[ 1 ] );
+    C := RandomObjectByList( CapCategory( D ), L[ 1 ] );
     
     return RandomMorphismWithFixedSourceAndRangeByList( C, D, L[ 2 ] );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedRangeByInteger,
+          [ IsBoundedChainComplex, IsInt ],
+  function( D, n )
+    
+    return RandomMorphismWithFixedRangeByList( D,
+            [ [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ], [ Int( n / 2 ) + 1 ] ]
+              );
+    
+end );
+
+##
+InstallMethod( RandomMorphismByList,
+          [ IsChainComplexCategory, IsList ],
+  function( chains, L )
+    local C;
+    
+    C := RandomObjectByList( chains, L[ 1 ] );
+    
+    return RandomMorphismWithFixedSourceByList( C, [ L[ 2 ], L[ 3 ] ] );
+    
+end );
+
+##
+InstallMethod( RandomMorphismByInteger,
+          [ IsChainComplexCategory, IsInt ],
+  function( chains, n )
+    local C;
+    
+    C := RandomObjectByInteger( chains, n );
+    
+    return RandomMorphismWithFixedSourceByInteger( C, n );
     
 end );
 
