@@ -75,10 +75,6 @@ InstallMethod( RandomObjectByList,
           
         fi;
         
-        if diffs <> [ ] and not IsZero( PreCompose( map, diffs[0] ) ) then
-          Error( "??" );
-        fi;
-        
         Add( diffs, map );
         
       od;
