@@ -18,3 +18,4 @@ ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" )
 ReadPackage( "DerivedCategories", "gap/Combinatoric.gi" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
 ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
+ReadPackage( "DerivedCategories", "gap/TempMethods.gi" );
