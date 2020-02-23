@@ -89,3 +89,52 @@ InstallMethod( RandomObjectByList,
     
 end );
 
+##
+InstallMethod( RandomObjectByInteger,
+          [ IsChainComplexCategory, IsInt ],
+  function( chains, n )
+    
+    return RandomObjectByList( chains, [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ] );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
+          [ IsBoundedChainComplex, IsBoundedChainComplex, IsList ],
+  function( C, D, L )
+    local b;
+    
+    b := BasisOfExternalHom( C, D );
+    
+    if IsEmpty( b ) then
+      return ZeroMorphism( C, D );
+    fi;
+    
+    return Sum( List( [ 0 .. AbsInt( L[ 1 ] ) ], i -> Random( b ) ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceByList,
+          [ IsBoundedChainComplex, IsList ],
+  function( C, L )
+    local D;
+    
+    D := RandomObjectByList( CapCategory( C ), L[ 1 ] );
+    
+    return RandomMorphismWithFixedSourceAndRangeByList( C, D, L[ 2 ] );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedRangeByList,
+          [ IsBoundedChainComplex, IsList ],
+  function( D, L )
+    local C;
+    
+    C := RandomObjectByList( CapCategory( C ), L[ 1 ] );
+    
+    return RandomMorphismWithFixedSourceAndRangeByList( C, D, L[ 2 ] );
+    
+end );
+
