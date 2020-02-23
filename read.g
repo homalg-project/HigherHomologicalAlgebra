@@ -13,4 +13,4 @@ ReadPackage( "ComplexesForCAP", "gap/naturaltransformations.gi" );
 ReadPackage( "ComplexesForCAP", "gap/resolutions.gi" );
 ReadPackage( "ComplexesForCAP", "gap/derivations.gi" );
 ReadPackage( "ComplexesForCAP", "gap/tools.gi" );
-
+ReadPackage( "ComplexesForCAP", "gap/randommethods.gi" );

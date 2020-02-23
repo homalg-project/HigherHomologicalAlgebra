@@ -1483,53 +1483,6 @@ InstallMethod( IsWellDefined,
     
 end );
 
-##
-BindGlobal( "RandomChainComplex",
-  function( chains, m, n, c )
-    local cat, diffs, o, map, i, j, k;
-    
-    cat := UnderlyingCategory( chains );
-    
-    diffs := [ ];
-    
-    o := RandomObject( cat, c );
-    
-    map := UniversalMorphismIntoZeroObject( o );
-    
-    for i in [ m .. n ] do
-      
-      i := _WeakKernelEmbedding( map );
-      
-      if not IsZeroForMorphisms( i ) then
-        
-        for k in [ 1 .. 5 ] do
-          
-          j := RandomMorphismWithFixedRange( Source( i ), c + Random( [ 0, 1 ] ) );
-        
-          map := PreCompose( j, i );
-          
-          if not IsZeroForMorphisms( map ) then
-            
-            break;
-            
-          fi;
-          
-        od;
-      
-      else
-        
-        map := ZeroMorphism( RandomObject( cat, c ), Source( map ) );
-        
-      fi;
-      
-      Add( diffs, map );
-      
-    od;
-    
-    return ChainComplex( diffs, m + 1 );
-      
-end );
-
 ######################################
 #
 # Shift using lazy methods
