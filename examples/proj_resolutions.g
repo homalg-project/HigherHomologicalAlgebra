@@ -10,8 +10,11 @@ M := AsLeftPresentation( HomalgMatrix( "[ [ x ], [ y ], [ z ] ]", 3, 1, R ) );
 CM := StalkCochainComplex( M, 0 );
 #! <A bounded object in Cochain complexes category over Category of left 
 #! presentations of Q[x,y,z] with active lower bound -1 and active upper bound 1.>
-P_M := ProjectiveResolution( M  );
-P_CM := ProjectiveResolution(CM);
+P_M := ProjectiveResolution( M );
+# or P_M := ProjectiveResolution( M, true );
+P_CM := ProjectiveResolution( CM );
+# or P_CM := ProjectiveResolution( CM, true );
+
 
 
 # Let V be a variety defined by the ideal I = < x^2 + y^2 - z >, then then the coordinate ring of V is R/I is regular, which implies that it has 

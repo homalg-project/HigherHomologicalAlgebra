@@ -6,6 +6,7 @@
 #! The cochain complex category of $\mathrm{Vec}_\mathbb{Q}$ can be constructed as follows 
 #! @EndLatexOnly
 #! @Example
+LoadPackage( "RingsForHomalg" );
 LoadPackage( "LinearAlgebraForCap" );;
 LoadPackage( "ComplexesForCAP" );;
 Q := HomalgFieldOfRationals( );;
