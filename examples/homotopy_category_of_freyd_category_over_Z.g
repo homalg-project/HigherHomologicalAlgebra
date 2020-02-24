@@ -20,3 +20,12 @@ N := ProjectiveChainResolution( FreydCategoryObject( RandomMorphism( rows, [ 1 .
 H := HomStructure( M, N );
 
 # or in this case: HomStructure( HomologyAt( M, 0 ), HomologyAt( N, 0 ) );
+
+
+# Localisation functor in the derived category
+LoadPackage( "DerivedCategories" );
+LL := LocalizationFunctorByProjectiveObjects( homotopy_freyd_cat );
+Display( LL );
+LL( M );
+LL( N );
+
