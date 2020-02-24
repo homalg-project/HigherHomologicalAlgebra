@@ -5,7 +5,7 @@ version 23/02/2020.
 
 Introduction
 ------------
-The "HomotopyCategories" package is a Gap/CAP package written for constructing homotopy categories of additive categories, i.e., the category of complexes modulo null-homotopic morphisms. Its aim is to carry out categorical and homological constructions and computations. Homotopy categories are in many cases a nice model for derived categroies. For example, when the category has enough injectives and projectives. This package has been written as step toward implementing derived
+The "HomotopyCategories" package is a Gap/CAP package written for constructing homotopy categories of additive categories, i.e., the category of complexes modulo null-homotopic morphisms. Its aim is to carry out categorical and homological constructions and computations. Homotopy categories are in many cases a nice model for derived categroies. For example, when the category has enough injectives or enough projectives. This package has been written as step toward implementing derived
 categories and Tilting equivalences between them. More details can be found at
 https://github.com/homalg-project/DerivedCategories.git
 
