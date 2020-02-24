@@ -65,8 +65,7 @@ AddObjectFunction( G,
     
     degrees := Concatenation( List( degrees, d -> ListWithIdenticalEntries( d[ 2 ], -d[ 1 ] ) ) );
     
-    return AsFullSubcategoryCell( graded_rows_in_lp_cat,
-              GradedFreeLeftPresentation( RankOfObject( a ), UnderlyingHomalgGradedRing( a ), degrees ) );
+    return GradedFreeLeftPresentation( RankOfObject( a ), UnderlyingHomalgGradedRing( a ), degrees ) / graded_rows_in_lp_cat;
     
 end );
 
@@ -78,8 +77,8 @@ AddMorphismFunction( G,
     
     rr := UnderlyingCell( r );
     
-    return  AsFullSubcategoryCell( graded_rows_in_lp_cat,
-              GradedPresentationMorphism( ss, UnderlyingHomalgMatrix( phi ), rr ) );
+    return GradedPresentationMorphism( ss, UnderlyingHomalgMatrix( phi ), rr ) / graded_rows_in_lp_cat;
+    
 end );
 
 
