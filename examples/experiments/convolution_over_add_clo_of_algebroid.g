@@ -1,10 +1,4 @@
-LoadPackage( "Bialgebroids");
-LoadPackage( "DerivedCategories" );
-
-##
-SetInfoLevel( InfoHomotopyCategories, 3 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
-ENABLE_COLORS := true;
+ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 
 create_vertrex_labels :=
   function( left_bound, horizontal_distance, below_bound, vertical_distance )
@@ -504,8 +498,8 @@ quit;
 
 field := HomalgFieldOfRationals( );
 
-horizontal_distance := 3;
-vertical_distance := 3;
+horizontal_distance := 5;
+vertical_distance := 5;
 below_bound := 0;
 left_bound := 0;
 
@@ -525,7 +519,6 @@ create_complex( left_bound, horizontal_distance, below_bound, vertical_distance,
 create_complex_morphism( left_bound, horizontal_distance, below_bound, vertical_distance, "C", "B", "alpha", add_algebroid );
 create_complex_morphism( left_bound, horizontal_distance, below_bound, vertical_distance, "B", "D", "beta", add_algebroid );
 
-quit;
 gamma := PreCompose( alpha, beta );
 conv_alpha := Convolution( alpha );
 conv_beta := Convolution( beta );
