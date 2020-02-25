@@ -184,7 +184,7 @@ InstallMethod( DerivedCategory,
     
     r := RandomTextColor( Name( C ) );
     
-    name := Concatenation( r[ 1 ], "Derived category (", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
+    name := Concatenation( r[ 1 ], "Derived category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
     
     D := CreateCapCategory( name );
     

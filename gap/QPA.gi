@@ -2944,7 +2944,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
       
       r := RandomTextColor( Name( A ) );
       
-      cat!.Name := Concatenation( r[ 1 ], "Quiver representations (", r[ 2 ], " ", Name( A ), " ", r[ 1 ], ")", r[ 2 ] );
+      cat!.Name := Concatenation( r[ 1 ], "Quiver representations(", r[ 2 ], " ", Name( A ), " ", r[ 1 ], ")", r[ 2 ] );
       
     fi;
     
