@@ -2918,7 +2918,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
               [ IsQuiverAlgebra and IsRightQuiverAlgebra, IsRationalsForHomalg ],
               1000,
   function( A, field )
-    local cat, domain, r;
+    local cat, domain, r, finalize_cat;
     
     if HasCategoryOfQuiverRepresentations( A ) then
       
@@ -3173,8 +3173,15 @@ InstallMethod( CategoryOfQuiverRepresentations,
         EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
       );
     
-    ##
-    FinalizeCategory( cat, true );
+    finalize_cat := ValueOption( "FinalizeCategory" );
+    
+    if finalize_cat = false then
+      
+      return cat;
+      
+    fi;
+    
+    Finalize( cat );
      
     return cat;
   
