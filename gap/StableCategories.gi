@@ -177,7 +177,7 @@ InstallMethod( StableCategory,
         
       fi;
       
-      name := Concatenation( "The stable category of ", name, " by ", name_membership_function );
+      name := Concatenation( "Stable category( ", name, " ) defined by ", name_membership_function );
     
     fi;
     
