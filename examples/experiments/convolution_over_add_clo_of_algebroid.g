@@ -410,7 +410,11 @@ quiver_algebra :=
       
     od;
    
-    return A / relations;
+    A := A / relations;
+    
+    SetIsFiniteDimensional( A, true );
+    
+    return A;
     
 end;
 
