@@ -1,7 +1,6 @@
 LoadPackage( "StableCategories" );
-LoadPackage( "QPA" );
-LoadPackage( "LinearAlgebra" );
-ReadPackage( "StableCategories", "/examples/random_methods_for_categories_of_quiver_reps.g" );
+LoadPackage( "DerivedCategories" ); # This is needed to add homomorphism structure to quiver reps
+LoadPackage( "RingsForHomalg" );
 
 field := Rationals;;
 
@@ -52,13 +51,8 @@ B := QuotientOfPathAlgebra(
   ]
 );;
 
+quit;
 cat := CategoryOfQuiverRepresentations( B : FinalizeCategory := false );;
-cat!.compute_basis_of_hom_using_homalg := [ true, 2, HomalgFieldOfRationals( ) ];
-# use 2 instead of 1, to hid [[#I  Using homalg to compute BasisOfHom(-,-)]]
-SetIsLinearCategoryOverCommutativeRing( cat, true );;
-SetCommutativeRingOfLinearCategory( cat, HomalgFieldOfRationals( ) );;
-AddMultiplyWithElementOfCommutativeRingForMorphisms( cat, \* );;
-AddRandomMethodsToQuiverRepresentations( cat );;
 AddMorphismIntoColiftingObject( cat, MonomorphismIntoSomeInjectiveObject );
 AddMorphismFromLiftingObject( cat, EpimorphismFromSomeProjectiveObject );
 Finalize( cat );
