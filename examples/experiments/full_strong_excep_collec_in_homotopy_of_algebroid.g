@@ -20,13 +20,12 @@ BB := PreCompose( BB, iso );
 ################## start ##################################
 
 o := TwistedGradedFreeModule( S, 0 );
-L := List( [ -1, 0, 1 ], i -> ApplyFunctor( BB, o[ i ] ) );
+L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
 name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 (0)}";
 name_for_algebra := "End(⊕ {𝓞 (i)|i=-2,-1,0})";
 collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name_for_quiver,
                                               name_for_endomorphism_algebra := name_for_algebra
                                           );
-
 
 algebroid := Algebroid( collection );
 add_algebroid := AdditiveClosure( algebroid );
