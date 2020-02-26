@@ -43,12 +43,12 @@ F := PreCompose( I, Conv );
 
 N := 0;
 while true do
-  a := RandomObject( ch_add_algebroid, [ -3, 3, 2 ] );
+  a := RandomObject( ho_add_algebroid, [ -3, 3, 2 ] );
   alpha := RandomMorphismWithFixedSource( a, [ [ -3, 3, 2 ], [ 3 ] ] );
   #Display( alpha );
   beta := RandomMorphismWithFixedSource( Range( alpha ), [ [ -3, 3, 2 ], [ 3 ] ] );
   #Display( beta );
-  if CheckFunctoriality( F, alpha/ho_add_algebroid, beta/ho_add_algebroid ) then 
+  if CheckFunctoriality( F, alpha, beta ) then 
     N := N + 1;
     Print( "N = ", N );
     Print( "  STILL SEEMS FUNCTORIAL!\n" );
