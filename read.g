@@ -19,3 +19,4 @@ ReadPackage( "DerivedCategories", "gap/Combinatoric.gi" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
 ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/TempMethods.gi" );
+ReadPackage( "DerivedCategories", "gap/ExceptionalResolutions.gi" );
