@@ -13,4 +13,4 @@ ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gi" );
 ReadPackage( "HomotopyCategories", "gap/DerivedMethods.gi" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gi" );
 ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gi" );
-
+ReadPackage( "HomotopyCategories", "gap/RandomMethods.gi" );
