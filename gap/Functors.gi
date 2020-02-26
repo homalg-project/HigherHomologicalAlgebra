@@ -944,19 +944,8 @@ InstallMethod( EmbeddingFunctorFromHomotopyCategory,
 InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )
-    local I, Ho_C, conv;
     
-    I := EquivalenceFunctorFromHomotopyCategory( collection );
-    
-    Ho_C := AsCapCategory( Range( I ) );
-    
-    conv := ConvolutionFunctor( Ho_C );
-    
-    conv := PreCompose( I, conv );
-    
-    conv!.Name := "Convolution functor";
-    
-    return conv;
+    return ConvolutionFunctor( HomotopyCategory( collection ) );
     
 end );
 
@@ -1005,6 +994,45 @@ InstallMethod( ConvolutionFunctor,
     return conv;
     
 end );
+
+##
+InstallMethod( ConvolutionFunctor,
+          [ IsHomotopyCategory ],
+  function( Ho_Ho_0_C )
+    local Ho_0_C, D, I, H, Conv;
+    
+    if not IsHomotopyCategory( Ho_Ho_0_C ) then
+      
+      Error( "The input should be a homotopy category!\n" );
+      
+    fi;
+    
+    Ho_0_C := DefiningCategory( Ho_Ho_0_C );
+    
+    if not IsAdditiveClosureCategory( Ho_0_C ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    D := UnderlyingCategory( Ho_0_C );
+    
+    I := EquivalenceFunctorFromAdditiveClosure( D );
+    
+    I := ExtendFunctorToHomotopyCategories( I );
+    
+    H := AsCapCategory( Range( I ) );
+    
+    Conv := ConvolutionFunctor( H );
+    
+    Conv := PreCompose( I, Conv );
+    
+    Conv!.Name := "Convolution functor";
+    
+    return Conv;
+    
+end );
+
 
 ####################################
 #
