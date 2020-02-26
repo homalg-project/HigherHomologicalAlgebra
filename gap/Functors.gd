@@ -1,4 +1,11 @@
+######################################################################
 #
+#   HomotopyCategories.gi                   Homotopy Categories
+#                                           Siegen University
+#   2020                                    Kamal Saleh
+#
+#####################################################################
+
 
 #! @Chapter Functors
 #! @Section Basic functors for homotopy categories.

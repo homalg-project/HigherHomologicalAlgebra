@@ -2,7 +2,7 @@
 #
 #   HomotopyCategories.gi                   Homotopy Categories
 #                                           Siegen University
-#   13.Feb.2017                             Kamal Saleh
+#   2020                                    Kamal Saleh
 #
 #####################################################################
 

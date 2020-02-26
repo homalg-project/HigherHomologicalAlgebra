@@ -1,3 +1,10 @@
+#####################################################################
+#
+#   HomotopyCategories.gi                   Homotopy Categories
+#                                           Siegen University
+#   2020                                    Kamal Saleh
+#
+#####################################################################
 
 ##
 DeclareAttribute( "Convolution", IsChainComplex );
