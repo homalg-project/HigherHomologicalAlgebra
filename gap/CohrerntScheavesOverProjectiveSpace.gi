@@ -36,7 +36,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       name_for_quiver := Concatenation( name_for_quiver, "}" );
       
-      name_for_algebra := Concatenation( "End(⊕ {Ω^i(i)|i=0,...,", String( n - 1 ), "})" );
+      name_for_algebra := Concatenation( "End( ⊕ {Ω^i(i)|i=0,...,", String( n - 1 ), "} )" );
       
       collection := CreateExceptionalCollection( full : 
                                                   name_for_underlying_quiver := name_for_quiver,
