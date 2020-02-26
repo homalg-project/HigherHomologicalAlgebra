@@ -1,7 +1,7 @@
 The HomotopyCategories package
 =========================
 
-version 23/02/2020.
+version 24/02/2020.
 
 Introduction
 ------------
