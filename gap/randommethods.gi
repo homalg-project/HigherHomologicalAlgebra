@@ -83,7 +83,7 @@ InstallMethod( RandomObjectByList,
       
     fi;
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomObjectByInteger,
@@ -92,7 +92,7 @@ InstallMethod( RandomObjectByInteger,
     
     return RandomObjectByList( chains, [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ] );
     
-end );
+end, -1 );
 
 ## L is list with one integer entry
 ##
@@ -109,7 +109,7 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
     
     return Sum( List( [ 0 .. AbsInt( L[ 1 ] ) ], i -> Random( b ) ) );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
@@ -118,7 +118,7 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
     
     return RandomMorphismWithFixedSourceAndRangeByList( C, D, [ n ] );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceByList,
@@ -130,7 +130,7 @@ InstallMethod( RandomMorphismWithFixedSourceByList,
     
     return RandomMorphismWithFixedSourceAndRangeByList( C, D, L[ 2 ] );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceByInteger,
@@ -141,7 +141,7 @@ InstallMethod( RandomMorphismWithFixedSourceByInteger,
             [ [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ], [ Int( n / 2 ) + 1 ] ]
               );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedRangeByList,
@@ -153,7 +153,7 @@ InstallMethod( RandomMorphismWithFixedRangeByList,
     
     return RandomMorphismWithFixedSourceAndRangeByList( C, D, L[ 2 ] );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedRangeByInteger,
@@ -164,7 +164,7 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
             [ [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ], [ Int( n / 2 ) + 1 ] ]
               );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismByList,
@@ -176,7 +176,7 @@ InstallMethod( RandomMorphismByList,
     
     return RandomMorphismWithFixedSourceByList( C, [ L[ 2 ], L[ 3 ] ] );
     
-end );
+end, -1 );
 
 ##
 InstallMethod( RandomMorphismByInteger,
@@ -188,5 +188,5 @@ InstallMethod( RandomMorphismByInteger,
     
     return RandomMorphismWithFixedSourceByInteger( C, n );
     
-end );
+end, -1 );
 
