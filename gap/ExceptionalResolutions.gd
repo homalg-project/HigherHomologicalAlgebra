@@ -8,9 +8,17 @@
 ##
 #############################################################################
 
-DeclareOperation( "ExceptionalCoverIntoCertainShift",
-            [ IsCapCategoryObject, IsInt, IsExceptionalCollection ] );
-
 DeclareOperation( "ExceptionalShift",
-            [ IsCapCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
+DeclareOperation( "MorphismFromSomeExceptionalObjectIntoCertainShift",
+            [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ] );
+
+DeclareOperation( "MorphismFromSomeExceptionalObject",
+            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+
+DeclareOperation( "ExceptionalResolution",
+            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+
+DeclareOperation( "ExceptionalResolution",
+            [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ] );

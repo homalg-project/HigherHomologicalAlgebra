@@ -9,8 +9,8 @@
 #############################################################################
 
 ##
-InstallMethod( ExceptionalCoverIntoCertainShift,
-          [ IsCapCategoryObject, IsInt, IsExceptionalCollection ],
+InstallMethod( MorphismFromSomeExceptionalObjectIntoCertainShift,
+          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
   function( a, N, collection )
     local C, H, H_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
     
@@ -19,6 +19,19 @@ InstallMethod( ExceptionalCoverIntoCertainShift,
     if not IsIdenticalObj( CapCategory( a ), C ) then
       
       Error( "The object should belong to the ambient category of the exceptional collection!\n" );
+      
+    fi;
+    
+    if HasIsZeroForObjects( a ) and IsZeroForObjects( a ) then
+      
+      mor := UniversalMorphismFromZeroObject( Shift( a, N ) );
+      
+      # In case the logic is switched off
+      SetIsZeroForObjects( Source( mor ), true );
+      
+      SetIsZeroForObjects( Range( mor ), true );
+      
+      return mor;
       
     fi;
     
@@ -59,7 +72,7 @@ end );
 # Hom(T,a) <> 0 only if l_T - u_a <= 0 and u_T - l_a >= 0.
 ##
 InstallMethod( ExceptionalShift,
-          [ IsCapCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, objects, T, u_T, l_T, u_a, l_a, N, shift_of_a;
     
@@ -99,9 +112,11 @@ InstallMethod( ExceptionalShift,
         
         if N = l_T - u_a then
           
-          Info( InfoDerivedCategories, 2, "It seems that the object is zero :)" );
+          Assert( 3, IsZeroForObjects( a ) );
           
-          return 0; # or any other integer
+          SetIsZeroForObjects( a, true );
+          
+          return 0;
           
         else
         
@@ -114,6 +129,117 @@ InstallMethod( ExceptionalShift,
     od;
     
     return N;
+    
+end );
+
+##
+InstallMethod( MorphismFromSomeExceptionalObject,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local N;
+    
+    N := ExceptionalShift( a, collection );
+    
+    return MorphismFromSomeExceptionalObjectIntoCertainShift( a, N, collection );
+    
+end );
+
+##
+InstallMethod( ExceptionalResolution,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local C, N, maps, diffs, res;
+    
+    C := CapCategory( a );
+    
+    N := ExceptionalShift( a, collection );
+    
+    maps := MapLazy( IntegersList,
+              function( i )
+                local alpha, beta, c;
+                
+                if i = -N then
+                  
+                  c := Shift( a, N );
+                  
+                elif i > -N then
+                
+                  c := Source( maps[ i - 1 ][ 2 ] );
+                  
+                else
+                  
+                  c := ZeroObject( C );
+                  
+                  SetIsZeroForObjects( c, true );
+                  
+                fi;
+                
+                if ExceptionalShift( c, collection ) <> 0 then
+                  
+                  Error( "Something unexpected happend!\n" );
+                  
+                fi;
+                
+                alpha := MorphismFromSomeExceptionalObjectIntoCertainShift( c, 0, collection );
+                
+                if HasIsZeroForObjects( c ) and IsZeroForObjects( c ) then
+                   
+                  beta := Shift( UniversalMorphismFromZeroObject( Source( alpha ) ), -1 );
+                  
+                  # In case the logic is switched off
+                  SetIsZeroForObjects( Source( beta ), true );
+                  
+                else
+                  
+                  beta := Shift( MorphismFromConeObject( alpha ), -1 );
+                  
+                fi;
+                 
+                return [ alpha, beta ];
+                
+              end, 1 );
+    
+    diffs := MapLazy( IntegersList, i -> PreCompose( maps[ i ][ 1 ], maps[ i - 1 ][ 2 ] ), 1 );
+    
+    res := ChainComplex( C, diffs );
+    
+    SetLowerBound( res, -N );
+    
+    return res;
+    
+end );
+
+##
+InstallMethod( ExceptionalResolution,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
+  function( a, collection, bool )
+    local C, res, u, zero;
+    
+    C := CapCategory( a );
+    
+    zero := ZeroObject( C );
+    
+    res := ExceptionalResolution( a, collection );
+    
+    u := ActiveLowerBound( res );
+    
+    while bool do
+      
+      if IsEqualForObjects( res[ u ], zero ) then
+        
+        SetUpperBound( res, u - 1 );
+        
+        return res;
+        
+      else
+        
+        u := u + 1;
+        
+      fi;
+      
+    od;
+    
+    return res;
     
 end );
 
