@@ -12,19 +12,21 @@
 KeyDependentOperation( "StalkChainFunctor", IsCapCategory, IsInt, ReturnTrue );
 KeyDependentOperation( "StalkCochainFunctor", IsCapCategory, IsInt, ReturnTrue );
 
-
-#! @Group f1
-#! @Description
-#! The first argument in the input must be the chain (resp. cochain) complex category of an abelian category $A$, the second argument is an integer <A>n</A>. 
-#! The output is the $n$'th homology (resp. cohomology) functor $\mathrm{Ch}_\bullet(A) \rightarrow A$
-#! ( resp. $\mathrm{Ch}^\bullet(A) \rightarrow A$)
-#! @Arguments Ch_\bullet(A), A, n
-#! @Returns a functor
-KeyDependentOperation( "HomologyFunctor", IsChainComplexCategory, IsInt, ReturnTrue );
-#! @EndGroup
-#! @Group f1
-#! @Arguments Ch^\bullet(A), A, n
-KeyDependentOperation( "CohomologyFunctor", IsCochainComplexCategory, IsInt, ReturnTrue );
+if false then
+  #! @Group f1
+  #! @Description
+  #! The first argument in the input must be the chain (resp. cochain) complex category of an
+  #! abelian category $A$, the second argument is an integer <A>n</A>.
+  #! The output is the $n$'th homology (resp. cohomology) functor $\mathrm{Ch}_\bullet(A) \rightarrow A$
+  #! ( resp. $\mathrm{Ch}^\bullet(A) \rightarrow A$)
+  #! @Arguments Ch_\bullet(A), A, n
+  #! @Returns a functor
+  KeyDependentOperation( "HomologyFunctor", IsChainComplexCategory, IsInt, ReturnTrue );
+  #! @EndGroup
+  #! @Group f1
+  #! @Arguments Ch^\bullet(A), A, n
+  KeyDependentOperation( "CohomologyFunctor", IsCochainComplexCategory, IsInt, ReturnTrue );
+fi;
 
 #! @Description
 #! The inputs are complex category $\mathrm{Comp}(A)$ and an integer. The output is a the endofunctor $T[n]$ that sends any complex $C$ to $C[n]$ and any complex morphism
