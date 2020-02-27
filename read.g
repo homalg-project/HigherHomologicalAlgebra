@@ -4,13 +4,13 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "ComplexesForCAP", "gap/complexes.gi" );
-ReadPackage( "ComplexesForCAP", "gap/doublecomplexes.gi" );
-ReadPackage( "ComplexesForCAP", "gap/categories.gi" );
-ReadPackage( "ComplexesForCAP", "gap/functors.gi" );
-ReadPackage( "ComplexesForCAP", "gap/chainmaps.gi" );
-ReadPackage( "ComplexesForCAP", "gap/naturaltransformations.gi" );
-ReadPackage( "ComplexesForCAP", "gap/resolutions.gi" );
-ReadPackage( "ComplexesForCAP", "gap/derivations.gi" );
-ReadPackage( "ComplexesForCAP", "gap/tools.gi" );
-ReadPackage( "ComplexesForCAP", "gap/randommethods.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Complexes.gi" );
+ReadPackage( "ComplexesForCAP", "gap/DoubleComplexes.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Categories.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Functors.gi" );
+ReadPackage( "ComplexesForCAP", "gap/ChainMaps.gi" );
+ReadPackage( "ComplexesForCAP", "gap/NaturalTransformations.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Resolutions.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Derivations.gi" );
+ReadPackage( "ComplexesForCAP", "gap/Tools.gi" );
+ReadPackage( "ComplexesForCAP", "gap/RandomMethods.gi" );
