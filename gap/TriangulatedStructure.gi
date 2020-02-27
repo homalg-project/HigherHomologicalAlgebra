@@ -89,6 +89,26 @@ function( homotopy_category )
   
   AddConeObject( homotopy_category, MappingCone );
   
+  AddMorphismIntoConeObjectWithGivenConeObject( homotopy_category,
+    function( phi, C )
+      local cell;
+      
+      cell := UnderlyingCell( phi );
+      
+      return NaturalInjectionInMappingCone( cell ) / homotopy_category;
+      
+  end );
+  
+  AddMorphismFromConeObjectWithGivenConeObject( homotopy_category,
+    function( phi, C )
+      local cell;
+      
+      cell := UnderlyingCell( phi );
+      
+      return NaturalProjectionFromMappingCone( cell ) / homotopy_category;
+      
+  end );
+ 
   ##
   AddCompleteMorphismToStandardExactTriangle( homotopy_category,
       function( phi )
