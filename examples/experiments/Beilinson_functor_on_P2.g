@@ -75,3 +75,17 @@ collection_ho := CreateExceptionalCollection( o_012_ho : name_for_underlying_qui
                                               name_for_endomorphism_algebra := name_for_algebra
                                           );
 
+################## to create random objects ################################
+U := ExtendFunctorToHomotopyCategories(
+      ExtendFunctorToAdditiveClosures(
+        IsomorphismFromAlgebroid( collection_ab )
+          ) );
+
+# create random object
+c := U( RandomObject( AsCapCategory( Source( U ) ), 3 ) ); 
+# or c := U( RandomObject( AsCapCategory( Source( U ) ), [ -3, 3, 2 ] ) );  [ lower_bound, upper_bound, complexity ]
+
+################# compare between embeddings of the two replacements #######
+inc_ab_c := inc_ab(c);
+inc_ho_c := PreCompose( ho_add_I, inc_ho )(c);
+HomologySupport( inc_ab_c );
