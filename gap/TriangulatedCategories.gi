@@ -83,6 +83,20 @@ filter_list := [ "morphism" ],
 cache_name := "ConeObject",
 return_type := "object" ),
 
+MorphismIntoConeObjectWithGivenConeObject:= rec(
+
+installation_name := "MorphismIntoConeObjectWithGivenConeObject",
+filter_list := [ "morphism", "object" ],
+cache_name := "MorphismIntoConeObjectWithGivenConeObject",
+return_type := "morphism" ),
+
+MorphismFromConeObjectWithGivenConeObject:= rec(
+
+installation_name := "MorphismFromConeObjectWithGivenConeObject",
+filter_list := [ "morphism", "object" ],
+cache_name := "MorphismFromConeObjectWithGivenConeObject",
+return_type := "morphism" ),
+
 ShiftOfObject:= rec( 
 
 installation_name := "ShiftOfObject", 
@@ -896,6 +910,7 @@ InstallMethod( IsomorphismIntoStandardExactTriangle,
     fi;
 end );
 
+##
 InstallMethod( ShiftOp, [ IsCapCategoryCell, IsInt ],
   function( cell, n )
   
@@ -930,6 +945,18 @@ InstallMethod( ShiftOp, [ IsCapCategoryCell, IsInt ],
     fi;
   
 end );
+
+##
+InstallMethod( MorphismIntoConeObject,
+          [ IsCapCategoryMorphism ],
+  phi -> MorphismIntoConeObjectWithGivenConeObject( phi, ConeObject( phi ) )
+);
+
+##
+InstallMethod( MorphismFromConeObject,
+          [ IsCapCategoryMorphism ],
+  phi -> MorphismFromConeObjectWithGivenConeObject( phi, ConeObject( phi ) )
+);
 
 InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
                IsCapCategory and IsTriangulatedCategory, 

@@ -448,13 +448,39 @@ DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsFu
 DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList ] );
 
+##
 DeclareAttribute( "ConeObject", IsCapCategoryMorphism );
-
 
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsFunction ] );
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddConeObject", [ IsCapCategory, IsList ] );
+
+##
+DeclareOperation( "MorphismIntoConeObjectWithGivenConeObject",
+      [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddMorphismIntoConeObjectWithGivenConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismIntoConeObjectWithGivenConeObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismIntoConeObjectWithGivenConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismIntoConeObjectWithGivenConeObject", [ IsCapCategory, IsList ] );
+
+##
+DeclareAttribute( "MorphismIntoConeObject",
+      IsCapCategoryMorphism );
+
+##
+DeclareOperation( "MorphismFromConeObjectWithGivenConeObject",
+      [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddMorphismFromConeObjectWithGivenConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismFromConeObjectWithGivenConeObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismFromConeObjectWithGivenConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismFromConeObjectWithGivenConeObject", [ IsCapCategory, IsList ] );
+
+##
+DeclareAttribute( "MorphismFromConeObject",
+      IsCapCategoryMorphism );
 
 #! @Description
 #! The argument is a triangle $T\in\mathrm{Triangles}(\mathcal{C})$, where $\mathcal{C}$ a triangulated category $\mathcal{C}$. 
