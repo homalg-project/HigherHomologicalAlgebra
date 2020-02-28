@@ -14,4 +14,4 @@ ReadPackage( "DerivedCategories", "gap/Tensor.gd" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gd" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gd" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gd" );
-ReadPackage( "DerivedCategories", "gap/ExceptionalResolutions.gd" );
+ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gd" );

@@ -14,8 +14,11 @@ DeclareOperation( "ExceptionalShift",
 DeclareOperation( "MorphismFromSomeExceptionalObject",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
-DeclareOperation( "ExceptionalResolution",
+DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
-DeclareOperation( "ExceptionalResolution",
+DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
+            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+
+DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ] );

@@ -24,14 +24,7 @@ InstallMethod( MorphismFromSomeExceptionalObject,
     
     if HasIsZeroForObjects( a ) and IsZeroForObjects( a ) then
       
-      mor := UniversalMorphismFromZeroObject( a );
-      
-      # In case the logic is switched off
-      SetIsZeroForObjects( Source( mor ), true );
-      
-      SetIsZeroForObjects( Range( mor ), true );
-      
-      return mor;
+      return [ ];
       
     fi;
     
@@ -43,7 +36,7 @@ InstallMethod( MorphismFromSomeExceptionalObject,
     
     if IsEmpty( min_gen ) then
       
-      return UniversalMorphismFromZeroObject( a );
+      return [ ];
       
     fi;
     
@@ -55,14 +48,12 @@ InstallMethod( MorphismFromSomeExceptionalObject,
     
     positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
     
-    mor := List( [ 1 .. Size( min_gen ) ],
-      i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
+    return List( [ 1 .. Size( min_gen ) ],
+      i -> vectors[ i ]{ positions_of_non_zeros[ i ] } *
               BasisOfExternalHom(
                 UnderlyingCell( collection[ positions[ i ] ] ), a )
                   { positions_of_non_zeros[ i ] }
           );
-    
-    return MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
     
 end );
 
@@ -131,7 +122,7 @@ InstallMethodWithCache( ExceptionalShift,
 end );
 
 ##
-InstallMethodWithCache( ExceptionalResolution,
+InstallMethod( EXCEPTIONAL_REPLACEMENT,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, N, maps, diffs, res;
@@ -142,57 +133,125 @@ InstallMethodWithCache( ExceptionalResolution,
     
     maps := MapLazy( IntegersList,
               function( i )
-                local alpha, beta, c;
+                local alpha, beta, alpha_as_list, beta_as_list, c, k, sources;
                 
-                if i = -N then
-                  
-                  c := Shift( a, N );
-                  
-                  alpha := MorphismFromSomeExceptionalObject( c, collection );
-                  
-                  beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
-                  
-                elif i > -N then
-                  
-                  c := Source( maps[ i - 1 ][ 2 ] );
-                  
-                  alpha := MorphismFromSomeExceptionalObject( c, collection );
-                  
-                  beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
-                  
-                else
+                if i < -N then
                   
                   alpha := UniversalMorphismFromZeroObject( ZeroObject( C ) );
                   
                   beta := UniversalMorphismIntoZeroObject( Range( maps[ i + 1 ][ 1 ] ) );
                   
+                  return [ alpha, beta, [ ], [ ] ];
+                 
+                elif i = -N then
+                  
+                  c := Shift( a, N );
+                  
+                else
+                  
+                  c := Source( maps[ i - 1 ][ 2 ] );
+                  
                 fi;
                 
-                return [ alpha, beta ];
+                alpha_as_list := MorphismFromSomeExceptionalObject( c, collection );
+                
+                sources := List( alpha_as_list, Source );
+                
+                if not IsEmpty( alpha_as_list ) then
+                  
+                  alpha := MorphismBetweenDirectSums( TransposedMat( [ alpha_as_list ] ) );
+                  
+                else
+                  
+                  alpha := UniversalMorphismFromZeroObject( c );
+                  
+                fi;
+                
+                beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
+                
+                beta_as_list := [ ];
+                
+                for k in [ 1 .. Size( alpha_as_list ) ] do
+                  
+                  Add( beta_as_list, PreCompose( beta, ProjectionInFactorOfDirectSum( sources, k ) ) );
+                  
+                od;
+                
+                return [ alpha, beta, alpha_as_list, beta_as_list ];
                 
               end, 1 );
     
-    diffs := MapLazy( IntegersList, i -> PreCompose( maps[ i ][ 1 ], maps[ i - 1 ][ 2 ] ), 1 );
+    maps!.shift := N;
     
-    res := ChainComplex( C, diffs );
-    
-    SetLowerBound( res, -N );
-    
-    return res;
+    return maps;
     
 end );
 
 ##
-InstallMethod( ExceptionalResolution,
+InstallMethodWithCache( ExceptionalReplacement,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local defining_category, additive_closure, homotopy_category, maps, N, diffs, res;
+    
+    defining_category := DefiningFullSubcategory( collection );
+    
+    additive_closure := AdditiveClosure( collection );
+    
+    homotopy_category := HomotopyCategory( collection );
+    
+    maps := EXCEPTIONAL_REPLACEMENT( a, collection );
+    
+    N := maps!.shift;
+    
+    diffs := MapLazy( IntegersList,
+      function( i )
+        local alpha_as_list, beta_as_list, source, range, matrix;
+        
+        alpha_as_list := maps[ i ][ 3 ];
+        
+        beta_as_list := maps[ i - 1 ][ 4 ];
+        
+        source := List( alpha_as_list, a -> Source( a ) / defining_category );
+        
+        range := List( beta_as_list, b -> Range( b ) / defining_category );
+        
+        if IsEmpty( source ) or IsEmpty( range ) then
+           
+          matrix := [ ];
+          
+        else
+          
+          matrix := List( alpha_as_list, a -> List( beta_as_list, b -> PreCompose( a, b ) / defining_category ) );
+        
+        fi;
+        
+        source := AdditiveClosureObject( source, additive_closure );
+        
+        range := AdditiveClosureObject( range, additive_closure );
+        
+        return AdditiveClosureMorphism( source, matrix, range );
+        
+    end, 1 );
+
+    res := ChainComplex( additive_closure, diffs ) / homotopy_category;
+    
+    SetLowerBound( res, -N );
+    
+    return res;
+
+end );
+
+##
+InstallMethod( ExceptionalReplacement,
           [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
   function( a, collection, bool )
     local C, r, u, zero;
     
     C := CapCategory( a );
     
-    zero := ZeroObject( C );
+    zero := ZeroObject( AdditiveClosure( collection ) );
     
-    r := ExceptionalResolution( a, collection );
+    r := ExceptionalReplacement( a, collection );
     
     u := ActiveLowerBound( r );
     
@@ -215,4 +274,3 @@ InstallMethod( ExceptionalResolution,
     return r;
     
 end );
-
