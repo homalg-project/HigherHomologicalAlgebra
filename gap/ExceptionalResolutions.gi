@@ -9,9 +9,9 @@
 #############################################################################
 
 ##
-InstallMethod( MorphismFromSomeExceptionalObjectIntoCertainShift,
-          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
-  function( a, N, collection )
+InstallMethod( MorphismFromSomeExceptionalObject,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
     local C, H, H_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
     
     C := AmbientCategory( collection );
@@ -24,7 +24,7 @@ InstallMethod( MorphismFromSomeExceptionalObjectIntoCertainShift,
     
     if HasIsZeroForObjects( a ) and IsZeroForObjects( a ) then
       
-      mor := UniversalMorphismFromZeroObject( Shift( a, N ) );
+      mor := UniversalMorphismFromZeroObject( a );
       
       # In case the logic is switched off
       SetIsZeroForObjects( Source( mor ), true );
@@ -36,8 +36,6 @@ InstallMethod( MorphismFromSomeExceptionalObjectIntoCertainShift,
     fi;
     
     H := HomFunctor( collection );
-    
-    a := Shift( a, N );
     
     H_a := H( a );
     
@@ -71,7 +69,7 @@ end );
 # If T & a are two perfect complexes, then
 # Hom(T,a) <> 0 only if l_T - u_a <= 0 and u_T - l_a >= 0.
 ##
-InstallMethod( ExceptionalShift,
+InstallMethodWithCache( ExceptionalShift,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, objects, T, u_T, l_T, u_a, l_a, N, shift_of_a;
@@ -81,7 +79,7 @@ InstallMethod( ExceptionalShift,
     if not IsHomotopyCategory( C ) then
       
       Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
-       
+      
     fi;
     
     objects := UnderlyingObjects( collection );
@@ -133,19 +131,7 @@ InstallMethod( ExceptionalShift,
 end );
 
 ##
-InstallMethod( MorphismFromSomeExceptionalObject,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local N;
-    
-    N := ExceptionalShift( a, collection );
-    
-    return MorphismFromSomeExceptionalObjectIntoCertainShift( a, N, collection );
-    
-end );
-
-##
-InstallMethod( ExceptionalResolution,
+InstallMethodWithCache( ExceptionalResolution,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, N, maps, diffs, res;
@@ -162,39 +148,26 @@ InstallMethod( ExceptionalResolution,
                   
                   c := Shift( a, N );
                   
+                  alpha := MorphismFromSomeExceptionalObject( c, collection );
+                  
+                  beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
+                  
                 elif i > -N then
-                
+                  
                   c := Source( maps[ i - 1 ][ 2 ] );
                   
-                else
+                  alpha := MorphismFromSomeExceptionalObject( c, collection );
                   
-                  c := ZeroObject( C );
-                  
-                  SetIsZeroForObjects( c, true );
-                  
-                fi;
-                
-                if ExceptionalShift( c, collection ) <> 0 then
-                  
-                  Error( "Something unexpected happend!\n" );
-                  
-                fi;
-                
-                alpha := MorphismFromSomeExceptionalObjectIntoCertainShift( c, 0, collection );
-                
-                if HasIsZeroForObjects( c ) and IsZeroForObjects( c ) then
-                   
-                  beta := Shift( UniversalMorphismFromZeroObject( Source( alpha ) ), -1 );
-                  
-                  # In case the logic is switched off
-                  SetIsZeroForObjects( Source( beta ), true );
+                  beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
                   
                 else
                   
-                  beta := Shift( MorphismFromConeObject( alpha ), -1 );
+                  alpha := UniversalMorphismFromZeroObject( ZeroObject( C ) );
+                  
+                  beta := UniversalMorphismIntoZeroObject( Range( maps[ i + 1 ][ 1 ] ) );
                   
                 fi;
-                 
+                
                 return [ alpha, beta ];
                 
               end, 1 );
@@ -213,23 +186,23 @@ end );
 InstallMethod( ExceptionalResolution,
           [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
   function( a, collection, bool )
-    local C, res, u, zero;
+    local C, r, u, zero;
     
     C := CapCategory( a );
     
     zero := ZeroObject( C );
     
-    res := ExceptionalResolution( a, collection );
+    r := ExceptionalResolution( a, collection );
     
-    u := ActiveLowerBound( res );
+    u := ActiveLowerBound( r );
     
     while bool do
       
-      if IsEqualForObjects( res[ u ], zero ) then
+      if IsEqualForObjects( r[ u ], zero ) then
         
-        SetUpperBound( res, u - 1 );
+        SetUpperBound( r, u - 1 );
         
-        return res;
+        return r;
         
       else
         
@@ -239,7 +212,7 @@ InstallMethod( ExceptionalResolution,
       
     od;
     
-    return res;
+    return r;
     
 end );
 

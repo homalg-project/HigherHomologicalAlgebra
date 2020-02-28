@@ -11,9 +11,6 @@
 DeclareOperation( "ExceptionalShift",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
-DeclareOperation( "MorphismFromSomeExceptionalObjectIntoCertainShift",
-            [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ] );
-
 DeclareOperation( "MorphismFromSomeExceptionalObject",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
