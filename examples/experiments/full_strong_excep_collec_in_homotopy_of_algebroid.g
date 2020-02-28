@@ -27,32 +27,10 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
                                               name_for_endomorphism_algebra := name_for_algebra
                                           );
 
-algebroid := Algebroid( collection );
-add_algebroid := AdditiveClosure( algebroid );
-ch_add_algebroid := ChainComplexCategory( add_algebroid );
-ho_add_algebroid := HomotopyCategory( add_algebroid );
+C := AmbientCategory( collection );
 
-I := ExtendFunctorToHomotopyCategories(
-        ExtendFunctorToAdditiveClosures(
-            IsomorphismFromAlgebroid( collection )
-              ) );
+F := ConvolutionFunctor( collection );
+G := ReplacementFunctor( collection );
 
-Conv := ConvolutionFunctor( collection );
-F := PreCompose( I, Conv );
-
-quit;
-N := 0;
-while true do
-  a := RandomObject( ho_add_algebroid, [ -3, 3, 2 ] );
-  alpha := RandomMorphismWithFixedSource( a, [ [ -3, 3, 2 ], [ 3 ] ] );
-  #Display( alpha );
-  beta := RandomMorphismWithFixedSource( Range( alpha ), [ [ -3, 3, 2 ], [ 3 ] ] );
-  #Display( beta );
-  if CheckFunctoriality( F, alpha, beta ) then 
-    N := N + 1;
-    Print( "N = ", N );
-    Print( "  STILL SEEMS FUNCTORIAL!\n" );
-  else
-    Error( ":/ COUNTER EXAMPLE FOUND!\n" );
-  fi;
-od;
+a := RandomObject( C, [ -3, 3, 3 ] );
+F(G(a));
