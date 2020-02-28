@@ -941,6 +941,32 @@ InstallMethod( EmbeddingFunctorFromHomotopyCategory,
 );
 
 ##
+InstallMethod( ReplacementFunctor,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local C, H, name, Rep;
+    
+    C := AmbientCategory( collection );
+    
+    H := HomotopyCategory( collection );
+    
+    name := "Replacement functor";
+    
+    Rep := CapFunctor( name, C, H );
+    
+    AddObjectFunction( Rep,
+      a -> ExceptionalReplacement( a, collection, true )
+    );
+    
+    AddMorphismFunction( Rep,
+      { s, alpha, r } -> "not yet implemented"
+    );
+    
+    return Rep;
+    
+end );
+
+##
 InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )

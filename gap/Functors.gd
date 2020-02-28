@@ -144,7 +144,9 @@ DeclareAttribute( "EquivalenceFunctorFromAdditiveClosure", IsExceptionalCollecti
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsExceptionalCollection );
 DeclareAttribute( "EquivalenceFunctorFromHomotopyCategory", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsExceptionalCollection );
+
 DeclareAttribute( "ConvolutionFunctor", IsExceptionalCollection );
+DeclareAttribute( "ReplacementFunctor", IsExceptionalCollection );
 
 DeclareAttribute( "ConvolutionFunctor", IsHomotopyCategory );
 
