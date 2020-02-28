@@ -137,6 +137,24 @@ InstallOtherMethod( ActiveUpperBound,
 );
 
 ##
+InstallOtherMethod( SetLowerBound,
+          [ IsHomotopyCategoryCell, IsInt ],
+  function( a, n )
+    
+    SetLowerBound( UnderlyingCell( a ), n );
+    
+end );
+
+##
+InstallOtherMethod( SetUpperBound,
+          [ IsHomotopyCategoryCell, IsInt ],
+  function( a, n )
+    
+    SetUpperBound( UnderlyingCell( a ), n );
+    
+end );
+
+##
 InstallOtherMethod( ViewComplex,
               [ IsHomotopyCategoryObject ],
   function( a )
