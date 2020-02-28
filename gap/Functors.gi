@@ -428,7 +428,7 @@ InstallMethod( CokernelObjectFunctor,
 end );
 
 ##
-InstallMethod( HomologyFunctorOp, 
+InstallOtherMethod( HomologyFunctorOp, 
                [ IsChainComplexCategory, IsInt ],
   function( complex_cat, i )
     local cat;
@@ -440,7 +440,7 @@ InstallMethod( HomologyFunctorOp,
 end );
 
 ##
-InstallMethod( CohomologyFunctorOp, 
+InstallOtherMethod( CohomologyFunctorOp, 
                [ IsCochainComplexCategory, IsInt ],
   function( complex_cat, i )
     local cat;

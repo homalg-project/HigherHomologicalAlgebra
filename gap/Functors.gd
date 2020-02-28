@@ -12,7 +12,7 @@
 KeyDependentOperation( "StalkChainFunctor", IsCapCategory, IsInt, ReturnTrue );
 KeyDependentOperation( "StalkCochainFunctor", IsCapCategory, IsInt, ReturnTrue );
 
-if false then
+if not ( IsBound( HomologyFunctorOp ) and IsBound( CohomologyFunctorOp ) ) then
   #! @Group f1
   #! @Description
   #! The first argument in the input must be the chain (resp. cochain) complex category of an
