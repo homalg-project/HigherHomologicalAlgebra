@@ -28,9 +28,23 @@ collection := CreateExceptionalCollection( L : name_for_underlying_quiver := nam
                                           );
 
 C := AmbientCategory( collection );
+L := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
 F := ConvolutionFunctor( collection );
 G := ReplacementFunctor( collection );
 
+quit;
+
+# create object in the ambient category
 a := RandomObject( C, [ -3, 3, 3 ] );
-F(G(a));
+
+# take it by G and bring it back by F
+FG_a := F(G(a));
+
+# Embedding both of them in some derived category to compare homologies
+L_a := L( a );
+L_FG_a := L( FG_a );
+
+# compute homologies
+List( [ -3 .. 3 ], i -> [ HomologyAt( L_a, i ), HomologyAt( L_FG_a, i ) ] );
+
