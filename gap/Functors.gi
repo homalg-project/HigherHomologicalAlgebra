@@ -1197,3 +1197,140 @@ InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
     
 end );
 
+###################################
+#
+# Embedding in derived category
+#
+###################################
+
+##
+InstallMethod( EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory,
+          [ IsExceptionalCollection ],
+  collection -> EmbeddingFunctorIntoDerivedCategory( AmbientCategory( collection ) )
+);
+
+##
+InstallMethod( EmbeddingFunctorIntoDerivedCategory,
+          [ IsCapCategory ],
+  function( C )
+    local Ho_C, I, J, D, A, U, F;
+    
+    if HasIsAbelianCategory( C ) and IsAbelianCategory( C ) then
+      
+      Ho_C := HomotopyCategory( C );
+      
+      I := EmbeddingFunctorInHomotopyCategory( C );
+      J := LocalizationFunctor( Ho_C );
+      
+      F := PreCompose( I, J );
+      
+      F!.Name := "Embedding functor of an abelian category in its derived category";
+      
+      return F;
+      
+    elif IsHomotopyCategory( C ) then
+      
+      D := DefiningCategory( C );
+      
+      if IsCapFullSubcategory( D ) then
+        
+        if HasIsAdditiveCategory( D ) and IsAdditiveCategory( D ) then
+          
+          A := AmbientCategory( D );
+          
+          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
+            
+            I := InclusionFunctor( D );
+            
+            I := ExtendFunctorToHomotopyCategories( I );
+            
+            J := LocalizationFunctor( AsCapCategory( Range( I ) ) );
+            
+            F := PreCompose( I, J );
+            
+            F!.Name := "Equivalence functor from homotopy category into derived category";
+            
+            return F;
+            
+          else
+            
+            return fail;
+            
+          fi;
+          
+        else
+          
+          return fail;
+          
+        fi;
+        
+      elif IsAdditiveClosureCategory( D ) then
+        
+        U := UnderlyingCategory( D );
+        
+        if IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( U ) then
+          
+          A := AmbientCategory( U );
+          
+          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
+            
+            I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( U ) );
+            
+            I := ExtendFunctorToHomotopyCategories( I );
+            
+            J := LocalizationFunctor( AsCapCategory( Range( I ) ) );
+            
+            F := PreCompose( I, J );
+            
+            F!.Name := "Equivalence functor from homotopy category into derived category";
+            
+            return F;
+            
+          else
+            
+            return fail;
+            
+          fi;
+        
+        elif IsAlgebroid( U ) then
+          
+          I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( U );
+          
+          I := PreCompose( I, InclusionFunctor( AsCapCategory( Range( I ) ) ) );
+          
+          I := ExtendFunctorToAdditiveClosureOfSource( I );
+          
+          I := ExtendFunctorToHomotopyCategories( I );
+          
+          J := LocalizationFunctor( AsCapCategory( Range( I ) ) );
+          
+          F := PreCompose( I, J );
+          
+          F!.Name := "Equivalence functor from homotopy category into derived category";
+          
+          return F;
+          
+        else
+          
+          return fail;
+          
+        fi;
+        
+      else
+        
+        return fail;
+        
+      fi;
+      
+    elif IsDerivedCategory( C ) then
+      
+      return IdentityFunctor( C );
+      
+    else
+      
+      return fail;
+      
+    fi;
+    
+end );
+
