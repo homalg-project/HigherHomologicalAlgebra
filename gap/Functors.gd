@@ -148,7 +148,7 @@ DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsExceptionalCollectio
 DeclareAttribute( "ConvolutionFunctor", IsExceptionalCollection );
 DeclareAttribute( "ReplacementFunctor", IsExceptionalCollection );
 
-DeclareAttribute( "ConvolutionFunctor", IsHomotopyCategory );
+DeclareAttribute( "CONVOLUTION_FUNCTOR", IsHomotopyCategory );
 
 
 DeclareOperation( "RestrictFunctorIterativelyToFullSubcategoryOfSource",

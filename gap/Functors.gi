@@ -971,12 +971,12 @@ InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )
     
-    return ConvolutionFunctor( HomotopyCategory( collection ) );
+    return CONVOLUTION_FUNCTOR( HomotopyCategory( collection ) );
     
 end );
 
 ##
-InstallMethod( ConvolutionFunctor,
+InstallMethod( CONVOLUTION_FUNCTOR,
           [ IsHomotopyCategory ],
   function( Ho_Ho_0_C )
     local Ho_0_C, Ho_C, Inc, name, conv;
@@ -1022,7 +1022,7 @@ InstallMethod( ConvolutionFunctor,
 end );
 
 ##
-InstallMethod( ConvolutionFunctor,
+InstallMethod( CONVOLUTION_FUNCTOR,
           [ IsHomotopyCategory ],
   function( Ho_Ho_0_C )
     local Ho_0_C, D, I, H, Conv;
@@ -1049,7 +1049,7 @@ InstallMethod( ConvolutionFunctor,
     
     H := AsCapCategory( Range( I ) );
     
-    Conv := ConvolutionFunctor( H );
+    Conv := CONVOLUTION_FUNCTOR( H );
     
     Conv := PreCompose( I, Conv );
     
