@@ -121,7 +121,7 @@ function( homotopy_category, n )
 end );
 
 ##
-InstallMethod( InclusionFunctorInHomotopyCategory,
+InstallMethod( EmbeddingFunctorInHomotopyCategory,
           [ IsCapCategory ],
   function( cat )
     local homotopy_cat, chains_cat, name, inc;
@@ -156,7 +156,7 @@ InstallMethod( EquivalenceIntoFullSubcategoryGeneratedByObjectsConcentratedInDeg
     
     C := DefiningCategory( homotopy_cat );
     
-    I := InclusionFunctorInHomotopyCategory( C );
+    I := EmbeddingFunctorInHomotopyCategory( C );
     
     full := FullSubcategoryGeneratedByObjectsConcentratedInDegree( homotopy_cat, i );
     
@@ -358,7 +358,7 @@ InstallOtherMethod( LocalizationFunctorByProjectiveObjects,
     
     Ho_C := HomotopyCategory( C );
     
-    I := InclusionFunctorInHomotopyCategory( C );
+    I := EmbeddingFunctorInHomotopyCategory( C );
     
     L := LocalizationFunctorByProjectiveObjects( Ho_C );
     
@@ -430,7 +430,7 @@ InstallOtherMethod( LocalizationFunctorByInjectiveObjects,
     
     Ho_C := HomotopyCategory( C );
     
-    I := InclusionFunctorInHomotopyCategory( C );
+    I := EmbeddingFunctorInHomotopyCategory( C );
     
     L := LocalizationFunctorByInjectiveObjects( Ho_C );
     

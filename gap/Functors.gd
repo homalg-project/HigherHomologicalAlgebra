@@ -28,7 +28,7 @@ KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, Return
 KeyDependentOperation( "EquivalenceIntoFullSubcategoryGeneratedByObjectsConcentratedInDegree",
           IsHomotopyCategory, IsInt, ReturnTrue );
 
-DeclareAttribute( "InclusionFunctorInHomotopyCategory", IsCapCategory );
+DeclareAttribute( "EmbeddingFunctorInHomotopyCategory", IsCapCategory );
 
 DeclareAttribute( "ExtendFunctorToHomotopyCategories", IsCapFunctor );
 
