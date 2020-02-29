@@ -7,6 +7,12 @@ InstallMethod( RandomObjectByInteger,
   function( category, n )
     local underlying_category;
     
+    if CanCompute( category, "RandomObjectByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
     underlying_category := UnderlyingCategory( category );
     
     if n = 0 then
@@ -31,6 +37,12 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
     
     category := CapCategory( source );
     
+    if CanCompute( category, "RandomMorphismWithFixedSourceAndRangeByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+   
     source_objects := ObjectList( source );
     
     range_objects := ObjectList( range );
@@ -71,6 +83,12 @@ InstallMethod( RandomMorphismWithFixedSourceByInteger,
     
     category := CapCategory( source );
     
+    if CanCompute( category, "RandomMorphismWithFixedSourceByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+
     range := RandomObjectByInteger( category, n );
     
     return RandomMorphismWithFixedSourceAndRangeByInteger( source, range, n );
@@ -85,6 +103,12 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
     
     category := CapCategory( range );
     
+    if CanCompute( category, "RandomMorphismWithFixedRangeByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+
     source := RandomObjectByInteger( category, n );
     
     return RandomMorphismWithFixedSourceAndRangeByInteger( source, range, n );
