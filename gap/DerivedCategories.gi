@@ -213,8 +213,12 @@ InstallMethod( DerivedCategory,
         
         roof_beta := UnderlyingRoof( beta );
         
-        return IsEqualForMorphisms( SourceMorphism( roof_alpha ), SourceMorphism( roof_beta ) ) and
-                IsEqualForMorphisms( RangeMorphism( roof_alpha ), RangeMorphism( roof_beta ) );
+        return IsEqualForMorphisms(
+                  SourceMorphism( roof_alpha ),
+                    SourceMorphism( roof_beta ) ) and
+                IsEqualForMorphisms(
+                  RangeMorphism( roof_alpha ),
+                    RangeMorphism( roof_beta ) );
                 
     end );
     
@@ -223,6 +227,17 @@ InstallMethod( DerivedCategory,
       function( a )
         
         return IdentityMorphism( UnderlyingCell( a ) ) / D;
+        
+    end );
+    
+    ##
+    AddIsIsomorphism( D,
+      function( alpha )
+        local roof;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        return IsQuasiIsomorphism( RangeMorphism( roof ) );
         
     end );
     
