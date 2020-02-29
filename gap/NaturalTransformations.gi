@@ -198,7 +198,7 @@ BindGlobal( "CounitOnBaseCategory",
     
     inc_1 := InclusionFunctorInAdditiveClosure( B );
     
-    inc_2 := InclusionFunctorInHomotopyCategory( C );
+    inc_2 := EmbeddingFunctorInHomotopyCategory( C );
     
     Inc := PreCompose( inc_1, inc_2 );
     

@@ -24,7 +24,7 @@ o_012_ab := FullSubcategoryGeneratedByListOfObjects( o_012_ab : name_of_full_sub
 add_o_012_ab := AdditiveClosure( o_012_ab );
 ho_o_012_ab := HomotopyCategory( add_o_012_ab );
 
-Emb := InclusionFunctorInHomotopyCategory( C );
+Emb := EmbeddingFunctorInHomotopyCategory( C );
 Emb := PreCompose( Emb, Loc );
 Emb!.Name := "Localisation functor";
 Emb := RestrictFunctorToFullSubcategoryOfSource( Emb, o_012_ab );

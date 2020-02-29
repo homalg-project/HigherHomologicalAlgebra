@@ -463,7 +463,7 @@ InstallMethod( HomFunctorOnDefiningCategory,
       
     fi;
     
-    I := InclusionFunctorInHomotopyCategory( C );
+    I := EmbeddingFunctorInHomotopyCategory( C );
     
     H := PreCompose( I, H );
     
