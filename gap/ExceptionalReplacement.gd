@@ -9,16 +9,16 @@
 #############################################################################
 
 DeclareOperation( "ExceptionalShift",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "MorphismFromSomeExceptionalObject",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ] );
+            [ IsHomotopyCategoryCell, IsExceptionalCollection, IsBool ] );
