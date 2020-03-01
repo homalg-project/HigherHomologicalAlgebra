@@ -122,14 +122,12 @@ InstallMethodWithCache( ExceptionalShift,
 end );
 
 ##
-InstallMethod( EXCEPTIONAL_REPLACEMENT,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local C, N, maps, diffs, res;
+InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
+          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
+  function( a, N, collection )
+    local C, maps, diffs, res;
     
     C := CapCategory( a );
-    
-    N := ExceptionalShift( a, collection );
     
     maps := MapLazy( IntegersList,
               function( i )
@@ -188,20 +186,46 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT,
 end );
 
 ##
-InstallMethodWithCache( ExceptionalReplacement,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local defining_category, additive_closure, homotopy_category, maps, N, diffs, res;
+#InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
+#          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+#  function( alpha, collection )
+#    local C, a, N_a, b, N_b, N, rep_a, rep_b, maps;
+#    
+#    C := CapCategory( alpha );
+#    
+#    a := Source( alpha );
+#    
+#    N_a := ExceptionalShift( a, collection );
+#    
+#    b := Range( alpha );
+#    
+#    N_b := ExceptionalShift( b, collection );
+#    
+#    N := Maximum( N_a, N_b );
+#    
+#    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, N, collection );
+#    
+#    rep_b := EXCEPTIONAL_REPLACEMENT_DATA( b, N, collection );
+#    
+#    maps := MapLazy( IntegersList,
+#              function( i )
+#                
+#            end, 1 );
+#end );
+
+##
+InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT,
+          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
+  function( a, N, collection )
+    local defining_category, additive_closure, homotopy_category, maps, diffs, res;
     
     defining_category := DefiningFullSubcategory( collection );
     
     additive_closure := AdditiveClosure( collection );
     
     homotopy_category := HomotopyCategory( collection );
-    
-    maps := EXCEPTIONAL_REPLACEMENT( a, collection );
-    
-    N := maps!.shift;
+
+    maps := EXCEPTIONAL_REPLACEMENT_DATA( a, N, collection );
     
     diffs := MapLazy( IntegersList,
       function( i )
@@ -241,6 +265,18 @@ InstallMethodWithCache( ExceptionalReplacement,
 
 end );
 
+##
+InstallMethodWithCache( ExceptionalReplacement,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local N;
+    
+    N := ExceptionalShift( a, collection );
+    
+    return EXCEPTIONAL_REPLACEMENT( a, N, collection );
+    
+end );
+ 
 ##
 InstallMethod( ExceptionalReplacement,
           [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],

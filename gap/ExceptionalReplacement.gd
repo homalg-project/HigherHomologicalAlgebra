@@ -17,8 +17,11 @@ DeclareOperation( "MorphismFromSomeExceptionalObject",
 DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
+DeclareOperation( "EXCEPTIONAL_REPLACEMENT_DATA",
+            [ IsHomotopyCategoryCell, IsInt, IsExceptionalCollection ] );
+
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsInt, IsExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryCell, IsExceptionalCollection, IsBool ] );
