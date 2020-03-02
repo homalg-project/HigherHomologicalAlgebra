@@ -959,7 +959,7 @@ InstallMethod( ReplacementFunctor,
     );
     
     AddMorphismFunction( Rep,
-      { s, alpha, r } -> "not yet implemented"
+      { s, alpha, r } -> ExceptionalReplacement( alpha, collection, true )
     );
     
     return Rep;
