@@ -19,7 +19,7 @@ InstallMethod( MappingCone,
     
     cone := MappingCone( u_phi ) / homotopy_category;
     
-    cone!.UnderlyingMorphismForMappingCone := phi;
+    cone!.defining_morphism_for_mapping_cone := phi;
     
     return cone;
     
@@ -190,7 +190,7 @@ end );
 InstallMethod( Convolution,
           [ IsChainComplex ],
   function( C )
-    local chains_category, homotopy_category, l, u, d, tau;
+    local chains_category, homotopy_category, l, u, c, shift, shift_c, d, tau;
     
     chains_category := CapCategory( C );
     
@@ -201,8 +201,16 @@ InstallMethod( Convolution,
     u := ActiveUpperBound( C );
      
     if u - l in [ 0, 1 ] then
-       
-      return ApplyFunctor( ShiftFunctor( homotopy_category, -l ), MappingCone( C ^ ( l + 1 ) ) );
+      
+      c := MappingCone( C ^ ( l + 1 ) );
+      
+      shift := ShiftFunctor( homotopy_category, -l );
+      
+      shift_c := ApplyFunctor( shift, c );
+      
+      shift_c!.defining_morphism_for_mapping_cone := ApplyFunctor( shift, c!.defining_morphism_for_mapping_cone );
+      
+      return shift_c;
       
     else
       
