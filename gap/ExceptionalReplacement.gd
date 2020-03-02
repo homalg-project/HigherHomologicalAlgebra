@@ -11,17 +11,23 @@
 DeclareOperation( "ExceptionalShift",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
-DeclareOperation( "MorphismFromSomeExceptionalObject",
+DeclareOperation( "MorphismFromExceptionalObject",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+
+DeclareOperation( "MorphismBetweenExceptionalObjects",
+            [ IsHomotopyCategoryMorphism, IsExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT_DATA",
-            [ IsHomotopyCategoryCell, IsInt, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ] );
+
+DeclareOperation( "EXCEPTIONAL_REPLACEMENT_DATA",
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
-            [ IsHomotopyCategoryCell, IsInt, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryCell, IsExceptionalCollection, IsBool ] );

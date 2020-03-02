@@ -9,7 +9,7 @@
 #############################################################################
 
 ##
-InstallMethod( MorphismFromSomeExceptionalObject,
+InstallMethod( MorphismFromExceptionalObject,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, H, H_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
@@ -30,7 +30,7 @@ InstallMethod( MorphismFromSomeExceptionalObject,
     
     H := HomFunctor( collection );
     
-    H_a := H( a );
+    H_a := ApplyFunctor( H, a );
     
     min_gen := MinimalGeneratingSet( H_a );
     
@@ -54,6 +54,32 @@ InstallMethod( MorphismFromSomeExceptionalObject,
                 UnderlyingCell( collection[ positions[ i ] ] ), a )
                   { positions_of_non_zeros[ i ] }
           );
+    
+end );
+
+##
+InstallMethod( MorphismBetweenExceptionalObjects,
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+  function( alpha, collection )
+    local H, H_alpha, D, full, I, J, m;
+    
+    H := HomFunctor( collection );
+    
+    H_alpha := ApplyFunctor( H, alpha );
+    
+    D := CategoryOfQuiverRepresentationsOverOppositeAlgebra( collection );
+    
+    full := FullSubcategoryGeneratedByProjectiveObjects( D );
+    
+    I := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( D );
+    
+    J := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+    
+    J := ExtendFunctorToAdditiveClosureOfSource( J );
+    
+    m := MorphismBetweenProjectiveChainResolutions( H_alpha );
+    
+    return ApplyFunctor( PreCompose( I, J ), m[ 0 ] / full );
     
 end );
 
@@ -122,12 +148,14 @@ InstallMethodWithCache( ExceptionalShift,
 end );
 
 ##
-InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
-          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
-  function( a, N, collection )
-    local C, maps, diffs, res;
+InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local C, N, maps, diffs, res;
     
     C := CapCategory( a );
+    
+    N := ExceptionalShift( a, collection );
     
     maps := MapLazy( IntegersList,
               function( i )
@@ -135,7 +163,7 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
                 
                 if i < -N then
                   
-                  alpha := UniversalMorphismFromZeroObject( ZeroObject( C ) );
+                  alpha := UniversalMorphismFromZeroObject( Shift( a, -i ) ); # or ZeroObject( C )
                   
                   beta := UniversalMorphismIntoZeroObject( Range( maps[ i + 1 ][ 1 ] ) );
                   
@@ -151,7 +179,7 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 fi;
                 
-                alpha_as_list := MorphismFromSomeExceptionalObject( c, collection );
+                alpha_as_list := MorphismFromExceptionalObject( c, collection );
                 
                 sources := List( alpha_as_list, Source );
                 
@@ -186,38 +214,77 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
 end );
 
 ##
-#InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
-#          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
-#  function( alpha, collection )
-#    local C, a, N_a, b, N_b, N, rep_a, rep_b, maps;
-#    
-#    C := CapCategory( alpha );
-#    
-#    a := Source( alpha );
-#    
-#    N_a := ExceptionalShift( a, collection );
-#    
-#    b := Range( alpha );
-#    
-#    N_b := ExceptionalShift( b, collection );
-#    
-#    N := Maximum( N_a, N_b );
-#    
-#    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, N, collection );
-#    
-#    rep_b := EXCEPTIONAL_REPLACEMENT_DATA( b, N, collection );
-#    
-#    maps := MapLazy( IntegersList,
-#              function( i )
-#                
-#            end, 1 );
-#end );
+InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+  function( phi, collection )
+    local C, A, U, a, N_a, b, N_b, N, rep_a, rep_b, maps;
+    
+    C := CapCategory( phi );
+    
+    A := AdditiveClosure( collection );
+    
+    U := EmbeddingFunctorFromAdditiveClosure( collection );
+    
+    a := Source( phi );
+    
+    N_a := ExceptionalShift( a, collection );
+    
+    b := Range( phi );
+    
+    N_b := ExceptionalShift( b, collection );
+    
+    N := Maximum( N_a, N_b );
+    
+    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
+    
+    rep_b := EXCEPTIONAL_REPLACEMENT_DATA( b, collection );
+    
+    maps := MapLazy( IntegersList,
+              function( i )
+                local psi, eta;
+                
+                if i < -N then
+                 
+                  psi := Shift( phi, i );
+                  
+                  eta := UniversalMorphismIntoZeroObject( ZeroObject( A ) );
+                  
+                  return [ psi, eta ];
+                  
+                elif i = -N then
+                  
+                  psi := Shift( phi, N );
+                  
+                  eta := MorphismBetweenExceptionalObjects( psi, collection );
+                  
+                  return [ psi, eta ];
+                  
+                else
+                   
+                  psi := MappingConePseudoFunctorial(
+                            rep_a[ i - 1 ][ 1 ], rep_b[ i - 1 ][ 1 ],
+                              ApplyFunctor( U, maps[ i - 1 ][ 2 ] ), maps[ i - 1 ][ 1 ]
+                                );
+                  
+                  psi := Shift( psi, -1 );
+                  
+                  eta := MorphismBetweenExceptionalObjects( psi, collection );
+                  
+                  return [ psi, eta ];
+                  
+                fi;
+                
+            end, 1 );
+    
+    return maps;
+    
+end );
 
 ##
-InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT,
-          [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ],
-  function( a, N, collection )
-    local defining_category, additive_closure, homotopy_category, maps, diffs, res;
+InstallMethodWithCache( ExceptionalReplacement,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local defining_category, additive_closure, homotopy_category, maps, diffs, res, N;
     
     defining_category := DefiningFullSubcategory( collection );
     
@@ -225,7 +292,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT,
     
     homotopy_category := HomotopyCategory( collection );
 
-    maps := EXCEPTIONAL_REPLACEMENT_DATA( a, N, collection );
+    maps := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
     
     diffs := MapLazy( IntegersList,
       function( i )
@@ -256,8 +323,10 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT,
         return AdditiveClosureMorphism( source, matrix, range );
         
     end, 1 );
-
+    
     res := ChainComplex( additive_closure, diffs ) / homotopy_category;
+    
+    N := ExceptionalShift( a, collection );
     
     SetLowerBound( res, -N );
     
@@ -267,13 +336,23 @@ end );
 
 ##
 InstallMethodWithCache( ExceptionalReplacement,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local N;
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+  function( alpha, collection )
+    local homotopy_category, rep_a, rep_b, maps, map;
     
-    N := ExceptionalShift( a, collection );
+    homotopy_category := HomotopyCategory( collection );
     
-    return EXCEPTIONAL_REPLACEMENT( a, N, collection );
+    rep_a := ExceptionalReplacement( Source( alpha ), collection );
+    
+    rep_b := ExceptionalReplacement( Range( alpha ), collection );
+    
+    maps := EXCEPTIONAL_REPLACEMENT_DATA( alpha, collection );
+    
+    maps := MapLazy( maps, m -> m[ 2 ], 1 );
+    
+    map := ChainMorphism( UnderlyingCell( rep_a ), UnderlyingCell( rep_b ), maps ) / homotopy_category;
+    
+    return map;
     
 end );
  
@@ -308,6 +387,24 @@ InstallMethod( ExceptionalReplacement,
     od;
     
     return r;
+    
+end );
+
+##
+InstallMethod( ExceptionalReplacement,
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection, IsBool ],
+  function( alpha, collection, bool )
+    local a, b, rep_a, rep_b;
+  
+    a := Source( alpha );
+    
+    b := Range( alpha );
+    
+    rep_a := ExceptionalReplacement( a, collection, bool );
+    
+    rep_b := ExceptionalReplacement( b, collection, bool );
+    
+    return ExceptionalReplacement( alpha, collection );
     
 end );
 
