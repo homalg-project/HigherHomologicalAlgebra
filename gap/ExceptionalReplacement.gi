@@ -343,6 +343,8 @@ InstallMethodWithCache( ExceptionalReplacement,
     
     res := ChainComplex( additive_closure, diffs ) / homotopy_category;
     
+    res!.exceptional_replacement_data := maps;
+    
     N := ExceptionalShift( a, collection );
     
     SetLowerBound( res, -N );
@@ -377,23 +379,35 @@ end );
 InstallMethod( ExceptionalReplacement,
           [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
   function( a, collection, bool )
-    local C, r, u, zero;
+    local C, rep_a, data, u, b, I;
     
     C := CapCategory( a );
     
-    zero := ZeroObject( AdditiveClosure( collection ) );
+    rep_a := ExceptionalReplacement( a, collection );
     
-    r := ExceptionalReplacement( a, collection );
+    data := rep_a!.exceptional_replacement_data;
     
-    u := ActiveLowerBound( r );
+    u := ActiveLowerBound( rep_a );
     
     while bool do
       
-      if IsEqualForObjects( r[ u ], zero ) then
+      if IsZeroForObjects( rep_a[ u ] ) then
         
-        SetUpperBound( r, u - 1 );
+        b := Range( data[ u ][ 1 ] );
         
-        return r;
+        I := CandidatesForExceptionalShift( b, collection );
+        
+        if IsEmpty( I ) or I[ 1 ] >= 0 then
+          
+          SetUpperBound( rep_a, u - 1 );
+          
+          return rep_a;
+          
+        else
+          
+          u := u + 1;
+          
+        fi;
         
       else
         
@@ -403,7 +417,7 @@ InstallMethod( ExceptionalReplacement,
       
     od;
     
-    return r;
+    return rep_a;
     
 end );
 
