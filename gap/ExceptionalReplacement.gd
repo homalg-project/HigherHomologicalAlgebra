@@ -11,6 +11,9 @@
 DeclareOperation( "ExceptionalShift",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
+DeclareOperation( "MorphismFromExceptionalObjectAsList",
+            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+
 DeclareOperation( "MorphismFromExceptionalObject",
             [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
 

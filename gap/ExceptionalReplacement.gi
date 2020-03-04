@@ -9,7 +9,7 @@
 #############################################################################
 
 ##
-InstallMethod( MorphismFromExceptionalObject,
+InstallMethod( MorphismFromExceptionalObjectAsList,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
     local C, H, H_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
@@ -55,6 +55,26 @@ InstallMethod( MorphismFromExceptionalObject,
                   { positions_of_non_zeros[ i ] }
           );
     
+end );
+
+##
+InstallMethod( MorphismFromExceptionalObject,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local m;
+    
+    m := MorphismFromExceptionalObjectAsList( a, collection );
+    
+    if IsEmpty( m ) then
+      
+      return UniversalMorphismFromZeroObject( a );
+      
+    else
+      
+      return MorphismBetweenDirectSums( TransposedMat( [ m ] ) );
+      
+    fi;
+     
 end );
 
 ##
@@ -179,7 +199,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 fi;
                 
-                alpha_as_list := MorphismFromExceptionalObject( c, collection );
+                alpha_as_list := MorphismFromExceptionalObjectAsList( c, collection );
                 
                 sources := List( alpha_as_list, Source );
                 
