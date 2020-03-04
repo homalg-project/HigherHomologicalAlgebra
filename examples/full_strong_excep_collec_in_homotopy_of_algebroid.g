@@ -20,15 +20,15 @@ BB := PreCompose( BB, iso );
 ################## start ##################################
 
 o := TwistedGradedFreeModule( S, 0 );
-L := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
+l := List( [ -2, -1, 0 ], i -> ApplyFunctor( BB, o[ i ] ) );
 name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 (0)}";
 name_for_algebra := "End( ⊕ {𝓞 (i)|i=-2,-1,0} )";
-collection := CreateExceptionalCollection( L : name_for_underlying_quiver := name_for_quiver,
+collection := CreateExceptionalCollection( l : name_for_underlying_quiver := name_for_quiver,
                                               name_for_endomorphism_algebra := name_for_algebra
                                           );
 
 C := AmbientCategory( collection );
-L := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
+I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
 F := ConvolutionFunctor( collection );
 G := ReplacementFunctor( collection );
@@ -42,9 +42,9 @@ a := RandomObject( C, [ -3, 3, 3 ] );
 FG_a := F(G(a));
 
 # Embedding both of them in some derived category to compare homologies
-L_a := L( a );
-L_FG_a := L( FG_a );
+I_a := I( a );
+I_FG_a := I( FG_a );
 
 # compute homologies
-List( [ -3 .. 3 ], i -> [ HomologyAt( L_a, i ), HomologyAt( L_FG_a, i ) ] );
+List( [ -3 .. 3 ], j -> [ HomologyAt( I_a, j ), HomologyAt( I_FG_a, j ) ] );
 
