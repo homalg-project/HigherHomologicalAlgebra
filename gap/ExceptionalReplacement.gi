@@ -105,12 +105,11 @@ end );
 
 # If T & a are two perfect complexes, then
 # Hom(T,a) <> 0 only if l_T - u_a <= 0 and u_T - l_a >= 0.
-##
-InstallMethodWithCache( ExceptionalShift,
+InstallMethod( CandidatesForExceptionalShift,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
-    local C, objects, T, u_T, l_T, u_a, l_a, N, shift_of_a;
-    
+    local C, T, u_T, l_T, u_a, l_a;
+     
     C := AmbientCategory( collection );
     
     if not IsHomotopyCategory( C ) then
@@ -118,11 +117,7 @@ InstallMethodWithCache( ExceptionalShift,
       Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
       
     fi;
-    
-    objects := UnderlyingObjects( collection );
-    
-    objects := List( objects, UnderlyingCell );
-    
+       
     T := TiltingObject( collection );
     
     u_T := ActiveUpperBound( T );
@@ -133,37 +128,39 @@ InstallMethodWithCache( ExceptionalShift,
     
     l_a := ActiveLowerBound( a );
     
-    N := u_T - l_a;
+    return [ l_T - u_a + 1 .. u_T - l_a ];
     
-    while N >= l_T - u_a do
+end );
+
+##
+InstallMethodWithCache( ExceptionalShift,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local E, I, shift_of_a, N;
+     
+    E := UnderlyingObjects( collection );
+    
+    E := List( E, UnderlyingCell );
+    
+    I := CandidatesForExceptionalShift( a, collection );
+    
+    for N in Reversed( I ) do
       
       shift_of_a := Shift( a, N );
       
-      if ForAny( objects, e -> not IsZeroForObjects( HomStructure( e, shift_of_a ) ) ) then
+      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, shift_of_a ) ) ) then
         
         return N;
-        
-      else
-        
-        if N = l_T - u_a then
-          
-          Assert( 3, IsZeroForObjects( a ) );
-          
-          SetIsZeroForObjects( a, true );
-          
-          return 0;
-          
-        else
-        
-          N := N - 1;
-          
-        fi;
         
       fi;
       
     od;
     
-    return N;
+    Assert( 3, IsZeroForObjects( a ) );
+    
+    SetIsZeroForObjects( a, true );
+    
+    return 0;
     
 end );
 

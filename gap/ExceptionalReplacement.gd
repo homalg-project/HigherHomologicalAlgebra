@@ -8,6 +8,9 @@
 ##
 #############################################################################
 
+DeclareOperation( "CandidatesForExceptionalShift",
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+
 DeclareOperation( "ExceptionalShift",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
