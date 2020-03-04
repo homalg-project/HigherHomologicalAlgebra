@@ -11,17 +11,13 @@
 InstallMethod( MappingCone,
           [ IsHomotopyCategoryMorphism ],
   function( phi )
-    local homotopy_category, u_phi, cone;
+    local homotopy_category, u_phi;
     
     homotopy_category := CapCategory( phi );
     
     u_phi := UnderlyingCell( phi );
     
-    cone := MappingCone( u_phi ) / homotopy_category;
-    
-    cone!.defining_morphism_for_mapping_cone := phi;
-    
-    return cone;
+    return MappingCone( u_phi ) / homotopy_category;
     
 end );
 
@@ -68,7 +64,9 @@ InstallMethod( MappingConeColift,
     
     maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ), 1 );
     
-    return ChainMorphism( MappingCone( phi ), Range( psi ), maps );
+    maps := ChainMorphism( MappingCone( phi ), Range( psi ), maps );
+    
+    return maps;
     
 end );
 
@@ -76,9 +74,9 @@ end );
 #    |                 |
 #    | alpha_0         | alpha_1
 #    |                 |
-#    v                 v 
+#    v                 v
 #    A' --- psi -----> B' ---------> Cone( psi )
-#  
+#
 InstallMethod( MappingConePseudoFunctorial,
           [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
   function( phi, psi, alpha_0, alpha_1 )
@@ -90,7 +88,7 @@ InstallMethod( MappingConePseudoFunctorial,
     
     s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
     
-    maps := MapLazy( IntegersList,  
+    maps := MapLazy( IntegersList,
             function( i )
               return MorphismBetweenDirectSums(
                 [
@@ -110,7 +108,7 @@ InstallMethod( MappingConeColift,
     local cochains, H, maps;
     
     cochains := CapCategory( phi );
-        
+    
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
     maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n + 1 ] ], [ psi[ n ] ] ] ), 1 );
@@ -130,7 +128,7 @@ InstallMethod( MappingConePseudoFunctorial,
     
     s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
     
-    maps := MapLazy( IntegersList,  
+    maps := MapLazy( IntegersList,
             function( i )
               return MorphismBetweenDirectSums(
                 [
@@ -138,7 +136,7 @@ InstallMethod( MappingConePseudoFunctorial,
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
                 ] );
             end, 1 );
-    
+            
     return ChainMorphism( cone_phi, cone_psi, maps );
     
 end );
@@ -182,7 +180,7 @@ InstallMethod( MappingConePseudoFunctorial,
     );
     
    return HomotopyCategoryMorphism( homotopy_category, m );
-    
+   
 end );
 
 #TODO Shift or UnsignedShift and why?
@@ -190,7 +188,7 @@ end );
 InstallMethod( Convolution,
           [ IsChainComplex ],
   function( C )
-    local chains_category, homotopy_category, l, u, c, shift, shift_c, d, tau;
+    local chains_category, homotopy_category, l, u, c, d, tau;
     
     chains_category := CapCategory( C );
     
@@ -204,13 +202,11 @@ InstallMethod( Convolution,
       
       c := MappingCone( C ^ ( l + 1 ) );
       
-      shift := ShiftFunctor( homotopy_category, -l );
+      c := Shift( c, l );
       
-      shift_c := ApplyFunctor( shift, c );
+      c!.defining_morphism := C ^ ( l + 1 );
       
-      shift_c!.defining_morphism_for_mapping_cone := ApplyFunctor( shift, c!.defining_morphism_for_mapping_cone );
-      
-      return shift_c;
+      return c;
       
     else
       
@@ -285,7 +281,7 @@ InstallMethod( Convolution,
       Add( L, m );
       
       new_alpha := ChainMorphism( new_C, new_D, L, l );
-       
+      
       return Convolution( new_alpha );
       
     fi;
