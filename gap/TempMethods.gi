@@ -115,3 +115,15 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
     
 end );
 
+##
+InstallMethod( RandomMorphismByInteger,
+          [ IsAdditiveClosureCategory, IsInt ],
+  function( category, n )
+    local a;
+    
+    a := RandomObjectByInteger( category, n );
+    
+    return RandomMorphismWithFixedSourceByInteger( a, Random( [ AbsInt( n ) - 1 .. AbsInt( n ) + 1 ] ) );
+    
+end );
+
