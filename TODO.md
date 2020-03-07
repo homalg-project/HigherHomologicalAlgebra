@@ -13,3 +13,4 @@ To do
 * Is it possible to optimize the computation of projective & injective resolutions?
 * Is it possible to return a minimal projective/injective resolution for a complex,
   if the underlying category allows this??
+* Rename the package to ComplexesCategories??
