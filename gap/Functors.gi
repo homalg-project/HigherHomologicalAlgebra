@@ -1213,7 +1213,7 @@ InstallMethod( EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory,
 InstallMethod( EmbeddingFunctorIntoDerivedCategory,
           [ IsCapCategory ],
   function( C )
-    local Ho_C, I, J, D, A, U, F;
+    local Ho_C, I, J, F, D, A, U, k, algebroid, add_algebroid;
     
     if HasIsAbelianCategory( C ) and IsAbelianCategory( C ) then
       
@@ -1315,6 +1315,36 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
           return fail;
           
         fi;
+      
+      elif IsQuiverRowsCategory( D ) then
+        
+        A := UnderlyingQuiverAlgebra( D );
+        
+        k := CommutativeRingOfLinearCategory( D );
+        
+        if ( HasIsIntegersForHomalg( k ) and IsIntegersForHomalg( k ) ) or IsIntegers( k ) then
+          
+          algebroid := Algebroid( A, true );
+          
+        else
+          
+          algebroid := Algebroid( A );
+          
+        fi;
+        
+        add_algebroid := AdditiveClosure( algebroid );
+        
+        I := IsomorphismFunctorFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, add_algebroid );
+        
+        I := ExtendFunctorToHomotopyCategories( I );
+        
+        F := EmbeddingFunctorIntoDerivedCategory( HomotopyCategory( add_algebroid ) );
+        
+        F := PreCompose( I, F );
+        
+        F!.Name := "Equivalence functor from homotopy category into derived category";
+        
+        return F;
         
       else
         
