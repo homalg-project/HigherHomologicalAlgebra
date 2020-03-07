@@ -11,11 +11,12 @@ collection := CreateExceptionalCollection( omegas : name_for_underlying_quiver :
 
 A := EndomorphismAlgebraOfExceptionalCollection( collection );
 algebroid := Algebroid( collection );
+add_algebroid := AdditiveClosure( algebroid );
 DeactivateCachingForCertainOperations( algebroid, operations_to_deactivate );
 iso_1 := IsomorphismIntoAlgebroid( collection );
 iso_1 := ExtendFunctorToAdditiveClosures( iso_1 );
 iso_1 := ExtendFunctorToHomotopyCategories( iso_1 );
-iso_2 := IsomorphismFunctorFromAdditiveClosureOfAlgebroidIntoQuiverRows( A );
+iso_2 := IsomorphismFunctorIntoQuiverRows( add_algebroid );
 iso_2 := ExtendFunctorToHomotopyCategories( iso_2 );
 BB := PreCompose( [ BB, iso_1, iso_2 ] );
 ################## start ##################################
@@ -31,7 +32,7 @@ collection := CreateExceptionalCollection( l : name_for_underlying_quiver := nam
 C := AmbientCategory( collection );
 D := AsCapCategory( Source( iso_2 ) );
 
-#I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
+I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
 F := ConvolutionFunctor( collection );
 G := ReplacementFunctor( collection );
@@ -46,9 +47,9 @@ c := iso_2( d );
 FG_c := F(G(c));
 
 # Embedding both of them in some derived category to compare homologies
-#I_c := I( c );
-#I_FG_c := I( FG_c );
+I_c := I( c );
+I_FG_c := I( FG_c );
 
 # compute homologies
-# List( [ -3 .. 3 ], j -> [ HomologyAt( I_c, j ), HomologyAt( I_FG_c, j ) ] );
+List( [ -3 .. 3 ], j -> [ HomologyAt( I_c, j ), HomologyAt( I_FG_c, j ) ] );
 
