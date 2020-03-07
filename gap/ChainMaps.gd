@@ -48,6 +48,12 @@ DeclareCategoryFamily( "IsCochainMorphism" );
 #
 ######################################
 
+DeclareOperation( "ChainMorphism",
+                   [ IsChainComplex, IsChainComplex, IsZFunction ] );
+
+DeclareOperation( "CochainMorphism",
+                   [ IsCochainComplex, IsCochainComplex, IsZFunction ] );
+
 #!  @Section Creating chain and cochain morphisms
 
 #!  @Description

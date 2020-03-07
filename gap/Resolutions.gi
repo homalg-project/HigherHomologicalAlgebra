@@ -59,7 +59,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     
     zero := ZeroObject( cat );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
       function( k )
         local temp, m, p1, p2, ker, pk;
         
@@ -90,9 +90,9 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
         
         fi;
       
-      end, 1 );
+      end );
     
-    r := CochainComplex( cat, MapLazy( maps, function( j ) return j[ 1 ]; end, 1 ) );
+    r := CochainComplex( cat, ApplyMap( maps, j -> j[ 1 ] ) );
     
     SetUpperBound( r, u - 1 );
     
@@ -170,9 +170,9 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
           
         else
           
-          temp_C := BaseList( Differentials( p_C ) )[ k ][ 3 ];
+          temp_C := BaseZFunctions( Differentials( p_C ) )[ 1 ][ k ][ 3 ];
           
-          temp_D := BaseList( Differentials( p_D ) )[ k ][ 3 ];
+          temp_D := BaseZFunctions( Differentials( p_D ) )[ 1 ][ k ][ 3 ];
          
           m := DirectSumFunctorial( [ maps[ k + 1 ], phi[ k ] ] );
           

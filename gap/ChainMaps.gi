@@ -94,7 +94,7 @@ end );
 #
 #########################################
 
-BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST",
+BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION",
      function( C1, C2, morphisms )
      local phi;
 
@@ -142,16 +142,16 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
   function( C1, C2, mor, n )
   local all_morphisms;
 
-  all_morphisms := MapLazy( IntegersList,
+  all_morphisms := AsZFunction(
         function( i )
           if i >= n and i <= n + Length( mor ) - 1 then 
             return mor[ i - n + 1 ];
           else
             return ZeroMorphism( C1[ i ], C2[ i ] );
           fi;
-         end, 1 );
+         end );
 
-  all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( C1, C2, all_morphisms );
+  all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION( C1, C2, all_morphisms );
 
   SetLowerBound( all_morphisms, n );
 
@@ -162,12 +162,12 @@ BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
 end );
 
 BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
-   function( l1,m1, l2,m2, mor, n, string )
-   local C1, C2, base_list, maps, zero, all_maps, cat, complex_category, complex_constructor, map_constructor, map;
+  function( l1, m1, l2, m2, mor, n, string )
+    local cat, complex_category, complex_constructor, map_constructor, C1, C2, l, maps, zero, all_maps, map;
 
-   cat := CapCategory( l1[ 1 ] );
+    cat := CapCategory( l1[ 1 ] );
 
-   if string = "chain_map" then 
+    if string = "chain_map" then 
 
       complex_category := ChainComplexCategory( cat );
 
@@ -175,7 +175,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
       map_constructor := ChainMorphism;
 
-   else 
+    else 
 
       complex_category := CochainComplexCategory( cat );
 
@@ -183,54 +183,73 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
 
       map_constructor := CochainMorphism;
 
-   fi;
+    fi;
 
-   C1 := complex_constructor( l1, m1 );
+    C1 := complex_constructor( l1, m1 );
 
-   C2 := complex_constructor( l2, m2 );
+    C2 := complex_constructor( l2, m2 );
 
-   base_list := [ Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) ) .. Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) ) ];
+    l := [
+          Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) )
+          ..
+          Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) )
+        ];
 
-   maps := List( base_list,      function( i )
+    maps := List( l,
+            function( i )
+              if i >= n and i <= n + Length( mor ) - 1 then 
+                return mor[ i - n + 1 ];
+              else 
+                return ZeroMorphism( C1[ i ], C2[ i ] );
+              fi;
+            end );
+   
+    zero := ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) );
 
-                                 if i >= n and i <= n + Length( mor ) - 1 then 
+    zero := RepeatListN( [ zero ] );
 
-                                        return mor[ i - n + 1 ];
+    all_maps := Concatenate( zero, l[ 1 ], maps, zero );
 
-                                 else 
+    map := map_constructor( C1, C2, all_maps );
 
-                                        return ZeroMorphism( C1[ i ], C2[ i ] );
+    if n > l[ Size( l ) ] then
+      
+      SetIsZeroForMorphisms( map, true );
+      
+    fi;
 
-                                 fi;
-
-                                 end );
-
-   zero := ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) );
-
-   zero := RepeatListN( [ zero ] );
-
-   all_maps := Concatenate( zero, base_list[ 1 ], maps, zero );
-
-   map := map_constructor( C1, C2, all_maps );
-
-   if n > base_list[ Length( base_list ) ] and not HasIsZeroForMorphisms( map ) then SetIsZeroForMorphisms( map, true );fi;
-
-   if n + Length( mor ) -1 < base_list[ 1 ] and not HasIsZeroForMorphisms( map ) then SetIsZeroForMorphisms( map, true ); fi;
-
-   return map;
+    if n + Size( mor ) - 1 < l[ 1 ] then
+    
+      SetIsZeroForMorphisms( map, true );
+   
+    fi;
+    
+    return map;
 
 end );
 
 
 ##
 InstallMethod( ChainMorphism,
+               [ IsChainComplex, IsChainComplex, IsZFunction ],
+CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
+
+##
+InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsZList ],
-CHAIN_OR_COCHAIN_MORPHISM_BY_LIST );
+    { C1, C2, l } -> ChainMorphism( C1, C2, AsZFunction( l ) )
+);
+
+##
+InstallMethod( CochainMorphism,
+               [ IsCochainComplex, IsCochainComplex, IsZFunction ],
+CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
 ##
 InstallMethod( CochainMorphism,
                [ IsCochainComplex, IsCochainComplex, IsZList ],
-CHAIN_OR_COCHAIN_MORPHISM_BY_LIST );
+    { C1, C2, l } -> CochainMorphism( C1, C2, AsZFunction( l ) )
+);
 
 ##
 InstallMethod( ChainMorphism,

@@ -64,23 +64,27 @@ InstallTrueMethod( IsBoundedCochainComplex, IsBoundedChainOrCochainComplex and I
 ###########################################
 
 ##
-BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
-  function( cat, diffs, make_assertions, type )
-    local C, assertion, f, msg;
+BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_Z_FUNCTION",
+  function( cat, diffs, type )
+    local C, f, msg;
     
     C := rec( );
     
     if type = "TheTypeOfChainComplexes" then
       
       ObjectifyWithAttributes( C, ValueGlobal( type ),
-                            Differentials, diffs );
+                              Differentials, diffs,
+                              Objects, ApplyMap( diffs, Source )
+                             );
                             
       Add( ChainComplexCategory( cat ), C );
       
     elif type = "TheTypeOfCochainComplexes" then
       
       ObjectifyWithAttributes( C, ValueGlobal( type ),
-                            Differentials, diffs );
+                              Differentials, diffs,
+                              Objects, ApplyMap( diffs, Source )
+                             );
       
       Add( CochainComplexCategory( cat ), C );
       
@@ -93,40 +97,36 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
 end );
 
 ##
-InstallMethod( ChainComplex, [ IsCapCategory, IsZList, IsBool ],
-  function( cat, diffs, make_assertions )
-    
-    return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST(
-            cat, diffs, make_assertions, "TheTypeOfChainComplexes"
-              );
-              
-end );
-
-##
-InstallMethod( ChainComplex, [ IsCapCategory, IsZList ],
+InstallMethod( ChainComplex, [ IsCapCategory, IsZFunction ],
   function( cat, diffs )
     
-    return ChainComplex( cat, diffs, false );
-    
-end );
-
-##
-InstallMethod( CochainComplex, [ IsCapCategory, IsZList, IsBool ],
-  function( cat, diffs, make_assertions )
-    
-    return CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST(
-            cat, diffs, make_assertions, "TheTypeOfCochainComplexes"
+    return CHAIN_OR_COCHAIN_COMPLEX_BY_Z_FUNCTION(
+            cat, diffs, "TheTypeOfChainComplexes"
               );
-              
+   
 end );
 
 ##
-InstallMethod( CochainComplex, [ IsCapCategory, IsZList ],
+InstallMethod( ChainComplex,
+          [ IsCapCategory, IsZList ],
+  { cat, l } -> ChainComplex( cat, AsZFunction( l ) )
+);
+
+##
+InstallMethod( CochainComplex, [ IsCapCategory, IsZFunction ],
   function( cat, diffs )
     
-    return CochainComplex( cat, diffs, false );
-    
+    return CHAIN_OR_COCHAIN_COMPLEX_BY_Z_FUNCTION(
+            cat, diffs, "TheTypeOfCochainComplexes"
+              );
+
 end );
+
+##
+InstallMethod( CochainComplex,
+          [ IsCapCategory, IsZList ],
+  { cat, l } -> CochainComplex( cat, AsZFunction( l ) )
+);
 
 ################################################
 #
@@ -667,15 +667,6 @@ end );
 # Attributes of a (co)chain complexes
 #
 #########################################
-
-##
-InstallMethod( Objects, 
-               [ IsChainOrCochainComplex ],
-  function( C )
-    
-    return MapLazy( Differentials( C ), Source, 1 );
-    
-end );
 
 ##
 InstallMethod( DifferentialAtOp, 

@@ -3,6 +3,7 @@
 #
 # Reading the declaration part of the package.
 #
+ReadPackage( "ComplexesForCAP", "gap/ZFunctions.gd" );
 ReadPackage( "ComplexesForCAP", "gap/Complexes.gd" );
 ReadPackage( "ComplexesForCAP", "gap/DoubleComplexes.gd" );
 ReadPackage( "ComplexesForCAP", "gap/Categories.gd" );

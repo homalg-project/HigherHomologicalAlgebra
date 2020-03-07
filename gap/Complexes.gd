@@ -50,11 +50,10 @@ DeclareCategory( "IsBoundedCochainComplex", IsBoundedChainOrCochainComplex and I
 #  Constructors of (Co)chain complexes 
 #
 #########################################
+DeclareOperation( "ChainComplex", [ IsCapCategory, IsZFunction ] );
+DeclareOperation( "CochainComplex", [ IsCapCategory, IsZFunction ] );
 
 #! @Section Creating chain and cochain complexes
-
-DeclareOperation( "ChainComplex", [ IsCapCategory, IsZList, IsBool ] );
-DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList, IsBool ] );
 
 #! @BeginGroup 1
 #! @Description
