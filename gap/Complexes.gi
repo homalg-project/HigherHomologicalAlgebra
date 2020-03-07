@@ -908,7 +908,7 @@ InstallMethod( CochainComplex,
 end );
 
 ##
-InstallMethod( StalkChainComplex,
+InstallMethod( StalkChainComplexOp,
           [ IsCapCategoryObject, IsInt ],
   function( obj, n )
     local zero_obj, zero, diffs, complex, complex_n;
@@ -933,7 +933,7 @@ InstallMethod( StalkChainComplex,
 end );
 
 ##
-InstallMethod( StalkCochainComplex,
+InstallMethod( StalkCochainComplexOp,
           [ IsCapCategoryObject, IsInt ],
   function( obj, n )
     local zero_obj, zero, diffs, complex, complex_n;

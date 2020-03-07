@@ -1408,7 +1408,7 @@ InstallMethod( IsQuasiIsomorphism,
 end );
 
 ##
-InstallMethod( StalkChainMorphism,
+InstallMethod( StalkChainMorphismOp,
           [ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
     local morphism;
@@ -1422,7 +1422,7 @@ InstallMethod( StalkChainMorphism,
 end );
 
 ##
-InstallMethod( StalkCochainMorphism,
+InstallMethod( StalkCochainMorphismOp,
           [ IsCapCategoryMorphism, IsInt ], 
   function( f, n )
     local morphism;

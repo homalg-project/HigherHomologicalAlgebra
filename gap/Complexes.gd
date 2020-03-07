@@ -99,11 +99,11 @@ DeclareOperation( "CochainComplex", [ IsDenseList ] );
 #! where $M_n=M( M^n=M)$ and $M_i=0(M^i=0)$ whenever $i\neq n$.
 #! @Arguments M, n
 #! @Returns a (co)chain complex
-DeclareOperation( "StalkChainComplex", [ IsCapCategoryObject, IsInt ] );
+KeyDependentOperation( "StalkChainComplex", IsCapCategoryObject, IsInt, ReturnTrue );
 #! @EndGroup
 #! @Group 4
 #! @Arguments M, n
-DeclareOperation( "StalkCochainComplex", [ IsCapCategoryObject, IsInt ] );
+KeyDependentOperation( "StalkCochainComplex", IsCapCategoryObject, IsInt, ReturnTrue );
 
 #! @InsertChunk 3
 #! @Description

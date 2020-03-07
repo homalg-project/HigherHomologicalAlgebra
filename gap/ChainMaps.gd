@@ -105,11 +105,11 @@ DeclareOperation( "CochainMorphism",
 #! where $f^{\bullet}_n=f( f_{\bullet}^n=f)$ and $f^{\bullet}_i=0(f_{\bullet}^i=0)$ whenever $i\neq n$.
 #! @Arguments f, n
 #! @Returns a (co)chain morphism
-DeclareOperation( "StalkChainMorphism", [ IsCapCategoryMorphism, IsInt ] );
+KeyDependentOperation( "StalkChainMorphism", IsCapCategoryMorphism, IsInt, ReturnTrue );
 #! @EndGroup
 #! @Group 41
 #! @Arguments f, n
-DeclareOperation( "StalkCochainMorphism", [ IsCapCategoryMorphism, IsInt ] );
+KeyDependentOperation( "StalkCochainMorphism", IsCapCategoryMorphism, IsInt, ReturnTrue );
 
 #! @BeginGroup 42
 #! @Description
