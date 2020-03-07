@@ -175,12 +175,6 @@ DeclareAttribute( "Differentials", IsChainOrCochainComplex );
 DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 #! @Description
-#! The command returns the category in which all objects and differentials of $C$ live.
-#! @Arguments C
-#! @Returns a Cap category
-DeclareAttribute( "CatOfComplex", IsChainOrCochainComplex );
-
-#! @Description
 #! If the input is a cochain complex $C$, then the output is the associated chain complex.
 #! Otherwise, the output is $C$.
 #! @Arguments C

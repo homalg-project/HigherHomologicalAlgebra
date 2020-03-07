@@ -73,7 +73,6 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
     if type = "TheTypeOfChainComplexes" then
       
       ObjectifyWithAttributes( C, ValueGlobal( type ),
-                            CatOfComplex, cat,
                             Differentials, diffs );
                             
       Add( ChainComplexCategory( cat ), C );
@@ -81,7 +80,6 @@ BindGlobal( "CHAIN_OR_COCHAIN_COMPLEX_BY_DIFFERENTIAL_LIST",
     elif type = "TheTypeOfCochainComplexes" then
       
       ObjectifyWithAttributes( C, ValueGlobal( type ),
-                            CatOfComplex, cat,
                             Differentials, diffs );
       
       Add( CochainComplexCategory( cat ), C );
