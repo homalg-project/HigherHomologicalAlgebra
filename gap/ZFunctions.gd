@@ -22,5 +22,5 @@ DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
 
 ###############
 
-DeclareAttribute( "AsZFunction", IsZList );
+#DeclareAttribute( "AsZFunction", IsZList );
 DeclareOperation( "MapLazy", [ IsZFunction, IsFunction, IsInt ] );

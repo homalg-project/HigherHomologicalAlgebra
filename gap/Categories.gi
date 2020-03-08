@@ -30,7 +30,7 @@ InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec(
     installation_name := "HomotopyMorphisms", 
     filter_list := [ "morphism" ],
     cache_name := "HomotopyMorphisms",
-    return_type := [ IsInfList ] ),
+    return_type := [ IsZFunction ] ),
 
 ) );
 
@@ -361,7 +361,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               local P, H, l, XX;
               P := Source( phi );
               XX := Source( pi );
-              H := MapLazy( IntegersList, function ( i )
+              H := AsZFunction( function ( i )
                       local id, m, n;
                       id := IdentityMorphism( P );
                       if i < ActiveLowerBound( P ) then
@@ -372,11 +372,11 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                       m := KernelLift( P ^ i, id[i] - PreCompose( P ^ i, H[(i - 1)] ) );
                       n := PreCompose( CoastrictionToImage( P ^ (i + 1) ), KernelLift( P ^ i, ImageEmbedding( P ^ (i + 1) ) ) );
                       return ProjectiveLift( m, n );
-                  end, 1 );
-              l := MapLazy( IntegersList, function ( i )
+                  end );
+              l := AsZFunction( function ( i )
                       return PreCompose( [ H[i], ProjectiveLift( phi[i + 1], pi[i + 1] ), XX ^ (i + 1) ] ) 
                         + PreCompose( [ P ^ i, H[(i - 1)], ProjectiveLift( phi[i], pi[i] ) ] );
-                  end, 1 );
+                  end );
               return ChainMorphism( P, XX, l );
           end );
     fi;
@@ -496,7 +496,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               mors := Morphisms( phi );
               mors := MapLazy( mors, function ( m )
                       return MultiplyWithElementOfCommutativeRingForMorphisms( r, m );
-                  end, 1 );
+                  end );
               return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors );
           end );
     fi;
@@ -700,7 +700,7 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS,
 
           tt := T!.UnderlyingDoubleComplex;
 
-          l := MapLazy( IntegersList,
+          l := AsZFunction(
             
             function( m )
               local ind_s, ind_t, morphisms, obj;
@@ -739,7 +739,7 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_ON_CHAIN_MORPHISMS,
               
               return MorphismBetweenDirectSums( morphisms );
               
-              end, 1 );
+              end );
                                       
           return ChainMorphism( S, T, l );
           
@@ -757,7 +757,7 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS,
 
         tt := T!.UnderlyingDoubleComplex;
 
-        l := MapLazy( IntegersList,
+        l := AsZFunction(
           
           function( m )
             local ind_s, ind_t, morphisms, obj;
@@ -778,7 +778,7 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_ON_CHAIN_MORPHISMS,
                           end );
               end );
             return MorphismBetweenDirectSums( morphisms );
-            end, 1 );
+            end );
                                     
       return ChainMorphism( S, T, l );
       
@@ -807,7 +807,7 @@ InstallGlobalFunction( ADD_BRAIDING_FOR_CHAINS,
       ss := s!.UnderlyingDoubleComplex;
       tt := t!.UnderlyingDoubleComplex;
       
-      l := MapLazy( IntegersList,
+      l := AsZFunction(
         function( m )
           local ind_s, ind_t, morphisms, obj;
              
@@ -849,7 +849,7 @@ InstallGlobalFunction( ADD_BRAIDING_FOR_CHAINS,
               
           return MorphismBetweenDirectSums( morphisms );
           
-          end, 1 );
+          end );
                                   
       return ChainMorphism( s, t, l );
       
@@ -880,7 +880,7 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP,
       
       tt := tensor_A_B!.UnderlyingDoubleComplex;
       
-      l := MapLazy( IntegersList,
+      l := AsZFunction(
         function( m )
           local obj, ind_hh, morphisms;
           
@@ -920,7 +920,7 @@ InstallGlobalFunction( ADD_TENSOR_PRODUCT_TO_INTERNAL_HOM_ADJUNCTION_MAP,
                              
           return MorphismBetweenDirectSums( [ morphisms ] );
            
-        end, 1 );
+        end );
       
       return ChainMorphism( A, hom_B_C, l );
        
@@ -952,7 +952,7 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP,
       
       tt := tensor_A_B!.UnderlyingDoubleComplex;
       
-      l := MapLazy( IntegersList, 
+      l := AsZFunction( 
         function( m )
           local obj, ind_tt, morphisms;
           
@@ -993,7 +993,7 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP,
                              
           return MorphismBetweenDirectSums( morphisms );
            
-        end, 1 );
+        end );
                                    
        return ChainMorphism( tensor_A_B, C, l );
        
@@ -1071,7 +1071,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         
         Tot2 := TotalChainComplex( rr );
         
-        l := MapLazy( IntegersList, function ( m )
+        l := AsZFunction( function ( m )
                 local ind_s, ind_t, morphisms, obj;
                 
                 obj := ObjectAt( Tot1, m );
@@ -1096,7 +1096,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
                 
                 return MorphismBetweenDirectSums( morphisms );
               
-              end, 1 );
+              end );
         
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           

@@ -507,12 +507,7 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
       function( C )
         local diffs, functor_C;
         
-        diffs := MapLazy( Differentials( C ),
-          function( d )
-            
-            return ApplyFunctor( F, d );
-        
-        end, 1 );
+        diffs := ApplyMap( Differentials( C ), d -> ApplyFunctor( F, d ) );
         
         functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
         
@@ -537,12 +532,12 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
       function( new_source, phi, new_range ) 
         local morphisms, functor_phi;
         
-        morphisms := MapLazy( Morphisms( phi ),
+        morphisms := ApplyMap( Morphisms( phi ),
           function( psi )
             
             return ApplyFunctor( F, psi );
           
-          end, 1 );
+          end );
         
         functor_phi := ChainMorphism( new_source, new_range, morphisms );
         
@@ -587,13 +582,13 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
       function( C )
         local diffs, functor_C;
         
-        diffs := MapLazy( Differentials( C ),
+        diffs := ApplyMap( Differentials( C ),
           
           function( d )
             
             return ApplyFunctor( F, d );
           
-          end, 1 );
+          end );
         
         functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
         
@@ -618,12 +613,12 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
       function( new_source, phi, new_range ) 
         local morphisms, functor_phi;
         
-        morphisms := MapLazy( Morphisms( phi ),
+        morphisms := ApplyMap( Morphisms( phi ),
           function( psi )
             
             return ApplyFunctor( F, psi );
           
-          end, 1 );
+          end );
         
         functor_phi := CochainMorphism( new_source, new_range, morphisms );
         
@@ -665,9 +660,9 @@ InstallMethod( ChainCategoryToCochainCategoryOfOppositeCategory,
       function( C )
         local inf_list;
         
-        inf_list := MapLazy( Differentials( C ), Opposite, 1 );
+        inf_list := ApplyMap( Differentials( C ), Opposite );
         
-        inf_list := ShiftLazy( inf_list, 1 );
+        inf_list := ShiftLazy( inf_list );
         
         return CochainComplex( Opposite( cat ), inf_list );
         
@@ -677,7 +672,7 @@ InstallMethod( ChainCategoryToCochainCategoryOfOppositeCategory,
       function( obj1, phi, obj2 )
         local inf_list;
         
-        inf_list := MapLazy( Morphisms( phi ), Opposite, 1 );
+        inf_list := ApplyMap( Morphisms( phi ), Opposite );
         
         return CochainMorphism( obj1, obj2, inf_list );
         
@@ -703,7 +698,7 @@ InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
       function( C )
         local inf_list;
         
-        inf_list := MapLazy( Differentials( C ), Opposite, 1 );
+        inf_list := ApplyMap( Differentials( C ), Opposite );
         
         inf_list := ShiftLazy( inf_list, -1 );
         
@@ -715,7 +710,7 @@ InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
       function( obj1, phi, obj2 )
         local inf_list;
         
-        inf_list := MapLazy( Morphisms( phi ), Opposite, 1 );
+        inf_list := ApplyMap( Morphisms( phi ), Opposite );
         
         return ChainMorphism( obj1, obj2, inf_list );
         
@@ -745,7 +740,7 @@ InstallMethod( BrutalTruncationAboveFunctorOp,
         function( new_source, phi, new_range )
           local morphisms;
           
-          morphisms := MapLazy( IntegersList, 
+          morphisms := AsZFunction( 
             function( i ) 
               
               if i <= n then 
@@ -758,7 +753,7 @@ InstallMethod( BrutalTruncationAboveFunctorOp,
               
               fi;
             
-            end, 1 );
+            end );
       
       return CochainMorphism( new_source, new_range, morphisms );
     
@@ -786,7 +781,7 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
         function( new_source, phi, new_range )
           local morphisms;
           
-          morphisms := MapLazy( IntegersList,
+          morphisms := AsZFunction(
             function( i ) 
               
               if i > n then 
@@ -799,7 +794,7 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
               
               fi;
             
-            end, 1 );
+            end );
           
       return CochainMorphism( new_source, new_range, morphisms );
       
@@ -830,7 +825,7 @@ InstallMethod( BrutalTruncationAboveFunctorOp,
       function( new_source, phi, new_range )
         local morphisms;
         
-        morphisms := MapLazy( IntegersList, 
+        morphisms := AsZFunction( 
         
           function( i ) 
           
@@ -844,7 +839,7 @@ InstallMethod( BrutalTruncationAboveFunctorOp,
             
             fi;
           
-          end, 1 );
+          end );
         
     return ChainMorphism( new_source, new_range, morphisms );
     
@@ -873,7 +868,7 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
       function( new_source, phi, new_range )
         local morphisms;
         
-        morphisms := MapLazy( IntegersList, 
+        morphisms := AsZFunction( 
                             
           function( i ) 
             
@@ -887,7 +882,7 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
             
             fi;
           
-          end, 1 );
+          end );
         
       return ChainMorphism( new_source, new_range, morphisms );
       
@@ -1030,7 +1025,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
         
         tt := T!.UnderlyingDoubleComplex;
         
-        l := MapLazy( IntegersList,
+        l := AsZFunction(
           
           function( m )
             local ind_s, ind_t, morphisms, obj;
@@ -1068,7 +1063,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
             
             return MorphismBetweenDirectSums( morphisms );
             
-            end, 1 );
+            end );
         
         return ChainMorphism( S, T, l );
       

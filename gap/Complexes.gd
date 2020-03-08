@@ -61,11 +61,11 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZFunction ] );
 #! ($M^{\bullet}\in \mathrm{Ch}^\bullet(A)$) where $d^M_{i}=\mathrm{diffs}[ i ]$($d_M^{i}=\mathrm{diffs}[ i ]$).
 #! @Arguments A, diffs
 #! @Returns a chain complex
-DeclareOperation( "ChainComplex", [ IsCapCategory, IsZList ] );
+#DeclareOperation( "ChainComplex", [ IsCapCategory, IsZList ] );
 #! @EndGroup
 #! @Group 1
 #! @Arguments A, diffs
-DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
+#DeclareOperation( "CochainComplex", [ IsCapCategory, IsZList ] );
 
 
 #! @BeginGroup 2

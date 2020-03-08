@@ -107,12 +107,6 @@ InstallMethod( ChainComplex, [ IsCapCategory, IsZFunction ],
 end );
 
 ##
-InstallMethod( ChainComplex,
-          [ IsCapCategory, IsZList ],
-  { cat, l } -> ChainComplex( cat, AsZFunction( l ) )
-);
-
-##
 InstallMethod( CochainComplex, [ IsCapCategory, IsZFunction ],
   function( cat, diffs )
     
@@ -122,12 +116,6 @@ InstallMethod( CochainComplex, [ IsCapCategory, IsZFunction ],
 
 end );
 
-##
-InstallMethod( CochainComplex,
-          [ IsCapCategory, IsZList ],
-  { cat, l } -> CochainComplex( cat, AsZFunction( l ) )
-);
-
 ################################################
 #
 #  Constructors of inductive (co)chain complexes
@@ -136,10 +124,10 @@ InstallMethod( CochainComplex,
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
-  function( d0, negative_part_function, positive_part_function, string )
-    local complex_constructor, negative_part, positive_part, cat, diffs;
+  function( N, d_N, negative_part_function, positive_part_function, string )
+    local cat, complex_constructor, diff;
     
-    cat := CapCategory( d0 ); 
+    cat := CapCategory( d_N );
     
     if string = "chain" then 
       
@@ -155,57 +143,45 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
       
     fi;
     
-    negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
-    
-    positive_part := InductiveList( d0, positive_part_function );
-    
-    diffs := Concatenate( negative_part, positive_part );
-    
-    return complex_constructor( cat, diffs );
+    diff := AsZFunction(
+              function( i )
+                if i = N then
+                  return d_N;
+                elif i > N then
+                  return positive_part_function( diff( i - 1 ) );
+                else
+                  return negative_part_function( diff( i + 1 ) );
+                fi;
+              end );
+              
+    return complex_constructor( cat, diff );
     
 end );
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE",
-  function( d0, negative_part_function, string )
-    local complex_constructor, negative_part, positive_part,
-            cat, diffs, d1, zero_part, complex, upper_bound;
-            
-    cat := CapCategory( d0 ); 
-    
-    zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
-    
+  function( N, d_N, negative_part_function, string )
+    local cat, positive_part_function, upper_bound, complex;
+     
+    cat := CapCategory( d_N );
+     
     if string = "chain" then 
       
-      complex_constructor := ChainComplex;
+      positive_part_function := d -> UniversalMorphismFromZeroObject( Source( d ) );
       
-      d1 := UniversalMorphismFromZeroObject( Source( d0 ) );
-      
-      upper_bound := 1;
+      upper_bound := N;
       
     elif string = "cochain" then
       
-      complex_constructor := CochainComplex;
+      positive_part_function := d -> UniversalMorphismIntoZeroObject( Range( d ) );
       
-      d1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
-      
-      upper_bound := 2;
-      
-    else
-      
-      Error( "string must be either chain or cochain" );
+      upper_bound := N + 1;
       
     fi;
     
-    negative_part := InductiveList( negative_part_function( d0 ), negative_part_function );
+    complex := CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( N, d_N, negative_part_function, positive_part_function, string );
     
-    positive_part := Concatenate( [ d0, d1 ], zero_part );
-    
-    diffs := Concatenate( negative_part, positive_part );
-    
-    complex :=  complex_constructor( cat, diffs );
-    
-    SetUpperBound( complex, upper_bound - 1 );
+    SetUpperBound( complex, upper_bound );
     
     return complex;
     
@@ -213,48 +189,31 @@ end );
 
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE",
-  function( d0, positive_part_function, string )
-    local complex_constructor, negative_part, positive_part, cat,
-            diffs, d_minus_1, zero_part, complex, lower_bound;
-    
-    cat := CapCategory( d0 ); 
-    
-    zero_part := RepeatListN( [ UniversalMorphismFromZeroObject( ZeroObject( cat ) ) ] );
-    
+  function( N, d_N, positive_part_function, string )
+    local cat, negative_part_function, lower_bound, complex;
+     
+    cat := CapCategory( d_N );
+     
     if string = "chain" then 
       
-      complex_constructor := ChainComplex;
+      negative_part_function := d -> UniversalMorphismIntoZeroObject( Range( d ) );
       
-      d_minus_1 := UniversalMorphismIntoZeroObject( Range( d0 ) );
-      
-      lower_bound := -2;
+      lower_bound := N - 1;
       
     elif string = "cochain" then
       
-      complex_constructor := CochainComplex;
+      negative_part_function := d -> UniversalMorphismFromZeroObject( Source( d ) );
       
-      d_minus_1 := UniversalMorphismFromZeroObject( Source( d0 ) );
-      
-      lower_bound := -1;
-      
-    else
-      
-      Error( "string must be either chain or cochain" );
+      lower_bound := N;
       
     fi;
     
-    positive_part := InductiveList( d0, positive_part_function );
+    complex := CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( N, d_N, negative_part_function, positive_part_function, string );
     
-    negative_part := Concatenate( [ d_minus_1 ], zero_part );
-    
-    diffs := Concatenate( negative_part, positive_part );
-    
-    complex :=  complex_constructor( cat, diffs );
-    
-    SetLowerBound( complex, lower_bound + 1 );
+    SetLowerBound( complex, lower_bound );
     
     return complex;
-    
+  
 end );
 
 ##
@@ -262,7 +221,7 @@ InstallMethod( ChainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
   function( d0, negative_part_function, positive_part_function )
     return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
-              d0, negative_part_function, positive_part_function,
+              0, d0, negative_part_function, positive_part_function,
                 "chain" );
     
 end );
@@ -273,7 +232,7 @@ InstallMethod( CochainComplexWithInductiveSides,
   function( d0, negative_part_function, positive_part_function )
     
     return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
-              d0, negative_part_function, positive_part_function,
+              0, d0, negative_part_function, positive_part_function,
                 "cochain" );
     
 end );
@@ -283,7 +242,7 @@ InstallMethod( ChainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
   function( d0, negative_part_function )
     
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "chain" );
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( 0, d0, negative_part_function, "chain" );
     
 end );
 
@@ -292,7 +251,7 @@ InstallMethod( ChainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
   function( d0, positive_part_function )
     
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "chain" );
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( 0, d0, positive_part_function, "chain" );
     
 end );
 
@@ -301,7 +260,7 @@ InstallMethod( CochainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
   function( d0, negative_part_function )
     
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( d0, negative_part_function, "cochain" );
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( 0, d0, negative_part_function, "cochain" );
     
 end );
 
@@ -310,7 +269,7 @@ InstallMethod( CochainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
   function( d0, positive_part_function )
     
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( d0, positive_part_function, "cochain" );
+    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( 0, d0, positive_part_function, "cochain" );
     
 end );
 
@@ -802,54 +761,54 @@ InstallMethod( AsCochainComplex, [ IsCochainComplex ], IdFunc );
 
 ##
 BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
-  function( cat, list, index, string )
-    local zero, zero_map, zero_part, n, diffs, new_list, complex, upper_bound, lower_bound;
-    
-    zero := ZeroObject( cat );
-    
-    zero_map := ZeroMorphism( zero, zero );
-    
-    zero_part := RepeatListN( [ zero_map ] );
-    
-    n := Length( list );
-    
-    if not ForAll( list, mor -> cat = CapCategory( mor ) ) then
-      
-      Error( "All morphisms in the list should live in the same category" );
-      
-    fi;
+  function( cat, diffs, N, string )
+    local complex_constructor, func, lower_bound, upper_bound, complex;
     
     if string = "chain" then
       
-      new_list := Concatenation(
-        [ ZeroMorphism( Range( list[ 1 ] ), zero ) ], list, [ ZeroMorphism( zero, Source( list[ n ] ) ) ] );
-        
-      diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
+      complex_constructor := ChainComplex;
       
-      complex := ChainComplex( cat, diffs );
+      func := function( i )
+                if i in [ N .. N + Size( diffs ) - 1 ] then
+                  return diffs[ i - N + 1 ];
+                elif i > N + Size( diffs ) - 1 then
+                  return UniversalMorphismFromZeroObject( Source( func( i - 1 ) ) );
+                else
+                  return UniversalMorphismIntoZeroObject( Range( func( i + 1 ) ) );
+                fi;
+              end;
       
-      lower_bound := index - 2;
+      lower_bound := N - 1;
       
-      upper_bound := index + Length( list );
+      upper_bound := N + Size( diffs ) - 1;
       
     else
       
-      new_list := Concatenation(
-        [ ZeroMorphism( zero, Source( list[ 1 ] ) ) ], list, [ ZeroMorphism( Range( list[ n ] ), zero ) ] );
+      complex_constructor := CochainComplex;
       
-      diffs := Concatenate( zero_part, index - 1, new_list, zero_part );
+      func := function( i )
+                if i in [ N .. N + Size( diffs ) - 1 ] then
+                  return diffs[ i - N + 1 ];
+                elif i > N + Size( diffs ) - 1 then
+                  return UniversalMorphismIntoZeroObject( Range( func( i - 1 ) ) );
+                else
+                  return UniversalMorphismFromZeroObject( Source( func( i + 1 ) ) );
+                fi;
+              end;
       
-      complex := CochainComplex( cat, diffs );
+      lower_bound := N;
       
-      lower_bound := index - 1;
-      
-      upper_bound := index + Length( list ) + 1;
-      
+      upper_bound := N + Size( diffs );
+
     fi;
     
-    SetLowerBound( complex, lower_bound + 1 );
+    diffs := AsZFunction( func );
     
-    SetUpperBound( complex, upper_bound - 1 );
+    complex := complex_constructor( cat, diffs );
+    
+    SetLowerBound( complex, lower_bound );
+    
+    SetUpperBound( complex, upper_bound );
     
     return complex;
     
@@ -902,19 +861,11 @@ end );
 InstallMethod( StalkChainComplexOp,
           [ IsCapCategoryObject, IsInt ],
   function( obj, n )
-    local zero_obj, zero, diffs, complex, complex_n;
+    local complex, complex_n;
     
-    zero_obj := ZeroObject( CapCategory( obj ) );
-    
-    zero := RepeatListN( [ ZeroMorphism( zero_obj, zero_obj ) ] );
-    
-    diffs := Concatenate( zero, n, [ ZeroMorphism( obj, zero_obj ), ZeroMorphism( zero_obj, obj ) ], zero );
-    
-    complex := ChainComplex( CapCategory( obj ), diffs );
+    complex := ChainComplex( [ UniversalMorphismIntoZeroObject( obj ) ], n );
     
     SetLowerBound( complex, n );
-    
-    SetUpperBound( complex, n );
     
     # See IsEqualForCacheForObjects to understand why I am adding the next line
     complex_n := complex[ n ];
@@ -927,20 +878,9 @@ end );
 InstallMethod( StalkCochainComplexOp,
           [ IsCapCategoryObject, IsInt ],
   function( obj, n )
-    local zero_obj, zero, diffs, complex, complex_n;
+    local complex, complex_n;
     
-    zero_obj := ZeroObject( CapCategory( obj ) );
-    
-    zero := RepeatListN( [ ZeroMorphism( zero_obj, zero_obj ) ] );
-    
-    diffs := Concatenate( zero, n - 1,
-              [ ZeroMorphism( zero_obj, obj ),
-                ZeroMorphism( obj, zero_obj ) ],
-              zero );
-              
-    complex := CochainComplex( CapCategory( obj ), diffs );
-    
-    SetLowerBound( complex, n );
+    complex := CochainComplex( [ UniversalMorphismIntoZeroObject( obj ) ], n );
     
     SetUpperBound( complex, n );
     
@@ -948,7 +888,7 @@ InstallMethod( StalkCochainComplexOp,
     complex_n := complex[ n ];
     
     return complex;
-    
+   
 end );
 
 #############################################
@@ -1386,9 +1326,7 @@ InstallMethod( AsComplexOverCapFullSubcategory,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( diffs,
-              diff -> 
-                ValueGlobal( "AsSubcategoryCell" )( full_subcategory, diff ), 1 );
+    diffs := ApplyMap( diffs, d -> ValueGlobal( "AsSubcategoryCell" )( full_subcategory, d ) );
     
     if IsChainComplex( C ) then
       
@@ -1488,7 +1426,7 @@ InstallMethod( ShiftLazyOp,
     
     if i mod 2 = 1 then
       
-      newDifferentials := MapLazy( newDifferentials, d -> -d, 1 );
+      newDifferentials := ApplyMap( newDifferentials, d -> -d );
       
     fi;
     
@@ -1706,28 +1644,19 @@ InstallMethod( GoodTruncationBelowOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
-      function( i )
-        
+    diffs := AsZFunction(
+      function( i ) 
         if i < n  then 
-          
           return ZeroMorphism( zero, zero );
-          
         elif i = n then
-          
           return ZeroMorphism( KernelObject( C^n ), zero );
-          
         elif i = n+1 then
-          
           return KernelLift( C^n, C^( n + 1 ) );
-          
         else
-          
           return C^i;
-          
         fi;
         
-      end, 1 );
+      end );
       
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1752,7 +1681,7 @@ InstallMethod( GoodTruncationBelowOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       
       function( i )
         if i < n - 1 then
@@ -1773,7 +1702,7 @@ InstallMethod( GoodTruncationBelowOp,
           
         fi;
         
-      end, 1 );
+      end );
       
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1798,7 +1727,7 @@ InstallMethod( GoodTruncationAboveOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i > n + 1  then
@@ -1819,7 +1748,7 @@ InstallMethod( GoodTruncationAboveOp,
           
         fi;
         
-      end, 1 );
+      end );
     
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1843,7 +1772,7 @@ InstallMethod( GoodTruncationAboveOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i > n  then
@@ -1864,7 +1793,7 @@ InstallMethod( GoodTruncationAboveOp,
           
         fi;
         
-      end, 1 );
+      end );
     
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1891,7 +1820,7 @@ InstallMethod( BrutalTruncationBelowOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i < n  then
@@ -1908,7 +1837,7 @@ InstallMethod( BrutalTruncationBelowOp,
           
         fi;
         
-      end, 1 );
+      end );
       
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1936,7 +1865,7 @@ InstallMethod( BrutalTruncationAboveOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i >= n + 1  then
@@ -1953,7 +1882,7 @@ InstallMethod( BrutalTruncationAboveOp,
           
         fi;
         
-      end, 1 );
+      end );
       
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -1980,7 +1909,7 @@ InstallMethod( BrutalTruncationBelowOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i < n  then
@@ -1997,7 +1926,7 @@ InstallMethod( BrutalTruncationBelowOp,
           
         fi;
         
-      end, 1 );
+      end );
     
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
@@ -2024,7 +1953,7 @@ InstallMethod( BrutalTruncationAboveOp,
     
     diffs := Differentials( C );
     
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         
         if i > n   then
@@ -2041,7 +1970,7 @@ InstallMethod( BrutalTruncationAboveOp,
           
         fi;
         
-      end, 1 );
+      end );
       
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     

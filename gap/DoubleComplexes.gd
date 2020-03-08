@@ -71,7 +71,7 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 #! I.e., $v^D_{i,j}:=cols[i][j]$.
 #! @Arguments A, rows, cols
 #! @Returns a double chain complex
-DeclareOperation( "DoubleChainComplex", [ IsCapCategory, IsInfList, IsInfList ] );
+DeclareOperation( "DoubleChainComplex", [ IsCapCategory, IsZFunction, IsZFunction ] );
 
 #! @Description
 #! The input is a Cap category $\mathcal{A}$ and  two functions $R$ and $V$. The output is the double chain complex $D$ defined by 
@@ -145,7 +145,7 @@ DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
 #! I.e., $v_D^{i,j}:=cols[i][j]$.
 #! @Arguments A, rows, cols
 #! @Returns a double cochain complex
-DeclareOperation( "DoubleCochainComplex", [ IsCapCategory, IsInfList, IsInfList ] );
+DeclareOperation( "DoubleCochainComplex", [ IsCapCategory, IsZFunction, IsZFunction ] );
 
 #! @Description
 #! The input is a Cap category $\mathcal{A}$ and two functions $R$ and $V$. The output is the double chain complex $D$ defined by 

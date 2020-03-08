@@ -206,10 +206,17 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
    
     zero := ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) );
 
-    zero := RepeatListN( [ zero ] );
-
-    all_maps := Concatenate( zero, l[ 1 ], maps, zero );
-
+    all_maps := 
+      AsZFunction(
+            function( i )
+              if i in l then
+                return maps[ Position( l, i ) ];
+              else
+                return zero;
+              fi;
+            end
+          );
+    
     map := map_constructor( C1, C2, all_maps );
 
     if n > l[ Size( l ) ] then
@@ -234,22 +241,11 @@ InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsZFunction ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
-##
-InstallMethod( ChainMorphism,
-               [ IsChainComplex, IsChainComplex, IsZList ],
-    { C1, C2, l } -> ChainMorphism( C1, C2, AsZFunction( l ) )
-);
 
 ##
 InstallMethod( CochainMorphism,
                [ IsCochainComplex, IsCochainComplex, IsZFunction ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
-
-##
-InstallMethod( CochainMorphism,
-               [ IsCochainComplex, IsCochainComplex, IsZList ],
-    { C1, C2, l } -> CochainMorphism( C1, C2, AsZFunction( l ) )
-);
 
 ##
 InstallMethod( ChainMorphism,

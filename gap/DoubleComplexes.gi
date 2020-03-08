@@ -63,7 +63,7 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
 
 
 InstallMethod( DoubleChainComplex, 
-               [ IsCapCategory, IsInfList, IsInfList ],
+               [ IsCapCategory, IsZFunction, IsZFunction ],
  function( cat, h, v )
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleChainComplex" );
@@ -71,7 +71,7 @@ InstallMethod( DoubleChainComplex,
 end );
 
 InstallMethod( DoubleCochainComplex, 
-               [ IsCapCategory, IsInfList, IsInfList ],
+               [ IsCapCategory, IsZFunction, IsZFunction ],
  function( cat, h, v )
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleCochainComplex" );
@@ -82,9 +82,9 @@ BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS",
  function( cat, R, V, name )
  local r,v;
 
- r := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> R( i, j ), 1 ), 1 );
+ r := AsZFunction(  j -> AsZFunction(  i -> R( i, j ) ) );
 
- v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
+ v := AsZFunction(  i -> AsZFunction(  j -> V( i, j ) ) );
 
  return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, r, v, name );
 
@@ -292,7 +292,7 @@ local d, cat, diff;
 
 cat := CatOfDoubleComplex( C );
 
-diff := MapLazy( IntegersList, function( m )
+diff := AsZFunction(  function( m )
                                local list;
                                
                                C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
@@ -309,7 +309,7 @@ diff := MapLazy( IntegersList, function( m )
                                                                      end ) );
                                
                                return MorphismBetweenDirectSums( list );
-                               end, 1 );
+                               end );
 d := ChainComplex( cat, diff );
 
 d!.UnderlyingDoubleComplex := C;
@@ -330,7 +330,7 @@ local d, cat, diff;
 cat := CatOfDoubleComplex( C );
 
 
-diff := MapLazy( IntegersList, function( m )
+diff := AsZFunction(  function( m )
                                local list;
                                
                                C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
@@ -346,7 +346,7 @@ diff := MapLazy( IntegersList, function( m )
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( list );
-                                end, 1 );
+                                end );
 d := ChainComplex( cat, diff );
 
 d!.UnderlyingDoubleComplex := C;
@@ -368,7 +368,7 @@ cat := CatOfDoubleComplex( C );
 
 zero_object := ZeroObject( cat );
 
-diff := MapLazy( IntegersList, function( m )
+diff := AsZFunction(  function( m )
                                local l;
                                
                                if m = x0 + y0 then
@@ -391,7 +391,7 @@ diff := MapLazy( IntegersList, function( m )
                                                                   fi;
                                                                   end ) );
                                return MorphismBetweenDirectSums( l );
-                               end, 1 );
+                               end );
 
 complex := ChainComplex( cat, diff );
 
@@ -416,7 +416,7 @@ cat := CatOfDoubleComplex( C );
 
 zero_object := ZeroObject( cat );
 
-diff := MapLazy( IntegersList, function( m )
+diff := AsZFunction(  function( m )
                                local l;
                                
                                if m = x0 + y0 + 1 then 
@@ -439,7 +439,7 @@ diff := MapLazy( IntegersList, function( m )
                                                                      fi;
                                                                      end ) );
                                return MorphismBetweenDirectSums( l );
-                               end, 1 );
+                               end );
 
 complex := ChainComplex( cat, diff );
 
