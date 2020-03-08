@@ -159,17 +159,17 @@ function( homotopy_category )
   ##
   AddRotationOfStandardExactTriangle( homotopy_category,
       function( tr )
-        local rot, standard_rot, f, X, Y, maps, tau;
+        local rot, standard_rot, f, XX, YY, maps, tau;
       
         rot := CreateExactTriangle( tr^1, tr^2, AdditiveInverse( ShiftOfMorphism( tr^0 ) ) );
       
-        standard_rot := CompleteMorphismToStandardExactTriangle( tr^1 );
+        standard_rot := CompleteMorphismToStandardExactTriangle( rot ^ 0 );
       
         f := UnderlyingCell( tr^0 );
       
-        X := UnderlyingCell( tr[ 0 ] );
+        XX := UnderlyingCell( tr[ 0 ] );
       
-        Y := UnderlyingCell( tr[ 1 ] );
+        YY := UnderlyingCell( tr[ 1 ] );
       
         maps := MapLazy( IntegersList,  
                 function( i )
@@ -177,8 +177,8 @@ function( homotopy_category )
                   MorphismBetweenDirectSums(
                     [ 
                       [ AdditiveInverse( f[ i - 1 ] ),
-                          IdentityMorphism( X[ i - 1 ] ),
-                            ZeroMorphism( X[ i - 1 ], Y[ i ] ) ]
+                          IdentityMorphism( XX[ i - 1 ] ),
+                            ZeroMorphism( XX[ i - 1 ], YY[ i ] ) ]
                     ] );
                 end, 1 );
       
@@ -186,7 +186,7 @@ function( homotopy_category )
               UnderlyingCell( rot[ 2 ] ),
                 UnderlyingCell( standard_rot[ 2 ] ), maps );
       
-        tau := HomotopyCategoryMorphism( homotopy_category, tau );
+        tau := HomotopyCategoryMorphism( CapCategory( tr ^ 0 ), tau );
       
         tau := CreateTrianglesMorphism(
                   rot, standard_rot, IdentityMorphism( tr[ 1 ] ), IdentityMorphism( tr[ 2 ] ), tau );
@@ -198,9 +198,9 @@ function( homotopy_category )
                   return
                   MorphismBetweenDirectSums(
                     [ 
-                      [ ZeroMorphism( Y[ i - 1 ], X[ i - 1 ] ) ],
-                        [ IdentityMorphism( X[ i - 1 ] )         ], 
-                          [ ZeroMorphism( Y[ i ], X[ i - 1 ] )     ]
+                      [ ZeroMorphism( YY[ i - 1 ], XX[ i - 1 ] ) ],
+                        [ IdentityMorphism( XX[ i - 1 ] )         ], 
+                          [ ZeroMorphism( YY[ i ], XX[ i - 1 ] ) ]
                     ] );
                 end, 1 );
       
@@ -208,7 +208,7 @@ function( homotopy_category )
               UnderlyingCell( standard_rot[ 2 ] ),
               UnderlyingCell( rot[ 2 ] ), maps );
       
-        tau := HomotopyCategoryMorphism( homotopy_category, tau );
+        tau := HomotopyCategoryMorphism( CapCategory( tr^0 ), tau );
       
         tau := CreateTrianglesMorphism(
                   standard_rot, rot, IdentityMorphism( tr[ 1 ] ), IdentityMorphism( tr[ 2 ] ), tau );
