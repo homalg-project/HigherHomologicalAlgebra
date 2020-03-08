@@ -14,3 +14,6 @@ To do
 * Is it possible to return a minimal projective/injective resolution for a complex,
   if the underlying category allows this??
 * Rename the package to ComplexesCategories??
+* Use ZFunctions
+* Use Categories constructor package to simplify implementation of the complexes category
+*
