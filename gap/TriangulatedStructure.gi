@@ -8,109 +8,89 @@
 
 BindGlobal( "ADD_TRIANGULATED_STRUCUTRE",
 
-function( homotopy_category )
+function( Ho_C )
     
-  SetIsTriangulatedCategory( homotopy_category, true );
+  SetIsTriangulatedCategory( Ho_C, true );
   
-  SetIsTriangulatedCategoryWithShiftAutomorphism( homotopy_category, true );
+  SetIsTriangulatedCategoryWithShiftAutomorphism( Ho_C, true );
 
   ## Adding the shift and reverse shift functors
-  AddShiftOfObject( homotopy_category,
+  AddShiftOfObject( Ho_C,
     function( C )
       local twist_functor;
       
-      twist_functor := ShiftFunctor( homotopy_category, -1 );
+      twist_functor := ShiftFunctor( Ho_C, -1 );
     
       return ApplyFunctor( twist_functor, C );
       
   end );
 
   ##
-  AddShiftOfMorphism( homotopy_category, 
+  AddShiftOfMorphism( Ho_C, 
       function( phi )
         local twist_functor;
         
-        twist_functor := ShiftFunctor( homotopy_category, -1 );
+        twist_functor := ShiftFunctor( Ho_C, -1 );
   
       return ApplyFunctor( twist_functor, phi );
   
   end );
   
   ##
-  AddReverseShiftOfObject( homotopy_category,
+  AddReverseShiftOfObject( Ho_C,
       function( C )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctor( homotopy_category, 1 );
+        reverse_twist_functor := ShiftFunctor( Ho_C, 1 );
    
         return ApplyFunctor( reverse_twist_functor, C );
   
   end );
   
   ##
-  AddReverseShiftOfMorphism( homotopy_category,
+  AddReverseShiftOfMorphism( Ho_C,
       function( phi )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctor( homotopy_category, 1 );
+        reverse_twist_functor := ShiftFunctor( Ho_C, 1 );
       
         return ApplyFunctor( reverse_twist_functor, phi );
   
   end );
   
   ##
-  AddIsomorphismIntoShiftOfReverseShift( homotopy_category,
-      function( C )
+  AddIsomorphismIntoShiftOfReverseShift( Ho_C, IdentityMorphism );
   
-        return IdentityMorphism( C );
+  AddIsomorphismFromShiftOfReverseShift( Ho_C, IdentityMorphism );
   
-  end );
+  AddIsomorphismIntoReverseShiftOfShift( Ho_C, IdentityMorphism );
   
-  AddIsomorphismFromShiftOfReverseShift( homotopy_category,
-      function( C )
-        
-        return IdentityMorphism( C );
-      
-  end );
+  AddIsomorphismFromReverseShiftOfShift( Ho_C, IdentityMorphism );
   
-  AddIsomorphismIntoReverseShiftOfShift( homotopy_category,
-      function( C )
-      
-        return IdentityMorphism( C );
+  AddConeObject( Ho_C, MappingCone );
   
-  end );
-  
-  AddIsomorphismFromReverseShiftOfShift( homotopy_category,
-      function( C )
-        
-        return IdentityMorphism( C );
-  
-  end );
-  
-  AddConeObject( homotopy_category, MappingCone );
-  
-  AddMorphismIntoConeObjectWithGivenConeObject( homotopy_category,
+  AddMorphismIntoConeObjectWithGivenConeObject( Ho_C,
     function( phi, C )
       local cell;
       
       cell := UnderlyingCell( phi );
       
-      return NaturalInjectionInMappingCone( cell ) / homotopy_category;
+      return NaturalInjectionInMappingCone( cell ) / Ho_C;
       
   end );
   
-  AddMorphismFromConeObjectWithGivenConeObject( homotopy_category,
+  AddMorphismFromConeObjectWithGivenConeObject( Ho_C,
     function( phi, C )
       local cell;
       
       cell := UnderlyingCell( phi );
       
-      return NaturalProjectionFromMappingCone( cell ) / homotopy_category;
+      return NaturalProjectionFromMappingCone( cell ) / Ho_C;
       
   end );
  
   ##
-  AddCompleteMorphismToStandardExactTriangle( homotopy_category,
+  AddCompleteMorphismToStandardExactTriangle( Ho_C,
       function( phi )
         local i, p;
         
@@ -123,9 +103,9 @@ function( homotopy_category )
   end );
   
   ##
-  AddCompleteToMorphismOfStandardExactTriangles( homotopy_category,
+  AddCompleteToMorphismOfStandardExactTriangles( Ho_C,
       function( tr1, tr2, phi, psi )
-        local tr1_0, tr2_0, phi_, psi_, s, maps, tau;
+        local tr1_0, tr2_0, phi_, psi_, homotopy_maps, maps, tau;
         
         tr1_0 := UnderlyingCell( tr1^0 );
         
@@ -135,91 +115,163 @@ function( homotopy_category )
         
         psi_ := UnderlyingCell( psi );
         
-        s := HomotopyMorphisms( PreCompose( tr1^0, psi ) - PreCompose( phi, tr2^0 ) );
+        homotopy_maps := HomotopyMorphisms( PreCompose( tr1^0, psi ) - PreCompose( phi, tr2^0 ) );
         
         maps := MapLazy( IntegersList,
                   function( i )
                     return
                       MorphismBetweenDirectSums(
                         [
-                          [ phi_[ i - 1 ], s[ i - 1 ] ],
+                          [ phi_[ i - 1 ], homotopy_maps[ i - 1 ] ],
                           [ ZeroMorphism( Source( psi_ )[ i ], Range( phi_ )[ i - 1 ] ), psi_[ i ] ]
                         ] );
                   end, 1 );
+        
         tau := ChainMorphism( 
                 UnderlyingCell( tr1[2] ), 
                 UnderlyingCell( tr2[2] ),
                 maps );
         
-        tau := HomotopyCategoryMorphism( homotopy_category, tau );
+        tau := HomotopyCategoryMorphism( Ho_C, tau );
         
         return CreateTrianglesMorphism( tr1, tr2, phi, psi, tau );
   end );
   
   ##
-  AddRotationOfStandardExactTriangle( homotopy_category,
-      function( tr )
-        local rot, standard_rot, f, XX, YY, maps, tau;
+  AddRotationOfStandardExactTriangle( Ho_C,
+      function( T )
+        local rotation, st_rotation, phi, A, B, maps, tau;
       
-        rot := CreateExactTriangle( tr^1, tr^2, AdditiveInverse( ShiftOfMorphism( tr^0 ) ) );
+        rotation := CreateExactTriangle( T ^ 1, T ^ 2, AdditiveInverse( ShiftOfMorphism( T ^ 0 ) ) );
       
-        standard_rot := CompleteMorphismToStandardExactTriangle( rot ^ 0 );
+        st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
       
-        f := UnderlyingCell( tr^0 );
+        phi := UnderlyingCell( T ^ 0 );
       
-        XX := UnderlyingCell( tr[ 0 ] );
+        A := UnderlyingCell( T[ 0 ] );
       
-        YY := UnderlyingCell( tr[ 1 ] );
+        B := UnderlyingCell( T[ 1 ] );
       
         maps := MapLazy( IntegersList,  
                 function( i )
                   return
                   MorphismBetweenDirectSums(
                     [ 
-                      [ AdditiveInverse( f[ i - 1 ] ),
-                          IdentityMorphism( XX[ i - 1 ] ),
-                            ZeroMorphism( XX[ i - 1 ], YY[ i ] ) ]
+                      [
+                        AdditiveInverse( phi[ i - 1 ] ),
+                        IdentityMorphism( A[ i - 1 ] ),
+                        ZeroMorphism( A[ i - 1 ], B[ i ] )
+                      ]
                     ] );
                 end, 1 );
       
         tau := ChainMorphism( 
-              UnderlyingCell( rot[ 2 ] ),
-                UnderlyingCell( standard_rot[ 2 ] ), maps );
+                  UnderlyingCell( rotation[ 2 ] ),
+                    UnderlyingCell( st_rotation[ 2 ] ), maps
+                  );
       
-        tau := HomotopyCategoryMorphism( CapCategory( tr ^ 0 ), tau );
+        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
       
         tau := CreateTrianglesMorphism(
-                  rot, standard_rot, IdentityMorphism( tr[ 1 ] ), IdentityMorphism( tr[ 2 ] ), tau );
+                  rotation, st_rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
       
-        SetIsomorphismIntoStandardExactTriangle( rot, tau );
+        SetIsomorphismIntoStandardExactTriangle( rotation, tau );
       
         maps := MapLazy( IntegersList,
                 function( i )
                   return
                   MorphismBetweenDirectSums(
                     [ 
-                      [ ZeroMorphism( YY[ i - 1 ], XX[ i - 1 ] ) ],
-                        [ IdentityMorphism( XX[ i - 1 ] )         ], 
-                          [ ZeroMorphism( YY[ i ], XX[ i - 1 ] ) ]
+                      [ ZeroMorphism( B[ i - 1 ], A[ i - 1 ] ) ],
+                      [ IdentityMorphism( A[ i - 1 ] ) ],
+                      [ ZeroMorphism( B[ i ], A[ i - 1 ] ) ]
                     ] );
                 end, 1 );
       
         tau := ChainMorphism( 
-              UnderlyingCell( standard_rot[ 2 ] ),
-              UnderlyingCell( rot[ 2 ] ), maps );
+                UnderlyingCell( st_rotation[ 2 ] ),
+                  UnderlyingCell( rotation[ 2 ] ), maps
+                );
       
-        tau := HomotopyCategoryMorphism( CapCategory( tr^0 ), tau );
+        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
       
         tau := CreateTrianglesMorphism(
-                  standard_rot, rot, IdentityMorphism( tr[ 1 ] ), IdentityMorphism( tr[ 2 ] ), tau );
+                  st_rotation, rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
       
-        SetIsomorphismFromStandardExactTriangle( rot, tau );
+        SetIsomorphismFromStandardExactTriangle( rotation, tau );
       
-        return rot;
+        return rotation;
+        
+  end );
+  
+  ##
+  AddReverseRotationOfStandardExactTriangle( Ho_C,
+      function( T )
+        local rotation, st_rotation, phi, A, B, maps, tau;
+      
+        rotation := CreateExactTriangle( AdditiveInverse( Shift( T ^ 2, -1 ) ), T ^ 0, T ^ 1 );
+      
+        st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
+      
+        phi := UnderlyingCell( T ^ 0 );
+      
+        A := UnderlyingCell( T[ 0 ] );
+      
+        B := UnderlyingCell( T[ 1 ] );
+      
+        maps := MapLazy( IntegersList,  
+                function( i )
+                  return
+                  MorphismBetweenDirectSums(
+                    [ 
+                      [ ZeroMorphism( A[ i - 1 ], B[ i ] ) ],
+                      [ IdentityMorphism( B[ i ] ) ],
+                      [ phi[ i ] ]
+                    ] );
+                end, 1 );
+      
+        tau := ChainMorphism( 
+                UnderlyingCell( st_rotation[ 2 ] ),
+                  UnderlyingCell( rotation[ 2 ] ),
+                    maps );
+      
+        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
+      
+        tau := CreateTrianglesMorphism(
+                  st_rotation, rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
+      
+        SetIsomorphismFromStandardExactTriangle( rotation, tau );
+      
+        maps := MapLazy( IntegersList,
+                function( i )
+                  return
+                  MorphismBetweenDirectSums(
+                    [ 
+                      [ 
+                        ZeroMorphism( B[ i ], A[ i - 1 ] ),
+                        IdentityMorphism( B[ i ] ),
+                        ZeroMorphism( B[ i ], A[ i ] )
+                      ]
+                    ] );
+                end, 1 );
+      
+        tau := ChainMorphism(
+                  UnderlyingCell( rotation[ 2 ] ), 
+                  UnderlyingCell( st_rotation[ 2 ] ),
+                  maps );
+      
+        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
+      
+        tau := CreateTrianglesMorphism(
+                  rotation, st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
+      
+        SetIsomorphismIntoStandardExactTriangle( rotation, tau );
+      
+        return rotation;
         
   end );
 
-#AddOctahedralAxiom( homotopy_category,
+#AddOctahedralAxiom( Ho_C,
 #    function( f_, g_ )
 #    local h_, f, g, h, X, Y, Z, t0, t1, t2, t, tf_, th_, tr, i, j, standard_tr;
 #    h_ := PreCompose( f_, g_ );
@@ -246,7 +298,7 @@ function( homotopy_category )
 #                );
 #            end, 1 );
 #    t1 := ChainMorphism( MappingCone( h ), MappingCone( g ), t1 );
-#    t1 := HomotopyCategoryMorphism( homotopy_category, t1 );
+#    t1 := HomotopyCategoryMorphism( Ho_C, t1 );
 #
 #    t2 := MapLazy( IntegersList, 
 #            function( i ) 
@@ -258,7 +310,7 @@ function( homotopy_category )
 #                );
 #            end, 1 );
 #    t2 := ChainMorphism( MappingCone( g ), ShiftLazy( MappingCone( f ), -1 ), t2 );
-#    t2 := HomotopyCategoryMorphism( homotopy_category, t2 );
+#    t2 := HomotopyCategoryMorphism( Ho_C, t2 );
 #
 #
 #    tr := CreateExactTriangle( t0, t1, t2 );
@@ -275,7 +327,7 @@ function( homotopy_category )
 #            );
 #            end, 1 );
 #    i := ChainMorphism( MappingCone( g ), MappingCone( UnderlyingMor( t0 ) ), i );
-#    i := HomotopyCategoryMorphism( homotopy_category, i );
+#    i := HomotopyCategoryMorphism( Ho_C, i );
 #    i := CreateTrianglesMorphism( tr, standard_tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), i );
 #
 #    j := MapLazy( IntegersList, 
@@ -291,7 +343,7 @@ function( homotopy_category )
 #            end, 1 );
 #    
 #    j := ChainMorphism( MappingCone( UnderlyingMor( t0 ) ), MappingCone( g ), j );
-#    j := HomotopyCategoryMorphism( homotopy_category, j );
+#    j := HomotopyCategoryMorphism( Ho_C, j );
 #    j := CreateTrianglesMorphism( standard_tr, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), j );
 #
 #    SetIsomorphismIntoStandardExactTriangle( tr, i );
