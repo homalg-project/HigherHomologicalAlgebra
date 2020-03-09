@@ -247,8 +247,32 @@ InstallMethod( DerivedCategory,
         
     end );
     
-    ##TODO add PreCompose
+    ##
+    AddIsWellDefinedForObjects( D,
+      function( a )
+      
+        return IsWellDefined( UnderlyingCell( a ) );
+        
+    end );
     
+    ##
+    AddIsWellDefinedForMorphisms( D,
+      function( alpha )
+        local roof, source_morphism, range_morphism;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        source_morphism := SourceMorphism( roof );
+        
+        range_morphism := RangeMorphism( roof );
+        
+        return IsEqualForObjects( Source( source_morphism ), Source( range_morphism ) ) and
+                IsWellDefined( source_morphism ) and
+                  IsWellDefined( range_morphism ) and
+                    IsQuasiIsomorphism( source_morphism );
+        
+    end );
+   
     D!.is_computable := false;
     
     Finalize( D );
@@ -299,6 +323,7 @@ InstallMethod( Display,
 
 end );
 
+##
 InstallMethod( ViewObj,
           [ IsDerivedCategoryObject ],
   function( a )
