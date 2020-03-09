@@ -97,7 +97,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     SetUpperBound( r, u - 1 );
     
     return CochainMorphism( r, C, 
-      MapLazy( IntegersList,
+      AsZFunction( 
         function( j )
           if j mod 2 = 0 then
             
@@ -109,7 +109,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
           
           fi;
         
-        end, 1 ) );
+        end ) );
       
 end );
 
@@ -160,7 +160,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
     
     u := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
       function( k )
         local temp_C, temp_D, m, kappa, ep_C, ep_D;
         
@@ -186,7 +186,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
          
          fi;
          
-      end, 1 );
+      end );
     
     return CochainMorphism( p_C, p_D, maps );
     
@@ -521,7 +521,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
               return c;
             end;
     
-    maps := MapLazy( IntegersList, func, 1 );
+    maps := AsZFunction( func );
     
     return CochainMorphism( P, Q, maps );
   
@@ -656,43 +656,44 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
     
     zero := ZeroObject( cat );
     
-    maps := MapLazy( IntegersList, function( k )
-      local temp, m, coker, iota, mor1, mor2;
-      
-      if k <= u then
-        
-        return [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ k ], zero ), ZeroMorphism( zero, zero ) ];
-      
-      else
-        
-        temp := maps[ k - 1 ][ 1 ];
-         
-        m := MorphismBetweenDirectSums(
-                            [
-                              [ AdditiveInverse( C^( k - 1 ) ), maps[ k - 1 ][ 2 ] ],
-                              [ ZeroMorphism( Source( temp ), C[ k ] ), temp ]
-                            ]
-                        );
-               
-        coker := CokernelProjection( m );
-        
-        iota := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
-        
-        mor1 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 1 );
-        
-        mor2 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 2 );
+    maps := AsZFunction(
+        function( k )
+          local temp, m, coker, iota, mor1, mor2;
           
-        return [ PostCompose( [ iota, coker, mor2 ] ), PostCompose( [ iota, coker, mor1 ] ), m ];
-      
-      fi;
-      
-    end, 1 );
+          if k <= u then
+            
+            return [ ZeroMorphism( zero, zero ), ZeroMorphism( C[ k ], zero ), ZeroMorphism( zero, zero ) ];
+          
+          else
+            
+            temp := maps[ k - 1 ][ 1 ];
+             
+            m := MorphismBetweenDirectSums(
+                                [
+                                  [ AdditiveInverse( C^( k - 1 ) ), maps[ k - 1 ][ 2 ] ],
+                                  [ ZeroMorphism( Source( temp ), C[ k ] ), temp ]
+                                ]
+                            );
+                   
+            coker := CokernelProjection( m );
+            
+            iota := MonomorphismIntoSomeInjectiveObject( Range( coker ) );
+            
+            mor1 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 1 );
+            
+            mor2 := InjectionOfCofactorOfDirectSum( [ C[ k ], Range( temp ) ], 2 );
+              
+            return [ PostCompose( [ iota, coker, mor2 ] ), PostCompose( [ iota, coker, mor1 ] ), m ];
+          
+          fi;
+          
+    end );
     
-    inj := CochainComplex( cat, ShiftLazy( MapLazy( maps, j -> j[ 1 ], 1 ), 1 ) );
+    inj := CochainComplex( cat, ShiftLazy( ApplyMap( maps, j -> j[ 1 ] ) ) );
     
     SetLowerBound( inj, u + 1 );
     
-    return CochainMorphism( C, inj, MapLazy( maps, j -> j[ 2 ], 1 ) );
+    return CochainMorphism( C, inj, ApplyMap( maps, j -> j[ 2 ] ) );
     
  end );
 
@@ -740,7 +741,7 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
     
     u := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) ) - 1;
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
       function( k )
         local temp_C, temp_D, m, kappa, mo_C, mo_D;
         
@@ -750,9 +751,9 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
           
         else
           
-          temp_C := BaseList( BaseList( Differentials( i_C ) ) )[ k ][ 3 ];
+          temp_C := BaseZFunctions( BaseZFunctions( Differentials( i_C ) )[ 1 ] )[ 1 ][ k ][ 3 ];
           
-          temp_D := BaseList( BaseList( Differentials( i_D ) ) )[ k ][ 3 ];
+          temp_D := BaseZFunctions( BaseZFunctions( Differentials( i_D ) )[ 1 ] )[ 1 ][ k ][ 3 ];
           
           m := DirectSumFunctorial( [ phi[ k ], maps[ k - 1 ] ] );
           
@@ -766,7 +767,7 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
          
          fi;
          
-      end, 1 );
+      end );
     
     return CochainMorphism( i_C, i_D, maps );
     
@@ -1102,7 +1103,7 @@ function( phi )
             return c;
           end;
   
-  maps := MapLazy( IntegersList, func, 1 );
+  maps := ApplyMap( func );
   
   return CochainMorphism( P, Q, maps );
 
@@ -1238,7 +1239,7 @@ BindGlobal( "QuasiIsomorphismFromProjectiveResolution2",
     
     zero := ZeroObject( cat );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
       function( k )
         local epi, iota, temp, p1, p2, D;
         
@@ -1274,14 +1275,13 @@ BindGlobal( "QuasiIsomorphismFromProjectiveResolution2",
         
         fi;
       
-      end, 1 );
+      end );
     
-    r := CochainComplex( cat, MapLazy( maps, function( j ) return j[ 1 ]; end, 1 ) );
+    r := CochainComplex( cat, AsZFunction( maps, j -> j[ 1 ] ) );
     
     SetUpperBound( r, u - 1 );
     
-    return CochainMorphism( r, C,
-            MapLazy( IntegersList, j -> maps[ j ][ 2 ], 1 ) );
+    return CochainMorphism( r, C, AsZFunction( j -> maps[ j ][ 2 ] ) );
       
 end );
 
@@ -1404,7 +1404,7 @@ InstallMethodWithCrispCache( CARTAN_HELPER,
     
     cat := UnderlyingCategory( chains );
   
-    diffs := MapLazy( IntegersList,
+    diffs := AsZFunction(
       function( i )
         local iota_1, pi_1, T1, iota_2, pi_2, T2, iota_3, pi_3, T3;
         
@@ -1437,14 +1437,14 @@ InstallMethodWithCrispCache( CARTAN_HELPER,
                       
                       ] );
         
-      end, 1 );
+      end );
     
       P := ChainComplex( cat, diffs );
       
       SetUpperBound( P, ActiveUpperBound( C ) );
       SetLowerBound( P, ActiveLowerBound( C ) );
       
-      mors := MapLazy( IntegersList,
+      mors := AsZFunction(
         function( i )
           local iota_1, pi_1, T1;
           
@@ -1456,7 +1456,7 @@ InstallMethodWithCrispCache( CARTAN_HELPER,
           
           return T1[ 1 ];
           
-        end, 1 );
+        end );
       
       map := ChainMorphism( P, C, mors );
       

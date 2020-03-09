@@ -44,7 +44,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     if IsIdenticalToZeroMorphism( phi ) or m > n then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
-      return MapLazy( IntegersList, n -> ZeroMorphism( A[ n ], B[ n - 1 ] ), 1 );
+      return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n - 1 ] ) );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
    
@@ -161,7 +161,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     if IsIdenticalToZeroMorphism( phi ) or m > n then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
-      return MapLazy( IntegersList, n -> ZeroMorphism( A[ n ], B[ n + 1 ] ), 1 );
+      return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n + 1 ] ) );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
      
@@ -275,7 +275,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     if IsIdenticalToZeroMorphism( phi ) then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
-      return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n + 1 ] ), 1 );
+      return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n + 1 ] ) );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
@@ -288,10 +288,15 @@ AddDerivationToCAP( HomotopyMorphisms,
       return fail;
     else
       SetIsNullHomotopic( phi, true );
-      return MapLazy( IntegersList, 
-          n -> PreCompose( 
-            MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n + 1 ] ) ] ] ),
-              colift[ n + 1 ] ), 1 );
+      return AsZFunction( n ->
+                PreCompose(
+                  MorphismBetweenDirectSums(
+                    [
+                      [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n + 1 ] ) ]
+                    ]
+                  ),
+                  colift[ n + 1 ] )
+                );
     fi;
     
 end: CategoryFilter := IsChainComplexCategory,
@@ -311,7 +316,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     if IsIdenticalToZeroMorphism( phi ) then
       Info( InfoComplexCategoriesForCAP, 2, "Computing witness for being null-homotopic the easy way ..." );
-      return MapLazy( IntegersList, n -> ZeroMorphism( C[ n ], D[ n - 1 ] ), 1 );
+      return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n - 1 ] ) );
       Info( InfoComplexCategoriesForCAP, 2, "Done!" );
     fi;
     
@@ -324,10 +329,14 @@ AddDerivationToCAP( HomotopyMorphisms,
       return fail;
     else
       SetIsNullHomotopic( phi, true );
-      return MapLazy( IntegersList, 
-          n -> PreCompose(
-            MorphismBetweenDirectSums( [ [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n - 1 ] ) ] ] ),
-              colift[ n - 1 ] ), 1 );
+      return AsZFunction( n -> 
+                PreCompose(
+                  MorphismBetweenDirectSums(
+                    [ 
+                      [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n - 1 ] ) ]
+                    ] ),
+                  colift[ n - 1 ] )
+                );
     fi;
     
 end: CategoryFilter := IsCochainComplexCategory,

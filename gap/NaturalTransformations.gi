@@ -29,9 +29,9 @@ BindGlobal( "EXTEND_NAT_TRANS_TO_COMPLEX_CAT",
       function( CF_C, C, CG_C )
         local maps;
         
-        maps := MapLazy( Objects( C ), o -> ApplyNaturalTransformation( eta, o ), 1 );
+        maps := ApplyMap( Objects( C ), o -> ApplyNaturalTransformation( eta, o ) );
         
-        return CHAIN_OR_COCHAIN_MORPHISM_BY_LIST( CF_C, CG_C, maps );
+        return CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION( CF_C, CG_C, maps );
         
     end );
     
