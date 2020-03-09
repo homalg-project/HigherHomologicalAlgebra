@@ -162,26 +162,3 @@ DeclareAttribute( "ImageOfFullyFaithfullFunctor", IsCapFunctor );
 DeclareAttribute( "IsomorphismIntoImageOfFullyFaithfulFunctor", IsCapFunctor );
 
 DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
-
-if not IsBound( IsomorphismFunctorFromQuiverRowsIntoAdditiveClosureOfAlgebroid ) then
-  
-  DeclareOperation( "IsomorphismFunctorFromQuiverRowsIntoAdditiveClosureOfAlgebroid",
-            [ IsQuiverRowsCategory, IsAdditiveClosureCategory ] );
-  
-  DeclareOperation( "IsomorphismFunctorFromAdditiveClosureOfAlgebroidIntoQuiverRows",
-            [ IsAdditiveClosureCategory, IsQuiverRowsCategory ] );
-  
-  DeclareAttribute( "IsomorphismFunctorFromQuiverRows", IsAdditiveClosureCategory );
-  
-  DeclareAttribute( "IsomorphismFunctorIntoQuiverRows", IsAdditiveClosureCategory );
-  
-  DeclareAttribute( "IsomorphismFunctorFromAdditiveClosureOfAlgebroid", IsQuiverRowsCategory );
-  
-  DeclareAttribute( "IsomorphismFunctorIntoAdditiveClosureOfAlgebroid", IsQuiverRowsCategory );
-  
-else
-  
-  Info( InfoWarning, 1, "\033[5mIt is time to remove the quiver rows functors, since they seem to be now in FreydCategories package!\033[0m" );
-  
-fi;
-
