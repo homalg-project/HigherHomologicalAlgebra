@@ -51,11 +51,8 @@ end );
 ##
 InstallMethod( IsHonest,
           [ IsRoof ],
-  function( roof )
-    
-    return IsIsomorphism( QuasiIsomorphism( roof ) );
-    
-end );
+  roof -> IsIsomorphism( QuasiIsomorphism( roof ) )
+);
 
 ##
 InstallMethod( AsHonestMorphism,
@@ -70,13 +67,13 @@ end );
 InstallMethod( DerivedCategoryObject,
           [ IsDerivedCategory, IsHomotopyCategoryObject ],
   function( D, object )
-    local homotopy, o;
+    local Ho_C, o;
     
-    homotopy := CapCategory( object );
+    Ho_C := CapCategory( object );
     
-    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( homotopy ) ) then
+    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( Ho_C ) ) then
       
-      Error( "wronge input" );
+      Error( "wronge input!\n" );
       
     fi;
     
@@ -92,27 +89,31 @@ end );
 ##
 InstallMethod( \[\],
           [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> UnderlyingCell( a )[ i ] );
+  { a, i } -> UnderlyingCell( a )[ i ]
+);
 
 ##
 InstallMethod( \^,
           [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> UnderlyingCell( a ) ^ i );
+  { a, i } -> UnderlyingCell( a ) ^ i
+);
 
 ##
-InstallMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ], { a, D } -> DerivedCategoryObject( D, a ) );
+InstallMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ],
+  { a, D } -> DerivedCategoryObject( D, a )
+);
 
 ##
 InstallMethod( DerivedCategoryMorphism,
           [ IsDerivedCategoryObject, IsRoof, IsDerivedCategoryObject ],
   function( source, roof, range )
-    local D, homotopy, m;
+    local D, Ho_C, m;
     
     D := CapCategory( source );
     
-    homotopy := CapCategory( SourceMorphism( roof ) );
+    Ho_C := CapCategory( SourceMorphism( roof ) );
     
-    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( homotopy ) ) then
+    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( Ho_C ) ) then
       
       Error( "wronge input" );
       
@@ -142,7 +143,9 @@ InstallMethod( DerivedCategoryMorphism,
 end );
 
 ##
-InstallMethod( \/, [ IsRoof, IsDerivedCategory ], {r,D} -> DerivedCategoryMorphism(D,r) );
+InstallMethod( \/, [ IsRoof, IsDerivedCategory ],
+  { r, D } -> DerivedCategoryMorphism(D,r)
+);
 
 ##
 InstallMethod( DerivedCategoryMorphism,
@@ -175,7 +178,9 @@ InstallMethod( DerivedCategoryMorphism,
 end );
 
 ##
-InstallMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ], {alpha,D} -> DerivedCategoryMorphism(D,alpha) );
+InstallMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ],
+  { alpha, D } -> DerivedCategoryMorphism( D, alpha )
+);
 
 ##
 InstallMethod( DerivedCategory,
