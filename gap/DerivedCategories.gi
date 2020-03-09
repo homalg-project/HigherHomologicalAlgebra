@@ -36,6 +36,7 @@ InstallMethod( Roof,
     roof := rec( );
     
     ObjectifyWithAttributes( roof, TheTypeRoof,
+          AmbientCategory, CapCategory( morphism ),
           SourceMorphism, quasi_isomorphism,
           RangeMorphism, morphism,
           Source, Range( quasi_isomorphism ),

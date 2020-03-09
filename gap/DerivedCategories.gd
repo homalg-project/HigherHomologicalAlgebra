@@ -35,6 +35,8 @@ DeclareAttribute( "Range", IsRoof );
 
 DeclareAttribute( "MiddleObject", IsRoof );
 
+DeclareAttribute( "AmbientCategory", IsRoof );
+
 DeclareAttribute( "AsHonestMorphism", IsRoof );
 
 DeclareProperty( "IsHonest", IsRoof );
