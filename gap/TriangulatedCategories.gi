@@ -78,360 +78,235 @@ InstallValue( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, rec(
 
 ConeObject:= rec( 
 
-installation_name := "ConeObject", 
-filter_list := [ "morphism" ],
-cache_name := "ConeObject",
-return_type := "object" ),
+  installation_name := "ConeObject", 
+  filter_list := [ "morphism" ],
+  cache_name := "ConeObject",
+  return_type := "object"
+),
 
 MorphismIntoConeObjectWithGivenConeObject:= rec(
 
-installation_name := "MorphismIntoConeObjectWithGivenConeObject",
-filter_list := [ "morphism", "object" ],
-cache_name := "MorphismIntoConeObjectWithGivenConeObject",
-return_type := "morphism" ),
+  installation_name := "MorphismIntoConeObjectWithGivenConeObject",
+  filter_list := [ "morphism", "object" ],
+  cache_name := "MorphismIntoConeObjectWithGivenConeObject",
+  return_type := "morphism"
+),
 
 MorphismFromConeObjectWithGivenConeObject:= rec(
 
-installation_name := "MorphismFromConeObjectWithGivenConeObject",
-filter_list := [ "morphism", "object" ],
-cache_name := "MorphismFromConeObjectWithGivenConeObject",
-return_type := "morphism" ),
+  installation_name := "MorphismFromConeObjectWithGivenConeObject",
+  filter_list := [ "morphism", "object" ],
+  cache_name := "MorphismFromConeObjectWithGivenConeObject",
+  return_type := "morphism"
+),
 
 ShiftOfObject:= rec( 
 
-installation_name := "ShiftOfObject", 
-filter_list := [ "object" ],
-cache_name := "ShiftOfObject",
-return_type := "object" ),
-
+  installation_name := "ShiftOfObject", 
+  filter_list := [ "object" ],
+  cache_name := "ShiftOfObject",
+  return_type := "object"
+),
 
 ShiftOfMorphism:= rec( 
 
-installation_name := "ShiftOfMorphism", 
-filter_list := [ "morphism" ],
-cache_name := "ShiftOfMorphism",
-return_type := "morphism" ),
+  installation_name := "ShiftOfMorphism", 
+  filter_list := [ "morphism" ],
+  cache_name := "ShiftOfMorphism",
+  return_type := "morphism"
+),
 
 ReverseShiftOfObject:= rec( 
 
-installation_name := "ReverseShiftOfObject", 
-filter_list := [ "object" ],
-cache_name := "ReverseShiftOfObject",
-return_type := "object" ),
-
+  installation_name := "ReverseShiftOfObject", 
+  filter_list := [ "object" ],
+  cache_name := "ReverseShiftOfObject",
+  return_type := "object"
+),
 
 ReverseShiftOfMorphism:= rec( 
 
-installation_name := "ReverseShiftOfMorphism", 
-filter_list := [ "morphism" ],
-cache_name := "ReverseShiftOfMorphism",
-return_type := "morphism" ),
+  installation_name := "ReverseShiftOfMorphism", 
+  filter_list := [ "morphism" ],
+  cache_name := "ReverseShiftOfMorphism",
+  return_type := "morphism"
+),
 
-##
 ShiftExpandingIsomorphismWithGivenObjects := rec(
+
   installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism",
-  post_function := function( s, L, r, return_value )
-                if not IsEqualForObjects( ShiftOfObject( DirectSum( L ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                elif not IsEqualForObjects( DirectSum( List( L, ShiftOfObject ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),
+  return_type := "morphism"
+),
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism",
-  post_function := function( s, L, r, return_value )
-                if not IsEqualForObjects( ShiftOfObject( DirectSum( L ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                elif not IsEqualForObjects( DirectSum( List( L, ShiftOfObject ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),
+  return_type := "morphism"
+),
 
 ReverseShiftExpandingIsomorphismWithGivenObjects := rec(
   installation_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism",
-  post_function := function( s, L, r, return_value )
-                if not IsEqualForObjects( ReverseShiftOfObject( DirectSum( L ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                elif not IsEqualForObjects( DirectSum( List( L, ReverseShiftOfObject ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),
+  return_type := "morphism"
+),
 
 ReverseShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism",
-  post_function := function( s, L, r, return_value )
-                if not IsEqualForObjects( ReverseShiftOfObject( DirectSum( L ) ), Range( return_value ) ) then
-                    Error( "The range of the output is not as it should be" );
-                elif not IsEqualForObjects( DirectSum( List( L, ReverseShiftOfObject ) ), Source( return_value ) ) then
-                    Error( "The source of the output is not as it should be" );
-                fi;
-                Assert( 5, IsIsomorphism( return_value ) );
-                SetIsIsomorphism( return_value, true );
-                end ),   
+  return_type := "morphism"
+),
 
 IsomorphismIntoShiftOfReverseShift := rec( 
 
-installation_name := "IsomorphismIntoShiftOfReverseShift",
-filter_list := [ "object" ],
-cache_name := "IsomorphismIntoShiftOfReverseShift",
-return_type := "morphism",
-post_function := 
-    function( obj, return_value )
-    if not IsEqualForObjects( Source( return_value), obj ) then
-        Error( "The output of your methods is not compatible" );
-    fi;
-    
-    if not IsEqualForObjects( Range( return_value ), ShiftOfObject( ReverseShiftOfObject( obj ) ) ) then
-        Error( "The output of your method is not compatible" );
-    fi;
-    
-    if not IsIsomorphism( return_value ) then
-        Error( "The output must be isomorphism");
-    fi;
-
-    Assert( 5, IsIsomorphism( return_value ) );
-    SetIsIsomorphism( return_value, true );
-    end ),
+  installation_name := "IsomorphismIntoShiftOfReverseShift",
+  filter_list := [ "object" ],
+  cache_name := "IsomorphismIntoShiftOfReverseShift",
+  return_type := "morphism"
+),
 
 IsomorphismIntoReverseShiftOfShift := rec( 
 
-installation_name := "IsomorphismIntoReverseShiftOfShift",
-filter_list := [ "object" ],
-cache_name := "IsomorphismIntoReverseShiftOfShift",
-return_type := "morphism",
-post_function := 
-    function( obj, return_value )
-    if not IsEqualForObjects( Source( return_value), obj ) then
-        Error( "The output of your methods is not compatible" );
-    fi;
-    
-    if not IsEqualForObjects( Range( return_value ), ReverseShiftOfObject( ShiftOfObject( obj ) ) ) then
-        Error( "The output of your method is not compatible" );
-    fi;
-    
-    if not IsIsomorphism( return_value ) then
-        Error( "The output must be isomorphism");
-    fi;
-
-    Assert( 5, IsIsomorphism( return_value ) );
-    SetIsIsomorphism( return_value, true );
-    end ),
+  installation_name := "IsomorphismIntoReverseShiftOfShift",
+  filter_list := [ "object" ],
+  cache_name := "IsomorphismIntoReverseShiftOfShift",
+  return_type := "morphism"
+),
 
 IsomorphismFromShiftOfReverseShift := rec( 
 
-installation_name := "IsomorphismFromShiftOfReverseShift",
-filter_list := [ "object" ],
-cache_name := "IsomorphismFromShiftOfReverseShift",
-return_type := "morphism",
-post_function := 
-    function( obj, return_value )
-        Assert( 5, IsIsomorphism( return_value ) );
-        SetIsIsomorphism( return_value, true );
-    end ),
+  installation_name := "IsomorphismFromShiftOfReverseShift",
+  filter_list := [ "object" ],
+  cache_name := "IsomorphismFromShiftOfReverseShift",
+  return_type := "morphism",
+),
 
 IsomorphismFromReverseShiftOfShift := rec( 
 
-installation_name := "IsomorphismFromReverseShiftOfShift",
-filter_list := [ "object" ],
-cache_name := "IsomorphismFromReverseShiftOfShift",
-return_type := "morphism",
-post_function := 
-    function( obj, return_value )
-    Assert( 5, IsIsomorphism( return_value ) );
-    SetIsIsomorphism( return_value, true );
-    end ),
+  installation_name := "IsomorphismFromReverseShiftOfShift",
+  filter_list := [ "object" ],
+  cache_name := "IsomorphismFromReverseShiftOfShift",
+  return_type := "morphism",
+),
 
 IsExactTriangle:= rec( 
 
-installation_name := "IsExactTriangle", 
-filter_list := [ IsCapCategoryTriangle ],
-cache_name := "IsExactTriangle",
-return_type := "bool",
-post_function := 
-    function( obj, return_value )
-    if return_value = true then
-        SetFilterObj( obj, IsCapCategoryExactTriangle );
-    fi;
-    end
+  installation_name := "IsExactTriangle", 
+  filter_list := [ IsCapCategoryTriangle ],
+  cache_name := "IsExactTriangle",
+  return_type := "bool",
 ),
 
 ##
-LiftColift := rec( 
-installation_name := "LiftColift", 
-filter_list := [ "morphism", "morphism", "morphism", "morphism" ],
-cache_name := "LiftColift",
-pre_function := function( alpha, beta, gamma, delta )
-                if not IsCongruentForMorphisms( PostCompose( alpha, gamma ), PostCompose( beta, delta ) ) then
-                    return [ false, "The commutativity test on the input is not satisfied" ];
-                fi;
-                return [ true ];
-                end,
-return_type := "morphism_or_fail",
-post_function :=function( alpha, beta, gamma, delta, return_value )
-                # In the language of lifts and colifts we must have
-                # return_value colifts alpha to beta and lifts gamma to delta.
-                if return_value <> fail and not IsCongruentForMorphisms( PostCompose( beta, return_value ), alpha ) then
-                    Error( "The commutativity test on the output is not satisfied" );
-                fi;
-                if return_value <> fail and not IsCongruentForMorphisms( PostCompose( return_value, gamma ), delta ) then
-                    Error( "The commutativity test on the output is not satisfied" );
-                fi;
-end ),
+LiftColift := rec(
+
+  installation_name := "LiftColift", 
+  filter_list := [ "morphism", "morphism", "morphism", "morphism" ],
+  cache_name := "LiftColift",
+  return_type := "morphism_or_fail",
+),
 
 IsStandardExactTriangle:= rec( 
 
-installation_name := "IsStandardExactTriangle", 
-filter_list := [ IsCapCategoryTriangle ],
-cache_name := "IsStandardExactTriangle",
-return_type := "bool",
-post_function := 
-    function( obj, return_value )
-    if return_value = true then
-        SetFilterObj( obj, IsCapCategoryStandardExactTriangle );
-    fi;
-    end
+installation_name := "IsStandardExactTriangle",
+
+  filter_list := [ IsCapCategoryTriangle ],
+  cache_name := "IsStandardExactTriangle",
+  return_type := "bool",
+  post_function := 
+      function( obj, return_value )
+      if return_value = true then
+          SetFilterObj( obj, IsCapCategoryStandardExactTriangle );
+      fi;
+      end
 ),
 
 IsomorphismFromStandardExactTriangle := rec(
 
-installation_name := "IsomorphismFromStandardExactTriangle",
-filter_list := [ IsCapCategoryExactTriangle ],
-cache_name := "IsomorphismFromStandardExactTriangle",
-return_type := [ IsCapCategoryTrianglesMorphism ],
-post_function :=    function( T, return_value )
-                    Assert( 5, IsIsomorphism( return_value[ 2 ] ) );
-                    SetIsIsomorphism( return_value, true );
-                    end ),
+  installation_name := "IsomorphismFromStandardExactTriangle",
+  filter_list := [ IsCapCategoryExactTriangle ],
+  cache_name := "IsomorphismFromStandardExactTriangle",
+  return_type := [ IsCapCategoryTrianglesMorphism ],
+),
 
 IsomorphismIntoStandardExactTriangle := rec(
 
-installation_name := "IsomorphismIntoStandardExactTriangle",
-filter_list := [ IsCapCategoryExactTriangle ],
-cache_name := "IsomorphismIntoStandardExactTriangle",
-return_type := [ IsCapCategoryTrianglesMorphism ],
-post_function :=    function( T, return_value )
-                    Assert( 5, IsIsomorphism( return_value[ 2 ] ) );
-                    SetIsIsomorphism( return_value, true );
-                    end ),
+  installation_name := "IsomorphismIntoStandardExactTriangle",
+  filter_list := [ IsCapCategoryExactTriangle ],
+  cache_name := "IsomorphismIntoStandardExactTriangle",
+  return_type := [ IsCapCategoryTrianglesMorphism ],
+),
 
 RotationOfStandardExactTriangle := rec( 
-installation_name := "RotationOfStandardExactTriangle",
-filter_list := [ IsCapCategoryStandardExactTriangle ],
-cache_name := "RotationOfStandardExactTriangle",
-return_type := [ IsCapCategoryExactTriangle ] ),
+
+  installation_name := "RotationOfStandardExactTriangle",
+  filter_list := [ IsCapCategoryStandardExactTriangle ],
+  cache_name := "RotationOfStandardExactTriangle",
+  return_type := [ IsCapCategoryExactTriangle ]
+),
 
 ReverseRotationOfStandardExactTriangle := rec( 
-installation_name := "ReverseRotationOfStandardExactTriangle",
-filter_list := [ IsCapCategoryStandardExactTriangle ],
-cache_name := "ReverseRotationOfStandardExactTriangle",
-return_type := [ IsCapCategoryExactTriangle ] ),
+
+  installation_name := "ReverseRotationOfStandardExactTriangle",
+  filter_list := [ IsCapCategoryStandardExactTriangle ],
+  cache_name := "ReverseRotationOfStandardExactTriangle",
+  return_type := [ IsCapCategoryExactTriangle ]
+),
 
 CompleteMorphismToStandardExactTriangle := rec(
 
-installation_name := "CompleteMorphismToStandardExactTriangle", 
-filter_list := [ "morphism" ],
-cache_name := "CompleteMorphismToStandardExactTriangle",
-return_type := [ IsCapCategoryStandardExactTriangle ] ),
+  installation_name := "CompleteMorphismToStandardExactTriangle", 
+  filter_list := [ "morphism" ],
+  cache_name := "CompleteMorphismToStandardExactTriangle",
+  return_type := [ IsCapCategoryStandardExactTriangle ]
+),
 
 CompleteToMorphismOfStandardExactTriangles:= rec(
 
-installation_name := "CompleteToMorphismOfStandardExactTriangles", 
-filter_list := [ IsCapCategoryStandardExactTriangle, IsCapCategoryStandardExactTriangle, "morphism", "morphism" ],
-cache_name := "CompleteToMorphismOfStandardExactTriangles",
-pre_function := function(tr1, tr2, phi, psi )
-                if not IsCongruentForMorphisms( PreCompose( tr1^0, psi ), PreCompose(phi, tr2^0 ) ) then
-                    return [ false, "The first squar in the given input does not commute!" ];
-                else
-                    return [ true ];
-                fi;
-                end,
-return_type := [ "morphism" ] ),
+  installation_name := "CompleteToMorphismOfStandardExactTriangles", 
+  filter_list := [ IsCapCategoryStandardExactTriangle, IsCapCategoryStandardExactTriangle, "morphism", "morphism" ],
+  cache_name := "CompleteToMorphismOfStandardExactTriangles",
+  return_type := [ "morphism" ] ),
 
 OctahedralAxiom:= rec(
 
-installation_name := "OctahedralAxiom", 
-filter_list := [ "morphism", "morphism" ],
-cache_name := "OctahedralAxiom",
-return_type := [ IsCapCategoryExactTriangle ],
-post_function :=    function( f, g, return_value )
-                    local h, t, tf, tg, th;
-                    h := PreCompose( f, g );
-                    t := return_value;
-                    tf := CompleteMorphismToStandardExactTriangle( f );
-                    tg := CompleteMorphismToStandardExactTriangle( g );
-                    th := CompleteMorphismToStandardExactTriangle( h );
-
-                    if not IsCongruentForMorphisms( PreCompose( tf^1, t^0 ), PreCompose( tg^0, th^1 ) ) then
-                        Error( "The top middle squar is not commutative!");
-                    fi;
-
-                    if not IsCongruentForMorphisms( tf^2, PreCompose( t^0, th^2 ) ) then
-                        Error( "The top-right squar is not commutative!");
-                    fi;
-
-                    if not IsCongruentForMorphisms( PreCompose( th^1, t^1 ), tg^1 ) then
-                        Error( "The middle-left squar is not commutative!");
-                    fi;
-
-                    if not IsCongruentForMorphisms( PreCompose( th^2, ShiftOfMorphism( f ) ), PreCompose( t^1, tg^2 ) ) then
-                        Error( "The middle-right squar is not commutative!");
-                    fi;
-
-                    if not IsCongruentForMorphisms( t^2, PreCompose( tg^2, ShiftOfMorphism( tf^1 ) ) ) then
-                        Error( "The bottom squar is not commutative!");
-                    fi;
-
-
-                    end ),
+  installation_name := "OctahedralAxiom", 
+  filter_list := [ "morphism", "morphism" ],
+  cache_name := "OctahedralAxiom",
+  return_type := [ IsCapCategoryExactTriangle ],
+),
 
 RotationOfExactTriangle := rec( 
-installation_name := "RotationOfExactTriangle",
-filter_list := [ IsCapCategoryExactTriangle ],
-cache_name := "RotationOfExactTriangle",
-return_type := [ IsCapCategoryExactTriangle ] ),
+
+  installation_name := "RotationOfExactTriangle",
+  filter_list := [ IsCapCategoryExactTriangle ],
+  cache_name := "RotationOfExactTriangle",
+  return_type := [ IsCapCategoryExactTriangle ]
+),
 
 ReverseRotationOfExactTriangle := rec( 
-installation_name := "ReverseRotationOfExactTriangle",
-filter_list := [ IsCapCategoryExactTriangle ],
-cache_name := "ReverseRotationOfExactTriangle",
-return_type := [ IsCapCategoryExactTriangle ] ),
+
+  installation_name := "ReverseRotationOfExactTriangle",
+  filter_list := [ IsCapCategoryExactTriangle ],
+  cache_name := "ReverseRotationOfExactTriangle",
+  return_type := [ IsCapCategoryExactTriangle ]
+),
 
 CompleteToMorphismOfExactTriangles:= rec(
 
-installation_name := "CompleteToMorphismOfExactTriangles", 
-filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism" ],
-cache_name := "CompleteToMorphismOfExactTriangles",
-return_type := [ IsCapCategoryTrianglesMorphism ] ),
-
-# Testtt:= rec(
-# 
-# installation_name := "Testtt", 
-# filter_list := [ "category" ],
-# cache_name := "Testtt",
-# return_type := "bool" ),
+  installation_name := "CompleteToMorphismOfExactTriangles", 
+  filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism" ],
+  cache_name := "CompleteToMorphismOfExactTriangles",
+  return_type := [ IsCapCategoryTrianglesMorphism ]
+),
 
 ) );
 
