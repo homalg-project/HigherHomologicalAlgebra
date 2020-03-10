@@ -164,6 +164,25 @@ AddDerivationToCAP( ReverseRotationOfStandardExactTriangle,
 end:CategoryFilter := IsTriangulatedCategory, Description := "creates the reverse rotation of a canonical exact triangle");
 
 ##
+AddDerivationToCAP( CompleteToMorphismOfExactTriangles,
+                [
+                  [ LiftColift, 1 ],
+                ],
+  function( T_1, T_2, alpha, beta )
+    local tau;
+    
+    tau := LiftColift(
+              PreCompose( T_1^2, Shift( alpha, 1 ) ),
+              T_2^2,
+              T_1^1,
+              PreCompose( beta, T_2^1 )
+            );
+    
+    return CreateTrianglesMorphism( T_1, T_2, alpha, beta, tau );
+    
+end: CategoryFilter := IsTriangulatedCategory );
+
+##
 AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
                 [   [ CompleteToMorphismOfExactTriangles, 1 ],
                     [ CompleteMorphismToStandardExactTriangle, 1 ]
