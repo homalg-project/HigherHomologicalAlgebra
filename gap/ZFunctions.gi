@@ -12,6 +12,20 @@ BindGlobal( "TheTypeOfZFunctions",
                      IsZFunction and IsZFunctionRep ) );
 
 ##
+InstallGlobalFunction( VoidZFunction,
+  function( )
+    local z_function;
+    
+    z_function := rec( );
+    
+    ObjectifyWithAttributes( z_function, TheTypeOfZFunctions );
+    
+    return z_function;
+    
+end );
+
+
+##
 InstallMethod( AsZFunction,
           [ IsFunction ],
   function( func )
@@ -21,6 +35,83 @@ InstallMethod( AsZFunction,
     
     ObjectifyWithAttributes( z_function, TheTypeOfZFunctions,
                             UnderlyingFunction, func );
+    
+    return z_function;
+    
+end );
+
+##
+InstallMethod( ZFunctionWithInductiveSides,
+          [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ],
+  function( N, val, neg_side_func, pos_side_func, compare_func )
+    local z_function, func;
+    
+    z_function := VoidZFunction( );
+    
+    SetFilterObj( z_function, IsZFunctionWithInductiveSides );
+    
+    func :=
+      function( i )
+        local prev_value, value;
+        
+        if i > N then
+          
+          if HasStablePosValue( z_function ) then
+            
+            return StablePosValue( z_function );
+            
+          else
+            
+            prev_value := z_function[ i - 1 ];
+            
+            value := pos_side_func( prev_value );
+            
+            if compare_func( value, prev_value ) then
+              
+              SetStablePosValue( z_function, value );
+              
+            fi;
+            
+            return value;
+            
+          fi;
+          
+        elif i < N then
+          
+          if HasStableNegValue( z_function ) then
+            
+            return StableNegValue( z_function );
+            
+          else
+            
+            prev_value := z_function[ i + 1 ];
+            
+            value := neg_side_func( prev_value );
+            
+            if compare_func( value, prev_value ) then
+              
+              SetStableNegValue( z_function, value );
+              
+            fi;
+            
+            return value;
+            
+          fi;
+          
+        else
+          
+          return val;
+          
+        fi;
+        
+      end;
+      
+    SetUnderlyingFunction( z_function, func );
+    SetFirstIndex( z_function, N );
+    SetFirstValue( z_function, val );
+    SetPosFunction( z_function, pos_side_func );
+    SetNegFunction( z_function, neg_side_func );
+    SetCompareFunction( z_function, compare_func );
     
     return z_function;
     
@@ -65,24 +156,12 @@ InstallMethod( ApplyMap,
     
 end );
 
-###
-#InstallMethod( AsZFunction,
-#          [ IsZList ],
-#  l -> AsZFunction( i -> l[i] )
-#);
-
 ##
-InstallMethod( MapLazy,
-          [ IsZFunction, IsFunction, IsInt ],
-  { z_function, map, n } -> ApplyMap( z_function, map )
-);
-
-###
-#InstallMethod( MapLazy,
-#          [ IsZList, IsFunction, IsInt ],
-#  { z_list, map, n } -> ApplyMap( AsZFunction( z_list ), map )
-#, 3000 );
-
+InstallMethod( CombineZFunctions,
+          [ IsList ],
+  function( L )
+    return ApplyMap( L, function( arg ) return arg; end );
+end );
 
 ##
 InstallMethod( Reflection,
@@ -99,7 +178,7 @@ InstallMethod( Reflection,
 end );
 
 ##
-InstallMethod( ApplyShift,
+InstallMethod( ApplyShiftOp,
           [ IsZFunction, IsInt ],
   { z_function, n } -> AsZFunction( i -> z_function[ i + n ] )
 );

@@ -319,7 +319,7 @@ function( obj )
   fi;
   
   func := function( mor )
-            local k,p; 
+            local k,p;
             k := KernelEmbedding( mor );
             p := EpimorphismFromSomeProjectiveObject( Source( k ) );
             return PreCompose( p, k );

@@ -42,14 +42,12 @@ gap> Display( CyclesAt( C, 4 ) );
   [  0,  1 ] ]
 
 A split monomorphism in Category of matrices over Q
-gap> diffs := Differentials( C );
-<An infinite list>
+gap> diffs := Differentials( C );;
 gap> diffs[ 1 ];
 <A zero, isomorphism in Category of matrices over Q>
 gap> diffs[ 10000 ];
 <A zero, isomorphism in Category of matrices over Q>
-gap> objs := Objects( C );
-<An infinite list>
+gap> objs := Objects( C );;
 gap> DefectOfExactnessAt( C, 4 );
 <A vector space object over Q of dimension 1>
 gap> DefectOfExactnessAt( C, 3 );
@@ -108,8 +106,7 @@ gap> IsZeroForMorphisms( PreCompose( psi, i ) );
 false
 gap> IsNullHomotopic( PreCompose( psi, i ) );
 true
-gap> H := HomotopyMorphisms( PreCompose( psi, i ) );
-<An infinite list>
+gap> H := HomotopyMorphisms( PreCompose( psi, i ) );;
 gap> Display( H[ 5 ] );
 [ [  0,  2 ] ]
 

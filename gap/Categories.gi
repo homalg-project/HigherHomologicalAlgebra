@@ -326,6 +326,325 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           end );
     fi;
     
+    if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then
+        if CanCompute( cat, "ZeroObject" ) then
+            AddZeroObject( complex_cat, function (  )
+                  local C;
+                  C := complex_constructor( [ ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) ) ], 0 );
+                  SetUpperBound( C, 0 );
+                  SetLowerBound( C, 0 );
+                  return C;
+              end );
+        fi;
+        if CanCompute( cat, "IsZeroForObjects" ) then
+            AddIsZeroForObjects( complex_cat, function ( C )
+                  local obj, i;
+                  if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then
+                      Error( "The complex must have lower and upper bounds" );
+                  fi;
+                  for obj in ComputedObjectAts( C ) do
+                      if IsCapCategoryObject( obj ) and not IsZeroForObjects( obj ) then
+                          return false;
+                      fi;
+                  od;
+                  for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do
+                      if not IsZeroForObjects( C[i] ) then
+                          SetLowerBound( C, i );
+                          return false;
+                      fi;
+                  od;
+                  return true;
+              end );
+        fi;
+        if CanCompute( cat, "ZeroMorphism" ) then
+            AddZeroMorphism( complex_cat, function ( C1, C2 )
+                  local morphisms;
+                  morphisms := ApplyMap( [ Objects( C1 ), Objects( C2 ) ], ZeroMorphism );
+                  morphisms := morphism_constructor( C1, C2, morphisms );
+                  SetUpperBound( morphisms, 0 );
+                  SetLowerBound( morphisms, 0 );
+                  return morphisms;
+              end );
+        fi;
+        if CanCompute( cat, "IsZeroForMorphisms" ) then
+            AddIsZeroForMorphisms( complex_cat, function ( phi )
+                  local mor, i;
+                  if not HasActiveLowerBound( phi ) or not HasActiveUpperBound( phi ) then
+                      Error( "The morphism must have lower and upper bounds" );
+                  fi;
+                  for mor in ComputedMorphismAts( phi ) do
+                      if IsCapCategoryMorphism( mor ) and not IsZeroForMorphisms( mor ) then
+                          return false;
+                      fi;
+                  od;
+                  for i in [ ActiveLowerBound( phi ) .. ActiveUpperBound( phi ) ] do
+                      if IsZeroForMorphisms( phi[ i ] ) then
+                          SetLowerBound( phi, i + 1 );
+                      else
+                          return false;
+                      fi;
+                  od;
+                  return true;
+              end );
+        fi;
+        if CanCompute( cat, "AdditionForMorphisms" ) then
+            AddAdditionForMorphisms( complex_cat, function ( m1, m2 )
+                  local phi;
+                  phi := morphism_constructor( Source( m1 ), Range( m1 ), ApplyMap( [ Morphisms( m1 ), Morphisms( m2 ) ], AdditionForMorphisms ) );
+                  AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAU_BOUND", true ], [ m2, "HAS_FAU_BOUND", true ] ], function (  )
+                          if not HasFAU_BOUND( phi ) then
+                              SetUpperBound( phi, Minimum( FAU_BOUND( m1 ), FAU_BOUND( m2 ) ) );
+                          fi;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ m1, "HAS_FAL_BOUND", true ], [ m2, "HAS_FAL_BOUND", true ] ], function (  )
+                          if not HasFAL_BOUND( phi ) then
+                              SetLowerBound( phi, Maximum( FAL_BOUND( m1 ), FAL_BOUND( m2 ) ) );
+                          fi;
+                          return;
+                      end ) );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "AdditiveInverseForMorphisms" ) then
+            AddAdditiveInverseForMorphisms( complex_cat, function ( m )
+                  local phi;
+                  phi := morphism_constructor( Source( m ), Range( m ), ApplyMap( Morphisms( m ), AdditiveInverseForMorphisms ) );
+                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "PreCompose" ) then
+            AddPreCompose( complex_cat, function ( m1, m2 )
+                  local phi;
+                  phi := morphism_constructor( Source( m1 ), Range( m2 ), ApplyMap( [ Morphisms( m1 ), Morphisms( m2 ) ], PreCompose ) );
+                  TODO_LIST_TO_PUSH_BOUNDS( m1, phi );
+                  TODO_LIST_TO_PUSH_BOUNDS( m2, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "IdentityMorphism" ) then
+            AddIdentityMorphism( complex_cat, function ( C )
+                  return morphism_constructor( C, C, ApplyMap( Objects( C ), IdentityMorphism ) );
+              end );
+        fi;
+        if CanCompute( cat, "InverseImmutable" ) then
+            AddInverse( complex_cat, function ( m )
+                  local phi;
+                  phi := morphism_constructor( Range( m ), Source( m ), ApplyMap( Morphisms( m ), Inverse ) );
+                  TODO_LIST_TO_PUSH_PULL_BOUNDS( m, phi );
+                  return phi;
+              end );
+        fi;
+        if CanCompute( cat, "LiftAlongMonomorphism" ) then
+            AddLiftAlongMonomorphism( complex_cat, function ( mono, test )
+                  local morphisms;
+                  morphisms := ApplyMap( [ Morphisms( mono ), Morphisms( test ) ], LiftAlongMonomorphism );
+                  return morphism_constructor( Source( test ), Source( mono ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "ColiftAlongEpimorphism" ) then
+            AddColiftAlongEpimorphism( complex_cat, function ( epi, test )
+                  local morphisms;
+                  morphisms := ApplyMap( [ Morphisms( epi ), Morphisms( test ) ], ColiftAlongEpimorphism );
+                  return morphism_constructor( Range( epi ), Range( test ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "DirectSum" ) then
+            AddDirectSum( complex_cat, function ( L )
+                  local diffs, complex, u, l;
+                  diffs := List( L, Differentials );
+                  diffs := CombineZFunctions( diffs );
+                  diffs := ApplyMap( diffs, DirectSumFunctorial );
+                  complex := complex_constructor( cat, diffs );
+                  u := List( L, function ( i )
+                          return [ i, "HAS_FAU_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( u, function (  )
+                          local b;
+                          b := Maximum( List( L, function ( i )
+                                    return ActiveUpperBound( i );
+                                end ) );
+                          SetUpperBound( complex, b );
+                          return;
+                      end ) );
+                  l := List( L, function ( i )
+                          return [ i, "HAS_FAL_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( l, function (  )
+                          local b;
+                          b := Minimum( List( L, function ( i )
+                                    return ActiveLowerBound( i );
+                                end ) );
+                          SetLowerBound( complex, b );
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetUpperBound( i, ActiveUpperBound( complex ) );
+                          od;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetLowerBound( i, ActiveLowerBound( complex ) );
+                          od;
+                          return;
+                      end ) );
+                  return complex;
+              end );
+        fi;
+        
+        if CanCompute( cat, "DirectSumFunctorialWithGivenDirectSums" ) then
+            AddDirectSumFunctorialWithGivenDirectSums( complex_cat, function ( source, L, range )
+                  local maps, morphism, u, l;
+                  maps := List( L, Morphisms );
+                  maps := CombineZFunctions( maps );
+                  maps := ApplyMap( maps, DirectSumFunctorial );
+                  morphism := morphism_constructor( source, range, maps );
+                  u := List( L, function ( i )
+                          return [ i, "HAS_FAU_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( u, function (  )
+                          local b;
+                          b := Maximum( List( L, function ( i )
+                                    return ActiveUpperBound( i );
+                                end ) );
+                          SetUpperBound( morphism, b );
+                          return;
+                      end ) );
+                  l := List( L, function ( i )
+                          return [ i, "HAS_FAL_BOUND", true ];
+                      end );
+                  AddToToDoList( ToDoListEntry( l, function (  )
+                          local b;
+                          b := Minimum( List( L, function ( i )
+                                    return ActiveLowerBound( i );
+                                end ) );
+                          SetLowerBound( morphism, b );
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAU_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetUpperBound( i, ActiveUpperBound( morphism ) );
+                          od;
+                          return;
+                      end ) );
+                  AddToToDoList( ToDoListEntry( [ [ morphism, "HAS_FAL_BOUND", true ] ], function (  )
+                          local i;
+                          for i in L do
+                              SetLowerBound( i, ActiveLowerBound( morphism ) );
+                          od;
+                          return;
+                      end ) );
+                  return morphism;
+              end );
+        fi;
+        if CanCompute( cat, "InjectionOfCofactorOfDirectSum" ) then
+            AddInjectionOfCofactorOfDirectSum( complex_cat,
+              function ( L, n )
+                local objects, morphisms;
+                objects := AsZFunction( i -> List( L, C -> C[ i ] ) );
+                morphisms := ApplyMap( objects, l -> InjectionOfCofactorOfDirectSum( l, n ) );
+                return morphism_constructor( L[ n ], DirectSum( L ), morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "ProjectionInFactorOfDirectSum" ) then
+            AddProjectionInFactorOfDirectSum( complex_cat,
+              function ( L, n )
+                local objects, morphisms;
+                objects := AsZFunction( i -> List( L, C -> C[ i ] ) );
+                morphisms := ApplyMap( objects, l -> ProjectionInFactorOfDirectSum( l, n ) );
+                return morphism_constructor( DirectSum( L ), L[ n ], morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "TerminalObject" ) and CanCompute( cat, "TerminalObjectFunctorial" ) then
+            AddTerminalObject( complex_cat, function (  )
+                  local diff, complex;
+                  diff := AsZFunction( i -> TerminalObjectFunctorial( cat ) );
+                  complex := complex_constructor( cat, diff );
+                  if HasZeroObject( cat ) and IsEqualForObjects( TerminalObject( cat ), ZeroObject( cat ) ) then
+                      SetUpperBound( complex, 0 );
+                      SetLowerBound( complex, 0 );
+                  fi;
+                  return complex;
+              end );
+        fi;
+        if CanCompute( cat, "UniversalMorphismIntoTerminalObjectWithGivenTerminalObject" ) then
+            AddUniversalMorphismIntoTerminalObjectWithGivenTerminalObject( complex_cat, function ( complex, terminal_object )
+                  local objects, universal_maps;
+                  objects := Objects( complex );
+                  universal_maps := ApplyMap( objects, UniversalMorphismIntoTerminalObject );
+                  return morphism_constructor( complex, terminal_object, universal_maps );
+              end );
+        fi;
+        if CanCompute( cat, "InitialObject" ) and CanCompute( cat, "InitialObjectFunctorial" ) then
+            AddInitialObject( complex_cat, function (  )
+                  local diff, complex;
+                  diff := AsZFunction( i -> InitialObjectFunctorial( cat ) );
+                  complex := complex_constructor( cat, diff );
+                  if HasZeroObject( cat ) and IsEqualForObjects( InitialObject( cat ), ZeroObject( cat ) ) then
+                      SetUpperBound( complex, 0 );
+                      SetLowerBound( complex, 0 );
+                  fi;
+                  return complex;
+              end );
+        fi;
+        if CanCompute( cat, "UniversalMorphismFromInitialObjectWithGivenInitialObject" ) then
+            AddUniversalMorphismFromInitialObjectWithGivenInitialObject( complex_cat, function ( complex, initial_object )
+                  local objects, universal_maps;
+                  objects := Objects( complex );
+                  universal_maps := ApplyMap( objects, UniversalMorphismFromInitialObject );
+                  return morphism_constructor( initial_object, complex, universal_maps );
+              end );
+        fi;
+    fi;
+    if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
+        if CanCompute( cat, "KernelEmbedding" ) then
+            AddKernelEmbedding( complex_cat, function ( phi )
+                  local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
+                  embeddings := ApplyMap( Morphisms( phi ), KernelEmbedding );
+                  kernel_to_next_source := ApplyMap( [ embeddings, Differentials( Source( phi ) ) ], PreCompose );
+                  diffs := ApplyMap( [ ShiftLazy( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift );
+                  kernel_complex := complex_constructor( cat, diffs );
+                  kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
+                  TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
+                  return kernel_emb;
+              end );
+        fi;
+        if CanCompute( cat, "KernelLift" ) then
+            AddKernelLift( complex_cat, function ( phi, tau )
+                  local morphisms, K;
+                  K := KernelObject( phi );
+                  morphisms := AsZFunction( i -> KernelLift( phi[ i ], tau[ i ] ) );
+                  return morphism_constructor( Source( tau ), K, morphisms );
+              end );
+        fi;
+        if CanCompute( cat, "CokernelProjection" ) then
+            AddCokernelProjection( complex_cat, function ( phi )
+                  local projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
+                  projections := ApplyMap( Morphisms( phi ), CokernelProjection );
+                  range_to_next_cokernel := ApplyMap( [ Differentials( Range( phi ) ), ShiftLazy( projections, shift_index ) ], PreCompose );
+                  diffs := ApplyMap( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift );
+                  cokernel_complex := complex_constructor( cat, diffs );
+                  cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
+                  TODO_LIST_TO_PUSH_BOUNDS( Range( phi ), cokernel_complex );
+                  return cokernel_proj;
+              end );
+        fi;
+        if CanCompute( cat, "CokernelColift" ) then
+            AddCokernelColift( complex_cat, function ( phi, tau )
+                  local morphisms, K;
+                  K := CokernelObject( phi );
+                  morphisms := AsZFunction( i -> CokernelColift( phi[i], tau[i] ) );
+                  return morphism_constructor( K, Range( tau ), morphisms );
+              end );
+        fi;
+    fi;
+    
     if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
         ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES( complex_cat );
         ADD_INTERNAL_HOM_ON_CHAIN_COMPLEXES( complex_cat );
@@ -494,7 +813,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat, function ( r, phi )
               local mors;
               mors := Morphisms( phi );
-              mors := MapLazy( mors, function ( m )
+              mors := ApplyMap( mors, function ( m )
                       return MultiplyWithElementOfCommutativeRingForMorphisms( r, m );
                   end );
               return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors );

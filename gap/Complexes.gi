@@ -125,7 +125,7 @@ end );
 ##
 BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
   function( N, d_N, negative_part_function, positive_part_function, string )
-    local cat, complex_constructor, diff;
+    local cat, complex_constructor, diff, func;
     
     cat := CapCategory( d_N );
     
@@ -143,17 +143,8 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES",
       
     fi;
     
-    diff := AsZFunction(
-              function( i )
-                if i = N then
-                  return d_N;
-                elif i > N then
-                  return positive_part_function( diff( i - 1 ) );
-                else
-                  return negative_part_function( diff( i + 1 ) );
-                fi;
-              end );
-              
+    diff := ZFunctionWithInductiveSides( N, d_N, negative_part_function, positive_part_function, IsEqualForMorphismsOnMor );
+    
     return complex_constructor( cat, diff );
     
 end );
@@ -208,7 +199,9 @@ BindGlobal( "CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE",
       
     fi;
     
-    complex := CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( N, d_N, negative_part_function, positive_part_function, string );
+    complex := CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES( N, d_N,
+                  negative_part_function, positive_part_function,
+                    string );
     
     SetLowerBound( complex, lower_bound );
     
@@ -762,19 +755,25 @@ InstallMethod( AsCochainComplex, [ IsCochainComplex ], IdFunc );
 ##
 BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
   function( cat, diffs, N, string )
-    local complex_constructor, func, lower_bound, upper_bound, complex;
+    local zero_obj, complex_constructor, func, lower_bound, upper_bound, z_func, complex;
+    
+    zero_obj := ZeroObject( cat );
     
     if string = "chain" then
       
       complex_constructor := ChainComplex;
       
       func := function( i )
-                if i in [ N .. N + Size( diffs ) - 1 ] then
-                  return diffs[ i - N + 1 ];
-                elif i > N + Size( diffs ) - 1 then
-                  return UniversalMorphismFromZeroObject( Source( func( i - 1 ) ) );
+                if i < N - 1 then
+                  return UniversalMorphismIntoZeroObject( zero_obj );
+                elif i = N - 1 then
+                  return UniversalMorphismIntoZeroObject( Range( diffs[ 1 ] ) );
+                elif i >= N and i <= N + Size( diffs ) - 1 then
+                  return diffs[ i - N + 1 ]; 
+                elif i = N + Size( diffs ) then
+                  return UniversalMorphismFromZeroObject( Source( diffs[ Size( diffs ) ] ) );
                 else
-                  return UniversalMorphismIntoZeroObject( Range( func( i + 1 ) ) );
+                  return UniversalMorphismFromZeroObject( zero_obj );
                 fi;
               end;
       
@@ -787,12 +786,17 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
       complex_constructor := CochainComplex;
       
       func := function( i )
-                if i in [ N .. N + Size( diffs ) - 1 ] then
+                
+                if i < N - 1 then
+                  return UniversalMorphismFromZeroObject( zero_obj );
+                elif i = N - 1 then
+                  return UniversalMorphismFromZeroObject( Source( diffs[ 1 ] ) );
+                elif i >= N and i <= N + Size( diffs ) - 1 then
                   return diffs[ i - N + 1 ];
-                elif i > N + Size( diffs ) - 1 then
-                  return UniversalMorphismIntoZeroObject( Range( func( i - 1 ) ) );
+                elif i = N + Size( diffs ) then
+                  return UniversalMorphismIntoZeroObject( Range( diffs[ Size( diffs ) ] ) );
                 else
-                  return UniversalMorphismFromZeroObject( Source( func( i + 1 ) ) );
+                  return UniversalMorphismIntoZeroObject( zero_obj );
                 fi;
               end;
       
@@ -802,9 +806,9 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
 
     fi;
     
-    diffs := AsZFunction( func );
+    z_func := AsZFunction( func );
     
-    complex := complex_constructor( cat, diffs );
+    complex := complex_constructor( cat, z_func );
     
     SetLowerBound( complex, lower_bound );
     
