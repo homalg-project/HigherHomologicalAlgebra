@@ -271,87 +271,97 @@ function( Ho_C )
         
   end );
 
-#AddOctahedralAxiom( Ho_C,
-#    function( f_, g_ )
-#    local h_, f, g, h, X, Y, Z, t0, t1, t2, t, tf_, th_, tr, i, j, standard_tr;
-#    h_ := PreCompose( f_, g_ );
-#    f := UnderlyingReplacement( f_ );
-#    g := UnderlyingReplacement( g_ );
-#    h := UnderlyingReplacement( h_ );
-#    X := Source( f );
-#    Y := Range( f );
-#    Z := Range( g );
-#
-#    tf_ := CompleteMorphismToStandardExactTriangle( f_ );
-#    th_ := CompleteMorphismToStandardExactTriangle( h_ );
-#
-#    t := CompleteToMorphismOfStandardExactTriangles( tf_, th_, IdentityMorphism( Source( f_ ) ), g_ );
-#    t0 := t[ 2 ];
-#
-#    t1 := MapLazy( IntegersList, 
-#            function( i ) 
-#                return MorphismBetweenDirectSums(
-#                    [
-#                        [ f[ i - 1 ], ZeroMorphism( X[ i - 1 ], Z[ i ] )],
-#                        [ ZeroMorphism( Z[ i ], Y[ i - 1 ] ), IdentityMorphism( Z[ i ] ) ]
-#                    ]
-#                );
-#            end, 1 );
-#    t1 := ChainMorphism( MappingCone( h ), MappingCone( g ), t1 );
-#    t1 := HomotopyCategoryMorphism( Ho_C, t1 );
-#
-#    t2 := MapLazy( IntegersList, 
-#            function( i ) 
-#                return MorphismBetweenDirectSums(
-#                    [
-#                        [ ZeroMorphism( Y[ i - 1 ], X[ i - 2 ] ), IdentityMorphism( Y[ i - 1 ] ) ],
-#                        [ ZeroMorphism( Z[ i ], X[ i - 2 ] ), ZeroMorphism( Z[ i ], Y[ i - 1 ] ) ]
-#                    ]
-#                );
-#            end, 1 );
-#    t2 := ChainMorphism( MappingCone( g ), ShiftLazy( MappingCone( f ), -1 ), t2 );
-#    t2 := HomotopyCategoryMorphism( Ho_C, t2 );
-#
-#
-#    tr := CreateExactTriangle( t0, t1, t2 );
-#
-#    standard_tr := CompleteMorphismToStandardExactTriangle( t0 );
-#
-#    i := MapLazy( IntegersList, 
-#            function( i )
-#            return MorphismBetweenDirectSums( 
-#                [
-#                    [ ZeroMorphism( Y[i-1], X[i-2] ), IdentityMorphism( Y[i-1] ), ZeroMorphism( Y[i-1], X[i-1] ), ZeroMorphism( Y[i-1], Z[i] ) ],
-#                    [ ZeroMorphism( Z[i], X[i-2] ), ZeroMorphism( Z[i], Y[i-1] ), ZeroMorphism( Z[i], X[i-1] ), IdentityMorphism( Z[i] ) ] 
-#                ]
-#            );
-#            end, 1 );
-#    i := ChainMorphism( MappingCone( g ), MappingCone( UnderlyingMor( t0 ) ), i );
-#    i := HomotopyCategoryMorphism( Ho_C, i );
-#    i := CreateTrianglesMorphism( tr, standard_tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), i );
-#
-#    j := MapLazy( IntegersList, 
-#            function( i )
-#            return MorphismBetweenDirectSums( 
-#                [
-#                    [  ZeroMorphism( X[i-2], Y[i-1] ), ZeroMorphism(  X[i-2], Z[i] ) ],
-#                    [  IdentityMorphism( Y[i-1] ),     ZeroMorphism(  Y[i-1], Z[i] ) ],
-#                    [  f[i-1], ZeroMorphism(  X[i-1], Z[i] ) ],
-#                    [  ZeroMorphism( Z[i], Y[i-1]   ), IdentityMorphism( Z[i] ) ] 
-#                ]
-#            );
-#            end, 1 );
-#    
-#    j := ChainMorphism( MappingCone( UnderlyingMor( t0 ) ), MappingCone( g ), j );
-#    j := HomotopyCategoryMorphism( Ho_C, j );
-#    j := CreateTrianglesMorphism( standard_tr, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), j );
-#
-#    SetIsomorphismIntoStandardExactTriangle( tr, i );
-#    SetIsomorphismFromStandardExactTriangle( tr, j );
-#    
-#    return tr;
-#
-#end );
+  AddOctahedralAxiom( Ho_C,
+    function( f, g )
+      local Ho_C, A, B, C, h, cone_f, cone_g, cone_h, shifted_cone_f, u, v, w, T, st_T, maps, cone_u, i, j;
+      
+      Ho_C := CapCategory( f );
+      
+      A := UnderlyingCell( Source( f ) );
+      
+      B := UnderlyingCell( Range( f ) );
+      
+      C := UnderlyingCell( Range( g ) );
+      
+      h := PreCompose( f, g );
+      
+      cone_f := UnderlyingCell( ConeObject( f ) );
+      
+      cone_g := UnderlyingCell( ConeObject( g ) );
+      
+      cone_h := UnderlyingCell( ConeObject( h ) );
+      
+      shifted_cone_f := UnderlyingCell( ShiftOfObject( ConeObject( f ) ) );
+      
+      u := MapLazy( IntegersList,
+            n -> MorphismBetweenDirectSums(
+                  [
+                    [ IdentityMorphism( A[ n - 1 ]  )   , ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
+                    [ ZeroMorphism( B[ n ], A[ n - 1 ] ), g[ n ]                             ],
+                  ]
+                ), 1 );
+      
+      u := ChainMorphism( cone_f, cone_h, u ) / Ho_C;
+      
+      v := MapLazy( IntegersList,
+            n -> MorphismBetweenDirectSums(
+                  [
+                    [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
+                    [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ],
+                  ]
+                ), 1 );
+      
+      v := ChainMorphism( cone_h, cone_g, v ) / Ho_C;
+      
+      w := MapLazy( IntegersList,
+            n -> MorphismBetweenDirectSums(
+                  [
+                    [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] ) ],
+                    [ ZeroMorphism( C[ n ], A[ n - 2 ]  ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ],
+                  ]
+                ), 1 );
+      
+      w := ChainMorphism( cone_g, shifted_cone_f, w ) / Ho_C;
+      
+      T := CreateExactTriangle( u, v, w );
+      
+      st_T := CompleteMorphismToStandardExactTriangle( u );
+      
+      maps := MapLazy( IntegersList,
+            n -> MorphismBetweenDirectSums(
+                  [  
+                    [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] )    , ZeroMorphism( B[ n - 1 ], A[ n - 1 ] ), ZeroMorphism( B[ n - 1 ], C[ n ] )  ],
+                    [ ZeroMorphism( C[ n ] , A[ n - 2 ] )   , ZeroMorphism( C[ n ], B[ n - 1 ] ), ZeroMorphism( C[ n ], A[ n - 1 ] )    , IdentityMorphism( C[ n ] )          ]
+                  ]
+              ), 1 );
+      
+      cone_u := UnderlyingCell( ConeObject( u ) );
+      
+      i := ChainMorphism( cone_g, cone_u, maps ) / Ho_C;
+      
+      i := CreateTrianglesMorphism( T, st_T, IdentityMorphism( cone_f ) / Ho_C, IdentityMorphism( cone_h ) / Ho_C, i );
+      
+      SetIsomorphismIntoStandardExactTriangle( T, i );
+      
+      maps := MapLazy( IntegersList,
+            n -> MorphismBetweenDirectSums(
+                  [  
+                    [ ZeroMorphism( A[ n - 2 ] , B[ n - 1 ] ), ZeroMorphism( A[ n - 2 ] ,C[ n ] ) ],
+                    [ IdentityMorphism( B[ n - 1 ] )         , ZeroMorphism( B[ n -1 ], C[ n ] )  ],
+                    [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ]   , C[ n ] )                           ],
+                    [ ZeroMorphism( C[ n ], B[ n - 1 ] )     , IdentityMorphism( C[ n ] )         ]
+                  ]
+              ), 1 );
+      
+      j := ChainMorphism( cone_u, cone_g, maps ) / Ho_C;
+      
+      j := CreateTrianglesMorphism( st_T, T, IdentityMorphism( cone_f ) / Ho_C, IdentityMorphism( cone_h ) / Ho_C, j );
+      
+      SetIsomorphismFromStandardExactTriangle( T, j );
+     
+      return T;
+      
+  end );
 
 end );
 
