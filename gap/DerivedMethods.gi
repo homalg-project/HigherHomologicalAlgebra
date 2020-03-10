@@ -354,7 +354,7 @@ AddDerivationToCAP( IsomorphismIntoStandardExactTriangle,
     local str, l;
     str := UnderlyingStandardExactTriangle( tr );
     
-    l := LiftColift( tr^1, str^1, tr^2, str^2 );
+    l := LiftColift( tr^2, str^2, tr^1, str^1 );
 
     if l = fail then
         return fail;
@@ -375,7 +375,7 @@ AddDerivationToCAP( IsomorphismFromStandardExactTriangle,
     local str, l;
     str := UnderlyingStandardExactTriangle( tr );
     
-    l := LiftColift( tr^1, str^1, tr^2, str^2 );
+    l := LiftColift( tr^2, str^2, tr^1, str^1 );
 
     if l = fail then
         return fail;
