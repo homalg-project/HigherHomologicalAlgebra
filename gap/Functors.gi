@@ -662,7 +662,7 @@ InstallMethod( ChainCategoryToCochainCategoryOfOppositeCategory,
         
         inf_list := ApplyMap( Differentials( C ), Opposite );
         
-        inf_list := ApplyShift( inf_list );
+        inf_list := ApplyShift( inf_list, 1 );
         
         return CochainComplex( Opposite( cat ), inf_list );
         
