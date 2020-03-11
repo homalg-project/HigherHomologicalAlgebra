@@ -69,23 +69,20 @@ homotopy_of_quiver_reps := HomotopyCategory( cat );;
 a_0 := RandomObject( cat, 3 );;
 
 alpha_1 := RandomMorphismWithFixedRange( a_0, 3 );;
-a := ChainComplex( [ alpha_1 ], 1 );;
+a := HomotopyCategoryObject( [ alpha_1 ], 1 );
 
 f := RandomMorphismWithFixedSource( a_0, 3 );;
 b_1 := Range( f );;
 
 beta_1 := RandomMorphismWithFixedSource( b_1, 3 );;
 
-b := ChainComplex( [ beta_1 ], 1 );;
+b := HomotopyCategoryObject( [ beta_1 ], 1 );
 
-phi := ChainMorphism( a, b, [ PreCompose( f, b^1 ), PreCompose( a^1, f ) ], 0 );; # b^1 := beta_1, a^1 := alpha_1
+phi := HomotopyCategoryMorphism( a, b, [ PreCompose( f, b^1 ), PreCompose( a^1, f ) ], 0 );; # b^1 := beta_1, a^1 := alpha_1
 
-homotopy_phi := HomotopyCategoryMorphism( homotopy_of_quiver_reps, phi );;
-
-IsZero( homotopy_phi );;
+IsZero( phi );;
 # true
 
-IsNullHomotopic( phi );;
 H := HomotopyMorphisms( phi );;  # H[ i ] : Source( phi )[ i ] ----> Range( phi )[ i + 1 ]
 H[1];
 
