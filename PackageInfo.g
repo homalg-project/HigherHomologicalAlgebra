@@ -14,7 +14,7 @@ Subtitle := "Bicomplexes for Abelian categories",
 Version := Maximum( [
                    "2017.05.02", ## Mohamed's version
                    ## this line prevents merge conflicts
-                   "2020.01.30", ## Kamals's version
+                   "2020.03.11", ## Kamals's version
                    ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -90,7 +90,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                   [ "ComplexesForCAP", ">= 2020.01.30" ] ],
+                   [ "ComplexesForCAP", ">= 2020.03.11" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
