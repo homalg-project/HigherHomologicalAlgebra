@@ -26,18 +26,35 @@ DeclareOperation( "ZFunctionWithInductiveSides",
 DeclareGlobalFunction( "VoidZFunction" );
 
 DeclareAttribute( "UnderlyingFunction", IsZFunction );
+
 DeclareAttribute( "Reflection", IsZFunction );
 
 DeclareAttribute( "BaseZFunctions", IsZFunction );
+
 DeclareAttribute( "AppliedMap", IsZFunction );
 
 DeclareOperation( "ApplyMap", [ IsZFunction, IsFunction ] );
+
 DeclareOperation( "CombineZFunctions", [ IsList ] );
 
 KeyDependentOperation( "ApplyShift", IsZFunction, IsInt, ReturnTrue );
 
 DeclareOperation( "ApplyMap", [ IsDenseList, IsFunction ] );
 
-# Extract infos from IsZFunction
-KeyDependentOperation( "Value", IsZFunction, IsInt, ReturnTrue );
+KeyDependentOperation( "ZFunctionValue", IsZFunction, IsInt, ReturnTrue );
+
 DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
+
+########################################
+
+if IsPackageMarkedForLoading( "InfiniteLists", ">= 2017.08.01" ) then
+  
+  DeclareAttribute( "AsZFunction", IsZList );
+  
+  InstallMethod( AsZFunction, [ IsZList ], z -> AsZFunction( i -> z[ i ] ) );
+  
+  DeclareAttribute( "AsZList", IsZFunction );
+  
+  InstallMethod( AsZList, [ IsZFunction ], z -> MapLazy( IntegersList, i -> z[ i ], 1 ) );
+  
+fi;
