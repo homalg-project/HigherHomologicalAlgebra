@@ -169,85 +169,31 @@ InstallMethod( CounitOfTensorHomAdjunction,
   
 end );
 
-
 #######################
 
-BindGlobal( "CounitOnBaseCategory",
-  function( collection )
-    local full, ambient_cat, C, B, inc_1, inc_2, Inc, Rep, name, eta, H;
-    Error( "not finished" );
-    full := DefiningFullSubcategory( collection );
-    
-    ambient_cat := AmbientCategory( full );
-    
-    if not IsHomotopyCategory( ambient_cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    C := DefiningCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( C ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    B := UnderlyingCategory( C );
-    
-    inc_1 := InclusionFunctorInAdditiveClosure( B );
-    
-    inc_2 := EmbeddingFunctorInHomotopyCategory( C );
-    
-    Inc := PreCompose( inc_1, inc_2 );
-    
-    #Rep := ReplacementFunctorOnBaseCategory( collection );
-    Rep := 0;
-    H := HomFunctor( collection );
-    
-    name := "Counit natural transformation";
-    
-    eta := NaturalTransformation( name, Rep, Inc );
-    
-    AddNaturalTransformationFunction( eta,
-      function( rep_a, a, inc_a )
-        local H_a, min_gen, positions, vectors, positions_of_non_zeros, mor, alpha;
-        
-        H_a := ApplyFunctor( H, inc_a );
-        
-        min_gen := MinimalGeneratingSet( H_a );
-        
-        if IsEmpty( min_gen ) then
-          
-          return ZeroMorphism( rep_a, inc_a );
-          
-        fi;
-        
-        min_gen := List( min_gen, g -> ElementVectors( g ) );
-        
-        positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
-        
-        vectors := ListN( min_gen, positions, { g, p } -> AsList( g[ p ] ) );
-        
-        positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
-        
-        mor := List( [ 1 .. Size( min_gen ) ],
-          i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
-                  BasisOfExternalHom(
-                    UnderlyingCell( collection[ positions[ i ] ] ), inc_a )
-                      { positions_of_non_zeros[ i ] }
-              );
-        
-        mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
-        
-        alpha := rep_a!.UnderlyingMorphismForMappingCone;
-         
-        return MappingConeColift( alpha, mor );
-                
-      end );
-    
-    return eta;
-     
-end );
 
+BindGlobal( "NATURAL",
+  function( a, collection )
+    local N, rep_a, alpha_N, Tr_alpha_N, value_N;
+    
+    N := ExceptionalShift( a, collection );
+    
+    if N <> 0 then
+      
+      Error( "??" );
+      
+    fi;
+    
+    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
+    
+    ### creating the first exact triangle
+    
+    alpha_N := rep_a[ N ][ 1 ];
+    
+    Tr_alpha_N := CompleteMorphismToStandardExactTriangle( alpha_N );
+    
+    value_N := ReverseRotationOfStandardExactTriangle( Tr_alpha_N );
+    
+    ### induction step ###
+    
+end );
