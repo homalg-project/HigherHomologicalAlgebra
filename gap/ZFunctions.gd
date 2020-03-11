@@ -1,16 +1,23 @@
 
 
 DeclareCategory( "IsZFunction", IsObject );
+
 DeclareCategory( "IsZFunctionWithInductiveSides", IsZFunction );
 
 DeclareAttribute( "AsZFunction", IsFunction );
 
 DeclareAttribute( "PosFunction", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "NegFunction", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "FirstIndex", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "FirstValue", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "CompareFunction", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "StablePosValue", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "StableNegValue", IsZFunctionWithInductiveSides );
 
 DeclareOperation( "ZFunctionWithInductiveSides",

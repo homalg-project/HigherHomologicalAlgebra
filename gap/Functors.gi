@@ -194,7 +194,7 @@ BindGlobal( "SHIFT_AS_FUNCTOR",
         
         morphisms := Morphisms( map );
         
-        morphisms := ShiftLazy( morphisms, n );
+        morphisms := ApplyShift( morphisms, n );
         
         morphisms := morphism_constructor( new_source, new_range, morphisms );
         
@@ -257,7 +257,7 @@ BindGlobal( "UNSIGNED_SHIFT_AS_FUNCTOR",
         
         morphisms := Morphisms( map );
         
-        morphisms := ShiftLazy( morphisms, n );
+        morphisms := ApplyShift( morphisms, n );
         
         morphisms := morphism_constructor( new_source, new_range, morphisms );
         
@@ -662,7 +662,7 @@ InstallMethod( ChainCategoryToCochainCategoryOfOppositeCategory,
         
         inf_list := ApplyMap( Differentials( C ), Opposite );
         
-        inf_list := ShiftLazy( inf_list );
+        inf_list := ApplyShift( inf_list );
         
         return CochainComplex( Opposite( cat ), inf_list );
         
@@ -700,7 +700,7 @@ InstallMethod( CochainCategoryToChainCategoryOfOppositeCategory,
         
         inf_list := ApplyMap( Differentials( C ), Opposite );
         
-        inf_list := ShiftLazy( inf_list, -1 );
+        inf_list := ApplyShift( inf_list, -1 );
         
         return ChainComplex( Opposite( cat ), inf_list );
         

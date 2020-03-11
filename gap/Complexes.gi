@@ -1426,7 +1426,7 @@ InstallMethod( ShiftLazyOp,
   function( C, i )
     local newDifferentials, complex;
     
-    newDifferentials := ShiftLazy( Differentials( C ), i );
+    newDifferentials := ApplyShift( Differentials( C ), i );
     
     if i mod 2 = 1 then
       
@@ -1540,7 +1540,7 @@ InstallMethod( ShiftUnsignedLazyOp, [ IsChainOrCochainComplex, IsInt ],
   function( C, i )
     local newDifferentials, complex;
     
-    newDifferentials := ShiftLazy( Differentials( C ), i );
+    newDifferentials := ApplyShift( Differentials( C ), i );
     
     if IsChainComplex( C ) then 
       

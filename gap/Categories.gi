@@ -608,7 +608,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                   local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
                   embeddings := ApplyMap( Morphisms( phi ), KernelEmbedding );
                   kernel_to_next_source := ApplyMap( [ embeddings, Differentials( Source( phi ) ) ], PreCompose );
-                  diffs := ApplyMap( [ ShiftLazy( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift );
+                  diffs := ApplyMap( [ ApplyShift( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift );
                   kernel_complex := complex_constructor( cat, diffs );
                   kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
                   TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
@@ -627,7 +627,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             AddCokernelProjection( complex_cat, function ( phi )
                   local projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
                   projections := ApplyMap( Morphisms( phi ), CokernelProjection );
-                  range_to_next_cokernel := ApplyMap( [ Differentials( Range( phi ) ), ShiftLazy( projections, shift_index ) ], PreCompose );
+                  range_to_next_cokernel := ApplyMap( [ Differentials( Range( phi ) ), ApplyShift( projections, shift_index ) ], PreCompose );
                   diffs := ApplyMap( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift );
                   cokernel_complex := complex_constructor( cat, diffs );
                   cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
@@ -816,7 +816,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               mors := ApplyMap( mors, function ( m )
                       return MultiplyWithElementOfCommutativeRingForMorphisms( r, m );
                   end );
-              return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_LIST" )( Source( phi ), Range( phi ), mors );
+              return ValueGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION" )( Source( phi ), Range( phi ), mors );
           end );
     fi;
     if CanCompute( cat, "IsIsomorphism" ) then

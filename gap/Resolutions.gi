@@ -689,7 +689,7 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
           
     end );
     
-    inj := CochainComplex( cat, ShiftLazy( ApplyMap( maps, j -> j[ 1 ] ) ) );
+    inj := CochainComplex( cat, ApplyShift( ApplyMap( maps, j -> j[ 1 ] ) ) );
     
     SetLowerBound( inj, u + 1 );
     
