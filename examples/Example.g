@@ -1,6 +1,6 @@
 #! @Chunk AsCategoryOfBicomplexes2
 
-LoadPackage( "M2" );
+LoadPackage( "IntrinsicModules" );
 LoadPackage( "BiComplexes" );
 
 #  Chain complex of chian complexes
@@ -113,33 +113,44 @@ Display( T^16 );
 IsExact( T );
 #! true
 Display( T, 13, 18 );
+#! An object in Chain complexes( intrinsic Category of left presentations of Z with ambient objects ) given by the data: 
 #! 
-#! -----------------------------------------------------------------
-#! In index 13
-#! 
-#! Object is
-#! 0
-#! 
-#! Differential is
+#!    Λ
+#!    |
 #! (an empty 0 x 0 matrix)
 #! 
 #! the map is currently represented by the above 0 x 0 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 14
+#!    |
 #! 
-#! Object is
-#! Z/< 2 > 
+#! -- 13 -----------------------
+#! 0
 #! 
-#! Differential is
+#! -----------------------------
+#! 
+#!    Λ
+#!    |
 #! (an empty 1 x 0 matrix)
 #! 
 #! the map is currently represented by the above 1 x 0 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 15
+#!    |
 #! 
-#! Object is
+#! -- 14 -----------------------
+#! Z/< 2 > 
+#! 
+#! -----------------------------
+#! 
+#!    Λ
+#!    |
+#! [ [  -1 ],
+#!   [   1 ] ]
+#! 
+#! the map is currently represented by the above 2 x 1 matrix
+#! 
+#!    |
+#! 
+#! -- 15 -----------------------
 #! [ [  0,  4 ] ]
 #! 
 #! Cokernel of the map
@@ -148,43 +159,45 @@ Display( T, 13, 18 );
 #! 
 #! currently represented by the above matrix
 #! 
-#! Differential is
-#! [ [  -1 ],
-#!   [   1 ] ]
+#! -----------------------------
 #! 
-#! the map is currently represented by the above 2 x 1 matrix
-#! 
-#! -----------------------------------------------------------------
-#! In index 16
-#! 
-#! Object is
-#! Z^(1 x 2)
-#! 
-#! Differential is
+#!    Λ
+#!    |
 #! [ [  -2,   0 ],
 #!   [   1,   1 ] ]
 #! 
 #! the map is currently represented by the above 2 x 2 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 17
+#!    |
 #! 
-#! Object is
-#! Z^(1 x 1)
+#! -- 16 -----------------------
+#! Z^(1 x 2)
 #! 
-#! Differential is
+#! -----------------------------
+#! 
+#!    Λ
+#!    |
 #! [ [  2,  4 ] ]
 #! 
 #! the map is currently represented by the above 1 x 2 matrix
 #! 
-#! -----------------------------------------------------------------
-#! In index 18
+#!    |
 #! 
-#! Object is
-#! 0
+#! -- 17 -----------------------
+#! Z^(1 x 1)
 #! 
-#! Differential is
+#! -----------------------------
+#! 
+#!    Λ
+#!    |
 #! (an empty 0 x 1 matrix)
 #! 
 #! the map is currently represented by the above 0 x 1 matrix
+#! 
+#!    |
+#! 
+#! -- 18 -----------------------
+#! 0
+#! 
+#! -----------------------------
 #! @EndExample

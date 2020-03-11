@@ -5,7 +5,7 @@
 # metadata in PackageInfo.g.
 #
 LoadPackage( "Bicomplexes" );
-LoadPackage( "M2" );
+LoadPackage( "IntrinsicModules" );
 
 options := rec(
     exitGAP := true,

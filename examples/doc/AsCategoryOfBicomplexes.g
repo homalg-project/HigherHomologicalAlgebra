@@ -1,6 +1,6 @@
 #! @Chunk AsCategoryOfBicomplexes
 
-LoadPackage( "M2" );
+LoadPackage( "IntrinsicModules" );
 LoadPackage( "Bicomplexes" );
 
 #! @BeginLatexOnly
@@ -63,15 +63,13 @@ ZZ := HomalgRingOfIntegers( );
 lp_cat := CategoryOfHomalgFinitelyPresentedLeftModules( ZZ );
 #! intrinsic Category of left presentations of Z with ambient objects
 chains_lp_cat := ChainComplexCategory( lp_cat );
-#! Chain complexes category over intrinsic Category
-#! of left presentations of Z with ambient objects
+#! Chain complexes( intrinsic Category of left presentations of Z with ambient objects )
 chains_chains_lp_cat := ChainComplexCategory( chains_lp_cat );
-#! Chain complexes category over chain complexes category over
-#! intrinsic Category of left presentations of Z with ambient objects
+#! Chain complexes( Chain complexes( intrinsic Category of left presentations of
+#! Z with ambient objects ) )
 Bicomplexes_cat := AsCategoryOfBicomplexes( chains_chains_lp_cat );
-#! Chain complexes category over chain complexes category over
-#! intrinsic Category of left presentations of Z with ambient objects
-#! as bicomplexes
+#! Chain complexes( Chain complexes( intrinsic Category of left presentations of 
+#! Z with ambient objects ) ) as bicomplexes
 F1 := HomalgFreeLeftModule( 1, ZZ );
 #! <A free left module of rank 1 on a free generator>
 d7 := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );
@@ -79,17 +77,15 @@ d7 := HomalgMap( HomalgMatrix( "[ [ 4 ] ]", 1, 1, ZZ ), F1, F1 );
 d6 := CokernelProjection( d7 );
 #! <An epimorphism of left modules>
 C10 := ChainComplex( [ d6, d7 ], 6 );
-#! <A bounded object in chain complexes category over intrinsic 
-#! Category of left presentations of Z with ambient objects with 
-#! active lower bound 4 and active upper bound 8>
+#! <An object in Chain complexes( intrinsic Category of left presentations of Z with
+#! ambient objects ) with active lower bound 5 and active upper bound 7>
 t7 := HomalgMap( HomalgMatrix( "[ [ 2 ] ]", 1, 1, ZZ ), F1, F1 );
 #! <An endo"morphism" of a left module>
 t6 := CokernelProjection( t7 );
 #! <An epimorphism of left modules>
 C9 := ChainComplex( [ t6, t7 ], 6 );
-#! <A bounded object in chain complexes category over intrinsic 
-#! Category of left presentations of Z with ambient objects with 
-#! active lower bound 4 and active upper bound 8>
+#! <An object in Chain complexes( intrinsic Category of left presentations of Z with
+#! ambient objects ) with active lower bound 5 and active upper bound 7>
 phi5 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), C10[ 5 ], C9[ 5 ] );
 #! <A "homomorphism" of left modules>
 phi6 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
@@ -97,13 +93,12 @@ phi6 := HomalgMap( HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
 phi7 := HomalgMap( 2 * HomalgIdentityMatrix( 1, ZZ ), F1, F1 );
 #! <An endo"morphism" of a left module>
 phi := ChainMorphism( C10, C9, [ phi5, phi6, phi7 ], 5 );
-#! <A bounded morphism in chain complexes category over intrinsic 
-#! Category of left presentations of Z with ambient objects with 
-#! active lower bound 4 and active upper bound 8>
+#! <A morphism in Chain complexes( intrinsic Category of left presentations of Z
+#! with ambient objects ) with active lower bound 5 and active upper bound 7>
 C := ChainComplex( [ phi ], 10 );
-#! <A bounded object in chain complexes category over chain complexes 
-#! category over intrinsic Category of left presentations of Z with 
-#! ambient objects with active lower bound 8 and active upper bound 11>
+#! <An object in Chain complexes( Chain complexes( intrinsic Category of left
+#! presentations of Z with ambient objects ) ) with active lower bound 
+#! 9 and active upper bound 10>
 #! @EndExample
 #! @BeginLatexOnly
 #! Now we compute its associated homological bicomplex $B$ and the total complex of $B$:
@@ -163,9 +158,8 @@ Display( VerticalDifferentialAt( B, 9, 7 ) );
 #! 
 #! the map is currently represented by the above 1 x 1 matrix
 T := TotalComplex( B );
-#! <A bounded object in chain complexes category over intrinsic Category 
-#! of left presentations of Z with ambient objects with active lower 
-#! bound 13 and active upper bound 18>
+#! <An object in Chain complexes( intrinsic Category of left presentations of Z with
+#! ambient objects ) with active lower bound 14 and active upper bound 17>
 T[ 13 ];
 #! <A zero left module>
 T[ 14 ];
@@ -187,43 +181,49 @@ Display( T^16 );
 IsExact( T );
 #! true
 T;
-#! <A cyclic, bounded object in chain complexes category over intrinsic 
-#! Category of left presentations of Z with ambient objects with active 
-#! lower bound 13 and active upper bound 18>
+#! <An exact, object in Chain complexes( intrinsic Category of left presentations\
+#! of Z with ambient objects ) with active lower bound 
+#! 14 and active upper bound 17>
 Display( T, 13, 18 );
+
+#! An object in Chain complexes( intrinsic Category of left presentations of Z with ambient objects ) given by the data: 
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 13
-#! 
-#! Differential:
+#!    Λ
+#!    |
 #! (an empty 0 x 0 matrix)
 #! 
 #! the map is currently represented by the above 0 x 0 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 13 -----------------------
 #! 0
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 14
+#! -----------------------------
 #! 
-#! Differential:
+#!    Λ
+#!    |
 #! (an empty 1 x 0 matrix)
 #! 
 #! the map is currently represented by the above 1 x 0 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 14 -----------------------
 #! Z/< 2 > 
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 15
+#! -----------------------------
 #! 
-#! Differential:
+#!    Λ
+#!    |
 #! [ [  -1 ],
 #!   [   1 ] ]
 #! 
 #! the map is currently represented by the above 2 x 1 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 15 -----------------------
 #! [ [  0,  4 ] ]
 #! 
 #! Cokernel of the map
@@ -232,37 +232,45 @@ Display( T, 13, 18 );
 #! 
 #! currently represented by the above matrix
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 16
+#! -----------------------------
 #! 
-#! Differential:
+#!    Λ
+#!    |
 #! [ [  -2,   0 ],
 #!   [   1,   1 ] ]
 #! 
 #! the map is currently represented by the above 2 x 2 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 16 -----------------------
 #! Z^(1 x 2)
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 17
+#! -----------------------------
 #! 
-#! Differential:
+#!    Λ
+#!    |
 #! [ [  2,  4 ] ]
 #! 
 #! the map is currently represented by the above 1 x 2 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 17 -----------------------
 #! Z^(1 x 1)
 #! 
-#! ------------------------/\--------------------------
-#! In homological degree 18
+#! -----------------------------
 #! 
-#! Differential:
+#!    Λ
+#!    |
 #! (an empty 0 x 1 matrix)
 #! 
 #! the map is currently represented by the above 0 x 1 matrix
 #! 
-#! Object:
+#!    |
+#! 
+#! -- 18 -----------------------
 #! 0
+#! 
+#! -----------------------------
 #! @EndExample
