@@ -133,7 +133,8 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     
     full := FullSubcategory( coh, name : FinalizeCategory := false );
     
-    SetSetOfKnownObjects( full, MapLazy( IntegersList, i -> ApplyFunctor( sh, TwistedGradedFreeModule( S, i ) ) / full, 1 ) );
+    SetSetOfKnownObjects( full,
+      AsZFunction( i -> ApplyFunctor( sh, TwistedGradedFreeModule( S, i ) ) / full ) );
     
     ##
     AddIsEqualForObjects( full,

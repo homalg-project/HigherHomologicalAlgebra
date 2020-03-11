@@ -393,7 +393,7 @@ InstallMethod( BeilinsonReplacement,
               
               fi;
               end;
-      diffs := MapLazy( IntegersList, diff, 1 );
+      diffs := AsZFunction( diff );
       rep := ChainComplex( cat, diffs );
       SetUpperBound( rep, ActiveUpperBound( C ) + n - 1 );
       SetLowerBound( rep, ActiveLowerBound( C ) - n + 1 );
@@ -436,7 +436,7 @@ InstallMethod( BeilinsonReplacement,
 
             end;
             
-    mors := MapLazy( IntegersList, mor, 1 );
+    mors := AsZFunction( mor );
     
     rep := ChainMorphism( source, range, mors );
     
@@ -536,7 +536,7 @@ InstallMethod( BeilinsonReplacement,
             fi;
             end;
 
-    diffs := MapLazy( IntegersList, diff, 1 );
+    diffs := AsZFunction( diff );
     rep := ChainComplex( cat, diffs );
     return rep;
     else
@@ -592,7 +592,7 @@ InstallMethod( BeilinsonReplacement,
               
               end;
                 
-        mors := MapLazy( IntegersList, mor, 1 );
+        mors := AsZFunction( mor );
         
         rep := ChainMorphism( source, range, mors );
         
@@ -631,9 +631,9 @@ InstallMethod( BeilinsonReplacement,
     b_source_aid := ApplyFunctor( sheafification, b_source_aid );
     b_arrow := ApplyFunctor( sheafification, b_arrow );
     b_range_aid := ApplyFunctor( sheafification, b_range_aid );
-    mors := MapLazy( IntegersList,
+    mors := AsZFunction(
       i -> SerreQuotientCategoryByThreeArrowsMorphism(
-        coh, GeneralizedMorphismByThreeArrows( b_source_aid[i], b_arrow[i], b_range_aid[i] ) ), 1 );
+        coh, GeneralizedMorphismByThreeArrows( b_source_aid[i], b_arrow[i], b_range_aid[i] ) ) );
     return ChainMorphism( Range( b_source_aid ), Source( b_range_aid ), mors );
 end );
 

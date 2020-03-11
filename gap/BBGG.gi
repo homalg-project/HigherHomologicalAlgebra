@@ -40,7 +40,7 @@ InstallMethod( RCochainFunctor,
         
         SetPositionOfTheDefaultPresentation( hM, 1 );
         
-        diff := MapLazy( IntegersList,
+        diff := AsZFunction( 
                   function( i )
                     local maps, mats, mat, source, range;
                     
@@ -56,7 +56,7 @@ InstallMethod( RCochainFunctor,
 
                     return GradedPresentationMorphism( source, mat, range );
                     
-                  end, 1 );
+                  end );
                 
         C := CochainComplex( cat_lp_ext , diff );
         
@@ -82,7 +82,7 @@ InstallMethod( RCochainFunctor,
       function( new_source, f, new_range )
         local mors;
         
-        mors := MapLazy( IntegersList, 
+        mors := AsZFunction(  
                   function( k )
                     local H, map;
                     H := HomogeneousPartOverCoefficientsRingFunctor( S, k );
@@ -95,7 +95,7 @@ InstallMethod( RCochainFunctor,
                         UnderlyingMatrix( map ) * KoszulDualRing( S ),
                         new_range[ k ] );
                     
-                    end, 1 );
+                    end );
         
         return CochainMorphism( new_source, new_range, mors );
         
@@ -120,12 +120,12 @@ BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
 
     R := CapFunctor( name, cat_lp_sym, cochains );
     
-    AddObjectFunction( R, 
+    AddObjectFunction( R,
         function( M )
         local hM, diff, d, C;
         hM := AsPresentationInHomalg( M );
         SetPositionOfTheDefaultPresentation( hM, 1 );
-        diff := MapLazy( IntegersList, i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ), 1 );
+        diff := AsZFunction(  i -> AsPresentationMorphismInCAP( RepresentationMapOfKoszulId( i, hM ) ) );
         C := CochainComplex( cat_lp_ext , diff );
         d := ShallowCopy( GeneratorDegrees( M ) );
 
@@ -143,14 +143,14 @@ BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
         return C;
         end );
 
-    AddMorphismFunction( R, 
+    AddMorphismFunction( R,
         function( new_source, f, new_range )
         local M, N, G1, G2, hM, hN, mors;
         M := Source( f );
         N := Range( f );
         hM := AsPresentationInHomalg( M );
         hN := AsPresentationInHomalg( N );
-        mors := MapLazy( IntegersList, 
+        mors := AsZFunction(
                 function( k )
                 local emb_hMk, emb_hNk, l;
                 emb_hMk := EmbeddingInSuperObject( SubmoduleGeneratedByHomogeneousPart( k, hM ) );
@@ -162,7 +162,7 @@ BindGlobal( "R_COCHAIN_FUNCTOR_OLD",
                 fi;
                 l := LiftAlongMonomorphism( emb_hNk, PreCompose( emb_hMk, f ) );
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l )*KoszulDualRing( S ), new_range[ k ] );
-                end, 1 );
+                end );
         return CochainMorphism( new_source, new_range, mors );
         end );
 
@@ -213,10 +213,10 @@ BindGlobal( "IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST",
 end );
 
 ##
-InstallMethod( LCochainFunctor, 
+InstallMethod( LCochainFunctor,
             [ IsHomalgGradedRing ],
     function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
+    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name;
     if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
       Error( "The input should be a graded polynomial ring" );
     fi;
@@ -231,12 +231,12 @@ InstallMethod( LCochainFunctor,
     name := Concatenation( "L functor from ", Name( cat_lp_ext ), " to ", Name( cochains ) );
     L := CapFunctor( name, cat_lp_ext, cochains );
     
-    AddObjectFunction( L, 
+    AddObjectFunction( L,
         function( M )
         local hM, diffs, C, d;
         hM := AsPresentationInHomalg( M );
          
-        diffs := MapLazy( IntegersList, 
+        diffs := AsZFunction(
             function( i )
             local l, source, range, u;
             l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
@@ -245,7 +245,7 @@ InstallMethod( LCochainFunctor,
             source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
             range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
             l := GradedPresentationMorphism( source, l, range );
-            return l;            
+            return l;
             # This is still true because all I am doing is changing the basis of the homogeneous part -i of M
             # by multiplying it with -1.
             # u := IS_POWER_OF_SOME_TWISTED_OMEGA_MODULE_WITH_EVEN_TWIST( M );
@@ -257,7 +257,7 @@ InstallMethod( LCochainFunctor,
             # return l;
             # fi;
 
-            end, 1 );
+            end );
 
         C :=  CochainComplex( cat_lp_sym, diffs );
         
@@ -278,14 +278,14 @@ InstallMethod( LCochainFunctor,
         
         end );
     
-    AddMorphismFunction( L, 
+    AddMorphismFunction( L,
         function( new_source, f, new_range )
         local M, N, mors;
         
         M := Source( f );
         N := Range( f );
         
-        mors := MapLazy( IntegersList, 
+        mors := AsZFunction(
                 function( k )
                 local l, s, r;
                 l := ApplyFunctor( HomogeneousPartOverCoefficientsRingFunctor( KS, -k ), f );
@@ -313,7 +313,7 @@ InstallMethod( LCochainFunctor,
                 
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
                 
-                end, 1 );
+                end );
                 
         return CochainMorphism( new_source, new_range, mors );
         end );
@@ -348,7 +348,7 @@ end );
 # it is here only  for making tests.
 BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
     function( S )
-    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name; 
+    local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name;
     
     n := Length( IndeterminatesOfPolynomialRing( S ) );
     KS := KoszulDualRing( S );
@@ -361,11 +361,11 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
     name := Concatenation( "L functor from ", Name( cat_lp_ext ), " to ", Name( cochains ) );
     L := CapFunctor( name, cat_lp_ext, cochains );
     
-    AddObjectFunction( L, 
+    AddObjectFunction( L,
         function( M )
         local hM, diffs, C, d;
         hM := AsPresentationInHomalg( M );
-        diffs := MapLazy( IntegersList, 
+        diffs := AsZFunction(
             function( i )
             local l, source, range;
             l := List( ind_ext, e -> RepresentationMapOfRingElement( e, hM, -i ) );
@@ -374,7 +374,7 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
             source := GradedFreeLeftPresentation( NrRows( l ), S, List( [ 1 .. NrRows( l ) ], j -> -i ) );
             range := GradedFreeLeftPresentation( NrColumns( l ), S, List( [ 1 .. NrColumns( l ) ], j -> -i - 1 ) );
             return GradedPresentationMorphism( source, l, range );
-            end, 1 );
+            end );
         C :=  CochainComplex( cat_lp_sym, diffs );
         
         d := ShallowCopy( GeneratorDegrees( M ) );
@@ -394,14 +394,14 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
         
         end );
         
-    AddMorphismFunction( L, 
+    AddMorphismFunction( L,
         function( new_source, f, new_range )
         local M, N, mors;
         
         M := Source( f );
         N := Range( f );
         
-        mors := MapLazy( IntegersList, 
+        mors := AsZFunction(
                 function( k )
                 local Mk, Nk, iMk, iNk, l;
                 # There is a reason to write the next two lines like this
@@ -418,7 +418,7 @@ BindGlobal( "L_COCHAIN_FUNCTOR_OLD",
                 l := LiftAlongMonomorphism( iNk, PreCompose( iMk, f ) );
                 
                 return GradedPresentationMorphism( new_source[ k ], UnderlyingMatrix( l ) * S, new_range[ k ] );
-              end, 1 );
+              end );
         
         return CochainMorphism( new_source, new_range, mors );
       end );
@@ -442,7 +442,7 @@ InstallMethod( CastelnuovoMumfordRegularity,
                 [ IsCapCategoryObject and IsChainComplex ],
     function( C )
     local reg;
-    reg := Minimum( List( [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ], 
+    reg := Minimum( List( [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ],
                         i -> i - CastelnuovoMumfordRegularity( C[ i ] ) ) );
     return Int( String( reg ) );
 end );
@@ -475,7 +475,7 @@ InstallMethodWithCrispCache( TateResolution,
     
     Tot := TotalComplex( B );
     
-    diffs := MapLazy( IntegersList, 
+    diffs := AsZFunction(
       function( i )
         
         Info( InfoBBGG, 3, "Computing Tate resolution at index ", i );
@@ -505,7 +505,7 @@ InstallMethodWithCrispCache( TateResolution,
         
         fi;
         
-      end, 1 );
+      end );
       
     return ChainComplex( lp_cat_ext, diffs );
     
@@ -543,7 +543,7 @@ InstallMethodWithCrispCache( TateResolution,
     
     reg := Minimum( reg_source, reg_range );
     
-    mors := MapLazy( IntegersList,
+    mors := AsZFunction(
       function( i )
         local mor;
         
@@ -568,7 +568,7 @@ InstallMethodWithCrispCache( TateResolution,
         
         fi;
         
-      end, 1 );
+      end );
     
     return ChainMorphism( new_source, new_range, mors );
     
@@ -716,7 +716,7 @@ InstallMethodWithCrispCache( TateResolution,
         graded_lp_cat_ext := GradedLeftPresentations( R );
         p := ProjectiveResolution( P );
         q := InjectiveResolution( P );
-        diffs := MapLazy( IntegersList, 
+        diffs := AsZFunction(
             function( i )
             if i > 1 then
                 return p^( -i + 1 );
@@ -725,7 +725,7 @@ InstallMethodWithCrispCache( TateResolution,
             else
                 return q^( -i );
             fi;
-            end, 1 );
+            end );
         return ChainComplex( graded_lp_cat_ext, diffs );
     
     else
@@ -744,7 +744,7 @@ InstallMethodWithCrispCache( TateResolution,
         graded_lp_cat_ext := GradedLeftPresentations( R );
         source := TateResolution( Source( phi ) );
         range := TateResolution( Range( phi ) );
-        mors := MapLazy( IntegersList,  
+        mors := AsZFunction(
             function( i )
                                         local epi_to_range, epi_to_source;
                                         if i > 1 then
@@ -756,7 +756,7 @@ InstallMethodWithCrispCache( TateResolution,
                                         else
                                             return Colift( source^( i + 1 ), PreCompose( mors[ i + 1 ], range^( i + 1 ) ) );
                                         fi;
-                                        end, 1 );
+                                        end );
         return ChainMorphism( source, range, mors );
         
     else
@@ -1075,7 +1075,7 @@ InstallMethod( TwistFunctor,
         twist := AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
           M!.ComputedTwists!.( String( degree ) ) := twist;
           return twist;
-        else    
+        else
           if not String( degree ) in NamesOfComponents( M!.ComputedTwists ) then
           twist := AsGradedLeftPresentation( UnderlyingMatrix( M ), List( GeneratorDegrees( M ), d -> d - degree ) );
             M!.ComputedTwists!.( String( degree ) ) := twist;
@@ -1095,7 +1095,7 @@ InstallMethod( TwistFunctor,
         twist := GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
           f!.ComputedTwists!.( String( degree ) ) := twist;
           return twist;
-        else    
+        else
           if not String( degree ) in NamesOfComponents( f!.ComputedTwists ) then
             twist := GradedPresentationMorphism( source, UnderlyingMatrix( f ), range );
             f!.ComputedTwists!.( String( degree ) ) := twist;
@@ -1105,7 +1105,7 @@ InstallMethod( TwistFunctor,
           fi;
         fi;
     end );
-      
+    
     return F;
 end );
 
@@ -1190,7 +1190,7 @@ InstallMethod( DimensionOfTateCohomology,
     cat := UnderlyingCategory( CapCategory( U ) );
     
     n := Length(
-      IndeterminatesOfExteriorRing( 
+      IndeterminatesOfExteriorRing(
         cat!.ring_for_representation_category ) );
     
     j := i + k;
