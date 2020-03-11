@@ -217,9 +217,7 @@ function( Ho_C )
                 end );
       
         tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
-      
-        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
-      
+        
         tau := CreateTrianglesMorphism(
                   st_rotation, rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
       
@@ -251,9 +249,7 @@ function( Ho_C )
 
   AddOctahedralAxiom( Ho_C,
     function( f, g )
-      local Ho_C, A, B, C, h, cone_f, cone_g, cone_h, shifted_cone_f, u, v, w, T, st_T, maps, cone_u, i, j;
-      
-      Ho_C := CapCategory( f );
+      local A, B, C, h, cone_f, cone_g, cone_h, shifted_cone_f, u, v, w, T, st_T, maps, cone_u, i, j;
       
       A := Source( f );
       
