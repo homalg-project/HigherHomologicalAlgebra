@@ -68,12 +68,15 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.8",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "CAP", ">= 2020.01.10" ],
-                           #[ "InfiniteLists", ">= 2017.08.01"],
-                           [ "MonoidalCategories", ">= 2019.08.10" ]
-                           ],
-  SuggestedOtherPackages := [ [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ] ],
+  NeededOtherPackages := [
+                            [ "AutoDoc", ">= 2019.09.04" ],
+                            [ "CAP", ">= 2020.01.10" ],
+                            [ "MonoidalCategories", ">= 2019.08.10" ]
+                         ],
+  SuggestedOtherPackages := [
+        [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ],
+        [ "InfiniteLists", ">= 2017.08.01"],
+      ],
    
   ExternalConditions := [ ],
 ),
