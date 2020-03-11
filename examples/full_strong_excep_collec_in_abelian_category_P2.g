@@ -123,7 +123,7 @@ lambda := UnitOfTensorHomAdjunction( collection );
 pp := IndecProjectiveObjects( D );
 
 # RandomObject( chains, [ lower_bound, upper_bound, complexity_of_each_differential ] );
-a := RandomObject( chains_C, [ -1, 1, 3 ] )/homotopy_C/derived_C;
+a := RandomObject( chains_C, [ -1, 1, 2 ] )/homotopy_C/derived_C;
 
 quit;
 
