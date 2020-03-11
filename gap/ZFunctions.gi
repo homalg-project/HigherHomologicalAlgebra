@@ -184,5 +184,8 @@ InstallMethod( ApplyShiftOp,
 );
 
 ##
-InstallOtherMethod( ShiftLazy, [ IsZFunction, IsInt ], ApplyShift );
-#InstallOtherMethod( BaseList, [ IsZFunction ], z_function -> BaseZFunctions( z_function )[ 1 ] );
+InstallMethod( ViewObj,
+          [ IsZFunction ],
+  function( z_function )
+    Print( "<ZFunction>\n" );
+end );
