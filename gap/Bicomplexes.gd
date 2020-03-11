@@ -164,7 +164,7 @@ DeclareOperation( "HomologicalBicomplex", [ IsChainComplex ] );
 #! The output is the corresponding anti-commutative homological bicomplex.
 #! @Arguments C, h, v
 #! @Returns B
-DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
+DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZFunction, IsZFunction ] );
 
 #! @Description
 #! The input is Cap category and two functions.  
@@ -174,7 +174,7 @@ DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
 DeclareOperation( "HomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
 
 DeclareOperation( "CohomologicalBicomplex", [ IsCochainComplex ] );
-DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsZList, IsZList ] );
+DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsZFunction, IsZFunction ] );
 DeclareOperation( "CohomologicalBicomplex", [ IsCapCategory, IsFunction, IsFunction ] );
 
 DeclareOperation( "ObjectAt", [ IsCapCategoryBicomplexObject, IsInt, IsInt ] );
@@ -219,7 +219,7 @@ KeyDependentOperation( "ComplexOfHorizontalHomologiesFunctorAt", IsCapCategory, 
 
 ## Morphisms
 DeclareOperation( "BicomplexMorphism", [ IsChainOrCochainMorphism ] );
-DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ] );
+DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZFunction ] );
 DeclareOperation( "BicomplexMorphism", [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsFunction ] );
 DeclareOperation( "MorphismAt", [ IsCapCategoryBicomplexMorphism, IsInt, IsInt ] );
 

@@ -9,7 +9,7 @@ function( C, x0, x1 )
   if x0 > x1 then return TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, x1, x0 );fi;
   cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
 
-  diff := MapLazy( IntegersList, 
+  diff := AsZFunction( 
         function( m )
         local list;
         C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
@@ -25,7 +25,7 @@ function( C, x0, x1 )
                                 fi;
                                 end ) );
         return MorphismBetweenDirectSums( list );
-        end, 1 );
+        end );
   return ChainComplex( cat, diff );;
 
 end );
@@ -40,7 +40,7 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICA
   if y0 > y1 then return TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, y1, y0 );fi;
   cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) );
 
-  diff := MapLazy( IntegersList, 
+  diff := AsZFunction( 
         function( m )
         local list;
         C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
@@ -56,7 +56,7 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICA
                 fi;
                 end ) );
         return MorphismBetweenDirectSums( list );
-        end, 1 );
+        end );
   return ChainComplex( cat, diff );
 
 end );
@@ -72,7 +72,7 @@ function( C, x0, y0 )
 
   zero_object := ZeroObject( cat );
 
-  diff := MapLazy( IntegersList, 
+  diff := AsZFunction( 
         function( m )
         local l;
         C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, m - y0 ];
@@ -93,7 +93,7 @@ function( C, x0, y0 )
                 fi;
                 end ) );
         return MorphismBetweenDirectSums( l );
-        end, 1 );
+        end );
   return ChainComplex( cat, diff );
 
 end );
@@ -109,7 +109,7 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICA
 
   zero_object := ZeroObject( cat );
 
-  diff := MapLazy( IntegersList, 
+  diff := AsZFunction( 
         function( m )
         local l;
         
@@ -132,7 +132,7 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICA
                 fi;
                 end ) );
         return MorphismBetweenDirectSums( l );
-        end, 1 );
+        end );
   return ChainComplex( cat, diff );
 end );
 
@@ -146,7 +146,7 @@ end );
 # 
 # cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
 # 
-# diff := MapLazy( IntegersList, function( m )
+# diff := AsZFunction( function( m )
 #                                local list;
 #                                
 #                                
@@ -164,7 +164,7 @@ end );
 #                                                                      end ) );
 #                                
 #                                return MorphismBetweenDirectSums( list );
-#                                end, 1 );
+#                                end );
 # d := ChainComplex( cat, diff );
 # 
 # #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
@@ -252,7 +252,7 @@ InstallMethod( TotalComplexFunctorial,
         R := Range( phi );
         tR := TotalComplex( R );
      
-        l := MapLazy( IntegersList, 
+        l := AsZFunction( 
                 function( m )
                 local ind_r, ind_s, morphisms;
                 ind_s := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
@@ -273,7 +273,7 @@ InstallMethod( TotalComplexFunctorial,
                 else
                      return MorphismBetweenDirectSums( morphisms );
                 fi;
-                end, 1 );
+                end );
 
         return ChainMorphism( tS, tR, l );
 end );

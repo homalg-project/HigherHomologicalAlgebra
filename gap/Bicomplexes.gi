@@ -345,49 +345,49 @@ InstallMethod( CohomologicalBicomplex,
 
 ##
 InstallMethod( HomologicalBicomplex,
-               [ IsCapCategory, IsZList, IsZList ],
+               [ IsCapCategory, IsZFunction, IsZFunction ],
   function( A, h, v )
     local chains_cat, C;
     
     chains_cat := ChainComplexCategory( A );
     C := ChainComplex( chains_cat, 
-        MapLazy( IntegersList,
+        AsZFunction(
             function( i )
             local source, range, diff;
             if i mod 2 = 0 then
-               source := ChainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
-               range := ChainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i - 1 ][ j ] ), 1 ) );
+               source := ChainComplex( A, AsZFunction( j -> v[ i ][ j ] ) );
+               range := ChainComplex( A, AsZFunction( j-> AdditiveInverseForMorphisms( v[ i - 1 ][ j ] ) ) );
             else
-               source := ChainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
-               range := ChainComplex( A, MapLazy( IntegersList, j-> v[ i - 1 ][ j ], 1 ) );
+               source := ChainComplex( A, AsZFunction( j -> AdditiveInverseForMorphisms( v[ i ][ j ] ) ) );
+               range := ChainComplex( A, AsZFunction( j-> v[ i - 1 ][ j ] ) );
             fi;
-            diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+            diff := AsZFunction( j -> h[ j ][ i ] );
             return ChainMorphism( source, range, diff );
-            end, 1 ) );
+            end ) );
    return HomologicalBicomplex( C );
 end );
 
 ##
 InstallMethod( CohomologicalBicomplex,
-               [ IsCapCategory, IsZList, IsZList ],
+               [ IsCapCategory, IsZFunction, IsZFunction ],
     function( A, h, v )
     local cochains_cat, C;
     
     cochains_cat := CochainComplexCategory( A );
     C := CochainComplex( cochains_cat, 
-        MapLazy( IntegersList,
+        AsZFunction(
         function( i )
         local source, range, diff;
         if i mod 2 = 0 then
-           source := CochainComplex( A, MapLazy( IntegersList, j -> v[ i ][ j ], 1 ) );
-           range := CochainComplex( A, MapLazy( IntegersList, j-> AdditiveInverseForMorphisms( v[ i + 1 ][ j ] ), 1 ) );
+           source := CochainComplex( A, AsZFunction( j -> v[ i ][ j ] ) );
+           range := CochainComplex( A, AsZFunction( j-> AdditiveInverseForMorphisms( v[ i + 1 ][ j ] ) ) );
         else
-           source := CochainComplex( A, MapLazy( IntegersList, j -> AdditiveInverseForMorphisms( v[ i ][ j ] ), 1 ) );
-           range := CochainComplex( A, MapLazy( IntegersList, j-> v[ i + 1 ][ j ], 1 ) );
+           source := CochainComplex( A, AsZFunction( j -> AdditiveInverseForMorphisms( v[ i ][ j ] ) ) );
+           range := CochainComplex( A, AsZFunction( j-> v[ i + 1 ][ j ] ) );
         fi;
-        diff := MapLazy( IntegersList, j -> h[ j ][ i ], 1 );
+        diff := AsZFunction( j -> h[ j ][ i ] );
         return CochainMorphism( source, range, diff );
-        end, 1 ) );
+        end ) );
    return CohomologicalBicomplex( C );
 end );
 
@@ -397,9 +397,9 @@ InstallMethod( HomologicalBicomplex,
   function( A, H, V )
     local h, v;
     
-    h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
+    h := AsZFunction( j -> AsZFunction( i -> H( i, j ) ) );
     
-    v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
+    v := AsZFunction( i -> AsZFunction( j -> V( i, j ) ) );
     
     return HomologicalBicomplex( A, h, v );
     
@@ -411,9 +411,9 @@ InstallMethod( CohomologicalBicomplex,
   function( A, H, V )
     local h, v;
     
-    h := MapLazy( IntegersList, j -> MapLazy( IntegersList, i -> H( i, j ), 1 ), 1 );
+    h := AsZFunction( j -> AsZFunction( i -> H( i, j ) ) );
     
-    v := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> V( i, j ), 1 ), 1 );
+    v := AsZFunction( i -> AsZFunction( j -> V( i, j ) ) );
     
     return CohomologicalBicomplex( A, h, v );
     
@@ -564,9 +564,9 @@ InstallMethod( RowAsComplexOp,
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
     if IsCapCategoryHomologicalBicomplexObject( B ) then
-       return ChainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
+       return ChainComplex( A, AsZFunction( i-> HorizontalDifferentialAt( B, i, j ) ) );
     else
-       return CochainComplex( A, MapLazy( IntegersList, i-> HorizontalDifferentialAt( B, i, j ), 1 ) );
+       return CochainComplex( A, AsZFunction( i-> HorizontalDifferentialAt( B, i, j ) ) );
     fi;
 end );
 
@@ -580,9 +580,9 @@ InstallMethod( ColumnAsComplexOp,
     A := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
     
     if IsCapCategoryHomologicalBicomplexObject( B ) then
-       return ChainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
+       return ChainComplex( A, AsZFunction( j -> VerticalDifferentialAt( B, i, j ) ) );
     else
-       return CochainComplex( A, MapLazy( IntegersList, j -> VerticalDifferentialAt( B, i, j ), 1 ) );
+       return CochainComplex( A, AsZFunction( j -> VerticalDifferentialAt( B, i, j ) ) );
     fi;
 end );
 
@@ -692,7 +692,7 @@ InstallMethod( BicomplexMorphism,
 
 ##
 InstallMethod( BicomplexMorphism,
-               [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZList ],
+               [ IsCapCategoryBicomplexObject, IsCapCategoryBicomplexObject, IsZFunction ],
     function( s, t, l )
     local ss, tt, phi;
     
@@ -720,7 +720,7 @@ InstallMethod( BicomplexMorphism,
        Error( "The source and range should be in the same category" );
     fi;
     
-    l := MapLazy( IntegersList, i -> MapLazy( IntegersList, j -> f( i, j ), 1 ), 1 );
+    l := AsZFunction( i -> AsZFunction( j -> f( i, j ) ) );
     
     return BicomplexMorphism( s, t, l );
     
@@ -941,23 +941,23 @@ InstallMethod( ComplexOfVerticalCohomologiesAtOp,
     C := UnderlyingCapCategoryCell( B );
     
     if HasIsBicomplexCategoryWithCommutativeSquares( bicomplexes ) and IsBicomplexCategoryWithCommutativeSquares( bicomplexes )then 
-    diffs := MapLazy( IntegersList, 
+    diffs := AsZFunction( 
         function( i )
         return ApplyFunctor( Coh, C^i );
-        end, 1 );
+        end );
     else
-        diffs := MapLazy( IntegersList, 
+        diffs := AsZFunction( 
             function( i )
             local D;
             if i mod 2 = 0 then
-                D := CochainComplex( cat, MapLazy( Differentials( Range( C^i ) ), d->AdditiveInverseForMorphisms(d), 1 ) );
+                D := CochainComplex( cat, AsZFunction(( Range( C^i ) ), d->AdditiveInverseForMorphisms(d) ) );
                 D := CochainMorphism( Source( C^i ), D, Morphisms( C^i ) );
             else
-                D := CochainComplex( cat, MapLazy( Differentials( Source( C^i ) ), d->AdditiveInverseForMorphisms(d), 1 ) );
+                D := CochainComplex( cat, AsZFunction(( Source( C^i ) ), d->AdditiveInverseForMorphisms(d) ) );
                 D := CochainMorphism( D, Range( C^i ), Morphisms( C^i ) );
             fi;
             return ApplyFunctor( Coh, D );
-            end, 1 );
+            end );
     fi;
     return CochainComplex( cat, diffs );
     ## Add to do list for the bounds
@@ -973,13 +973,13 @@ InstallMethod( ComplexMorphismOfVerticalCohomologiesAtOp,
     cat := UnderlyingCategory( cochains );
     Coh := CohomologyFunctor( cochains, n );
     psi := UnderlyingCapCategoryCell( phi );
-    maps := MapLazy( IntegersList, function( i )
+    maps := AsZFunction( function( i )
                                     local s,r, p;
                                     s := ColumnAsComplex( Source( phi ), i );
                                     r := ColumnAsComplex( Range( phi ), i );
                                     p := CochainMorphism( s, r, Morphisms( psi[ i ] ) );
                                     return ApplyFunctor( Coh, p );
-                                    end, 1 );
+                                    end );
     return CochainMorphism( ComplexOfVerticalCohomologiesAt( Source( phi ), n ),
                             ComplexOfVerticalCohomologiesAt( Range( phi ), n ), maps );
 
@@ -1017,16 +1017,16 @@ InstallMethod( ComplexOfHorizontalCohomologiesAtOp,
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
     Coh := CohomologyFunctor( cochains, m );
-    diffs := MapLazy( IntegersList, function( i )
+    diffs := AsZFunction( function( i )
                                     local current_source, current_range, current_mor, maps;
                                     current_source := RowAsComplex( B, i );
                                     current_range := RowAsComplex( B, i + 1 );
-                                    maps := MapLazy( IntegersList, function( j )
+                                    maps := AsZFunction( function( j )
                                                                     return VerticalDifferentialAt( B, j, i );
-                                                                    end, 1 );
+                                                                    end );
                                     current_mor := CochainMorphism( current_source, current_range, maps );
                                     return ApplyFunctor( Coh, current_mor );
-                                    end, 1 );
+                                    end );
     return CochainComplex( cat, diffs );
     ## Add to do list for the bounds
 end );
@@ -1041,16 +1041,16 @@ InstallMethod( ComplexMorphismOfHorizontalCohomologiesAtOp,
     cochains := UnderlyingCategory( cochains );
     cat := UnderlyingCategory( cochains );
     Coh := CohomologyFunctor( cochains, m );
-    maps := MapLazy( IntegersList,  function( i )
+    maps := AsZFunction(  function( i )
                                     local current_source, current_range, current_mor, current_maps;
                                     current_source := RowAsComplex( Source( phi ), i );
                                     current_range := RowAsComplex( Range( phi ), i );
-                                    current_maps := MapLazy( IntegersList,  function( j )
+                                    current_maps := AsZFunction(  function( j )
                                                                     return MorphismAt( phi, j, i );
-                                                                    end, 1 );
+                                                                    end );
                                     current_mor := CochainMorphism( current_source, current_range, current_maps );
                                     return ApplyFunctor( Coh, current_mor );
-                                    end, 1 );
+                                    end );
     return CochainMorphism( ComplexOfHorizontalCohomologiesAt( Source( phi ), m ),
                             ComplexOfHorizontalCohomologiesAt( Range( phi ), m ), maps );
 
