@@ -39,6 +39,30 @@ InstallMethod( HomotopyCategoryMorphism,
 end );
 
 ##
+InstallMethod( HomotopyCategoryMorphism,
+          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsList, IsInt ],
+  function( a, b, maps, N )
+    local homotopy_category;
+    
+    homotopy_category := CapCategory( a );
+    
+    return ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps, N ) / homotopy_category;
+    
+end );
+
+##
+InstallMethod( HomotopyCategoryMorphism,
+          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsInfList ],
+  function( a, b, maps )
+    local homotopy_category;
+    
+    homotopy_category := CapCategory( a );
+    
+    return ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps ) / homotopy_category;
+    
+end );
+
+##
 InstallMethod( \[\],
   [ IsHomotopyCategoryMorphism, IsInt ],
     { a, i } -> UnderlyingCell( a )[ i ] );

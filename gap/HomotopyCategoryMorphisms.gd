@@ -14,6 +14,12 @@ DeclareCategory( "IsHomotopyCategoryMorphism",
 DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategory, IsCapCategoryMorphism ] );
 
+DeclareOperation( "HomotopyCategoryMorphism",
+            [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsList, IsInt ] );
+
+DeclareOperation( "HomotopyCategoryMorphism",
+            [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsInfList ] );
+
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryMorphism, IsInt ] );
 
