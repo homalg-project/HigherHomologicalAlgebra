@@ -125,7 +125,7 @@ function( Ho_C )
                           [ phi_[ i - 1 ], homotopy_maps[ i - 1 ] ],
                           [ ZeroMorphism( Source( psi_ )[ i ], Range( phi_ )[ i - 1 ] ), psi_[ i ] ]
                         ] );
-                  end, 1 );
+                  end );
         
         tau := HomotopyCategoryMorphism( tr1[ 2 ], tr2[ 2 ], maps );
         
@@ -159,7 +159,7 @@ function( Ho_C )
                         ZeroMorphism( A[ i - 1 ], B[ i ] )
                       ]
                     ] );
-                end, 1 );
+                end );
       
         tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
         
@@ -177,7 +177,7 @@ function( Ho_C )
                       [ IdentityMorphism( A[ i - 1 ] ) ],
                       [ ZeroMorphism( B[ i ], A[ i - 1 ] ) ]
                     ] );
-                end, 1 );
+                end );
       
         tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
       
