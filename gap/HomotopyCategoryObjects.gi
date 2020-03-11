@@ -39,6 +39,33 @@ InstallMethod( HomotopyCategoryObject,
 end );
 
 ##
+InstallMethod( HomotopyCategoryObject,
+          [ IsList, IsInt ],
+  function( diffs, N )
+    local category, homotopy_category;
+    
+    category := CapCategory( diffs[ 1 ] );
+    
+    homotopy_category := HomotopyCategory( category );
+    
+    return ChainComplex( diffs, N ) / homotopy_category;
+    
+end );
+
+##
+InstallMethod( HomotopyCategoryObject,
+          [ IsHomotopyCategory, IsInfList ],
+  function( homotopy_category, diffs )
+    local chains;
+    
+    chains := UnderlyingCategory( homotopy_category );
+    
+    return ChainComplex( chains, diffs ) / homotopy_category;
+    
+end );
+
+
+##
 InstallMethod( \[\],
   [ IsHomotopyCategoryObject, IsInt ],
     { a, i } -> UnderlyingCell( a )[ i ] );

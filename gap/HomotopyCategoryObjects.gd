@@ -16,6 +16,13 @@ DeclareCategory( "IsHomotopyCategoryObject",
 DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsCapCategoryObject ] );
 
+DeclareOperation( "HomotopyCategoryObject",
+            [ IsHomotopyCategory, IsInfList ] );
+
+
+DeclareOperation( "HomotopyCategoryObject",
+            [ IsList, IsInt ] );
+
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryObject, IsInt ] );
 
