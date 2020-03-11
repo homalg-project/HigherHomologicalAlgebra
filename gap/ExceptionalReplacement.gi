@@ -174,7 +174,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
     
     N := ExceptionalShift( a, collection );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
               function( i )
                 local alpha, beta, alpha_as_list, beta_as_list, c, k, sources;
                 
@@ -222,7 +222,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
                 
                 return [ alpha, beta, alpha_as_list, beta_as_list ];
                 
-              end, 1 );
+              end );
     
     maps!.shift := N;
     
@@ -256,7 +256,7 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
     
     rep_b := EXCEPTIONAL_REPLACEMENT_DATA( b, collection );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
               function( i )
                 local psi, eta;
                 
@@ -291,7 +291,7 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 fi;
                 
-            end, 1 );
+            end );
     
     return maps;
     
@@ -311,35 +311,35 @@ InstallMethodWithCache( ExceptionalReplacement,
 
     maps := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
     
-    diffs := MapLazy( IntegersList,
-      function( i )
-        local alpha_as_list, beta_as_list, source, range, matrix;
-        
-        alpha_as_list := maps[ i ][ 3 ];
-        
-        beta_as_list := maps[ i - 1 ][ 4 ];
-        
-        source := List( alpha_as_list, a -> Source( a ) / defining_category );
-        
-        range := List( beta_as_list, b -> Range( b ) / defining_category );
-        
-        if IsEmpty( source ) or IsEmpty( range ) then
-           
-          matrix := [ ];
-          
-        else
-          
-          matrix := List( alpha_as_list, a -> List( beta_as_list, b -> PreCompose( a, b ) / defining_category ) );
-        
-        fi;
-        
-        source := AdditiveClosureObject( source, additive_closure );
-        
-        range := AdditiveClosureObject( range, additive_closure );
-        
-        return AdditiveClosureMorphism( source, matrix, range );
-        
-    end, 1 );
+    diffs := AsZFunction(
+              function( i )
+                local alpha_as_list, beta_as_list, source, range, matrix;
+                
+                alpha_as_list := maps[ i ][ 3 ];
+                
+                beta_as_list := maps[ i - 1 ][ 4 ];
+                
+                source := List( alpha_as_list, a -> Source( a ) / defining_category );
+                
+                range := List( beta_as_list, b -> Range( b ) / defining_category );
+                
+                if IsEmpty( source ) or IsEmpty( range ) then
+                   
+                  matrix := [ ];
+                  
+                else
+                  
+                  matrix := List( alpha_as_list, a -> List( beta_as_list, b -> PreCompose( a, b ) / defining_category ) );
+                
+                fi;
+                
+                source := AdditiveClosureObject( source, additive_closure );
+                
+                range := AdditiveClosureObject( range, additive_closure );
+                
+                return AdditiveClosureMorphism( source, matrix, range );
+                
+              end );
     
     res := ChainComplex( additive_closure, diffs ) / homotopy_category;
     
@@ -367,7 +367,7 @@ InstallMethodWithCache( ExceptionalReplacement,
     
     maps := EXCEPTIONAL_REPLACEMENT_DATA( alpha, collection );
     
-    maps := MapLazy( maps, m -> m[ 2 ], 1 );
+    maps := ApplyMap( maps, m -> m[ 2 ] );
     
     map := ChainMorphism( UnderlyingCell( rep_a ), UnderlyingCell( rep_b ), maps ) / homotopy_category;
     
