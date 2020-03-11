@@ -41,6 +41,8 @@ DeclareAttribute( "AsHonestMorphism", IsRoof );
 
 DeclareProperty( "IsHonest", IsRoof );
 
+DeclareOperation( "PreComposeRoofs", [ IsRoof, IsRoof ] );
+
 DeclareOperation( "DerivedCategoryObject", [ IsDerivedCategory, IsHomotopyCategoryObject ] );
 
 DeclareOperation( "\[\]", [ IsDerivedCategoryObject, IsInt ] );

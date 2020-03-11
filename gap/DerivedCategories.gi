@@ -57,9 +57,64 @@ InstallMethod( IsHonest,
 ##
 InstallMethod( AsHonestMorphism,
           [ IsRoof ],
-  function( roof )
+  roof -> PreCompose( Inverse( QuasiIsomorphism( roof ) ), RangeMorphism( roof ) )
+);
+
+#       D
+#      / \
+#    C     A
+#   / \r s/ \
+# S     B     T
+
+##
+InstallMethod( PreComposeRoofs,
+          [ IsRoof, IsRoof ],
+  function( roof_1, roof_2 )
+    local Ho_C, r, s, A, B, C, tau, r_o_tau, D, rr_maps, rr, ss_maps, ss;
     
-    return PreCompose( Inverse( QuasiIsomorphism( roof ) ), RangeMorphism( roof ) );
+    Ho_C := AmbientCategory( roof_1 );
+    
+    s := SourceMorphism( roof_2 );
+    
+    r := RangeMorphism( roof_1 );
+    
+    A := Source( s );
+    
+    B := Range( s );
+    
+    C := Source( r );
+    
+    tau := MorphismIntoConeObject( s );
+    
+    r_o_tau := PreCompose( r, tau );
+    
+    D := Shift( ConeObject( r_o_tau ), -1 );
+    
+    rr_maps := AsZFunction(
+                i -> MorphismBetweenDirectSums(
+                  [
+                    [ ZeroMorphism( C[ i ], A[ i ] ) ],
+                    [ IdentityMorphism( A[ i ] ) ],
+                    [ ZeroMorphism( B[ i + 1], A[ i ] ) ]
+                  ] ) );
+                  
+    rr := ChainMorphism( UnderlyingCell( D ), UnderlyingCell( A ), rr_maps ) / Ho_C;
+    
+    ss_maps := AsZFunction(
+                i -> MorphismBetweenDirectSums(
+                  [
+                    [ AdditiveInverse( IdentityMorphism( C[ i ] ) ) ],
+                    [ ZeroMorphism( A[ i ], C[ i ] ) ],
+                    [ ZeroMorphism( B[ i + 1], C[ i ] ) ]
+                  ] ) );
+    
+    ss := ChainMorphism( UnderlyingCell( D ), UnderlyingCell( C ), ss_maps ) / Ho_C;
+    
+    ss := PreCompose( ss, SourceMorphism( roof_1 ) );
+    
+    rr := PreCompose( rr, RangeMorphism( roof_2 ) );
+    
+    return Roof( ss, rr );
     
 end );
 
@@ -233,6 +288,19 @@ InstallMethod( DerivedCategory,
       function( a )
         
         return IdentityMorphism( UnderlyingCell( a ) ) / D;
+        
+    end );
+    
+    ##
+    AddPreCompose( D,
+      function( alpha_1, alpha_2 )
+        local roof_1, roof_2;
+        
+        roof_1 := UnderlyingRoof( alpha_1 );
+        
+        roof_2 := UnderlyingRoof( alpha_2 );
+        
+        return PreComposeRoofs( roof_1, roof_2 ) / D;
         
     end );
     
