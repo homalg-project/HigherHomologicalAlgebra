@@ -18,7 +18,11 @@ DeclareAttribute( "CompareFunction", IsZFunctionWithInductiveSides );
 
 DeclareAttribute( "StablePosValue", IsZFunctionWithInductiveSides );
 
+DeclareAttribute( "IndexOfStablePosValue", IsZFunctionWithInductiveSides );
+
 DeclareAttribute( "StableNegValue", IsZFunctionWithInductiveSides );
+
+DeclareAttribute( "IndexOfStableNegValue", IsZFunctionWithInductiveSides );
 
 DeclareOperation( "ZFunctionWithInductiveSides",
       [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ] );

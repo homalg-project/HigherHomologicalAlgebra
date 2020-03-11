@@ -70,6 +70,8 @@ InstallMethod( ZFunctionWithInductiveSides,
               
               SetStablePosValue( z_function, value );
               
+              SetIndexOfStablePosValue( z_function, i - 1 );
+              
             fi;
             
             return value;
@@ -91,6 +93,8 @@ InstallMethod( ZFunctionWithInductiveSides,
             if compare_func( value, prev_value ) then
               
               SetStableNegValue( z_function, value );
+              
+              SetIndexOfStableNegValue( z_function, i + 1 );
               
             fi;
             
@@ -120,9 +124,32 @@ end );
 ##
 InstallMethod( ZFunctionValueOp,
           [ IsZFunction, IsInt ],
+  { z_function, i } -> UnderlyingFunction( z_function )( i )
+);
+
+##
+InstallMethod( ZFunctionValueOp,
+          [ IsZFunction and HasIndexOfStableNegValue, IsInt ],
   function( z_function, i )
     
-    return UnderlyingFunction( z_function )( i );
+    if i <= IndexOfStableNegValue( z_function ) then
+      return StableNegValue( z_function );
+    else
+      TryNextMethod( );
+    fi;
+    
+end );
+
+##
+InstallMethod( ZFunctionValueOp,
+          [ IsZFunction and HasIndexOfStablePosValue, IsInt ],
+  function( z_function, i )
+    
+    if i >= IndexOfStablePosValue( z_function ) then
+      return StablePosValue( z_function );
+    else
+      TryNextMethod( );
+    fi;
     
 end );
 
@@ -187,5 +214,5 @@ InstallMethod( ApplyShiftOp,
 InstallMethod( ViewObj,
           [ IsZFunction ],
   function( z_function )
-    Print( "<ZFunction>\n" );
+    Print( "<ZFunction>" );
 end );
