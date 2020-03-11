@@ -277,21 +277,21 @@ function( Ho_C )
       
       Ho_C := CapCategory( f );
       
-      A := UnderlyingCell( Source( f ) );
+      A := Source( f );
       
-      B := UnderlyingCell( Range( f ) );
+      B := Range( f );
       
-      C := UnderlyingCell( Range( g ) );
+      C := Range( g );
       
       h := PreCompose( f, g );
       
-      cone_f := UnderlyingCell( ConeObject( f ) );
+      cone_f := ConeObject( f );
       
-      cone_g := UnderlyingCell( ConeObject( g ) );
+      cone_g := ConeObject( g );
       
-      cone_h := UnderlyingCell( ConeObject( h ) );
+      cone_h := ConeObject( h );
       
-      shifted_cone_f := UnderlyingCell( ShiftOfObject( ConeObject( f ) ) );
+      shifted_cone_f := ShiftOfObject( ConeObject( f ) );
       
       u := MapLazy( IntegersList,
             n -> MorphismBetweenDirectSums(
@@ -301,7 +301,7 @@ function( Ho_C )
                   ]
                 ), 1 );
       
-      u := ChainMorphism( cone_f, cone_h, u ) / Ho_C;
+      u := HomotopyCategoryMorphism( cone_f, cone_h, u );
       
       v := MapLazy( IntegersList,
             n -> MorphismBetweenDirectSums(
@@ -311,7 +311,7 @@ function( Ho_C )
                   ]
                 ), 1 );
       
-      v := ChainMorphism( cone_h, cone_g, v ) / Ho_C;
+      v := HomotopyCategoryMorphism( cone_h, cone_g, v );
       
       w := MapLazy( IntegersList,
             n -> MorphismBetweenDirectSums(
@@ -321,7 +321,7 @@ function( Ho_C )
                   ]
                 ), 1 );
       
-      w := ChainMorphism( cone_g, shifted_cone_f, w ) / Ho_C;
+      w := HomotopyCategoryMorphism( cone_g, shifted_cone_f, w );
       
       T := CreateExactTriangle( u, v, w );
       
@@ -335,11 +335,11 @@ function( Ho_C )
                   ]
               ), 1 );
       
-      cone_u := UnderlyingCell( ConeObject( u ) );
+      cone_u := ConeObject( u );
       
-      i := ChainMorphism( cone_g, cone_u, maps ) / Ho_C;
+      i := HomotopyCategoryMorphism( cone_g, cone_u, maps );
       
-      i := CreateTrianglesMorphism( T, st_T, IdentityMorphism( cone_f ) / Ho_C, IdentityMorphism( cone_h ) / Ho_C, i );
+      i := CreateTrianglesMorphism( T, st_T, IdentityMorphism( cone_f ), IdentityMorphism( cone_h ), i );
       
       SetIsomorphismIntoStandardExactTriangle( T, i );
       
@@ -353,9 +353,9 @@ function( Ho_C )
                   ]
               ), 1 );
       
-      j := ChainMorphism( cone_u, cone_g, maps ) / Ho_C;
+      j := HomotopyCategoryMorphism( cone_u, cone_g, maps );
       
-      j := CreateTrianglesMorphism( st_T, T, IdentityMorphism( cone_f ) / Ho_C, IdentityMorphism( cone_h ) / Ho_C, j );
+      j := CreateTrianglesMorphism( st_T, T, IdentityMorphism( cone_f ), IdentityMorphism( cone_h ), j );
       
       SetIsomorphismFromStandardExactTriangle( T, j );
      
