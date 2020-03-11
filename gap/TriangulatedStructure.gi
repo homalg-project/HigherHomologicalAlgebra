@@ -127,14 +127,10 @@ function( Ho_C )
                         ] );
                   end, 1 );
         
-        tau := ChainMorphism( 
-                UnderlyingCell( tr1[2] ), 
-                UnderlyingCell( tr2[2] ),
-                maps );
-        
-        tau := HomotopyCategoryMorphism( Ho_C, tau );
+        tau := HomotopyCategoryMorphism( tr1[ 2 ], tr2[ 2 ], maps );
         
         return CreateTrianglesMorphism( tr1, tr2, phi, psi, tau );
+        
   end );
   
   ##
@@ -146,11 +142,11 @@ function( Ho_C )
       
         st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
       
-        phi := UnderlyingCell( T ^ 0 );
+        phi := T ^ 0;
       
-        A := UnderlyingCell( T[ 0 ] );
+        A := T[ 0 ];
       
-        B := UnderlyingCell( T[ 1 ] );
+        B := T[ 1 ];
       
         maps := MapLazy( IntegersList,  
                 function( i )
@@ -165,13 +161,8 @@ function( Ho_C )
                     ] );
                 end, 1 );
       
-        tau := ChainMorphism( 
-                  UnderlyingCell( rotation[ 2 ] ),
-                    UnderlyingCell( st_rotation[ 2 ] ), maps
-                  );
-      
-        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
-      
+        tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
+        
         tau := CreateTrianglesMorphism(
                   rotation, st_rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
       
@@ -188,12 +179,7 @@ function( Ho_C )
                     ] );
                 end, 1 );
       
-        tau := ChainMorphism( 
-                UnderlyingCell( st_rotation[ 2 ] ),
-                  UnderlyingCell( rotation[ 2 ] ), maps
-                );
-      
-        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
+        tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
       
         tau := CreateTrianglesMorphism(
                   st_rotation, rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
@@ -213,11 +199,11 @@ function( Ho_C )
       
         st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
       
-        phi := UnderlyingCell( T ^ 0 );
+        phi := T ^ 0;
       
-        A := UnderlyingCell( T[ 0 ] );
+        A := T[ 0 ];
       
-        B := UnderlyingCell( T[ 1 ] );
+        B := T[ 1 ];
       
         maps := MapLazy( IntegersList,  
                 function( i )
@@ -230,10 +216,7 @@ function( Ho_C )
                     ] );
                 end, 1 );
       
-        tau := ChainMorphism( 
-                UnderlyingCell( st_rotation[ 2 ] ),
-                  UnderlyingCell( rotation[ 2 ] ),
-                    maps );
+        tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
       
         tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
       
@@ -255,12 +238,7 @@ function( Ho_C )
                     ] );
                 end, 1 );
       
-        tau := ChainMorphism(
-                  UnderlyingCell( rotation[ 2 ] ), 
-                  UnderlyingCell( st_rotation[ 2 ] ),
-                  maps );
-      
-        tau := HomotopyCategoryMorphism( CapCategory( T ^ 0 ), tau );
+        tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
       
         tau := CreateTrianglesMorphism(
                   rotation, st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
