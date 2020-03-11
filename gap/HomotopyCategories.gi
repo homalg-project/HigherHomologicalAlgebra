@@ -265,7 +265,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
         
         Tot2 := TotalChainComplex( rr );
         
-        l := MapLazy( IntegersList, function ( m )
+        l := AsZFunction( function ( m )
                 local ind_s, ind_t, morphisms, obj;
                 
                 obj := ObjectAt( Tot1, m );
@@ -290,7 +290,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
                 
                 return MorphismBetweenDirectSums( morphisms );
               
-              end, 1 );
+              end );
         
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           

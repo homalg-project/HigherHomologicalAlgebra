@@ -62,7 +62,7 @@ InstallMethod( MappingConeColift,
         
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
-    maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ), 1 );
+    maps := AsZFunction( n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ psi[ n ] ] ] ) );
     
     maps := ChainMorphism( MappingCone( phi ), Range( psi ), maps );
     
@@ -88,7 +88,7 @@ InstallMethod( MappingConePseudoFunctorial,
     
     s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
             function( i )
               return MorphismBetweenDirectSums(
                 [
@@ -96,7 +96,7 @@ InstallMethod( MappingConePseudoFunctorial,
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i - 1 ] ), alpha_1[ i ] ]
                 ] );
                 
-            end, 1 );
+            end );
             
     return ChainMorphism( cone_phi, cone_psi, maps );
     
@@ -111,7 +111,7 @@ InstallMethod( MappingConeColift,
     
     H := HomotopyMorphisms( PreCompose( phi, psi ) );
     
-    maps := MapLazy( IntegersList, n -> MorphismBetweenDirectSums( [ [ H[ n + 1 ] ], [ psi[ n ] ] ] ), 1 );
+    maps := AsZFunction( n -> MorphismBetweenDirectSums( [ [ H[ n + 1 ] ], [ psi[ n ] ] ] ) );
     
     return CochainMorphism( MappingCone( phi ), Range( psi ), maps );
     
@@ -128,14 +128,14 @@ InstallMethod( MappingConePseudoFunctorial,
     
     s := HomotopyMorphisms( PreCompose( phi, alpha_1 ) - PreCompose( alpha_0, psi ) );
     
-    maps := MapLazy( IntegersList,
+    maps := AsZFunction(
             function( i )
               return MorphismBetweenDirectSums(
                 [
                   [ alpha_0[ i + 1 ], s[ i + 1 ] ],
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
                 ] );
-            end, 1 );
+            end );
             
     return ChainMorphism( cone_phi, cone_psi, maps );
     

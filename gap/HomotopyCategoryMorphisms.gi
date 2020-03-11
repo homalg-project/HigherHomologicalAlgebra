@@ -52,7 +52,7 @@ end );
 
 ##
 InstallMethod( HomotopyCategoryMorphism,
-          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsInfList ],
+          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsZFunction ],
   function( a, b, maps )
     local homotopy_category;
     
@@ -81,27 +81,6 @@ InstallMethod( HomotopyMorphisms,
     
 end );
 
-InstallMethod( HomotopyMorphisms,
-    [ IsChainComplex ],
-  function( C )
-    local chains, cat;
-    
-    chains := CapCategory( C );
-    
-    cat := UnderlyingCategory( chains );
-    
-    if IsHomotopyCategory( cat ) then
-      
-      return MapLazy( IntegersList, i -> HomotopyMorphisms( PreCompose( C^i, C^( i - 1 ) ) ), 1 );
-      
-    else
-      
-      Error( "The input should be a chain complex whose objects and morphisms live in a homotopy category" );
-    
-    fi;
-    
-end );
-
 ##
 InstallMethod( IsQuasiIsomorphism,
           [ IsHomotopyCategoryMorphism ],
@@ -124,7 +103,7 @@ BindGlobal( "AsPseudoHomologicalBicomplex",
       
       diffs := Differentials( C );
       
-      diffs := MapLazy( diffs, UnderlyingCell, 1 );
+      diffs := ApplyMap( diffs, UnderlyingCell );
       
       complex := ChainComplex( cat, diffs );
       

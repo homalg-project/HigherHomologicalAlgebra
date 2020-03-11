@@ -117,7 +117,7 @@ function( Ho_C )
         
         homotopy_maps := HomotopyMorphisms( PreCompose( tr1^0, psi ) - PreCompose( phi, tr2^0 ) );
         
-        maps := MapLazy( IntegersList,
+        maps := AsZFunction(
                   function( i )
                     return
                       MorphismBetweenDirectSums(
@@ -148,7 +148,7 @@ function( Ho_C )
       
         B := T[ 1 ];
       
-        maps := MapLazy( IntegersList,  
+        maps := AsZFunction(  
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -168,7 +168,7 @@ function( Ho_C )
       
         SetIsomorphismIntoStandardExactTriangle( rotation, tau );
       
-        maps := MapLazy( IntegersList,
+        maps := AsZFunction(
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -205,7 +205,7 @@ function( Ho_C )
       
         B := T[ 1 ];
       
-        maps := MapLazy( IntegersList,  
+        maps := AsZFunction(
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -214,7 +214,7 @@ function( Ho_C )
                       [ IdentityMorphism( B[ i ] ) ],
                       [ phi[ i ] ]
                     ] );
-                end, 1 );
+                end );
       
         tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
       
@@ -225,7 +225,7 @@ function( Ho_C )
       
         SetIsomorphismFromStandardExactTriangle( rotation, tau );
       
-        maps := MapLazy( IntegersList,
+        maps := AsZFunction(
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -236,7 +236,7 @@ function( Ho_C )
                         ZeroMorphism( B[ i ], A[ i ] )
                       ]
                     ] );
-                end, 1 );
+                end );
       
         tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
       
@@ -271,33 +271,33 @@ function( Ho_C )
       
       shifted_cone_f := ShiftOfObject( ConeObject( f ) );
       
-      u := MapLazy( IntegersList,
+      u := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
                     [ IdentityMorphism( A[ n - 1 ]  )   , ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
                     [ ZeroMorphism( B[ n ], A[ n - 1 ] ), g[ n ]                             ],
                   ]
-                ), 1 );
+                ) );
       
       u := HomotopyCategoryMorphism( cone_f, cone_h, u );
       
-      v := MapLazy( IntegersList,
+      v := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
                     [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
                     [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ],
                   ]
-                ), 1 );
+                ) );
       
       v := HomotopyCategoryMorphism( cone_h, cone_g, v );
       
-      w := MapLazy( IntegersList,
+      w := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
                     [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] ) ],
                     [ ZeroMorphism( C[ n ], A[ n - 2 ]  ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ],
                   ]
-                ), 1 );
+                ) );
       
       w := HomotopyCategoryMorphism( cone_g, shifted_cone_f, w );
       
@@ -305,13 +305,13 @@ function( Ho_C )
       
       st_T := CompleteMorphismToStandardExactTriangle( u );
       
-      maps := MapLazy( IntegersList,
+      maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
                     [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] )    , ZeroMorphism( B[ n - 1 ], A[ n - 1 ] ), ZeroMorphism( B[ n - 1 ], C[ n ] )  ],
                     [ ZeroMorphism( C[ n ] , A[ n - 2 ] )   , ZeroMorphism( C[ n ], B[ n - 1 ] ), ZeroMorphism( C[ n ], A[ n - 1 ] )    , IdentityMorphism( C[ n ] )          ]
                   ]
-              ), 1 );
+              ) );
       
       cone_u := ConeObject( u );
       
@@ -321,7 +321,7 @@ function( Ho_C )
       
       SetIsomorphismIntoStandardExactTriangle( T, i );
       
-      maps := MapLazy( IntegersList,
+      maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
                     [ ZeroMorphism( A[ n - 2 ] , B[ n - 1 ] ), ZeroMorphism( A[ n - 2 ] ,C[ n ] ) ],
@@ -329,7 +329,7 @@ function( Ho_C )
                     [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ]   , C[ n ] )                           ],
                     [ ZeroMorphism( C[ n ], B[ n - 1 ] )     , IdentityMorphism( C[ n ] )         ]
                   ]
-              ), 1 );
+              ) );
       
       j := HomotopyCategoryMorphism( cone_u, cone_g, maps );
       

@@ -54,7 +54,7 @@ end );
 
 ##
 InstallMethod( HomotopyCategoryObject,
-          [ IsHomotopyCategory, IsInfList ],
+          [ IsHomotopyCategory, IsZFunction ],
   function( homotopy_category, diffs )
     local chains;
     

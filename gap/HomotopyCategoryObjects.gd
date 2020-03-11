@@ -17,7 +17,7 @@ DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsCapCategoryObject ] );
 
 DeclareOperation( "HomotopyCategoryObject",
-            [ IsHomotopyCategory, IsInfList ] );
+            [ IsHomotopyCategory, IsZFunction ] );
 
 
 DeclareOperation( "HomotopyCategoryObject",
