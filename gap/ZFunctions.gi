@@ -118,7 +118,7 @@ InstallMethod( ZFunctionWithInductiveSides,
 end );
 
 ##
-InstallMethod( ValueOp,
+InstallMethod( ZFunctionValueOp,
           [ IsZFunction, IsInt ],
   function( z_function, i )
     
@@ -128,7 +128,7 @@ end );
 
 ##
 InstallMethod( \[\], [ IsZFunction, IsInt ],
-  { z_function, i } -> Value( z_function, i )
+  { z_function, i } -> ZFunctionValue( z_function, i )
 );
 
 ##
