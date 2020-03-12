@@ -32,18 +32,19 @@ Persons := [
   ),
 ],
 
-#SourceRepository := rec( Type := "TODO", URL := "URL" ),
-#IssueTrackerURL := "TODO",
-#SupportEmail := "TODO",
+SourceRepository := rec(
+    Type := "git",
+    URL := Concatenation( "https://github.com/homalg-project/", ~.PackageName )
+),
 
-PackageWWWHome := "https://github.com/kamalsaleh/ComplexesCategories",
-
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.PackageWWWHome,
+PackageWWWHome := Concatenation( "https://homalg-project.github.io/", ~.PackageName ),
+README_URL     := Concatenation( ~.PackageWWWHome, "/README.md" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
                                  "/", ~.PackageName, "-", ~.Version ),
-
-ArchiveFormats := ".tar.gz",
+ArchiveFormats  := ".tar.gz",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
