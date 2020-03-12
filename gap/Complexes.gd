@@ -57,7 +57,7 @@ DeclareOperation( "CochainComplex", [ IsCapCategory, IsZFunction ] );
 
 #! @BeginGroup 1
 #! @Description
-#! The input is category <A>A</A> and an infinite list <A>diffs</A>. The output is the chain (resp. cochain) complex $M_{\bullet}\in \mathrm{Ch}(A)$
+#! The input is category <A>A</A> and a \mathbb{Z}-function <A>diffs</A>. The output is the chain (resp. cochain) complex $M_{\bullet}\in \mathrm{Ch}(A)$
 #! ($M^{\bullet}\in \mathrm{Ch}^\bullet(A)$) where $d^M_{i}=\mathrm{diffs}[ i ]$($d_M^{i}=\mathrm{diffs}[ i ]$).
 #! @Arguments A, diffs
 #! @Returns a chain complex
@@ -162,15 +162,15 @@ DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsCapCategoryMorp
 #! @Section Attributes
 
 #! @Description
-#! The command returns the differentials of the chain or cochain complex as an infinite list.
+#! The command returns the differentials of the chain or cochain complex as a \mathbb{Z}-function.
 #! @Arguments C
-#! @Returns an infinite list
+#! @Returns a \mathbb{Z}-function
 DeclareAttribute( "Differentials", IsChainOrCochainComplex );
 
 #! @Description
-#! The command returns the objects of the chain or cochain complex as an infinite list.
+#! The command returns the objects of the chain or cochain complex as a \mathbb{Z}-function.
 #! @Arguments C
-#! @Returns an infinite list
+#! @Returns a \mathbb{Z}-function
 DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 #! @Description

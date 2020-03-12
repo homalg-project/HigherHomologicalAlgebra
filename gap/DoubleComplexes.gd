@@ -63,10 +63,10 @@ DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 #! @EndLatexOnly
 
 #! @Description
-#! The input is a Cap category $\mathcal{A}$ and two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
-#! be an infinite list that represents 
+#! The input is a Cap category $\mathcal{A}$ and two $\mathbb{Z}$-functions $rows$ and $cols$. The entry in index $j$ of $rows$ should 
+#! be an \mathbb{Z}-function that represents 
 #! the $j$'th row of the double complex. I.e., $h^D_{i,j}:= rows[j][i]$ for all $i\in\mathbb{Z}$. 
-#! Again, the entry in index $i$ of $cols$ should be an infinite list that represents the $i$'th 
+#! Again, the entry in index $i$ of $cols$ should be an \mathbb{Z}-function that represents the $i$'th 
 #! column of the double complex.
 #! I.e., $v^D_{i,j}:=cols[i][j]$.
 #! @Arguments A, rows, cols
@@ -137,10 +137,10 @@ DeclareOperation( "DoubleChainComplex", [ IsDoubleCochainComplex ] );
 
 
 #! @Description
-#! The input is a Cap category $\mathcal{A}$ and  two infinite lists $rows$ and $cols$. The entry in index $j$ of $rows$ should 
-#! be an infinite list that represents 
+#! The input is a Cap category $\mathcal{A}$ and  two $\mathbb{Z}$-functions $rows$ and $cols$. The entry in index $j$ of $rows$ should 
+#! be an \mathbb{Z}-function that represents 
 #! the $j$'th row of the double complex. I.e., $h_D^{i,j}:= rows[j][i]$ for all $i\in\mathbb{Z}$. 
-#! Again, the entry in index $i$ of $cols$ should be an infinite list that represents the $i$'th 
+#! Again, the entry in index $i$ of $cols$ should be an \mathbb{Z}-function that represents the $i$'th 
 #! column of the double complex.
 #! I.e., $v_D^{i,j}:=cols[i][j]$.
 #! @Arguments A, rows, cols
@@ -176,16 +176,16 @@ DeclareOperation( "DoubleCochainComplex", [ IsDoubleChainComplex ] );
 
 #! @Description
 #!  The input is double chain or cochain complex $D$.
-#!  The output is the infinite list of rows.
+#!  The output is the \mathbb{Z}-function of rows.
 #! @Arguments D
-#! @Returns an infinite list of infinite lists.
+#! @Returns an \mathbb{Z}-function of $\mathbb{Z}$-functions.
 DeclareAttribute( "Rows", IsDoubleChainOrCochainComplex );
 
 #! @Description
 #!  The input is double chain or cochain complex $D$.
-#!  The output is the infinite list of columns.
+#!  The output is the \mathbb{Z}-function of columns.
 #! @Arguments D
-#! @Returns an infinite list of infinite lists.
+#! @Returns an \mathbb{Z}-function of $\mathbb{Z}$-functions.
 DeclareAttribute( "Columns", IsDoubleChainOrCochainComplex );
 
 #################################
@@ -196,23 +196,23 @@ DeclareAttribute( "Columns", IsDoubleChainOrCochainComplex );
 
 #! @Description
 #! The input is double chain or cochain complex $D$ and integer $j$. The output is 
-#! the infinite list that represents the $j$'th row of $D$.
+#! the \mathbb{Z}-function that represents the $j$'th row of $D$.
 #! @Arguments D, j
-#! @Returns an infinite list
+#! @Returns an \mathbb{Z}-function
 KeyDependentOperation( "CertainRow", IsDoubleChainOrCochainComplex, IsInt, ReturnTrue );
 
 #! @Description
 #! The input is double chain or cochain complex $D$ and integer $i$. The output is 
-#! the infinite list that represents the $i$'th column of $D$.
+#! the \mathbb{Z}-function that represents the $i$'th column of $D$.
 #! @Arguments D, i
-#! @Returns an infinite list
+#! @Returns an \mathbb{Z}-function
 KeyDependentOperation( "CertainColumn", IsDoubleChainOrCochainComplex, IsInt, ReturnTrue);
 
 #! @Description
 #! The input is double chain or cochain complex $D$ and integers $i,j$. The output is 
 #! the object of $D$ in position $(i,j)$.
 #! @Arguments D, i, j
-#! @Returns an infinite list
+#! @Returns an \mathbb{Z}-function
 DeclareOperation( "ObjectAt", [ IsDoubleChainOrCochainComplex, IsInt, IsInt ] );
 
 #! @Description

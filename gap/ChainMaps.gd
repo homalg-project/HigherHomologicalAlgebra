@@ -48,21 +48,15 @@ DeclareCategoryFamily( "IsCochainMorphism" );
 #
 ######################################
 
-DeclareOperation( "ChainMorphism",
-                   [ IsChainComplex, IsChainComplex, IsZFunction ] );
-
-DeclareOperation( "CochainMorphism",
-                   [ IsCochainComplex, IsCochainComplex, IsZFunction ] );
-
 #!  @Section Creating chain and cochain morphisms
 
 #!  @Description
-#!  The input is two chain complexes $C,D$ and an infinite list $l$. 
+#!  The input is two chain complexes $C,D$ and a $\mathbb{Z}$-function $l$. 
 #!  The output is the chain morphism $\phi:C\rightarrow D$ defined by $\phi_i :=l[i]$.
 #!  @Arguments C, D, l
 #!  @Returns a chain morphism
-#DeclareOperation( "ChainMorphism",
-#                   [ IsChainComplex, IsChainComplex, IsZList ] );
+DeclareOperation( "ChainMorphism",
+                   [ IsChainComplex, IsChainComplex, IsZFunction ] );
 
 #!  @Description
 #!  The input is two chain complexes $C,D$, dense list $l$ and an integer $k$. 
@@ -82,12 +76,13 @@ DeclareOperation( "ChainMorphism",
 
 
 #!  @Description
-#!  The input is two cochain complexes $C,D$ and an infinite list $l$. 
+#!  The input is two cochain complexes $C,D$ and a $\mathbb{Z}$-function $l$. 
 #!  The output is the cochain morphism $\phi:C\rightarrow D$ defined by $\phi_i :=l[i]$.
 #!  @Arguments C, D, l
 #!  @Returns a cochain morphism
-#DeclareOperation( "CochainMorphism",
-#		   [ IsCochainComplex, IsCochainComplex, IsZList ] );
+DeclareOperation( "CochainMorphism",
+                   [ IsCochainComplex, IsCochainComplex, IsZFunction ] );
+
 
 #!  @Description
 #!  The input is two cochain complexes $C,D$, dense list $l$ and an integer $k$. 
@@ -138,9 +133,9 @@ KeyDependentOperation( "CohomologyFunctorialAt", IsCochainMorphism, IsInt, Retur
 #!  @Section Attributes
 
 #!  @Description
-#!  The output is morphisms of the chain or cochain morphism as an infinite list.
+#!  The output is morphisms of the chain or cochain morphism as a $\mathbb{Z}$-function.
 #!  @Arguments phi
-#!  @Returns infinite list
+#!  @Returns $\mathbb{Z}$-function
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
 #! @Description
@@ -286,10 +281,10 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 
 #!  @Description
 #!  The input is a null-homotopic chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the homotopy morphisms given as 
-#! an infinite list $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ). Note that this method 
+#! a $\mathbb{Z}$-function $(h_i:C_i \rightarrow D_{i+1})$ ( resp. $(h_i:C_i \rightarrow D_{i-1})$ ). Note that this method 
 #! can be called only if it is added to the category, see $\texttt{AddHomotopyMorphisms}$.
 #!  @Arguments phi
-#!  @Returns Infinite list
+#!  @Returns A ZFunction
 DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 
 

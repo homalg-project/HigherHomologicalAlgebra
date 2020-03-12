@@ -110,7 +110,7 @@ AddDerivationToCAP( HomotopyMorphisms,
       
     else
       
-      # This H is not well-defined, we only need the infinite list
+      # This H is not well-defined, we only need the Z function
       
       SetIsNullHomotopic( phi, true );
       
