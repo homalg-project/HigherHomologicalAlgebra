@@ -1,17 +1,17 @@
-The ComplexesForCAP package
+The ComplexesCategories package
 =========================
 
 version 11/03/2020.
 
 Introduction
 ------------
-The "ComplexesForCAP" package is a Gap/CAP package written for constructing chain or cochain complexes category of a given CAP category. Its aim is to carry out categorical and homological constructions and computation in the complexes categories such as homology, cohomology, mapping cones, mapping cylinders, resolutions, etc.
+The "ComplexesCategories" package is a Gap/CAP package written for constructing chain or cochain complexes category of a given CAP category. Its aim is to carry out categorical and homological constructions and computation in the complexes categories such as homology, cohomology, mapping cones, mapping cylinders, resolutions, etc.
 
 
 Installation
 -----------
 The package can easily be obtained by cloning the repository
-https://github.com/homalg-project/ComplexesForCAP.git
+https://github.com/homalg-project/ComplexesCategories.git
 in the pkg directory of the Gap installation.
 
 Required packages
@@ -28,7 +28,7 @@ Remarks
 * To create the documentation go in your terminal to where you installed the package and 
  perform the command
    ```sh
-   bla-bla/ComplexesForCAP$ gap makedoc.g
+   bla-bla/ComplexesCategories$ gap makedoc.g
    ```
 * To be able to run all the examples in the package, you may need to download the homalg_project
   https://github.com/homalg-project/homalg_project.git
@@ -40,6 +40,6 @@ Remarks
 
 License
 -------
-ComplexesForCAP is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
+ComplexesCategories is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

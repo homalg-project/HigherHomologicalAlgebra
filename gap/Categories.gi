@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  ComplexesForCAP package             Kamal Saleh 
+##  ComplexesCategories package             Kamal Saleh 
 ##  2017                                University of Siegen
 ##
 ##  Chapter Complexes categories

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  ComplexesForCAP package             Kamal Saleh 
+##  ComplexesCategories package             Kamal Saleh 
 ##  2017                                University of Siegen
 ##
 #!  @Chapter Complexes morphisms
@@ -293,8 +293,8 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInMappingCone", IsChainOrCo
 DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 
 
-DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
-DeclareOperation( "MappingConePseudoFunctorial", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
+#DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
+#DeclareOperation( "MappingConePseudoFunctorial", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 
 
 #!  @Section Properties

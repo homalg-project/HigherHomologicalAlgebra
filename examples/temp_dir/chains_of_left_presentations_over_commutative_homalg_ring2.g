@@ -1,7 +1,7 @@
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "ModulePresentations" );
-LoadPackage( "ComplexesForCAP" );
-ReadPackage( "ComplexesForCAP", "examples/temp_dir/random_methods_for_module_presentations.g" );
+LoadPackage( "ComplexesCategories" );
+ReadPackage( "ComplexesCategories", "examples/temp_dir/random_methods_for_module_presentations.g" );
 
 R := HomalgFieldOfRationalsInSingular()*"x,y,z,t";
 

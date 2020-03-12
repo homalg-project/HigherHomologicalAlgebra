@@ -1,5 +1,5 @@
 LoadPackage( "LinearAlgebraForCAP" );
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 LoadPackage( "RingsForHomalg" );
 
 Q := HomalgFieldOfRationals( );

@@ -8,7 +8,7 @@
 #! @Example
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "LinearAlgebraForCap" );;
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 Q := HomalgFieldOfRationals( );;
 matrix_category := MatrixCategory( Q );
 #! Category of matrices over Q

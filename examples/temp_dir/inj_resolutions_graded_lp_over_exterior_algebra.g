@@ -1,5 +1,5 @@
 LoadPackage( "GradedModulePresentationsForCap" );;
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 
 S := GradedRing( HomalgFieldOfRationalsInSingular()*"x,y,z" );
 SetWeightsOfIndeterminates( S, [ 1, 1, 0 ] );

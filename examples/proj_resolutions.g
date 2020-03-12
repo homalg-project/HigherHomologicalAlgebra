@@ -1,4 +1,4 @@
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 LoadPackage( "ModulePresentations" );;
 LoadPackage( "GradedModulePresentations" );;
 LoadPackage( "RingsForHomalg" );;

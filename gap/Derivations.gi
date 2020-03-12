@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  ComplexesForCAP.gi             ComplexesForCAP package
+##  ComplexesCategories.gi             ComplexesCategories package
 ##
 ##  Copyright 2018,                Kamal Saleh, Siegen University, Germany
 ##

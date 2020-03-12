@@ -1,7 +1,7 @@
 
 # This example requires QPA2 in my devel branch in github: https://github.com/kamalsaleh/QPA2.git
 LoadPackage( "QPA" );
-LoadPackage( "ComplexesForCAP" );
+LoadPackage( "ComplexesCategories" );
 
 DeclareOperation( "LinearQuiver", [ IsDirection, IsObject, IsInt, IsInt ] );
 DeclareOperation( "LinearRightQuiver", [ IsObject, IsInt, IsInt ] );

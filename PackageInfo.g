@@ -1,5 +1,5 @@
 #
-# ComplexesForCAP: Gap package to create (co)chain complexes category of a given Cap category
+# ComplexesCategories: Gap package to create (co)chain complexes category of a given Cap category
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,7 +8,7 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "ComplexesForCAP",
+PackageName := "ComplexesCategories",
 Subtitle := "Gap package to create (co)chain complexes category of a given Cap category",
 Version := "2020.03.11",
 Date := ~.Version{[ 1 .. 10 ]},
@@ -36,7 +36,7 @@ Persons := [
 #IssueTrackerURL := "TODO",
 #SupportEmail := "TODO",
 
-PackageWWWHome := "https://github.com/kamalsaleh/ComplexesForCAP",
+PackageWWWHome := "https://github.com/kamalsaleh/ComplexesCategories",
 
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
@@ -58,7 +58,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "ComplexesForCAP",
+  BookName  := "ComplexesCategories",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",

@@ -5,7 +5,7 @@
 #! @EndLatexOnly
 #! @Example
 LoadPackage( "ModulePresentations" );;
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 Z6 := HomalgRingOfIntegers( )/6;
 #! Z/( 6 )
 cat := LeftPresentations( Z6 );

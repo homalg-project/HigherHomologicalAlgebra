@@ -1,6 +1,6 @@
 LoadPackage( "ModulePresentations" );
 LoadPackage( "RingsForHomalg" );
-LoadPackage( "ComplexesForCAP" );
+LoadPackage( "ComplexesCategories" );
 
 R := HomalgFieldOfRationalsInSingular()*"x,y,z";;
 R := R/( "x*y-z^3"/R );

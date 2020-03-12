@@ -1,6 +1,6 @@
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "ModulePresentations" );
-LoadPackage( "ComplexesForCAP" );
+LoadPackage( "ComplexesCategories" );
 
 compute_lifts_in_chains := 
 	function( alpha, beta )

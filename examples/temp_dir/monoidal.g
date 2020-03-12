@@ -1,7 +1,7 @@
 #! @Chunk vec_spaces_as_monoidal_category
 #! @Example
 LoadPackage( "LinearAlgebra" );;
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 Q := HomalgFieldOfRationals( );
 #! Q
 F1 := VectorSpaceObject( 1, Q );

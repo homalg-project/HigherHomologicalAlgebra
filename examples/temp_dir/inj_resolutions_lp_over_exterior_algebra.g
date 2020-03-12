@@ -1,6 +1,6 @@
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "ModulePresentationsForCap" );;
-LoadPackage( "ComplexesForCAP" );;
+LoadPackage( "ComplexesCategories" );;
 
 #! @Chunk complexes_example_2
 #! @BeginLatexOnly
