@@ -35,8 +35,22 @@ DeclareAttribute( "AsZFunction", IsFunction );
 DeclareAttribute( "UnderlyingFunction", IsZFunction );
 
 #! @Description
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> and an integer <A>i</A>. The output is
+#! <A>z_func</A>[<C>i</C>].
+#! @Arguments z_func, i
+#! @Returns a Gap object
+KeyDependentOperation( "ZFunctionValue", IsZFunction, IsInt, ReturnTrue );
+
+#! @Description
+#! The method delegates to <C>ZFunctionValue</C>.
+#! @Arguments z_func, i
+#! @Returns a Gap object
+DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
+
+
+#! @Description
 #! The arguments are an integer <A>n</A>, a Gap object <A>val_n</A>, a function <A>neg_part_func</A>, a function <A>pos_part_func</A> and a function <A>compare_func</A>.
-#! The output is the $\mathbb{Z}$-function <C>z_func</C> defined as follows
+#! The output is the $\mathbb{Z}$-function <C>z_func</C> defined as follows:
 #! @BeginLatexOnly
 #!     $$\begin{cases}
 #!        \mathtt{neg\_part\_func( z\_func[ i + 1 ] )} & \quad \text{if}\quad i<n, \\
@@ -49,7 +63,6 @@ DeclareAttribute( "UnderlyingFunction", IsZFunction );
 #! @Returns a $\mathbb{Z}$-function with inductive sides
 DeclareOperation( "ZFunctionWithInductiveSides",
       [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ] );
-
 
 #! @BeginGroup 9228
 #! @Description
@@ -103,58 +116,63 @@ DeclareAttribute( "StableNegValue", IsZFunction );
 DeclareAttribute( "IndexOfStableNegValue", IsZFunction );
 
 #! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A>. The output is another
+#! $\mathbb{Z}$-function <C>ref_z_func</C> such that <C>ref_z_func[i]</C> is equal
+#! to <A>z_func</A>[<C>-i</C>] for all <C>i</C> in $\mathbb{Z}$.
+#! @Arguments z_func
+#! @Returns a $\mathbb{Z}$-function 
 DeclareAttribute( "Reflection", IsZFunction );
 
 #! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
-DeclareAttribute( "BaseZFunctions", IsZFunction );
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> and an integer <A>n</A>. The output is
+#! another $\mathbb{Z}$-function <C>m</C> such that <C>m[i]</C> is equal to <A>z_func</A><C>[n+i]</C>.
+#! @Arguments z_func, n
+#! @Returns a $\mathbb{Z}$-function
+KeyDependentOperation( "ApplyShift", IsZFunction, IsInt, ReturnTrue );
+
 
 #! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
-DeclareAttribute( "AppliedMap", IsZFunction );
-
-#! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
+#! The arguments are a $\mathbb{Z}$-function <A>z_func</A> and a function <A>F</A>.
+#! The output is another $\mathbb{Z}$-function <C>m</C> such that
+#! <C>m[i]</C> is equal to <A>F</A>(<A>z_func</A>[<C>i</C>]).
+#! @Arguments z_func, F
+#! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "ApplyMap", [ IsZFunction, IsFunction ] );
 
 #! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
-DeclareOperation( "CombineZFunctions", [ IsList ] );
-
-#! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
-KeyDependentOperation( "ApplyShift", IsZFunction, IsInt, ReturnTrue );
-
-#! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
+#! The arguments are a list $\mathbb{Z}$-functions
+#! <A>L=[z_func_1,...,z_func_n]</A> and a function <A>F</A> with 
+#! <C>Size(L)</C> arguments.
+#! The output is another $\mathbb{Z}$-function <C>m</C> such that
+#! <C>m[i]</C> is equal to <A>F</A>(<A>z_func_1</A><C>[i]</C>,...,
+#! <A>z_func_n</A><C>[i]</C>). We call the list <A>L</A> the <C>BaseZFunctions</C>
+#! of <C>m</C> and 
+#! @Arguments L, F
+#! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "ApplyMap", [ IsDenseList, IsFunction ] );
 
 #! @Description
-#! ?
-#! @Arguments ?
-#! @Returns ?
-KeyDependentOperation( "ZFunctionValue", IsZFunction, IsInt, ReturnTrue );
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> that has been defined by applying a map <C>F</C>
+#! on a list <C>L</C> of $\mathbb{Z}$-functions. The output is the list <C>L</C>.
+#! @Arguments z_func
+#! @Returns a list of $\mathbb{Z}$-functions
+DeclareAttribute( "BaseZFunctions", IsZFunction );
 
 #! @Description
-#! ?
-#! @Arguments ?
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> that has been defined by applying a map <C>F</C>
+#! on a list <C>L</C> of $\mathbb{Z}$-functions. The output is the function <C>L</C>.
+#! @Arguments z_func
+#! @Returns a function
+DeclareAttribute( "AppliedMap", IsZFunction );
+
+#! @Description
+#! The argument is a dense list <A>L</A> of $\mathbb{Z}$-functions.
+#! The output is another $\mathbb{Z}$-function <C>m</C> such that
+#! <C>m[i]</C> is equal to [ <A>L[1]</A><C>[i]</C>,...,
+#! <A>L[Size(L)]</A><C>[i]</C>] for all <C>i</C> in $\mathbb{Z}$.
+#! @Arguments L
 #! @Returns ?
-DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
+DeclareOperation( "CombineZFunctions", [ IsDenseList ] );
 
 ########################################
 

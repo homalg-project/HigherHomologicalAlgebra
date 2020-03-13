@@ -185,7 +185,7 @@ end );
 
 ##
 InstallMethod( CombineZFunctions,
-          [ IsList ],
+          [ IsDenseList ],
   function( L )
     return ApplyMap( L, function( arg ) return arg; end );
 end );
