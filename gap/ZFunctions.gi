@@ -43,7 +43,7 @@ end );
 ##
 InstallMethod( ZFunctionWithInductiveSides,
           [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ],
-  function( N, val, neg_side_func, pos_side_func, compare_func )
+  function( N, val, lower_func, upper_func, compare_func )
     local z_function, func;
     
     z_function := VoidZFunction( );
@@ -56,21 +56,21 @@ InstallMethod( ZFunctionWithInductiveSides,
         
         if i > N then
           
-          if HasStablePosValue( z_function ) then
+          if HasStableUpperValue( z_function ) then
             
-            return StablePosValue( z_function );
+            return StableUpperValue( z_function );
             
           else
             
             prev_value := z_function[ i - 1 ];
             
-            value := pos_side_func( prev_value );
+            value := upper_func( prev_value );
             
             if compare_func( value, prev_value ) then
               
-              SetStablePosValue( z_function, value );
+              SetStableUpperValue( z_function, value );
               
-              SetIndexOfStablePosValue( z_function, i - 1 );
+              SetIndexOfStableUpperValue( z_function, i - 1 );
               
             fi;
             
@@ -80,21 +80,21 @@ InstallMethod( ZFunctionWithInductiveSides,
           
         elif i < N then
           
-          if HasStableNegValue( z_function ) then
+          if HasStableLowerValue( z_function ) then
             
-            return StableNegValue( z_function );
+            return StableLowerValue( z_function );
             
           else
             
             prev_value := z_function[ i + 1 ];
             
-            value := neg_side_func( prev_value );
+            value := lower_func( prev_value );
             
             if compare_func( value, prev_value ) then
               
-              SetStableNegValue( z_function, value );
+              SetStableLowerValue( z_function, value );
               
-              SetIndexOfStableNegValue( z_function, i + 1 );
+              SetIndexOfStableLowerValue( z_function, i + 1 );
               
             fi;
             
@@ -113,8 +113,8 @@ InstallMethod( ZFunctionWithInductiveSides,
     SetUnderlyingFunction( z_function, func );
     SetFirstIndex( z_function, N );
     SetFirstValue( z_function, val );
-    SetPosFunction( z_function, pos_side_func );
-    SetNegFunction( z_function, neg_side_func );
+    SetUpperFunction( z_function, upper_func );
+    SetLowerFunction( z_function, lower_func );
     SetCompareFunction( z_function, compare_func );
     
     return z_function;
@@ -129,11 +129,11 @@ InstallMethod( ZFunctionValueOp,
 
 ##
 InstallMethod( ZFunctionValueOp,
-          [ IsZFunction and HasIndexOfStableNegValue, IsInt ],
+          [ IsZFunction and HasIndexOfStableLowerValue, IsInt ],
   function( z_function, i )
     
-    if i <= IndexOfStableNegValue( z_function ) then
-      return StableNegValue( z_function );
+    if i <= IndexOfStableLowerValue( z_function ) then
+      return StableLowerValue( z_function );
     else
       TryNextMethod( );
     fi;
@@ -142,11 +142,11 @@ end );
 
 ##
 InstallMethod( ZFunctionValueOp,
-          [ IsZFunction and HasIndexOfStablePosValue, IsInt ],
+          [ IsZFunction and HasIndexOfStableUpperValue, IsInt ],
   function( z_function, i )
     
-    if i >= IndexOfStablePosValue( z_function ) then
-      return StablePosValue( z_function );
+    if i >= IndexOfStableUpperValue( z_function ) then
+      return StableUpperValue( z_function );
     else
       TryNextMethod( );
     fi;

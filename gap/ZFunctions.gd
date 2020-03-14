@@ -49,17 +49,18 @@ DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
 
 
 #! @Description
-#! The arguments are an integer <A>n</A>, a Gap object <A>val_n</A>, a function <A>neg_part_func</A>, a function <A>pos_part_func</A> and a function <A>compare_func</A>.
+#! The arguments are an integer <A>n</A>, a Gap object <A>val_n</A>, a function <A>lower_func</A>, a function <A>upper_func</A> and a function <A>compare_func</A>.
 #! The output is the $\mathbb{Z}$-function <C>z_func</C> defined as follows:
 #! @BeginLatexOnly
 #!     $$\begin{cases}
-#!        \mathtt{neg\_part\_func( z\_func[ i + 1 ] )} & \quad \text{if}\quad i<n, \\
+#!        \mathtt{lower\_func( z\_func[ i + 1 ] )} & \quad \text{if}\quad i<n, \\
 #!        \mathtt{val\_n} & \quad \text{if}\quad i=n,\\
-#!        \mathtt{pos\_part\_func( z\_func[ i - 1 ] )} & \quad \text{if}\quad i>n. \\
+#!        \mathtt{upper\_func( z\_func[ i - 1 ] )} & \quad \text{if}\quad i>n. \\
 #!     \end{cases}$$
 #! @EndLatexOnly
-#! At each call, the method compares the computed value to the previous or next value and in the affermative case, the method sets a positive or negative stable value.
-#! @Arguments n, val_n, neg_part_func, pos_part_func, compare_func
+#! At each call, the method compares the computed value to the previous or next value and 
+#! in the affermative case, the method sets a upper or lower stable value.
+#! @Arguments n, val_n, lower_func, upper_func, compare_func
 #! @Returns a $\mathbb{Z}$-function with inductive sides
 DeclareOperation( "ZFunctionWithInductiveSides",
       [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ] );
@@ -69,10 +70,10 @@ DeclareOperation( "ZFunctionWithInductiveSides",
 #! They are the attributes that define a $\mathbb{Z}$-function with inductive sides.
 #! @Arguments z_func
 #! @Returns a function
-DeclareAttribute( "PosFunction", IsZFunctionWithInductiveSides );
+DeclareAttribute( "UpperFunction", IsZFunctionWithInductiveSides );
 #! @Arguments z_func
 #! @Returns a function
-DeclareAttribute( "NegFunction", IsZFunctionWithInductiveSides );
+DeclareAttribute( "LowerFunction", IsZFunctionWithInductiveSides );
 #! @Arguments z_func
 #! @Returns an integer
 DeclareAttribute( "FirstIndex", IsZFunctionWithInductiveSides );
@@ -86,34 +87,34 @@ DeclareAttribute( "FirstValue", IsZFunctionWithInductiveSides );
 DeclareAttribute( "CompareFunction", IsZFunctionWithInductiveSides );
 
 #! @Description
-#! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable positive value <C>pos_val</C>,
-#! if there is an index <C>pos_N</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>pos_val</C> for all indices <C>i</C> greater or equal to <C>pos_N</C>.
-#! In that case, the output is the value <C>pos_val</C>.
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable upper value <C>val</C>,
+#! if there is an index <C>N</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C> greater or equal to <C>N</C>.
+#! In that case, the output is the value <C>val</C>.
 #! @Arguments func
 #! @Returns a Gap object
-DeclareAttribute( "StablePosValue", IsZFunction );
+DeclareAttribute( "StableUpperValue", IsZFunction );
 
 #! @Description
-#! The argument is a $\mathbb{Z}$-function <A>z_func</A> with a stable positive value <C>pos_val</C>. The output is some index where <A>z_func</A> starts to take
-#! values equal to <C>pos_val</C>.
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> with a stable upper value <C>val</C>. The output is some index where <A>z_func</A> starts to take
+#! values equal to <C>val</C>.
 #! @Arguments func
 #! @Returns an integer
-DeclareAttribute( "IndexOfStablePosValue", IsZFunction );
+DeclareAttribute( "IndexOfStableUpperValue", IsZFunction );
 
 #! @Description
-#! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable negative value <C>neg_val</C>,
-#! if there is an index <C>neg_N</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>neg_val</C> for all indices <C>i</C> less or equal to <C>neg_N</C>.
-#! In that case, the output is the value <C>neg_val</C>.
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable lower value <C>val</C>,
+#! if there is an index <C>N</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C> less or equal to <C>N</C>.
+#! In that case, the output is the value <C>val</C>.
 #! @Arguments func
 #! @Returns a Gap object
-DeclareAttribute( "StableNegValue", IsZFunction );
+DeclareAttribute( "StableLowerValue", IsZFunction );
 
 #! @Description
-#! The argument is a $\mathbb{Z}$-function <A>z_func</A> with a stable negative value <C>neg_val</C>. The output is some index where <A>z_func</A> starts to take
-#! values equal to <C>neg_val</C>.
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A> with a stable lower value <C>val</C>. The output is some index where <A>z_func</A> starts to take
+#! values equal to <C>val</C>.
 #! @Arguments func
 #! @Returns an integer
-DeclareAttribute( "IndexOfStableNegValue", IsZFunction );
+DeclareAttribute( "IndexOfStableLowerValue", IsZFunction );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A>. The output is another
