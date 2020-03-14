@@ -38,12 +38,24 @@ SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
 DeclareCategory( "IsChainOrCochainComplexCategory", IsCapCategory );
 
 #! @Description
+#!  Gap-categories of the chain or cochain complexes category.
+DeclareCategory( "IsBoundedChainOrCochainComplexCategory", IsChainOrCochainComplexCategory );
+
+#! @Description
 #!  Gap-categories of the chain complexes category.
 DeclareCategory( "IsChainComplexCategory", IsChainOrCochainComplexCategory );
 
 #! @Description
+#!  Gap-categories of the chain complexes category.
+DeclareCategory( "IsBoundedChainComplexCategory", IsBoundedChainOrCochainComplexCategory );
+
+#! @Description
 #!  Gap-category of the cochain complexes category.
 DeclareCategory( "IsCochainComplexCategory", IsChainOrCochainComplexCategory );
+
+#! @Description
+#!  Gap-category of the cochain complexes category.
+DeclareCategory( "IsBoundedCochainComplexCategory", IsBoundedChainOrCochainComplexCategory );
 
 ###################################################
 #
