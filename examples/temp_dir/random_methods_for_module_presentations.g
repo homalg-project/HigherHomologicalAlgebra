@@ -378,53 +378,75 @@ TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS :=
 end;
 
 
-ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS := function( category, left_or_right )
-  local S;
+ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS :=
+  function( category, left_or_right )
+    local S;
 
-  S := category!.ring_for_representation_category;
-  
-  TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS( S );
-  
-  if left_or_right = "left"  then
+    S := category!.ring_for_representation_category;
     
-    if IsBound( category!.ring_for_representation_category!.random_element_func ) and 
-         IsBound( category!.ring_for_representation_category!.random_matrix_func ) then
+    TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS( S );
+    
+    if left_or_right = "left"  then
       
-      ADD_RRANDOM_OBJECT( category, "left" );
-      
-      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT( category );
-      
-      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT( category );
-      
-      if HasIsCommutative( category!.ring_for_representation_category ) and IsCommutative( category!.ring_for_representation_category ) then
+      if IsBound( S!.random_element_func ) and 
+           IsBound( S!.random_matrix_func ) then
         
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "left" );
+        ADD_RRANDOM_OBJECT( category, "left" );
+        
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT( category );
+        
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT( category );
+        
+        if HasIsCommutative( S ) and IsCommutative( S ) then
+          
+          ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "left" );
+        
+        fi;
       
       fi;
+      
+    elif left_or_right = "right" then
     
-    fi;
-    
-  elif left_or_right = "right" then
-  
-    if IsBound( category!.ring_for_representation_category!.random_element_func ) and
-         IsBound( category!.ring_for_representation_category!.random_matrix_func ) then
-      
-      ADD_RRANDOM_OBJECT( category, "right" );
-      
-      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT( category );
-      
-      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT( category );
-      
-      if HasIsCommutative( category!.ring_for_representation_category ) and IsCommutative( category!.ring_for_representation_category ) then
+      if IsBound( S ) and IsBound( S ) then
         
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "right" );
+        ADD_RRANDOM_OBJECT( category, "right" );
+        
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT( category );
+        
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT( category );
+        
+        if HasIsCommutative( S ) and IsCommutative( S ) then
+          
+          ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "right" );
+        
+        fi;
       
       fi;
-    
+      
     fi;
     
-  fi;
-  
-  Finalize( category );
+    Finalize( category );
   
 end;
+
+
+##
+InstallMethod( LeftPresentations,
+          [ IsHomalgRing ],
+  function( S )
+    local random_methods, cat;
+    
+    random_methods := ValueOption( "random_methods" );
+    
+    if random_methods = false then
+      TryNextMethod( );
+    fi;
+    
+    cat := LeftPresentations( S : FinalizeCategory := false, random_methods := false );
+    
+    ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "left" );
+    
+    return cat;
+    
+end, 1000 );
+
