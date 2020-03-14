@@ -1,7 +1,9 @@
 Done:
+1- Define PreCompose in derived categories
+2- Import methods into derived categories, for example HomologyAt and HomologyFunctorialAt ...
 
 
 To Do:
-1- Define PreCompose in derived categories
-2- Import methods into derived categories, for example HomologyAt and HomologyFunctorialAt ...
-3- ...
+3- Add additive structure to derived categories (using CategoryConstructor package?)
+4- Add triangulated structure to derived categories
+5-
