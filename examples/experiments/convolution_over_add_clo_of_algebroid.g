@@ -528,3 +528,5 @@ conv_alpha := Convolution( alpha );
 conv_beta := Convolution( beta );
 conv_gamma := Convolution( gamma );
 
+IsCongruentForMorphisms( PreCompose( conv_alpha, conv_beta ), conv_gamma );
+

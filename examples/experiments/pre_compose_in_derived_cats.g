@@ -48,9 +48,9 @@ quit;
 
 ################# start #######################################
 
-A := HomotopyCategoryObject( [ d1_A/AC, d2_A/AC, d3_A/AC ], 1 );
-B := HomotopyCategoryObject( [ d1_B/AC, d2_B/AC, d3_B/AC ], 1 );
-C := HomotopyCategoryObject( [ d1_C/AC, d2_C/AC, d3_C/AC ], 1 );
+A := ChainComplex( [ d1_A/AC, d2_A/AC, d3_A/AC ], 1 );
+B := ChainComplex( [ d1_B/AC, d2_B/AC, d3_B/AC ], 1 );
+C := ChainComplex( [ d1_C/AC, d2_C/AC, d3_C/AC ], 1 );
 
 f := HomotopyCategoryMorphism( A, B, [ f_0/AC, f_1/AC, f_2/AC, f_3/AC ], 0 );
 g := HomotopyCategoryMorphism( C, B, [ g_0/AC, g_1/AC, g_2/AC, g_3/AC ], 0 );
