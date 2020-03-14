@@ -347,11 +347,15 @@ DeclareOperation( "HasActiveLowerBound", [ IsChainOrCochainMorphism ] );
 #!  @Returns an integer
 DeclareOperation( "ActiveUpperBound", [ IsChainOrCochainMorphism ] );
 
+DeclareOperation( "ActiveUpperBoundForSourceAndRange", [ IsChainOrCochainMorphism ] );
+
 #!  @Description
 #!  The input is chain or cochain morphism. The output is its active lower bound if such has been set to $\phi$. Otherwise we get error.
 #!  @Arguments phi
 #!  @Returns an integer
 DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
+
+DeclareOperation( "ActiveLowerBoundForSourceAndRange", [ IsChainOrCochainMorphism ] );
 
 #!  @Description
 #! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component 

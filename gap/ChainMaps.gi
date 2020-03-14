@@ -757,6 +757,20 @@ InstallMethod( ActiveUpperBound,
 end );
 
 ##
+InstallMethod( ActiveUpperBoundForSourceAndRange,
+          [ IsChainOrCochainMorphism ],
+  alpha -> Maximum( List( [ Source, Range ],
+              oper -> ActiveUpperBound( oper( alpha ) ) ) )
+);
+
+##
+InstallMethod( ActiveLowerBoundForSourceAndRange,
+          [ IsChainOrCochainMorphism ],
+  alpha -> Minimum( List( [ Source, Range ],
+              oper -> ActiveLowerBound( oper( alpha ) ) ) )
+);
+
+##
 InstallMethod( AsChainMorphism,
     [ IsCochainMorphism ],
   function( phi )
