@@ -6,14 +6,9 @@ LoadPackage( "RingsForHomalg" );;
 R := HomalgFieldOfRationalsInSingular( )*"x,y,z";;
 cat := LeftPresentations( R );
 M := AsLeftPresentation( HomalgMatrix( "[ [ x ], [ y ], [ z ] ]", 3, 1, R ) );
-#! <An object in Category of left presentations of Q[x,y,z]>
 CM := StalkCochainComplex( M, 0 );
-#! <A bounded object in Cochain complexes category over Category of left 
-#! presentations of Q[x,y,z] with active lower bound -1 and active upper bound 1.>
 P_M := ProjectiveResolution( M );
-# or P_M := ProjectiveResolution( M, true );
 P_CM := ProjectiveResolution( CM );
-# or P_CM := ProjectiveResolution( CM, true );
 
 
 
