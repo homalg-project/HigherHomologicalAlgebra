@@ -55,7 +55,13 @@ DeclareAttribute( "AmbientCategory", IsExceptionalCollection );
 #!  Returns the endomorphism quiver algebra of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns a quiver algebra
-DeclareAttribute( "EndomorphismAlgebraOfExceptionalCollection", IsExceptionalCollection );
+DeclareAttribute( "EndomorphismAlgebraAttr", IsExceptionalCollection );
+
+#! @Description
+#!  delegates to <C>EndomorphismAlgebraAttr</C>(<A>E</A>).
+#! @Arguments E
+#! @Returns a quiver algebra
+DeclareOperation( "EndomorphismAlgebra", [ IsExceptionalCollection ] );
 
 #! @Description
 #!  Returns the algebroid defined by the endomorphism quiver algebra of the exceptional collection <A>E</A>.

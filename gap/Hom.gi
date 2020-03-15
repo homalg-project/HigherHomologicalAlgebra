@@ -18,7 +18,7 @@ InstallMethod( HomFunctorAttr,
     
     full := DefiningFullSubcategory( collection );
     
-    A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    A := EndomorphismAlgebra( collection );
     
     field := LeftActingDomain( A );
     

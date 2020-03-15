@@ -415,7 +415,7 @@ InstallMethod( IsomorphismIntoAlgebroid,
     
     full := DefiningFullSubcategory( collection );
     
-    A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    A := EndomorphismAlgebra( collection );
     
     algebroid := Algebroid( A );
     
@@ -512,7 +512,7 @@ InstallMethod( IsomorphismFromAlgebroid,
     
     full := DefiningFullSubcategory( collection );
     
-    A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    A := EndomorphismAlgebra( collection );
     
     algebroid := Algebroid( A );
     

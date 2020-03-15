@@ -40,7 +40,7 @@ Finalize( cat );;
 
 full := FullSubcategoryGeneratedByListOfObjects( IndecProjRepresentations( A ) );
 collection := CreateExceptionalCollection( full );
-B := EndomorphismAlgebraOfExceptionalCollection( collection );
+B := EndomorphismAlgebra( collection );
 algebroid := Algebroid( B );
 
 

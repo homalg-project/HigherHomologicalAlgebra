@@ -157,7 +157,7 @@ InstallMethod( TensorFunctor,
       
     fi;
    
-    A := EndomorphismAlgebraOfExceptionalCollection( collection );
+    A := EndomorphismAlgebra( collection );
     
     A := OppositeAlgebra( A );
     

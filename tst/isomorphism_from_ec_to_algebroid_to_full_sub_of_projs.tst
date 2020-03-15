@@ -10,7 +10,7 @@ gap> while ok = false do
 > od;;
 gap> cat := CategoryOfQuiverRepresentations( A );;
 gap> collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );;
-gap> B := EndomorphismAlgebraOfExceptionalCollection( collection );;
+gap> B := EndomorphismAlgebra( collection );;
 gap> algebroid := Algebroid( B );;
 gap> F := IsomorphismIntoAlgebroid( collection );;
 gap> G := IsomorphismFromAlgebroid( collection );;

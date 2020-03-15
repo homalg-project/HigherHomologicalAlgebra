@@ -753,13 +753,19 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
 end );
 
 ##
-InstallMethod( EndomorphismAlgebraOfExceptionalCollection,
+InstallMethod( EndomorphismAlgebraAttr,
     [ IsExceptionalCollection ],
   function( collection )
     
     return QuiverAlgebraFromExceptionalCollection( collection, GLOBAL_FIELD_FOR_QPA!.default_field );
   
 end );
+
+##
+InstallMethod( EndomorphismAlgebra,
+          [ IsExceptionalCollection ],
+  E -> EndomorphismAlgebraAttr( E )
+);
 
 ##
 InstallMethod( AmbientCategory,
@@ -770,13 +776,13 @@ InstallMethod( AmbientCategory,
 ##
 InstallMethod( Algebroid,
           [ IsExceptionalCollection ],
-  collection -> Algebroid( EndomorphismAlgebraOfExceptionalCollection( collection ) )
+  collection -> Algebroid( EndomorphismAlgebra( collection ) )
 );
 
 ##
 InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
           [ IsExceptionalCollection ],
-  collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebraOfExceptionalCollection( collection ) ) )
+  collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebra( collection ) ) )
 );
 
 ##

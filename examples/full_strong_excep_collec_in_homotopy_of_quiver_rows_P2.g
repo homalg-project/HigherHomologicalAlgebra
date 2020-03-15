@@ -11,7 +11,7 @@ collection := CreateExceptionalCollection( omegas :
                 name_for_underlying_quiver := name_for_quiver,
                   name_for_endomorphism_algebra := name_for_algebra );
 
-A := EndomorphismAlgebraOfExceptionalCollection( collection );
+A := EndomorphismAlgebra( collection );
 algebroid := Algebroid( collection );
 add_algebroid := AdditiveClosure( algebroid );
 DeactivateCachingForCertainOperations( algebroid, operations_to_deactivate );
