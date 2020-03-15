@@ -59,9 +59,9 @@ DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
 #! The arguments are an integer <A>n</A>, a Gap object <A>val_n</A>, a function <A>lower_func</A>, a function <A>upper_func</A> and a function <A>compare_func</A>.
 #! The output is the $\mathbb{Z}$-function <C>z_func</C> defined as follows:
 #! <C>z_func</C>[<C>i</C>]
-#! is equal to <A>lower_func</A>(<C>z_func[i+1]</C>) if <C>i</C><C>&lt;</C><A>n</A>;
+#! is equal to <A>lower_func</A>(<C>z_func</C>[<C>i+1</C>]) if <C>i</C><C>&lt;</C><A>n</A>;
 #! and is equal to <A>val_n</A> if <C>i</C>=<A>n</A>;
-#! and is equal to <A>upper_func</A>(<C>z_func[i-1]</C>) otherwise.
+#! and is equal to <A>upper_func</A>(<C>z_func</C>[<C>i-1</C>]) otherwise.
 #! At each call, the method compares the computed value to the previous or next value via the function
 #! <A>compare_func</A>; and 
 #! in the affermative case, the method sets a upper or lower stable values.
@@ -94,7 +94,7 @@ DeclareAttribute( "CompareFunction", IsZFunctionWithInductiveSides );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable upper value <C>val</C>,
-#! if there is an index <C>n</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C> greater or equal to <C>n</C>.
+#! if there is an index <C>n</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C>'s greater or equal to <C>n</C>.
 #! In that case, the output is the value <C>val</C>.
 #! @Arguments z_func
 #! @Returns a Gap object
@@ -112,14 +112,14 @@ DeclareAttribute( "IndexOfStableUpperValue", IsZFunction );
 #! an integer <A>n</A> and an object <A>val</A>.
 #! The operation sets <A>val</A> as a stable upper value for
 #! <A>z_func</A> at the index <A>n</A>.
-#! @Arguments z_func, val, n
+#! @Arguments z_func, n, val
 #! @Returns nothing
 DeclareOperation( "SetStableUpperValue",
               [ IsZFunction, IsInt, IsObject ] );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A>. We say that <A>z_func</A> has a stable lower value <C>val</C>,
-#! if there is an index <C>n</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C> less or equal to <C>n</C>.
+#! if there is an index <C>n</C> such that <A>z_func</A>[<C>i</C>] is equal to <C>val</C> for all indices <C>i</C>'s less or equal to <C>n</C>.
 #! In that case, the output is the value <C>val</C>.
 #! @Arguments z_func
 #! @Returns a Gap object
@@ -137,15 +137,15 @@ DeclareAttribute( "IndexOfStableLowerValue", IsZFunction );
 #! an integer <A>n</A> and an object <A>val</A>.
 #! The operation sets <A>val</A> as a stable lower value for
 #! <A>z_func</A> at the index <A>n</A>.
-#! @Arguments z_func, val, n
+#! @Arguments z_func, n, val
 #! @Returns nothing
 DeclareOperation( "SetStableLowerValue",
               [ IsZFunction, IsInt, IsObject ] );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A>. The output is another
-#! $\mathbb{Z}$-function <C>ref_z_func</C> such that <C>ref_z_func[i]</C> is equal
-#! to <A>z_func</A>[<C>-i</C>] for all <C>i</C> in $\mathbb{Z}$.
+#! $\mathbb{Z}$-function <C>ref_z_func</C> such that <C>ref_z_func</C>[<C>i</C>] is equal
+#! to <A>z_func</A>[<C>-i</C>] for all <C>i</C>'s in $\mathbb{Z}$.
 #! @Arguments z_func
 #! @Returns a $\mathbb{Z}$-function 
 DeclareAttribute( "Reflection", IsZFunction );
@@ -153,7 +153,7 @@ DeclareAttribute( "Reflection", IsZFunction );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A> and an integer <A>n</A>. The output is
-#! another $\mathbb{Z}$-function <C>m</C> such that <C>m[i]</C> is equal to <A>z_func</A><C>[n+i]</C>.
+#! another $\mathbb{Z}$-function <C>m</C> such that <C>m</C>[<C>i</C>] is equal to <A>z_func</A>[<C>n+i</C>].
 #! @Arguments z_func, n
 #! @Returns a $\mathbb{Z}$-function
 KeyDependentOperation( "ApplyShift", IsZFunction, IsInt, ReturnTrue );
@@ -163,18 +163,18 @@ KeyDependentOperation( "ApplyShift", IsZFunction, IsInt, ReturnTrue );
 #! The arguments are a $\mathbb{Z}$-function <A>z_func</A> and a function <A>F</A> that can
 #! be applied on one argument.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
-#! <C>m[i]</C> is equal to <A>F</A>(<A>z_func</A>[<C>i</C>]).
+#! <C>m</C>[<C>i</C>] is equal to <A>F</A>(<A>z_func</A>[<C>i</C>]).
 #! @Arguments z_func, F
 #! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "ApplyMap", [ IsZFunction, IsFunction ] );
 
 #! @Description
 #! The arguments are a list $\mathbb{Z}$-functions
-#! <A>L=[z_func_1,...,z_func_n]</A> and a function <A>F</A> with 
-#! <C>Size(L)</C> arguments.
+#! <A>L</A> and a function <A>F</A> with 
+#! <C>Size</C>(<A>L</A>) arguments.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
-#! <C>m[i]</C> is equal to <A>F</A>(<A>z_func_1</A><C>[i]</C>,...,
-#! <A>z_func_n</A><C>[i]</C>). We call the list <A>L</A> the <C>BaseZFunctions</C>
+#! <C>m</C>[<C>i</C>] is equal to <A>F</A>(<A>L</A>[1][<C>i</C>],...,
+#! <A>L</A>[<C>Size</C>(<A>L</A>)][<C>i</C>]). We call the list <A>L</A> the <C>BaseZFunctions</C>
 #! of <C>m</C> and <A>F</A> the <C>AppliedMap</C>.
 #! @Arguments L, F
 #! @Returns a $\mathbb{Z}$-function
@@ -198,8 +198,8 @@ DeclareAttribute( "AppliedMap", IsZFunction );
 #! @Description
 #! The argument is a dense list <A>L</A> of $\mathbb{Z}$-functions.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
-#! <C>m[i]</C> is equal to [<A>L[1]</A><C>[i]</C>,...,
-#! <A>L[Size(L)]</A><C>[i]</C>] for all <C>i</C> in $\mathbb{Z}$.
+#! <C>m</C>[<C>i</C>] is equal to [<A>L</A>[1][<C>i</C>],...,
+#! <A>L</A>[Size(L)][<C>i</C>]] for all indices <C>i</C>'s in $\mathbb{Z}$.
 #! @Arguments L
 #! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "CombineZFunctions", [ IsDenseList ] );
