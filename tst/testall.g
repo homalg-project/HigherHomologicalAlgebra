@@ -9,7 +9,7 @@ LoadPackage( "LinearAlgebraForCAP" );
 LoadPackage( "ModulePresentations" );
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "GaussForHomalg" );
-ReadPackage( "ComplexesCategories", "examples/temp_dir/random_methods_for_module_presentations.g" );
+ReadPackage( "ComplexesCategories", "examples/pre_read/random_methods_for_module_presentations.g" );
 
 R := HomalgFieldOfRationalsInSingular( )* "x,y,z";;
 S := HomalgFieldOfRationalsInSingular( )* "x,y,z,t";; 
