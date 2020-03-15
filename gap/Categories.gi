@@ -339,7 +339,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         od;
         
       end;
-      
+    
+    ########################################################################
     list_of_operations :=
       [
         "IsZeroForObjects",
@@ -405,6 +406,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
            
     add_methods( list_of_operations, create_func_from_name );
     
+    ###################################################################
+    
     list_of_operations :=
       [
        "ZeroObject",
@@ -432,7 +435,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       end;
         
     add_methods( list_of_operations, create_func_from_name );
-       
+    
+    ###################################################################
+      
     list_of_operations :=
       [
         "AdditionForMorphisms",
@@ -465,7 +470,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       end;
     
     add_methods( list_of_operations, create_func_from_name );
-      
+
+    ###################################################################
+
     list_of_operations :=
       [
         "AdditiveInverseForMorphisms",
@@ -495,7 +502,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       end;
     
     add_methods( list_of_operations, create_func_from_name );
-
+    
+    ###################################################################
+    
     list_of_operations :=
       [
         "IdentityMorphism",
@@ -528,86 +537,189 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       
     add_methods( list_of_operations, create_func_from_name );   
     
+    ###################################################################
+   
     if HasIsAdditiveCategory( complex_cat ) and IsAdditiveCategory( complex_cat ) then
                 
-        if CanCompute( cat, "DirectSum" ) then
-            AddDirectSum( complex_cat,
-                function ( arg )
-                  local eval_arg, result, lower_bound, upper_bound;
-                  
-                  if IsList( arg[ 1 ] ) then
-                    
-                    arg := arg[ 1 ];
-                    
-                  fi;
-                  
-                  eval_arg := List( arg, Differentials );
-                  
-                  eval_arg := CombineZFunctions( eval_arg );
-                  
-                  eval_arg := ApplyMap( eval_arg, DirectSumFunctorial );
-                  
-                  result := complex_constructor( cat, eval_arg );
-                  
-                  lower_bound := Minimum( List( arg, ActiveLowerBound ) );
-                  
-                  upper_bound := Maximum( List( arg, ActiveUpperBound ) );
-                  
-                  SetLowerBound( result, lower_bound );
-                  
-                  SetUpperBound( result, upper_bound );
-                  
-                  return result;
-                  
-              end );
-        fi;
-        
-        if CanCompute( cat, "DirectSumFunctorialWithGivenDirectSums" ) then
-            
-            AddDirectSumFunctorialWithGivenDirectSums( complex_cat,
-              function ( source, L, range )
+      if CanCompute( cat, "DirectSum" ) then
+        AddDirectSum( complex_cat,
+           function ( arg )
+              local eval_arg, result, lower_bound, upper_bound;
               
-                local maps, morphism, u, l;
+              if IsList( arg[ 1 ] ) then
                 
-                maps := List( L, Morphisms );
+                arg := arg[ 1 ];
                 
-                maps := CombineZFunctions( maps );
-                
-                maps := ApplyMap( maps, DirectSumFunctorial );
-                
-                return morphism_constructor( source, range, maps );
-                
-              end );
+              fi;
+              
+              eval_arg := List( arg, Differentials );
+              
+              eval_arg := CombineZFunctions( eval_arg );
+              
+              eval_arg := ApplyMap( eval_arg, DirectSumFunctorial );
+              
+              result := complex_constructor( cat, eval_arg );
+              
+              lower_bound := Minimum( List( arg, ActiveLowerBound ) );
+              
+              upper_bound := Maximum( List( arg, ActiveUpperBound ) );
+              
+              SetLowerBound( result, lower_bound );
+              
+              SetUpperBound( result, upper_bound );
+              
+              return result;
+              
+           end );
+          
         fi;
         
-        if CanCompute( cat, "InjectionOfCofactorOfDirectSum" ) then
+        ###################################################################
+       
+        list_of_operations :=
+          [
+            "DirectSumFunctorialWithGivenDirectSums" 
+          ];
             
-            AddInjectionOfCofactorOfDirectSum( complex_cat,
-              function ( L, n )
-                local objects, morphisms;
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+           
+            return
+              function ( arg ) 
+                local src_rng, morphisms;
                 
-                objects := AsZFunction( i -> List( L, C -> C[ i ] ) );
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
+               
+                morphisms := List( arg[ 2 ], Morphisms );
                 
-                morphisms := ApplyMap( objects, l -> InjectionOfCofactorOfDirectSum( l, n ) );
+                morphisms := CombineZFunctions( morphisms );
                 
-                return morphism_constructor( L[ n ], DirectSum( L ), morphisms );
+                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), morphisms, Objects( src_rng[ 2 ] ) ], oper );
                 
-              end );
-        fi;
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                
+              end;
+          
+          end;
+          
+        add_methods( list_of_operations, create_func_from_name );
         
-        if CanCompute( cat, "ProjectionInFactorOfDirectSum" ) then
-            AddProjectionInFactorOfDirectSum( complex_cat,
-              function ( L, n )
-                local objects, morphisms;
+        ###################################################################
+        
+        list_of_operations :=
+          [
+            "InjectionOfCofactorOfDirectSumWithGivenDirectSum",
+            "ProjectionInFactorOfDirectSumWithGivenDirectSum"
+          ];
+        
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+            
+            return
+              function ( arg )
+                local src_rng, objects, morphisms;
                 
-                objects := AsZFunction( i -> List( L, C -> C[ i ] ) );
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
                 
-                morphisms := ApplyMap( objects, l -> ProjectionInFactorOfDirectSum( l, n ) );
+                objects := List( arg[ 1 ], Objects );
                 
-                return morphism_constructor( DirectSum( L ), L[ n ], morphisms );
+                objects := CombineZFunctions( objects );
                 
-              end );
-        fi;
+                objects := CombineZFunctions( [ objects, Objects( arg[ 3 ] ) ] );
+                
+                morphisms := ApplyMap( objects, l -> oper( l[ 1 ], arg[ 2 ], l[ 2 ] ) );
+                
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                  
+              end;
+              
+          end;
+    
+        add_methods( list_of_operations, create_func_from_name );
+        
+        ###################################################################
+        
+        list_of_operations :=
+          [
+            "UniversalMorphismIntoDirectSumWithGivenDirectSum",
+            "UniversalMorphismFromDirectSumWithGivenDirectSum"
+          ];
+          
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+           
+            return
+              function( arg )
+                local src_rng, objects, morphisms;
+                
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
+                
+                objects := CombineZFunctions( List( arg[ 1 ], Objects ) );
+                
+                morphisms := CombineZFunctions( List( arg[ 2 ], Morphisms ) );
+                
+                morphisms := ApplyMap( [ objects, morphisms, Objects( arg[ 3 ] ) ], oper );
+                
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                
+              end;
+              
+          end;
+          
+        add_methods( list_of_operations, create_func_from_name );
+        
+        ###################################################################
+        
+        list_of_operations :=
+          [
+            "MorphismBetweenDirectSums"
+          ];
+          
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+            
+            return
+              function( arg )
+                local src_rng, morphisms;
+                
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
+                
+                morphisms := List( arg[ 2 ], r -> CombineZFunctions( List( r, Morphisms ) ) );
+                
+                morphisms := CombineZFunctions( morphisms );
+                
+                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), morphisms, Objects( src_rng[ 2 ] ) ], oper );
+                
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                
+              end;
+            
+          end;
+          
+        add_methods( list_of_operations, create_func_from_name );
+        
+        ###################################################################
+        
     fi;
     
     if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
