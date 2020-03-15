@@ -74,7 +74,7 @@ Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
                            [ "CAP", ">= 2020.01.10" ],
-                           [ "ComplexesCategories", ">= 2020.03.13" ],
+                           [ "ComplexesCategories", ">= 2020.03.15" ],
                            [ "GeneralizedMorphismsForCAP", "2019.01.16" ],
                            [ "StableCategories", ">= 2020.02.21" ] ],
   SuggestedOtherPackages := [ ],
