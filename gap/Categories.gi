@@ -723,46 +723,116 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     fi;
     
     if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
-        if CanCompute( cat, "KernelEmbedding" ) then
-            AddKernelEmbedding( complex_cat, function ( phi )
-                  local embeddings, kernel_to_next_source, diffs, kernel_complex, kernel_emb;
-                  embeddings := ApplyMap( Morphisms( phi ), KernelEmbedding );
-                  kernel_to_next_source := ApplyMap( [ embeddings, Differentials( Source( phi ) ) ], PreCompose );
-                  diffs := ApplyMap( [ ApplyShift( Morphisms( phi ), shift_index ), kernel_to_next_source ], KernelLift );
-                  kernel_complex := complex_constructor( cat, diffs );
-                  kernel_emb := morphism_constructor( kernel_complex, Source( phi ), embeddings );
-                  TODO_LIST_TO_PUSH_BOUNDS( Source( phi ), kernel_complex );
-                  return kernel_emb;
-              end );
-        fi;
-        if CanCompute( cat, "KernelLift" ) then
-            AddKernelLift( complex_cat, function ( phi, tau )
-                  local morphisms, K;
-                  K := KernelObject( phi );
-                  morphisms := AsZFunction( i -> KernelLift( phi[ i ], tau[ i ] ) );
-                  return morphism_constructor( Source( tau ), K, morphisms );
-              end );
-        fi;
-        if CanCompute( cat, "CokernelProjection" ) then
-            AddCokernelProjection( complex_cat, function ( phi )
-                  local projections, range_to_next_cokernel, diffs, cokernel_complex, cokernel_proj;
-                  projections := ApplyMap( Morphisms( phi ), CokernelProjection );
-                  range_to_next_cokernel := ApplyMap( [ Differentials( Range( phi ) ), ApplyShift( projections, shift_index ) ], PreCompose );
-                  diffs := ApplyMap( [ Morphisms( phi ), range_to_next_cokernel ], CokernelColift );
-                  cokernel_complex := complex_constructor( cat, diffs );
-                  cokernel_proj := morphism_constructor( Range( phi ), cokernel_complex, projections );
-                  TODO_LIST_TO_PUSH_BOUNDS( Range( phi ), cokernel_complex );
-                  return cokernel_proj;
-              end );
-        fi;
-        if CanCompute( cat, "CokernelColift" ) then
-            AddCokernelColift( complex_cat, function ( phi, tau )
-                  local morphisms, K;
-                  K := CokernelObject( phi );
-                  morphisms := AsZFunction( i -> CokernelColift( phi[i], tau[i] ) );
-                  return morphism_constructor( K, Range( tau ), morphisms );
-              end );
-        fi;
+         
+        list_of_operations :=
+          [
+            "KernelObject",
+            "CokernelObject",
+          ];
+          
+        create_func_from_name :=
+          function( name )
+            local oper, info, functorial;
+            
+            oper := ValueGlobal( name );
+            
+            info := CAP_INTERNAL_METHOD_NAME_RECORD.( name );
+            
+            functorial := ValueGlobal( info.functorial );
+            
+            return
+              function( arg )
+                local mu, nu, alpha_s, s, alpha_r, r, z_func, complex;
+                
+                mu := Differentials( Source( arg[ 1 ] ) );
+                
+                nu := Differentials( Range( arg[ 1 ] ) );
+                
+                alpha_s := Morphisms( arg[ 1 ] );
+                
+                s := ApplyMap( alpha_s, oper );
+                
+                alpha_r := ApplyShift( alpha_s, shift_index );
+                
+                r := ApplyShift( s, shift_index );
+                
+                z_func := ApplyMap( [ s, alpha_s, mu, nu, alpha_r, r ], functorial );
+                
+                complex := complex_constructor( cat, z_func );
+                
+                SetLowerBound( complex, ActiveLowerBoundForSourceAndRange( arg[ 1 ] ) );
+                
+                SetUpperBound( complex, ActiveUpperBoundForSourceAndRange( arg[ 1 ] ) );
+                
+                return complex;
+                
+              end;
+          
+          end;
+        
+        add_methods( list_of_operations, create_func_from_name ); 
+        
+        list_of_operations :=
+          [
+            "KernelEmbeddingWithGivenKernelObject",
+            "CokernelProjectionWithGivenCokernelObject"
+          ];
+        
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+            
+            return
+              
+              function( arg )
+                local src_rng, morphisms;
+                
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
+                
+                morphisms := ApplyMap( [ Morphisms( arg[ 1 ] ), Objects( arg[ 2 ] ) ], oper );
+                
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                
+              end;
+              
+          end;
+        
+        add_methods( list_of_operations, create_func_from_name );
+        
+        list_of_operations :=
+          [
+            "KernelLiftWithGivenKernelObject",
+            "CokernelColiftWithGivenCokernelObject",
+          ];
+        
+        create_func_from_name :=
+          function( name )
+            local oper, type;
+            
+            oper := ValueGlobal( name );
+            
+            type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
+            
+            return
+              function ( arg )
+                local src_rng, morphisms;
+                
+                src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
+                
+                morphisms := ApplyMap( [ Morphisms( arg[ 1 ] ), Morphisms( arg[ 2 ] ), Objects( arg[ 3 ] ) ], oper );
+                
+                return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
+                
+              end;
+          
+          end;
+        
+        add_methods( list_of_operations, create_func_from_name );
+        
     fi;
     
     if HasIsMonoidalCategory( complex_cat ) and IsMonoidalCategory( complex_cat ) and shift_index = -1 then
