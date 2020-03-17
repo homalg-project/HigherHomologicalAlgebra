@@ -444,41 +444,11 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         "PreCompose",
         "PostCompose",
         "LiftAlongMonomorphism",
-        "ColiftAlongEpimorphism"
-      ];
-    
-    create_func_from_name :=
-      function( name )
-        local oper, type;
-        
-        oper := ValueGlobal( name );
-        
-        type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
-        
-        return
-          function( alpha, beta )
-            local src_rng, z_func;
-            
-            src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, [ alpha, beta ] );
-            
-            z_func := ApplyMap( [ Morphisms( alpha ), Morphisms( beta ) ], oper );
-            
-            return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], z_func );
-            
-          end;
-          
-      end;
-    
-    add_methods( list_of_operations, create_func_from_name );
-
-    ###################################################################
-
-    list_of_operations :=
-      [
+        "ColiftAlongEpimorphism",
         "AdditiveInverseForMorphisms",
         "InverseImmutable"
       ];
-    
+       
     create_func_from_name :=
       function( name )
         local oper, type;
@@ -488,12 +458,12 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         type := CAP_INTERNAL_METHOD_NAME_RECORD.( name ).io_type;
         
         return
-          function( alpha  )
+          function( arg )
             local src_rng, z_func;
             
-            src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, [ alpha ] );
+            src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
             
-            z_func := ApplyMap( Morphisms( alpha ), oper );
+            z_func := ApplyMap( List( arg, Morphisms ), oper );
             
             return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], z_func );
             
@@ -502,7 +472,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
       end;
     
     add_methods( list_of_operations, create_func_from_name );
-    
+        
     ###################################################################
     
     list_of_operations :=
@@ -521,13 +491,11 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         return
           function( arg  )
-            local src_rng, eval_arg, z_func;
+            local src_rng, z_func;
             
             src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
             
-            eval_arg := List( arg, Objects );
-            
-            z_func := ApplyMap( eval_arg, oper );
+            z_func := ApplyMap( List( arg, Objects ), oper );
             
             return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], z_func );
             
