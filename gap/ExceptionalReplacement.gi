@@ -210,7 +210,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 fi;
                 
-                beta := AdditiveInverse( Shift( MorphismFromConeObject( alpha ), -1 ) );
+                beta := AdditiveInverse( Shift( MorphismFromStandardConeObject( alpha ), -1 ) );
                 
                 beta_as_list := [ ];
                 

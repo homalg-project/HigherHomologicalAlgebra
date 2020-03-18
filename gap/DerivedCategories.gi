@@ -84,11 +84,11 @@ InstallMethod( PreComposeRoofs,
     
     C := Source( r );
     
-    tau := MorphismIntoConeObject( s );
+    tau := MorphismIntoStandardConeObject( s );
     
     r_o_tau := PreCompose( r, tau );
     
-    D := Shift( ConeObject( r_o_tau ), -1 );
+    D := Shift( StandardConeObject( r_o_tau ), -1 );
     
     rr_maps := AsZFunction(
                 i -> MorphismBetweenDirectSums(
