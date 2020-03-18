@@ -5,6 +5,6 @@
 #
 ReadPackage( "TriangulatedCategories", "gap/TriangulatedCategories.gi");
 
-ReadPackage( "TriangulatedCategories", "gap/DerivedMethods.gi");
+#ReadPackage( "TriangulatedCategories", "gap/DerivedMethods.gi");
 
 ReadPackage( "TriangulatedCategories", "gap/TrianglesCategory.gi");
