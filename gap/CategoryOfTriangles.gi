@@ -12,687 +12,392 @@
 ##
 ###############################
 
-DeclareRepresentation( "IsCapCategoryTriangleRep",
-                        IsCapCategoryTriangle and IsAttributeStoringRep,
-                        [ ] );
-
-DeclareRepresentation( "IsCapCategoryExactTriangleRep",
-
-                        IsCapCategoryExactTriangle and IsAttributeStoringRep,
-                        [ ] );
-
-DeclareRepresentation( "IsCapCategoryStandardExactTriangleRep",
-                        IsCapCategoryStandardExactTriangle and IsAttributeStoringRep,
-                        [ ] );
-                        
-DeclareRepresentation( "IsCapCategoryTrianglesMorphismRep",
-
-                        IsCapCategoryTrianglesMorphism and IsAttributeStoringRep, 
-                        [ ] );
+DeclareRepresentation( "IsCapExactTriangleRep",
+          IsCapExactTriangle and IsAttributeStoringRep,
+          [ ] );
+                      
+DeclareRepresentation( "IsCapExactTrianglesMorphismRep",
+          IsCapExactTrianglesMorphism and IsAttributeStoringRep, 
+          [ ] );
 
 ##############################
 ##
 ## Family and type 
 ##
 ##############################
+ 
+BindGlobal( "IsCapExactTrianglesMorphismsFamily",
+  NewFamily( "IsCapExactTrianglesMorphismsFamily", IsObject )
+);
 
-BindGlobal( "CapCategoryTrianglesFamily",
-  NewFamily( "CapCategoryTrianglesFamily", IsObject ) );
+BindGlobal( "TheTypeCapExactTrianglesMorphism", 
+  NewType( IsCapExactTrianglesMorphismsFamily, IsCapExactTrianglesMorphismRep )
+);
 
-BindGlobal( "CapCategoryExactTrianglesFamily",
-  NewFamily( "CapCategoryExactTrianglesFamily", IsCapCategoryTriangle ) );
+BindGlobal( "IsCapExactTriangleFamily",
+  NewFamily( "IsCapExactTriangleFamily", IsObject )
+);
 
-BindGlobal( "CapCategoryStandardExactTrianglesFamily",
-  NewFamily( "CapCategoryStandardExactTrianglesFamily", IsCapCategoryExactTriangle ) );
-  
-BindGlobal( "CapCategoryTrianglesMorphismsFamily",
-  NewFamily( "CapCategoryTrianglesMorphismsFamily", IsObject ) );
-  
-BindGlobal( "TheTypeCapCategoryTriangle", 
-  NewType( CapCategoryTrianglesFamily, 
-                      IsCapCategoryTriangleRep ) );
+BindGlobal( "TheTypeCapExactTriangle", 
+  NewType( IsCapExactTriangleFamily, IsCapExactTriangleRep )
+);
                       
-BindGlobal( "TheTypeCapCategoryExactTriangle", 
-  NewType( CapCategoryExactTrianglesFamily, 
-                      IsCapCategoryExactTriangleRep ) );
-                      
-BindGlobal( "TheTypeCapCategoryStandardExactTriangle", 
-  NewType( CapCategoryStandardExactTrianglesFamily, 
-                      IsCapCategoryStandardExactTriangleRep ) );
-
-                      
-BindGlobal( "TheTypeCapCategoryTrianglesMorphism", 
-  NewType( CapCategoryTrianglesMorphismsFamily, 
-                      IsCapCategoryTrianglesMorphismRep ) );
-                      
-
-InstallMethod( CategoryOfTriangles, 
-                [ IsCapCategory and IsTriangulatedCategory ],
-    function( category )
-    local name, cat;
+InstallMethod( CategoryOfExactTriangles,
+          [ IsTriangulatedCategory ],
+  function( category )
+    local name, triangles;
     
-    name := Concatenation( "Category of triangles in ", Name( category ) );
+    name := Concatenation( "Exact triangles category( ", Name( category ), " )" );
     
-    cat := CreateCapCategory( name );
+    triangles := CreateCapCategory( name );
     
-    AddIsEqualForObjects( cat,
-        function( T1, T2 )
-        return IsEqualForObjects( ObjectAt( T1, 0 ), ObjectAt( T2, 0 ) ) and 
-                IsEqualForObjects( ObjectAt( T1, 1 ), ObjectAt( T2, 1 ) ) and
-                 IsEqualForObjects( ObjectAt( T1, 2 ), ObjectAt( T2, 2 ) ) and
-                  IsEqualForMorphisms( MorphismAt( T1, 0 ), MorphismAt( T2, 0 ) ) and 
-                   IsEqualForMorphisms( MorphismAt( T1, 1 ), MorphismAt( T2, 1 ) ) and
-                    IsEqualForMorphisms( MorphismAt( T1, 2 ), MorphismAt( T2, 2 ) );
-        end );
-        
-    AddIsEqualForMorphisms( cat,
-        function( phi1, phi2 )
-        return IsEqualForMorphisms( MorphismAt( phi1, 0 ), MorphismAt( phi2, 0 ) ) and 
-                  IsEqualForMorphisms( MorphismAt( phi1, 1 ), MorphismAt( phi2, 1 ) ) and
-                    IsEqualForMorphisms( MorphismAt( phi1, 2 ), MorphismAt( phi2, 2 ) );
-        end );
-
-    AddIsCongruentForMorphisms( cat,
-        function( phi1, phi2 )
-        return IsCongruentForMorphisms( MorphismAt( phi1, 0 ), MorphismAt( phi2, 0 ) ) and 
-                  IsCongruentForMorphisms( MorphismAt( phi1, 1 ), MorphismAt( phi2, 1 ) ) and
-                    IsCongruentForMorphisms( MorphismAt( phi1, 2 ), MorphismAt( phi2, 2 ) );
-        end );
+    SetFilterObj( triangles, IsCapCategoryOfExactTriangles );
     
-    AddIsZeroForObjects( cat, 
-        function( T )
-        return ForAll( [ 0,1,2,3 ], i -> IsZeroForObjects( ObjectAt( T, i ) ) );
-        end );
-        
-    AddIsZeroForMorphisms( cat, 
-        function( phi )
-        return ForAll( [ 0,1,2,3 ], i -> IsZeroForMorphisms( MorphismAt( phi, i ) ) );
-        end );
-        
-    AddIdentityMorphism( cat, 
-        function( T )
-        local m;
-        
-        m := List( [0,1,2], i -> IdentityMorphism( ObjectAt( T, i ) ) );
-        
-        return CreateTrianglesMorphism( T, T, m[1], m[2], m[3] );
-        
-        end );
+    AddObjectRepresentation( triangles, IsCapExactTriangleRep );
     
-    AddPreCompose( cat, 
-        function( phi1, phi2 )
-        local m1, m2;
+    AddMorphismRepresentation( triangles, IsCapExactTrianglesMorphismRep );
+    
+    AddIsEqualForObjects( triangles,
+      function( triangle_1, triangle_2 )
+        return IsEqualForObjects( triangle_1[ 0 ], triangle_2[ 0 ] ) and 
+                IsEqualForObjects( triangle_1[ 1 ], triangle_2[ 1 ] ) and
+                 IsEqualForObjects(  triangle_1[ 2 ], triangle_2[ 2 ] ) and
+                  IsEqualForMorphisms( triangle_1 ^ 0, triangle_2 ^ 0 ) and 
+                   IsEqualForMorphisms( triangle_1 ^ 1, triangle_2 ^ 1 ) and
+                    IsEqualForMorphisms( triangle_1 ^ 2, triangle_2 ^ 2 );
+      end );
+      
+    AddIsEqualForMorphisms( triangles,
+      function( phi_1, phi_2 )
+        return IsEqualForMorphisms( phi_1[ 0 ], phi_2[ 0 ] ) and 
+                  IsEqualForMorphisms( phi_1[ 1 ], phi_2[ 1 ] ) and
+                    IsEqualForMorphisms( phi_1[ 2 ], phi_2[ 2 ] );
+      end );
+      
+    AddIsCongruentForMorphisms( triangles,
+      function( phi_1, phi_2 )
+        return IsCongruentForMorphisms( phi_1[ 0 ], phi_2[ 0 ] ) and 
+                  IsCongruentForMorphisms( phi_1[ 1 ], phi_2[ 1 ] ) and
+                    IsCongruentForMorphisms( phi_1[ 2 ], phi_2[ 2 ] );
+      end );
+      
+    AddIsZeroForObjects( triangles,
+      function( triangle )
+        return ForAll( [ 0 .. 3 ], i -> IsZeroForObjects( triangle[ i ] ) );
+      end );
+      
+    AddIsZeroForMorphisms( triangles,
+      function( phi )
+        return ForAll( [ 0 .. 3 ], i -> IsZeroForMorphisms( phi[ i ] ) );
+      end );
+      
+    AddIdentityMorphism( triangles,
+      function( triangle )
+        local maps;
         
-        m1 := List( [ 0, 1, 2 ], i -> MorphismAt( phi1, i ) );
+        maps := List( [ 0 .. 2 ], i -> IdentityMorphism( triangle[ i ] ) );
         
-        m2 := List( [ 0, 1, 2 ], i -> MorphismAt( phi2, i ) );
+        return MorphismOfExactTriangles( triangle, maps[ 1 ], maps[ 2 ], maps[ 3 ], triangle );
         
-        return CreateTrianglesMorphism( Source( phi1 ), Range( phi2 ), 
-                                            PreCompose( m1[1], m2[1] ),
-                                            PreCompose( m1[2], m2[2] ),
-                                            PreCompose( m1[3], m2[3] ) );
+      end );
+      
+    AddPreCompose( triangles,
+      function( phi, psi )
+        local maps_phi, maps_psi, maps;
         
+        maps_phi := List( [ 0 .. 2 ], i -> phi[ i ] );
+        
+        maps_psi := List( [ 0 .. 2 ], i -> psi[ i ] );
+        
+        maps := ListN( maps_phi, maps_psi, PreCompose );
+        
+        return MorphismOfExactTriangles( Source( phi ), maps[ 1 ], maps[ 2 ], maps[ 3 ], Range( psi ) );
+       
     end );
     
-    
-    AddPostCompose( cat, 
-        function( phi1, phi2 )
-        local m1, m2;
-        
-        m1 := List( [ 0, 1, 2 ], i -> MorphismAt( phi1, i ) );
-        
-        m2 := List( [ 0, 1, 2 ], i -> MorphismAt( phi2, i ) );
-        
-        return CreateTrianglesMorphism( Source( phi1 ), Range( phi2 ), 
-                                            PostCompose( m1[1], m2[1] ),
-                                            PostCompose( m1[2], m2[2] ),
-                                            PostCompose( m1[3], m2[3] ) );
-    
-    end );
-
-    AddIsIsomorphism( cat,
-        function( phi )
-        if IsIsomorphism( phi[0] ) and IsIsomorphism( phi[1] ) and IsIsomorphism( phi[2] ) and IsIsomorphism( phi[3] ) then
-            return true;
+    AddIsIsomorphism( triangles,
+      function( phi )
+        if ForAll( [ 0 .. 3 ], i -> IsIsomorphism( phi[ i ] ) ) then
+          
+          return true;
+          
         else
-            AddToReasons( "IsIsomorphism: At least one of the 4 underlying morphisms is not isomorphism" );
-            return false;
+          
+          return false;
+          
         fi;
+        
     end );
-
-
-    AddIsWellDefinedForObjects( cat, 
-        function( T )
     
-        if not IsWellDefined( ObjectAt( T, 0 ) ) or 
-            not IsWellDefined( ObjectAt( T, 1 ) ) or
-            not IsWellDefined( ObjectAt( T, 2 ) ) or
-            not IsWellDefined( ObjectAt( T, 3 ) ) then
-
-                AddToReasons( "IsWellDefinedForObjects: At least one of the objects in the (triangle) is not well-defined" );
-                return false;
+    AddIsWellDefinedForObjects( triangles,
+      function( triangle )
+        
+        if not ( IsWellDefined( triangle[ 0 ] ) and
+                  IsWellDefined( triangle[ 1 ] ) and
+                    IsWellDefined( triangle[ 2 ] ) and
+                      IsWellDefined( triangle[ 3 ] )
+                        ) then
+                        
+          return false;
+          
         fi;
-    
-        if not IsWellDefined( MorphismAt( T, 0 ) ) or 
-            not IsWellDefined( MorphismAt( T, 1 ) ) or
-            not IsWellDefined( MorphismAt( T,2 ) ) then
-
-                AddToReasons( "IsWellDefinedForObjects: At least one of the morphisms in the (triangle) is not well-defined" );
-                return false;
+        
+        if not ( IsWellDefined( triangle ^ 0 ) and
+                  IsWellDefined( triangle ^ 1 ) and
+                    IsWellDefined( triangle ^ 2 )
+                      ) then
+                      
+          return false;
+          
         fi;
-    
-        if not IsEqualForObjects( Range( MorphismAt( T, 0 ) ), Source( MorphismAt( T, 1 ) ) ) or
-            not IsEqualForObjects( Range( MorphismAt( T, 1 ) ), Source( MorphismAt( T, 2 ) ) ) or
-            not IsEqualForObjects( ShiftOfObject( Source( MorphismAt( T, 0 ) ) ), Range( MorphismAt( T, 2 ) ) ) then
-                AddToReasons( "IsWellDefinedForObjects: At least two consecutive morphisms in the (triangle) are not compatible" );
-                return false;
+        
+        if not ( IsEqualForObjects( Range( triangle ^ 0 ), Source( triangle ^ 1 ) ) and
+                  IsEqualForObjects( Range( triangle ^ 1 ), Source( triangle ^ 2 ) ) and
+                    IsEqualForObjects( ShiftOnObject( Source( triangle ^ 0 ) ), Range( triangle ^ 2 ) )
+                      ) then
+                      
+          return false;
+          
         fi;
-    
-        if not IsZeroForMorphisms( PreCompose( MorphismAt( T, 0), MorphismAt( T, 1 ) ) ) or
-            not IsZeroForMorphisms( PreCompose( MorphismAt( T, 1), MorphismAt( T, 2 ) ) ) then
-                AddToReasons( "IsWellDefinedForObjects: The composition of two consecutive morphisms in the (triangle) is not zero" );
-                return false;
+        
+        if not ( IsZeroForMorphisms( PreCompose( triangle ^ 0, triangle ^ 1 ) ) and
+                  IsZeroForMorphisms( PreCompose( triangle ^ 1, triangle ^ 2 ) )
+                    ) then
+                    
+          return false;
+          
         fi;
-    
+        
         return true;
-
+        
     end );
     
-    AddIsWellDefinedForMorphisms( cat, 
-        function( phi )
-        local T1, T2;
+    AddIsWellDefinedForMorphisms( triangles, 
+      function( phi )
+        local triangle_1, triangle_2;
         
         if not IsWellDefined( Source( phi ) ) or not IsWellDefined( Range( phi) ) then
-            AddToReasons( "IsWellDefinedForMorphisms: The source or range is not well-defined" );
-            return false;
-        fi;
-
-        if not ForAll( [ 0 .. 3 ], i -> IsWellDefined( phi[i] ) ) then
-            AddToReasons( "IsWellDefinedForMorphisms: One of the vertical morphisms is not well-defined" );
-            return false;
-        fi;
-
-        T1 := Source( phi );
-        T2 := Range( phi );
-        
-        if not IsEqualForObjects( Source( MorphismAt( phi, 0 ) ), ObjectAt( T1, 0 ) ) or 
-            not IsEqualForObjects( Range( MorphismAt( phi, 0 ) ), ObjectAt( T2, 0) )  then 
-            
-            AddToReasons( "IsWellDefinedForMorphisms: The morphism m0 is not compatible" );
-            return false;
-            
+          
+          return false;
+          
         fi;
         
-        if not IsEqualForObjects( Source( MorphismAt( phi, 1 ) ), ObjectAt( T1, 1 ) ) or 
-            not IsEqualForObjects( Range( MorphismAt( phi, 1 ) ), ObjectAt( T2, 1) )  then 
-            
-            AddToReasons( "IsWellDefinedForMorphisms: The morphism m1 is not compatible" );
-            return false;
+        if not ForAll( [ 0 .. 3 ], i -> IsWellDefined( phi[ i ] ) ) then
+          
+          return false;
+          
+        fi;
+        
+        triangle_1 := Source( phi );
+        
+        triangle_2 := Range( phi );
+        
+        if not ( IsEqualForObjects( Source( phi[ 0 ] ), triangle_1[ 0 ] ) and 
+                  IsEqualForObjects( Range( phi[ 0 ] ), triangle_2[ 0 ] )
+              ) then
+              
+          return false;
+          
+        fi;
+        
+        if not ( IsEqualForObjects( Source( phi[ 1 ] ), triangle_1[ 1 ] ) and
+                  IsEqualForObjects( Range( phi[ 1 ] ), triangle_2[ 1 ] )
+              ) then
+              
+          return false;
+          
+        fi;
+        
+        if not ( IsEqualForObjects( Source( phi[ 2 ] ), triangle_1[ 2 ] ) and
+                  IsEqualForObjects( Range( phi[ 2 ] ), triangle_2[ 2 ] )
+                ) then
+                
+          return false;
         
         fi;
         
-        if not IsEqualForObjects( Source( MorphismAt( phi, 2 ) ), ObjectAt( T1, 2) ) or 
-            not IsEqualForObjects( Range( MorphismAt( phi, 2 ) ), ObjectAt( T2, 2) )  then 
-            
-            AddToReasons( "IsWellDefinedForMorphisms: The morphism m2 is not compatible" );
-            return false;
-        
-        fi;
-    
         # Is the diagram commutative?
-
-        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 0 ), MorphismAt( phi, 1 ) ), PreCompose( MorphismAt( phi, 0 ), MorphismAt( T2, 0) ) ) then
         
-            AddToReasons( "IsWellDefinedForMorphisms: The first squar is not commutative" );
-            return false;
+        if not IsCongruentForMorphisms(
+                  PreCompose( triangle_1 ^ 0, MorphismAt( phi, 1 ) ), 
+                    PreCompose( phi[ 0 ], triangle_2 ^ 0 )
+                ) then
+                
+          return false;
             
         fi;
         
-        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 1 ), MorphismAt( phi, 2 ) ), PreCompose( MorphismAt( phi, 1 ), MorphismAt( T2, 1) ) ) then
-        
-            AddToReasons( "IsWellDefinedForMorphisms: The second squar is not commutative" );
-            return false;
-            
+        if not IsCongruentForMorphisms(
+                  PreCompose( triangle_1 ^ 1, phi[ 2 ] ),
+                    PreCompose( phi[ 1 ], triangle_2 ^ 1 )
+                ) then
+                
+          return false;
+          
         fi;
         
-        if not IsCongruentForMorphisms( PreCompose( MorphismAt( T1, 2), MorphismAt( phi, 3 ) ), 
-                                    PreCompose( MorphismAt( phi, 2 ), MorphismAt( T2, 2) ) ) then
-            AddToReasons( "IsWellDefinedForMorphisms: The third squar is not commutative" );
+        if not IsCongruentForMorphisms(
+                  PreCompose( triangle_1 ^ 2, phi[ 3 ] ),
+                    PreCompose( phi[ 2 ], triangle_2 ^ 2 )
+                ) then
+                
             return false;
             
         fi;
         
         return true;
-    
-    end );
-    
-    AddDirectSum( cat, 
-        function( L )
-        local m, D, u, o;
         
-        m := TransposedMat( List( L, l -> List( [ 0, 1, 2 ], i -> MorphismAt( l, i ) ) ) );
-        
-        o := List( L, l -> l[0] );
-
-        m := List( [ 1, 2, 3 ], l -> DirectSumFunctorial( m[ l ] ) );
-        
-        D := CreateTriangle( m[ 1 ], m[ 2 ], PreCompose( m[ 3 ], ShiftFactoringIsomorphism( o ) ) );
-
-        u := List( L, i-> [ i, "IsExactTriangle", true ] );
-
-        AddToToDoList( ToDoListEntry( u, 
-                    function( )
-                    local iso_from_can_triangle, iso_into_can_triangle;
-
-                    SetIsExactTriangle( D, true );
-
-                    iso_into_can_triangle := function( L, D )
-                        local can_D, i1, i2, k, can_L_k, ik_1, ik_2, mor;
-
-                        can_D := UnderlyingStandardExactTriangle( D );
-                        i1 := List( L, IsomorphismIntoStandardExactTriangle );
-                        i2 := [ ];
-                        for k in [ 1 .. Length( L ) ] do
-                            can_L_k := UnderlyingStandardExactTriangle( L[ k ] );
-                            ik_1 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
-                            ik_2 := InjectionOfCofactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                            Add( i2, CompleteToMorphismOfStandardExactTriangles( can_L_k, can_D, ik_1, ik_2 ) );
-                        od;
-
-                        i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
-                        i2 := List( i2, iso -> MorphismAt( iso, 2 ) );
-
-                        mor := MorphismBetweenDirectSums( TransposedMat( [ List( [ 1 .. Length( L ) ], k -> PreCompose( i1[ k ], i2[ k ] ) ) ] ) );
-
-                        return CreateTrianglesMorphism( D, can_D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor );
-
-                        end;
-
-                    AddToUnderlyingLazyMethods( D, IsomorphismIntoStandardExactTriangle, iso_into_can_triangle, [ L, D ] );
-
-                    iso_from_can_triangle := function( L, D )
-                        local can_D, i1, i2, k, can_L_k, pk_1, pk_2, mor;
-
-                        can_D := UnderlyingStandardExactTriangle( D );
-                        i1 := List( L, IsomorphismFromStandardExactTriangle );
-                        i2 := [ ];
-                        for k in [ 1 .. Length( L ) ] do
-                            can_L_k := UnderlyingStandardExactTriangle( L[ k ] );
-                            pk_1 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 0 ) ), k );
-                            pk_2 := ProjectionInFactorOfDirectSum( List( L, l-> ObjectAt( l, 1 ) ), k );
-                            Add( i2, CompleteToMorphismOfStandardExactTriangles( can_D, can_L_k, pk_1, pk_2 ) );
-                        od;
-
-                        i1 := List( i1, iso -> MorphismAt( iso, 2 ) );
-                        i2 := List( i2, iso -> MorphismAt( iso, 2 ) );
-
-                        mor := MorphismBetweenDirectSums( [ List( [ 1 .. Length( L ) ], k -> PreCompose( i2[ k ], i1[ k ] ) ) ] );
-
-                        return CreateTrianglesMorphism( can_D, D, IdentityMorphism( ObjectAt( D, 0 ) ), IdentityMorphism( ObjectAt( D, 1 ) ), mor );
-
-                        end;
-                    
-                    AddToUnderlyingLazyMethods( D, IsomorphismFromStandardExactTriangle, iso_from_can_triangle, [ L, D ] );
-                    
-                    end ) );
-
-        return D;
-
-    end );
-
-    AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( cat, 
-        function( L, n, D )
-        local objs0, objs1, objs2, i0, i1, i2;
-
-        objs0 := List( L, l -> l[0] );
-        objs1 := List( L, l -> l[1] );
-        objs2 := List( L, l -> l[2] );
-
-        i0 := InjectionOfCofactorOfDirectSum( objs0, n );
-        i1 := InjectionOfCofactorOfDirectSum( objs1, n );
-        i2 := InjectionOfCofactorOfDirectSum( objs2, n );
-
-        return CreateTrianglesMorphism( L[ n ], D, i0, i1, i2 );
-
     end );
     
-    AddProjectionInFactorOfDirectSumWithGivenDirectSum( cat, 
-        function( L, n, D )
-        local objs0, objs1, objs2, p0, p1, p2;
-
-        objs0 := List( L, l -> l[0] );
-        objs1 := List( L, l -> l[1] );
-        objs2 := List( L, l -> l[2] );
-
-        p0 := ProjectionInFactorOfDirectSum( objs0, n );
-        p1 := ProjectionInFactorOfDirectSum( objs1, n );
-        p2 := ProjectionInFactorOfDirectSum( objs2, n );
-
-        return CreateTrianglesMorphism( D, L[ n ], p0, p1, p2 );
-
-    end );
-
-    Finalize( cat );
+    Finalize( triangles );
     
-    return cat;
+    return triangles;
     
 end );
 
-###############################
+####################################
 ##
-##  Methods record
+## Constructors
 ##
-###############################
+####################################
 
 ##
-LiftColift := rec(
+InstallMethod( ExactTriangle,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, iota_alpha, pi_alpha )
+    local cat, triangles, tr;
+    
+    cat := CapCategory( alpha );
+    
+    triangles := CategoryOfExactTriangles( cat );
+    
+    tr := rec( );
+    
+    ObjectifyObjectForCAPWithAttributes(
+                tr, triangles,
+                DomainMorphism, alpha,
+                MorphismIntoConeObject, iota_alpha,
+                MorphismFromConeObject, pi_alpha
+              );
+    
+    return tr;
 
-  installation_name := "LiftColift", 
-  filter_list := [ "morphism", "morphism", "morphism", "morphism" ],
-  cache_name := "LiftColift",
-  return_type := "morphism_or_fail",
-),
-
-InstallValue( CATEGORY_OF_TRIANGLES_METHOD_NAME_RECORD, rec( 
-  
- IsExactTriangle:= rec(
-  installation_name := "IsExactTriangle", 
-  filter_list := [ "object" ],
-  cache_name := "IsExactTriangle",
-  return_type := "bool",
-),
-
-IsStandardExactTriangle:= rec( 
-
-installation_name := "IsStandardExactTriangle",
-  filter_list := [ "object" ],
-  cache_name := "IsStandardExactTriangle",
-  return_type := "bool",
-  post_function := 
-    function( obj, return_value )
-      if return_value = true then
-          SetFilterObj( obj, IsCapCategoryStandardExactTriangle );
-      fi;
-    end
-),
-
-IsomorphismIntoStandardExactTriangleWithGivenObject := rec(
-  installation_name := "IsomorphismIntoStandardExactTriangleWithGivenObject",
-  filter_list := [ "object", "object" ],
-  io_type := [ [ "t", "st" ], [ "t", "alpha", "st" ] ],
-  cache_name := "IsomorphismIntoStandardExactTriangleWithGivenObject",
-  return_type := [ "morphism" ],
-),
-
-IsomorphismIntoStandardExactTriangle := rec(
-  installation_name := "IsomorphismIntoStandardExactTriangle",
-  filter_list := [ "object" ],
-  io_type := [ [ "t" ], [ "t", "alpha", "st" ] ],
-  cache_name := "IsomorphismIntoStandardExactTriangle",
-  return_type := [ "morphism" ],
-),
-
-IsomorphismFromStandardExactTriangleWithGivenObject := rec(
-  installation_name := "IsomorphismFromStandardExactTriangleWithGivenObject",
-  filter_list := [ "object", "object" ],
-  io_type := [ [ "t", "st" ], [ "st", "alpha", "t" ] ],
-  cache_name := "IsomorphismFromStandardExactTriangleWithGivenObject",
-  return_type := [ "morphism" ],
-),
-
-IsomorphismFromStandardExactTriangle := rec(
-  installation_name := "IsomorphismFromStandardExactTriangle",
-  filter_list := [ "object" ],
-  io_type := [ [ "t" ], [ "st", "alpha", "t" ] ],
-  cache_name := "IsomorphismFromStandardExactTriangle",
-  return_type := [ "morphism" ],
-),
-
-RotationOfStandardExactTriangle := rec(
-  installation_name := "RotationOfStandardExactTriangle",
-  filter_list := [ "object" ],
-  cache_name := "RotationOfStandardExactTriangle",
-  return_type := [ "object" ]
-),
-
-ReverseRotationOfStandardExactTriangle := rec(
-  installation_name := "ReverseRotationOfStandardExactTriangle",
-  filter_list := [ "object" ],
-  cache_name := "ReverseRotationOfStandardExactTriangle",
-  return_type := [ "object" ]
-),
-
-CompleteToMorphismOfStandardExactTriangles:= rec(
-
-  installation_name := "CompleteToMorphismOfStandardExactTriangles", 
-  filter_list := [ "object", "object", "morphism", "morphism" ],
-  cache_name := "CompleteToMorphismOfStandardExactTriangles",
-  return_type := [ "morphism" ] ),
-
-RotationOfExactTriangle := rec( 
-
-  installation_name := "RotationOfExactTriangle",
-  filter_list := [ IsCapCategoryExactTriangle ],
-  cache_name := "RotationOfExactTriangle",
-  return_type := [ IsCapCategoryExactTriangle ]
-),
-
-ReverseRotationOfExactTriangle := rec( 
-
-  installation_name := "ReverseRotationOfExactTriangle",
-  filter_list := [ IsCapCategoryExactTriangle ],
-  cache_name := "ReverseRotationOfExactTriangle",
-  return_type := [ IsCapCategoryExactTriangle ]
-),
-
-CompleteToMorphismOfExactTriangles:= rec(
-
-  installation_name := "CompleteToMorphismOfExactTriangles", 
-  filter_list := [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, "morphism", "morphism" ],
-  cache_name := "CompleteToMorphismOfExactTriangles",
-  return_type := [ IsCapCategoryTrianglesMorphism ]
-),
- 
-
-) );
-
-CAP_INTERNAL_ENHANCE_NAME_RECORD( CATEGORY_OF_TRIANGLES_METHOD_NAME_RECORD );
-
-CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( CATEGORY_OF_TRIANGLES_METHOD_NAME_RECORD );
+end );
 
 
-#####################################
+#
+InstallMethod( MorphismOfExactTriangles, 
+        [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+  function( s, mu, nu, lambda, r )
+    local triangles, phi;
+    
+    triangles := CapCategory( s );
+    
+    phi := rec( 0 := mu, 1 := nu, 2 := lambda );
+    
+    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( phi, triangles, s, r );
+    
+    return phi;
+    
+end );
+
+
+##
+InstallMethod( MorphismAtOp, 
+          [ IsCapExactTriangle, IsInt ],
+  function( triangle, i )
+    
+    if i = 0 then
+      
+      return DomainMorphism( triangle );
+      
+    elif i = 1 then
+      
+      return MorphismIntoConeObject( triangle );
+      
+    elif i = 2 then
+      
+      return MorphismFromConeObject( triangle );
+      
+    else
+      
+      Error( "Wrong index!\n" );
+    
+    fi;
+
+end );
+
+##
+InstallMethod( ObjectAtOp, 
+          [ IsCapExactTriangle, IsInt ],
+  function( triangle, i )
+    
+    if i < 0 or i > 3 then
+      
+      Error( "Wrong index!\n" );
+      
+    elif i = 3 then
+    
+      return Range( MorphismAt( triangle, 2 ) );
+      
+    else
+      
+      return Source( MorphismAt( triangle, i ) );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( MorphismAtOp, 
+                [ IsCapExactTrianglesMorphism, IsInt ],
+  function( phi, i )
+    
+    if i < 0 or i > 3 then
+      
+      Error( "Wrong index!\n" );
+      
+    elif i = 3 then
+    
+      return ShiftOnMorphism( phi!.0 );
+      
+    else
+      
+      return phi!.( i );
+      
+    fi;
+
+end );
+
+##
+InstallMethod( \^,
+          [ IsCapExactTriangle, IsInt ],
+  function( triangle, i )
+    
+    return MorphismAt( triangle, i );
+
+end );
+
+##
+InstallMethod( \[\],
+          [ IsCapExactTriangle, IsInt ],
+  function( triangle, i )
+    
+    return ObjectAt( triangle, i );
+
+end );
+
+##
+InstallMethod( \[\],
+          [ IsCapExactTrianglesMorphism, IsInt ],
+  function( phi, i )
+    
+    return MorphismAt( phi, i );
+
+end );
+
 ###
-### Constructors
-###
-#####################################
-#
-###
-#InstallMethod( CreateTriangle, 
-#                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
-#    
-#    function( mor1, mor2, mor3 )
-#    local  triangle;
-#    
-#    triangle:= rec( T0 := Source( mor1 ),
-#                    t0 := mor1,
-#                    T1 := Source( mor2 ),
-#                    t1 := mor2,
-#                    T2 := Source( mor3 ),
-#                    t2 := mor3,
-#                    T3 :=  Range( mor3 ),
-#                    UnderlyingLazyMethods := [ ]
-#                    );
-#    
-#    ObjectifyWithAttributes( triangle, TheTypeCapCategoryTriangle,
-#                             UnderlyingCapCategory, CapCategory( mor1 ) 
-#                            );
-#    
-#    AddObject( CategoryOfTriangles( CapCategory( mor1 ) ), triangle );
-#    
-#    AddToToDoList( ToDoListEntry( [ [ triangle, "IsExactTriangle", true ] ], 
-#                    function( )
-#                    SetFilterObj( triangle, IsCapCategoryExactTriangle );
-#                    end ) );
-#
-#    AddToToDoList( ToDoListEntry( [ [ triangle, "IsStandardExactTriangle", true ] ], 
-#                    function( )
-#                    SetFilterObj( triangle, IsCapCategoryStandardExactTriangle );
-#                    SetIsExactTriangle( triangle, true );
-#                    end ) );
-#
-#    return triangle;
-#    
-#end );
-#
-###
-#InstallMethod( CreateExactTriangle, 
-#                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
-#   
-#                       
-#    function( mor1, mor2, mor3 )
-#    local  triangle;
-#        
-#    triangle:= CreateTriangle( mor1, mor2, mor3 );
-#    
-#    SetFilterObj( triangle, IsCapCategoryExactTriangle );
-#
-#    Assert( 5, IsExactTriangle( triangle ) );
-#    SetIsExactTriangle( triangle, true );
-#    
-#    return triangle;
-#    
-#end );
-#
-###
-#InstallMethod( CreateStandardExactTriangle, 
-#                [ IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism ],
-#   
-#                       
-#    function( mor1, mor2, mor3 )
-#    local  triangle;
-#        
-#    triangle:= CreateTriangle( mor1, mor2, mor3 );
-#    
-#    SetFilterObj( triangle, IsCapCategoryStandardExactTriangle );
-#    Assert( 5, IsStandardExactTriangle( triangle ) );
-#    SetIsStandardExactTriangle( triangle, true );
-#
-#    SetIsomorphismFromStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
-#    SetIsomorphismIntoStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
-#
-#    return triangle;
-#    
-#end );
-#
-###
-#InstallMethod( CreateTrianglesMorphism, 
-#               [ IsCapCategoryTriangle, IsCapCategoryTriangle,
-#               IsCapCategoryMorphism, IsCapCategoryMorphism, 
-#                       IsCapCategoryMorphism ], 
-#               
-#   function( T1, T2, morphism0, morphism1, morphism2 )
-#   local morphism;
-# 
-#   morphism := rec( m0 := morphism0,
-#                    
-#                    m1 := morphism1,
-#                    
-#                    m2 := morphism2,
-#                            
-#                    UnderlyingLazyMethods := [ ] );
-#                  
-#   ObjectifyWithAttributes( morphism, TheTypeCapCategoryTrianglesMorphism,
-#                            Source, T1,
-#                            Range, T2,
-#                            UnderlyingCapCategory, CapCategory( morphism0 )
-#                          );
-#   
-#   AddMorphism( CategoryOfTriangles( CapCategory( morphism0 ) ), morphism );
-#   
-#   return morphism;
-#   
-#end );
-#
-#
-###
-#InstallMethod( MorphismAtOp, 
-#                [ IsCapCategoryTriangle, IsInt ],
-#    function( T, i )
-#    
-#    if i = 0 then return T!.t0;
-#    
-#    elif i = 1 then return T!.t1;
-#    
-#    elif i = 2 then return T!.t2;
-#    
-#    else Error( "The second entry should be 0, 1 or 2" );
-#    
-#    fi;
-#
-#end );
-#
-###
-#InstallMethod( ObjectAtOp, 
-#                [ IsCapCategoryTriangle, IsInt ],
-#    function( T, i )
-#    
-#    if i = 0 then return T!.T0;
-#    
-#    elif i = 1 then return T!.T1;
-#    
-#    elif i = 2 then return T!.T2;
-#    
-#    elif i = 3 then return T!.T3;
-#    
-#    else Error( "The second entry should be 0, 1, 2 or 3" );
-#    
-#    fi;
-#
-#end );
-#
-###
-#InstallMethod( MorphismAtOp, 
-#                [ IsCapCategoryTrianglesMorphism, IsInt ],
-#    function( phi, i )
-#    
-#    if i = 0 then return phi!.m0;
-#    
-#    elif i = 1 then return phi!.m1;
-#    
-#    elif i = 2 then return phi!.m2;
-#    
-#    elif i = 3 then return ShiftOfMorphism( phi!.m0 );
-#    
-#    else
-#        Error( "Index can be 0,1,2 or 3" );
-#    fi;
-#
-#end );
-#
-###
-#InstallMethod( \^, [ IsCapCategoryTriangle, IsInt ],
-#    function( T, i )
-#    return MorphismAt( T, i );
-#
-#end );
-#
-###
-#InstallMethod( \[\], [ IsCapCategoryTriangle, IsInt ],
-#    function( T, i )
-#    return ObjectAt( T, i );
-#
-#end );
-#
-###
-#InstallMethod( \[\], [ IsCapCategoryTrianglesMorphism, IsInt ],
-#    function( phi, i )
-#    return MorphismAt( phi, i );
-#
-#end );
-#
-###
-#InstallMethod( AddToUnderlyingLazyMethods, 
+#InstallMethod( AddtriangleoUnderlyingLazyMethods, 
 #            [ IsCapCategoryCell, IsOperation, IsFunction, IsList ],
 #    function( C, method_name, F, l )
 #    
@@ -786,7 +491,7 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( CATEGORY_OF_TRIANGLES_METHOD_NAME_RECORD 
 #
 #    if IsCapCategoryStandardExactTriangle( triangle ) then 
 #        Print( "<A standard exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
-#    elif IsCapCategoryExactTriangle( triangle ) then 
+#    elif IsCapExactTriangle( triangle ) then 
 #        if HasIsStandardExactTriangle( triangle ) and not IsStandardExactTriangle( triangle ) then
 #            Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
 #        else

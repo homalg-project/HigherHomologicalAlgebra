@@ -21,6 +21,12 @@ DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 ##
 ####################################
 
+#! @Section Triangulated categories
+
+KeyDependentOperation( "Shift", IsCapCategoryCell, IsInt, ReturnTrue );
+
+DeclareCategory( "IsTriangulatedCategory", IsCapCategory );
+
 #! @Section Categorical operations
 
 #! @Description
@@ -148,7 +154,7 @@ DeclareOperation( "AddShiftOnObject", [ IsCapCategory, IsList ] );
 #! The output is $\Sigma \alpha:\Sigma A \to \Sigma B$.
 #! @Returns $\Sigma \alpha:\Sigma A \to \Sigma B$
 #! @Arguments sigma_A, alpha, sigma_B
-DeclareOperation( "ShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryObject ] );
+DeclareOperation( "ShiftOnMorphismWithGivenObjects", [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -168,18 +174,6 @@ DeclareOperation( "AddShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList 
 #! @Returns $\Sigma \alpha:\Sigma A \to \Sigma B$
 #! @Arguments alpha
 DeclareAttribute( "ShiftOnMorphism", IsCapCategoryMorphism );
-
-#! @Description
-#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
-#! This operation adds the given function $F$ to
-#! the category for the basic operation <C>ShiftOnMorphism</C>.
-#! @Returns nothing
-#! @Arguments T, F
-DeclareOperation( "AddShiftOnMorphism", [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddShiftOnMorphism", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddShiftOnMorphism", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddShiftOnMorphism", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$. The output is $\Sigma^{-1} A$.
@@ -224,18 +218,6 @@ DeclareOperation( "AddReverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, 
 #! @Returns $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$
 #! @Arguments alpha
 DeclareAttribute( "ReverseShiftOnMorphism", IsCapCategoryMorphism );
-
-#! @Description
-#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
-#! This operation adds the given function $F$ to
-#! the category for the basic operation <C>ReverseShiftOnMorphism</C>.
-#! @Returns nothing
-#! @Arguments T, F
-DeclareOperation( "AddReverseShiftOnMorphism", [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddReverseShiftOnMorphism", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseShiftOnMorphism", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseShiftOnMorphism", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma \circ \Sigma^{-1}) A$ in a triangulated category $\mathcal{T}$.
@@ -407,20 +389,20 @@ DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsLi
 #! @EndLatexOnly
 #! @Returns a morphism $C(\alpha_1) \to C(\alpha_2)$
 #! @Arguments C_alpha_1, alpha_1, u, v, alpha_2, C_alpha_2
-DeclareOperation( "MorphismBetweenStandardConeObjectsWithGivenStandardConeObjects",
+DeclareOperation( "MorphismBetweenStandardConeObjectsWithGivenObjects",
           [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismBetweenStandardConeObjectsWithGivenStandardConeObjects</C>.
+#! the category for the basic operation <C>MorphismBetweenStandardConeObjectsWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenStandardConeObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenStandardConeObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenStandardConeObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenStandardConeObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsList ] );
 
 
 #! @Description
@@ -445,18 +427,6 @@ DeclareOperation( "MorphismBetweenStandardConeObjects",
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
-#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
-#! This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismBetweenStandardConeObjects</C>.
-#! @Returns nothing
-#! @Arguments T, F
-DeclareOperation( "AddMorphismBetweenStandardConeObjects", [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddMorphismBetweenStandardConeObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismBetweenStandardConeObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismBetweenStandardConeObjects", [ IsCapCategory, IsList ] );
-
-#! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
 #! The output is the standard cone object $C(\beta)$.
 #! @BeginLatexOnly
@@ -479,18 +449,6 @@ DeclareOperation( "AddMorphismBetweenStandardConeObjects", [ IsCapCategory, IsLi
 #! @Arguments alpha, beta
 DeclareOperation( "ConeObjectByOctahedralAxiom",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
-
-#! @Description
-#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
-#! This operation adds the given function $F$ to
-#! the category for the basic operation <C>ConeObjectByOctahedralAxiom</C>.
-#! @Returns nothing
-#! @Arguments T, F
-DeclareOperation( "AddConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddConeObjectByOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddConeObjectByOctahedralAxiom", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
@@ -580,20 +538,20 @@ DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiom", [ IsCapCategory,
 #! @EndLatexOnly
 #! @Returns a morphism $C(\beta)\to C(u_{\alpha,\beta})$
 #! @Arguments s, alpha, beta, r
-DeclareOperation( "WitnessIsomorphismByOctahedralAxiomWithGivenObjects",
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
       [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>WitnessIsomorphismByOctahedralAxiomWithGivenObjects</C>.
+#! the category for the basic operation <C>WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$ and 
@@ -603,20 +561,233 @@ DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiomWithGivenObjects", [ Is
 #! and $\pi_{\alpha,\beta}=\pi(u_{\alpha,\beta})\circ w_{\alpha,\beta}$.
 #! @Returns a morphism $C(\beta)\to C(u_{\alpha,\beta})$.
 #! @Arguments alpha, beta
-DeclareOperation( "WitnessIsomorphismByOctahedralAxiom",
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#! The arguments are two morphisms $\alpha:A\to B$ and $\beta:B\to C$.
+#! The output is ...
+#! @Returns a morphism $C(u_{\alpha,\beta})\to C(\beta)$
+#! @Arguments alpha, beta
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>WitnessIsomorphismByOctahedralAxiom</C>.
+#! the category for the basic operation <C>WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiom", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismByOctahedralAxiom", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are two morphisms $\alpha:A\to B$ and $\beta:B\to C$.
+#! The output is ...
+#! @Returns a morphism $C(u_{\alpha,\beta})\to C(\beta)$
+#! @Arguments alpha, beta
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom",
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#################################
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$
+#! The output is $\Sigma A$.
+#! @Returns an object $\Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "ConeObjectByRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is $\iota(\alpha):B\to C(\alpha)$.
+#! @Returns a morphism $B\to C(\alpha)$.
+#! @Arguments alpha
+DeclareAttribute( "DomainMorphismByRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is a morphism $\pi(\alpha):C(\alpha)\to \Sigma A$.
+#! @Returns a morphism $C(\alpha)\to \Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "MorphismIntoConeObjectByRotationAxiom",
+    IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is a morphism $-\Sigma \alpha:\Sigma A\to\Sigma B$.
+#! @Returns a morphism $\Sigma A\to\Sigma B$
+#! @Arguments alpha
+DeclareAttribute( "MorphismFromConeObjectByRotationAxiom",
+    IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is an isomorphism $\Sigma A \to C(\iota(\alpha))$ such that
+#! $?\circ\pi(\alpha)=\iota(\iota(\alpha))$ and
+#! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
+#! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
+#! @Arguments alpha
+DeclareAttribute( "WitnessIsomorphismIntoStandardConeObjectByRotationAxiom",
+     IsCapCategoryMorphism );
+
+#! @Description
+#! The arguments are an object $s=\Sigma A$, morphism $\alpha:A\to B$ and
+#! an object $r=C(\iota A )$.
+#! The output is an isomorphism $\Sigma A \to C(\iota(\alpha))$ such that
+#! $?\circ\pi(\alpha)=\iota(\iota(\alpha))$ and
+#! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
+#! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
+#! @Arguments s, alpha, r
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects",
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
+#! This operation adds the given function $F$ to
+#! the category for the basic operation <C>WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects</C>.
+#! @Returns nothing
+#! @Arguments T, F
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is an isomorphism $C(\iota(\alpha))\to\Sigma A$ such that
+#! ???
+#! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "WitnessIsomorphismFromStandardConeObjectByRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The arguments are an object $s=C(\iota(\alpha))$, morphism $\alpha:A\to B$ and
+#! an object $r=\Sigma A$.
+#! The output is an isomorphism $C(\iota(\alpha))\to\Sigma A$ such that
+#! ???
+#! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
+#! @Arguments s, alpha, r
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects",
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
+#! This operation adds the given function $F$ to
+#! the category for the basic operation <C>WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</C>.
+#! @Returns nothing
+#! @Arguments T, F
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+
+#################################
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$
+#! The output is $\Sigma A$.
+#! @Returns an object $\Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "ConeObjectByReverseRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is $\iota(\alpha):B\to C(\alpha)$.
+#! @Returns a morphism $B\to C(\alpha)$.
+#! @Arguments alpha
+DeclareAttribute( "DomainMorphismByReverseRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is a morphism $\pi(\alpha):C(\alpha)\to \Sigma A$.
+#! @Returns a morphism $C(\alpha)\to \Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "MorphismIntoConeObjectByReverseRotationAxiom",
+    IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is a morphism $-\Sigma \alpha:\Sigma A\to\Sigma B$.
+#! @Returns a morphism $\Sigma A\to\Sigma B$
+#! @Arguments alpha
+DeclareAttribute( "MorphismFromConeObjectByReverseRotationAxiom",
+    IsCapCategoryMorphism );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is an isomorphism $\Sigma A \to C(\iota(\alpha))$ such that
+#! $?\circ\pi(\alpha)=\iota(\iota(\alpha))$ and
+#! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
+#! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
+#! @Arguments alpha
+DeclareAttribute( "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiom",
+     IsCapCategoryMorphism );
+
+#! @Description
+#! The arguments are an object $s=\Sigma A$, morphism $\alpha:A\to B$ and
+#! an object $r=C(\iota A )$.
+#! The output is an isomorphism $\Sigma A \to C(\iota(\alpha))$ such that
+#! $?\circ\pi(\alpha)=\iota(\iota(\alpha))$ and
+#! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
+#! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
+#! @Arguments s, alpha, r
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
+#! This operation adds the given function $F$ to
+#! the category for the basic operation <C>WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects</C>.
+#! @Returns nothing
+#! @Arguments T, F
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The argument is a morphism $\alpha:A\to B$.
+#! The output is an isomorphism $C(\iota(\alpha))\to\Sigma A$ such that
+#! ???
+#! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
+#! @Arguments alpha
+DeclareAttribute( "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiom",
+      IsCapCategoryMorphism );
+
+#! @Description
+#! The arguments are an object $s=C(\iota(\alpha))$, morphism $\alpha:A\to B$ and
+#! an object $r=\Sigma A$.
+#! The output is an isomorphism $C(\iota(\alpha))\to\Sigma A$ such that
+#! ???
+#! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
+#! @Arguments s, alpha, r
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
+#! This operation adds the given function $F$ to
+#! the category for the basic operation <C>WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects</C>.
+#! @Returns nothing
+#! @Arguments T, F
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+
 
 DeclareOperation( "ShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
 
@@ -650,11 +821,27 @@ DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCap
 DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-####################################
+######################################
 ##
-#! @Section GAP Categories
+#! @Section Attributes and Operations
 ##
-####################################
+######################################
 
+DeclareAttribute( "ShiftFunctorAttr", IsTriangulatedCategory );
+
+
+if not IsBound( ShiftFunctor ) then
+  DeclareOperation( "ShiftFunctor", [ IsTriangulatedCategory ] );
+fi;
+
+DeclareAttribute( "ReverseShiftFunctor", IsTriangulatedCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoReverseShiftOfShift", IsTriangulatedCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoShiftOfReverseShift", IsTriangulatedCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity", IsTriangulatedCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromShiftOfReverseShiftIntoIdentity", IsTriangulatedCategory );
 
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCapCategory );
