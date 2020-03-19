@@ -190,9 +190,9 @@ BindGlobal( "NATURAL",
     
     alpha_N := rep_a[ N ][ 1 ];
     
-    Tr_alpha_N := CompleteMorphismToStandardExactTriangle( alpha_N );
+    #Tr_alpha_N := CompleteMorphismToStandardExactTriangle( alpha_N );
     
-    value_N := ReverseRotationOfStandardExactTriangle( Tr_alpha_N );
+    #value_N := ReverseRotationOfStandardExactTriangle( Tr_alpha_N );
     
     ### induction step ###
     

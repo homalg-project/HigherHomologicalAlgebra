@@ -523,6 +523,14 @@ create_complex( left_bound, horizontal_distance, below_bound, vertical_distance,
 create_complex_morphism( left_bound, horizontal_distance, below_bound, vertical_distance, "C", "B", "alpha", add_algebroid );
 create_complex_morphism( left_bound, horizontal_distance, below_bound, vertical_distance, "B", "D", "beta", add_algebroid );
 
+# C
+# | alpha
+# V
+# B
+# | beta
+# V
+# D
+
 gamma := PreCompose( alpha, beta );
 conv_alpha := Convolution( alpha );
 conv_beta := Convolution( beta );
