@@ -100,7 +100,7 @@ InstallMethod( HomotopyCategory,
         
     fi;
     
-    ADD_TRIANGULATED_STRUCUTRE( homotopy_category );
+    ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS( homotopy_category );
     
     if to_be_finalized = false then
       

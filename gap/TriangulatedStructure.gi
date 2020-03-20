@@ -6,16 +6,14 @@
 #
 #####################################################################
 
-BindGlobal( "ADD_TRIANGULATED_STRUCUTRE",
+BindGlobal( "ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS",
 
 function( Ho_C )
     
-  SetIsTriangulatedCategory( Ho_C, true );
-  
-  SetIsTriangulatedCategoryWithShiftAutomorphism( Ho_C, true );
+  SetFilterObj( Ho_C, IsTriangulatedCategory );
 
   ## Adding the shift and reverse shift functors
-  AddShiftOfObject( Ho_C,
+  AddShiftOnObject( Ho_C,
     function( C )
       local twist_functor;
       
@@ -26,8 +24,8 @@ function( Ho_C )
   end );
 
   ##
-  AddShiftOfMorphism( Ho_C, 
-      function( phi )
+  AddShiftOnMorphismWithGivenObjects( Ho_C,
+      function( s, phi, r )
         local twist_functor;
         
         twist_functor := ShiftFunctor( Ho_C, -1 );
@@ -37,7 +35,7 @@ function( Ho_C )
   end );
   
   ##
-  AddReverseShiftOfObject( Ho_C,
+  AddReverseShiftOnObject( Ho_C,
       function( C )
         local reverse_twist_functor;
         
@@ -48,8 +46,8 @@ function( Ho_C )
   end );
   
   ##
-  AddReverseShiftOfMorphism( Ho_C,
-      function( phi )
+  AddReverseShiftOnMorphismWithGivenObjects( Ho_C,
+      function( s, phi, r )
         local reverse_twist_functor;
         
         reverse_twist_functor := ShiftFunctor( Ho_C, 1 );
@@ -67,108 +65,92 @@ function( Ho_C )
   
   AddIsomorphismFromReverseShiftOfShift( Ho_C, IdentityMorphism );
   
-  AddConeObject( Ho_C, MappingCone );
+  AddStandardConeObject( Ho_C, MappingCone );
   
-  AddMorphismIntoConeObjectWithGivenConeObject( Ho_C,
-    function( phi, C )
+  AddMorphismIntoStandardConeObjectWithGivenStandardConeObject( Ho_C,
+    function( alpha, st_cone )
       local cell;
       
-      cell := UnderlyingCell( phi );
+      cell := UnderlyingCell( alpha );
       
       return NaturalInjectionInMappingCone( cell ) / Ho_C;
       
   end );
   
-  AddMorphismFromConeObjectWithGivenConeObject( Ho_C,
-    function( phi, C )
+  AddMorphismFromStandardConeObjectWithGivenStandardConeObject( Ho_C,
+    function( alpha, st_cone )
       local cell;
       
-      cell := UnderlyingCell( phi );
+      cell := UnderlyingCell( alpha );
       
       return NaturalProjectionFromMappingCone( cell ) / Ho_C;
       
   end );
- 
+
+#    A ----- alpha ----> B ----------> Cone( alpha ) -----> Shift A
+#    |                   |                |                 |
+#    | mu                | nu             |                 | Shift( mu, 1 )
+#    |                   |                |                 |
+#    v                   v                v                 v
+#    A' ---- beta -----> B' ---------> Cone( beta  ) -----> Shift A'
+
   ##
-  AddCompleteMorphismToStandardExactTriangle( Ho_C,
-      function( phi )
-        local i, p;
-        
-        i := NaturalInjectionInMappingCone( phi );
-        
-        p := NaturalProjectionFromMappingCone( phi );
-        
-        return CreateStandardExactTriangle( phi, i, p );
-      
+  AddMorphismBetweenStandardConeObjectsWithGivenObjects( Ho_C,
+     function( cone_alpha, alpha, mu, nu, beta, cone_beta )
+       local homotopy_maps, maps;
+       
+       homotopy_maps := HomotopyMorphisms( PreCompose( alpha, nu ) - PreCompose( mu, beta ) );
+       
+       maps := AsZFunction(
+                 function( i )
+                   return
+                     MorphismBetweenDirectSums(
+                       [
+                         [ mu[ i - 1 ]                                            , homotopy_maps[ i - 1 ] ],
+                         [ ZeroMorphism( Source( nu )[ i ], Range( mu )[ i - 1 ] ), nu[ i ]                ]
+                       ] );
+                 end );
+       
+       return HomotopyCategoryMorphism( cone_alpha, cone_beta, maps );
+       
   end );
   
   ##
-  AddCompleteToMorphismOfStandardExactTriangles( Ho_C,
-      function( tr1, tr2, phi, psi )
-        local tr1_0, tr2_0, phi_, psi_, homotopy_maps, maps, tau;
-        
-        tr1_0 := UnderlyingCell( tr1^0 );
-        
-        tr2_0 := UnderlyingCell( tr2^0 );
-        
-        phi_ := UnderlyingCell( phi );
-        
-        psi_ := UnderlyingCell( psi );
-        
-        homotopy_maps := HomotopyMorphisms( PreCompose( tr1^0, psi ) - PreCompose( phi, tr2^0 ) );
-        
-        maps := AsZFunction(
-                  function( i )
-                    return
-                      MorphismBetweenDirectSums(
-                        [
-                          [ phi_[ i - 1 ], homotopy_maps[ i - 1 ] ],
-                          [ ZeroMorphism( Source( psi_ )[ i ], Range( phi_ )[ i - 1 ] ), psi_[ i ] ]
-                        ] );
-                  end );
-        
-        tau := HomotopyCategoryMorphism( tr1[ 2 ], tr2[ 2 ], maps );
-        
-        return CreateTrianglesMorphism( tr1, tr2, phi, psi, tau );
-        
-  end );
-  
-  ##
-  AddRotationOfStandardExactTriangle( Ho_C,
-      function( T )
-        local rotation, st_rotation, phi, A, B, maps, tau;
+  AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, r )
+      local A, B, maps;
       
-        rotation := CreateExactTriangle( T ^ 1, T ^ 2, AdditiveInverse( ShiftOfMorphism( T ^ 0 ) ) );
+      A := Source( alpha );
       
-        st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
+      B := Range( alpha );
       
-        phi := T ^ 0;
-      
-        A := T[ 0 ];
-      
-        B := T[ 1 ];
-      
-        maps := AsZFunction(  
+      maps := AsZFunction(  
                 function( i )
                   return
                   MorphismBetweenDirectSums(
                     [ 
                       [
-                        AdditiveInverse( phi[ i - 1 ] ),
+                        AdditiveInverse( alpha[ i - 1 ] ),
                         IdentityMorphism( A[ i - 1 ] ),
                         ZeroMorphism( A[ i - 1 ], B[ i ] )
                       ]
                     ] );
                 end );
       
-        tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
-        
-        tau := CreateTrianglesMorphism(
-                  rotation, st_rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
+      return HomotopyCategoryMorphism( s, r, maps );
       
-        SetIsomorphismIntoStandardExactTriangle( rotation, tau );
+  end );
+
+  ##
+  AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, r )
+      local A, B, maps;
       
-        maps := AsZFunction(
+      A := Source( alpha );
+      
+      B := Range( alpha );
+      
+      maps := AsZFunction(
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -177,53 +159,23 @@ function( Ho_C )
                       [ IdentityMorphism( A[ i - 1 ] ) ],
                       [ ZeroMorphism( B[ i ], A[ i - 1 ] ) ]
                     ] );
+                    
                 end );
+       
+      return HomotopyCategoryMorphism( s, r, maps );
       
-        tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
-      
-        tau := CreateTrianglesMorphism(
-                  st_rotation, rotation, IdentityMorphism( T[ 1 ] ), IdentityMorphism( T[ 2 ] ), tau );
-      
-        SetIsomorphismFromStandardExactTriangle( rotation, tau );
-      
-        return rotation;
-        
   end );
   
   ##
-  AddReverseRotationOfStandardExactTriangle( Ho_C,
-      function( T )
-        local rotation, st_rotation, phi, A, B, maps, tau;
+  AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, r )
+      local A, B, maps;
       
-        rotation := CreateExactTriangle( AdditiveInverse( Shift( T ^ 2, -1 ) ), T ^ 0, T ^ 1 );
+      A := Source( alpha );
       
-        st_rotation := CompleteMorphismToStandardExactTriangle( rotation ^ 0 );
+      B := Range( alpha );
       
-        phi := T ^ 0;
-      
-        A := T[ 0 ];
-      
-        B := T[ 1 ];
-      
-        maps := AsZFunction(
-                function( i )
-                  return
-                  MorphismBetweenDirectSums(
-                    [ 
-                      [ ZeroMorphism( A[ i - 1 ], B[ i ] ) ],
-                      [ IdentityMorphism( B[ i ] ) ],
-                      [ phi[ i ] ]
-                    ] );
-                end );
-      
-        tau := HomotopyCategoryMorphism( st_rotation[ 2 ], rotation[ 2 ], maps );
-        
-        tau := CreateTrianglesMorphism(
-                  st_rotation, rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
-      
-        SetIsomorphismFromStandardExactTriangle( rotation, tau );
-      
-        maps := AsZFunction(
+      maps := AsZFunction(
                 function( i )
                   return
                   MorphismBetweenDirectSums(
@@ -235,57 +187,85 @@ function( Ho_C )
                       ]
                     ] );
                 end );
-      
-        tau := HomotopyCategoryMorphism( rotation[ 2 ], st_rotation[ 2 ], maps );
-      
-        tau := CreateTrianglesMorphism(
-                  rotation, st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), tau );
-      
-        SetIsomorphismIntoStandardExactTriangle( rotation, tau );
-      
-        return rotation;
+                
+      return HomotopyCategoryMorphism( s, r, maps );
         
   end );
 
-  AddOctahedralAxiom( Ho_C,
-    function( f, g )
-      local A, B, C, h, cone_f, cone_g, cone_h, shifted_cone_f, u, v, w, T, st_T, maps, cone_u, i, j;
+  ##
+  AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, r )
+      local A, B, maps;
       
-      A := Source( f );
+      A := Source( alpha );
       
-      B := Range( f );
+      B := Range( alpha );
+     
+      maps := AsZFunction(
+                function( i )
+                  return
+                  MorphismBetweenDirectSums(
+                    [ 
+                      [ ZeroMorphism( A[ i - 1 ], B[ i ] ) ],
+                      [ IdentityMorphism( B[ i ] ) ],
+                      [ alpha[ i ] ]
+                    ] );
+                end );
       
-      C := Range( g );
+      return HomotopyCategoryMorphism( s, r, maps );
+        
+  end );
       
-      h := PreCompose( f, g );
+  ##
+  AddDomainMorphismByOctahedralAxiom( Ho_C,
+    function( alpha, beta )
+      local mu, alpha_beta;
       
-      cone_f := ConeObject( f );
+      mu := IdentityMorphism( Source( alpha ) );
       
-      cone_g := ConeObject( g );
+      alpha_beta := PreCompose( alpha, beta );
       
-      cone_h := ConeObject( h );
+      return MorphismBetweenStandardConeObjects( alpha, mu, beta, alpha_beta );
       
-      shifted_cone_f := ShiftOfObject( ConeObject( f ) );
+  end );
+  
+  ##
+  AddMorphismIntoConeObjectByOctahedralAxiom( Ho_C,
+    function( alpha, beta )
+      local A, B, C, v, cone, cone_beta;
       
-      u := AsZFunction(
-            n -> MorphismBetweenDirectSums(
-                  [
-                    [ IdentityMorphism( A[ n - 1 ]  )   , ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
-                    [ ZeroMorphism( B[ n ], A[ n - 1 ] ), g[ n ]                             ],
-                  ]
-                ) );
+      A := Source( alpha );
       
-      u := HomotopyCategoryMorphism( cone_f, cone_h, u );
+      B := Range( alpha );
+      
+      C := Range( beta );
       
       v := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
-                    [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
+                    [ alpha[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
                     [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ],
                   ]
                 ) );
       
-      v := HomotopyCategoryMorphism( cone_h, cone_g, v );
+      cone := StandardConeObject( PreCompose( alpha, beta ) );
+      
+      cone_beta := StandardConeObject( beta );
+      
+      return HomotopyCategoryMorphism( cone, cone_beta, v );
+     
+  end );
+  
+  ##
+  AddMorphismFromConeObjectByOctahedralAxiom( Ho_C,
+    function( alpha, beta )
+      local A, B, C, w, cone_beta, shifted_cone_alpha;
+      
+      A := Source( alpha );
+      
+      B := Range( alpha );
+      
+      C := Range( beta );
       
       w := AsZFunction(
             n -> MorphismBetweenDirectSums(
@@ -294,13 +274,26 @@ function( Ho_C )
                     [ ZeroMorphism( C[ n ], A[ n - 2 ]  ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ],
                   ]
                 ) );
+                
+      cone_beta := StandardConeObject( beta );
       
-      w := HomotopyCategoryMorphism( cone_g, shifted_cone_f, w );
+      shifted_cone_alpha := ShiftOnObject( StandardConeObject( alpha ) );
       
-      T := CreateExactTriangle( u, v, w );
+      return HomotopyCategoryMorphism( cone_beta, shifted_cone_alpha, w );
       
-      st_T := CompleteMorphismToStandardExactTriangle( u );
+  end );
+  
+  ##
+  AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, beta, r )
+      local A, B, C, maps;
       
+      A := Source( alpha );
+      
+      B := Range( alpha );
+      
+      C := Range( beta );
+     
       maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
@@ -309,33 +302,34 @@ function( Ho_C )
                   ]
               ) );
       
-      cone_u := ConeObject( u );
+      return HomotopyCategoryMorphism( s, r, maps );
+          
+  end );
+
+  ##
+  AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
+    function( s, alpha, beta, r )
+      local A, B, C, maps;
       
-      i := HomotopyCategoryMorphism( cone_g, cone_u, maps );
+      A := Source( alpha );
       
-      i := CreateTrianglesMorphism( T, st_T, IdentityMorphism( cone_f ), IdentityMorphism( cone_h ), i );
+      B := Range( alpha );
       
-      SetIsomorphismIntoStandardExactTriangle( T, i );
-      
+      C := Range( beta );
+           
       maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
-                    [ ZeroMorphism( A[ n - 2 ] , B[ n - 1 ] ), ZeroMorphism( A[ n - 2 ] ,C[ n ] ) ],
-                    [ IdentityMorphism( B[ n - 1 ] )         , ZeroMorphism( B[ n -1 ], C[ n ] )  ],
-                    [ f[ n - 1 ], ZeroMorphism( A[ n - 1 ]   , C[ n ] )                           ],
-                    [ ZeroMorphism( C[ n ], B[ n - 1 ] )     , IdentityMorphism( C[ n ] )         ]
+                    [ ZeroMorphism( A[ n - 2 ] , B[ n - 1 ] ) , ZeroMorphism( A[ n - 2 ], C[ n ] ) ],
+                    [ IdentityMorphism( B[ n - 1 ] )          , ZeroMorphism( B[ n -1 ], C[ n ] )  ],
+                    [ alpha[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] )                           ],
+                    [ ZeroMorphism( C[ n ], B[ n - 1 ] )      , IdentityMorphism( C[ n ] )         ]
                   ]
               ) );
       
-      j := HomotopyCategoryMorphism( cone_u, cone_g, maps );
-      
-      j := CreateTrianglesMorphism( st_T, T, IdentityMorphism( cone_f ), IdentityMorphism( cone_h ), j );
-      
-      SetIsomorphismFromStandardExactTriangle( T, j );
-     
-      return T;
-      
+      return HomotopyCategoryMorphism( s, r, maps );
+          
   end );
-
+  
 end );
 
