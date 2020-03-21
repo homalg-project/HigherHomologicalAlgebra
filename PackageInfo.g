@@ -76,7 +76,7 @@ Dependencies := rec(
                            [ "CAP", ">= 2020.01.10" ],
                            [ "ComplexesCategories", ">= 2020.03.15" ],
                            [ "GeneralizedMorphismsForCAP", "2019.01.16" ],
-                           [ "StableCategories", ">= 2020.02.21" ] ],
+                           [ "StableCategories", ">= 2020.03.20" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
