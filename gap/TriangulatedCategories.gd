@@ -92,7 +92,6 @@ DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsFuncti
 DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsList ] );
 
-
 #! @Description
 #! The arguments are a morphism $\alpha: A \to B$ in a triangulated category and an object $C:=C(\alpha)$.
 #! The output is the morphism $\pi(\alpha):C(\alpha)\to\Sigma A$
@@ -130,6 +129,7 @@ DeclareOperation( "AddMorphismFromStandardConeObject", [ IsCapCategory, IsFuncti
 DeclareOperation( "AddMorphismFromStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddMorphismFromStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddMorphismFromStandardConeObject", [ IsCapCategory, IsList ] );
+
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$. The output is $\Sigma A$.
@@ -179,197 +179,197 @@ DeclareAttribute( "ShiftOnMorphism", IsCapCategoryMorphism );
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$. The output is $\Sigma^{-1} A$.
 #! @Returns $\Sigma^{-1} A$
 #! @Arguments A
-DeclareOperation( "ReverseShiftOnObject", [ IsObject ] );
+DeclareOperation( "InverseShiftOnObject", [ IsObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>ReverseShiftOnObject</C>.
+#! the category for the basic operation <C>InverseShiftOnObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddReverseShiftOnObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseShiftOnObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddReverseShiftOnObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseShiftOnObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseShiftOnObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseShiftOnObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseShiftOnObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseShiftOnObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are an object $\Sigma^{-1} A$, a morphism $\alpha:A\to B$ and an object $\Sigma^{-1} B$ in a triangulated category $\mathcal{T}$.
 #! The output is $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$.
 #! @Returns $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$
 #! @Arguments rev_sigma_A, alpha, rev_sigma_B
-DeclareOperation( "ReverseShiftOnMorphismWithGivenObjects", [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+DeclareOperation( "InverseShiftOnMorphismWithGivenObjects", [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>ReverseShiftOnMorphismWithGivenObjects</C>.
+#! the category for the basic operation <C>InverseShiftOnMorphismWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddReverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddReverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is a morphism $\alpha:A\to B$ in a triangulated category $\mathcal{T}$.
 #! The output is $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$.
 #! @Returns $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$
 #! @Arguments alpha
-DeclareAttribute( "ReverseShiftOnMorphism", IsCapCategoryMorphism );
+DeclareAttribute( "InverseShiftOnMorphism", IsCapCategoryMorphism );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma \circ \Sigma^{-1}) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Returns a morphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Arguments A, sigma_o_rev_sigma_A
-DeclareOperation( "IsomorphismIntoShiftOfReverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismIntoShiftOfInverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismIntoShiftOfReverseShiftWithGivenObject</C>.
+#! the category for the basic operation <C>IsomorphismIntoShiftOfInverseShiftWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Returns a morphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Arguments A
-DeclareOperation( "IsomorphismIntoShiftOfReverseShift", [ IsObject ] );
+DeclareOperation( "IsomorphismIntoShiftOfInverseShift", [ IsObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismIntoShiftOfReverseShift</C>.
+#! the category for the basic operation <C>IsomorphismIntoShiftOfInverseShift</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShift", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoShiftOfReverseShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoShiftOfInverseShift", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma^{-1} \circ \Sigma) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Returns a morphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Arguments A, rev_sigma_o_sigma_A
-DeclareOperation( "IsomorphismIntoReverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismIntoInverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismIntoReverseShiftOfShiftWithGivenObject</C>.
+#! the category for the basic operation <C>IsomorphismIntoInverseShiftOfShiftWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Returns a morphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismIntoReverseShiftOfShift", IsCapCategoryObject );
+DeclareAttribute( "IsomorphismIntoInverseShiftOfShift", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismIntoReverseShiftOfShift</C>.
+#! the category for the basic operation <C>IsomorphismIntoInverseShiftOfShift</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShift", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismIntoReverseShiftOfShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismIntoInverseShiftOfShift", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma \circ \Sigma^{-1}) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Returns a morphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Arguments A, sigma_o_rev_sigma_A
-DeclareOperation( "IsomorphismFromShiftOfReverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromShiftOfReverseShiftWithGivenObject</C>.
+#! the category for the basic operation <C>IsomorphismFromShiftOfInverseShiftWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument in an objects $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Returns a morphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismFromShiftOfReverseShift", IsCapCategoryObject );
+DeclareAttribute( "IsomorphismFromShiftOfInverseShift", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromShiftOfReverseShift</C>.
+#! the category for the basic operation <C>IsomorphismFromShiftOfInverseShift</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShift", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfReverseShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromShiftOfInverseShift", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma^{-1} \circ \Sigma) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Returns a morphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Arguments A, rev_sigma_o_sigma_A
-DeclareOperation( "IsomorphismFromReverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "IsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromReverseShiftOfShiftWithGivenObject</C>.
+#! the category for the basic operation <C>IsomorphismFromInverseShiftOfShiftWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Returns a morphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismFromReverseShiftOfShift", IsCapCategoryObject );
+DeclareAttribute( "IsomorphismFromInverseShiftOfShift", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromReverseShiftOfShift</C>.
+#! the category for the basic operation <C>IsomorphismFromInverseShiftOfShift</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShift", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromReverseShiftOfShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShift", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShift", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsomorphismFromInverseShiftOfShift", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are an object $C_{\alpha_1}$, four morphisms $\alpha_1:A_1\to B_1$, $u:A_1\to A_2$,
@@ -425,6 +425,26 @@ DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsC
 DeclareOperation( "MorphismBetweenStandardConeObjects",
       [  IsCapCategoryMorphism, IsCapCategoryMorphism, 
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
@@ -697,7 +717,7 @@ DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWit
 #! The output is $\Sigma A$.
 #! @Returns an object $\Sigma A$
 #! @Arguments alpha
-DeclareAttribute( "ConeObjectByReverseRotationAxiom",
+DeclareAttribute( "ConeObjectByInverseRotationAxiom",
       IsCapCategoryMorphism );
 
 #! @Description
@@ -705,7 +725,7 @@ DeclareAttribute( "ConeObjectByReverseRotationAxiom",
 #! The output is $\iota(\alpha):B\to C(\alpha)$.
 #! @Returns a morphism $B\to C(\alpha)$.
 #! @Arguments alpha
-DeclareAttribute( "DomainMorphismByReverseRotationAxiom",
+DeclareAttribute( "DomainMorphismByInverseRotationAxiom",
       IsCapCategoryMorphism );
 
 #! @Description
@@ -713,7 +733,7 @@ DeclareAttribute( "DomainMorphismByReverseRotationAxiom",
 #! The output is a morphism $\pi(\alpha):C(\alpha)\to \Sigma A$.
 #! @Returns a morphism $C(\alpha)\to \Sigma A$
 #! @Arguments alpha
-DeclareAttribute( "MorphismIntoConeObjectByReverseRotationAxiom",
+DeclareAttribute( "MorphismIntoConeObjectByInverseRotationAxiom",
     IsCapCategoryMorphism );
 
 #! @Description
@@ -721,7 +741,7 @@ DeclareAttribute( "MorphismIntoConeObjectByReverseRotationAxiom",
 #! The output is a morphism $-\Sigma \alpha:\Sigma A\to\Sigma B$.
 #! @Returns a morphism $\Sigma A\to\Sigma B$
 #! @Arguments alpha
-DeclareAttribute( "MorphismFromConeObjectByReverseRotationAxiom",
+DeclareAttribute( "MorphismFromConeObjectByInverseRotationAxiom",
     IsCapCategoryMorphism );
 
 #! @Description
@@ -731,7 +751,7 @@ DeclareAttribute( "MorphismFromConeObjectByReverseRotationAxiom",
 #! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
 #! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
 #! @Arguments alpha
-DeclareAttribute( "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiom",
+DeclareAttribute( "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom",
      IsCapCategoryMorphism );
 
 #! @Description
@@ -742,20 +762,20 @@ DeclareAttribute( "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxio
 #! $\pi(\iota(\alpha))\circ ?=-\Sigma \alpha$.
 #! @Returns a morphism $\Sigma A \to C(\iota(\alpha))$
 #! @Arguments s, alpha, r
-DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
       [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects</C>.
+#! the category for the basic operation <C>WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is a morphism $\alpha:A\to B$.
@@ -763,7 +783,7 @@ DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByReverseRotationA
 #! ???
 #! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
 #! @Arguments alpha
-DeclareAttribute( "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiom",
+DeclareAttribute( "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom",
       IsCapCategoryMorphism );
 
 #! @Description
@@ -773,20 +793,20 @@ DeclareAttribute( "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxio
 #! ???
 #! @Returns a morphism $C(\iota(\alpha))\to\Sigma A$
 #! @Arguments s, alpha, r
-DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
       [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects</C>.
+#! the category for the basic operation <C>WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 
 DeclareOperation( "ShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
@@ -805,43 +825,26 @@ DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategor
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "ReverseShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
+DeclareOperation( "InverseShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
 
-DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "ReverseShiftFactoringIsomorphismWithGivenObjects", [ IsObject ] );
+DeclareOperation( "InverseShiftFactoringIsomorphismWithGivenObjects", [ IsObject ] );
 
-DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddReverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
 ######################################
 ##
 #! @Section Attributes and Operations
 ##
 ######################################
-
-DeclareAttribute( "ShiftFunctorAttr", IsTriangulatedCategory );
-
-
-if not IsBound( ShiftFunctor ) then
-  DeclareOperation( "ShiftFunctor", [ IsTriangulatedCategory ] );
-fi;
-
-DeclareAttribute( "ReverseShiftFunctor", IsTriangulatedCategory );
-
-DeclareAttribute( "NaturalIsomorphismFromIdentityIntoReverseShiftOfShift", IsTriangulatedCategory );
-
-DeclareAttribute( "NaturalIsomorphismFromIdentityIntoShiftOfReverseShift", IsTriangulatedCategory );
-
-DeclareAttribute( "NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity", IsTriangulatedCategory );
-
-DeclareAttribute( "NaturalIsomorphismFromShiftOfReverseShiftIntoIdentity", IsTriangulatedCategory );
 
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCapCategory );

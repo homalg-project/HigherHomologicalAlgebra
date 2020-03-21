@@ -45,11 +45,23 @@ BindGlobal( "TheTypeCapExactTriangle",
 InstallMethod( CategoryOfExactTriangles,
           [ IsTriangulatedCategory ],
   function( category )
-    local name, triangles;
+    local r, name, triangles;
     
-    name := Concatenation( "Exact triangles category( ", Name( category ), " )" );
+    if IsBound( RandomTextColor ) then
+      
+      r := ValueGlobal( "RandomTextColor" )( Name( category ) );
+      
+      name := Concatenation( r[ 1 ], "Category of exact triangles( ", r[ 2 ], Name( category ), r[ 1 ], " )", r[ 2 ] );
+      
+    else
+      
+      name := Concatenation( "Category of exact triangles( ", Name( category ), " )" );
+      
+    fi;
     
     triangles := CreateCapCategory( name );
+    
+    SetUnderlyingCategory( triangles, category );
     
     SetFilterObj( triangles, IsCapCategoryOfExactTriangles );
     
@@ -57,6 +69,10 @@ InstallMethod( CategoryOfExactTriangles,
     
     AddMorphismRepresentation( triangles, IsCapExactTrianglesMorphismRep );
     
+    AddIsEqualForCacheForObjects( triangles, IsIdenticalObj );
+    
+    AddIsEqualForCacheForMorphisms( triangles, IsIdenticalObj );
+   
     AddIsEqualForObjects( triangles,
       function( triangle_1, triangle_2 )
         return IsEqualForObjects( triangle_1[ 0 ], triangle_2[ 0 ] ) and 
@@ -284,8 +300,102 @@ InstallMethod( ExactTriangle,
 
 end );
 
+##
+InstallMethod( StandardExactTriangle,
+          [ IsCapCategoryMorphism ],
+  function( alpha )
+    local triangle, iota_alpha, pi_alpha;
+    
+    iota_alpha := MorphismIntoStandardConeObject( alpha );
+    
+    pi_alpha := MorphismFromStandardConeObject( alpha );
+    
+    triangle := ExactTriangle( alpha, iota_alpha, pi_alpha );
+    
+    SetIsStandardExactTriangle( triangle, true );
+    
+    SetWitnessIsomorphismIntoStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
+    
+    SetWitnessIsomorphismFromStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
+    
+    return triangle;
+    
+end );
 
-#
+##
+InstallOtherMethod( ExactTriangle,
+        [ IsCapCategoryMorphism ],
+  alpha -> StandardExactTriangle( alpha )
+);
+
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta )
+    
+    return
+      ExactTriangle(
+        DomainMorphismByOctahedralAxiom( alpha, beta ),
+        MorphismIntoConeObjectByOctahedralAxiom( alpha, beta ),
+        MorphismFromConeObjectByOctahedralAxiom( alpha, beta )
+      );
+     
+end );
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ],
+  function( alpha, beta, b )
+    local triangle, st_triangle, T, i;
+    
+    triangle := ExactTriangleByOctahedralAxiom( alpha, beta );
+    
+    if not b then
+      
+      return triangle;
+      
+    fi;
+    
+    st_triangle := StandardExactTriangle( triangle );
+    
+    T := CapCategory( alpha );
+    
+    if not( CanCompute( T, "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects" ) and
+              CanCompute( T, "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects" )
+          ) then
+          
+      Error( "The octahedral methods must be installed in the category of the arguments" );
+      
+    else
+      
+      i := WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, st_triangle[ 2 ] );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( triangle,
+        MorphismOfExactTriangles(
+          triangle,
+          IdentityMorphism( triangle[ 0 ] ),
+          IdentityMorphism( triangle[ 1 ] ),
+          i,
+          st_triangle
+        ) );
+      
+      i := WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( st_triangle[ 2 ], alpha, beta, triangle[ 2 ] );
+      
+      SetWitnessIsomorphismFromStandardExactTriangle( triangle,
+        MorphismOfExactTriangles(
+          st_triangle,
+          IdentityMorphism( triangle[ 0 ] ),
+          IdentityMorphism( triangle[ 1 ] ),
+          i,
+          triangle
+        ) );
+    
+    fi;
+    
+    return triangle;
+    
+end );
+
+##
 InstallMethod( MorphismOfExactTriangles, 
         [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
   function( s, mu, nu, lambda, r )
@@ -300,7 +410,6 @@ InstallMethod( MorphismOfExactTriangles,
     return phi;
     
 end );
-
 
 ##
 InstallMethod( MorphismAtOp, 
@@ -396,197 +505,299 @@ InstallMethod( \[\],
 
 end );
 
-###
-#InstallMethod( AddtriangleoUnderlyingLazyMethods, 
-#            [ IsCapCategoryCell, IsOperation, IsFunction, IsList ],
-#    function( C, method_name, F, l )
-#    
-#    Add( C!.UnderlyingLazyMethods, method_name );
-#    Add( C!.UnderlyingLazyMethods, F );
-#    Add( C!.UnderlyingLazyMethods, l );
+##
+InstallMethod( IsStandardExactTriangle,
+          [ IsCapExactTriangle ],
+    triangle -> IsEqualForObjects( triangle, StandardExactTriangle( triangle ^ 0 ) )
+);
+
+##
+InstallMethod( StandardExactTriangle,
+          [ IsCapExactTriangle ],
+    triangle -> StandardExactTriangle( triangle ^ 0 )
+);
+
+##
+InstallMethod( Rotation,
+          [ IsCapExactTriangle ],
+    triangle -> ExactTriangle( triangle ^ 1, triangle ^ 2, AdditiveInverse( ShiftOnMorphism( triangle ^ 0 ) ) )
+);
+
+##  
+##  A ---> B ---> C ---> Σ A
+##
+##  B ---> C ---> Σ A ---> Σ B
+##
+InstallMethod( Rotation,
+          [ IsCapExactTriangle, IsBool ],
+  function( triangle, bool )
+    local rotation, st_rotation, i, st_triangle, w_1, v_1;
+     
+    rotation := Rotation( triangle );
+    
+    if not bool then
+      
+      return rotation;
+      
+    fi;
+    
+    st_rotation := StandardExactTriangle( rotation );
+    
+    if IsStandardExactTriangle( triangle ) then
+      
+      i := WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
+      
+      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+      
+      i := WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
+      
+      i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
+     
+      SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
+      
+    else
+      
+      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
+      
+      st_triangle := Source( i );
+      
+      w_1 := WitnessIsomorphismIntoStandardConeObjectByRotationAxiom( st_triangle ^ 0 );
+      
+      v_1 := MorphismBetweenStandardConeObjects( st_triangle ^ 1, IdentityMorphism( st_triangle[ 1 ] ), i[ 2 ], triangle ^ 1 );
+      
+      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+            
+    fi;
+    
+    return rotation;
+    
+end );
+
+##  
+##  A ---> B ---> C ---> Σ A
+##
+##  Σ^-1 C  ---> A ---> B ---> Σ Σ^-1 C
+##
+InstallMethod( InverseRotation,
+          [ IsCapExactTriangle ],
+  function( triangle )
+  
+    return ExactTriangle(
+              PreCompose(
+                AdditiveInverse( InverseShiftOnMorphism( triangle ^ 2 ) ),
+                IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
+                        ),
+              triangle ^ 0,
+              PreCompose(
+                triangle ^ 1,
+                IsomorphismIntoShiftOfInverseShift( triangle[ 2 ] )
+                        )
+                    );
+    
+end );
+
+InstallMethod( InverseRotation,
+          [ IsCapExactTriangle, IsBool ],
+  function( triangle, bool )
+    local rotation, st_rotation, i, st_triangle, w_1, v_1;
+    
+    rotation := InverseRotation( triangle );
+    
+    if not bool then
+      
+      return rotation;
+      
+    fi;
+    
+    st_rotation := StandardExactTriangle( rotation );
+    
+    if IsStandardExactTriangle( triangle ) then
+      
+      i := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
+      
+      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+      
+      i := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
+      
+      i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
+     
+      SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
+      
+    else
+      
+      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
+      
+      st_triangle := Source( i );
+      
+      w_1 := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom( st_triangle ^ 0 );
+      
+      v_1 := MorphismBetweenStandardConeObjects(
+                PreCompose(
+                  AdditiveInverse( InverseShiftOnMorphism( st_triangle ^ 2 ) ),
+                  IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
+                ),
+                InverseShiftOnMorphism( i[ 2 ] ),
+                IdentityMorphism( triangle[ 0 ] ),
+                PreCompose(
+                  AdditiveInverse( InverseShiftOnMorphism( triangle ^ 2 ) ),
+                  IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
+                )
+              );
+      
+      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+     
+    fi;
+    
+    return rotation;
+   
+    
+end );
+
+##
+InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
+          [ IsCapExactTriangle ],
+  function( triangle )
+    local cat, st_triangle, i;
+    
+    if IsStandardExactTriangle( triangle ) then
+      
+      return IdentityMorphism( triangle );
+      
+    fi;
+    
+    # This could happen only if the user manually have set this attribute
+    if HasWitnessIsomorphismFromStandardExactTriangle( triangle ) then
+      
+      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
+      
+      return MorphismOfExactTriangles(
+                triangle,
+                IdentityMorphism( triangle[ 0 ] ),
+                IdentityMorphism( triangle[ 1 ] ),
+                Inverse( i[ 2 ] ),
+                Source( i )
+              );
+              
+    fi;
+     
+    cat := UnderlyingCategory( CapCategory( triangle ) );
+    
+    if not CanCompute( cat, "WitnessIsomorphismIntoStandardConeObjectByExactTriangle" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    st_triangle := StandardExactTriangle( triangle ^ 0 );
+    
+    i := WitnessIsomorphismIntoStandardConeObjectByExactTriangle( triangle ^ 0, triangle ^ 1, triangle ^ 2 );
+    
+    if i = fail then
+      
+      return fail;
+      
+    else
+      
+      return MorphismOfExactTriangles( triangle, IdentityMorphism( triangle[ 0 ] ), IdentityMorphism( triangle[ 1 ] ), i, st_triangle );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( WitnessIsomorphismFromStandardExactTriangle,
+          [ IsCapExactTriangle ],
+  function( triangle )
+    local cat, st_triangle, i;
+    
+    if IsStandardExactTriangle( triangle ) then
+      
+      return IdentityMorphism( triangle );
+      
+    fi;
+    
+    i := WitnessIsomorphismIntoStandardExactTriangle( triangle );
+    
+    if i = fail then
+      
+      return fail;
+      
+    else
+      
+      return MorphismOfExactTriangles(
+                Range( i ),
+                IdentityMorphism( triangle[ 0 ] ),
+                IdentityMorphism( triangle[ 1 ] ),
+                Inverse( i[ 2 ] ),
+                triangle
+              );
+    
+    fi;
+    
+end );
+    
+##    
+InstallMethod( MorphismBetweenConeObjects,
+          [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+  function( triangle_1, mu_0, mu_1, triangle_2 )
+    local st_triangle_1, st_triangle_2, i_1, j_1, i_2, j_2, u, v, w;
+    
+    st_triangle_1 := StandardExactTriangle( triangle_1 );
+    
+    st_triangle_2 := StandardExactTriangle( triangle_2 );
+    
+    i_1 := WitnessIsomorphismIntoStandardExactTriangle( triangle_1 );
+    
+    j_1 := WitnessIsomorphismFromStandardExactTriangle( triangle_1 );
+    
+    i_2 := WitnessIsomorphismIntoStandardExactTriangle( triangle_2 );
+    
+    j_2 := WitnessIsomorphismFromStandardExactTriangle( triangle_2 );
+    
+    u := PreCompose( [ j_1[ 0 ], mu_0, i_2[ 0 ] ] );
+    
+    v := PreCompose( [ j_1[ 1 ], mu_1, i_2[ 1 ] ] );
+    
+    w := MorphismBetweenStandardConeObjects( st_triangle_1 ^ 0, u, v, st_triangle_2 ^ 0 );
+    
+    return PreCompose( [ i_1[ 2 ], w, j_2[ 2 ] ] );
+    
+end );
+
+#################
 #
-#end );
+# Display
 #
-###
-#InstallMethod( ExtendFunctorToTrianglesCategory, [ IsCapFunctor ],
-#
-#    function( F )
-#    local source, range, name, functor;
-#    
-#    # Note: F must commute with the Shift functor.
-#
-#    source := AsCapCategory( Source( F ) );
-#    range := AsCapCategory( Range( F ) );
-#    
-#    source := CategoryOfTriangles( source );
-#    range := CategoryOfTriangles( range );
-#    
-#    name := Concatenation( "Extension of ", Name( F ) );
-#    
-#    functor := CapFunctor( name, source, range );
-#
-#    AddObjectFunction( functor, 
-#    
-#        function( T )
-#          
-#        return CreateTriangle( ApplyFunctor(F, T^0), ApplyFunctor(F, T^1), ApplyFunctor(F, T^2) );
-#          
-#        end );
-#          
-#    AddMorphismFunction( functor, 
-#    
-#        function( new_source, phi, new_range )
-#          
-#        return CreateTrianglesMorphism( new_source, new_range, ApplyFunctor(F,phi[0]), ApplyFunctor(F,phi[1]), ApplyFunctor(F,phi[2]) );
-#          
-#        end );
-#          
-#    return functor;
-#
-#end );
-#
-###
-#InstallMethod( MappingCone,
-#                [ IsCapCategoryTrianglesMorphism ],
-#
-#    function( phi )
-#    local T1, T2, t0, t1, t2;
-#
-#    T1 := Source( phi );
-#    
-#    T2 := Range( phi );
-#    
-#    t0 := MorphismBetweenDirectSums( 
-#                                    [
-#                                        [ AdditiveInverse( T1^1 ), phi[1] ],
-#                                        [ ZeroMorphism( T2[0], T1[2]), T2^0]
-#                                    ]
-#                                    );
-#    t1 := MorphismBetweenDirectSums( 
-#                                    [
-#                                        [ AdditiveInverse( T1^2 ), phi[2] ],
-#                                        [ ZeroMorphism( T2[1], T1[3]), T2^1]
-#                                    ]
-#                                    );
-#    t2 := MorphismBetweenDirectSums( 
-#                                    [
-#                                        [ AdditiveInverse( ShiftOfMorphism( T1^0 ) ), ShiftOfMorphism( phi[0] ) ],
-#                                        [ ZeroMorphism( T2[2], ShiftOfObject( T1[1]) ) , T2^2]
-#                                    ]
-#                                    );
-#    return CreateTriangle( t0, t1, t2 );
-#
-#end );
-###############################
-###
-###  View
-###
-###############################
-#
-#InstallMethod( ViewObj,
-#               
-#               [ IsCapCategoryTriangle ], 
-#               
-#    function( triangle )
-#
-#    if IsCapCategoryStandardExactTriangle( triangle ) then 
-#        Print( "<A standard exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
-#    elif IsCapExactTriangle( triangle ) then 
-#        if HasIsStandardExactTriangle( triangle ) and not IsStandardExactTriangle( triangle ) then
-#            Print( "<An exact (not canonical) triangle in ", Name( CapCategory( ObjectAt( triangle, 0) ) ), ">");
-#        else
-#            Print( "<An exact triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">");
-#        fi;
-#    else
-#        Print( "<A triangle in ", Name( CapCategory( ObjectAt( triangle, 0 ) ) ), ">" );
-#    fi;
-#
-#end );
-#  
-#InstallMethod( ViewObj, 
-#
-#               [ IsCapCategoryTrianglesMorphism ], 
-#               
-#    function( morphism )
-#  
-#        Print( "<A morphism of triangles in ", CapCategory( MorphismAt( morphism, 0 ) ), ">" );
-#  
-#end );
-#
-#
-###############################
-###
-###  Display
-###
-###############################
-#
-#
-#InstallMethod( Display,
-#
-#        [ IsCapCategoryTriangle ],
-#
-#    function( triangle )
-#    if IsCapCategoryStandardExactTriangle( triangle ) then
-#        Print( "A standard exact triangle given by the sequence\n\n");
-#    elif IsCapCategoryExactTriangle( triangle ) then
-#        Print( "An exact triangle given by the sequence\n\n");
-#    else
-#        Print( "A triangle given by the sequence\n\n" );
-#    fi;
-#
-#    Print( TextAttr.bold, TextAttr.1, "          τ0         τ1         τ2           \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "     T0 ------> T1 ------> T2 ------> Σ(T0)  \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\n\nT0:\n\n" , TextAttr.reset );
-#    Display( ObjectAt( triangle, 0 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ0:\n\n", TextAttr.reset );
-#    Display( MorphismAt( triangle, 0 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "T1:\n\n" , TextAttr.reset );
-#    Display( ObjectAt( triangle, 1 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ1:\n\n", TextAttr.reset );
-#    Display( MorphismAt( triangle, 1 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "T2:\n\n" , TextAttr.reset );
-#    Display( ObjectAt( triangle, 2 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(  TextAttr.bold, TextAttr.1, TextAttr.underscore,     "τ2:\n\n", TextAttr.reset );
-#    Display( MorphismAt( triangle, 2 ) );
-#    Print(      "\n------------------------------------\n\n" );
-#    Print(     TextAttr.bold, TextAttr.1, TextAttr.underscore,  "Σ(T0):\n\n" , TextAttr.reset );
-#    Display( ShiftOfObject( ObjectAt( triangle, 0 ) ) );
-#
-#end, 5 );
-#
-###
-#InstallMethod( Display,
-#        [ IsCapCategoryTrianglesMorphism ],
-#
-#    function( morphism )
-#
-#    Print( "A morphism of triangles:\n");
-#
-#    Print( TextAttr.bold, TextAttr.1, "                τ0          τ1           τ2             \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "     Tr  : T0 -------> T1 -------> T2 -------> Σ(T0)    \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "           |           |           |             |      \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "           | m0        | m1        | m2          | Σ(m0)\n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "           |           |           |             |      \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "           V           V           V             V      \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "     Tr' : T'0 ------> T'1 ------> T'2 ------> Σ(T'0)    \n", TextAttr.reset );
-#    Print( TextAttr.bold, TextAttr.1, "                τ'0         τ'1          τ'2             \n", TextAttr.reset );
-#    Print( "\n---------------------------------------------\n" );
-#    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm0:\n\n", TextAttr.reset );
-#    Display( MorphismAt( morphism, 0 ) );
-#    Print( "-----------------------------------------------\n" );
-#    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm1:\n\n", TextAttr.reset );
-#    Display( MorphismAt( morphism, 1 ) );
-#    Print( "-----------------------------------------------\n" );
-#    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nm2:\n\n", TextAttr.reset );
-#    Display( MorphismAt( morphism, 2 ) );
-#    Print( "-----------------------------------------------\n" );
-#    Print( TextAttr.bold, TextAttr.1, TextAttr.underscore, "\nΣ(m0):\n\n", TextAttr.reset );
-#    Display( MorphismAt( morphism, 3 ) );
-#    Print( "-----------------------------------------------\n" );
-#
-# end );
+#################
+
+##
+InstallMethod( Display,
+          [ IsCapExactTriangle ],
+  function( triangle )
+
+    Print( "       T^0          T^1          T^2            \n" );
+    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )\n" );
+    
+end );
+
+##
+InstallMethod( Display,
+          [ IsCapExactTrianglesMorphism ],
+  function( nu )
+
+    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
+    Print( " |            |            |              |           \n" );
+    Print( " | nu[0]      | nu[1]      | nu[2]        | Σ( nu[0] )\n" );
+    Print( " V            V            V              V           \n" );
+    Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
+  
+end );
+

@@ -7,4 +7,4 @@
 ReadPackage( "TriangulatedCategories", "gap/TriangulatedCategories.gd");
 ReadPackage( "TriangulatedCategories", "gap/TrianglesCategory.gd");
 ReadPackage( "TriangulatedCategories", "gap/CategoryOfTriangles.gd");
-
+ReadPackage( "TriangulatedCategories", "gap/Functors.gd");

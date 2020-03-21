@@ -29,26 +29,26 @@ MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
   return_type := "morphism"
 ),
 
-MorphismIntoStandardConeObject := rec(
-  installation_name := "MorphismIntoStandardConeObject",
-  filter_list := [ "morphism" ],
-  io_type := [ [ "alpha" ], [ "r_alpha", "cone_alpha" ] ],
-  cache_name := "MorphismIntoStandardConeObject",
-  return_type := "morphism"
-),
-
 MorphismFromStandardConeObjectWithGivenStandardConeObject := rec(
   installation_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
   filter_list := [ "morphism", "object" ],
-  io_type := [ [ "alpha", "cone_alpha" ], [ "cone_alpha", "sh_s_alpha" ] ],
+  io_type := [ [ "alpha", "cone_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
   cache_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
+  return_type := "morphism"
+),
+
+MorphismIntoStandardConeObject := rec(
+  installation_name := "MorphismIntoStandardConeObject",
+  filter_list := [ "morphism" ],
+  io_type := [ [ "alpha" ], [ "range_alpha", "cone_alpha" ] ],
+  cache_name := "MorphismIntoStandardConeObject",
   return_type := "morphism"
 ),
 
 MorphismFromStandardConeObject := rec(
   installation_name := "MorphismFromStandardConeObject",
   filter_list := [ "morphism" ],
-  io_type := [ [ "alpha" ], [ "cone_alpha", "sh_s_alpha" ] ],
+  io_type := [ [ "alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
   cache_name := "MorphismFromStandardConeObject",
   return_type := "morphism"
 ),
@@ -68,19 +68,35 @@ ShiftOnMorphismWithGivenObjects := rec(
   return_type := "morphism"
 ),
 
-ReverseShiftOnObject := rec(
-  installation_name := "ReverseShiftOnObject",
+InverseShiftOnObject := rec(
+  installation_name := "InverseShiftOnObject",
   filter_list := [ "object" ],
-  cache_name := "ReverseShiftOnObject",
+  cache_name := "InverseShiftOnObject",
   return_type := "object"
 ),
 
-ReverseShiftOnMorphismWithGivenObjects := rec(
-  installation_name := "ReverseShiftOnMorphismWithGivenObjects",
+InverseShiftOnMorphismWithGivenObjects := rec(
+  installation_name := "InverseShiftOnMorphismWithGivenObjects",
   io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
   filter_list := [ "object", "morphism", "object" ],
-  cache_name := "ReverseShiftOnMorphismWithGivenObjects",
+  cache_name := "InverseShiftOnMorphismWithGivenObjects",
   return_type := "morphism"
+),
+
+WitnessIsomorphismIntoStandardConeObjectByExactTriangle := rec(
+  installation_name := "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+  io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "range_iota_alpha", "cone_alpha" ] ],
+  filter_list := [ "morphism", "morphism", "morphism" ],
+  cache_name := "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+  return_type := "morphism_or_fail"
+),
+
+WitnessIsomorphismFromStandardConeObjectByExactTriangle := rec(
+  installation_name := "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+  io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "cone_alpha", "range_iota_alpha" ] ],
+  filter_list := [ "morphism", "morphism", "morphism" ],
+  cache_name := "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+  return_type := "morphism_or_fail"
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
@@ -99,83 +115,83 @@ ShiftFactoringIsomorphismWithGivenObjects := rec(
   return_type := "morphism"
 ),
 
-ReverseShiftExpandingIsomorphismWithGivenObjects := rec(
-  installation_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
+InverseShiftExpandingIsomorphismWithGivenObjects := rec(
+  installation_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "ReverseShiftExpandingIsomorphismWithGivenObjects",
+  cache_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
   return_type := "morphism"
 ),
 
-ReverseShiftFactoringIsomorphismWithGivenObjects := rec(
-  installation_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
+InverseShiftFactoringIsomorphismWithGivenObjects := rec(
+  installation_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "ReverseShiftFactoringIsomorphismWithGivenObjects",
+  cache_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
   return_type := "morphism"
 ),
 
-IsomorphismIntoShiftOfReverseShiftWithGivenObject := rec(
-  installation_name := "IsomorphismIntoShiftOfReverseShiftWithGivenObject",
+IsomorphismIntoShiftOfInverseShiftWithGivenObject := rec(
+  installation_name := "IsomorphismIntoShiftOfInverseShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismIntoShiftOfReverseShiftWithGivenObject",
+  cache_name := "IsomorphismIntoShiftOfInverseShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismIntoShiftOfReverseShift := rec(
-  installation_name := "IsomorphismIntoShiftOfReverseShift",
+IsomorphismIntoShiftOfInverseShift := rec(
+  installation_name := "IsomorphismIntoShiftOfInverseShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismIntoShiftOfReverseShift",
+  cache_name := "IsomorphismIntoShiftOfInverseShift",
   return_type := "morphism"
 ),
 
-IsomorphismIntoReverseShiftOfShiftWithGivenObject := rec(
-  installation_name := "IsomorphismIntoReverseShiftOfShiftWithGivenObject",
+IsomorphismIntoInverseShiftOfShiftWithGivenObject := rec(
+  installation_name := "IsomorphismIntoInverseShiftOfShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismIntoReverseShiftOfShiftWithGivenObject",
+  cache_name := "IsomorphismIntoInverseShiftOfShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismIntoReverseShiftOfShift := rec(
-  installation_name := "IsomorphismIntoReverseShiftOfShift",
+IsomorphismIntoInverseShiftOfShift := rec(
+  installation_name := "IsomorphismIntoInverseShiftOfShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismIntoReverseShiftOfShift",
+  cache_name := "IsomorphismIntoInverseShiftOfShift",
   return_type := "morphism"
 ),
 
-IsomorphismFromShiftOfReverseShiftWithGivenObject := rec(
-  installation_name := "IsomorphismFromShiftOfReverseShiftWithGivenObject",
+IsomorphismFromShiftOfInverseShiftWithGivenObject := rec(
+  installation_name := "IsomorphismFromShiftOfInverseShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromShiftOfReverseShiftWithGivenObject",
+  cache_name := "IsomorphismFromShiftOfInverseShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismFromShiftOfReverseShift := rec(
-  installation_name := "IsomorphismFromShiftOfReverseShift",
+IsomorphismFromShiftOfInverseShift := rec(
+  installation_name := "IsomorphismFromShiftOfInverseShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromShiftOfReverseShift",
+  cache_name := "IsomorphismFromShiftOfInverseShift",
   return_type := "morphism"
 ),
 
-IsomorphismFromReverseShiftOfShiftWithGivenObject := rec(
-  installation_name := "IsomorphismFromReverseShiftOfShiftWithGivenObject",
+IsomorphismFromInverseShiftOfShiftWithGivenObject := rec(
+  installation_name := "IsomorphismFromInverseShiftOfShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromReverseShiftOfShiftWithGivenObject",
+  cache_name := "IsomorphismFromInverseShiftOfShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismFromReverseShiftOfShift := rec(
-  installation_name := "IsomorphismFromReverseShiftOfShift",
+IsomorphismFromInverseShiftOfShift := rec(
+  installation_name := "IsomorphismFromInverseShiftOfShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromReverseShiftOfShift",
+  cache_name := "IsomorphismFromInverseShiftOfShift",
   return_type := "morphism"
 ),
 
@@ -241,19 +257,19 @@ WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   return_type := [ "morphism" ],
 ),
 
-WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
+  installation_name := "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+  cache_name := "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
-WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
+  installation_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
-  cache_name := "WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects",
+  cache_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
@@ -270,7 +286,6 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECOR
 #
 ##########################################
 
-
 ##
 InstallMethod( ShiftOnMorphism,
           [ IsCapCategoryMorphism ],
@@ -282,9 +297,9 @@ InstallMethod( ShiftOnMorphism,
 );
 
 ##
-InstallMethod( ReverseShiftOnMorphism,
+InstallMethod( InverseShiftOnMorphism,
           [ IsCapCategoryMorphism ],
-  alpha -> ReverseShiftOnMorphismWithGivenObjects(
+  alpha -> InverseShiftOnMorphismWithGivenObjects(
               ShiftOnObject( Source( alpha ) ),
               alpha,
               ShiftOnObject( Range( alpha ) )
@@ -383,7 +398,7 @@ InstallMethod( MorphismFromConeObjectByRotationAxiom,
 end );
 
 ##
-InstallMethod( ConeObjectByReverseRotationAxiom,
+InstallMethod( ConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
@@ -392,7 +407,7 @@ InstallMethod( ConeObjectByReverseRotationAxiom,
 end );
 
 ##
-InstallMethod( DomainMorphismByReverseRotationAxiom,
+InstallMethod( DomainMorphismByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local u;
@@ -400,25 +415,25 @@ InstallMethod( DomainMorphismByReverseRotationAxiom,
     u := MorphismFromStandardConeObject( alpha );
     
     return PreCompose(
-              AdditiveInverseForMorphisms( ReverseShiftOnMorphism( u ) ),
-              IsomorphismFromReverseShiftOfShift( Source( alpha ) )
+              AdditiveInverseForMorphisms( InverseShiftOnMorphism( u ) ),
+              IsomorphismFromInverseShiftOfShift( Source( alpha ) )
             );
     
 end );
 
 ##
-InstallMethod( MorphismIntoConeObjectByReverseRotationAxiom,
+InstallMethod( MorphismIntoConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ], IdFunc
 );
 
 ##
-InstallMethod( MorphismFromConeObjectByReverseRotationAxiom,
+InstallMethod( MorphismFromConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
     return PreCompose(
               MorphismIntoStandardConeObject( alpha ),
-              IsomorphismIntoShiftOfReverseShift( StandardConeObject( alpha ) )
+              IsomorphismIntoShiftOfInverseShift( StandardConeObject( alpha ) )
             );
     
 end );
@@ -452,30 +467,30 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByRotationAxiom,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiom,
+InstallMethod( WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
     
-    s := ConeObjectByReverseRotationAxiom( alpha );
+    s := ConeObjectByInverseRotationAxiom( alpha );
     
-    r := StandardConeObject( DomainMorphismByReverseRotationAxiom( alpha ) );
+    r := StandardConeObject( DomainMorphismByInverseRotationAxiom( alpha ) );
     
-    return WitnessIsomorphismIntoStandardConeObjectByReverseRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
 ##
-InstallMethod( WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiom,
+InstallMethod( WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
     
-    s := StandardConeObject( DomainMorphismByReverseRotationAxiom( alpha ) );
+    s := StandardConeObject( DomainMorphismByInverseRotationAxiom( alpha ) );
     
-    r := ConeObjectByReverseRotationAxiom( alpha );
+    r := ConeObjectByInverseRotationAxiom( alpha );
     
-    return WitnessIsomorphismFromStandardConeObjectByReverseRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
@@ -575,7 +590,7 @@ end );
 ## &  &  &  &  &  &  & C[-1] \arrow[r, "{-h[-1]}"'] & A \arrow[r, "{\alpha(-h[-1])}"'] & C(h[-1]) \arrow[r, "{\beta(-h[-1])}"'] & C
 ##\end{tikzcd}
 #
-#InstallMethod( ReverseRotationOfExactTriangle,
+#InstallMethod( InverseRotationOfExactTriangle,
 #                [ IsCapCategoryExactTriangle ],
 #                -1000,
 #    function( T )
@@ -591,21 +606,21 @@ end );
 #    fi;
 #
 #    if IsCapCategoryStandardExactTriangle( T ) then
-#        return ReverseRotationOfStandardExactTriangle( T );
+#        return InverseRotationOfStandardExactTriangle( T );
 #    fi;
 #
 #    can_T := UnderlyingStandardExactTriangle( T );
 #    T_to_can_T := IsomorphismIntoStandardExactTriangle( T );
 #    can_T_to_T := IsomorphismFromStandardExactTriangle( T );
 #
-#    rT := CreateExactTriangle( AdditiveInverse(ReverseShiftOnMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
-#    rcan_T := ReverseRotationOfStandardExactTriangle( can_T );
+#    rT := CreateExactTriangle( AdditiveInverse(InverseShiftOnMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
+#    rcan_T := InverseRotationOfStandardExactTriangle( can_T );
 #
-#    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, ReverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ),
+#    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ),
 #                                                        MorphismAt( T_to_can_T, 0 ),
 #                                                        MorphismAt( T_to_can_T, 1 ) );
 #
-#    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, ReverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ),
+#    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ),
 #                                                        MorphismAt( can_T_to_T, 0 ),
 #                                                        MorphismAt( can_T_to_T, 1 ) );
 #
@@ -617,14 +632,14 @@ end );
 #    can_rT := UnderlyingStandardExactTriangle( rT );
 #
 #    can_rcan_T_to_can_rT := CompleteToMorphismOfStandardExactTriangles( can_rcan_T, can_rT,
-#                                ReverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ) );
+#                                InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ) );
 ##    can_rcan_T_to_can_rT := CreateTrianglesMorphism( can_rcan_T, can_rT,
-##                                ReverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ), can_rcan_T_to_can_rT );
+##                                InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ), can_rcan_T_to_can_rT );
 #
 #    can_rT_to_can_rcan_T := CompleteToMorphismOfStandardExactTriangles( can_rT, can_rcan_T,
-#                                ReverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ) );
+#                                InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ) );
 ##    can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T,
-##                                ReverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ), can_rT_to_can_rcan_T );
+##                                InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ), can_rT_to_can_rcan_T );
 #
 #    SetIsomorphismIntoStandardExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
 #    SetIsomorphismFromStandardExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
@@ -669,13 +684,13 @@ end );
 #end );
 #
 ###
-#InstallMethod( ReverseShiftExpandingIsomorphism,
+#InstallMethod( InverseShiftExpandingIsomorphism,
 #                [ IsList ],
 #  function( L )
-#    return ReverseShiftExpandingIsomorphismWithGivenObjects(
-#            ReverseShiftOnObject( DirectSum( L ) ),
+#    return InverseShiftExpandingIsomorphismWithGivenObjects(
+#            InverseShiftOnObject( DirectSum( L ) ),
 #            L,
-#            DirectSum( List( L, ReverseShiftOnObject ) )
+#            DirectSum( List( L, InverseShiftOnObject ) )
 #          );
 #end );
 #
@@ -692,174 +707,15 @@ end );
 #end );
 #
 ###
-#InstallMethod( ReverseShiftFactoringIsomorphism,
+#InstallMethod( InverseShiftFactoringIsomorphism,
 #          [ IsList ],
 #    function( L )
-#    return ReverseShiftFactoringIsomorphismWithGivenObjects(
-#              DirectSum( List( L, ReverseShiftOnObject ) ),
+#    return InverseShiftFactoringIsomorphismWithGivenObjects(
+#              DirectSum( List( L, InverseShiftOnObject ) ),
 #              L,
-#              ReverseShiftOnObject( DirectSum( L ) )
+#              InverseShiftOnObject( DirectSum( L ) )
 #          );
 #end );
-
-##
-InstallMethod( ShiftFunctorAttr,
-          [ IsCapCategory and IsTriangulatedCategory ],
-  function( category )
-    local name, Sigma;
-    
-    name := Concatenation( "Shift endofunctor on a triangulated category" );
-    
-    Sigma := CapFunctor( name, category, category );
-    
-    if not ( CanCompute( category, "ShiftOnObject" )
-              and CanCompute( category, "ShiftOnMorphismWithGivenObjects" ) ) then
-              
-        Error( "ShiftOnObject and ShiftOnMorphism should be added to the category" );
-        
-    fi;
-    
-    AddObjectFunction( Sigma, ShiftOnObject );
-    
-    AddMorphismFunction( Sigma, ShiftOnMorphismWithGivenObjects );
-    
-    return Sigma;
-    
-end );
-
-##
-InstallOtherMethod( ShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],
-  ShiftFunctorAttr
-);
-
-InstallMethod( ReverseShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],  
-  function( category )
-    local name, Sigma;
-    
-    name := Concatenation( "Reverse Shift endofunctor on a triangulated category" );
-    
-    Sigma := CapFunctor( name, category, category );
-    
-    if not ( CanCompute( category, "ReverseShiftOnObject" )
-              and CanCompute( category, "ReverseShiftOnMorphismWithGivenObjects" ) ) then
-              
-      Error( "ReverseShiftOnObject and ReverseShiftOnMorphism should be added to the category" );
-      
-    fi;
-    
-    AddObjectFunction( Sigma, ReverseShiftOnObject );
-    
-    AddMorphismFunction( Sigma, ReverseShiftOnMorphismWithGivenObjects );
-    
-    return Sigma;
-    
-end );
-
-##
-InstallMethod( NaturalIsomorphismFromIdentityIntoShiftOfReverseShift,
-          [ IsCapCategory and IsTriangulatedCategory ],        
-  function( category )
-    local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
-    
-    id := IdentityFunctor( category );
-    
-    shift := ShiftFunctor( category );
-    
-    reverse_shift := ReverseShiftFunctor( category );
-    
-    shift_after_reverse_shift := PreCompose( reverse_shift, shift );
-    
-    name := "Autoequivalence from identity functor to Σ o Σ^-1 in ";
-    
-    name := Concatenation( name, Name( category ) );
-    
-    nat := NaturalTransformation( name, id, shift_after_reverse_shift );
-    
-    AddNaturalTransformationFunction( nat, IsomorphismIntoShiftOfReverseShiftWithGivenObject );
-    
-    return nat;
-    
-end );
-
-##
-InstallMethod( NaturalIsomorphismFromIdentityIntoReverseShiftOfShift,
-          [ IsCapCategory and IsTriangulatedCategory ],
-  function( category )
-    local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
-    
-    id := IdentityFunctor( category );
-    
-    shift := ShiftFunctor( category );
-    
-    reverse_shift := ReverseShiftFunctor( category );
-    
-    reverse_shift_after_shift := PreCompose( shift, reverse_shift);
-    
-    name := "Autoequivalence from identity functor to Σ^-1 o Σ in  ";
-    
-    name := Concatenation( name, Name( category ) );
-    
-    nat := NaturalTransformation( name, id, reverse_shift_after_shift );
-    
-    AddNaturalTransformationFunction( nat, IsomorphismIntoReverseShiftOfShiftWithGivenObject );
-    
-    return nat;
-    
-end );
-
-##
-InstallMethod( NaturalIsomorphismFromShiftOfReverseShiftIntoIdentity,
-          [ IsCapCategory and IsTriangulatedCategory ],
-  function( category )
-    local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
-    
-    id := IdentityFunctor( category );
-    
-    shift := ShiftFunctor( category );
-    
-    reverse_shift := ReverseShiftFunctor( category );
-    
-    shift_after_reverse_shift := PreCompose( reverse_shift, shift );
-    
-    name := "Autoequivalence from Σ o Σ^-1 to identity functor in ";
-    
-    name := Concatenation( name, Name( category ) );
-    
-    nat := NaturalTransformation( name, id, shift_after_reverse_shift );
-    
-    AddNaturalTransformationFunction( nat, IsomorphismFromShiftOfReverseShiftWithGivenObject );
-    
-    return nat;
-    
-end );
-
-##
-InstallMethod( NaturalIsomorphismFromReverseShiftOfShiftIntoIdentity,
-                      [ IsCapCategory and IsTriangulatedCategory ],
-  function( category )
-    local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
-    
-    id := IdentityFunctor( category );
-    
-    shift := ShiftFunctor( category );
-    
-    reverse_shift := ReverseShiftFunctor( category );
-    
-    reverse_shift_after_shift := PreCompose( shift, reverse_shift);
-    
-    name := "Autoequivalence from Σ^-1 o Σ to identity functor in ";
-    
-    name := Concatenation( name, Name( category ) );
-    
-    nat := NaturalTransformation( name, id, reverse_shift_after_shift );
-    
-    AddNaturalTransformationFunction( nat, IsomorphismFromReverseShiftOfShiftWithGivenObject );
-    
-    return nat;
-    
-end );
 
 ###
 #InstallMethod( IsomorphismFromStandardExactTriangle,
@@ -905,34 +761,36 @@ InstallMethod( ShiftOp,
     fi;
     
     if n = 0 then
+      
       return cell;
+      
     elif n > 0 then
+    
       if IsCapCategoryObject( cell ) then
+        
         return ShiftOnObject( Shift( cell, n - 1 ) );
+        
       else
+        
         return ShiftOnMorphism( Shift( cell, n - 1 ) );
+        
       fi;
+      
     else
+      
       if IsCapCategoryObject( cell ) then
-        return ReverseShiftOnObject( Shift( cell, n + 1 ) );
+        
+        return InverseShiftOnObject( Shift( cell, n + 1 ) );
+        
       else
-        return ReverseShiftOnMorphism( Shift( cell, n + 1 ) );
+        
+        return InverseShiftOnMorphism( Shift( cell, n + 1 ) );
+        
       fi;
+      
     fi;
 
 end );
-
-###
-#InstallMethod( MorphismIntoStandardConeObject,
-#          [ IsCapCategoryMorphism ],
-#  phi -> MorphismIntoStandardConeObjectWithGivenStandardConeObject( phi, StandardConeObject( phi ) )
-#);
-#
-###
-#InstallMethod( MorphismFromStandardConeObject,
-#          [ IsCapCategoryMorphism ],
-#  phi -> MorphismFromStandardConeObjectWithGivenStandardConeObject( phi, StandardConeObject( phi ) )
-#);
 #
 #InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
 #               IsCapCategory and IsTriangulatedCategory,
