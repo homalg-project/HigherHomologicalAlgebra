@@ -44,35 +44,53 @@ AssignSetOfObjects( algebroid );
 AssignSetOfGeneratingMorphisms( algebroid );
 
 AC := AdditiveClosure( algebroid );
+Ho_AC := HomotopyCategory( AC );
+I := EmbeddingFunctorIntoDerivedCategory( Ho_AC );
+
 
 A := HomotopyCategoryObject( [ d1_A/AC, d2_A/AC, d3_A/AC ], 1 );
 B := HomotopyCategoryObject( [ d1_B/AC, d2_B/AC, d3_B/AC ], 1 );
 C := HomotopyCategoryObject( [ d1_C/AC, d2_C/AC, d3_C/AC ], 1 );
 
-f := HomotopyCategoryMorphism( A, B, [ f_0/AC, f_1/AC, f_2/AC, f_3/AC ], 0 );
-g := HomotopyCategoryMorphism( B, C, [ g_0/AC, g_1/AC, g_2/AC, g_3/AC ], 0 );
-
-g_o_f := PreCompose( f, g );
+alpha := HomotopyCategoryMorphism( A, B, [ f_0/AC, f_1/AC, f_2/AC, f_3/AC ], 0 );
+beta  := HomotopyCategoryMorphism( B, C, [ g_0/AC, g_1/AC, g_2/AC, g_3/AC ], 0 );
 
 quit;
 
-Tr_f := CompleteMorphismToStandardExactTriangle( f );
-Tr_g := CompleteMorphismToStandardExactTriangle( g );
-Tr_g_o_f := CompleteMorphismToStandardExactTriangle( g_o_f );
+## complete alpha to standard exact triangle
+st_alpha := StandardExactTriangle( alpha );;
+IsStandardExactTriangle( st_alpha );
+#! true
 
-U := CompleteToMorphismOfStandardExactTriangles( Tr_f, Tr_g_o_f, IdentityMorphism( A ), g );
-
-u := U[ 2 ];
-v := LiftColift( PreCompose( MorphismFromConeObject(g_o_f), Shift( f, 1 ) ),
-                    MorphismFromConeObject( g ),
-                      MorphismIntoConeObject( g_o_f ),
-                        MorphismIntoConeObject( g )
-                      );
-w := PreCompose( MorphismFromConeObject(g), Shift( MorphismIntoConeObject(f), 1 ) );
-
-T := CreateExactTriangle( u, v, w );
-i := IsomorphismIntoStandardExactTriangle( T );
-i := i[2];
-j := Inverse( i );
-
+## compute rotation of st_alpha without computing a witness isomorphism
+rot_st_alpha := Rotation( st_alpha );;
+IsStandardExactTriangle( rot_st_alpha );
+#! false
+HasWitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );
+#! false
+rot_st_alpha := Rotation( st_alpha, true );;
+HasWitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );
+#! true
+w := WitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );;
+IsWellDefined( w );
+#! true
+IsIsomorphism( w );
+#! true
+IsStandardExactTriangle( Range( w ) );
+#! true
+inv_rot_st_alpha := InverseRotation( st_alpha, true );;
+w := WitnessIsomorphismIntoStandardExactTriangle( inv_rot_st_alpha );;
+IsWellDefined( w );
+#! true
+IsIsomorphism( w );
+#! true
+IsStandardExactTriangle( Range( w ) );
+#! true
+t := ExactTriangleByOctahedralAxiom( alpha, beta, true );;
+IsWellDefined( t );
+#! true
+w := WitnessIsomorphismIntoStandardExactTriangle( t );;
+# Checking whether a morphism is isomorphism in derived category is faster
+IsIsomorphism( I( w[ 2 ] ) );
+IsIsomorphism( w[ 2 ] );
 
