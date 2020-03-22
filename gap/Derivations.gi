@@ -262,9 +262,12 @@ end,
 Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
 ##
-AddDerivationToCAP( HomotopyMorphisms,
+AddFinalDerivation( HomotopyMorphisms,
                 [
-                    [ Colift, 1 ]
+                  [ Colift, 1 ]
+                ],
+                [
+                  HomotopyMorphisms
                 ],
   function( phi )
     local C, D, colift;
@@ -303,9 +306,12 @@ end: CategoryFilter := IsChainComplexCategory,
          Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
 ##
-AddDerivationToCAP( HomotopyMorphisms,
+AddFinalDerivation( HomotopyMorphisms,
                 [
-                    [ Colift, 1 ]
+                  [ Colift, 1 ]
+                ],
+                [
+                  HomotopyMorphisms
                 ],
   function( phi )
     local C, D, colift;
