@@ -83,19 +83,19 @@ InverseShiftOnMorphismWithGivenObjects := rec(
   return_type := "morphism"
 ),
 
-WitnessIsomorphismIntoStandardConeObjectByExactTriangle := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+WitnessIsomorphismIntoStandardConeObject := rec(
+  installation_name := "WitnessIsomorphismIntoStandardConeObject",
   io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "range_iota_alpha", "cone_alpha" ] ],
   filter_list := [ "morphism", "morphism", "morphism" ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+  cache_name := "WitnessIsomorphismIntoStandardConeObject",
   return_type := "morphism_or_fail"
 ),
 
-WitnessIsomorphismFromStandardConeObjectByExactTriangle := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+WitnessIsomorphismFromStandardConeObject := rec(
+  installation_name := "WitnessIsomorphismFromStandardConeObject",
   io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "cone_alpha", "range_iota_alpha" ] ],
   filter_list := [ "morphism", "morphism", "morphism" ],
-  cache_name := "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+  cache_name := "WitnessIsomorphismFromStandardConeObject",
   return_type := "morphism_or_fail"
 ),
 
@@ -495,188 +495,6 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom,
 end );
 
 ###
-#InstallMethod( TrivialExactTriangle,
-#                [ IsCapCategoryObject ],
-#    function( obj )
-#    local T, i, j, can_triangle;
-#
-#    T := CreateExactTriangle( IdentityMorphism( obj ), UniversalMorphismIntoZeroObject( obj ), UniversalMorphismFromZeroObject( ShiftOnObject( obj ) ) );
-#    can_triangle := CompleteMorphismToStandardExactTriangle( IdentityMorphism( obj ) );
-#
-#    i := CreateTrianglesMorphism( T, can_triangle, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T, 1 ) ),
-#                                                    UniversalMorphismFromZeroObject( ObjectAt( can_triangle, 2 ) ) );
-#    j := CreateTrianglesMorphism( can_triangle, T, IdentityMorphism( ObjectAt( T, 0 ) ), IdentityMorphism( ObjectAt( T, 1 ) ),
-#                                                    UniversalMorphismIntoZeroObject( ObjectAt( can_triangle, 2 ) ) );
-#    SetIsomorphismFromStandardExactTriangle( T, j );
-#    SetIsomorphismIntoStandardExactTriangle( T, i );
-#
-#    return T;
-#
-#end );
-#
-###
-#InstallMethod( UnderlyingStandardExactTriangle,
-#                [ IsCapCategoryExactTriangle ],
-#    function( T )
-#
-#    if IsCapCategoryStandardExactTriangle( T ) then
-#        return T;
-#    else
-#        return CompleteMorphismToStandardExactTriangle( MorphismAt( T, 0 ) );
-#    fi;
-#
-#end );
-#
-###
-#InstallMethod( RotationOfExactTriangle,
-#                [ IsCapCategoryExactTriangle ],
-#                # the following -1000 implies that this method will be called only if there is no other option to compute the isomorphism.
-#                -1000,
-#    function( T )
-#    local rT, iso_from_can_exact_tr, iso_into_can_exact_tr;
-#
-#    if IsCapCategoryStandardExactTriangle( T ) then
-#        return RotationOfStandardExactTriangle( T );
-#    fi;
-#
-#    rT := CreateExactTriangle( MorphismAt( T, 1 ), MorphismAt( T, 2 ), AdditiveInverse( ShiftOnMorphism( MorphismAt( T, 0 ) ) ) );
-#
-#    iso_into_can_exact_tr := function( T, rT )
-#    local can_T, T_to_can_T, rcan_T, rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T, can_rT, can_T_to_T, can_rcan_T_to_can_rT,iso;
-#    can_T := UnderlyingStandardExactTriangle( T );
-#    T_to_can_T := IsomorphismIntoStandardExactTriangle( T );
-#    rcan_T := RotationOfStandardExactTriangle( can_T );
-#    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ), MorphismAt( T_to_can_T, 3 ) );
-#    rcan_T_to_can_rcan_T := IsomorphismIntoStandardExactTriangle( rcan_T );
-#    can_rcan_T := UnderlyingStandardExactTriangle( rcan_T );
-#    can_rT := UnderlyingStandardExactTriangle( rT );
-#    can_T_to_T := IsomorphismFromStandardExactTriangle( T );
-#    can_rcan_T_to_can_rT := CompleteToMorphismOfStandardExactTriangles( can_rcan_T, can_rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ) );
-#    iso := PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] );
-#    Assert( 5, IsIsomorphism( iso[2] ) );
-#    SetIsIsomorphism( iso, true );
-#    return iso;
-#    end;
-#    AddToUnderlyingLazyMethods( rT, IsomorphismIntoStandardExactTriangle, iso_into_can_exact_tr, [T, rT ] );
-#
-#    iso_from_can_exact_tr := function( T, rT )
-#    local rcan_T_to_rT, can_T, T_to_can_T, rcan_T, rT_to_rcan_T, can_rcan_T, can_rT, can_T_to_T, can_rcan_T_to_rcan_T, can_rT_to_can_rcan_T, iso;
-#
-#    can_T := UnderlyingStandardExactTriangle( T );
-#    can_T_to_T := IsomorphismFromStandardExactTriangle( T );
-#    rcan_T := RotationOfStandardExactTriangle( can_T );
-#    T_to_can_T := IsomorphismIntoStandardExactTriangle( T );
-#    can_rcan_T := UnderlyingStandardExactTriangle( rcan_T );
-#    can_rT := UnderlyingStandardExactTriangle( rT );
-#    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, MorphismAt( can_T_to_T, 1 ), MorphismAt( can_T_to_T, 2 ), MorphismAt( can_T_to_T, 3 ) );
-#    can_rcan_T_to_rcan_T := IsomorphismFromStandardExactTriangle( rcan_T );
-#    can_rT_to_can_rcan_T := CompleteToMorphismOfStandardExactTriangles( can_rT, can_rcan_T, MorphismAt( T_to_can_T, 1 ), MorphismAt( T_to_can_T, 2 ) );
-#    iso := PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] );
-#    Assert( 5, IsIsomorphism( iso[2] ) );
-#    SetIsIsomorphism( iso, true );
-#    return iso;
-#    end;
-#    AddToUnderlyingLazyMethods( rT, IsomorphismFromStandardExactTriangle, iso_from_can_exact_tr, [T, rT ] );
-#
-#    return rT;
-#
-#end );
-#
-#
-##\begin{tikzcd}
-##A \arrow[r, "f"] & B \arrow[r, "g"] & C \arrow[r, "h"] \arrow[d, "u", two heads, tail] & A[1] &  &  &  & C[-1] \arrow[r, "{-h[-1]}"] \arrow[d, "{u[-1]}"'] & A \arrow[r, "f"] & B \arrow[r, "g"] & C \arrow[d, "u"] \\
-##A \arrow[r, "f"'] & B \arrow[r, "\alpha(f)"'] & C(f) \arrow[r, "\beta(f)"'] & A[1] &  &  &  & C(f)[-1] \arrow[r, "{-\beta(f)[-1]}"'] & A \arrow[r, "f"'] & B \arrow[r, "\alpha(f)"'] \arrow[d, "t"] & C(f) \\
-## &  &  &  &  &  &  & C(f)[-1] \arrow[r, "{-\beta(f)[-1]}"] \arrow[d, "{u[-1]^{-1}}"'] & A \arrow[r, "\alpha(*)"] & C(\beta(f)[-1]) \arrow[r, "\beta(*)"] \arrow[d, "s"] & C(f) \arrow[d, "u^{-1}"] \\
-## &  &  &  &  &  &  & C[-1] \arrow[r, "{-h[-1]}"'] & A \arrow[r, "{\alpha(-h[-1])}"'] & C(h[-1]) \arrow[r, "{\beta(-h[-1])}"'] & C
-##\end{tikzcd}
-#
-#InstallMethod( InverseRotationOfExactTriangle,
-#                [ IsCapCategoryExactTriangle ],
-#                -1000,
-#    function( T )
-#    local can_T, T_to_can_T, can_T_to_T, rT, rcan_T, rT_to_rcan_T, rcan_T_to_rT, can_rcan_T,
-#       rcan_T_to_can_rcan_T, can_rcan_T_to_rcan_T, can_rT, can_rcan_T_to_can_rT, can_rT_to_can_rcan_T;
-#
-#    if not HasIsTriangulatedCategoryWithShiftAutomorphism( UnderlyingCapCategory( T ) ) then
-#        Error( "Its not known wether the shift functor is automorphism!" );
-#    fi;
-#
-#    if not IsTriangulatedCategoryWithShiftAutomorphism( UnderlyingCapCategory( T ) ) then
-#        Error( "The shift-functor that defines the triangulated struture must be automorphism!" );
-#    fi;
-#
-#    if IsCapCategoryStandardExactTriangle( T ) then
-#        return InverseRotationOfStandardExactTriangle( T );
-#    fi;
-#
-#    can_T := UnderlyingStandardExactTriangle( T );
-#    T_to_can_T := IsomorphismIntoStandardExactTriangle( T );
-#    can_T_to_T := IsomorphismFromStandardExactTriangle( T );
-#
-#    rT := CreateExactTriangle( AdditiveInverse(InverseShiftOnMorphism( MorphismAt( T, 2 ) ) ), MorphismAt( T, 0), MorphismAt( T, 1 ) );
-#    rcan_T := InverseRotationOfStandardExactTriangle( can_T );
-#
-#    rT_to_rcan_T := CreateTrianglesMorphism( rT, rcan_T, InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ),
-#                                                        MorphismAt( T_to_can_T, 0 ),
-#                                                        MorphismAt( T_to_can_T, 1 ) );
-#
-#    rcan_T_to_rT := CreateTrianglesMorphism( rcan_T, rT, InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ),
-#                                                        MorphismAt( can_T_to_T, 0 ),
-#                                                        MorphismAt( can_T_to_T, 1 ) );
-#
-#
-#    can_rcan_T := UnderlyingStandardExactTriangle( rcan_T );
-#    rcan_T_to_can_rcan_T := IsomorphismIntoStandardExactTriangle( rcan_T );
-#    can_rcan_T_to_rcan_T := IsomorphismFromStandardExactTriangle( rcan_T );
-#
-#    can_rT := UnderlyingStandardExactTriangle( rT );
-#
-#    can_rcan_T_to_can_rT := CompleteToMorphismOfStandardExactTriangles( can_rcan_T, can_rT,
-#                                InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ) );
-##    can_rcan_T_to_can_rT := CreateTrianglesMorphism( can_rcan_T, can_rT,
-##                                InverseShiftOnMorphism( MorphismAt( can_T_to_T, 2 ) ), MorphismAt( can_T_to_T, 0 ), can_rcan_T_to_can_rT );
-#
-#    can_rT_to_can_rcan_T := CompleteToMorphismOfStandardExactTriangles( can_rT, can_rcan_T,
-#                                InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ) );
-##    can_rT_to_can_rcan_T := CreateTrianglesMorphism( can_rT, can_rcan_T,
-##                                InverseShiftOnMorphism( MorphismAt( T_to_can_T, 2 ) ), MorphismAt( T_to_can_T, 0 ), can_rT_to_can_rcan_T );
-#
-#    SetIsomorphismIntoStandardExactTriangle(   rT, PreCompose( [ rT_to_rcan_T, rcan_T_to_can_rcan_T, can_rcan_T_to_can_rT ] ) );
-#    SetIsomorphismFromStandardExactTriangle( rT, PreCompose( [ can_rT_to_can_rcan_T, can_rcan_T_to_rcan_T, rcan_T_to_rT ] ) );
-#
-#    return rT;
-#
-#end );
-#
-#InstallMethod( CompleteToMorphismOfExactTriangles,
-#                [ IsCapCategoryExactTriangle, IsCapCategoryExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism ],
-#                -1000,
-#    function( T1, T2, m0, m1 )
-#    local can_T1, can_T2, T1_to_can_T1, T2_to_can_T2, can_T1_to_T1, can_T2_to_T2, can_T1_to_can_T2,
-#        can_T1_to_can_T2_0, can_T1_to_can_T2_1;
-#
-#    if IsCapCategoryStandardExactTriangle( T1 ) and IsCapCategoryStandardExactTriangle( T2 ) then
-#        return CompleteToMorphismOfStandardExactTriangles( T1, T2, m0, m1 );
-#    fi;
-#
-#    can_T1 := UnderlyingStandardExactTriangle( T1 );
-#    can_T2 := UnderlyingStandardExactTriangle( T2 );
-#
-#    T1_to_can_T1 := IsomorphismIntoStandardExactTriangle( T1 );
-#    can_T1_to_T1 := IsomorphismFromStandardExactTriangle( T1 );
-#
-#    T2_to_can_T2 := IsomorphismIntoStandardExactTriangle( T2 );
-#    can_T2_to_T2 := IsomorphismFromStandardExactTriangle( T2 );
-#
-#    can_T1_to_can_T2_0 := PreCompose( [ MorphismAt( can_T1_to_T1, 0 ), m0, MorphismAt( T2_to_can_T2, 0 ) ] );
-#    can_T1_to_can_T2_1 := PreCompose( [ MorphismAt( can_T1_to_T1, 1 ), m1, MorphismAt( T2_to_can_T2, 1 ) ] );
-#    can_T1_to_can_T2 := CompleteToMorphismOfStandardExactTriangles( can_T1, can_T2, can_T1_to_can_T2_0, can_T1_to_can_T2_1 );
-#    return PreCompose( [ T1_to_can_T1, can_T1_to_can_T2, can_T2_to_T2 ] );
-#
-#end );
-#
-
-###
 #InstallMethod( ShiftExpandingIsomorphism,
 #                [ IsList ],
 #  function( L )
@@ -791,18 +609,18 @@ InstallMethod( ShiftOp,
     fi;
 
 end );
-#
-#InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
-#               IsCapCategory and IsTriangulatedCategory,
-#               0,
-#
-#   function( category )
-#
-#   AddPredicateImplicationFileToCategory( category,
-#      Filename(
-#        DirectoriesPackageLibrary( "TriangulatedCategories", "LogicForTriangulatedCategories" ),
-#        "PredicateImplicationsForTriangulatedCategories.tex" ) );
-#
-#   TryNextMethod( );
-#
-#end );
+
+InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
+               IsCapCategory and IsTriangulatedCategory,
+               0,
+
+   function( category )
+
+   AddPredicateImplicationFileToCategory( category,
+      Filename(
+        DirectoriesPackageLibrary( "TriangulatedCategories", "LogicForTriangulatedCategories" ),
+        "PredicateImplicationsForTriangulatedCategories.tex" ) );
+
+   TryNextMethod( );
+
+end );

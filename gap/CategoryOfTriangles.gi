@@ -84,17 +84,17 @@ InstallMethod( CategoryOfExactTriangles,
       end );
       
     AddIsEqualForMorphisms( triangles,
-      function( phi_1, phi_2 )
-        return IsEqualForMorphisms( phi_1[ 0 ], phi_2[ 0 ] ) and 
-                  IsEqualForMorphisms( phi_1[ 1 ], phi_2[ 1 ] ) and
-                    IsEqualForMorphisms( phi_1[ 2 ], phi_2[ 2 ] );
+      function( mu, nu )
+        return IsEqualForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
+                  IsEqualForMorphisms( mu[ 1 ], nu[ 1 ] ) and
+                    IsEqualForMorphisms( mu[ 2 ], nu[ 2 ] );
       end );
       
     AddIsCongruentForMorphisms( triangles,
-      function( phi_1, phi_2 )
-        return IsCongruentForMorphisms( phi_1[ 0 ], phi_2[ 0 ] ) and 
-                  IsCongruentForMorphisms( phi_1[ 1 ], phi_2[ 1 ] ) and
-                    IsCongruentForMorphisms( phi_1[ 2 ], phi_2[ 2 ] );
+      function( mu, nu )
+        return IsCongruentForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
+                  IsCongruentForMorphisms( mu[ 1 ], nu[ 1 ] ) and
+                    IsCongruentForMorphisms( mu[ 2 ], nu[ 2 ] );
       end );
       
     AddIsZeroForObjects( triangles,
@@ -103,8 +103,8 @@ InstallMethod( CategoryOfExactTriangles,
       end );
       
     AddIsZeroForMorphisms( triangles,
-      function( phi )
-        return ForAll( [ 0 .. 3 ], i -> IsZeroForMorphisms( phi[ i ] ) );
+      function( mu )
+        return ForAll( [ 0 .. 3 ], i -> IsZeroForMorphisms( mu[ i ] ) );
       end );
       
     AddIdentityMorphism( triangles,
@@ -118,22 +118,22 @@ InstallMethod( CategoryOfExactTriangles,
       end );
       
     AddPreCompose( triangles,
-      function( phi, psi )
-        local maps_phi, maps_psi, maps;
+      function( mu, nu )
+        local maps_mu, maps_nu, maps;
         
-        maps_phi := List( [ 0 .. 2 ], i -> phi[ i ] );
+        maps_mu := List( [ 0 .. 2 ], i -> mu[ i ] );
         
-        maps_psi := List( [ 0 .. 2 ], i -> psi[ i ] );
+        maps_nu := List( [ 0 .. 2 ], i -> nu[ i ] );
         
-        maps := ListN( maps_phi, maps_psi, PreCompose );
+        maps := ListN( maps_mu, maps_nu, PreCompose );
         
-        return MorphismOfExactTriangles( Source( phi ), maps[ 1 ], maps[ 2 ], maps[ 3 ], Range( psi ) );
+        return MorphismOfExactTriangles( Source( mu ), maps[ 1 ], maps[ 2 ], maps[ 3 ], Range( nu ) );
        
     end );
     
     AddIsIsomorphism( triangles,
-      function( phi )
-        if ForAll( [ 0 .. 3 ], i -> IsIsomorphism( phi[ i ] ) ) then
+      function( mu )
+        if ForAll( [ 0 .. 3 ], i -> IsIsomorphism( mu[ i ] ) ) then
           
           return true;
           
@@ -189,43 +189,43 @@ InstallMethod( CategoryOfExactTriangles,
     end );
     
     AddIsWellDefinedForMorphisms( triangles, 
-      function( phi )
+      function( mu )
         local triangle_1, triangle_2;
         
-        if not IsWellDefined( Source( phi ) ) or not IsWellDefined( Range( phi) ) then
+        if not IsWellDefined( Source( mu ) ) or not IsWellDefined( Range( mu) ) then
           
           return false;
           
         fi;
         
-        if not ForAll( [ 0 .. 3 ], i -> IsWellDefined( phi[ i ] ) ) then
+        if not ForAll( [ 0 .. 3 ], i -> IsWellDefined( mu[ i ] ) ) then
           
           return false;
           
         fi;
         
-        triangle_1 := Source( phi );
+        triangle_1 := Source( mu );
         
-        triangle_2 := Range( phi );
+        triangle_2 := Range( mu );
         
-        if not ( IsEqualForObjects( Source( phi[ 0 ] ), triangle_1[ 0 ] ) and 
-                  IsEqualForObjects( Range( phi[ 0 ] ), triangle_2[ 0 ] )
+        if not ( IsEqualForObjects( Source( mu[ 0 ] ), triangle_1[ 0 ] ) and 
+                  IsEqualForObjects( Range( mu[ 0 ] ), triangle_2[ 0 ] )
               ) then
               
           return false;
           
         fi;
         
-        if not ( IsEqualForObjects( Source( phi[ 1 ] ), triangle_1[ 1 ] ) and
-                  IsEqualForObjects( Range( phi[ 1 ] ), triangle_2[ 1 ] )
+        if not ( IsEqualForObjects( Source( mu[ 1 ] ), triangle_1[ 1 ] ) and
+                  IsEqualForObjects( Range( mu[ 1 ] ), triangle_2[ 1 ] )
               ) then
               
           return false;
           
         fi;
         
-        if not ( IsEqualForObjects( Source( phi[ 2 ] ), triangle_1[ 2 ] ) and
-                  IsEqualForObjects( Range( phi[ 2 ] ), triangle_2[ 2 ] )
+        if not ( IsEqualForObjects( Source( mu[ 2 ] ), triangle_1[ 2 ] ) and
+                  IsEqualForObjects( Range( mu[ 2 ] ), triangle_2[ 2 ] )
                 ) then
                 
           return false;
@@ -235,8 +235,8 @@ InstallMethod( CategoryOfExactTriangles,
         # Is the diagram commutative?
         
         if not IsCongruentForMorphisms(
-                  PreCompose( triangle_1 ^ 0, MorphismAt( phi, 1 ) ), 
-                    PreCompose( phi[ 0 ], triangle_2 ^ 0 )
+                  PreCompose( triangle_1 ^ 0, mu[ 1 ] ),
+                    PreCompose( mu[ 0 ], triangle_2 ^ 0 )
                 ) then
                 
           return false;
@@ -244,8 +244,8 @@ InstallMethod( CategoryOfExactTriangles,
         fi;
         
         if not IsCongruentForMorphisms(
-                  PreCompose( triangle_1 ^ 1, phi[ 2 ] ),
-                    PreCompose( phi[ 1 ], triangle_2 ^ 1 )
+                  PreCompose( triangle_1 ^ 1, mu[ 2 ] ),
+                    PreCompose( mu[ 1 ], triangle_2 ^ 1 )
                 ) then
                 
           return false;
@@ -253,8 +253,8 @@ InstallMethod( CategoryOfExactTriangles,
         fi;
         
         if not IsCongruentForMorphisms(
-                  PreCompose( triangle_1 ^ 2, phi[ 3 ] ),
-                    PreCompose( phi[ 2 ], triangle_2 ^ 2 )
+                  PreCompose( triangle_1 ^ 2, mu[ 3 ] ),
+                    PreCompose( mu[ 2 ], triangle_2 ^ 2 )
                 ) then
                 
             return false;
@@ -280,23 +280,23 @@ end );
 ##
 InstallMethod( ExactTriangle,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, iota_alpha, pi_alpha )
-    local cat, triangles, tr;
+  function( alpha, iota, pi )
+    local cat, triangles, t;
     
     cat := CapCategory( alpha );
     
     triangles := CategoryOfExactTriangles( cat );
     
-    tr := rec( );
+    t := rec( );
     
     ObjectifyObjectForCAPWithAttributes(
-                tr, triangles,
+                t, triangles,
                 DomainMorphism, alpha,
-                MorphismIntoConeObject, iota_alpha,
-                MorphismFromConeObject, pi_alpha
+                MorphismIntoConeObject, iota,
+                MorphismFromConeObject, pi
               );
     
-    return tr;
+    return t;
 
 end );
 
@@ -398,16 +398,16 @@ end );
 ##
 InstallMethod( MorphismOfExactTriangles, 
         [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
-  function( s, mu, nu, lambda, r )
-    local triangles, phi;
+  function( s, mu_0, mu_1, mu_2, r )
+    local triangles, mu;
     
     triangles := CapCategory( s );
     
-    phi := rec( 0 := mu, 1 := nu, 2 := lambda );
+    mu := rec( 0 := mu_0, 1 := mu_1, 2 := mu_2 );
     
-    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( phi, triangles, s, r );
+    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( mu, triangles, s, r );
     
-    return phi;
+    return mu;
     
 end );
 
@@ -460,7 +460,7 @@ end );
 ##
 InstallMethod( MorphismAtOp, 
                 [ IsCapExactTrianglesMorphism, IsInt ],
-  function( phi, i )
+  function( mu, i )
     
     if i < 0 or i > 3 then
       
@@ -468,11 +468,11 @@ InstallMethod( MorphismAtOp,
       
     elif i = 3 then
     
-      return ShiftOnMorphism( phi!.0 );
+      return ShiftOnMorphism( mu!.( 0 ) );
       
     else
       
-      return phi!.( i );
+      return mu!.( i );
       
     fi;
 
@@ -499,9 +499,9 @@ end );
 ##
 InstallMethod( \[\],
           [ IsCapExactTrianglesMorphism, IsInt ],
-  function( phi, i )
+  function( mu, i )
     
-    return MorphismAt( phi, i );
+    return MorphismAt( mu, i );
 
 end );
 
@@ -520,7 +520,7 @@ InstallMethod( StandardExactTriangle,
 ##
 InstallMethod( Rotation,
           [ IsCapExactTriangle ],
-    triangle -> ExactTriangle( triangle ^ 1, triangle ^ 2, AdditiveInverse( ShiftOnMorphism( triangle ^ 0 ) ) )
+    triangle -> Rotation( triangle, false )
 );
 
 ##  
@@ -533,44 +533,46 @@ InstallMethod( Rotation,
   function( triangle, bool )
     local rotation, st_rotation, i, st_triangle, w_1, v_1;
      
-    rotation := Rotation( triangle );
+    rotation := ExactTriangle(
+                  triangle ^ 1,
+                  triangle ^ 2,
+                  AdditiveInverse( ShiftOnMorphism( triangle ^ 0 ) )
+                );
     
-    if not bool then
+    if bool then
       
-      return rotation;
+      st_rotation := StandardExactTriangle( rotation );
       
-    fi;
+      if IsStandardExactTriangle( triangle ) then
+        
+        i := WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
+        
+        i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
+        
+        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        
+        i := WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
+        
+        i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
+       
+        SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
+        
+      else
+        
+        i := WitnessIsomorphismFromStandardExactTriangle( triangle );
+        
+        st_triangle := Source( i );
+        
+        w_1 := WitnessIsomorphismIntoStandardConeObjectByRotationAxiom( st_triangle ^ 0 );
+        
+        v_1 := MorphismBetweenStandardConeObjects( st_triangle ^ 1, IdentityMorphism( st_triangle[ 1 ] ), i[ 2 ], triangle ^ 1 );
+        
+        i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
+        
+        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+              
+      fi;
     
-    st_rotation := StandardExactTriangle( rotation );
-    
-    if IsStandardExactTriangle( triangle ) then
-      
-      i := WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
-      
-      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
-      
-      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
-      
-      i := WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
-      
-      i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
-     
-      SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
-      
-    else
-      
-      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
-      
-      st_triangle := Source( i );
-      
-      w_1 := WitnessIsomorphismIntoStandardConeObjectByRotationAxiom( st_triangle ^ 0 );
-      
-      v_1 := MorphismBetweenStandardConeObjects( st_triangle ^ 1, IdentityMorphism( st_triangle[ 1 ] ), i[ 2 ], triangle ^ 1 );
-      
-      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
-      
-      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
-            
     fi;
     
     return rotation;
@@ -584,121 +586,117 @@ end );
 ##
 InstallMethod( InverseRotation,
           [ IsCapExactTriangle ],
-  function( triangle )
-  
-    return ExactTriangle(
+  triangle -> InverseRotation( triangle, false )
+);
+
+##
+InstallMethod( InverseRotation,
+          [ IsCapExactTriangle, IsBool ],
+  function( t, bool )
+    local rotation, st_rotation, i, st_t, w_1, v_1;
+    
+    rotation :=
+        ExactTriangle(
               PreCompose(
-                AdditiveInverse( InverseShiftOnMorphism( triangle ^ 2 ) ),
-                IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
+                AdditiveInverse( InverseShiftOnMorphism( t ^ 2 ) ),
+                IsomorphismFromInverseShiftOfShift( t[ 0 ] )
                         ),
-              triangle ^ 0,
+              t ^ 0,
               PreCompose(
-                triangle ^ 1,
-                IsomorphismIntoShiftOfInverseShift( triangle[ 2 ] )
+                t ^ 1,
+                IsomorphismIntoShiftOfInverseShift( t[ 2 ] )
                         )
                     );
     
-end );
-
-InstallMethod( InverseRotation,
-          [ IsCapExactTriangle, IsBool ],
-  function( triangle, bool )
-    local rotation, st_rotation, i, st_triangle, w_1, v_1;
-    
-    rotation := InverseRotation( triangle );
-    
-    if not bool then
+    if bool then
       
-      return rotation;
+      st_rotation := StandardExactTriangle( rotation );
       
-    fi;
-    
-    st_rotation := StandardExactTriangle( rotation );
-    
-    if IsStandardExactTriangle( triangle ) then
+      if IsStandardExactTriangle( t ) then
+        
+        i := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( rotation[ 2 ], t ^ 0, st_rotation[ 2 ] );
+        
+        i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
+        
+        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        
+        i := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( st_rotation[ 2 ], t ^ 0, rotation[ 2 ] );
+        
+        i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
+       
+        SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
+        
+      else
+        
+        i := WitnessIsomorphismFromStandardExactTriangle( t );
+        
+        st_t := Source( i );
+        
+        w_1 := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom( st_t ^ 0 );
+        
+        v_1 := MorphismBetweenStandardConeObjects(
+                  PreCompose(
+                    AdditiveInverse( InverseShiftOnMorphism( st_t ^ 2 ) ),
+                    IsomorphismFromInverseShiftOfShift( t[ 0 ] )
+                  ),
+                  InverseShiftOnMorphism( i[ 2 ] ),
+                  IdentityMorphism( t[ 0 ] ),
+                  PreCompose(
+                    AdditiveInverse( InverseShiftOnMorphism( t ^ 2 ) ),
+                    IsomorphismFromInverseShiftOfShift( t[ 0 ] )
+                  )
+                );
+        
+        i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
+        
+        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        
+      fi;
       
-      i := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
-      
-      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
-      
-      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
-      
-      i := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
-      
-      i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
-     
-      SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
-      
-    else
-      
-      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
-      
-      st_triangle := Source( i );
-      
-      w_1 := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom( st_triangle ^ 0 );
-      
-      v_1 := MorphismBetweenStandardConeObjects(
-                PreCompose(
-                  AdditiveInverse( InverseShiftOnMorphism( st_triangle ^ 2 ) ),
-                  IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
-                ),
-                InverseShiftOnMorphism( i[ 2 ] ),
-                IdentityMorphism( triangle[ 0 ] ),
-                PreCompose(
-                  AdditiveInverse( InverseShiftOnMorphism( triangle ^ 2 ) ),
-                  IsomorphismFromInverseShiftOfShift( triangle[ 0 ] )
-                )
-              );
-      
-      i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
-      
-      SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
-     
     fi;
     
     return rotation;
-   
     
 end );
 
 ##
 InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
           [ IsCapExactTriangle ],
-  function( triangle )
-    local cat, st_triangle, i;
+  function( t )
+    local cat, st_t, i;
     
-    if IsStandardExactTriangle( triangle ) then
+    if IsStandardExactTriangle( t ) then
       
-      return IdentityMorphism( triangle );
+      return IdentityMorphism( t );
       
     fi;
     
     # This could happen only if the user manually have set this attribute
-    if HasWitnessIsomorphismFromStandardExactTriangle( triangle ) then
+    if HasWitnessIsomorphismFromStandardExactTriangle( t ) then
       
-      i := WitnessIsomorphismFromStandardExactTriangle( triangle );
+      i := WitnessIsomorphismFromStandardExactTriangle( t );
       
       return MorphismOfExactTriangles(
-                triangle,
-                IdentityMorphism( triangle[ 0 ] ),
-                IdentityMorphism( triangle[ 1 ] ),
+                t,
+                IdentityMorphism( t[ 0 ] ),
+                IdentityMorphism( t[ 1 ] ),
                 Inverse( i[ 2 ] ),
                 Source( i )
               );
               
     fi;
      
-    cat := UnderlyingCategory( CapCategory( triangle ) );
+    cat := UnderlyingCategory( CapCategory( t ) );
     
-    if not CanCompute( cat, "WitnessIsomorphismIntoStandardConeObjectByExactTriangle" ) then
+    if not CanCompute( cat, "WitnessIsomorphismIntoStandardConeObject" ) then
       
       TryNextMethod( );
       
     fi;
     
-    st_triangle := StandardExactTriangle( triangle ^ 0 );
+    st_t := StandardExactTriangle( t ^ 0 );
     
-    i := WitnessIsomorphismIntoStandardConeObjectByExactTriangle( triangle ^ 0, triangle ^ 1, triangle ^ 2 );
+    i := WitnessIsomorphismIntoStandardConeObject( t ^ 0, t ^ 1, t ^ 2 );
     
     if i = fail then
       
@@ -706,7 +704,13 @@ InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
       
     else
       
-      return MorphismOfExactTriangles( triangle, IdentityMorphism( triangle[ 0 ] ), IdentityMorphism( triangle[ 1 ] ), i, st_triangle );
+      return MorphismOfExactTriangles(
+                t,
+                IdentityMorphism( t[ 0 ] ),
+                IdentityMorphism( t[ 1 ] ),
+                i,
+                st_t
+              );
       
     fi;
     
@@ -715,16 +719,16 @@ end );
 ##
 InstallMethod( WitnessIsomorphismFromStandardExactTriangle,
           [ IsCapExactTriangle ],
-  function( triangle )
-    local cat, st_triangle, i;
+  function( t )
+    local cat, st_t, i;
     
-    if IsStandardExactTriangle( triangle ) then
+    if IsStandardExactTriangle( t ) then
       
-      return IdentityMorphism( triangle );
+      return IdentityMorphism( t );
       
     fi;
     
-    i := WitnessIsomorphismIntoStandardExactTriangle( triangle );
+    i := WitnessIsomorphismIntoStandardExactTriangle( t );
     
     if i = fail then
       
@@ -734,10 +738,10 @@ InstallMethod( WitnessIsomorphismFromStandardExactTriangle,
       
       return MorphismOfExactTriangles(
                 Range( i ),
-                IdentityMorphism( triangle[ 0 ] ),
-                IdentityMorphism( triangle[ 1 ] ),
+                IdentityMorphism( t[ 0 ] ),
+                IdentityMorphism( t[ 1 ] ),
                 Inverse( i[ 2 ] ),
-                triangle
+                t
               );
     
     fi;
@@ -747,30 +751,108 @@ end );
 ##    
 InstallMethod( MorphismBetweenConeObjects,
           [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
-  function( triangle_1, mu_0, mu_1, triangle_2 )
-    local st_triangle_1, st_triangle_2, i_1, j_1, i_2, j_2, u, v, w;
+  function( t_1, mu_0, mu_1, t_2 )
+    local st_t_1, st_t_2, i_1, j_1, i_2, j_2, u, v, w;
     
-    st_triangle_1 := StandardExactTriangle( triangle_1 );
+    st_t_1 := StandardExactTriangle( t_1 );
     
-    st_triangle_2 := StandardExactTriangle( triangle_2 );
+    st_t_2 := StandardExactTriangle( t_2 );
     
-    i_1 := WitnessIsomorphismIntoStandardExactTriangle( triangle_1 );
+    i_1 := WitnessIsomorphismIntoStandardExactTriangle( t_1 );
     
-    j_1 := WitnessIsomorphismFromStandardExactTriangle( triangle_1 );
+    j_1 := WitnessIsomorphismFromStandardExactTriangle( t_1 );
     
-    i_2 := WitnessIsomorphismIntoStandardExactTriangle( triangle_2 );
+    i_2 := WitnessIsomorphismIntoStandardExactTriangle( t_2 );
     
-    j_2 := WitnessIsomorphismFromStandardExactTriangle( triangle_2 );
+    j_2 := WitnessIsomorphismFromStandardExactTriangle( t_2 );
     
     u := PreCompose( [ j_1[ 0 ], mu_0, i_2[ 0 ] ] );
     
     v := PreCompose( [ j_1[ 1 ], mu_1, i_2[ 1 ] ] );
     
-    w := MorphismBetweenStandardConeObjects( st_triangle_1 ^ 0, u, v, st_triangle_2 ^ 0 );
+    w := MorphismBetweenStandardConeObjects(
+            st_t_1 ^ 0,
+            u,
+            v,
+            st_t_2 ^ 0
+          );
     
     return PreCompose( [ i_1[ 2 ], w, j_2[ 2 ] ] );
     
 end );
+
+##
+InstallMethod( MorphismOfExactTriangles,
+          [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+  function( t_1, mu_0, mu_1, t_2 )
+    local mu_2;
+    
+    mu_2 := MorphismBetweenConeObjects( t_1, mu_0, mu_1, t_2 );
+    
+    return MorphismOfExactTriangles( t_1, mu_0, mu_1, mu_2, t_2 );
+    
+end );
+
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapExactTriangle, IsCapExactTriangle ],
+    { t_1, t_2 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, false )
+);
+
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapExactTriangle, IsCapExactTriangle, IsBool ],
+  function( t_1, t_2, bool )
+    local i_1, j_1, i_2, j_2, t, alpha, iota, pi, triangle, u, v, w, i;
+    
+    if not IsEqualForObjects( t_1[ 1 ], t_2[ 0 ] ) then
+      
+      Error( "Wrong input!\n" );
+      
+    fi;
+    
+    i_1 := WitnessIsomorphismIntoStandardExactTriangle( t_1 );
+    
+    j_1 := WitnessIsomorphismFromStandardExactTriangle( t_1 );
+    
+    i_2 := WitnessIsomorphismIntoStandardExactTriangle( t_2 );
+    
+    j_2 := WitnessIsomorphismFromStandardExactTriangle( t_2 );
+    
+    t := ExactTriangleByOctahedralAxiom( t_1 ^ 0, t_2 ^ 0, true );
+    
+    alpha := PreCompose( i_1[ 2 ], t ^ 0 );
+    
+    iota := PreCompose( t ^ 1, j_2[ 2 ] );
+    
+    pi := PreCompose( [ i_2[ 2 ], t ^ 2, ShiftOnMorphism( j_1[ 2 ] ) ] );
+    
+    triangle := ExactTriangle( alpha, iota, pi );
+    
+    if bool = true then
+      
+      u := i_2[ 2 ];
+      
+      v := WitnessIsomorphismIntoStandardExactTriangle( t )[ 2 ];
+      
+      w := MorphismBetweenStandardConeObjects( t ^ 0, j_1[ 2 ], IdentityMorphism( t[ 1 ] ), triangle ^ 0 );
+      
+      i := MorphismOfExactTriangles(
+              triangle,
+              IdentityMorphism( triangle[ 0 ] ),
+              IdentityMorphism( triangle[ 1 ] ),
+              PreCompose( [ u, v, w ] ),
+              StandardExactTriangle( triangle )
+            );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( triangle, i );
+      
+    fi;
+    
+    return triangle;
+    
+end );
+
 
 #################
 #
@@ -779,25 +861,114 @@ end );
 #################
 
 ##
+InstallMethod( ViewExactTriangle,
+          [ IsCapExactTriangle ],
+  function( T )
+
+    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
+    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n\n" );
+    
+    Print( "T[ 0 ]:\n" );
+    ViewObj( T[ 0 ] );
+    
+    Print( "\n\nT ^ 0:\n\n" );
+    ViewObj( T ^ 0 );
+    
+    Print( "\n\nT[ 1 ]:\n\n" );
+    ViewObj( T[ 1 ] );
+    
+    Print( "\n\nT ^ 1:\n\n" );
+    ViewObj( T ^ 1 );
+    
+    Print( "\n\nT[ 2 ]:\n\n" );
+    ViewObj( T[ 2 ] );
+    
+    Print( "\n\nT ^ 2:\n\n" );
+    ViewObj( T ^ 2 );
+    
+    Print( "\n\nΣ( T[ 0 ] ):\n\n" );
+    ViewObj( T[ 3 ] );
+    
+end );
+
+##
+InstallMethod( ViewMorphismOfExactTriangles,
+          [ IsCapExactTrianglesMorphism ],
+  function( mu )
+    Print( "A morphism of exact triangles\n\n" );
+    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
+    Print( " |            |            |              |           \n" );
+    Print( " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
+    Print( " V            V            V              V           \n" );
+    Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
+    
+    Print( "\n\nmu[ 0 ]:\n\n" );
+    ViewObj( mu[ 0 ] );
+    
+    Print( "\n\nmu[ 1 ]:\n\n" );
+    ViewObj( mu[ 1 ] );
+    
+    Print( "\n\nmu[ 2 ]:\n\n" );
+    ViewObj( mu[ 2 ] );
+    
+    Print( "\n\nmu[ 3 ]:\n\n" );
+    ViewObj( mu[ 3 ] );
+ 
+end );
+
+##
 InstallMethod( Display,
           [ IsCapExactTriangle ],
-  function( triangle )
+  function( T )
 
-    Print( "       T^0          T^1          T^2            \n" );
-    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )\n" );
+    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
+    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n\n" );
+    
+    Print( "T[ 0 ]:\n" );
+    Display( T[ 0 ] );
+    
+    Print( "\nT ^ 0:\n\n" );
+    Display( T ^ 0 );
+    
+    Print( "\nT[ 1 ]:\n\n" );
+    Display( T[ 1 ] );
+    
+    Print( "\nT ^ 1:\n\n" );
+    Display( T ^ 1 );
+    
+    Print( "\nT[ 2 ]:\n\n" );
+    Display( T[ 2 ] );
+    
+    Print( "\nT ^ 2:\n\n" );
+    Display( T ^ 2 );
+    
+    Print( "\nΣ( T[ 0 ] ):\n\n" );
+    Display( T[ 3 ] );
     
 end );
 
 ##
 InstallMethod( Display,
           [ IsCapExactTrianglesMorphism ],
-  function( nu )
-
+  function( mu )
+    Print( "A morphism of exact triangles\n\n" );
     Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
     Print( " |            |            |              |           \n" );
-    Print( " | nu[0]      | nu[1]      | nu[2]        | Σ( nu[0] )\n" );
+    Print( " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
     Print( " V            V            V              V           \n" );
     Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
-  
+    
+    Print( "\nmu[ 0 ]:\n\n" );
+    Display( mu[ 0 ] );
+    
+    Print( "\nmu[ 1 ]:\n\n" );
+    Display( mu[ 1 ] );
+    
+    Print( "\nmu[ 2 ]:\n\n" );
+    Display( mu[ 2 ] );
+    
+    Print( "\nmu[ 3 ]:\n\n" );
+    Display( mu[ 3 ] );
+ 
 end );
 

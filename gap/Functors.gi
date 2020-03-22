@@ -13,7 +13,7 @@ InstallMethod( ShiftFunctorAttr,
   function( category )
     local name, Sigma, G, eta;
     
-    name := "Shift endofunctor on a triangulated category";
+    name := "Shift auto-equivalence on a triangulated category";
     
     Sigma := CapFunctor( name, category, category );
     
@@ -27,15 +27,7 @@ InstallMethod( ShiftFunctorAttr,
     AddObjectFunction( Sigma, ShiftOnObject );
     
     AddMorphismFunction( Sigma, ShiftOnMorphismWithGivenObjects );
-    
-    G := PreCompose( Sigma, Sigma );
-    
-    eta := NaturalTransformation( "Σ o Σ ==> Σ o Σ", G, G );
-    
-    AddNaturalTransformationFunction( eta, { s, a, r } -> IdentityMorphism( s ) );
-    
-    SetCommutativityNaturalIsomorphismForExactFunctor( Sigma, eta );
-    
+        
     return Sigma;
     
 end );
@@ -51,7 +43,7 @@ InstallMethod( InverseShiftFunctor,
   function( category )
     local name, rev_Sigma, Sigma, G_1, G_2, eta;
     
-    name := "Inverse Shift endofunctor on a triangulated category";
+    name := "Inverse Shift auto-equivalence on a triangulated category";
     
     rev_Sigma := CapFunctor( name, category, category );
     
@@ -65,25 +57,7 @@ InstallMethod( InverseShiftFunctor,
     AddObjectFunction( rev_Sigma, InverseShiftOnObject );
     
     AddMorphismFunction( rev_Sigma, InverseShiftOnMorphismWithGivenObjects );
-    
-    Sigma := ShiftFunctor( category );
-    
-    G_1 := PreCompose( Sigma, rev_Sigma );
-    
-    G_2 := PreCompose( rev_Sigma, Sigma );
-    
-    eta := NaturalTransformation( "Σ^-1 o Σ ==> Σ o Σ^-1", G_1, G_2 );
-    
-    AddNaturalTransformationFunction( eta,
-      { G_1_a, a, G_2_a } ->
-          PreCompose(
-            IsomorphismFromInverseShiftOfShift( a ),
-            IsomorphismIntoShiftOfInverseShift( a )
-          )
-    );
-    
-    SetCommutativityNaturalIsomorphismForExactFunctor( rev_Sigma, eta );
-    
+        
     return rev_Sigma;
     
 end );

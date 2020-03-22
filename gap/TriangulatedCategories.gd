@@ -404,7 +404,6 @@ DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsC
 DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsCapCategory, IsList ] );
 
-
 #! @Description
 #! The arguments are morphisms $\alpha_1:A_1\to B_1$, $u:A_1\to A_2$,
 #! $v:B_1\to B_2$, $\alpha_2:A_2\to B_2$ such that $v\circ \alpha_1=\alpha_2\circ u$.
@@ -427,24 +426,24 @@ DeclareOperation( "MorphismBetweenStandardConeObjects",
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 
-DeclareOperation( "WitnessIsomorphismIntoStandardConeObjectByExactTriangle",
+DeclareOperation( "WitnessIsomorphismIntoStandardConeObject",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObjectByExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismIntoStandardConeObject", [ IsCapCategory, IsList ] );
 
 
-DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByExactTriangle",
+DeclareOperation( "WitnessIsomorphismFromStandardConeObject",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByExactTriangle", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddWitnessIsomorphismFromStandardConeObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.

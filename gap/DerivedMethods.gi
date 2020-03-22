@@ -13,14 +13,14 @@
 ################################################
 
 ##
-AddFinalDerivation( WitnessIsomorphismIntoStandardConeObjectByExactTriangle,
+AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
                 [
                   [ SolveLinearSystemInAbCategory, 1 ],
                   [ Inverse, 1 ]
                 ],
                 [
-                  WitnessIsomorphismIntoStandardConeObjectByExactTriangle,
-                  WitnessIsomorphismFromStandardConeObjectByExactTriangle
+                  WitnessIsomorphismIntoStandardConeObject,
+                  WitnessIsomorphismFromStandardConeObject
                 ],
   function( alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
@@ -49,11 +49,11 @@ AddFinalDerivation( WitnessIsomorphismIntoStandardConeObjectByExactTriangle,
   
   end,
 [
-  WitnessIsomorphismFromStandardConeObjectByExactTriangle,
+  WitnessIsomorphismFromStandardConeObject,
     function( alpha, iota, pi )
       local w;
       
-      w := WitnessIsomorphismIntoStandardConeObjectByExactTriangle( alpha, iota, pi );
+      w := WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi );
       
       if w = fail then
         
@@ -70,3 +70,6 @@ AddFinalDerivation( WitnessIsomorphismIntoStandardConeObjectByExactTriangle,
   CategoryFilter := IsTriangulatedCategory,
   Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategory"
 );
+
+
+
