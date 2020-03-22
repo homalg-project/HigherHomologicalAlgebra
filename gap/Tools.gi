@@ -97,15 +97,11 @@ InstallMethod( Finalize,
     
     Finalize( category: disable_sanity_checks_and_logic := false );
     
-    if DISABLE_ALL_SANITY_CHECKS <> true then
-      return;
-    else
+    if DISABLE_ALL_SANITY_CHECKS then
       DisableSanityChecks( category );
     fi;
     
-    if SWITCH_LOGIC_OFF <> true then
-      return;
-    else
+    if SWITCH_LOGIC_OFF then
       CapCategorySwitchLogicOff( category );
     fi;
     
