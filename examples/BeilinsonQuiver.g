@@ -41,8 +41,8 @@ I := EmbeddingFunctorIntoDerivedCategory( Ho_AC );
 
 quit;
 
-alpha := RandomMorphism( Ho_AC, [ [ -3, 3, 3 ], [ -3, 3, 3 ], [ 3 ] ] );
-beta := RandomMorphismWithFixedSource( Range( alpha ), [ [ -3, 3, 3 ], [ 3 ] ] );
+alpha := RandomMorphism( Ho_AC, [ [ -2, 2, 2 ], [ -2, 2, 2 ], [ 2 ] ] );
+beta := RandomMorphismWithFixedSource( Range( alpha ), [ [ -2, 2, 2 ], [ 2 ] ] );
 
 sigma := ShiftFunctor( Ho_AC );
 sigma_m1 := InverseShiftFunctor( Ho_AC );
