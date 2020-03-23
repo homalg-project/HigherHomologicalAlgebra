@@ -71,5 +71,143 @@ AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
   Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategory"
 );
 
+# See categories and homological algebra (schapira)
+AddFinalDerivation( IsIsomorphism,
+                [
+                    [ StandardConeObject, 1 ],
+                    [ IsZeroForObjects,  1 ]
+                ],
+                [
+                    IsIsomorphism
+                ],
+  function( alpha )
+  
+    return IsZeroForObjects( StandardConeObject( alpha ) );
+    
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "IsIsomorphism by deciding if the cone object is zero"
+);
 
+##
+AddDerivationToCAP( IsSplitEpimorphism,
+                [
+                    [ IsEpimorphism, 1 ]
+                ],
+  function( alpha )
+    return IsEpimorphism( alpha );
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "a morphism is triangulated categories is epi iff it is split epi"
+);
+
+##
+AddDerivationToCAP( IsSplitMonomorphism,
+                [
+                    [ IsMonomorphism, 1 ]
+                ],
+  function( alpha )
+    return IsMonomorphism( alpha );
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "a morphism is triangulated categories is mono iff it is split mono"
+);
+
+##
+AddDerivationToCAP( IsEpimorphism,
+                [
+                    [ IsSplitEpimorphism, 1 ]
+                ],
+  function( alpha )
+    return IsSplitEpimorphism( alpha );
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "a morphism is triangulated categories is epi iff it is split epi"
+);
+
+##
+AddDerivationToCAP( IsMonomorphism,
+                [
+                    [ IsSplitMonomorphism, 1 ]
+                ],
+  function( alpha )
+    return IsSplitMonomorphism( alpha );
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "a morphism is triangulated categories is mono iff it is split mono"
+);
+
+##
+AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
+                [
+                    [ InjectionOfCofactorOfDirectSum, 1 ],
+                    [ ShiftOnMorphismWithGivenObjects, 1 ]
+                ],
+  function( s, L, r  )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> [ ShiftOnMorphism( m ) ] );
+    return MorphismBetweenDirectSums( Tl );
+    
+end:
+  ategoryFilter := IsTriangulatedCategory,
+  Description:= "ShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and ShiftOnMorphism"
+);
+
+AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
+                [
+                    [ ProjectionInFactorOfDirectSum, 1 ],
+                    [ ShiftOnMorphismWithGivenObjects, 1 ]
+                ],
+  function( s, L, r  )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> ShiftOnMorphism( m ) );
+    return MorphismBetweenDirectSums( [ Tl ] );
+    
+end:
+ CategoryFilter := IsTriangulatedCategory,
+  Description:= "ShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and ShiftOnMorphism"
+
+);
+
+##
+AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
+                [
+                    [ InjectionOfCofactorOfDirectSum, 1 ],
+                    [ InverseShiftOnMorphismWithGivenObjects, 1 ]
+                ],
+  function( s, L, r )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> [ InverseShiftOnMorphism( m ) ] );
+    return MorphismBetweenDirectSums( Tl );
+    
+ end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "InverseShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and InverseShiftOnMorphism"
+ );
+
+##
+AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
+                [
+                    [ ProjectionInFactorOfDirectSum, 1 ],
+                    [ InverseShiftOnMorphismWithGivenObjects, 1 ]
+                ],
+  function( s, L, r )
+    local l, Tl;
+
+    l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
+    Tl := List( l, m -> InverseShiftOnMorphism( m ) );
+    return MorphismBetweenDirectSums( [ Tl ] );
+       
+ end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "InverseShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and InverseShiftOnMorphism"
+ );
+
+##
 

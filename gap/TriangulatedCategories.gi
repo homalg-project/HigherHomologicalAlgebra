@@ -273,6 +273,39 @@ WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects :
   return_type := [ "morphism" ],
 ),
 
+ShiftExpandingIsomorphismWithGivenObjects := rec(
+
+  installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
+  return_type := "morphism"
+),
+
+ShiftFactoringIsomorphismWithGivenObjects := rec(
+  installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
+  return_type := "morphism"
+),
+
+InverseShiftExpandingIsomorphismWithGivenObjects := rec(
+  installation_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
+  return_type := "morphism"
+),
+
+InverseShiftFactoringIsomorphismWithGivenObjects := rec(
+  installation_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  cache_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
+  return_type := "morphism"
+)
+
 ) );
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD );

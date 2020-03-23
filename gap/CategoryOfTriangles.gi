@@ -864,30 +864,31 @@ end );
 InstallMethod( ViewExactTriangle,
           [ IsCapExactTriangle ],
   function( T )
-
-    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
-    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n\n" );
     
-    Print( "T[ 0 ]:\n" );
+    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
+    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
+    
+    Print( "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
     ViewObj( T[ 0 ] );
     
-    Print( "\n\nT ^ 0:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
     ViewObj( T ^ 0 );
     
-    Print( "\n\nT[ 1 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
     ViewObj( T[ 1 ] );
     
-    Print( "\n\nT ^ 1:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
     ViewObj( T ^ 1 );
     
-    Print( "\n\nT[ 2 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
     ViewObj( T[ 2 ] );
     
-    Print( "\n\nT ^ 2:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
     ViewObj( T ^ 2 );
     
-    Print( "\n\nΣ( T[ 0 ] ):\n\n" );
+    Print( "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
     ViewObj( T[ 3 ] );
+
     
 end );
 
@@ -922,27 +923,27 @@ InstallMethod( Display,
   function( T )
 
     Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
-    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n\n" );
+    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
     
-    Print( "T[ 0 ]:\n" );
+    Print( "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
     Display( T[ 0 ] );
     
-    Print( "\nT ^ 0:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
     Display( T ^ 0 );
     
-    Print( "\nT[ 1 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
     Display( T[ 1 ] );
     
-    Print( "\nT ^ 1:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
     Display( T ^ 1 );
     
-    Print( "\nT[ 2 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
     Display( T[ 2 ] );
     
-    Print( "\nT ^ 2:\n\n" );
+    Print( "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
     Display( T ^ 2 );
     
-    Print( "\nΣ( T[ 0 ] ):\n\n" );
+    Print( "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
     Display( T[ 3 ] );
     
 end );
@@ -958,16 +959,16 @@ InstallMethod( Display,
     Print( " V            V            V              V           \n" );
     Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
     
-    Print( "\nmu[ 0 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "mu[ 0 ]:", TextAttr.reset, "\n\n" );
     Display( mu[ 0 ] );
     
-    Print( "\nmu[ 1 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "mu[ 1 ]:", TextAttr.reset, "\n\n" );
     Display( mu[ 1 ] );
     
-    Print( "\nmu[ 2 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "mu[ 2 ]:", TextAttr.reset, "\n\n" );
     Display( mu[ 2 ] );
     
-    Print( "\nmu[ 3 ]:\n\n" );
+    Print( "\n", TextAttr.b6, "mu[ 3 ]:", TextAttr.reset, "\n\n" );
     Display( mu[ 3 ] );
  
 end );

@@ -807,38 +807,117 @@ DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationA
 DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
+##
+#! @Description
+#! The arguments are list $L=[A_1,\dots,A_n]$ and two objects $X=\Sigma \bigoplus_i A_i, Y=\bigoplus_i \Sigma A_i$.
+#! The output is the isomorphism $X \rightarrow Y$ associated to $\Sigma$.
+#! @Returns a morphism
+#! @Arguments X, L, Y
+DeclareOperation( "ShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
-DeclareOperation( "ShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
-
+#! @Description
+#! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
+#! the category for the basic operation ShiftExpandingIsomorphismWithGivenObjects. 
+#! @Returns nothing
+#! @Arguments C, F
 DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
 DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "ShiftFactoringIsomorphismWithGivenObjects", [ IsObject ] );
+##
+#! @Description
+#! The argument is a list $L=[A_1,\dots,A_n]$.
+#! The output is the isomorphism $X \rightarrow Y$ associated to $\Sigma$, where 
+#! $X=\Sigma \bigoplus_i A_i$ and $Y=\bigoplus_i \Sigma A_i$
+#! @Returns a morphism
+#! @Arguments L
+DeclareOperation( "ShiftExpandingIsomorphism", [ IsList ] );
 
+##
+#! @Description
+#! The arguments are list $L=[A_1,\dots,A_n]$ and two objects $Y=\bigoplus_i \Sigma A_i, X=\Sigma \bigoplus_i A_i$.
+#! The output is the isomorphism $Y \rightarrow X$ associated to $\Sigma$.
+#! @Returns a morphism
+#! @Arguments Y, L, X
+DeclareOperation( "ShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. This operation adds the given function $F$ to
+#! the category for the basic operation AddShiftFactoringIsomorphismWithGivenObjects. 
+#! @Returns nothing
+#! @Arguments C, F
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "InverseShiftExpandingIsomorphismWithGivenObjects", [ IsObject ] );
+##
+#! @Description
+#! The argument is a list $L=[A_1,\dots,A_n]$.
+#! The output is the isomorphism $Y \rightarrow X$ associated to $\Sigma$, where 
+#! $Y=\bigoplus_i \Sigma A_i$ and $X=\Sigma \bigoplus_i A_i$.
+#! @Returns a morphism
+#! @Arguments L
+DeclareOperation( "ShiftFactoringIsomorphism", [ IsList ] );
 
+##
+#! @Description
+#! The arguments are list $L=[A_1,\dots,A_n]$ and two objects $X=\Sigma^{-1} \bigoplus_i A_i, Y=\bigoplus_i \Sigma^{-1} A_i$.
+#! The output is the isomorphism $X \rightarrow Y$ associated to $\Sigma^{-1}$.
+#! @Returns a morphism
+#! @Arguments X, L, Y
+DeclareOperation( "InverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. 
+#! This operation adds the given function $F$ to
+#! the category for the basic operation InverseShiftExpandingIsomorphismWithGivenObjects. 
+#! @Returns nothing
+#! @Arguments C, F
 DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
 DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddInverseShiftExpandingIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
 
-DeclareOperation( "InverseShiftFactoringIsomorphismWithGivenObjects", [ IsObject ] );
+##
+#! @Description
+#! The argument is a list $L=[A_1,\dots,A_n]$.
+#! The output is the isomorphism $X \rightarrow Y$ associated to $\Sigma$, where 
+#! $X=\Sigma \bigoplus_i A_i$ and $Y=\bigoplus_i \Sigma A_i$
+#! @Returns a morphism
+#! @Arguments L
+DeclareOperation( "InverseShiftExpandingIsomorphism", [ IsList ] );
 
+##
+#! @Description
+#! The arguments are list $L=[A_1,\dots,A_n]$ and two objects $Y=\bigoplus_i \Sigma^{-1} A_i, X=\Sigma^{-1} \bigoplus_i A_i$.
+#! The output is the isomorphism $Y \rightarrow X$ associated to $\Sigma^{-1}$.
+#! @Returns a morphism
+#! @Arguments Y, L, X
+DeclareOperation( "InverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+
+#! @Description
+#! The arguments are a triangulated category $\mathcal{C}$ w.r.t. $\Sigma:\mathcal{C} \rightarrow \mathcal{C}$ and a function $F$. 
+#! This operation adds the given function $F$ to
+#! the category for the basic operation InverseShiftFactoringIsomorphismWithGivenObjects. 
+#! @Returns nothing
+#! @Arguments C, F
 DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
 DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
 DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddInverseShiftFactoringIsomorphismWithGivenObjects", [ IsCapCategory, IsList ] );
+#! @Description
+#! The argument is a list $L=[A_1,\dots,A_n]$.
+#! The output is the isomorphism $Y \rightarrow X$ associated to $\Sigma^{-1}$, where 
+#! $Y=\bigoplus_i \Sigma^{-1} A_i$ and $X=\Sigma^{-1} \bigoplus_i A_i$.
+#! @Returns a morphism
+#! @Arguments L
+DeclareOperation( "InverseShiftFactoringIsomorphism", [ IsList ] );
 
 ######################################
 ##
