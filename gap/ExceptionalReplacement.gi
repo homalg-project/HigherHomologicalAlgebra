@@ -210,7 +210,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 fi;
                 
-                beta := AdditiveInverse( Shift( MorphismFromStandardConeObject( alpha ), -1 ) );
+                beta := DomainMorphismByInverseRotationAxiom( alpha );
                 
                 beta_as_list := [ ];
                 
