@@ -294,3 +294,134 @@ InstallMethod( Convolution,
   alpha -> Convolution( UnderlyingCell( alpha ) )
 );
 
+##
+InstallMethod( BackwardConvolutionOp,
+          [ IsChainComplex, IsInt ],
+  function( C, m )
+    local l, u, alpha, beta, H, maps, d_mp2, diffs;
+    
+    l := ActiveLowerBound( C );
+    
+    u := ActiveUpperBound( C );
+        
+    if m < l then
+      
+      return C;
+      
+    elif m > l then
+      
+      return BackwardConvolution( BackwardConvolution( C, m - 1 ), m );
+      
+    elif u - l in [ 0, 1 ] then
+      
+      return StalkChainComplex( InverseShiftOnObject( StandardConeObject( C ^ ( m + 1 ) ) ), m + 1 );
+      
+    else
+      
+      alpha := C ^ ( m + 2 );
+      
+      beta := C ^ ( m + 1 );
+      
+      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+      
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      
+      d_mp2 := HomotopyCategoryMorphism(
+                  Source( alpha ),
+                  InverseShiftOnObject( StandardConeObject( C ^ ( m + 1 ) ) ),
+                  maps
+                );
+      
+      diffs := List( [ l + 3 .. u ], i -> C ^ i );
+      
+      Add( diffs, d_mp2, 1 );
+      
+      return ChainComplex( diffs, m + 2 );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsChainComplex ],
+  function( C )
+    local u;
+    
+    u := ActiveUpperBound( C );
+    
+    C := BackwardConvolution( C, u - 1 );
+    
+    return Shift( C[ u ], u );
+    
+end );
+
+##
+InstallMethod( BackwardConvolutionOp,
+          [ IsChainMorphism, IsInt ],
+  function( alpha, m )
+    local C, D, l, u, map, maps, s, r;
+     
+    C := Source( alpha );
+    
+    D := Range( alpha );
+    
+    l := Minimum( ActiveLowerBound( C ), ActiveLowerBound( D ) );
+    
+    u := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
+    
+    if m < l then
+      
+      return alpha;
+      
+    elif m > l then
+      
+      return BackwardConvolution( BackwardConvolution( alpha, m - 1 ), m );
+      
+    else
+      
+      map := MorphismBetweenStandardConeObjects(
+                C ^ ( m + 1 ),
+                alpha[ m + 1 ],
+                alpha[ m ],
+                D ^ ( m + 1 )
+              );
+      
+      map := InverseShiftOnMorphism( map );
+      
+      if u - l in [ 0, 1 ] then
+        
+        return StalkChainMorphism( map, m + 1 );
+    
+      else
+        
+        maps := List( [ m + 2 .. u ], i -> alpha[ i ] );
+        
+        Add( maps, map, 1 );
+        
+        s := BackwardConvolution( Source( alpha ), m );
+        
+        r := BackwardConvolution( Range( alpha ), m );
+        
+        return ChainMorphism( s, r, maps, m + 1 );
+        
+      fi;      
+     
+    fi;
+    
+end );
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsChainMorphism ],
+  function( alpha )
+    local u;
+    
+    u := ActiveUpperBoundForSourceAndRange( alpha );
+    
+    alpha := BackwardConvolution( alpha, u - 1 );
+    
+    return Shift( alpha[ u ], u );
+    
+end );
+
