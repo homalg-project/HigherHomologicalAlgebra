@@ -65,7 +65,9 @@ function( Ho_C )
   
   AddIsomorphismFromInverseShiftOfShift( Ho_C, IdentityMorphism );
   
-  AddStandardConeObject( Ho_C, MappingCone );
+  AddStandardConeObject( Ho_C,
+    alpha -> MappingCone( UnderlyingCell( alpha ) ) / Ho_C
+  );
   
   AddMorphismIntoStandardConeObjectWithGivenStandardConeObject( Ho_C,
     function( alpha, st_cone )
