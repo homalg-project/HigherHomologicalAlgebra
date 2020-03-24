@@ -7,14 +7,18 @@
 #####################################################################
 
 ##
-DeclareAttribute( "Convolution", IsChainComplex );
+DeclareAttribute( "BackwardConvolution", IsChainComplex );
 
 ##
-DeclareAttribute( "Convolution", IsHomotopyCategoryObject );
+KeyDependentOperation( "BackwardConvolution", IsChainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "BackwardConvolution", IsChainMorphism, IsInt, ReturnTrue );
 
 ##
-DeclareAttribute( "Convolution", IsChainMorphism );
+DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryObject );
 
 ##
-DeclareAttribute( "Convolution", IsHomotopyCategoryMorphism );
+DeclareAttribute( "BackwardConvolution", IsChainMorphism );
+
+##
+DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryMorphism );
 
