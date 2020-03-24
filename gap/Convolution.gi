@@ -185,51 +185,49 @@ end );
 
 #TODO Shift or UnsignedShift and why?
 ##
-InstallMethod( Convolution,
+InstallMethod( ForwardConvolution,
           [ IsChainComplex ],
   function( C )
-    local chains_category, homotopy_category, l, u, c, d, tau;
-    
-    chains_category := CapCategory( C );
-    
-    homotopy_category := UnderlyingCategory( chains_category );
-    
+    local l, u, diffs, alpha, beta, H, maps, d_um1;
+     
     l := ActiveLowerBound( C );
     
     u := ActiveUpperBound( C );
      
     if u - l in [ 0, 1 ] then
       
-      c := MappingCone( C ^ ( l + 1 ) );
-      
-      c := Shift( c, l );
-      
-      c!.defining_morphism := C ^ ( l + 1 );
-      
-      return c;
+      return Shift( MappingCone( C ^ ( l + 1 ) ), l );
       
     else
       
-      d := List( [ l + 1 .. u - 2 ], i -> C ^ i );
+      diffs := List( [ l + 1 .. u - 2 ], i -> C ^ i );
       
-      tau := MappingConeColift( C ^ u, C ^ ( u - 1 ) );
+      alpha := C ^ u;
       
-      Add( d, tau );
+      beta := C ^ ( u - 1 );
       
-      return Convolution( ChainComplex( d, l + 1 ) );
+      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+    
+      maps := AsZFunction( n -> MorphismBetweenDirectSums( [ [ H[ n - 1 ] ], [ beta[ n ] ] ] ) );
+    
+      d_um1 := HomotopyCategoryMorphism( MappingCone( alpha ), Range( beta ), maps );
+      
+      Add( diffs, d_um1 );
+      
+      return ForwardConvolution( ChainComplex( diffs, l + 1 ) );
       
     fi;
    
 end );
 
 ##
-InstallMethod( Convolution,
+InstallMethod( ForwardConvolution,
           [ IsHomotopyCategoryObject ],
-  C -> Convolution( UnderlyingCell( C ) )
+  C -> ForwardConvolution( UnderlyingCell( C ) )
 );
 
 ##
-InstallMethod( Convolution,
+InstallMethod( ForwardConvolution,
           [ IsChainMorphism ],
   function( alpha )
     local chains_category, homotopy_category, C, D, l, u, m, tau_C, d_C, new_C, tau_D, d_D, new_D, L, new_alpha;
@@ -282,16 +280,16 @@ InstallMethod( Convolution,
       
       new_alpha := ChainMorphism( new_C, new_D, L, l );
       
-      return Convolution( new_alpha );
+      return ForwardConvolution( new_alpha );
       
     fi;
   
 end );
 
 ##
-InstallMethod( Convolution,
+InstallMethod( ForwardConvolution,
           [ IsHomotopyCategoryMorphism ],
-  alpha -> Convolution( UnderlyingCell( alpha ) )
+  alpha -> ForwardConvolution( UnderlyingCell( alpha ) )
 );
 
 ##

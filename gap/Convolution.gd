@@ -7,6 +7,18 @@
 #####################################################################
 
 ##
+DeclareAttribute( "ForwardConvolution", IsChainComplex );
+
+##
+DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryObject );
+
+##
+DeclareAttribute( "ForwardConvolution", IsChainMorphism );
+
+##
+DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryMorphism );
+
+##
 DeclareAttribute( "BackwardConvolution", IsChainComplex );
 
 ##
