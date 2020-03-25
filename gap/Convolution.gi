@@ -167,7 +167,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolution( BackwardConvolution( C, m - 1 ), m );
+      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -207,7 +207,7 @@ InstallMethod( BackwardConvolution,
     
     u := ActiveUpperBound( C );
     
-    C := BackwardConvolution( C, u - 1 );
+    C := BackwardConvolutionAtIndex( C, u - 1 );
     
     return Shift( C[ u ], u );
     
