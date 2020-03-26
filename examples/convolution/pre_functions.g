@@ -509,3 +509,47 @@ create_morphisms :=
     od;
     
 end;
+
+
+hack_algebroid_morphism :=
+  function( f, y, z )
+    local e, p, c;
+    e := UnderlyingQuiverAlgebraElement( f );
+    if IsZero( e ) then
+      return f;
+    fi;
+    e := Representative( e );
+    p := Paths( e );
+    if Size( p ) <> 1 then
+      Error( "not expected input!" );
+    fi;
+    c := Coefficients( e );
+    return c[ 1 ] * ValueGlobal( ReplacedString( String( p[ 1 ] ), y, z ) );
+end;
+
+hack_additive_closure_morphism :=
+  function( F, y, z )
+    local AC, m;
+    AC := CapCategory( F );
+    m := MorphismMatrix( F );
+    m := List( m, row -> List( row, f -> hack_algebroid_morphism( f, y, z ) ) );
+    return AdditiveClosureMorphism( Source( F ), m, Range( F ) );
+end;
+
+hack_object_in_homotopy_category :=
+  function( C, y, z )
+    local l, u, diffs; 
+    l := ActiveLowerBound( C );
+    u := ActiveUpperBound( C );
+    diffs := List( [ l + 1 .. u ], i -> hack_additive_closure_morphism( C ^ i, y, z ) );
+    return HomotopyCategoryObject( diffs, l + 1 );
+end;
+
+hack_morphism_in_homotopy_category :=
+  function( F, y, z )
+    local l, u, maps;
+    l := ActiveLowerBound( F );
+    u := ActiveUpperBound( F );
+    maps := List( [ l .. u ], i -> hack_additive_closure_morphism( F[ i ], y, z ) );
+    return HomotopyCategoryMorphism( Source( F ), Range( F ), maps, l );
+end;

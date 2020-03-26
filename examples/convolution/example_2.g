@@ -1,4 +1,4 @@
-ReadPackage( "DerivedCategories", "examples/convolution/convolution.g" );
+ReadPackage( "DerivedCategories", "examples/convolution/pre_functions.g" );
 
 field := HomalgFieldOfRationals( );
 
