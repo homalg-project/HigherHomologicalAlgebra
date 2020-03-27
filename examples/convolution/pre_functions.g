@@ -68,6 +68,10 @@ create_labels_for_higher_differentials :=
   function( l, r, b, a, names )
     local N, indices, labels, u, v, index, name;
     
+    if Minimum( r - l, a - b ) < 2 then
+      return [  [ ], [ ], [ ] ];
+    fi;
+    
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
     labels := [ ]; 
@@ -106,7 +110,6 @@ create_labels_for_higher_differentials :=
     return TransposedMat( labels );
     
 end;
-
 
 create_labels_for_0_morphisms :=
   function( l, r, b, a, names )
@@ -147,6 +150,10 @@ create_labels_for_higher_morphisms :=
   function( l, r, b, a, names )
     local indices, labels, pos, positions, current_labels, s, N, name, index, p;
     
+    if Minimum( r - l, a - b ) < 1 then
+      return [  [ ], [ ], [ ] ];
+    fi;
+    
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
     labels := [ ];
@@ -171,6 +178,50 @@ create_labels_for_higher_morphisms :=
                     "m"
                   );
             
+            Add( current_labels, [ s, pos + ( N - 1 ) * ( r - l + 1 ) * ( a - b + 1 ), N * ( r - l + 1 ) * ( a - b + 1 ) + p ] );
+            
+          od;
+          
+          labels := Concatenation( labels, current_labels );
+          
+        od;
+      
+      od;
+      
+    od;
+    
+    return TransposedMat( labels );
+    
+end;
+
+create_labels_for_homotopies :=
+  function( l, r, b, a, names )
+    local indices, labels, pos, positions, current_labels, s, N, name, index, p;
+    
+    indices := Cartesian( [ l .. r ], [ b .. a ] );
+    
+    labels := [ ];
+    
+    for N in [ 1 .. Size( names ) ] do
+        
+      for name in names[ N ] do
+        
+        for index in indices do
+          
+          pos := Position( indices, index );
+              
+          positions := PositionsProperty( indices, i -> Sum( index ) + 1 = Sum( i ) and index[ 2 ] - i[ 2 ] >= 0 );
+              
+          current_labels := [ ];
+          
+          for p in positions do
+            
+            s := ReplacedString(
+                    Concatenation( name, "_", String( index[1] ), "x", String( index[ 2 ] ), "_", String( index[ 2 ] - indices[ p ][ 2 ] ) ),
+                    "-",
+                    "m"
+                  );
+                
             Add( current_labels, [ s, pos + ( N - 1 ) * ( r - l + 1 ) * ( a - b + 1 ), N * ( r - l + 1 ) * ( a - b + 1 ) + p ] );
             
           od;
@@ -400,6 +451,131 @@ morphisms_relations :=
    
 end;
 
+
+homotopies_relations :=
+  function( A, l, r, b, a, names )
+    local indices, relations, positions, current_index, degree, morphism_name, morphism, rel, positions_for_left_side, diff_name, x, y, positions_for_right_side, name, index, p, u;
+    
+    indices := Cartesian( [ l .. r ], [ b .. a ] );
+    
+    relations := [ ];
+    
+    for name in names do
+      
+      for index in indices do
+        
+        positions := PositionsProperty( indices, k -> Sum( index ) = Sum( k ) and index[ 2 ] - k[ 2 ] >= 0 );
+        
+        for p in positions do
+          
+          current_index := indices[ p ];
+          
+          degree := index[ 2 ] - current_index[ 2 ];
+          
+          if degree = 0 then
+            morphism_name := name[ 3 ];
+          else
+            morphism_name := name[ 4 ];
+          fi;
+          
+          morphism := ReplacedString(
+                        Concatenation( morphism_name, "_", String( index[ 1 ] ), "x", String( index[ 2 ] ), "_", String( degree ) ),
+                        "-",
+                        "m"
+                      );
+                      
+          rel := - A.( morphism );
+          
+          positions_for_left_side :=
+              PositionsProperty( indices, i -> Sum( index ) - 1 = Sum( i ) and index[ 2 ] - i[ 2 ] in [ 0 .. degree ] );
+            
+          for u in positions_for_left_side do
+            
+            if index[ 2 ] - indices[ u ][ 2 ] in [ 0, 1 ] then
+              diff_name := name[ 1 ];
+            else
+              diff_name := name[ 2 ];
+            fi;
+            
+            x := Concatenation(
+                    diff_name,
+                    "_",
+                    String( index[ 1 ] ),
+                    "x",
+                    String( index[ 2 ] ),
+                    "_",
+                    String( index[ 2 ] - indices[ u ][ 2 ] )
+                  );
+                  
+            x := ReplacedString( x, "-", "m" );
+            
+            y := Concatenation(
+                    name[ 5 ],
+                    "_",
+                    String( indices[ u ][ 1 ] ),
+                    "x",
+                    String( indices[ u ][ 2 ] ),
+                    "_",
+                    String( indices[ u ][ 2 ] - current_index[ 2 ] )
+                  );
+                  
+            y := ReplacedString( y, "-", "m" );
+            
+            rel := rel + A.( x ) * A.( y );
+            
+          od;
+          
+          positions_for_right_side :=
+              PositionsProperty( indices, i -> Sum( index ) + 1 = Sum( i ) and index[ 2 ] - i[ 2 ] in [ 0 .. degree ] );
+              
+          for u in positions_for_right_side do
+          
+            x := Concatenation(
+                    name[ 5 ],
+                    "_",
+                    String( index[ 1 ] ),
+                    "x",
+                    String( index[ 2 ] ),
+                    "_",
+                    String( index[ 2 ] - indices[ u ][ 2 ] )
+                  );
+                   
+            x := ReplacedString( x, "-", "m" );
+            
+            if indices[ u ][ 2 ] - current_index[ 2 ] in [ 0, 1 ] then
+              diff_name := name[ 6 ];
+            else
+              diff_name := name[ 7 ];
+            fi;
+            
+            y := Concatenation(
+                    diff_name,
+                    "_",
+                    String( indices[ u ][ 1 ] ),
+                    "x",
+                    String( indices[ u ][ 2 ] ),
+                    "_",
+                    String( indices[ u ][ 2 ] - current_index[ 2 ] )
+                  );
+            
+            y := ReplacedString( y, "-", "m" );
+            
+            rel := rel + A.( x ) * A.( y );
+            
+          od;
+          
+          Add( relations, rel );
+          
+        od;
+        
+      od;
+      
+    od;
+    
+    return Set( relations );
+    
+end;
+
 create_complexes :=
   function( AC, l, r, b, a, names )
     local indices, diffs, complexes, maps, name;
@@ -509,7 +685,6 @@ create_morphisms :=
     od;
     
 end;
-
 
 hack_algebroid_morphism :=
   function( f, y, z )
