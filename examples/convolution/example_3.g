@@ -2,9 +2,11 @@ ReadPackage( "DerivedCategories", "examples/convolution/pre_functions.g" );
 
 field := HomalgFieldOfRationals( );
 
-# In the following we create three grids P**, Q**, R**
-# and a morphism between alpha:P** --> Q** and beta: Q** --> R**
-# Then we apply the convolution on alpha, beta and their composition.
+# In the following we create three grids P**, Q**
+# and a morphism between alpha:P** --> Q**
+# which has two different Convolutions,
+# Accourding two how we complete the degree part of alpha
+# to higher morphism.
 
 l := 0;
 r := 4;
