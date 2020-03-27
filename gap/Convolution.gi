@@ -28,7 +28,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( C, m + 1 ), m );
+      return ForwardConvolution( ForwardConvolution( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -58,13 +58,19 @@ end );
 
 ##
 InstallMethod( ForwardConvolution,
+          [ IsChainComplex, IsInt ],
+  ForwardConvolutionAtIndex
+);
+
+##
+InstallMethod( ForwardConvolution,
           [ IsChainComplex ],
   function( C )
     local l;
     
     l := ActiveLowerBound( C );
     
-    C := ForwardConvolutionAtIndex( C, l + 1 );
+    C := ForwardConvolution( C, l + 1 );
     
     return Shift( C[ l ], l );
     
@@ -92,7 +98,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( alpha, m + 1 ), m );
+      return ForwardConvolution( ForwardConvolution( alpha, m + 1 ), m );
       
     else
       
@@ -113,9 +119,9 @@ InstallMethod( ForwardConvolutionAtIndexOp,
         
         Add( maps, map );
         
-        s := ForwardConvolutionAtIndex( Source( alpha ), m );
+        s := ForwardConvolution( Source( alpha ), m );
         
-        r := ForwardConvolutionAtIndex( Range( alpha ), m );
+        r := ForwardConvolution( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, l );
         
@@ -127,13 +133,19 @@ end );
 
 ##
 InstallMethod( ForwardConvolution,
+          [ IsChainMorphism, IsInt ],
+  ForwardConvolutionAtIndex
+);
+
+##
+InstallMethod( ForwardConvolution,
           [ IsChainMorphism ],
   function( alpha )
     local l;
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := ForwardConvolutionAtIndex( alpha, l + 1 );
+    alpha := ForwardConvolution( alpha, l + 1 );
     
     return Shift( alpha[ l ], l );
     
@@ -167,7 +179,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m - 1 ), m );
+      return BackwardConvolution( BackwardConvolution( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -201,13 +213,19 @@ end );
 
 ##
 InstallMethod( BackwardConvolution,
+          [ IsChainComplex, IsInt ],
+  BackwardConvolutionAtIndex
+);
+
+##
+InstallMethod( BackwardConvolution,
           [ IsChainComplex ],
   function( C )
     local u;
     
     u := ActiveUpperBound( C );
     
-    C := BackwardConvolutionAtIndex( C, u - 1 );
+    C := BackwardConvolution( C, u - 1 );
     
     return Shift( C[ u ], u );
     
@@ -229,7 +247,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( alpha, m - 1 ), m );
+      return BackwardConvolution( BackwardConvolution( alpha, m - 1 ), m );
       
     else
       
@@ -252,9 +270,9 @@ InstallMethod( BackwardConvolutionAtIndexOp,
         
         Add( maps, map, 1 );
         
-        s := BackwardConvolutionAtIndex( Source( alpha ), m );
+        s := BackwardConvolution( Source( alpha ), m );
         
-        r := BackwardConvolutionAtIndex( Range( alpha ), m );
+        r := BackwardConvolution( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, m + 1 );
         
@@ -266,13 +284,19 @@ end );
 
 ##
 InstallMethod( BackwardConvolution,
+          [ IsChainMorphism, IsInt ],
+  BackwardConvolutionAtIndex
+);
+
+##
+InstallMethod( BackwardConvolution,
           [ IsChainMorphism ],
   function( alpha )
     local u;
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := BackwardConvolutionAtIndex( alpha, u - 1 );
+    alpha := BackwardConvolution( alpha, u - 1 );
     
     return Shift( alpha[ u ], u );
     
