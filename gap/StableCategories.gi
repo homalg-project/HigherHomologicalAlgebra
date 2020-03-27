@@ -190,10 +190,20 @@ InstallMethod( StableCategory,
     fi;
     
     stable_category := QuotientCategory( category, congruency_test_function: NameOfCategory := name,
-                                                                             FinalizeCategory := to_be_finalized,
+                                                                             FinalizeCategory := false,
                                                                              SpecialFilters := special_filters );
     
+    # It can be derived, but this is better, because the function membership_function may have been implemented
+    # to set some attributes, for example HomotopyMorphism in case the stable category is some homotopy category.
+    AddIsZeroForMorphisms( stable_category, phi -> membership_function( UnderlyingCell( phi ) ) );
+    
     SetCongruencyTestFunctionForStableCategory( stable_category, membership_function );
+    
+    if to_be_finalized = true then
+      
+      Finalize( stable_category );
+      
+    fi;
     
     return stable_category;
     
