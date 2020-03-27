@@ -1,27 +1,42 @@
 ReadPackage( "DerivedCategories", "examples/convolution/pre_functions.g" );
 
-# In the following we create a grid P** with differntials of degrees 0 & 1 with labels dP_0, dP_1
-# and two different higher differentials, which both can be used to compute a convolution
-
 field := HomalgFieldOfRationals( );
 
+# In the following we create three grids P**, Q**, R**
+# and a morphism between alpha:P** --> Q** and beta: Q** --> R**
+# Then we apply the convolution on alpha, beta and their composition.
+
 l := 0;
-r := 5;
+r := 3;
 b := 0;
-a := 5;
+a := 3;
 
-vertices_labels := create_labels_for_vertices( l, r, b, a, [ "P" ] );
+vertices_labels := create_labels_for_vertices( l, r, b, a, [ "P", "Q", "R" ] );
 
-01_diffs := create_labels_for_01_differentials( l, r, b, a, [ [ "dP" ] ] );
-higher_diffs := create_labels_for_higher_differentials( l, r, b, a, [ [ "fP", "gP" ] ] );
+01_diffs := create_labels_for_01_differentials( l, r, b, a, [ [ "dP" ], [ "dQ" ], [ "dR" ] ] );
+higher_diffs := create_labels_for_higher_differentials( l, r, b, a, [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ] );
 
-arrows := ListN( 01_diffs, higher_diffs, Concatenation );
+0_morphisms := create_labels_for_0_morphisms( l, r, b, a, [ [ "alpha" ], [ "beta" ] ] );
+higher_morphisms := create_labels_for_higher_morphisms( l, r, b, a, [ [ "h_alpha" ], [ "h_beta" ] ] );
+
+diffs := ListN( 01_diffs, higher_diffs, Concatenation );
+morphisms := ListN( 0_morphisms, higher_morphisms, Concatenation );
+
+arrows := ListN( diffs, morphisms, Concatenation );
 
 quiver := RightQuiver( "q", vertices_labels, arrows[1], arrows[2], arrows[3] );
 
 A := PathAlgebra( field, quiver );
 
-relations := differentials_relations( A, l, r, b, a, [ "dP" ], [ [ "fP", "gP" ] ] );
+d_relations := differentials_relations( A, l, r, b, a, [ "dP", "dQ", "dR" ], [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ] );
+
+m_relations := morphisms_relations( A, l, r, b, a,
+        [
+          [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
+          [ "dQ", "hdQ", "beta", "h_beta", "dR", "hdR" ]
+        ] );
+
+relations := Concatenation( d_relations, m_relations );
 
 A := A / relations;
 
@@ -33,15 +48,27 @@ AssignSetOfGeneratingMorphisms( C );
 AC := AdditiveClosure( C );
 Ho_AC := HomotopyCategory( AC );
 
-create_complexes( AC, l, r, b, a, [ [ "dP", "P" ] ] );
+create_complexes( AC, l, r, b, a, [ [ "dP", "P" ], [ "dQ", "Q" ], [ "dR", "R" ] ] );
+create_morphisms( AC, l, r, b, a, [ [ "P", "Q", "alpha" ], [ "Q", "R", "beta" ] ] );
+
 quit;
 
-conv_fP := Convolution( P );
-IsWellDefined( conv_fP );
+Display( P_0x1 / AC );
+Display( P_1[ 0 ] );
+Display( P_1 );
+P;
+P[1] = P_1;
+P[2] = P_2;
+Q;
+Q[1] = Q_1;
+Q[2] = Q_2;
+alpha_1;
+Source( alpha_1 ) = P_1;
+Range( alpha_1 ) = Q_1;
+alpha;
 
-conv_gP := hack_object_in_homotopy_category( conv_fP, "fP", "gP" );
-IsWellDefined( conv_gP );
-
-HomStructure( conv_fP, conv_gP );
-#! <A vector space object over Q of dimension 0>
+conv_P := Convolution( P );
+conv_alpha := Convolution( alpha );
+conv_beta := Convolution( beta );
+conv_alpha_beta := Convolution( PreCompose( alpha, beta ) );
 
