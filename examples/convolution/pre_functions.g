@@ -454,7 +454,7 @@ end;
 
 homotopies_relations :=
   function( A, l, r, b, a, names )
-    local indices, relations, positions, current_index, degree, morphism_name, morphism, rel, positions_for_left_side, diff_name, x, y, positions_for_right_side, name, index, p, u;
+    local indices, relations, positions, current_index, degree, m_names, morphisms, rel, positions_for_left_side, diff_name, x, y, positions_for_right_side, name, index, p, u;
     
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
@@ -473,18 +473,35 @@ homotopies_relations :=
           degree := index[ 2 ] - current_index[ 2 ];
           
           if degree = 0 then
-            morphism_name := name[ 3 ];
+            m_names := name[ 3 ];
           else
-            morphism_name := name[ 4 ];
+            m_names := name[ 4 ];
           fi;
           
-          morphism := ReplacedString(
-                        Concatenation( morphism_name, "_", String( index[ 1 ] ), "x", String( index[ 2 ] ), "_", String( degree ) ),
-                        "-",
-                        "m"
-                      );
-                      
-          rel := - A.( morphism );
+          morphisms :=
+            List( m_names,
+              m_name -> A. ( ReplacedString(
+                            Concatenation(
+                            m_name,
+                            "_",
+                            String( index[ 1 ] ),
+                            "x",
+                            String( index[ 2 ] ),
+                            "_",
+                            String( degree )
+                            ),
+                            "-",
+                            "m" )
+                        )
+                );
+          
+          if Size( morphisms ) = 1 then
+            rel := morphisms[ 1 ];
+          elif Size( morphisms ) = 2 then
+            rel := morphisms[ 1 ] - morphisms[ 2 ];
+          else
+            Error( "bad input!\n" );
+          fi;
           
           positions_for_left_side :=
               PositionsProperty( indices, i -> Sum( index ) - 1 = Sum( i ) and index[ 2 ] - i[ 2 ] in [ 0 .. degree ] );
