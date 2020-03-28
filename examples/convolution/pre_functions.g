@@ -68,7 +68,7 @@ create_labels_for_higher_differentials :=
   function( l, r, b, a, names )
     local N, indices, labels, u, v, index, name;
     
-    if Minimum( r - l, a - b ) < 2 then
+    if IsEmpty( names ) or Minimum( r - l, a - b ) < 2 then
       return [  [ ], [ ], [ ] ];
     fi;
     
@@ -115,6 +115,10 @@ create_labels_for_0_morphisms :=
   function( l, r, b, a, names )
     local indices, labels, current_labels, N, name;
     
+    if IsEmpty( names ) then
+      return [ [ ], [ ], [ ] ];
+    fi;
+    
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
     labels := [ ];
@@ -150,7 +154,7 @@ create_labels_for_higher_morphisms :=
   function( l, r, b, a, names )
     local indices, labels, pos, positions, current_labels, s, N, name, index, p;
     
-    if Minimum( r - l, a - b ) < 1 then
+    if IsEmpty( names ) or Minimum( r - l, a - b ) < 1 then
       return [  [ ], [ ], [ ] ];
     fi;
     
@@ -198,6 +202,10 @@ create_labels_for_homotopies :=
   function( l, r, b, a, names )
     local indices, labels, pos, positions, current_labels, s, N, name, index, p;
     
+    if IsEmpty( names ) then
+      return [ [ ], [ ], [ ] ];
+    fi;
+
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
     labels := [ ];
@@ -239,8 +247,11 @@ create_labels_for_homotopies :=
 end;
 
 differentials_relations :=
-  function( A, l, r, b, a, 01_diff_names, higher_diff_names )
-    local indices, relations, pos, current_index, degree, positions_of_relevant_indices, current_relation, name, x, y, N, higher_diff_name, index, p;
+  function( A, l, r, b, a, diffs_names )
+    local 01_diff_names, higher_diff_names, indices, relations, pos, current_index, degree, positions_of_relevant_indices, current_relation, name, x, y, N, higher_diff_name, index, p;
+    
+    01_diff_names := diffs_names[ 1 ];
+    higher_diff_names := diffs_names[ 2 ];
     
     indices := Cartesian( [ l .. r ], [ b .. a ] );
     
@@ -701,6 +712,52 @@ create_morphisms :=
     
     od;
     
+end;
+
+create_free_category :=
+  function( field, l, r, b, a, names, complexes, morphisms )
+    local vertices_labels, 01_diffs, higher_diffs, 0_morphisms, higher_morphisms, homotopies, diffs, mors, arrows, quiver, A, d_relations, m_relations, h_relations, relations, C, AC;
+    
+    vertices_labels := create_labels_for_vertices( l, r, b, a, names[ 1 ] );
+    
+    01_diffs := create_labels_for_01_differentials( l, r, b, a, names[ 2 ] );
+    higher_diffs := create_labels_for_higher_differentials( l, r, b, a, names[ 3 ] );
+    
+    0_morphisms := create_labels_for_0_morphisms( l, r, b, a, names[ 4 ] );
+    higher_morphisms := create_labels_for_higher_morphisms( l, r, b, a, names[ 5 ] );
+    homotopies := create_labels_for_homotopies( l, r, b, a, names[ 6 ] );
+
+    diffs := ListN( 01_diffs, higher_diffs, Concatenation );
+    mors := ListN( 0_morphisms, higher_morphisms, homotopies, Concatenation );
+    
+    arrows := ListN( diffs, mors, Concatenation );
+    
+    quiver := RightQuiver( "quiver", vertices_labels, arrows[1], arrows[2], arrows[3] );
+    
+    A := PathAlgebra( field, quiver );
+    
+    d_relations := differentials_relations( A, l, r, b, a, names[ 7 ] );
+    
+    m_relations := morphisms_relations( A, l, r, b, a, names[ 8 ] );
+    
+    h_relations := homotopies_relations( A, l, r, b, a, names[ 9 ] );
+
+    relations := Concatenation( d_relations, m_relations, h_relations );
+    
+    A := A / relations;
+    
+    C := Algebroid( A );
+    C!.Name := "algebroid over quiver algebra";
+    
+    AssignSetOfObjects( C );
+    AssignSetOfGeneratingMorphisms( C );
+    
+    AC := AdditiveClosure( C );
+    
+    create_complexes( AC, l, r, b, a, complexes );
+    create_morphisms( AC, l, r, b, a, morphisms );
+    
+    return AC;
 end;
 
 hack_algebroid_morphism :=
