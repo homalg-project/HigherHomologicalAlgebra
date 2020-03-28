@@ -1,11 +1,11 @@
 if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
     
-  ##
-  InstallMethod( BeilinsonFunctor,
+  
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules,
             [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, add_full, collection, iso, inc_1, inc_2, reps, homotopy_reps, name_for_algebra, name_for_quiver, BB, r, i;
-      
+      local n, A, cat, full, name_for_quiver, name_for_algebra, collection, name_for_underlying_quiver, name_for_endomorphism_algebra, homotopy_cat, BB, underlyin, i;
+    
       n := Size( Indeterminates( S ) );
       
       A := KoszulDualRing( S );
@@ -14,20 +14,12 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
       
-      add_full := AdditiveClosure( full );
-      
-      DeactivateCachingOfCategory( add_full );
-      
-      CapCategorySwitchLogicOff( add_full );
-      
-      DisableSanityChecks( add_full );
-      
       name_for_quiver := "quiver{";
       
       for i in Reversed( [ 0 .. n - 1 ] ) do
         
         if i <> 0 then
-          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ") -{", String( n - 1 ), "}-> " );
+          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ") -{", String( n ), "}-> " );
         else
           name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ")" );
         fi;
@@ -43,19 +35,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
                                                   name_for_endomorphism_algebra := name_for_algebra
                                                 );
       
-      iso := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+      homotopy_cat := HomotopyCategory( collection );
       
-      inc_1 := InclusionFunctor( AsCapCategory( Range( iso ) ) );
-      
-      iso := PreCompose( [ iso, inc_1 ] );
-      
-      iso := ExtendFunctorToAdditiveClosureOfSource( iso );
-      
-      reps := AsCapCategory( Range( iso ) );
-      
-      homotopy_reps := HomotopyCategory( reps );
-      
-      BB := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_reps );
+      BB := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_cat );
       
       AddObjectFunction( BB,
         function( a )
@@ -63,11 +45,17 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
           
           T := TateResolution( a );
           
-          diffs := List( [ - n + 2 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T ^ i ) ) );
+          diffs := Differentials( T );
           
-          C := ChainComplex( diffs, - n + 2 );
+          diffs := ApplyMap( diffs, CAN_TWISTED_OMEGA_CELL );
           
-          return C / homotopy_reps;
+          C := HomotopyCategoryObject( homotopy_cat, diffs );
+          
+          SetLowerBound( C, - n + 1 );
+          
+          SetUpperBound( C, n - 1 );
+          
+          return C;
           
       end );
       
@@ -75,91 +63,207 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
         function( s, alpha, r )
           local T, maps;
           
-          s := UnderlyingCell( s );
-          
-          r := UnderlyingCell( r );
-          
           T := TateResolution( alpha );
           
-          maps := List( [ - n + 1 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T[ i ] ) ) );
+          maps := Morphisms( T );
           
-          return ChainMorphism( s, r, maps, - n + 1 ) / homotopy_reps;
+          maps := ApplyMap( maps, CAN_TWISTED_OMEGA_CELL );
+          
+          return HomotopyCategoryMorphism( s, r, maps );
           
       end );
       
       return BB;
+ 
+  end );
+  
+  ##
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C;
+      
+      B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
+      
+      C := AsCapCategory( Range( B ) );
+      
+      C := DefiningCategory( C );
+      
+      C := UnderlyingCategory( C );
+      
+      C := ExceptionalCollection( C );
+      
+      C := IsomorphismIntoAlgebroid( C );
+      
+      C := ExtendFunctorToAdditiveClosures( C );
+      
+      C := ExtendFunctorToHomotopyCategories( C );
+      
+      C := PreCompose( B, C );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
       
   end );
   
   ##
-  #InstallMethod( 
-  BindGlobal( "BeilinsonFunctor2",
-     #       [ IsHomalgGradedRing ],
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows,
+            [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, add_full, iso, add_cotangent_modules, homotopy_cat, r, name, BB;
+      local B, C;
       
-      n := Size( Indeterminates( S ) );
+      B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
       
-      A := KoszulDualRing( S );
+      C := AsCapCategory( Range( B ) );
       
-      cat := GradedLeftPresentations( S );
+      C := DefiningCategory( C );
       
-      full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
+      C := IsomorphismFunctorIntoQuiverRows( C );
       
-      add_full := AdditiveClosure( full );
+      C := ExtendFunctorToHomotopyCategories( C );
       
-      DeactivateCachingOfCategory( add_full );
+      C := PreCompose( B, C );
       
-      CapCategorySwitchLogicOff( add_full );
+      C!.Name := "Cotangent Beilinson functor";
       
-      DisableSanityChecks( add_full );
+      return C;
+      
+    end );
+  
+  
+  ##
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C;
+      
+      B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
+      
+      C := AsCapCategory( Range( B ) );
+      
+      C := DefiningCategory( C );
+      
+      C := UnderlyingCategory( C );
+      
+      C := ExceptionalCollection( C );
+    
+      C := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( C );
+      
+      C := ExtendFunctorToAdditiveClosures( C );
+      
+      C := ExtendFunctorToHomotopyCategories( C );
+      
+      C := PreCompose( B, C );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
            
-      iso := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S );
+  end );
+  
+  ##
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C;
       
-      iso := ExtendFunctorToAdditiveClosures( iso );
+      B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects( S );
       
-      add_cotangent_modules:= AsCapCategory( Range( iso ) );
+      C := AsCapCategory( Range( B ) );
       
-      homotopy_cat := HomotopyCategory( add_cotangent_modules);
+      C := DefiningCategory( C );
       
-      name := "Cotangent Beilinson functor";
+      C := UnderlyingCategory( C );
       
-      BB := CapFunctor( name, cat, homotopy_cat );
+      C := AmbientCategory( C );
       
-      AddObjectFunction( BB,
-        function( a )
-          local T, diffs, C;
-          
-          T := TateResolution( a );
-          
-          diffs := List( [ - n + 2 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T ^ i ) ) );
-          
-          C := ChainComplex( diffs, - n + 2 );
-          
-          return C / homotopy_cat;
-          
-      end );
+      C := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( C );
       
-      AddMorphismFunction( BB,
-        function( s, alpha, r )
-          local T, maps;
-          
-          s := UnderlyingCell( s );
-          
-          r := UnderlyingCell( r );
-          
-          T := TateResolution( alpha );
-          
-          maps := List( [ - n + 1 .. n - 1 ], i -> ApplyFunctor( iso, CAN_TWISTED_OMEGA_CELL( T[ i ] ) ) );
-          
-          return ChainMorphism( s, r, maps, - n + 1 ) / homotopy_cat;
-          
-      end );
+      C := ExtendFunctorToHomotopyCategories( C );
       
-      return BB;
+      C := PreCompose( B, C );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
       
   end );
+  
+  ##
+  InstallMethod( BeilinsonFunctorIntoDerivedCategory,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C, H;
+      
+      B := BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects( S );
+      
+      C := AsCapCategory( Range( B ) );
 
+      C := DefiningCategory( C );
+      
+      C := InclusionFunctor( C );
+      
+      C := ExtendFunctorToHomotopyCategories( C );
+      
+      H := AsCapCategory( Range( C ) );
+      
+      H := LocalizationFunctor( H );
+      
+      C := PreCompose( [ B, C, H ] );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
+ 
+  end );
+  
+  ##
+  InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C;
+      
+      B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
+      
+      C := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S );
+      
+      C := ExtendFunctorToAdditiveClosures( C );
+      
+      C := ExtendFunctorToHomotopyCategories( C );
+      
+      C := PreCompose( B, C );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
+      
+  end );
+  
+  ##
+  InstallMethod( BeilinsonFunctor,
+            [ IsHomalgGradedRing ],
+    function( S )
+      local B, C;
+      
+      B := BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects( S );
+      
+      C := AsCapCategory( Range( B ) );
+      
+      C := DefiningCategory( C );
+      
+      C := InclusionFunctor( C );
+      
+      C := ExtendFunctorToHomotopyCategories( C );
+      
+      C := PreCompose( B, C );
+      
+      C!.Name := "Cotangent Beilinson functor";
+      
+      return C;
+      
+  end );
+  
   ##
   #InstallMethod( 
   BindGlobal( "BeilinsonFunctor3",
