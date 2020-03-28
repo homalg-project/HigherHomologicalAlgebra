@@ -7,49 +7,47 @@ field := HomalgFieldOfRationals( );
 # Then we apply the convolution on alpha, beta and their composition.
 
 l := 0;
-r := 3;
+r := 2;
 b := 0;
-a := 3;
+a := 2;
 
-vertices_labels := create_labels_for_vertices( l, r, b, a, [ "P", "Q", "R" ] );
+input :=
+  [
+    # vertices labels
+    [ "P", "Q", "R" ],
+    
+    # 0,1 diffs labels
+    [ [ "dP" ], [ "dQ" ], [ "dR" ] ],
+    
+    # higher diffs labels
+    [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ],
+    
+    # 0 morphisms
+    [ [ "alpha" ], [ "beta" ] ],
+    
+    # higher morphisms
+    [ [ "h_alpha" ], [ "h_beta" ] ],
+    
+    # homotopies
+    [ ],
+    
+    # differentials relations
+    [ [ "dP", "dQ", "dR" ], [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ] ],
+    
+    # morphisms relations
+    [
+      [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
+      [ "dQ", "hdQ", "beta", "h_beta", "dR", "hdR" ]
+    ],
+    
+    # homotopies relations
+    [ ],
+  ];
+    
+complexes := [ [ "dP", "P" ], [ "dQ", "Q" ], [ "dR", "R" ] ];
+morphisms := [ [ "P", "Q", "alpha" ], [ "Q", "R", "beta" ] ];
 
-01_diffs := create_labels_for_01_differentials( l, r, b, a, [ [ "dP" ], [ "dQ" ], [ "dR" ] ] );
-higher_diffs := create_labels_for_higher_differentials( l, r, b, a, [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ] );
-
-0_morphisms := create_labels_for_0_morphisms( l, r, b, a, [ [ "alpha" ], [ "beta" ] ] );
-higher_morphisms := create_labels_for_higher_morphisms( l, r, b, a, [ [ "h_alpha" ], [ "h_beta" ] ] );
-
-diffs := ListN( 01_diffs, higher_diffs, Concatenation );
-morphisms := ListN( 0_morphisms, higher_morphisms, Concatenation );
-
-arrows := ListN( diffs, morphisms, Concatenation );
-
-quiver := RightQuiver( "q", vertices_labels, arrows[1], arrows[2], arrows[3] );
-
-A := PathAlgebra( field, quiver );
-
-d_relations := differentials_relations( A, l, r, b, a, [ "dP", "dQ", "dR" ], [ [ "hdP" ], [ "hdQ" ], [ "hdR" ] ] );
-
-m_relations := morphisms_relations( A, l, r, b, a,
-        [
-          [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
-          [ "dQ", "hdQ", "beta", "h_beta", "dR", "hdR" ]
-        ] );
-
-relations := Concatenation( d_relations, m_relations );
-
-A := A / relations;
-
-C := Algebroid( A );
-C!.Name := "algebroid over quiver algebra";
-AssignSetOfObjects( C );
-AssignSetOfGeneratingMorphisms( C );
-
-AC := AdditiveClosure( C );
-Ho_AC := HomotopyCategory( AC );
-
-create_complexes( AC, l, r, b, a, [ [ "dP", "P" ], [ "dQ", "Q" ], [ "dR", "R" ] ] );
-create_morphisms( AC, l, r, b, a, [ [ "P", "Q", "alpha" ], [ "Q", "R", "beta" ] ] );
+AC := create_free_category( field, l, r, b, a, input, complexes, morphisms );
 
 quit;
 
