@@ -1000,7 +1000,9 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     
     C := AdditiveClosure( C );
     
-    J := IsomorphismIntoQuiverRows( C );
+    J := IsomorphismFunctorIntoQuiverRows( C );
+    
+    J := ExtendFunctorToHomotopyCategories( J );
     
     G := PreCompose( G, J );
     
