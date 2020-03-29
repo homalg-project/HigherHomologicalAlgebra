@@ -836,6 +836,84 @@ InstallMethod( AdditiveClosure,
   collection -> AdditiveClosure( DefiningFullSubcategory( collection ) )
 );
 
+
+##
+BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
+  function( full )
+    local ambient, ring;
+    
+    ambient := AmbientCategory( full );
+    
+    ring := CommutativeRingOfLinearCategory( full );
+    
+    ## full is subcategory in quiver reps
+    
+    if IsQuiverRepresentationCategory( ambient ) then
+      
+      AddRandomObjectByInteger( full,
+        { full, n } -> Random( SetOfKnownObjects( full ) )
+      );
+      
+      AddRandomMorphismWithFixedSourceByInteger( full,
+        function( o, n )
+          local objects, p, b; 
+          
+          objects := Shuffle( ShallowCopy( SetOfKnownObjects( full ) ) );
+          
+          p := PositionProperty( objects, obj -> not IsZero( HomStructure( o, obj ) ) );
+          
+          if p = fail then
+              return Random( [ 0 .. AbsInt( n ) ] ) * One( ring ) * IdentityMorphism( o );
+          fi;
+          
+          b := BasisOfExternalHom( o, objects[ p ] );
+          
+          return Sum( List( [ 0 .. AbsInt( n ) ], i -> Random( b ) ) );
+          
+      end );
+      
+      AddRandomMorphismWithFixedRangeByInteger( full,
+        function( o, n )
+          local objects, p, b;
+          
+          objects := Shuffle( ShallowCopy( SetOfKnownObjects( full ) ) );
+          
+          p := PositionProperty( objects, obj -> not IsZero( HomStructure( obj, o ) ) );
+          
+          if p = fail then
+              return Random( [ 0 .. AbsInt( n ) ] ) * One( ring ) * IdentityMorphism( o );
+          fi;
+          
+          b := BasisOfExternalHom( objects[ p ], o );
+          
+          return Sum( List( [ 0 .. AbsInt( n ) ], i -> Random( b ) ) );
+          
+      end );
+      
+      AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
+        function( s, r, n )
+          local b;
+          
+          b := BasisOfExternalHom( s, r );
+          
+          if IsEmpty( b ) then
+              return ZeroMorphism( s, r );
+          fi;
+          
+          return Sum( List( [ 0 .. AbsInt( n ) ], i -> Random( b ) ) );
+          
+        end );
+      
+    else
+      
+      Info( InfoWarning, 1, "Maybe you can add random methods?" );
+      
+      return;
+      
+    fi;
+   
+end );
+
 ##
 BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
   function( full )
@@ -946,6 +1024,10 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
               
     ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
     
+    ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
+    
+    full!.full_subcategory_generated_by_indec_projective_objects := true;
+    
     Finalize( full );
     
     CapCategorySwitchLogicOff( full );
@@ -1025,8 +1107,12 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
               
     full := FullSubcategoryGeneratedByListOfObjects( injs :
               FinalizeCategory := false, name_of_full_subcategory := name );
-              
+    
+    full!.full_subcategory_generated_by_indec_injective_objects := true;
+            
     ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
+    
+    ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS( full );
     
     Finalize( full );
     
