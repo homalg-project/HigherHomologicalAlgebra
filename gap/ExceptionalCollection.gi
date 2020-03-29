@@ -851,8 +851,11 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
     if IsQuiverRepresentationCategory( ambient ) then
       
       AddRandomObjectByInteger( full,
-        { full, n } -> Random( SetOfKnownObjects( full ) )
-      );
+        function( full, n )
+          local obj;
+          obj := Shuffle( ShallowCopy( SetOfKnownObjects( full ) ) );
+          return Random( obj );
+      end );
       
       AddRandomMorphismWithFixedSourceByInteger( full,
         function( o, n )
