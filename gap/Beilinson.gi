@@ -188,7 +188,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
 
     end );
     
-    SetCachingOfCategoryCrisp( full );
+    #SetCachingOfCategoryCrisp( full );
     #DeactivateCachingOfCategory( full );
     CapCategorySwitchLogicOff( full );
     DisableSanityChecks( full );
@@ -1348,6 +1348,178 @@ end );
 ######################################
 
 ##
+InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankeOne,
+          [ IsHomalgGradedRing and IsFreePolynomialRing ],
+  function( S )
+    local graded_pres, k, coh, generalized_morphism_cat, sh, name, full, is_additive;
+    
+    graded_pres := GradedLeftPresentations( S );
+       
+    k := UnderlyingNonGradedRing( CoefficientsRing( S ) );
+    
+    name := "{ S(i), i ∈  Z }";
+    
+    full := FullSubcategory( graded_pres, name : FinalizeCategory := false );
+    
+    SetSetOfKnownObjects( full,
+          AsZFunction( i -> TwistedGradedFreeModule( S, i ) / full )
+        );
+    
+    ##
+    AddIsEqualForObjects( full,
+      function( M, N )
+        
+        return IsIdenticalObj( M, N )
+                or GeneratorDegrees( UnderlyingCell( M ) )
+                    = GeneratorDegrees( UnderlyingCell( N ) );
+    end, 99 );
+    
+    ##
+    AddIsEqualForMorphisms( full,
+      function( alpha, beta )
+        
+        if IsIdenticalObj( alpha, beta ) then
+          
+          return true;
+          
+        fi;
+        
+        if not ( IsEqualForObjects( Source( alpha ), Source( beta ) )
+                  and IsEqualForObjects( Range( alpha ), Range( beta ) )
+                ) then
+          
+          return false;
+          
+        fi;
+        
+        return EntriesOfHomalgMatrix( UnderlyingMatrix( UnderlyingCell( alpha ) ) )[ 1 ]
+                    = EntriesOfHomalgMatrix( UnderlyingMatrix( UnderlyingCell( beta ) ) )[ 1 ];
+    end, 99 );
+    
+    ##
+    AddIsEqualForCacheForObjects( full, IsEqualForObjects, 99 );
+    AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms, 99 );
+      
+    AddIsWellDefinedForObjects( full,
+      function( M )
+        
+        M := UnderlyingCell( M );
+        
+        return NrRows( UnderlyingMatrix( M ) ) = 0 and NrCols( UnderlyingMatrix( M ) ) = 1;
+        
+    end );
+    
+    AddIsWellDefinedForMorphisms( full,
+      function( alpha )
+        return IsWellDefined( Source( alpha ) ) and IsWellDefined( Range( alpha ) )
+                and IsWellDefined( UnderlyingCell( alpha ) );
+                
+    end, 99 );
+    
+    SetIsLinearCategoryOverCommutativeRing( full, true );
+    
+    SetCommutativeRingOfLinearCategory( full, k );
+    
+    AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
+      function( r, alpha )
+        local coeff;
+        
+        if HasCoefficientsOfMorphism( alpha ) then
+          
+          coeff := r * CoefficientsOfMorphism( alpha );
+          
+        else
+          
+          coeff := fail;
+          
+        fi;
+        
+        alpha := UnderlyingCell( alpha );
+        
+        alpha := GradedPresentationMorphism(
+                    Source( alpha ),
+                    ( r / S ) * UnderlyingMatrix( alpha ),
+                    Range( alpha )
+                  ) / full;
+        
+        if not IsIdenticalObj( coeff, fail ) then
+          
+          SetCoefficientsOfMorphism( alpha, coeff );
+          
+        fi;
+        
+        return alpha;
+        
+    end, 99 );
+        
+    AddBasisOfExternalHom( full,
+      function( M, N )
+        local twist_M, twist_N, B, identity_matrix;
+        
+        twist_M := HomalgElementToInteger( -GeneratorDegrees( UnderlyingCell( M ) )[ 1 ] );
+        
+        twist_N := HomalgElementToInteger( -GeneratorDegrees( UnderlyingCell( N ) )[ 1 ] );
+        
+        B := BasisBetweenTwistedGradedFreeModules( S, twist_M, twist_N );
+        
+        B := List( B, b -> b / full );
+        
+        identity_matrix := EntriesOfHomalgMatrixAsListList( HomalgIdentityMatrix( Size( B ), k ) );
+        
+        ListN( B, identity_matrix, function( b, c ) SetCoefficientsOfMorphism( b, c ); return true; end );
+        
+        return B;
+        
+    end, 99 );
+    
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
+      function( phi, B )
+        local entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
+        
+        if B = [  ] then
+          
+          return [  ];
+          
+        fi;
+        
+        phi := UnderlyingCell( phi );
+        
+        entry := UnderlyingMatrix( phi )[ 1, 1 ];
+        
+        B := List( B, UnderlyingCell );
+        
+        B := List( B, b -> EntriesOfHomalgMatrix( UnderlyingMatrix( b ) )[ 1 ] );
+        
+        sol := ListWithIdenticalEntries( Size( B ), Zero( k ) );
+        
+        coeff_mat := Coefficients( EvalRingElement( entry ) );
+          
+        for j in [ 1 .. NrRows( coeff_mat ) ] do
+            
+            current_coeff := coeff_mat[ j, 1 ];
+            
+            current_mono := coeff_mat!.monomials[ j ] / S;
+            
+            position_in_basis := Position( B, current_mono );
+            
+            sol[ position_in_basis ] := current_coeff / k;
+            
+        od;
+        
+        return sol;
+        
+    end, 99 );
+    
+    Finalize( full );
+    
+    DisableSanityChecks( full );
+    CapCategorySwitchLogicOff( full );
+   
+    return full;
+    
+end );
+
+##
 InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
@@ -1633,5 +1805,47 @@ InstallMethod( ViewObj,
       
     od;
 
+end );
+
+##
+InstallMethod( ViewObj,
+          [ IsGradedLeftPresentationMorphism ],
+  function( alpha )
+    local s, mat_s, r, mat_r;
+    
+    s := Source( alpha );
+    
+    mat_s := UnderlyingMatrix( s );
+    
+    if not IsZero( NrRows( mat_s ) ) then
+    
+      TryNextMethod( );
+    
+    fi;
+    
+    r := Range( alpha );
+    
+    mat_r := UnderlyingMatrix( r );
+ 
+    if not IsZero( NrRows( mat_r ) ) then
+    
+      TryNextMethod( );
+    
+    fi;
+
+    ViewObj( s );
+    
+    Print( " --" );
+    
+    if NrCols( mat_s ) = 1 and NrCols( mat_r ) = 1 then
+      
+      Print( "{",UnderlyingMatrix( alpha )[ 1, 1 ],"}" );
+      
+    fi;
+     
+    Print( "-> " );
+    
+    ViewObj( r );
+    
 end );
 
