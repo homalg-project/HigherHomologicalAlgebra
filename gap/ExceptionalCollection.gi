@@ -740,8 +740,14 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
       
       Algebroid( A )!.Name := Concatenation( r[ 1 ],
                                 "Algebroid(", r[ 2 ], " ", name,
-                                  " ", r[ 1 ], ")", r[ 2 ] );;
+                                  " ", r[ 1 ], ")", r[ 2 ]
+                                );;
       
+      QuiverRows( A )!.Name := Concatenation( r[ 1 ],
+                                 "QuiverRows(", r[ 2 ], " ", name,
+                                  " ", r[ 1 ], ")", r[ 2 ]
+                                );;
+       
     fi;
     
     Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
