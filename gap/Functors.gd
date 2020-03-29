@@ -149,7 +149,13 @@ DeclareAttribute( "EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory", IsEx
 DeclareAttribute( "EmbeddingFunctorIntoDerivedCategory", IsCapCategory );
 
 DeclareAttribute( "ConvolutionFunctor", IsExceptionalCollection );
+DeclareAttribute( "ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsExceptionalCollection );
+DeclareAttribute( "ConvolutionFunctorFromHomotopyCategoryOfQuiverRows", IsExceptionalCollection );
+
+
 DeclareAttribute( "ReplacementFunctor", IsExceptionalCollection );
+DeclareAttribute( "ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsExceptionalCollection );
+DeclareAttribute( "ReplacementFunctorIntoHomotopyCategoryOfQuiverRows", IsExceptionalCollection );
 
 DeclareAttribute( "CONVOLUTION_FUNCTOR", IsHomotopyCategory );
 

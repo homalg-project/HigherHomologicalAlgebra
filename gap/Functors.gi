@@ -967,11 +967,102 @@ InstallMethod( ReplacementFunctor,
 end );
 
 ##
+InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local G, J;
+    
+    G := ReplacementFunctor( collection );
+    
+    J := IsomorphismIntoAlgebroid( collection );
+    
+    J := ExtendFunctorToAdditiveClosureOfSource( J );
+    
+    J := ExtendFunctorToHomotopyCategories( J );
+    
+    G := PreCompose( G, J );
+    
+    G!.Name := "Replacement functor";
+    
+    return G;
+    
+end );
+
+##
+InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
+          [ IsExceptionalCollection ],
+  function( collection )
+    local G, C, J;
+    
+    G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+    
+    C := Algebroid( collection );
+    
+    C := AdditiveClosure( C );
+    
+    J := IsomorphismIntoQuiverRows( C );
+    
+    G := PreCompose( G, J );
+    
+    G!.Name := "Replacement functor";
+    
+    return G;
+    
+end );
+
+##
 InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )
     
     return CONVOLUTION_FUNCTOR( HomotopyCategory( collection ) );
+    
+end );
+
+##
+InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid,
+    [ IsExceptionalCollection ],
+  function( collection )
+    local I, F;
+    
+    I := IsomorphismFromAlgebroid( collection );
+    
+    I := ExtendFunctorToAdditiveClosureOfSource( I );
+    
+    I := ExtendFunctorToHomotopyCategories( I );
+    
+    F := ConvolutionFunctor( collection );
+    
+    F := PreCompose( I, F );
+    
+    F!.Name := "Convolution functor";
+    
+    return F;
+    
+end );
+
+##
+##
+InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
+    [ IsExceptionalCollection ],
+  function( collection )
+    local C, I, F;
+    
+    C := Algebroid( collection );
+    
+    C := AdditiveClosure( C );
+    
+    I := IsomorphismFunctorFromQuiverRows( C ); 
+    
+    I := ExtendFunctorToHomotopyCategories( I );
+    
+    F := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+    
+    F := PreCompose( I, F );
+    
+    F!.Name := "Convolution functor";
+    
+    return F;
     
 end );
 
