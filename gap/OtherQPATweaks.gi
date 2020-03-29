@@ -176,6 +176,7 @@ BindGlobal( "CONVERT_COMPLEX_OF_QUIVER_REPS_TO_QUIVER_REP",
     
 end );
 
+##
 BindGlobal( "CONVERT_COMPLEX_MORPHISM_OF_QUIVER_REPS_TO_QUIVER_REP_MORPHISM",
   function( phi, A )
     local L,m,n, matrices, r1, r2;
@@ -276,6 +277,7 @@ BindGlobal( "COMPUTE_LIFT_IN_COMPLEXES_OF_QUIVER_REPS",
     
 end );
 
+##
 BindGlobal( "COMPUTE_COLIFT_IN_COMPLEXES_OF_QUIVER_REPS",
   function( f, g )
     local m, n, A, f_, g_, colift;
@@ -314,6 +316,7 @@ end );
 
 ####### for additive closures ########################
 
+##
 InstallMethod( _WeakKernelEmbedding,
           [ IsAdditiveClosureMorphism ],
   function( alpha )
@@ -345,6 +348,7 @@ InstallMethod( _WeakKernelEmbedding,
     
 end );
 
+##
 InstallMethod( _WeakKernelEmbedding,
           [ IsAdditiveClosureMorphism ],
   function( alpha )

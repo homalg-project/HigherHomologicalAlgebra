@@ -1150,6 +1150,52 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
     
 end );
 
+BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
+  function( full )
+    local ambient;
+    
+    ambient := AmbientCategory( full );
+    
+    ## full is subcategory in quiver reps
+    
+    if IsQuiverRepresentationCategory( ambient ) then
+      
+      AddRandomObjectByInteger( full,
+        function( full, n )
+          local I, C;
+          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          C := AsCapCategory( Source( I ) );
+          return I( RandomObjectByInteger( C, n ) );
+      end );
+      
+      AddRandomMorphismWithFixedSourceByInteger( full,
+        function( s, n )
+          local I, J;
+          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
+          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          return I( RandomMorphismWithFixedSourceByInteger( J( s ), n ) );
+      end );
+    
+      AddRandomMorphismWithFixedRangeByInteger( full,
+        function( r, n )
+          local I, J;
+          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
+          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          return I( RandomMorphismWithFixedRangeByInteger( J( r ), n ) );
+      end );
+     
+      AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
+        function( s, r, n )
+          local I, J;
+          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
+          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          return I( RandomMorphismWithFixedSourceAndRangeByInteger( J( s ), J( r ), n ) );
+        end );
+      
+    fi;
+       
+end );
+
 ##
 InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
           [ IsCapCategory ],
@@ -1210,6 +1256,8 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       end );
     
     fi;
+    
+    ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS( full );
     
     CapCategorySwitchLogicOff( full );
     
