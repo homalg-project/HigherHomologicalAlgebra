@@ -344,3 +344,46 @@ InstallMethod( _WeakKernelEmbedding,
     return J( alpha/ AsCapCategory( Source(J) ) );
     
 end );
+
+InstallMethod( _WeakKernelEmbedding,
+          [ IsAdditiveClosureMorphism ],
+  function( alpha )
+    local cat, full, ambient_cat, J, Inc, I;
+    
+    cat := CapCategory( alpha );
+    
+    full := UnderlyingCategory( cat );
+    
+    ambient_cat := AmbientCategory( full );
+    
+    if not ( IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( full )
+              and IsQuiverRepresentationCategory( ambient_cat )
+            ) then
+            
+      TryNextMethod( );
+    fi;
+    
+    if IsBound( full!.full_subcategory_generated_by_indec_projective_objects ) and
+        full!.full_subcategory_generated_by_indec_projective_objects then
+        
+        J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient_cat );
+    
+    elif IsBound( full!.full_subcategory_generated_by_indec_injective_objects ) and
+         full!.full_subcategory_generated_by_indec_injective_objects then
+         
+        J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
+        
+    else
+      TryNextMethod( );
+    fi;
+
+    Inc := InclusionFunctor( full );
+    I := ExtendFunctorToAdditiveClosureOfSource( Inc );
+      
+    alpha := I( alpha );
+    alpha := KernelEmbedding( alpha );
+    alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
+    
+    return J( alpha/ AsCapCategory( Source( J ) ) );
+    
+end );
