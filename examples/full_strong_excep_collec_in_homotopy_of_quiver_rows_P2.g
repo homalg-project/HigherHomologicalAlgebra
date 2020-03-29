@@ -17,8 +17,8 @@ C := AmbientCategory( collection );
 
 I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
-F := ConvolutionFunctor( collection );
-G := ReplacementFunctor( collection );
+F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( collection );
+G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( collection );
 
 quit;
 

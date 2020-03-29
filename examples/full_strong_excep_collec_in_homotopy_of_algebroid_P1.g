@@ -20,8 +20,8 @@ collection := CreateExceptionalCollection( l : name_for_underlying_quiver := nam
 C := AmbientCategory( collection );
 I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
-F := ConvolutionFunctor( collection );
-G := ReplacementFunctor( collection );
+F := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
 
 quit;
 
