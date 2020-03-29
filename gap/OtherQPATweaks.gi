@@ -358,14 +358,15 @@ InstallMethod( _WeakKernelEmbedding,
     
     full := UnderlyingCategory( cat );
     
-    ambient_cat := AmbientCategory( full );
     
     if not ( IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( full )
-              and IsQuiverRepresentationCategory( ambient_cat )
+              and IsQuiverRepresentationCategory( AmbientCategory( full ) )
             ) then
             
       TryNextMethod( );
     fi;
+    
+    ambient_cat := AmbientCategory( full );
     
     if IsBound( full!.full_subcategory_generated_by_indec_projective_objects ) and
         full!.full_subcategory_generated_by_indec_projective_objects then
@@ -375,7 +376,7 @@ InstallMethod( _WeakKernelEmbedding,
     elif IsBound( full!.full_subcategory_generated_by_indec_injective_objects ) and
          full!.full_subcategory_generated_by_indec_injective_objects then
          
-        J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
+        J := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
         
     else
       TryNextMethod( );
@@ -391,3 +392,34 @@ InstallMethod( _WeakKernelEmbedding,
     return J( alpha/ AsCapCategory( Source( J ) ) );
     
 end );
+
+##
+InstallMethod( _WeakKernelEmbedding,
+          [ IsCapCategoryMorphismInASubcategory ],
+  function( alpha )
+    local full;
+    
+    full := CapCategory( alpha );
+    
+    alpha := KernelEmbedding( UnderlyingCell( alpha ) );
+    
+    return PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha ) / full;
+   
+end );
+
+##
+InstallMethod( _WeakKernelEmbedding,
+          [ IsQuiverRowsMorphism ],
+  function( alpha )
+    local QRows, I, J;
+    
+    QRows := CapCategory( alpha );
+    
+    I := IsomorphismFunctorIntoAdditiveClosureOfAlgebroid( QRows );
+    
+    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( QRows );
+    
+    return J( _WeakKernelEmbedding( I( alpha ) ) );
+    
+end );
+
