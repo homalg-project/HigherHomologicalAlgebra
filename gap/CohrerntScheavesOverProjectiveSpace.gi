@@ -111,7 +111,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows,
             [ IsHomalgGradedRing ],
     function( S )
-      local B, C;
+      local B, C, QRows, A, r, name;
       
       B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
       
@@ -121,6 +121,16 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       C := IsomorphismFunctorIntoQuiverRows( C );
       
+      QRows := AsCapCategory( Range( C ) );
+      
+      A := UnderlyingQuiverAlgebra( QRows );
+      
+      r := RandomTextColor( Name( QRows ) );
+      
+      name := Concatenation( r[ 1 ], "QuiverRows( ", r[ 2 ], Name( A ), r[ 1 ], " )", r[ 2 ] );
+      
+      QRows!.Name := name;
+      
       C := ExtendFunctorToHomotopyCategories( C );
       
       C := PreCompose( B, C );
@@ -129,7 +139,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       return C;
       
-    end );
+  end );
   
   
   ##
