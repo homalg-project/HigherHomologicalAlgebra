@@ -56,11 +56,11 @@ end );
 InstallMethod( HomotopyCategoryObject,
           [ IsHomotopyCategory, IsZFunction ],
   function( homotopy_category, diffs )
-    local chains;
+    local C;
     
-    chains := UnderlyingCategory( homotopy_category );
+    C := DefiningCategory( homotopy_category );
     
-    return ChainComplex( chains, diffs ) / homotopy_category;
+    return ChainComplex( C, diffs ) / homotopy_category;
     
 end );
 
