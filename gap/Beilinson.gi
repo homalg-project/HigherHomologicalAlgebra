@@ -1486,6 +1486,12 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankeOne,
         
         entry := UnderlyingMatrix( phi )[ 1, 1 ];
         
+        if IsZero( entry ) then
+          
+          return ListWithIdenticalEntries( Size( B ), Zero( k ) );
+          
+        fi;
+        
         B := List( B, UnderlyingCell );
         
         B := List( B, b -> EntriesOfHomalgMatrix( UnderlyingMatrix( b ) )[ 1 ] );
