@@ -278,10 +278,12 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
                   
                 else
                    
-                  psi := MappingConePseudoFunctorial(
-                            rep_a[ i - 1 ][ 1 ], rep_b[ i - 1 ][ 1 ],
-                              ApplyFunctor( U, maps[ i - 1 ][ 2 ] ), maps[ i - 1 ][ 1 ]
-                                );
+                  psi := MorphismBetweenStandardConeObjects(
+                            rep_a[ i - 1 ][ 1 ], 
+                            ApplyFunctor( U, maps[ i - 1 ][ 2 ] ),
+                            maps[ i - 1 ][ 1 ],
+                            rep_b[ i - 1 ][ 1 ]
+                          );
                   
                   psi := Shift( psi, -1 );
                   
