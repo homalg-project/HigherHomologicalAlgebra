@@ -75,7 +75,7 @@ Dependencies := rec(
         [ "HomotopyCategories", ">= 2020.03.21" ]
           ],
   SuggestedOtherPackages := [
-            [ "BBGG", ">= 2020.01.20" ],
+            [ "BBGG", ">= 2020.03.20" ],
             [ "NConvex", ">= 2019.12.06" ],
             ],
   ExternalConditions := [ ],
