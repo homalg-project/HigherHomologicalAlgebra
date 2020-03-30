@@ -28,8 +28,8 @@ T_2 := ExtendFunctorToAdditiveClosureOfSource( T_2 );
 T_2 := ExtendFunctorToHomotopyCategories( T_2 );
 
 # create a Beilinson functor
-#B := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S );
-B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
+B := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S );
+#B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
 C := AsCapCategory( Range( B ) );
 
 # embedd C in some derived category
@@ -45,7 +45,12 @@ B_2 := RestrictFunctorIterativelyToFullSubcategoryOfSource( B, full_2 );
 image_B_1 := ImageOfFullyFaithfullFunctor( B_1 );
 
 # create strong full exceptional collection
-collection_1 := CreateExceptionalCollection( image_B_1 );
+name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 (0)}";
+name_for_algebra := "End( ⊕ {𝓞 (i)|i=-2,-1,0} )";
+collection_1 := CreateExceptionalCollection( image_B_1 :
+                      name_for_underlying_quiver := name_for_quiver,
+                      name_for_endomorphism_algebra := name_for_algebra
+                    );
 
 # connect full_1 with image_B_1
 U_1 := IsomorphismIntoImageOfFullyFaithfulFunctor( B_1 );
@@ -69,7 +74,12 @@ V_2 := ExtendFunctorToAdditiveClosureOfSource( V_2 );
 V_2 := ExtendFunctorToHomotopyCategories( V_2 );
 
 # create strong full exceptional collection
-collection_2 := CreateExceptionalCollection( image_B_2 );
+name_for_quiver := "quiver{𝓞 (-1) -{3}-> 𝓞 (0) -{3}-> 𝓞 (1)}";
+name_for_algebra := "End( ⊕ {𝓞 (i)|i=-1,0,1} )";
+collection_2 := CreateExceptionalCollection( image_B_2 :
+                      name_for_underlying_quiver := name_for_quiver,
+                      name_for_endomorphism_algebra := name_for_algebra
+                    );
 
 #
 TT_1 := PreCompose(
