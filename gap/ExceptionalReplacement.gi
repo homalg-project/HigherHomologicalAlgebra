@@ -156,10 +156,6 @@ InstallMethodWithCache( ExceptionalShift,
       
     od;
     
-    Assert( 3, IsZeroForObjects( a ) );
-    
-    SetIsZeroForObjects( a, true );
-    
     return 0;
     
 end );
