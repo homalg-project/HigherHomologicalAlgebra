@@ -9,7 +9,7 @@
 KeyDependentOperation("TwistedOmegaModule", IsExteriorRing, IsInt, ReturnTrue );
 
 DeclareAttribute( "FullSubcategoryGeneratedByTwistedOmegaModules", IsExteriorRing );
-DeclareAttribute( "FullSubcategoryGeneratedByGradedFreeModulesOfRankeOne", IsHomalgGradedRing );
+DeclareAttribute( "FullSubcategoryGeneratedByGradedFreeModulesOfRankOne", IsHomalgGradedRing );
 
 #! @Arguments S, i
 #! The input is a graded polynomial ring $S$ and an integer $i$. The output is the graded  $S$-lp $S(i)$.

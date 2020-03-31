@@ -1348,7 +1348,7 @@ end );
 ######################################
 
 ##
-InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankeOne,
+InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local graded_pres, k, coh, generalized_morphism_cat, sh, name, full, is_additive;
