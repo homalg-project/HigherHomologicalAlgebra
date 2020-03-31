@@ -54,6 +54,24 @@ morphisms := [ [ "P", "Q", "alpha" ] ];
 AC := create_free_category( field, l, r, b, a, input, complexes, morphisms );
 quit;
 
+#   P :=
+#
+#
+#   P_2:      P_0x2  <--- P_1x2 <--- P_2x2 <---
+#    |          |           |          | 
+#    |          |           |          | 
+#    v          v           v          v 
+#   P_1:      P_0x1  <--- P_1x1 <--- P_2x1 <---
+#    |          |           |          | 
+#    | dP_1     |           |          | 
+#    v          v           v          v 
+#   P_0:      P_0x0  <--- P_1x0 <--- P_2x0 <---
+#
+#
+#               0           1          2
+
+P;
+Q;
 # Two higher morphisms "y" and "z" could have been used, but the convolution method chooses to use "y_?x?_?"
 conv_y := Convolution( alpha );
 conv_z := hack_morphism_in_homotopy_category( conv_y, "y", "z" );
