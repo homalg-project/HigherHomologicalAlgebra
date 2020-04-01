@@ -853,7 +853,55 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
 end );
 
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ],
+    { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
+);
 
+##
+InstallMethod( ExactTriangleByOctahedralAxiom,
+          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ],
+  function( t_1, t_2, t_3, bool )
+    local triangle, i_3, j_3, i;
+    
+    if not ( IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
+              and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
+                and IsCongruentForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 )
+              ) then
+      Error( "Wrong input!\n" );
+      
+    fi;
+    
+    triangle := ExactTriangleByOctahedralAxiom( t_1, t_2, bool );
+    
+    i_3 := WitnessIsomorphismIntoStandardExactTriangle( t_3 );
+    
+    j_3 := WitnessIsomorphismFromStandardExactTriangle( t_3 );
+    
+    if IsEqualForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 ) then
+      
+      i := IdentityMorphism( StandardConeObject( t_3 ^ 0 ) );
+      
+    else
+      
+      Error( "Take care of this whenever you reach this error!\n" );
+      
+    fi;
+    
+    triangle := ExactTriangle(
+                    PreCompose( [ triangle^0, i, j_3[ 2 ] ] ),
+                    PreCompose( [ i_3[ 2 ], Inverse( i ), triangle^1 ] ),
+                    triangle^2
+                  );
+    
+    if bool = true then
+      Error( "not yet implemented!\n" );
+    fi;
+    
+    return triangle;
+    
+end );
 #################
 #
 # Display
