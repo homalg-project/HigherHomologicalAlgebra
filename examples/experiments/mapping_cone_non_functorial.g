@@ -25,36 +25,23 @@ relations := [
     
 A := Qq / relations;
 
-Aoid := Algebroid( A );;
-SetIsProjective( DistinguishedObjectOfHomomorphismStructure( Aoid ), true );;
-add_Aoid := AdditiveClosure( Aoid );;
-adelman := AdelmanCategory( add_Aoid );;
-Ch_adelman := ChainComplexCategory( adelman );
-Ho_adelman := HomotopyCategory( adelman );
+C := Algebroid( A );;
+AC := AdditiveClosure( C );
+Ch_AC := ChainComplexCategory( AC );
+Ho_AC := HomotopyCategory( AC );
 
-##
-ob := SetOfObjects( Aoid );
-for o in ob do
-  s := LabelAsString( UnderlyingVertex( o ) );
-  BindGlobal( s, o/add_Aoid/adelman );
-od;
+AssignSetOfObjects( C );
+AssignSetOfGeneratingMorphisms( C );
 
-##
-gm := SetOfGeneratingMorphisms( Aoid );;
-for m in gm do
-  s := LabelAsString( Paths( Representative( UnderlyingQuiverAlgebraElement( m ) ) )[ 1 ] );
-  BindGlobal( s, m/add_Aoid/adelman );
-od;
+st_A := StandardExactTriangle( d_A / AC / Ch_AC / Ho_AC );
+st_B := StandardExactTriangle( d_B / AC / Ch_AC / Ho_AC );
 
-st_A := CompleteMorphismToStandardExactTriangle( d_A/Ch_adelman/Ho_adelman );
-st_B := CompleteMorphismToStandardExactTriangle( d_B/Ch_adelman/Ho_adelman );
-
-m := CompleteToMorphismOfStandardExactTriangles( st_A, st_B, f_1/Ch_adelman/Ho_adelman, f_0/Ch_adelman/Ho_adelman );
+m := MorphismOfExactTriangles( st_A, f_1 / AC / Ch_AC / Ho_AC, f_0 / AC / Ch_AC / Ho_AC, st_B );
 IsWellDefined( m );
 
-G := ChainMorphism( UnderlyingCell( st_A[2] ), UnderlyingCell( st_B[2] ), [ g_0, g_1 ], 0 )/Ho_adelman;
+g := HomotopyCategoryMorphism( st_A[ 2 ], st_B[ 2 ], [ g_0 / AC, g_1 / AC ], 0 );
 
-n := CreateTrianglesMorphism( st_A, st_B, m[0], m[1], G );
+n := MorphismOfExactTriangles( st_A, m[ 0 ], m[ 1 ], g, st_B );
 IsWellDefined( n );
 
 m = n;
