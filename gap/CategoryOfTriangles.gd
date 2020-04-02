@@ -275,8 +275,10 @@ DeclareAttribute( "InverseRotation", IsCapExactTriangle );
 #! @Returns a triangle
 DeclareOperation( "InverseRotation", [ IsCapExactTriangle, IsBool ] );
 
-KeyDependentOperation( "Shift", IsCapExactTriangle, IsInt, ReturnTrue );
-KeyDependentOperation( "Shift", IsCapExactTrianglesMorphism, IsInt, ReturnTrue );
+if false then
+  KeyDependentOperation( "Shift", IsCapExactTriangle, IsInt, ReturnTrue );
+  KeyDependentOperation( "Shift", IsCapExactTrianglesMorphism, IsInt, ReturnTrue );
+fi;
 
 DeclareOperation( "ViewExactTriangle", [ IsCapExactTriangle ] );
 DeclareOperation( "ViewMorphismOfExactTriangles", [ IsCapExactTrianglesMorphism ] );

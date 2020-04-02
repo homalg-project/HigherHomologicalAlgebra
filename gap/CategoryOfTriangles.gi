@@ -528,15 +528,68 @@ InstallMethod( Rotation,
 InstallMethod( ShiftOp,
           [ IsCapExactTriangle, IsInt ],
   function( t, n )
-    local triangle;
+    local shift_t, st, shift_st, w;
     
-    triangle := ExactTriangle(
+    shift_t := ExactTriangle(
                     ( -1 ) ^ n * Shift( t^0, n ),
                     Shift( t^1, n ),
                     Shift( t^2, n )
                   );
     
-    return triangle;
+    if HasWitnessIsomorphismIntoStandardExactTriangle( t ) or
+        HasWitnessIsomorphismFromStandardExactTriangle( t ) then
+        
+        st := StandardExactTriangle( t );
+        
+        shift_st := ExactTriangle(
+                    ( -1 ) ^ n * Shift( st^0, n ),
+                    Shift( st^1, n ),
+                    Shift( st^2, n )
+                  );
+        
+    fi;
+    
+    # In case the triangulated category is a homotopy category,
+    # then shift_st is always again standard.
+    if not IsStandardExactTriangle( shift_st ) then
+      
+      return shift_t;
+      
+    fi;
+   
+    if HasWitnessIsomorphismIntoStandardExactTriangle( t ) then
+      
+      w := WitnessIsomorphismIntoStandardExactTriangle( t );
+      
+      w := MorphismOfExactTriangles(
+                shift_t,
+                Shift( w[ 0 ], n ),
+                Shift( w[ 1 ], n ),
+                Shift( w[ 2 ], n ),
+                shift_st
+              );
+      
+      SetWitnessIsomorphismIntoStandardExactTriangle( shift_t, w );
+      
+    fi;
+    
+    if HasWitnessIsomorphismFromStandardExactTriangle( t ) then
+      
+      w := WitnessIsomorphismFromStandardExactTriangle( t );
+      
+      w := MorphismOfExactTriangles(
+                shift_st,
+                Shift( w[ 0 ], n ),
+                Shift( w[ 1 ], n ),
+                Shift( w[ 2 ], n ),
+                shift_t
+              );
+      
+      SetWitnessIsomorphismFromStandardExactTriangle( shift_t, w );
+
+    fi;
+   
+    return shift_t;
     
 end );
 

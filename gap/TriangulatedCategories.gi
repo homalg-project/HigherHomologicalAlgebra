@@ -608,7 +608,7 @@ InstallMethod( ShiftOp,
     C := CapCategory( cell );
     
     if not IsTriangulatedCategory( C ) then
-      Error( "The ambient category should be a triangulated category!" );
+      TryNextMethod( );
     fi;
     
     if n = 0 then
