@@ -523,6 +523,35 @@ InstallMethod( Rotation,
     triangle -> Rotation( triangle, false )
 );
 
+
+##
+InstallMethod( ShiftOp,
+          [ IsCapExactTriangle, IsInt ],
+  function( t, n )
+    local triangle;
+    
+    triangle := ExactTriangle(
+                    ( -1 ) ^ n * Shift( t^0, n ),
+                    Shift( t^1, n ),
+                    Shift( t^2, n )
+                  );
+    
+    return triangle;
+    
+end );
+
+##
+InstallMethod( ShiftOp,
+          [ IsCapExactTrianglesMorphism, IsInt ],
+  function( mu, n )
+    return MorphismOfExactTriangles(
+                    Shift( Source( mu ), n ),
+                    Shift( mu[ 0 ], n ),
+                    Shift( mu[ 1 ], n ),
+                    Shift( mu[ 2 ], n ),
+                    Shift( Range( mu ), n )
+                  );
+end );
 ##  
 ##  A ---> B ---> C ---> Σ A
 ##
