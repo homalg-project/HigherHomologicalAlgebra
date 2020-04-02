@@ -914,7 +914,12 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
     else
       
-      Error( "Take care of this whenever you reach this error!\n" );
+      i := MorphismBetweenStandardConeObjects(
+                    PreCompose( t_1^0, t_2^0 ),
+                    IdentityMorphism( t_1[ 0 ] ),
+                    IdentityMorphism( t_2[ 1 ] ),
+                    t_3^0
+                  );
       
     fi;
     
@@ -925,12 +930,16 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
                   );
     
     if bool = true then
-      Error( "not yet implemented!\n" );
+      
+      #TODO do this better!
+      WitnessIsomorphismIntoStandardExactTriangle( triangle );
+      
     fi;
     
     return triangle;
     
 end );
+
 #################
 #
 # Display
