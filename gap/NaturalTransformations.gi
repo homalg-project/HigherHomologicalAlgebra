@@ -170,11 +170,25 @@ InstallMethod( CounitOfTensorHomAdjunction,
 end );
 
 #######################
-
+# a, collection
+# I := EmbeddingFunctorFromHomotopyCategory( collection );
+# rep_a := ReplacementFunctor( collection )( a );
+# rep_a := UnderlyingCell( I( rep_a ) );
+# gamma_rep_a := { rep_a, i }-> BackwardConvolution( rep_a, i - 1 ) ^ ( i + 1 );
+# for i>-1
+# Range( gamma_rep_a( rep_a, i ) )
+#   = Shift( BackwardConvolution( BrutalTruncationAbove( rep_a, i + 1 ) ), -i );
+# triangle_rep_a := {rep_a,i} -> ExactTriangle( gamma_rep_a( rep_a, i ) );
+# for i>-1
+# triangle_rep_a(rep_a,i)[0]=rep_a[i+1];
+# i > 0;; t := triangle_rep_a( rep_a, i );
+# shift_t := ExactTriangle( (-1)^(i-1) * Shift( t^0, i-1 ), Shift( t^1, i-1 ), Shift( t^2, i-1 ) );
 
 BindGlobal( "NATURAL",
   function( a, collection )
-    local N, rep_a, alpha_N, Tr_alpha_N, value_N;
+    local I, N, data, rep_a, z_func, func;
+    
+    I := EmbeddingFunctorFromHomotopyCategory( collection );
     
     N := ExceptionalShift( a, collection );
     
@@ -184,16 +198,63 @@ BindGlobal( "NATURAL",
       
     fi;
     
-    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
+    data := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
+    
+    rep_a := I( ExceptionalReplacement( a, collection, true ) );
+    
+    rep_a := UnderlyingCell( rep_a ); 
     
     ### creating the first exact triangle
+    z_func := VoidZFunction( ); 
     
-    alpha_N := rep_a[ N ][ 1 ];
+    func :=
+      function( n )
+        local alpha_n, t_alpha_n, shift_t_alpha_n, triangle, gamma_n, t_gamma_n, shift_t_gamma_n, t, lambda_n, iota_lambda_n, pi_lambda, shift_t_lambda_n;
+        
+        if n < N + 1 then
+          
+          return true;
+          
+        elif n =  N + 1 then
+        
+          alpha_n := data[ n ][ 1 ];
+          t_alpha_n := StandardExactTriangle( alpha_n );
+          shift_t_alpha_n := Shift( t_alpha_n, n - 1 );
+          
+          triangle := InverseRotation( StandardExactTriangle( data[ n - 1 ][ 1 ] ), true );
+          
+          gamma_n := BackwardConvolution( rep_a, n - 2 ) ^ n;
+          t_gamma_n := StandardExactTriangle( gamma_n );
+          shift_t_gamma_n := Shift( t_gamma_n, n - 1 );
+          
+          return [ shift_t_alpha_n, triangle, shift_t_gamma_n ];
+          
+        else
     
-    #Tr_alpha_N := CompleteMorphismToStandardExactTriangle( alpha_N );
+          alpha_n := data[ n ][ 1 ];
+          t_alpha_n := StandardExactTriangle( alpha_n );
+          shift_t_alpha_n := Shift( t_alpha_n, n - 1 );
+          
+          t := z_func[ n - 1 ];
+          
+          t := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
+          
+          gamma_n := BackwardConvolution( rep_a, n - 2 ) ^ n;
+          t_gamma_n := StandardExactTriangle( gamma_n );
+          shift_t_gamma_n := Shift( t_gamma_n, n - 1 );
+          
+          lambda_n := ChainMorphism( StalkChainComplex( rep_a[ n ], n - 1 ), BrutalTruncationAbove( rep_a, n ), [ rep_a^n ], n - 1 );
+          iota_lambda_n := NaturalInjectionInMappingCone( lambda_n );
+          pi_lambda := NaturalProjectionFromMappingCone( lambda_n );
+          shift_t_lambda_n := ExactTriangle( Convolution( lambda_n ), Convolution( iota_lambda_n ), Convolution( pi_lambda ) );
+          
+          return [ shift_t_alpha_n, t, shift_t_gamma_n ];
+        
+        fi;
+      
+      end;
+      
+    SetUnderlyingFunction( z_func, func );
     
-    #value_N := ReverseRotationOfStandardExactTriangle( Tr_alpha_N );
-    
-    ### induction step ###
     
 end );
