@@ -77,12 +77,6 @@ InstallMethod( ForwardConvolution,
 end );
 
 ##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryObject ],
-  C -> ForwardConvolution( UnderlyingCell( C ) )
-);
-
-##
 InstallMethod( ForwardConvolutionAtIndexOp,
           [ IsChainMorphism, IsInt ],
   function( alpha, m )
@@ -150,6 +144,12 @@ InstallMethod( ForwardConvolution,
     return Shift( alpha[ l ], l );
     
 end );
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsHomotopyCategoryObject ],
+  C -> ForwardConvolution( UnderlyingCell( C ) )
+);
 
 ##
 InstallMethod( ForwardConvolution,
@@ -301,4 +301,16 @@ InstallMethod( BackwardConvolution,
     return Shift( alpha[ u ], u );
     
 end );
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsHomotopyCategoryObject ],
+  C -> BackwardConvolution( UnderlyingCell( C ) )
+);
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsHomotopyCategoryMorphism ],
+  alpha -> BackwardConvolution( UnderlyingCell( alpha ) )
+);
 
