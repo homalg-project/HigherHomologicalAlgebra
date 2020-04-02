@@ -230,7 +230,7 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom",
       [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ] );
 
 #! @Description
-#! The arguments are two exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$,
+#! The arguments are three exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$ and boolian <A>b</A>,
 #! $t_1[0]=t_3[0]$, $t_2[1]=t_3[1]$ and $t_2^0\circ t_1^0=t_3^0$.
 #! The output is the exact triangle defined by the Octahedral axiom.
 #! If $b$ = <C>true</C> then the operation will compute a witness isomorphism into the standard exact triangle.
