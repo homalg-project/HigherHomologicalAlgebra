@@ -1012,12 +1012,65 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     
 end );
 
+BindGlobal( "SET_COMMUTATIVITY_NAT_ISO_BETWEEN_CONVOLUTION_AND_SHIFT",
+  function( collection, conv )
+    local D, sigma_D, C, sigma_C, conv_o_sigma_D, sigma_C_o_conv, name, eta;
+    
+    D := HomotopyCategory( collection );
+    
+    sigma_D := ShiftFunctor( D );
+    
+    C := AmbientCategory( collection );
+    
+    sigma_C := ShiftFunctor( C );
+    
+    conv_o_sigma_D := PostCompose( conv, sigma_D );
+    
+    sigma_C_o_conv := PostCompose( sigma_C, conv );
+    
+    name := "Natural isomorphism F o Σ => Σ o F";
+    
+    eta := NaturalTransformation( name, conv_o_sigma_D, sigma_C_o_conv );
+    
+    AddNaturalTransformationFunction( eta,
+      function( conv_o_sigma_D_a, a, sigma_C_o_conv_a )
+        local diffs, b, z_func, alpha;
+        
+        diffs := Differentials( a );
+        
+        diffs := ApplyMap( diffs, AdditiveInverse );
+        
+        b := HomotopyCategoryObject( D, diffs );
+        
+        SetLowerBound( b, ActiveLowerBound( a ) );
+        
+        SetUpperBound( b, ActiveUpperBound( a ) );
+        
+        z_func := AsZFunction( i -> ( -1 ) ^ i * IdentityMorphism( a[ i ] ) );
+        
+        alpha := HomotopyCategoryMorphism( a, b, z_func );
+        
+        alpha := conv_o_sigma_D( alpha );
+                
+        return alpha;
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( conv, eta );
+   
+end );
+
 ##
 InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )
+    local conv;
     
-    return CONVOLUTION_FUNCTOR( HomotopyCategory( collection ) );
+    conv := CONVOLUTION_FUNCTOR( HomotopyCategory( collection ) );
+    
+    SET_COMMUTATIVITY_NAT_ISO_BETWEEN_CONVOLUTION_AND_SHIFT( collection, conv );
+    
+    return conv;
     
 end );
 
