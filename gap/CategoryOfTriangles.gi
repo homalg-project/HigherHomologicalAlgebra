@@ -148,6 +148,12 @@ InstallMethod( CategoryOfExactTriangles,
     AddIsWellDefinedForObjects( triangles,
       function( triangle )
         
+        if IsStandardExactTriangle( triangle ) then
+          
+          return true;
+          
+        fi;
+        
         if not ( IsWellDefined( triangle[ 0 ] ) and
                   IsWellDefined( triangle[ 1 ] ) and
                     IsWellDefined( triangle[ 2 ] ) and
@@ -180,6 +186,12 @@ InstallMethod( CategoryOfExactTriangles,
                   IsZeroForMorphisms( PreCompose( triangle ^ 1, triangle ^ 2 ) )
                     ) then
                     
+          return false;
+          
+        fi;
+        
+        if not IsExactTriangle( triangle^0, triangle^1, triangle^2 ) then
+          
           return false;
           
         fi;
