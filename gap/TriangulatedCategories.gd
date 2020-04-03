@@ -425,6 +425,16 @@ DeclareOperation( "MorphismBetweenStandardConeObjects",
       [  IsCapCategoryMorphism, IsCapCategoryMorphism, 
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
+DeclareOperation( "IsExactTriangle",
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsExactTriangle", [ IsCapCategory, IsList ] );
+
+
 
 DeclareOperation( "WitnessIsomorphismIntoStandardConeObject",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );

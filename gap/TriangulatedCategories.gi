@@ -85,7 +85,7 @@ InverseShiftOnMorphismWithGivenObjects := rec(
 
 WitnessIsomorphismIntoStandardConeObject := rec(
   installation_name := "WitnessIsomorphismIntoStandardConeObject",
-  io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "range_iota_alpha", "cone_alpha" ] ],
+  io_type := [ [ "alpha", "iota", "pi" ], [ "range_iota", "cone_alpha" ] ],
   filter_list := [ "morphism", "morphism", "morphism" ],
   cache_name := "WitnessIsomorphismIntoStandardConeObject",
   return_type := "morphism_or_fail"
@@ -93,10 +93,17 @@ WitnessIsomorphismIntoStandardConeObject := rec(
 
 WitnessIsomorphismFromStandardConeObject := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObject",
-  io_type := [ [ "alpha", "iota_alpha", "pi_alpha" ], [ "cone_alpha", "range_iota_alpha" ] ],
+  io_type := [ [ "alpha", "iota", "pi" ], [ "cone_alpha", "range_iota" ] ],
   filter_list := [ "morphism", "morphism", "morphism" ],
   cache_name := "WitnessIsomorphismFromStandardConeObject",
   return_type := "morphism_or_fail"
+),
+
+IsExactTriangle := rec(
+  installation_name := "IsExactTriangle",
+  filter_list := [ "morphism", "morphism", "morphism" ],
+  cache_name := "IsExactTriangle",
+  return_type := "bool"
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
