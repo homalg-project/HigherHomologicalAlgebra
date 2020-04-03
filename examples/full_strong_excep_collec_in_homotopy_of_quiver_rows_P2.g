@@ -47,7 +47,7 @@ C := AmbientCategory( collection );
 D := AsCapCategory( Source( F ) );
 
 FF := ExtendFunctorToCategoryOfTriangles( F );
-# GG := ExtendFunctorToCategoryOfTriangles( G );
+GG := ExtendFunctorToCategoryOfTriangles( G );
 
 quit;
 
@@ -63,6 +63,14 @@ I_FG_a := I( FG_a );
 
 # compute homologies
 List( [ -3 .. 3 ], j -> [ HomologyAt( I_a, j ), HomologyAt( I_FG_a, j ) ] );
+
+# create an exact triangle in C
+alpha := RandomMorphism( C, [ [-2,2,2], [-2,2,2], [2] ] );
+st_alpha := StandardExactTriangle( alpha );
+GG_st_alpha := GG( st_alpha );
+IsWellDefined( GG_st_alpha );
+w := WitnessIsomorphismIntoStandardExactTriangle( GG_st_alpha );
+List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( w[ i ] ) );
 
 # create an exact triangle in D
 alpha := RandomMorphism( D, [ [-2,2,2], [-2,2,2], [2] ] );
