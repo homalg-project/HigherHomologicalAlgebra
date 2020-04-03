@@ -1078,7 +1078,7 @@ end );
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     [ IsExceptionalCollection ],
   function( collection )
-    local I, F;
+    local I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
     
     I := IsomorphismFromAlgebroid( collection );
     
@@ -1086,13 +1086,39 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroi
     
     I := ExtendFunctorToHomotopyCategories( I );
     
+    eta_I := CommutativityNaturalTransformationWithShiftFunctor( I );
+    
     F := ConvolutionFunctor( collection );
     
-    F := PreCompose( I, F );
+    eta_F := CommutativityNaturalTransformationWithShiftFunctor( F );
     
-    F!.Name := "Convolution functor";
+    IF := PreCompose( I, F );
     
-    return F;
+    sigma_S := ShiftFunctor( AsCapCategory( Source( IF ) ) );
+
+    sigma_T := ShiftFunctor( AsCapCategory( Range( IF ) ) );
+
+    IF_o_sigma_S := PostCompose( IF, sigma_S );
+
+    sigma_T_o_IF := PostCompose( sigma_T, IF );
+
+    eta := NaturalTransformation( "Natural isomorphism F o Σ => Σ o F", IF_o_sigma_S, sigma_T_o_IF );
+    
+    AddNaturalTransformationFunction( eta,
+      function( IF_o_sigma_S_a, a, sigma_T_o_IF_a )
+      
+        return PreCompose(
+                  ApplyFunctor( F, ApplyNaturalTransformation( eta_I, a ) ),
+                  ApplyNaturalTransformation( eta_F, ApplyFunctor( I, a ) )
+                );
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( IF, eta );
+    
+    IF!.Name := "Convolution functor";
+    
+    return IF;
     
 end );
 
@@ -1101,7 +1127,7 @@ end );
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     [ IsExceptionalCollection ],
   function( collection )
-    local C, I, F;
+    local C, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
     
     C := Algebroid( collection );
     
@@ -1110,14 +1136,40 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     I := IsomorphismFunctorFromQuiverRows( C ); 
     
     I := ExtendFunctorToHomotopyCategories( I );
+     
+    eta_I := CommutativityNaturalTransformationWithShiftFunctor( I );
     
     F := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
     
-    F := PreCompose( I, F );
+    eta_F := CommutativityNaturalTransformationWithShiftFunctor( F );
     
-    F!.Name := "Convolution functor";
+    IF := PreCompose( I, F );
     
-    return F;
+    sigma_S := ShiftFunctor( AsCapCategory( Source( IF ) ) );
+
+    sigma_T := ShiftFunctor( AsCapCategory( Range( IF ) ) );
+
+    IF_o_sigma_S := PostCompose( IF, sigma_S );
+
+    sigma_T_o_IF := PostCompose( sigma_T, IF );
+
+    eta := NaturalTransformation( "Natural isomorphism F o Σ => Σ o F", IF_o_sigma_S, sigma_T_o_IF );
+    
+    AddNaturalTransformationFunction( eta,
+      function( IF_o_sigma_S_a, a, sigma_T_o_IF_a )
+      
+        return PreCompose(
+                  ApplyFunctor( F, ApplyNaturalTransformation( eta_I, a ) ),
+                  ApplyNaturalTransformation( eta_F, ApplyFunctor( I, a ) )
+                );
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( IF, eta );
+    
+    IF!.Name := "Convolution functor";
+    
+    return IF;
     
 end );
 
