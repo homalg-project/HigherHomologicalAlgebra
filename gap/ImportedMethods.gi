@@ -155,6 +155,24 @@ InstallOtherMethod( SetUpperBound,
 end );
 
 ##
+InstallOtherMethod( Objects,
+              [ IsHomotopyCategoryObject ],
+  a -> Objects( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( Differentials,
+              [ IsHomotopyCategoryObject ],
+  a -> Differentials( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( Morphisms,
+              [ IsHomotopyCategoryMorphism ],
+  alpha -> Morphisms( UnderlyingCell( alpha ) )
+);
+
+##
 InstallOtherMethod( ViewComplex,
               [ IsHomotopyCategoryObject ],
   function( a )
