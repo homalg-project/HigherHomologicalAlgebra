@@ -941,10 +941,45 @@ InstallMethod( EmbeddingFunctorFromHomotopyCategory,
 );
 
 ##
+BindGlobal( "SET_COMMUTATIVITY_NAT_ISO_BETWEEN_REPLACEMENT_AND_SHIFT",
+  function( collection, rep )
+    local D, sigma_D, C, sigma_C, rep_o_sigma_C, sigma_D_o_rep, name, eta;
+    
+    D := HomotopyCategory( collection );
+    
+    sigma_D := ShiftFunctor( D );
+    
+    C := AmbientCategory( collection );
+    
+    sigma_C := ShiftFunctor( C );
+    
+    rep_o_sigma_C := PostCompose( rep, sigma_C );
+    
+    sigma_D_o_rep := PostCompose( sigma_D, rep );
+    
+    name := "Natural isomorphism G o Σ => Σ o G";
+    
+    eta := NaturalTransformation( name, rep_o_sigma_C, sigma_D_o_rep );
+    
+    AddNaturalTransformationFunction( eta,
+      function( rep_o_sigma_a, a, sigma_D_o_rep_a )
+        local z_func;
+        
+        z_func := AsZFunction( i -> ( -1 ) ^ ( i - 1 ) * IdentityMorphism( rep_o_sigma_a[ i ] ) );
+        
+        return HomotopyCategoryMorphism( rep_o_sigma_a, sigma_D_o_rep_a, z_func );
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( rep, eta );
+   
+end );
+
+##
 InstallMethod( ReplacementFunctor,
           [ IsExceptionalCollection ],
   function( collection )
-    local C, H, name, Rep;
+    local C, H, name, rep;
     
     C := AmbientCategory( collection );
     
@@ -952,17 +987,19 @@ InstallMethod( ReplacementFunctor,
     
     name := "Replacement functor";
     
-    Rep := CapFunctor( name, C, H );
+    rep := CapFunctor( name, C, H );
     
-    AddObjectFunction( Rep,
+    AddObjectFunction( rep,
       a -> ExceptionalReplacement( a, collection, true )
     );
     
-    AddMorphismFunction( Rep,
+    AddMorphismFunction( rep,
       { s, alpha, r } -> ExceptionalReplacement( alpha, collection, true )
     );
     
-    return Rep;
+    SET_COMMUTATIVITY_NAT_ISO_BETWEEN_REPLACEMENT_AND_SHIFT( collection, rep );
+    
+    return rep;
     
 end );
 
@@ -970,9 +1007,11 @@ end );
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
           [ IsExceptionalCollection ],
   function( collection )
-    local G, J;
+    local G, eta_G, J, eta_J, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
     G := ReplacementFunctor( collection );
+    
+    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
     
     J := IsomorphismIntoAlgebroid( collection );
     
@@ -980,11 +1019,35 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroi
     
     J := ExtendFunctorToHomotopyCategories( J );
     
-    G := PreCompose( G, J );
+    eta_J := CommutativityNaturalTransformationWithShiftFunctor( J );
     
-    G!.Name := "Replacement functor";
+    GJ := PreCompose( G, J );
     
-    return G;
+    sigma_S := ShiftFunctor( AsCapCategory( Source( GJ ) ) );
+
+    sigma_T := ShiftFunctor( AsCapCategory( Range( GJ ) ) );
+
+    GJ_o_sigma_S := PostCompose( GJ, sigma_S );
+
+    sigma_T_o_GJ := PostCompose( sigma_T, GJ );
+
+    eta := NaturalTransformation( "Natural isomorphism G o Σ => Σ o G", GJ_o_sigma_S, sigma_T_o_GJ );
+    
+    AddNaturalTransformationFunction( eta,
+      function( GJ_o_sigma_S_a, a, sigma_T_o_GJ_a )
+      
+        return PreCompose(
+                  ApplyFunctor( J, ApplyNaturalTransformation( eta_G, a ) ),
+                  ApplyNaturalTransformation( eta_J, ApplyFunctor( G, a ) )
+                );
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( GJ, eta );
+    
+    GJ!.Name := "Replacement functor";
+    
+    return GJ;
     
 end );
 
@@ -992,9 +1055,11 @@ end );
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
           [ IsExceptionalCollection ],
   function( collection )
-    local G, C, J;
+    local G, eta_G, C, J, eta_J, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
     G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+    
+    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
     
     C := Algebroid( collection );
     
@@ -1003,13 +1068,37 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     J := IsomorphismFunctorIntoQuiverRows( C );
     
     J := ExtendFunctorToHomotopyCategories( J );
+        
+    eta_J := CommutativityNaturalTransformationWithShiftFunctor( J );
     
-    G := PreCompose( G, J );
+    GJ := PreCompose( G, J );
     
-    G!.Name := "Replacement functor";
+    sigma_S := ShiftFunctor( AsCapCategory( Source( GJ ) ) );
+
+    sigma_T := ShiftFunctor( AsCapCategory( Range( GJ ) ) );
+
+    GJ_o_sigma_S := PostCompose( GJ, sigma_S );
+
+    sigma_T_o_GJ := PostCompose( sigma_T, GJ );
+
+    eta := NaturalTransformation( "Natural isomorphism G o Σ => Σ o G", GJ_o_sigma_S, sigma_T_o_GJ );
     
-    return G;
+    AddNaturalTransformationFunction( eta,
+      function( GJ_o_sigma_S_a, a, sigma_T_o_GJ_a )
+      
+        return PreCompose(
+                  ApplyFunctor( J, ApplyNaturalTransformation( eta_G, a ) ),
+                  ApplyNaturalTransformation( eta_J, ApplyFunctor( G, a ) )
+                );
+        
+    end );
     
+    SetCommutativityNaturalTransformationWithShiftFunctor( GJ, eta );
+    
+    GJ!.Name := "Replacement functor";
+    
+    return GJ;
+   
 end );
 
 BindGlobal( "SET_COMMUTATIVITY_NAT_ISO_BETWEEN_CONVOLUTION_AND_SHIFT",
