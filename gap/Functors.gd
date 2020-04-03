@@ -65,8 +65,8 @@ DeclareAttribute( "NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity", IsTri
 #! The argument is an exact functor $F:\mathcal{T}_1\to\mathcal{T}_2$ between triangulated categories.
 #! The output is a natural isomorphism $\eta:F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F$.
 #! @Arguments F
-#! @Returns a natural isomorphism $F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F$
-DeclareAttribute( "CommutativityNaturalIsomorphismForExactFunctor", IsCapFunctor );
+#! @Returns a natural transformation $F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F$
+DeclareAttribute( "CommutativityNaturalTransformationWithShiftFunctor", IsCapFunctor );
 
 #! @Description
 #! The argument is an exact functor $F:\mathcal{T}_1\to\mathcal{T}_2$ between triangulated categories, for which

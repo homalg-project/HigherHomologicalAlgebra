@@ -168,11 +168,11 @@ end );
 
 ##
 InstallMethod( ExtendFunctorToCategoryOfTriangles,
-          [ IsCapFunctor and HasCommutativityNaturalIsomorphismForExactFunctor ],
+          [ IsCapFunctor and HasCommutativityNaturalTransformationWithShiftFunctor ],
   function( F )
     local eta, S, R, name, TF;
     
-    eta := CommutativityNaturalIsomorphismForExactFunctor( F );
+    eta := CommutativityNaturalTransformationWithShiftFunctor( F );
     
     S := AsCapCategory( Source( F ) );
     
