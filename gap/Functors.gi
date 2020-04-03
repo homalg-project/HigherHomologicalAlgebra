@@ -168,7 +168,7 @@ end );
 InstallMethod( ExtendFunctorToHomotopyCategories,
                [ IsCapFunctor ],
   function( F )
-    local S, T, ChF, name, functor;
+    local S, T, ChF, name, sigma_S, sigma_T, F_o_sigma_S, sigma_T_o_F, eta;
     
     S := HomotopyCategory( AsCapCategory( Source( F ) ) );
     
@@ -184,23 +184,44 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
       
     fi;
     
-    functor := CapFunctor( name, S, T );
+    F := CapFunctor( name, S, T );
     
-    AddObjectFunction( functor,
+    AddObjectFunction( F,
       function( C )
         
         return ApplyFunctor( ChF, UnderlyingCell( C ) ) / T;
         
       end );
     
-    AddMorphismFunction( functor,
+    AddMorphismFunction( F,
       function( new_source, phi, new_range ) 
         
         return ApplyFunctor( ChF, UnderlyingCell( phi ) ) / T;
         
       end );
-      
-    return functor;
+    
+    sigma_S := ShiftFunctor( S );
+    
+    sigma_T := ShiftFunctor( T );
+    
+    F_o_sigma_S := PostCompose( F, sigma_S );
+    
+    sigma_T_o_F := PostCompose( sigma_T, F );
+    
+    name := "Natural isomorphism F o Σ => Σ o F";
+    
+    eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
+    
+    AddNaturalTransformationFunction( eta,
+      function( F_o_sigma_S_a, a, sigma_T_o_F_a )
+         
+        return IdentityMorphism( F_o_sigma_S_a );
+        
+    end );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
+    
+    return F;
     
 end );
 
