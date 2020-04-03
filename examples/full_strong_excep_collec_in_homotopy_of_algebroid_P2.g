@@ -36,14 +36,17 @@ collection := CreateExceptionalCollection( image_B : name_for_underlying_quiver 
                                               name_for_endomorphism_algebra := name_for_algebra
                                           );
 
-C := AmbientCategory( collection );
-
 # embedd the ambient in some derived category where homology can be computed
 I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 
-
 F := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
 G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+
+C := AmbientCategory( collection );
+D := AsCapCategory( Source( F ) );
+
+FF := ExtendFunctorToCategoryOfTriangles( F );
+# GG := ExtendFunctorToCategoryOfTriangles( G );
 
 quit;
 
@@ -60,4 +63,12 @@ I_FG_a := I( FG_a );
 # compute homologies
 List( [ -3 .. 3 ], j -> [ HomologyAt( I_a, j ), HomologyAt( I_FG_a, j ) ] );
 
-# now how does O(3) looks like in the category Source(U)?
+# create an exact triangle in D
+alpha := RandomMorphism( D, [ [-2,2,2], [-2,2,2], [2] ] );
+st_alpha := StandardExactTriangle( alpha );
+FF_st_alpha := FF( st_alpha );
+IsWellDefined( FF_st_alpha );
+w := WitnessIsomorphismIntoStandardExactTriangle( FF_st_alpha );
+List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( I( w[ i ] ) ) );
+List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( w[ i ] ) );
+
