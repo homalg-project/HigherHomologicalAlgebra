@@ -190,7 +190,7 @@ InstallMethod( CategoryOfExactTriangles,
           
         fi;
         
-        if not IsExactTriangle( triangle^0, triangle^1, triangle^2 ) then
+        if WitnessIsomorphismIntoStandardExactTriangle( triangle ) = fail then
           
           return false;
           
