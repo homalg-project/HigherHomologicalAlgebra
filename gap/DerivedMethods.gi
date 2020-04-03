@@ -13,10 +13,24 @@
 ################################################
 
 ##
+AddDerivationToCAP( IsExactTriangle,
+                [
+                  [ WitnessIsomorphismIntoStandardConeObject, 1 ],
+                ],
+  function( alpha, iota, pi )
+    
+    return WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi ) <> fail;
+    
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject"
+);
+
+##
 AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
                 [
                   [ SolveLinearSystemInAbCategory, 1 ],
-                  [ Inverse, 1 ]
+                  [ ShiftOnObject, 1 ]
                 ],
                 [
                   WitnessIsomorphismIntoStandardConeObject,
@@ -24,6 +38,12 @@ AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
                 ],
   function( alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
+    
+    if not IsEqualForObjects( ShiftOnObject( Source( alpha ) ), Range( pi ) ) then
+      
+      Error( "Wrong input!\n" );
+      
+    fi;
     
     iota_alpha := MorphismIntoStandardConeObject( alpha );
     
