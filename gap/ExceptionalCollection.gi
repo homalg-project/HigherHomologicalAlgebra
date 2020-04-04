@@ -136,6 +136,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
 end );
 
+##
 InstallMethod( ExceptionalCollection,
           [ IsCapFullSubcategory ],
   function( full )
@@ -150,6 +151,13 @@ InstallMethod( ExceptionalCollection,
     return ExceptionalCollection( full );
   
 end );
+
+##
+InstallOtherMethod( ExceptionalCollection,
+        [ IsCapFullSubcategory, IsString, IsString ],
+  { full, name_for_quiver, name_for_algebra } ->
+    ExceptionalCollection( full : name_for_underlying_quiver := name_for_quiver, name_for_endomorphism_algebra := name_for_algebra )
+);
 
 ##
 InstallMethod( TiltingObject,
