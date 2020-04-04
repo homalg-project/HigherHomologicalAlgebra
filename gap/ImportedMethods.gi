@@ -96,9 +96,21 @@ InstallOtherMethod( HomologyAt,
 );
 
 ##
+InstallOtherMethod( ComputedHomologyAts,
+          [ IsHomotopyCategoryObject ],
+    a -> ComputedHomologyAts( UnderlyingCell( a ) )
+);
+
+##
 InstallOtherMethod( HomologyFunctorialAt,
           [ IsHomotopyCategoryMorphism, IsInt ],
     { alpha, i } -> HomologyFunctorialAt( UnderlyingCell( alpha ), i )
+);
+
+##
+InstallOtherMethod( ComputedHomologyFunctorialAts,
+          [ IsHomotopyCategoryMorphism ],
+    a -> ComputedHomologyFunctorialAts( UnderlyingCell( a ) )
 );
 
 ##
