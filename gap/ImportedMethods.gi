@@ -171,21 +171,3 @@ InstallOtherMethod( Morphisms,
               [ IsHomotopyCategoryMorphism ],
   alpha -> Morphisms( UnderlyingCell( alpha ) )
 );
-
-##
-InstallOtherMethod( ViewComplex,
-              [ IsHomotopyCategoryObject ],
-  function( a )
-    
-    ViewComplex( UnderlyingCell( a ) );
-    
-end );
-
-##
-InstallOtherMethod( ViewChainMorphism,
-              [ IsHomotopyCategoryMorphism ],
-  function( alpha )
-    
-    ViewChainMorphism( UnderlyingCell( alpha ) );
-    
-end );
