@@ -1,9 +1,10 @@
-LoadPackage( "HomotopyCategories" );
 LoadPackage( "FreydCategories" );
 LoadPackage( "4ti2Interface" ); # or NConvex
 LoadPackage( "LinearAlgebra" );
 LoadPackage( "GradedModulePresentations" );
 LoadPackage( "Bialgebroid" );
+LoadPackage( "SubcategoriesForCAP" );
+LoadPackage( "HomotopyCategories" );
 ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_graded_rows.g" );
 
 Q := HomalgFieldOfRationalsInSingular( );;

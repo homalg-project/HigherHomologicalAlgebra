@@ -1,6 +1,6 @@
-LoadPackage( "HomotopyCategories" );
 LoadPackage( "RingsForHomalg" );
 LoadPackage( "FreydCategories" );
+LoadPackage( "HomotopyCategories" );
 ReadPackage( "HomotopyCategories", "/examples/temp_dir/random_methods_for_categories_of_rows.g" );
 
 #R := HomalgFieldOfRationals( );
