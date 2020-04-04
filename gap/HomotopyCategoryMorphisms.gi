@@ -124,32 +124,66 @@ end );
 ##
 InstallMethod( Display,
             [ IsHomotopyCategoryMorphism ],
-  function( a )
-  
-    Print( "A morphism in homotopy category defined by:\n\n" );
-
-    Display( UnderlyingCell( a ) );
+  function( map )
+    local l, u, r, s, i;
+    
+    l := ActiveLowerBound( map );
+    
+    u := ActiveUpperBound( map );
+    
+    r := RandomTextColor( "" );
+    
+    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
+    
+    Print( "\n" );
+    
+    for i in [ l .. u ] do
+      
+      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      Print( s );
+      Print( "\n" ); 
+      Display( map[ i ] );
+      Print( "\n" );
+      
+    od;
 
 end );
 
 InstallMethod( ViewObj,
             [ IsHomotopyCategoryMorphism ],
-  function( a )
-    local c;
+  function( map )
     
-    c := UnderlyingCell( a );
-    
-    Print( "<A morphism in ", Name( CapCategory( a ) ) );
-    
-    if HasActiveLowerBound( c ) then
-      Print( " with active lower bound ", ActiveLowerBound( c ) );
-    fi;
-    
-    if HasActiveUpperBound( c ) then
-      Print( " and active upper bound ", ActiveUpperBound( c ) );
-    fi;
-    
+    Print( "<A morphism in ", Name( CapCategory( map ) ) );
+    Print( " with active lower bound ", ActiveLowerBound( map ) );
+    Print( " and active upper bound ", ActiveUpperBound( map ) );
     Print(">" );
 
 end );
- 
+
+##
+InstallMethod( ViewHomotopyCategoryMorphism,
+               [ IsHomotopyCategoryMorphism ],
+  function( map )
+    local l, u, r, s, i;
+    
+    l := ActiveLowerBound( map );
+    
+    u := ActiveUpperBound( map );
+    
+    r := RandomTextColor( "" );
+     
+    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
+    Print( "\n" );
+    
+    for i in [ l .. u ] do
+      
+      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      Print( s );
+      Print( "\n" ); 
+      ViewObj( map[ i ] );
+      Print( "\n" );
+      
+    od;
+
+end );
+

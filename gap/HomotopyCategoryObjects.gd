@@ -29,3 +29,5 @@ DeclareOperation( "\[\]",
 DeclareOperation( "\^",
             [ IsHomotopyCategoryObject, IsInt ] );
 
+DeclareOperation( "ViewHomotopyCategoryObject",
+            [ IsHomotopyCategoryObject ] );

@@ -84,33 +84,84 @@ InstallMethod( \/,
 
 ##
 InstallMethod( Display,
-            [ IsHomotopyCategoryObject ],
+          [ IsHomotopyCategoryObject ],
   function( a )
-  
-    Print( "An object in homotopy category defined by:\n\n" );
-
-    Display( UnderlyingCell( a ) );
-
+    local l, u, r, s, i;
+    
+    l := ActiveLowerBound( a );
+    
+    u := ActiveUpperBound( a );
+    
+    r := RandomTextColor( "" );
+    
+    Print( "An object in ", Name( CapCategory( a ) ), " given by the data: \n\n" );
+    
+    for i in [ l .. u ] do
+      
+      Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+      Display( a ^ i );
+      Print( "\n" );
+      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      Print( s );
+      Print( "\n" );
+      Display( a[ i ] );
+      Print( "\n" );
+      Print( Concatenation(
+        ListWithIdenticalEntries(
+          Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
+        );
+      Print( "\n\n" );
+      
+    od;
+    
 end );
 
+##
 InstallMethod( ViewObj,
-            [ IsHomotopyCategoryObject ],
+          [ IsHomotopyCategoryObject ],
   function( a )
-    local c;
-    
-    c := UnderlyingCell( a );
     
     Print( "<An object in ", Name( CapCategory( a ) ) );
-    
-    if HasActiveLowerBound( c ) then
-      Print( " with active lower bound ", ActiveLowerBound( c ) );
-    fi;
-    
-    if HasActiveUpperBound( c ) then
-      Print( " and active upper bound ", ActiveUpperBound( c ) );
-    fi;
-    
+    Print( " with active lower bound ", ActiveLowerBound( a ) );
+    Print( " and active upper bound ", ActiveUpperBound( a ) );
     Print(">" );
 
 end );
- 
+
+##
+InstallMethod( ViewHomotopyCategoryObject, 
+          [ IsHomotopyCategoryObject ],
+  function( a )
+    local l, u, r, s, i;
+    
+    l := ActiveLowerBound( a );
+    
+    u := ActiveUpperBound( a );
+   
+    r := RandomTextColor( "" );
+    
+    Print( "An object in ", Name( CapCategory( a ) ), " given by the data: \n\n" );
+    
+    for i in [ l .. u ] do
+      
+      Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+      ViewObj( a ^ i );
+      Print( "\n" );
+      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      Print( s );
+      Print( "\n" );
+      ViewObj( a[ i ] );
+      Print( "\n" );
+      Print( Concatenation(
+        ListWithIdenticalEntries(
+          Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
+        );
+      Print( "\n\n" );
+      
+    od;
+
+end );
