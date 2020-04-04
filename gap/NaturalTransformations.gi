@@ -186,8 +186,8 @@ end );
 
 BindGlobal( "NATURAL",
   function( a, collection )
-    local I, N, data, rep_a, z_func, func;
-    
+    local I, N, data, e_rep_a, rep_a, H, z_func, func;
+    Error( );
     I := EmbeddingFunctorFromHomotopyCategory( collection );
     
     N := ExceptionalShift( a, collection );
@@ -200,9 +200,11 @@ BindGlobal( "NATURAL",
     
     data := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
     
-    rep_a := I( ExceptionalReplacement( a, collection, true ) );
+    e_rep_a := ExceptionalReplacement( a, collection, true );
+    rep_a := I( e_rep_a );
+    rep_a := UnderlyingCell( rep_a );
     
-    rep_a := UnderlyingCell( rep_a ); 
+    H := CapCategory( rep_a ); 
     
     ### creating the first exact triangle
     z_func := VoidZFunction( ); 
@@ -230,7 +232,11 @@ BindGlobal( "NATURAL",
           return [ shift_t_alpha_n, triangle, shift_t_gamma_n ];
           
         else
-    
+          
+          if n > ActiveUpperBound( rep_a ) then
+            return true;
+          fi;
+          
           alpha_n := data[ n ][ 1 ];
           t_alpha_n := StandardExactTriangle( alpha_n );
           shift_t_alpha_n := Shift( t_alpha_n, n - 1 );
@@ -243,11 +249,16 @@ BindGlobal( "NATURAL",
           t_gamma_n := StandardExactTriangle( gamma_n );
           shift_t_gamma_n := Shift( t_gamma_n, n - 1 );
           
-          lambda_n := ChainMorphism( StalkChainComplex( rep_a[ n ], n - 1 ), BrutalTruncationAbove( rep_a, n ), [ rep_a^n ], n - 1 );
-          iota_lambda_n := NaturalInjectionInMappingCone( lambda_n );
-          pi_lambda := NaturalProjectionFromMappingCone( lambda_n );
-          shift_t_lambda_n := ExactTriangle( Convolution( lambda_n ), Convolution( iota_lambda_n ), Convolution( pi_lambda ) );
-          
+          if IsCongruentForMorphisms(
+                  PreCompose( shift_t_alpha_n^0, t^0 ), -shift_t_gamma_n^0
+                ) then
+            shift_t_gamma_n := ExactTriangle( -shift_t_gamma_n^0, -shift_t_gamma_n^1, shift_t_gamma_n^2 );
+          elif not IsCongruentForMorphisms(
+                  PreCompose( shift_t_alpha_n^0, t^0 ), shift_t_gamma_n^0
+                ) then
+            Error( "Sorry, you need to fix this!\n" );
+          fi;
+
           return [ shift_t_alpha_n, t, shift_t_gamma_n ];
         
         fi;
@@ -256,5 +267,6 @@ BindGlobal( "NATURAL",
       
     SetUnderlyingFunction( z_func, func );
     
+    return z_func;
     
 end );
