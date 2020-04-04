@@ -233,7 +233,7 @@ BindGlobal( "NATURAL",
           
         else
           
-          if n > ActiveUpperBound( rep_a ) then
+          if n > ActiveUpperBound( rep_a ) + 1 then
             return true;
           fi;
           
