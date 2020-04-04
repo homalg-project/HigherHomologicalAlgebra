@@ -15,6 +15,17 @@
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
 
+
+####################################
+#
+# to avoid conflicts with modules package
+#
+####################################
+
+if not IsBound( IsExactTriangle ) then
+  DeclareProperty( "IsExactTriangle", IsObject );
+fi;
+
 ####################################
 ##
 #! @Chapter Triangulated Categories
