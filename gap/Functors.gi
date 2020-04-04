@@ -593,13 +593,21 @@ InstallMethod( RestrictFunctorIterativelyToFullSubcategoryOfSource,
     
     if IsIdenticalObj( AsCapCategory( Source( F ) ), AmbientCategory( full ) ) then
       
-      return RestrictFunctorToFullSubcategoryOfSource( F, full );
+      F := RestrictFunctorToFullSubcategoryOfSource( F, full );
+      
+      F!.Name := "Restriction of functor to a full subcategory";
+      
+      return F;
       
     else
       
-      G := RestrictFunctorIterativelyToFullSubcategoryOfSource( F, AmbientCategory( full ) );
+      F := RestrictFunctorIterativelyToFullSubcategoryOfSource( F, AmbientCategory( full ) );
+       
+      F := RestrictFunctorToFullSubcategoryOfSource( F, full );
       
-      return RestrictFunctorToFullSubcategoryOfSource( G, full );
+      F!.Name := "Restriction of functor to a full subcategory";
+      
+      return F;
       
     fi;
     
