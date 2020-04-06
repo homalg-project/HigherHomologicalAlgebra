@@ -66,12 +66,12 @@ IsStandardExactTriangle( st_alpha );
 rot_st_alpha := Rotation( st_alpha );;
 IsStandardExactTriangle( rot_st_alpha );
 #! false
-HasWitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );
+HasWitnessIsomorphismOntoStandardExactTriangle( rot_st_alpha );
 #! false
 rot_st_alpha := Rotation( st_alpha, true );;
-HasWitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );
+HasWitnessIsomorphismOntoStandardExactTriangle( rot_st_alpha );
 #! true
-w := WitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );;
+w := WitnessIsomorphismOntoStandardExactTriangle( rot_st_alpha );;
 IsWellDefined( w );
 #! true
 IsIsomorphism( w );
@@ -79,7 +79,7 @@ IsIsomorphism( w );
 IsStandardExactTriangle( Range( w ) );
 #! true
 inv_rot_st_alpha := InverseRotation( st_alpha, true );;
-w := WitnessIsomorphismIntoStandardExactTriangle( inv_rot_st_alpha );;
+w := WitnessIsomorphismOntoStandardExactTriangle( inv_rot_st_alpha );;
 IsWellDefined( w );
 #! true
 IsIsomorphism( w );
@@ -89,7 +89,7 @@ IsStandardExactTriangle( Range( w ) );
 t := ExactTriangleByOctahedralAxiom( alpha, beta, true );;
 IsWellDefined( t );
 #! true
-w := WitnessIsomorphismIntoStandardExactTriangle( t );;
+w := WitnessIsomorphismOntoStandardExactTriangle( t );;
 # Checking whether a morphism is isomorphism in derived category is faster
 IsIsomorphism( I( w[ 2 ] ) );
 IsIsomorphism( w[ 2 ] );

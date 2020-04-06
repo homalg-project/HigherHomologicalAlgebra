@@ -57,11 +57,11 @@ function( Ho_C )
   end );
   
   ##
-  AddIsomorphismIntoShiftOfInverseShift( Ho_C, IdentityMorphism );
+  AddIsomorphismOntoShiftOfInverseShift( Ho_C, IdentityMorphism );
   
   AddIsomorphismFromShiftOfInverseShift( Ho_C, IdentityMorphism );
   
-  AddIsomorphismIntoInverseShiftOfShift( Ho_C, IdentityMorphism );
+  AddIsomorphismOntoInverseShiftOfShift( Ho_C, IdentityMorphism );
   
   AddIsomorphismFromInverseShiftOfShift( Ho_C, IdentityMorphism );
   
@@ -118,7 +118,7 @@ function( Ho_C )
   end );
   
   ##
-  AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( Ho_C,
+  AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( Ho_C,
     function( s, alpha, r )
       local A, B, maps;
       
@@ -169,7 +169,7 @@ function( Ho_C )
   end );
   
   ##
-  AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( Ho_C,
+  AddWitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( Ho_C,
     function( s, alpha, r )
       local A, B, maps;
       
@@ -286,7 +286,7 @@ function( Ho_C )
   end );
   
   ##
-  AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
+  AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
     function( s, alpha, beta, r )
       local A, B, C, maps;
       
