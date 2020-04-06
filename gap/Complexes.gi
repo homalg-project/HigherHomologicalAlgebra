@@ -457,7 +457,7 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( Display, 
+InstallMethod( Display,
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local r, co_homo, s, dashes, i;
@@ -469,22 +469,23 @@ InstallMethod( Display,
     if IsChainComplex( C ) then
       
       for i in [ m .. n ] do
-        
-        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        Display( C^i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        if i <> m then
+          Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          Display( C^i );
+          Print( "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        fi;
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
-        Print( "\n" ); 
+        Print( "\n" );
         Display( C[ i ] );
         Print( "\n" );
-        Print( Concatenation( 
+        Print( Concatenation(
           ListWithIdenticalEntries(
             Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
           );
-        Print( "\n\n" ); 
+        Print( "\n\n" );
       od;
       
     else
@@ -493,22 +494,22 @@ InstallMethod( Display,
         
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
-        Print( "\n" ); 
+        Print( "\n" );
         Display( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
             Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
           );
-          
-        Print( "\n\n" ); 
-        
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        Display( C^i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
-        Print( "\n" ); 
+        Print( "\n\n" );
+        if i <> n then
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          Display( C^i );
+          Print( "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
+          Print( "\n" );
+        fi;
         
       od;
       
@@ -538,7 +539,7 @@ InstallMethod( DisplayComplex, [ IsChainOrCochainComplex, IsInt, IsInt ], Displa
 InstallMethod( DisplayComplex, [ IsBoundedChainOrCochainComplex ], Display );
 
 ##
-InstallMethod( ViewComplex, 
+InstallMethod( ViewComplex,
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local r, co_homo, s, dashes, i;
@@ -550,12 +551,13 @@ InstallMethod( ViewComplex,
     if IsChainComplex( C ) then
       
       for i in [ m .. n ] do
-        
-        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        ViewObj( C^i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        if i <> m then
+          Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          ViewObj( C^i );
+          Print( "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+        fi;
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
@@ -574,7 +576,7 @@ InstallMethod( ViewComplex,
         
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
-        Print( "\n" ); 
+        Print( "\n" );
         ViewObj( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
@@ -582,14 +584,14 @@ InstallMethod( ViewComplex,
             Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
           );
         Print( "\n\n" );
-        
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        ViewObj( C^i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
-        Print( "\n" ); 
-       
+        if i <> n then
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          ViewObj( C^i );
+          Print( "\n" );
+          Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+          Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
+          Print( "\n" );
+        fi;
       od;
       
     fi;
