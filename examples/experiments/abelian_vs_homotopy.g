@@ -49,7 +49,7 @@ collection_ho := CreateExceptionalCollection( o_012_ho : name_for_underlying_qui
 add_o_012_ho := AdditiveClosure( o_012_ho );
 ho_o_012_ho := HomotopyCategory( add_o_012_ho );
 
-I := IsomorphismIntoImageOfFullyFaithfulFunctor( Emb );
+I := IsomorphismOntoImageOfFullyFaithfulFunctor( Emb );
 J := IsomorphismFromImageOfFullyFaithfulFunctor( Emb );
 
 add_I := ExtendFunctorToAdditiveClosures( I );

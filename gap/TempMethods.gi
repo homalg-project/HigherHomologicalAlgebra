@@ -163,7 +163,7 @@ InstallMethod( RandomMorphismWithFixedSourceByInteger,
     
     QRows := CapCategory( o );
     
-    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
     
     J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
@@ -179,7 +179,7 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
     
     QRows := CapCategory( o );
    
-    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
     
     J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
@@ -195,7 +195,7 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
     
     QRows := CapCategory( s );
 
-    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
     
     J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     

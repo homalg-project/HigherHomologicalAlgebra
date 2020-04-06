@@ -53,7 +53,7 @@ collection_1 := CreateExceptionalCollection( image_B_1 :
                     );
 
 # connect full_1 with image_B_1
-U_1 := IsomorphismIntoImageOfFullyFaithfulFunctor( B_1 );
+U_1 := IsomorphismOntoImageOfFullyFaithfulFunctor( B_1 );
 U_1 := ExtendFunctorToAdditiveClosureOfSource( U_1 );
 U_1 := ExtendFunctorToHomotopyCategories( U_1 );
 
@@ -65,7 +65,7 @@ V_1 := ExtendFunctorToHomotopyCategories( V_1 );
 image_B_2 := ImageOfFullyFaithfullFunctor( B_2 );
 
 # connect full_2 with image_B_2
-U_2 := IsomorphismIntoImageOfFullyFaithfulFunctor( B_2 );
+U_2 := IsomorphismOntoImageOfFullyFaithfulFunctor( B_2 );
 U_2 := ExtendFunctorToAdditiveClosureOfSource( U_2 );
 U_2 := ExtendFunctorToHomotopyCategories( U_2 );
 

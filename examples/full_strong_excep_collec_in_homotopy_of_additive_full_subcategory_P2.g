@@ -21,7 +21,7 @@ B := RestrictFunctorIterativelyToFullSubcategoryOfSource( B, full );
 image_B := ImageOfFullyFaithfullFunctor( B );
 
 # connect the two category full & image_B with functors
-U := IsomorphismIntoImageOfFullyFaithfulFunctor( B );
+U := IsomorphismOntoImageOfFullyFaithfulFunctor( B );
 U := ExtendFunctorToAdditiveClosureOfSource( U );
 U := ExtendFunctorToHomotopyCategories( U );
 

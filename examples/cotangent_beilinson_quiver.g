@@ -50,7 +50,7 @@ B := EndomorphismAlgebra( collection );
 algebroid := Algebroid( B );
 
 
-F := IsomorphismIntoAlgebroid( collection );
+F := IsomorphismOntoAlgebroid( collection );
 G := IsomorphismFromAlgebroid( collection );
 
 add_F := ExtendFunctorToAdditiveClosures( F );
@@ -62,6 +62,6 @@ additive_alg := AsCapCategory( Range( add_F ) );
 a := AdditiveClosureObject( [ collection[1], collection[2] ], additive_full );
 add_F_a := ApplyFunctor( add_F, IdentityMorphism( a ) );
 
-I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
 J := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
 

@@ -330,7 +330,7 @@ InstallMethod( _WeakKernelEmbedding,
       TryNextMethod( );
     fi;
     
-    I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
     Inc := InclusionFunctor( AsCapCategory( Range( I ) ) );
     I := ExtendFunctorToAdditiveClosureOfSource( PreCompose( I, Inc ) );
      
@@ -415,7 +415,7 @@ InstallMethod( _WeakKernelEmbedding,
     
     QRows := CapCategory( alpha );
     
-    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
     
     J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     

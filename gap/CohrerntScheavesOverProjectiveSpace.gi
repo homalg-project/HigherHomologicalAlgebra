@@ -93,7 +93,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       C := ExceptionalCollection( C );
       
-      C := IsomorphismIntoAlgebroid( C );
+      C := IsomorphismOntoAlgebroid( C );
       
       C := ExtendFunctorToAdditiveClosures( C );
       
@@ -119,7 +119,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       C := DefiningCategory( C );
       
-      C := IsomorphismIntoQuiverRows( C );
+      C := IsomorphismOntoQuiverRows( C );
       
       QRows := AsCapCategory( Range( C ) );
       
@@ -158,7 +158,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       C := ExceptionalCollection( C );
     
-      C := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( C );
+      C := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( C );
       
       C := ExtendFunctorToAdditiveClosures( C );
       

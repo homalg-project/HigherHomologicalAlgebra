@@ -21,7 +21,7 @@ B := RestrictFunctorIterativelyToFullSubcategoryOfSource( B, full );
 image_B := ImageOfFullyFaithfullFunctor( B );
 
 # connect the two category full & image_B with functors
-U := IsomorphismIntoImageOfFullyFaithfulFunctor( B );
+U := IsomorphismOntoImageOfFullyFaithfulFunctor( B );
 U := ExtendFunctorToAdditiveClosureOfSource( U );
 U := ExtendFunctorToHomotopyCategories( U );
 
@@ -69,7 +69,7 @@ alpha := RandomMorphism( C, [ [-2,2,2], [-2,2,2], [2] ] );
 st_alpha := StandardExactTriangle( alpha );
 GG_st_alpha := GG( st_alpha );
 IsWellDefined( GG_st_alpha );
-w := WitnessIsomorphismIntoStandardExactTriangle( GG_st_alpha );
+w := WitnessIsomorphismOntoStandardExactTriangle( GG_st_alpha );
 List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( w[ i ] ) );
 
 # create an exact triangle in D
@@ -77,7 +77,7 @@ alpha := RandomMorphism( D, [ [-2,2,2], [-2,2,2], [2] ] );
 st_alpha := StandardExactTriangle( alpha );
 FF_st_alpha := FF( st_alpha );
 IsWellDefined( FF_st_alpha );
-w := WitnessIsomorphismIntoStandardExactTriangle( FF_st_alpha );
+w := WitnessIsomorphismOntoStandardExactTriangle( FF_st_alpha );
 List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( I( w[ i ] ) ) );
 List( [ 0, 1, 2, 3 ], i -> IsIsomorphism( w[ i ] ) );
 

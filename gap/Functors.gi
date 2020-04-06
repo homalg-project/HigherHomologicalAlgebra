@@ -167,7 +167,7 @@ InstallMethod( EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAddi
         
         alpha_cell := UnderlyingCell( alpha );
         
-        iso := IsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition( UnderlyingCell( Source( alpha ) ) );
+        iso := IsomorphismOntoInjectiveRepresentationFromCanonicalDecomposition( UnderlyingCell( Source( alpha ) ) );
         
         d_source_cell := List( d_source_cell, Range );
         
@@ -212,7 +212,7 @@ InstallMethod( EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubc
 end );
 
 ##
-InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+InstallMethod( IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsAlgebroid ],
   function( algebroid )
     local A, A_op, full, ambient_cat, quiver_op, nr_vertices, basis, projs, projs_in_subcategory, r, name, F;
@@ -275,18 +275,18 @@ InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentations
 end );
 
 ##
-InstallMethod( IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+InstallMethod( IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
           [ IsExceptionalCollection ],
   function( collection )
     local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
     
     full := DefiningFullSubcategory( collection );
     
-    iso_1 := IsomorphismIntoAlgebroid( collection );
+    iso_1 := IsomorphismOntoAlgebroid( collection );
     
     algebroid := AsCapCategory( Range( iso_1 ) );
     
-    iso_2 := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    iso_2 := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
     
     iso := PreCompose( iso_1, iso_2 );
     
@@ -371,7 +371,7 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
         
         basis := BasisOfExternalHom( s, r );
         
-        I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+        I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
         
         images := List( basis, b -> ApplyFunctor( I, b ) );
         
@@ -406,7 +406,7 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentations
 end );
 
 ##
-InstallMethod( IsomorphismIntoAlgebroid,
+InstallMethod( IsomorphismOntoAlgebroid,
         [ IsExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, r, name, object_func, morphism_func;
@@ -1021,7 +1021,7 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroi
     
     eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
     
-    J := IsomorphismIntoAlgebroid( collection );
+    J := IsomorphismOntoAlgebroid( collection );
     
     J := ExtendFunctorToAdditiveClosureOfSource( J );
     
@@ -1073,7 +1073,7 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     
     C := AdditiveClosure( C );
     
-    J := IsomorphismIntoQuiverRows( C );
+    J := IsomorphismOntoQuiverRows( C );
     
     J := ExtendFunctorToHomotopyCategories( J );
         
@@ -1391,7 +1391,7 @@ InstallMethod( ImageOfFullyFaithfullFunctor,
 end );
 
 ##
-InstallMethod( IsomorphismIntoImageOfFullyFaithfulFunctor,
+InstallMethod( IsomorphismOntoImageOfFullyFaithfulFunctor,
           [ IsCapFunctor ],
   function( I )
     local C, D, r, name;
@@ -1589,7 +1589,7 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
         
         elif IsAlgebroid( U ) then
           
-          I := IsomorphismIntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( U );
+          I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( U );
           
           I := PreCompose( I, InclusionFunctor( AsCapCategory( Range( I ) ) ) );
           

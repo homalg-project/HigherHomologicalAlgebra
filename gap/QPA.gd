@@ -42,13 +42,13 @@ DeclareAttribute( "DecomposeProjectiveQuiverRepresentation", IsQuiverRepresentat
 
 DeclareAttribute( "DecomposeInjectiveQuiverRepresentation", IsQuiverRepresentation );
 
-DeclareAttribute( "IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
 
 DeclareAttribute( "IsomorphismFromProjectiveRepresentationIntoCanonicalDecomposition", IsQuiverRepresentation );
 
 DeclareAttribute( "IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition", IsQuiverRepresentation );
 
-DeclareAttribute( "IsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
+DeclareAttribute( "IsomorphismOntoInjectiveRepresentationFromCanonicalDecomposition", IsQuiverRepresentation );
 
 DeclareGlobalFunction( "Homalg_to_QPA_Matrix" );
 

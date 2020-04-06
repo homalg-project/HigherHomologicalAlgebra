@@ -565,7 +565,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
     fi;
     
-    SetIsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition( a, IdentityMorphism( a ) );
+    SetIsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition( a, IdentityMorphism( a ) );
     
     SetIsomorphismFromProjectiveRepresentationIntoCanonicalDecomposition( a, IdentityMorphism( a ) );
     
@@ -854,7 +854,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     if IsZero( new_a ) then
       
-      SetIsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition( a, DirectSumFunctorial( o ) );
+      SetIsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition( a, DirectSumFunctorial( o ) );
       
       SetIsomorphismFromProjectiveRepresentationIntoCanonicalDecomposition( a, DirectSumFunctorial( List( o, Inverse ) ) );
       
@@ -912,7 +912,7 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
       
     fi;
     
-    SetIsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition( a, IdentityMorphism( a ) );
+    SetIsomorphismOntoInjectiveRepresentationFromCanonicalDecomposition( a, IdentityMorphism( a ) );
     
     SetIsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition( a, IdentityMorphism( a ) );
     
@@ -938,16 +938,16 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
 end );
 
 ##
-InstallMethod( IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition,
+InstallMethod( IsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition,
           [ IsQuiverRepresentation ],
   function( a )
     local d;
     
     d := DecomposeProjectiveQuiverRepresentation( a );
     
-    if HasIsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition( a ) then
+    if HasIsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition( a ) then
       
-      return IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition( a );
+      return IsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition( a );
       
     fi;
     
@@ -969,12 +969,12 @@ InstallMethod( IsomorphismFromProjectiveRepresentationIntoCanonicalDecomposition
       
     fi;
     
-    return Inverse( IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition( a ) );
+    return Inverse( IsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition( a ) );
     
 end );
 
 ##
-InstallMethod( IsomorphismIntoInjectiveRepresentationFromCanonicalDecomposition,
+InstallMethod( IsomorphismOntoInjectiveRepresentationFromCanonicalDecomposition,
           [ IsQuiverRepresentation ],
   function( a )
     
@@ -990,7 +990,7 @@ InstallMethod( IsomorphismFromInjectiveRepresentationIntoCanonicalDecomposition,
   function( a )
     
     return DualOfRepresentationHomomorphism(
-            IsomorphismIntoProjectiveRepresentationFromCanonicalDecomposition(
+            IsomorphismOntoProjectiveRepresentationFromCanonicalDecomposition(
               DualOfRepresentation( a ) ) );
     
 end );
