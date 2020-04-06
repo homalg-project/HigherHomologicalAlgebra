@@ -477,7 +477,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
                     algebroid.( Concatenation( 
                                   v,
                                   String( arrow_label[ 1 ] ),
-                                  "_", v,
+                                  "_",
                                   String( arrow_label[ 2 ] ),
                                   "_",
                                   String( arrow_label[ 3 ] ) )

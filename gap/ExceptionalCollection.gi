@@ -109,7 +109,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
     
     collection := rec(
-                    char := Random( [ "v", "u", "s", "t" ] ),
+                    char := "m",
                     arrows := rec( ),
                     other_paths := rec( ),
                     paths := rec( ),
@@ -695,7 +695,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     labels := List( arrows,
       a -> Concatenation( v, String( a[ 1 ] ),
-              "_", v, String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
+              "_", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
     
     quiver := RightQuiver( collection!.name_for_underlying_quiver,
                 [ 1 .. nr_vertices ], labels, sources, ranges );
@@ -719,7 +719,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
           l -> Product(
             List( l, a -> A.(
               Concatenation( v, String( a[1] ),
-                "_", v, String( a[2] ), "_", String( a[ 3 ] ) ) ) ) )
+                "_", String( a[2] ), "_", String( a[ 3 ] ) ) ) ) )
               );
         
         rel := RelationsBetweenMorphisms( paths_in_collection );
