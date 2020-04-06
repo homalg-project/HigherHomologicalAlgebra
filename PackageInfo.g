@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
 Subtitle := "Package to create homotopy categories of an additive category",
-Version := "2020.03.23",
+Version := "2020.04.01",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -74,7 +74,7 @@ Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
                            [ "CAP", ">= 2020.01.10" ],
-                           [ "ComplexesCategories", ">= 2020.03.15" ],
+                           [ "ComplexesCategories", ">= 2020.04.01" ],
                            [ "GeneralizedMorphismsForCAP", "2019.01.16" ],
                            [ "StableCategories", ">= 2020.03.20" ] ],
   SuggestedOtherPackages := [ ],
