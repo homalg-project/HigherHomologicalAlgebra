@@ -1357,7 +1357,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
        
     k := UnderlyingNonGradedRing( CoefficientsRing( S ) );
     
-    name := "{ S(i), i ∈  Z }";
+    name := "{S(i),i∈ Z}";
     
     full := FullSubcategory( graded_pres, name : FinalizeCategory := false );
     
@@ -1744,7 +1744,7 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( ViewObj, 
+InstallMethod( ViewObj,
     [ IsGradedLeftPresentation ],
   function( o )
     local S, twists, c, p;
@@ -1810,7 +1810,7 @@ InstallMethod( ViewObj,
       fi;
       
     od;
-
+    
 end );
 
 ##
@@ -1824,32 +1824,32 @@ InstallMethod( ViewObj,
     mat_s := UnderlyingMatrix( s );
     
     if not IsZero( NrRows( mat_s ) ) then
-    
+       
       TryNextMethod( );
-    
+      
     fi;
     
     r := Range( alpha );
     
     mat_r := UnderlyingMatrix( r );
- 
+    
     if not IsZero( NrRows( mat_r ) ) then
-    
+      
       TryNextMethod( );
-    
+      
     fi;
-
+    
     ViewObj( s );
     
-    Print( " --" );
+    Print( "-" );
     
     if NrCols( mat_s ) = 1 and NrCols( mat_r ) = 1 then
       
       Print( "{",UnderlyingMatrix( alpha )[ 1, 1 ],"}" );
       
     fi;
-     
-    Print( "-> " );
+    
+    Print( "->" );
     
     ViewObj( r );
     

@@ -504,7 +504,7 @@ InstallMethod( ViewObj,
     if IsEmpty( twists ) then
       
       Print( "0" );
-      return; 
+      
     fi;
     
     c := [ ];
@@ -538,13 +538,13 @@ InstallMethod( ViewObj,
           Print( "𝓞 (", twists[ 1 ], ")⊕ " );
           
         fi;
-       
+        
         twists := twists{ [ p .. Size( twists ) ] };
-      
+        
       fi;
       
     od;
-     
+    
 end );
   
 ##
@@ -566,24 +566,27 @@ InstallMethod( ViewObj,
     r := Range( alpha );
     
     mat_r := UnderlyingMatrix( UnderlyingHonestObject( r ) );
- 
+    
     if not IsZero( NrRows( mat_r ) ) then
     
       TryNextMethod( );
     
     fi;
-
+    
     ViewObj( s );
     
-    Print( "--" );
+    Print( "-" );
     
     if NrCols( mat_s ) = 1 and NrCols( mat_r ) = 1 then
       
-      Print( "{",UnderlyingMatrix( HonestRepresentative( UnderlyingGeneralizedMorphism( alpha ) ) )[ 1, 1 ],"}" );
-      
+      Print( "{", UnderlyingMatrix(
+                    HonestRepresentative(
+                      UnderlyingGeneralizedMorphism( alpha ) ) )[ 1, 1 ],"}"
+                  );
+    
     fi;
-     
-    Print( " --> " );
+    
+    Print( "-> " );
     
     ViewObj( r );
     
