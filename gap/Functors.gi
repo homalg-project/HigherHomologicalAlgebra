@@ -585,34 +585,6 @@ InstallMethod( IsomorphismFromAlgebroid,
     
 end );
 
-##
-InstallMethod( RestrictFunctorIterativelyToFullSubcategoryOfSource,
-              [ IsCapFunctor, IsCapFullSubcategory ],
-  function( F, full )
-    local G;
-    
-    if IsIdenticalObj( AsCapCategory( Source( F ) ), AmbientCategory( full ) ) then
-      
-      F := RestrictFunctorToFullSubcategoryOfSource( F, full );
-      
-      F!.Name := "Restriction of functor to a full subcategory";
-      
-      return F;
-      
-    else
-      
-      F := RestrictFunctorIterativelyToFullSubcategoryOfSource( F, AmbientCategory( full ) );
-       
-      F := RestrictFunctorToFullSubcategoryOfSource( F, full );
-      
-      F!.Name := "Restriction of functor to a full subcategory";
-      
-      return F;
-      
-    fi;
-    
-end );
-
 InstallMethod( LocalizationFunctor,
               [ IsHomotopyCategory ],
   function( homotopy )
