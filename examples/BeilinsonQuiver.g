@@ -64,9 +64,9 @@ IsStandardExactTriangle( st_alpha );
 rot_st_alpha := rot( st_alpha );;
 IsStandardExactTriangle( rot_st_alpha );
 #! false
-HasWitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );
+HasWitnessIsomorphismOntoStandardExactTriangle( rot_st_alpha );
 #! true
-w := WitnessIsomorphismIntoStandardExactTriangle( rot_st_alpha );;
+w := WitnessIsomorphismOntoStandardExactTriangle( rot_st_alpha );;
 IsWellDefined( w );
 #! true
 IsIsomorphism( w[ 0 ] );
@@ -84,12 +84,12 @@ o := ExactTriangleByOctahedralAxiom( st_alpha, st_beta );
 
 ### Let us create non-standard exact triangles
 t_alpha := ExactTriangle( st_alpha ^ 0, ( 1/3 ) * st_alpha ^ 1, 3 * st_alpha ^ 2 );;
-w := WitnessIsomorphismIntoStandardExactTriangle( t_alpha );;
+w := WitnessIsomorphismOntoStandardExactTriangle( t_alpha );;
 Range( w ) = st_alpha;
 #! true
 
 t_beta := ExactTriangle( st_beta ^ 0, ( 1/2 ) * st_beta ^ 1, 2 * st_beta ^ 2 );;
-w := WitnessIsomorphismIntoStandardExactTriangle( t_beta );;
+w := WitnessIsomorphismOntoStandardExactTriangle( t_beta );;
 Range( w ) = st_beta;
 #! true
 

@@ -190,7 +190,7 @@ InstallMethod( CategoryOfExactTriangles,
           
         fi;
         
-        if WitnessIsomorphismIntoStandardExactTriangle( triangle ) = fail then
+        if WitnessIsomorphismOntoStandardExactTriangle( triangle ) = fail then
           
           return false;
           
@@ -326,7 +326,7 @@ InstallMethod( StandardExactTriangle,
     
     SetIsStandardExactTriangle( triangle, true );
     
-    SetWitnessIsomorphismIntoStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
+    SetWitnessIsomorphismOntoStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
     
     SetWitnessIsomorphismFromStandardExactTriangle( triangle, IdentityMorphism( triangle ) );
     
@@ -371,7 +371,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
     T := CapCategory( alpha );
     
-    if not( CanCompute( T, "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects" ) and
+    if not( CanCompute( T, "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects" ) and
               CanCompute( T, "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects" )
           ) then
           
@@ -379,9 +379,9 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
     else
       
-      i := WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, st_triangle[ 2 ] );
+      i := WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, st_triangle[ 2 ] );
       
-      SetWitnessIsomorphismIntoStandardExactTriangle( triangle,
+      SetWitnessIsomorphismOntoStandardExactTriangle( triangle,
         MorphismOfExactTriangles(
           triangle,
           IdentityMorphism( triangle[ 0 ] ),
@@ -548,7 +548,7 @@ InstallMethod( ShiftOp,
                     Shift( t^2, n )
                   );
     
-    if HasWitnessIsomorphismIntoStandardExactTriangle( t ) or
+    if HasWitnessIsomorphismOntoStandardExactTriangle( t ) or
         HasWitnessIsomorphismFromStandardExactTriangle( t ) then
         
         st := StandardExactTriangle( t );
@@ -569,9 +569,9 @@ InstallMethod( ShiftOp,
       
     fi;
    
-    if HasWitnessIsomorphismIntoStandardExactTriangle( t ) then
+    if HasWitnessIsomorphismOntoStandardExactTriangle( t ) then
       
-      w := WitnessIsomorphismIntoStandardExactTriangle( t );
+      w := WitnessIsomorphismOntoStandardExactTriangle( t );
       
       w := MorphismOfExactTriangles(
                 shift_t,
@@ -581,7 +581,7 @@ InstallMethod( ShiftOp,
                 shift_st
               );
       
-      SetWitnessIsomorphismIntoStandardExactTriangle( shift_t, w );
+      SetWitnessIsomorphismOntoStandardExactTriangle( shift_t, w );
       
     fi;
     
@@ -639,11 +639,11 @@ InstallMethod( Rotation,
       
       if IsStandardExactTriangle( triangle ) then
         
-        i := WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
+        i := WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( rotation[ 2 ], triangle ^ 0, st_rotation[ 2 ] );
         
         i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
         
-        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        SetWitnessIsomorphismOntoStandardExactTriangle( rotation, i );
         
         i := WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
         
@@ -657,13 +657,13 @@ InstallMethod( Rotation,
         
         st_triangle := Source( i );
         
-        w_1 := WitnessIsomorphismIntoStandardConeObjectByRotationAxiom( st_triangle ^ 0 );
+        w_1 := WitnessIsomorphismOntoStandardConeObjectByRotationAxiom( st_triangle ^ 0 );
         
         v_1 := MorphismBetweenStandardConeObjects( st_triangle ^ 1, IdentityMorphism( st_triangle[ 1 ] ), i[ 2 ], triangle ^ 1 );
         
         i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
         
-        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        SetWitnessIsomorphismOntoStandardExactTriangle( rotation, i );
               
       fi;
     
@@ -698,7 +698,7 @@ InstallMethod( InverseRotation,
               t ^ 0,
               PreCompose(
                 t ^ 1,
-                IsomorphismIntoShiftOfInverseShift( t[ 2 ] )
+                IsomorphismOntoShiftOfInverseShift( t[ 2 ] )
                         )
                     );
     
@@ -708,11 +708,11 @@ InstallMethod( InverseRotation,
       
       if IsStandardExactTriangle( t ) then
         
-        i := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( rotation[ 2 ], t ^ 0, st_rotation[ 2 ] );
+        i := WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( rotation[ 2 ], t ^ 0, st_rotation[ 2 ] );
         
         i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, st_rotation );
         
-        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        SetWitnessIsomorphismOntoStandardExactTriangle( rotation, i );
         
         i := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( st_rotation[ 2 ], t ^ 0, rotation[ 2 ] );
         
@@ -726,7 +726,7 @@ InstallMethod( InverseRotation,
         
         st_t := Source( i );
         
-        w_1 := WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom( st_t ^ 0 );
+        w_1 := WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom( st_t ^ 0 );
         
         v_1 := MorphismBetweenStandardConeObjects(
                   PreCompose(
@@ -743,7 +743,7 @@ InstallMethod( InverseRotation,
         
         i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
         
-        SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
+        SetWitnessIsomorphismOntoStandardExactTriangle( rotation, i );
         
       fi;
       
@@ -754,7 +754,7 @@ InstallMethod( InverseRotation,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
+InstallMethod( WitnessIsomorphismOntoStandardExactTriangle,
           [ IsCapExactTriangle ],
   function( t )
     local cat, st_t, i;
@@ -782,7 +782,7 @@ InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
      
     cat := UnderlyingCategory( CapCategory( t ) );
     
-    if not CanCompute( cat, "WitnessIsomorphismIntoStandardConeObject" ) then
+    if not CanCompute( cat, "WitnessIsomorphismOntoStandardConeObject" ) then
       
       TryNextMethod( );
       
@@ -790,7 +790,7 @@ InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
     
     st_t := StandardExactTriangle( t ^ 0 );
     
-    i := WitnessIsomorphismIntoStandardConeObject( t ^ 0, t ^ 1, t ^ 2 );
+    i := WitnessIsomorphismOntoStandardConeObject( t ^ 0, t ^ 1, t ^ 2 );
     
     if i = fail then
       
@@ -822,7 +822,7 @@ InstallMethod( WitnessIsomorphismFromStandardExactTriangle,
       
     fi;
     
-    i := WitnessIsomorphismIntoStandardExactTriangle( t );
+    i := WitnessIsomorphismOntoStandardExactTriangle( t );
     
     if i = fail then
       
@@ -852,11 +852,11 @@ InstallMethod( MorphismBetweenConeObjects,
     
     st_t_2 := StandardExactTriangle( t_2 );
     
-    i_1 := WitnessIsomorphismIntoStandardExactTriangle( t_1 );
+    i_1 := WitnessIsomorphismOntoStandardExactTriangle( t_1 );
     
     j_1 := WitnessIsomorphismFromStandardExactTriangle( t_1 );
     
-    i_2 := WitnessIsomorphismIntoStandardExactTriangle( t_2 );
+    i_2 := WitnessIsomorphismOntoStandardExactTriangle( t_2 );
     
     j_2 := WitnessIsomorphismFromStandardExactTriangle( t_2 );
     
@@ -905,11 +905,11 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
     fi;
     
-    i_1 := WitnessIsomorphismIntoStandardExactTriangle( t_1 );
+    i_1 := WitnessIsomorphismOntoStandardExactTriangle( t_1 );
     
     j_1 := WitnessIsomorphismFromStandardExactTriangle( t_1 );
     
-    i_2 := WitnessIsomorphismIntoStandardExactTriangle( t_2 );
+    i_2 := WitnessIsomorphismOntoStandardExactTriangle( t_2 );
     
     j_2 := WitnessIsomorphismFromStandardExactTriangle( t_2 );
     
@@ -927,7 +927,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
       u := i_2[ 2 ];
       
-      v := WitnessIsomorphismIntoStandardExactTriangle( t )[ 2 ];
+      v := WitnessIsomorphismOntoStandardExactTriangle( t )[ 2 ];
       
       w := MorphismBetweenStandardConeObjects( t ^ 0, j_1[ 2 ], IdentityMorphism( t[ 1 ] ), triangle ^ 0 );
       
@@ -939,7 +939,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
               StandardExactTriangle( triangle )
             );
       
-      SetWitnessIsomorphismIntoStandardExactTriangle( triangle, i );
+      SetWitnessIsomorphismOntoStandardExactTriangle( triangle, i );
       
     fi;
     
@@ -969,7 +969,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
     triangle := ExactTriangleByOctahedralAxiom( t_1, t_2, bool );
     
-    i_3 := WitnessIsomorphismIntoStandardExactTriangle( t_3 );
+    i_3 := WitnessIsomorphismOntoStandardExactTriangle( t_3 );
     
     j_3 := WitnessIsomorphismFromStandardExactTriangle( t_3 );
     
@@ -997,7 +997,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     if bool = true then
       
       #TODO do this better!
-      WitnessIsomorphismIntoStandardExactTriangle( triangle );
+      WitnessIsomorphismOntoStandardExactTriangle( triangle );
       
     fi;
     

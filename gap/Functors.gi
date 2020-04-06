@@ -82,7 +82,7 @@ InstallMethod( NaturalIsomorphismFromIdentityIntoShiftOfInverseShift,
     
     nat := NaturalTransformation( name, id, shift_after_reverse_shift );
     
-    AddNaturalTransformationFunction( nat, IsomorphismIntoShiftOfInverseShiftWithGivenObject );
+    AddNaturalTransformationFunction( nat, IsomorphismOntoShiftOfInverseShiftWithGivenObject );
     
     return nat;
     
@@ -108,7 +108,7 @@ InstallMethod( NaturalIsomorphismFromIdentityIntoInverseShiftOfShift,
     
     nat := NaturalTransformation( name, id, reverse_shift_after_shift );
     
-    AddNaturalTransformationFunction( nat, IsomorphismIntoInverseShiftOfShiftWithGivenObject );
+    AddNaturalTransformationFunction( nat, IsomorphismOntoInverseShiftOfShiftWithGivenObject );
     
     return nat;
     

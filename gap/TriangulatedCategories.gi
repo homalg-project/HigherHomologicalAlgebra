@@ -83,11 +83,11 @@ InverseShiftOnMorphismWithGivenObjects := rec(
   return_type := "morphism"
 ),
 
-WitnessIsomorphismIntoStandardConeObject := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObject",
+WitnessIsomorphismOntoStandardConeObject := rec(
+  installation_name := "WitnessIsomorphismOntoStandardConeObject",
   io_type := [ [ "alpha", "iota", "pi" ], [ "range_iota", "cone_alpha" ] ],
   filter_list := [ "morphism", "morphism", "morphism" ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObject",
+  cache_name := "WitnessIsomorphismOntoStandardConeObject",
   return_type := "morphism_or_fail"
 ),
 
@@ -138,35 +138,35 @@ InverseShiftFactoringIsomorphismWithGivenObjects := rec(
   return_type := "morphism"
 ),
 
-IsomorphismIntoShiftOfInverseShiftWithGivenObject := rec(
-  installation_name := "IsomorphismIntoShiftOfInverseShiftWithGivenObject",
+IsomorphismOntoShiftOfInverseShiftWithGivenObject := rec(
+  installation_name := "IsomorphismOntoShiftOfInverseShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismIntoShiftOfInverseShiftWithGivenObject",
+  cache_name := "IsomorphismOntoShiftOfInverseShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismIntoShiftOfInverseShift := rec(
-  installation_name := "IsomorphismIntoShiftOfInverseShift",
+IsomorphismOntoShiftOfInverseShift := rec(
+  installation_name := "IsomorphismOntoShiftOfInverseShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismIntoShiftOfInverseShift",
+  cache_name := "IsomorphismOntoShiftOfInverseShift",
   return_type := "morphism"
 ),
 
-IsomorphismIntoInverseShiftOfShiftWithGivenObject := rec(
-  installation_name := "IsomorphismIntoInverseShiftOfShiftWithGivenObject",
+IsomorphismOntoInverseShiftOfShiftWithGivenObject := rec(
+  installation_name := "IsomorphismOntoInverseShiftOfShiftWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismIntoInverseShiftOfShiftWithGivenObject",
+  cache_name := "IsomorphismOntoInverseShiftOfShiftWithGivenObject",
   return_type := "morphism"
 ),
 
-IsomorphismIntoInverseShiftOfShift := rec(
-  installation_name := "IsomorphismIntoInverseShiftOfShift",
+IsomorphismOntoInverseShiftOfShift := rec(
+  installation_name := "IsomorphismOntoInverseShiftOfShift",
   filter_list := [ "object" ],
   io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismIntoInverseShiftOfShift",
+  cache_name := "IsomorphismOntoInverseShiftOfShift",
   return_type := "morphism"
 ),
 
@@ -232,11 +232,11 @@ MorphismFromConeObjectByOctahedralAxiom := rec(
   return_type := [ "morphism" ],
 ),
 
-WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
+WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
+  installation_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "morphism", "object" ],
   io_type := [ [ "cone_g", "f", "g", "st_cone" ], [ "cone_g", "st_cone" ] ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
+  cache_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
@@ -248,11 +248,11 @@ WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec
   return_type := [ "morphism" ],
 ),
 
-WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects",
+WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
+  installation_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects",
+  cache_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
@@ -264,11 +264,11 @@ WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   return_type := [ "morphism" ],
 ),
 
-WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
+WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
+  installation_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
-  cache_name := "WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
+  cache_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
@@ -370,7 +370,7 @@ InstallMethod( MorphismBetweenStandardConeObjects,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom,
+InstallMethod( WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
   function( alpha, beta )
     local s, u, r;
@@ -381,7 +381,7 @@ InstallMethod( WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom,
      
     r := StandardConeObject( u );
     
-    return WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
       
 end );
 
@@ -473,13 +473,13 @@ InstallMethod( MorphismFromConeObjectByInverseRotationAxiom,
     
     return PreCompose(
               MorphismIntoStandardConeObject( alpha ),
-              IsomorphismIntoShiftOfInverseShift( StandardConeObject( alpha ) )
+              IsomorphismOntoShiftOfInverseShift( StandardConeObject( alpha ) )
             );
     
 end );
 
 ##
-InstallMethod( WitnessIsomorphismIntoStandardConeObjectByRotationAxiom,
+InstallMethod( WitnessIsomorphismOntoStandardConeObjectByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
@@ -488,7 +488,7 @@ InstallMethod( WitnessIsomorphismIntoStandardConeObjectByRotationAxiom,
     
     r := StandardConeObject( DomainMorphismByRotationAxiom( alpha ) );
     
-    return WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
@@ -507,7 +507,7 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByRotationAxiom,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom,
+InstallMethod( WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
@@ -516,7 +516,7 @@ InstallMethod( WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom,
     
     r := StandardConeObject( DomainMorphismByInverseRotationAxiom( alpha ) );
     
-    return WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
@@ -591,16 +591,16 @@ end );
 #end );
 #
 ###
-#InstallMethod( IsomorphismIntoStandardExactTriangle,
+#InstallMethod( IsomorphismOntoStandardExactTriangle,
 #                [ IsCapCategoryExactTriangle ],
 #                -1000,
 #    function( T )
 #    local F, p;
 #    F := T!.UnderlyingLazyMethods;
-#    if not IsomorphismIntoStandardExactTriangle in F then
+#    if not IsomorphismOntoStandardExactTriangle in F then
 #        TryNextMethod( );
 #    else
-#        p := Position( F, IsomorphismIntoStandardExactTriangle );
+#        p := Position( F, IsomorphismOntoStandardExactTriangle );
 #        return CallFuncList( F[p+1], F[ p+2 ] );
 #    fi;
 #end );

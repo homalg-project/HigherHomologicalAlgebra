@@ -15,25 +15,25 @@
 ##
 AddDerivationToCAP( IsExactTriangle,
                 [
-                  [ WitnessIsomorphismIntoStandardConeObject, 1 ],
+                  [ WitnessIsomorphismOntoStandardConeObject, 1 ],
                 ],
   function( alpha, iota, pi )
     
-    return WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi ) <> fail;
+    return WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi ) <> fail;
     
 end:
   CategoryFilter := IsTriangulatedCategory,
-  Description:= "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject"
+  Description:= "IsExactTriangle by WitnessIsomorphismOntoStandardConeObject"
 );
 
 ##
-AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
+AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
                 [
                   [ SolveLinearSystemInAbCategory, 1 ],
                   [ ShiftOnObject, 1 ]
                 ],
                 [
-                  WitnessIsomorphismIntoStandardConeObject,
+                  WitnessIsomorphismOntoStandardConeObject,
                   WitnessIsomorphismFromStandardConeObject
                 ],
   function( alpha, iota, pi )
@@ -73,7 +73,7 @@ AddFinalDerivation( WitnessIsomorphismIntoStandardConeObject,
     function( alpha, iota, pi )
       local w;
       
-      w := WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi );
+      w := WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi );
       
       if w = fail then
         
