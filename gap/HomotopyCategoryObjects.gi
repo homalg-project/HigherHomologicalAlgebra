@@ -97,12 +97,13 @@ InstallMethod( Display,
     Print( "An object in ", Name( CapCategory( a ) ), " given by the data: \n\n" );
     
     for i in [ l .. u ] do
-      
-      Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-      Display( a ^ i );
-      Print( "\n" );
-      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      if i <> l then
+        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        Display( a ^ i );
+        Print( "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      fi;
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" );
@@ -146,11 +147,13 @@ InstallMethod( ViewHomotopyCategoryObject,
     
     for i in [ l .. u ] do
       
-      Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-      ViewObj( a ^ i );
-      Print( "\n" );
-      Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      if i <> l then
+        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
+        ViewObj( a ^ i );
+        Print( "\n" );
+        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
+      fi;
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" );
