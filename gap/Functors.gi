@@ -1073,7 +1073,7 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     
     C := AdditiveClosure( C );
     
-    J := IsomorphismFunctorIntoQuiverRows( C );
+    J := IsomorphismIntoQuiverRows( C );
     
     J := ExtendFunctorToHomotopyCategories( J );
         
@@ -1230,7 +1230,7 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     
     C := AdditiveClosure( C );
     
-    I := IsomorphismFunctorFromQuiverRows( C ); 
+    I := IsomorphismFromQuiverRows( C ); 
     
     I := ExtendFunctorToHomotopyCategories( I );
      
@@ -1629,7 +1629,7 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
         
         add_algebroid := AdditiveClosure( algebroid );
         
-        I := IsomorphismFunctorFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, add_algebroid );
+        I := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, add_algebroid );
         
         I := ExtendFunctorToHomotopyCategories( I );
         

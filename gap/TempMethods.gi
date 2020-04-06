@@ -147,7 +147,7 @@ InstallMethod( RandomObjectByInteger,
   function( Qrows, n )
     local J, AC;
     
-    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( Qrows );
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( Qrows );
     
     AC := AsCapCategory( Source( J ) );
     
@@ -163,9 +163,9 @@ InstallMethod( RandomMorphismWithFixedSourceByInteger,
     
     QRows := CapCategory( o );
     
-    I := IsomorphismFunctorIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
     
-    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( QRows );
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
     return J( RandomMorphismWithFixedSourceByInteger( I( o ), n ) );
     
@@ -179,9 +179,9 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
     
     QRows := CapCategory( o );
    
-    I := IsomorphismFunctorIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
     
-    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( QRows );
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
     return J( RandomMorphismWithFixedRangeByInteger( I( o ), n ) );
    
@@ -195,9 +195,9 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
     
     QRows := CapCategory( s );
 
-    I := IsomorphismFunctorIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
     
-    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( QRows );
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
     return J( RandomMorphismWithFixedSourceAndRangeByInteger( I( s ), I( r ), n ) );
     

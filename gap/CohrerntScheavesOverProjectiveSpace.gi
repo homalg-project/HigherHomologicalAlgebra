@@ -119,7 +119,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       C := DefiningCategory( C );
       
-      C := IsomorphismFunctorIntoQuiverRows( C );
+      C := IsomorphismIntoQuiverRows( C );
       
       QRows := AsCapCategory( Range( C ) );
       

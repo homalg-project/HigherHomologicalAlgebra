@@ -415,9 +415,9 @@ InstallMethod( _WeakKernelEmbedding,
     
     QRows := CapCategory( alpha );
     
-    I := IsomorphismFunctorIntoAdditiveClosureOfAlgebroid( QRows );
+    I := IsomorphismIntoAdditiveClosureOfAlgebroid( QRows );
     
-    J := IsomorphismFunctorFromAdditiveClosureOfAlgebroid( QRows );
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
     
     return J( _WeakKernelEmbedding( I( alpha ) ) );
     
