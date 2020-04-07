@@ -43,7 +43,7 @@ BindGlobal( "TheTypeExceptionalCollection",
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
   function( arg )
-    local full, cache, L, collection, n, name_for_quiver, name_for_algebra; 
+    local full, cache, L, collection, n, quiver, algebra, vertices_labels;
     
     full := arg[ 1 ];
     
@@ -98,16 +98,30 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     MakeImmutable( L );
     
-    name_for_quiver := ValueOption( "name_for_underlying_quiver" );
-     
-    if name_for_quiver = fail then
+    vertices_labels := ValueOption( "vertices_labels" );
+    
+    if vertices_labels = fail then
       
-      name_for_quiver := "quiver";
+      vertices_labels := [ 1 .. Size( L ) ];
       
     fi;
     
-    name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
+    algebra := ValueOption( "algebra" );
     
+    if algebra = fail and vertices_labels <> [ 1 .. Size( L ) ] then
+      
+      algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, "⊕ " ), " )" );
+      
+    fi;
+    
+    quiver := ValueOption( "quiver" );
+     
+    if quiver = fail then
+      
+      quiver := "quiver";
+      
+    fi;
+        
     collection := rec(
                     char := "m",
                     arrows := rec( ),
@@ -118,8 +132,9 @@ InstallGlobalFunction( CreateExceptionalCollection,
                     labels_for_other_paths := rec( ),
                     labels_for_paths := rec( ),
                     labels_for_basis_for_paths := rec( ),
-                    name_for_underlying_quiver := name_for_quiver,
-                    name_for_endomorphism_algebra := name_for_algebra
+                    quiver := quiver,
+                    algebra := algebra,
+                    vertices_labels := vertices_labels 
                     );
     
     n := Length( L );
@@ -140,13 +155,16 @@ end );
 InstallMethod( ExceptionalCollection,
           [ IsCapFullSubcategory ],
   function( full )
-    local name_for_quiver, name_for_algebra;
+    local quiver, algebra, labels;
     
-    name_for_quiver := ValueOption( "name_for_underlying_quiver" );
-    name_for_algebra := ValueOption( "name_for_endomorphism_algebra" );
+    labels := ValueOption( "vertices_labels" );
+    quiver := ValueOption( "quiver" );
+    algebra := ValueOption( "algebra" );
     
-    CreateExceptionalCollection( full : name_for_underlying_quiver := name_for_quiver,
-                                        name_for_endomorphism_algebra := name_for_algebra );
+    CreateExceptionalCollection( full : quiver := quiver,
+                                        algebra := algebra,
+                                        vertices_labels := labels
+                                      );
     
     return ExceptionalCollection( full );
   
@@ -672,7 +690,7 @@ end );
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r, v;
+    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r, v, vertices_labels;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -697,8 +715,8 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
       a -> Concatenation( v, String( a[ 1 ] ),
               "_", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
     
-    quiver := RightQuiver( collection!.name_for_underlying_quiver,
-                [ 1 .. nr_vertices ], labels, sources, ranges );
+    quiver := RightQuiver( collection!.quiver,
+                collection!.vertices_labels, labels, sources, ranges );
     
     A := PathAlgebra( field, quiver );
     
@@ -736,9 +754,9 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     A := QuotientOfPathAlgebra( A, relations ); 
     
-    if collection!.name_for_endomorphism_algebra <> fail then
+    if collection!.algebra <> fail then
       
-      name := collection!.name_for_endomorphism_algebra;
+      name := collection!.algebra;
       
       A!.alternative_name := name;
       
@@ -757,10 +775,6 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
                                 );;
        
     fi;
-    
-    Assert( 2, IsAdmissibleQuiverAlgebra( A ) );
-   
-    SetIsAdmissibleQuiverAlgebra( A, true );
     
     return A;
     
