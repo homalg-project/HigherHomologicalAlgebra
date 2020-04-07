@@ -44,6 +44,22 @@ end );
 
 ##
 InstallMethod( \.,
+        [ IsQuiverRowsCategory, IsPosInt ],
+        
+  function( QRows, string_as_int )
+    local name, A;
+    
+    name := NameRNam( string_as_int );
+ 
+    A := UnderlyingQuiverAlgebra( QRows );
+    
+    return A.(name) / QRows;
+    
+end );
+
+
+##
+InstallMethod( \.,
         [ IsChainComplexCategory, IsPosInt ],
    { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
 );
