@@ -240,3 +240,50 @@ InstallMethod( ViewObj,
             );
 end );
 
+##
+InstallMethod( Display,
+            [ IsQuiverRowsObject ],
+  function( object )
+    local L, o;
+  
+    L := ListOfQuiverVertices( object );
+    
+    L := List( L, l -> ListWithIdenticalEntries( l[ 2 ], l[ 1 ] ) );
+    
+    L := Concatenation( L );
+    
+    Print( "An object in ", Name( CapCategory( object ) ), " defined by ", Size( L ), " vertices:\n" );
+    
+    for o in L do
+      
+      Print( "\n<(", String( o ), ")>" );
+      
+    od;
+    
+end );
+
+##
+InstallMethod( Display,
+            [ IsQuiverRowsMorphism ],
+  function( morphism )
+    local mat, i, j;
+    
+    Print( "A morphism in ", Name( CapCategory( morphism ) ),
+              " defined by the following ", NrRows( morphism ), " x ", NrColumns( morphism ),
+                " matrix of quiver algebra elements:\n"
+            );
+    
+    mat := MorphismMatrix( morphism );
+     
+    for i in [ 1 .. NrRows( morphism ) ] do
+      
+      for j in [ 1 .. NrColumns( morphism ) ] do
+        
+        Print( "\n[", i, ",", j, "]: " );
+        Print( String( mat[ i, j ] ) );
+        
+      od;
+      
+    od;
+    
+end );
