@@ -47,13 +47,25 @@ InstallMethod( \.,
         [ IsQuiverRowsCategory, IsPosInt ],
         
   function( QRows, string_as_int )
-    local name, A;
+    local name, A, q, a;
     
     name := NameRNam( string_as_int );
  
     A := UnderlyingQuiverAlgebra( QRows );
     
-    return A.(name) / QRows;
+    q := QuiverOfAlgebra( A );
+    
+    a  := q.( name );
+    
+    if IsQuiverVertex( a ) or IsArrow( a ) then
+      
+      return a / QRows;
+      
+    else
+      
+      Error( "the given component ", name, " is neither a vertex nor an arrow of the quiver q = ", q, "\n" );
+      
+    fi;
     
 end );
 
