@@ -159,6 +159,7 @@ DeclareAttribute( "ReplacementFunctorIntoHomotopyCategoryOfQuiverRows", IsExcept
 
 DeclareAttribute( "CONVOLUTION_FUNCTOR", IsHomotopyCategory );
 
+DeclareAttribute( "ImageOfFunctor", IsCapFunctor );
 DeclareAttribute( "ImageOfFullyFaithfullFunctor", IsCapFunctor );
 
 DeclareAttribute( "IsomorphismOntoImageOfFullyFaithfulFunctor", IsCapFunctor );
