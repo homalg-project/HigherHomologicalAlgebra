@@ -427,7 +427,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
         
         p := PositionProperty( [ 1 .. n ], i -> IsEqualForObjects( e, collection[ i ] ) );
         
-        return algebroid.(p);
+        return SetOfObjects( algebroid )[ p ];
         
     end;
     

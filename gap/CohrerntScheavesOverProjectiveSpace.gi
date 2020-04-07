@@ -4,7 +4,7 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
   InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules,
             [ IsHomalgGradedRing ],
     function( S )
-      local n, A, cat, full, name_for_quiver, name_for_algebra, collection, name_for_underlying_quiver, name_for_endomorphism_algebra, homotopy_cat, BB, underlyin, i;
+      local n, A, cat, full, labels, collection, vertices_labels, homotopy_cat, BB;
     
       n := Size( Indeterminates( S ) );
       
@@ -14,26 +14,9 @@ if IsPackageMarkedForLoading( "BBGG", ">= 2019.12.06" ) then
       
       full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
       
-      name_for_quiver := "quiver{";
+      labels := List( Reversed( [ 0 .. n - 1 ] ), i -> Concatenation( "Ω^", String( i ),"(", String( i ) , ")" ) );
       
-      for i in Reversed( [ 0 .. n - 1 ] ) do
-        
-        if i <> 0 then
-          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ") -{", String( n ), "}-> " );
-        else
-          name_for_quiver := Concatenation( name_for_quiver, "Ω^", String( i ),"(", String( i ) , ")" );
-        fi;
-        
-      od;
-      
-      name_for_quiver := Concatenation( name_for_quiver, "}" );
-      
-      name_for_algebra := Concatenation( "End( ⊕ {Ω^i(i)|i=0,...,", String( n - 1 ), "} )" );
-      
-      collection := CreateExceptionalCollection( full : 
-                                                  name_for_underlying_quiver := name_for_quiver,
-                                                  name_for_endomorphism_algebra := name_for_algebra
-                                                );
+      collection := CreateExceptionalCollection( full : vertices_labels := labels );
       
       homotopy_cat := HomotopyCategory( collection );
       
