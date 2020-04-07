@@ -30,11 +30,8 @@ V := ExtendFunctorToAdditiveClosureOfSource( V );
 V := ExtendFunctorToHomotopyCategories( V );
 
 # use the image to define a strong full exceptional collection
-name_for_quiver := "quiver{𝓞 (-2) -{2}-> 𝓞 (-1)}";
-name_for_algebra := "End( ⊕ {𝓞 (i)|i=-2,-1} )";
-collection := CreateExceptionalCollection( image_B : name_for_underlying_quiver := name_for_quiver,
-                                              name_for_endomorphism_algebra := name_for_algebra
-                                          );
+vertices_labels := [ "𝓞 (-2)", "𝓞 (-1)" ];
+collection := CreateExceptionalCollection( image_B : vertices_labels := vertices_labels );
 
 # embedd the ambient in some derived category where homology can be computed
 I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
