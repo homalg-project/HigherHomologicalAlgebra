@@ -43,7 +43,7 @@ BindGlobal( "TheTypeExceptionalCollection",
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
   function( arg )
-    local full, cache, L, collection, n, quiver, algebra, vertices_labels;
+    local full, cache, L, collection, n, quiver, algebra, vertices_labels, positions;
     
     full := arg[ 1 ];
     
@@ -71,9 +71,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
      
     fi;
     
-    L := ShallowCopy( full!.Objects );
-    
-    L := List( L, obj -> AsSubcategoryCell( full, obj ) );
+    L := ShallowCopy( SetOfKnownObjects( full ) );
     
     if IsEmpty( L ) then
       
@@ -89,6 +87,17 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
     
+    vertices_labels := ValueOption( "vertices_labels" );
+    
+    # The labels also need to be sorted
+    if vertices_labels <> fail then
+      
+      positions := List( L, o -> Position( SetOfKnownObjects( full ), o ) );
+      
+      vertices_labels := List( positions, p -> vertices_labels[ p ] );
+      
+    fi;
+    
     # to set better bounds
     if IsHomotopyCategory( AmbientCategory( full ) ) then
       
@@ -97,9 +106,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     fi;
     
     MakeImmutable( L );
-    
-    vertices_labels := ValueOption( "vertices_labels" );
-    
+     
     if vertices_labels = fail then
       
       vertices_labels := [ 1 .. Size( L ) ];
