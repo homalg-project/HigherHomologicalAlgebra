@@ -45,12 +45,8 @@ B_2 := RestrictFunctorToFullSubcategoryOfSource( B, full_2 );
 image_B_1 := ImageOfFullyFaithfullFunctor( B_1 );
 
 # create strong full exceptional collection
-name_for_quiver := "quiver{𝓞 (-2) -{3}-> 𝓞 (-1) -{3}-> 𝓞 (0)}";
-name_for_algebra := "End( ⊕ {𝓞 (i)|i=-2,-1,0} )";
-collection_1 := CreateExceptionalCollection( image_B_1 :
-                      name_for_underlying_quiver := name_for_quiver,
-                      name_for_endomorphism_algebra := name_for_algebra
-                    );
+labels := [ "𝓞 (-2)", "𝓞 (-1)", "𝓞 (0)" ];
+collection_1 := CreateExceptionalCollection( image_B_1 : vertices_labels := labels );
 
 # connect full_1 with image_B_1
 U_1 := IsomorphismOntoImageOfFullyFaithfulFunctor( B_1 );
@@ -74,12 +70,8 @@ V_2 := ExtendFunctorToAdditiveClosureOfSource( V_2 );
 V_2 := ExtendFunctorToHomotopyCategories( V_2 );
 
 # create strong full exceptional collection
-name_for_quiver := "quiver{𝓞 (-1) -{3}-> 𝓞 (0) -{3}-> 𝓞 (1)}";
-name_for_algebra := "End( ⊕ {𝓞 (i)|i=-1,0,1} )";
-collection_2 := CreateExceptionalCollection( image_B_2 :
-                      name_for_underlying_quiver := name_for_quiver,
-                      name_for_endomorphism_algebra := name_for_algebra
-                    );
+labels := [ "𝓞 (-1)", "𝓞 (0)", "𝓞 (1)" ];
+collection_2 := CreateExceptionalCollection( image_B_2 : vertices_labels := labels );
 
 #
 TT_1 := PreCompose(
