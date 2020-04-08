@@ -8,3 +8,5 @@ DeclareOperation( "EmbeddingFromProductOfAlgebroidsIntoTensorProduct",
       [ IsAlgebroid, IsAlgebroid ] );
 
 DeclareAttribute( "ExtendFunctorFromProductCategoryToAdditiveClosures", IsCapFunctor );
+
+DeclareOperation( "ProductOfFunctors", [ IsCapProductCategory, IsList, IsCapProductCategory ] );

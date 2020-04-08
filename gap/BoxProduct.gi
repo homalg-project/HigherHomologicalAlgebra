@@ -130,7 +130,7 @@ InstallMethod( ExtendFunctorFromProductCategoryToAdditiveClosures,
     
     product_cat := AsCapCategory( Source( F ) );
     
-    if not HasComponents( product_cat ) then
+    if not IsCapProductCategory( product_cat ) then
       
       Error( "The source of the functor should be a product category" );
       
@@ -191,3 +191,29 @@ InstallMethod( ExtendFunctorFromProductCategoryToAdditiveClosures,
     return FF;
     
 end );
+
+##
+InstallMethod( ProductOfFunctors,
+          [ IsCapProductCategory, IsList, IsCapProductCategory ],
+  function( S, functors, R )
+    local F;
+    
+    #S := Product( List( functors, func -> AsCapCategory( Source( func ) ) ) );
+    
+    #R := Product( List( functors, func -> AsCapCategory( Range( func ) ) ) );
+    
+    F := CapFunctor( "Product of functors", S, R );
+    
+    AddObjectFunction( F,
+      object -> ListN( functors, Components( object ), { func, o } -> ApplyFunctor( func, o ) ) / R
+    );
+
+    AddMorphismFunction( F,
+      { s, morphism, r }
+        -> ListN( functors, Components( morphism ), { func, m } -> ApplyFunctor( func, m ) ) / R
+    );
+    
+    return F;
+    
+end );
+
