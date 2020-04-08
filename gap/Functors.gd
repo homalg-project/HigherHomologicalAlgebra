@@ -32,7 +32,7 @@ DeclareAttribute( "EmbeddingFunctorInHomotopyCategory", IsCapCategory );
 
 DeclareAttribute( "ExtendFunctorToHomotopyCategories", IsCapFunctor );
 
-DeclareAttribute( "ExtendProductFunctorToHomotopyCategories", IsCapFunctor );
+DeclareAttribute( "ExtendFunctorFromProductCategoryToHomotopyCategories", IsCapFunctor );
 
 DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategories", IsCapNaturalTransformation );
 

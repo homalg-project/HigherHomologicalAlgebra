@@ -226,10 +226,10 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
 end );
 
 ##
-InstallMethod( ExtendProductFunctorToHomotopyCategories,
+InstallMethod( ExtendFunctorFromProductCategoryToHomotopyCategories,
           [ IsCapFunctor ],
   function( F )
-    local source, cat_1, cat_2, range, ChF, homotopy_cat_1, homotopy_cat_2, homotopy_cat_1_cat_2, homotopy_range, name, U;
+    local source, cat_1, cat_2, range, ChF, source_ChF, homotopy_cat_1, homotopy_cat_2, homotopy_cat_1_cat_2, homotopy_range, name, U;
     
     source := AsCapCategory( Source( F ) );
     
@@ -239,7 +239,9 @@ InstallMethod( ExtendProductFunctorToHomotopyCategories,
     
     range := AsCapCategory( Range( F ) );
     
-    ChF := ExtendProductFunctorToChainComplexCategoryProductFunctor( F );
+    ChF := ExtendFunctorFromProductCategoryToChainComplexCategories( F );
+    
+    source_ChF := AsCapCategory( Source( ChF ) );
     
     homotopy_cat_1 := HomotopyCategory( cat_1 );
     
@@ -261,11 +263,11 @@ InstallMethod( ExtendProductFunctorToHomotopyCategories,
         
         D := UnderlyingCell( Components( C_x_D )[ 2 ] );
         
-        return ApplyFunctor( ChF, Product( C, D ) ) / homotopy_range;
+        return ApplyFunctor( ChF, [ C, D ] / source_ChF ) / homotopy_range;
         
     end );
     
-    AddObjectFunction( U,
+    AddMorphismFunction( U,
       function( S, phi_x_psi, R )
         local phi, psi;
         
@@ -273,7 +275,7 @@ InstallMethod( ExtendProductFunctorToHomotopyCategories,
         
         psi := UnderlyingCell( Components( phi_x_psi )[ 2 ] );
         
-        return ApplyFunctor( ChF, Product( phi, psi ) ) / homotopy_range;
+        return ApplyFunctor( ChF, [ phi, psi ] / source_ChF ) / homotopy_range;
         
     end );
    
