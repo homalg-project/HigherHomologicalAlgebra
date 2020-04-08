@@ -892,10 +892,11 @@ InstallMethod( BrutalTruncationBelowFunctorOp,
     
 end );
 
-InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
+InstallMethod( ExtendFunctorFromProductCategoryToChainComplexCategories,
       [ IsCapFunctor ],
   function( F )
     local source, cat_1, cat_2, range, ch_range, ch_cat_1, ch_cat_2, ch_cat_1_ch_cat_2, name, U; 
+    
     source := AsCapCategory( Source( F ) );
     
     if not HasComponents( source ) then
@@ -924,7 +925,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
     
     ch_cat_1_ch_cat_2 := Product( ch_cat_1, ch_cat_2 );
     
-    name := Concatenation( "Extension functor from ", Name( ch_cat_1_ch_cat_2 ), " to ", Name( ch_range ) );
+    name := "Extension of a functor from product category to chain complexes";
     
     U := CapFunctor( name, ch_cat_1_ch_cat_2, ch_range );
     
@@ -956,7 +957,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
         
         H := function( i, j )
           
-          return ApplyFunctor( F, Product( C^i, IdentityMorphism( D[ j ] ) ) );
+          return ApplyFunctor( F, [ C^i, IdentityMorphism( D[ j ] ) ] / source );
           
         end;
         
@@ -964,11 +965,11 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
           
           if i mod 2 = 0 then
           
-            return ApplyFunctor( F, Product( IdentityMorphism( C[ i ] ), D^j ) );
+            return ApplyFunctor( F, [ IdentityMorphism( C[ i ] ), D^j ] / source );
             
           else
           
-            return AdditiveInverse( ApplyFunctor( F, Product( IdentityMorphism( C[ i ] ), D^j ) ) );
+            return AdditiveInverse( ApplyFunctor( F, [ IdentityMorphism( C[ i ] ), D^j ] / source ) );
           
           fi;
         
@@ -1049,7 +1050,7 @@ InstallMethod( ExtendProductFunctorToChainComplexCategoryProductFunctor,
                     
                     if i = j then
                       
-                      return ApplyFunctor( F, Product( phi[ i ], psi[ m - i ] ) );
+                      return ApplyFunctor( F, [ phi[ i ], psi[ m - i ] ] / source );
                     
                     else
                       

@@ -209,8 +209,7 @@ DeclareAttribute( "ExtendFunctorToChainComplexCategories", IsCapFunctor );
 DeclareAttribute( "ExtendFunctorToCochainComplexCategories", IsCapFunctor );
 
 
-DeclareAttribute( "ExtendProductFunctorToChainComplexCategoryProductFunctor", IsCapFunctor );
-DeclareAttribute( "ExtendProductFunctorToCochainComplexCategoryProductFunctor", IsCapFunctor );
+DeclareAttribute( "ExtendFunctorFromProductCategoryToChainComplexCategories", IsCapFunctor );
 
 #! @Description
 #! The input is a complex category $\mathrm{Com}(A)$ of some Cap category $A$ 
