@@ -10,3 +10,6 @@ DeclareOperation( "EmbeddingFromProductOfAlgebroidsIntoTensorProduct",
 DeclareAttribute( "ExtendFunctorFromProductCategoryToAdditiveClosures", IsCapFunctor );
 
 DeclareOperation( "ProductOfFunctors", [ IsCapProductCategory, IsList, IsCapProductCategory ] );
+
+DeclareOperation( "FunctorFromProductOfQuiverRowsOntoQuiverRowsOfTensorProductAlgebra",
+      [ IsQuiverRowsCategory, IsQuiverRowsCategory ] );

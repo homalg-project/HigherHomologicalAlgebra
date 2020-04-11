@@ -94,11 +94,111 @@ InstallMethodWithCache( BoxProductFunctor,
 );
 
 ##
+InstallMethodWithCache( FunctorFromProductOfQuiverRowsOntoQuiverRowsOfTensorProductAlgebra,
+          [  IsQuiverRowsCategory, IsQuiverRowsCategory ],
+  function( QRows_A_1, QRows_A_2 )
+    local quiver, algebras, A, A_1, A_2, quiver_1, quiver_2, QRows_A, product_QRows_A_12, F, r;
+    
+    A_1 := UnderlyingQuiverAlgebra( QRows_A_1 );
+    
+    quiver_1 := QuiverOfAlgebra( A_1 );
+    
+    A_2 := UnderlyingQuiverAlgebra( QRows_A_2 );
+    
+    quiver_2 := QuiverOfAlgebra( A_2 );
+    
+    A := TensorProductOfAlgebras( A_1, A_2 );
+    
+    SetName( A, Concatenation( Name( A_1 ), "⊗ ", Name( A_2 ) ) );
+    
+    quiver := QuiverOfAlgebra( A );
+    
+    QRows_A := QuiverRows( A );
+    
+    r := RandomTextColor( Name( A ) );
+    
+    QRows_A!.Name := Concatenation( r[ 1 ], "QuiverRows( ", r[ 2 ], Name( A ), r[ 1 ], " )", r[ 2 ] );
+    
+    product_QRows_A_12 := Product( QRows_A_1, QRows_A_2 );
+    
+    F := CapFunctor( "KAMAL", product_QRows_A_12, QRows_A );
+    
+    AddObjectFunction( F,
+      function( product_object )
+        local vertices_1, vertices_2, vertices;
+        
+        vertices_1 := ListOfQuiverVertices( product_object[ 1 ] );
+        
+        vertices_1 := Concatenation( List( vertices_1,
+                        l -> ListWithIdenticalEntries(
+                                l[ 2 ],
+                                VertexIndex( l[ 1 ] )
+                              ) ) );
+        
+        vertices_2 := ListOfQuiverVertices( product_object[ 2 ] );
+        
+        vertices_2 := Concatenation( List( vertices_2,
+                        l -> ListWithIdenticalEntries(
+                                l[ 2 ],
+                                VertexIndex( l[ 1 ] )
+                              ) ) );
+        
+        if IsEmpty( vertices_1 ) or IsEmpty( vertices_2 ) then
+          
+          return ZeroObject( QRows_A );
+          
+        else
+          
+          vertices := ListX( vertices_1, vertices_2,
+                        { i, j } -> 
+                          [ Vertex( quiver, ProductQuiverVertexIndex( [ quiver_1, quiver_2 ], [ i, j ] ) ), 1 ]
+                        );
+          
+          return QuiverRowsObject( vertices, QRows_A );
+          
+        fi;
+    
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, product_morphism, r )
+        local matrix_1, matrix_2, matrix;
+        
+        matrix_1 := MorphismMatrix( product_morphism[ 1 ] );
+        
+        matrix_2 := MorphismMatrix( product_morphism[ 2 ] );
+        
+        if ForAny( [ matrix_1, matrix_2 ], m -> IsEmpty( m ) or IsEmpty( m[ 1 ] ) ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          matrix := ListX( matrix_1, matrix_2,
+                    { row_1, row_2 } -> ListX( row_1, row_2,
+                      { e_1, e_2 } -> ElementaryTensor( e_1, e_2, A )
+                        ) );
+          
+          return QuiverRowsMorphism( s, matrix, r );
+                         
+        fi;
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
 InstallMethodWithCache( EmbeddingFromProductOfAlgebroidsIntoTensorProduct,
           [ IsAlgebroid, IsAlgebroid ],
   function( A, B )
-    local product_AB, tensor_AB, name, F;
+    local AB, product_AB, tensor_AB, name, F;
     
+    AB := TensorProductOfAlgebras( A, B );
+    
+    SetName( AB, Concatenation( Name( A ), "⊗ ", Name( B ) ) );
+
     product_AB := Product( A, B );
     
     tensor_AB := TensorProductOnObjects( A, B );
@@ -176,14 +276,17 @@ InstallMethod( ExtendFunctorFromProductCategoryToAdditiveClosures,
         
         matrix_2 := MorphismMatrix( product_morphism[ 2 ] );
         
-        if IsEmpty( matrix_1 ) or IsEmpty( matrix_1[ 1 ] ) or IsEmpty( matrix_2 ) or IsEmpty( matrix_2[ 1 ] ) then
-          
+        if ForAny( [ matrix_1, matrix_2 ], m -> IsEmpty( m ) or IsEmpty( m[ 1 ] ) ) then
+        
           return ZeroMorphism( s, r );
           
         else
           
-          return ListX(matrix_1, matrix_2, {row_1,row_2} -> ListX( row_1, row_2, { s, t } -> ApplyFunctor( F, [ s, t ] / product_cat ) ) ) / range_add_cat;
-        
+          return ListX( matrix_1, matrix_2,
+                    { row_1, row_2 } -> ListX( row_1, row_2,
+                      { s, t } -> ApplyFunctor( F, [ s, t ] / product_cat ) )
+                        ) / range_add_cat;
+                         
         fi;
         
     end );
