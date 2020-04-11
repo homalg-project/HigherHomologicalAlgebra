@@ -765,9 +765,9 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
       
       name := collection!.algebra;
       
-      A!.alternative_name := name;
+      SetName( A, name );
       
-      OppositeAlgebra( A )!.alternative_name := Concatenation( name, "^op" );
+      SetName( OppositeAlgebra( A ), Concatenation( name, "^op" ) );
       
       r := RandomTextColor( name );
       
