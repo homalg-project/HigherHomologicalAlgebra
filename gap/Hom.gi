@@ -53,7 +53,7 @@ InstallMethod( HomFunctorAttr,
     
     AddObjectFunction( F,
       function( V )
-        local dim_vec, bases, mats, i, j, k, a, Ei_to_V, current_mat, rel, r, label, alpha;
+        local dim_vec, bases, mats, i, j, k, B, a, Ei_to_V, current_mat, rel, r, label, alpha;
         
         dim_vec := [ ];
         
@@ -71,18 +71,22 @@ InstallMethod( HomFunctorAttr,
           
           if not IsBound( bases[ i ] ) then
             
-            Add( bases, BasisOfExternalHom( UnderlyingCell( collection[ i ] ), V ), i );
+            B := BasisOfExternalHom( UnderlyingCell( collection[ i ] ), V );
             
-            Add( dim_vec, Size( bases[ i ] ), i );
-          
+            bases[ i ] := B;
+            
+            dim_vec[ i ] := Size( B );
+            
           fi;
           
           if not IsBound( bases[ j ] ) then
             
-            Add( bases, BasisOfExternalHom( UnderlyingCell( collection[ j ] ), V ), j );
+            B := BasisOfExternalHom( UnderlyingCell( collection[ j ] ), V );
             
-            Add( dim_vec, Size( bases[ j ] ), j );
-          
+            bases[ j ] := B;
+            
+            dim_vec[ j ] := Size( B );
+             
           fi;
           
           a := UnderlyingCell( Arrows( collection, i, j )[ k ] );
