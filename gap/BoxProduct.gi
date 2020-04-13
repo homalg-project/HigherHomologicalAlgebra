@@ -121,7 +121,7 @@ InstallMethodWithCache( FunctorFromProductOfQuiverRowsOntoQuiverRowsOfTensorProd
     
     product_QRows_A_12 := Product( QRows_A_1, QRows_A_2 );
     
-    F := CapFunctor( "KAMAL", product_QRows_A_12, QRows_A );
+    F := CapFunctor( "Tensor product on quiver rows", product_QRows_A_12, QRows_A );
     
     AddObjectFunction( F,
       function( product_object )
@@ -193,16 +193,24 @@ end );
 InstallMethodWithCache( EmbeddingFromProductOfAlgebroidsIntoTensorProduct,
           [ IsAlgebroid, IsAlgebroid ],
   function( A, B )
-    local AB, product_AB, tensor_AB, name, F;
+    local AA, BB, AB, product_AB, tensor_AB, r, name, F;
     
-    AB := TensorProductOfAlgebras( A, B );
+    AA := UnderlyingQuiverAlgebra( A );
     
-    SetName( AB, Concatenation( Name( A ), "⊗ ", Name( B ) ) );
+    BB := UnderlyingQuiverAlgebra( B );
+   
+    AB := TensorProductOfAlgebras( AA, BB );
+    
+    SetName( AB, Concatenation( Name( AA ), "⊗ ", Name( BB ) ) );
 
     product_AB := Product( A, B );
     
     tensor_AB := TensorProductOnObjects( A, B );
     
+    r := RandomTextColor( Name( A ) );
+    
+    tensor_AB!.Name := Concatenation( r[ 1 ], "Algebroid( ", r[ 2 ], Name( AB ), r[ 1 ], " )", r[ 2 ] );
+   
     name := "Tensor product functor";
     
     F := CapFunctor( name, product_AB, tensor_AB );
