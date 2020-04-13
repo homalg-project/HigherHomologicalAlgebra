@@ -132,10 +132,8 @@ BindGlobal( "SHEAFIFIES_TO_ZERO_FOR_PPS",
 end );
 
 BindGlobal( "COX_RING_OF_PPS",
-  function( L )
-    local homalg_field, variables, variables_strings, factor_rings, weights, S, irrelevant_ideal;
-
-    homalg_field := HomalgFieldOfRationalsInSingular(  );
+  function( homalg_field, L )
+    local variables, variables_strings, factor_rings, weights, S, irrelevant_ideal;
 
     if Length( L ) > 7 then
       return fail;
@@ -176,17 +174,21 @@ BindGlobal( "COX_RING_OF_PPS",
     
 end );
 
-#S := 0; cat := 0; sub_cat := 0; coh := 0; sh := 0;
-#
-#constructe_categories := function( product )
-#    S := cox_ring_of_product_of_projective_spaces( product );
-#    cat := GradedLeftPresentations( S );
-#    sub_cat := FullSubcategoryByMembershipFunction( cat, sheafifies_to_zero );
-#    coh := cat / sub_cat;
-#    sh := CanonicalProjection( coh );
-#    Print( "S, cat, coh, sh\n" );
-#    return;
-#end;
+##
+BindGlobal( "CoherentSheavesOverProductOfProjectiveSpaces",
+  function( field, product )
+    local S, cat, sub_cat;
+    
+    S := COX_RING_OF_PPS( field, product );
+    
+    cat := GradedLeftPresentations( S );
+    
+    sub_cat := FullSubcategoryByMembershipFunction( cat, SHEAFIFIES_TO_ZERO_FOR_PPS );
+    
+    return cat / sub_cat;
+    
+end );
+
 #
 #euler_sequence := function( S )
 #  local L, w, Lw, d_m1, d_m2;
@@ -240,87 +242,99 @@ end );
 #      return C;
 #end;
 #
-#p_i_star := function( S, i )
-#  local cat_i, cat, func;
-#
-#  cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
-#
-#  cat := GradedLeftPresentations( S );
-#  
-#  func := CapFunctor( Concatenation( String( i ), "-factor " ), cat_i, cat );
-#
-#  AddObjectFunction( func,
-#    function( M )
-#      local generator_degrees, n, degrees, j;
-#    
-#      if not IsIdenticalObj( UnderlyingHomalgRing( M ), S!.factor_rings[ i ] ) then
-#        
-#        Error( "The given object is not defined over the expected ring.\n" );
-#
-#      fi;
-#
-#      generator_degrees := List( GeneratorDegrees( M ), HomalgElementToInteger );
-#      
-#      n := Length( S!.factor_rings );
-#
-#      degrees := List( generator_degrees, g -> ListWithIdenticalEntries( n, 0 ) );
-#
-#      for j in [ 1 .. Length( degrees ) ] do
-#
-#        degrees[ j ][ i ] := generator_degrees[ j ];
-#
-#      od;
-#
-#      return AsGradedLeftPresentation( UnderlyingMatrix( M ) * S, degrees );
-#
-#  end );
-#
-#  AddMorphismFunction( func,
-#
-#     function( source, f, range )
-#
-#       return GradedPresentationMorphism( source, UnderlyingMatrix( f ) * S, range );
-#
-#  end );
-#
-#  return func;
-#
-#end;
-#
-#box_tensor_bifunctor := function( S )
-#    local cat, cats, prod_cats, n, F;
-#
-#    cat := GradedLeftPresentations( S );
-#    cats := List( S!.factor_rings, GradedLeftPresentations );
-#    prod_cats := CallFuncList( Product, cats );
-#    n := Length( cats );
-#    F := CapFunctor( "Box tensor functor", prod_cats, cat );
-#    
-#    # M_1 x M_2 x ... x M_n -> M_1 ⊠ M_2 ⊠ ... ⊠ M_n
-#    AddObjectFunction( F,
-#        function( M )
-#          local L;
-#          L := List( [ 1 .. n ], i -> ApplyFunctor( p_i_star(S,i), M[ i ] ) );
-#          return Iterated( L, TensorProductOnObjects );
-#    end );
-#    
-#    # f_1 x f_2 x ... x f_n -> f_1 ⊠ f_2 ⊠ ... ⊠ f_n
-#    AddMorphismFunction( F,
-#        function( source, phi, range )
-#          local L;
-#          L := List( [ 1 .. n ], i -> ApplyFunctor( p_i_star(S,i), phi[ i ] ) );
-#          return Iterated( L, TensorProductOnMorphisms );
-#    end );
-#
-#    return F;
-#end;
+
+BindGlobal( "InjectionOfFactorOfTensorProduct",
+function( S, i )
+  local cat_i, cat, F;
+
+  cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
+
+  cat := GradedLeftPresentations( S );
+  
+  F := CapFunctor( Concatenation( String( i ), "-factor " ), cat_i, cat );
+
+  AddObjectFunction( F,
+    function( a )
+      local generator_degrees, n, degrees, j;
+    
+      if not IsIdenticalObj( UnderlyingHomalgRing( a ), S!.factor_rings[ i ] ) then
+        
+        Error( "The given object is not defined over the expected ring.\n" );
+
+      fi;
+
+      generator_degrees := List( GeneratorDegrees( a ), HomalgElementToInteger );
+      
+      n := Length( S!.factor_rings );
+
+      degrees := List( generator_degrees, g -> ListWithIdenticalEntries( n, 0 ) );
+
+      for j in [ 1 .. Length( degrees ) ] do
+
+        degrees[ j ][ i ] := generator_degrees[ j ];
+
+      od;
+
+      return AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees );
+
+  end );
+
+  AddMorphismFunction( F,
+
+     function( s, alpha, r )
+
+       return GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r );
+
+  end );
+
+  return F;
+
+end );
+
+
+BindGlobal( "BOX_PRODUCT_FUNCTOR_ON_COX_RING_OF_PPS",
+  function( S )
+    local cat, cats, prod_cats, n, I, F;
+
+    cat := GradedLeftPresentations( S );
+    
+    cats := List( S!.factor_rings, GradedLeftPresentations );
+    
+    prod_cats := CallFuncList( Product, cats );
+    
+    n := Length( cats );
+    
+    I := List( [ 1 .. n ], i -> InjectionOfFactorOfTensorProduct( S, i ) );
+    
+    F := CapFunctor( "Box tensor functor", prod_cats, cat );
+    
+    # M_1 x M_2 x ... x M_n -> M_1 ⊠ M_2 ⊠ ... ⊠ M_n
+    AddObjectFunction( F,
+        function( M )
+          local L;
+          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], M[ i ] ) );
+          return Iterated( L, TensorProductOnObjects );
+    end );
+    
+    # f_1 x f_2 x ... x f_n -> f_1 ⊠ f_2 ⊠ ... ⊠ f_n
+    AddMorphismFunction( F,
+        function( source, phi, range )
+          local L;
+          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], phi[ i ] ) );
+          return Iterated( L, TensorProductOnMorphisms );
+    end );
+    
+    return F;
+    
+end );
+
 #
 #m := InputFromUser( "P^m x P^n, for m = " );
 #n := InputFromUser( "and n = " );
 #L := Cartesian( [ 0 .. m ], [ 0 .. n ] );
 #L := List( L, l -> Concatenation( "Z_", String( l[ 1 ] ), String( l[ 2 ] ) ) );
 #constructe_categories( [m,n] );
-#A := GradedRing( HomalgFieldOfRationalsInSingular()*JoinStringsWithSeparator(L,",") );
+# A := GradedRing( HomalgFieldOfRationalsInSingular()*JoinStringsWithSeparator(L,",") );
 #WeightsOfIndeterminates( A );
 #
 #
@@ -359,8 +373,8 @@ end );
 #end;
 #
 #N := InputFromUser( "P^N x P^N, for N = " );
-#constructe_categories( [N,N] );
-#C := diagonal_res( S, N );
+# constructe_categories( [N,N] );
+# C := diagonal_res( S, N );
 #
 #
 ##############################

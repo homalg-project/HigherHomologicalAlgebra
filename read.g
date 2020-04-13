@@ -20,3 +20,4 @@ ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
 ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/TempMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gi" );
+ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
