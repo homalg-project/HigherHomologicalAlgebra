@@ -1516,14 +1516,57 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
         
     end, 99 );
     
+    AddRandomObjectByInteger( full,
+      function( full, n )
+        return TwistedGradedFreeModule( S, Random( [ -AbsInt( n ) .. AbsInt( n ) ] ) ) / full;
+    end );
+    
+    AddRandomMorphismWithFixedSourceByInteger( full,
+      function( s, n )
+        local degree, basis;
+        degree := GeneratorDegrees( UnderlyingCell( s ) );
+        degree := List( degree, HomalgElementToInteger );
+        basis := BasisBetweenTwistedGradedFreeModules( S, degree[ 1 ], degree[ 1 ] + AbsInt( n ) );
+        return Sum( List( [ 0 .. AbsInt( n ) ], i -> i/S * Random( basis ) ) );
+    end );
+    
+    AddRandomMorphismWithFixedRangeByInteger( full,
+      function( r, n )
+        local degree, basis;
+        degree := GeneratorDegrees( UnderlyingCell( r ) );
+        degree := List( degree, HomalgElementToInteger );
+        basis := BasisBetweenTwistedGradedFreeModules( S, degree[ 1 ] - AbsInt( n ), degree[ 1 ] );
+        return Sum( List( [ 0 .. AbsInt( n ) ], i -> (-1)^i*i/S * Random( basis ) ) );
+    end ); 
+    
+    AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
+      function( s, r, n )
+        local basis;
+        
+        basis := BasisOfExternalHom( s, r );
+        
+        if IsEmpty( basis ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return Sum( List( [ 0 .. AbsInt( n ) ], i -> MinusOne( k ) ^ i * Random( basis ) ) );        
+          
+        fi;
+        
+    end );
+    
     Finalize( full );
     
     DisableSanityChecks( full );
+    
     CapCategorySwitchLogicOff( full );
    
     return full;
     
 end );
+
 
 ##
 InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
@@ -1765,11 +1808,11 @@ InstallMethod( ViewObj,
         
         if p > 2 then
           
-          Print( "S(", twists[ 1 ], ")^", p - 1, "⊕" );
+          Print( "S(", twists[ 1 ], ")^", p - 1, "⊕ " );
         
         else
           
-          Print( "S(", twists[ 1 ], ")⊕" );
+          Print( "S(", twists[ 1 ], ")⊕ " );
           
         fi;
        
