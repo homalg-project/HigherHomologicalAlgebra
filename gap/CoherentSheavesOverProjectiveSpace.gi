@@ -458,32 +458,6 @@ end );
 
 ## 𝒪, 𝓞, 𝛀, 𝛚 ⨁,, ⊕, Ω
 
-##
-InstallMethod( ViewObj,
-          [ IsSerreQuotientCategoryObject ],
-  function( M )
-    local o, S, n, omegas, p;
-     
-    o := UnderlyingHonestObject( M );
-    
-    S := UnderlyingHomalgRing( o );
-    
-    n := Size( Indeterminates( S ) );
-    
-    omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
-    
-    p := Position( omegas, o );
-    
-    if p = fail then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    Print( "Ω^", p - 1, "(", p - 1, ")" );
-    
-end );
-
 InstallMethod( ViewObj,
           [ IsSerreQuotientCategoryObject ],
   function( M )

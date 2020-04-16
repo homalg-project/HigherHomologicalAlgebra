@@ -1357,7 +1357,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
        
     k := UnderlyingNonGradedRing( CoefficientsRing( S ) );
     
-    name := "{S(i),i∈ Z}";
+    name := Concatenation( "{S(i), i∈ Z, S := ", String( S ), "}" );
     
     full := FullSubcategory( graded_pres, name : FinalizeCategory := false );
     
@@ -1710,38 +1710,6 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoT
 # ViewObj
 #
 ####################################
-
-##
-InstallMethod( ViewObj,
-          [ IsGradedLeftPresentation ],
-  function( o )
-    local S, n, omegas, p;
-    
-    S := UnderlyingHomalgRing( o );
-    
-    if not ( HasIsFreePolynomialRing( S ) and IsFreePolynomialRing( S ) ) then
-      
-      TryNextMethod( );
-      
-    fi;
-   
-    S := UnderlyingHomalgRing( o );
-    
-    n := Size( Indeterminates( S ) );
-    
-    omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
-    
-    p := Position( omegas, o );
-    
-    if p = fail then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    Print( "Ω^", p - 1, "(", p - 1, ")" );
-    
-end );
 
 ##
 InstallMethod( ViewObj,

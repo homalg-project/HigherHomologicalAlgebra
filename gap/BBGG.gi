@@ -215,8 +215,9 @@ end );
 ##
 InstallMethod( LCochainFunctor,
             [ IsHomalgGradedRing ],
-    function( S )
+  function( S )
     local cat_lp_ext, cat_lp_sym, cochains, ind_ext, ind_sym, L, KS, n, name;
+    
     if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
       Error( "The input should be a graded polynomial ring" );
     fi;

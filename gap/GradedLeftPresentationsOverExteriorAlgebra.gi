@@ -368,8 +368,6 @@ InstallMethod( ViewObj,
     fi; 
     
     twists := List( -GeneratorDegrees( o ), d -> Size( Indeterminates( A ) ) + d );
-     
-    #Print( "An object in Serre quotient category defined by: " );
     
     if IsEmpty( twists ) then
       
@@ -387,11 +385,11 @@ InstallMethod( ViewObj,
         
         if Size( twists ) > 1 then
           
-          Print( "𝛚(", twists[ 1 ], ")^", Size( twists ) );
+          Print( "𝛚 (", twists[ 1 ], ")^", Size( twists ) );
           
         else
           
-          Print( "𝛚(", twists[ 1 ], ")" );
+          Print( "𝛚 (", twists[ 1 ], ")" );
           
         fi;
         
@@ -401,11 +399,11 @@ InstallMethod( ViewObj,
         
         if p > 2 then
           
-          Print( "𝛚(", twists[ 1 ], ")^", p - 1, "⊕" );
+          Print( "𝛚 (", twists[ 1 ], ")^", p - 1, "⊕" );
         
         else
           
-          Print( "𝛚(", twists[ 1 ], ")⊕" );
+          Print( "𝛚 (", twists[ 1 ], ")⊕" );
           
         fi;
        
