@@ -309,10 +309,14 @@ InstallMethod( ProductOfFunctors,
   function( S, functors, R )
     local F;
     
-    #S := Product( List( functors, func -> AsCapCategory( Source( func ) ) ) );
-    
-    #R := Product( List( functors, func -> AsCapCategory( Range( func ) ) ) );
-    
+    if not ( ForAll( ListN( Components( S ), List( functors, F -> AsCapCategory( Source( F ) ) ), IsIdenticalObj ), IdFunc )
+              and ForAll( ListN( Components( R ), List( functors, F -> AsCapCategory( Range( F ) ) ), IsIdenticalObj ), IdFunc )
+              ) then
+      
+      Error( "Wrong input!\n" );
+      
+    fi;
+        
     F := CapFunctor( "Product of functors", S, R );
     
     AddObjectFunction( F,

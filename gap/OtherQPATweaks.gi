@@ -395,6 +395,66 @@ end );
 
 ##
 InstallMethod( _WeakKernelEmbedding,
+          [ IsAdditiveClosureMorphism ],
+  function( alpha )
+    local cat, full, ambient_cat, S, I, mat, source, range;
+    
+    cat := CapCategory( alpha );
+    
+    full := UnderlyingCategory( cat );
+    
+    
+    if not ( IsCapFullSubcategory( full ) and IsBound( AmbientCategory( full )!.ring_for_representation_category ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if IsZero( Source( alpha ) ) then
+      
+      return UniversalMorphismFromZeroObject( Source( alpha ) );
+    
+    fi;
+    
+    ambient_cat := AmbientCategory( full );
+    
+    S := ambient_cat!.ring_for_representation_category;
+    
+    I := InclusionFunctor( full );
+    
+    I := ExtendFunctorToAdditiveClosureOfSource( I );
+      
+    alpha := I( alpha );
+    
+    alpha := KernelEmbedding( alpha );
+    
+    alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
+    
+    mat := UnderlyingMatrix( alpha );
+    
+    source := List( GeneratorDegrees( Source( alpha ) ), degree -> GradedFreeLeftPresentation( 1, S, [ degree ] ) );
+    
+    range := List( GeneratorDegrees( Range( alpha ) ), degree -> GradedFreeLeftPresentation( 1, S, [ degree ] ) );
+    
+    if IsEmpty( source ) then
+      
+      return UniversalMorphismFromZeroObject( Range( alpha ) );
+      
+    else
+    
+      return List( [ 1 .. Size( source ) ],
+            i -> List( [ 1 .. Size( range ) ],
+                  j -> GradedPresentationMorphism( source[i], HomalgMatrix( [ [ mat[ i, j ] ] ], 1, 1, S ), range[ j ] ) / full
+                ) ) / cat;
+                
+    fi;
+     
+end );
+
+
+
+##
+InstallMethod( _WeakKernelEmbedding,
           [ IsCapCategoryMorphismInASubcategory ],
   function( alpha )
     local full;

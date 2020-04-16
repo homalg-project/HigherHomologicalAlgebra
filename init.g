@@ -15,3 +15,4 @@ ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gd" );
 ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gd" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gd" );
 ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gd" );
+ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gd" );

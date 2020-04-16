@@ -131,7 +131,8 @@ BindGlobal( "SHEAFIFIES_TO_ZERO_FOR_PPS",
 
 end );
 
-BindGlobal( "COX_RING_OF_PPS",
+InstallMethod( CoxRingForProductOfProjectiveSpaces,
+          [ IsRationalsForHomalg, IsList ],
   function( homalg_field, L )
     local variables, variables_strings, factor_rings, weights, S, irrelevant_ideal;
 
@@ -139,12 +140,12 @@ BindGlobal( "COX_RING_OF_PPS",
       return fail;
     fi;
 
-    variables := [ "x_", "y_", "z_", "s_", "t_", "u_", "w_" ];
+    variables := [ "x", "y", "z", "s", "t", "u", "w" ];
     
     variables_strings := List( [ 1 .. Length( L ) ], 
           i -> List( [ 0 .. L[ i ] ], j -> Concatenation( variables[ i ], String( j ) ) ) );
     
-    variables := List( variables_strings, v -> JoinStringsWithSeparator(v,",") );
+    variables := List( variables_strings, v -> JoinStringsWithSeparator( v, "," ) );
     
     factor_rings := List( variables, v -> GradedRing( homalg_field * v ) );
     
@@ -170,22 +171,129 @@ BindGlobal( "COX_RING_OF_PPS",
     
     S!.irrelevant_ideal := HomalgMatrix( irrelevant_ideal, Length( irrelevant_ideal ), 1, S );
     
+    S!.projective_spaces := L;
+    
     return S;
     
 end );
 
 ##
-BindGlobal( "CoherentSheavesOverProductOfProjectiveSpaces",
-  function( field, product )
-    local S, cat, sub_cat;
-    
-    S := COX_RING_OF_PPS( field, product );
+InstallMethod( CoherentSheavesOverProductOfProjectiveSpaces,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local cat, sub_cat;
     
     cat := GradedLeftPresentations( S );
     
     sub_cat := FullSubcategoryByMembershipFunction( cat, SHEAFIFIES_TO_ZERO_FOR_PPS );
     
     return cat / sub_cat;
+    
+end );
+
+##
+InstallMethod( PullbackFunctorAlongProjectionOp,
+          [ IsHomalgGradedRing, IsInt ],
+function( S, i )
+  local cat_i, coh, sh, name, F;
+  
+  cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
+  
+  coh := CoherentSheavesOverProductOfProjectiveSpaces( S );
+  
+  sh := CanonicalProjection( coh );
+  
+  name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of product of projective spaces" );
+  
+  F := CapFunctor( name, cat_i, coh );
+  
+  AddObjectFunction( F,
+    function( a )
+      local generator_degrees, n, degrees, j;
+      
+      if not IsIdenticalObj( UnderlyingHomalgRing( a ), S!.factor_rings[ i ] ) then
+        
+        Error( "The given object is not defined over the expected ring.\n" );
+
+      fi;
+
+      generator_degrees := List( GeneratorDegrees( a ), HomalgElementToInteger );
+      
+      n := Length( S!.factor_rings );
+
+      degrees := List( generator_degrees, g -> ListWithIdenticalEntries( n, 0 ) );
+
+      for j in [ 1 .. Length( degrees ) ] do
+
+        degrees[ j ][ i ] := generator_degrees[ j ];
+
+      od;
+
+      return ApplyFunctor( sh, AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees ) );
+
+  end );
+
+  AddMorphismFunction( F,
+
+    function( s, alpha, r )
+      
+      s := UnderlyingHonestObject( s );
+      
+      r := UnderlyingHonestObject( r );
+      
+      return ApplyFunctor( sh, GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r ) );
+
+  end );
+
+  return F;
+
+end );
+
+##
+InstallMethod( BoxProductOnProductOfProjectiveSpaces,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local coh, sh, cats, prod_cats, n, I, F;
+
+    coh := CoherentSheavesOverProductOfProjectiveSpaces( S );
+    
+    sh := CanonicalProjection( coh );
+    
+    cats := List( S!.factor_rings, GradedLeftPresentations );
+    
+    prod_cats := CallFuncList( Product, cats );
+    
+    n := Length( cats );
+    
+    I := List( [ 1 .. n ], i -> PullbackFunctorAlongProjectionOp( S, i ) );
+    
+    F := CapFunctor( "Box tensor functor", prod_cats, coh );
+    
+    # M_1 x M_2 x ... x M_n -> M_1 ⊠ M_2 ⊠ ... ⊠ M_n
+    AddObjectFunction( F,
+        function( M )
+          local L;
+          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], M[ i ] ) );
+          return
+            ApplyFunctor(
+              sh,
+              Iterated( L, TensorProductOnObjects )
+            );
+    end );
+    
+    # f_1 x f_2 x ... x f_n -> f_1 ⊠ f_2 ⊠ ... ⊠ f_n
+    AddMorphismFunction( F,
+        function( s, phi, r )
+          local L;
+          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], phi[ i ] ) );
+          return
+            ApplyFunctor(
+              sh,
+              Iterated( L, TensorProductOnMorphisms )
+            );
+    end );
+    
+    return F;
     
 end );
 
@@ -242,91 +350,6 @@ end );
 #      return C;
 #end;
 #
-
-BindGlobal( "InjectionOfFactorOfTensorProduct",
-function( S, i )
-  local cat_i, cat, F;
-
-  cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
-
-  cat := GradedLeftPresentations( S );
-  
-  F := CapFunctor( Concatenation( String( i ), "-factor " ), cat_i, cat );
-
-  AddObjectFunction( F,
-    function( a )
-      local generator_degrees, n, degrees, j;
-    
-      if not IsIdenticalObj( UnderlyingHomalgRing( a ), S!.factor_rings[ i ] ) then
-        
-        Error( "The given object is not defined over the expected ring.\n" );
-
-      fi;
-
-      generator_degrees := List( GeneratorDegrees( a ), HomalgElementToInteger );
-      
-      n := Length( S!.factor_rings );
-
-      degrees := List( generator_degrees, g -> ListWithIdenticalEntries( n, 0 ) );
-
-      for j in [ 1 .. Length( degrees ) ] do
-
-        degrees[ j ][ i ] := generator_degrees[ j ];
-
-      od;
-
-      return AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees );
-
-  end );
-
-  AddMorphismFunction( F,
-
-     function( s, alpha, r )
-
-       return GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r );
-
-  end );
-
-  return F;
-
-end );
-
-
-BindGlobal( "BOX_PRODUCT_FUNCTOR_ON_COX_RING_OF_PPS",
-  function( S )
-    local cat, cats, prod_cats, n, I, F;
-
-    cat := GradedLeftPresentations( S );
-    
-    cats := List( S!.factor_rings, GradedLeftPresentations );
-    
-    prod_cats := CallFuncList( Product, cats );
-    
-    n := Length( cats );
-    
-    I := List( [ 1 .. n ], i -> InjectionOfFactorOfTensorProduct( S, i ) );
-    
-    F := CapFunctor( "Box tensor functor", prod_cats, cat );
-    
-    # M_1 x M_2 x ... x M_n -> M_1 ⊠ M_2 ⊠ ... ⊠ M_n
-    AddObjectFunction( F,
-        function( M )
-          local L;
-          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], M[ i ] ) );
-          return Iterated( L, TensorProductOnObjects );
-    end );
-    
-    # f_1 x f_2 x ... x f_n -> f_1 ⊠ f_2 ⊠ ... ⊠ f_n
-    AddMorphismFunction( F,
-        function( source, phi, range )
-          local L;
-          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], phi[ i ] ) );
-          return Iterated( L, TensorProductOnMorphisms );
-    end );
-    
-    return F;
-    
-end );
 
 #
 #m := InputFromUser( "P^m x P^n, for m = " );
