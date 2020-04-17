@@ -4,8 +4,13 @@ ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 field := HomalgFieldOfRationalsInSingular( );
 
 S := CoxRingForProductOfProjectiveSpaces( field, [ 2, 1 ] );
+S_fpres := GradedLeftPresentations( S );
+Ch_S_fpres := ChainComplexCategory( S_fpres );
+
 S_P2 := S!.factor_rings[ 1 ];
 S_P2_fpres := GradedLeftPresentations( S_P2 );
+I_P2_fpres := PullbackFunctorAlongProjection( S, 1 );
+Ch_I_P2_fpres := ExtendFunctorToChainComplexCategories( I_P2_fpres );
 O_P2 := FullSubcategoryGeneratedByGradedFreeModulesOfRankOne( S_P2 );
 objs_O_P2 := SetOfKnownObjects( O_P2 );
 B_P2 := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S_P2 );
@@ -18,6 +23,8 @@ QRows_P2 := DefiningCategory( D_P2 );
 
 S_P1 := S!.factor_rings[ 2 ];
 S_P1_fpres := GradedLeftPresentations( S_P1 );
+I_P1_fpres := PullbackFunctorAlongProjection( S, 2 );
+Ch_I_P1_fpres := ExtendFunctorToChainComplexCategories( I_P1_fpres );
 O_P1 := FullSubcategoryGeneratedByGradedFreeModulesOfRankOne( S_P1 );
 objs_O_P1 := SetOfKnownObjects( O_P1 );
 B_P1 := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S_P1 );
@@ -57,6 +64,7 @@ vertices_labels := ListX( [ -1, 0, 1 ], [ -1, 0 ],
                     );
 collection := CreateExceptionalCollection( images : vertices_labels := vertices_labels );
 
+I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
 F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( collection );
 G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( collection );
 
@@ -71,26 +79,38 @@ D.("𝓞 (-1,0)");
 Coh_P2 := CoherentSheavesOverProjectiveSpace( S_P2 );
 Coh_P1 := CoherentSheavesOverProjectiveSpace( S_P1 );
 Coh_P2_x_P1 := CoherentSheavesOverProductOfProjectiveSpaces( S );
+Sh := ExtendFunctorToChainComplexCategories( CanonicalProjection( Coh_P2_x_P1 ) );
 
-i_O_P2 := InclusionFunctor( O_P2 );
-i_Add_O_P2 := ExtendFunctorToAdditiveClosureOfSource( i_O_P2 );
-i_Ch_Add_O_P2 := ExtendFunctorToChainComplexCategories( i_Add_O_P2 );
+I_O_P2 := InclusionFunctor( O_P2 );
+I_Add_O_P2 := ExtendFunctorToAdditiveClosureOfSource( I_O_P2 );
+Ch_I_Add_O_P2 := ExtendFunctorToChainComplexCategories( I_Add_O_P2 );
 
-i_O_P1 := InclusionFunctor( O_P1 );
-i_Add_O_P1 := ExtendFunctorToAdditiveClosureOfSource( i_O_P1 );
-i_Ch_Add_O_P1 := ExtendFunctorToChainComplexCategories( i_Add_O_P1 );
+I_O_P1 := InclusionFunctor( O_P1 );
+I_Add_O_P1 := ExtendFunctorToAdditiveClosureOfSource( I_O_P1 );
+Ch_I_Add_O_P1 := ExtendFunctorToChainComplexCategories( I_Add_O_P1 );
 
-i_Ch_Add_O_P2_x_Ch_Add_O_P1 := ProductOfFunctors( [ i_Ch_Add_O_P2, i_Ch_Add_O_P1 ] );
-
-H := BoxProductOnProductOfProjectiveSpaces( S );
-H := ExtendFunctorFromProductCategoryToChainComplexCategories( H );
-H := PreCompose( i_Ch_Add_O_P2_x_Ch_Add_O_P1, H );
-###################
+Ch_I_Add_O_P2_x_Ch_I_Add_O_P1 := ProductOfFunctors( [ Ch_I_Add_O_P2, Ch_I_Add_O_P1 ] );
+Ch_I_P2_fpres_x_Ch_I_P1_fpres := ProductOfFunctors( [ Ch_I_P2_fpres, Ch_I_P1_fpres ] );
+TT := TensorProductFunctor( Ch_S_fpres );
+H := PreCompose( [ Ch_I_Add_O_P2_x_Ch_I_Add_O_P1, Ch_I_P2_fpres_x_Ch_I_P1_fpres, TT, Sh ] );
 
 Ch_Add_O_P2_x_Ch_Add_O_P1 := Product( Ch_Add_O_P2, Ch_Add_O_P1 );
+
+###################
+quit;
 
 Display( H );
 Display( L );
 
-a := [ RandomObject( Ch_Add_O_P2, 1 ), RandomObject( Ch_Add_O_P1, 1 ) ] / Ch_Add_O_P2_x_Ch_Add_O_P1;
+a_1 := RandomObject( Ch_Add_O_P2, 1 );
+#a_1 := KoszulChainComplex( S_P2, 1 );
+
+#a_2 := RandomObject( Ch_Add_O_P1, 1 );
+a_2 := KoszulChainComplex( S_P1, 1 );
+
+a := [ a_1, a_2 ] / Ch_Add_O_P2_x_Ch_Add_O_P1;
+
+HomologySupport( H( a ) );
+HomologySupport( I( Convolution( L( a ) ) ) );
+
 
