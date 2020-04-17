@@ -1652,3 +1652,31 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
     fi;
     
 end );
+
+##
+InstallMethod( TensorProductFunctor,
+              [ IsCapCategory ],
+  function( C )
+    local CxC, name, F;
+    
+    #TODO add checks
+    
+    CxC := Product( C, C );
+    
+    name := "Tensor product functor";
+    
+    F := CapFunctor( name, CxC, C );
+    
+    AddObjectFunction( F,
+      o -> TensorProductOnObjects( o[ 1 ], o[ 2 ] )
+    );
+    
+    AddMorphismFunction( F,
+      { s, m, r } -> TensorProductOnMorphismsWithGivenTensorProducts( s, m[ 1 ], m[ 2 ], r )
+    );
+    
+    return F;
+    
+end );
+
+

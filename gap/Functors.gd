@@ -165,3 +165,5 @@ DeclareAttribute( "ImageOfFullyFaithfullFunctor", IsCapFunctor );
 DeclareAttribute( "IsomorphismOntoImageOfFullyFaithfulFunctor", IsCapFunctor );
 
 DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
+
+DeclareAttribute( "TensorProductFunctor", IsCapCategory );
