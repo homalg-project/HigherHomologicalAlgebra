@@ -332,3 +332,17 @@ InstallMethod( ProductOfFunctors,
     
 end );
 
+##
+InstallOtherMethod( ProductOfFunctors,
+          [ IsList ],
+  function( functors )
+    local S, R;
+    
+    S := CallFuncList( Product, List( functors, func -> AsCapCategory( Source( func ) ) ) );
+    
+    R := CallFuncList( Product, List( functors, func -> AsCapCategory( Range( func ) ) ) );
+    
+    return ProductOfFunctors( S, functors, R );
+    
+end );
+
