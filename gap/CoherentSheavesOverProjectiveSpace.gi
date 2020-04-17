@@ -478,6 +478,7 @@ InstallMethod( ViewObj,
     if IsEmpty( twists ) then
       
       Print( "0" );
+      return;
       
     fi;
     
