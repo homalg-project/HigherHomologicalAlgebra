@@ -110,7 +110,7 @@ BindGlobal( "IS_SOME_POWER_OF_IRRELEVANT_IDEAL_CONTAINED_IN_IDEAL_PPS",
 end );
 
 ##
-BindGlobal( "SHEAFIFIES_TO_ZERO_FOR_PPS",
+BindGlobal( "IS_ZERO_SHEAF_OVER_Pm_x_Pn",
 
   function( M )
     local S, ideal, irrelevant_ideal;
@@ -185,7 +185,7 @@ InstallMethod( CoherentSheavesOverProductOfProjectiveSpaces,
     
     cat := GradedLeftPresentations( S );
     
-    sub_cat := FullSubcategoryByMembershipFunction( cat, SHEAFIFIES_TO_ZERO_FOR_PPS );
+    sub_cat := FullSubcategoryByMembershipFunction( cat, IS_ZERO_SHEAF_OVER_Pm_x_Pn );
     
     return cat / sub_cat;
     
