@@ -195,17 +195,15 @@ end );
 InstallMethod( PullbackFunctorAlongProjectionOp,
           [ IsHomalgGradedRing, IsInt ],
 function( S, i )
-  local cat_i, coh, sh, name, F;
+  local cat_i, cat, name, F;
   
   cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
   
-  coh := CoherentSheavesOverProductOfProjectiveSpaces( S );
-  
-  sh := CanonicalProjection( coh );
+  cat := GradedLeftPresentations( S );
   
   name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of product of projective spaces" );
   
-  F := CapFunctor( name, cat_i, coh );
+  F := CapFunctor( name, cat_i, cat );
   
   AddObjectFunction( F,
     function( a )
@@ -229,7 +227,7 @@ function( S, i )
 
       od;
 
-      return ApplyFunctor( sh, AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees ) );
+      return AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees );
 
   end );
 
@@ -237,11 +235,7 @@ function( S, i )
 
     function( s, alpha, r )
       
-      s := UnderlyingHonestObject( s );
-      
-      r := UnderlyingHonestObject( r );
-      
-      return ApplyFunctor( sh, GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r ) );
+      return GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r );
 
   end );
 
@@ -273,6 +267,7 @@ InstallMethod( BoxProductOnProductOfProjectiveSpaces,
     AddObjectFunction( F,
         function( M )
           local L;
+          
           L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], M[ i ] ) );
           return
             ApplyFunctor(
