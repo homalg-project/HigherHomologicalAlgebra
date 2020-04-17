@@ -292,6 +292,75 @@ InstallMethod( BoxProductOnProductOfProjectiveSpaces,
     
 end );
 
+InstallMethod( KoszulChainComplexOp,
+          [ IsHomalgGradedRing, IsInt ],
+  function( S, n )
+    local ind, K, rank_one, add_rank_one, ch_add_ranke_one, l, u, diffs;
+      
+      ind := IndeterminatesOfPolynomialRing( S );
+      
+      K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ -n ] );
+      
+      K := ProjectiveChainResolution( K, true );
+      
+      rank_one := FullSubcategoryGeneratedByGradedFreeModulesOfRankOne( S );
+      
+      add_rank_one := AdditiveClosure( rank_one );
+      
+      ch_add_ranke_one := ChainComplexCategory( add_rank_one );
+      
+      l := ActiveLowerBound( K );
+      
+      u := ActiveUpperBound( K );
+      
+      diffs := List( [ l + 1 .. u ],
+        function( i )
+          local source, range, mat;
+          
+          source := List( GeneratorDegrees( Source( K^i ) ), degree -> GradedFreeLeftPresentation( 1, S, [ degree ] ) );
+          
+          if IsEmpty( source ) then
+            
+            source := ZeroObject( add_rank_one );
+            
+          else
+            
+            source := List( source, o -> o / rank_one ) / add_rank_one;
+          
+          fi;
+          
+          range := List( GeneratorDegrees( Range( K^i ) ), degree -> GradedFreeLeftPresentation( 1, S, [ degree ] ) );
+    
+          if IsEmpty( range ) then
+            
+            range := ZeroObject( add_rank_one );
+            
+          else
+            
+            range := List( range, o -> o / rank_one ) / add_rank_one;
+            
+          fi;
+          
+          mat := UnderlyingMatrix( K^i );
+          
+          mat := List( [ 1 .. Size( ObjectList( source ) ) ],
+                  u -> List( [ 1 .. Size( ObjectList( range ) ) ],
+                        v -> GradedPresentationMorphism(
+                                UnderlyingCell( source[u] ),
+                                HomalgMatrix( [ [ mat[ u, v ] ] ], 1, 1, S ),
+                                UnderlyingCell( range[ v ] )
+                              ) / rank_one
+                           )
+                       );
+          
+          return AdditiveClosureMorphism( source, mat, range );
+          
+        end );
+      
+      return ChainComplex( diffs, l + 1 );
+      
+end );
+
 #
 #euler_sequence := function( S )
 #  local L, w, Lw, d_m1, d_m2;
@@ -303,15 +372,6 @@ end );
 #  return CochainComplex( [ d_m2, d_m1 ], -2 );
 #end;
 #
-#koszul_resolution_old := 
-#    function( S )
-#      local ind, K;
-#      ind := IndeterminatesOfPolynomialRing( S );
-#      K := AsGradedLeftPresentation( HomalgMatrix( ind, S ), [ 0 ] );
-#      K := ProjectiveResolution( K );
-#      SetLowerBound( K, - Length( ind ) - 1 );
-#      return K;
-#end;
 #
 #koszul_syzygy_module_old :=
 #    function( S, k )
