@@ -12,6 +12,7 @@ B_P2 := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S_P2 );
 B_P2 := RestrictFunctorToFullSubcategoryOfSource( B_P2, O_P2 );
 Add_B_P2 := ExtendFunctorToAdditiveClosureOfSource( B_P2 );
 Add_O_P2 := AsCapCategory( Source( Add_B_P2 ) );
+Ch_Add_O_P2 := ChainComplexCategory( Add_O_P2 );
 D_P2 := AsCapCategory( Range( Add_B_P2 ) );
 QRows_P2 := DefiningCategory( D_P2 );
 
@@ -23,6 +24,7 @@ B_P1 := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S_P1 );
 B_P1 := RestrictFunctorToFullSubcategoryOfSource( B_P1, O_P1 );
 Add_B_P1 := ExtendFunctorToAdditiveClosureOfSource( B_P1 );
 Add_O_P1 := AsCapCategory( Source( Add_B_P1 ) );
+Ch_Add_O_P1 := ChainComplexCategory( Add_O_P1 );
 D_P1 := AsCapCategory( Range( Add_B_P1 ) );
 QRows_P1 := DefiningCategory( D_P1 );
 
@@ -85,6 +87,10 @@ H := ExtendFunctorFromProductCategoryToChainComplexCategories( H );
 H := PreCompose( i_Ch_Add_O_P2_x_Ch_Add_O_P1, H );
 ###################
 
+Ch_Add_O_P2_x_Ch_Add_O_P1 := Product( Ch_Add_O_P2, Ch_Add_O_P1 );
+
 Display( H );
 Display( L );
+
+a := [ RandomObject( Ch_Add_O_P2, 1 ), RandomObject( Ch_Add_O_P1, 1 ) ] / Ch_Add_O_P2_x_Ch_Add_O_P1;
 
