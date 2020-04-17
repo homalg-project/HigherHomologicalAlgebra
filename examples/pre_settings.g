@@ -43,6 +43,7 @@ DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
     IsCapProductCategory
     # or some function
   ];
+HOMALG_MATRICES.Eager = false;
 
 #
 field := GLOBAL_FIELD_FOR_QPA!.default_field;
