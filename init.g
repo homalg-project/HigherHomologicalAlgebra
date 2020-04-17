@@ -12,7 +12,11 @@ ReadPackage( "DerivedCategories", "gap/Functors.gd" );
 ReadPackage( "DerivedCategories", "gap/Hom.gd" );
 ReadPackage( "DerivedCategories", "gap/Tensor.gd" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gd" );
-ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gd" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gd" );
 ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gd" );
-ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gd" );
+
+
+if IsPackageMarkedForLoading( "BBGG", ">= 2019.04.16" ) then
+  ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gd" );
+  ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gd" );
+fi;

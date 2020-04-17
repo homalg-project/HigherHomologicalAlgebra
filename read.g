@@ -14,10 +14,13 @@ ReadPackage( "DerivedCategories", "gap/Functors.gi" );
 ReadPackage( "DerivedCategories", "gap/Hom.gi" );
 ReadPackage( "DerivedCategories", "gap/Tensor.gi" );
 ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
-ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
 ReadPackage( "DerivedCategories", "gap/Combinatoric.gi" );
 ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
 ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/TempMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gi" );
-ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
+
+if IsPackageMarkedForLoading( "BBGG", ">= 2019.04.16" ) then
+  ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
+  ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
+fi;
