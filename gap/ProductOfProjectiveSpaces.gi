@@ -1,6 +1,5 @@
-LoadPackage( "DerivedCategories" );
 
-BindGlobal( "ANNIHILATOR_PPS",
+BindGlobal( "ANNIHILATOR_OF_GRADED_MODULE_OVER_COX_RING_OF_PPS",
             
   function( M )
     local mat, S, F, n, Id, L, ann, f, g;
@@ -114,21 +113,13 @@ BindGlobal( "IS_ZERO_SHEAF_OVER_Pm_x_Pn",
 
   function( M )
     local S, ideal, irrelevant_ideal;
-
-    irrelevant_ideal := UnderlyingHomalgRing( M )!.irrelevant_ideal;
-
-    if IsZero( M ) then
-      return true;
-    fi;
-
-    ideal := ANNIHILATOR_PPS( M );
     
-    if IsZero( ideal ) then
-      return false;
-    fi;
-
+    irrelevant_ideal := UnderlyingHomalgRing( M )!.irrelevant_ideal;
+    
+    ideal := ANNIHILATOR_OF_GRADED_MODULE_OVER_COX_RING_OF_PPS( M );
+    
     return IS_SOME_POWER_OF_IRRELEVANT_IDEAL_CONTAINED_IN_IDEAL_PPS( irrelevant_ideal, ideal );
-
+    
 end );
 
 InstallMethod( CoxRingForProductOfProjectiveSpaces,
@@ -175,72 +166,6 @@ InstallMethod( CoxRingForProductOfProjectiveSpaces,
     
     return S;
     
-end );
-
-##
-InstallMethod( CoherentSheavesOverProductOfProjectiveSpaces,
-          [ IsHomalgGradedRing ],
-  function( S )
-    local cat, sub_cat;
-    
-    cat := GradedLeftPresentations( S );
-    
-    sub_cat := FullSubcategoryByMembershipFunction( cat, IS_ZERO_SHEAF_OVER_Pm_x_Pn );
-    
-    return cat / sub_cat;
-    
-end );
-
-##
-InstallMethod( PullbackFunctorAlongProjectionOp,
-          [ IsHomalgGradedRing, IsInt ],
-function( S, i )
-  local cat_i, cat, name, F;
-  
-  cat_i := GradedLeftPresentations( S!.factor_rings[ i ] );
-  
-  cat := GradedLeftPresentations( S );
-  
-  name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of product of projective spaces" );
-  
-  F := CapFunctor( name, cat_i, cat );
-  
-  AddObjectFunction( F,
-    function( a )
-      local generator_degrees, n, degrees, j;
-      
-      if not IsIdenticalObj( UnderlyingHomalgRing( a ), S!.factor_rings[ i ] ) then
-        
-        Error( "The given object is not defined over the expected ring.\n" );
-
-      fi;
-
-      generator_degrees := List( GeneratorDegrees( a ), HomalgElementToInteger );
-      
-      n := Length( S!.factor_rings );
-
-      degrees := List( generator_degrees, g -> ListWithIdenticalEntries( n, 0 ) );
-
-      for j in [ 1 .. Length( degrees ) ] do
-
-        degrees[ j ][ i ] := generator_degrees[ j ];
-
-      od;
-
-      return AsGradedLeftPresentation( UnderlyingMatrix( a ) * S, degrees );
-
-  end );
-
-  AddMorphismFunction( F,
-
-    function( s, alpha, r )
-      
-      return GradedPresentationMorphism( s, UnderlyingMatrix( alpha ) * S, r );
-
-  end );
-
-  return F;
-
 end );
 
 ##

@@ -342,5 +342,3 @@ InstallMethod( RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOf
     return F;
     
 end );
-  
-;
