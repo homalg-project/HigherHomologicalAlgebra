@@ -573,7 +573,7 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
             
             end );
         
-        output := coeffs{ pos } * images;
+        output := List( coeffs{ pos }, conv ) * images;
                
         return output;
         
