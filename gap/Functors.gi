@@ -493,9 +493,9 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
   function( F )
     local S, T, functor, name, r;
     
-    S := ChainComplexCategory( AsCapCategory( Source( F ) ) );
+    S := ChainComplexCategory( SourceOfFunctor( F ) );
     
-    T := ChainComplexCategory( AsCapCategory(  Range( F ) ) );
+    T := ChainComplexCategory( RangeOfFunctor( F ) );
     
     r := RandomTextColor( Name( F ) );
     
@@ -509,7 +509,7 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
         
         diffs := ApplyMap( Differentials( C ), d -> ApplyFunctor( F, d ) );
         
-        functor_C := ChainComplex( AsCapCategory( Range( F ) ), diffs );
+        functor_C := ChainComplex( RangeOfFunctor( F ), diffs );
         
         TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
         
@@ -568,9 +568,9 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
   function( F )
     local S, T, functor, name, r;
     
-    S := CochainComplexCategory( AsCapCategory( Source( F ) ) );
+    S := CochainComplexCategory( SourceOfFunctor( F ) );
     
-    T := CochainComplexCategory( AsCapCategory(  Range( F ) ) );
+    T := CochainComplexCategory( RangeOfFunctor( F ) );
     
     r := RandomTextColor( Name( F ) );
     
@@ -590,7 +590,7 @@ InstallMethod( ExtendFunctorToCochainComplexCategories,
           
           end );
         
-        functor_C := CochainComplex( AsCapCategory( Range( F ) ), diffs );
+        functor_C := CochainComplex( RangeOfFunctor( F ), diffs );
         
         TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
         
@@ -897,7 +897,7 @@ InstallMethod( ExtendFunctorFromProductCategoryToChainComplexCategories,
   function( F )
     local source, cat_1, cat_2, range, ch_range, ch_cat_1, ch_cat_2, ch_cat_1_ch_cat_2, name, U; 
     
-    source := AsCapCategory( Source( F ) );
+    source := SourceOfFunctor( F );
     
     if not HasComponents( source ) then
       
@@ -915,7 +915,7 @@ InstallMethod( ExtendFunctorFromProductCategoryToChainComplexCategories,
     
     cat_2 := Components( source )[ 2 ];
     
-    range := AsCapCategory( Range( F ) );
+    range := RangeOfFunctor( F );
     
     ch_cat_1 := ChainComplexCategory( cat_1 );
     

@@ -240,7 +240,7 @@ InstallGlobalFunction( CheckFunctoriality,
             PreCompose( ApplyFunctor( F, alpha ), ApplyFunctor( F, beta ) )
             );
     
-    source_cat := AsCapCategory( Source( F ) );
+    source_cat := SourceOfFunctor( F );
     
     if HasIsAbCategory( source_cat ) and IsAbCategory( source_cat ) then
       
@@ -261,7 +261,7 @@ InstallMethod( Display,
           [ IsCapFunctor ],
   function( F )
     
-    Print( CreateNameWithColorsForFunctor( Name( F ), AsCapCategory( Source( F ) ), AsCapCategory( Range( F ) ) ) );
+    Print( CreateNameWithColorsForFunctor( Name( F ), SourceOfFunctor( F ), RangeOfFunctor( F ) ) );
     
 end );
 
