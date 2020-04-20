@@ -265,8 +265,17 @@ InstallMethod( Display,
     
 end );
 
+##
+InstallMethod( SourceOfFunctor,
+          [ IsCapFunctor ],
+  F -> AsCapCategory( Source( F ) )
+);
 
-#############################################
+##
+InstallMethod( RangeOfFunctor,
+          [ IsCapFunctor ],
+  F -> AsCapCategory( Range( F ) )
+);
 
 ## Try number 0
 InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
