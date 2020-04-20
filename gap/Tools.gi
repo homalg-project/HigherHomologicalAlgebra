@@ -13,7 +13,12 @@ SWITCH_LOGIC_OFF := false;
 ENABLE_COLORS := false;
 DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
 
-##
+##########################
+#
+# Real time
+#
+##########################
+
 InstallGlobalFunction( Time,
   function( command, arguments )
     local t0, t1;
@@ -27,6 +32,176 @@ InstallGlobalFunction( Time,
     return Float( ( t1 - t0 ) / 10^9 );
     
 end );
+
+#############################################
+#
+# Finalizing
+#
+#############################################
+
+InstallMethod( Finalize,
+          [ IsCapCategory ],
+  function( category )
+    local o;
+    
+    o := ValueOption( "ksl_iho_niv_aje_nde" );
+    
+    if o = false then
+      TryNextMethod( );
+    fi;
+    
+    Finalize( category: ksl_iho_niv_aje_nde := false );
+    
+    if DISABLE_ALL_SANITY_CHECKS then
+      DisableSanityChecks( category );
+    fi;
+    
+    if SWITCH_LOGIC_OFF then
+      CapCategorySwitchLogicOff( category );
+    fi;
+    
+    if ForAny( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, func -> func( category ) ) then
+      DeactivateCachingOfCategory( category );
+    fi;
+    
+end, 5000 );
+
+##
+InstallMethod( FinalizeCategory,
+          [ IsCapCategory, IsBool ],
+  function( cat, bool )
+    
+    if bool then
+      
+      Finalize( cat );
+      
+    fi;
+    
+end );
+
+################################################
+#
+# Caching, Sanity checks, Logic
+#
+################################################
+
+##
+InstallGlobalFunction( DeactivateCachingForCertainOperations,
+  function( category, list_of_operations )
+    local current_name;
+    
+    for current_name in list_of_operations do
+      
+      SetCaching( category, current_name, "none" );
+      
+    od;
+    
+end );
+
+##
+InstallGlobalFunction( ActivateCachingForCertainOperations,
+  function( category, list_of_operations )
+    local equality_operations, current_name;
+    
+    equality_operations := [
+                  "IsEqualForMorphisms",
+                  "IsEqualForObjects",
+                  "IsEqualForMorphismsOnMor",
+                  "IsEqualForCacheForMorphisms",
+                  "IsEqualForCacheForObjects"
+                  ];
+                  
+    list_of_operations := Concatenation( equality_operations, list_of_operations );
+    
+    for current_name in RecNames( category!.caches ) do
+      
+      if current_name in list_of_operations then
+        
+        continue;
+        
+      fi;
+      
+      SetCaching( category, current_name, "none" );
+      
+    od;
+    
+end );
+
+##
+InstallGlobalFunction( CurrentCaching,
+  function( cat )
+  
+    Display( cat!.default_cache_type );
+    
+end );
+
+###################################
+#
+# Colors
+#
+###################################
+
+##
+InstallGlobalFunction( RandomTextColor,
+  function ( name )
+    local colors, colors_in_name, pos;
+    if ENABLE_COLORS <> true then
+      return [ "", "" ];
+    else
+      colors := [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ];
+      colors_in_name := List( colors, c -> PositionSublist( name, c ) );
+      pos := Positions( colors_in_name, fail );
+      if Size( pos ) = 1 then
+        pos := [ ];
+      fi;
+      if not IsEmpty( pos ) then
+        return [ colors[ Random( pos ) ], "\033[0m" ];
+      else
+        return [ colors[ Position( colors_in_name, Maximum( colors_in_name ) ) ], "\033[0m" ];
+      fi;
+    fi;
+end );
+
+
+##
+InstallGlobalFunction( RandomBoldTextColor,
+  function (  )
+    if ENABLE_COLORS <> true then
+      return [ "", "" ];
+    else
+      return [ Random( [ "\033[1m\033[31m" ] ), "\033[0m" ];
+    fi;
+end );
+
+##
+InstallGlobalFunction( RandomBackgroundColor,
+  function (  )
+    if ENABLE_COLORS <> true then
+      return [ "", "" ];
+    else
+      return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
+    fi;
+end );
+
+##
+InstallGlobalFunction( CreateNameWithColorsForFunctor,
+  function( name, source, range )
+    local r;
+    
+    r := RandomBoldTextColor( );
+    
+    return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n",
+                          Name( source ), "\n", r[ 1 ],
+                          "  |\n  V", r[ 2 ], "\n",
+                          Name( range ), "\n" );
+  
+end );
+
+###################################
+#
+# Functors
+#
+###################################
 
 ##
 InstallMethod( CallFuncList,
@@ -81,35 +256,14 @@ InstallGlobalFunction( CheckFunctoriality,
     
 end );
 
-
-#############################################
-
-InstallMethod( Finalize,
-          [ IsCapCategory ],
-  function( category )
-    local o;
+##
+InstallMethod( Display,
+          [ IsCapFunctor ],
+  function( F )
     
-    o := ValueOption( "disable_sanity_checks_and_logic" );
+    Print( CreateNameWithColorsForFunctor( Name( F ), AsCapCategory( Source( F ) ), AsCapCategory( Range( F ) ) ) );
     
-    if o = false then
-      TryNextMethod( );
-    fi;
-    
-    Finalize( category: disable_sanity_checks_and_logic := false );
-    
-    if DISABLE_ALL_SANITY_CHECKS then
-      DisableSanityChecks( category );
-    fi;
-    
-    if SWITCH_LOGIC_OFF then
-      CapCategorySwitchLogicOff( category );
-    fi;
-    
-    if ForAny( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, func -> func( category ) ) then
-      DeactivateCachingOfCategory( category );
-    fi;
-    
-end, 5000 );
+end );
 
 
 #############################################
@@ -598,133 +752,11 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
     -> FunctorFromLinearCategoryByTwoFunctions( name, source_cat, range_cat, object_func, morphism_func, 3 )
 );
 
-##
-InstallGlobalFunction( DeactivateCachingForCertainOperations,
-  function( category, list_of_operations )
-    local current_name;
-    
-    for current_name in list_of_operations do
-      
-      SetCaching( category, current_name, "none" );
-      
-    od;
-    
-end );
-
-##
-InstallGlobalFunction( ActivateCachingForCertainOperations,
-  function( category, list_of_operations )
-    local equality_operations, current_name;
-    
-    equality_operations := [
-                  "IsEqualForMorphisms",
-                  "IsEqualForObjects",
-                  "IsEqualForMorphismsOnMor",
-                  "IsEqualForCacheForMorphisms",
-                  "IsEqualForCacheForObjects"
-                  ];
-                  
-    list_of_operations := Concatenation( equality_operations, list_of_operations );
-    
-    for current_name in RecNames( category!.caches ) do
-      
-      if current_name in list_of_operations then
-        
-        continue;
-        
-      fi;
-      
-      SetCaching( category, current_name, "none" );
-      
-    od;
-    
-end );
-
-##
-InstallMethod( FinalizeCategory,
-          [ IsCapCategory, IsBool ],
-  function( cat, bool )
-    
-    if bool then
-      
-      Finalize( cat );
-      
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( RandomTextColor,
-  function ( name )
-    local colors, colors_in_name, pos;
-    if ENABLE_COLORS <> true then
-      return [ "", "" ];
-    else
-      colors := [ "\033[32m", "\033[33m", "\033[34m", "\033[35m" ];
-      colors_in_name := List( colors, c -> PositionSublist( name, c ) );
-      pos := Positions( colors_in_name, fail );
-      if Size( pos ) = 1 then
-        pos := [ ];
-      fi;
-      if not IsEmpty( pos ) then
-        return [ colors[ Random( pos ) ], "\033[0m" ];
-      else
-        return [ colors[ Position( colors_in_name, Maximum( colors_in_name ) ) ], "\033[0m" ];
-      fi;
-    fi;
-end );
-
-
-##
-InstallGlobalFunction( RandomBoldTextColor,
-  function (  )
-    if ENABLE_COLORS <> true then
-      return [ "", "" ];
-    else
-      return [ Random( [ "\033[1m\033[31m" ] ), "\033[0m" ];
-    fi;
-end );
-
-##
-InstallGlobalFunction( RandomBackgroundColor,
-  function (  )
-    if ENABLE_COLORS <> true then
-      return [ "", "" ];
-    else
-      return [ Random( [ "\033[43m", "\033[42m", "\033[44m", "\033[45m", "\033[46m" ] ), "\033[0m" ];
-    fi;
-end );
-
-##
-InstallGlobalFunction( CreateNameWithColorsForFunctor,
-  function( name, source, range )
-    local r;
-    
-    r := RandomBoldTextColor( );
-    
-    return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n",
-                          Name( source ), "\n", r[ 1 ],
-                          "  |\n  V", r[ 2 ], "\n",
-                          Name( range ), "\n" );
-  
-end );
-
-##
-InstallGlobalFunction( CurrentCaching,
-  function( cat )
-  
-    Display( cat!.default_cache_type );
-    
-end );
-
-##
-InstallMethod( Display,
-          [ IsCapFunctor ],
-  function( F )
-    
-    Print( CreateNameWithColorsForFunctor( Name( F ), AsCapCategory( Source( F ) ), AsCapCategory( Range( F ) ) ) );
-    
-end );
+############################
+#
+# find weak kernel in verious categories
+#
+############################
 
 ##
 InstallMethod( _WeakKernelEmbedding,
