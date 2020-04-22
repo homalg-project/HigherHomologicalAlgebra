@@ -189,7 +189,7 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
     
     H := HomFunctor( collection );
     
-    reps := AsCapCategory( Range( H ) );
+    reps := RangeOfFunctor( H );
     
     inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
     
@@ -247,7 +247,7 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
    
     H := HomFunctor( collection );
     
-    reps := AsCapCategory( Range( H ) );
+    reps := RangeOfFunctor( H );
     
     proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( ambient_cat );
     
@@ -393,7 +393,7 @@ InstallMethod( HomFunctorOnBaseCategory,
     
     B := UnderlyingCategory( C );
     
-    reps := AsCapCategory( Range( H ) );
+    reps := RangeOfFunctor( H );
     
     H := PreCompose( [
                       InclusionFunctorInAdditiveClosure( B ),
