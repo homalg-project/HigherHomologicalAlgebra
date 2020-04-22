@@ -18,7 +18,7 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
     
     iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
     
-    indec_projs := AsCapCategory( Source( iso ) );
+    indec_projs := SourceOfFunctor( iso );
     
     name := "- ⊗_{End T} T functor on indecomposable projective objects";
     
@@ -42,15 +42,15 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     add_G := ExtendFunctorToAdditiveClosures( G );
     
-    C := AmbientCategory( AsCapCategory( Source( G ) ) );
+    C := AmbientCategory( SourceOfFunctor( G ) );
     
     can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
     
     can_add_G := PreCompose( can, add_G );
     
-    projs := AsCapCategory( Source( can_add_G ) );
+    projs := SourceOfFunctor( can_add_G );
     
-    D := AsCapCategory( Range( can_add_G ) );
+    D := RangeOfFunctor( can_add_G );
     
     name := "- ⊗_{End T} T functor on projective objects";
     
@@ -86,7 +86,7 @@ InstallMethod( TensorFunctor,
     
     I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( full ) );
     
-    projs := AsCapCategory( Source( T ) );
+    projs := SourceOfFunctor( T );
     
     reps := AmbientCategory( projs  );
      
