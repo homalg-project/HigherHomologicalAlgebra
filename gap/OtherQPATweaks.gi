@@ -331,10 +331,10 @@ InstallMethod( _WeakKernelEmbedding,
     fi;
     
     I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
-    Inc := InclusionFunctor( AsCapCategory( Range( I ) ) );
+    Inc := InclusionFunctor( RangeOfFunctor( I ) );
     I := ExtendFunctorToAdditiveClosureOfSource( PreCompose( I, Inc ) );
      
-    reps_cat := AsCapCategory( Range( I ) );
+    reps_cat := RangeOfFunctor( I );
     
     alpha := I( alpha );
     alpha := KernelEmbedding( alpha );
@@ -344,7 +344,7 @@ InstallMethod( _WeakKernelEmbedding,
     J := ExtendFunctorToAdditiveClosures( J );
     J := PreCompose( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps_cat ), J );
     
-    return J( alpha/ AsCapCategory( Source(J) ) );
+    return J( alpha/ SourceOfFunctor(J) );
     
 end );
 
@@ -389,7 +389,7 @@ InstallMethod( _WeakKernelEmbedding,
     alpha := KernelEmbedding( alpha );
     alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
     
-    return J( alpha/ AsCapCategory( Source( J ) ) );
+    return J( alpha/ SourceOfFunctor( J ) );
     
 end );
 
@@ -450,8 +450,6 @@ InstallMethod( _WeakKernelEmbedding,
     fi;
      
 end );
-
-
 
 ##
 InstallMethod( _WeakKernelEmbedding,
