@@ -1,116 +1,4 @@
 
-
-##
-InstallGlobalFunction( ADD_RANDOM_METHODS_TO_GRADED_ROWS,
-  function( category )
-    local S;
-    
-    S := UnderlyingGradedRing( category );
-    
-    ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS( S );
-    
-    ##
-    AddRandomObjectByList( category,
-      function( category, L )
-        local degree_list;
-        degree_list := List( [ 1 .. L[1] ], i -> [ Random( L[2] ), 1 ] );
-        return GradedRow( degree_list, S );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedSourceByList( category,
-      function( a, L )
-        local degrees_a, degrees_b, b, mat;
-        degrees_a := UnzipDegreeList( a );
-        degrees_b := List( L, l -> [ l, 1 ] );
-        b := GradedRow( degrees_b, S );
-        degrees_b := UnzipDegreeList( b );
-        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
-        return GradedRowOrColumnMorphism( a, mat, b );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedRangeByList( category,
-      function( b, L )
-        local degrees_a, degrees_b, a, mat;
-        degrees_b := UnzipDegreeList( b );
-        degrees_a := List( L, l -> [ l, 1 ] );
-        a := GradedRow( degrees_a, S );
-        degrees_a := UnzipDegreeList( a );
-        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
-        return GradedRowOrColumnMorphism( a, mat, b );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedSourceAndRangeByList( category,
-      function( a, b, L )
-        local degrees_a, degrees_b, mat;
-        degrees_a := UnzipDegreeList( a );
-        degrees_b := UnzipDegreeList( b );
-        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
-        return GradedRowOrColumnMorphism( a, mat, b );
-    end );
-    
-    ##
-    AddRandomMorphismByList( category,
-      function( category, L )
-        local degrees_a, degrees_b, a, b, mat;
-        degrees_a := List( [ 1 .. L[ 1 ] ], i -> [ Random( L[ 3 ] ), 1 ] );
-        degrees_b := List( [ 1 .. L[ 2 ] ], i -> [ Random( L[ 4 ] ), 1 ] );
-        a := GradedRow( degrees_a, S );
-        b := GradedRow( degrees_b, S );
-        degrees_a := UnzipDegreeList( a );
-        degrees_b := UnzipDegreeList( b );
-        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
-        return GradedRowOrColumnMorphism( a, mat, b );
-    end );
-    
-    ##
-    AddRandomObjectByInteger( category,
-      function( category, n )
-        local weights, degrees_list;
-        
-        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
-        Add( weights, Degree( One( S ) ) );
-        weights := List( weights, HomalgElementToListOfIntegers );
-        degrees_list := List( [ 1 .. n ], i -> Sum( List( [ 1 .. Random( [ 1 .. 4 ] ) ], j -> ( -1 ) ^ j * Random( weights ) ) ) );
-        return RandomObjectByList( category, [ n, degrees_list ] );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedSourceAndRangeByInteger( category,
-      function( a, b, n )
-        return RandomMorphismWithFixedSourceAndRangeByList( a, b, [] );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedSourceByInteger( category,
-      function( a, n )
-        local degrees_a, weights, degrees_b, b;
-  
-        degrees_a := UnzipDegreeList( a );
-        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
-        Add( weights, Degree( One( S ) ) );
-        degrees_b := List( [ 1 .. n ], i -> [ Random( degrees_a ) + Sum( List( [ 1 .. Random( [ 1 .. 3 ] ) ], j -> Random( weights ) ) ), 1 ]  );
-        b := GradedRow( degrees_b, S );
-        return RandomMorphismWithFixedSourceAndRangeByInteger( a, b, 0 );
-    end );
-    
-    ##
-    AddRandomMorphismWithFixedRangeByInteger( category,
-      function( b, n )
-        local degrees_b, weights, degrees_a, a;
-  
-        degrees_b := UnzipDegreeList( b );
-        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
-        Add( weights, Degree( One( S ) ) );
-        degrees_a := List( [ 1 .. n ], i -> [ Random( degrees_b ) - Sum( List( [ 1 .. Random( [ 1 .. 3 ] ) ], j -> Random( weights ) ) ), 1 ]  );
-        a := GradedRow( degrees_a, S );
-        return RandomMorphismWithFixedSourceAndRangeByInteger( a, b, 0 );
-    end );
-   
-end );
-
 ##
 InstallMethodWithCrispCache( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
           [ IsGradedRow ],
@@ -125,7 +13,7 @@ function( M )
   
   G := UnzipDegreeList( M );
   dG := DuplicateFreeList( G );
-  dG := List( dG, d -> MONOMIALS_OF_DEGREE( S, d ) );
+  dG := List( dG, d -> MonomialsOfDegree( S, d ) );
   
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
   L := ListWithIdenticalEntries( Length( G ), 0 );
@@ -297,6 +185,189 @@ InstallMethod( CategoryOfGradedRows,
 end );
 
 ##
+InstallMethod( IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedRowsOfRankOne,
+          [ IsCategoryOfGradedRows ],
+  function( rows )
+    local S, full, add_full, name, F;
+    
+    S := UnderlyingGradedRing( rows );
+    
+    full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
+    
+    add_full := AdditiveClosure( full );
+    
+    name := "Isomorphism from category of graded rows to additive closure of full subcategory of graded rows of rank 1";
+    
+    F := CapFunctor( name, rows, add_full );
+    
+    AddObjectFunction( F,
+      function( a )
+        local degs;
+        
+        degs := UnzipDegreeList( a );
+        
+        if IsEmpty( degs ) then
+          
+          return ZeroObject( add_full );
+          
+        else
+          
+          return List( degs, d -> GradedRow( [ [ d, 1 ] ], S ) / full ) / add_full;
+          
+        fi;
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        local m, s_list, r_list;
+        
+        m := UnderlyingHomalgMatrix( alpha );
+        
+        s_list := ObjectList( s );
+        
+        r_list := ObjectList( r );
+        
+        m := List( [ 1 .. Size( s_list ) ],
+                i -> List( [ 1 .. Size( r_list ) ],
+                  j -> GradedRowOrColumnMorphism(
+                              UnderlyingCell( s_list[i] ),
+                              CertainRows( CertainColumns( m, [ j ] ), [ i ] ),
+                              UnderlyingCell( r_list[j] )
+                            ) / full
+                         )
+                   );
+        
+        return AdditiveClosureMorphism( s, m, r );
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( FullSubcategoryGeneratedByGradedRowsOfRankOne,
+          [ IsHomalgGradedRing ],
+  
+  function( S )
+    local rows, r, name, full, FinalizeCategory;
+    
+    rows := CategoryOfGradedRows( S );
+    
+    r := RandomTextColor( Name( rows ) );
+    
+    name := Concatenation( r[ 1 ], "Full subcategory( ", r[ 2 ], Name( rows ), r[ 1 ], " generated by objects of rank one", r[ 2 ] );
+    
+    full := FullSubcategory( rows, name : FinalizeCategory := false );
+    
+    AddIsWellDefinedForObjects( full,
+      a -> IsWellDefinedForObjects( UnderlyingCell( a ) ) and Rank( UnderlyingCell( a ) ) = 1
+    );
+    
+    AddIsWellDefinedForMorphisms( full,
+      a -> IsWellDefinedForMorphisms( UnderlyingCell( a ) )
+              and Rank( UnderlyingCell( Source( a ) ) ) = 1
+                and Rank( UnderlyingCell( Range( a ) ) ) = 1
+    );
+    
+    Finalize( full );
+    
+    return full;
+    
+end );
+
+##
+BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE",
+
+  function( S )
+    local full, A1, A2, Ho_QRows, ring, B1, B2, name, B, func_on_objects, func_on_morphisms;
+    
+    full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
+    
+    A1 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 1 ] );
+    
+    A2 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 2 ] );
+    
+    Ho_QRows := HomotopyCategory( QuiverRows( TensorProductOfAlgebras( A1, A2 ) ) );
+    
+    ring := CommutativeRingOfLinearCategory( Ho_QRows );
+    
+    B1 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 1 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S!.factor_rings[ 1 ] )
+            );
+    
+    B2 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 2 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S!.factor_rings[ 2 ] )
+            );
+    
+    name := "Beilinson functor on product of projective spaces experimental";
+    
+    B := CapFunctor( name, full, Ho_QRows );
+    
+    func_on_objects :=
+      function( a )
+        local degs;
+        
+        degs := HomalgElementToListOfIntegers( DegreeList( UnderlyingCell( a ) )[ 1 ][ 1 ] );
+        
+        a := ListN( degs, S!.factor_rings, { deg, ring } -> GradedRow( [ [ [ deg ], 1 ] ], ring ) );
+        
+        return BoxProduct( B1( a[ 1 ] ), B2( a[ 2 ] ), Ho_QRows );
+    
+      end;
+    
+    func_on_morphisms :=
+      function( alpha )
+        local s, r;
+        
+        s := func_on_objects( Source( alpha ) );
+        
+        r := func_on_objects( Range( alpha ) );
+        
+        alpha := DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOfProjectiveSpaces( UnderlyingCell( alpha ) );
+        
+        if IsEmpty( alpha ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return Sum( List( alpha, l -> ( l[ 1 ] / ring ) * BoxProduct( B1( l[ 2 ][ 1 ] ), B2( l[ 2 ][ 2 ] ), Ho_QRows ) ) );
+          
+        fi;
+        
+      end;
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_QRows, func_on_objects, func_on_morphisms );
+    
+end );
+
+##
+InstallMethod( BeilinsonExperimental,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local rows, B, I;
+    
+    rows := CategoryOfGradedRows( S );
+    
+    B := BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE( S );
+    
+    B := ExtendFunctorToAdditiveClosureOfSource( B );
+    
+    I := IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedRowsOfRankOne( rows );
+    
+    I := PreCompose( I, B );
+    
+    I!.Name := "Beilinson functor from category of graded rows over Cox ring of product of projective spaces into homotopy category of quiver rows";
+    
+    return I;
+    
+end );
+
+##
 InstallMethod( FreydCategory,
           [ IsCapCategory ],
           1000,
@@ -338,6 +409,65 @@ InstallMethod( FreydCategory,
     Finalize( freyd_category );
     
     return freyd_category;
+    
+end );
+
+##
+InstallMethod( QuiverRows,
+          [ IsQuiverAlgebra ],
+          1000,
+  function( A )
+    local v, QRows, qr_derived_cats, name, r;
+    
+    v := ValueOption( "qr_derived_cats" );
+    
+    if v = false then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    QRows := QuiverRows( A : qr_derived_cats := false );
+    
+    if HasTensorProductFactors( A ) then
+      
+      name := List( TensorProductFactors( A ), Name );
+      
+      name := JoinStringsWithSeparator( name, "⊗ " );
+      
+    else
+      
+      name := Name( A );
+      
+    fi;
+    
+    r := RandomTextColor( "" );
+    
+    QRows!.Name := Concatenation( r[ 1 ], "QuiverRows( ", r[ 2 ], name, r[ 1 ], " )", r[ 2 ] );
+    
+    return QRows;
+
+end );
+
+##
+InstallMethod( \/,
+          [ IsList, IsCategoryOfGradedRows ],
+  function( l, rows )
+    
+    return GradedRow( l, UnderlyingGradedRing( rows ) );
+    
+end );
+
+##
+InstallMethod( \/,
+          [ IsList , IsCategoryOfGradedRows ],
+  function( l, rows )
+    
+    if IsEmpty( l ) or IsList( l[ 1 ] ) then
+      TryNextMethod( );
+    fi;
+    
+    return GradedRow( [ [ l, 1 ] ], UnderlyingGradedRing( rows ) );
     
 end );
 
@@ -441,7 +571,7 @@ InstallMethod( CoherentSheavesOverProductOfProjectiveSpaces,
 end );
 
 ##
-InstallMethod( PullbackFunctorAlongProjectionOp,
+InstallMethod( PullbackFunctorAlongProjectionIntoFreydCategoryOp,
           [ IsHomalgGradedRing, IsInt ],
 function( S, i )
   local freyd_i, freyd, name, F;
@@ -450,7 +580,7 @@ function( S, i )
   
   freyd := FreydCategory( CategoryOfGradedRows( S ) );
   
-  name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of product of projective spaces" );
+  name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of Cox product of product of projective spaces" );
   
   F := CapFunctor( name, freyd_i, freyd );
   
@@ -513,10 +643,647 @@ function( S, i )
 
 end );
 
+##
+InstallMethod( PullbackFunctorAlongProjectionIntoGradedRowsOp,
+          [ IsHomalgGradedRing, IsInt ],
+function( S, i )
+  local rows_i, rows, name, F;
+  
+  rows_i := CategoryOfGradedRows( S!.factor_rings[ i ] );
+  
+  rows := CategoryOfGradedRows( S );
+  
+  name := Concatenation( "Pullback functor along the projection onto ", String( i ), "-factor of Cox ring of product of projective spaces" );
+  
+  F := CapFunctor( name, rows_i, rows );
+  
+  AddObjectFunction( F,
+    function( o )
+      local source_degs, new_source_degs, j;
+      
+      source_degs := DegreeList( o );
+      
+      new_source_degs := List( [ 1 .. Size( source_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), source_degs[ j ][ 2 ] ] );
+      
+      for j in [ 1 .. Size( source_degs ) ] do
+
+        new_source_degs[ j ][ 1 ][ i ] := source_degs[ j ][ 1 ];
+
+      od;
+      
+      return GradedRow( new_source_degs, S );
+      
+  end );
+  
+  AddMorphismFunction( F,
+    
+    function( s, alpha, r )
+      
+      return GradedRowOrColumnMorphism(
+                  s,
+                  UnderlyingHomalgMatrix( alpha ) * S,
+                  r
+                );
+                
+  end );
+
+  return F;
+
+end );
 
 ##
 InstallOtherMethod( _WeakKernelEmbedding,
           [ IsGradedRowMorphism ],
   WeakKernelEmbedding
 );
+
+##
+InstallMethod( DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOfProjectiveSpaces,
+          [ IsGradedRowMorphism ],
+  function( alpha )
+    local S, source_degs, sources, range_degs, ranges, inds, e, coeffs, monomials, morphisms;
+    
+    if not Rank( Source( alpha ) ) = 1 and Rank( Range( alpha ) ) = 1 then
+      Error( "Wrong input!\n" );
+    fi;
+    
+    S := UnderlyingHomalgGradedRing( alpha );
+    
+    if not IsBound( S!.factor_rings ) then
+      Error( "Wrong input!\n" );
+    fi;
+    
+    e := UnderlyingHomalgMatrix( alpha )[ 1, 1 ];
+    
+    coeffs := CoefficientsOfGradedRingElement( e );
+    
+    if IsEmpty( coeffs ) then
+      return [ ];
+    fi;
+    
+    source_degs := HomalgElementToListOfIntegers( DegreeList( Source( alpha ) )[ 1 ][ 1 ] );
+    
+    sources := ListN( source_degs, S!.factor_rings, { deg, ring } -> GradedRow( [ [ [ deg ], 1 ] ], ring ) );
+    
+    range_degs := HomalgElementToListOfIntegers( DegreeList( Range( alpha ) )[ 1 ][ 1 ] );
+    
+    ranges := ListN( range_degs, S!.factor_rings, { deg, ring } -> GradedRow( [ [ [ deg ], 1 ] ], ring ) );
+    
+    if IsEndomorphism( alpha ) then
+      
+      return [ [ coeffs[ 1 ], List( sources, IdentityMorphism ) ] ];
+      
+    fi;
+    
+    inds := List( S!.factor_rings, ring -> List( Indeterminates( ring ), String ) );
+    
+    monomials := MonomialsOfGradedRingElement( e );
+    
+    monomials := List( monomials, m -> SplitString( String( m ), "*" ) );
+    
+    morphisms := List( monomials,
+                  m -> ListN( sources, ranges, inds, S!.factor_rings,
+                      function( source, range, ind, ring )
+                        local s;
+                        
+                        s := JoinStringsWithSeparator( Filtered( m, s -> ForAny( ind, x -> PositionSublist( s, x ) <> fail ) ), "*" );
+                        
+                        if s = "" then
+                          s := "1";
+                        fi;
+                        
+                        return GradedRowOrColumnMorphism(
+                                    source,
+                                    HomalgMatrix( s, 1, 1, ring ),
+                                    range
+                                );
+                      end )
+                    );
+                    
+    return ListN( coeffs, morphisms, { c, m } -> [ c, m ] );
+    
+end );
+
+##
+InstallMethod( BoxProduct,
+          [ IsList, IsFreydCategory ],
+  function( cells, freyd_category )
+    local rows, S, F;
+    
+    rows := UnderlyingCategory( freyd_category );
+    
+    S := UnderlyingGradedRing( rows );
+    
+    if not IsBound( S!.factor_rings ) then
+      Error( "The given ring should be a Cox ring of product of projective spaces" );
+    fi;
+    
+    F := List( [ 1 .. Size( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoFreydCategory( S, i ) );
+    
+    cells := ListN( F, cells, ApplyFunctor );
+    
+    return TensorProduct( cells );
+    
+end );
+
+##
+InstallMethod( BoxProduct,
+          [ IsList, IsCategoryOfGradedRows ],
+  function( cells, rows )
+    local S, F;
+    
+    S := UnderlyingGradedRing( rows );
+    
+    if not IsBound( S!.factor_rings ) then
+      Error( "The given ring should be a Cox ring of product of projective spaces" );
+    fi;
+    
+    F := List( [ 1 .. Size( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoGradedRows( S, i ) );
+    
+    cells := ListN( F, cells, ApplyFunctor );
+    
+    return TensorProduct( cells );
+    
+end );
+
+##
+InstallMethod( BoxProduct,
+          [ IsList, IsCapFullSubcategory ],
+  
+  { cells, full } -> BoxProduct( List( cells, UnderlyingCell ), AmbientCategory( full ) ) / full
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsFreydCategoryObject, IsFreydCategoryObject, IsFreydCategory ],
+  { a, b, freyd_category } -> BoxProduct( [ a, b ], freyd_category )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsFreydCategoryMorphism, IsFreydCategoryMorphism, IsFreydCategory ],
+  { alpha, beta, freyd_category } -> BoxProduct( [ alpha, beta ], freyd_category )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsGradedRow, IsGradedRow, IsCategoryOfGradedRows ],
+  { a, b, rows } -> BoxProduct( [ a, b ], rows )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsGradedRowMorphism, IsGradedRowMorphism, IsCategoryOfGradedRows ],
+  { alpha, beta, rows } -> BoxProduct( [ alpha, beta ], rows )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsCapCategoryCellInAFullSubcategory, IsCapCategoryCellInAFullSubcategory, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
+  { c_1, c_2, full } -> BoxProduct( [ c_1, c_2 ], full )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsGradedRow, IsGradedRow, IsFreydCategory ],
+  { a, b, freyd_category } -> AsFreydCategoryObject( BoxProduct( [ a, b ], UnderlyingCategory( freyd_category ) ) )
+);
+
+##
+InstallOtherMethod( BoxProduct,
+          [ IsGradedRowMorphism, IsGradedRowMorphism, IsFreydCategory ],
+  { alpha, beta, freyd_category } -> AsFreydCategoryMorphism( BoxProduct( [ alpha, beta ], UnderlyingCategory( freyd_category ) ) )
+);
+
+##
+InstallMethod( BoxProduct,
+          [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapCategory ],
+  function( full_1, full_2, category )
+    local objects_1, objects_2, objects;
+    
+    objects_1 := List( SetOfKnownObjects( full_1 ), UnderlyingCell );
+    
+    objects_2 := List( SetOfKnownObjects( full_2 ), UnderlyingCell );
+    
+    objects := ListX( objects_1, objects_2, { o1, o2 } -> BoxProduct( o1, o2, category ) );
+    
+    return FullSubcategoryGeneratedByListOfObjects( objects );
+    
+end );
+
+################################
+#
+# Random methods
+#
+################################
+
+## These random methods should be removed as soon as the following PR has been merged to CAP
+## https://github.com/homalg-project/CAP_project/pull/479
+
+#####################
+##
+## Additive closure
+##
+#####################
+
+##
+InstallGlobalFunction( ADD_RANDOM_METHODS_TO_GRADED_ROWS,
+  function( category )
+    local S;
+    
+    S := UnderlyingGradedRing( category );
+    
+    ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS( S );
+    
+    ##
+    AddRandomObjectByList( category,
+      function( category, L )
+        local degree_list;
+        degree_list := List( [ 1 .. L[1] ], i -> [ Random( L[2] ), 1 ] );
+        return GradedRow( degree_list, S );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedSourceByList( category,
+      function( a, L )
+        local degrees_a, degrees_b, b, mat;
+        degrees_a := UnzipDegreeList( a );
+        degrees_b := List( L, l -> [ l, 1 ] );
+        b := GradedRow( degrees_b, S );
+        degrees_b := UnzipDegreeList( b );
+        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
+        return GradedRowOrColumnMorphism( a, mat, b );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedRangeByList( category,
+      function( b, L )
+        local degrees_a, degrees_b, a, mat;
+        degrees_b := UnzipDegreeList( b );
+        degrees_a := List( L, l -> [ l, 1 ] );
+        a := GradedRow( degrees_a, S );
+        degrees_a := UnzipDegreeList( a );
+        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
+        return GradedRowOrColumnMorphism( a, mat, b );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedSourceAndRangeByList( category,
+      function( a, b, L )
+        local degrees_a, degrees_b, mat;
+        degrees_a := UnzipDegreeList( a );
+        degrees_b := UnzipDegreeList( b );
+        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
+        return GradedRowOrColumnMorphism( a, mat, b );
+    end );
+    
+    ##
+    AddRandomMorphismByList( category,
+      function( category, L )
+        local degrees_a, degrees_b, a, b, mat;
+        degrees_a := List( [ 1 .. L[ 1 ] ], i -> [ Random( L[ 3 ] ), 1 ] );
+        degrees_b := List( [ 1 .. L[ 2 ] ], i -> [ Random( L[ 4 ] ), 1 ] );
+        a := GradedRow( degrees_a, S );
+        b := GradedRow( degrees_b, S );
+        degrees_a := UnzipDegreeList( a );
+        degrees_b := UnzipDegreeList( b );
+        mat := S!.random_matrix_between_free_left_presentations_func( -degrees_a, -degrees_b );
+        return GradedRowOrColumnMorphism( a, mat, b );
+    end );
+    
+    ##
+    AddRandomObjectByInteger( category,
+      function( category, n )
+        local weights, degrees_list;
+        
+        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+        Add( weights, Degree( One( S ) ) );
+        weights := List( weights, HomalgElementToListOfIntegers );
+        degrees_list := List( [ 1 .. n ], i -> Sum( List( [ 1 .. Random( [ 1 .. 4 ] ) ], j -> ( -1 ) ^ j * Random( weights ) ) ) );
+        return RandomObjectByList( category, [ n, degrees_list ] );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedSourceAndRangeByInteger( category,
+      function( a, b, n )
+        return RandomMorphismWithFixedSourceAndRangeByList( a, b, [] );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedSourceByInteger( category,
+      function( a, n )
+        local degrees_a, weights, degrees_b, b;
+  
+        degrees_a := UnzipDegreeList( a );
+        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+        Add( weights, Degree( One( S ) ) );
+        degrees_b := List( [ 1 .. n ], i -> [ Random( degrees_a ) + Sum( List( [ 1 .. Random( [ 1 .. 3 ] ) ], j -> Random( weights ) ) ), 1 ]  );
+        b := GradedRow( degrees_b, S );
+        return RandomMorphismWithFixedSourceAndRangeByInteger( a, b, 0 );
+    end );
+    
+    ##
+    AddRandomMorphismWithFixedRangeByInteger( category,
+      function( b, n )
+        local degrees_b, weights, degrees_a, a;
+  
+        degrees_b := UnzipDegreeList( b );
+        weights := DuplicateFreeList( WeightsOfIndeterminates( S ) );
+        Add( weights, Degree( One( S ) ) );
+        degrees_a := List( [ 1 .. n ], i -> [ Random( degrees_b ) - Sum( List( [ 1 .. Random( [ 1 .. 3 ] ) ], j -> Random( weights ) ) ), 1 ]  );
+        a := GradedRow( degrees_a, S );
+        return RandomMorphismWithFixedSourceAndRangeByInteger( a, b, 0 );
+    end );
+   
+end );
+
+##
+InstallMethod( RandomObjectByInteger,
+          [ IsAdditiveClosureCategory, IsInt ],
+  function( category, n )
+    local underlying_category;
+     
+    if CanCompute( category, "RandomObjectByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    underlying_category := UnderlyingCategory( category );
+    
+    if n = 0 then
+      
+      return ZeroObject( category );
+      
+    else
+      
+      return List( [ 1 .. AbsInt( n ) ],
+              i -> RandomObjectByInteger( underlying_category, n )
+               ) / category;
+               
+    fi;
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
+          [ IsAdditiveClosureObject, IsAdditiveClosureObject, IsInt ],
+  function( source, range, n )
+    local category, source_objects, range_objects, morphisms, current_row, s, r;
+    
+    category := CapCategory( source );
+    
+    if CanCompute( category, "RandomMorphismWithFixedSourceAndRangeByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+   
+    source_objects := ObjectList( source );
+    
+    range_objects := ObjectList( range );
+    
+    if IsEmpty( source_objects ) or IsEmpty( range_objects ) then
+      
+      return ZeroMorphism( source, range );
+      
+    else
+      
+      morphisms := [ ];
+      
+      for s in source_objects do
+        
+        current_row := [ ];
+        
+        for r in range_objects do
+          
+          Add( current_row, RandomMorphismWithFixedSourceAndRange( s, r, n ) );
+          
+        od;
+        
+        Add( morphisms, current_row );
+        
+      od;
+      
+      return morphisms / category;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceByInteger,
+          [ IsAdditiveClosureObject, IsInt ],
+  function( source, n )
+    local category, range;
+    
+    category := CapCategory( source );
+    
+    if CanCompute( category, "RandomMorphismWithFixedSourceByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+
+    range := RandomObjectByInteger( category, n );
+    
+    return RandomMorphismWithFixedSourceAndRangeByInteger( source, range, n );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedRangeByInteger,
+          [ IsAdditiveClosureObject, IsInt ],
+  function( range, n )
+    local category, source;
+    
+    category := CapCategory( range );
+    
+    if CanCompute( category, "RandomMorphismWithFixedRangeByInteger" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+
+    source := RandomObjectByInteger( category, n );
+    
+    return RandomMorphismWithFixedSourceAndRangeByInteger( source, range, n );
+    
+end );
+
+##
+InstallMethod( RandomMorphismByInteger,
+          [ IsAdditiveClosureCategory, IsInt ],
+  function( category, n )
+    local a;
+    
+    a := RandomObjectByInteger( category, n );
+    
+    return RandomMorphismWithFixedSourceByInteger( a, Random( [ AbsInt( n ) - 1 .. AbsInt( n ) + 1 ] ) );
+    
+end );
+
+
+#####################
+##
+## Quiver rows
+##
+#####################
+
+##
+InstallMethod( RandomObjectByInteger,
+          [ IsQuiverRowsCategory, IsInt ],
+  function( Qrows, n )
+    local J, AC;
+    
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( Qrows );
+    
+    AC := SourceOfFunctor( J );
+    
+    return J( RandomObjectByInteger( AC, n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceByInteger,
+          [ IsQuiverRowsObject, IsInt ],
+  function( o, n )
+    local QRows, I, J;
+    
+    QRows := CapCategory( o );
+    
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
+    
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
+    
+    return J( RandomMorphismWithFixedSourceByInteger( I( o ), n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedRangeByInteger,
+          [ IsQuiverRowsObject, IsInt ],
+  function( o, n )
+    local QRows, I, J;
+    
+    QRows := CapCategory( o );
+   
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
+    
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
+    
+    return J( RandomMorphismWithFixedRangeByInteger( I( o ), n ) );
+   
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
+          [ IsQuiverRowsObject, IsQuiverRowsObject, IsInt ],
+  function( s, r, n )
+    local QRows, I, J;
+    
+    QRows := CapCategory( s );
+
+    I := IsomorphismOntoAdditiveClosureOfAlgebroid( QRows );
+    
+    J := IsomorphismFromAdditiveClosureOfAlgebroid( QRows );
+    
+    return J( RandomMorphismWithFixedSourceAndRangeByInteger( I( s ), I( r ), n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismByInteger,
+          [ IsQuiverRowsCategory, IsInt ],
+  function( QRows, n )
+    local a;
+    
+    a := RandomObjectByInteger( QRows, n );
+    
+    return RandomMorphismWithFixedSourceByInteger( a, Random( [ AbsInt( n ) - 1 .. AbsInt( n ) + 1 ] ) );
+    
+end );
+
+####################################
+##
+## Temp View methods for Quiver rows cells
+##
+####################################
+
+##
+InstallMethod( Display,
+            [ IsQuiverRowsObject ],
+  function( object )
+    local L, o;
+  
+    L := ListOfQuiverVertices( object );
+    
+    L := List( L, l -> ListWithIdenticalEntries( l[ 2 ], l[ 1 ] ) );
+    
+    L := Concatenation( L );
+    
+    Print( "An object in ", Name( CapCategory( object ) ), " defined by ", Size( L ), " vertices:\n" );
+    
+    for o in L do
+      
+      Print( "\n<(", String( o ), ")>" );
+      
+    od;
+    
+end );
+
+##
+InstallMethod( Display,
+            [ IsQuiverRowsMorphism ],
+  function( morphism )
+    local mat, i, j;
+    
+    Print( "A morphism in ", Name( CapCategory( morphism ) ),
+              " defined by the following ", NrRows( morphism ), " x ", NrColumns( morphism ),
+                " matrix of quiver algebra elements:\n"
+            );
+    
+    mat := MorphismMatrix( morphism );
+     
+    for i in [ 1 .. NrRows( morphism ) ] do
+      
+      for j in [ 1 .. NrColumns( morphism ) ] do
+        
+        Print( "\n[", i, ",", j, "]: " );
+        Print( String( mat[ i, j ] ) );
+        
+      od;
+      
+    od;
+    
+end );
+
+##
+InstallMethod( Display,
+            [ IsGradedRow ],
+            
+  function( object )
+    local degrees, s, degree;
+    
+    Print( Concatenation( "An object in ",
+                          Name( CapCategory( object ) ),
+                          " with rank ", String( RankOfObject( object ) ),
+                          " and degrees: \n" ) 
+                        );
+    
+    degrees := DegreeList( object );
+    
+    for degree in degrees do
+      
+      if degree[ 2 ] > 1 then
+        s := Concatenation( "^", String( degree[ 2 ] ) );
+      else
+        s := "";
+      fi;
+      
+      Display( Concatenation( "<", ViewString( degree[ 1 ] ), ">", s ) );
+      
+    od;
+     
+end );
 
