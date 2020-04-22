@@ -1692,7 +1692,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules,
+InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local A, omegas, objects_omegas, Omegas, objects_Omegas, object_func, morphism_func, name;
@@ -1713,14 +1713,14 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoT
       BasisOfExternalHom( object_func( Source( alpha ) ), object_func( Range( alpha ) ) )
         [ Position( BasisOfExternalHom( Source( alpha ), Range( alpha ) ), alpha ) ];
         
-    name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀^i(i)'s as modules";
+    name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀 ^i(i)'s as modules";
     
-    return ValueGlobal( "FunctorFromLinearCategoryByTwoFunctions" )( name, omegas, Omegas, object_func, morphism_func );
+    return FunctorFromLinearCategoryByTwoFunctions( name, omegas, Omegas, object_func, morphism_func );
     
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves,
+InstallMethod( IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local coh, sh, modules, sheaves, name, cell_func;
@@ -1733,19 +1733,19 @@ InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesI
     
     sheaves := FullSubcategoryGeneratedByTwistedCotangentSheaves( S );
         
-    name := "Isomorphism functor from 𝛀^i(i)'s as modules to 𝛀^i(i)'s as sheaves";
+    name := "Isomorphism functor from 𝛀 ^i(i)'s as modules to 𝛀 ^i(i)'s as sheaves";
     
     cell_func := c -> ApplyFunctor( sh, UnderlyingCell( c ) ) / sheaves;
     
-    return ValueGlobal( "FunctorFromLinearCategoryByTwoFunctions" )( name, modules, sheaves, cell_func, cell_func );
+    return FunctorFromLinearCategoryByTwoFunctions( name, modules, sheaves, cell_func, cell_func );
     
 end );
 
 ##
-InstallMethod( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves,
+InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentSheaves,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
-    S -> PreCompose( IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S ),
-            IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves( S ) )
+    S -> PreCompose( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S ),
+            IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves( S ) )
 );
 
 ######################################

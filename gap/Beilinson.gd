@@ -71,11 +71,11 @@ DeclareOperation( "BasisBetweenTwistedCotangentModulesAsChains", [ IsHomalgGrade
 
 DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentModules", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedCotangentModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
 
 
 
