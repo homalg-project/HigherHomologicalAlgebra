@@ -122,6 +122,15 @@ BindGlobal( "AsPseudoHomologicalBicomplex",
 end );
 
 ##
+InstallMethod( BoxProduct,
+          [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism, IsHomotopyCategory ],
+  { a, b, homotopy_category } -> HomotopyCategoryMorphism(
+                                        homotopy_category,
+                                        BoxProduct( UnderlyingCell( a ), UnderlyingCell( b ), UnderlyingCategory( homotopy_category ) )
+                                      )
+);
+
+##
 InstallMethod( Display,
             [ IsHomotopyCategoryMorphism ],
   function( map )

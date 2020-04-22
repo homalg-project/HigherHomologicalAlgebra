@@ -44,5 +44,8 @@ DeclareOperation( "MappingConeColift", [ IsHomotopyCategoryMorphism, IsHomotopyC
 DeclareOperation( "MappingConePseudoFunctorial",
     [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ] );
 
+DeclareOperation( "BoxProduct",
+    [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism, IsCapCategory ] );
+
 DeclareOperation( "ViewHomotopyCategoryMorphism",
             [ IsHomotopyCategoryMorphism ] );

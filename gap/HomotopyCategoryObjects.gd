@@ -19,7 +19,6 @@ DeclareOperation( "HomotopyCategoryObject",
 DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsZFunction ] );
 
-
 DeclareOperation( "HomotopyCategoryObject",
             [ IsList, IsInt ] );
 
@@ -28,6 +27,9 @@ DeclareOperation( "\[\]",
 
 DeclareOperation( "\^",
             [ IsHomotopyCategoryObject, IsInt ] );
+
+DeclareOperation( "BoxProduct",
+            [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsCapCategory ] );
 
 DeclareOperation( "ViewHomotopyCategoryObject",
             [ IsHomotopyCategoryObject ] );

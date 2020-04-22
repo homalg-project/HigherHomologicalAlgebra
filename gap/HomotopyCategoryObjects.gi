@@ -64,7 +64,6 @@ InstallMethod( HomotopyCategoryObject,
     
 end );
 
-
 ##
 InstallMethod( \[\],
   [ IsHomotopyCategoryObject, IsInt ],
@@ -81,6 +80,14 @@ InstallMethod( \/,
   {a,H} -> HomotopyCategoryObject( H, a )
 );
 
+##
+InstallMethod( BoxProduct,
+          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsHomotopyCategory ],
+  { a, b, homotopy_category } -> HomotopyCategoryObject(
+                                          homotopy_category,
+                                          BoxProduct( UnderlyingCell( a ), UnderlyingCell( b ), UnderlyingCategory( homotopy_category ) )
+                                        )
+);
 
 ##
 InstallMethod( Display,
