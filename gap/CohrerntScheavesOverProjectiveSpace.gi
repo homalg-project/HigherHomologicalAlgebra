@@ -1,10 +1,52 @@
+
+##
+InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local F, G;
     
-  
+    F := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S );
+    
+    G := EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows( S );
+    
+    G := RestrictFunctorToFullSubcategoryOfSource( G, RangeOfFunctor( F ) );
+    
+    G := PreCompose( F, G );
+    
+    G := IsomorphismOntoImageOfFullyFaithfulFunctor( G );
+    
+    G!.Name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀 ^i(i)'s as modules";
+    
+    return G;
+    
+end );
+
+##
+InstallMethod( EndomorphismAlgebraOfCotangentBeilinsonCollection,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local B;
+    
+    B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
+    
+    B := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B ) ) );
+    
+    return EndomorphismAlgebra( ExceptionalCollection( B ) );
+    
+end );
+
+##
 InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules,
           [ IsHomalgGradedRing ],
   function( S )
-    local n, A, cat, full, labels, collection, vertices_labels, homotopy_cat, BB;
-  
+    local G, n, A, cat, full, labels, collection, vertices_labels, homotopy_cat, B, I;
+    
+    G := DegreeGroup( S );
+    
+    if not ( IsFree( G ) and Rank( G ) = 1 ) then
+      Error( "The input should be a polynomial ring whose indeterminates degrees are 1's" );
+    fi;
+    
     n := Size( Indeterminates( S ) );
     
     A := KoszulDualRing( S );
@@ -19,9 +61,9 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
     
     homotopy_cat := HomotopyCategory( collection );
     
-    BB := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_cat );
+    B := CapFunctor( "Cotangent Beilinson functor", cat, homotopy_cat );
     
-    AddObjectFunction( BB,
+    AddObjectFunction( B,
       function( a )
         local T, diffs, C;
         
@@ -41,7 +83,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
         
     end );
     
-    AddMorphismFunction( BB,
+    AddMorphismFunction( B,
       function( s, alpha, r )
         local T, maps;
         
@@ -55,8 +97,14 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
         
     end );
     
-    return BB;
-
+    I := EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations( S );
+    
+    B := PreCompose( I, B );
+    
+    B!.Name := "Cotangent Beilinson functor";
+    
+    return B;
+    
 end );
 
 ##
@@ -67,7 +115,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
     
     C := DefiningCategory( C );
     
@@ -97,13 +145,13 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows,
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
     
     C := DefiningCategory( C );
     
     C := IsomorphismOntoQuiverRows( C );
     
-    QRows := AsCapCategory( Range( C ) );
+    QRows := RangeOfFunctor( C );
     
     A := UnderlyingQuiverAlgebra( QRows );
     
@@ -132,7 +180,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProje
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
     
     C := DefiningCategory( C );
     
@@ -162,7 +210,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects,
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
     
     C := DefiningCategory( C );
     
@@ -190,7 +238,7 @@ InstallMethod( BeilinsonFunctorIntoDerivedCategory,
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
 
     C := DefiningCategory( C );
     
@@ -198,7 +246,7 @@ InstallMethod( BeilinsonFunctorIntoDerivedCategory,
     
     C := ExtendFunctorToHomotopyCategories( C );
     
-    H := AsCapCategory( Range( C ) );
+    H := RangeOfFunctor( C );
     
     H := LocalizationFunctor( H );
     
@@ -214,21 +262,21 @@ end );
 InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules,
           [ IsHomalgGradedRing ],
   function( S )
-    local B, C;
+    local B, G;
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
+        
+    G := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory( S );
     
-    C := IsomorphismFromFullSubcategoryGeneratedByTwistedOmegaModulesIntoTwistedCotangentModules( S );
+    G := ExtendFunctorToAdditiveClosures( G );
     
-    C := ExtendFunctorToAdditiveClosures( C );
+    G := ExtendFunctorToHomotopyCategories( G );
     
-    C := ExtendFunctorToHomotopyCategories( C );
+    G := PreCompose( B, G );
     
-    C := PreCompose( B, C );
+    G!.Name := "Cotangent Beilinson functor";
     
-    C!.Name := "Cotangent Beilinson functor";
-    
-    return C;
+    return G;
     
 end );
 
@@ -240,7 +288,7 @@ InstallMethod( BeilinsonFunctor,
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects( S );
     
-    C := AsCapCategory( Range( B ) );
+    C := RangeOfFunctor( B );
     
     C := DefiningCategory( C );
     
@@ -323,7 +371,7 @@ InstallMethod( RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOf
     
     BB := BeilinsonFunctor( S );
     
-    homotopy_reps := AsCapCategory( Range( BB ) );
+    homotopy_reps := RangeOfFunctor( BB );
     
     full := FullSubcategoryGeneratedByTwistsOfStructureSheaf( S );
     

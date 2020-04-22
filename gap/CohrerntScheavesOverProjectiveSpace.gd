@@ -6,10 +6,9 @@
 ##
 #############################################################################
 
-DeclareOperation( "MonomialsOfDegree", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
 
-
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows", IsHomalgGradedRing );
@@ -18,6 +17,7 @@ DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects", IsH
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoDerivedCategory", IsHomalgGradedRing );
 
+DeclareAttribute( "EndomorphismAlgebraOfCotangentBeilinsonCollection", IsHomalgGradedRing );
 
 DeclareAttribute( "RestrictionOfBeilinsonFunctorToFullSubcategoryGeneratedByTwistsOfStructureSheaf", IsHomalgGradedRing );
 
