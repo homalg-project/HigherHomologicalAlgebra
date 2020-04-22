@@ -64,6 +64,12 @@ DeclareAttribute( "EndomorphismAlgebraAttr", IsExceptionalCollection );
 DeclareOperation( "EndomorphismAlgebra", [ IsExceptionalCollection ] );
 
 #! @Description
+#!  Returns the exceptional collection that defines the quiver algebra <A>A</A>.
+#! @Arguments A
+#! @Returns an exceptional collection
+DeclareAttribute( "DefiningExceptionalCollection", IsQuiverAlgebra );
+
+#! @Description
 #!  Returns the algebroid defined by the endomorphism quiver algebra of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns an algebroid

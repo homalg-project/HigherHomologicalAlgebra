@@ -761,6 +761,8 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     
     A := QuotientOfPathAlgebra( A, relations ); 
     
+    SetDefiningExceptionalCollection( A, collection );
+    
     if collection!.algebra <> fail then
       
       name := collection!.algebra;
@@ -1202,7 +1204,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
         function( full, n )
           local I, C;
           I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
-          C := AsCapCategory( Source( I ) );
+          C := SourceOfFunctor( I );
           return I( RandomObjectByInteger( C, n ) );
       end );
       
