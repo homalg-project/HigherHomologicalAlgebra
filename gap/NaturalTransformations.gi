@@ -28,7 +28,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
     
     TT := TensorFunctor( collection );
     
-    D := AsCapCategory( Source( TT ) );
+    D := SourceOfFunctor( TT );
     
     k := CommutativeRingOfLinearCategory( D );
     
@@ -122,7 +122,7 @@ InstallMethod( CounitOfTensorHomAdjunction,
     
     TT := TensorFunctor( collection );
     
-    C := AsCapCategory( Source( HH ) );
+    C := SourceOfFunctor( HH );
     
     k := CommutativeRingOfLinearCategory( C );
     
