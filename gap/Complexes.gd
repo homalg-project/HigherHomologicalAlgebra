@@ -664,6 +664,11 @@ KeyDependentOperation( "BrutalTruncationBelow", IsCochainComplex, IsInt, ReturnT
 #! @InsertChunk vec_1
 # @InsertChunk complexes_example_2
 
+DeclareOperation( "BoxProduct",
+    [ IsBoundedChainComplex, IsBoundedChainComplex, IsCapCategory ] );
+
+DeclareOperation( "BoxProduct",
+    [ IsBoundedCochainComplex, IsBoundedCochainComplex, IsCapCategory ] );
 
 ##############################################
 #

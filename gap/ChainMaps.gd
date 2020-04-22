@@ -443,6 +443,12 @@ DeclareOperation( "MappingConePseudoFunctorial",
 #!  @Section Examples
 #!  @InsertChunk vec_2
 
+DeclareOperation( "BoxProduct",
+    [ IsBoundedCochainMorphism, IsBoundedCochainMorphism, IsCapCategory ] );
+
+DeclareOperation( "BoxProduct",
+    [ IsBoundedChainMorphism, IsBoundedChainMorphism, IsCapCategory ] );
+
 #######################################
 #
 #  Global functions and variables

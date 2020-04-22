@@ -1991,6 +1991,51 @@ InstallMethod( BrutalTruncationAboveOp,
     
 end );
 
+
+##
+InstallMethod( BoxProduct,
+          [ IsBoundedChainComplex, IsBoundedChainComplex, IsChainComplexCategory ],
+  function( C, D, category )
+    local underlying_category, H, V, d;
+    
+    underlying_category := UnderlyingCategory( category );
+    
+    H := function( i, j )
+      
+      return BoxProduct( C^i, IdentityMorphism( D[ j ] ), underlying_category );
+      
+    end;
+    
+    V := function( i, j )
+      
+      if i mod 2 = 0 then
+        
+        return BoxProduct( IdentityMorphism( C[ i ] ), D^j, underlying_category );
+        
+      else
+        
+        return AdditiveInverse( BoxProduct( IdentityMorphism( C[ i ] ), D^j, underlying_category ) );
+        
+      fi;
+      
+    end;
+    
+    d := DoubleChainComplex( UnderlyingCategory( category ), H, V );
+    
+    SetRightBound( d, ActiveUpperBound( C ) );
+    
+    SetLeftBound( d, ActiveLowerBound( C ) );
+    
+    SetBelowBound( d, ActiveLowerBound( D ) );
+    
+    SetAboveBound( d, ActiveUpperBound( D ) );
+    
+    d := TotalChainComplex( d );
+    
+    return d;
+    
+end );
+
 #####################################
 #
 # To Do Lists operations

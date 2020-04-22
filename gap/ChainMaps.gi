@@ -1493,6 +1493,66 @@ InstallMethod( HomologyFunctorialAtOp, [ IsChainMorphism, IsInt ], HOMOLOGY_OR_C
 ##
 InstallMethod( CohomologyFunctorialAtOp, [ IsCochainMorphism, IsInt ], HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX_FUNCTORIAL );
 
+##
+InstallMethod( BoxProduct,
+          [ IsBoundedChainMorphism, IsBoundedChainMorphism, IsChainComplexCategory ],
+  function( phi, psi, category )
+    local underlying_category, S, T, ss, tt, l;
+    
+    underlying_category := UnderlyingCategory( category );
+    
+    S := BoxProduct( Source( phi ), Source( psi ), category );
+    
+    T := BoxProduct( Range( phi ), Range( psi ), category );
+    
+    ss := S!.UnderlyingDoubleComplex;
+    
+    tt := T!.UnderlyingDoubleComplex;
+    
+    l := AsZFunction(
+      
+      function( m )
+        local ind_s, ind_t, morphisms, obj;
+        
+        # this is important to write the used indices.
+        obj := ObjectAt( S, m );
+        
+        obj := ObjectAt( T, m );
+        
+        ind_s := ss!.IndicesOfTotalComplex.( String( m ) );
+        
+        ind_t := tt!.IndicesOfTotalComplex.( String( m ) );
+        
+        morphisms := List( [ ind_s[ 1 ] .. ind_s[ 2 ] ],
+          
+          function( i )
+            
+            return List( [ ind_t[ 1 ] .. ind_t[ 2 ] ],
+              
+              function( j )
+                
+                if i = j then
+                  
+                  return BoxProduct( phi[ i ], psi[ m - i ], underlying_category );
+                  
+                else
+                  
+                  return ZeroMorphism( ObjectAt( ss, i, m - i), ObjectAt( tt, j, m - j ) );
+                  
+                fi;
+                
+              end );
+              
+          end );
+          
+        return MorphismBetweenDirectSums( morphisms );
+        
+      end );
+      
+    return ChainMorphism( S, T, l );
+    
+end );
+
 #####################################
 #
 # To Do Lists operations
