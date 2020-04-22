@@ -161,6 +161,7 @@ end );
 ##
 InstallMethod( ExceptionalCollection,
           [ IsCapFullSubcategory ],
+          
   function( full )
     local quiver, algebra, labels;
     
@@ -179,7 +180,8 @@ end );
 
 ##
 InstallOtherMethod( ExceptionalCollection,
-        [ IsCapFullSubcategory, IsString, IsString ],
+          [ IsCapFullSubcategory, IsString, IsString ],
+          
   { full, name_for_quiver, name_for_algebra } ->
     ExceptionalCollection( full : name_for_underlying_quiver := name_for_quiver, name_for_endomorphism_algebra := name_for_algebra )
 );
@@ -187,6 +189,7 @@ InstallOtherMethod( ExceptionalCollection,
 ##
 InstallMethod( TiltingObject,
           [ IsExceptionalCollection ],
+          
   function( collection )
     local full, I, objs;
     
@@ -204,7 +207,8 @@ end );
 
 ##
 InstallMethod( InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject,
-              [ IsExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
+          [ IsExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
+          
   function( collection, phi )
     local nr_objects, objs, p_source, p_range, L;
     
@@ -229,7 +233,8 @@ end );
 
 ##
 InstallMethod( \[\],
-      [ IsExceptionalCollection, IsInt ],
+          [ IsExceptionalCollection, IsInt ],
+          
   function( collection, i )
     local n;
     
@@ -248,7 +253,7 @@ end );
 ## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
 ##
 InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
-    [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
+          [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
     
   function( source, range, morphisms )
     local cat, linear_maps, H;
@@ -287,7 +292,8 @@ end );
 
 ##
 InstallMethod( Arrows,
-    [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
+    
   function( collection, i, j )
     local cat, n, source, range, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
     
@@ -373,7 +379,7 @@ end );
 
 ##
 InstallMethod( OtherPaths,
-    [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
     local n, paths;
@@ -424,7 +430,7 @@ end );
 
 ##
 InstallMethod( Paths,
-    [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
   
   function( collection, i, j )
     local paths;
@@ -444,7 +450,8 @@ end );
 
 ##
 InstallMethod( BasisForPaths,
-              [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
+              
   function( collection, i, j )
     local k, dim, paths, paths_labels, n, p, basis, labels, current_path, current_one_morphism;
     
@@ -558,7 +565,8 @@ end );
 
 ##
 InstallMethod( LabelsForArrows,
-    [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
+  
   function( collection, i, j )
     local nr_arrows, labels;
     
@@ -582,7 +590,8 @@ end );
 
 ##
 InstallMethod( LabelsForOtherPaths,
-    [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsExceptionalCollection, IsInt, IsInt ],
+          
   function( collection, i, j )
     local n, labels;
     
@@ -633,12 +642,14 @@ InstallMethod( LabelsForOtherPaths,
       return labels;
     
     fi; 
-  end );
+
+end );
 
 
 ##
 InstallMethod( LabelsForPaths,
       [ IsExceptionalCollection, IsInt, IsInt ],
+      
   function( collection, i, j )
     local labels;
     
@@ -664,6 +675,7 @@ end );
 ##
 InstallMethod( LabelsForBasisForPaths,
               [ IsExceptionalCollection, IsInt, IsInt ],
+              
   function( collection, i, j )
     
     if IsBound( collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) ) then
@@ -680,6 +692,7 @@ end );
 
 ##
 InstallGlobalFunction( RelationsBetweenMorphisms,
+
   function( morphisms )
     local source, range, map;
     
@@ -696,6 +709,7 @@ end );
 ##
 InstallMethod( QuiverAlgebraFromExceptionalCollection,
         [ IsExceptionalCollection, IsField ],
+        
   function( collection, field )
     local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r, v, vertices_labels;
     
@@ -792,45 +806,49 @@ end );
 ##
 InstallMethod( EndomorphismAlgebraAttr,
     [ IsExceptionalCollection ],
-  function( collection )
     
-    return QuiverAlgebraFromExceptionalCollection( collection, GLOBAL_FIELD_FOR_QPA!.default_field );
-  
-end );
+  collection -> QuiverAlgebraFromExceptionalCollection( collection, GLOBAL_FIELD_FOR_QPA!.default_field )
+);
 
 ##
 InstallMethod( EndomorphismAlgebra,
           [ IsExceptionalCollection ],
+          
   E -> EndomorphismAlgebraAttr( E )
 );
 
 ##
 InstallMethod( AmbientCategory,
           [ IsExceptionalCollection ],
+          
   collection -> AmbientCategory( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( Algebroid,
           [ IsExceptionalCollection ],
+          
   collection -> Algebroid( EndomorphismAlgebra( collection ) )
 );
 
 ##
 InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
           [ IsExceptionalCollection ],
+          
   collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebra( collection ) ) )
 );
 
 ##
 InstallMethod( HomotopyCategory,
           [ IsExceptionalCollection ],
+          
   collection -> HomotopyCategory( AdditiveClosure( DefiningFullSubcategory( collection ) ) )
 );
 
 ##
 InstallMethod( AdditiveClosureAsFullSubcategory,
           [ IsCapFullSubcategory ],
+          
   function( full )
     local ambient_cat, r, name, A;
   
@@ -864,14 +882,29 @@ end );
 ##
 InstallMethod( AdditiveClosureAsFullSubcategory,
           [ IsExceptionalCollection ],
+          
   collection -> AdditiveClosureAsFullSubcategory( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( AdditiveClosure,
           [ IsExceptionalCollection ],
+          
   collection -> AdditiveClosure( DefiningFullSubcategory( collection ) )
 );
+
+##
+InstallMethodWithCache( BoxProduct,
+          [ IsExceptionalCollection, IsExceptionalCollection, IsCapCategory ],
+          
+  function( collection_1, collection_2, category )
+    local full;
+    
+    full := BoxProduct( DefiningFullSubcategory( collection_1 ), DefiningFullSubcategory( collection_2 ), category );
+    
+    return CreateExceptionalCollection( full );
+    
+end );
 
 
 ##

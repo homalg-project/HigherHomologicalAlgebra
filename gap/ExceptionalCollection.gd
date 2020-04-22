@@ -206,6 +206,11 @@ DeclareOperation( "InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomor
 #! @Returns a quiver path algebra
 DeclareGlobalFunction( "RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection" );
 
+
+DeclareOperation( "BoxProduct",
+    [ IsExceptionalCollection, IsExceptionalCollection, IsCapCategory ]
+);
+
 DeclareOperation( "QuiverAlgebraFromExceptionalCollection",
     [ IsExceptionalCollection, IsField ] );
 
@@ -217,6 +222,7 @@ DeclareOperation( "QuiverAlgebraFromExceptionalCollection",
 #! @Returns a list of ring elements
 DeclareGlobalFunction( "RelationsBetweenMorphisms" );
 
+#TODO Please find another place for this!
 ##
 #! @Description
 #!  The argument is an abelian category <A>C</A> with enouph projectives. The output the full subcategory
