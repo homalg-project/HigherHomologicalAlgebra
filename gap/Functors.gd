@@ -137,12 +137,12 @@ DeclareOperation( "RightDerivedFunctor",
 DeclareAttribute( "RDerivedFunctor",
         IsCapFunctor );
 
-DeclareAttribute( "EquivalenceFunctorFromAdditiveClosure", IsCapFullSubcategory );
+DeclareAttribute( "EquivalenceFromAdditiveClosure", IsCapFullSubcategory );
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsCapFullSubcategory );
 
-DeclareAttribute( "EquivalenceFunctorFromAdditiveClosure", IsExceptionalCollection );
+DeclareAttribute( "EquivalenceFromAdditiveClosure", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsExceptionalCollection );
-DeclareAttribute( "EquivalenceFunctorFromHomotopyCategory", IsExceptionalCollection );
+DeclareAttribute( "EquivalenceFromHomotopyCategory", IsExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsExceptionalCollection );
 
 DeclareAttribute( "EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory", IsExceptionalCollection );
@@ -167,3 +167,13 @@ DeclareAttribute( "IsomorphismOntoImageOfFullyFaithfulFunctor", IsCapFunctor );
 DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
 
 DeclareAttribute( "TensorProductFunctor", IsCapCategory );
+
+DeclareAttribute( "EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows", IsHomalgGradedRing );
+DeclareAttribute( "EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations", IsHomalgGradedRing );
+
+KeyDependentOperation( "PullbackFunctorAlongProjectionIntoFreydCategory", IsHomalgGradedRing, IsInt, ReturnTrue );
+KeyDependentOperation( "PullbackFunctorAlongProjectionIntoGradedRows", IsHomalgGradedRing, IsInt, ReturnTrue );
+
+DeclareOperation( "IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories",
+        [ IsCapFunctor, IsCapFunctor, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ] );
+
