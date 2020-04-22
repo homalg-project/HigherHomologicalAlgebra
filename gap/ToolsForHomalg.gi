@@ -374,8 +374,20 @@ InstallOtherMethod( HomalgElementToListOfIntegers,
 end );
 
 ##
-InstallMethodWithCrispCache( MONOMIALS_OF_DEGREE,
-  [ IsHomalgGradedRing, IsHomalgModuleElement ],
+InstallMethod( CoefficientsOfGradedRingElement,
+          [ IsHomalgGradedRingElement ],
+  e -> EntriesOfHomalgMatrix( Coefficients( EvalRingElement( e ) ) )
+);
+
+##
+InstallMethod( MonomialsOfGradedRingElement,
+          [ IsHomalgGradedRingElement ],
+  e -> Coefficients( EvalRingElement( e ) )!.monomials
+);
+
+##
+BindGlobal( "MONOMIALS_OF_DEGREE_USING_4TI2",
+  
   function( S, degree )
     local new_degree, indeterminates, weights_of_indeterminates, D, solutions;
     
@@ -404,3 +416,88 @@ InstallMethodWithCrispCache( MONOMIALS_OF_DEGREE,
     return  solutions;
 
 end );
+
+##
+BindGlobal( "MONOMIALS_OF_DEGREE_USING_NCONVEX",
+
+   function( S, degree )
+    local indeterminates, n, weights, matrix, equations, polyhedron, solutions;
+    
+    indeterminates := Indeterminates( S );
+    
+    n := Size( indeterminates );
+    
+    degree := UnderlyingMorphism( degree );
+    
+    degree := MatrixOfMap( degree );
+    
+    degree := EntriesOfHomalgMatrix( degree );
+    
+    degree := List( degree, HomalgElementToInteger );
+    
+    weights := WeightsOfIndeterminates( S );
+    
+    matrix := List( weights, UnderlyingMorphism );
+    
+    matrix := List( matrix, d -> MatrixOfMap( d ) );
+    
+    matrix := TransposedMatrix( UnionOfRows( matrix ) );
+    
+    matrix := EntriesOfHomalgMatrixAsListList( matrix );
+    
+    equations := ListN( degree, matrix, { e, d } -> Concatenation( [ -e ], d ) );
+    
+    equations := Concatenation( equations, -equations );
+    
+    equations := Concatenation( equations, IdentityMat( n + 1 ){ [ 2 .. n + 1 ] } );
+    
+    polyhedron := PolyhedronByInequalities( equations );
+    
+    solutions := LatticePointsGenerators( polyhedron )[ 1 ];
+    
+    solutions := List( solutions, sol -> Product( ListN( indeterminates, sol, \^ )  ) );
+    
+    if HasIsExteriorRing( S ) and IsExteriorRing( S ) then
+      
+      solutions := Filtered( solutions, sol -> not IsZero( sol ) );
+      
+    fi;
+    
+    return solutions;
+    
+end );
+
+##
+InstallMethodWithCache( MonomialsOfDegree,
+          [ IsHomalgGradedRing, IsHomalgModuleElement ],
+  
+  function( S, degree )
+     
+    if IsPackageMarkedForLoading( "NConvex", ">=2020.03.02" ) then
+      
+      return MONOMIALS_OF_DEGREE_USING_NCONVEX( S, degree );
+      
+    elif IsPackageMarkedForLoading( "4ti2Interface", ">=2019.09.03" ) then
+      
+      return MONOMIALS_OF_DEGREE_USING_4TI2( S, degree );
+      
+    else
+      
+      # or add a method for special rings
+      Error( "You need 'NConvex' or '4ti2Interface' to perform this operation" );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( EntriesOfHomalgMatrixAttr,
+          [ IsHomalgMatrix ],
+  EntriesOfHomalgMatrix
+);
+
+##
+InstallMethod( EntriesOfHomalgMatrixAsListListAttr,
+          [ IsHomalgMatrix ],
+  EntriesOfHomalgMatrixAsListList
+);
