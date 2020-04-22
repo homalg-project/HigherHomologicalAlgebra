@@ -1728,35 +1728,12 @@ InstallMethod( EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRo
     F := CapFunctor( name, fpres, freyd );
 
     AddObjectFunction( F,
-      function( o )
-        local degrees, range, m;
-        
-        degrees := GeneratorDegrees( o );
-        
-        degrees := List( degrees, d -> [ -d, 1 ] );
-        
-        range := GradedRow( degrees, S );
-        
-        m := UnderlyingMatrix( o );
-        
-        m := DeduceSomeMapFromMatrixAndRangeForGradedRows( m, range );
-        
-        return FreydCategoryObject( m );
-        
-    end );
+      o -> o / freyd
+    );
     
     AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        alpha := GradedRowOrColumnMorphism(
-                    Range( RelationMorphism( s ) ),
-                    UnderlyingMatrix( alpha ),
-                    Range( RelationMorphism( r ) )
-                  );
-        
-        return FreydCategoryMorphism( s, alpha, r );
-        
-    end );
+      { s, alpha, r } -> alpha / freyd
+    );
     
     return F;
     
@@ -1779,27 +1756,12 @@ InstallMethod( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentatio
     F := CapFunctor( name, freyd, fpres );
     
     AddObjectFunction( F,
-      function( o )
-        local rm, degrees;
-        
-        rm := RelationMorphism( o );
-        
-        degrees := DegreeList( Range( rm ) );
-        
-        degrees := Concatenation( List( degrees, d -> ListWithIdenticalEntries( d[ 2 ], -d[ 1 ] ) ) );
-        
-        return AsGradedLeftPresentation( UnderlyingHomalgMatrix( rm ), degrees );
-        
-    end );
+      o -> o / fpres
+    );
     
     AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        alpha := MorphismDatum( alpha );
-        
-        return GradedPresentationMorphism( s, UnderlyingHomalgMatrix( alpha ), r );
-    
-    end );
+      { s, alpha, r } -> alpha / fpres
+    );
     
     return F;
     
