@@ -1223,6 +1223,13 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlg
     
 end );
 
+##
+InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
+        [ IsExceptionalCollection ],
+  collection -> FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( Algebroid( collection ) )
+);
+
+##
 BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
   function( full )
     local ambient;
