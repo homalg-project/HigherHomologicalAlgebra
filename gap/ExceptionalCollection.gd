@@ -76,6 +76,12 @@ DeclareAttribute( "DefiningExceptionalCollection", IsQuiverAlgebra );
 DeclareAttribute( "Algebroid", IsExceptionalCollection );
 
 #! @Description
+#!  Returns the category of quiver rows over the endomorphism algebra of <A>E</A>.
+#! @Arguments E
+#! @Returns a category
+DeclareAttribute( "QuiverRows", IsExceptionalCollection );
+
+#! @Description
 #!  Returns the direct sum of the objects of the exceptional collection <A>E</A>.
 #! @Arguments E
 #! @Returns an object

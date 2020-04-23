@@ -832,6 +832,13 @@ InstallMethod( Algebroid,
 );
 
 ##
+InstallMethod( QuiverRows,
+          [ IsExceptionalCollection ],
+          
+  collection -> QuiverRows( EndomorphismAlgebra( collection ) )
+);
+
+##
 InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
           [ IsExceptionalCollection ],
           
