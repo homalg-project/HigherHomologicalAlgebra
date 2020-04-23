@@ -21,15 +21,17 @@ DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
 
 InstallGlobalFunction( Time,
   function( command, arguments )
-    local t0, t1;
+    local output, t0, t1;
     
     t0 := NanosecondsSinceEpoch( );
     
-    CallFuncList( command, arguments );
+    output := CallFuncList( command, arguments );
     
     t1 := NanosecondsSinceEpoch( );
     
-    return Float( ( t1 - t0 ) / 10^9 );
+    Display( Float( ( t1 - t0 ) / 10^9 ) );
+    
+    return output;
     
 end );
 
