@@ -126,6 +126,24 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
     
     B!.Name := "Cotangent Beilinson functor";
     
+    ## In this special case I want to set the interpretation isomorphism
+    ##
+    SetInterpretationIsomorphismFromAlgebroid(
+          Algebroid( collection ),
+          PreCompose(
+              IsomorphismFromAlgebroid( collection ),
+              IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory( S )
+            )
+        );
+        
+    SetInterpretationIsomorphismOntoAlgebroid(
+          Algebroid( collection ),
+          PostCompose(
+              IsomorphismOntoAlgebroid( collection ),
+              IsomorphismFromTwistedCotangentModulesAsObjectsInFreydCategoryOntoTwistedOmegaModules( S )
+            )
+        );
+    
     return B;
     
 end );
@@ -134,7 +152,7 @@ end );
 InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
           [ IsHomalgGradedRing ],
   function( S )
-    local B, C;
+    local B, C, collection;
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
     
@@ -144,9 +162,9 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     
     C := UnderlyingCategory( C );
     
-    C := ExceptionalCollection( C );
+    collection := ExceptionalCollection( C );
     
-    C := IsomorphismOntoAlgebroid( C );
+    C := IsomorphismOntoAlgebroid( collection );
     
     C := ExtendFunctorToAdditiveClosures( C );
     
@@ -155,7 +173,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     C := PreCompose( B, C );
     
     C!.Name := "Cotangent Beilinson functor";
-    
+        
     return C;
     
 end );
