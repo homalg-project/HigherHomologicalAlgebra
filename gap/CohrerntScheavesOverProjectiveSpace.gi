@@ -1,6 +1,6 @@
 
 ##
-InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory,
+InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory,
           [ IsHomalgGradedRing ],
   function( S )
     local F, G;
@@ -20,6 +20,29 @@ InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsOb
     return G;
     
 end );
+
+##
+InstallMethod( IsomorphismFromTwistedCotangentModulesAsObjectsInFreydCategoryOntoTwistedOmegaModules,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local F, G;
+    
+    F := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S );
+    
+    G := EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows( S );
+    
+    G := RestrictFunctorToFullSubcategoryOfSource( G, RangeOfFunctor( F ) );
+    
+    G := PreCompose( F, G );
+    
+    G := IsomorphismFromImageOfFullyFaithfulFunctor( G );
+    
+    G!.Name := "Isomorphism functor from 𝛀 ^i(i)'s as modules into 𝛚_E(i)'s";
+    
+    return G;
+    
+end );
+
 
 ##
 InstallMethod( EndomorphismAlgebraOfCotangentBeilinsonCollection,
@@ -266,7 +289,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCot
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
         
-    G := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory( S );
+    G := IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory( S );
     
     G := ExtendFunctorToAdditiveClosures( G );
     

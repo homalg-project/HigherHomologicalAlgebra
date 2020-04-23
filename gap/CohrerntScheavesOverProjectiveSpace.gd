@@ -8,7 +8,8 @@
 
 DeclareAttribute( "BeilinsonFunctor", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModulesAsObjectsInFreydCategory", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedCotangentModulesAsObjectsInFreydCategoryOntoTwistedOmegaModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows", IsHomalgGradedRing );
