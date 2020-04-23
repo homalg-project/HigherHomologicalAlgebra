@@ -1728,12 +1728,35 @@ InstallMethod( EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRo
     F := CapFunctor( name, fpres, freyd );
 
     AddObjectFunction( F,
-      o -> o / freyd
-    );
+      function( o )
+        local degrees, range, m;
+        
+        degrees := GeneratorDegrees( o );
+        
+        degrees := List( degrees, d -> [ -d, 1 ] );
+        
+        range := GradedRow( degrees, S );
+        
+        m := UnderlyingMatrix( o );
+        
+        m := DeduceSomeMapFromMatrixAndRangeForGradedRows( m, range );
+        
+        return FreydCategoryObject( m );
+        
+    end );
     
     AddMorphismFunction( F,
-      { s, alpha, r } -> alpha / freyd
-    );
+      function( s, alpha, r )
+        
+        alpha := GradedRowOrColumnMorphism(
+                    Range( RelationMorphism( s ) ),
+                    UnderlyingMatrix( alpha ),
+                    Range( RelationMorphism( r ) )
+                  );
+                  
+        return FreydCategoryMorphism( s, alpha, r );
+
+    end );
     
     return F;
     
@@ -1756,12 +1779,27 @@ InstallMethod( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentatio
     F := CapFunctor( name, freyd, fpres );
     
     AddObjectFunction( F,
-      o -> o / fpres
-    );
+      function( o )
+        local rm, degrees;
+        
+        rm := RelationMorphism( o );
+        
+        degrees := DegreeList( Range( rm ) );
+        
+        degrees := Concatenation( List( degrees, d -> ListWithIdenticalEntries( d[ 2 ], -d[ 1 ] ) ) );
+        
+        return AsGradedLeftPresentation( UnderlyingHomalgMatrix( rm ), degrees );
+        
+    end );
     
     AddMorphismFunction( F,
-      { s, alpha, r } -> alpha / fpres
-    );
+      function( s, alpha, r )
+        
+        alpha := MorphismDatum( alpha );
+    
+        return GradedPresentationMorphism( s, UnderlyingHomalgMatrix( alpha ), r );
+        
+    end );
     
     return F;
     
@@ -1774,7 +1812,8 @@ end );
 #
 ######################################
 
-InstallMethod( IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories,
+##
+InstallMethodWithCrispCache( IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories,
           [ IsCapFunctor, IsCapFunctor, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( F_1, F_2, box_product_full_subcategory )
     local ring, algebroid_1, A_1, algebroid_2, A_2, algebroid, func_on_object, func_on_morphism, name;
@@ -1863,5 +1902,37 @@ end );
 InstallOtherMethod( IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories,
       [ IsCapFunctor, IsCapFunctor, IsExceptionalCollection ],
   { F_1, F_2, collection } -> IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( F_1, F_2, DefiningFullSubcategory( collection ) )
+);
+
+##
+InstallMethodWithCrispCache( IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids,
+          [ IsCapFunctor, IsCapFunctor, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
+  function( F_1, F_2, box_product_full_subcategory )
+    local V, name, F;
+    
+    V := IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( F_1, F_2, box_product_full_subcategory );
+    
+    V := IsomorphismFromImageOfFullyFaithfulFunctor( V );
+    
+    name := "Abstraction functor from full subcategory defined by a box product onto tensor product of algebroids";
+    
+    F := CapFunctor( name, AmbientCategory( SourceOfFunctor( V ) ), RangeOfFunctor( V ) );
+    
+    AddObjectFunction( F,
+      o -> ApplyFunctor( V,  o / SourceOfFunctor( V ) )
+    );
+    
+    AddMorphismFunction( F,
+      { s, alpha, r } -> ApplyFunctor( V,  alpha / SourceOfFunctor( V ) )
+    );
+    
+    return F;
+    
+end );
+
+##
+InstallOtherMethod( IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids,
+      [ IsCapFunctor, IsCapFunctor, IsExceptionalCollection ],
+  { F_1, F_2, collection } -> IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids( F_1, F_2, DefiningFullSubcategory( collection ) )
 );
 

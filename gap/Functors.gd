@@ -137,6 +137,9 @@ DeclareOperation( "RightDerivedFunctor",
 DeclareAttribute( "RDerivedFunctor",
         IsCapFunctor );
 
+DeclareAttribute( "InterpretationIsomorphismFromAlgebroid", IsAlgebroid );
+DeclareAttribute( "InterpretationIsomorphismOntoAlgebroid", IsAlgebroid );
+
 DeclareAttribute( "EquivalenceFromAdditiveClosure", IsCapFullSubcategory );
 DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsCapFullSubcategory );
 
@@ -175,5 +178,7 @@ KeyDependentOperation( "PullbackFunctorAlongProjectionIntoFreydCategory", IsHoma
 KeyDependentOperation( "PullbackFunctorAlongProjectionIntoGradedRows", IsHomalgGradedRing, IsInt, ReturnTrue );
 
 DeclareOperation( "IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories",
+        [ IsCapFunctor, IsCapFunctor, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ] );
+DeclareOperation( "IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids",
         [ IsCapFunctor, IsCapFunctor, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ] );
 
