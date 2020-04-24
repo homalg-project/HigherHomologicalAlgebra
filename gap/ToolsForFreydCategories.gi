@@ -1,4 +1,11 @@
 
+
+##
+InstallMethod( MONOMIALS_OF_DEGREEOp,
+          [ IsHomalgGradedRing, IsHomalgModuleElement ],
+  { S, degree } -> MonomialsOfDegree( S, degree )
+);
+
 ##
 InstallMethodWithCrispCache( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
           [ IsGradedRow ],
@@ -13,7 +20,7 @@ function( M )
   
   G := UnzipDegreeList( M );
   dG := DuplicateFreeList( G );
-  dG := List( dG, d -> MonomialsOfDegree( S, d ) );
+  dG := List( dG, d -> MONOMIALS_OF_DEGREE( S, d ) );
   
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
   L := ListWithIdenticalEntries( Length( G ), 0 );
