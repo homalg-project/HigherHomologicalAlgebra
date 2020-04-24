@@ -107,14 +107,14 @@ InstallMethod( Display,
       if i <> l then
         Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        Display( a ^ i );
+        DisplayCapCategoryCell( a ^ i );
         Print( "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
       fi;
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" );
-      Display( a[ i ] );
+      DisplayCapCategoryCell( a[ i ] );
       Print( "\n" );
       Print( Concatenation(
         ListWithIdenticalEntries(
@@ -132,8 +132,15 @@ InstallMethod( ViewObj,
   function( a )
     
     Print( "<An object in ", Name( CapCategory( a ) ) );
-    Print( " with active lower bound ", ActiveLowerBound( a ) );
-    Print( " and active upper bound ", ActiveUpperBound( a ) );
+    
+    if HasActiveLowerBound( a ) then
+      Print( " with active lower bound ", ActiveLowerBound( a ) );
+    fi;
+    
+    if HasActiveUpperBound( a ) then
+      Print( " and active upper bound ", ActiveUpperBound( a ) );
+    fi;
+    
     Print(">" );
 
 end );
@@ -157,14 +164,14 @@ InstallMethod( ViewHomotopyCategoryObject,
       if i <> l then
         Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        ViewObj( a ^ i );
+        ViewCapCategoryCell( a ^ i );
         Print( "\n" );
         Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
       fi;
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" );
-      ViewObj( a[ i ] );
+      ViewCapCategoryCell( a[ i ] );
       Print( "\n" );
       Print( Concatenation(
         ListWithIdenticalEntries(
