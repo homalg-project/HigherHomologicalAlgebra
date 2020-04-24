@@ -155,7 +155,7 @@ end );
 InstallGlobalFunction( CurrentCaching,
   function( cat )
   
-    Display( cat!.default_cache_type );
+    return cat!.default_cache_type;
     
 end );
 
