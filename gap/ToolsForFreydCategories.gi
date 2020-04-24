@@ -711,6 +711,57 @@ function( S, i )
 end );
 
 ##
+InstallMethod( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsOntoGradedRows,
+          [ IsFreydCategory ],
+          
+  function( freyd )
+    local rows, S, full, name, F;
+    
+    rows := UnderlyingCategory( freyd );
+    
+    if not IsCategoryOfGradedRows( rows ) then
+      TryNextMethod( );
+    fi;
+    
+    S := UnderlyingGradedRing( rows );
+    
+    full := FullSubcategoryGeneratedByProjectiveObjects( freyd );
+    
+    name := "Equivalence functor from canonical projective objects in Freyd category onto category of graded rows";
+    
+    F := CapFunctor( name, full, rows );
+    
+    AddObjectFunction( F,
+    
+      function( o )
+        
+        o := UnderlyingCell( o );
+        
+        o := RelationMorphism( o );
+        
+        if not Rank( Source( o ) ) = 0 then
+          
+          Error( "Wrong input!\n" );
+          
+        fi;
+        
+        return Range( o );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      
+      function( s, alpha, r )
+        
+        return MorphismDatum( UnderlyingCell( alpha ) );
+        
+    end );
+    
+    return F;
+    
+end );
+
+##
 InstallOtherMethod( _WeakKernelEmbedding,
           [ IsGradedRowMorphism ],
   WeakKernelEmbedding

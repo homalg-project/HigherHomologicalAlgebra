@@ -16,6 +16,7 @@ DeclareOperation( "BoxProduct",
     );
 
 DeclareAttribute( "BeilinsonExperimental", IsHomalgGradedRing );
+DeclareAttribute( "EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsOntoGradedRows", IsFreydCategory );
 DeclareAttribute( "IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedRowsOfRankOne", IsCategoryOfGradedRows );
 DeclareAttribute( "FullSubcategoryGeneratedByGradedRowsOfRankOne", IsHomalgGradedRing );
 DeclareAttribute( "DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOfProjectiveSpaces", IsGradedRowMorphism );
