@@ -1333,7 +1333,7 @@ InstallMethod( Display,
             [ IsGradedRow ],
             
   function( object )
-    local degrees, s, degree;
+    local degrees, s, vs, degree;
     
     Print( Concatenation( "An object in ",
                           Name( CapCategory( object ) ),
@@ -1351,9 +1351,49 @@ InstallMethod( Display,
         s := "";
       fi;
       
-      Display( Concatenation( "<", ViewString( degree[ 1 ] ), ">", s ) );
+      vs := ViewString( degree[ 1 ] );
+      
+      if vs[ 1 ] = "(" then
+      
+          Display( Concatenation( "<", ViewString( degree[ 1 ] ), ">", s ) );
+          
+      else
+      
+          Display( Concatenation( "<(", ViewString( degree[ 1 ] ), ")>", s ) );
+      
+      fi;
       
     od;
      
 end );
 
+##
+InstallMethod( DisplayCapCategoryCell,
+          [ IsGradedRowOrColumnMorphism ],
+  function( alpha )
+    
+    # mapping matrix
+    Display( UnderlyingHomalgMatrix( alpha ) );
+    
+    # general information on morphism
+    Print( Concatenation( "\n", StringMutable( alpha ), " defined by the above matrix\n" ) );
+
+end );
+
+
+##
+InstallMethod( DisplayCapCategoryCell,
+          [ IsFreydCategoryMorphism ],
+  function( alpha )
+    
+    # mapping matrix
+    Display( MorphismDatum( alpha ) );
+    
+    Print( Concatenation( "\n\n", "--------------------------------", "\n" ) );
+    Print( "General description:\n" );
+    Print( "--------------------------------\n\n" );
+    
+    # general information on morphism
+    Display( Concatenation( StringMutable( alpha ), " defined by the above morphism datum" ) );
+
+end );
