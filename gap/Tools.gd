@@ -8,6 +8,10 @@ DeclareGlobalFunction( "CheckNaturality" );
 
 DeclareGlobalFunction( "CheckFunctoriality" );
 
+DeclareOperation( "ViewCapCategoryCell", [ IsCapCategoryCell ] );
+
+DeclareOperation( "DisplayCapCategoryCell", [ IsCapCategoryCell ] );
+
 DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
     [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction, IsInt ] );
 

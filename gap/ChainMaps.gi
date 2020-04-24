@@ -376,7 +376,7 @@ InstallMethod( Display,
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" ); 
-      Display( map[ i ] );
+      DisplayCapCategoryCell( map[ i ] );
       Print( "\n" );
       
     od;
@@ -414,7 +414,7 @@ InstallMethod( ViewChainOrCochainMorphism,
       s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
       Print( s );
       Print( "\n" ); 
-      ViewObj( map[ i ] );
+      ViewCapCategoryCell( map[ i ] );
       Print( "\n" );
       
     od;

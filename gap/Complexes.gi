@@ -472,14 +472,14 @@ InstallMethod( Display,
         if i <> m then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          Display( C^i );
+          DisplayCapCategoryCell( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         fi;
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        Display( C[ i ] );
+        DisplayCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -495,7 +495,7 @@ InstallMethod( Display,
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        Display( C[ i ] );
+        DisplayCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -504,7 +504,7 @@ InstallMethod( Display,
         Print( "\n\n" );
         if i <> n then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          Display( C^i );
+          DisplayCapCategoryCell( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
@@ -554,14 +554,14 @@ InstallMethod( ViewComplex,
         if i <> m then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          ViewObj( C^i );
+          ViewCapCategoryCell( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         fi;
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        ViewObj( C[ i ] );
+        ViewCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -577,7 +577,7 @@ InstallMethod( ViewComplex,
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        ViewObj( C[ i ] );
+        ViewCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -586,7 +586,7 @@ InstallMethod( ViewComplex,
         Print( "\n\n" );
         if i <> n then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          ViewObj( C^i );
+          ViewCapCategoryCell( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );

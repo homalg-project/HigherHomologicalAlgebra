@@ -35,6 +35,28 @@ InstallGlobalFunction( Time,
     
 end );
 
+#########################
+#
+# View Obj
+#
+########################
+
+##
+InstallMethod( ViewCapCategoryCell,
+          [ IsCapCategoryCell ],
+          
+  function( c )
+    ViewObj( c );
+end );
+
+##
+InstallMethod( DisplayCapCategoryCell,
+          [ IsCapCategoryCell ],
+          
+  function( c )
+    Display( c );
+end );
+
 #############################################
 #
 # Finalizing
