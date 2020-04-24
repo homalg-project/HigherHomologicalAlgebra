@@ -2,7 +2,8 @@ ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 ######################### start example #################################
 
 # create graded polynomial ring
-S := GradedRing( HomalgFieldOfRationalsInSingular( ) * "x0..2" );
+Q := HomalgFieldOfRationalsInSingular( );
+S := GradedRing( Q * "x0..2" );
 rows := CategoryOfGradedRows( S );
 freyd := FreydCategory( rows );
 fpres := GradedLeftPresentations( S );
@@ -25,6 +26,9 @@ ViewHomotopyCategoryObject( U_o1 );
 
 # or Interpret the output in the derived category of the quiver representations over the opposite algebra
 U_o1 := U( o1 * freyd ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
+
+# or Interpret the output as a quiver representation
+U_o1 := HomologyAt( U( o1 * freyd ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) ), 0 );
 
 # or Interpret the output in the homotopy of the quiver rows
 U_o1 := U( o1 * freyd ) * HomotopyCategory( QuiverRows( algebra ) );
