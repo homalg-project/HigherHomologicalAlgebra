@@ -285,7 +285,79 @@ InstallMethod( FullSubcategoryGeneratedByGradedRowsOfRankOne,
 end );
 
 ##
-BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE",
+BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_ALGEBROID",
+
+  function( S )
+    local full, A1, A2, Ho_A, ring, B1, B2, name, B, func_on_objects, func_on_morphisms;
+    
+    full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
+    
+    A1 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 1 ] );
+    
+    A1 := Algebroid( A1 );
+    
+    A2 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 2 ] );
+    
+    A2 := Algebroid( A2 );
+    
+    Ho_A := HomotopyCategory( AdditiveClosure( TensorProductOnObjects( A1, A2 ) ) );
+    
+    ring := CommutativeRingOfLinearCategory( Ho_A );
+    
+    B1 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 1 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S!.factor_rings[ 1 ] )
+            );
+    
+    B2 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 2 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S!.factor_rings[ 2 ] )
+            );
+    
+    name := "Beilinson functor on product of projective spaces onto homotopy category of tensor product of algebroids";
+    
+    B := CapFunctor( name, full, Ho_A );
+    
+    func_on_objects :=
+      function( a )
+        local degs;
+        
+        degs := HomalgElementToListOfIntegers( DegreeList( UnderlyingCell( a ) )[ 1 ][ 1 ] );
+        
+        a := ListN( degs, S!.factor_rings, { deg, ring } -> GradedRow( [ [ [ deg ], 1 ] ], ring ) );
+        
+        return BoxProduct( B1( a[ 1 ] ), B2( a[ 2 ] ), Ho_A );
+    
+      end;
+    
+    func_on_morphisms :=
+      function( alpha )
+        local s, r;
+        
+        s := func_on_objects( Source( alpha ) );
+        
+        r := func_on_objects( Range( alpha ) );
+        
+        alpha := DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOfProjectiveSpaces( UnderlyingCell( alpha ) );
+        
+        if IsEmpty( alpha ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return Sum( List( alpha, l -> ( l[ 1 ] / ring ) * BoxProduct( B1( l[ 2 ][ 1 ] ), B2( l[ 2 ][ 2 ] ), Ho_A ) ) );
+          
+        fi;
+        
+      end;
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_A, func_on_objects, func_on_morphisms );
+    
+end );
+
+##
+BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_QUIVER_ROWS",
 
   function( S )
     local full, A1, A2, Ho_QRows, ring, B1, B2, name, B, func_on_objects, func_on_morphisms;
@@ -310,7 +382,7 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE",
               BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S!.factor_rings[ 2 ] )
             );
     
-    name := "Beilinson functor on product of projective spaces experimental";
+    name := "Beilinson functor on product of projective spaces onto homotopy category of quiver rows";
     
     B := CapFunctor( name, full, Ho_QRows );
     
@@ -353,14 +425,90 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE",
 end );
 
 ##
-InstallMethod( BeilinsonExperimental,
+BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_BOX_PRODUCT_OF_OMEGAS",
+
+  function( S )
+    local full, freyd, ring, B1, B2, omegas_1, omegas_2, omegas, Ho_omegas, name, B, func_on_objects, func_on_morphisms;
+    
+    full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
+    
+    freyd := FreydCategory( CategoryOfGradedRows( S ) );
+    
+    ring := CommutativeRingOfLinearCategory( freyd );
+    
+    B1 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 1 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules( S!.factor_rings[ 1 ] )
+            );
+    
+    B2 := PreCompose(
+              EmbeddingFunctorIntoFreydCategory( CategoryOfGradedRows( S!.factor_rings[ 2 ] ) ),
+              BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules( S!.factor_rings[ 2 ] )
+            );
+    
+    omegas_1 := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B1 ) ) );
+    
+    omegas_2 := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B2 ) ) );
+    
+    omegas := BoxProduct( omegas_1, omegas_2, freyd );
+    
+    Ho_omegas := HomotopyCategory( AdditiveClosure( omegas ) );
+    
+    name := "Beilinson functor on product of projective spaces onto homotopy category of additive closure of box product of twisted cotangent modules";
+    
+    B := CapFunctor( name, full, Ho_omegas );
+    
+    func_on_objects :=
+      function( a )
+        local degs;
+        
+        degs := HomalgElementToListOfIntegers( DegreeList( UnderlyingCell( a ) )[ 1 ][ 1 ] );
+        
+        a := ListN( degs, S!.factor_rings, { deg, ring } -> GradedRow( [ [ [ deg ], 1 ] ], ring ) );
+        
+        return BoxProduct( B1( a[ 1 ] ), B2( a[ 2 ] ), Ho_omegas );
+    
+      end;
+    
+    func_on_morphisms :=
+      function( alpha )
+        local s, r;
+        
+        s := func_on_objects( Source( alpha ) );
+        
+        r := func_on_objects( Range( alpha ) );
+        
+        alpha := DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOfProjectiveSpaces( UnderlyingCell( alpha ) );
+        
+        if IsEmpty( alpha ) then
+          
+          return ZeroMorphism( s, r );
+          
+        else
+          
+          return Sum( List( alpha, l -> ( l[ 1 ] / ring ) * BoxProduct( B1( l[ 2 ][ 1 ] ), B2( l[ 2 ][ 2 ] ), Ho_omegas ) ) );
+          
+        fi;
+        
+      end;
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_omegas, func_on_objects, func_on_morphisms );
+    
+end );
+
+##
+InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows,
           [ IsHomalgGradedRing ],
   function( S )
     local rows, B, I;
     
+    if not IsBound( S!.factor_rings ) or Length( S!.factor_rings ) <> 2 then
+      TryNextMethod( );
+    fi;
+    
     rows := CategoryOfGradedRows( S );
     
-    B := BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE( S );
+    B := BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_QUIVER_ROWS( S );
     
     B := ExtendFunctorToAdditiveClosureOfSource( B );
     
@@ -368,11 +516,64 @@ InstallMethod( BeilinsonExperimental,
     
     I := PreCompose( I, B );
     
-    I!.Name := "Beilinson functor from category of graded rows over Cox ring of product of projective spaces into homotopy category of quiver rows";
+    I!.Name := "Cotangent Beilinson functor";
+     
+    return I;
+    
+end );
+
+##
+InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local rows, B, I;
+    
+    if not IsBound( S!.factor_rings ) or Length( S!.factor_rings ) <> 2 then
+      TryNextMethod( );
+    fi;
+    
+    rows := CategoryOfGradedRows( S );
+    
+    B := BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_ALGEBROID( S );
+    
+    B := ExtendFunctorToAdditiveClosureOfSource( B );
+    
+    I := IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedRowsOfRankOne( rows );
+    
+    I := PreCompose( I, B );
+    
+    I!.Name := "Cotangent Beilinson functor";
     
     return I;
     
 end );
+
+##
+InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfBoxProductOfTwistedCotangentModules,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local rows, B, I;
+    
+    if not IsBound( S!.factor_rings ) or Length( S!.factor_rings ) <> 2 then
+      TryNextMethod( );
+    fi;
+    
+    rows := CategoryOfGradedRows( S );
+    
+    B := BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_BOX_PRODUCT_OF_OMEGAS( S );
+    
+    B := ExtendFunctorToAdditiveClosureOfSource( B );
+    
+    I := IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedRowsOfRankOne( rows );
+    
+    I := PreCompose( I, B );
+    
+    I!.Name := "Cotangent Beilinson functor";
+    
+    return I;
+    
+end );
+
 
 ##
 InstallMethod( FreydCategory,
@@ -424,7 +625,7 @@ InstallMethod( QuiverRows,
           [ IsQuiverAlgebra ],
           1000,
   function( A )
-    local v, QRows, qr_derived_cats, name, r;
+    local v, QRows, name, r;
     
     v := ValueOption( "qr_derived_cats" );
     
