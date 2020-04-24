@@ -167,6 +167,18 @@ InstallOtherMethod( SetUpperBound,
 end );
 
 ##
+InstallOtherMethod( HasActiveLowerBound,
+          [ IsHomotopyCategoryCell ],
+    a -> HasActiveLowerBound( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( HasActiveUpperBound,
+          [ IsHomotopyCategoryCell ],
+    a -> HasActiveUpperBound( UnderlyingCell( a ) )
+);
+
+##
 InstallOtherMethod( Objects,
               [ IsHomotopyCategoryObject ],
   a -> Objects( UnderlyingCell( a ) )
