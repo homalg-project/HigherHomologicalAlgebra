@@ -1353,15 +1353,15 @@ InstallMethod( Display,
       
       vs := ViewString( degree[ 1 ] );
       
-      if vs[ 1 ] = "(" then
+      #if vs[ 1 ] = "(" then
       
           Display( Concatenation( "<", ViewString( degree[ 1 ] ), ">", s ) );
           
-      else
+      #else
       
-          Display( Concatenation( "<(", ViewString( degree[ 1 ] ), ")>", s ) );
+          #Display( Concatenation( "<(", ViewString( degree[ 1 ] ), ")>", s ) );
       
-      fi;
+      #fi;
       
     od;
      
