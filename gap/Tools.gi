@@ -29,7 +29,7 @@ InstallGlobalFunction( Time,
     
     t1 := NanosecondsSinceEpoch( );
     
-    Print( Float( ( t1 - t0 ) / 10^9 ), " Secs." );
+    Print( Float( ( t1 - t0 ) / 10^9 ), " Secs.\n" );
     
     return output;
     
