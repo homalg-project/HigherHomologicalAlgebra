@@ -24,8 +24,8 @@ omegas_2 := RangeOfFunctor( I2 );
 
 omegas := BoxProduct( omegas_1, omegas_2, freyd );
 V := IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( I1, I2, omegas );
-V := ExtendFunctorToAdditiveClosures( I );
-V := ExtendFunctorToHomotopyCategories( I );
+V := ExtendFunctorToAdditiveClosures( V );
+V := ExtendFunctorToHomotopyCategories( V );
 
 B := BeilinsonExperimental( S );
 quit;
