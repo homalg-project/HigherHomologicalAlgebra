@@ -657,6 +657,43 @@ InstallMethod( QuiverRows,
 
 end );
 
+##
+InstallMethod( Algebroid,
+          [ IsQuiverAlgebra ],
+          1000,
+  function( A )
+    local v, algebroid, name, r;
+    
+    v := ValueOption( "algebroid_derived_cats" );
+    
+    if v = false then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    algebroid := Algebroid( A : algebroid_derived_cats := false );
+    
+    if HasTensorProductFactors( A ) then
+      
+      name := List( TensorProductFactors( A ), Name );
+      
+      name := JoinStringsWithSeparator( name, "⊗ " );
+      
+    else
+      
+      name := Name( A );
+      
+    fi;
+    
+    r := RandomTextColor( "" );
+    
+    algebroid!.Name := Concatenation( r[ 1 ], "Algebroid( ", r[ 2 ], name, r[ 1 ], " )", r[ 2 ] );
+    
+    return algebroid;
+
+end );
+
 ###########################################
 #
 # Related to product of projective spaces
