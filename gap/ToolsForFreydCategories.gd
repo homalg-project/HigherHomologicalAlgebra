@@ -8,6 +8,7 @@ DeclareGlobalFunction( "ADD_RANDOM_METHODS_TO_GRADED_ROWS" );
 DeclareGlobalFunction( "IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PPS_IN_KERNEL_OF_SERRE_QUOTIENT" );
 DeclareGlobalFunction( "ANNIHILATOR_OF_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PPS" );
 DeclareAttribute( "UnderlyingCategoryOfRows", IsCategoryOfGradedRows );
+DeclareGlobalFunction( "IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PS_IN_KERNEL_OF_SERRE_QUOTIENT" );
 
 DeclareOperation( "BoxProduct", [ IsList, IsCapCategory ] );
 DeclareOperation( "BoxProduct",

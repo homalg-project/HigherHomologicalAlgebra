@@ -525,6 +525,47 @@ InstallGlobalFunction( IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PPS_IN_KERNEL_OF_
 end );
 
 ##
+InstallGlobalFunction( IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PS_IN_KERNEL_OF_SERRE_QUOTIENT,
+  
+  function( o )
+    local freyd, rows, S;
+    
+    freyd := CapCategory( o );
+    
+    rows := UnderlyingCategory( freyd );
+    
+    S := UnderlyingGradedRing( rows );
+    
+    o := ApplyFunctor( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations( S ), o );
+    
+    return IsZero( HilbertPolynomial( AsPresentationInHomalg( o ) ) );
+    
+end );
+
+##
+InstallMethod( CoherentSheavesOverProjectiveSpace,
+          [ IsHomalgGradedRing ],
+          1000,
+  function( S )
+    local freyd, sub_cat, coh, factor, r;
+    
+    freyd := FreydCategory( CategoryOfGradedRows( S ) );
+    
+    sub_cat := FullSubcategoryByMembershipFunction( freyd, IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PS_IN_KERNEL_OF_SERRE_QUOTIENT );
+    
+    coh := freyd / sub_cat;
+    
+    factor := Concatenation( "P^", String( Size( Indeterminates( S ) ) - 1 ) );
+    
+    r := RandomTextColor( Name( freyd ) );
+    
+    coh!.Name := Concatenation( r[ 1 ], "Coherent sheaves( ", r[ 2 ], factor, " with Cox ring ", String( S ), r[ 1 ], " )", r[ 2 ] );
+    
+    return coh;
+    
+end );
+
+##
 InstallMethod( CoherentSheavesOverProductOfProjectiveSpaces,
           [ IsHomalgGradedRing ],
   function( S )
