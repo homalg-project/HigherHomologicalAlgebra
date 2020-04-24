@@ -21,7 +21,7 @@ U_o1 := U( o1 * freyd );
 Display( U_o1 );
 
 # or Interpret the output in the homotopy of the quiver representations over the opposite algebra
-U_o1 := U( o1 * freyd ) * HomotopyCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) )
+U_o1 := U( o1 * freyd ) * HomotopyCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
 ViewHomotopyCategoryObject( U_o1 );
 
 # or Interpret the output in the derived category of the quiver representations over the opposite algebra
