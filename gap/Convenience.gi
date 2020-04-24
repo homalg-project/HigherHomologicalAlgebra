@@ -533,6 +533,40 @@ InstallMethod( \/,
       
     fi;
     
+    if IsCapFullSubcategory( defining_cat_2 ) and HasIsAdditiveCategory( defining_cat_2 ) then
+     
+      if HasFullSubcategoryGeneratedByProjectiveObjects( defining_cat_1 ) and
+            IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( defining_cat_1 ), defining_cat_2 ) then
+          
+          return LocalizationFunctorByProjectiveObjects( homotopy_category_1 );
+         
+         
+      fi;
+      
+      if HasFullSubcategoryGeneratedByInjectiveObjects( defining_cat_1 ) and
+            IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( defining_cat_1 ), defining_cat_2 ) then
+          
+          return LocalizationFunctorByInjectiveObjects( homotopy_category_1 );
+         
+         
+      fi;
+     
+    fi;
+    
+    if IsFreydCategory( defining_cat_1 ) and IsCategoryOfGradedRows( defining_cat_2 ) then
+      
+      if IsIdenticalObj( defining_cat_2, UnderlyingCategory( defining_cat_1 ) ) then
+        
+        I := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsOntoGradedRows( defining_cat_1 );
+        
+        I := ExtendFunctorToHomotopyCategories( I );
+        
+        return PreCompose( LocalizationFunctorByProjectiveObjects( homotopy_category_1 ), I );
+        
+      fi;
+      
+    fi;
+    
     I := DefiningCategory( homotopy_category_1 ) / DefiningCategory( homotopy_category_2 );
     
     return ExtendFunctorToHomotopyCategories( I );
@@ -646,6 +680,38 @@ InstallMethod( \/,
       fi;
       
       return EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations( S );
+      
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( \/,
+          [ IsCategoryOfGradedRows, IsCapCategory ],
+  function( graded_rows, category )
+    local S, freyd_category;
+    
+    if IsIdenticalObj( category, graded_rows ) then
+      
+      return IdentityFunctor( category );
+      
+    fi;
+   
+    if IsBound( category!.ring_for_representation_category ) then
+      
+      S := category!.ring_for_representation_category;
+      
+      if not IsIdenticalObj( S, UnderlyingGradedRing( graded_rows ) ) then
+        TryNextMethod( );
+      fi;
+      
+      freyd_category := FreydCategory( graded_rows );
+      
+      return PreCompose( graded_rows/freyd_category, freyd_category/category );
       
     else
       
