@@ -12,6 +12,29 @@ InstallMethod( \/,
   { F, category } -> PreCompose( F, RangeOfFunctor( F ) / category )
 );
 
+
+##
+InstallMethod( \/,
+          [ IsList, IsCapCategory ],
+  function( l, category )
+    
+    if IsEmpty( l ) then
+      TryNextMethod( );
+    fi;
+    
+    if not ForAll( l, IsCapCategoryObject ) then
+      TryNextMethod( );
+    fi;
+    
+    if not ForAll( l, o -> IsIdenticalObj( CapCategory( o ), category ) ) then
+      TryNextMethod( );
+    fi;
+    
+    return FullSubcategoryGeneratedByListOfObjects( l );
+    
+end );
+
+
 ##
 InstallMethod( \.,
         [ IsAdditiveClosureCategory, IsPosInt ],
@@ -726,7 +749,11 @@ InstallMethod( \/,
           [ IsList, IsCategoryOfGradedRows ],
   function( l, rows )
     
-    return GradedRow( l, UnderlyingGradedRing( rows ) );
+    if not IsEmpty( l ) and IsCapCategoryCell( l[ 1 ] ) then
+        TryNextMethod( );
+    else
+        return GradedRow( l, UnderlyingGradedRing( rows ) );
+    fi;
     
 end );
 
@@ -735,7 +762,7 @@ InstallMethod( \/,
           [ IsList , IsCategoryOfGradedRows ],
   function( l, rows )
     
-    if IsEmpty( l ) or IsList( l[ 1 ] ) then
+    if IsEmpty( l ) or IsCapCategoryCell( l[ 1 ] ) or IsList( l[ 1 ] ) then
       TryNextMethod( );
     fi;
     

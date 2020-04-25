@@ -1,5 +1,5 @@
 
-DeclareOperation( "\/", [ IsList, IsCategoryOfGradedRows ] );
+DeclareOperation( "\/", [ IsList, IsCapCategory ] );
 DeclareOperation( "\/", [ IsCapCategoryCell, IsCategoryOfGradedRows ] );
 DeclareOperation( "\/", [ IsCapCategory, IsCapCategory ] );
 DeclareOperation( "\*", [ IsCapCategoryCell, IsCapCategory ] );
