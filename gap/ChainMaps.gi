@@ -277,8 +277,8 @@ end );
 #
 ###################################
 
-InstallMethod( MorphismAtOp, 
-          [ IsChainOrCochainMorphism, IsInt ], 
+InstallMethod( MorphismAtOp,
+          [ IsChainOrCochainMorphism, IsInt ],
 
   function( phi, i )
      local m;
@@ -360,26 +360,33 @@ InstallMethod( ViewObj,
   
 end );
 
-
-##
-InstallMethod( Display, 
-               [ IsChainOrCochainMorphism, IsInt, IsInt ], 
+BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
   function( map, m, n )
     local r, s, i;
     
     r := RandomTextColor( "" );
      
-    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
     Print( "\n" );
     for i in [ m .. n ] do
       
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
       Print( "\n" ); 
       DisplayCapCategoryCell( map[ i ] );
       Print( "\n" );
       
     od;
+
+end );
+
+##
+InstallMethod( Display,
+               [ IsChainOrCochainMorphism, IsInt, IsInt ],
+  function( map, m, n )
+    
+    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM( map, m, n );
+    
+    Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
     
 end );
 
@@ -400,25 +407,34 @@ InstallMethod( Display,
 end );
 
 ##
-InstallMethod( ViewChainOrCochainMorphism, 
-               [ IsChainOrCochainMorphism, IsInt, IsInt ], 
+BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
   function( map, m, n )
     local r, s, i;
     
     r := RandomTextColor( "" );
      
-    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
     Print( "\n" );
     for i in [ m .. n ] do
       
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+      s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
-      Print( "\n" ); 
+      Print( "\n" );
       ViewCapCategoryCell( map[ i ] );
       Print( "\n" );
       
     od;
 
+end );
+
+##
+InstallMethod( ViewChainOrCochainMorphism,
+               [ IsChainOrCochainMorphism, IsInt, IsInt ],
+  function( map, m, n )
+    
+    VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM( map, m, n );
+    
+    Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
+    
 end );
 
 ##
@@ -434,7 +450,7 @@ InstallMethod( ViewChainOrCochainMorphism,
         Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
         
       fi;
-    
+      
 end );
 
 ##
@@ -512,13 +528,14 @@ InstallMethod( IsWellDefined,
    fi;
    return true;
 end );
-   
+
 #################################
 #
 # Operations
 #
 #################################
 
+##
 InstallMethod( HasActiveLowerBound,
                [ IsChainOrCochainMorphism ],
   
@@ -540,6 +557,7 @@ InstallMethod( HasActiveLowerBound,
     
 end );
 
+##
 InstallMethod( HasActiveUpperBound,
                [ IsChainOrCochainMorphism ],
   function( phi )
@@ -636,8 +654,8 @@ end );
 
 ##
 InstallMethod( ActiveLowerBound,
-               [ IsChainOrCochainMorphism ],
-  
+          [ IsChainOrCochainMorphism ],
+          
   function( phi )
     local l;
     
@@ -697,8 +715,8 @@ end );
 
 ##
 InstallMethod( ActiveUpperBound,
-               [ IsChainOrCochainMorphism ],
-  
+          [ IsChainOrCochainMorphism ],
+          
   function( phi )
     local l;
     
@@ -869,7 +887,7 @@ InstallMethod( MappingCone,
     C := Range( phi );
     
     if IsChainMorphism( phi ) then
-        
+      
       diffs := AsZFunction( n ->
                     MorphismBetweenDirectSums(
                       [
@@ -877,7 +895,7 @@ InstallMethod( MappingCone,
                         [ ZeroMorphism( C[n], B[n - 2] ), C ^ n      ]
                       ] )
                   );
-            
+                  
       complex := ChainComplex( UnderlyingCategory( complex_cat ), diffs );
         
       AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
@@ -1032,9 +1050,9 @@ end );
 #    |                 |
 #    | alpha_0         | alpha_1
 #    |                 |
-#    v                 v 
+#    v                 v
 #    A' --- psi -----> B' ---------> Cone( psi )
-#  
+#
 InstallMethodWithCrispCache( MappingConePseudoFunctorial,
    [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
   function( phi, psi, alpha_0, alpha_1 )
@@ -1053,7 +1071,7 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i - 1 ] ), alpha_1[ i ] ]
                 ] )
               );
-            
+              
     return ChainMorphism( cone_phi, cone_psi, maps );
     
 end );
@@ -1097,13 +1115,13 @@ InstallMethodWithCrispCache( MappingConePseudoFunctorial,
                   [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
                 ] )
               );
-            
+              
     return ChainMorphism( cone_phi, cone_psi, maps );
     
 end );
 
 ##
-InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone, 
+InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone,
             [ IsChainOrCochainMorphism ],
     function( phi )
     local B, C, morphisms;
@@ -1112,7 +1130,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone,
     
     C := Range( phi );
     
-    if IsChainMorphism( phi ) then 
+    if IsChainMorphism( phi ) then
       
       morphisms := AsZFunction( n ->
                     MorphismBetweenDirectSums(
@@ -1122,20 +1140,20 @@ InstallMethod( NaturalMorphismFromMappingCylinderInMappingCone,
                         [ ZeroMorphism( B[ n ], B[ n - 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ]
                       ] )
                     );
-      
+                     
       return ChainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
       
     else
       
       morphisms := AsZFunction( n ->
                     MorphismBetweenDirectSums(
-                        [ 
+                        [
                           [ IdentityMorphism( B[ n + 1 ] ), ZeroMorphism( B[ n + 1 ], C[ n ] ) ],
                           [ ZeroMorphism( C[ n ], B[ n + 1 ] ), AdditiveInverse( IdentityMorphism( C[ n ] ) ) ],
                           [ ZeroMorphism( B[ n ], B[ n + 1 ] ), ZeroMorphism( B[ n ], C[ n ] ) ]
                         ] )
                     );
-                                                               
+                    
       return CochainMorphism( MappingCylinder( phi ), MappingCone( phi ), morphisms );
        
     fi;
@@ -1148,7 +1166,7 @@ end );
 #
 #######################################
 
-InstallMethod( MappingCylinder, 
+InstallMethod( MappingCylinder,
                [ IsChainOrCochainMorphism ],
   function( phi )
     
@@ -1157,8 +1175,8 @@ InstallMethod( MappingCylinder,
 end );
 
 ##
-InstallMethod( NaturalInjectionOfSourceInMappingCylinder, 
-               [ IsChainOrCochainMorphism ], 
+InstallMethod( NaturalInjectionOfSourceInMappingCylinder,
+               [ IsChainOrCochainMorphism ],
   function ( phi )
     local morphisms, B, C;
     
@@ -1174,18 +1192,18 @@ InstallMethod( NaturalInjectionOfSourceInMappingCylinder,
                           [ ZeroMorphism( B[ n ], B[ n - 1 ] ), ZeroMorphism( B[ n ], C[ n ] ), IdentityMorphism( B[ n ] ) ]
                         ] )
                       );
-            
+                      
         return ChainMorphism( B, MappingCylinder( phi ), morphisms );
         
     else
         
         morphisms := AsZFunction( n ->
-                      MorphismBetweenDirectSums( 
+                      MorphismBetweenDirectSums(
                         [
                           [ ZeroMorphism( B[ n ], B[ n + 1 ] ), ZeroMorphism( B[ n ], C[ n ] ), IdentityMorphism( B[ n ] ) ]
                         ] )
                       );
-        
+                      
         return CochainMorphism( B, MappingCylinder( phi ), morphisms );
         
     fi;
@@ -1194,8 +1212,8 @@ end );
 
 # 
 ##
-InstallMethod( NaturalInjectionOfRangeInMappingCylinder, 
-               [ IsChainOrCochainMorphism ],           
+InstallMethod( NaturalInjectionOfRangeInMappingCylinder,
+               [ IsChainOrCochainMorphism ],
   function ( phi )
     local morphisms, B, C;
     
@@ -1211,7 +1229,7 @@ InstallMethod( NaturalInjectionOfRangeInMappingCylinder,
                           [ ZeroMorphism( C[n], B[n - 1] ), IdentityMorphism( C[n] ), ZeroMorphism( C[n], B[n] ) ]
                         ] )
                       );
-            
+                      
         return ChainMorphism( C, MappingCylinder( phi ), morphisms );
         
     else
@@ -1222,7 +1240,7 @@ InstallMethod( NaturalInjectionOfRangeInMappingCylinder,
                           [ ZeroMorphism( C[n], B[n + 1] ), IdentityMorphism( C[n] ), ZeroMorphism( C[n], B[n] ) ]
                         ] )
                       );
-            
+                      
         return CochainMorphism( C, MappingCylinder( phi ), morphisms );
         
     fi;
@@ -1239,7 +1257,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInRange,
     
     C := Range( phi );
     
-    if IsChainMorphism( phi ) then 
+    if IsChainMorphism( phi ) then
       
       morphisms := AsZFunction( n ->
                     MorphismBetweenDirectSums(
@@ -1249,7 +1267,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInRange,
                         [ phi[ n ]                           ]
                       ] )
                     );
-      
+                    
       return ChainMorphism( MappingCylinder( phi ), C, morphisms );
       
     else
@@ -1262,7 +1280,7 @@ InstallMethod( NaturalMorphismFromMappingCylinderInRange,
                         [ phi[ n ]                           ]
                       ] )
                     );
-                                        
+                    
       return CochainMorphism( MappingCylinder( phi ), C, morphisms );
       
     fi;
@@ -1368,7 +1386,7 @@ InstallMethod( NaturalMorphismFromMappingCocylinderToRange,
     fi;
     
 end );
-    
+
 ##
 InstallMethod( IsQuasiIsomorphism,
                   [ IsChainOrCochainMorphism ],
@@ -1395,7 +1413,7 @@ InstallMethod( IsQuasiIsomorphism,
       
       h_functor := HomologyFunctor;
       
-    else 
+    else
       
       h_functor := CohomologyFunctor;
       
@@ -1460,7 +1478,7 @@ end );
 
 ##
 InstallMethod( StalkChainMorphismOp,
-          [ IsCapCategoryMorphism, IsInt ], 
+          [ IsCapCategoryMorphism, IsInt ],
   function( f, n )
     local morphism;
     
@@ -1474,7 +1492,7 @@ end );
 
 ##
 InstallMethod( StalkCochainMorphismOp,
-          [ IsCapCategoryMorphism, IsInt ], 
+          [ IsCapCategoryMorphism, IsInt ],
   function( f, n )
     local morphism;
     

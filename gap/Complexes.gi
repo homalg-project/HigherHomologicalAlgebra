@@ -457,14 +457,11 @@ InstallMethod( ViewObj,
 end );
 
 ##
-InstallMethod( Display,
-               [ IsChainOrCochainComplex, IsInt, IsInt ],
+BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
   function( C, m, n )
-    local r, co_homo, s, dashes, i;
+    local r, s, i;
     
     r := RandomTextColor( "" );
-    
-    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
     if IsChainComplex( C ) then
       
@@ -476,30 +473,30 @@ InstallMethod( Display,
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         fi;
-        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
         Print( s );
         Print( "\n" );
         DisplayCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "=" ) )
           );
         Print( "\n\n" );
       od;
       
-    else
+    elif IsCochainComplex( C ) then
       
       for i in [ m .. n ] do
         
-        s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
+        s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
         Print( s );
         Print( "\n" );
         DisplayCapCategoryCell( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
+            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "=" ) )
           );
         Print( "\n\n" );
         if i <> n then
@@ -513,7 +510,23 @@ InstallMethod( Display,
         
       od;
       
+    else
+      
+      Error( "Wrong input!\n" );
+      
     fi;
+    
+
+end );
+
+##
+InstallMethod( Display,
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, m, n )
+    
+    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( C, m, n );
+    
+    Print( "\nAn object in ", Name( CapCategory( C ) ), " given by the above data\n" );
     
 end );
 
@@ -538,15 +551,11 @@ InstallMethod( DisplayComplex, [ IsChainOrCochainComplex, IsInt, IsInt ], Displa
 
 InstallMethod( DisplayComplex, [ IsBoundedChainOrCochainComplex ], Display );
 
-##
-InstallMethod( ViewComplex,
-               [ IsChainOrCochainComplex, IsInt, IsInt ],
+BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
   function( C, m, n )
-    local r, co_homo, s, dashes, i;
+    local r, s, i;
     
     r := RandomTextColor( "" );
-    
-    Print( "An object in ", Name( CapCategory( C ) ), " given by the data: \n\n" );
     
     if IsChainComplex( C ) then
       
@@ -595,7 +604,19 @@ InstallMethod( ViewComplex,
       od;
       
     fi;
-     
+
+end );
+
+##
+InstallMethod( ViewComplex,
+               [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, m, n )
+    local r, co_homo, s, dashes, i;
+    
+    VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( C, m, n );
+    
+    Print( "\nAn object in ", Name( CapCategory( C ) ), " given by the above data\n" );
+         
 end );
 
 ##
