@@ -2918,7 +2918,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
               [ IsQuiverAlgebra and IsRightQuiverAlgebra, IsRationalsForHomalg ],
               1000,
   function( A, field )
-    local cat, domain, r, finalize_cat;
+    local cat, domain, r, name, finalize_cat;
     
     if HasCategoryOfQuiverRepresentations( A ) then
       
@@ -2939,6 +2939,16 @@ InstallMethod( CategoryOfQuiverRepresentations,
     fi;
     
     cat := CategoryOfQuiverRepresentations( A : FinalizeCategory := false, coqr_derived_cats := false );
+    
+    if HasTensorProductFactors( A ) then
+      
+      name := List( TensorProductFactors( A ), Name );
+      
+      name := JoinStringsWithSeparator( name, "⊗ " );
+      
+      A!.alternative_name := name;
+      
+    fi;
     
     if Name( A ) <> "none" then
       

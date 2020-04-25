@@ -249,8 +249,7 @@ InstallGlobalFunction( ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS,
           
           return true;
       
-      elif IsPackageMarkedForLoading( "NConvex", "2019.02.02" ) or 
-                ( IsPackageMarkedForLoading( "Convex", "2017.09.02" ) and IsPackageMarkedForLoading( "PolymakeInterface", "2018.09.25" ) ) then
+      elif IsPackageMarkedForLoading( "NConvex", "2019.02.02" ) then
         
         random_homogeneous_element_func :=
           function( degree )

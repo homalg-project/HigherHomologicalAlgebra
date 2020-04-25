@@ -7,23 +7,25 @@ InstallMethod( MONOMIALS_OF_DEGREEOp,
 );
 
 ##
-InstallMethodWithCrispCache( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
+InstallMethod( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
           [ IsGradedRow ],
-function( M )
+function( o )
   local S, G, dG, positions, L, mats, current_mat, i;
   
-  if Rank( M ) = 0 then
+  if Rank( o ) = 0 then
     return [  ];
   fi;
   
-  S := UnderlyingHomalgGradedRing( M );
+  S := UnderlyingHomalgGradedRing( o );
   
-  G := UnzipDegreeList( M );
+  G := UnzipDegreeList( o );
   dG := DuplicateFreeList( G );
   dG := List( dG, d -> MONOMIALS_OF_DEGREE( S, d ) );
   
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
+  
   L := ListWithIdenticalEntries( Length( G ), 0 );
+  
   List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
   
   mats := [  ];
@@ -37,13 +39,13 @@ function( M )
     if not IsZero( current_mat ) then
       
       mats := Concatenation( mats, Cartesian( current_mat ) );
-    
+      
     fi;
-  
+    
   od;
   
   return mats;
-
+  
 end );
 
 ##
@@ -285,10 +287,65 @@ InstallMethod( FullSubcategoryGeneratedByGradedRowsOfRankOne,
 end );
 
 ##
+BindGlobal( "SET_INTERPRETATION_ISOMORPHISM_FROM_AND_TO_ALGEBROID",
+  function( S )
+    local omegas, algebra_1, algebroid_1, algebra_2, algebroid_2, I1, I2, algebroid, I;
+    
+    if not IsBound( S!.factor_rings ) or Length( S!.factor_rings ) <> 2 then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    omegas := FullSubcategoryGeneratedByBoxProductOfTwistedCotangentModules( S );
+    
+    algebra_1 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 1 ] );
+    
+    algebroid_1 := Algebroid( algebra_1 );
+    
+    algebra_2 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[ 2 ] );
+    
+    algebroid_2 := Algebroid( algebra_2 );
+    
+    I1 := InterpretationIsomorphismFromAlgebroid( algebroid_1 );
+    
+    I2 := InterpretationIsomorphismFromAlgebroid( algebroid_2 );
+    
+    algebroid := TensorProductOnObjects( algebroid_1, algebroid_2 );
+    
+    if not HasInterpretationIsomorphismFromAlgebroid( algebroid ) then
+      
+      I := IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( I1, I2, omegas );
+      
+      if not IsIdenticalObj( algebroid, SourceOfFunctor( I ) ) then
+        Error( "Unexpected error happend, please report this!\n" );
+      fi;
+     
+      SetInterpretationIsomorphismFromAlgebroid( algebroid, I );
+      
+    fi;
+    
+    if not HasInterpretationIsomorphismOntoAlgebroid( algebroid ) then
+      
+      I := IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids( I1, I2, omegas );
+      
+      if not IsIdenticalObj( algebroid, RangeOfFunctor( I ) ) then
+        Error( "Unexpected error happend, please report this!\n" );
+      fi;
+      
+      SetInterpretationIsomorphismOntoAlgebroid( algebroid, I );
+      
+    fi;
+    
+end );
+
+##
 BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_ALGEBROID",
 
   function( S )
     local full, A1, A2, Ho_A, ring, B1, B2, name, B, func_on_objects, func_on_morphisms;
+    
+    SET_INTERPRETATION_ISOMORPHISM_FROM_AND_TO_ALGEBROID( S );
     
     full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
     
@@ -361,6 +418,8 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_QUIVER_ROWS"
 
   function( S )
     local full, A1, A2, Ho_QRows, ring, B1, B2, name, B, func_on_objects, func_on_morphisms;
+    
+    SET_INTERPRETATION_ISOMORPHISM_FROM_AND_TO_ALGEBROID( S );
     
     full := FullSubcategoryGeneratedByGradedRowsOfRankOne( S );
     
@@ -549,6 +608,30 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
 end );
 
 ##
+InstallMethod( FullSubcategoryGeneratedByBoxProductOfTwistedCotangentModules,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local freyd, B1, B2, omegas_1, omegas_2;
+    
+    if not IsBound( S!.factor_rings ) and Size( S!.factor_rings ) = 2 then
+      TryNextMethod( );
+    fi;
+    
+    freyd := FreydCategory( CategoryOfGradedRows( S ) );
+    
+    B1 := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules( S!.factor_rings[ 1 ] );
+    
+    B2 := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules( S!.factor_rings[ 2 ] );
+    
+    omegas_1 := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B1 ) ) );
+    
+    omegas_2 := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B2 ) ) );
+    
+    return BoxProduct( omegas_1, omegas_2, freyd );
+    
+end );
+
+##
 InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfBoxProductOfTwistedCotangentModules,
           [ IsHomalgGradedRing ],
   function( S )
@@ -573,7 +656,6 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfBoxProduct
     return I;
     
 end );
-
 
 ##
 InstallMethod( FreydCategory,
@@ -643,6 +725,8 @@ InstallMethod( QuiverRows,
       
       name := JoinStringsWithSeparator( name, "⊗ " );
       
+      A!.alternative_name := name;
+      
     else
       
       name := Name( A );
@@ -679,6 +763,8 @@ InstallMethod( Algebroid,
       name := List( TensorProductFactors( A ), Name );
       
       name := JoinStringsWithSeparator( name, "⊗ " );
+      
+      A!.alternative_name := name;
       
     else
       

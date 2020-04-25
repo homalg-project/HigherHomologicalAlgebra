@@ -16,6 +16,7 @@ DeclareOperation( "BoxProduct",
       [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapCategory ]
     );
 
+DeclareAttribute( "FullSubcategoryGeneratedByBoxProductOfTwistedCotangentModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfBoxProductOfTwistedCotangentModules", IsHomalgGradedRing );

@@ -1,12 +1,22 @@
 
 
 ##
-InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory,
+InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
           [ IsHomalgGradedRing ],
   function( S )
-    local F, G;
     
-    F := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S );
+    return RangeOfFunctor( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModules( S ) );
+    
+end );
+
+##
+InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModules,
+          [ IsHomalgGradedRing ],
+          1000,
+  function( S )
+    local F, G;
+
+    F := IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGLP( S ); # GLP=GradedLeftPresentations
     
     G := EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows( S );
     
@@ -23,12 +33,12 @@ InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsOb
 end );
 
 ##
-InstallMethod( IsomorphismFromTwistedCotangentModulesAsObjectsInFreydCategoryOntoTwistedOmegaModules,
+InstallMethod( IsomorphismFromTwistedCotangentModulesOntoTwistedOmegaModules,
           [ IsHomalgGradedRing ],
   function( S )
     local F, G;
     
-    F := IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S );
+    F := IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGLP( S );
     
     G := EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows( S );
     
@@ -133,7 +143,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
           Algebroid( collection ),
           PreCompose(
               IsomorphismFromAlgebroid( collection ),
-              IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory( S )
+              IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModules( S )
             )
         );
         
@@ -141,7 +151,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
           Algebroid( collection ),
           PostCompose(
               IsomorphismOntoAlgebroid( collection ),
-              IsomorphismFromTwistedCotangentModulesAsObjectsInFreydCategoryOntoTwistedOmegaModules( S )
+              IsomorphismFromTwistedCotangentModulesOntoTwistedOmegaModules( S )
             )
         );
     
@@ -308,7 +318,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCot
     
     B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules( S );
         
-    G := IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsObjectsInFreydCategory( S );
+    G := IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModules( S );
     
     G := ExtendFunctorToAdditiveClosures( G );
     

@@ -17,14 +17,7 @@ ReadPackage( "DerivedCategories", "gap/BoxProduct.gi" );
 ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/TempMethods.gi" );
 ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gi" );
-
-if IsPackageMarkedForLoading( "BBGG", ">= 2019.04.16" ) then
-  ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
-  ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
-fi;
-
-if IsPackageMarkedForLoading( "NConvex", ">= 2020.01.01" ) then
-  ReadPackage( "DerivedCategories", "gap/ToolsForHomalg.gi" );
-  ReadPackage( "DerivedCategories", "gap/ToolsForFreydCategories.gi" );
-fi;
-
+ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" );
+ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
+ReadPackage( "DerivedCategories", "gap/ToolsForHomalg.gi" );
+ReadPackage( "DerivedCategories", "gap/ToolsForFreydCategories.gi" );

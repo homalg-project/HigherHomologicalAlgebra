@@ -4,31 +4,58 @@ ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 # create graded polynomial ring
 Q := HomalgFieldOfRationalsInSingular( );
 S := CoxRingForProductOfProjectiveSpaces( Q, [ 1, 2 ] );
+
+# create the Beilinson functor
+U := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
+twisted_omegas := FullSubcategoryGeneratedByBoxProductOfTwistedCotangentModules( S );
+
+# Geometry
 rows := CategoryOfGradedRows( S );
 freyd := FreydCategory( rows );
 fpres := GradedLeftPresentations( S );
 coh_P1xP2 := CoherentSheavesOverProductOfProjectiveSpaces( S );
 Sh := SheafificationFunctor( coh_P1xP2 );
 
-algebra_1 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[1] );
-algebra_2 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[2] );
+# Algebra
+A_1 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[1] );
+A_2 := EndomorphismAlgebraOfCotangentBeilinsonCollection( S!.factor_rings[2] );
+algebra := TensorProductOfAlgebras( A_1, A_2 );
 
-algebroid_1 := Algebroid( algebra_1 );
-algebroid_2 := Algebroid( algebra_2 );
+algebroid := Algebroid( algebra );
+qrows := QuiverRows( algebra );
+qreps := CategoryOfQuiverRepresentations( algebra );
 
-I1 := InterpretationIsomorphismFromAlgebroid( algebroid_1 );
-I2 := InterpretationIsomorphismFromAlgebroid( algebroid_2 );
-
-omegas_1 := RangeOfFunctor( I1 );
-omegas_2 := RangeOfFunctor( I2 );
-
-omegas := BoxProduct( omegas_1, omegas_2, freyd );
-V := IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( I1, I2, omegas );
-V := ExtendFunctorToAdditiveClosures( V );
-V := ExtendFunctorToHomotopyCategories( V );
-
-B := BeilinsonExperimental( S );
 quit;
 
-o_11 := [1,1] / rows;
+o11 := [1,1] / rows;
+
+# Or interpret the o11 in the freyd category
+U_o11 := o11 * freyd;
+
+# Or interpret the output in the homotopy of the additive closure of 'algebroid'
+U_o11 := U( o11 );
+
+# Or interpret the output in the homotopy of the quiver rows
+U_o11 := U( o11 ) * HomotopyCategory( QuiverRows( algebra ) );
+
+# Or interpret the output in the homotopy of the quiver representations over the opposite algebra
+U_o11 := U( o11 ) * HomotopyCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
+
+# Or interpret the output in the derived category of the quiver representations over the opposite algebra
+U_o11 := U( o11 ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
+
+# Or interpret the output as a quiver representation
+U_o11 := HomologyAt( U( o11 ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) ), 0 );
+
+# Or interpret the output in the homotopy of twisted cotangent modules
+U_o11 := U( o11 ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) );
+
+# Or interpret the output in the homotopy of the freyd category
+U_o11 := U( o11 ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd );
+
+# Or interpret the output in the homotopy of the graded rows, i.e., in terms of the collection O(-3),O(-2),O(-1)
+U_o11 := U( o11 ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows );
+
+# Or interpret the output in the homotopy of graded left presentations
+U_o11 := U( o11 ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows ) * HomotopyCategory( fpres );
 

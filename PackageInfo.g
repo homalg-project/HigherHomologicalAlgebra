@@ -77,7 +77,8 @@ Dependencies := rec(
   SuggestedOtherPackages := [
             [ "BBGG", ">= 2020.04.16" ],
             [ "NConvex", ">= 2019.12.06" ],
-            ],
+            [ "4ti2Interface", ">= 2019.09.03" ]
+          ],
   ExternalConditions := [ ],
 ),
 

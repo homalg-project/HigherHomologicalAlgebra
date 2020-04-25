@@ -122,6 +122,7 @@ BindGlobal( "IS_ZERO_SHEAF_OVER_Pm_x_Pn",
     
 end );
 
+##
 InstallMethod( CoxRingForProductOfProjectiveSpaces,
           [ IsRationalsForHomalg, IsList ],
   function( homalg_field, L )
@@ -169,54 +170,6 @@ InstallMethod( CoxRingForProductOfProjectiveSpaces,
 end );
 
 ##
-InstallMethod( BoxProductOnProductOfProjectiveSpaces,
-          [ IsHomalgGradedRing ],
-  function( S )
-    local coh, sh, cats, prod_cats, n, I, F;
-
-    coh := CoherentSheavesOverProductOfProjectiveSpaces( S );
-    
-    sh := CanonicalProjection( coh );
-    
-    cats := List( S!.factor_rings, GradedLeftPresentations );
-    
-    prod_cats := CallFuncList( Product, cats );
-    
-    n := Length( cats );
-    
-    I := List( [ 1 .. n ], i -> PullbackFunctorAlongProjectionOp( S, i ) );
-    
-    F := CapFunctor( "Box tensor functor", prod_cats, coh );
-    
-    # M_1 x M_2 x ... x M_n -> M_1 ⊠ M_2 ⊠ ... ⊠ M_n
-    AddObjectFunction( F,
-        function( M )
-          local L;
-          
-          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], M[ i ] ) );
-          return
-            ApplyFunctor(
-              sh,
-              Iterated( L, TensorProductOnObjects )
-            );
-    end );
-    
-    # f_1 x f_2 x ... x f_n -> f_1 ⊠ f_2 ⊠ ... ⊠ f_n
-    AddMorphismFunction( F,
-        function( s, phi, r )
-          local L;
-          L := List( [ 1 .. n ], i -> ApplyFunctor( I[ i ], phi[ i ] ) );
-          return
-            ApplyFunctor(
-              sh,
-              Iterated( L, TensorProductOnMorphisms )
-            );
-    end );
-    
-    return F;
-    
-end );
-
 InstallMethod( KoszulChainComplexOp,
           [ IsHomalgGradedRing, IsInt ],
   function( S, n )
