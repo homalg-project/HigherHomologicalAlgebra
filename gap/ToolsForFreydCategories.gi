@@ -735,7 +735,7 @@ InstallMethod( QuiverRows,
     
     r := RandomTextColor( "" );
     
-    QRows!.Name := Concatenation( r[ 1 ], "QuiverRows( ", r[ 2 ], name, r[ 1 ], " )", r[ 2 ] );
+    QRows!.Name := Concatenation( r[ 1 ], "Quiver rows( ", r[ 2 ], name, r[ 1 ], " )", r[ 2 ] );
     
     return QRows;
 
