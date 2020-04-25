@@ -79,8 +79,28 @@ function( Ho_C )
       
   end );
   
+  AddMorphismIntoStandardConeObject( Ho_C,
+    function( alpha )
+      local cell;
+      
+      cell := UnderlyingCell( alpha );
+      
+      return NaturalInjectionInMappingCone( cell ) / Ho_C;
+      
+  end );
+ 
   AddMorphismFromStandardConeObjectWithGivenStandardConeObject( Ho_C,
     function( alpha, st_cone )
+      local cell;
+      
+      cell := UnderlyingCell( alpha );
+      
+      return NaturalProjectionFromMappingCone( cell ) / Ho_C;
+      
+  end );
+  
+  AddMorphismFromStandardConeObject( Ho_C,
+    function( alpha )
       local cell;
       
       cell := UnderlyingCell( alpha );

@@ -19,7 +19,7 @@ BindGlobal( "TheTypeOfHomotopyCategoryObject",
 
 ##
 InstallMethod( HomotopyCategoryObject,
-            [ IsHomotopyCategory, IsCapCategoryObject ],
+            [ IsHomotopyCategory, IsChainComplex ],
             
   function( homotopy_category, a )
     local homotopy_a;
