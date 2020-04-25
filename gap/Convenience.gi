@@ -12,6 +12,11 @@ InstallMethod( \/,
   { F, category } -> PreCompose( F, RangeOfFunctor( F ) / category )
 );
 
+##
+InstallMethod( \/,
+          [ IsCapCategory, IsCapFunctor ],
+  { category, F } -> PreCompose( category / SourceOfFunctor( F ), F )
+);
 
 ##
 InstallMethod( \/,
