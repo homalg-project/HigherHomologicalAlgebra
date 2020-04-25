@@ -12,7 +12,7 @@ DeclareCategory( "IsHomotopyCategoryMorphism",
 
 
 DeclareOperation( "HomotopyCategoryMorphism",
-            [ IsHomotopyCategory, IsCapCategoryMorphism ] );
+            [ IsHomotopyCategory, IsChainMorphism ] );
 
 DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsList, IsInt ] );

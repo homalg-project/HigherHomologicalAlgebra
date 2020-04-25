@@ -17,7 +17,7 @@ BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
 
 ##
 InstallMethod( HomotopyCategoryMorphism,
-            [ IsHomotopyCategory, IsCapCategoryMorphism ],
+            [ IsHomotopyCategory, IsChainMorphism ],
             
   function( homotopy_category, phi )
     local homotopy_phi;
@@ -69,7 +69,7 @@ InstallMethod( \[\],
 
 ##
 InstallMethod( \/,
-          [ IsCapCategoryMorphism, IsHomotopyCategory ],
+          [ IsChainMorphism, IsHomotopyCategory ],
   {a,H} -> HomotopyCategoryMorphism( H, a )
 );
 
