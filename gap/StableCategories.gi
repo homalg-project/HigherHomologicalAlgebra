@@ -226,9 +226,15 @@ end );
 ##
 InstallMethod( \/,
           [ IsCapCategoryObject, IsStableCategory ],
-  {a,Q} -> StableCategoryObject( Q, a )
-);
-
+  function( a, Q )
+    
+    if not IsIdenticalObj( CapCategory( a ), UnderlyingCategory( Q ) ) then
+        TryNextMethod( );
+    fi;
+    
+    return StableCategoryObject( Q, a );
+    
+end );
 
 ##
 InstallMethod( StableCategoryMorphism,
@@ -247,9 +253,15 @@ end );
 ##
 InstallMethod( \/,
           [ IsCapCategoryMorphism, IsStableCategory ],
-  {a,Q} -> StableCategoryMorphism( Q, a )
-);
-
+  function( a, Q )
+    
+    if not IsIdenticalObj( CapCategory( a ), UnderlyingCategory( Q ) ) then
+        TryNextMethod( );
+    fi;
+    
+    return StableCategoryMorphism( Q, a );
+    
+end );
 
 ########################
 #
