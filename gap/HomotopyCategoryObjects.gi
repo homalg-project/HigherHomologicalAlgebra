@@ -99,30 +99,10 @@ InstallMethod( Display,
     
     u := ActiveUpperBound( a );
     
-    r := RandomTextColor( "" );
+    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( UnderlyingCell( a ), l, u );
+     
+    Print( "\nAn object in ", Name( CapCategory( a ) ), " given by the above data\n" );
     
-    Print( "An object in ", Name( CapCategory( a ) ), " given by the data: \n\n" );
-    
-    for i in [ l .. u ] do
-      if i <> l then
-        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        DisplayCapCategoryCell( a ^ i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
-      fi;
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
-      Print( s );
-      Print( "\n" );
-      DisplayCapCategoryCell( a[ i ] );
-      Print( "\n" );
-      Print( Concatenation(
-        ListWithIdenticalEntries(
-          Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
-        );
-      Print( "\n\n" );
-      
-    od;
     
 end );
 
@@ -154,31 +134,9 @@ InstallMethod( ViewHomotopyCategoryObject,
     l := ActiveLowerBound( a );
     
     u := ActiveUpperBound( a );
-   
-    r := RandomTextColor( "" );
     
-    Print( "An object in ", Name( CapCategory( a ) ), " given by the data: \n\n" );
+    VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( UnderlyingCell( a ), l, u );
     
-    for i in [ l .. u ] do
-      
-      if i <> l then
-        Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-        ViewCapCategoryCell( a ^ i );
-        Print( "\n" );
-        Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
-      fi;
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
-      Print( s );
-      Print( "\n" );
-      ViewCapCategoryCell( a[ i ] );
-      Print( "\n" );
-      Print( Concatenation(
-        ListWithIdenticalEntries(
-          Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
-        );
-      Print( "\n\n" );
-      
-    od;
-
+    Print( "\nAn object in ", Name( CapCategory( a ) ), " given by the above data\n" );
+    
 end );

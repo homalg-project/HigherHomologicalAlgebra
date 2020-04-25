@@ -140,22 +140,10 @@ InstallMethod( Display,
     
     u := ActiveUpperBound( map );
     
-    r := RandomTextColor( "" );
+    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM( UnderlyingCell( map ), l, u );
     
-    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
+    Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
     
-    Print( "\n" );
-    
-    for i in [ l .. u ] do
-      
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
-      Print( s );
-      Print( "\n" ); 
-      DisplayCapCategoryCell( map[ i ] );
-      Print( "\n" );
-      
-    od;
-
 end );
 
 InstallMethod( ViewObj,
@@ -179,20 +167,9 @@ InstallMethod( ViewHomotopyCategoryMorphism,
     
     u := ActiveUpperBound( map );
     
-    r := RandomTextColor( "" );
-     
-    Print( "A morphism in ", Name( CapCategory( map ) ), " given by the data: \n" );
-    Print( "\n" );
+    VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM( UnderlyingCell( map ), l, u );
     
-    for i in [ l .. u ] do
-      
-      s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
-      Print( s );
-      Print( "\n" ); 
-      ViewCapCategoryCell( map[ i ] );
-      Print( "\n" );
-      
-    od;
+    Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
 
 end );
 
