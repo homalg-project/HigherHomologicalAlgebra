@@ -19,6 +19,8 @@ o1 := [1] / rows;
 U := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
 algebra := EndomorphismAlgebraOfCotangentBeilinsonCollection( S );
 
+quit;
+
 U_o1 := U( o1 * freyd );
 
 # Or interpret the output in the homotopy of the quiver representations over the opposite algebra
