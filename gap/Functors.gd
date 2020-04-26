@@ -169,7 +169,8 @@ DeclareAttribute( "IsomorphismOntoImageOfFullyFaithfulFunctor", IsCapFunctor );
 
 DeclareAttribute( "IsomorphismFromImageOfFullyFaithfulFunctor", IsCapFunctor );
 
-DeclareAttribute( "TensorProductFunctor", IsCapCategory );
+DeclareAttribute( "DefiningFunctor", IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects );
+DeclareAttribute( "DefiningFullyFaithfulFunctor", IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects );
 
 DeclareAttribute( "EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows", IsHomalgGradedRing );
 DeclareAttribute( "EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations", IsHomalgGradedRing );
