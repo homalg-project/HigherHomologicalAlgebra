@@ -2,16 +2,54 @@ DeclareGlobalVariable( "DISABLE_ALL_SANITY_CHECKS" );
 DeclareGlobalVariable( "SWITCH_LOGIC_OFF" );
 DeclareGlobalVariable( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );
 DeclareGlobalVariable( "ENABLE_COLORS" );
+DeclareGlobalVariable( "SET_OF_ALL_CREATED_FUNCTORS" );
 
 MakeReadWriteGlobal( "DISABLE_ALL_SANITY_CHECKS" );
 MakeReadWriteGlobal( "SWITCH_LOGIC_OFF" );
 MakeReadWriteGlobal( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );
 MakeReadWriteGlobal( "ENABLE_COLORS" );
+MakeReadWriteGlobal( "SET_OF_ALL_CREATED_FUNCTORS" );
 
 DISABLE_ALL_SANITY_CHECKS := false;
 SWITCH_LOGIC_OFF := false;
 ENABLE_COLORS := false;
 DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
+SET_OF_ALL_CREATED_FUNCTORS := [ ];
+
+##########################
+#
+# Functos
+#
+##########################
+
+##
+InstallMethod( CapFunctor,
+          [ IsString, IsList, IsCapCategory ],
+          
+  function( name, source_list, range )
+    local o, F;
+    
+    o := ValueOption( "sko_hil_ene_pav_mne" );
+    
+    if o = false then
+      TryNextMethod( );
+    fi;
+    
+    F := CapFunctor( name, source_list, range : sko_hil_ene_pav_mne := false );
+    
+    Add( SET_OF_ALL_CREATED_FUNCTORS, F );
+    
+    return F;
+    
+end, 5000 );
+
+##
+InstallMethod( SetOfKnownFunctors,
+          [ IsCapCategory, IsCapCategory ],
+  { category_1, category_2 }
+      -> Filtered( SET_OF_ALL_CREATED_FUNCTORS,
+          F -> IsIdenticalObj( SourceOfFunctor( F ), category_1 ) and IsIdenticalObj( RangeOfFunctor( F ), category_2 ) )
+);
 
 ##########################
 #

@@ -24,6 +24,8 @@ DeclareGlobalFunction( "ActivateCachingForCertainOperations" );
 
 DeclareOperation( "FinalizeCategory", [ IsCapCategory, IsBool ] );
 
+DeclareOperation( "SetOfKnownFunctors", [ IsCapCategory, IsCapCategory ] );
+
 DeclareGlobalFunction( "RandomTextColor" );
 
 DeclareGlobalFunction( "RandomBoldTextColor" );
