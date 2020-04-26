@@ -40,8 +40,10 @@ DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
     IsAlgebroid,
     IsQuiverRowsCategory,
     cat -> IsBound( cat!.ring_for_representation_category ),
-    IsCapProductCategory
-    # or some function
+    IsCapProductCategory,
+    IsCategoryOfGradedRows,
+    IsFreydCategory
+    
   ];
 
 #
