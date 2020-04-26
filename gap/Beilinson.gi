@@ -301,7 +301,7 @@ InstallMethodWithCache( BasisBetweenTwistedGradedFreeModules,
 end );
 
 ##
-InstallMethodWithCache( BasisBetweenTwistedCotangentModules, 
+InstallMethodWithCache( BasisBetweenTwistedCotangentModulesAsGLP, 
     "this should return the basis of Hom( omega^i(i),omega^j(j) )",
     [ IsHomalgGradedRing, IsInt, IsInt ],
     function( S, i, j )
@@ -662,7 +662,7 @@ InstallMethodWithCache( RECORD_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES,
         return ZeroMorphism( source, range );
     else
         coefficients := List( record!.coefficients, c -> String( c )/S );
-        return coefficients*BasisBetweenTwistedCotangentModules( S, u, v );
+        return coefficients*BasisBetweenTwistedCotangentModulesAsGLP( S, u, v );
     fi;                     
 
 end );
@@ -1569,7 +1569,7 @@ end );
 
 
 ##
-InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
+InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local graded_pres, k, coh, generalized_morphism_cat, sh, indeterminates, n, omegas, mats, dims, full;
@@ -1649,7 +1649,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
           
         fi;
         
-        B := BasisBetweenTwistedCotangentModules( S, index_M, index_N );
+        B := BasisBetweenTwistedCotangentModulesAsGLP( S, index_M, index_N );
         
         B := List( B, b -> b / full );
         
@@ -1692,7 +1692,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModules,
 end );
 
 ##
-InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules,
+InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGLP,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local A, omegas, objects_omegas, Omegas, objects_Omegas, object_func, morphism_func, name;
@@ -1703,7 +1703,7 @@ InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules,
     
     objects_omegas := SetOfKnownObjects( omegas );
     
-    Omegas := FullSubcategoryGeneratedByTwistedCotangentModules( S );
+    Omegas := FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP( S );
     
     objects_Omegas := SetOfKnownObjects( Omegas );
     
@@ -1720,7 +1720,7 @@ InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules,
 end );
 
 ##
-InstallMethod( IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves,
+InstallMethod( IsomorphismFromTwistedCotangentModulesAsGLPOntoTwistedCotangentSheaves,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
   function( S )
     local coh, sh, modules, sheaves, name, cell_func;
@@ -1729,7 +1729,7 @@ InstallMethod( IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves
     
     sh := SheafificationFunctor( coh );
     
-    modules := FullSubcategoryGeneratedByTwistedCotangentModules( S );
+    modules := FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP( S );
     
     sheaves := FullSubcategoryGeneratedByTwistedCotangentSheaves( S );
         
@@ -1742,10 +1742,10 @@ InstallMethod( IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves
 end );
 
 ##
-InstallMethod( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentSheaves,
+InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentSheaves,
           [ IsHomalgGradedRing and IsFreePolynomialRing ],
-    S -> PreCompose( IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules( S ),
-            IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves( S ) )
+    S -> PreCompose( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGLP( S ),
+            IsomorphismFromTwistedCotangentModulesAsGLPOntoTwistedCotangentSheaves( S ) )
 );
 
 ######################################

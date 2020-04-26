@@ -63,19 +63,19 @@ DeclareOperation( "BasisBetweenTwistedGradedFreeModules", [ IsHomalgGradedRing, 
 #! $\varphi_{i+1,i}^{\ell} \varphi_{i,i-1}^{\ell}=0$ and 
 #! $\varphi_{i+1,i}^{\ell_1} \varphi_{i,i-1}^{\ell_2}= -\varphi_{i+1,i}^{\ell_2} \varphi_{i,i-1}^{\ell_1}$.
 #! @Returns a list
-DeclareOperation( "BasisBetweenTwistedCotangentModules", [ IsHomalgGradedRing, IsInt, IsInt ] );
+DeclareOperation( "BasisBetweenTwistedCotangentModulesAsGLP", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
 
 DeclareOperation( "BasisBetweenTwistedCotangentModulesAsChains", [ IsHomalgGradedRing, IsInt, IsInt ] );
 
 
-DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentModules", IsHomalgGradedRing );
+DeclareAttribute( "FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentModules", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGLP", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromTwistedCotangentModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedCotangentModulesAsGLPOntoTwistedCotangentSheaves", IsHomalgGradedRing );
 
-DeclareAttribute( "IsomorphismFromTwistedOmegaModulesIntoTwistedCotangentSheaves", IsHomalgGradedRing );
+DeclareAttribute( "IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentSheaves", IsHomalgGradedRing );
 
 
 

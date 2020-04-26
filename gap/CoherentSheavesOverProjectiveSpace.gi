@@ -80,7 +80,7 @@ InstallMethod( BasisBetweenTwistedCotangentSheaves,
     
     sh := SheafificationFunctor( coh );
     
-    B := BasisBetweenTwistedCotangentModules( S, i, j );
+    B := BasisBetweenTwistedCotangentModulesAsGLP( S, i, j );
     
     return List( B, b -> ApplyFunctor( sh, b ) );
     
