@@ -103,6 +103,44 @@ InstallMethod( \.,
 
 ##
 InstallMethod( \/,
+          [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
+  function( full_1, full_2 )
+    local F, I;
+    
+    if HasDefiningFullyFaithfulFunctor( full_2 ) then
+      
+      F := DefiningFullyFaithfulFunctor( full_2 );
+      
+      I := IsomorphismOntoImageOfFullyFaithfulFunctor( F );
+      
+      if IsIdenticalObj( SourceOfFunctor( I ), full_1 ) then
+        
+        return I;
+        
+      fi;
+      
+    fi;
+    
+    if HasDefiningFullyFaithfulFunctor( full_1 ) then
+      
+      F := DefiningFullyFaithfulFunctor( full_1 );
+      
+      I := IsomorphismFromImageOfFullyFaithfulFunctor( F );
+      
+      if IsIdenticalObj( RangeOfFunctor( I ), full_2 ) then
+        
+        return I;
+        
+      fi;
+      
+    fi;
+   
+    TryNextMethod( );
+    
+end );
+
+##
+InstallMethod( \/,
           [ IsAlgebroid, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( algebroid, full )
     local I;
