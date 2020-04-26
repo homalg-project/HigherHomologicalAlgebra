@@ -61,6 +61,12 @@ InstallGlobalFunction( Time,
   function( command, arguments )
     local output, t0, t1;
     
+    if not IsList( arguments ) then
+      
+      return Time( command, [ arguments ] );
+      
+    fi;
+    
     t0 := NanosecondsSinceEpoch( );
     
     output := CallFuncList( command, arguments );
