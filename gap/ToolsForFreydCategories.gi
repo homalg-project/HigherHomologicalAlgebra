@@ -32,11 +32,11 @@ function( o )
   
   for i in [ 1 .. Length( L ) ] do
     
-    current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
-    
-    current_mat[ i ] := L[ i ];
-    
-    if not IsZero( current_mat ) then
+    if not IsZero( L[ i ] ) then
+      
+      current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
+      
+      current_mat[ i ] := L[ i ];
       
       mats := Concatenation( mats, Cartesian( current_mat ) );
       
@@ -74,10 +74,8 @@ end );
 
 ##
 InstallGlobalFunction( COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM,
-  function( phi, basis )
-    local category, K, S, a, b, U, degrees_a, degrees_b, degrees, hom_a_b, mat, psi, B, A, sol, list_of_entries,
-    position_of_non_zero_entry, current_coeff, current_coeff_mat, current_mono, position_in_basis,
-    current_term, current_entry, j;
+  function( phi, B )
+    local category, K, S, a, b, degrees_a, degrees_b, degrees, hom_a_b, A, list_of_entries, sol, position_of_non_zero_entry, current_entry, current_coeff_mat, current_coeff, current_mono, current_term, position_in_basis, j;
     
     category := CapCategory( phi );
     
@@ -109,7 +107,7 @@ InstallGlobalFunction( COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_
 
     list_of_entries := ShallowCopy( EntriesOfHomalgMatrix( A ) );
 
-    B := BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW( hom_a_b );
+    B := List( B, b -> EntriesOfHomalgMatrixAttr( UnderlyingHomalgMatrix( b ) ) );
     
     if B = [  ] then
       
@@ -129,11 +127,11 @@ InstallGlobalFunction( COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_
       
       for j in [ 1 .. NrRows( current_coeff_mat ) ] do
         
-        current_coeff := MatElm( current_coeff_mat, j, 1 );
+        current_coeff := current_coeff_mat[ j, 1 ];
         current_mono := current_coeff_mat!.monomials[ j ]/S;
-        current_term := current_coeff/S * current_mono;
+        current_term := current_coeff / S * current_mono;
         position_in_basis := PositionProperty( B, b -> b[ position_of_non_zero_entry ] = current_mono );
-        sol[ position_in_basis ] := current_coeff/K;
+        sol[ position_in_basis ] := current_coeff / K;
         
       od;
       
