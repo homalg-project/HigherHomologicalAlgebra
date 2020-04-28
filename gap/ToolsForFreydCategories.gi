@@ -3,8 +3,15 @@
 ##
 InstallMethod( MONOMIALS_OF_DEGREEOp,
           [ IsHomalgGradedRing, IsHomalgModuleElement ],
-  { S, degree } -> MonomialsOfDegree( S, degree )
-);
+  function( S, degree )
+    
+    if ForAll( WeightsOfIndeterminates(S), w -> w = 1 ) then
+      return EntriesOfHomalgMatrix( MonomialMatrix( HomalgElementToInteger( degree ), S ) );
+    else
+      return MonomialsOfDegree( S, degree );
+    fi;
+    
+end );
 
 ##
 InstallMethod( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
