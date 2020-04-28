@@ -57,13 +57,13 @@ function( Ho_C )
   end );
   
   ##
-  AddIsomorphismOntoShiftOfInverseShift( Ho_C, IdentityMorphism );
+  AddIsomorphismOntoShiftOfInverseShiftWithGivenObject( Ho_C, { a, b } -> IdentityMorphism( a ) );
   
-  AddIsomorphismFromShiftOfInverseShift( Ho_C, IdentityMorphism );
+  AddIsomorphismFromShiftOfInverseShiftWithGivenObject( Ho_C, { a, b } -> IdentityMorphism( a ) );
   
-  AddIsomorphismOntoInverseShiftOfShift( Ho_C, IdentityMorphism );
+  AddIsomorphismOntoInverseShiftOfShiftWithGivenObject( Ho_C, { a, b } -> IdentityMorphism( a ) );
   
-  AddIsomorphismFromInverseShiftOfShift( Ho_C, IdentityMorphism );
+  AddIsomorphismFromInverseShiftOfShiftWithGivenObject( Ho_C, { a, b } -> IdentityMorphism( a ) );
   
   AddStandardConeObject( Ho_C,
     alpha -> MappingCone( UnderlyingCell( alpha ) ) / Ho_C
@@ -355,3 +355,26 @@ function( Ho_C )
   
 end );
 
+##
+InstallMethod( IsomorphismOntoShiftOfInverseShift,
+          [ IsHomotopyCategoryObject ],
+  { a } -> IdentityMorphism( a )
+);
+
+##
+InstallMethod( IsomorphismFromShiftOfInverseShift,
+          [ IsHomotopyCategoryObject ],
+  { a } -> IdentityMorphism( a )
+);
+
+##
+InstallMethod( IsomorphismOntoInverseShiftOfShift,
+          [ IsHomotopyCategoryObject ],
+  { a } -> IdentityMorphism( a )
+);
+
+##
+InstallMethod( IsomorphismFromInverseShiftOfShift,
+          [ IsHomotopyCategoryObject ],
+  { a } -> IdentityMorphism( a )
+);
