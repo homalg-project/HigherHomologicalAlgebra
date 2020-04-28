@@ -23,9 +23,9 @@ operations_to_deactivate := [
 
 ########################### global options ###############################
 #
-SetInfoLevel( InfoDerivedCategories, 3 );
-SetInfoLevel( InfoHomotopyCategories, 3 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
+SetInfoLevel( InfoDerivedCategories, 0 );
+SetInfoLevel( InfoHomotopyCategories, 0 );
+SetInfoLevel( InfoComplexCategoriesForCAP, 0 );
 #
 DISABLE_ALL_SANITY_CHECKS := true;
 SWITCH_LOGIC_OFF := true;

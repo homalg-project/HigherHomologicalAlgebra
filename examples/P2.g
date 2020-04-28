@@ -18,31 +18,33 @@ o1 := [1] / rows;
 # Create a Beilinson functor from Freyd category into quiver algebraic model
 U := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( S );
 algebra := EndomorphismAlgebraOfCotangentBeilinsonCollection( S );
+algebroid := Algebroid( algebra );
+qrows := QuiverRows( algebra );
 
 quit;
 
-U_o1 := U( o1 * freyd );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) );
 
 # Or interpret the output in the homotopy of the quiver representations over the opposite algebra
-U_o1 := U( o1 * freyd ) * HomotopyCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
 
 # Or interpret the output in the derived category of the quiver representations over the opposite algebra
-U_o1 := U( o1 * freyd ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) );
 
 # Or interpret the output as a quiver representation
-U_o1 := HomologyAt( U( o1 * freyd ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) ), 0 );
+U_o1 := HomologyAt( o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * DerivedCategory( CategoryOfQuiverRepresentations( OppositeAlgebra( algebra ) ) ), 0 );
 
 # Or interpret the output in the homotopy of the quiver rows
-U_o1 := U( o1 * freyd ) * HomotopyCategory( QuiverRows( algebra ) );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( qrows );
 
 # Or interpret the output in the homotopy of twisted cotangent modules
-U_o1 := U( o1 * freyd ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) );
 
 # or interpret the output in the homotopy of the freyd category
-U_o1 := U( o1 * freyd ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd );
 
 # Or interpret the output in the homotopy of the graded rows, i.e., in terms of the collection O(-3),O(-2),O(-1)
-U_o1 := U( o1 * freyd ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows );
 
 # Or interpret the output in the homotopy of graded left presentations
-U_o1 := U( o1 * freyd ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows ) * HomotopyCategory( fpres );
+U_o1 := o1 * freyd * HomotopyCategory( AdditiveClosure( algebroid ) ) * HomotopyCategory( AdditiveClosure( twisted_omegas ) ) * HomotopyCategory( freyd ) * HomotopyCategory( rows ) * HomotopyCategory( fpres );
