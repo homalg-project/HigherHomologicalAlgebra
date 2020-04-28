@@ -57,17 +57,12 @@ LiftingMorphismWithGivenLiftingObjects := rec(
     filter_list := [ "morphism", "object", "object" ],
     cache_name := "LiftingMorphismWithGivenLiftingObjects",
     return_type := "morphism" ),
-
-LiftingMorphism := rec(
-    installation_name := "LiftingMorphism",
-    filter_list := [ "morphism" ],
-    cache_name := "LiftingMorphism",
-    return_type := "morphism" ),
-
+    
 MorphismFromLiftingObjectWithGivenLiftingObject := rec(
   installation_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
   filter_list := [ "object", "object" ],
   cache_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
+  number_of_diagram_arguments := 1,
   return_type := "morphism" ),
 
 MorphismFromLiftingObject := rec(
@@ -99,17 +94,12 @@ ColiftingMorphismWithGivenColiftingObjects := rec(
   filter_list := [ "morphism", "object", "object" ],
   cache_name := "ColiftingMorphismWithGivenColiftingObjects",
   return_type := "morphism" ),
-
-ColiftingMorphism := rec(
-  installation_name := "ColiftingMorphism",
-  filter_list := [ "morphism" ],
-  cache_name := "ColiftingMorphism",
-  return_type := "morphism" ),
   
 MorphismIntoColiftingObjectWithGivenColiftingObject := rec(
   installation_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
   filter_list := [ "object", "object" ],
   cache_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
+  number_of_diagram_arguments := 1,
   return_type := "morphism" ),
 
 MorphismIntoColiftingObject := rec(

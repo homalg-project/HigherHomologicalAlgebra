@@ -86,23 +86,9 @@ DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
 DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
                   [ IsCapCategory, IsList ] );
 
-##
 DeclareOperation( "ColiftingMorphism",
                   [ IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddColiftingMorphism",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddColiftingMorphism",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddColiftingMorphism",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddColiftingMorphism",
-                  [ IsCapCategory, IsList ] );
-
-##
 DeclareProperty( "IsColiftableThroughColiftingObject",
                   IsCapCategoryMorphism );
 
@@ -204,19 +190,6 @@ DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
 DeclareOperation( "LiftingMorphism",
                   [ IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddLiftingMorphism",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddLiftingMorphism",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddLiftingMorphism",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddLiftingMorphism",
-                  [ IsCapCategory, IsList ] );
-
-##
 DeclareProperty( "IsLiftableThroughLiftingObject",
                   IsCapCategoryMorphism );
 
