@@ -25,6 +25,7 @@ MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
   installation_name := "MorphismIntoStandardConeObjectWithGivenStandardConeObject",
   filter_list := [ "morphism", "object" ],
   io_type := [ [ "alpha", "cone_alpha" ], [ "range_alpha", "cone_alpha" ] ],
+  number_of_diagram_arguments := 1,
   cache_name := "MorphismIntoStandardConeObjectWithGivenStandardConeObject",
   return_type := "morphism"
 ),
@@ -33,6 +34,7 @@ MorphismFromStandardConeObjectWithGivenStandardConeObject := rec(
   installation_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
   filter_list := [ "morphism", "object" ],
   io_type := [ [ "alpha", "cone_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
+  number_of_diagram_arguments := 1,  
   cache_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
   return_type := "morphism"
 ),
@@ -146,13 +148,13 @@ IsomorphismOntoShiftOfInverseShiftWithGivenObject := rec(
   return_type := "morphism"
 ),
 
-IsomorphismOntoShiftOfInverseShift := rec(
-  installation_name := "IsomorphismOntoShiftOfInverseShift",
-  filter_list := [ "object" ],
-  io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismOntoShiftOfInverseShift",
-  return_type := "morphism"
-),
+#IsomorphismOntoShiftOfInverseShift := rec(
+#  installation_name := "IsomorphismOntoShiftOfInverseShift",
+#  filter_list := [ "object" ],
+#  io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
+#  cache_name := "IsomorphismOntoShiftOfInverseShift",
+#  return_type := "morphism"
+#),
 
 IsomorphismOntoInverseShiftOfShiftWithGivenObject := rec(
   installation_name := "IsomorphismOntoInverseShiftOfShiftWithGivenObject",
@@ -162,13 +164,13 @@ IsomorphismOntoInverseShiftOfShiftWithGivenObject := rec(
   return_type := "morphism"
 ),
 
-IsomorphismOntoInverseShiftOfShift := rec(
-  installation_name := "IsomorphismOntoInverseShiftOfShift",
-  filter_list := [ "object" ],
-  io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismOntoInverseShiftOfShift",
-  return_type := "morphism"
-),
+#IsomorphismOntoInverseShiftOfShift := rec(
+#  installation_name := "IsomorphismOntoInverseShiftOfShift",
+#  filter_list := [ "object" ],
+#  io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
+#  cache_name := "IsomorphismOntoInverseShiftOfShift",
+#  return_type := "morphism"
+#),
 
 IsomorphismFromShiftOfInverseShiftWithGivenObject := rec(
   installation_name := "IsomorphismFromShiftOfInverseShiftWithGivenObject",
@@ -178,13 +180,13 @@ IsomorphismFromShiftOfInverseShiftWithGivenObject := rec(
   return_type := "morphism"
 ),
 
-IsomorphismFromShiftOfInverseShift := rec(
-  installation_name := "IsomorphismFromShiftOfInverseShift",
-  filter_list := [ "object" ],
-  io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromShiftOfInverseShift",
-  return_type := "morphism"
-),
+#IsomorphismFromShiftOfInverseShift := rec(
+#  installation_name := "IsomorphismFromShiftOfInverseShift",
+#  filter_list := [ "object" ],
+#  io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
+#  cache_name := "IsomorphismFromShiftOfInverseShift",
+#  return_type := "morphism"
+#),
 
 IsomorphismFromInverseShiftOfShiftWithGivenObject := rec(
   installation_name := "IsomorphismFromInverseShiftOfShiftWithGivenObject",
@@ -194,13 +196,13 @@ IsomorphismFromInverseShiftOfShiftWithGivenObject := rec(
   return_type := "morphism"
 ),
 
-IsomorphismFromInverseShiftOfShift := rec(
-  installation_name := "IsomorphismFromInverseShiftOfShift",
-  filter_list := [ "object" ],
-  io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromInverseShiftOfShift",
-  return_type := "morphism"
-),
+#IsomorphismFromInverseShiftOfShift := rec(
+#  installation_name := "IsomorphismFromInverseShiftOfShift",
+#  filter_list := [ "object" ],
+#  io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
+#  cache_name := "IsomorphismFromInverseShiftOfShift",
+#  return_type := "morphism"
+#),
 
 MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   installation_name := "MorphismBetweenStandardConeObjectsWithGivenObjects",
