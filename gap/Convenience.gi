@@ -1,21 +1,44 @@
 
-
 ##
-InstallMethod( \*,
-          [ IsCapCategoryCell, IsCapCategory ],
-  { cell, category } -> ApplyFunctor( CapCategory( cell ) / category, cell )
+InstallMethod( \/,
+          [ IsCapCategory, IsCapCategory ],
+  FindSomeFunctor
 );
 
 ##
 InstallMethod( \/,
           [ IsCapFunctor, IsCapCategory ],
-  { F, category } -> PreCompose( F, RangeOfFunctor( F ) / category )
+  FindSomeFunctor
 );
 
 ##
 InstallMethod( \/,
           [ IsCapCategory, IsCapFunctor ],
-  { category, F } -> PreCompose( category / SourceOfFunctor( F ), F )
+  FindSomeFunctor
+);
+
+##
+InstallMethod( \*,
+          [ IsCapCategoryCell, IsCapCategory ],
+  FindSomeFunctorThenApply
+);
+
+##
+InstallMethod( FindSomeFunctorThenApply,
+          [ IsCapCategoryCell, IsCapCategory ],
+  { cell, category } -> ApplyFunctor( FindSomeFunctor( CapCategory( cell ), category ), cell )
+);
+
+##
+InstallMethod( FindSomeFunctor,
+          [ IsCapFunctor, IsCapCategory ],
+  { F, category } -> PreCompose( F, FindSomeFunctor( RangeOfFunctor( F ), category ) )
+);
+
+##
+InstallMethod( FindSomeFunctor,
+          [ IsCapCategory, IsCapFunctor ],
+  { category, F } -> PreCompose( FindSomeFunctor( category, SourceOfFunctor( F ) ), F )
 );
 
 ##
@@ -88,7 +111,6 @@ InstallMethod( \.,
     
 end );
 
-
 ##
 InstallMethod( \.,
         [ IsChainComplexCategory, IsPosInt ],
@@ -102,7 +124,7 @@ InstallMethod( \.,
 ##############################################
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( full_1, full_2 )
     local F, I;
@@ -140,7 +162,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAlgebroid, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( algebroid, full )
     local I;
@@ -160,7 +182,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsAlgebroid ],
   function( full, algebroid )
     local I;
@@ -180,7 +202,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsAlgebroid ],
   function( full, algebroid )
     local collection;
@@ -200,7 +222,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( full, indec_projs )
     local collection, A;
@@ -229,7 +251,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsQuiverRepresentationCategory ],
   function( full, reps )
     local collection, A, I;
@@ -253,7 +275,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( indec_projs, full )
     local collection, A;
@@ -283,7 +305,7 @@ end );
 
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAlgebroid, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( algebroid, full )
     local collection;
@@ -303,7 +325,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAlgebroid, IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects ],
   function( algebroid, full )
     local A;
@@ -326,7 +348,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects, IsAlgebroid ],
   function( full, algebroid )
     local A;
@@ -350,7 +372,7 @@ end );
 
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAlgebroid, IsQuiverRepresentationCategory ],
   function( algebroid, category )
     local A, I;
@@ -368,7 +390,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapFullSubcategory, IsCapCategory ],
   function( full, category )
     local underlying_category, I, J;
@@ -383,14 +405,14 @@ InstallMethod( \/,
       if IsIdenticalObj( full, underlying_category ) then
         return StalkChainFunctor( full, 0 );
       fi;
-      I := full / underlying_category;
-      J := underlying_category / category;
+      I := FindSomeFunctor( full, underlying_category );
+      J := FindSomeFunctor( underlying_category, category );
       return PreCompose( I, J );
     elif IsHomotopyCategory( category ) then
-      I := full / UnderlyingCategory( category );
+      I := FindSomeFunctor( full, UnderlyingCategory( category ) );
       return PreCompose( I, ProjectionFunctor( category ) );
     elif IsDerivedCategory( category ) then
-      I := full / HomotopyCategory( DefiningCategory( category ) );
+      I := FindSomeFunctor( full, HomotopyCategory( DefiningCategory( category ) ) );
       J := LocalizationFunctor( HomotopyCategory( DefiningCategory( category ) ) );
       return PreCompose( I, J );
     else
@@ -405,7 +427,7 @@ end );
 ##############################################
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsAdditiveClosureCategory ],
   function( cat, additive_closure )
     local underlying_category;
@@ -421,7 +443,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAdditiveClosureCategory, IsCapCategory ],
   function( additive_closure, cat )
     local underlying_category, I;
@@ -432,26 +454,26 @@ InstallMethod( \/,
     
     underlying_category := UnderlyingCategory( additive_closure );
     
-    I := underlying_category / cat;
+    I := FindSomeFunctor( underlying_category, cat );
     
     return ExtendFunctorToAdditiveClosureOfSource( I );
     
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAdditiveClosureCategory, IsAdditiveClosureCategory ],
   function( additive_closure_1, additive_closure_2 )
     local I;
     
-    I := UnderlyingCategory( additive_closure_1 ) / UnderlyingCategory( additive_closure_2 );
+    I := FindSomeFunctor( UnderlyingCategory( additive_closure_1 ), UnderlyingCategory( additive_closure_2 ) );
     
     return ExtendFunctorToAdditiveClosures( I );
     
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsAdditiveClosureCategory, IsQuiverRowsCategory ],
   function( add_closure, quiver_rows )
     
@@ -471,7 +493,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsQuiverRowsCategory, IsAdditiveClosureCategory ],
   function( quiver_rows, add_closure )
     
@@ -497,7 +519,7 @@ end );
 ##############################################
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsChainComplexCategory ],
   function( cat, chains_category )
     local underlying_category, I, J;
@@ -511,33 +533,42 @@ InstallMethod( \/,
     if IsIdenticalObj( cat, underlying_category ) then
       return StalkChainFunctor( cat, 0 );
     else
-      I := cat / UnderlyingCategory( chains_category );
-      J := UnderlyingCategory( chains_category ) / chains_category;
+      I := FindSomeFunctor( cat, UnderlyingCategory( chains_category ) );
+      J := FindSomeFunctor( UnderlyingCategory( chains_category ), chains_category );
       return PreCompose( I, J );
     fi;
  
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsChainComplexCategory, IsChainComplexCategory ],
   function( cat, chains_category )
     local I;
-    I := UnderlyingCategory( cat ) / UnderlyingCategory( chains_category );
+    I := FindSomeFunctor( UnderlyingCategory( cat ), UnderlyingCategory( chains_category ) );
     return ExtendFunctorToChainComplexCategories( I );
 end );
 
 ##
-InstallMethod( \/,
-          [ IsChainComplex, IsChainComplexCategory ],
-  { o, chains_category } -> ApplyFunctor( CapCategory( o ) / chains_category, o )
-);
-
-##
-InstallMethod( \/,
-          [ IsChainMorphism, IsChainComplexCategory ],
-  { alpha, chains_category } -> ApplyFunctor( CapCategory( alpha ) / chains_category, alpha )
-);
+InstallMethod( FindSomeFunctor,
+          [ IsCapCategory, IsCapCategory ],
+          10000,
+  function( C1, C2 )
+    local F;
+    
+    F := SetOfKnownFunctors( C1, C2 );
+    
+    if IsEmpty( F ) then
+      
+      TryNextMethod( );
+      
+    else
+      
+      return F[1];
+      
+    fi;
+  
+end );
 
 ##############################################
 #
@@ -552,7 +583,7 @@ InstallMethod( \.,
 );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsHomotopyCategory, IsHomotopyCategory ],
   function( homotopy_category_1, homotopy_category_2 )
     local defining_cat_1, underlying_category_1, collection, defining_cat_2, underlying_category_2, I;
@@ -633,14 +664,14 @@ InstallMethod( \/,
       
     fi;
     
-    I := DefiningCategory( homotopy_category_1 ) / DefiningCategory( homotopy_category_2 );
+    I := FindSomeFunctor( DefiningCategory( homotopy_category_1 ), DefiningCategory( homotopy_category_2 ) );
     
     return ExtendFunctorToHomotopyCategories( I );
     
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsHomotopyCategory ],
   function( category, homotopy_category )
     local underlying_category, I, J;
@@ -665,7 +696,7 @@ InstallMethod( \/,
    
     underlying_category := UnderlyingCategory( homotopy_category );
     
-    I := category / underlying_category;
+    I := FindSomeFunctor( category, underlying_category );
     
     J := ProjectionFunctor( homotopy_category );
     
@@ -683,7 +714,7 @@ end );
 ############################################################
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCategoryOfGradedRows, IsFreydCategory ],
   function( rows, freyd_category )
     
@@ -696,7 +727,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsFreydCategory ],
   function( category, freyd_category )
     local S;
@@ -726,7 +757,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsFreydCategory, IsCapCategory ],
   function( freyd_category, category )
     local S;
@@ -756,7 +787,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCategoryOfGradedRows, IsCapCategory ],
   function( graded_rows, category )
     local S, freyd_category;
@@ -777,7 +808,7 @@ InstallMethod( \/,
       
       freyd_category := FreydCategory( graded_rows );
       
-      return PreCompose( graded_rows/freyd_category, freyd_category/category );
+      return PreCompose( FindSomeFunctor( graded_rows, freyd_category ), FindSomeFunctor( freyd_category, category ) );
       
     else
       
@@ -909,16 +940,16 @@ end );
 ##############################################
 
 ##
-InstallMethod( \/,
+InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsDerivedCategory ],
   function( category, derived_category )
     local defining_category, homotopy_category, I;
-  
+    
     defining_category := DefiningCategory( derived_category );
     
     homotopy_category := HomotopyCategory( defining_category );
     
-    I := category / homotopy_category;
+    I := FindSomeFunctor( category, homotopy_category );
     
     return PreCompose( I, LocalizationFunctor( homotopy_category ) );
     
