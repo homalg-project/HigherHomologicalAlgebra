@@ -54,5 +54,5 @@ o4 := U( [4]/rows * freyd ) * HomotopyCategory(c) * HomotopyCategory( AdditiveCl
 
 # or better in the homotopy category of freyd
 
-o4 := ( [4]/rows * freyd ) * HomotopyCategory(c) * HomotopyCategory( AdditiveClosure( full ) ) * HomotopyCategory( rows );
+o4 := U( [4]/rows * freyd ) * HomotopyCategory(c) * HomotopyCategory( AdditiveClosure( full ) ) * HomotopyCategory( rows );
 
