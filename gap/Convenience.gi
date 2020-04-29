@@ -564,6 +564,11 @@ InstallMethod( FindSomeFunctor,
       
     else
       
+      if Size( F ) > 1 then
+        Info( InfoWarning, 1, Concatenation( "Returning the first out of many functors between ", Name( C1 ), " and ", Name( C2 ) ) );
+        Info( InfoWarning, 1, "It is recommended to use the operation: SetOfKnownFunctors( category_1, category_2 )" );
+      fi;
+      
       return F[1];
       
     fi;
