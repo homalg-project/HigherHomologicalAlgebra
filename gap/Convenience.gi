@@ -552,7 +552,7 @@ end );
 ##
 InstallMethod( FindSomeFunctor,
           [ IsCapCategory, IsCapCategory ],
-          10000,
+          -10000,
   function( C1, C2 )
     local F;
     
