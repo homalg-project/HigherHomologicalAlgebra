@@ -1,14 +1,14 @@
 
 
 ##
-InstallMethod( MONOMIALS_OF_DEGREEOp,
+InstallMethod( MONOMIALS_WITH_GIVEN_DEGREE,
           [ IsHomalgGradedRing, IsHomalgModuleElement ],
   function( S, degree )
     
-    if ForAll( WeightsOfIndeterminates(S), w -> w = 1 ) then
+    if ForAll( WeightsOfIndeterminates( S ), w -> w = 1 ) then
       return EntriesOfHomalgMatrix( MonomialMatrix( HomalgElementToInteger( degree ), S ) );
     else
-      return MonomialsOfDegree( S, degree );
+      return MonomialsWithGivenDegree( S, degree );
     fi;
     
 end );
@@ -27,7 +27,7 @@ function( o )
   
   G := UnzipDegreeList( o );
   dG := DuplicateFreeList( G );
-  dG := List( dG, d -> MONOMIALS_OF_DEGREE( S, d ) );
+  dG := List( dG, d -> MONOMIALS_WITH_GIVEN_DEGREE( S, d ) );
   
   positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
   
@@ -168,14 +168,7 @@ InstallMethod( CategoryOfGradedRows,
     rows := CategoryOfGradedRows( S : FinalizeCategory := false, cogr_derived_cats := false );
     
     SetUnderlyingCategoryOfRows( rows, CategoryOfRows( S ) );
-    
-    ADD_RANDOM_METHODS_TO_GRADED_ROWS( rows );
-      
-    ## Adding the external hom methods 
-    AddBasisOfExternalHom( rows, BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_ROWS );
-    
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( rows, COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM );
-    
+       
     ## Defining rows as linear category
     SetIsLinearCategoryOverCommutativeRing( rows, true );
     
@@ -189,11 +182,24 @@ InstallMethod( CategoryOfGradedRows,
     
     rows!.Name := Concatenation( r[ 1 ], "Graded rows( ", r[ 2 ], String( S ), r[ 1 ], " )", r[ 2 ] );
     
+    if CanComputeMonomialsWithGivenDegreeForRing( S ) then
+    
+      ADD_RANDOM_METHODS_TO_GRADED_ROWS( rows );
+    
+      ## Adding the external hom methods 
+      AddBasisOfExternalHom( rows, BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_ROWS );
+      
+      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( rows,
+        COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM
+      );
+    
+    fi;
+    
     Finalize( rows );;
     
     # To derive a nice homomorphism structore on Freyd category of the rows
     SetIsProjective( DistinguishedObjectOfHomomorphismStructure( rows ), true );
-  
+    
     return rows;
     
 end );

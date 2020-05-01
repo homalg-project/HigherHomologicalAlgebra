@@ -9,7 +9,7 @@ DeclareGlobalFunction( "IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PPS_IN_KERNEL_OF
 DeclareGlobalFunction( "ANNIHILATOR_OF_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PPS" );
 DeclareAttribute( "UnderlyingCategoryOfRows", IsCategoryOfGradedRows );
 DeclareGlobalFunction( "IS_FREYD_CATEGORY_OBJECT_OF_COX_RING_OF_PS_IN_KERNEL_OF_SERRE_QUOTIENT" );
-KeyDependentOperation( "MONOMIALS_OF_DEGREE", IsHomalgGradedRing, IsHomalgModuleElement, ReturnTrue );
+DeclareOperation( "MONOMIALS_WITH_GIVEN_DEGREE", [ IsHomalgGradedRing, IsHomalgModuleElement ] );
 
 DeclareOperation( "BoxProduct", [ IsList, IsCapCategory ] );
 DeclareOperation( "BoxProduct",
