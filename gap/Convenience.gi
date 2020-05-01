@@ -591,7 +591,7 @@ InstallMethod( \.,
 InstallMethod( FindSomeFunctor,
           [ IsHomotopyCategory, IsHomotopyCategory ],
   function( homotopy_category_1, homotopy_category_2 )
-    local defining_cat_1, underlying_category_1, collection, defining_cat_2, underlying_category_2, I;
+    local defining_cat_1, underlying_category_1, collection, defining_cat_2, underlying_category_2, I, underlying_category;
     
     if IsIdenticalObj( homotopy_category_1, homotopy_category_2) then
       
@@ -668,7 +668,7 @@ InstallMethod( FindSomeFunctor,
       fi;
       
     fi;
-    
+        
     I := FindSomeFunctor( DefiningCategory( homotopy_category_1 ), DefiningCategory( homotopy_category_2 ) );
     
     return ExtendFunctorToHomotopyCategories( I );
@@ -698,7 +698,18 @@ InstallMethod( FindSomeFunctor,
     if IsCapFullSubcategory( category ) then
       TryNextMethod( );
     fi;
-   
+    
+    if IsFreydCategory( category ) and IsQuiverRowsCategory( DefiningCategory( homotopy_category ) ) then
+      TryNextMethod( );
+    fi;
+    
+    if IsFreydCategory( category ) and IsAdditiveClosureCategory( DefiningCategory( homotopy_category ) ) then
+      underlying_category := UnderlyingCategory( DefiningCategory( homotopy_category ) );
+      if IsAlgebroid( underlying_category ) then
+        TryNextMethod( );
+      fi;
+    fi;
+
     underlying_category := UnderlyingCategory( homotopy_category );
     
     I := FindSomeFunctor( category, underlying_category );
