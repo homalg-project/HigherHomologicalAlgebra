@@ -237,23 +237,18 @@ DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
 DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
                   [ IsCapCategory, IsList ] );
 
-
-###
-###
-
 DeclareOperation( "StableCategory",
             [ IsCapCategory, IsFunction ] );
 
-# These methods call AsQuotientCategory(Object/Morphism)
 DeclareOperation( "StableCategoryObject",
             [ IsStableCategory, IsCapCategoryObject ] );
 
 DeclareOperation( "StableCategoryMorphism",
             [ IsStableCategory, IsCapCategoryMorphism ] );
 
-DeclareAttribute( "StableCategoryByColiftingStructure", IsCapCategory );
+DeclareAttribute( "StableCategoryBySystemOfColiftingObjects", IsCapCategory );
 
-DeclareAttribute( "StableCategoryByLiftingStructure", IsCapCategory );
+DeclareAttribute( "StableCategoryBySystemOfLiftingObjects", IsCapCategory );
 
 DeclareAttribute( "CongruencyTestFunctionForStableCategory", IsStableCategory );
 

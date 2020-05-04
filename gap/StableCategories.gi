@@ -139,10 +139,133 @@ CAP_INTERNAL_ENHANCE_NAME_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
 CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
 
 ########################
-##
-## Installer
-##
+#
+# category constructor
+#
 ########################
+
+InstallMethod( StableCategoryBySystemOfColiftingObjects,
+            [ IsCapCategory ],
+  function( category )
+    local name, can_be_factored_through_colifting_object, special_filters, stable_category,
+      SpecialFilters, with_hom_structure, category_of_hom_structure, to_be_finalized;
+    
+    if not CanCompute( category, "MorphismIntoColiftingObject" ) then
+      
+      Error( "The method 'MorphismIntoColiftingObject' should be added to ", Name( category ) );
+    
+    fi;
+    
+    if not CanCompute( category, "Colift" ) then
+      
+      Error( "The method 'Colift' should be added to ", Name( category ) );
+    
+    fi;
+    
+    name := ValueOption( "NameOfCategory" );
+    
+    can_be_factored_through_colifting_object := IsColiftableThroughColiftingObject;
+     
+    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
+    
+    with_hom_structure := ValueOption( "WithHomomorphismStructure" );
+    
+    if with_hom_structure <> false and
+         CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+           CanCompute( category, "HomomorphismStructureOnObjects" ) and
+             CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
+               CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
+                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                   
+                    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
+                   
+                    if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
+                     
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
+                  
+                    elif  LoadPackage( "FreydCategories" ) = true then
+                      
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
+                    
+                    fi;
+    
+    fi;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    if to_be_finalized = false then
+      
+      return stable_category;
+      
+    fi;
+    
+    Finalize( stable_category );
+    
+    return stable_category;
+    
+end );
+
+InstallMethod( StableCategoryBySystemOfLiftingObjects,
+            [ IsCapCategory ],
+  function( category )
+    local name, can_be_factored_through_lifting_object, stable_category, with_hom_structure, category_of_hom_structure, to_be_finalized;
+    
+    if not CanCompute( category, "MorphismFromLiftingObject" ) then
+      
+      Error( "The method 'MorphismFromLiftingObject' should be added to ", Name( category ) );
+    
+    fi;
+    
+    if not CanCompute( category, "Lift" ) then
+      
+      Error( "The method 'Lift' should be added to ", Name( category ) );
+    
+    fi;
+     
+    name := ValueOption( "NameOfCategory" );
+    
+    can_be_factored_through_lifting_object := IsLiftableThroughLiftingObject;
+    
+    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
+    
+    with_hom_structure := ValueOption( "WithHomomorphismStructure" );
+    
+    if with_hom_structure <> false and
+         CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+           CanCompute( category, "HomomorphismStructureOnObjects" ) and
+             CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
+               CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
+                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
+                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
+                    
+                    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
+                    
+                    if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
+                     
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
+                    
+                    elif LoadPackage( "FreydCategories" ) = true then
+                      
+                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
+                    
+                    fi;
+    
+    fi;
+    
+    to_be_finalized := ValueOption( "FinalizeCategory" );
+    
+    if to_be_finalized = false then
+      
+      return stable_category;
+      
+    fi;
+    
+    Finalize( stable_category );
+    
+    return stable_category;
+    
+end );
 
 InstallMethod( StableCategory,
               [ IsCapCategory, IsFunction ],
@@ -211,6 +334,12 @@ InstallMethod( StableCategory,
     
 end );
 
+########################
+#
+# cells constructor
+#
+########################
+
 ##
 InstallMethod( StableCategoryObject,
             [ IsStableCategory, IsCapCategoryObject ],
@@ -265,142 +394,13 @@ InstallMethod( \/,
     
 end );
 
-########################
-#
-# constructor
-#
-########################
-
-InstallMethod( StableCategoryByColiftingStructure,
-            [ IsCapCategory ],
-  function( category )
-    local name, can_be_factored_through_colifting_object, special_filters, stable_category,
-      SpecialFilters, with_hom_structure, category_of_hom_structure, to_be_finalized;
-    
-    if not CanCompute( category, "MorphismIntoColiftingObject" ) then
-      
-      Error( "The method 'MorphismIntoColiftingObject' should be added to ", Name( category ) );
-    
-    fi;
-    
-    if not CanCompute( category, "Colift" ) then
-      
-      Error( "The method 'Colift' should be added to ", Name( category ) );
-    
-    fi;
-    
-    name := ValueOption( "NameOfCategory" );
-    
-    can_be_factored_through_colifting_object := IsColiftableThroughColiftingObject;
-     
-    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
-    
-    with_hom_structure := ValueOption( "WithHomomorphismStructure" );
-    
-    if with_hom_structure <> false and
-         CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-           CanCompute( category, "HomomorphismStructureOnObjects" ) and
-             CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
-               CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
-                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
-                   
-                    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
-                   
-                    if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
-                     
-                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                  
-                    elif  LoadPackage( "FreydCategories" ) = true then
-                      
-                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
-                    
-                    fi;
-    
-    fi;
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
-    if to_be_finalized = false then
-      
-      return stable_category;
-      
-    fi;
-    
-    Finalize( stable_category );
-    
-    return stable_category;
-    
-end );
-
-InstallMethod( StableCategoryByLiftingStructure,
-            [ IsCapCategory ],
-  function( category )
-    local name, can_be_factored_through_lifting_object, stable_category, with_hom_structure, category_of_hom_structure, to_be_finalized;
-    
-    if not CanCompute( category, "MorphismFromLiftingObject" ) then
-      
-      Error( "The method 'MorphismFromLiftingObject' should be added to ", Name( category ) );
-    
-    fi;
-    
-    if not CanCompute( category, "Lift" ) then
-      
-      Error( "The method 'Lift' should be added to ", Name( category ) );
-    
-    fi;
-     
-    name := ValueOption( "NameOfCategory" );
-    
-    can_be_factored_through_lifting_object := IsLiftableThroughLiftingObject;
-    
-    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
-    
-    with_hom_structure := ValueOption( "WithHomomorphismStructure" );
-    
-    if with_hom_structure <> false and
-         CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-           CanCompute( category, "HomomorphismStructureOnObjects" ) and
-             CanCompute( category, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and
-               CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
-                 CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
-                   CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
-                    
-                    category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
-                    
-                    if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
-                     
-                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                    
-                    elif LoadPackage( "FreydCategories" ) = true then
-                      
-                      ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
-                    
-                    fi;
-    
-    fi;
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
-    if to_be_finalized = false then
-      
-      return stable_category;
-      
-    fi;
-    
-    Finalize( stable_category );
-    
-    return stable_category;
-    
-end );
-
-#########################
+############################
 #
 #  Homomorphism structure
 #
-##########################
+###########################
 
-InstallMethodWithCrispCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS,
+InstallMethodWithCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OBJECTS,
   [ IsStableCategoryObject, IsStableCategoryObject ],
   function( stable_a, stable_b )
     local a, b, a_to_I_a;
@@ -415,7 +415,7 @@ InstallMethodWithCrispCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTI
   
 end );
 
-InstallMethodWithCrispCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS,
+InstallMethodWithCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_LIFTING_OBJECTS,
   [ IsStableCategoryObject, IsStableCategoryObject ],
   function( stable_a, stable_b )
     local a, b, P_b_to_b;
