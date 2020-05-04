@@ -83,7 +83,7 @@ InstallMethod( HomotopyCategory,
       
     fi;
     
-    homotopy_category := StableCategoryByColiftingStructure( chains: NameOfCategory := name,
+    homotopy_category := StableCategoryBySystemOfColiftingObjects( chains: NameOfCategory := name,
                                                                      FinalizeCategory := false,
                                                                      WithHomomorphismStructure := true,
                                                                      SpecialFilters := special_filters );
