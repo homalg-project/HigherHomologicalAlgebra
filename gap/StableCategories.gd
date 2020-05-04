@@ -21,8 +21,21 @@ DeclareCategory( "IsStableCategoryMorphism",
 ##
 ## Stable colifting structure
 
-DeclareOperation( "ColiftingObject",
-                  [ IsCapCategoryObject ] );
+DeclareProperty( "IsColiftingObject", IsCapCategoryObject );
+
+DeclareOperation( "AddIsColiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsColiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsColiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsColiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ColiftingObject", IsCapCategoryObject );
 
 DeclareOperation( "AddColiftingObject",
                   [ IsCapCategory, IsFunction ] );
@@ -122,8 +135,21 @@ DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
 
 ## Stable lifting structure
 
-DeclareOperation( "LiftingObject",
-                  [ IsCapCategoryObject ] );
+DeclareProperty( "IsLiftingObject", IsCapCategoryObject );
+
+DeclareOperation( "AddIsLiftingObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsLiftingObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddIsLiftingObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddIsLiftingObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "LiftingObject", IsCapCategoryObject );
 
 DeclareOperation( "AddLiftingObject",
                   [ IsCapCategory, IsFunction ] );

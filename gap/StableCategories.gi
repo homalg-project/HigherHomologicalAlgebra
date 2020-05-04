@@ -45,7 +45,13 @@ BindGlobal( "TheTypeOfStableCategoryMorphism",
 InstallValue( CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS, rec( ) );
 
 InstallValue( STABLE_CATEGORIES_METHOD_NAME_RECORD, rec(
- 
+
+IsLiftingObject := rec(
+  installation_name := "IsLiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "IsLiftingObject",
+  return_type := "bool" ),
+
 LiftingObject := rec(
   installation_name := "LiftingObject",
   filter_list := [ "object" ],
@@ -82,6 +88,12 @@ WitnessForBeingLiftableThroughLiftingObject := rec(
   filter_list := [ "morphism" ],
   cache_name := "WitnessForBeingLiftableThroughLiftingObject",
   return_type := "morphism" ),
+
+IsColiftingObject := rec(
+  installation_name := "IsColiftingObject",
+  filter_list := [ "object" ],
+  cache_name := "IsColiftingObject",
+  return_type := "bool" ),
 
 ColiftingObject := rec(
   installation_name := "ColiftingObject",
