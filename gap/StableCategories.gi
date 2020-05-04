@@ -921,23 +921,10 @@ end );
 InstallMethod( Display,
             [ IsStableCategoryObject ],
   function( a )
-    local test_function, name;
     
-    test_function := CongruencyTestFunctionForStableCategory( CapCategory( a ) );
+    Print( "An object in ", Name( CapCategory( a ) ), " defined by the underlying object:\n\n" );
     
-    name := NameFunction( test_function );
-    
-    if name = "unknown" then
-      
-      name := "a congruency test function";
-    
-    fi;
-      
-    Print( "An object in a stable category defined by:\n\n" );
-         
     Display( UnderlyingCell( a ) );
-    
-    Print( "\nmodulo ", name );
     
 end );
 
@@ -945,23 +932,10 @@ end );
 InstallMethod( Display,
             [ IsStableCategoryMorphism ],
   function( alpha )
-    local name, test_function;
     
-    test_function := CongruencyTestFunctionForStableCategory( CapCategory( alpha ) );
-    
-    name := NameFunction( test_function );
-    
-    if name = "unknown" then
-      
-      name := "a congruency test function";
-      
-    fi;
-    
-    Print( "A morphism in a stable category defined by:\n\n" );
+    Print( "A morphism in ", Name( CapCategory( alpha ) ), " defined by the underlying morphism:\n\n" );
     
     Display( UnderlyingCell( alpha ) );
     
-    Print( "\nmodulo ", name );
-  
 end );
 
