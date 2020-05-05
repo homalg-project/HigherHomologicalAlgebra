@@ -1,12 +1,5 @@
 LoadPackage( "DerivedCategories" );
 
-Q := HomalgFieldOfRationalsInSingular( );
-S := GradedRing( Q * "x,y,z" );
-
-rows := CategoryOfGradedRows( S );
-freyd := FreydCategory( rows );
-chains := ChainComplexCategory( rows );
-arrows := FullSubcategory( chains, Concatenation( "Arrows( ", Name( rows ), " )" ) : FinalizeCategory := false, is_additive := true );
 
 AddColiftingObject( arrows,
   function( a )
