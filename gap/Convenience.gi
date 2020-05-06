@@ -709,7 +709,18 @@ InstallMethod( FindSomeFunctor,
         TryNextMethod( );
       fi;
     fi;
-
+    
+    if IsCategoryOfGradedRows( category ) and IsQuiverRowsCategory( DefiningCategory( homotopy_category ) ) then
+      TryNextMethod( );
+    fi;
+    
+    if IsCategoryOfGradedRows( category ) and IsAdditiveClosureCategory( DefiningCategory( homotopy_category ) ) then
+      underlying_category := UnderlyingCategory( DefiningCategory( homotopy_category ) );
+      if IsAlgebroid( underlying_category ) then
+        TryNextMethod( );
+      fi;
+    fi;
+    
     underlying_category := UnderlyingCategory( homotopy_category );
     
     I := FindSomeFunctor( category, underlying_category );
