@@ -1,1 +1,1 @@
-1- Add derivations to the category
+1- Add derived methods to the category
