@@ -1,4 +1,15 @@
 
+DeclareAttribute( "Basis", IsAlgebroid );
+
+##
+InstallMethod( Basis,
+          [ IsAlgebroid ],
+          
+  function( algebroid )
+    
+    return List( BasisVectors( Basis( UnderlyingQuiverAlgebra( algebroid ) ) ), e -> e / algebroid );
+    
+end );
 
 ## Constructors with out any check
 

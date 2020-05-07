@@ -143,51 +143,54 @@ DeclareOperation( "\[\]", [ IsExceptionalCollection, IsInt ] );
 #!  through any other object in the exceptional collection.
 #! @Arguments E, i, j
 #! @Returns IsList
+KeyDependentOperation( "PathsOfLengthOne", IsExceptionalCollection, IsList, ReturnTrue );
+
 DeclareOperation( "Arrows", [ IsExceptionalCollection, IsInt, IsInt ] );
+
 
 #! @Description
 #!  It returns a generating set for the vector space of morphisms from $E_i$ to $E_j$ that can be factored
 #!  along at least one object in the exceptional collection.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "OtherPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "PathsOfLengthGreaterThanOne", IsExceptionalCollection, IsList, ReturnTrue );
 
 #! @Description
-#!  It returns the union of <C>Arrows</C> and <C>OtherPaths</C> applied
+#!  It returns the union of <C>PathsOfLengthOne</C> and <C>PathsOfLengthGreaterThanOne</C> applied
 #!  on the same input. In other words it returns a generating set for the vector space Hom$(E_i,E_j)$.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "Paths", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "AllPaths", IsExceptionalCollection, IsList, ReturnTrue );
 
 #! @Description
 #!  It returns a basis for <C>Paths( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "BasisForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "BasisForPaths", IsExceptionalCollection, IsList, ReturnTrue );
 
 #! @Description
-#!  It returns labels for <C>Arrows( E, i, j )</C>.
+#!  It returns labels for <C>PathsOfLengthOne( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns IsList
-DeclareOperation( "LabelsForArrows", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "LabelsForPathsOfLengthOne", IsExceptionalCollection, IsList, ReturnTrue );
 
 #! @Description
-#!  It returns labels for <C>OtherPaths( E, i, j )</C>.
+#!  It returns labels for <C>LabelsForPathsOfLengthOne( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns a list of lists
-DeclareOperation( "LabelsForOtherPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
-
-#! @Description
-#!  It returns labels for <C>Paths( E, i, j )</C>.
-#! @Arguments E, i, j
-#! @Returns a list of lists
-DeclareOperation( "LabelsForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "LabelsForPathsOfLengthGreaterThanOne", IsExceptionalCollection, IsList, ReturnTrue );
 
 #! @Description
 #!  It returns labels for <C>Paths( E, i, j )</C>.
 #! @Arguments E, i, j
 #! @Returns a list of lists
-DeclareOperation( "LabelsForBasisForPaths", [ IsExceptionalCollection, IsInt, IsInt ] );
+KeyDependentOperation( "LabelsForAllPaths", IsExceptionalCollection, IsList, ReturnTrue );
+
+#! @Description
+#!  It returns labels for <C>Paths( E, i, j )</C>.
+#! @Arguments E, i, j
+#! @Returns a list of lists
+KeyDependentOperation( "LabelsForBasisForPaths", IsExceptionalCollection, IsList, ReturnTrue );
 
 ####################################
 ##

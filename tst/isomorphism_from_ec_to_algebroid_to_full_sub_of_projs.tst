@@ -19,7 +19,7 @@ gap> N := 20;;
 gap> for i in [ 1 .. N ] do
 > nr_vertices := NumberOfVertices( QuiverOfAlgebra( A ) );
 > j := Random( [ 1 .. nr_vertices - 2 ] );
-> p := Paths( collection, j, Random( [ j + 1 .. nr_vertices ] ) );
+> p := AllPaths( collection, j, Random( [ j + 1 .. nr_vertices ] ) );
 > if not IsEmpty( p ) then
 >   c := List( [ 1 .. Size( p ) ], i -> Random( [ -100 .. 100 ] ) );
 >   cp := c * p;

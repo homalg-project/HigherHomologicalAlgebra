@@ -30,8 +30,8 @@ BindGlobal( "ExceptionalCollectionFamily",
   NewFamily( "ExceptionalCollectionFamily", IsObject ) );
 
 ##
-BindGlobal( "TheTypeExceptionalCollection", 
-  NewType( ExceptionalCollectionFamily, 
+BindGlobal( "TheTypeExceptionalCollection",
+  NewType( ExceptionalCollectionFamily,
                       IsExceptionalCollectionRep ) );
 
 ##################################
@@ -43,7 +43,7 @@ BindGlobal( "TheTypeExceptionalCollection",
 ##
 InstallGlobalFunction( CreateExceptionalCollection,
   function( arg )
-    local full, cache, L, collection, n, quiver, algebra, vertices_labels, positions;
+    local full, cache, L, collection, n, quiver, algebra, vertices_labels, positions, i, j;
     
     full := arg[ 1 ];
     
@@ -68,7 +68,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
       full := FullSubcategoryGeneratedByListOfObjects( full );
       
       SetCachingOfCategory( full, cache );
-     
+      
     fi;
     
     L := ShallowCopy( SetOfKnownObjects( full ) );
@@ -76,16 +76,30 @@ InstallGlobalFunction( CreateExceptionalCollection,
     if IsEmpty( L ) then
       
       Error( "The input is empty!" );
-    
+      
     fi;
     
     if not HasRangeCategoryOfHomomorphismStructure( full ) then
       
       Error( "The category needs homomorphism structure" );
-    
+       
     fi;
     
-    Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
+    for i in [ 1 .. Size( L ) - 1 ] do
+      for j in [ i + 1 .. Size( L ) ] do
+        if not IsZero( HomomorphismStructureOnObjects( L[ j ], L[ i ] ) ) then
+          Sort( L, { a, b } -> IsZero( HomomorphismStructureOnObjects( b, a ) ) );
+        fi;
+      od;
+    od;
+    
+    for i in [ 1 .. Size( L ) - 1 ] do
+      for j in [ i + 1 .. Size( L ) ] do
+        if not IsZero( HomomorphismStructureOnObjects( L[ j ], L[ i ] ) ) then
+          Error( "Please give the exceptional objects in the correct order!\n" );
+        fi;
+      od;
+    od;
     
     vertices_labels := ValueOption( "vertices_labels" );
     
@@ -128,20 +142,12 @@ InstallGlobalFunction( CreateExceptionalCollection,
       quiver := "quiver";
       
     fi;
-        
+    
     collection := rec(
                     char := "m",
-                    arrows := rec( ),
-                    other_paths := rec( ),
-                    paths := rec( ),
-                    basis_for_paths := rec( ),
-                    labels_for_arrows := rec( ),
-                    labels_for_other_paths := rec( ),
-                    labels_for_paths := rec( ),
-                    labels_for_basis_for_paths := rec( ),
                     quiver := quiver,
                     algebra := algebra,
-                    vertices_labels := vertices_labels 
+                    vertices_labels := vertices_labels
                     );
     
     n := Length( L );
@@ -151,7 +157,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
         UnderlyingObjects, L,
         NumberOfObjects, n,
         DefiningFullSubcategory, full );
-    
+        
     SetExceptionalCollection( full, collection );
     
     return collection;
@@ -175,7 +181,7 @@ InstallMethod( ExceptionalCollection,
                                       );
     
     return ExceptionalCollection( full );
-  
+    
 end );
 
 ##
@@ -215,18 +221,18 @@ InstallMethod( InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingOb
     nr_objects := NumberOfObjects( collection );
     
     objs := UnderlyingObjects( collection );
-        
+    
     p_source := Position( objs, Source( phi ) );
-        
+    
     p_range := Position( objs, Range( phi ) );
-        
+    
     objs := List( objs, UnderlyingCell );
-        
+    
     L := List( [ 1 .. nr_objects ],
       i -> List( [ 1 .. nr_objects ], j -> ZeroMorphism( objs[ i ], objs[ j ] ) ) );
-        
+      
     L[ p_source ][ p_range ] := UnderlyingCell( phi );
-        
+    
     return MorphismBetweenDirectSums( L );
     
 end );
@@ -279,23 +285,26 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphis
           IsEqualForObjects( Range( morphism ), range ) ) then
           
           Error( "All morphisms should have the same source and range" );
-    
+          
     fi;
     
     linear_maps := List( morphisms, morphism ->
       [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( morphism ) ] );
-    
-    return MorphismBetweenDirectSums( linear_maps );
       
+    return MorphismBetweenDirectSums( linear_maps );
+    
 end );
 
-
 ##
-InstallMethod( Arrows,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+InstallMethod( PathsOfLengthOneOp,
+          [ IsExceptionalCollection, IsList ],
     
-  function( collection, i, j )
-    local cat, n, source, range, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
+  function( collection, indices )
+    local i, j, n, source, range, cat, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
+    
+    i := indices[ 1 ];
+    
+    j := indices[ 2 ];
     
     n := NumberOfObjects( collection );
     
@@ -311,24 +320,18 @@ InstallMethod( Arrows,
         
     else
       
-      if IsBound( collection!.arrows.( String( [ i, j ] ) ) ) then
-        
-        return collection!.arrows.( String( [ i, j ] ) );
-      
-      fi;
-       
       source := collection[ i ];
-    
+      
       range := collection[ j ];
       
       cat := CapCategory( source );
-
+      
       H := HomomorphismStructureOnObjects( source, range );
-
+      
       U := DistinguishedObjectOfHomomorphismStructure( cat );
-
+      
       maps := BasisOfExternalHom( U, H );
-     
+      
       if j - i = 1 then
       
         arrows := List( maps, map ->
@@ -337,22 +340,22 @@ InstallMethod( Arrows,
       
       else
       
-        paths := OtherPaths( collection, i, j );
+        paths := PathsOfLengthGreaterThanOne( collection, [ i, j ] );
       
         one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, paths );
         
         nr_arrows := Dimension( CokernelObject( one_morphism ) );
         
         arrows := [ ];
-      
+        
         for map in maps do
         
           if not IsLiftable( map, one_morphism ) then
-                  
+            
             Add( arrows,
               InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( 
                 source, range, map ) );
-            
+                
             one_morphism := MorphismBetweenDirectSums( [ [ map ], [ one_morphism ] ] );
             
             if Length( arrows ) = nr_arrows then
@@ -360,106 +363,104 @@ InstallMethod( Arrows,
               break;
               
             fi;
-         
+            
           fi;
-        
+          
         od;
-      
+        
       fi;
       
-      MakeImmutable( arrows );
-      
-      collection!.arrows!.( String( [ i, j ] ) ) := arrows;
-      
       return arrows;
-        
+      
     fi;
       
 end );
 
 ##
-InstallMethod( OtherPaths,
+InstallOtherMethod( PathsOfLengthOne,
           [ IsExceptionalCollection, IsInt, IsInt ],
-  
-  function( collection, i, j )
-    local n, paths;
-   
+  { collection, i, j } -> PathsOfLengthOne( collection, [ i, j ] )
+);
+
+##
+InstallOtherMethod( Arrows,
+          [ IsExceptionalCollection, IsInt, IsInt ],
+  { collection, i, j } -> PathsOfLengthOne( collection, [ i, j ] )
+);
+
+##
+InstallMethod( PathsOfLengthGreaterThanOneOp,
+          [ IsExceptionalCollection, IsList ],
+          
+  function( collection, indices )
+    local i, j, n, paths;
+    
+    i := indices[ 1 ];
+    
+    j := indices[ 2 ];
+    
     n := NumberOfObjects( collection );
     
     if i <= 0 or j <= 0 or i > n or j > n then
       
-      Error( "Wrong input: some index is less than zero or bigger with the number of objects in the strong exceptional collection." );
+      Error( "Wrong input!\n" );
       
     fi;
     
-    if j - i <= 0 then
+    if j - i <= 1 then
       
       return [ ];
-    
-    elif j - i = 1 then
       
-      # should we change this
-      return [ ];
-    
     else
-     
-      if IsBound( collection!.other_paths!.( String( [ i, j ] ) ) ) then
-        
-        return collection!.other_paths!.( String( [ i, j ] ) );
-        
-      fi;
-
+      
       paths := List( [ i + 1 .. j - 1 ],
-              u -> ListX( 
-                Arrows( collection, i, u ), 
+              u -> ListX(
+                PathsOfLengthOne( collection, [ i, u ] ),
                   Concatenation(
-                    OtherPaths( collection, u, j ),
-                      Arrows( collection, u, j ) ), PreCompose ) );
+                    PathsOfLengthGreaterThanOne( collection, [ u, j ] ),
+                      PathsOfLengthOne( collection, [ u, j ] ) ), PreCompose ) );
+                      
+      return Concatenation( paths );
       
-      paths := Concatenation( paths );
-      
-      MakeImmutable( paths );
-     
-      collection!.other_paths!.( String( [ i, j ] ) ) := paths;
-      
-      return paths;
-    
-    fi; 
-    
-end );
-
-##
-InstallMethod( Paths,
-          [ IsExceptionalCollection, IsInt, IsInt ],
-  
-  function( collection, i, j )
-    local paths;
-    
-    paths := Concatenation( 
-              Arrows( collection, i, j ),
-                OtherPaths( collection, i, j )
-                );
-    
-    collection!.paths!.( String( [ i, j ] ) ) := paths;
-    
-    MakeImmutable( paths );
-
-    return paths;
-    
-end );
-
-##
-InstallMethod( BasisForPaths,
-          [ IsExceptionalCollection, IsInt, IsInt ],
-              
-  function( collection, i, j )
-    local k, dim, paths, paths_labels, n, p, basis, labels, current_path, current_one_morphism;
-    
-    if IsBound( collection!.basis_for_paths!.( String( [ i, j ] ) ) ) then
-        
-        return collection!.basis_for_paths!.( String( [ i, j ] ) );
-        
     fi;
+    
+end );
+
+##
+InstallOtherMethod( PathsOfLengthGreaterThanOne,
+          [ IsExceptionalCollection, IsInt, IsInt ],
+  { collection, i, j } -> PathsOfLengthGreaterThanOne( collection, [ i, j ] )
+);
+
+##
+InstallMethod( AllPathsOp,
+          [ IsExceptionalCollection, IsList ],
+          
+  function( collection, indices )
+    
+    return Concatenation(
+                PathsOfLengthOne( collection, indices ),
+                PathsOfLengthGreaterThanOne( collection, indices )
+              );
+              
+end );
+
+##
+InstallOtherMethod( AllPaths,
+          [ IsExceptionalCollection, IsInt, IsInt ],
+  { collection, i, j } -> AllPaths( collection, [ i, j ] )
+);
+
+##
+InstallMethod( BasisForPathsOp,
+          [ IsExceptionalCollection, IsList ],
+              
+  function( collection, indices )
+    local i, j, basis, labels, dim, paths, paths_labels, n, p, hom_i_j, basis_as_morphism, current_path, k;
+    
+    i := indices[ 1 ];
+    
+    j := indices[ 2 ];
     
     if i > j then
       
@@ -467,13 +468,7 @@ InstallMethod( BasisForPaths,
       
       labels := [ ];
       
-      MakeImmutable( basis );
-      
-      MakeImmutable( labels );
-      
-      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
-      
-      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
       
       return basis;
       
@@ -483,13 +478,7 @@ InstallMethod( BasisForPaths,
       
       labels := [ [ i, i, 0 ] ];
       
-      MakeImmutable( basis );
-      
-      MakeImmutable( labels );
-      
-      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
-      
-      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
       
       return basis;
       
@@ -497,12 +486,13 @@ InstallMethod( BasisForPaths,
     
     dim := Dimension( HomomorphismStructureOnObjects( collection[ i ], collection[ j ] ) );
     
-    paths := Paths( collection, i, j );
+    paths := AllPaths( collection, [ i, j ] );
     
-    paths_labels := LabelsForPaths( collection, i, j );
+    paths_labels := LabelsForAllPaths( collection, [ i, j ] );
     
     n := Length( paths );
     
+    # search for non-zero path in the set of all paths
     p := PositionProperty( paths, p -> not IsZero( p ) );
     
     if p = fail then
@@ -511,182 +501,151 @@ InstallMethod( BasisForPaths,
       
       labels := [ ];
       
-      MakeImmutable( basis );
-    
-      MakeImmutable( labels );
-    
-      collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
-    
-      collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
       
       return basis;
       
     fi;
     
+    hom_i_j := HomStructure( collection[ i ], collection[ j ] );
+    
+    dim := Dimension( hom_i_j );
+    
     basis := [ paths[ p ] ];
     
     labels := [ paths_labels[ p ] ];
     
+    basis_as_morphism := UniversalMorphismFromZeroObject( hom_i_j );
+    
     for k in [ p + 1 .. n ] do
       
-      current_path := paths[ k ];
+      if Size( basis ) = dim then
+        
+        break;
+        
+      fi;
       
-      current_path := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( current_path );
+      current_path := HomStructure( paths[ k ] );
       
-      current_one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( collection[ i ], collection[ j ], basis );
+      if IsZero( current_path ) then
+        continue;
+      fi;
       
-      if not IsLiftable( current_path, current_one_morphism ) then
+      if not IsLiftable( current_path, basis_as_morphism ) then
         
         Add( basis, paths[ k ] );
         
         Add( labels, paths_labels[ k ] );
         
-      fi;
-      
-      if Length( basis ) = dim then
-        
-        continue;
-        
+        basis_as_morphism :=
+          MorphismBetweenDirectSums(
+              [
+                [ basis_as_morphism ],
+                [ current_path ]
+              ]
+            );
+            
       fi;
       
     od;
     
-    MakeImmutable( basis );
-    
-    MakeImmutable( labels );
-    
-    collection!.basis_for_paths!.( String( [ i, j ] ) ) := basis;
-    
-    collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) := labels;
+    SetLabelsForBasisForPaths( collection, [ i, j ], labels );
     
     return basis;
     
 end );
 
 ##
-InstallMethod( LabelsForArrows,
+InstallOtherMethod( BasisForPaths,
           [ IsExceptionalCollection, IsInt, IsInt ],
-  
-  function( collection, i, j )
-    local nr_arrows, labels;
+  { collection, i, j } -> BasisForPaths( collection, [ i, j ] )
+);
+
+##
+InstallMethod( LabelsForPathsOfLengthOneOp,
+          [ IsExceptionalCollection, IsList ],
+          
+  function( collection, indices )
+    local nr_arrows;
     
-    if IsBound( collection!.labels_for_arrows!.( String( [ i, j ] ) ) ) then
-      
-      return collection!.labels_for_arrows!.( String( [ i, j ] ) );
-      
-    fi;
-   
-    nr_arrows := Length( Arrows( collection, i, j ) ); 
-   
-    labels := List( [ 1 .. nr_arrows ], k -> [ i, j, k ] );
+    nr_arrows := Length( PathsOfLengthOne( collection, indices ) );
     
-    collection!.labels_for_arrows!.( String( [ i, j ] ) ) := labels;
-    
-    MakeImmutable( labels );
- 
-    return labels;
+    return List( [ 1 .. nr_arrows ], k -> Concatenation( indices, [ k ] ) );
     
 end );
 
 ##
-InstallMethod( LabelsForOtherPaths,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+InstallMethod( LabelsForPathsOfLengthGreaterThanOneOp,
+          [ IsExceptionalCollection, IsList ],
           
-  function( collection, i, j )
-    local n, labels;
+  function( collection, indices )
+    local i, j, n, labels;
+    
+    i := indices[ 1 ];
+    
+    j := indices[ 2 ];
     
     n := NumberOfObjects( collection );
     
     if i <= 0 or j <= 0 or i > n or j > n then
       
-      Error( "Wrong input: some index is less than zero or bigger with the number of objects in the strong exceptional collection." );
+      Error( "Wrong input!\n" );
       
     fi;
     
     if j - i <= 0 then
       
       return [ ];
-    
+      
     elif j - i = 1 then
       
       # should we change this
       return [ ];
-    
+      
     else
     
-    if IsBound( collection!.labels_for_other_paths!.( String( [ i, j ] ) ) ) then
-      
-      return collection!.labels_for_other_paths!.( String( [ i, j ] ) );
-    
-    fi;
-    
     labels := List( [ i + 1 .. j - 1 ],
-              u -> ListX( 
+              u -> ListX(
                     
-                    LabelsForArrows( collection, i, u ),
+                    LabelsForPathsOfLengthOne( collection,  [ i, u ] ),
                     
                     Concatenation(
-                      LabelsForOtherPaths( collection, u, j ),
-                        List( LabelsForArrows( collection, u, j ), a -> [ a ] )
+                      LabelsForPathsOfLengthGreaterThanOne( collection, [ u, j ] ),
+                        List( LabelsForPathsOfLengthOne( collection, [ u, j ] ), a -> [ a ] )
                                  ),
-                    
+                                
                     {a,b} -> Concatenation( [ a ], b ) )
               );
-      
-      labels := Concatenation( labels );
-      
-      MakeImmutable( labels );
-
-      collection!.labels_for_other_paths!.( String( [ i, j ] ) ) := labels;
-      
-      return labels;
-    
-    fi; 
-
-end );
-
-
-##
-InstallMethod( LabelsForPaths,
-      [ IsExceptionalCollection, IsInt, IsInt ],
-      
-  function( collection, i, j )
-    local labels;
-    
-    if IsBound( collection!.labels_for_paths!.( String( [ i, j ] ) ) ) then
-      
-      return collection!.labels_for_paths!.( String( [ i, j ] ) );
-      
-    fi;
-    
-    labels := Concatenation( 
-              List( LabelsForArrows( collection, i, j ), l -> [ l ] ),
-                LabelsForOtherPaths( collection, i, j )
-                );
-    
-    MakeImmutable( labels );
-
-    collection!.labels_for_paths!.( String( [ i, j ] ) ) := labels;
-    
-    return labels;
-    
-end );
-
-##
-InstallMethod( LabelsForBasisForPaths,
-              [ IsExceptionalCollection, IsInt, IsInt ],
               
-  function( collection, i, j )
-    
-    if IsBound( collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) ) ) then
-      
-      return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
+      return Concatenation( labels );
       
     fi;
-   
-    BasisForPaths( collection, i, j );
     
-    return collection!.labels_for_basis_for_paths!.( String( [ i, j ] ) );
+end );
+
+##
+InstallMethod( LabelsForAllPathsOp,
+      [ IsExceptionalCollection, IsList ],
+      
+  function( collection, indices )
+    
+    return Concatenation(
+                List( LabelsForPathsOfLengthOne( collection, indices ), l -> [ l ] ),
+                LabelsForPathsOfLengthGreaterThanOne( collection, indices )
+              );
+              
+end );
+
+##
+InstallMethod( LabelsForBasisForPathsOp,
+              [ IsExceptionalCollection, IsList ],
+              
+  function( collection, indices )
+    local b;
+    
+    b := BasisForPaths( collection, indices );
+    
+    return LabelsForBasisForPaths( collection, indices );
     
 end );
 
@@ -703,7 +662,7 @@ InstallGlobalFunction( RelationsBetweenMorphisms,
     map := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, morphisms );
     
     return EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( KernelEmbedding( map ) ) );
-  
+    
 end );
 
 ##
@@ -716,14 +675,14 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     nr_vertices := NumberOfObjects( collection );
     
     arrows := List( [ 1 .. nr_vertices - 1 ],
-                i -> Concatenation( 
+                i -> Concatenation(
                   
                   List( [ i + 1 .. nr_vertices ],
-                    j -> LabelsForArrows( collection, i, j )
+                    j -> LabelsForPathsOfLengthOne( collection, [ i, j ] )
                       )
                                   )
                   );
-    
+                  
     arrows := Concatenation( arrows );
     
     sources := List( arrows, a -> a[ 1 ] );
@@ -746,13 +705,13 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
     for i in [ 1 .. nr_vertices - 1 ] do
       for j in [ i + 1 .. nr_vertices ] do
                       
-        paths_in_collection := Paths( collection, i, j );
+        paths_in_collection := AllPaths( collection, [ i, j ] );
         
         if IsEmpty( paths_in_collection ) then
           continue;
         fi;
         
-        labels := LabelsForPaths( collection, i, j );
+        labels := LabelsForAllPaths( collection, [ i, j ] );
         
         paths_in_quiver := List( labels,
           l -> Product(
@@ -766,7 +725,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
         rel := List( rel, r -> List( r, e -> e / field ) * paths_in_quiver );
         
         relations := Concatenation( relations, rel );
-                      
+        
       od;
       
     od;
@@ -791,12 +750,12 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
                                 "Algebroid(", r[ 2 ], " ", name,
                                   " ", r[ 1 ], ")", r[ 2 ]
                                 );;
-      
+                                
       QuiverRows( A )!.Name := Concatenation( r[ 1 ],
                                  "QuiverRows(", r[ 2 ], " ", name,
                                   " ", r[ 1 ], ")", r[ 2 ]
                                 );;
-       
+                                
     fi;
     
     return A;

@@ -469,7 +469,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
           
         fi;
         
-        labels := LabelsForBasisForPaths( collection, i, j );
+        labels := LabelsForBasisForPaths( collection, [ i, j ] );
         
         dim := Length( basis );
         
