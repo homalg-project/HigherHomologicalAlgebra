@@ -257,6 +257,52 @@ InstallMethod( \[\],
 end );
 
 ##
+InstallMethod( PathsOfLengthGreaterThanOneOp,
+          [ IsExceptionalCollection, IsList ],
+          
+  function( collection, indices )
+    local i, j, n;
+    
+    n := NumberOfObjects( collection );
+    
+    if not ForAll( indices, i -> i in [ 1 .. n ] ) then
+      
+      Error( "Wrong input!\n" );
+      
+    fi;
+    
+    i := indices[ 1 ];
+    
+    j := indices[ 2 ];
+    
+    if j - i <= 1 then
+      
+      return [ ];
+      
+    else
+      
+      return
+        Concatenation(
+          List( [ i + 1 .. j - 1 ],
+            u -> ListX(
+                    PathsOfLengthOne( collection, [ i, u ] ),
+                    AllPaths( collection, [ u, j ] ),
+                    PreCompose
+                  )
+              )
+        );
+        
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( PathsOfLengthGreaterThanOne,
+          [ IsExceptionalCollection, IsInt, IsInt ],
+  { collection, i, j } -> PathsOfLengthGreaterThanOne( collection, [ i, j ] )
+);
+
+##
 InstallMethod( PathsOfLengthOneOp,
           [ IsExceptionalCollection, IsList ],
     
@@ -348,60 +394,17 @@ InstallOtherMethod( Arrows,
 );
 
 ##
-InstallMethod( PathsOfLengthGreaterThanOneOp,
-          [ IsExceptionalCollection, IsList ],
-          
-  function( collection, indices )
-    local i, j, n, paths;
-    
-    i := indices[ 1 ];
-    
-    j := indices[ 2 ];
-    
-    n := NumberOfObjects( collection );
-    
-    if i <= 0 or j <= 0 or i > n or j > n then
-      
-      Error( "Wrong input!\n" );
-      
-    fi;
-    
-    if j - i <= 1 then
-      
-      return [ ];
-      
-    else
-      
-      paths := List( [ i + 1 .. j - 1 ],
-              u -> ListX(
-                PathsOfLengthOne( collection, [ i, u ] ),
-                  Concatenation(
-                    PathsOfLengthGreaterThanOne( collection, [ u, j ] ),
-                      PathsOfLengthOne( collection, [ u, j ] ) ), PreCompose ) );
-                      
-      return Concatenation( paths );
-      
-    fi;
-    
-end );
-
-##
-InstallOtherMethod( PathsOfLengthGreaterThanOne,
-          [ IsExceptionalCollection, IsInt, IsInt ],
-  { collection, i, j } -> PathsOfLengthGreaterThanOne( collection, [ i, j ] )
-);
-
-##
 InstallMethod( AllPathsOp,
           [ IsExceptionalCollection, IsList ],
           
   function( collection, indices )
     
-    return Concatenation(
-                PathsOfLengthOne( collection, indices ),
-                PathsOfLengthGreaterThanOne( collection, indices )
-              );
-              
+    return
+      Concatenation(
+          PathsOfLengthOne( collection, indices ),
+          PathsOfLengthGreaterThanOne( collection, indices )
+        );
+            
 end );
 
 ##
@@ -415,102 +418,49 @@ InstallMethod( BasisForPathsOp,
           [ IsExceptionalCollection, IsList ],
               
   function( collection, indices )
-    local i, j, basis, labels, dim, paths, paths_labels, n, p, hom_i_j, basis_as_morphism, current_path, k;
+    local dim, arrows, arrows_labels, long_paths, long_paths_labels, B, B_labels, p, rel, labels;
     
-    i := indices[ 1 ];
+    dim := Dimension( HomStructure( collection[ indices[ 1 ] ], collection[ indices[ 2 ] ] ) );
     
-    j := indices[ 2 ];
+    arrows := PathsOfLengthOne( collection, indices );
     
-    if i > j then
-      
-      basis := [ ];
-      
-      labels := [ ];
-      
-      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
-      
-      return basis;
-      
-    elif i = j then
-      
-      basis := [ IdentityMorphism( collection[ i ] ) ];
-      
-      labels := [ [ i, i, 0 ] ];
-      
-      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
-      
-      return basis;
-      
-    fi;
+    arrows_labels := List( LabelsForPathsOfLengthOne( collection, indices ), l -> [ l ] );
     
-    dim := Dimension( HomomorphismStructureOnObjects( collection[ i ], collection[ j ] ) );
+    long_paths := PathsOfLengthGreaterThanOne( collection, indices );
     
-    paths := AllPaths( collection, [ i, j ] );
+    long_paths_labels := LabelsForPathsOfLengthGreaterThanOne( collection, indices );
     
-    paths_labels := LabelsForAllPaths( collection, [ i, j ] );
+    B := [ ];
     
-    n := Length( paths );
+    B_labels := [ ];
     
-    # search for non-zero path in the set of all paths
-    p := PositionProperty( paths, p -> not IsZero( p ) );
-    
-    if p = fail then
+    while Size( B ) < dim - Size( arrows ) do
       
-      basis := [ ];
+      p := PositionProperty( long_paths, path -> not IsZero( path ) );
       
-      labels := [ ];
+      rel := RelationsBetweenMorphisms( Concatenation( B, [ long_paths[ p ] ] ) );
       
-      SetLabelsForBasisForPaths( collection, [ i, j ], labels );
-      
-      return basis;
-      
-    fi;
-    
-    hom_i_j := HomStructure( collection[ i ], collection[ j ] );
-    
-    dim := Dimension( hom_i_j );
-    
-    basis := [ paths[ p ] ];
-    
-    labels := [ paths_labels[ p ] ];
-    
-    basis_as_morphism := UniversalMorphismFromZeroObject( hom_i_j );
-    
-    for k in [ p + 1 .. n ] do
-      
-      if Size( basis ) = dim then
+      if IsEmpty( rel ) then
         
-        break;
+        Add( B, long_paths[ p ] );
+        
+        Add( B_labels, long_paths_labels[ p ] );
         
       fi;
       
-      current_path := HomStructure( paths[ k ] );
+      long_paths := long_paths{ [ p + 1 .. Size( long_paths ) ] };
       
-      if IsZero( current_path ) then
-        continue;
-      fi;
-      
-      if not IsLiftable( current_path, basis_as_morphism ) then
-        
-        Add( basis, paths[ k ] );
-        
-        Add( labels, paths_labels[ k ] );
-        
-        basis_as_morphism :=
-          MorphismBetweenDirectSums(
-              [
-                [ basis_as_morphism ],
-                [ current_path ]
-              ]
-            );
-            
-      fi;
+      long_paths_labels := long_paths_labels{ [ p + 1 .. Size( long_paths_labels ) ] };
       
     od;
     
-    SetLabelsForBasisForPaths( collection, [ i, j ], labels );
+    B := Concatenation( arrows, B );
     
-    return basis;
+    labels := Concatenation( arrows_labels, B_labels );
+    
+    SetLabelsForBasisForPaths( collection, indices, labels );
+    
+    return B;
     
 end );
 
@@ -563,21 +513,17 @@ InstallMethod( LabelsForPathsOfLengthGreaterThanOneOp,
       
     else
     
-    labels := List( [ i + 1 .. j - 1 ],
-              u -> ListX(
-                    
-                    LabelsForPathsOfLengthOne( collection,  [ i, u ] ),
-                    
-                    Concatenation(
-                      LabelsForPathsOfLengthGreaterThanOne( collection, [ u, j ] ),
-                        List( LabelsForPathsOfLengthOne( collection, [ u, j ] ), a -> [ a ] )
-                                 ),
-                                
-                    {a,b} -> Concatenation( [ a ], b ) )
-              );
-              
-      return Concatenation( labels );
-      
+      return
+        Concatenation(
+          List( [ i + 1 .. j - 1 ],
+            u -> ListX(
+                  List( LabelsForPathsOfLengthOne( collection,  [ i, u ] ), l -> [ l ] ),
+                  LabelsForAllPaths( collection, [ u, j ] ),
+                  Concatenation
+                )
+              )
+            );
+            
     fi;
     
 end );
