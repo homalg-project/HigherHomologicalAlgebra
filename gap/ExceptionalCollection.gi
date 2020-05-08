@@ -256,61 +256,26 @@ InstallMethod( \[\],
     
 end );
 
-## morphisms := [ f1,f2,f3: A -> B ] will be mapped to F:k^3 -> H(A,B).
-##
-InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
-          [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
-    
-  function( source, range, morphisms )
-    local cat, linear_maps, H;
-    
-    cat := CapCategory( source );
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
-      
-      Error( "The category needs homomorphism structure" );
-      
-    fi;
-    
-    if IsEmpty( morphisms ) then
-      
-      H := HomomorphismStructureOnObjects( source, range );
-      
-      return UniversalMorphismFromZeroObject( H );
-      
-    fi;
-    
-    if not ForAll( morphisms,
-        morphism -> IsEqualForObjects( Source( morphism ), source ) and
-          IsEqualForObjects( Range( morphism ), range ) ) then
-          
-          Error( "All morphisms should have the same source and range" );
-          
-    fi;
-    
-    linear_maps := List( morphisms, morphism ->
-      [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( morphism ) ] );
-      
-    return MorphismBetweenDirectSums( linear_maps );
-    
-end );
-
 ##
 InstallMethod( PathsOfLengthOneOp,
           [ IsExceptionalCollection, IsList ],
     
   function( collection, indices )
-    local i, j, n, source, range, cat, H, U, maps, arrows, paths, one_morphism, nr_arrows, map;
+    local i, s, j, r, n, full, hom_ij, D, maps, long_paths, arrows, beta, nr_arrows, m;
     
     i := indices[ 1 ];
     
+    s := collection[ i ];
+    
     j := indices[ 2 ];
+    
+    r := collection[ j ];
     
     n := NumberOfObjects( collection );
     
     if i <= 0 or j <= 0 or i > n or j > n then
       
-      Error( "Wrong input: some index is less than zero or bigger than the number of objects in the strong exceptional collection." );
+      Error( "Wrong input!\n" );
       
     fi;
  
@@ -320,45 +285,39 @@ InstallMethod( PathsOfLengthOneOp,
         
     else
       
-      source := collection[ i ];
+      full := DefiningFullSubcategory( collection );
       
-      range := collection[ j ];
+      hom_ij := HomStructure( s, r );
       
-      cat := CapCategory( source );
+      D := DistinguishedObjectOfHomomorphismStructure( full );
       
-      H := HomomorphismStructureOnObjects( source, range );
+      maps := BasisOfExternalHom( D, hom_ij );
       
-      U := DistinguishedObjectOfHomomorphismStructure( cat );
+      long_paths := PathsOfLengthGreaterThanOne( collection, [ i, j ] );
       
-      maps := BasisOfExternalHom( U, H );
-      
-      if j - i = 1 then
-      
-        arrows := List( maps, map ->
-          InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(
-            source, range, map ) );
-      
-      else
-      
-        paths := PathsOfLengthGreaterThanOne( collection, [ i, j ] );
-      
-        one_morphism := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, paths );
+      if j - i = 1 or IsEmpty( long_paths ) then
         
-        nr_arrows := Dimension( CokernelObject( one_morphism ) );
+        arrows := List( maps, m -> HomStructure( s, r, m ) );
+        
+      else
+        
+        beta := List( long_paths, p -> [ HomStructure( p ) ] );
+        
+        beta := MorphismBetweenDirectSums( beta );
+        
+        nr_arrows := Dimension( CokernelObject( beta ) );
         
         arrows := [ ];
         
-        for map in maps do
+        for m in maps do
         
-          if not IsLiftable( map, one_morphism ) then
+          if not IsLiftable( m, beta ) then
             
-            Add( arrows,
-              InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( 
-                source, range, map ) );
-                
-            one_morphism := MorphismBetweenDirectSums( [ [ map ], [ one_morphism ] ] );
+            Add( arrows, HomStructure( s, r, m ) );
             
-            if Length( arrows ) = nr_arrows then
+            beta := MorphismBetweenDirectSums( [ [ m ], [ beta ] ] );
+            
+            if Size( arrows ) = nr_arrows then
               
               break;
               
@@ -653,13 +612,9 @@ end );
 InstallGlobalFunction( RelationsBetweenMorphisms,
 
   function( morphisms )
-    local source, range, map;
+    local map;
     
-    source := Source( morphisms[ 1 ] );
-    
-    range := Range( morphisms[ 1 ] );
-    
-    map := InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure( source, range, morphisms );
+    map := MorphismBetweenDirectSums( List( morphisms, m -> [ HomStructure( m ) ] ) );
     
     return EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( KernelEmbedding( map ) ) );
     
