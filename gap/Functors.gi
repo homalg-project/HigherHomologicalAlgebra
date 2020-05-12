@@ -459,7 +459,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
         
         j := PositionProperty( [ 1 .. n ], k -> IsEqualForObjects( r, collection[ k ] ) );
         
-        basis := BasisForPaths( collection, i, j );
+        basis := BasisOfPaths( collection, i, j );
         
         v := collection!.char;
         
@@ -469,7 +469,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
           
         fi;
         
-        labels := LabelsForBasisForPaths( collection, [ i, j ] );
+        labels := LabelsForBasisOfPaths( collection, [ i, j ] );
         
         dim := Length( basis );
         
@@ -483,17 +483,22 @@ InstallMethod( IsomorphismOntoAlgebroid,
           
         else
           
-          paths := List( labels, label ->
-                  PreCompose(
-                  List( label, arrow_label ->
-                    algebroid.( Concatenation( 
-                                  v,
-                                  String( arrow_label[ 1 ] ),
-                                  "_",
-                                  String( arrow_label[ 2 ] ),
-                                  "_",
-                                  String( arrow_label[ 3 ] ) )
-                              ) ) ) );
+          paths :=
+            List( labels, label ->
+              PreCompose(
+                List( label, arrow_label ->
+                  algebroid.(
+                    Concatenation(
+                       v,
+                       String( arrow_label[ 1 ] ),
+                       "_",
+                       String( arrow_label[ 2 ] ),
+                       "_",
+                       String( arrow_label[ 3 ] ) )
+                            )
+                )
+              )
+            );
         fi;
         
         rel := RelationsBetweenMorphisms( Concatenation( [ phi ], basis ) );
@@ -576,7 +581,7 @@ InstallMethod( IsomorphismFromAlgebroid,
         
         arrow_list := List( paths, ArrowList );
         
-        arrow_list := List( arrow_list, 
+        arrow_list := List( arrow_list,
           l -> List( l, arrow -> [
                                     VertexIndex( Source( arrow ) ),
                                     VertexIndex( Target( arrow ) ),
@@ -587,7 +592,7 @@ InstallMethod( IsomorphismFromAlgebroid,
         paths_list := List( arrow_list,
           l -> PreCompose(
                    List( l, indices -> Arrows( collection, indices[ 1 ], indices[ 2 ] )[ indices[ 3 ] ] )
-                    ) );  
+                    ) );
                     
         return coeffs * paths_list;
         
@@ -802,7 +807,7 @@ InstallMethod( RDerivedFunctor,
     fi;
     
     name := "Right derived functor";
-       
+    
     RF := CapFunctor( name, D_1, D_2 );
     
     AddObjectFunction( RF,

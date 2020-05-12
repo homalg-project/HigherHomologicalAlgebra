@@ -414,7 +414,7 @@ InstallOtherMethod( AllPaths,
 );
 
 ##
-InstallMethod( BasisForPathsOp,
+InstallMethod( BasisOfPathsOp,
           [ IsExceptionalCollection, IsList ],
               
   function( collection, indices )
@@ -458,16 +458,16 @@ InstallMethod( BasisForPathsOp,
     
     labels := Concatenation( arrows_labels, B_labels );
     
-    SetLabelsForBasisForPaths( collection, indices, labels );
+    SetLabelsForBasisOfPaths( collection, indices, labels );
     
     return B;
     
 end );
 
 ##
-InstallOtherMethod( BasisForPaths,
+InstallOtherMethod( BasisOfPaths,
           [ IsExceptionalCollection, IsInt, IsInt ],
-  { collection, i, j } -> BasisForPaths( collection, [ i, j ] )
+  { collection, i, j } -> BasisOfPaths( collection, [ i, j ] )
 );
 
 ##
@@ -542,15 +542,15 @@ InstallMethod( LabelsForAllPathsOp,
 end );
 
 ##
-InstallMethod( LabelsForBasisForPathsOp,
+InstallMethod( LabelsForBasisOfPathsOp,
               [ IsExceptionalCollection, IsList ],
               
   function( collection, indices )
     local b;
     
-    b := BasisForPaths( collection, indices );
+    b := BasisOfPaths( collection, indices );
     
-    return LabelsForBasisForPaths( collection, indices );
+    return LabelsForBasisOfPaths( collection, indices );
     
 end );
 
