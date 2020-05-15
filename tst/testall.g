@@ -11,8 +11,9 @@ LoadPackage( "RingsForHomalg" );
 LoadPackage( "GaussForHomalg" );
 ReadPackage( "ComplexesCategories", "examples/pre_read/random_methods_for_module_presentations.g" );
 
-R := HomalgFieldOfRationalsInSingular( )* "x,y,z";;
-S := HomalgFieldOfRationalsInSingular( )* "x,y,z,t";; 
+field := HomalgFieldOfRationalsInSingular( );
+R := field * "x,y,z";;
+S := field * "x,y,z,t";;
 
 dirs := DirectoriesPackageLibrary( "ComplexesCategories", "tst" );
 TestDirectory( dirs, rec( exitGAP := true,
