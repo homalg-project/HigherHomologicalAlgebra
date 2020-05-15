@@ -14,7 +14,7 @@ InstallMethod( IsAbelianCategoryWithComputableEnoughProjectives,
     
     return HasIsAbelianCategory( cat )
               and IsAbelianCategory( cat )
-                and CanCompute( cat, "IsProjective" )
+                # and CanCompute( cat, "IsProjective" )
                   and CanCompute( cat, "SomeProjectiveObject" )
                     and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
                       and CanCompute( cat, "ProjectiveLift" );
@@ -27,7 +27,7 @@ InstallMethod( IsAbelianCategoryWithComputableEnoughInjectives,
     
     return HasIsAbelianCategory( cat )
               and IsAbelianCategory( cat )
-                and CanCompute( cat, "IsInjective" )
+                # and CanCompute( cat, "IsInjective" )
                   and CanCompute( cat, "SomeInjectiveObject" )
                     and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
                       and CanCompute( cat, "InjectiveColift" );
@@ -49,10 +49,14 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
     
     cat := UnderlyingCategory( CapCategory( C ) );
        
-    if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
-      
+    if not ( HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "SomeProjectiveObject" )
+                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
+                    ) then
+                      
       Error( "The underlying category must be abelian with computable enough projectives" );
-    
+      
     fi;
     
     u := ActiveUpperBound( C ) + 1;
@@ -311,11 +315,15 @@ function( obj )
   fi;
   
   cat := CapCategory( obj );
-   
-  if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then 
-    
-    Error( "The category must be abelian with computable enough projectives" );
   
+  if not ( HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "SomeProjectiveObject" )
+                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
+                    ) then
+                      
+    Error( "The category must be abelian with computable enough projectives" );
+    
   fi;
   
   func := function( mor )
@@ -491,7 +499,7 @@ InstallMethod( MorphismBetweenProjectiveResolutions,
     if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then 
       
       Error( "The category must be abelian with computable enough projectives" );
-    
+       
     fi;
     
     P := ProjectiveResolution( Source( phi ) );
@@ -646,8 +654,12 @@ InstallMethod( QuasiIsomorphismIntoInjectiveResolution,
     
     cat := UnderlyingCategory( CapCategory( C ) );
        
-    if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
-      
+    if not ( HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "SomeInjectiveObject" )
+                  and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
+                    ) then
+                      
       Error( "The underlying category must be abelian with enough injectives" );
     
     fi;
@@ -893,10 +905,14 @@ function( obj )
   
   cat := CapCategory( obj );
     
-  if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
-    
+  if not ( HasIsAbelianCategory( cat )
+              and IsAbelianCategory( cat )
+                and CanCompute( cat, "SomeInjectiveObject" )
+                  and CanCompute( cat, "MonomorphismIntoSomeInjectiveObject" )
+                    ) then
+                      
     Error( "The category must be abelian with computable enough injectives" );
-  
+    
   fi;
   
   func := function( mor )
