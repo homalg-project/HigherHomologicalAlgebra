@@ -41,6 +41,38 @@ InstallMethod( AsZFunction,
 end );
 
 ##
+InstallMethod( AsZFunction,
+          [ IsZList ],
+          
+  function( z )
+    
+    if not IsPackageMarkedForLoading( "InfiniteLists", ">= 2017.08.01" ) then
+      
+      Error( "InfinitLists is needed for this operation!\n" );
+      
+    fi;
+    
+    return AsZFunction( i -> z[ i ] );
+    
+end );
+
+##
+InstallMethod( AsZList,
+          [ IsZFunction ],
+          
+  function( z )
+    
+    if not IsPackageMarkedForLoading( "InfiniteLists", ">= 2017.08.01" ) then
+      
+      Error( "InfinitLists is needed for this operation!\n" );
+      
+    fi;
+    
+    return ValueGlobal( "MapLazy" )( ValueGlobal( "IntegersList" ), i -> z[ i ], 1 );
+    
+end );
+
+##
 InstallMethod( ZFunctionWithInductiveSides,
           [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ],
   function( N, val, lower_func, upper_func, compare_func )

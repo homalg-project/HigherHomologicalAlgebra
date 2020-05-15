@@ -116,6 +116,18 @@ InstallMethod( CochainComplex, [ IsCapCategory, IsZFunction ],
 
 end );
 
+##
+InstallOtherMethod( ChainComplex, [ IsCapCategory, IsZList ],
+  
+  { cat, diffs } -> ChainComplex( cat, AsZFunction( diffs ) )
+);
+
+##
+InstallOtherMethod( CochainComplex, [ IsCapCategory, IsZList ],
+
+  { cat, diffs } -> CochainComplex( cat, AsZFunction( diffs ) )
+);
+
 ################################################
 #
 #  Constructors of inductive (co)chain complexes

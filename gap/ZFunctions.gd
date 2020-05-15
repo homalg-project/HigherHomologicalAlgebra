@@ -206,14 +206,11 @@ DeclareOperation( "CombineZFunctions", [ IsDenseList ] );
 
 ########################################
 
-if IsPackageMarkedForLoading( "InfiniteLists", ">= 2017.08.01" ) then
-  
-  DeclareAttribute( "AsZFunction", IsZList );
-  
-  InstallMethod( AsZFunction, [ IsZList ], z -> AsZFunction( i -> z[ i ] ) );
-  
-  DeclareAttribute( "AsZList", IsZFunction );
-  
-  InstallMethod( AsZList, [ IsZFunction ], z -> MapLazy( IntegersList, i -> z[ i ], 1 ) );
-  
+# to convert between IsZLists and IsZFunctions
+
+if not IsPackageMarkedForLoading( "InfiniteLists", ">= 2017.08.01" ) then
+  DeclareCategory( "IsZList", IsObject );
 fi;
+
+DeclareAttribute( "AsZFunction", IsZList );
+DeclareAttribute( "AsZList", IsZFunction );

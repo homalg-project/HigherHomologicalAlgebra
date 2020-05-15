@@ -75,7 +75,8 @@ Dependencies := rec(
                             [ "MonoidalCategories", ">= 2019.08.10" ]
                          ],
   SuggestedOtherPackages := [
-        [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ]
+        [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ],
+        [ "InfiniteLists", ">= 2017.08.01" ]
       ],
    
   ExternalConditions := [ ],
