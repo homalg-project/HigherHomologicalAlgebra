@@ -70,3 +70,8 @@ DeclareAttribute( "UnderlyingRoof", IsDerivedCategoryMorphism );
 DeclareAttribute( "DerivedCategory", IsCapCategory );
 
 DeclareAttribute( "DefiningCategory", IsDerivedCategory );
+
+DeclareGlobalFunction( "ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS" );
+
+DeclareGlobalFunction( "ADD_SPECIAL_METHODS_BY_ENOUGH_INJECTIVE_OBJECTS" );
+

@@ -257,6 +257,31 @@ InstallMethod( DerivedCategory,
     
     AddMorphismRepresentation( D, IsDerivedCategoryMorphism );
     
+    SetIsAbCategory( D, true );
+    
+    if HasIsLinearCategoryOverCommutativeRing( C ) and 
+        IsLinearCategoryOverCommutativeRing( C ) then
+        
+        SetIsLinearCategoryOverCommutativeRing( D, true );
+        
+        SetCommutativeRingOfLinearCategory( D,
+              CommutativeRingOfLinearCategory( C )
+            );
+        
+        AddMultiplyWithElementOfCommutativeRingForMorphisms( D,
+          function( e, alpha )
+            local roof;
+            
+            roof := UnderlyingRoof( alpha );
+            
+            return Roof(
+                    MultiplyWithElementOfCommutativeRingForMorphisms( e, SourceMorphism( roof ) ),
+                    RangeMorphism( roof )
+                  ) / D;
+        end );
+        
+    fi;
+    
     ##
     AddIsEqualForObjects( D,
       function( a1, a2 )
@@ -284,10 +309,30 @@ InstallMethod( DerivedCategory,
     end );
     
     ##
+    AddIsZeroForObjects( D,
+      function( a )
+      
+        return IsExact( UnderlyingCell( UnderlyingCell( a ) ) );
+        
+    end );
+    
+    ##
     AddIdentityMorphism( D,
       function( a )
         
         return IdentityMorphism( UnderlyingCell( a ) ) / D;
+        
+    end );
+    
+    ##
+    AddZeroMorphism( D,
+      function( a, b )
+        
+        a := UnderlyingCell( a );
+        
+        b := UnderlyingCell( b );
+        
+        return Roof( IdentityMorphism( a ), ZeroMorphism( a, b ) ) / D;
         
     end );
     
@@ -340,8 +385,32 @@ InstallMethod( DerivedCategory,
                     IsQuasiIsomorphism( source_morphism );
         
     end );
-   
+    
+    ##
+    AddAdditiveInverseForMorphisms( D,
+      function( alpha )
+        local roof;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        return Roof(
+                  AdditiveInverseForMorphisms( SourceMorphism( roof ) ),
+                  RangeMorphism( roof )
+                ) / D;
+                
+    end );
+    
     D!.is_computable := false;
+    
+    if IsAbelianCategoryWithComputableEnoughProjectives( C ) then
+      
+      ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS( D );
+      
+    elif IsAbelianCategoryWithComputableEnoughInjectives( C ) then
+      
+      ADD_SPECIAL_METHODS_BY_ENOUGH_INJECTIVE_OBJECTS( D );
+      
+    fi;
     
     Finalize( D );
     
@@ -349,6 +418,111 @@ InstallMethod( DerivedCategory,
     
 end );
 
+##
+InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
+  function( D )
+    local C, P, I, Ho_C, L;
+    
+    D!.is_computable := true;
+    
+    C := DefiningCategory( D );
+    
+    P := FullSubcategoryGeneratedByProjectiveObjects( C );
+    
+    I := InclusionFunctor( P );
+    
+    I := ExtendFunctorToHomotopyCategories( I );
+    
+    Ho_C := HomotopyCategory( C );
+    
+    L := LocalizationFunctorByProjectiveObjects( Ho_C );
+     
+    AddIsCongruentForMorphisms( D,
+      function( alpha, beta )
+        local U;
+        
+        U := UniversalFunctorFromDerivedCategory( L );
+        
+        return IsCongruentForMorphisms( ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
+        
+    end );
+    
+    AddIsZeroForMorphisms( D,
+      function( alpha )
+        local U;
+        
+        U := UniversalFunctorFromDerivedCategory( L );
+        
+        return IsZeroForMorphisms( ApplyFunctor( U, alpha ) );
+        
+    end );
+    
+    AddAdditionForMorphisms( D,
+      function( alpha, beta )
+        local a, qa, b, qb, U, m, roof;
+        
+        a := UnderlyingCell( Source( alpha ) );
+        
+        qa := QuasiIsomorphismFromProjectiveResolution( a, true );
+        
+        b := UnderlyingCell( Source( alpha ) );
+        
+        qb := QuasiIsomorphismFromProjectiveResolution( a, true );
+        
+        U := UniversalFunctorFromDerivedCategory( L );
+        
+        m := AdditionForMorphisms( ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
+        
+        roof := Roof( qa, PreCompose( ApplyFunctor( I, m ), qb ) );
+        
+        return roof / D;
+        
+    end );
+    
+    if CanCompute( Ho_C, "BasisOfExternalHom" ) and
+        CanCompute( Ho_C, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
+        
+        AddBasisOfExternalHom( D,
+          function( a, b )
+            local qa, qb, U, Ua, Ub, B;
+            
+            qa := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ), true );
+            
+            qb := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( b ), true );
+            
+            U := UniversalFunctorFromDerivedCategory( L );
+            
+            Ua := ApplyFunctor( U, a );
+            
+            Ub := ApplyFunctor( U, b );
+            
+            B := BasisOfExternalHom( Ua, Ub );
+            
+            return List( B, m -> Roof( qa, PreCompose( ApplyFunctor( I, m ), qb ) ) / D );
+            
+        end );
+        
+        AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( D,
+          function( alpha, B )
+            local U;
+            
+            U := UniversalFunctorFromDerivedCategory( L );
+            
+            return CoefficientsOfMorphism( ApplyFunctor( U, alpha ) );
+            
+        end );
+        
+      fi;
+      
+end );
+
+##
+InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_INJECTIVE_OBJECTS,
+  function( D )
+    
+    # complete the code similarily to the above global function
+    
+end );
 
 #######################
 #
