@@ -2028,6 +2028,14 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Source( alpha ), Source( beta ) );
     
+    if IsEmpty( partitions ) then
+      if IsZeroForMorphisms( alpha ) then
+        return ZeroMorphism( Source( alpha ), Source( beta ) );
+      else
+        return fail;
+      fi;
+    fi;
+    
     mats_alpha := MatricesOfRepresentationHomomorphism( alpha );
     
     mats_alpha := List( mats_alpha, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
@@ -2095,6 +2103,14 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     partitions := PARTITIONS_OF_AUXILIARY_MATRIX_FOR_BASIS_OF_EXTERNAL_HOM( Range( beta ), Range( alpha ) );
     
+    if IsEmpty( partitions ) then
+      if IsZeroForMorphisms( alpha ) then
+        return ZeroMorphism( Range( beta ), Range( alpha ) );
+      else
+        return fail;
+      fi;
+    fi;
+   
     mats_alpha := MatricesOfRepresentationHomomorphism( alpha );
     
     mats_alpha := List( mats_alpha, m -> QPA_to_Homalg_Matrix_With_Given_Homalg_Field( m, field ) );
