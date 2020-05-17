@@ -224,59 +224,89 @@ end );
 ##
 InstallMethod( ChainComplexWithInductiveSides,
                [ IsCapCategoryMorphism, IsFunction, IsFunction ],
-  function( d0, negative_part_function, positive_part_function )
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
-              0, d0, negative_part_function, positive_part_function,
-                "chain" );
-    
-end );
+  { d_0, negative_part_function, positive_part_function } ->
+      ChainComplexWithInductiveSides( 0, d_0, negative_part_function, positive_part_function )
+);
 
 ##
-InstallMethod( CochainComplexWithInductiveSides,
-               [ IsCapCategoryMorphism, IsFunction, IsFunction ],
-  function( d0, negative_part_function, positive_part_function )
-    
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
-              0, d0, negative_part_function, positive_part_function,
-                "cochain" );
-    
-end );
+InstallMethod( ChainComplexWithInductiveSides,
+               [ IsInt, IsCapCategoryMorphism, IsFunction, IsFunction ],
+  { n, d_n, negative_part_function, positive_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
+              n, d_n, negative_part_function, positive_part_function,
+                "chain" )
+);
 
 ##
 InstallMethod( ChainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
-  function( d0, negative_part_function )
-    
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( 0, d0, negative_part_function, "chain" );
-    
-end );
+  { d_0, negative_part_function } -> ChainComplexWithInductiveNegativeSide( 0, d_0, negative_part_function )
+);
+
+##
+InstallMethod( ChainComplexWithInductiveNegativeSide,
+              [ IsInt, IsCapCategoryMorphism, IsFunction ],
+  { n, d_n, negative_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( n, d_n, negative_part_function, "chain" )
+);
 
 ##
 InstallMethod( ChainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
-  function( d0, positive_part_function )
-    
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( 0, d0, positive_part_function, "chain" );
-    
-end );
+  { d_0, positive_part_function } ->
+    ChainComplexWithInductivePositiveSide( 0, d_0, positive_part_function )
+);
+
+##
+InstallMethod( ChainComplexWithInductivePositiveSide,
+              [ IsInt, IsCapCategoryMorphism, IsFunction ],
+  { n, d_n, positive_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( n, d_n, positive_part_function, "chain" )
+);
+
+##
+InstallMethod( CochainComplexWithInductiveSides,
+               [ IsCapCategoryMorphism, IsFunction, IsFunction ],
+  { d_0, negative_part_function, positive_part_function } ->
+    CochainComplexWithInductiveSides( 0, d_0, negative_part_function, positive_part_function )
+);
+
+##
+InstallMethod( CochainComplexWithInductiveSides,
+               [ IsInt, IsCapCategoryMorphism, IsFunction, IsFunction ],
+  { n, d_n, negative_part_function, positive_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_SIDES(
+              n, d_n, negative_part_function, positive_part_function,
+                "cochain" )
+);
 
 ##
 InstallMethod( CochainComplexWithInductiveNegativeSide,
                [ IsCapCategoryMorphism, IsFunction ],
-  function( d0, negative_part_function )
-    
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( 0, d0, negative_part_function, "cochain" );
-    
-end );
+  { d_0, negative_part_function } ->
+    CochainComplexWithInductiveNegativeSide( 0, d_0, negative_part_function )
+);
+
+##
+InstallMethod( CochainComplexWithInductiveNegativeSide,
+              [ IsInt, IsCapCategoryMorphism, IsFunction ],
+  { n, d_n, negative_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_NEGATIVE_SIDE( n, d_n, negative_part_function, "cochain" )
+);
 
 ##
 InstallMethod( CochainComplexWithInductivePositiveSide,
                [ IsCapCategoryMorphism, IsFunction ],
-  function( d0, positive_part_function )
-    
-    return CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( 0, d0, positive_part_function, "cochain" );
-    
-end );
+  { d_0, positive_part_function } ->
+    CochainComplexWithInductivePositiveSide( 0, d_0, positive_part_function )
+);
+
+##
+InstallMethod( CochainComplexWithInductivePositiveSide,
+              [ IsInt, IsCapCategoryMorphism, IsFunction ],
+  { n, d_n, positive_part_function } ->
+    CHAIN_OR_COCHAIN_WITH_INDUCTIVE_POSITIVE_SIDE( n, d_n, positive_part_function, "cochain" )
+);
 
 ########################################
 #

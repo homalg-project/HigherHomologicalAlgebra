@@ -113,6 +113,8 @@ KeyDependentOperation( "StalkCochainComplex", IsCapCategoryObject, IsInt, Return
 #! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
 
+DeclareOperation( "ChainComplexWithInductiveSides", [ IsInt, IsCapCategoryMorphism, IsFunction, IsFunction ] );
+
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
 #! The output is cochain complex $M^{\bullet}\in\mathrm{Ch}^\bullet(A)$ where $d_{M}^{0}=d$ 
@@ -120,6 +122,8 @@ DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsF
 #! @Arguments d,G,F
 #! @Returns a cochain complex
 DeclareOperation( "CochainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
+
+DeclareOperation( "CochainComplexWithInductiveSides", [ IsInt, IsCapCategoryMorphism, IsFunction, IsFunction ] );
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $G$. 
@@ -129,6 +133,8 @@ DeclareOperation( "CochainComplexWithInductiveSides", [ IsCapCategoryMorphism, I
 #! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductiveNegativeSide", [ IsCapCategoryMorphism, IsFunction ] );
 
+DeclareOperation( "ChainComplexWithInductiveNegativeSide", [ IsInt, IsCapCategoryMorphism, IsFunction ] );
+
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $F$. 
 #! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{0}=d$ 
@@ -136,6 +142,8 @@ DeclareOperation( "ChainComplexWithInductiveNegativeSide", [ IsCapCategoryMorphi
 #! @Arguments d,F
 #! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductivePositiveSide", [ IsCapCategoryMorphism, IsFunction ] );
+
+DeclareOperation( "ChainComplexWithInductivePositiveSide", [ IsInt, IsCapCategoryMorphism, IsFunction ] );
 
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $G$. 
@@ -145,6 +153,8 @@ DeclareOperation( "ChainComplexWithInductivePositiveSide", [ IsCapCategoryMorphi
 #! @Returns a cochain complex
 DeclareOperation( "CochainComplexWithInductiveNegativeSide", [ IsCapCategoryMorphism, IsFunction ] );
 
+DeclareOperation( "CochainComplexWithInductiveNegativeSide", [ IsInt, IsCapCategoryMorphism, IsFunction ] );
+
 #! @Description
 #! The input is a morphism $d\in A$ and a functions $F$. 
 #! The output is cochain complex $M^{\bullet}\in\mathrm{Ch}^\bullet(A)$ where $d_{M}^{0}=d$ 
@@ -152,6 +162,8 @@ DeclareOperation( "CochainComplexWithInductiveNegativeSide", [ IsCapCategoryMorp
 #! @Arguments d,F
 #! @Returns a cochain complex
 DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsCapCategoryMorphism, IsFunction ] );
+
+DeclareOperation( "CochainComplexWithInductivePositiveSide", [ IsInt, IsCapCategoryMorphism, IsFunction ] );
 
 #########################################
 #
