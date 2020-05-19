@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Gap package to create derived categories",
-Version := "2020.04.01",
+Version := "2020.05.01",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -75,7 +75,7 @@ Dependencies := rec(
         [ "HomotopyCategories", ">= 2020.04.03" ]
           ],
   SuggestedOtherPackages := [
-            [ "BBGG", ">= 2020.04.16" ],
+            [ "BBGG", ">= 2020.05.01" ],
             [ "NConvex", ">= 2019.12.06" ],
             [ "4ti2Interface", ">= 2019.09.03" ]
           ],
