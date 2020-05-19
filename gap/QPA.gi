@@ -2048,7 +2048,7 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     matrices := List( matrices,
               mats -> UnionOfRows(
-                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                List( mats, mat -> ConvertTransposedMatrixToColumn( TransposedMatrix( mat ) ) )
                                  )
                 );
     
@@ -2056,7 +2056,7 @@ BindGlobal( "COMPUTE_LIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     vector := Filtered( mats_alpha, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
+    vector := List( vector, v -> ConvertTransposedMatrixToColumn( TransposedMatrix( v ) ) );
               
     vector := UnionOfRows( vector );
     
@@ -2123,7 +2123,7 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     matrices := List( matrices,
               mats -> UnionOfRows(
-                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                List( mats, mat -> ConvertTransposedMatrixToColumn( TransposedMatrix( mat ) ) )
                                  )
                 );
     
@@ -2131,7 +2131,7 @@ BindGlobal( "COMPUTE_COLIFT_IN_QUIVER_REPS_DERIVED_CATS_PACKAGE",
     
     vector := Filtered( mats_alpha, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
+    vector := List( vector, v -> ConvertTransposedMatrixToColumn( TransposedMatrix( v ) ) );
               
     vector := UnionOfRows( vector );
     
@@ -2465,7 +2465,7 @@ InstallGlobalFunction( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM,
     
     vector := Filtered( vector, m -> NrRows( m ) <> 0 and NrCols( m ) <> 0 );
     
-    vector := List( vector, v -> ConvertMatrixToColumn( TransposedMatrix( v ) ) );
+    vector := List( vector, v -> ConvertTransposedMatrixToColumn( TransposedMatrix( v ) ) );
               
     vector := UnionOfRows( vector );
     
@@ -2530,7 +2530,7 @@ InstallGlobalFunction( HOM_STRUCTURE_ON_QUIVER_REPRESENTATION_HOMOMORPHISMS_WITH
     
     mats := List( partitions,
               mats -> UnionOfRows(      
-                List( mats, mat -> ConvertMatrixToColumn( TransposedMatrix( mat ) ) )
+                List( mats, mat -> ConvertTransposedMatrixToColumn( TransposedMatrix( mat ) ) )
                                  )
                 );
     
