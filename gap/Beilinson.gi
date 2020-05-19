@@ -1671,13 +1671,13 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
         
         mat := UnderlyingMatrix( phi ) * k;
         
-        mat := ConvertMatrixToRow( mat );
+        mat := ConvertTransposedMatrixToRow( mat );
         
         B := List( B, UnderlyingCell );
         
         B := List( B, b -> UnderlyingMatrix( b ) * k );
         
-        B := UnionOfRows( List( B, ConvertMatrixToRow ) );
+        B := UnionOfRows( List( B, ConvertTransposedMatrixToRow ) );
         
         sol := RightDivide( mat, B );
         
