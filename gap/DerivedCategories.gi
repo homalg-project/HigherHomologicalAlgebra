@@ -558,11 +558,18 @@ end );
 InstallMethod( Display,
           [ IsDerivedCategoryObject ],
   function( a )
-  
-    Print( "An object in derived category defined by:\n\n" );
-
-    Display( UnderlyingCell( a ) );
-
+    local c, l, u;
+    
+    c := UnderlyingCell( UnderlyingCell( a ) );
+    
+    l := ActiveLowerBound( c );
+    
+    u := ActiveUpperBound( c );
+    
+    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( c, l, u );
+    
+    Print( "\nAn object in ", Name( CapCategory( a ) ), " given by the above data\n" );
+    
 end );
 
 ##
@@ -578,11 +585,11 @@ end );
 InstallMethod( Display,
           [ IsDerivedCategoryMorphism ],
   function( a )
-  
-    Print( "A morphism in derived category defined by:\n\n" );
-
+    
     Display( UnderlyingRoof( a ) );
 
+    Print( "\nA morphism in ", Name( CapCategory( a ) ), " given by the above roof\n" );
+    
 end );
 
 InstallMethod( ViewObj,
