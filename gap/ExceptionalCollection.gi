@@ -1314,6 +1314,44 @@ end );
 ###########################
 
 ##
+InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure,
+          [ IsCapCategoryObject, IsCapCategoryObject, IsList ],
+    
+  function( source, range, morphisms )
+    local cat, linear_maps, H;
+    
+    cat := CapCategory( source );
+    
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      
+      Error( "The category needs homomorphism structure" );
+      
+    fi;
+    
+    if IsEmpty( morphisms ) then
+      
+      H := HomomorphismStructureOnObjects( source, range );
+      
+      return UniversalMorphismFromZeroObject( H );
+      
+    fi;
+    
+    if not ForAll( morphisms,
+        morphism -> IsEqualForObjects( Source( morphism ), source ) and
+          IsEqualForObjects( Range( morphism ), range ) ) then
+          
+          Error( "All morphisms should have the same source and range" );
+          
+    fi;
+    
+    linear_maps := List( morphisms, morphism ->
+      [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( morphism ) ] );
+      
+    return MorphismBetweenDirectSums( linear_maps );
+    
+end );
+
+##
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
     local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, g, e, cat, i;
