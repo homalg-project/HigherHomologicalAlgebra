@@ -49,6 +49,7 @@ DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS :=
 #
 field := GLOBAL_FIELD_FOR_QPA!.default_field;
 homalg_field := field;
+HOMALG_MATRICES.PreferDenseMatrices := true;
 #homalg_field := HomalgFieldOfRationalsInSingular( );
 #homalg_field := HomalgFieldOfRationalsInMAGMA( );
 SET_GLOBAL_FIELD_FOR_QPA( homalg_field );
