@@ -70,7 +70,7 @@ Dependencies := rec(
   NeededOtherPackages := [
         [ "QPA", ">= 2.0-dev"],
         [ "CAP", ">= 2020.04.16" ],
-        [ "Bialgebroids", ">= 2020.04.03" ],
+        [ "Algebroids", ">= 2020.04.24" ],
         [ "SubcategoriesForCAP", ">= 2020.02.01" ],
         [ "HomotopyCategories", ">= 2020.04.03" ]
           ],
