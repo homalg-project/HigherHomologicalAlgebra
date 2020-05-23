@@ -1,0 +1,3 @@
+##
+DeclareOperation( "HomotopyCategoryObject",
+        [ IsJuliaObject, IsInt ] );
