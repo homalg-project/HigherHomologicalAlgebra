@@ -653,7 +653,7 @@ InstallMethod( QuiverAlgebraFromExceptionalCollection,
                                 );;
                                 
       QuiverRows( A )!.Name := Concatenation( r[ 1 ],
-                                 "QuiverRows(", r[ 2 ], " ", name,
+                                 "Quiver rows(", r[ 2 ], " ", name,
                                   " ", r[ 1 ], ")", r[ 2 ]
                                 );;
                                 
