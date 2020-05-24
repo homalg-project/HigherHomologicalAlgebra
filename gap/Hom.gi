@@ -45,7 +45,7 @@ InstallMethod( HomFunctorAttr,
     
     fi;
     
-    reps := CategoryOfQuiverRepresentations( A_op, CommutativeRingOfLinearCategory( full ) );
+    reps := CategoryOfQuiverRepresentations( A_op );
     
     name := "Hom(T,-) functor";
           
