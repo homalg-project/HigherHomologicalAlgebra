@@ -535,7 +535,7 @@ InstallMethod( ViewObj,
           [ IsRoof ],
   function( roof )
     
-    Print( "<A roof s <~~ a --> r, defined over ", Name( CapCategory( SourceMorphism( roof ) ) ), ">" );
+    Print( "<A roof s <~~ a --> r in ", Name( CapCategory( SourceMorphism( roof ) ) ), ">" );
     
 end );
 
