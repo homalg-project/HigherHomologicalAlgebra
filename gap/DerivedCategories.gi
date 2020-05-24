@@ -465,9 +465,9 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
         
         qa := QuasiIsomorphismFromProjectiveResolution( a, true );
         
-        b := UnderlyingCell( Source( alpha ) );
+        b := UnderlyingCell( Range( alpha ) );
         
-        qb := QuasiIsomorphismFromProjectiveResolution( a, true );
+        qb := QuasiIsomorphismFromProjectiveResolution( b, true );
         
         U := UniversalFunctorFromDerivedCategory( L );
         
