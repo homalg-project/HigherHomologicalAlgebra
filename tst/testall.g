@@ -4,10 +4,8 @@
 # This file runs package tests. It is also referenced in the package
 # metadata in PackageInfo.g.
 #
-LoadPackage( "DerivedCategories" );
-LoadPackage( "LinearAlgebraForCAP" );
-LoadPackage( "RingsForHomalg" );
-LoadPackage( "GaussForHomalg" );
+
+ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 
 S := HomalgFieldOfRationalsInSingular( ) * "x,y,z,t";
 
