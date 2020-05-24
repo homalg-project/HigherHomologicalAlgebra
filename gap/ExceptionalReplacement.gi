@@ -128,7 +128,7 @@ InstallMethod( CandidatesForExceptionalShift,
     
     l_a := ActiveLowerBound( a );
     
-    return [ l_T - u_a + 1 .. u_T - l_a ];
+    return [ l_T - u_a .. u_T - l_a ];
     
 end );
 
@@ -156,7 +156,7 @@ InstallMethodWithCache( ExceptionalShift,
       
     od;
     
-    return 0;
+    return -infinity;
     
 end );
 
@@ -395,8 +395,10 @@ InstallMethod( ExceptionalReplacement,
         
         I := CandidatesForExceptionalShift( b, collection );
         
-        if IsEmpty( I ) or I[ 1 ] >= 0 then
-          
+        if IsEmpty( I ) or
+            I[ 1 ] >= 0 or
+              ExceptionalShift( b, collection ) = -infinity then
+              
           SetUpperBound( rep_a, u - 1 );
           
           return rep_a;
