@@ -3,7 +3,7 @@ LoadPackage( "DerivedCategories" );
 
 ##
 SetInfoLevel( InfoHomotopyCategories, 3 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 3 );
+SetInfoLevel( InfoComplexesCategories, 3 );
 
 field := HomalgFieldOfRationals( );
 

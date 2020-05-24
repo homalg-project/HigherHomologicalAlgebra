@@ -3,7 +3,7 @@ ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 
 SetInfoLevel( InfoDerivedCategories, 1 );
 SetInfoLevel( InfoHomotopyCategories, 1 );
-SetInfoLevel( InfoComplexCategoriesForCAP, 1 );
+SetInfoLevel( InfoComplexesCategories, 1 );
 
 # create graded polynomial ring
 Q := HomalgFieldOfRationalsInSingular( );
