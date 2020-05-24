@@ -416,11 +416,11 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           
           if not IsEmpty( basis ) then
             
-            Info( InfoComplexCategoriesForCAP, 3, "\033[5mApplying the functor on a basis with ", Size( basis ), " element(s) ...\033[0m" );
+            Info( InfoComplexesCategories, 3, "\033[5mApplying the functor on a basis with ", Size( basis ), " element(s) ...\033[0m" );
             
             images := List( basis, morphism_func );
             
-            Info( InfoComplexCategoriesForCAP, 3, "Done!" );
+            Info( InfoComplexesCategories, 3, "Done!" );
             
           fi;
           
@@ -598,9 +598,9 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           
         fi;
         
-        Info( InfoComplexCategoriesForCAP, 3, "\033[5mApplying ", name, " on a morphism ...\033[0m" );
+        Info( InfoComplexesCategories, 3, "\033[5mApplying ", name, " on a morphism ...\033[0m" );
         alpha := morphism_func( alpha );
-        Info( InfoComplexCategoriesForCAP, 3, "Done!" );
+        Info( InfoComplexesCategories, 3, "Done!" );
         
         return alpha;
         
@@ -728,9 +728,9 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           
         fi;
          
-        Info( InfoComplexCategoriesForCAP, 3, "\033[5mApplying \033[0m", name, " on a morphism ..." );
+        Info( InfoComplexesCategories, 3, "\033[5mApplying \033[0m", name, " on a morphism ..." );
         alpha := morphism_func( alpha );
-        Info( InfoComplexCategoriesForCAP, 3, "Done!" );
+        Info( InfoComplexesCategories, 3, "Done!" );
         
         return alpha;
         
