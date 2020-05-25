@@ -708,10 +708,15 @@ InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
 );
 
 ##
-InstallMethod( HomotopyCategory,
+InstallMethod( HomotopyCategoryAttr,
           [ IsExceptionalCollection ],
           
   collection -> HomotopyCategory( AdditiveClosure( DefiningFullSubcategory( collection ) ) )
+);
+
+InstallOtherMethod( HomotopyCategory,
+          [ IsExceptionalCollection ],
+  collection -> HomotopyCategoryAttr( collection )
 );
 
 ##

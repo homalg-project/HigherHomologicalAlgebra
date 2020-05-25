@@ -127,7 +127,7 @@ DeclareAttribute( "CategoryOfQuiverRepresentationsOverOppositeAlgebra", IsExcept
 #!  Returns the homotopy category of the additive closure of <C>DefiningFullSubcategory</C>(<A>E</A>).
 #! @Arguments E
 #! @Returns a category
-DeclareAttribute( "HomotopyCategory", IsExceptionalCollection );
+DeclareAttribute( "HomotopyCategoryAttr", IsExceptionalCollection );
 
 #! @Description
 #!  Returns the additive closure of the <C>DefiningFullSubcategory</C>(<A>E</A>) as an additive
