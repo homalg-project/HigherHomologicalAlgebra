@@ -50,7 +50,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           [ IsCapCategory, IsInt ],
   function ( cat, shift_index )
     local name, complex_cat, complex_constructor, morphism_constructor, to_be_finalized, range_cat_of_hom_struc, objects_equality_for_cache, 
-    morphisms_equality_for_cache, chains_range_cat, r, list_of_operations, create_func_from_name, add_methods;
+    morphisms_equality_for_cache, chains_range_cat, r, list_of_operations, create_func_from_name, add_methods, chains_cat;
     
     r := RandomTextColor( Name( cat ) );
     if shift_index = -1 then
@@ -937,12 +937,15 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               return;
           end );
     fi;
-    if
-     shift_index = -1 and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" ) and CanCompute( cat, "HomomorphismStructureOnObjects" ) 
-                and CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" 
-                 ) and CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) 
-          and CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) 
-        and HasRangeCategoryOfHomomorphismStructure( cat ) then
+    if shift_index = -1
+        and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" )
+          and CanCompute( cat, "HomomorphismStructureOnObjects" )
+            and CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" )
+              and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" )
+                and CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" )
+                  and CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) 
+                    and HasRangeCategoryOfHomomorphismStructure( cat )
+                      then
         range_cat_of_hom_struc := RangeCategoryOfHomomorphismStructure( cat );
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
             SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat_of_hom_struc );
@@ -967,6 +970,55 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE( complex_cat );
         ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM( complex_cat );
     fi;
+    
+    if shift_index = 1
+        and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" )
+          and CanCompute( cat, "HomomorphismStructureOnObjects" )
+            and CanCompute( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" )
+              and CanCompute( cat, "DistinguishedObjectOfHomomorphismStructure" )
+                and CanCompute( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" )
+                  and CanCompute( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) 
+                    and HasRangeCategoryOfHomomorphismStructure( cat )
+                      then
+        
+        chains_cat := ChainComplexCategory( cat );
+        
+        SetRangeCategoryOfHomomorphismStructure( complex_cat, RangeCategoryOfHomomorphismStructure( chains_cat ) );
+        
+        AddDistinguishedObjectOfHomomorphismStructure( complex_cat,
+          { } -> DistinguishedObjectOfHomomorphismStructure( chains_cat )
+        );
+        
+        AddHomomorphismStructureOnObjects( complex_cat,
+          { C, D } -> HomomorphismStructureOnObjects( AsChainComplex( C ), AsChainComplex( D ) )
+        );
+        
+        AddHomomorphismStructureOnMorphismsWithGivenObjects( complex_cat,
+          { s, phi, psi, r } -> HomomorphismStructureOnMorphismsWithGivenObjects( s, AsChainMorphism( phi ), AsChainMorphism( psi ), r )
+        );
+        
+        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( complex_cat,
+          phi -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( AsChainMorphism( phi ) )
+        );
+        
+        AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( complex_cat,
+          { C, D, eta } -> AsCochainMorphism( InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( AsChainComplex( C ), AsChainComplex( D ), eta ) )
+        );
+        
+        if CanCompute( chains_cat, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" )
+            and CanCompute( chains_cat, "BasisOfExternalHom" ) then
+            
+            AddBasisOfExternalHom( complex_cat,
+              { C, D } -> List( BasisOfExternalHom( AsChainComplex( C ), AsChainComplex( D ) ), AsCochainMorphism )
+            );
+            
+            AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( complex_cat,
+              { phi, basis } -> CoefficientsOfMorphismWithGivenBasisOfExternalHom( AsChainMorphism( phi ), List( basis, AsChainMorphism ) )
+            );
+            
+        fi;
+    fi;
+    
     if CanCompute( cat, "MultiplyWithElementOfCommutativeRingForMorphisms" ) then
         AddMultiplyWithElementOfCommutativeRingForMorphisms( complex_cat, function ( r, phi )
               local mors;
