@@ -1,4 +1,4 @@
-LoadPackage( "Bialgebroids");
+LoadPackage( "Algebroids");
 LoadPackage( "DerivedCategories" );
 ENABLE_COLORS := true;
 
