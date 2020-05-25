@@ -63,8 +63,7 @@ d_0 := UniversalMorphismIntoZeroObject( a_0 );
 
 omega_2 := HomotopyCategoryObject( [ d_0 ], 0 );
 
-vl := [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ];
-c := CreateExceptionalCollection( [ omega_0, omega_1, omega_2 ] : vertices_labels := vl );
+c := CreateExceptionalCollection( [ omega_0, omega_1, omega_2 ], [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ] );
 
 G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( c );
 F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( c );

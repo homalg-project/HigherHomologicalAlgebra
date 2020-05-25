@@ -41,33 +41,16 @@ BindGlobal( "TheTypeExceptionalCollection",
 #################################
 
 ##
-InstallGlobalFunction( CreateExceptionalCollection,
-  function( arg )
-    local full, cache, L, collection, n, quiver, algebra, vertices_labels, positions, i, j;
-    
-    full := arg[ 1 ];
-    
-    if Size( arg ) = 1 then
-      
-      cache := "crisp";
-      
-    else
-      
-      cache := arg[ 2 ];
-      
-    fi;
+InstallMethod( CreateExceptionalCollection,
+          [ IsCapFullSubcategory, IsList, IsString ],
+  function( full, vertices_labels, cache )
+    local L, range, positions, algebra, quiver, collection, n, i, j;
     
     if HasExceptionalCollection( full ) then
       
-      return ExceptionalCollection( full );
-      
-    fi;
-    
-    if IsList( full ) then
-      
-      full := FullSubcategoryGeneratedByListOfObjects( full );
-      
       SetCachingOfCategory( full, cache );
+      
+      return ExceptionalCollection( full );
       
     fi;
     
@@ -75,7 +58,7 @@ InstallGlobalFunction( CreateExceptionalCollection,
     
     if IsEmpty( L ) then
       
-      Error( "The input is empty!" );
+      Error( "The input is empty full-subcategory!" );
       
     fi;
     
@@ -83,6 +66,14 @@ InstallGlobalFunction( CreateExceptionalCollection,
       
       Error( "The category needs homomorphism structure" );
        
+    fi;
+    
+    range := RangeCategoryOfHomomorphismStructure( full );
+    
+    if not IsMatrixCategory( range ) then
+      
+      Error( "The range category of homomorphism structure should be the matrix category over some field!\n" );
+      
     fi;
     
     for i in [ 1 .. Size( L ) - 1 ] do
@@ -101,16 +92,10 @@ InstallGlobalFunction( CreateExceptionalCollection,
       od;
     od;
     
-    vertices_labels := ValueOption( "vertices_labels" );
-    
     # The labels also need to be sorted
-    if vertices_labels <> fail then
-      
-      positions := List( L, o -> Position( SetOfKnownObjects( full ), o ) );
-      
-      vertices_labels := List( positions, p -> vertices_labels[ p ] );
-      
-    fi;
+    positions := List( L, o -> Position( SetOfKnownObjects( full ), o ) );
+    
+    vertices_labels := List( positions, p -> vertices_labels[ p ] );
     
     # to set better bounds
     if IsHomotopyCategory( AmbientCategory( full ) ) then
@@ -120,28 +105,10 @@ InstallGlobalFunction( CreateExceptionalCollection,
     fi;
     
     MakeImmutable( L );
-     
-    if vertices_labels = fail then
-      
-      vertices_labels := [ 1 .. Size( L ) ];
-      
-    fi;
     
-    algebra := ValueOption( "algebra" );
+    algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, "⊕ " ), " )" );
     
-    if algebra = fail and vertices_labels <> [ 1 .. Size( L ) ] then
-      
-      algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, "⊕ " ), " )" );
-      
-    fi;
-    
-    quiver := ValueOption( "quiver" );
-     
-    if quiver = fail then
-      
-      quiver := "quiver";
-      
-    fi;
+    quiver := "quiver";
     
     collection := rec(
                     char := "m",
@@ -165,31 +132,66 @@ InstallGlobalFunction( CreateExceptionalCollection,
 end );
 
 ##
-InstallMethod( ExceptionalCollection,
-          [ IsCapFullSubcategory ],
-          
-  function( full )
-    local quiver, algebra, labels;
+InstallMethod( CreateExceptionalCollection,
+          [ IsList, IsList, IsString ],
+  function( objects, vertices_labels, cache )
+    local full;
     
-    labels := ValueOption( "vertices_labels" );
-    quiver := ValueOption( "quiver" );
-    algebra := ValueOption( "algebra" );
+    full := FullSubcategoryGeneratedByListOfObjects( objects );
     
-    CreateExceptionalCollection( full : quiver := quiver,
-                                        algebra := algebra,
-                                        vertices_labels := labels
-                                      );
-    
-    return ExceptionalCollection( full );
+    return CreateExceptionalCollection( full, vertices_labels, cache );
     
 end );
 
 ##
-InstallOtherMethod( ExceptionalCollection,
-          [ IsCapFullSubcategory, IsString, IsString ],
-          
-  { full, name_for_quiver, name_for_algebra } ->
-    ExceptionalCollection( full : name_for_underlying_quiver := name_for_quiver, name_for_endomorphism_algebra := name_for_algebra )
+InstallMethod( CreateExceptionalCollection,
+          [ IsCapFullSubcategory, IsList ],
+  function( full, vertices_labels )
+    
+    return CreateExceptionalCollection( full, vertices_labels, "crisp" );
+    
+end );
+
+##
+InstallMethod( CreateExceptionalCollection,
+          [ IsList, IsList ],
+  function( objects, vertices_labels )
+    local full;
+    
+    full := FullSubcategoryGeneratedByListOfObjects( objects );
+    
+    return CreateExceptionalCollection( full, vertices_labels );
+    
+end );
+
+##
+InstallMethod( CreateExceptionalCollection,
+          [ IsCapFullSubcategory ],
+  function( full )
+    local vertices_labels;
+    
+    vertices_labels := List( [ 1 .. Size( SetOfKnownObjects( full ) ) ], String );
+    
+    return CreateExceptionalCollection( full, vertices_labels );
+    
+end );
+
+##
+InstallMethod( CreateExceptionalCollection,
+          [ IsList ],
+  function( objects )
+    local full;
+    
+    full := FullSubcategoryGeneratedByListOfObjects( objects );
+    
+    return CreateExceptionalCollection( full );
+    
+end );
+
+##
+InstallMethod( ExceptionalCollection,
+          [ IsCapFullSubcategory ],
+  CreateExceptionalCollection
 );
 
 ##
@@ -1428,7 +1430,7 @@ InstallMethod( ViewObj,
     
     full := DefiningFullSubcategory( collection );
     
-    Print( "<A strong exceptional collection defined by the objects of the ", Name( full ), ">" );
+    Print( "<A exceptional collection defined by the objects of the ", Name( full ), ">" );
     
 end );
 

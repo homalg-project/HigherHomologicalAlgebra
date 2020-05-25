@@ -91,7 +91,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
     
     labels := List( Reversed( [ 0 .. n - 1 ] ), i -> Concatenation( "Ω^", String( i ),"(", String( i ) , ")" ) );
     
-    collection := CreateExceptionalCollection( full : vertices_labels := labels );
+    collection := CreateExceptionalCollection( full, labels );
     
     homotopy_cat := HomotopyCategory( collection );
     
