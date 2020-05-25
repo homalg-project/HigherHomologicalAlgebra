@@ -1,6 +1,19 @@
 
 ##
 InstallMethod( RandomObjectByList,
+          [ IsCochainComplexCategory, IsList ],
+  function( cochains, L )
+    return
+      AsCochainComplex(
+          RandomObjectByList(
+              ChainComplexCategory( UnderlyingCategory( cochains ) ),
+              [ -L[2], -L[1], L[3] ]
+          )
+      );
+end );
+
+##
+InstallMethod( RandomObjectByList,
           [ IsChainComplexCategory, IsList ],
   function( chains, L )
     local m, n, c, cat, o, map, weak, diffs, j, current_map, current_weak, r, k, bool;
@@ -87,6 +100,15 @@ end, -1 );
 
 ##
 InstallMethod( RandomObjectByInteger,
+          [ IsCochainComplexCategory, IsInt ],
+  function( cochains, n )
+    
+    return RandomObjectByList( cochains, [ -AbsInt( n ), AbsInt( n ), Int( n / 2 ) + 1 ] );
+    
+end, -1 );
+
+##
+InstallMethod( RandomObjectByInteger,
           [ IsChainComplexCategory, IsInt ],
   function( chains, n )
     
@@ -97,7 +119,7 @@ end, -1 );
 ## L is list with one integer entry
 ##
 InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
-          [ IsBoundedChainComplex, IsBoundedChainComplex, IsList ],
+          [ IsBoundedChainOrCochainComplex, IsBoundedChainOrCochainComplex, IsList ],
   function( C, D, L )
     local b;
     
@@ -113,7 +135,7 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
-          [ IsBoundedChainComplex, IsBoundedChainComplex, IsInt ],
+          [ IsBoundedChainOrCochainComplex, IsBoundedChainOrCochainComplex, IsInt ],
   function( C, D, n )
     
     return RandomMorphismWithFixedSourceAndRangeByList( C, D, [ n ] );
@@ -122,7 +144,7 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceByList,
-          [ IsBoundedChainComplex, IsList ],
+          [ IsBoundedChainOrCochainComplex, IsList ],
   function( C, L )
     local D;
     
@@ -134,7 +156,7 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedSourceByInteger,
-          [ IsBoundedChainComplex, IsInt ],
+          [ IsBoundedChainOrCochainComplex, IsInt ],
   function( C, n )
     
     return RandomMorphismWithFixedSourceByList( C,
@@ -145,7 +167,7 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedRangeByList,
-          [ IsBoundedChainComplex, IsList ],
+          [ IsBoundedChainOrCochainComplex, IsList ],
   function( D, L )
     local C;
     
@@ -157,7 +179,7 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismWithFixedRangeByInteger,
-          [ IsBoundedChainComplex, IsInt ],
+          [ IsBoundedChainOrCochainComplex, IsInt ],
   function( D, n )
     
     return RandomMorphismWithFixedRangeByList( D,
@@ -168,11 +190,11 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismByList,
-          [ IsChainComplexCategory, IsList ],
-  function( chains, L )
+          [ IsChainOrCochainComplexCategory, IsList ],
+  function( complex_cat, L )
     local C;
     
-    C := RandomObjectByList( chains, L[ 1 ] );
+    C := RandomObjectByList( complex_cat, L[ 1 ] );
     
     return RandomMorphismWithFixedSourceByList( C, [ L[ 2 ], L[ 3 ] ] );
     
@@ -180,11 +202,11 @@ end, -1 );
 
 ##
 InstallMethod( RandomMorphismByInteger,
-          [ IsChainComplexCategory, IsInt ],
-  function( chains, n )
+          [ IsChainOrCochainComplexCategory, IsInt ],
+  function( complex_cat, n )
     local C;
     
-    C := RandomObjectByInteger( chains, n );
+    C := RandomObjectByInteger( complex_cat, n );
     
     return RandomMorphismWithFixedSourceByInteger( C, n );
     
