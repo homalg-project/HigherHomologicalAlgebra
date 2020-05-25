@@ -17,3 +17,5 @@ To do
   if the underlying category allows this??
 * Get rid of the current methods to compute the Total complex of a "double-complex"
   and use Convolution instead.
+* Reduce the interaction between chains and cochains.
+  e.g., hom structure now on cochains is computable by converting cells to chains first.
