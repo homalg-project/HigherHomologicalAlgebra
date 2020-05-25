@@ -9,15 +9,24 @@
 BindGlobal( "ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS",
 
 function( Ho_C )
-    
+  local complex_cat, index_shift;
+  
   SetFilterObj( Ho_C, IsTriangulatedCategory );
-
+  
+  complex_cat := UnderlyingCategory( Ho_C );
+  
+  if IsChainComplexCategory( complex_cat ) then
+    index_shift := -1;
+  else
+    index_shift := 1;
+  fi;
+  
   ## Adding the shift and reverse shift functors
   AddShiftOnObject( Ho_C,
     function( C )
       local twist_functor;
       
-      twist_functor := ShiftFunctor( Ho_C, -1 );
+      twist_functor := ShiftFunctor( Ho_C, index_shift );
     
       return ApplyFunctor( twist_functor, C );
       
@@ -28,7 +37,7 @@ function( Ho_C )
       function( s, phi, r )
         local twist_functor;
         
-        twist_functor := ShiftFunctor( Ho_C, -1 );
+        twist_functor := ShiftFunctor( Ho_C, index_shift );
   
       return ApplyFunctor( twist_functor, phi );
   
@@ -39,7 +48,7 @@ function( Ho_C )
       function( C )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctor( Ho_C, 1 );
+        reverse_twist_functor := ShiftFunctor( Ho_C, -index_shift );
    
         return ApplyFunctor( reverse_twist_functor, C );
   
@@ -50,7 +59,7 @@ function( Ho_C )
       function( s, phi, r )
         local reverse_twist_functor;
         
-        reverse_twist_functor := ShiftFunctor( Ho_C, 1 );
+        reverse_twist_functor := ShiftFunctor( Ho_C, -index_shift );
       
         return ApplyFunctor( reverse_twist_functor, phi );
   
@@ -128,8 +137,8 @@ function( Ho_C )
                    return
                      MorphismBetweenDirectSums(
                        [
-                         [ mu[ i - 1 ]                                            , homotopy_maps[ i - 1 ] ],
-                         [ ZeroMorphism( Source( nu )[ i ], Range( mu )[ i - 1 ] ), nu[ i ]                ]
+                         [ mu[ i + index_shift ]                                            , homotopy_maps[ i + index_shift ] ],
+                         [ ZeroMorphism( Source( nu )[ i ], Range( mu )[ i + index_shift ] ), nu[ i ]                          ]
                        ] );
                  end );
        
@@ -152,9 +161,9 @@ function( Ho_C )
                   MorphismBetweenDirectSums(
                     [ 
                       [
-                        AdditiveInverse( alpha[ i - 1 ] ),
-                        IdentityMorphism( A[ i - 1 ] ),
-                        ZeroMorphism( A[ i - 1 ], B[ i ] )
+                        AdditiveInverse( alpha[ i + index_shift ] ),
+                        IdentityMorphism( A[ i + index_shift ] ),
+                        ZeroMorphism( A[ i + index_shift ], B[ i ] )
                       ]
                     ] );
                 end );
@@ -177,9 +186,9 @@ function( Ho_C )
                   return
                   MorphismBetweenDirectSums(
                     [ 
-                      [ ZeroMorphism( B[ i - 1 ], A[ i - 1 ] ) ],
-                      [ IdentityMorphism( A[ i - 1 ] ) ],
-                      [ ZeroMorphism( B[ i ], A[ i - 1 ] ) ]
+                      [ ZeroMorphism( B[ i + index_shift ], A[ i + index_shift ] ) ],
+                      [ IdentityMorphism( A[ i + index_shift ] ) ],
+                      [ ZeroMorphism( B[ i ], A[ i + index_shift ] ) ]
                     ] );
                     
                 end );
@@ -203,7 +212,7 @@ function( Ho_C )
                   MorphismBetweenDirectSums(
                     [ 
                       [ 
-                        ZeroMorphism( B[ i ], A[ i - 1 ] ),
+                        ZeroMorphism( B[ i ], A[ i + index_shift ] ),
                         IdentityMorphism( B[ i ] ),
                         ZeroMorphism( B[ i ], A[ i ] )
                       ]
@@ -228,7 +237,7 @@ function( Ho_C )
                   return
                   MorphismBetweenDirectSums(
                     [ 
-                      [ ZeroMorphism( A[ i - 1 ], B[ i ] ) ],
+                      [ ZeroMorphism( A[ i + index_shift ], B[ i ] ) ],
                       [ IdentityMorphism( B[ i ] ) ],
                       [ alpha[ i ] ]
                     ] );
@@ -265,8 +274,8 @@ function( Ho_C )
       v := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
-                    [ alpha[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] ) ],
-                    [ ZeroMorphism( C[ n ], B[ n - 1 ] ), IdentityMorphism( C[ n ] ) ],
+                    [ alpha[ n + index_shift ], ZeroMorphism( A[ n + index_shift ], C[ n ] ) ],
+                    [ ZeroMorphism( C[ n ], B[ n + index_shift ] ), IdentityMorphism( C[ n ] ) ],
                   ]
                 ) );
       
@@ -292,8 +301,8 @@ function( Ho_C )
       w := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [
-                    [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] ) ],
-                    [ ZeroMorphism( C[ n ], A[ n - 2 ]  ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ],
+                    [ ZeroMorphism( B[ n + index_shift ], A[ n + 2 * index_shift ] ), IdentityMorphism( B[ n + index_shift ] ) ],
+                    [ ZeroMorphism( C[ n ], A[ n + 2 * index_shift ]  ), ZeroMorphism( C[ n ], B[ n + index_shift ] ) ],
                   ]
                 ) );
                 
@@ -319,8 +328,8 @@ function( Ho_C )
       maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
-                    [ ZeroMorphism( B[ n - 1 ], A[ n - 2 ] ), IdentityMorphism( B[ n - 1 ] )    , ZeroMorphism( B[ n - 1 ], A[ n - 1 ] ), ZeroMorphism( B[ n - 1 ], C[ n ] )  ],
-                    [ ZeroMorphism( C[ n ] , A[ n - 2 ] )   , ZeroMorphism( C[ n ], B[ n - 1 ] ), ZeroMorphism( C[ n ], A[ n - 1 ] )    , IdentityMorphism( C[ n ] )          ]
+                    [ ZeroMorphism( B[ n + index_shift ], A[ n + 2 * index_shift ] ), IdentityMorphism( B[ n + index_shift ] )    , ZeroMorphism( B[ n + index_shift ], A[ n + index_shift ] ), ZeroMorphism( B[ n + index_shift ], C[ n ] )  ],
+                    [ ZeroMorphism( C[ n ] , A[ n + 2 * index_shift ] )   , ZeroMorphism( C[ n ], B[ n + index_shift ] ), ZeroMorphism( C[ n ], A[ n + index_shift ] )    , IdentityMorphism( C[ n ] )          ]
                   ]
               ) );
       
@@ -342,10 +351,10 @@ function( Ho_C )
       maps := AsZFunction(
             n -> MorphismBetweenDirectSums(
                   [  
-                    [ ZeroMorphism( A[ n - 2 ] , B[ n - 1 ] ) , ZeroMorphism( A[ n - 2 ], C[ n ] ) ],
-                    [ IdentityMorphism( B[ n - 1 ] )          , ZeroMorphism( B[ n -1 ], C[ n ] )  ],
-                    [ alpha[ n - 1 ], ZeroMorphism( A[ n - 1 ], C[ n ] )                           ],
-                    [ ZeroMorphism( C[ n ], B[ n - 1 ] )      , IdentityMorphism( C[ n ] )         ]
+                    [ ZeroMorphism( A[ n + 2 * index_shift ] , B[ n + index_shift ] ) , ZeroMorphism( A[ n + 2 * index_shift ], C[ n ] ) ],
+                    [ IdentityMorphism( B[ n + index_shift ] )          , ZeroMorphism( B[ n + index_shift ], C[ n ] )  ],
+                    [ alpha[ n + index_shift ], ZeroMorphism( A[ n + index_shift ], C[ n ] )                           ],
+                    [ ZeroMorphism( C[ n ], B[ n + index_shift ] )      , IdentityMorphism( C[ n ] )         ]
                   ]
               ) );
       

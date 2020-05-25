@@ -20,6 +20,18 @@ BindGlobal( "TheTypeOfHomotopyCategory",
         NewType( TheFamilyOfCapCategories,
                 IsHomotopyCategoryRep ) );
 
+##
+InstallMethod( HomotopyCategoryAttr,
+          [ IsCapCategory ],
+  cat -> HomotopyCategory( cat, false )
+);
+
+##
+InstallOtherMethod( HomotopyCategory,
+          [ IsCapCategory ],
+  cat -> HomotopyCategoryAttr( cat )
+);
+
 # The StandardHomomorphismStructure is the one that comes from the stable structure.
 # There is another way to enhance the homotopy categories with a homomorphism structure,
 # By the use of double complexes.
@@ -27,12 +39,21 @@ BindGlobal( "TheTypeOfHomotopyCategory",
 # if WithStandardHomomorphismStructure = false then the second way will be used,
 # otherwise, the standard one will be used.
 ##
-InstallMethod( HomotopyCategory,
-      [ IsCapCategory ],
-  function( cat )
-    local chains, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
+
+InstallMethod( HomotopyCategoryOp,
+      [ IsCapCategory, IsBool ],
+  function( cat, over_cochains )
+    local complex_cat, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
     
-    chains := ChainComplexCategory( cat : FinalizeCategory := false );
+    if over_cochains then
+      
+      complex_cat := CochainComplexCategory( cat : FinalizeCategory := false );
+      
+    else
+      
+      complex_cat := ChainComplexCategory( cat : FinalizeCategory := false );
+      
+    fi;
     
     if not ( HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) ) then
     
@@ -40,39 +61,39 @@ InstallMethod( HomotopyCategory,
       
     fi;
     
-    if HasIsFinalized( chains ) then
+    if HasIsFinalized( complex_cat ) then
       
-      if not CanCompute( chains, "MorphismIntoColiftingObject" ) or
-          not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
+      if not CanCompute( complex_cat, "MorphismIntoColiftingObject" ) or
+          not CanCompute( complex_cat, "IsColiftableThroughColiftingObject" ) then
           
           Error( "The chains complex category seems to have been finalized without adding colifting structure" );
           
       fi;
       
     else
-    
+      
       coliftable_function := ValueOption( "is_coliftable_through_colifting_object_func" );
       
       if IsFunction( coliftable_function ) then
-                
-        AddIsColiftableThroughColiftingObject( chains, coliftable_function );
+        
+        AddIsColiftableThroughColiftingObject( complex_cat, coliftable_function );
         
       fi;
       
-      Finalize( chains );
+      Finalize( complex_cat );
       
-      if not CanCompute( chains, "IsColiftableThroughColiftingObject" ) then
+      if not CanCompute( complex_cat, "IsColiftableThroughColiftingObject" ) then
         
         Error( "The method IsColiftableThroughColiftingObject should be added to the category of chains!" );
         
       fi;
-    
+       
     fi;
     
     r := RandomTextColor( Name( cat ) );
     
     name := Concatenation( r[ 1 ], "Homotopy category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
-   
+    
     to_be_finalized := ValueOption( "FinalizeCategory" );
     
     special_filters := ValueOption( "SpecialFilters" );
@@ -83,29 +104,41 @@ InstallMethod( HomotopyCategory,
       
     fi;
     
-    homotopy_category := StableCategoryBySystemOfColiftingObjects( chains: NameOfCategory := name,
-                                                                     FinalizeCategory := false,
-                                                                     WithHomomorphismStructure := true,
-                                                                     SpecialFilters := special_filters );
+    homotopy_category := StableCategoryBySystemOfColiftingObjects(
+                              complex_cat: NameOfCategory := name,
+                              FinalizeCategory := false,
+                              WithHomomorphismStructure := true,
+                              SpecialFilters := special_filters
+                            );
+    
+    ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS( homotopy_category );
     
     SetDefiningCategory( homotopy_category, cat );
     
-    if ValueOption( "WithStandardHomomorphismStructure" ) <> true and
+    if ValueOption( "WithStandardHomomorphismStructure" ) <> true and not over_cochains and
         
         HasRangeCategoryOfHomomorphismStructure( cat ) then
         
         Info( InfoHomotopyCategories, 2, "The classical methods will be installed for the homomorphism structure on homotopy categories" );
         
-        ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY( homotopy_category );
+        ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
         
     fi;
     
-    ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS( homotopy_category );
+    if ValueOption( "WithStandardHomomorphismStructure" ) <> true and over_cochains and
+        
+        HasRangeCategoryOfHomomorphismStructure( cat ) then
+        
+        Info( InfoHomotopyCategories, 2, "The classical methods will be installed for the homomorphism structure on homotopy categories" );
+        
+        ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_COCHAINS( homotopy_category );
+        
+    fi;
     
     if to_be_finalized = false then
       
       return homotopy_category;
-    
+      
     fi;
     
     Finalize( homotopy_category );
@@ -160,7 +193,7 @@ end );
 ###
 
 ##
-InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
@@ -181,9 +214,10 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
           
           Error( "to do" );
           
-          return 
-          HomotopyCategoryObject( homotopy_category,
-          StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 ) );
+          return
+            HomotopyCategoryObject( homotopy_category,
+                StalkCochainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 )
+              );
           
         fi;
          
@@ -192,7 +226,7 @@ InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOM
  end );
  
 ##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_OBJECTS_IN_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
@@ -239,7 +273,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY,
 end );
 
 ##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_MORPHISMS_IN_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc, chains_range_cat_of_hom_struc, H0;
     
@@ -313,7 +347,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGOR
 end );
 
 ##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
@@ -375,7 +409,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
 end );
 
 ##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
     
@@ -436,7 +470,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
 
 end );
 
-InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
+InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
   function( homotopy_category )
     local chains, cat, range_cat_of_hom_struc;
 
@@ -457,12 +491,86 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY,
       
     fi;
         
-    ADD_HOM_STRUCTURE_ON_CHAINS_IN_HOMOTOPY_CATEGORY( homotopy_category );
-    ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS_IN_HOMOTOPY_CATEGORY( homotopy_category );
-    ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY( homotopy_category );
-    ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY( homotopy_category );
-    ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY( homotopy_category );
+    ADD_HOM_STRUCTURE_ON_OBJECTS_IN_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
+    ADD_HOM_STRUCTURE_ON_MORPHISMS_IN_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
+    ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
+    ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_MORPHISM_IN_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
+    ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_IN_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
 
+end );
+
+
+InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_COCHAINS,
+  function( homotopy_category )
+    local homotopy_cat;
+    
+    homotopy_cat := HomotopyCategory( DefiningCategory( homotopy_category ), false );
+    
+    SetRangeCategoryOfHomomorphismStructure( homotopy_category,
+      RangeCategoryOfHomomorphismStructure( homotopy_cat )
+    );
+    
+    AddDistinguishedObjectOfHomomorphismStructure( homotopy_category,
+      { } -> DistinguishedObjectOfHomomorphismStructure( homotopy_cat )
+    );
+    
+    AddHomomorphismStructureOnObjects( homotopy_category,
+      { a, b } ->
+        HomomorphismStructureOnObjects(
+            AsChainComplex( UnderlyingCell( a ) ) / homotopy_cat,
+            AsChainComplex( UnderlyingCell( b ) ) / homotopy_cat
+          )
+    );
+    
+    AddHomomorphismStructureOnMorphismsWithGivenObjects( homotopy_category,
+      { s, alpha, beta, r } ->
+        HomomorphismStructureOnMorphismsWithGivenObjects(
+          s,
+          AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat,
+          AsChainMorphism( UnderlyingCell( beta  ) ) / homotopy_cat,
+          r
+        )
+    );
+    
+    AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( homotopy_category,
+      alpha ->
+        InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure(
+          AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat
+        )
+    );
+    
+    AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( homotopy_category,
+      { s, r, eta } ->
+        AsCochainMorphism(
+          UnderlyingCell(
+            InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(
+              AsChainComplex( UnderlyingCell( s ) ) / homotopy_cat,
+              AsChainComplex( UnderlyingCell( r ) ) / homotopy_cat,
+              eta
+            )
+          )
+        ) / homotopy_category
+    );
+    
+    AddBasisOfExternalHom( homotopy_category,
+      { a, b } ->
+        List(
+          BasisOfExternalHom(
+              AsChainComplex( UnderlyingCell( a ) ) / homotopy_cat,
+              AsChainComplex( UnderlyingCell( b ) ) / homotopy_cat
+            ),
+          m -> AsCochainMorphism( UnderlyingCell( m ) ) / homotopy_category
+        )
+    );
+    
+    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( homotopy_category,
+      { alpha, basis } ->
+        CoefficientsOfMorphismWithGivenBasisOfExternalHom(
+          AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat,
+          List( basis, m -> AsChainMorphism( UnderlyingCell( m ) ) / homotopy_cat )
+        )    
+    );
+    
 end );
 
 ## This function computes the homotopy by solving the associated two sided linear system of morphisms in the category.

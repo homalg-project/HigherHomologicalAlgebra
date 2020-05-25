@@ -20,7 +20,7 @@ DeclareOperation( "HomotopyCategoryObject",
             [ IsHomotopyCategory, IsZFunction ] );
 
 DeclareOperation( "HomotopyCategoryObject",
-            [ IsList, IsInt ] );
+            [ IsHomotopyCategory, IsList, IsInt ] );
 
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryObject, IsInt ] );

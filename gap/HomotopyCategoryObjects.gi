@@ -19,7 +19,7 @@ BindGlobal( "TheTypeOfHomotopyCategoryObject",
 
 ##
 InstallMethod( HomotopyCategoryObject,
-            [ IsHomotopyCategory, IsChainComplex ],
+            [ IsHomotopyCategory, IsChainOrCochainComplex ],
             
   function( homotopy_category, a )
     local homotopy_a;
@@ -40,15 +40,18 @@ end );
 
 ##
 InstallMethod( HomotopyCategoryObject,
-          [ IsList, IsInt ],
-  function( diffs, N )
-    local category, homotopy_category;
+          [ IsHomotopyCategory, IsList, IsInt ],
+  function( homotopy_category, diffs, N )
     
-    category := CapCategory( diffs[ 1 ] );
-    
-    homotopy_category := HomotopyCategory( category );
-    
-    return ChainComplex( diffs, N ) / homotopy_category;
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      return HomotopyCategoryObject( homotopy_category, ChainComplex( diffs, N ) );
+      
+    else
+      
+      return HomotopyCategoryObject( homotopy_category, CochainComplex( diffs, N ) );
+      
+    fi;
     
 end );
 
@@ -60,9 +63,28 @@ InstallMethod( HomotopyCategoryObject,
     
     C := DefiningCategory( homotopy_category );
     
-    return ChainComplex( C, diffs ) / homotopy_category;
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      return ChainComplex( C, diffs ) / homotopy_category;
+      
+    else
+      
+      return CochainComplex( C, diffs ) / homotopy_category;
+      
+    fi;
     
 end );
+
+##
+InstallOtherMethod( HomotopyCategoryObject,
+          [ IsList, IsInt ],
+          
+  function( diffs, N )
+    
+    return HomotopyCategoryObject( HomotopyCategory( CapCategory( diffs[1] ) ), diffs, N );
+    
+end );
+
 
 ##
 InstallMethod( \[\],
@@ -76,17 +98,18 @@ InstallMethod( \^,
 
 ##
 InstallMethod( \/,
-          [ IsCapCategoryObject, IsHomotopyCategory ],
-  {a,H} -> HomotopyCategoryObject( H, a )
+          [ IsChainOrCochainComplex, IsHomotopyCategory ],
+  { a, H } -> HomotopyCategoryObject( H, a )
 );
 
 ##
 InstallMethod( BoxProduct,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsHomotopyCategory ],
-  { a, b, homotopy_category } -> HomotopyCategoryObject(
-                                          homotopy_category,
-                                          BoxProduct( UnderlyingCell( a ), UnderlyingCell( b ), UnderlyingCategory( homotopy_category ) )
-                                        )
+  { a, b, homotopy_category } ->
+      HomotopyCategoryObject(
+          homotopy_category,
+          BoxProduct( UnderlyingCell( a ), UnderlyingCell( b ), UnderlyingCategory( homotopy_category ) )
+        )
 );
 
 ##

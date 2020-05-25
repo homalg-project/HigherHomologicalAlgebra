@@ -17,7 +17,7 @@ BindGlobal( "TheTypeOfHomotopyCategoryMorphism",
 
 ##
 InstallMethod( HomotopyCategoryMorphism,
-            [ IsHomotopyCategory, IsChainMorphism ],
+            [ IsHomotopyCategory, IsChainOrCochainMorphism ],
             
   function( homotopy_category, phi )
     local homotopy_phi;
@@ -42,11 +42,21 @@ end );
 InstallMethod( HomotopyCategoryMorphism,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsList, IsInt ],
   function( a, b, maps, N )
-    local homotopy_category;
+    local homotopy_category, alpha;
     
     homotopy_category := CapCategory( a );
     
-    return ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps, N ) / homotopy_category;
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      alpha := ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps, N );
+       
+    else
+      
+      alpha := CochainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps, N );
+       
+    fi;
+    
+    return HomotopyCategoryMorphism( homotopy_category, alpha  );
     
 end );
 
@@ -54,11 +64,21 @@ end );
 InstallMethod( HomotopyCategoryMorphism,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsZFunction ],
   function( a, b, maps )
-    local homotopy_category;
+    local homotopy_category, alpha;
     
     homotopy_category := CapCategory( a );
     
-    return ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps ) / homotopy_category;
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      alpha := ChainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps );
+      
+    else
+      
+      alpha := CochainMorphism( UnderlyingCell( a ), UnderlyingCell( b ), maps );
+        
+    fi;
+    
+    return HomotopyCategoryMorphism( homotopy_category, alpha  );
     
 end );
 
@@ -69,8 +89,8 @@ InstallMethod( \[\],
 
 ##
 InstallMethod( \/,
-          [ IsChainMorphism, IsHomotopyCategory ],
-  {a,H} -> HomotopyCategoryMorphism( H, a )
+          [ IsChainOrCochainMorphism, IsHomotopyCategory ],
+  { a, H } -> HomotopyCategoryMorphism( H, a )
 );
 
 InstallMethod( HomotopyMorphisms,

@@ -50,11 +50,11 @@ function( homotopy_category, n )
   
   cat := DefiningCategory( homotopy_category );
   
-  complex_cat := ChainComplexCategory( cat );
+  complex_cat := UnderlyingCategory( homotopy_category );
   
   T := ShiftFunctor( complex_cat, n );
   
-  name := Concatenation( "Shift by ", String( n ), " autoequivalence on " );
+  name := Concatenation( "Shift by ", String( n ), " autoequivalence" );
   
   if n = 0 then
     
@@ -92,7 +92,7 @@ function( homotopy_category, n )
   
   cat := DefiningCategory( homotopy_category );
   
-  complex_cat := ChainComplexCategory( cat );
+  complex_cat := UnderlyingCategory( homotopy_category );
   
   T := UnsignedShiftFunctor( complex_cat, n );
   
