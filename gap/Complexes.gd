@@ -199,6 +199,10 @@ DeclareAttribute( "AsChainComplex", IsChainOrCochainComplex );
 #! @Returns a cochain complex
 DeclareAttribute( "AsCochainComplex", IsChainOrCochainComplex );
 
+DeclareAttribute( "AsChainCell", IsCapCategoryCell );
+
+DeclareAttribute( "AsCochainCell", IsCapCategoryCell );
+
 #! @Description
 #! The input is a bounded chain (resp. cochain) complex $C$ and two integers $m,n$. 
 #! The output is true when $C$ is an exact complex, otherwise the output is

@@ -811,6 +811,28 @@ InstallMethod( AsChainComplex, [ IsChainComplex ], IdFunc );
 ##
 InstallMethod( AsCochainComplex, [ IsCochainComplex ], IdFunc );
 
+##
+InstallMethod( AsChainCell,
+          [ IsCapCategoryCell ],
+  function( cell )
+    if IsCapCategoryObject( cell ) then
+      return AsChainComplex( cell );
+    else
+      return AsChainMorphism( cell );
+    fi;
+end );
+
+##
+InstallMethod( AsCochainCell,
+          [ IsCapCategoryCell ],
+  function( cell )
+    if IsCapCategoryObject( cell ) then
+      return AsCochainComplex( cell );
+    else
+      return AsCochainMorphism( cell );
+    fi;
+end );
+
 ################################################
 #
 #  Constructors of finite (co)chain complexes
