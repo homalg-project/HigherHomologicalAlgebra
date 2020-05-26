@@ -10,7 +10,6 @@
 DeclareCategory( "IsHomotopyCategoryMorphism",
                  IsHomotopyCategoryCell and IsStableCategoryMorphism );
 
-
 DeclareOperation( "HomotopyCategoryMorphism",
             [ IsHomotopyCategory, IsChainOrCochainMorphism ] );
 
@@ -22,6 +21,10 @@ DeclareOperation( "HomotopyCategoryMorphism",
 
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryMorphism, IsInt ] );
+
+DeclareAttribute( "AsChainMorphism", IsHomotopyCategoryMorphism );
+
+DeclareAttribute( "AsCochainMorphism", IsHomotopyCategoryMorphism );
 
 DeclareProperty( "IsQuasiIsomorphism", IsHomotopyCategoryMorphism );
 

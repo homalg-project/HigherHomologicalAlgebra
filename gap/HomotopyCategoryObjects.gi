@@ -103,6 +103,54 @@ InstallMethod( \/,
 );
 
 ##
+InstallMethod( AsChainComplex,
+              [ IsHomotopyCategoryObject ],
+  function( a )
+    local homotopy_cat, output;
+    
+    homotopy_cat := CapCategory( a );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
+      
+      return a;
+      
+    else
+      
+      output := AsChainComplex( UnderlyingCell( a ) ) / HomotopyCategory( DefiningCategory( homotopy_cat ), false );
+      
+      SetAsCochainMorphism( output, a );
+      
+      return output;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( AsCochainComplex,
+              [ IsHomotopyCategoryObject ],
+  function( a )
+    local homotopy_cat, output;
+    
+    homotopy_cat := CapCategory( a );
+    
+    if IsCochainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
+      
+      return a;
+      
+    else
+      
+      output := AsCochainComplex( UnderlyingCell( a ) ) / HomotopyCategory( DefiningCategory( homotopy_cat ), true );
+      
+      SetAsChainComplex( output, a );
+      
+      return output;
+      
+    fi;
+    
+end );
+
+##
 InstallMethod( BoxProduct,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsHomotopyCategory ],
   { a, b, homotopy_category } ->

@@ -93,6 +93,55 @@ InstallMethod( \/,
   { a, H } -> HomotopyCategoryMorphism( H, a )
 );
 
+##
+InstallMethod( AsChainMorphism,
+              [ IsHomotopyCategoryMorphism ],
+  function( alpha )
+    local homotopy_cat, output;
+    
+    homotopy_cat := CapCategory( alpha );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
+      
+      return alpha;
+      
+    else
+      
+      output := AsChainMorphism( UnderlyingCell( alpha ) ) / HomotopyCategory( DefiningCategory( homotopy_cat ), false );
+      
+      SetAsCochainMorphism( output, alpha );
+      
+      return output;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( AsCochainMorphism,
+              [ IsHomotopyCategoryMorphism ],
+  function( alpha )
+    local homotopy_cat, output;
+    
+    homotopy_cat := CapCategory( alpha );
+    
+    if IsCochainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
+      
+      return alpha;
+      
+    else
+      
+      output := AsCochainMorphism( UnderlyingCell( alpha ) ) / HomotopyCategory( DefiningCategory( homotopy_cat ), true );
+      
+      SetAsChainMorphism( output, alpha );
+      
+      return output;
+      
+    fi;
+    
+end );
+
+
 InstallMethod( HomotopyMorphisms,
     [ IsHomotopyCategoryMorphism ],
   function( phi )

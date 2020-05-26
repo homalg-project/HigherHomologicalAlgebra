@@ -28,6 +28,10 @@ DeclareOperation( "\[\]",
 DeclareOperation( "\^",
             [ IsHomotopyCategoryObject, IsInt ] );
 
+DeclareAttribute( "AsChainComplex", IsHomotopyCategoryObject );
+
+DeclareAttribute( "AsCochainComplex", IsHomotopyCategoryObject );
+
 DeclareOperation( "BoxProduct",
             [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsCapCategory ] );
 
