@@ -6,11 +6,36 @@
 #
 #####################################################################
 
-###########################
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsHomotopyCategoryObject ],
+  C -> ForwardConvolution( UnderlyingCell( C ) )
+);
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsHomotopyCategoryMorphism ],
+  alpha -> ForwardConvolution( UnderlyingCell( alpha ) )
+);
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsHomotopyCategoryObject ],
+  C -> BackwardConvolution( UnderlyingCell( C ) )
+);
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsHomotopyCategoryMorphism ],
+  alpha -> BackwardConvolution( UnderlyingCell( alpha ) )
+);
+
+################################
 #
-# Backward convolution
+# Forward convolution by chains
 #
-###########################
+################################
 
 ##
 InstallMethod( ForwardConvolutionAtIndexOp,
@@ -28,7 +53,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolution( ForwardConvolution( C, m + 1 ), m );
+      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -58,19 +83,13 @@ end );
 
 ##
 InstallMethod( ForwardConvolution,
-          [ IsChainComplex, IsInt ],
-  ForwardConvolutionAtIndex
-);
-
-##
-InstallMethod( ForwardConvolution,
           [ IsChainComplex ],
   function( C )
     local l;
     
     l := ActiveLowerBound( C );
     
-    C := ForwardConvolution( C, l + 1 );
+    C := ForwardConvolutionAtIndex( C, l + 1 );
     
     return Shift( C[ l ], l );
     
@@ -92,7 +111,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolution( ForwardConvolution( alpha, m + 1 ), m );
+      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( alpha, m + 1 ), m );
       
     else
       
@@ -113,9 +132,9 @@ InstallMethod( ForwardConvolutionAtIndexOp,
         
         Add( maps, map );
         
-        s := ForwardConvolution( Source( alpha ), m );
+        s := ForwardConvolutionAtIndex( Source( alpha ), m );
         
-        r := ForwardConvolution( Range( alpha ), m );
+        r := ForwardConvolutionAtIndex( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, l );
         
@@ -127,41 +146,23 @@ end );
 
 ##
 InstallMethod( ForwardConvolution,
-          [ IsChainMorphism, IsInt ],
-  ForwardConvolutionAtIndex
-);
-
-##
-InstallMethod( ForwardConvolution,
           [ IsChainMorphism ],
   function( alpha )
     local l;
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := ForwardConvolution( alpha, l + 1 );
+    alpha := ForwardConvolutionAtIndex( alpha, l + 1 );
     
     return Shift( alpha[ l ], l );
     
 end );
 
-##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryObject ],
-  C -> ForwardConvolution( UnderlyingCell( C ) )
-);
-
-##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryMorphism ],
-  alpha -> ForwardConvolution( UnderlyingCell( alpha ) )
-);
-
-###########################
+################################
 #
-# Backward convolution
+# Backward convolution by chains
 #
-###########################
+################################
 
 ##
 InstallMethod( BackwardConvolutionAtIndexOp,
@@ -179,7 +180,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolution( BackwardConvolution( C, m - 1 ), m );
+      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -213,19 +214,13 @@ end );
 
 ##
 InstallMethod( BackwardConvolution,
-          [ IsChainComplex, IsInt ],
-  BackwardConvolutionAtIndex
-);
-
-##
-InstallMethod( BackwardConvolution,
           [ IsChainComplex ],
   function( C )
     local u;
     
     u := ActiveUpperBound( C );
     
-    C := BackwardConvolution( C, u - 1 );
+    C := BackwardConvolutionAtIndex( C, u - 1 );
     
     return Shift( C[ u ], u );
     
@@ -247,7 +242,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolution( BackwardConvolution( alpha, m - 1 ), m );
+      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( alpha, m - 1 ), m );
       
     else
       
@@ -270,9 +265,9 @@ InstallMethod( BackwardConvolutionAtIndexOp,
         
         Add( maps, map, 1 );
         
-        s := BackwardConvolution( Source( alpha ), m );
+        s := BackwardConvolutionAtIndex( Source( alpha ), m );
         
-        r := BackwardConvolution( Range( alpha ), m );
+        r := BackwardConvolutionAtIndex( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, m + 1 );
         
@@ -284,33 +279,275 @@ end );
 
 ##
 InstallMethod( BackwardConvolution,
-          [ IsChainMorphism, IsInt ],
-  BackwardConvolutionAtIndex
-);
-
-##
-InstallMethod( BackwardConvolution,
           [ IsChainMorphism ],
   function( alpha )
     local u;
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := BackwardConvolution( alpha, u - 1 );
+    alpha := BackwardConvolutionAtIndex( alpha, u - 1 );
     
     return Shift( alpha[ u ], u );
     
 end );
 
+###################################
+#
+# Forward Convolution by cochains
+#
+###################################
+
 ##
-InstallMethod( BackwardConvolution,
-          [ IsHomotopyCategoryObject ],
-  C -> BackwardConvolution( UnderlyingCell( C ) )
-);
+InstallMethod( ForwardConvolutionAtIndexOp,
+          [ IsCochainComplex, IsInt ],
+
+  function( C, m )
+    local l, u, alpha, beta, H, maps, d, diffs;
+     
+    u := ActiveUpperBound( C );
+    
+    l := ActiveLowerBound( C );
+    
+    if m < l then
+      
+      return C;
+      
+    elif m > l then
+      
+      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( C, m - 1 ), m );
+      
+    elif u - l in [ 0, 1 ] then
+      
+      return StalkCochainComplex( StandardConeObject( C ^ m ), m + 1 );
+      
+    else
+      
+      alpha := C ^ m;
+      
+      beta := C ^ ( m + 1 );
+      
+      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+      
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ H[ i + 1 ] ], [ beta[ i ] ] ] ) );
+      
+      d := HomotopyCategoryMorphism( StandardConeObject( alpha ), Range( beta ), maps );
+      
+      diffs := List( [ l + 2 .. u - 1 ], i -> C ^ i );
+      
+      diffs := Concatenation( [ d ], diffs );
+      
+      return CochainComplex( diffs, l + 1 );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsCochainComplex ],
+  function( C )
+    local u;
+    
+    u := ActiveUpperBound( C );
+    
+    C := ForwardConvolutionAtIndex( C, u - 1 );
+    
+    return Shift( C[ u ], -u );
+    
+end );
+
+##
+InstallMethod( ForwardConvolutionAtIndexOp,
+          [ IsCochainMorphism, IsInt ],
+  function( alpha, m )
+    local l, u, map, maps, s, r;
+    
+    l := ActiveLowerBoundForSourceAndRange( alpha );
+    
+    u := ActiveUpperBoundForSourceAndRange( alpha );
+    
+    if m < l then
+      
+      return alpha;
+      
+    elif m > l then
+      
+      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( alpha, m - 1 ), m );
+      
+    else
+      
+      map := MorphismBetweenStandardConeObjects(
+                Source( alpha ) ^ m,
+                alpha[ m ],
+                alpha[ m + 1 ],
+                Range( alpha ) ^ m
+              );
+              
+      if l = u then
+        
+        return StalkCochainMorphism( map, m + 1 );
+        
+      else
+        
+        maps := List( [ l + 2 .. u ], i -> alpha[ i ] );
+        
+        maps := Concatenation( [ map ], maps );
+        
+        s := ForwardConvolutionAtIndex( Source( alpha ), m );
+        
+        r := ForwardConvolutionAtIndex( Range( alpha ), m );
+        
+        return CochainMorphism( s, r, maps, l + 1 );
+        
+      fi;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsCochainMorphism ],
+  function( alpha )
+    local u;
+    
+    u := ActiveUpperBoundForSourceAndRange( alpha );
+    
+    alpha := ForwardConvolutionAtIndex( alpha, u - 1 );
+    
+    return Shift( alpha[ u ], -u );
+    
+end );
+
+#########################
+#
+# Backward Convolution by cochains
+#
+#########################
+
+##
+InstallMethod( BackwardConvolutionAtIndexOp,
+          [ IsCochainComplex, IsInt ],
+  function( C, m )
+    local l, u, alpha, beta, H, maps, d, diffs;
+    
+    l := ActiveLowerBound( C );
+    
+    u := ActiveUpperBound( C );
+    
+    if m > u then
+      
+      return C;
+      
+    elif m < u then
+      
+      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m + 1 ), m );
+      
+    elif u - l in [ 0, 1 ] then
+      
+      return StalkCochainComplex( InverseShiftOnObject( StandardConeObject( C ^ ( m - 1 ) ) ), m - 1 );
+      
+    else
+      
+      alpha := C ^ ( m - 2 );
+      
+      beta := C ^ ( m - 1 );
+      
+      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+      
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      
+      d := HomotopyCategoryMorphism(
+                  Source( alpha ),
+                  InverseShiftOnObject( StandardConeObject( C ^ ( m - 1 ) ) ),
+                  maps
+                );
+                
+      diffs := List( [ l .. u - 3 ], i -> C ^ i );
+      
+      Add( diffs, d );
+      
+      return CochainComplex( diffs, l );
+      
+    fi;
+    
+end );
 
 ##
 InstallMethod( BackwardConvolution,
-          [ IsHomotopyCategoryMorphism ],
-  alpha -> BackwardConvolution( UnderlyingCell( alpha ) )
-);
+          [ IsCochainComplex ],
+  function( C )
+    local l;
+    
+    l := ActiveLowerBound( C );
+    
+    C := BackwardConvolutionAtIndex( C, l + 1 );
+    
+    return Shift( C[ l ], -l );
+    
+end );
 
+##
+InstallMethod( BackwardConvolutionAtIndexOp,
+          [ IsCochainMorphism, IsInt ],
+  function( alpha, m )
+    local C, D, l, u, map, maps, s, r;
+    
+    l := ActiveLowerBoundForSourceAndRange( alpha );
+    
+    u := ActiveUpperBoundForSourceAndRange( alpha );
+    
+    if m > u then
+      
+      return alpha;
+      
+    elif m < u then
+      
+      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( alpha, m + 1 ), m );
+      
+    else
+      
+      map := MorphismBetweenStandardConeObjects(
+                Source( alpha ) ^ ( m - 1 ),
+                alpha[ m - 1 ],
+                alpha[ m ],
+                Range( alpha ) ^ ( m - 1 )
+              );
+              
+      map := InverseShiftOnMorphism( map );
+      
+      if u - l in [ 0, 1 ] then
+        
+        return StalkCochainMorphism( map, m - 1 );
+        
+      else
+        
+        maps := List( [ l .. u - 2 ], i -> alpha[ i ] );
+        
+        Add( maps, map );
+        
+        s := BackwardConvolutionAtIndex( Source( alpha ), m );
+        
+        r := BackwardConvolutionAtIndex( Range( alpha ), m );
+        
+        return CochainMorphism( s, r, maps, l );
+        
+      fi;
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsCochainMorphism ],
+  function( alpha )
+    local l;
+    
+    l := ActiveLowerBoundForSourceAndRange( alpha );
+    
+    alpha := BackwardConvolutionAtIndex( alpha, l + 1 );
+    
+    return Shift( alpha[ l ], -l );
+    
+end );

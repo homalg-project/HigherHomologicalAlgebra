@@ -7,28 +7,28 @@
 #####################################################################
 
 ##
-KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainComplex, IsInt, ReturnTrue );
-KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 
-DeclareOperation( "ForwardConvolution", [ IsChainComplex, IsInt ] );
-DeclareAttribute( "ForwardConvolution", IsChainComplex );
+DeclareOperation( "ForwardConvolution", [ IsChainOrCochainComplex, IsInt ] );
+DeclareAttribute( "ForwardConvolution", IsChainOrCochainComplex );
 DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryObject );
 
-DeclareOperation( "ForwardConvolution", [ IsChainMorphism, IsInt ] );
-DeclareAttribute( "ForwardConvolution", IsChainMorphism );
+DeclareOperation( "ForwardConvolution", [ IsChainOrCochainMorphism, IsInt ] );
+DeclareAttribute( "ForwardConvolution", IsChainOrCochainMorphism );
 DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryMorphism );
 
 ##
-KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainComplex, IsInt, ReturnTrue );
-KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
-DeclareOperation( "BackwardConvolution", [ IsChainComplex, IsInt ] );
-DeclareAttribute( "BackwardConvolution", IsChainComplex );
+DeclareOperation( "BackwardConvolution", [ IsChainOrCochainComplex, IsInt ] );
+DeclareAttribute( "BackwardConvolution", IsChainOrCochainComplex );
 DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryObject );
 
-DeclareOperation( "BackwardConvolution", [ IsChainMorphism, IsInt ] );
-DeclareAttribute( "BackwardConvolution", IsChainMorphism );
+DeclareOperation( "BackwardConvolution", [ IsChainOrCochainMorphism, IsInt ] );
+DeclareAttribute( "BackwardConvolution", IsChainOrCochainMorphism );
 DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryMorphism );
 
 DeclareSynonym( "Convolution", ForwardConvolution );
