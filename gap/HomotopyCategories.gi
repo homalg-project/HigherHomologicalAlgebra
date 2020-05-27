@@ -43,16 +43,18 @@ InstallOtherMethod( HomotopyCategory,
 InstallMethod( HomotopyCategoryOp,
       [ IsCapCategory, IsBool ],
   function( cat, over_cochains )
-    local complex_cat, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
+    local complex_cat, bullet, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
     
     if over_cochains then
       
       complex_cat := CochainComplexCategory( cat : FinalizeCategory := false );
+      bullet := "^•"; #"^●";
       
     else
       
       complex_cat := ChainComplexCategory( cat : FinalizeCategory := false );
-      
+      bullet := ""; #"_•";
+
     fi;
     
     if not ( HasIsAdditiveCategory( cat ) and IsAdditiveCategory( cat ) ) then
@@ -91,8 +93,8 @@ InstallMethod( HomotopyCategoryOp,
     fi;
     
     r := RandomTextColor( Name( cat ) );
-    
-    name := Concatenation( r[ 1 ], "Homotopy category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
+     
+    name := Concatenation( r[ 1 ], "Homotopy", bullet, " category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
     
