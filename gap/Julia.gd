@@ -1,0 +1,3 @@
+##
+DeclareOperation( "CreateExceptionalCollection",
+        [ IsObject, IsJuliaObject ] );
