@@ -21,3 +21,7 @@ ReadPackage( "DerivedCategories", "gap/CohrerntScheavesOverProjectiveSpace.gi" )
 ReadPackage( "DerivedCategories", "gap/ProductOfProjectiveSpaces.gi" );
 ReadPackage( "DerivedCategories", "gap/ToolsForHomalg.gi" );
 ReadPackage( "DerivedCategories", "gap/ToolsForFreydCategories.gi" );
+
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+    ReadPackage( "DerivedCategories", "gap/Julia.gi" );
+fi;
