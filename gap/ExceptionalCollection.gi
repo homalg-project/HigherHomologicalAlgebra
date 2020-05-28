@@ -106,7 +106,7 @@ InstallMethod( CreateExceptionalCollection,
     
     MakeImmutable( L );
     
-    algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, "⊕ " ), " )" );
+    algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, " ⊕ " ), " )" );
     
     quiver := "quiver";
     
