@@ -14,3 +14,7 @@ ReadPackage( "HomotopyCategories", "gap/DerivedMethods.gi" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gi" );
 ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gi" );
 ReadPackage( "HomotopyCategories", "gap/RandomMethods.gi" );
+
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+    ReadPackage( "HomotopyCategories", "gap/Julia.gi" );
+fi;
