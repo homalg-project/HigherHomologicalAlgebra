@@ -1435,7 +1435,7 @@ InstallMethod( ViewObj,
     
     full := DefiningFullSubcategory( collection );
     
-    Print( "<A exceptional collection defined by the objects of the ", Name( full ), ">" );
+    Print( "<An exceptional collection defined by the objects of the ", Name( full ), ">" );
     
 end );
 
@@ -1447,7 +1447,7 @@ InstallMethod( Display,
     
     N := NumberOfObjects( collection );
     
-    Print( "A strong exceptional collection defined by ", N, " objects:\n\n" );
+    Print( "An exceptional collection defined by ", N, " objects:\n\n" );
     
     for i in [ 1 .. N ] do
       
