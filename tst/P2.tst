@@ -4,6 +4,7 @@ gap> q := RightQuiver( "q",
 >           [ 1, 1, 1, 2, 2, 2 ],
 >           [ 2, 2, 2, 3, 3, 3 ]
 >         );;
+gap> field := HomalgFieldOfRationals( );;
 gap> kq := PathAlgebra( field, q );;
 gap> A := kq  / [ kq.x0*kq.y1-kq.x1*kq.y0, kq.x0*kq.y2-kq.x2*kq.y0, kq.x1*kq.y2-kq.x2*kq.y1 ];;
 gap> Dimension( A );
