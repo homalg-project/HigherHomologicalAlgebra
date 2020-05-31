@@ -1573,48 +1573,54 @@ hack_morphism_in_homotopy_category :=
     return HomotopyCategoryMorphism( Source( F ), Range( F ), maps, l );
 end;
 
+# An example for an output:
 
-l := 0;
-r := 2;
-b := 0;
-a := 2;
-names :=
-  [
-    # vertices labels
-    [ "P", "Q" ],
-    
-    # 0,1 diffs labels
-    [ [ "dP" ], [ "dQ" ] ],
-    
-    # higher diffs labels
-    [ [ "hdP" ], [ "hdQ" ] ],
-    
-    # 0 morphisms
-    [ [ "alpha", "beta" ] ],
-    
-    # higher morphisms
-    [ [ "h_alpha", "h_beta" ] ],
-    
-    # homotopies
+if false then
+  
+  l := -2;
+  r := 2;
+  b := -2;
+  a := 2;
+  names :=
     [
-      [ "h" ]
-    ],
-    
-    # differentials relations
-    [ [ "dP", "dQ" ], [ [ "hdP" ], [ "hdQ" ] ] ],
-    
-    # morphisms relations
-    [
-      [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
-      [ "dP", "hdP", "beta",  "h_beta",  "dQ", "hdQ" ]
-    ],
-    
-    # homotopies relations
-    [
-      [ "dP","hdP", [ "alpha", "beta" ], [ "h_alpha", "h_beta" ], "h", "dQ", "hdQ" ]
-    ],
-  ];
+      # vertices labels, these are the labels of the grid's
+      [ "P", "Q" ],
+      
+      # 0,1 diffs labels, these are the diffs of degree 0 and 1, they go left and down, in case of chains, and right, up in case of cochains
+      [ [ "dP" ], [ "dQ" ] ],
+      
+      # higher diffs labels, these are higher diffs, i.e., diffs of degree 2 and more, hence the letter "h"
+      [ [ "hdP" ], [ "hdQ" ] ],
+      
+      # 0 morphisms labels, these are the morphisms of degree 0 between two grids
+      [ [ "alpha", "beta" ] ],
+      
+      # higher morphisms labels, these are higher morphisms between two grids
+      [ [ "h_alpha", "h_beta" ] ], 
+      
+      # homotopies that should exists between the two grids
+      [
+        [ "h" ]
+      ],
+      
+      # differentials relations
+      # this means dP will be extended by hdP and similarly for dQ
+      [ [ "dP", "dQ" ], [ [ "hdP" ], [ "hdQ" ] ] ],
+      
+      # morphisms relations
+      [
+        [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
+        [ "dP", "hdP", "beta",  "h_beta",  "dQ", "hdQ" ]
+      ],
+      
+      # homotopies relations
+      [
+        [ "dP","hdP", [ "alpha", "beta" ], [ "h_alpha", "h_beta" ], "h", "dQ", "hdQ" ]
+      ],
+    ];
+  
+  complexes := [ [ "dP", "P" ], [ "dQ", "Q" ] ];
+  morphisms := [ [ "P", "Q", "alpha" ], [ "P", "Q", "beta" ] ];
 
-complexes := [ [ "dP", "P" ], [ "dQ", "Q" ] ];
-morphisms := [ [ "P", "Q", "alpha" ] ];
+fi;
 
