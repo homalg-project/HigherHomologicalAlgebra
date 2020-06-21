@@ -47,7 +47,7 @@ AddMorphismIntoColiftingObject( homotopy_of_rows,
 end );;
 
 Finalize( homotopy_of_rows );;
-stable_homotopy_cat_of_rows := StableCategoryByColiftingStructure( homotopy_of_rows );;
+stable_homotopy_cat_of_rows := StableCategoryBySystemOfColiftingObjects( homotopy_of_rows );;
 f_a := RandomMorphism( rows, 3 );;
 f_b := RandomMorphism( rows, 6 );;
 IsWellDefined( f_a );;
