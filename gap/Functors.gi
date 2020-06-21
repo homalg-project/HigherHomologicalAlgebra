@@ -165,16 +165,24 @@ InstallMethod( EquivalenceIntoFullSubcategoryGeneratedByObjectsConcentratedInDeg
 end );
 
 ##
-InstallMethod( ExtendFunctorToHomotopyCategories,
-               [ IsCapFunctor ],
-  function( F )
+InstallMethod( ExtendFunctorToHomotopyCategoriesOp,
+               [ IsCapFunctor, IsBool ],
+  function( F, over_cochains )
     local S, T, ChF, name, sigma_S, sigma_T, F_o_sigma_S, sigma_T_o_F, eta;
     
-    S := HomotopyCategory( AsCapCategory( Source( F ) ) );
+    S := HomotopyCategory( AsCapCategory( Source( F ) ), over_cochains );
     
-    T := HomotopyCategory( AsCapCategory(  Range( F ) ) );
+    T := HomotopyCategory( AsCapCategory(  Range( F ) ), over_cochains );
     
-    ChF := ExtendFunctorToChainComplexCategories( F );
+    if over_cochains then
+      
+      ChF := ExtendFunctorToCochainComplexCategories( F );
+      
+    else
+      
+      ChF := ExtendFunctorToChainComplexCategories( F );
+      
+    fi;
     
     name := ValueOption( "name_for_functor" );
     
@@ -200,30 +208,46 @@ InstallMethod( ExtendFunctorToHomotopyCategories,
         
       end );
     
-    sigma_S := ShiftFunctor( S );
+    if not over_cochains then
+      
+      sigma_S := ShiftFunctor( S );
+      
+      sigma_T := ShiftFunctor( T );
+      
+      F_o_sigma_S := PostCompose( F, sigma_S );
+      
+      sigma_T_o_F := PostCompose( sigma_T, F );
+      
+      name := "Natural isomorphism F o Σ => Σ o F";
+      
+      eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
+      
+      AddNaturalTransformationFunction( eta,
+        function( F_o_sigma_S_a, a, sigma_T_o_F_a )
+           
+          return IdentityMorphism( F_o_sigma_S_a );
+          
+      end );
+      
+      SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
     
-    sigma_T := ShiftFunctor( T );
-    
-    F_o_sigma_S := PostCompose( F, sigma_S );
-    
-    sigma_T_o_F := PostCompose( sigma_T, F );
-    
-    name := "Natural isomorphism F o Σ => Σ o F";
-    
-    eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
-    
-    AddNaturalTransformationFunction( eta,
-      function( F_o_sigma_S_a, a, sigma_T_o_F_a )
-         
-        return IdentityMorphism( F_o_sigma_S_a );
-        
-    end );
-    
-    SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
+    fi;
     
     return F;
     
 end );
+
+##
+InstallMethod( ExtendFunctorToHomotopyCategoriesAttr,
+          [ IsCapFunctor ],
+  F -> ExtendFunctorToHomotopyCategories( F, false )
+);
+
+##
+InstallMethod( ExtendFunctorToHomotopyCategories,
+          [ IsCapFunctor ],
+    ExtendFunctorToHomotopyCategoriesAttr
+);
 
 ##
 InstallMethod( ExtendFunctorFromProductCategoryToHomotopyCategories,
