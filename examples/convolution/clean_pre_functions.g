@@ -12,7 +12,7 @@ create_labels_for_vertices_cochains:=
             List( labels,
                 i -> 
                   ReplacedString(
-                    Concatenation( name, "_", String( i[ 1 ] ), "x", String( i[ 2 ] ) ),
+                    Concatenation( name, "_", String( i[ 2 ] ), "x", String( i[ 1 ] ) ), #&
                     "-",
                     "m"
                   )
@@ -43,7 +43,7 @@ create_labels_for_01_differentials_cochains:=
           v := List( v, i ->
                   [
                     ReplacedString(
-                      Concatenation( name, "_", String( index[ 1 ] ), "x", String( index[ 2 ] ), "_",
+                      Concatenation( name, "_", String( index[ 2 ] ), "x", String( index[ 1 ] ), "_", #&
                       String( -index[ 2 ] + indices[ i ][ 2 ] ) ),
                       "-",
                       "m"
@@ -90,7 +90,7 @@ create_labels_for_higher_differentials_cochains:=
           v := List( v, i ->
                   [
                     ReplacedString(
-                      Concatenation( name, "_", String( index[ 1 ] ), "x", String( index[ 2 ] ), "_", 
+                      Concatenation( name, "_", String( index[ 2 ] ), "x", String( index[ 1 ] ), "_",#&
                         String( -index[ 2 ] + indices[ i ][ 2 ] ) ),
                       "-",
                       "m"
@@ -131,7 +131,7 @@ create_labels_for_0_morphisms_cochains:=
                   List( [ 1 .. Size( indices ) ],
                       i -> [  
                           ReplacedString(
-                            Concatenation( name, "_", String( indices[ i ][ 1 ] ), "x", String( indices[ i ][ 2 ] ), "_0" ),
+                            Concatenation( name, "_", String( indices[ i ][ 2 ] ), "x", String( indices[ i ][ 1 ] ), "_0" ),#&
                             "-",
                             "m"
                           ),
@@ -177,7 +177,7 @@ create_labels_for_higher_morphisms_cochains:=
           for p in positions do
             
             s := ReplacedString(
-                    Concatenation( name, "_", String( index[1] ), "x", String( index[ 2 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),
+                    Concatenation( name, "_", String( index[ 2 ] ), "x", String( index[ 1 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),#&
                     "-",
                     "m"
                   );
@@ -225,7 +225,7 @@ create_labels_for_homotopies_cochains :=
           for p in positions do
             
             s := ReplacedString(
-                    Concatenation( name, "_", String( index[1] ), "x", String( index[ 2 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),
+                    Concatenation( name, "_", String( index[ 2 ] ), "x", String( index[ 1 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),#&
                     "-",
                     "m"
                   );
@@ -265,7 +265,7 @@ create_labels_for_special_homotopies_cochains :=
       for p in positions do
         
         s := ReplacedString(
-                Concatenation( name, "_", String( index[1] ), "x", String( index[ 2 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),
+                Concatenation( name, "_", String( index[ 2 ] ), "x", String( index[ 1 ] ), "_", String( -index[ 2 ] + indices[ p ][ 2 ] ) ),#&
                 "-",
                 "m"
               );
@@ -329,11 +329,11 @@ differentials_relations_cochains :=
               x := Concatenation(
                     name,
                     "_",
-                    String( index[ 1 ] ),
-                    "x",
                     String( index[ 2 ] ),
+                    "x",
+                    String( index[ 1 ] ),
                     "_",
-                    String( -index[ 2 ] + indices[p][ 2 ] )
+                    String( -index[ 2 ] + indices[p][ 2 ] ) #&
                   );
               
               x := ReplacedString( x, "-", "m" );
@@ -347,11 +347,11 @@ differentials_relations_cochains :=
               y := Concatenation(
                     name,
                     "_",
-                    String( indices[ p ][ 1 ] ),
-                    "x",
                     String( indices[ p ][ 2 ] ),
+                    "x",
+                    String( indices[ p ][ 1 ] ),
                     "_",
-                    String( -indices[ p ][ 2 ] + current_index[ 2 ] )
+                    String( -indices[ p ][ 2 ] + current_index[ 2 ] ) #&
                   );
               
               y := ReplacedString( y, "-", "m" );
@@ -410,9 +410,9 @@ morphisms_relations_cochains :=
             x := Concatenation(
                       diff_name,
                       "_",
-                      String( index[ 1 ] ),
-                      "x",
                       String( index[ 2 ] ),
+                      "x",
+                      String( index[ 1 ] ),#&
                       "_",
                       String( -index[ 2 ] + indices[ u ][ 2 ] )
                     );
@@ -428,9 +428,9 @@ morphisms_relations_cochains :=
             y := Concatenation(
                       morphism_name,
                       "_",
-                      String( indices[ u ][ 1 ] ),
-                      "x",
                       String( indices[ u ][ 2 ] ),
+                      "x",
+                      String( indices[ u ][ 1 ] ),#&
                       "_",
                       String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                     );
@@ -457,9 +457,9 @@ morphisms_relations_cochains :=
             x := Concatenation(
                       morphism_name,
                       "_",
-                      String( index[ 1 ] ),
-                      "x",
                       String( index[ 2 ] ),
+                      "x",
+                      String( index[ 1 ] ),#&
                       "_",
                       String( -index[ 2 ] + indices[ u ][ 2 ] )
                     );
@@ -475,9 +475,9 @@ morphisms_relations_cochains :=
             y := Concatenation(
                       diff_name,
                       "_",
-                      String( indices[ u ][ 1 ] ),
-                      "x",
                       String( indices[ u ][ 2 ] ),
+                      "x",
+                      String( indices[ u ][ 1 ] ),#&
                       "_",
                       String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                     );
@@ -534,9 +534,9 @@ homotopies_relations_cochains:=
                             Concatenation(
                             m_name,
                             "_",
-                            String( index[ 1 ] ),
-                            "x",
                             String( index[ 2 ] ),
+                            "x",
+                            String( index[ 1 ] ),#&
                             "_",
                             String( degree )
                             ),
@@ -568,9 +568,9 @@ homotopies_relations_cochains:=
             x := Concatenation(
                     diff_name,
                     "_",
-                    String( index[ 1 ] ),
-                    "x",
                     String( index[ 2 ] ),
+                    "x",
+                    String( index[ 1 ] ),#&
                     "_",
                     String( -index[ 2 ] + indices[ u ][ 2 ] )
                   );
@@ -580,9 +580,9 @@ homotopies_relations_cochains:=
             y := Concatenation(
                     name[ 5 ],
                     "_",
-                    String( indices[ u ][ 1 ] ),
-                    "x",
                     String( indices[ u ][ 2 ] ),
+                    "x",
+                    String( indices[ u ][ 1 ] ),#&
                     "_",
                     String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                   );
@@ -601,9 +601,9 @@ homotopies_relations_cochains:=
             x := Concatenation(
                     name[ 5 ],
                     "_",
-                    String( index[ 1 ] ),
-                    "x",
                     String( index[ 2 ] ),
+                    "x",
+                    String( index[ 1 ] ),#&
                     "_",
                     String( -index[ 2 ] + indices[ u ][ 2 ] )
                   );
@@ -619,9 +619,9 @@ homotopies_relations_cochains:=
             y := Concatenation(
                     diff_name,
                     "_",
-                    String( indices[ u ][ 1 ] ),
-                    "x",
                     String( indices[ u ][ 2 ] ),
+                    "x",
+                    String( indices[ u ][ 1 ] ),#&
                     "_",
                     String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                   );
@@ -665,7 +665,7 @@ special_homotopies_relations_cochains:=
           degree := -index[ 2 ] + current_index[ 2 ];
           
           left_side := A.( ReplacedString(
-                          Concatenation( name[ 3 ], "_", String( index[ 1 ] ), "x", String(  index[ 2 ] ), "_", String( degree ) ),
+                          Concatenation( name[ 3 ], "_", String( index[ 2 ] ), "x", String(  index[ 1 ] ), "_", String( degree ) ),#&
                           "-",
                           "m"
                         )
@@ -689,9 +689,9 @@ special_homotopies_relations_cochains:=
                       Concatenation(
                         name[ 4 ],
                         "_",
-                        String( index[ 1 ] ),
-                        "x",
                         String( index[ 2 ] ),
+                        "x",
+                        String( index[ 1 ] ),#&
                         "_",
                         String( -index[ 2 ] + indices[ u ][ 2 ] )
                       ),
@@ -701,9 +701,9 @@ special_homotopies_relations_cochains:=
                       Concatenation(
                         diff( u ),
                         "_",
-                        String( indices[ u ][ 1 ] ),
-                        "x",
                         String( indices[ u ][ 2 ] ),
+                        "x",
+                        String( indices[ u ][ 1 ] ),#&
                         "_",
                         String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                       ),
@@ -714,7 +714,7 @@ special_homotopies_relations_cochains:=
           od;
           
           right_side := A.( ReplacedString(
-                          Concatenation( name[ 2 ], "_", String( index[ 1 ] ), "x", String(  index[ 2 ] ), "_", String( degree ) ),
+                          Concatenation( name[ 2 ], "_", String( index[ 2 ] ), "x", String(  index[ 1 ] ), "_", String( degree ) ),#&
                           "-",
                           "m"
                         )
@@ -738,9 +738,9 @@ special_homotopies_relations_cochains:=
                       Concatenation(
                         diff( u ),
                         "_",
-                        String( index[ 1 ] ),
-                        "x",
                         String( index[ 2 ] ),
+                        "x",
+                        String( index[ 1 ] ),#&
                         "_",
                         String( -index[ 2 ] + indices[ u ][ 2 ] )
                       ),
@@ -750,9 +750,9 @@ special_homotopies_relations_cochains:=
                       Concatenation(
                         name[ 4 ],
                         "_",
-                        String( indices[ u ][ 1 ] ),
-                        "x",
                         String( indices[ u ][ 2 ] ),
+                        "x",
+                        String( indices[ u ][ 1 ] ),#&
                         "_",
                         String( -indices[ u ][ 2 ] + current_index[ 2 ] )
                       ),
@@ -789,8 +789,8 @@ create_complexes:=
       
       diffs := List( indices,
                 row -> List( row,
-                  i -> A.( ReplacedString(
-                          Concatenation( name[ 1 ], "_", String( i[ 1 ] ), "x", String( i[ 2 ] ), "_0" ),
+                  i -> ( -1 )^( i[ 2 ] ) * A.( ReplacedString(
+                          Concatenation( name[ 1 ], "_", String( i[ 2 ] ), "x", String( i[ 1 ] ), "_0" ),#&
                           "-",
                           "m"
                           ) ) / AC
@@ -816,8 +816,8 @@ create_complexes:=
       
       maps := List( maps,
                 row -> List( row,
-                  i -> (-1) ^ Sum( i ) * A.( ReplacedString(
-                          Concatenation( name[ 1 ], "_", String( i[ 1 ] ), "x", String( i[ 2 ] ), "_1" ),
+                  i ->  ( -1 )^( i[ 2 ] - 1 ) * A.( ReplacedString(
+                          Concatenation( name[ 1 ], "_", String( i[ 2 ] ), "x", String( i[ 1 ] ), "_1" ),#&
                           "-",
                           "m"
                           ) ) / AC
@@ -866,7 +866,7 @@ create_morphisms:=
                 List( row, map ->
                   A.(
                     ReplacedString(
-                      Concatenation( name[ 3 ], "_", String( map[ 1 ] ), "x", String( map[ 2 ] ), "_0" ),
+                      Concatenation( name[ 3 ], "_", String( map[ 2 ] ), "x", String( map[ 1 ] ), "_0" ),#&
                       "-",
                       "m"
                     )
@@ -874,9 +874,9 @@ create_morphisms:=
                 )
               );
       
-      sources := List( [ b .. a ], i -> A.( ReplacedString( Concatenation( name[ 1 ], "_", String( i ) ), "-", "m" ) ) );
+      sources := List( [ b .. a ], i -> ValueGlobal( ReplacedString( Concatenation( name[ 1 ], "_", String( i ) ), "-", "m" ) ) );
       
-      ranges := List( [ b .. a ], i -> A.( ReplacedString( Concatenation( name[ 2 ], "_", String( i ) ), "-", "m" ) ) );
+      ranges := List( [ b .. a ], i -> ValueGlobal( ReplacedString( Concatenation( name[ 2 ], "_", String( i ) ), "-", "m" ) ) );
       
       maps := List( [ b .. a ],
                 function( i )
@@ -942,18 +942,18 @@ create_totalization_complex :=
               function( r )
                 local s_obj, r_obj, d;
                 
-                s_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( s[1] ), "x", String( s[2] ) ), "-", "m" ) );
+                s_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( s[2] ), "x", String( s[1] ) ), "-", "m" ) ); #&
                 
-                r_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( r[1] ), "x", String( r[2] ) ), "-", "m" ) );
+                r_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( r[2] ), "x", String( r[1] ) ), "-", "m" ) ); #&
                
                 d := r[ 2 ] - s[ 2 ];
                 
                 if d < 0 then
                   return ZeroMorphism( s_obj, r_obj );
                 elif d in [ 0, 1 ] then
-                  return algebroid.( ReplacedString( Concatenation( names[ 2 ], "_", String( s[1] ), "x", String( s[2] ), "_", String( d ) ), "-", "m" ) );
+                  return algebroid.( ReplacedString( Concatenation( names[ 2 ], "_", String( s[2] ), "x", String( s[1] ), "_", String( d ) ), "-", "m" ) ); #&
                 else
-                  return algebroid.( ReplacedString( Concatenation( names[ 3 ], "_", String( s[1] ), "x", String( s[2] ), "_", String( d ) ), "-", "m" ) );
+                  return algebroid.( ReplacedString( Concatenation( names[ 3 ], "_", String( s[2] ), "x", String( s[1] ), "_", String( d ) ), "-", "m" ) ); #&
                 fi;
               
               end
@@ -1000,18 +1000,18 @@ create_totalization_complex_morphism :=
               function( r )
                 local s_obj, r_obj, d;
                 
-                s_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( s[1] ), "x", String( s[2] ) ), "-", "m" ) );
+                s_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( s[2] ), "x", String( s[1] ) ), "-", "m" ) );#&
                 
-                r_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( r[1] ), "x", String( r[2] ) ), "-", "m" ) );
+                r_obj := algebroid.( ReplacedString( Concatenation( names[ 1 ], "_", String( r[2] ), "x", String( r[1] ) ), "-", "m" ) );#&
                
                 d := r[ 2 ] - s[ 2 ];
                 
                 if d < 0 or d = 1 then
                   return ZeroMorphism( s_obj, r_obj );
                 elif d = 0 then
-                  return IdentityMorphism( UnderlyingQuiver( algebroid ).( ReplacedString( Concatenation( names[ 1 ], "_", String( s[1] ), "x", String( s[2] ) ), "-", "m" ) ) / algebroid );
+                  return IdentityMorphism( UnderlyingQuiver( algebroid ).( ReplacedString( Concatenation( names[ 1 ], "_", String( s[2] ), "x", String( s[1] ) ), "-", "m" ) ) / algebroid );#&
                 else
-                  return algebroid.( ReplacedString( Concatenation( names[ 4 ], "_", String( s[1] ), "x", String( s[2] ), "_", String( d ) ), "-", "m" ) );
+                  return algebroid.( ReplacedString( Concatenation( names[ 4 ], "_", String( s[2] ), "x", String( s[1] ), "_", String( d ) ), "-", "m" ) );#&
                 fi;
               
               end
@@ -1032,7 +1032,11 @@ create_algebroid :=
     
     01_diffs := create_labels_for_01_differentials_cochains( l, r, b, a, names[ 2 ] );
     higher_diffs := create_labels_for_higher_differentials_cochains( l, r, b, a, names[ 3 ] );
-    s_homotopies := create_labels_for_special_homotopies_cochains( l, r, b, a, extra_names[ 4 ] );
+    if not IsEmpty( extra_names ) then
+      s_homotopies := create_labels_for_special_homotopies_cochains( l, r, b, a, extra_names[ 4 ] );
+    else
+      s_homotopies := [ [], [], [] ];
+    fi;
     
     0_morphisms := create_labels_for_0_morphisms_cochains( l, r, b, a, names[ 4 ] );
     higher_morphisms := create_labels_for_higher_morphisms_cochains( l, r, b, a, names[ 5 ] );
@@ -1051,7 +1055,14 @@ create_algebroid :=
      
     m_relations := morphisms_relations_cochains( A, l, r, b, a, names[ 8 ] );
     
-    sh_relations := special_homotopies_relations_cochains( A, l, r, b, a, [ extra_names ] ); #TODO think about the arguments
+    if not IsEmpty( extra_names ) then
+      
+      sh_relations := special_homotopies_relations_cochains( A, l, r, b, a, [ extra_names ] ); #TODO think about the arguments
+    else
+      
+      sh_relations := [ ];
+      
+    fi;
     
     h_relations := homotopies_relations_cochains( A, l, r, b, a, names[ 9 ] );
 
