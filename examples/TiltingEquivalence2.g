@@ -23,4 +23,28 @@ for P in [ P1, P2, P3, P4 ] do
 od;
 #I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( Aoid );
 #iota := EmbeddingFunctorIntoDerivedCategory( SourceOfFunctor( Conv ) );
+# This exceptional collection comes form objects that lives in abelian category Hence, we
+# can create it in the abelian category and then use RHom(T,-) and LTensor(T,-)
+
+iota := EmbeddingFunctorIntoDerivedCategory( HA );
+HomologySupport( iota( P4 ) );
+Q1 := HomologyAt( iota( P1 ), 0 );
+Q2 := HomologyAt( iota( P2 ), 0 );
+Q3 := HomologyAt( iota( P3 ), 0 );
+Q4 := HomologyAt( iota( P4 ), 0 );
+C := CreateExceptionalCollection( [ Q1, Q2, Q3, Q4 ], [ "1111", "0101", "0011", "0111" ] );
+
+hom := HomFunctor(C);
+Rhom := RightDerivedFunctor( hom );
+
+ten := TensorFunctor(C);
+Lten := LeftDerivedFunctor( ten );
+
+Display( Rhom );
+Display( Lten );
+
+BasisOfExternalHom( iota( P1 ), LTen( Rhom( iota( P1 ) ) ) );
+BasisOfExternalHom( iota( P2 ), LTen( Rhom( iota( P2 ) ) ) );
+BasisOfExternalHom( iota( P3 ), LTen( Rhom( iota( P3 ) ) ) );
+BasisOfExternalHom( iota( P4 ), LTen( Rhom( iota( P4 ) ) ) );
 
