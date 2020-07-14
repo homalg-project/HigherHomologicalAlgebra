@@ -99,9 +99,13 @@ InstallMethod( \.,
     
     a  := q.( name );
     
-    if IsQuiverVertex( a ) or IsArrow( a ) then
+    if IsQuiverVertex( a ) then
       
-      return a / QRows;
+      return AsQuiverRowsObject( a, QRows );
+      
+    elif IsArrow( a ) then
+      
+      return AsQuiverRowsMorphism( A.( name ), QRows );
       
     else
       
