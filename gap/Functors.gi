@@ -1294,11 +1294,11 @@ InstallMethod( CONVOLUTION_FUNCTOR,
     conv := CapFunctor( name, Ho_Ho_0_C, Ho_C );
     
     AddObjectFunction( conv,
-      a -> Convolution( ApplyFunctor( Inc, a ) )
+      a -> BackwardConvolution( ApplyFunctor( Inc, a ) )
     );
     
     AddMorphismFunction( conv,
-      { s, alpha, r } -> Convolution( ApplyFunctor( Inc, alpha ) )
+      { s, alpha, r } -> BackwardConvolution( ApplyFunctor( Inc, alpha ) )
     );
    
     return conv;
