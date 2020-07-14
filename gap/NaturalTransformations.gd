@@ -26,3 +26,6 @@ DeclareAttribute( "UnitOfTensorHomAdjunction", IsExceptionalCollection );
 #! @Returns a natural transformation
 DeclareAttribute( "CounitOfTensorHomAdjunction", IsExceptionalCollection );
 
+DeclareOperation( "COMPUTE_STANDARD_ISOMORPHISM", [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+DeclareOperation( "COMPUTE_ISOMORPHISM", [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+

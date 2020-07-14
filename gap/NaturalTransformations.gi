@@ -169,104 +169,97 @@ InstallMethod( CounitOfTensorHomAdjunction,
   
 end );
 
-#######################
-# a, collection
-# I := EmbeddingFunctorFromHomotopyCategory( collection );
-# rep_a := ReplacementFunctor( collection )( a );
-# rep_a := UnderlyingCell( I( rep_a ) );
-# gamma_rep_a := { rep_a, i }-> BackwardConvolution( rep_a, i - 1 ) ^ ( i + 1 );
-# for i>-1
-# Range( gamma_rep_a( rep_a, i ) )
-#   = Shift( BackwardConvolution( BrutalTruncationAbove( rep_a, i + 1 ) ), -i );
-# triangle_rep_a := {rep_a,i} -> ExactTriangle( gamma_rep_a( rep_a, i ) );
-# for i>-1
-# triangle_rep_a(rep_a,i)[0]=rep_a[i+1];
-# i > 0;; t := triangle_rep_a( rep_a, i );
-# shift_t := ExactTriangle( (-1)^(i-1) * Shift( t^0, i-1 ), Shift( t^1, i-1 ), Shift( t^2, i-1 ) );
-
-BindGlobal( "NATURAL",
+##
+InstallMethod( COMPUTE_ISOMORPHISM,
+        [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
-    local I, N, data, e_rep_a, rep_a, H, z_func, func;
-    Error( );
-    I := EmbeddingFunctorFromHomotopyCategory( collection );
+    local N;
     
     N := ExceptionalShift( a, collection );
     
-    if N <> 0 then
+    return Shift( COMPUTE_STANDARD_ISOMORPHISM( Shift( a, N ), collection ), -N );
+
+end );
+
+##
+InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
+        [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local I, data, r, H, z_func, func;
+    
+    if not IsIdenticalObj( CapCategory( a ), AmbientCategory( collection ) ) then
       
-      Error( "??" );
+      Error( "Wrong input" );
       
     fi;
     
+    I := EmbeddingFunctorFromHomotopyCategory( collection );
+    
     data := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
     
-    e_rep_a := ExceptionalReplacement( a, collection, true );
-    rep_a := I( e_rep_a );
-    rep_a := UnderlyingCell( rep_a );
+    r := UnderlyingCell( I( ExceptionalReplacement( a, collection, true ) ) );
     
-    H := CapCategory( rep_a ); 
+    H := CapCategory( r );
     
-    ### creating the first exact triangle
-    z_func := VoidZFunction( ); 
+    z_func := VoidZFunction( );
     
     func :=
       function( n )
-        local alpha_n, t_alpha_n, shift_t_alpha_n, triangle, gamma_n, t_gamma_n, shift_t_gamma_n, t, lambda_n, iota_lambda_n, pi_lambda, shift_t_lambda_n;
+        local t_n, st_t_n, shift_st_t_n, t_0, st_t_0, U, j_n, st_j_n, shift_st_j_n, t;
         
-        if n < N + 1 then
+        if n < 1 then
           
           return true;
           
-        elif n =  N + 1 then
-        
-          alpha_n := data[ n ][ 1 ];
-          t_alpha_n := StandardExactTriangle( alpha_n );
-          shift_t_alpha_n := Shift( t_alpha_n, n - 1 );
+        elif n = 1 then
           
-          triangle := InverseRotation( StandardExactTriangle( data[ n - 1 ][ 1 ] ), true );
+          t_n := data[ n ][ 1 ];
+          st_t_n := StandardExactTriangle( t_n );
+          shift_st_t_n := Shift( st_t_n, n - 1 );
           
-          gamma_n := BackwardConvolution( rep_a, n - 2 ) ^ n;
-          t_gamma_n := StandardExactTriangle( gamma_n );
-          shift_t_gamma_n := Shift( t_gamma_n, n - 1 );
+          t_0 := data[ n - 1 ][ 1 ];
+          st_t_0 := StandardExactTriangle( t_0 );
+          U := InverseRotation( st_t_0, true );
           
-          return [ shift_t_alpha_n, triangle, shift_t_gamma_n ];
+          j_n := BackwardConvolutionAtIndex( r, n - 2 ) ^ n;
+          st_j_n := StandardExactTriangle( j_n );
+          shift_st_j_n := Shift( st_j_n, n - 1 );
           
-        else
+          Assert( 4, IsCongruentForMorphisms( PreCompose( shift_st_t_n^0, U^0 ), shift_st_j_n^0 ) );
           
-          if n > ActiveUpperBound( rep_a ) + 1 then
-            return true;
-          fi;
+          return [ shift_st_t_n, U, shift_st_j_n ];
           
-          alpha_n := data[ n ][ 1 ];
-          t_alpha_n := StandardExactTriangle( alpha_n );
-          shift_t_alpha_n := Shift( t_alpha_n, n - 1 );
+        elif n <= ActiveUpperBound( r ) + 1 then
+          
+          t_n := data[ n ][ 1 ];
+          st_t_n := StandardExactTriangle( t_n );
+          shift_st_t_n := Shift( st_t_n, n - 1 );
           
           t := z_func[ n - 1 ];
           
-          t := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
+          U := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
           
-          gamma_n := BackwardConvolution( rep_a, n - 2 ) ^ n;
-          t_gamma_n := StandardExactTriangle( gamma_n );
-          shift_t_gamma_n := Shift( t_gamma_n, n - 1 );
+          j_n := BackwardConvolutionAtIndex( r, n - 2 ) ^ n;
+          st_j_n := StandardExactTriangle( j_n );
+          shift_st_j_n := Shift( st_j_n, n - 1 );
           
-          if IsCongruentForMorphisms(
-                  PreCompose( shift_t_alpha_n^0, t^0 ), -shift_t_gamma_n^0
-                ) then
-            shift_t_gamma_n := ExactTriangle( -shift_t_gamma_n^0, -shift_t_gamma_n^1, shift_t_gamma_n^2 );
-          elif not IsCongruentForMorphisms(
-                  PreCompose( shift_t_alpha_n^0, t^0 ), shift_t_gamma_n^0
-                ) then
-            Error( "Sorry, you need to fix this!\n" );
-          fi;
-
-          return [ shift_t_alpha_n, t, shift_t_gamma_n ];
-        
+          Assert( 4, IsCongruentForMorphisms(
+                          PreCompose( [ shift_st_t_n^0, U^0, t[ 3 ]^2 ] ),
+                          PreCompose( shift_st_j_n^0, t[ 3 ]^2 )
+                        ) );
+          
+          return [ shift_st_t_n, U, shift_st_j_n ];
+          
+        else
+          
+          return true;
+          
         fi;
-      
+        
       end;
       
     SetUnderlyingFunction( z_func, func );
     
-    return z_func;
+    return z_func[ ActiveUpperBound( r ) + 1 ][ 2 ]^1;
     
 end );
