@@ -291,6 +291,48 @@ InstallMethod( BackwardConvolution,
     
 end );
 
+##
+InstallMethod( ShiftOfBackwardConvolution_into_BackwardConvolutionOfShiftOp,
+          [ IsHomotopyCategoryObject, IsInt ],
+  function( C, n )
+    local diffs, D, z_func, alpha;
+    
+    if n mod 2 = 0 then
+      
+      return IdentityMorphism( Shift( BackwardConvolution( C ), n ) );
+      
+    fi;
+    
+    diffs := Differentials( C );
+    
+    diffs := ApplyMap( diffs, AdditiveInverse );
+    
+    D := HomotopyCategoryObject( CapCategory( C ), diffs );
+    
+    SetLowerBound( D, ActiveLowerBound( C ) );
+    
+    SetUpperBound( D, ActiveUpperBound( C ) );
+    
+    z_func := AsZFunction( i -> ( -1 ) ^ i * IdentityMorphism( C[ i ] ) );
+    
+    alpha := HomotopyCategoryMorphism( C, D, z_func );
+    
+    return Shift( BackwardConvolution( alpha ), n );
+
+end );
+
+##
+InstallMethod( BackwardConvolutionOfShift_into_ShiftOfBackwardConvolutionOp,
+          [ IsHomotopyCategoryObject, IsInt ],
+  function( C, n )
+    local m;
+    
+    m := ShiftOfBackwardConvolution_into_BackwardConvolutionOfShift( C, n );
+    
+    return HomotopyCategoryMorphism( Range( m ), Source( m ), Morphisms( m ) );
+
+end );
+
 ###################################
 #
 # Forward Convolution by cochains
