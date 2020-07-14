@@ -543,9 +543,9 @@ InstallMethod( ShiftOp,
     local shift_t, st, shift_st, w;
     
     shift_t := ExactTriangle(
-                    ( -1 ) ^ n * Shift( t^0, n ),
+                    Shift( t^0, n ),
                     Shift( t^1, n ),
-                    Shift( t^2, n )
+                    (-1)^n * Shift( t^2, n )
                   );
     
     if HasWitnessIsomorphismOntoStandardExactTriangle( t ) or
@@ -554,15 +554,13 @@ InstallMethod( ShiftOp,
         st := StandardExactTriangle( t );
         
         shift_st := ExactTriangle(
-                    ( -1 ) ^ n * Shift( st^0, n ),
+                    Shift( st^0, n ),
                     Shift( st^1, n ),
-                    Shift( st^2, n )
+                    (-1)^n * Shift( st^2, n )
                   );
         
     fi;
     
-    # In case the triangulated category is a homotopy category,
-    # then shift_st is always again standard.
     if not IsStandardExactTriangle( shift_st ) then
       
       return shift_t;
