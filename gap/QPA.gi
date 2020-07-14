@@ -14,11 +14,11 @@ InstallValue( GLOBAL_FIELD_FOR_QPA, rec( is_locked := false, default_field := Ho
 InstallGlobalFunction( SET_GLOBAL_FIELD_FOR_QPA,
   function( field )
     
-    if GLOBAL_FIELD_FOR_QPA!.is_locked then
+    #if GLOBAL_FIELD_FOR_QPA!.is_locked then
       
-      Error( "Setting the GLOBAL_FIELD_FOR_QPA should be done only once per session!\n" );
+      #Error( "Setting the GLOBAL_FIELD_FOR_QPA should be done only once per session!\n" );
       
-    fi;
+    #fi;
     
     
     GLOBAL_FIELD_FOR_QPA!.field := field;
