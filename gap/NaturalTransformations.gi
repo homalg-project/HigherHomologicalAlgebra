@@ -173,12 +173,16 @@ end );
 InstallMethod( COMPUTE_ISOMORPHISM,
         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
-    local N;
+    local N, iota;
     
     N := ExceptionalShift( a, collection );
     
-    return Shift( COMPUTE_STANDARD_ISOMORPHISM( Shift( a, N ), collection ), -N );
-
+    iota := Shift( COMPUTE_STANDARD_ISOMORPHISM( Shift( a, N ), collection ), -N );
+    
+    Assert( 0, IsEqualForObjects( Source( iota ), PreCompose( ReplacementFunctor( collection ), ConvolutionFunctor( collection ) )( a ) ) );
+    
+    return iota;
+    
 end );
 
 ##
