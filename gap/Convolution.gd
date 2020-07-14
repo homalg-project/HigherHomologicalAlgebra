@@ -30,7 +30,3 @@ DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryObject );
 DeclareOperation( "BackwardConvolution", [ IsChainOrCochainMorphism, IsInt ] );
 DeclareAttribute( "BackwardConvolution", IsChainOrCochainMorphism );
 DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryMorphism );
-
-DeclareSynonym( "Convolution", ForwardConvolution );
-#DeclareSynonym( "Convolution", BackwardConvolution );
-

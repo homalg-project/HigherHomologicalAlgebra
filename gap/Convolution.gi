@@ -194,7 +194,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ -alpha[ i ], H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
@@ -455,7 +455,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ -alpha[ i ], H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
