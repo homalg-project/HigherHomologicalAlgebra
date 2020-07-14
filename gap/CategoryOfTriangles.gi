@@ -955,17 +955,13 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
 InstallMethod( ExactTriangleByOctahedralAxiom,
           [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ],
   function( t_1, t_2, t_3, bool )
-    local triangle, i_3, j_3, i;
+    local t, i_3, j_3, i;
     
-    if not ( IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
-              and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
-                and IsCongruentForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 )
-              ) then
-      Error( "Wrong input!\n" );
-      
-    fi;
+    Assert( 2, IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
+                and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
+                  and IsCongruentForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 ) );
     
-    triangle := ExactTriangleByOctahedralAxiom( t_1, t_2, bool );
+    t := ExactTriangleByOctahedralAxiom( t_1, t_2, bool );
     
     i_3 := WitnessIsomorphismOntoStandardExactTriangle( t_3 );
     
@@ -983,23 +979,30 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
                     IdentityMorphism( t_2[ 1 ] ),
                     t_3^0
                   );
-      
+                  
     fi;
     
-    triangle := ExactTriangle(
-                    PreCompose( [ triangle^0, i, j_3[ 2 ] ] ),
-                    PreCompose( [ i_3[ 2 ], Inverse( i ), triangle^1 ] ),
-                    triangle^2
+    t := ExactTriangle(
+                    PreCompose( [ t^0, i, j_3[ 2 ] ] ),
+                    PreCompose( [ i_3[ 2 ], Inverse( i ), t^1 ] ),
+                    t^2
                   );
     
     if bool = true then
       
-      #TODO do this better!
-      WitnessIsomorphismOntoStandardExactTriangle( triangle );
+      WitnessIsomorphismOntoStandardExactTriangle( t );
       
     fi;
     
-    return triangle;
+    Assert( 2, IsWellDefined( t ) and IsWellDefined( t_1 ) and IsWellDefined( t_2 ) and IsWellDefined( t_3 ) and
+                IsCongruentForMorphisms( PreCompose( t_1^1, t^0 ), PreCompose( t_2^0, t_3^1 ) ) and
+                  IsCongruentForMorphisms( t_1^2, PreCompose( t^0, t_3^2 ) ) and
+                    IsCongruentForMorphisms( PreCompose( t_3^1, t^1 ), t_2^1 ) and
+                      IsCongruentForMorphisms( PreCompose( t^1, t_2^2 ), PreCompose(t_3^2, Shift( t_1^0, 1 ) ) ) and
+                        IsCongruentForMorphisms( PreCompose( t_2^2, Shift( t_1^1, 1 ) ), t^2 )
+                );
+                
+    return t;
     
 end );
 
