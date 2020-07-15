@@ -68,14 +68,14 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.9",
   NeededOtherPackages := [
-        [ "QPA", ">= 2.0-dev"],
+        [ "QPA", ">= 2.0-dev"], # https://github.com/homalg-project/QPA2.git
         [ "CAP", ">= 2020.04.16" ],
         [ "Algebroids", ">= 2020.04.24" ],
         [ "SubcategoriesForCAP", ">= 2020.02.01" ],
-        [ "HomotopyCategories", ">= 2020.07.14" ]
+        [ "HomotopyCategories", ">= 2020.07.14" ],
+        [ "BBGG", "2020.05.01" ],
           ],
   SuggestedOtherPackages := [
-            [ "BBGG", ">= 2020.05.01" ],
             [ "NConvex", ">= 2019.12.06" ],
             [ "4ti2Interface", ">= 2019.09.03" ]
           ],
