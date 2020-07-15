@@ -70,9 +70,9 @@ InstallMethod( CreateExceptionalCollection,
     
     range := RangeCategoryOfHomomorphismStructure( full );
     
-    if not IsMatrixCategory( range ) then
+    if not ( IsMatrixCategory( range ) or IsCategoryOfRows( range ) ) then
       
-      Error( "The range category of homomorphism structure should be the matrix category over some field!\n" );
+      Error( "The range category of homomorphism structure should be MatrixCategory( K ) or CategoryOfRows( K ) for some field K!\n" );
       
     fi;
     
@@ -353,7 +353,7 @@ InstallMethod( PathsOfLengthOneOp,
         
         beta := MorphismBetweenDirectSums( beta );
         
-        nr_arrows := Dimension( CokernelObject( beta ) );
+        nr_arrows := RankOfObject( CokernelObject( beta ) );
         
         arrows := [ ];
         
@@ -422,7 +422,7 @@ InstallMethod( BasisOfPathsOp,
   function( collection, indices )
     local dim, arrows, arrows_labels, long_paths, long_paths_labels, B, B_labels, p, rel, labels;
     
-    dim := Dimension( HomStructure( collection[ indices[ 1 ] ], collection[ indices[ 2 ] ] ) );
+    dim := RankOfObject( HomStructure( collection[ indices[ 1 ] ], collection[ indices[ 2 ] ] ) );
     
     arrows := PathsOfLengthOne( collection, indices );
     
@@ -1313,6 +1313,9 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
     return full;
 
 end );
+
+##
+InstallOtherMethod( RankOfObject, [ IsVectorSpaceObject ], Dimension );
 
 ###########################
 ##
