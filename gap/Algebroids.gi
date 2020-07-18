@@ -1,5 +1,12 @@
 
 
+##
+InstallMethod( \.,
+        [ IsHomotopyCategory, IsPosInt ],
+   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
+);
+
+##
 BindGlobal( "_StRiNg",
   function( i )
     
