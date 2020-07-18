@@ -115,12 +115,6 @@ InstallMethod( \.,
     
 end );
 
-##
-InstallMethod( \.,
-        [ IsChainComplexCategory, IsPosInt ],
-   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
-);
-
 ##############################################
 #
 # Convenience methods for full subcategories
@@ -584,12 +578,6 @@ end );
 # Convenience methods to Homotopy categories
 #
 ##############################################
-
-##
-InstallMethod( \.,
-        [ IsHomotopyCategory, IsPosInt ],
-   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
-);
 
 ##
 InstallMethod( FindSomeFunctor,
