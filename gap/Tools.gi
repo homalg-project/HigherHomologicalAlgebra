@@ -839,3 +839,21 @@ InstallMethod( _WeakKernelEmbedding,
   
 end, 5000 );
 
+###########################
+#
+# Other
+#
+##########################
+
+##
+InstallMethod( \.,
+        [ IsChainComplexCategory, IsPosInt ],
+   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
+);
+
+##
+InstallMethod( \.,
+        [ IsCochainComplexCategory, IsPosInt ],
+   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
+);
+
