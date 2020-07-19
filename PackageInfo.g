@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Gap package for constructing stable category of a given Cap category",
-Version := "2020.07.14",
+Version := "2020.07.15",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -74,7 +74,7 @@ Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "CAP", ">= 2020.04.27" ],
                            [ "GAPDoc", ">= 1.5" ],
-                            [ "TriangulatedCategories", ">= 2020.07.14" ],
+                            [ "TriangulatedCategories", ">= 2020.07.15" ],
                             #[ "FrobeniusCategories", ">= 2019.12.06" ],
                             [ "QuotientCategories", ">= 2020.02.05" ],
                             #[ "FreydCategoriesForCAP", ">= 0" ]
