@@ -40,7 +40,14 @@ end );
 
 ##
 InstallMethod( HomotopyCategoryMorphism,
+          [ IsHomotopyCategoryObject, IsList, IsInt, IsHomotopyCategoryObject ],
+  { a, maps, N, b } -> HomotopyCategoryMorphism( a, b, maps, N )
+);
+
+##
+InstallMethod( HomotopyCategoryMorphism,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsList, IsInt ],
+
   function( a, b, maps, N )
     local homotopy_category, alpha;
     
@@ -59,6 +66,12 @@ InstallMethod( HomotopyCategoryMorphism,
     return HomotopyCategoryMorphism( homotopy_category, alpha  );
     
 end );
+
+##
+InstallMethod( HomotopyCategoryMorphism,
+          [ IsHomotopyCategoryObject, IsZFunction, IsHomotopyCategoryObject ],
+  { a, maps, b } -> HomotopyCategoryMorphism( a, b, maps )
+);
 
 ##
 InstallMethod( HomotopyCategoryMorphism,
