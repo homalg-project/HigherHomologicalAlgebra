@@ -32,7 +32,7 @@ KeyDependentOperation( "ExtendFunctorToHomotopyCategories", IsCapFunctor, IsBool
 
 DeclareAttribute( "ExtendFunctorToHomotopyCategoriesAttr", IsCapFunctor );
 
-DeclareOperation( "ExtendFunctorToHomotopyCategories", [ IsCapFunctor ] );
+#DeclareOperation( "ExtendFunctorToHomotopyCategories", [ IsCapFunctor ] );
 
 DeclareAttribute( "EmbeddingFunctorInHomotopyCategory", IsCapCategory );
 

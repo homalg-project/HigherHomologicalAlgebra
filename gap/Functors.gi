@@ -244,7 +244,7 @@ InstallMethod( ExtendFunctorToHomotopyCategoriesAttr,
 );
 
 ##
-InstallMethod( ExtendFunctorToHomotopyCategories,
+InstallOtherMethod( ExtendFunctorToHomotopyCategories,
           [ IsCapFunctor ],
     ExtendFunctorToHomotopyCategoriesAttr
 );
