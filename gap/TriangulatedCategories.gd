@@ -461,20 +461,23 @@ DeclareOperation( "ConeObjectByOctahedralAxiom",
 #! and $\pi(\alpha)=\pi(\beta\circ\alpha)\circ u_{\alpha,\beta}$.
 #! @Returns a morphism $u_{\alpha,\beta}$:$C(\alpha)\to C(\beta\circ\alpha)$
 #! @Arguments alpha, beta
+DeclareOperation( "DomainMorphismByOctahedralAxiomWithGivenObjects",
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
 DeclareOperation( "DomainMorphismByOctahedralAxiom",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>DomainMorphismByOctahedralAxiom</C>.
+#! the category for the basic operation <C>DomainMorphismByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddDomainMorphismByOctahedralAxiom", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddDomainMorphismByOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddDomainMorphismByOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddDomainMorphismByOctahedralAxiom", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 
 #! @Description
@@ -484,20 +487,24 @@ DeclareOperation( "AddDomainMorphismByOctahedralAxiom", [ IsCapCategory, IsList 
 #! and $\Sigma\alpha\circ\pi(\beta\circ\alpha)=\pi(\beta)$.
 #! @Returns a morphism $C(\beta\circ\alpha) \to C(\beta)$ 
 #! @Arguments alpha, beta
+DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
+   [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
 DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiom",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismIntoConeObjectByOctahedralAxiom</C>.
+#! the category for the basic operation <C>MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiom", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
@@ -505,20 +512,23 @@ DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiom", [ IsCapCategory,
 #! such that $\pi_{\alpha,\beta}=\Sigma \iota(\alpha) \circ\pi(\beta)$.
 #! @Returns a morphism $C(\beta) \to \Sigma C(\alpha)$
 #! @Arguments alpha, beta
+DeclareOperation( "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
 DeclareOperation( "MorphismFromConeObjectByOctahedralAxiom",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismFromConeObjectByOctahedralAxiom</C>.
+#! the category for the basic operation <C>MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiom", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiom", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiom", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are an object $s=C(\beta)$, a morphism $\alpha:A\to B$,

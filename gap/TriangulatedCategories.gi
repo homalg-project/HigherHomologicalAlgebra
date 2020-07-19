@@ -108,38 +108,6 @@ IsExactTriangle := rec(
   return_type := "bool"
 ),
 
-ShiftExpandingIsomorphismWithGivenObjects := rec(
-  installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism"
-),
-
-ShiftFactoringIsomorphismWithGivenObjects := rec(
-  installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism"
-),
-
-InverseShiftExpandingIsomorphismWithGivenObjects := rec(
-  installation_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
-  return_type := "morphism"
-),
-
-InverseShiftFactoringIsomorphismWithGivenObjects := rec(
-  installation_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
-  cache_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
-  return_type := "morphism"
-),
-
 IsomorphismOntoShiftOfInverseShiftWithGivenObject := rec(
   installation_name := "IsomorphismOntoShiftOfInverseShiftWithGivenObject",
   filter_list := [ "object", "object" ],
@@ -213,24 +181,24 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   is_with_given := false
 ),
 
-DomainMorphismByOctahedralAxiom := rec(
-  installation_name := "DomainMorphismByOctahedralAxiom",
-  filter_list := [ "morphism", "morphism" ],
-  cache_name := "DomainMorphismByOctahedralAxiom",
+DomainMorphismByOctahedralAxiomWithGivenObjects := rec(
+  installation_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
+  filter_list := [ "object", "morphism", "morphism", "object" ],
+  cache_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
-MorphismIntoConeObjectByOctahedralAxiom := rec(
-  installation_name := "MorphismIntoConeObjectByOctahedralAxiom",
-  filter_list := [ "morphism", "morphism" ],
-  cache_name := "MorphismIntoConeObjectByOctahedralAxiom",
+MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects := rec(
+  installation_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
+  filter_list := [ "object", "morphism", "morphism", "object" ],
+  cache_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
-MorphismFromConeObjectByOctahedralAxiom := rec(
-  installation_name := "MorphismFromConeObjectByOctahedralAxiom",
-  filter_list := [ "morphism", "morphism" ],
-  cache_name := "MorphismFromConeObjectByOctahedralAxiom",
+MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
+  installation_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
+  filter_list := [ "object", "morphism", "morphism", "object" ],
+  cache_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
@@ -283,7 +251,6 @@ WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects :
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
-
   installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
@@ -533,6 +500,48 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom,
     r := ConeObjectByInverseRotationAxiom( alpha );
     
     return WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
+    
+end );
+
+##
+InstallMethod( DomainMorphismByOctahedralAxiom,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta )
+    local s, r;
+    
+    s := StandardConeObject( alpha );
+    
+    r := StandardConeObject( PreCompose( alpha, beta ) );
+    
+    return DomainMorphismByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+  
+end );
+
+##
+InstallMethod( MorphismIntoConeObjectByOctahedralAxiom,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta )
+    local s, r;
+    
+    s := StandardConeObject( PreCompose( alpha, beta ) );
+    
+    r := StandardConeObject( beta );
+    
+    return MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    
+end );
+
+##
+InstallMethod( MorphismFromConeObjectByOctahedralAxiom,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta )
+    local s, r;
+     
+    s := StandardConeObject( beta );
+    
+    r := ShiftOnObject( StandardConeObject( alpha ) );
+    
+    return MorphismFromConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
     
 end );
 
