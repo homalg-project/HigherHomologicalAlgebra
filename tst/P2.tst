@@ -58,6 +58,9 @@ gap> J := EmbeddingFunctorIntoDerivedCategory( RangeOfFunctor( G ) );;
 gap> o0 := SourceOfFunctor( G ).( "𝓞(0)" );;
 gap> FG_o0 := F( G( o0 ) );;
 gap> a := RandomObject( SourceOfFunctor(G), 3 );;
+gap> m := COMPUTE_ISOMORPHISM( a, c );;
+gap> IsIsomorphism( m );
+true
 gap> FG_a := F( G( a ) );;
 gap> a := I( a );;
 gap> FG_a := I( FG_a );;
