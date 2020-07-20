@@ -36,7 +36,7 @@ end );
 InstallMethod( CreateDiagramInHomotopyCategory,
           [ IsHomalgRing, IsList, IsList, IsList, IsList ],
   function( field, objects, morphisms, relations, bounds )
-    local N, vertices, arrows, o, monomial, index_first_term, index_last_term, Q, kQ, C, AC, ChAC, HoAC, complexes, I, complexes_morphisms, map, h, kQ_mod_I, kQ_mod_I_oid, P, k, m, rel, t;
+    local N, vertices, arrows, o, monomial, index_first_term, index_last_term, Q, kQ, C, AC, ChAC, complexes, I, complexes_morphisms, map, h, kQ_mod_I, kQ_mod_I_oid, P, k, m, rel, t, H;
     
     bounds := [ bounds[ 1 ], bounds[ Size( bounds ) ] ];
     
@@ -122,8 +122,6 @@ InstallMethod( CreateDiagramInHomotopyCategory,
     
     ChAC := CochainComplexCategory( AC );
     
-    HoAC := HomotopyCategory( AC, true );
-    
     complexes := [ ];
      
     for o in objects do
@@ -151,7 +149,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
         CochainMorphism(
             complexes[ m[ 2 ] ],
             complexes[ m[ 3 ] ],
-            List( [ bounds[ 1 ] .. bounds[ 2 ] ], i -> C.( Concatenation( m[ 1 ], "^", _StRiNg( i ) ) )/AC ),
+            List( [ bounds[ 1 ] .. bounds[ 2 ] ], i -> kQ.( Concatenation( m[ 1 ], "^", _StRiNg( i ) ) )/C/AC ),
             bounds[ 1 ]
           )
       );
@@ -182,7 +180,31 @@ InstallMethod( CreateDiagramInHomotopyCategory,
     
     for rel in relations do
        
-      map := Sum( List( rel[ 1 ], r -> r[ 1 ] * PreCompose( List( r[ 2 ], s -> complexes_morphisms[ PositionProperty( morphisms, m -> m[ 1 ] = s ) ] ) ) ) );
+      map := Sum( List( rel[ 1 ],
+              r -> r[ 1 ] * PreCompose(
+                List( r[ 2 ],
+                  function( s )
+                    local p;
+                    
+                    p := PositionProperty( morphisms, m -> m[ 1 ] = s );
+                    
+                    if p <> fail then
+                      
+                      return complexes_morphisms[ p ];
+                    
+                    fi;
+                    
+                    p := Position( objects, s );
+                    
+                    if p <> fail then
+                      
+                      return IdentityMorphism( complexes[ p ] );
+                      
+                    fi;
+                    
+                  end ) ) 
+                )
+              );
       
       h := rel[ 2 ];
       
@@ -261,14 +283,16 @@ InstallMethod( CreateDiagramInHomotopyCategory,
     P := ProjectionFromAlgebroidOfPathAlgebra( kQ_mod_I_oid );
     
     P := ExtendFunctorToAdditiveClosures( P );
+
+    H := HomotopyCategory( RangeOfFunctor( P ), true );
     
-    P := ExtendFunctorToHomotopyCategories( P, true );
+    P := ExtendFunctorToCochainComplexCategories( P );
     
     for k in [ 1 .. Size( complexes ) ] do
       
       MakeReadWriteGlobal( objects[ k ] );
       
-      DeclareSynonym( objects[ k ], P( complexes[ k ] / HoAC ) );
+      DeclareSynonym( objects[ k ], P( complexes[ k ] ) / H );
       
     od;
     
@@ -276,10 +300,10 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       
       MakeReadWriteGlobal( morphisms[ k ][ 1 ] );
       
-      DeclareSynonym( morphisms[ k ][ 1 ], P( complexes_morphisms[ k ] / HoAC ) );
+      DeclareSynonym( morphisms[ k ][ 1 ], P( complexes_morphisms[ k ] ) / H );
       
     od;
     
-    return RangeOfFunctor( P );
+    return H;
     
 end );
