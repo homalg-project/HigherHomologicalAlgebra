@@ -255,14 +255,12 @@ function( Ho_C )
       
   ##
   AddDomainMorphismByOctahedralAxiomWithGivenObjects( Ho_C,
-    function( s, alpha, beta, r )
-      local A, id_A, gamma;
+    function( s, alpha, beta, gamma, r )
+      local A, id_A;
       
       A := Source( alpha );
       
       id_A := IdentityMorphism( A );
-      
-      gamma := PreCompose( alpha, beta );
       
       return MorphismBetweenStandardConeObjectsWithGivenObjects( s, alpha, id_A, beta, gamma, r );
       
@@ -270,8 +268,8 @@ function( Ho_C )
   
   ##
   AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
-    function( s, alpha, beta, r )
-      local A, B, C, maps;
+    function( s, alpha, beta, gamma, r )
+      local A, B, C, h, maps;
       
       A := Source( alpha );
       
@@ -279,12 +277,14 @@ function( Ho_C )
       
       C := Range( beta );
       
+      h := HomotopyMorphisms( PreCompose( alpha, beta ) - gamma );
+      
       maps := AsZFunction(
                 i -> MorphismBetweenDirectSums(
                   [
                     [
                       alpha[ i + N ],
-                      ZeroMorphism( A[ i + N ], C[ i ] )
+                      -h[ i + N ]
                     ],
                     [
                       ZeroMorphism( C[ i ], B[ i + N ] ),
@@ -300,7 +300,7 @@ function( Ho_C )
   
   ##
   AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
-    function( s, alpha, beta, r )
+    function( s, alpha, beta, gamma, r )
       local A, B, C, maps;
       
       A := Source( alpha );
@@ -330,7 +330,7 @@ function( Ho_C )
   
   ##
   AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
-    function( s, alpha, beta, r )
+    function( s, alpha, beta, gamma, r )
       local A, B, C, maps;
       
       A := Source( alpha );
@@ -364,14 +364,16 @@ function( Ho_C )
 
   ##
   AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
-    function( s, alpha, beta, r )
-      local A, B, C, maps;
+    function( s, alpha, beta, gamma, r )
+      local A, B, C, h, maps;
       
       A := Source( alpha );
       
       B := Range( alpha );
       
       C := Range( beta );
+      
+      h := HomotopyMorphisms( PreCompose( alpha, beta ) - gamma );
       
       maps := AsZFunction(
                 i -> MorphismBetweenDirectSums(
@@ -386,7 +388,7 @@ function( Ho_C )
                     ],
                     [
                       alpha[ i + N ],
-                      ZeroMorphism( A[ i + N ], C[ i ] )
+                      -h[ i + N ]
                     ],
                     [
                       ZeroMorphism( C[ i ], B[ i + N ] ),
