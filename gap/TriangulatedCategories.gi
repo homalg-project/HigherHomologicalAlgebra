@@ -183,37 +183,37 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
 
 DomainMorphismByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "object" ],
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "object" ],
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "object" ],
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "object" ],
-  io_type := [ [ "cone_g", "f", "g", "st_cone" ], [ "cone_g", "st_cone" ] ],
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "cone_g", "f", "g", "h", "st_cone" ], [ "cone_g", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
 
 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "object" ],
-  io_type := [ [ "st_cone", "f", "g", "cone_g" ], [ "st_cone", "cone_g" ] ],
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "st_cone", "f", "g", "h", "cone_g" ], [ "st_cone", "cone_g" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := [ "morphism" ],
 ),
@@ -317,8 +317,8 @@ InstallMethod( InverseShiftOnMorphism,
 
 ##
 InstallMethod( ConeObjectByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     
     return StandardConeObject( beta );
     
@@ -340,33 +340,33 @@ end );
 
 ##
 InstallMethod( WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     local s, u, r;
     
-    s := ConeObjectByOctahedralAxiom( alpha, beta );
+    s := ConeObjectByOctahedralAxiom( alpha, beta, gamma );
     
-    u := DomainMorphismByOctahedralAxiom( alpha, beta );
+    u := DomainMorphismByOctahedralAxiom( alpha, beta, gamma );
      
     r := StandardConeObject( u );
     
-    return WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
       
 end );
 
 ##
 InstallMethod( WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     local s, u, r;
     
-    u := DomainMorphismByOctahedralAxiom( alpha, beta );
+    u := DomainMorphismByOctahedralAxiom( alpha, beta, gamma );
      
     s := StandardConeObject( u );
 
-    r := ConeObjectByOctahedralAxiom( alpha, beta );
+    r := ConeObjectByOctahedralAxiom( alpha, beta, gamma );
         
-    return WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
       
 end );
 
@@ -505,43 +505,43 @@ end );
 
 ##
 InstallMethod( DomainMorphismByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     local s, r;
     
     s := StandardConeObject( alpha );
     
-    r := StandardConeObject( PreCompose( alpha, beta ) );
+    r := StandardConeObject( gamma );
     
-    return DomainMorphismByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return DomainMorphismByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
   
 end );
 
 ##
 InstallMethod( MorphismIntoConeObjectByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     local s, r;
     
-    s := StandardConeObject( PreCompose( alpha, beta ) );
+    s := StandardConeObject( gamma );
     
     r := StandardConeObject( beta );
     
-    return MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
     
 end );
 
 ##
 InstallMethod( MorphismFromConeObjectByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     local s, r;
      
     s := StandardConeObject( beta );
     
     r := ShiftOnObject( StandardConeObject( alpha ) );
     
-    return MorphismFromConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, r );
+    return MorphismFromConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
     
 end );
 

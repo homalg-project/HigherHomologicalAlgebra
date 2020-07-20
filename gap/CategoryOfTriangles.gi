@@ -342,24 +342,24 @@ InstallOtherMethod( ExactTriangle,
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, beta, gamma )
     
     return
       ExactTriangle(
-        DomainMorphismByOctahedralAxiom( alpha, beta ),
-        MorphismIntoConeObjectByOctahedralAxiom( alpha, beta ),
-        MorphismFromConeObjectByOctahedralAxiom( alpha, beta )
+        DomainMorphismByOctahedralAxiom( alpha, beta, gamma ),
+        MorphismIntoConeObjectByOctahedralAxiom( alpha, beta, gamma ),
+        MorphismFromConeObjectByOctahedralAxiom( alpha, beta, gamma )
       );
      
 end );
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ],
-  function( alpha, beta, b )
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ],
+  function( alpha, beta, gamma, b )
     local triangle, st_triangle, T, i;
     
-    triangle := ExactTriangleByOctahedralAxiom( alpha, beta );
+    triangle := ExactTriangleByOctahedralAxiom( alpha, beta, gamma );
     
     if not b then
       
@@ -379,7 +379,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
     else
       
-      i := WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, st_triangle[ 2 ] );
+      i := WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, gamma, st_triangle[ 2 ] );
       
       SetWitnessIsomorphismOntoStandardExactTriangle( triangle,
         MorphismOfExactTriangles(
@@ -390,7 +390,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
           st_triangle
         ) );
       
-      i := WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( st_triangle[ 2 ], alpha, beta, triangle[ 2 ] );
+      i := WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( st_triangle[ 2 ], alpha, beta, gamma, triangle[ 2 ] );
       
       SetWitnessIsomorphismFromStandardExactTriangle( triangle,
         MorphismOfExactTriangles(
@@ -887,22 +887,20 @@ end );
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle ],
-    { t_1, t_2 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, false )
+          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ],
+    { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
 );
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle, IsBool ],
-  function( t_1, t_2, bool )
-    local i_1, j_1, i_2, j_2, t, alpha, iota, pi, triangle, u, v, w, i;
+          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ],
+  function( t_1, t_2, t_3, bool )
+    local i_1, j_1, i_2, j_2, i_3, j_3, t, alpha, iota, pi, triangle, u, v, w, i;
     
-    if not IsEqualForObjects( t_1[ 1 ], t_2[ 0 ] ) then
-      
-      Error( "Wrong input!\n" );
-      
-    fi;
-    
+    Assert( 2, IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
+                and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
+                  and IsCongruentForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 ) );
+                  
     i_1 := WitnessIsomorphismOntoStandardExactTriangle( t_1 );
     
     j_1 := WitnessIsomorphismFromStandardExactTriangle( t_1 );
@@ -911,11 +909,15 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
     j_2 := WitnessIsomorphismFromStandardExactTriangle( t_2 );
     
-    t := ExactTriangleByOctahedralAxiom( t_1 ^ 0, t_2 ^ 0, true );
+    i_3 := WitnessIsomorphismOntoStandardExactTriangle( t_3 );
     
-    alpha := PreCompose( i_1[ 2 ], t ^ 0 );
+    j_3 := WitnessIsomorphismFromStandardExactTriangle( t_3 );
     
-    iota := PreCompose( t ^ 1, j_2[ 2 ] );
+    t := ExactTriangleByOctahedralAxiom( t_1 ^ 0, t_2 ^ 0, t_3 ^ 0, true );
+    
+    alpha := PreCompose( [ i_1[ 2 ], t ^ 0, j_3[ 2 ] ] );
+    
+    iota := PreCompose( [ i_3[ 2 ], t ^ 1, j_2[ 2 ] ] );
     
     pi := PreCompose( [ i_2[ 2 ], t ^ 2, ShiftOnMorphism( j_1[ 2 ] ) ] );
     
@@ -927,7 +929,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
       
       v := WitnessIsomorphismOntoStandardExactTriangle( t )[ 2 ];
       
-      w := MorphismBetweenStandardConeObjects( t ^ 0, j_1[ 2 ], IdentityMorphism( t[ 1 ] ), triangle ^ 0 );
+      w := MorphismBetweenStandardConeObjects( t ^ 0, j_1[ 2 ], j_3[ 2 ], triangle ^ 0 );
       
       i := MorphismOfExactTriangles(
               triangle,
@@ -936,11 +938,19 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
               PreCompose( [ u, v, w ] ),
               StandardExactTriangle( triangle )
             );
-      
+            
       SetWitnessIsomorphismOntoStandardExactTriangle( triangle, i );
       
     fi;
     
+    Assert( 2, IsWellDefined( triangle ) and IsWellDefined( t_1 ) and IsWellDefined( t_2 ) and IsWellDefined( t_3 ) and
+                IsCongruentForMorphisms( PreCompose( t_1^1, triangle^0 ), PreCompose( t_2^0, t_3^1 ) ) and
+                  IsCongruentForMorphisms( t_1^2, PreCompose( triangle^0, t_3^2 ) ) and
+                    IsCongruentForMorphisms( PreCompose( t_3^1, triangle^1 ), t_2^1 ) and
+                      IsCongruentForMorphisms( PreCompose( triangle^1, t_2^2 ), PreCompose(t_3^2, Shift( t_1^0, 1 ) ) ) and
+                        IsCongruentForMorphisms( PreCompose( t_2^2, Shift( t_1^1, 1 ) ), triangle^2 )
+                );
+                
     return triangle;
     
 end );
@@ -950,61 +960,6 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
           [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ],
     { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
 );
-
-##
-InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ],
-  function( t_1, t_2, t_3, bool )
-    local t, i_3, j_3, i;
-    
-    Assert( 2, IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
-                and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
-                  and IsCongruentForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 ) );
-    
-    t := ExactTriangleByOctahedralAxiom( t_1, t_2, bool );
-    
-    i_3 := WitnessIsomorphismOntoStandardExactTriangle( t_3 );
-    
-    j_3 := WitnessIsomorphismFromStandardExactTriangle( t_3 );
-    
-    if IsEqualForMorphisms( PreCompose( t_1^0, t_2^0 ), t_3^0 ) then
-      
-      i := IdentityMorphism( StandardConeObject( t_3 ^ 0 ) );
-      
-    else
-      
-      i := MorphismBetweenStandardConeObjects(
-                    PreCompose( t_1^0, t_2^0 ),
-                    IdentityMorphism( t_1[ 0 ] ),
-                    IdentityMorphism( t_2[ 1 ] ),
-                    t_3^0
-                  );
-                  
-    fi;
-    
-    t := ExactTriangle(
-                    PreCompose( [ t^0, i, j_3[ 2 ] ] ),
-                    PreCompose( [ i_3[ 2 ], Inverse( i ), t^1 ] ),
-                    t^2
-                  );
-    
-    if bool = true then
-      
-      WitnessIsomorphismOntoStandardExactTriangle( t );
-      
-    fi;
-    
-    Assert( 2, IsWellDefined( t ) and IsWellDefined( t_1 ) and IsWellDefined( t_2 ) and IsWellDefined( t_3 ) and
-                IsCongruentForMorphisms( PreCompose( t_1^1, t^0 ), PreCompose( t_2^0, t_3^1 ) ) and
-                  IsCongruentForMorphisms( t_1^2, PreCompose( t^0, t_3^2 ) ) and
-                    IsCongruentForMorphisms( PreCompose( t_3^1, t^1 ), t_2^1 ) and
-                      IsCongruentForMorphisms( PreCompose( t^1, t_2^2 ), PreCompose(t_3^2, Shift( t_1^0, 1 ) ) ) and
-                        IsCongruentForMorphisms( PreCompose( t_2^2, Shift( t_1^1, 1 ) ), t^2 )
-                );
-                
-    return t;
-    
-end );
 
 #################
 #

@@ -193,24 +193,17 @@ DeclareOperation( "MorphismOfExactTriangles",
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$. The output is the exact triangle
 #! defined by the Octhedral axiom.
-#! @Arguments alpha, beta
+#! @Arguments alpha, beta, gamma
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$ and a boolian $b$.
 #! The output is the exact triangle defined by the Octhedral axiom. If $b$=<C>true</C>, then
 #! the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments alpha, beta, b
+#! @Arguments alpha, beta, gamma, b
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ] );
-
-#! @Description
-#! The arguments are two exact triangles $t_1,t_2$ such that $t_1[1]=t_2[0]$.
-#! The output is the exact triangle defined by the Octahedral axiom.
-#! @Arguments t_1, t_2
-#! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ] );
 
 #! @Description
 #! The arguments are two exact triangles $t_1,t_2$ such that $t_1[1]=t_2[0]$ and a boolian $b$.
@@ -218,7 +211,7 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapE
 #! If $b$ = <C>true</C> then the operation will compute a witness isomorphism into the standard exact triangle.
 #! @Arguments t_1, t_2, b
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle, IsBool ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ] );
 
 #! @Description
 #! The arguments are three exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$,
@@ -226,18 +219,7 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapE
 #! The output is the exact triangle defined by the Octahedral axiom.
 #! @Arguments t_1, t_2, t_3
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom",
-      [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ] );
-
-#! @Description
-#! The arguments are three exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$ and boolian <A>b</A>,
-#! $t_1[0]=t_3[0]$, $t_2[1]=t_3[1]$ and $t_2^0\circ t_1^0=t_3^0$.
-#! The output is the exact triangle defined by the Octahedral axiom.
-#! If $b$ = <C>true</C> then the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments t_1, t_2, t_3, bool
-#! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom",
-      [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ] );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle

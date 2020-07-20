@@ -452,7 +452,7 @@ DeclareOperation( "AddWitnessIsomorphismFromStandardConeObject", [ IsCapCategory
 #! @Returns $C(\beta)$
 #! @Arguments alpha, beta
 DeclareOperation( "ConeObjectByOctahedralAxiom",
-      [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
@@ -462,10 +462,10 @@ DeclareOperation( "ConeObjectByOctahedralAxiom",
 #! @Returns a morphism $u_{\alpha,\beta}$:$C(\alpha)\to C(\beta\circ\alpha)$
 #! @Arguments alpha, beta
 DeclareOperation( "DomainMorphismByOctahedralAxiomWithGivenObjects",
-    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 DeclareOperation( "DomainMorphismByOctahedralAxiom",
-    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -488,10 +488,10 @@ DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapC
 #! @Returns a morphism $C(\beta\circ\alpha) \to C(\beta)$ 
 #! @Arguments alpha, beta
 DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
-   [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+   [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiom",
-    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 
 #! @Description
@@ -513,10 +513,10 @@ DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", 
 #! @Returns a morphism $C(\beta) \to \Sigma C(\alpha)$
 #! @Arguments alpha, beta
 DeclareOperation( "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
-    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 DeclareOperation( "MorphismFromConeObjectByOctahedralAxiom",
-    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -553,7 +553,7 @@ DeclareOperation( "AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects", 
 #! @Returns a morphism $C(\beta)\to C(u_{\alpha,\beta})$
 #! @Arguments s, alpha, beta, r
 DeclareOperation( "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
-      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -576,7 +576,7 @@ DeclareOperation( "AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomW
 #! @Returns a morphism $C(\beta)\to C(u_{\alpha,\beta})$.
 #! @Arguments alpha, beta
 DeclareOperation( "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom",
-  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+  [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$ and $\beta:B\to C$.
@@ -584,7 +584,7 @@ DeclareOperation( "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom",
 #! @Returns a morphism $C(u_{\alpha,\beta})\to C(\beta)$
 #! @Arguments alpha, beta
 DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
-      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+      [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -604,7 +604,7 @@ DeclareOperation( "AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomW
 #! @Returns a morphism $C(u_{\alpha,\beta})\to C(\beta)$
 #! @Arguments alpha, beta
 DeclareOperation( "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom",
-      [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #################################
 
