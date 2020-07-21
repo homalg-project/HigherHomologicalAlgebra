@@ -252,7 +252,8 @@ function( Ho_C )
       return HomotopyCategoryMorphism( s, maps, r );
         
   end );
-      
+  
+  ## Can be derived, but here is a direct implementation    
   ##
   AddDomainMorphismByOctahedralAxiomWithGivenObjects( Ho_C,
     function( s, alpha, beta, gamma, r )
@@ -298,6 +299,7 @@ function( Ho_C )
        
   end );
   
+  ## Can be derived, but here is a direct implementation
   ##
   AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
     function( s, alpha, beta, gamma, r )
