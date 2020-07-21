@@ -109,6 +109,58 @@ end:
   Description:= "IsIsomorphism by deciding if the cone object is zero"
 );
 
+
+AddDerivationToCAP( DomainMorphismByOctahedralAxiomWithGivenObjects,
+                [
+                    [ IdentityMorphism, 1 ],
+                    [ MorphismBetweenStandardConeObjectsWithGivenObjects,  1 ]
+                ],
+  function( s, alpha, beta, gamma, r )
+    local A, id_A;
+    
+    A := Source( alpha );
+    
+    id_A := IdentityMorphism( A );
+    
+    return MorphismBetweenStandardConeObjectsWithGivenObjects( s, alpha, id_A, beta, gamma, r );
+    
+end );
+
+AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
+                [
+                  [ StandardConeObject, 2 ],
+                  [ MorphismFromStandardConeObjectWithGivenStandardConeObject, 1 ],
+                  [ MorphismIntoStandardConeObjectWithGivenStandardConeObject, 1 ],
+                  [ ShiftOnObject, 1 ],
+                  [ ShiftOnMorphismWithGivenObjects, 1 ]
+                ],
+  function( s, alpha, beta, gamma, r )
+    local B, pi_beta, cone_alpha, iota_alpha;
+    
+    B := Range( alpha );
+     
+    pi_beta := MorphismFromStandardConeObjectWithGivenStandardConeObject(
+                          beta,
+                          s
+                      );
+    
+    cone_alpha := StandardConeObject( alpha );
+    
+    iota_alpha := MorphismIntoStandardConeObjectWithGivenStandardConeObject(
+                          alpha,
+                          cone_alpha
+                      );
+    
+    iota_alpha := ShiftOnMorphismWithGivenObjects(
+                      ShiftOnObject( B ),
+                      iota_alpha,
+                      r
+                    );
+    
+    return PreCompose( pi_beta, iota_alpha );
+    
+end );
+
 ##
 AddDerivationToCAP( IsSplitEpimorphism,
                 [
@@ -230,4 +282,5 @@ AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
  );
 
 ##
+
 
