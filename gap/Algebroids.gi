@@ -36,7 +36,9 @@ end );
 InstallMethod( CreateDiagramInHomotopyCategory,
           [ IsHomalgRing, IsList, IsList, IsList, IsList ],
   function( field, objects, morphisms, relations, bounds )
-    local N, vertices, arrows, o, monomial, index_first_term, index_last_term, Q, kQ, C, AC, ChAC, complexes, I, complexes_morphisms, map, h, kQ_mod_I, kQ_mod_I_oid, P, k, m, rel, t, H;
+    local char, N, vertices, arrows, o, monomial, index_first_term, index_last_term, Q, kQ, C, AC, ChAC, complexes, I, complexes_morphisms, map, h, kQ_mod_I, kQ_mod_I_oid, P, k, m, rel, t, H;
+    
+    char := "_";
     
     bounds := [ bounds[ 1 ], bounds[ Size( bounds ) ] ];
     
@@ -47,7 +49,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
               objects,
               List( [ bounds[1] .. bounds[2] ], i -> _StRiNg( i ) )
             ),
-          s -> JoinStringsWithSeparator( s, "^" )
+          s -> JoinStringsWithSeparator( s, char )
         );
     
     arrows := [ ];
@@ -59,7 +61,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       arrows :=
         Concatenation( arrows, List( [ bounds[1] .. bounds[2] - 1 ],
               i -> Concatenation(
-                      "d", o, "^", _StRiNg( i ), ":",
+                      "d", o, char, _StRiNg( i ), ":",
                       vertices[ N * ( k - 1) - bounds[ 1 ] + i + 1 ],
                       "->",
                       vertices[ N * ( k - 1) - bounds[ 1 ] + i + 2 ]
@@ -73,7 +75,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       arrows :=
         Concatenation( arrows, List( [ bounds[ 1 ] .. bounds[ 2 ] ],
               i -> Concatenation(
-                      m[ 1 ], "^", _StRiNg( i ), ":",
+                      m[ 1 ], char, _StRiNg( i ), ":",
                       vertices[ ( m[ 2 ] - 1 ) * N - bounds[ 1 ] + i + 1 ],
                       "->", vertices[ ( m[ 3 ] - 1 ) * N -bounds[ 1 ] + i + 1 ]
                     )
@@ -98,7 +100,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       arrows :=
         Concatenation( arrows, List( [ bounds[ 1 ] + 1 .. bounds[ 2 ] ],
               i -> Concatenation(
-                      rel[ 2 ], "^", _StRiNg( i ), ":",
+                      rel[ 2 ], char, _StRiNg( i ), ":",
                       vertices[ ( index_first_term - 1 ) * N - bounds[ 1 ] + i + 1 ],
                       "->", vertices[ ( index_last_term - 1 ) * N - bounds[ 1 ] + i ]
                     )
@@ -128,7 +130,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       
       Add( complexes,
           CochainComplex(
-              List( [ bounds[ 1 ] .. bounds[ 2 ] - 1 ], i -> C.( Concatenation( "d", o, "^", _StRiNg( i ) ) )/AC ),
+              List( [ bounds[ 1 ] .. bounds[ 2 ] - 1 ], i -> C.( Concatenation( "d", o, char, _StRiNg( i ) ) )/AC ),
               bounds[ 1 ]
             )
          );
@@ -149,7 +151,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
         CochainMorphism(
             complexes[ m[ 2 ] ],
             complexes[ m[ 3 ] ],
-            List( [ bounds[ 1 ] .. bounds[ 2 ] ], i -> kQ.( Concatenation( m[ 1 ], "^", _StRiNg( i ) ) )/C/AC ),
+            List( [ bounds[ 1 ] .. bounds[ 2 ] ], i -> kQ.( Concatenation( m[ 1 ], char, _StRiNg( i ) ) )/C/AC ),
             bounds[ 1 ]
           )
       );
@@ -213,7 +215,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
         Add( I,
           UnderlyingQuiverAlgebraElement(
             MorphismMatrix( 
-              map[ bounds[ 1 ] ] - PreCompose( Source( map ) ^ bounds[ 1 ], C.( Concatenation( h, "^", _StRiNg( bounds[1] + 1 ) ) ) /AC ) 
+              map[ bounds[ 1 ] ] - PreCompose( Source( map ) ^ bounds[ 1 ], C.( Concatenation( h, char, _StRiNg( bounds[1] + 1 ) ) ) /AC ) 
                 )[ 1, 1 ]
               )
             );
@@ -224,8 +226,8 @@ InstallMethod( CreateDiagramInHomotopyCategory,
           UnderlyingQuiverAlgebraElement(
             MorphismMatrix( 
               map[ t ]
-              - PreCompose( Source( map ) ^ t, C.( Concatenation( h, "^", _StRiNg( t + 1 ) ) ) / AC )
-              - PostCompose( Range( map ) ^ ( t - 1 ), C.( Concatenation( h, "^", _StRiNg( t ) ) ) /AC )
+              - PreCompose( Source( map ) ^ t, C.( Concatenation( h, char, _StRiNg( t + 1 ) ) ) / AC )
+              - PostCompose( Range( map ) ^ ( t - 1 ), C.( Concatenation( h, char, _StRiNg( t ) ) ) /AC )
                 )[ 1, 1 ]
               )
             );
@@ -235,7 +237,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
         Add( I,
           UnderlyingQuiverAlgebraElement(
             MorphismMatrix( 
-              map[ bounds[ 2 ] ] - PostCompose( Range( map ) ^ ( bounds[ 2 ] - 1 ), C.( Concatenation( h, "^", _StRiNg( bounds[ 2 ] ) ) ) /AC ) 
+              map[ bounds[ 2 ] ] - PostCompose( Range( map ) ^ ( bounds[ 2 ] - 1 ), C.( Concatenation( h, char, _StRiNg( bounds[ 2 ] ) ) ) /AC ) 
                 )[ 1, 1 ]
               )
             );
