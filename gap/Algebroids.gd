@@ -9,6 +9,5 @@
 #   ];
 # bounds := [ 0, 3 ];
 
-DeclareOperation( "CreateDiagramInHomotopyCategory", [ IsHomalgRing, IsList, IsList, IsList, IsList ] );
 
 DeclareOperation( "CreateDiagramInHomotopyCategory", [ IsList, IsList, IsList, IsList ] );

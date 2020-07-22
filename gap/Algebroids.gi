@@ -22,290 +22,304 @@ BindGlobal( "_StRiNg",
     
 end );
 
-##
-InstallMethod( CreateDiagramInHomotopyCategory,
-          [ IsList, IsList, IsList, IsList ],
-          
-  function( objects, morphisms, relations, bounds )
+BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
+  function( maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
+    local l, u, k, main_vertices, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
     
-    return CreateDiagramInHomotopyCategory( HomalgFieldOfRationals( ), objects, morphisms, relations, bounds );
+    l := bounds[ 1 ];
     
-end );
+    u := bounds[ 2 ];
+    
+    k := HomalgFieldOfRationals( );
+    
+    main_vertices := DuplicateFreeList( Concatenation( List( maps_labels, map -> map{ [ 2, 3 ] } ) ) );
+    
+    vertices := ListX( main_vertices, [ l .. u ], 
+                    { V, i } -> Concatenation( V, "_", _StRiNg( i ) )
+                  );
+    
+    diffs := ListX( main_vertices, [ l .. u - 1 ],
+                    { V, i } -> Concatenation(
+                                      "d", V, "_", _StRiNg( i ),
+                                      ":",
+                                      V, "_", _StRiNg( i ),
+                                      "->",
+                                      V, "_", _StRiNg( i + 1 )
+                                    )
+                  );
 
-##
-InstallMethod( CreateDiagramInHomotopyCategory,
-          [ IsHomalgRing, IsList, IsList, IsList, IsList ],
-  function( field, objects, morphisms, relations, bounds )
-    local char, N, vertices, arrows, o, monomial, index_first_term, index_last_term, Q, kQ, C, AC, ChAC, complexes, I, complexes_morphisms, map, h, kQ_mod_I, kQ_mod_I_oid, P, k, m, rel, t, H;
+    maps := ListX( maps_labels, [ l .. u ],
+                    { map, i } -> Concatenation(
+                                      map[ 1 ], "_", _StRiNg( i ),
+                                      ":",
+                                      map[ 2 ], "_", _StRiNg( i ),
+                                      "->",
+                                      map[ 3 ], "_", _StRiNg( i )
+                                    )
+                       );
     
-    char := "_";
+    arrows := Concatenation( diffs, maps, extra_arrows );
     
-    bounds := [ bounds[ 1 ], bounds[ Size( bounds ) ] ];
+    Q := RightQuiver(
+            Concatenation(
+                "q(",
+                JoinStringsWithSeparator( vertices, "," ),
+                ")[",
+                JoinStringsWithSeparator( arrows, "," ),
+                "]"
+              )
+          );
     
-    N := bounds[ 2 ] - bounds[ 1 ] + 1;
+    kQ := PathAlgebra( k, Q );
     
-    vertices :=
-    List( Cartesian(
-              objects,
-              List( [ bounds[1] .. bounds[2] ], i -> _StRiNg( i ) )
-            ),
-          s -> JoinStringsWithSeparator( s, char )
-        );
+    oid := Algebroid( kQ );
     
-    arrows := [ ];
+    AssignSetOfGeneratingMorphisms( oid );
     
-    for k in [ 1 .. Size( objects ) ] do
-      
-      o := objects[ k ];
-      
-      arrows :=
-        Concatenation( arrows, List( [ bounds[1] .. bounds[2] - 1 ],
-              i -> Concatenation(
-                      "d", o, char, _StRiNg( i ), ":",
-                      vertices[ N * ( k - 1) - bounds[ 1 ] + i + 1 ],
-                      "->",
-                      vertices[ N * ( k - 1) - bounds[ 1 ] + i + 2 ]
+    gmaps := SetOfGeneratingMorphisms( oid );
+    
+    diffs_rel := List( [ 1 .. Size( gmaps ) - 1 ], 
+              i -> UnderlyingQuiverAlgebraElement( gmaps[ i ] * gmaps[ i + 1 ] )
+            );
+    
+    diffs_rel := Filtered( diffs_rel, r -> not IsZero( r ) );
+    
+    maps_rel := ListX( maps_labels, [ l .. u - 1 ],
+                  { m, i } -> 
+                    UnderlyingQuiverAlgebraElement(
+                        oid.( Concatenation( "d", m[ 2 ], "_", _StRiNg( i ) ) )
+                      * oid.( Concatenation( m[ 1 ], "_", _StRiNg( i + 1 ) ) )
+                      - oid.( Concatenation( m[ 1 ], "_", _StRiNg( i ) ) )
+                      * oid.( Concatenation( "d", m[ 3 ], "_", _StRiNg( i ) ) )
                     )
-                  )
-                );
-     
+                  );
+    
+    rels := Concatenation(
+                diffs_rel,
+                maps_rel,
+                List( extra_relations, r -> UnderlyingQuiverAlgebraElement( EvalString( r ) ) )
+              );
+    
+    kQ_mod_rels := kQ / rels;
+    
+    oid := Algebroid( kQ_mod_rels );
+    
+    AssignSetOfGeneratingMorphisms( oid );
+    AssignSetOfObjects( oid );
+    
+    oid!.Name := Concatenation(
+                      "Algebroid(V=", String( Size( vertices ) ), ",E=", 
+                      String( Size( gmaps ) ), ",rel=", String( Size( rels ) ), ")"
+                    );
+    
+    Aoid := AdditiveClosure( oid );
+    
+    if over_homotopy then
+      
+      H := HomotopyCategory( Aoid, true );
+      
+    else
+      
+      H := CochainComplexCategory( Aoid );
+      
+    fi;
+    
+    for V in main_vertices do
+      
+      C := CochainComplex( List( [ l .. u - 1 ], i -> oid.( Concatenation( "d", V, "_", _StRiNg( i ) ) ) / Aoid ), l );
+
+      MakeReadWriteGlobal( V );
+      
+      if over_homotopy then
+        DeclareSynonym( V, C / H );
+      else
+        DeclareSynonym( V, C );
+      fi;
+      
     od;
     
-    for m in morphisms do
-      arrows :=
-        Concatenation( arrows, List( [ bounds[ 1 ] .. bounds[ 2 ] ],
-              i -> Concatenation(
-                      m[ 1 ], char, _StRiNg( i ), ":",
-                      vertices[ ( m[ 2 ] - 1 ) * N - bounds[ 1 ] + i + 1 ],
-                      "->", vertices[ ( m[ 3 ] - 1 ) * N -bounds[ 1 ] + i + 1 ]
-                    )
-                  )
-                );
-    od;
-
-    for rel in relations do
+    for map in maps_labels do
       
-      if rel[ 2 ] = "0" then
+      s := ValueGlobal( map[ 2 ] );
+      
+      r := ValueGlobal( map[ 3 ] );
+      
+      if IsHomotopyCategoryObject( s ) then
         
-        continue;
+        s := UnderlyingCell( s );
+        
+        r := UnderlyingCell( r );
         
       fi;
       
-      monomial := rel[ 1 ][ 1 ][ 2 ];
-      
-      index_first_term := morphisms[ PositionProperty( morphisms, m -> m[ 1 ] = monomial[ 1 ] ) ][ 2 ];
-      
-      index_last_term := morphisms[ PositionProperty( morphisms, m -> m[ 1 ] = monomial[ Size( monomial ) ] ) ][ 3 ];
-      
-      arrows :=
-        Concatenation( arrows, List( [ bounds[ 1 ] + 1 .. bounds[ 2 ] ],
-              i -> Concatenation(
-                      rel[ 2 ], char, _StRiNg( i ), ":",
-                      vertices[ ( index_first_term - 1 ) * N - bounds[ 1 ] + i + 1 ],
-                      "->", vertices[ ( index_last_term - 1 ) * N - bounds[ 1 ] + i ]
-                    )
-                  )
-                );
-      
-      
-    od;
-    
-    vertices := JoinStringsWithSeparator( vertices, "," );
-    
-    arrows := JoinStringsWithSeparator( arrows, "," );
-    
-    Q := RightQuiver( Concatenation( "Q(", vertices, ")[", arrows, "]" ) );
-    
-    kQ := PathAlgebra( field, Q );
-    
-    C := Algebroid( kQ );
-    
-    AC := AdditiveClosure( C );
-    
-    ChAC := CochainComplexCategory( AC );
-    
-    complexes := [ ];
-     
-    for o in objects do
-      
-      Add( complexes,
-          CochainComplex(
-              List( [ bounds[ 1 ] .. bounds[ 2 ] - 1 ], i -> C.( Concatenation( "d", o, char, _StRiNg( i ) ) )/AC ),
-              bounds[ 1 ]
-            )
-         );
-      
-    od;
-    
-    I := Concatenation(
-          List( complexes, c -> List( [ bounds[ 1 ] .. bounds[ 2 ] - 2 ],
-            i -> UnderlyingQuiverAlgebraElement( MorphismMatrix( PreCompose( c^i, c^( i + 1 ) ) )[ 1, 1 ] ) )
-          )
-        );
-    
-    complexes_morphisms := [ ];
-    
-    for m in morphisms do
-      
-      Add( complexes_morphisms,
-        CochainMorphism(
-            complexes[ m[ 2 ] ],
-            complexes[ m[ 3 ] ],
-            List( [ bounds[ 1 ] .. bounds[ 2 ] ], i -> kQ.( Concatenation( m[ 1 ], char, _StRiNg( i ) ) )/C/AC ),
-            bounds[ 1 ]
-          )
-      );
-      
-    od;
-    
-    I := Concatenation( I, Concatenation(
-          List( complexes_morphisms, m -> List( [ bounds[ 1 ] .. bounds[ 2 ] - 1 ],
-              function( i )
-                local f;
-                
-                f := PreCompose( Source( m )^i, m[ i + 1 ] ) - PreCompose( m[ i ], Range( m )^i );
-                
-                if IsZero( f ) then
-                  
-                  return Zero( kQ );
-                  
-                else
-                  
-                  return UnderlyingQuiverAlgebraElement( MorphismMatrix( f )[ 1, 1 ] );
-                  
-                fi;
-                
-              end )
-          )
-        )
-      );
-    
-    for rel in relations do
-       
-      map := Sum( List( rel[ 1 ],
-              r -> r[ 1 ] * PreCompose(
-                List( r[ 2 ],
-                  function( s )
-                    local p;
-                    
-                    p := PositionProperty( morphisms, m -> m[ 1 ] = s );
-                    
-                    if p <> fail then
-                      
-                      return complexes_morphisms[ p ];
-                    
-                    fi;
-                    
-                    p := Position( objects, s );
-                    
-                    if p <> fail then
-                      
-                      return IdentityMorphism( complexes[ p ] );
-                      
-                    fi;
-                    
-                  end ) ) 
-                )
+      C :=  CochainMorphism(
+                  s,
+                  r,
+                  List( [ l .. u ], i -> oid.( Concatenation( map[ 1 ], "_", _StRiNg( i ) ) ) / Aoid ),
+                  l
               );
       
-      h := rel[ 2 ];
+      MakeReadWriteGlobal( map[ 1 ] );
       
-      if h <> "0" then
-        
-        Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ bounds[ 1 ] ] - PreCompose( Source( map ) ^ bounds[ 1 ], C.( Concatenation( h, char, _StRiNg( bounds[1] + 1 ) ) ) /AC ) 
-                )[ 1, 1 ]
-              )
-            );
-        
-        for t in [ bounds[ 1 ] + 1 .. bounds[ 2 ] - 1 ] do
-          
-         Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ t ]
-              - PreCompose( Source( map ) ^ t, C.( Concatenation( h, char, _StRiNg( t + 1 ) ) ) / AC )
-              - PostCompose( Range( map ) ^ ( t - 1 ), C.( Concatenation( h, char, _StRiNg( t ) ) ) /AC )
-                )[ 1, 1 ]
-              )
-            );
-         
-        od;
-        
-        Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ bounds[ 2 ] ] - PostCompose( Range( map ) ^ ( bounds[ 2 ] - 1 ), C.( Concatenation( h, char, _StRiNg( bounds[ 2 ] ) ) ) /AC ) 
-                )[ 1, 1 ]
-              )
-            );
-        
+      if over_homotopy then
+        DeclareSynonym( map[ 1 ], C / H );
       else
-        
-        Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ bounds[ 1 ] ]
-                )[ 1, 1 ]
-              )
-            );
-        
-        for t in [ bounds[ 1 ] + 1 .. bounds[ 2 ] - 1 ] do
-          
-         Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ t ]
-                )[ 1, 1 ]
-              )
-            );
-         
-        od;
-        
-        Add( I,
-          UnderlyingQuiverAlgebraElement(
-            MorphismMatrix( 
-              map[ bounds[ 2 ] ] 
-                )[ 1, 1 ]
-              )
-            );
-
+        DeclareSynonym( map[ 1 ], C );
       fi;
       
     od;
     
-    kQ_mod_I := kQ / I;
-    
-    kQ_mod_I_oid := Algebroid( kQ_mod_I );
-    
-    kQ_mod_I_oid!.Name := "algebroid";
-    
-    P := ProjectionFromAlgebroidOfPathAlgebra( kQ_mod_I_oid );
-    
-    P := ExtendFunctorToAdditiveClosures( P );
-
-    H := HomotopyCategory( RangeOfFunctor( P ), true );
-    
-    P := ExtendFunctorToCochainComplexCategories( P );
-    
-    for k in [ 1 .. Size( complexes ) ] do
-      
-      MakeReadWriteGlobal( objects[ k ] );
-      
-      DeclareSynonym( objects[ k ], P( complexes[ k ] ) / H );
-      
-    od;
-    
-    for k in [ 1 .. Size( complexes_morphisms ) ] do
-      
-      MakeReadWriteGlobal( morphisms[ k ][ 1 ] );
-      
-      DeclareSynonym( morphisms[ k ][ 1 ], P( complexes_morphisms[ k ] ) / H );
-      
-    od;
-    
-    return H;
+    return Aoid;
     
 end );
+
+BindGlobal( "MakeMorphismNullHomotopic",
+  function( L )
+    local map, s, r, lb, ub, diffs_s, diffs_r, maps, extra_arrows, diffs_s_h, diffs_r_h, rels, extra_relations;
+  
+    map := EvalString( L[ 1 ] );
+    
+    s := Source( map );
+    r := Range( map );
+    
+    lb := Maximum( ActiveLowerBound( s ), ActiveLowerBound( r ) + 1 );
+    ub := Minimum( ActiveUpperBound( s ), ActiveUpperBound( r ) + 1 );
+    
+    
+    diffs_s := List( [ lb - 1 .. ub - 1 ],
+                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( s ^ i )[1,1] ) ) )
+                );
+    
+    diffs_r := List( [ lb - 1.. ub - 1 ],
+                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( r ^ i )[1,1] ) ) )
+                );
+    
+    
+    maps := List( [ lb - 1 .. ub ], 
+                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( map[ i ] )[1,1] ) ) )
+                );
+    
+    extra_arrows := List( [ lb .. ub ],
+                   i -> Concatenation( 
+                           L[ 2 ],
+                           "_",
+                           _StRiNg( i )
+                          )
+                  );
+    
+    diffs_s_h := ListN( diffs_s, extra_arrows, { d, h } -> JoinStringsWithSeparator( [ d, h ], "*" ) );
+    diffs_r_h := ListN( extra_arrows, diffs_r, { h, d } -> JoinStringsWithSeparator( [ h, d ], "*" ) );
+    rels := ListN( diffs_s_h{[2..Size(diffs_s_h)]}, diffs_r_h{[1..Size(diffs_s_h)-1]},
+                    { s, r } -> Concatenation( s, "+", r )
+                  );
+    Add( rels, diffs_s_h[ 1 ], 1 );
+    Add( rels, diffs_r_h[ Size( diffs_r_h ) ] );
+  
+    extra_relations := ListN( maps, rels,
+                  { m, r } -> Concatenation( m, "-(", r, ")" )
+                );
+  
+    extra_arrows := List( [ lb .. ub ],
+                 i -> Concatenation( 
+                         L[ 2 ],
+                         "_",
+                         _StRiNg(i),
+                         ":",
+                         JoinStringsWithSeparator(
+                             List( [ Source( map )[ i ][ 1 ], Range( map )[ i - 1 ][ 1 ] ], 
+                                 o -> String( UnderlyingVertex( o ) )
+                               ),
+                             "->"
+                         )
+                       )
+                );
+  
+    return [ extra_arrows, extra_relations ];
+
+end );
+
+InstallMethod( CreateDiagramInHomotopyCategory,
+          [ IsList, IsList, IsList, IsList ],
+  function( maps_labels, bounds, pre_relations, other_relations )
+    local extra_arrows, extra_relations, e, m, relations, oid;
+    
+    CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, [ ], [ ], false );
+    
+    extra_arrows := [ ];
+    
+    extra_relations := [ ];
+    
+    for m in pre_relations do
+      
+      e := MakeMorphismNullHomotopic( m );
+      
+      extra_arrows := Concatenation( extra_arrows, e[ 1 ] );
+      
+      extra_relations := Concatenation( extra_relations, e[ 2 ] );
+      
+    od;
+    
+    oid := CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, extra_arrows, extra_relations, true );
+    
+    for relations in other_relations do
+      
+      for m in relations do
+        
+        e := MakeMorphismNullHomotopic( m );
+        
+        extra_arrows := Concatenation( extra_arrows, e[ 1 ] );
+        
+        extra_relations := Concatenation( extra_relations, e[ 2 ] );
+      
+      od;
+      
+      oid := CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, extra_arrows, extra_relations, true );
+      
+    od;
+    
+    return oid;
+    
+end );
+
+#bounds := [ -3, 3 ];
+#maps :=
+# [
+#       [ "a1", "A1", "A2" ],
+#       [ "a2", "A2", "A3" ],
+#       [ "a3", "A3", "A4" ],
+#       [ "b1", "B1", "B2" ],
+#       [ "b2", "B2", "B3" ],
+#       [ "b3", "B3", "B4" ],
+#       [ "phi1", "A1", "B1" ],
+#       [ "phi2", "A2", "B2" ],
+#       [ "phi3", "A3", "B3" ],
+#       [ "phi4", "A4", "B4" ],
+#       [ "h2", "A2", "B1" ],
+#       [ "h3", "A3", "B2" ],
+#       [ "h4", "A4", "B3" ]
+# ];
+#
+#pre_relations :=
+#    [
+#      [ "PreCompose(a1,a2)", "ha1" ],
+#      [ "PreCompose(a2,a3)", "ha2" ],
+#      [ "PreCompose(b1,b2)", "hb1" ],
+#      [ "PreCompose(b2,b3)", "hb2" ],
+#      
+#      [ "PreCompose(a1,phi2)-PreCompose(phi1,b1)", "s1" ],
+#      [ "PreCompose(a2,phi3)-PreCompose(phi2,b2)", "s2" ],
+#      [ "PreCompose(a3,phi4)-PreCompose(phi3,b3)", "s3" ],
+#      
+#      [ "PreCompose(a1,h2)-phi1", "t1" ],
+#      [ "PreCompose(a2,h3)+PreCompose(h2,b1)-phi2", "t2" ],
+#      [ "PreCompose(a3,h4)+PreCompose(h3,b2)-phi3", "t3" ],
+#      [ "PreCompose(h4,b3)-phi4", "t4" ],
+#      
+#    ];
+#
+#other_relations :=
+#  [
+#    [
+#      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ]
+#    ]
+#  ];
