@@ -545,6 +545,44 @@ InstallMethod( MorphismFromConeObjectByOctahedralAxiom,
     
 end );
 
+##
+InstallMethod( StandardCoConeObject,
+          [ IsCapCategoryMorphism ],
+  function( alpha )
+    
+    return InverseShiftOnObject( StandardConeObject( alpha ) );
+    
+end );
+
+##
+InstallMethod( MorphismFromStandardCoConeObject,
+          [ IsCapCategoryMorphism ],
+  function( alpha )
+    
+    return AdditiveInverseForMorphisms(
+              InverseShiftOnMorphism(
+                  MorphismFromStandardConeObject( alpha )
+                )
+              );
+    
+end );
+
+##
+InstallMethod( MorphismBetweenStandardCoConeObjects,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+  function( alpha, mu, nu, beta )
+    
+    return InverseShiftOnMorphism(
+              MorphismBetweenStandardConeObjects(
+                    alpha,
+                    mu,
+                    nu,
+                    beta
+                  )
+              );
+    
+end );
+
 ###
 #InstallMethod( ShiftExpandingIsomorphism,
 #                [ IsList ],

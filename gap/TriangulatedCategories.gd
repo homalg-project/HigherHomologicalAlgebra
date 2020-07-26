@@ -65,6 +65,14 @@ DeclareOperation( "AddStandardConeObject",
 DeclareOperation( "AddStandardConeObject",
                   [ IsCapCategory, IsList ] );
 
+DeclareAttribute( "StandardCoConeObject",
+                  IsCapCategoryMorphism );
+
+DeclareAttribute( "MorphismFromStandardCoConeObject",
+                  IsCapCategoryMorphism );
+
+DeclareOperation( "MorphismBetweenStandardCoConeObjects",
+      [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 #! @Description
 #! The arguments are a morphism $\alpha: A \to B$ in a triangulated category and an object $C:=C(\alpha)$.
 #! The output is the morphism $\iota(\alpha):B\to C(\alpha)$
