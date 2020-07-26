@@ -1,3 +1,3 @@
-The GAP 4 package `TriangulatedCategoriesForCAP'
+The GAP 4 package `TriangulatedCategories'
 ==============================
 
