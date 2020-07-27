@@ -1,5 +1,4 @@
 
-
 ##
 InstallMethod( \.,
         [ IsHomotopyCategory, IsPosInt ],
@@ -75,6 +74,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     oid := Algebroid( kQ );
     
     AssignSetOfGeneratingMorphisms( oid );
+    AssignSetOfObjects( oid );
     
     gmaps := SetOfGeneratingMorphisms( oid );
     
@@ -175,7 +175,7 @@ end );
 
 BindGlobal( "MakeMorphismNullHomotopic",
   function( L )
-    local map, s, r, lb, ub, diffs_s, diffs_r, maps, extra_arrows, diffs_s_h, diffs_r_h, rels, extra_relations;
+    local map, s, r, lb, ub, diffs_s, diffs_r, maps, extra_arrows, diffs_s_h, diffs_r_h, rels, extra_relations, cat, vertices, vertices_id, i, j;
   
     map := EvalString( L[ 1 ] );
     
@@ -218,7 +218,41 @@ BindGlobal( "MakeMorphismNullHomotopic",
     extra_relations := ListN( maps, rels,
                   { m, r } -> Concatenation( m, "-(", r, ")" )
                 );
-  
+    
+    cat := CapCategory( s );
+    
+    if IsHomotopyCategory( cat ) then
+      
+      vertices := List( SetOfObjects(
+                        UnderlyingCategory(
+                          DefiningCategory(
+                            CapCategory( s ) )
+                          )
+                      ),
+                      o -> Concatenation( "(", String( UnderlyingVertex(o) ), ")" )
+                    );
+    else
+      
+      vertices := List( SetOfObjects(
+                        UnderlyingCategory(
+                          UnderlyingCategory(
+                            CapCategory( s ) )
+                          )
+                      ),
+                      o -> Concatenation( "(", String( UnderlyingVertex(o) ), ")" )
+                    );
+    fi;
+    
+    vertices_id := List( vertices, v -> Concatenation( "IdentityMorphism", v ) );
+    
+    for i in [ 1 .. Size( vertices ) ] do
+      for j in [ 1 .. Size( extra_relations ) ] do
+       
+       extra_relations[ j ] := ReplacedString( extra_relations[ j ], vertices[ i ], vertices_id[ i ] );
+       
+      od;
+    od;
+    
     extra_arrows := List( [ lb .. ub ],
                  i -> Concatenation( 
                          L[ 2 ],
@@ -281,45 +315,46 @@ InstallMethod( CreateDiagramInHomotopyCategory,
     
 end );
 
-#bounds := [ -3, 3 ];
-#maps :=
-# [
-#       [ "a1", "A1", "A2" ],
-#       [ "a2", "A2", "A3" ],
-#       [ "a3", "A3", "A4" ],
-#       [ "b1", "B1", "B2" ],
-#       [ "b2", "B2", "B3" ],
-#       [ "b3", "B3", "B4" ],
-#       [ "phi1", "A1", "B1" ],
-#       [ "phi2", "A2", "B2" ],
-#       [ "phi3", "A3", "B3" ],
-#       [ "phi4", "A4", "B4" ],
-#       [ "h2", "A2", "B1" ],
-#       [ "h3", "A3", "B2" ],
-#       [ "h4", "A4", "B3" ]
-# ];
-#
-#pre_relations :=
-#    [
-#      [ "PreCompose(a1,a2)", "ha1" ],
-#      [ "PreCompose(a2,a3)", "ha2" ],
-#      [ "PreCompose(b1,b2)", "hb1" ],
-#      [ "PreCompose(b2,b3)", "hb2" ],
-#      
-#      [ "PreCompose(a1,phi2)-PreCompose(phi1,b1)", "s1" ],
-#      [ "PreCompose(a2,phi3)-PreCompose(phi2,b2)", "s2" ],
-#      [ "PreCompose(a3,phi4)-PreCompose(phi3,b3)", "s3" ],
-#      
-#      [ "PreCompose(a1,h2)-phi1", "t1" ],
-#      [ "PreCompose(a2,h3)+PreCompose(h2,b1)-phi2", "t2" ],
-#      [ "PreCompose(a3,h4)+PreCompose(h3,b2)-phi3", "t3" ],
-#      [ "PreCompose(h4,b3)-phi4", "t4" ],
-#      
-#    ];
-#
-#other_relations :=
-#  [
-#    [
-#      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ]
-#    ]
-#  ];
+bounds := [ -3, 3 ];
+maps_labels :=
+ [
+       [ "a1", "A1", "A2" ],
+       [ "a2", "A2", "A3" ],
+       [ "a3", "A3", "A4" ],
+       [ "b1", "B1", "B2" ],
+       [ "b2", "B2", "B3" ],
+       [ "b3", "B3", "B4" ],
+       [ "phi1", "A1", "B1" ],
+       [ "phi2", "A2", "B2" ],
+       [ "phi3", "A3", "B3" ],
+       [ "phi4", "A4", "B4" ],
+       [ "h2", "A2", "B1" ],
+       [ "h3", "A3", "B2" ],
+       [ "h4", "A4", "B3" ]
+ ];
+
+pre_relations :=
+    [
+      [ "PreCompose(a1,a2)", "ha1" ],
+      [ "PreCompose(a2,a3)", "ha2" ],
+      [ "PreCompose(b1,b2)", "hb1" ],
+      [ "PreCompose(b2,b3)", "hb2" ],
+      
+      [ "PreCompose(a1,phi2)-PreCompose(phi1,b1)", "s1" ],
+      [ "PreCompose(a2,phi3)-PreCompose(phi2,b2)", "s2" ],
+      [ "PreCompose(a3,phi4)-PreCompose(phi3,b3)", "s3" ],
+      
+      [ "PreCompose(a1,h2)-phi1", "t1" ],
+      [ "PreCompose(a2,h3)+PreCompose(h2,b1)-phi2", "t2" ],
+      [ "PreCompose(a3,h4)+PreCompose(h3,b2)-phi3", "t3" ],
+      [ "PreCompose(h4,b3)-phi4", "t4" ],
+      
+    ];
+
+other_relations :=
+  [
+    [
+      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ],
+      [ "BasisOfExternalHom( Shift( A3, 1 ), B4 )[1]", "y" ]
+    ]
+  ];
