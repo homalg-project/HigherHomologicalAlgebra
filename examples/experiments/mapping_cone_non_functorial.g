@@ -8,40 +8,46 @@ SetInfoLevel( InfoComplexesCategories, 3 );
 field := HomalgFieldOfRationals( );
 
 ##
-vertex_labels := [ "A_1", "A_0", "B_1", "B_0" ];
-labels := [ "d_A", "d_B", "f_0", "f_1", "g_0", "g_1", "y", "z" ];
-sources := [ 1, 3, 2, 1, 2, 1, 2, 2 ];
-ranges  := [ 2, 4, 4, 3, 4, 3, 3, 3 ];
-quiver := RightQuiver( "quiver", vertex_labels, labels, sources, ranges );
+vertices_labels := [ "A", "C", "B", "D" ];
+arrows_labels := [ "r", "s", "f_0", "f_1", "g_0", "g_1", "u", "v" ];
+sources := [ 1, 3, 1, 2, 1, 2, 2, 2 ];
+ranges  := [ 2, 4, 3, 4, 3, 4, 3, 3 ];
+quiver := RightQuiver( "quiver", vertices_labels, arrows_labels, sources, ranges );
 
 Qq := PathAlgebra( field, quiver );
 
 relations := [
-      Qq.d_A * Qq.f_0 - Qq.f_1 * Qq.d_B,
-      Qq.d_A * Qq.g_0 - Qq.g_1 * Qq.d_B,
-      Qq.f_1 - Qq.g_1- Qq.d_A * Qq.y,
-      Qq.f_0 - Qq.g_0 - Qq.z * Qq.d_B 
+      Qq.r * Qq.f_1 - Qq.f_0 * Qq.s,
+      Qq.r * Qq.g_1 - Qq.g_0 * Qq.s,
+      Qq.f_1 - Qq.g_1- Qq.v * Qq.s,
+      Qq.f_0 - Qq.g_0 - Qq.r * Qq.u
     ];
     
-A := Qq / relations;
+gamma := Qq / relations;
 
-C := Algebroid( A );;
-AC := AdditiveClosure( C );
-Ch_AC := ChainComplexCategory( AC );
-Ho_AC := HomotopyCategory( AC );
+gamma_oid := Algebroid( gamma );;
+AssignSetOfObjects( gamma_oid );
+AssignSetOfGeneratingMorphisms( gamma_oid );
 
-AssignSetOfObjects( C );
-AssignSetOfGeneratingMorphisms( C );
+gamma_oid_oplus := AdditiveClosure( gamma_oid );
+Co_gamma_oid_oplus := CochainComplexCategory( gamma_oid_oplus );
+Ho_gamma_oid_oplus := HomotopyCategory( gamma_oid_oplus, true );
 
-st_A := StandardExactTriangle( d_A / AC / Ch_AC / Ho_AC );
-st_B := StandardExactTriangle( d_B / AC / Ch_AC / Ho_AC );
+st_r := StandardExactTriangle( r / gamma_oid_oplus / Co_gamma_oid_oplus / Ho_gamma_oid_oplus );
+st_s := StandardExactTriangle( s / gamma_oid_oplus / Co_gamma_oid_oplus / Ho_gamma_oid_oplus );
 
-m := MorphismOfExactTriangles( st_A, f_1 / AC / Ch_AC / Ho_AC, f_0 / AC / Ch_AC / Ho_AC, st_B );
+m := MorphismOfExactTriangles(
+        st_r,
+        f_0 / gamma_oid_oplus / Co_gamma_oid_oplus / Ho_gamma_oid_oplus,
+        f_1 / gamma_oid_oplus / Co_gamma_oid_oplus / Ho_gamma_oid_oplus,
+        st_s
+      );
+
 IsWellDefined( m );
 
-g := HomotopyCategoryMorphism( st_A[ 2 ], st_B[ 2 ], [ g_0 / AC, g_1 / AC ], 0 );
+g := HomotopyCategoryMorphism( st_r[ 2 ], st_s[ 2 ], [ g_0 / gamma_oid_oplus, g_1 / gamma_oid_oplus ], 0 );
 
-n := MorphismOfExactTriangles( st_A, m[ 0 ], m[ 1 ], g, st_B );
+n := MorphismOfExactTriangles( st_r, m[ 0 ], m[ 1 ], g, st_s );
 IsWellDefined( n );
 
 m = n;

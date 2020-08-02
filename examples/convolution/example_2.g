@@ -1,4 +1,4 @@
-ReadPackage( "DerivedCategories", "examples/convolution/pre_functions.g" );
+ReadPackage( "DerivedCategories", "examples/convolution/clean_pre_functions.g" );
 
 # 
 
@@ -9,7 +9,7 @@ r := 4;
 b := 0;
 a := 4;
 
-input :=
+names :=
   [
     # vertices labels
     [ "P", "Q" ],
@@ -28,7 +28,7 @@ input :=
     
     # homotopies
     [
-      #[ "h" ]
+      [ "h" ]
     ],
     
     # differentials relations
@@ -39,17 +39,20 @@ input :=
       [ "dP", "hdP", "alpha", "h_alpha", "dQ", "hdQ" ],
       [ "dP", "hdP", "beta",  "h_beta",  "dQ", "hdQ" ]
     ],
-    
+   
     # homotopies relations
     [
-      #[ "dP","hdP", [ "alpha", "beta" ], [ "h_alpha", "h_beta" ], "h", "dQ", "hdQ" ]
+      [ "dP","hdP", [ "alpha", "beta" ], [ "h_alpha", "h_beta" ], "h", "dQ", "hdQ" ]
     ],
   ];
   
+
+extra_names := [ ];
+
 complexes := [ [ "dP", "P" ], [ "dQ", "Q" ] ];
 morphisms := [ [ "P", "Q", "alpha" ], [ "P", "Q", "beta" ] ];
 
-AC := create_free_category( field, l, r, b, a, input, complexes, morphisms );
+AC := create_algebroid( field, l, r, b, a, names, extra_names, complexes, morphisms );
 
 quit;
 #   P :=
