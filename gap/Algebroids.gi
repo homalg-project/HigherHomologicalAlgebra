@@ -22,17 +22,15 @@ BindGlobal( "_StRiNg",
 end );
 
 BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
-  function( maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
-    local l, u, k, main_vertices, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
+  function( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
+    local l, u, k, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
     
     l := bounds[ 1 ];
     
     u := bounds[ 2 ];
     
     k := HomalgFieldOfRationals( );
-    
-    main_vertices := DuplicateFreeList( Concatenation( List( maps_labels, map -> map{ [ 2, 3 ] } ) ) );
-    
+     
     vertices := ListX( main_vertices, [ l .. u ], 
                     { V, i } -> Concatenation( V, "_", _StRiNg( i ) )
                   );
@@ -272,12 +270,12 @@ BindGlobal( "MakeMorphismNullHomotopic",
 
 end );
 
-InstallMethod( CreateDiagramInHomotopyCategory,
-          [ IsList, IsList, IsList, IsList ],
-  function( maps_labels, bounds, pre_relations, other_relations )
+InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
+          [ IsList, IsList, IsList, IsList, IsList ],
+  function( main_vertices, maps_labels, bounds, pre_relations, other_relations )
     local extra_arrows, extra_relations, e, m, relations, oid;
     
-    CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, [ ], [ ], false );
+    CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, [ ], [ ], false );
     
     extra_arrows := [ ];
     
@@ -293,7 +291,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       
     od;
     
-    oid := CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, extra_arrows, extra_relations, true );
+    oid := CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true );
     
     for relations in other_relations do
       
@@ -307,7 +305,7 @@ InstallMethod( CreateDiagramInHomotopyCategory,
       
       od;
       
-      oid := CREATE_ALGEBROID_OF_DIAGRAM( maps_labels, bounds, extra_arrows, extra_relations, true );
+      oid := CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true );
       
     od;
     

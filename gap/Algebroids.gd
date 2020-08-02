@@ -10,4 +10,4 @@
 # bounds := [ 0, 3 ];
 
 
-DeclareOperation( "CreateDiagramInHomotopyCategory", [ IsList, IsList, IsList, IsList ] );
+DeclareOperation( "AlgebroidOfDiagramInHomotopyCategory", [ IsList, IsList, IsList, IsList, IsList ] );
