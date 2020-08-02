@@ -1571,6 +1571,18 @@ InstallMethod( BoxProduct,
     
 end );
 
+##
+InstallOtherMethod( ShiftLazy,
+        [ IsChainOrCochainMorphism, IsInt ],
+  function( phi, n )
+    local cat;
+    
+    cat := CapCategory( phi );
+    
+    return ApplyFunctor( ShiftFunctor( cat, n ), phi );
+    
+end );
+
 #####################################
 #
 # To Do Lists operations
