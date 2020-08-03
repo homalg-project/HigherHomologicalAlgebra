@@ -195,3 +195,10 @@ InstallOtherMethod( Morphisms,
               [ IsHomotopyCategoryMorphism ],
   alpha -> Morphisms( UnderlyingCell( alpha ) )
 );
+
+##
+InstallOtherMethod( \*,
+              [ IsRingElement, IsHomotopyCategoryObject ],
+  { r, a } -> ( r * UnderlyingCell( a ) ) / CapCategory( a )
+);
+
