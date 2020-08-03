@@ -25,6 +25,10 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
   function( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
     local l, u, k, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
     
+    MAKE_READ_WRITE_GLOBAL( "REREADING" );
+    REREADING := true;
+    SetInfoLevel( InfoWarning, 0 );
+    
     l := bounds[ 1 ];
     
     u := bounds[ 2 ];
@@ -106,8 +110,8 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     AssignSetOfObjects( oid );
     
     oid!.Name := Concatenation(
-                      "Algebroid(V=", String( Size( vertices ) ), ",E=", 
-                      String( Size( gmaps ) ), ",rel=", String( Size( rels ) ), ")"
+                      "Algebroid( V=", String( Size( vertices ) ), ", E=", 
+                      String( Size( gmaps ) ), ", rel=", String( Size( rels ) ), " )"
                     );
     
     Aoid := AdditiveClosure( oid );
@@ -167,6 +171,10 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
       
     od;
     
+    REREADING := false;
+    
+    SetInfoLevel( InfoWarning, 1 );
+    
     return Aoid;
     
 end );
@@ -183,21 +191,21 @@ BindGlobal( "MakeMorphismNullHomotopic",
     lb := Maximum( ActiveLowerBound( s ), ActiveLowerBound( r ) + 1 );
     ub := Minimum( ActiveUpperBound( s ), ActiveUpperBound( r ) + 1 );
     
-    
-    diffs_s := List( [ lb - 1 .. ub - 1 ],
-                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( s ^ i )[1,1] ) ) )
-                );
-    
-    diffs_r := List( [ lb - 1.. ub - 1 ],
-                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( r ^ i )[1,1] ) ) )
-                );
-    
-    
     maps := List( [ lb - 1 .. ub ], 
                   i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( map[ i ] )[1,1] ) ) )
                 );
     
-    extra_arrows := List( [ lb .. ub ],
+    if L[ 2 ] <> "0" and lb <= ub then
+      
+      diffs_s := List( [ lb - 1 .. ub - 1 ],
+                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( s ^ i )[1,1] ) ) )
+                );
+      
+      diffs_r := List( [ lb - 1.. ub - 1 ],
+                  i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( r ^ i )[1,1] ) ) )
+                );
+      
+      extra_arrows := List( [ lb .. ub ],
                    i -> Concatenation( 
                            L[ 2 ],
                            "_",
@@ -205,17 +213,22 @@ BindGlobal( "MakeMorphismNullHomotopic",
                           )
                   );
     
-    diffs_s_h := ListN( diffs_s, extra_arrows, { d, h } -> JoinStringsWithSeparator( [ d, h ], "*" ) );
-    diffs_r_h := ListN( extra_arrows, diffs_r, { h, d } -> JoinStringsWithSeparator( [ h, d ], "*" ) );
-    rels := ListN( diffs_s_h{[2..Size(diffs_s_h)]}, diffs_r_h{[1..Size(diffs_s_h)-1]},
+      diffs_s_h := ListN( diffs_s, extra_arrows, { d, h } -> JoinStringsWithSeparator( [ d, h ], "*" ) );
+      diffs_r_h := ListN( extra_arrows, diffs_r, { h, d } -> JoinStringsWithSeparator( [ h, d ], "*" ) );
+      rels := ListN( diffs_s_h{[2..Size(diffs_s_h)]}, diffs_r_h{[1..Size(diffs_s_h)-1]},
                     { s, r } -> Concatenation( s, "+", r )
                   );
-    Add( rels, diffs_s_h[ 1 ], 1 );
-    Add( rels, diffs_r_h[ Size( diffs_r_h ) ] );
+      Add( rels, diffs_s_h[ 1 ], 1 );
+      Add( rels, diffs_r_h[ Size( diffs_r_h ) ] );
   
-    extra_relations := ListN( maps, rels,
+      extra_relations := ListN( maps, rels,
                   { m, r } -> Concatenation( m, "-(", r, ")" )
                 );
+    else
+      
+      extra_relations := maps;
+      
+    fi;
     
     cat := CapCategory( s );
     
@@ -251,7 +264,9 @@ BindGlobal( "MakeMorphismNullHomotopic",
       od;
     od;
     
-    extra_arrows := List( [ lb .. ub ],
+    if L[ 2 ] <> "0" then
+      
+      extra_arrows := List( [ lb .. ub ],
                  i -> Concatenation( 
                          L[ 2 ],
                          "_",
@@ -265,7 +280,12 @@ BindGlobal( "MakeMorphismNullHomotopic",
                          )
                        )
                 );
-  
+    else
+      
+      extra_arrows := [ ];
+      
+    fi;
+    
     return [ extra_arrows, extra_relations ];
 
 end );
