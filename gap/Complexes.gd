@@ -458,6 +458,9 @@ DeclareOperation( "DifferentialsSupport", [ IsBoundedChainOrCochainComplex ] );
 DeclareOperation( "AsComplexOverCapFullSubcategory",
       [ IsCapCategory, IsChainOrCochainComplex ] );
 
+
+DeclareOperation( "\*", [ IsRingElement, IsChainOrCochainComplex ] );
+
 #! @Description
 #! The input is a chain (resp. cochain) complex $C$ and two integers $m,n$. 
 #! The output is true when $C$ is well defined in the interval $[m,\dots,n]$ and false otherwise.

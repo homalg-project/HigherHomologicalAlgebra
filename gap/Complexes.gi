@@ -1436,6 +1436,40 @@ InstallMethod( AsComplexOverCapFullSubcategory,
 end );
 
 ##
+InstallOtherMethod( \*,
+          [ IsRingElement, IsChainOrCochainComplex ],
+  function( r, C )
+    local cat, diffs, rC;
+    
+    cat := UnderlyingCategory( CapCategory( C ) );
+    
+    diffs := Differentials( C );
+    
+    diffs := ApplyMap( diffs, d -> MultiplyWithElementOfCommutativeRingForMorphisms( r, d ) );
+    
+    if IsChainComplex( C ) then
+      
+      rC := ChainComplex( cat, diffs );
+      
+    else
+      
+      rC := CochainComplex( cat, diffs );
+      
+    fi;
+    
+    if HasActiveUpperBound( C ) then
+      SetUpperBound( rC, ActiveUpperBound( C ) );
+    fi;
+    
+    if HasActiveLowerBound( C ) then
+      SetLowerBound( rC, ActiveLowerBound( C ) );
+    fi;
+    
+    return rC;
+    
+end );
+
+##
 InstallMethod( IsWellDefined,
           [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )
