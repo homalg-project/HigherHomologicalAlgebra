@@ -1134,3 +1134,30 @@ InstallMethod( StalkCochainFunctorOp,
     
 end );
 
+##
+InstallMethod( MinusOneFunctor,
+          [ IsChainOrCochainComplexCategory ],
+  function( complexes )
+    local morphism_constructor, name, F;
+    
+    if IsChainComplexCategory( complexes ) then
+      
+      morphism_constructor := ChainMorphism;
+      
+    else
+      
+      morphism_constructor := CochainMorphism;
+      
+    fi;
+    
+    name := "Endofunctor defined by: C -> -1 * C";
+    
+    F := CapFunctor( name, complexes, complexes );
+    
+    AddObjectFunction( F, C -> -1 * C );
+    
+    AddMorphismFunction( F, { s, phi, r } -> morphism_constructor( s, r, Morphisms( phi ) ) );
+    
+    return F;
+    
+end );
