@@ -489,3 +489,78 @@ InstallOtherMethod( LocalizationFunctorByInjectiveObjects,
     
 end );
 
+##
+InstallMethod( MinusOneFunctor,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local complex_cat, F, H;
+    
+    complex_cat := UnderlyingCategory( homotopy_category );
+    
+    F := MinusOneFunctor( complex_cat );
+    
+    H := CapFunctor( Name( F ), homotopy_category, homotopy_category );
+    
+    AddObjectFunction( H,
+      a -> ApplyFunctor( F, UnderlyingCell( a ) ) / homotopy_category
+    );
+    
+    AddMorphismFunction( H,
+      { s, alpha, r } -> ApplyFunctor( F, UnderlyingCell( alpha ) ) / homotopy_category
+    );
+    
+    return H;
+    
+end );
+
+##
+InstallMethod( NaturalIsomorphismFromIdentityIntoMinusOneFunctor,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local complex_cat, eta, Id, F, name, nat;
+    
+    complex_cat := UnderlyingCategory( homotopy_category );
+    
+    eta := NaturalIsomorphismFromIdentityIntoMinusOneFunctor( complex_cat );
+    
+    Id := IdentityFunctor( homotopy_category );
+    
+    F := MinusOneFunctor( homotopy_category );
+    
+    name := "Natural transformation: Id => -1 * -";
+    
+    nat := NaturalTransformation( name, Id, F );
+    
+    AddNaturalTransformationFunction( nat,
+      { s, a, r } -> ApplyNaturalTransformation( eta, UnderlyingCell( a ) ) / homotopy_category
+    );
+    
+    return nat;
+    
+end );
+
+##
+InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local complex_cat, eta, Id, F, name, nat;
+    
+    complex_cat := UnderlyingCategory( homotopy_category );
+    
+    eta := NaturalIsomorphismFromMinusOneFunctorIntoIdentity( complex_cat );
+    
+    Id := IdentityFunctor( homotopy_category );
+    
+    F := MinusOneFunctor( homotopy_category );
+    
+    name := "Natural transformation: -1 * - => Id";
+    
+    nat := NaturalTransformation( name, F, Id );
+    
+    AddNaturalTransformationFunction( nat,
+      { s, a, r } -> ApplyNaturalTransformation( eta, UnderlyingCell( a ) ) / homotopy_category
+    );
+    
+    return nat;
+    
+end );

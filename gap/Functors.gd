@@ -44,6 +44,12 @@ DeclareAttribute( "LocalizationFunctorByProjectiveObjects", IsHomotopyCategory )
 
 DeclareAttribute( "LocalizationFunctorByInjectiveObjects", IsHomotopyCategory );
 
+DeclareAttribute( "MinusOneFunctor", IsHomotopyCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoMinusOneFunctor", IsHomotopyCategory );
+
+DeclareAttribute( "NaturalIsomorphismFromMinusOneFunctorIntoIdentity", IsHomotopyCategory );
+
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
 # DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
