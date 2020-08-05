@@ -9,7 +9,15 @@ InstallMethod( \.,
 BindGlobal( "_StRiNg",
   function( i )
     
-    if i < 0 then
+    if IsList( i ) and not IsString( i ) then
+      
+      return List( i, ValueGlobal( "_StRiNg" ) );
+    
+    elif IsString( i ) then
+      
+      return ReplacedString( i, "-", "m" );
+      
+    elif i < 0 then
       
       return ReplacedString( String( i ), "-", "m" );
       
@@ -175,7 +183,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     #SetInfoLevel( InfoWarning, 1 );
     
-    return Aoid;
+    return oid;
     
 end );
 
