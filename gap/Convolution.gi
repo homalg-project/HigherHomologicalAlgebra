@@ -385,6 +385,12 @@ InstallMethod( ForwardConvolutionAtIndexOp,
 end );
 
 ##
+InstallOtherMethod( ForwardConvolutionAtIndex,
+        [ IsHomotopyCategoryCell, IsInt ],
+  { c, m } -> ForwardConvolutionAtIndex( UnderlyingCell( c ), m )
+);
+
+##
 InstallMethod( ForwardConvolution,
           [ IsCochainComplex ],
   function( C )
@@ -514,6 +520,12 @@ InstallMethod( BackwardConvolutionAtIndexOp,
     fi;
     
 end );
+
+##
+InstallOtherMethod( BackwardConvolutionAtIndex,
+        [ IsHomotopyCategoryCell, IsInt ],
+  { c, m } -> BackwardConvolutionAtIndex( UnderlyingCell( c ), m )
+);
 
 ##
 InstallMethod( BackwardConvolution,
