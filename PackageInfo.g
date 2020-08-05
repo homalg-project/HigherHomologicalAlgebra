@@ -76,7 +76,7 @@ Dependencies := rec(
                            [ "GAPDoc", ">= 1.5" ],
                             [ "TriangulatedCategories", ">= 2020.07.15" ],
                             #[ "FrobeniusCategories", ">= 2019.12.06" ],
-                            [ "QuotientCategories", ">= 2020.02.05" ],
+                            [ "QuotientCategories", ">= 2020.07.05" ],
                             #[ "FreydCategoriesForCAP", ">= 0" ]
                           ],
   SuggestedOtherPackages := [ ],
