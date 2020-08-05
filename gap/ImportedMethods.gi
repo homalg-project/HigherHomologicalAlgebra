@@ -202,3 +202,15 @@ InstallOtherMethod( \*,
   { r, a } -> ( r * UnderlyingCell( a ) ) / CapCategory( a )
 );
 
+##
+InstallOtherMethod( BrutalTruncationAbove,
+              [ IsHomotopyCategoryCell, IsInt ],
+  { c, n } -> BrutalTruncationAbove( UnderlyingCell( c ), n ) / CapCategory( c )
+);
+
+##
+InstallOtherMethod( BrutalTruncationBelow,
+              [ IsHomotopyCategoryCell, IsInt ],
+  { c, n } -> BrutalTruncationBelow( UnderlyingCell( c ), n ) / CapCategory( c )
+);
+
