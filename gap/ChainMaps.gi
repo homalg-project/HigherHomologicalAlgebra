@@ -1583,6 +1583,24 @@ InstallOtherMethod( ShiftLazy,
     
 end );
 
+##
+InstallOtherMethod( BrutalTruncationAbove,
+      [ IsChainOrCochainMorphism, IsInt ],
+  function( phi, n )
+    
+    return BrutalTruncationAboveFunctor( CapCategory( phi ), n )( phi );
+    
+end );
+
+##
+InstallOtherMethod( BrutalTruncationBelow,
+      [ IsChainOrCochainMorphism, IsInt ],
+  function( phi, n )
+    
+    return BrutalTruncationBelowFunctor( CapCategory( phi ), n )( phi );
+    
+end );
+
 #####################################
 #
 # To Do Lists operations
