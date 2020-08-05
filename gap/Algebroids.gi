@@ -25,9 +25,9 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
   function( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
     local l, u, k, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
     
-    MAKE_READ_WRITE_GLOBAL( "REREADING" );
-    REREADING := true;
-    SetInfoLevel( InfoWarning, 0 );
+    #MAKE_READ_WRITE_GLOBAL( "REREADING" );
+    #REREADING := true;
+    #SetInfoLevel( InfoWarning, 0 );
     
     l := bounds[ 1 ];
     
@@ -171,9 +171,9 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
       
     od;
     
-    REREADING := false;
+    #REREADING := false;
     
-    SetInfoLevel( InfoWarning, 1 );
+    #SetInfoLevel( InfoWarning, 1 );
     
     return Aoid;
     
@@ -333,46 +333,46 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
     
 end );
 
-bounds := [ -3, 3 ];
-maps_labels :=
- [
-       [ "a1", "A1", "A2" ],
-       [ "a2", "A2", "A3" ],
-       [ "a3", "A3", "A4" ],
-       [ "b1", "B1", "B2" ],
-       [ "b2", "B2", "B3" ],
-       [ "b3", "B3", "B4" ],
-       [ "phi1", "A1", "B1" ],
-       [ "phi2", "A2", "B2" ],
-       [ "phi3", "A3", "B3" ],
-       [ "phi4", "A4", "B4" ],
-       [ "h2", "A2", "B1" ],
-       [ "h3", "A3", "B2" ],
-       [ "h4", "A4", "B3" ]
- ];
-
-pre_relations :=
-    [
-      [ "PreCompose(a1,a2)", "ha1" ],
-      [ "PreCompose(a2,a3)", "ha2" ],
-      [ "PreCompose(b1,b2)", "hb1" ],
-      [ "PreCompose(b2,b3)", "hb2" ],
-      
-      [ "PreCompose(a1,phi2)-PreCompose(phi1,b1)", "s1" ],
-      [ "PreCompose(a2,phi3)-PreCompose(phi2,b2)", "s2" ],
-      [ "PreCompose(a3,phi4)-PreCompose(phi3,b3)", "s3" ],
-      
-      [ "PreCompose(a1,h2)-phi1", "t1" ],
-      [ "PreCompose(a2,h3)+PreCompose(h2,b1)-phi2", "t2" ],
-      [ "PreCompose(a3,h4)+PreCompose(h3,b2)-phi3", "t3" ],
-      [ "PreCompose(h4,b3)-phi4", "t4" ],
-      
-    ];
-
-other_relations :=
-  [
-    [
-      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ],
-      [ "BasisOfExternalHom( Shift( A3, 1 ), B4 )[1]", "y" ]
-    ]
-  ];
+#bounds := [ -3, 3 ];
+#maps_labels :=
+# [
+#       [ "a1", "A1", "A2" ],
+#       [ "a2", "A2", "A3" ],
+#       [ "a3", "A3", "A4" ],
+#       [ "b1", "B1", "B2" ],
+#       [ "b2", "B2", "B3" ],
+#       [ "b3", "B3", "B4" ],
+#       [ "phi1", "A1", "B1" ],
+#       [ "phi2", "A2", "B2" ],
+#       [ "phi3", "A3", "B3" ],
+#       [ "phi4", "A4", "B4" ],
+#       [ "h2", "A2", "B1" ],
+#       [ "h3", "A3", "B2" ],
+#       [ "h4", "A4", "B3" ]
+# ];
+#
+#pre_relations :=
+#    [
+#      [ "PreCompose(a1,a2)", "ha1" ],
+#      [ "PreCompose(a2,a3)", "ha2" ],
+#      [ "PreCompose(b1,b2)", "hb1" ],
+#      [ "PreCompose(b2,b3)", "hb2" ],
+#      
+#      [ "PreCompose(a1,phi2)-PreCompose(phi1,b1)", "s1" ],
+#      [ "PreCompose(a2,phi3)-PreCompose(phi2,b2)", "s2" ],
+#      [ "PreCompose(a3,phi4)-PreCompose(phi3,b3)", "s3" ],
+#      
+#      [ "PreCompose(a1,h2)-phi1", "t1" ],
+#      [ "PreCompose(a2,h3)+PreCompose(h2,b1)-phi2", "t2" ],
+#      [ "PreCompose(a3,h4)+PreCompose(h3,b2)-phi3", "t3" ],
+#      [ "PreCompose(h4,b3)-phi4", "t4" ],
+#      
+#    ];
+#
+#other_relations :=
+#  [
+#    [
+#      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ],
+#      [ "BasisOfExternalHom( Shift( A3, 1 ), B4 )[1]", "y" ]
+#    ]
+#  ];
