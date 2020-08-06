@@ -1607,51 +1607,54 @@ InstallMethod( ShiftLazyOp,
     
     AddToToDoList( ToDoListEntryForEqualAttributes( C, "IsExact", complex, "IsExact" ) );
     
-    AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
+    if HasActiveLowerBound( C ) then
       
-      function( )
-        
-        if not HasFAU_BOUND( complex ) then
-          
-          SetUpperBound( complex, FAU_BOUND( C ) - i );
-        
-        fi;
+      SetLowerBound( complex, ActiveLowerBound( C ) - i );
       
-      end ) );
+    else
       
-    AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ],
-      function( )
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
+        function( )
+          if not HasFAL_BOUND( complex ) then
+            SetLowerBound( complex, ActiveLowerBound( C ) - i );
+          fi;
+        end )
+      );
         
-        if not HasFAU_BOUND( C ) then
-          
-          SetUpperBound( C, FAU_BOUND( complex ) + i );
-        
-        fi;
-        
-      end ) );
+      AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ],
+        function( )
+          if not HasFAL_BOUND( C ) then
+            SetLowerBound( C, ActiveLowerBound( complex ) + i );
+          fi;
+        end )
+      );
+    
+    fi;
+    
+    if HasActiveUpperBound( C ) then
       
-    AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ],
-      function( )
-        
-        if not HasFAL_BOUND( complex ) then
-          
-          SetLowerBound( complex, FAL_BOUND( C ) - i );
-          
-        fi;
-        
-      end ) );
-        
-    AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAL_BOUND", true ] ],
-      function( )
-        
-        if not HasFAL_BOUND( C ) then
-          
-          SetLowerBound( C, FAL_BOUND( complex ) + i );
-          
-        fi;
-        
-      end ) );
+      SetUpperBound( complex, ActiveUpperBound( C ) - i );
       
+    else
+      
+      AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ],
+        function( )
+          if not HasFAU_BOUND( complex ) then
+            SetUpperBound( complex, ActiveUpperBound( C ) - i );
+          fi;
+        end )
+      );
+        
+      AddToToDoList( ToDoListEntry( [ [ complex, "HAS_FAU_BOUND", true ] ],
+        function( )
+          if not HasFAU_BOUND( C ) then
+            SetUpperBound( C, ActiveUpperBound( complex ) + i );
+          fi;
+        end )
+      );
+      
+    fi;
+    
     return complex;
     
 end );
