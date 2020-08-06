@@ -107,6 +107,20 @@ InstallMethod( \/,
 );
 
 ##
+InstallOtherMethod( \/,
+          [ IsCapCategoryMorphism, IsHomotopyCategory ],
+  function( a, H )
+    
+    if IsIdenticalObj( CapCategory( a ), DefiningCategory( H ) ) then
+      return a/UnderlyingCategory( H )/H;
+    fi;
+    
+    TryNextMethod( );
+    
+end );
+
+
+##
 InstallMethod( AsChainMorphism,
               [ IsHomotopyCategoryMorphism ],
   function( alpha )
