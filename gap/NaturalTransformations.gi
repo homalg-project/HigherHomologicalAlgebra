@@ -71,7 +71,7 @@ InstallMethod( NaturalIsomorphismFromIdentityIntoMinusOneFunctor,
         
         maps := AsZFunction(
                   function( i )
-                    if i mod 2 = 0 then
+                    if i mod 2 = 1 then
                       return IdentityMorphism( C[ i ] );
                     else
                       return AdditiveInverse( IdentityMorphism( C[ i ] ) );
@@ -117,7 +117,7 @@ InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
         
         maps := AsZFunction(
                   function( i )
-                    if i mod 2 = 0 then
+                    if i mod 2 = 1 then
                       return IdentityMorphism( C[ i ] );
                     else
                       return AdditiveInverse( IdentityMorphism( C[ i ] ) );
