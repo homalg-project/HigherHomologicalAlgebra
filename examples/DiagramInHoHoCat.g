@@ -1,8 +1,8 @@
 LoadPackage( "HomotopyCategories" );
 ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 
-N := 4; # Nr ob objects in each object in HoHo
-l := -3; # the position of the lower bound
+N := 5; # Nr ob objects in each object in HoHo
+l := -4; # the position of the lower bound
 bounds := [ l, l+N+1 ];
 labels_of_objects := [ "A", "B" ];
 labels_of_morphisms := [ [ "phi", "A", "B" ] ];
