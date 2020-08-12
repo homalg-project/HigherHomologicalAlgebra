@@ -25,6 +25,10 @@ KeyDependentOperation( "ShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
 KeyDependentOperation( "UnsignedShiftFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
 
+KeyDependentOperation( "BrutalTruncationAboveFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
+
+KeyDependentOperation( "BrutalTruncationBelowFunctor", IsHomotopyCategory, IsInt, ReturnTrue );
+
 KeyDependentOperation( "EquivalenceIntoFullSubcategoryGeneratedByObjectsConcentratedInDegree",
           IsHomotopyCategory, IsInt, ReturnTrue );
 
