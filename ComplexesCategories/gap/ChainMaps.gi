@@ -277,6 +277,7 @@ end );
 #
 ###################################
 
+##
 InstallMethod( MorphismAtOp,
           [ IsChainOrCochainMorphism, IsInt ],
 
@@ -309,7 +310,16 @@ InstallMethod( MorphismAtOp,
 
 end );
 
+##
 InstallMethod( \[\], [ IsChainOrCochainMorphism, IsInt ], MorphismAt );
+
+##
+InstallOtherMethod( \^, [ IsChainOrCochainMorphism, IsInt ],
+  function( phi, n )
+  
+    Error( "Maybe you should use brackets [] ;)" );
+    
+end );
 
 #################################
 #
