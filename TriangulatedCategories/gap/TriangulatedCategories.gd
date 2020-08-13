@@ -195,6 +195,13 @@ DeclareOperation( "AddShiftOnMorphismWithGivenObjects", [ IsCapCategory, IsList 
 DeclareAttribute( "ShiftOnMorphism", IsCapCategoryMorphism );
 
 #! @Description
+#! This is a convenience method to apply the shift functor on objects or morphisms.
+#! The operation delegates to either <C>ShiftOnObject</C> or <C>ShiftOnMorphism</C>.
+#! @Returns $\Sigma c$
+#! @Arguments c
+DeclareOperation( "Shift", [ IsCapCategoryCell ] );
+
+#! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$. The output is $\Sigma^{-1} A$.
 #! @Returns $\Sigma^{-1} A$
 #! @Arguments A
@@ -237,6 +244,14 @@ DeclareOperation( "AddInverseShiftOnMorphismWithGivenObjects", [ IsCapCategory, 
 #! @Returns $\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B$
 #! @Arguments alpha
 DeclareAttribute( "InverseShiftOnMorphism", IsCapCategoryMorphism );
+
+
+#! @Description
+#! This is a convenience method to apply the inverse shift functor on objects or morphisms.
+#! The operation delegates to either <C>InverseShiftOnObject</C> or <C>InverseShiftOnMorphism</C>.
+#! @Returns $\Sigma^{-1} c$
+#! @Arguments c
+DeclareOperation( "InverseShift", [ IsCapCategoryCell ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma \circ \Sigma^{-1}) A$ in a triangulated category $\mathcal{T}$.

@@ -699,6 +699,37 @@ InstallMethod( ShiftOp,
 
 end );
 
+##
+InstallOtherMethod( Shift,
+              [ IsCapCategoryCell ],
+  function( c )
+    
+    if not IsTriangulatedCategory( CapCategory( c ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return Shift( c, 1 );
+    
+end );
+
+##
+InstallMethod( InverseShift,
+              [ IsCapCategoryCell ],
+  function( c )
+    
+    if not IsTriangulatedCategory( CapCategory( c ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    return Shift( c, -1 );
+    
+end );
+
+##
 InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
                IsCapCategory and IsTriangulatedCategory,
                0,
