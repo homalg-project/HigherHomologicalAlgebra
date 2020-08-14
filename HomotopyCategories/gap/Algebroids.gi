@@ -336,6 +336,8 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
       oid := CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true );
       
     od;
+     
+    oid!.defining_data := [ main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true ];
     
     return oid;
     
