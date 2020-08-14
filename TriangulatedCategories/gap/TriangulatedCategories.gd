@@ -48,6 +48,8 @@ DeclareCategory( "IsTriangulatedCategory", IsCapCategory );
 DeclareAttribute( "StandardConeObject",
                   IsCapCategoryMorphism );
 
+DeclareSynonym( "cone", StandardConeObject );
+
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
 #! the category for the basic operation <C>StandardConeObject</C>.
@@ -99,6 +101,7 @@ DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject"
 #! @Arguments alpha
 #! @Returns a morphism $\iota(\alpha):B\to C(\alpha)$
 DeclareAttribute( "MorphismIntoStandardConeObject", IsCapCategoryMorphism );
+DeclareSynonym( "iota", MorphismIntoStandardConeObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
@@ -137,6 +140,7 @@ DeclareOperation( "AddMorphismFromStandardConeObjectWithGivenStandardConeObject"
 #! @Arguments alpha, C
 #! @Returns a morphism $\pi(\alpha):C(\alpha)\to\Sigma A$
 DeclareAttribute( "MorphismFromStandardConeObject", IsCapCategoryMorphism );
+DeclareSynonym( "pi", MorphismFromStandardConeObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
@@ -422,6 +426,8 @@ DeclareOperation( "AddMorphismBetweenStandardConeObjectsWithGivenObjects", [ IsC
 DeclareOperation( "MorphismBetweenStandardConeObjects",
       [  IsCapCategoryMorphism, IsCapCategoryMorphism, 
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareSynonym( "mcone", MorphismBetweenStandardConeObjects );
 
 DeclareOperation( "IsExactTriangle",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
