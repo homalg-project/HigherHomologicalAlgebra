@@ -16,9 +16,59 @@ ENABLE_COLORS := false;
 DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
 SET_OF_ALL_CREATED_FUNCTORS := [ ];
 
+
+BindGlobal( "SET_SPECIAL_SETTINGS",
+  function( )
+    
+    DISABLE_ALL_SANITY_CHECKS := true;
+    
+    SWITCH_LOGIC_OFF := true;
+    
+    ENABLE_COLORS := true;
+    
+    DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ IsChainComplexCategory, IsCochainComplexCategory ];
+   
+    if IsBound( IsMatrixCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsMatrixCategory" ) );
+    fi;
+    
+    if IsBound( IsHomotopyCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal(  "IsHomotopyCategory" ) );
+    fi;
+    
+    if IsBound( IsAdditiveClosureCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsAdditiveClosureCategory" ) );
+    fi;
+    
+    if IsBound( IsQuiverRowsCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsQuiverRepresentationCategory" ) );
+    fi;
+    
+    if IsBound( IsAlgebroid ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsAlgebroid" ) );
+    fi;
+    
+    if IsBound( IsQuiverRowsCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsQuiverRowsCategory" ) );
+    fi;
+    
+    if IsBound( IsCapProductCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsCapProductCategory" ) );
+    fi;
+    
+    if IsBound( IsCategoryOfGradedRows ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsCategoryOfGradedRows" ) );
+    fi;
+    
+    if IsBound( IsFreydCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsFreydCategory" ) );
+    fi; 
+       
+end );
+
 ##########################
 #
-# Functos
+# Functors
 #
 ##########################
 
