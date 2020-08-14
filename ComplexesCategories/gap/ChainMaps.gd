@@ -205,6 +205,12 @@ DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 #!  @Returns chain (resp. cochain) morphism
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
 
+
+# it computes the direct sums with different order
+DeclareOperation( "_MappingCone", [ IsChainOrCochainMorphism ] );
+DeclareOperation( "_NaturalInjectionInMappingCone", [ IsChainOrCochainMorphism ] );
+DeclareOperation( "_NaturalProjectionFromMappingCone", [ IsChainOrCochainMorphism ] );
+
 #!  @Description
 #!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
 #!  mapping cylinder chain (resp. cochain) complex
