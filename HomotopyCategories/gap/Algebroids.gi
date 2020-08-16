@@ -37,6 +37,12 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     #REREADING := true;
     #SetInfoLevel( InfoWarning, 0 );
     
+    if Size( maps_labels ) > 0 and IsInt( maps_labels[ 1 ][ 2 ] ) then
+      
+      maps_labels := List( maps_labels, m -> [ m[ 1 ], main_vertices[ m[ 2 ] ], main_vertices[ m[ 3 ] ] ] );
+      
+    fi;
+    
     l := bounds[ 1 ];
     
     u := bounds[ 2 ];
