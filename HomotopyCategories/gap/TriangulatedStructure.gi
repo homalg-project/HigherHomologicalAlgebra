@@ -429,3 +429,74 @@ InstallMethod( IsomorphismFromInverseShiftOfShift,
           [ IsHomotopyCategoryObject ],
   a -> IdentityMorphism( a )
 );
+
+# It is true in any triangulated category, but I don't have time for a clean implementation
+##
+BindGlobal( "3x3LemmaInHomotopyCategory",
+  function( f, u, v, g )
+    local Ho, N, A, B, C, D, w, t, s, r, maps;
+    
+    Ho := CapCategory( f );
+    
+    if IsChainComplexCategory( UnderlyingCategory( Ho ) ) then
+      
+      N := -1;
+      
+    else
+      
+      N := 1;
+      
+    fi;
+    
+    A := Source( f );
+    
+    B := Range( f );
+    
+    C := Source( g );
+    
+    D := Range( g );
+    
+    w := MorphismBetweenStandardConeObjects( f, u, v, g );
+    
+    t := MorphismBetweenStandardConeObjects( u, f, g, v );
+    
+    s := StandardConeObject( t );
+    
+    r := StandardConeObject( w );
+    
+    maps := AsZFunction(
+                i -> MorphismBetweenDirectSums(
+                        [
+                          [
+                            AdditiveInverse( IdentityMorphism( A[ i + 2 * N ] ) ),
+                            ZeroMorphism( A[ i + 2 * N ], B[ i + N ]  ),
+                            ZeroMorphism( A[ i + 2 * N ], C[ i + N ]  ),
+                            ZeroMorphism( A[ i + 2 * N ], D[ i ] )
+                          ],
+                          [
+                            ZeroMorphism( C[ i + N ], A[ i + 2 * N ] ),
+                            ZeroMorphism( C[ i + N ], B[ i + N ]  ),
+                            IdentityMorphism( C[ i + N ]  ),
+                            ZeroMorphism( C[ i + N ], D[ i ] )
+                          ],
+                          [
+                            ZeroMorphism( B[ i + N ], A[ i + 2 * N ] ),
+                            IdentityMorphism( B[ i + N ]  ),
+                            ZeroMorphism( B[ i + N ], C[ i + N ]  ),
+                            ZeroMorphism( B[ i + N ], D[ i ] )
+                          ],
+                          [
+                            ZeroMorphism( D[ i ], A[ i + 2 * N ] ),
+                            ZeroMorphism( D[ i ], B[ i + N ]  ),
+                            ZeroMorphism( D[ i ], C[ i + N ] ),
+                            IdentityMorphism( D[ i ]  )
+                          ],
+                        ]
+                    )
+                );
+                
+    return HomotopyCategoryMorphism( s, maps, r );
+    
+end );
+
+
