@@ -20,6 +20,12 @@ InstallMethod( ForwardConvolution,
 );
 
 ##
+InstallOtherMethod( ForwardConvolution,
+          [ IsHomotopyCategoryCell, IsInt ],
+    ForwardConvolutionAtIndex 
+);
+
+##
 InstallMethod( BackwardConvolution,
           [ IsHomotopyCategoryObject ],
   C -> BackwardConvolution( UnderlyingCell( C ) )
@@ -29,6 +35,12 @@ InstallMethod( BackwardConvolution,
 InstallMethod( BackwardConvolution,
           [ IsHomotopyCategoryMorphism ],
   alpha -> BackwardConvolution( UnderlyingCell( alpha ) )
+);
+
+##
+InstallOtherMethod( BackwardConvolution,
+          [ IsHomotopyCategoryCell, IsInt ],
+    BackwardConvolutionAtIndex 
 );
 
 ################################
