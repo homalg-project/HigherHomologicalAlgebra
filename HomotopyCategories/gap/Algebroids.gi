@@ -236,8 +236,13 @@ BindGlobal( "MakeMorphismNullHomotopic",
       Add( rels, diffs_r_h[ Size( diffs_r_h ) ] );
   
       extra_relations := ListN( maps, rels,
-                  { m, r } -> Concatenation( m, "-(", r, ")" )
-                );
+                  function( m, r )
+                    if m <> "0" then
+                      return Concatenation( m, "-(", r, ")" );
+                    else
+                      return Concatenation( "-(", r, ")" );
+                    fi;
+                end );
     else
       
       extra_relations := maps;
@@ -306,16 +311,16 @@ end );
 
 InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
           [ IsList, IsList, IsList, IsList, IsList ],
-  function( main_vertices, maps_labels, bounds, pre_relations, other_relations )
+  function( objects, maps, bounds, pre_rels, other_rels )
     local extra_arrows, extra_relations, e, m, relations, oid;
     
-    CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, [ ], [ ], false );
+    CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, [ ], [ ], false );
     
     extra_arrows := [ ];
     
     extra_relations := [ ];
     
-    for m in pre_relations do
+    for m in pre_rels do
       
       e := MakeMorphismNullHomotopic( m );
       
@@ -325,9 +330,9 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
       
     od;
     
-    oid := CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true );
+    oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true );
     
-    for relations in other_relations do
+    for relations in other_rels do
       
       for m in relations do
         
@@ -339,11 +344,11 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
       
       od;
       
-      oid := CREATE_ALGEBROID_OF_DIAGRAM( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true );
+      oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true );
       
     od;
      
-    oid!.defining_data := [ main_vertices, maps_labels, bounds, extra_arrows, extra_relations, true ];
+    oid!.defining_data := [ objects, maps, bounds, extra_arrows, extra_relations, true ];
     
     return oid;
     
@@ -367,7 +372,7 @@ end );
 #       [ "h4", "A4", "B3" ]
 # ];
 #
-#pre_relations :=
+#pre_rels :=
 #    [
 #      [ "PreCompose(a1,a2)", "ha1" ],
 #      [ "PreCompose(a2,a3)", "ha2" ],
@@ -385,7 +390,7 @@ end );
 #      
 #    ];
 #
-#other_relations :=
+#other_rels :=
 #  [
 #    [
 #      [ "BasisOfExternalHom( Shift( A1, 1 ), B2 )[1]", "x" ],
