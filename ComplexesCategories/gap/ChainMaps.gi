@@ -271,6 +271,25 @@ InstallMethod( CochainMorphism,
    return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "cochain_map" );
 end );
 
+##
+InstallOtherMethod( \/,
+      [ IsDenseList, IsChainOrCochainComplexCategory ],
+  function( data_list, complex_cat )
+    
+    if Size( data_list ) = 2 then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if IsChainComplexCategory( complex_cat ) then
+      return CallFuncList( ChainMorphism, data_list );
+    else
+      return CallFuncList( CochainMorphism, data_list );
+    fi;
+    
+end );
+
 ###################################
 #
 # Components of co-chain morphisms

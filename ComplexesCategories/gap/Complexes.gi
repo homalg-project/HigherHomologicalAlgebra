@@ -931,6 +931,31 @@ InstallMethod( CochainComplex,
 end );
 
 ##
+InstallOtherMethod( \/,
+      [ IsDenseList, IsChainOrCochainComplexCategory ],
+  function( diffs_and_index, complex_cat )
+    
+    if not Size( diffs_and_index ) = 2 then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if not IsIdenticalObj( CapCategory( diffs_and_index[ 1 ][ 1 ] ), UnderlyingCategory( complex_cat ) ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    if IsChainComplexCategory( complex_cat ) then
+      return CallFuncList( ChainComplex, diffs_and_index );
+    else
+      return CallFuncList( CochainComplex, diffs_and_index );
+    fi;
+    
+end );
+
+##
 InstallMethod( ChainComplex,
           [ IsDenseList ],
   function( diffs )

@@ -116,6 +116,27 @@ InstallOtherMethod( \/,
 end );
 
 ##
+InstallOtherMethod( \/,
+              [ IsDenseList, IsHomotopyCategory ],
+  function( data_list, homotopy_category )
+    
+    if Size( data_list ) = 2 then
+      
+      return CallFuncList( HomotopyCategoryObject, Concatenation( [ homotopy_category ], data_list ) );
+      
+    elif IsCapCategory( data_list[ 1 ] ) then
+      
+      return CallFuncList( HomotopyCategoryObject, data_list );
+      
+    else
+      
+      return CallFuncList( HomotopyCategoryMorphism, data_list );
+      
+    fi;
+    
+end );
+
+##
 InstallMethod( AsChainComplex,
               [ IsHomotopyCategoryObject ],
   function( a )
