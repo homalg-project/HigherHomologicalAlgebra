@@ -81,6 +81,44 @@ for label_of_morphism in labels_of_morphisms do
 
 od;
 
+if false then
+  
+  objects := Concatenation( objects, [ "C0", "D0" ] );
+  maps := Concatenation( maps, [ [ "a0", "A0", "C0" ], [ "b0", "B0", "D0" ], [ "psi0", "C0", "D0" ] ] );
+  pre_rels := Concatenation( pre_rels,
+              [
+                [ "PreCompose(a0,psi0)-PreCompose(phi0,b0)", "l" ],
+                [ "PreCompose(dA_m1,a0)", "hAm1" ],
+                [ "PreCompose(dB_m1,b0)", "hBm1" ]
+              ]
+            );
+  other_rels :=
+    Concatenation(
+      other_rels,
+      
+      [
+        [
+          [ "BasisOfExternalHom( Shift( Am2,1 ), C0 )[ 1 ]", "h_Am2_3" ],
+          [ "BasisOfExternalHom( Shift( Bm2,1 ), D0 )[ 1 ]", "h_Bm2_3" ]
+        ],
+        [
+          [ "BasisOfExternalHom( Shift( Am3,2 ), C0 )[ 1 ]", "h_Am3_4" ],
+          [ "BasisOfExternalHom( Shift( Bm3,2 ), D0 )[ 1 ]", "h_Bm3_4" ]
+        ],
+        [
+          [ "BasisOfExternalHom( Shift( Am1,1 ), D0 )[ 1 ]", "h_Am1_3" ]
+        ],
+        [
+          [ "BasisOfExternalHom( Shift( Am2,2 ), D0 )[ 1 ]", "h_Am2_4" ]
+        ],
+        [
+          [ "BasisOfExternalHom( Shift( Am3,3 ), D0 )[ 1 ]", "h_Am2_5" ]
+        ]
+      ]
+    );;
+  
+fi;
+  
 oid := AlgebroidOfDiagramInHomotopyCategory( objects, maps, bounds, pre_rels, other_rels );
 Aoid := AdditiveClosure( oid );
 Ho := HomotopyCategory( Aoid, true );
