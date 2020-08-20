@@ -907,3 +907,6 @@ InstallMethod( \.,
    { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
 );
 
+##
+DeclareSynonym( "id", IdentityMorphism );
+
