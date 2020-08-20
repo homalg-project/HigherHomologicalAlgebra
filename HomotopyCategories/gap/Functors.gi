@@ -527,7 +527,7 @@ InstallMethod( NaturalIsomorphismFromIdentityIntoMinusOneFunctor,
     
     F := MinusOneFunctor( homotopy_category );
     
-    name := "Natural transformation: Id => -1 * -";
+    name := "Natural isomorphism: Id => ⊝ ";
     
     nat := NaturalTransformation( name, Id, F );
     
@@ -553,7 +553,7 @@ InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
     
     F := MinusOneFunctor( homotopy_category );
     
-    name := "Natural transformation: -1 * - => Id";
+    name := "Natural isomorphism: ⊝  => Id";
     
     nat := NaturalTransformation( name, F, Id );
     

@@ -1150,7 +1150,7 @@ InstallMethod( MinusOneFunctor,
       
     fi;
     
-    name := "Endofunctor defined by: C -> -1 * C";
+    name := "⊝ automorphism";
     
     F := CapFunctor( name, complexes, complexes );
     

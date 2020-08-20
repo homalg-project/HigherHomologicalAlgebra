@@ -61,7 +61,7 @@ InstallMethod( NaturalIsomorphismFromIdentityIntoMinusOneFunctor,
     
     F := MinusOneFunctor( complexes );
     
-    name := "Natural transformation: Id => -1 * -";
+    name := "Natural isomorphism: Id => ⊝ ";
     
     nat := NaturalTransformation( name, Id, F );
     
@@ -107,7 +107,7 @@ InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
     
     F := MinusOneFunctor( complexes );
     
-    name := "Natural isomorphism: -1 * - => Id";
+    name := "Natural isomorphism: ⊝  => Id";
     
     nat := NaturalTransformation( name, F, Id );
     
