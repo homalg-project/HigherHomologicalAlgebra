@@ -399,7 +399,7 @@ end );
 ##
 InstallOtherMethod( ForwardConvolutionAtIndex,
         [ IsHomotopyCategoryCell, IsInt ],
-  { c, m } -> ForwardConvolutionAtIndex( UnderlyingCell( c ), m )
+  { c, m } -> ForwardConvolutionAtIndex( UnderlyingCell( c ), m ) / CapCategory( c )
 );
 
 ##
@@ -536,7 +536,7 @@ end );
 ##
 InstallOtherMethod( BackwardConvolutionAtIndex,
         [ IsHomotopyCategoryCell, IsInt ],
-  { c, m } -> BackwardConvolutionAtIndex( UnderlyingCell( c ), m )
+  { c, m } -> BackwardConvolutionAtIndex( UnderlyingCell( c ), m ) / CapCategory( c )
 );
 
 ##
