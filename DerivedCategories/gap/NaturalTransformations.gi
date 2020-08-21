@@ -225,7 +225,7 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
           st_t_0 := StandardExactTriangle( t_0 );
           U := InverseRotation( st_t_0, true );
           
-          j_n := BackwardPostnikovSystemAt( r, n - 2 ) ^ n;
+          j_n := BackwardPostnikovSystemAt( r, n - 1 ) ^ n;
           st_j_n := StandardExactTriangle( j_n );
           shift_st_j_n := Shift( st_j_n, n - 1 );
           
@@ -243,7 +243,7 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
           
           U := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
           
-          j_n := BackwardPostnikovSystemAt( r, n - 2 ) ^ n;
+          j_n := BackwardPostnikovSystemAt( r, n - 1 ) ^ n;
           st_j_n := StandardExactTriangle( j_n );
           shift_st_j_n := Shift( st_j_n, n - 1 );
           
