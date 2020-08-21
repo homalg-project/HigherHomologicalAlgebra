@@ -6,51 +6,14 @@
 #
 #####################################################################
 
-
-##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryObject ],
-  C -> ForwardConvolution( UnderlyingCell( C ) )
-);
-
-##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryMorphism ],
-  alpha -> ForwardConvolution( UnderlyingCell( alpha ) )
-);
-
-##
-InstallOtherMethod( ForwardConvolution,
-          [ IsHomotopyCategoryCell, IsInt ],
-    ForwardConvolutionAtIndex 
-);
-
-##
-InstallMethod( BackwardConvolution,
-          [ IsHomotopyCategoryObject ],
-  C -> BackwardConvolution( UnderlyingCell( C ) )
-);
-
-##
-InstallMethod( BackwardConvolution,
-          [ IsHomotopyCategoryMorphism ],
-  alpha -> BackwardConvolution( UnderlyingCell( alpha ) )
-);
-
-##
-InstallOtherMethod( BackwardConvolution,
-          [ IsHomotopyCategoryCell, IsInt ],
-    BackwardConvolutionAtIndex 
-);
-
 ################################
 #
-# Forward convolution by chains
+# for chain complexes cells
 #
 ################################
 
 ##
-InstallMethod( ForwardConvolutionAtIndexOp,
+InstallMethod( ForwardPostnikovSystemAtOp,
           [ IsChainComplex, IsInt ],
   function( C, m )
     local l, u, alpha, beta, H, maps, d, diffs;
@@ -65,7 +28,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( C, m + 1 ), m );
+      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -101,14 +64,14 @@ InstallMethod( ForwardConvolution,
     
     l := ActiveLowerBound( C );
     
-    C := ForwardConvolutionAtIndex( C, l + 1 );
+    C := ForwardPostnikovSystemAt( C, l + 1 );
     
     return Shift( C[ l ], l );
     
 end );
 
 ##
-InstallMethod( ForwardConvolutionAtIndexOp,
+InstallMethod( ForwardPostnikovSystemAtOp,
           [ IsChainMorphism, IsInt ],
   function( alpha, m )
     local l, u, map, maps, s, r;
@@ -123,7 +86,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( alpha, m + 1 ), m );
+      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m + 1 ), m );
       
     else
       
@@ -144,9 +107,9 @@ InstallMethod( ForwardConvolutionAtIndexOp,
         
         Add( maps, map );
         
-        s := ForwardConvolutionAtIndex( Source( alpha ), m );
+        s := ForwardPostnikovSystemAt( Source( alpha ), m );
         
-        r := ForwardConvolutionAtIndex( Range( alpha ), m );
+        r := ForwardPostnikovSystemAt( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, l );
         
@@ -164,20 +127,14 @@ InstallMethod( ForwardConvolution,
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := ForwardConvolutionAtIndex( alpha, l + 1 );
+    alpha := ForwardPostnikovSystemAt( alpha, l + 1 );
     
     return Shift( alpha[ l ], l );
     
 end );
 
-################################
-#
-# Backward convolution by chains
-#
-################################
-
 ##
-InstallMethod( BackwardConvolutionAtIndexOp,
+InstallMethod( BackwardPostnikovSystemAtOp,
           [ IsChainComplex, IsInt ],
   function( C, m )
     local l, u, alpha, beta, H, maps, d, diffs;
@@ -192,7 +149,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m - 1 ), m );
+      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -232,14 +189,14 @@ InstallMethod( BackwardConvolution,
     
     u := ActiveUpperBound( C );
     
-    C := BackwardConvolutionAtIndex( C, u - 1 );
+    C := BackwardPostnikovSystemAt( C, u - 1 );
     
     return Shift( C[ u ], u );
     
 end );
 
 ##
-InstallMethod( BackwardConvolutionAtIndexOp,
+InstallMethod( BackwardPostnikovSystemAtOp,
           [ IsChainMorphism, IsInt ],
   function( alpha, m )
     local C, D, l, u, map, maps, s, r;
@@ -254,7 +211,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( alpha, m - 1 ), m );
+      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m - 1 ), m );
       
     else
       
@@ -277,9 +234,9 @@ InstallMethod( BackwardConvolutionAtIndexOp,
         
         Add( maps, map, 1 );
         
-        s := BackwardConvolutionAtIndex( Source( alpha ), m );
+        s := BackwardPostnikovSystemAt( Source( alpha ), m );
         
-        r := BackwardConvolutionAtIndex( Range( alpha ), m );
+        r := BackwardPostnikovSystemAt( Range( alpha ), m );
         
         return ChainMorphism( s, r, maps, m + 1 );
         
@@ -297,7 +254,7 @@ InstallMethod( BackwardConvolution,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := BackwardConvolutionAtIndex( alpha, u - 1 );
+    alpha := BackwardPostnikovSystemAt( alpha, u - 1 );
     
     return Shift( alpha[ u ], u );
     
@@ -345,14 +302,14 @@ InstallMethod( BackwardConvolutionOfShift_into_ShiftOfBackwardConvolutionOp,
 
 end );
 
-###################################
+#####################################
 #
-# Forward Convolution by cochains
+# For cochains categories cells
 #
-###################################
+#####################################
 
 ##
-InstallMethod( ForwardConvolutionAtIndexOp,
+InstallMethod( ForwardPostnikovSystemAtOp,
           [ IsCochainComplex, IsInt ],
 
   function( C, m )
@@ -368,7 +325,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( C, m - 1 ), m );
+      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -397,12 +354,6 @@ InstallMethod( ForwardConvolutionAtIndexOp,
 end );
 
 ##
-InstallOtherMethod( ForwardConvolutionAtIndex,
-        [ IsHomotopyCategoryCell, IsInt ],
-  { c, m } -> ForwardConvolutionAtIndex( UnderlyingCell( c ), m ) / CapCategory( c )
-);
-
-##
 InstallMethod( ForwardConvolution,
           [ IsCochainComplex ],
   function( C )
@@ -410,14 +361,14 @@ InstallMethod( ForwardConvolution,
     
     u := ActiveUpperBound( C );
     
-    C := ForwardConvolutionAtIndex( C, u - 1 );
+    C := ForwardPostnikovSystemAt( C, u - 1 );
     
     return Shift( C[ u ], -u );
     
 end );
 
 ##
-InstallMethod( ForwardConvolutionAtIndexOp,
+InstallMethod( ForwardPostnikovSystemAtOp,
           [ IsCochainMorphism, IsInt ],
   function( alpha, m )
     local l, u, map, maps, s, r;
@@ -432,7 +383,7 @@ InstallMethod( ForwardConvolutionAtIndexOp,
       
     elif m > l then
       
-      return ForwardConvolutionAtIndex( ForwardConvolutionAtIndex( alpha, m - 1 ), m );
+      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m - 1 ), m );
       
     else
       
@@ -453,9 +404,9 @@ InstallMethod( ForwardConvolutionAtIndexOp,
         
         maps := Concatenation( [ map ], maps );
         
-        s := ForwardConvolutionAtIndex( Source( alpha ), m );
+        s := ForwardPostnikovSystemAt( Source( alpha ), m );
         
-        r := ForwardConvolutionAtIndex( Range( alpha ), m );
+        r := ForwardPostnikovSystemAt( Range( alpha ), m );
         
         return CochainMorphism( s, r, maps, l + 1 );
         
@@ -473,20 +424,14 @@ InstallMethod( ForwardConvolution,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := ForwardConvolutionAtIndex( alpha, u - 1 );
+    alpha := ForwardPostnikovSystemAt( alpha, u - 1 );
     
     return Shift( alpha[ u ], -u );
     
 end );
 
-#########################
-#
-# Backward Convolution by cochains
-#
-#########################
-
 ##
-InstallMethod( BackwardConvolutionAtIndexOp,
+InstallMethod( BackwardPostnikovSystemAtOp,
           [ IsCochainComplex, IsInt ],
   function( C, m )
     local l, u, alpha, beta, H, maps, d, diffs;
@@ -501,7 +446,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( C, m + 1 ), m );
+      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
@@ -534,12 +479,6 @@ InstallMethod( BackwardConvolutionAtIndexOp,
 end );
 
 ##
-InstallOtherMethod( BackwardConvolutionAtIndex,
-        [ IsHomotopyCategoryCell, IsInt ],
-  { c, m } -> BackwardConvolutionAtIndex( UnderlyingCell( c ), m ) / CapCategory( c )
-);
-
-##
 InstallMethod( BackwardConvolution,
           [ IsCochainComplex ],
   function( C )
@@ -547,14 +486,14 @@ InstallMethod( BackwardConvolution,
     
     l := ActiveLowerBound( C );
     
-    C := BackwardConvolutionAtIndex( C, l + 1 );
+    C := BackwardPostnikovSystemAt( C, l + 1 );
     
     return Shift( C[ l ], -l );
     
 end );
 
 ##
-InstallMethod( BackwardConvolutionAtIndexOp,
+InstallMethod( BackwardPostnikovSystemAtOp,
           [ IsCochainMorphism, IsInt ],
   function( alpha, m )
     local C, D, l, u, map, maps, s, r;
@@ -569,7 +508,7 @@ InstallMethod( BackwardConvolutionAtIndexOp,
       
     elif m < u then
       
-      return BackwardConvolutionAtIndex( BackwardConvolutionAtIndex( alpha, m + 1 ), m );
+      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m + 1 ), m );
       
     else
       
@@ -592,9 +531,9 @@ InstallMethod( BackwardConvolutionAtIndexOp,
         
         Add( maps, map );
         
-        s := BackwardConvolutionAtIndex( Source( alpha ), m );
+        s := BackwardPostnikovSystemAt( Source( alpha ), m );
         
-        r := BackwardConvolutionAtIndex( Range( alpha ), m );
+        r := BackwardPostnikovSystemAt( Range( alpha ), m );
         
         return CochainMorphism( s, r, maps, l );
         
@@ -612,8 +551,38 @@ InstallMethod( BackwardConvolution,
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := BackwardConvolutionAtIndex( alpha, l + 1 );
+    alpha := BackwardPostnikovSystemAt( alpha, l + 1 );
     
     return Shift( alpha[ l ], -l );
     
 end );
+
+#####################################
+#
+# For homotopy category cells
+#
+#####################################
+
+##
+InstallOtherMethod( ForwardPostnikovSystemAt,
+        [ IsHomotopyCategoryCell, IsInt ],
+  { c, m } -> ForwardPostnikovSystemAt( UnderlyingCell( c ), m ) / CapCategory( c )
+);
+
+##
+InstallOtherMethod( BackwardPostnikovSystemAt,
+        [ IsHomotopyCategoryCell, IsInt ],
+  { c, m } -> BackwardPostnikovSystemAt( UnderlyingCell( c ), m ) / CapCategory( c )
+);
+
+##
+InstallMethod( ForwardConvolution,
+          [ IsHomotopyCategoryCell ],
+  c -> ForwardConvolution( UnderlyingCell( c ) )
+);
+
+##
+InstallMethod( BackwardConvolution,
+          [ IsHomotopyCategoryCell ],
+  c -> BackwardConvolution( UnderlyingCell( c ) )
+);

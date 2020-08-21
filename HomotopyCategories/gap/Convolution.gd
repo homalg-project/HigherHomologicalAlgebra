@@ -7,29 +7,21 @@
 #####################################################################
 
 ##
-KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainOrCochainComplex, IsInt, ReturnTrue );
-KeyDependentOperation( "ForwardConvolutionAtIndex", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "ForwardPostnikovSystemAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "ForwardPostnikovSystemAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
 
-DeclareOperation( "ForwardConvolution", [ IsChainOrCochainComplex, IsInt ] );
 DeclareAttribute( "ForwardConvolution", IsChainOrCochainComplex );
-DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryObject );
-
-DeclareOperation( "ForwardConvolution", [ IsChainOrCochainMorphism, IsInt ] );
 DeclareAttribute( "ForwardConvolution", IsChainOrCochainMorphism );
-DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryMorphism );
+DeclareAttribute( "ForwardConvolution", IsHomotopyCategoryCell );
 
 ##
-KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainOrCochainComplex, IsInt, ReturnTrue );
-KeyDependentOperation( "BackwardConvolutionAtIndex", IsChainOrCochainMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "BackwardPostnikovSystemAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "BackwardPostnikovSystemAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
-DeclareOperation( "BackwardConvolution", [ IsChainOrCochainComplex, IsInt ] );
 DeclareAttribute( "BackwardConvolution", IsChainOrCochainComplex );
-DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryObject );
-
-DeclareOperation( "BackwardConvolution", [ IsChainOrCochainMorphism, IsInt ] );
 DeclareAttribute( "BackwardConvolution", IsChainOrCochainMorphism );
-DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryMorphism );
+DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryCell );
 
 KeyDependentOperation( "ShiftOfBackwardConvolution_into_BackwardConvolutionOfShift", IsHomotopyCategoryObject, IsInt, ReturnTrue );
 KeyDependentOperation( "BackwardConvolutionOfShift_into_ShiftOfBackwardConvolution", IsHomotopyCategoryObject, IsInt, ReturnTrue );
