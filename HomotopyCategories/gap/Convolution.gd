@@ -28,4 +28,6 @@ KeyDependentOperation( "BackwardConvolutionOfShift_into_ShiftOfBackwardConvoluti
 
 DeclareSynonym( "fconv", ForwardConvolution );
 DeclareSynonym( "bconv", BackwardConvolution );
+DeclareSynonym( "fpkv", ForwardPostnikovSystemAt );
+DeclareSynonym( "bpkv", BackwardPostnikovSystemAt );
 
