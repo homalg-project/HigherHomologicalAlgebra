@@ -22,23 +22,23 @@ InstallMethod( ForwardPostnikovSystemAtOp,
     
     u := ActiveUpperBound( C );
     
-    if m > u then
+    if m + 1 > u then
       
       return C;
       
-    elif m < u then
+    elif m + 1 < u then
       
       return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
-      return StalkChainComplex( StandardConeObject( C ^ m ), m - 1 );
+      return StalkChainComplex( StandardConeObject( C ^ ( m + 1 ) ), m );
       
     else
       
-      alpha := C ^ m;
+      alpha := C ^ ( m + 1 );
       
-      beta := C ^ ( m - 1 );
+      beta := C ^ m;
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
@@ -64,7 +64,7 @@ InstallMethod( ForwardConvolution,
     
     l := ActiveLowerBound( C );
     
-    C := ForwardPostnikovSystemAt( C, l + 1 );
+    C := ForwardPostnikovSystemAt( C, l );
     
     return Shift( C[ l ], l );
     
@@ -80,26 +80,26 @@ InstallMethod( ForwardPostnikovSystemAtOp,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    if m > u then
+    if m + 1 > u then
       
       return alpha;
       
-    elif m < u then
+    elif m + 1 < u then
       
       return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m + 1 ), m );
       
     else
       
       map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ m,
+                Source( alpha ) ^ ( m + 1 ),
+                alpha[ m + 1 ],
                 alpha[ m ],
-                alpha[ m - 1 ],
-                Range( alpha ) ^ m
+                Range( alpha ) ^ ( m + 1 )
               );
               
       if l = u then
         
-        return StalkChainMorphism( map, m - 1 );
+        return StalkChainMorphism( map, m );
         
       else
         
@@ -127,7 +127,7 @@ InstallMethod( ForwardConvolution,
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := ForwardPostnikovSystemAt( alpha, l + 1 );
+    alpha := ForwardPostnikovSystemAt( alpha, l );
     
     return Shift( alpha[ l ], l );
     
@@ -143,23 +143,23 @@ InstallMethod( BackwardPostnikovSystemAtOp,
     
     u := ActiveUpperBound( C );
     
-    if m < l then
+    if m - 1 < l then
       
       return C;
       
-    elif m > l then
+    elif m - 1 > l then
       
       return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
-      return StalkChainComplex( InverseShiftOnObject( StandardConeObject( C ^ ( m + 1 ) ) ), m + 1 );
+      return StalkChainComplex( InverseShiftOnObject( StandardConeObject( C ^ m ) ), m );
       
     else
       
-      alpha := C ^ ( m + 2 );
+      alpha := C ^ ( m + 1 );
       
-      beta := C ^ ( m + 1 );
+      beta := C ^ m;
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
@@ -167,7 +167,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( C ^ ( m + 1 ) ) ),
+                  InverseShiftOnObject( StandardConeObject( C ^ m ) ),
                   maps
                 );
                 
@@ -175,7 +175,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
       
       Add( diffs, d, 1 );
       
-      return ChainComplex( diffs, m + 2 );
+      return ChainComplex( diffs, m + 1 );
       
     fi;
     
@@ -189,7 +189,7 @@ InstallMethod( BackwardConvolution,
     
     u := ActiveUpperBound( C );
     
-    C := BackwardPostnikovSystemAt( C, u - 1 );
+    C := BackwardPostnikovSystemAt( C, u );
     
     return Shift( C[ u ], u );
     
@@ -205,32 +205,32 @@ InstallMethod( BackwardPostnikovSystemAtOp,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    if m < l then
+    if m - 1 < l then
       
       return alpha;
       
-    elif m > l then
+    elif m - 1 > l then
       
       return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m - 1 ), m );
       
     else
       
       map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ ( m + 1 ),
-                alpha[ m + 1 ],
+                Source( alpha ) ^ ( m ),
                 alpha[ m ],
-                Range( alpha ) ^ ( m + 1 )
+                alpha[ m - 1 ],
+                Range( alpha ) ^ ( m )
               );
               
       map := InverseShiftOnMorphism( map );
       
       if u - l in [ 0, 1 ] then
         
-        return StalkChainMorphism( map, m + 1 );
+        return StalkChainMorphism( map, m );
         
       else
         
-        maps := List( [ m + 2 .. u ], i -> alpha[ i ] );
+        maps := List( [ m + 1 .. u ], i -> alpha[ i ] );
         
         Add( maps, map, 1 );
         
@@ -238,7 +238,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
         
         r := BackwardPostnikovSystemAt( Range( alpha ), m );
         
-        return ChainMorphism( s, r, maps, m + 1 );
+        return ChainMorphism( s, r, maps, m );
         
       fi;
       
@@ -254,7 +254,7 @@ InstallMethod( BackwardConvolution,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := BackwardPostnikovSystemAt( alpha, u - 1 );
+    alpha := BackwardPostnikovSystemAt( alpha, u );
     
     return Shift( alpha[ u ], u );
     
@@ -319,23 +319,23 @@ InstallMethod( ForwardPostnikovSystemAtOp,
     
     l := ActiveLowerBound( C );
     
-    if m < l then
+    if m - 1 < l then
       
       return C;
       
-    elif m > l then
+    elif m - 1 > l then
       
       return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m - 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
-      return StalkCochainComplex( StandardConeObject( C ^ m ), m + 1 );
+      return StalkCochainComplex( StandardConeObject( C ^ ( m - 1 ) ), m );
       
     else
       
-      alpha := C ^ m;
+      alpha := C ^ ( m - 1 );
       
-      beta := C ^ ( m + 1 );
+      beta := C ^ m;
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
@@ -361,7 +361,7 @@ InstallMethod( ForwardConvolution,
     
     u := ActiveUpperBound( C );
     
-    C := ForwardPostnikovSystemAt( C, u - 1 );
+    C := ForwardPostnikovSystemAt( C, u );
     
     return Shift( C[ u ], -u );
     
@@ -377,26 +377,26 @@ InstallMethod( ForwardPostnikovSystemAtOp,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    if m < l then
+    if m - 1 < l then
       
       return alpha;
       
-    elif m > l then
+    elif m - 1 > l then
       
       return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m - 1 ), m );
       
     else
       
       map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ m,
+                Source( alpha ) ^ ( m - 1 ),
+                alpha[ m - 1 ],
                 alpha[ m ],
-                alpha[ m + 1 ],
-                Range( alpha ) ^ m
+                Range( alpha ) ^ ( m - 1 )
               );
               
       if l = u then
         
-        return StalkCochainMorphism( map, m + 1 );
+        return StalkCochainMorphism( map, m );
         
       else
         
@@ -424,7 +424,7 @@ InstallMethod( ForwardConvolution,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    alpha := ForwardPostnikovSystemAt( alpha, u - 1 );
+    alpha := ForwardPostnikovSystemAt( alpha, u );
     
     return Shift( alpha[ u ], -u );
     
@@ -440,23 +440,23 @@ InstallMethod( BackwardPostnikovSystemAtOp,
     
     u := ActiveUpperBound( C );
     
-    if m > u then
+    if m + 1 > u then
       
       return C;
       
-    elif m < u then
+    elif m + 1 < u then
       
       return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m + 1 ), m );
       
     elif u - l in [ 0, 1 ] then
       
-      return StalkCochainComplex( InverseShiftOnObject( StandardConeObject( C ^ ( m - 1 ) ) ), m - 1 );
+      return StalkCochainComplex( InverseShiftOnObject( StandardConeObject( C ^ m ) ), m );
       
     else
       
-      alpha := C ^ ( m - 2 );
+      alpha := C ^ ( m - 1 );
       
-      beta := C ^ ( m - 1 );
+      beta := C ^ m;
       
       H := HomotopyMorphisms( PreCompose( alpha, beta ) );
       
@@ -464,7 +464,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( C ^ ( m - 1 ) ) ),
+                  InverseShiftOnObject( StandardConeObject( C ^ m ) ),
                   maps
                 );
                 
@@ -486,7 +486,7 @@ InstallMethod( BackwardConvolution,
     
     l := ActiveLowerBound( C );
     
-    C := BackwardPostnikovSystemAt( C, l + 1 );
+    C := BackwardPostnikovSystemAt( C, l );
     
     return Shift( C[ l ], -l );
     
@@ -502,28 +502,28 @@ InstallMethod( BackwardPostnikovSystemAtOp,
     
     u := ActiveUpperBoundForSourceAndRange( alpha );
     
-    if m > u then
+    if m + 1 > u then
       
       return alpha;
       
-    elif m < u then
+    elif m + 1 < u then
       
       return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m + 1 ), m );
       
     else
       
       map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ ( m - 1 ),
-                alpha[ m - 1 ],
+                Source( alpha ) ^ m,
                 alpha[ m ],
-                Range( alpha ) ^ ( m - 1 )
+                alpha[ m + 1 ],
+                Range( alpha ) ^ m
               );
               
       map := InverseShiftOnMorphism( map );
       
       if u - l in [ 0, 1 ] then
         
-        return StalkCochainMorphism( map, m - 1 );
+        return StalkCochainMorphism( map, m );
         
       else
         
@@ -551,7 +551,7 @@ InstallMethod( BackwardConvolution,
     
     l := ActiveLowerBoundForSourceAndRange( alpha );
     
-    alpha := BackwardPostnikovSystemAt( alpha, l + 1 );
+    alpha := BackwardPostnikovSystemAt( alpha, l );
     
     return Shift( alpha[ l ], -l );
     
