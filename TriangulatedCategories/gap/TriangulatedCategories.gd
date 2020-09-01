@@ -70,6 +70,8 @@ DeclareOperation( "AddStandardConeObject",
 DeclareAttribute( "StandardCoConeObject",
                   IsCapCategoryMorphism );
 
+DeclareSynonym( "cocone", StandardCoConeObject );
+
 DeclareAttribute( "MorphismFromStandardCoConeObject",
                   IsCapCategoryMorphism );
 
@@ -428,6 +430,7 @@ DeclareOperation( "MorphismBetweenStandardConeObjects",
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareSynonym( "mcone", MorphismBetweenStandardConeObjects );
+DeclareSynonym( "mcocone", MorphismBetweenStandardCoConeObjects );
 
 DeclareOperation( "IsExactTriangle",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
