@@ -31,7 +31,7 @@ Required packages
 * You will also need [homalg_project](https://github.com/homalg-project/homalg_project.git)
 
 * Other needed packages
-  - https://github.com/homalg-project/QPA2.git
+  - https://github.com/sunnyquiver/QPA2.git
   - https://github.com/homalg-project/Algebroids/
   - https://github.com/homalg-project/SubcategoriesForCAP/
   - https://github.com/homalg-project/FinSetsForCAP/
