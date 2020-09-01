@@ -179,6 +179,12 @@ InstallOtherMethod( HasActiveUpperBound,
 );
 
 ##
+InstallOtherMethod( ActiveLowerBoundForSourceAndRange,
+          [ IsHomotopyCategoryMorphism ],
+    alpha -> ActiveLowerBoundForSourceAndRange( UnderlyingCell( alpha ) )
+);
+
+##
 InstallOtherMethod( Objects,
               [ IsHomotopyCategoryObject ],
   a -> Objects( UnderlyingCell( a ) )
