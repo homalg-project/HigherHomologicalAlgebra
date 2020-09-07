@@ -909,4 +909,5 @@ InstallMethod( \.,
 
 ##
 DeclareSynonym( "id", IdentityMorphism );
-
+DeclareSynonym( "hom", HomStructure );
+DeclareSynonym( "bhom", HomStructure );
