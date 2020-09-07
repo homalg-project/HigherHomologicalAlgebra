@@ -1,5 +1,5 @@
 #
-# HomotopyCategories: Package to create homotopy categories of an additive category
+# HomotopyCategories: Package to create homotopy categories of additive categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
-Subtitle := "Package to create homotopy categories of an additive category",
+Subtitle := "Package to create homotopy categories of additive categories",
 Version := "2020.08.15",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
@@ -67,7 +67,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Package to create homotopy categories of an additive category",
+  LongTitle := "Package to create homotopy categories of additive categories",
 ),
 
 Dependencies := rec(
