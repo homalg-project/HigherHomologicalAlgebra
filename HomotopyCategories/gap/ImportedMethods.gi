@@ -220,3 +220,15 @@ InstallOtherMethod( BrutalTruncationBelow,
   { c, n } -> BrutalTruncationBelow( UnderlyingCell( c ), n ) / CapCategory( c )
 );
 
+##
+InstallMethod( LaTeXOutput,
+          [ IsHomotopyCategoryCell ],
+  c -> LaTeXOutput( UnderlyingCell( c ) )
+);
+
+##
+InstallOtherMethod( LaTeXOutput,
+          [ IsHomotopyCategoryCell, IsInt, IsInt ],
+  { c, l, u } -> LaTeXOutput( UnderlyingCell( c, l, u ) )
+);
+
