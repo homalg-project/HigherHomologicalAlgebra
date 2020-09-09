@@ -558,6 +558,30 @@ InstallMethod( IsWellDefined,
    return true;
 end );
 
+##
+InstallOtherMethod( LaTeXOutput,
+        [ IsChainOrCochainMorphism, IsInt, IsInt ],
+  function( phi, l, u )
+    local s, i;
+    
+    s := "\\begin{array}{lc}\n ";
+    
+    for i in [ l .. u ] do
+      
+      s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] ), " \\\\ \n " );
+      
+    od;
+    
+    return Concatenation( s, "\\end{array}" );
+    
+end );
+
+##
+InstallMethod( LaTeXOutput,
+          [ IsBoundedChainOrCochainMorphism ],
+  phi -> LaTeXOutput( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) )
+);
+
 #################################
 #
 # Operations

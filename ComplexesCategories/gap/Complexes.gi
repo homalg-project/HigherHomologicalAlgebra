@@ -562,6 +562,76 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
 end );
 
 ##
+InstallOtherMethod( LaTeXOutput,
+        [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, l, u )
+    local OnlyDifferentials, s, i;
+    
+    OnlyDifferentials := ValueOption( "OnlyDifferentials" );
+    
+    s := "\\begin{array}{c}\n ";
+    
+    if IsChainComplex( C ) then
+      
+      if OnlyDifferentials <> true then
+        
+        s := Concatenation( s, LaTeXOutput( C[ l ] ), "\n \\\\ \n " );
+        
+      fi;
+      
+      for i in [ l + 1 .. u ] do
+         
+        s := Concatenation( s, "\\\\ \n \\uparrow_{\\scalebox{0.4}{\\phantom{", String( i ), "}}} \n \\\\ \n " );
+        
+        s := Concatenation( s, LaTeXOutput( C ^ i ), "\n \\\\ \n " );
+        
+        s := Concatenation( s, "\\vert_{\\scalebox{0.4}{", String( i ), "}} \n \\\\ \n " );
+        
+        if OnlyDifferentials <> true then
+          
+          s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ i ] ), "\n \\\\ \n " );
+          
+        fi;
+        
+      od;
+    
+    else
+      
+      for i in [ l .. u - 1 ] do
+        
+        if OnlyDifferentials <> true then
+          
+          s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ i ] ), " \n \\\\ \n " );
+          
+        fi;
+        
+        s := Concatenation( s, "\\\\ \n  \\vert^{\\scalebox{0.4}{", String( i ), "}} \n \\\\ \n " );
+        
+        s := Concatenation( s, LaTeXOutput( C ^ i ), " \n \\\\ \n " );
+        
+        s := Concatenation( s, " \\downarrow_{\\scalebox{0.4}{\\phantom{", String( i ), "}}} \n \\\\ \n " ); 
+        
+      od;
+      
+      if OnlyDifferentials <> true then
+        
+        s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ u ] ) );
+        
+      fi;
+      
+    fi;
+    
+    return Concatenation( s, "\\end{array}" );
+  
+end );
+
+##
+InstallMethod( LaTeXOutput,
+          [ IsBoundedChainOrCochainComplex ],
+  C -> LaTeXOutput( C, ActiveLowerBound( C ), ActiveUpperBound( C ) )
+);
+
+##
 InstallMethod( Display,
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
