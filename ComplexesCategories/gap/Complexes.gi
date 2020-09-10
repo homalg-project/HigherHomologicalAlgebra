@@ -565,7 +565,7 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, l, u )
-    local OnlyDifferentials, OnlyDatum, s, i, ScaleBox;
+    local OnlyDifferentials, OnlyDatum, s, i, ScaleBox, Color, WithColor;
     
     OnlyDifferentials := ValueOption( "OnlyDifferentials" );
     

@@ -562,17 +562,157 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( phi, l, u )
-    local s, i;
+    local OnlyDatum, Color, s, i, ScaleBox, WithColor;
     
-    s := "\\begin{array}{lc}\n ";
+    OnlyDatum := ValueOption( "OnlyDatum" );
     
-    for i in [ l .. u ] do
+    WithColor := ValueOption( "WithColor" );
+    
+    if WithColor = fail then
       
-      s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] ), " \\\\ \n " );
+      Color := "black";
       
-    od;
+    elif WithColor = true then
+      
+      Color := Random( [ "red", "green", "blue" ] );
+      
+    elif IsString( WithColor ) then
+      
+      Color := WithColor;
+      
+    fi;
     
-    return Concatenation( s, "\\end{array}" );
+    if OnlyDatum = true then
+      
+      s := "\\begin{array}{lc}\n ";
+      
+      for i in [ l .. u ] do
+        
+        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] ), " \\\\ \n " );
+        
+      od;
+    
+    else
+      
+      s := "\\begin{array}{ccc}\n ";
+      
+      if IsChainMorphism( phi ) then
+        
+        s := Concatenation(
+                s,
+                LaTeXOutput( Source( phi )[ l ] ),
+                "&\\xrightarrow{",
+                LaTeXOutput( phi[ l ] : OnlyDatum := true ),
+                "}&",
+                LaTeXOutput( Range( phi )[ l ] ),
+                "\n \\\\ \n "
+              );
+        
+        for i in [ l + 1 .. u ] do
+          
+          s := Concatenation(
+                  s,
+                  "\\\\ \n { \\color{",Color, "}\\uparrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  "&&",
+                  " \n { \\color{",Color, "}\\uparrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  "\n \\\\ \n "
+                );
+          
+          s := Concatenation(
+                  s,
+                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
+                  "&&",
+                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
+                  "\n \\\\ \n "
+                );
+          
+          s := Concatenation(
+                  s,
+                  "{ \\color{", Color, "}\\vert_{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "&&",
+                  "{ \\color{", Color, "}\\vert_{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\n \\\\ \n "
+                );
+          
+          s := Concatenation(
+                s,
+                LaTeXOutput( Source( phi )[ i ] ),
+                "&\\xrightarrow{",
+                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
+                "}&",
+                LaTeXOutput( Range( phi )[ i ] ),
+                "\n \\\\ \n "
+              );
+          
+        od;
+      
+      else
+        
+        for i in [ l .. u - 1 ] do
+          
+          s := Concatenation(
+                s,
+                "\\\\ \n",
+                LaTeXOutput( Source( phi )[ i ] ),
+                "&\\xrightarrow{",
+                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
+                "}&",
+                LaTeXOutput( Range( phi )[ i ] ),
+                "\n \\\\ \n "
+              );
+          
+          s := Concatenation(
+                  s,
+                  "\\\\ \n { \\color{", Color, "}\\vert^{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "&&",
+                  "{ \\color{", Color, "}\\vert^{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\n \\\\ \n "
+                );
+          
+          s := Concatenation(
+                  s,
+                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
+                  "&&",
+                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
+                  "\n \\\\ \n "
+                );
+          
+          s := Concatenation(
+                  s,
+                  " { \\color{",Color, "}\\downarrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  "&&",
+                  " \n { \\color{",Color, "}\\downarrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}"
+                );
+           
+        od;
+        
+        s := Concatenation(
+                s,
+                "\\\\ \n",
+                LaTeXOutput( Source( phi )[ u ] ),
+                "&\\xrightarrow{",
+                LaTeXOutput( phi[ u ] : OnlyDatum := true ),
+                "}&",
+                LaTeXOutput( Range( phi )[ u ] ),
+                "\n \\\\ \n "
+              );
+        
+      fi;
+ 
+      
+    fi;
+    
+    s := Concatenation( s, "\\end{array}" );  
+    
+    ScaleBox := ValueOption( "ScaleBox" );
+    
+    if ScaleBox <> fail then
+      
+      s := Concatenation( "\\scalebox{", String( ScaleBox ), "}{$", s, "$}" );
+      
+    fi;
+    
+    return s;
     
 end );
 
