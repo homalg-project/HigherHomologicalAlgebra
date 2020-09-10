@@ -907,7 +907,41 @@ InstallMethod( \.,
    { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
 );
 
-##
-DeclareSynonym( "id", IdentityMorphism );
-DeclareSynonym( "hom", HomStructure );
-DeclareSynonym( "bhom", HomStructure );
+#########################
+#
+# LIST_OF_SYNONYMS
+#
+#########################
+
+DeclareGlobalVariable( "LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS" );
+MakeReadWriteGlobal( "LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS" );
+
+LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS :=
+  [
+    [ "id", IdentityMorphism ],
+    [ "hom", HomStructure ],
+    [ "bhom", BasisOfExternalHom ]
+  ];
+
+# (D)ECLARE the synonyms
+#
+BindGlobal( "DLIST_OF_SYNONYMS_FOR_CAP_OPERATIONS", 
+  function( )
+    local l;
+    
+    for l in LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS do
+      
+      if not IsString( l[ 1 ] ) then
+        
+        Error( "The first entry of each list should be a string!" );
+        
+      elif not EvalString( Concatenation( "IsBound( ", l[ 1 ], ")" ) ) then
+        
+        DeclareSynonym( l[ 1 ], l[ 2 ] );
+        
+      fi;
+      
+    od;
+    
+end );
+

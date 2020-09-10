@@ -1,7 +1,7 @@
 The ComplexesCategories package
 =========================
 
-version 01/09/2020.
+version 02/09/2020.
 
 Introduction
 ------------
