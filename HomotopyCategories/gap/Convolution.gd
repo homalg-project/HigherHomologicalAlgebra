@@ -26,8 +26,13 @@ DeclareAttribute( "BackwardConvolution", IsHomotopyCategoryCell );
 KeyDependentOperation( "ShiftOfBackwardConvolution_into_BackwardConvolutionOfShift", IsHomotopyCategoryObject, IsInt, ReturnTrue );
 KeyDependentOperation( "BackwardConvolutionOfShift_into_ShiftOfBackwardConvolution", IsHomotopyCategoryObject, IsInt, ReturnTrue );
 
-DeclareSynonym( "fconv", ForwardConvolution );
-DeclareSynonym( "bconv", BackwardConvolution );
-DeclareSynonym( "fpkv", ForwardPostnikovSystemAt );
-DeclareSynonym( "bpkv", BackwardPostnikovSystemAt );
+##
+Append( LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS,
+  [
+    [ "fconv", ForwardConvolution ],
+    [ "bconv", BackwardConvolution ],
+    [ "fpkv", ForwardPostnikovSystemAt ],
+    [ "bpkv", BackwardPostnikovSystemAt ]
+  ]
+);
 

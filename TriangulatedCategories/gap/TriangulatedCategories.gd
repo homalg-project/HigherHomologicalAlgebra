@@ -48,7 +48,6 @@ DeclareCategory( "IsTriangulatedCategory", IsCapCategory );
 DeclareAttribute( "StandardConeObject",
                   IsCapCategoryMorphism );
 
-DeclareSynonym( "cone", StandardConeObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
@@ -70,7 +69,6 @@ DeclareOperation( "AddStandardConeObject",
 DeclareAttribute( "StandardCoConeObject",
                   IsCapCategoryMorphism );
 
-DeclareSynonym( "cocone", StandardCoConeObject );
 
 DeclareAttribute( "MorphismFromStandardCoConeObject",
                   IsCapCategoryMorphism );
@@ -103,7 +101,6 @@ DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject"
 #! @Arguments alpha
 #! @Returns a morphism $\iota(\alpha):B\to C(\alpha)$
 DeclareAttribute( "MorphismIntoStandardConeObject", IsCapCategoryMorphism );
-DeclareSynonym( "iota", MorphismIntoStandardConeObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
@@ -142,7 +139,6 @@ DeclareOperation( "AddMorphismFromStandardConeObjectWithGivenStandardConeObject"
 #! @Arguments alpha, C
 #! @Returns a morphism $\pi(\alpha):C(\alpha)\to\Sigma A$
 DeclareAttribute( "MorphismFromStandardConeObject", IsCapCategoryMorphism );
-DeclareSynonym( "pi", MorphismFromStandardConeObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
@@ -429,8 +425,6 @@ DeclareOperation( "MorphismBetweenStandardConeObjects",
       [  IsCapCategoryMorphism, IsCapCategoryMorphism, 
           IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareSynonym( "mcone", MorphismBetweenStandardConeObjects );
-DeclareSynonym( "mcocone", MorphismBetweenStandardCoConeObjects );
 
 DeclareOperation( "IsExactTriangle",
       [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
@@ -953,3 +947,16 @@ DeclareOperation( "InverseShiftFactoringIsomorphism", [ IsList ] );
 ######################################
 
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCapCategory );
+
+## Syns
+
+Append( LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS,
+  [
+    [ "cone", StandardConeObject ],
+    [ "cocone", StandardCoConeObject ],
+    [ "iota", MorphismIntoStandardConeObject ],
+    [ "pi", MorphismFromStandardConeObject ],
+    [ "mcone", MorphismBetweenStandardConeObjects ],
+    [ "mcocone", MorphismBetweenStandardCoConeObjects ]
+  ]
+);
