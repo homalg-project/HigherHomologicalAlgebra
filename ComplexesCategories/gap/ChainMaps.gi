@@ -562,33 +562,17 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( phi, l, u )
-    local OnlyDatum, Color, s, i, ScaleBox, WithColor;
+    local OnlyDatum, s, i;
     
     OnlyDatum := ValueOption( "OnlyDatum" );
-    
-    WithColor := ValueOption( "WithColor" );
-    
-    if WithColor = fail then
-      
-      Color := "black";
-      
-    elif WithColor = true then
-      
-      Color := Random( [ "red", "green", "blue" ] );
-      
-    elif IsString( WithColor ) then
-      
-      Color := WithColor;
-      
-    fi;
-    
+        
     if OnlyDatum = true then
       
       s := "\\begin{array}{lc}\n ";
       
       for i in [ l .. u ] do
         
-        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] ), " \\\\ \n " );
+        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
         
       od;
     
@@ -601,20 +585,20 @@ InstallOtherMethod( LaTeXOutput,
         s := Concatenation(
                 s,
                 LaTeXOutput( Source( phi )[ l ] ),
-                "&\\xrightarrow{",
+                "&-\\phantom{-}{",
                 LaTeXOutput( phi[ l ] : OnlyDatum := true ),
-                "}&",
+                "}\\phantom{-}\\rightarrow&",
                 LaTeXOutput( Range( phi )[ l ] ),
-                "\n \\\\ \n "
+                "\n \\\\ \n"
               );
         
         for i in [ l + 1 .. u ] do
           
           s := Concatenation(
                   s,
-                  "\\\\ \n { \\color{",Color, "}\\uparrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  " \\uparrow_{\\phantom{", String( i ), "}}",
                   "&&",
-                  " \n { \\color{",Color, "}\\uparrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  " \n \\uparrow_{\\phantom{", String( i ), "}}",
                   "\n \\\\ \n "
                 );
           
@@ -628,18 +612,18 @@ InstallOtherMethod( LaTeXOutput,
           
           s := Concatenation(
                   s,
-                  "{ \\color{", Color, "}\\vert_{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\\vert_{", String( i ), "} ",
                   "&&",
-                  "{ \\color{", Color, "}\\vert_{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\\vert_{", String( i ), "} ",
                   "\n \\\\ \n "
                 );
           
           s := Concatenation(
                 s,
                 LaTeXOutput( Source( phi )[ i ] ),
-                "&\\xrightarrow{",
+                "&-\\phantom{-}{",
                 LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}&",
+                "}\\phantom{-}\\rightarrow&",
                 LaTeXOutput( Range( phi )[ i ] ),
                 "\n \\\\ \n "
               );
@@ -654,18 +638,18 @@ InstallOtherMethod( LaTeXOutput,
                 s,
                 "\\\\ \n",
                 LaTeXOutput( Source( phi )[ i ] ),
-                "&\\xrightarrow{",
+                "&-\\phantom{-}{",
                 LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}&",
+                "}\\phantom{-}\\rightarrow&",
                 LaTeXOutput( Range( phi )[ i ] ),
-                "\n \\\\ \n "
+                "\n "
               );
           
           s := Concatenation(
                   s,
-                  "\\\\ \n { \\color{", Color, "}\\vert^{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\\\\ \n \\vert^{", String( i ), "} ",
                   "&&",
-                  "{ \\color{", Color, "}\\vert^{\\scalebox{0.7}{", String( i ), "}}} ",
+                  "\\vert^{", String( i ), "} ",
                   "\n \\\\ \n "
                 );
           
@@ -679,9 +663,9 @@ InstallOtherMethod( LaTeXOutput,
           
           s := Concatenation(
                   s,
-                  " { \\color{",Color, "}\\downarrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}",
+                  " \\downarrow_{\\phantom{", String( i ), "}}",
                   "&&",
-                  " \n { \\color{",Color, "}\\downarrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}}"
+                  " \n \\downarrow_{\\phantom{", String( i ), "}}"
                 );
            
         od;
@@ -690,28 +674,19 @@ InstallOtherMethod( LaTeXOutput,
                 s,
                 "\\\\ \n",
                 LaTeXOutput( Source( phi )[ u ] ),
-                "&\\xrightarrow{",
+                "&-\\phantom{-}{",
                 LaTeXOutput( phi[ u ] : OnlyDatum := true ),
-                "}&",
+                "}\\phantom{-}\\rightarrow&",
                 LaTeXOutput( Range( phi )[ u ] ),
                 "\n \\\\ \n "
               );
-        
+                      
       fi;
- 
-      
+    
     fi;
     
     s := Concatenation( s, "\\end{array}" );  
-    
-    ScaleBox := ValueOption( "ScaleBox" );
-    
-    if ScaleBox <> fail then
-      
-      s := Concatenation( "\\scalebox{", String( ScaleBox ), "}{$", s, "$}" );
-      
-    fi;
-    
+        
     return s;
     
 end );
@@ -719,7 +694,7 @@ end );
 ##
 InstallMethod( LaTeXOutput,
           [ IsBoundedChainOrCochainMorphism ],
-  phi -> LaTeXOutput( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) )
+  phi -> LaTeXOutput( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
 );
 
 #################################

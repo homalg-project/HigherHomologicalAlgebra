@@ -565,26 +565,10 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, l, u )
-    local OnlyDifferentials, OnlyDatum, s, i, ScaleBox, Color, WithColor;
+    local OnlyDifferentials, OnlyDatum, s, i;
     
     OnlyDifferentials := ValueOption( "OnlyDifferentials" );
-    
-    WithColor := ValueOption( "WithColor" );
-    
-    if WithColor = fail then
-      
-      Color := "black";
-      
-    elif WithColor = true then
-      
-      Color := Random( [ "red", "green", "blue" ] );
-      
-    elif IsString( WithColor ) then
-      
-      Color := WithColor;
-      
-    fi;
-    
+        
     if OnlyDifferentials = true then
       
       OnlyDatum := false;
@@ -601,21 +585,21 @@ InstallOtherMethod( LaTeXOutput,
       
       if OnlyDifferentials <> true then
         
-        s := Concatenation( s, LaTeXOutput( C[ l ] ), "\n \\\\ \n " );
+        s := Concatenation( s, LaTeXOutput( C[ l ] ), "\n " );
         
       fi;
       
       for i in [ l + 1 .. u ] do
          
-        s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}} \n \\\\ \n " );
+        s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\phantom{", String( i ), "}}} \n \\\\ \n " );
         
         s := Concatenation( s, LaTeXOutput( C ^ i : OnlyDatum := OnlyDatum ), "\n \\\\ \n " );
         
-        s := Concatenation( s, "{ \\color{", Color, "}\\vert_{\\scalebox{0.7}{", String( i ), "}}} \n \\\\ \n " );
+        s := Concatenation( s, "{ \\color{", Color, "}\\vert_{", String( i ), "}} \n " );
         
         if OnlyDifferentials <> true then
           
-          s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ i ] ), "\n \\\\ \n " );
+          s := Concatenation( s, "\n \\\\ \n", LaTeXOutput( C[ i ] ) );
           
         fi;
         
@@ -627,15 +611,15 @@ InstallOtherMethod( LaTeXOutput,
         
         if OnlyDifferentials <> true then
           
-          s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ i ] ), " \n \\\\ \n " );
+          s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ i ] ), " \n " );
           
         fi;
         
-        s := Concatenation( s, "\\\\ \n  { \\color{", Color, "}\\vert^{\\scalebox{0.7}{", String( i ), "}}} \n \\\\ \n " );
+        s := Concatenation( s, "\\\\ \n  { \\color{", Color, "}\\vert^{", String( i ), "}} \n \\\\ \n " );
         
         s := Concatenation( s, LaTeXOutput( C ^ i : OnlyDatum := OnlyDatum ), " \n \\\\ \n " );
         
-        s := Concatenation( s, "{ \\color{", Color, "} \\downarrow_{\\scalebox{0.7}{\\phantom{", String( i ), "}}}} \n \\\\ \n " ); 
+        s := Concatenation( s, "{ \\color{", Color, "} \\downarrow_{\\phantom{", String( i ), "}}} \n " ); 
         
       od;
       
