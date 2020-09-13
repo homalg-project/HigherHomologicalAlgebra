@@ -565,7 +565,7 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, l, u )
-    local OnlyDifferentials, OnlyDatum, s, i;
+    local OnlyDifferentials, OnlyDatum, s, i, Color;
     
     OnlyDifferentials := ValueOption( "OnlyDifferentials" );
         
@@ -576,6 +576,22 @@ InstallOtherMethod( LaTeXOutput,
     else
       
       OnlyDatum := true;
+      
+    fi;
+    
+    Color := ValueOption( "Color" );
+    
+    if Color in [ fail, false ] then
+      
+      Color := "black";
+      
+    elif Color = true then
+      
+      Color := "red";
+      
+    elif not IsString( Color ) then
+      
+      Color := "black";
       
     fi;
     
@@ -632,15 +648,7 @@ InstallOtherMethod( LaTeXOutput,
     fi;
     
     s := Concatenation( s, "\\end{array}" );
-    
-    ScaleBox := ValueOption( "ScaleBox" );
-    
-    if ScaleBox <> fail then
-      
-      s := Concatenation( "\\scalebox{", String( ScaleBox ), "}{$", s, "$}" );
-      
-    fi;
-    
+        
     return s;
     
 end );
