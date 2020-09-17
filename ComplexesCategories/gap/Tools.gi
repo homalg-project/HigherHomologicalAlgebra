@@ -1023,13 +1023,11 @@ decorations.pathmorphing,decorations.text,decorations.markings}
   },
 }
 \begin{document}
-\[
-  """,
+\[""",
     latex_string,
-  """
-\]
+"""\]
 \end{document}
-  """
+"""
     );
     
     PrintTo( filename, string );
