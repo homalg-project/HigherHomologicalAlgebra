@@ -945,3 +945,102 @@ BindGlobal( "DLIST_OF_SYNONYMS_FOR_CAP_OPERATIONS",
     
 end );
 
+######################
+#
+# LaTeX
+#
+#####################
+
+##
+DeclareGlobalFunction( "CompileLaTeXOutput" );
+
+##
+InstallGlobalFunction( CompileLaTeXOutput,
+  function( latex_string )
+    local dir, filename, string, str;
+    
+    dir := DirectoryTemporary();
+    
+    filename := Filename( dir, "main.tex" );
+    
+    string := Concatenation(
+    """
+\documentclass[12pt,makeidx]{amsbook}
+\usepackage[pdfauthor   = {Gap User},
+            pdftitle    = {Test},
+            pdfsubject  = {},
+            bookmarks=true,
+            bookmarksopen=true,
+            pagebackref=true,
+            hyperindex=true,
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=blue,
+            filecolor=blue,
+            urlcolor=blue,
+            ]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{automata,shapes,arrows,matrix,backgrounds,positioning,plotmarks,
+calc,patterns,matrix,decorations.pathreplacing,
+decorations.pathmorphing,decorations.text,decorations.markings}
+
+\tikzset{
+  mysquare/.style={
+    draw,minimum size=1cm,align=center,
+    append after command={node[fill,anchor=north west,minimum size=0.35cm] at (\tikzlastnode.north west) {}}
+  },
+  twoarrows/.style n args={4}{
+    decoration={
+      markings,
+      mark=at position #1 with {\arrow{>}\node[above] {#3};},
+      mark=at position #2 with {\arrow{>}\node[above] {#4};}
+    },
+  postaction=decorate
+  },
+  onearrow/.style 2 args={
+    decoration={
+      markings,
+      mark=at position #1 with {\arrow{>}\node[above] {#2};},
+    },
+  postaction=decorate
+  },
+  onearrowrev/.style 2 args={
+    decoration={
+      markings,
+      mark=at position #1 with {\arrow{<}\node[above] {#2};},
+    },
+  postaction=decorate
+  },
+}
+\begin{document}
+\[
+  """,
+    latex_string,
+  """
+\]
+\end{document}
+  """
+    );
+    
+    PrintTo( filename, string );
+    
+    str := "";
+    
+    Process( dir, Filename( DirectoriesSystemPrograms(), "pdflatex" ), InputTextUser(), OutputTextString(str,true), [ "main.tex" ] );
+    
+    Print( Concatenation( "Exec( \"xdg-open ", Filename( dir, "main.pdf" ), " &\" );" ) );
+    
+    return;
+    
+end );
+
