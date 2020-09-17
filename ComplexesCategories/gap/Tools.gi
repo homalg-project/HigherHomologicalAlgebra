@@ -957,7 +957,7 @@ DeclareGlobalFunction( "CompileLaTeXOutput" );
 ##
 InstallGlobalFunction( CompileLaTeXOutput,
   function( latex_string )
-    local dir, filename, string, str;
+    local dir, filename, string, str, x;
     
     dir := DirectoryTemporary();
     
@@ -1030,13 +1030,33 @@ decorations.pathmorphing,decorations.text,decorations.markings}
 """
     );
     
+    x := SizeScreen( );
+    
+    SizeScreen( [ 10^6, 10^6 ] );
+    
     PrintTo( filename, string );
+    
+    SizeScreen( x );
     
     str := "";
     
-    Process( dir, Filename( DirectoriesSystemPrograms(), "pdflatex" ), InputTextUser(), OutputTextString(str,true), [ "main.tex" ] );
+    x := Process(
+            dir,
+            Filename( DirectoriesSystemPrograms(), "pdflatex" ),
+            InputTextUser( ),
+            OutputTextString(str,true),
+            [ "-halt-on-error", "main.tex" ]
+          );
     
-    Print( Concatenation( "Exec( \"xdg-open ", Filename( dir, "main.pdf" ), " &\" );" ) );
+    if x <> 0 then
+      
+      Error( "Something went wrong!, please check the main.tex file at ", filename );
+      
+    else
+      
+      Exec( Concatenation( "xdg-open ", Filename( dir, "main.pdf" ), " &" ) );
+      
+    fi;
     
     return;
     
