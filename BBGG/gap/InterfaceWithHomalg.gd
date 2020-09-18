@@ -30,7 +30,6 @@ DeclareAttribute( "AsPresentationMorphismInHomalg", IsGradedLeftOrRightPresentat
 #! @Returns a graded lp in CAP
 DeclareAttribute( "AsPresentationMorphismInCAP", IsHomalgGradedMap  );
 
-#! @EndSection
 
 DeclareOperation( "RepresentationMapOfRingElement", [ IsRingElement, IsGradedLeftOrRightPresentation, IsInt ] );
 KeyDependentOperation( "GradedLeftPresentationGeneratedByHomogeneousPart", IsGradedLeftPresentation, IsInt, ReturnTrue );
