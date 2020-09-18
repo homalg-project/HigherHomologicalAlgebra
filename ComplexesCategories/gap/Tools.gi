@@ -1034,6 +1034,7 @@ decorations.pathmorphing,decorations.text,decorations.markings}
   postaction=decorate
   },
 }
+\setcounter{MaxMatrixCols}{100}
 \begin{document}
 \begin{center}
 \scalebox{""",
