@@ -174,12 +174,12 @@ InstallMethod( BackwardPostnikovSystemAtOp,
         Error( "The input is not well-defined!" );
         
       fi;
-
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ -alpha[ i ], H[ i ] ] ] ) );
+      
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( C ^ m ) ),
+                  InverseShiftOnObject( StandardConeObject( beta ) ),
                   maps
                 );
                 
@@ -483,12 +483,12 @@ InstallMethod( BackwardPostnikovSystemAtOp,
         Error( "The input is not well-defined!" );
         
       fi;
-
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ -alpha[ i ], H[ i ] ] ] ) );
+      
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( C ^ m ) ),
+                  InverseShiftOnObject( StandardConeObject( beta ) ),
                   maps
                 );
                 
