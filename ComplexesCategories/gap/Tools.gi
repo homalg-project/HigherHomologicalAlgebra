@@ -957,8 +957,20 @@ DeclareGlobalFunction( "CompileLaTeXOutput" );
 ##
 InstallGlobalFunction( CompileLaTeXOutput,
   function( latex_string )
-    local dir, filename, string, str, x;
+    local scale, dir, filename, string, file, x, str;
     
+    scale := ValueOption( "ScaleBox" );
+    
+    if scale = fail then
+      
+      scale := "1";
+      
+    elif not IsString( scale ) then
+      
+      scale := String( scale );
+      
+    fi;
+     
     dir := DirectoryTemporary();
     
     filename := Filename( dir, "main.tex" );
@@ -1023,20 +1035,22 @@ decorations.pathmorphing,decorations.text,decorations.markings}
   },
 }
 \begin{document}
-\[""",
+\begin{center}
+\scalebox{""",
+scale,
+"""}{$""",
     latex_string,
-"""\]
+"""$}
+\end{center}
 \end{document}
 """
     );
     
-    x := SizeScreen( );
+    file := OutputTextFile( filename, true );
     
-    SizeScreen( [ 10^6, 10^6 ] );
+    SetPrintFormattingStatus( file, false );
     
-    PrintTo( filename, string );
-    
-    SizeScreen( x );
+    PrintTo( file, string );
     
     str := "";
     
@@ -1044,7 +1058,7 @@ decorations.pathmorphing,decorations.text,decorations.markings}
             dir,
             Filename( DirectoriesSystemPrograms(), "pdflatex" ),
             InputTextUser( ),
-            OutputTextString(str,true),
+            OutputTextString( str, true ),
             [ "-halt-on-error", "main.tex" ]
           );
     
@@ -1052,9 +1066,13 @@ decorations.pathmorphing,decorations.text,decorations.markings}
       
       Error( "Something went wrong!, please check the main.tex file at ", filename );
       
-    else
+    elif Filename(DirectoriesSystemPrograms(), "xdg-open" ) <> fail then
       
       Exec( Concatenation( "xdg-open ", Filename( dir, "main.pdf" ), " &" ) );
+      
+    else
+      
+      Print( Filename( dir, "main.pdf" ) );
       
     fi;
     
