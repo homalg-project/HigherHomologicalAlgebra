@@ -199,10 +199,18 @@ DeclareAttribute( "AppliedMap", IsZFunction );
 #! The argument is a dense list <A>L</A> of $\mathbb{Z}$-functions.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
 #! <C>m</C>[<C>i</C>] is equal to [<A>L</A>[1][<C>i</C>],...,
-#! <A>L</A>[Size(L)][<C>i</C>]] for all indices <C>i</C>'s in $\mathbb{Z}$.
+#! <A>L</A>[<C>Size</C>(<A>L</A>)][<C>i</C>]] for all indices <C>i</C>'s in $\mathbb{Z}$.
 #! @Arguments L
 #! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "CombineZFunctions", [ IsDenseList ] );
+
+#! @Description
+#! The argument is a $\mathbb{Z}$-function <A>z_func</A>, an integer <A>n</A> and a dense list <A>L</A>.
+#! The output is a new $\mathbb{Z}$-function whose values between <A>n</A> and <A>n</A>+<C>Size</C>(<A>L</A>)-1
+#! are taken from <A>L</A>.
+#! @Arguments z_func, n, L
+#! @Returns a $\mathbb{Z}$-function
+DeclareOperation( "Replace", [ IsZFunction, IsInt, IsDenseList ] );
 
 ########################################
 

@@ -256,6 +256,31 @@ InstallMethod( Reflection,
 end );
 
 ##
+InstallMethod( Replace,
+          [ IsZFunction, IsInt, IsDenseList ],
+  function( z_function, n, L )
+    local func;
+    
+    func :=
+      function( i )
+        
+        if i in [ n .. n + Size( L ) - 1 ] then
+          
+          return L[ i - n + 1 ];
+        
+        else
+          
+          return z_function[ i ];
+          
+        fi;
+        
+      end;
+      
+    return AsZFunction( func );
+    
+end );
+
+##
 InstallMethod( ApplyShiftOp,
           [ IsZFunction, IsInt ],
   { z_function, n } -> AsZFunction( i -> z_function[ i + n ] )
