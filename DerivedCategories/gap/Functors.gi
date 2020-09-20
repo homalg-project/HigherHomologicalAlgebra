@@ -934,8 +934,22 @@ InstallMethod( EmbeddingFunctorFromAdditiveClosure,
 ##
 InstallMethod( EmbeddingFunctorFromHomotopyCategory,
           [ IsExceptionalCollection ],
-  collection -> ExtendFunctorToHomotopyCategories( EmbeddingFunctorFromAdditiveClosure( collection ) )
-);
+  function( collection )
+    local iota;
+    
+    iota := EmbeddingFunctorFromAdditiveClosure( collection );
+    
+    if ValueOption( "by_cochains" ) = true then
+      
+      return ExtendFunctorToHomotopyCategories( iota, true );
+      
+    else
+      
+      return ExtendFunctorToHomotopyCategories( iota, false );
+      
+    fi;
+    
+end );
 
 ##
 BindGlobal( "SET_COMMUTATIVITY_NAT_ISO_BETWEEN_REPLACEMENT_AND_SHIFT",
