@@ -50,6 +50,14 @@ DeclareAttribute( "NaturalIsomorphismFromIdentityIntoMinusOneFunctor", IsHomotop
 
 DeclareAttribute( "NaturalIsomorphismFromMinusOneFunctorIntoIdentity", IsHomotopyCategory );
 
+DeclareAttribute( "EquivalenceOntoHomotopyCategoryByCochainComplexes", IsHomotopyCategory );
+
+DeclareAttribute( "EquivalenceFromHomotopyCategoryByCochainComplexes", IsHomotopyCategory );
+
+DeclareAttribute( "EquivalenceOntoHomotopyCategoryByChainComplexes", IsHomotopyCategory );
+
+DeclareAttribute( "EquivalenceFromHomotopyCategoryByChainComplexes", IsHomotopyCategory );
+
 # DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
 
 # DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );

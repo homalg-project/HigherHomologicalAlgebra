@@ -349,19 +349,31 @@ end );
 InstallMethod( LocalizationFunctorByProjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
-    local cat, projs, homotopy_category_projs, name, F;
+    local cat, projs, homotopy_category_projs, name, F, oper;
     
     cat := DefiningCategory( homotopy_category );
     
     if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
       
-      Error( "The input should be abelian with computable enough projective objects!\n" );
+      Error( "The defining category should be abelian with computable enough projective objects!\n" );
       
     fi;
     
     projs := ValueGlobal( "FullSubcategoryGeneratedByProjectiveObjects" )( cat );
     
-    homotopy_category_projs := HomotopyCategory( projs );
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      homotopy_category_projs := HomotopyCategory( projs, false );
+      
+      oper := AsChainMorphismOverCapFullSubcategory;
+      
+    else
+      
+      homotopy_category_projs := HomotopyCategory( projs, true );
+      
+      oper := AsCochainMorphismOverCapFullSubcategory;
+      
+    fi;
     
     name := "Localization functor by projective objects";
     
@@ -387,7 +399,7 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
         
         psi := MorphismBetweenProjectiveResolutions( UnderlyingCell( phi ), true );
         
-        psi := AsChainMorphismOverCapFullSubcategory( UnderlyingCell( s ), psi, UnderlyingCell( r ) );
+        psi := oper( UnderlyingCell( s ), psi, UnderlyingCell( r ) );
         
         return psi / homotopy_category_projs;
         
@@ -564,3 +576,101 @@ InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
     return nat;
     
 end );
+
+##
+InstallMethod( EquivalenceFromHomotopyCategoryByCochainComplexes,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local cat, source_category, F;
+    
+    cat := DefiningCategory( homotopy_category );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      source_category := HomotopyCategory( cat, true );
+      
+    else
+      
+      return IdentityFunctor( homotopy_category );
+      
+    fi;
+    
+    F := CapFunctor( "homotopy category by cochains -> homotopy category by chains", source_category, homotopy_category );
+    
+    AddObjectFunction( F, AsChainComplex );
+    
+    AddMorphismFunction( F, AsChainMorphism );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( EquivalenceOntoHomotopyCategoryByCochainComplexes,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local cat, range_category, homotopy_category_, F;
+    
+    cat := DefiningCategory( homotopy_category );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      range_category := HomotopyCategory( cat, true );
+      
+    else
+      
+      return IdentityFunctor( homotopy_category );
+      
+    fi;
+    
+    F := CapFunctor( "homotopy category by chains -> homotopy category by cochains", homotopy_category, range_category );
+    
+    AddObjectFunction( F, AsCochainComplex );
+    
+    AddMorphismFunction( F, AsCochainMorphism );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( EquivalenceFromHomotopyCategoryByChainComplexes,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local cat;
+    
+    cat := DefiningCategory( homotopy_category );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      return IdentityFunctor( homotopy_category );
+      
+    else
+      
+      return EquivalenceOntoHomotopyCategoryByCochainComplexes( HomotopyCategory( cat ) );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( EquivalenceOntoHomotopyCategoryByChainComplexes,
+          [ IsHomotopyCategory ],
+  function( homotopy_category )
+    local cat;
+    
+    cat := DefiningCategory( homotopy_category );
+    
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      return IdentityFunctor( homotopy_category );
+      
+    else
+      
+      return EquivalenceFromHomotopyCategoryByCochainComplexes( HomotopyCategory( cat ) );
+      
+    fi;
+    
+end );
+
+
