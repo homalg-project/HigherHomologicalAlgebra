@@ -140,8 +140,6 @@ DeclareAttribute( "MorphismFromZerothHomologyOfBeilinsonReplacementToGLP", IsGra
 #! @Returns nothing
 DeclareGlobalFunction( "ShowMatrix" );
 
-#! @EndSection
-
 ##
 DeclareOperation( "RECORD_TO_MORPHISM_OF_TWISTED_COTANGENT_SHEAVES", [ IsHomalgGradedRing, IsRecord ] );
 DeclareAttribute( "MORPHISM_OF_TWISTED_OMEGA_MODULES_AS_LIST_OF_RECORDS", IsGradedLeftPresentationMorphism );

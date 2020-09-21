@@ -124,8 +124,6 @@ KeyDependentOperation( "HomogeneousPartOverCoefficientsRingFunctor", IsHomalgGra
 
 DeclareGlobalFunction( "RandomGradedPresentationMorphism" ); 
 
-#! @EndSection
-
 # to be removed and renamed!
 # It returns for ( F,i,k) the dimension of H^i( X, F(k) )
 DeclareOperation( "DimensionOfTateCohomology",
