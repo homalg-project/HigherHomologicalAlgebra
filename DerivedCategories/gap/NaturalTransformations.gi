@@ -175,7 +175,7 @@ InstallMethod( COMPUTE_ISOMORPHISM,
   function( a, collection )
     local N, iota;
     
-    N := ExceptionalShift( a, collection );
+    N := MaximalExceptionalShift( a, collection );
     
     iota := Shift( COMPUTE_STANDARD_ISOMORPHISM( Shift( a, N ), collection ), -N );
     

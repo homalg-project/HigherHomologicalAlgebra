@@ -9,6 +9,106 @@
 #############################################################################
 
 ##
+InstallMethod( CandidatesForExceptionalShifts,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local C, T, u_T, l_T, u_a, l_a;
+     
+    C := AmbientCategory( collection );
+    
+    if not IsHomotopyCategory( C ) then
+      
+      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
+      
+    fi;
+       
+    T := TiltingObject( collection );
+    
+    u_T := ActiveUpperBound( T );
+    
+    l_T := ActiveLowerBound( T );
+    
+    u_a := ActiveUpperBound( a );
+    
+    l_a := ActiveLowerBound( a );
+    
+    if IsChainComplex( UnderlyingCell( a ) ) then
+      
+      return [ l_T - u_a .. u_T - l_a ];
+      
+    else
+      
+      return [ l_a - u_T .. u_a - l_T ];
+      
+    fi;
+    
+end );
+
+##
+InstallMethodWithCache( ExceptionalShifts,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local E, I;
+     
+    E := List( UnderlyingObjects( collection ), UnderlyingCell );
+    
+    I := CandidatesForExceptionalShifts( a, collection );
+    
+    I := Filtered( I, N -> ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) );
+    
+    return I;
+    
+end );
+
+##
+InstallMethodWithCache( MinimalExceptionalShift,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local E, I, shift_of_a, N;
+     
+    E := List( UnderlyingObjects( collection ), UnderlyingCell );
+    
+    I := CandidatesForExceptionalShifts( a, collection );
+    
+    for N in I do
+      
+      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) then
+        
+        return N;
+        
+      fi;
+      
+    od;
+    
+    return infinity;
+    
+end );
+
+##
+InstallMethodWithCache( MaximalExceptionalShift,
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+  function( a, collection )
+    local E, I, shift_of_a, N;
+     
+    E := List( UnderlyingObjects( collection ), UnderlyingCell );
+    
+    I := CandidatesForExceptionalShifts( a, collection );
+    
+    for N in Reversed( I ) do
+      
+      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) then
+        
+        return N;
+        
+      fi;
+      
+    od;
+    
+    return -infinity;
+    
+end );
+
+##
 InstallMethod( MorphismFromExceptionalObjectAsList,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
   function( a, collection )
@@ -103,63 +203,6 @@ InstallMethod( MorphismBetweenExceptionalObjects,
     
 end );
 
-# If T & a are two perfect complexes, then
-# Hom(T,a) <> 0 only if l_T - u_a <= 0 and u_T - l_a >= 0.
-InstallMethod( CandidatesForExceptionalShift,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local C, T, u_T, l_T, u_a, l_a;
-     
-    C := AmbientCategory( collection );
-    
-    if not IsHomotopyCategory( C ) then
-      
-      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
-      
-    fi;
-       
-    T := TiltingObject( collection );
-    
-    u_T := ActiveUpperBound( T );
-    
-    l_T := ActiveLowerBound( T );
-    
-    u_a := ActiveUpperBound( a );
-    
-    l_a := ActiveLowerBound( a );
-    
-    return [ l_T - u_a .. u_T - l_a ];
-    
-end );
-
-##
-InstallMethodWithCache( ExceptionalShift,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local E, I, shift_of_a, N;
-     
-    E := UnderlyingObjects( collection );
-    
-    E := List( E, UnderlyingCell );
-    
-    I := CandidatesForExceptionalShift( a, collection );
-    
-    for N in Reversed( I ) do
-      
-      shift_of_a := Shift( a, N );
-      
-      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, shift_of_a ) ) ) then
-        
-        return N;
-        
-      fi;
-      
-    od;
-    
-    return -infinity;
-    
-end );
-
 ##
 InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
@@ -168,7 +211,7 @@ InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
     
     C := CapCategory( a );
     
-    N := ExceptionalShift( a, collection );
+    N := MaximalExceptionalShift( a, collection );
     
     maps := AsZFunction(
               function( i )
@@ -240,11 +283,11 @@ InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
     
     a := Source( phi );
     
-    N_a := ExceptionalShift( a, collection );
+    N_a := MaximalExceptionalShift( a, collection );
     
     b := Range( phi );
     
-    N_b := ExceptionalShift( b, collection );
+    N_b := MaximalExceptionalShift( b, collection );
     
     N := Maximum( N_a, N_b );
     
@@ -343,7 +386,7 @@ InstallMethodWithCache( ExceptionalReplacement,
     
     res!.exceptional_replacement_data := maps;
     
-    N := ExceptionalShift( a, collection );
+    N := MaximalExceptionalShift( a, collection );
     
     SetLowerBound( res, -N );
     
@@ -393,11 +436,11 @@ InstallMethod( ExceptionalReplacement,
         
         b := Range( data[ u ][ 1 ] );
         
-        I := CandidatesForExceptionalShift( b, collection );
+        I := CandidatesForExceptionalShifts( b, collection );
         
         if IsEmpty( I ) or
             I[ 1 ] >= 0 or
-              ExceptionalShift( b, collection ) = -infinity then
+              MaximalExceptionalShift( b, collection ) = -infinity then
               
           SetUpperBound( rep_a, u - 1 );
           

@@ -8,10 +8,16 @@
 ##
 #############################################################################
 
-DeclareOperation( "CandidatesForExceptionalShift",
+DeclareOperation( "CandidatesForExceptionalShifts",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
-DeclareOperation( "ExceptionalShift",
+DeclareOperation( "MinimalExceptionalShift",
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+
+DeclareOperation( "MaximalExceptionalShift",
+            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+
+DeclareOperation( "ExceptionalShifts",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "MorphismFromExceptionalObjectAsList",
