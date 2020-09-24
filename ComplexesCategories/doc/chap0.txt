@@ -1,0 +1,244 @@
+  
+  
+                             [1X ComplexesCategories [101X
+  
+  
+           [1X Category of (co)chain complexes of an additive category [101X
+  
+  
+                                   2020.09.05
+  
+  
+                                5 September 2020
+  
+  
+                                  Kamal Saleh
+  
+  
+  
+  Kamal Saleh
+      Email:    [7Xmailto:kamal.saleh@uni-siegen.de[107X
+      Homepage: [7Xhttps://github.com/kamalsaleh/[107X
+      Address:  [33X[0;14YWalter-Flex-Str. 3[133X
+                [33X[0;14Y57068 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (ComplexesCategories)[101X
+  
+  1 [33X[0;0YComplexes categories[133X
+    1.1 [33X[0;0YConstructing chain and cochain categories[133X
+      1.1-1 IsChainOrCochainComplexCategory
+      1.1-2 IsBoundedChainOrCochainComplexCategory
+      1.1-3 IsChainComplexCategory
+      1.1-4 IsBoundedChainComplexCategory
+      1.1-5 IsCochainComplexCategory
+      1.1-6 IsBoundedCochainComplexCategory
+      1.1-7 ChainComplexCategory
+      1.1-8 CochainComplexCategory
+      1.1-9 UnderlyingCategory
+      1.1-10 FullSubcategoryGeneratedByComplexesConcentratedInDegree
+      1.1-11 AddIsNullHomotopic
+  2 [33X[0;0YComplexes[133X
+    2.1 [33X[0;0YCategories and filters[133X
+      2.1-1 IsChainOrCochainComplex
+    2.2 [33X[0;0YCreating chain and cochain complexes[133X
+      2.2-1 ChainComplex
+      2.2-2 ChainComplex
+      2.2-3 ChainComplex
+      2.2-4 StalkChainComplex
+      2.2-5 ChainComplexWithInductiveSides
+      2.2-6 ChainComplexWithInductiveSides
+      2.2-7 CochainComplexWithInductiveSides
+      2.2-8 ChainComplexWithInductiveNegativeSide
+      2.2-9 ChainComplexWithInductivePositiveSide
+      2.2-10 CochainComplexWithInductiveNegativeSide
+      2.2-11 CochainComplexWithInductivePositiveSide
+    2.3 [33X[0;0YAttributes[133X
+      2.3-1 Differentials
+      2.3-2 Objects
+      2.3-3 AsChainComplex
+      2.3-4 AsCochainComplex
+      2.3-5 IsExact
+    2.4 [33X[0;0YOperations[133X
+      2.4-1 \[\]
+      2.4-2 \^
+      2.4-3 CyclesAt
+      2.4-4 BoundariesAt
+      2.4-5 GeneralizedEmbeddingOfHomologyAt
+      2.4-6 GeneralizedProjectionOntoHomologyAt
+      2.4-7 GeneralizedEmbeddingOfCohomologyAt
+      2.4-8 GeneralizedProjectionOntoCohomologyAt
+      2.4-9 DefectOfExactnessAt
+      2.4-10 HomologySupport
+      2.4-11 HomologySupport
+      2.4-12 ObjectsSupport
+      2.4-13 ObjectsSupport
+      2.4-14 AsComplexOverCapFullSubcategory
+      2.4-15 IsWellDefined
+      2.4-16 IsWellDefined
+      2.4-17 IsExactInIndex
+      2.4-18 SetUpperBound
+      2.4-19 SetLowerBound
+      2.4-20 HasActiveUpperBound
+      2.4-21 HasActiveLowerBound
+      2.4-22 ActiveUpperBound
+      2.4-23 ActiveLowerBound
+      2.4-24 DisplayComplex
+      2.4-25 ViewComplex
+    2.5 [33X[0;0YTruncations[133X
+      2.5-1 GoodTruncationBelow
+      2.5-2 GoodTruncationAbove
+      2.5-3 GoodTruncationAbove
+      2.5-4 GoodTruncationBelow
+      2.5-5 BrutalTruncationBelow
+      2.5-6 BrutalTruncationAbove
+      2.5-7 BrutalTruncationAbove
+      2.5-8 BrutalTruncationBelow
+  3 [33X[0;0YComplexes morphisms[133X
+    3.1 [33X[0;0YCategories and filters[133X
+      3.1-1 IsChainOrCochainMorphism
+    3.2 [33X[0;0YCreating chain and cochain morphisms[133X
+      3.2-1 ChainMorphism
+      3.2-2 ChainMorphism
+      3.2-3 ChainMorphism
+      3.2-4 CochainMorphism
+      3.2-5 CochainMorphism
+      3.2-6 CochainMorphism
+      3.2-7 StalkChainMorphism
+      3.2-8 HomologyFunctorialAt
+    3.3 [33X[0;0YAttributes[133X
+      3.3-1 Morphisms
+      3.3-2 AsChainMorphism
+      3.3-3 AsCochainMorphism
+      3.3-4 MappingCone
+      3.3-5 NaturalInjectionInMappingCone
+      3.3-6 NaturalProjectionFromMappingCone
+      3.3-7 MappingCylinder
+      3.3-8 NaturalInjectionOfSourceInMappingCylinder
+      3.3-9 NaturalInjectionOfRangeInMappingCylinder
+      3.3-10 NaturalMorphismFromMappingCylinderInRange
+      3.3-11 NaturalMorphismFromMappingCylinderInMappingCone
+      3.3-12 HomotopyMorphisms
+    3.4 [33X[0;0YProperties[133X
+      3.4-1 IsQuasiIsomorphism
+      3.4-2 IsNullHomotopic
+    3.5 [33X[0;0YOperations[133X
+      3.5-1 SetUpperBound
+      3.5-2 SetLowerBound
+      3.5-3 HasActiveUpperBound
+      3.5-4 HasActiveLowerBound
+      3.5-5 ActiveUpperBound
+      3.5-6 ActiveLowerBound
+      3.5-7 MorphismAt
+      3.5-8 CyclesFunctorialAt
+      3.5-9 \[\]
+      3.5-10 IsQuasiIsomorphism
+      3.5-11 MorphismsSupport
+      3.5-12 Display
+      3.5-13 IsWellDefined
+  4 [33X[0;0YFunctors[133X
+    4.1 [33X[0;0YBasic functors for complex categories.[133X
+      4.1-1 HomologyFunctor
+      4.1-2 ShiftFunctor
+      4.1-3 UnsignedShiftFunctor
+      4.1-4 ChainToCochainComplexFunctor
+      4.1-5 CochainToChainComplexFunctor
+      4.1-6 ExtendFunctorToChainComplexCategories
+      4.1-7 ExtendFunctorToCochainComplexCategories
+      4.1-8 BrutalTruncationAboveFunctor
+      4.1-9 BrutalTruncationBelowFunctor
+    4.2 [33X[0;0YExamples[133X
+      4.2-1 GoodTruncationAboveFunctor
+    4.3 [33X[0;0YNatural transformations[133X
+      4.3-1 ExtendNaturalTransformationToChainComplexCategories
+      4.3-2 ExtendNaturalTransformationToCochainComplexCategories
+  5 [33X[0;0YDouble complexes[133X
+    5.1 [33X[0;0YCreating double complexes[133X
+      5.1-1 DoubleChainComplex
+      5.1-2 DoubleChainComplex
+      5.1-3 DoubleChainComplex
+      5.1-4 DoubleChainComplex
+      5.1-5 DoubleCochainComplex
+      5.1-6 DoubleCochainComplex
+      5.1-7 DoubleCochainComplex
+      5.1-8 DoubleCochainComplex
+    5.2 [33X[0;0YAttributes and operations[133X
+      5.2-1 Rows
+      5.2-2 Columns
+      5.2-3 CertainRow
+      5.2-4 CertainColumn
+      5.2-5 ObjectAt
+      5.2-6 HorizontalDifferentialAt
+      5.2-7 VerticalDifferentialAt
+      5.2-8 SetAboveBound
+      5.2-9 TotalChainComplex
+  6 [33X[0;0YResolutions[133X
+    6.1 [33X[0;0YDefinitions[133X
+    6.2 [33X[0;0YComputing resolutions[133X
+      6.2-1 IsAbelianCategoryWithComputableEnoughProjectives
+      6.2-2 IsAbelianCategoryWithComputableEnoughInjectives
+      6.2-3 ProjectiveResolution
+      6.2-4 ProjectiveResolution
+      6.2-5 ProjectiveCochainResolution
+      6.2-6 ProjectiveCochainResolution
+      6.2-7 ProjectiveChainResolution
+      6.2-8 ProjectiveChainResolution
+      6.2-9 MorphismBetweenProjectiveResolutions
+      6.2-10 MorphismBetweenProjectiveResolutions
+      6.2-11 MorphismBetweenProjectiveCochainResolutions
+      6.2-12 MorphismBetweenProjectiveCochainResolutions
+      6.2-13 MorphismBetweenProjectiveChainResolutions
+      6.2-14 MorphismBetweenProjectiveChainResolutions
+      6.2-15 InjectiveResolution
+      6.2-16 InjectiveResolution
+      6.2-17 InjectiveCochainResolution
+      6.2-18 InjectiveCochainResolution
+      6.2-19 InjectiveChainResolution
+      6.2-20 InjectiveChainResolution
+      6.2-21 MorphismBetweenInjectiveResolutions
+      6.2-22 MorphismBetweenInjectiveResolutions
+      6.2-23 MorphismBetweenInjectiveCochainResolutions
+      6.2-24 MorphismBetweenInjectiveCochainResolutions
+      6.2-25 MorphismBetweenInjectiveChainResolutions
+      6.2-26 MorphismBetweenInjectiveChainResolutions
+      6.2-27 QuasiIsomorphismFromProjectiveResolution
+      6.2-28 QuasiIsomorphismFromProjectiveResolution
+      6.2-29 QuasiIsomorphismIntoInjectiveResolution
+      6.2-30 QuasiIsomorphismIntoInjectiveResolution
+    6.3 [33X[0;0YExamples[133X
+      6.3-1 MorphismFromHorseshoeResolution
+      6.3-2 HorseshoeResolution
+  7 [33X[0;0YZ-functions[133X
+    7.1 [33X[0;0YGap categories for Z functions[133X
+      7.1-1 IsZFunction
+      7.1-2 IsZFunctionWithInductiveSides
+    7.2 [33X[0;0YCreating Z-functions[133X
+      7.2-1 VoidZFunction
+      7.2-2 AsZFunction
+      7.2-3 UnderlyingFunction
+      7.2-4 ZFunctionValue
+      7.2-5 \[\]
+      7.2-6 ZFunctionWithInductiveSides
+      7.2-7 UpperFunction
+      7.2-8 StableUpperValue
+      7.2-9 IndexOfStableUpperValue
+      7.2-10 SetStableUpperValue
+      7.2-11 StableLowerValue
+      7.2-12 IndexOfStableLowerValue
+      7.2-13 SetStableLowerValue
+      7.2-14 Reflection
+      7.2-15 ApplyShift
+      7.2-16 ApplyMap
+      7.2-17 ApplyMap
+      7.2-18 BaseZFunctions
+      7.2-19 AppliedMap
+      7.2-20 CombineZFunctions
+      7.2-21 Replace
+  
+  
+  [32X

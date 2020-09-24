@@ -1,0 +1,96 @@
+  
+  [1X1 [33X[0;0YComplexes categories[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YConstructing chain and cochain categories[133X[101X
+  
+  [1X1.1-1 IsChainOrCochainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsChainOrCochainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-categories of the chain or cochain complexes category.[133X
+  
+  [1X1.1-2 IsBoundedChainOrCochainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsBoundedChainOrCochainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-categories of the chain or cochain complexes category.[133X
+  
+  [1X1.1-3 IsChainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsChainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-categories of the chain complexes category.[133X
+  
+  [1X1.1-4 IsBoundedChainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsBoundedChainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-categories of the chain complexes category.[133X
+  
+  [1X1.1-5 IsCochainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsCochainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-category of the cochain complexes category.[133X
+  
+  [1X1.1-6 IsBoundedCochainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XIsBoundedCochainComplexCategory[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-category of the cochain complexes category.[133X
+  
+  [1X1.1-7 ChainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XChainComplexCategory[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP category[133X
+  
+  [33X[0;0YCreates  the  chain  complex  category  [23X\mathrm{Ch}_\bullet(A)[123X  an  additive
+  category  [23XA[123X.  If  you want to contruct the category without finalizing it so
+  that   you   can   add   your   own   methods,   you  can  run  the  command
+  [23X\texttt{ChainComplexCategory(A:FinalizeCategory := false)}[123X.[133X
+  
+  [1X1.1-8 CochainComplexCategory[101X
+  
+  [33X[1;0Y[29X[2XCochainComplexCategory[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP category[133X
+  
+  [33X[0;0YCreates  the  cochain  complex  category  [23X\mathrm{Ch}^\bullet(A)[123X an additive
+  category  [23XA[123X.  If  you want to contruct the category without finalizing it so
+  that   you   can   add   your   own   methods,   you  can  run  the  command
+  [23X\texttt{CochainComplexCategory(A:FinalizeCategory := false)}[123X.[133X
+  
+  [1X1.1-9 UnderlyingCategory[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingCategory[102X( [3XB[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP category[133X
+  
+  [33X[0;0YThe  input  is a chain or cochain complex category [23XB=C(A)[123X constructed by one
+  of the previous commands. The outout is [23XA[123X[133X
+  
+  [1X1.1-10 FullSubcategoryGeneratedByComplexesConcentratedInDegree[101X
+  
+  [33X[1;0Y[29X[2XFullSubcategoryGeneratedByComplexesConcentratedInDegree[102X( [3XB[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP category[133X
+  
+  [33X[0;0YThe  input  is  a chain or cochain complex category [23XB=C(A)[123X and an integer [23Xn[123X.
+  The   outout  is  the  additive  full  subcategory  generated  by  complexes
+  concentrated in degree [23Xn[123X.[133X
+  
+  [1X1.1-11 AddIsNullHomotopic[101X
+  
+  [33X[1;0Y[29X[2XAddIsNullHomotopic[102X( [3XCom(A)[103X, [3XF[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input is chain (or cochain category) [23XCom(A)[123X of some additive category [23XA[123X
+  and  a  function [23XF[123X. This operation adds the given function [23XF[123X to the category
+  [23XCom(A)[123X  for  the basic operation [10XIsNullHomotopic[110X. So, [23XF[123X should be a function
+  whose input is a chain or cochain morphism [23X\phi\in Com(A)[123X and output is [13Xtrue[113X
+  if [23X\phi[123X is null-homotopic and [13Xfalse[113X otherwise.[133X
+  

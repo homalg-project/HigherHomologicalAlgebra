@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (ComplexesCategories) - Chapter 6: Resolutions</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6.html">[MathJax off]</a></p>
+<p><a id="X7C0B125E7D5415B4" name="X7C0B125E7D5415B4"></a></p>
+<div class="ChapSects"><a href="chap6_mj.html#X7C0B125E7D5415B4">6 <span class="Heading">Resolutions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X84541F61810C741D">6.1 <span class="Heading">Definitions</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X78B77F3E797F0762">6.2 <span class="Heading">Computing resolutions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X783E937586F41090">6.2-1 IsAbelianCategoryWithComputableEnoughProjectives</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7E8EAB287E4D1D75">6.2-2 IsAbelianCategoryWithComputableEnoughInjectives</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X789EEAB7863D3817">6.2-3 ProjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X877509B17AAFA558">6.2-4 ProjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X83B71BBD7C6D2EE9">6.2-5 ProjectiveCochainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8737023778F4753B">6.2-6 ProjectiveCochainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7FB9806683E6CDEA">6.2-7 ProjectiveChainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8637F19587D8A44F">6.2-8 ProjectiveChainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7F783B867C52C83A">6.2-9 MorphismBetweenProjectiveResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7E8110298178AB44">6.2-10 MorphismBetweenProjectiveResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7833CE8A860A4A7B">6.2-11 MorphismBetweenProjectiveCochainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85C4F69183AAE63F">6.2-12 MorphismBetweenProjectiveCochainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X803281A07A9F6644">6.2-13 MorphismBetweenProjectiveChainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7FC27EF67B255AE0">6.2-14 MorphismBetweenProjectiveChainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X82D380978469357C">6.2-15 InjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X811705FB8636727B">6.2-16 InjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85D517F784D49D8E">6.2-17 InjectiveCochainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A48915E7B1B3B60">6.2-18 InjectiveCochainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7DDC5705791D7893">6.2-19 InjectiveChainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X853BDA9481EA4B85">6.2-20 InjectiveChainResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X84356BC2868A0B14">6.2-21 MorphismBetweenInjectiveResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X821292297C312A46">6.2-22 MorphismBetweenInjectiveResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X84A04C8A7EA31C66">6.2-23 MorphismBetweenInjectiveCochainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X793CF1147E52A9C9">6.2-24 MorphismBetweenInjectiveCochainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X86D729567B4D2B11">6.2-25 MorphismBetweenInjectiveChainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A4B5170816BD834">6.2-26 MorphismBetweenInjectiveChainResolutions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8306076E823EEEF7">6.2-27 QuasiIsomorphismFromProjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7EE9297D84934455">6.2-28 QuasiIsomorphismFromProjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X84C55CF57F00EA41">6.2-29 QuasiIsomorphismIntoInjectiveResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X863D629E83E273F0">6.2-30 QuasiIsomorphismIntoInjectiveResolution</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7A489A5D79DA9E5C">6.3 <span class="Heading">Examples</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X863611D97882EE85">6.3-1 MorphismFromHorseshoeResolution</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7DD93C677EDFDFF0">6.3-2 HorseshoeResolution</a></span>
+</div></div>
+</div>
+
+<h3>6 <span class="Heading">Resolutions</span></h3>
+
+<p><a id="X84541F61810C741D" name="X84541F61810C741D"></a></p>
+
+<h4>6.1 <span class="Heading">Definitions</span></h4>
+
+<p><a id="X78B77F3E797F0762" name="X78B77F3E797F0762"></a></p>
+
+<h4>6.2 <span class="Heading">Computing resolutions</span></h4>
+
+<p><a id="X783E937586F41090" name="X783E937586F41090"></a></p>
+
+<h5>6.2-1 IsAbelianCategoryWithComputableEnoughProjectives</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianCategoryWithComputableEnoughProjectives</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The argument is a category <var class="Arg">C</var>. The output is whether the <var class="Arg">C</var> is abelian and have the following methods <code class="code">IsProjective</code>, <code class="code">SomeProjectiveObject</code>, <code class="code">EpimorphismFromSomeProjectiveObject</code> and <code class="code">ProjectiveLift</code> are installed.</p>
+
+<p><a id="X7E8EAB287E4D1D75" name="X7E8EAB287E4D1D75"></a></p>
+
+<h5>6.2-2 IsAbelianCategoryWithComputableEnoughInjectives</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianCategoryWithComputableEnoughInjectives</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The argument is a category <var class="Arg">C</var>. The output is whether the <var class="Arg">C</var> is abelian and have the following methods <code class="code">IsInjective</code>, <code class="code">SomeInjectiveObject</code>, <code class="code">MonomorphismIntoSomeInjectiveObject</code> and <code class="code">InjectiveColift</code> are installed.</p>
+
+<p><a id="X789EEAB7863D3817" name="X789EEAB7863D3817"></a></p>
+
+<h5>6.2-3 ProjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain complex</p>
+
+<p>If the input is bounded above cochain complex or bounded below chain complex then the output is projective resolution in the sense of the above definition. If the input is an object <span class="SimpleMath">\(M\)</span> which is not a complex and its category has enough projectives, then the output is its projective resolution in the classical sense , i.e., complex <span class="SimpleMath">\(P^\bullet\)</span> which is exact everywhere but in index <span class="SimpleMath">\(0\)</span>, where <span class="SimpleMath">\(H^0(P^\bullet)\cong M\)</span>.</p>
+
+<p><a id="X877509B17AAFA558" name="X877509B17AAFA558"></a></p>
+
+<h5>6.2-4 ProjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveResolution</code>( <var class="Arg">C</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain complex</p>
+
+<p>The arguments are an object <var class="Arg">C</var> and a boolian <var class="Arg">bool</var>. If <var class="Arg">bool</var> = <code class="keyw">false</code> then the ouput is <code class="code">ProjectiveResolution</code>(<var class="Arg">C</var>), otherwise the output is <code class="code">ProjectiveResolution</code>(<var class="Arg">C</var>) after trying to find its bounds.</p>
+
+<p><a id="X83B71BBD7C6D2EE9" name="X83B71BBD7C6D2EE9"></a></p>
+
+<h5>6.2-5 ProjectiveCochainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveCochainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough projectives. The output is <code class="code">ProjectiveResolution</code>(<var class="Arg">M</var>) as a cochain complex.</p>
+
+<p><a id="X8737023778F4753B" name="X8737023778F4753B"></a></p>
+
+<h5>6.2-6 ProjectiveCochainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveCochainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough projectives. The output is <code class="code">ProjectiveResolution</code>(<var class="Arg">M</var>) as a cochain complex after trying to set its bounds.</p>
+
+<p><a id="X7FB9806683E6CDEA" name="X7FB9806683E6CDEA"></a></p>
+
+<h5>6.2-7 ProjectiveChainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveChainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough projectives. The output is <code class="code">ProjectiveResolution</code>(<var class="Arg">M</var>) as a chain complex.</p>
+
+<p><a id="X8637F19587D8A44F" name="X8637F19587D8A44F"></a></p>
+
+<h5>6.2-8 ProjectiveChainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveChainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough projectives. The output is <code class="code">ProjectiveResolution</code>(<var class="Arg">M</var>) as a chain complex after trying to set its bounds.</p>
+
+<p><a id="X7F783B867C52C83A" name="X7F783B867C52C83A"></a></p>
+
+<h5>6.2-9 MorphismBetweenProjectiveResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain morphism</p>
+
+<p>The input is a morphism <span class="SimpleMath">\(\alpha\)</span> whose category is abelian with enough projectives. The output is the induced cochain morphism between the projective resolutions of the source and range of <span class="SimpleMath">\(\alpha\)</span>. This morphism is unique up to homotopy.</p>
+
+<p><a id="X7E8110298178AB44" name="X7E8110298178AB44"></a></p>
+
+<h5>6.2-10 MorphismBetweenProjectiveResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain morphism</p>
+
+<p>The arguments are a morphism <span class="SimpleMath">\(\alpha\)</span> and a boolian <var class="Arg">bool</var>. If <var class="Arg">bool</var> = <code class="keyw">false</code> then the ouput is <code class="code">MorphismBetweenProjectiveResolutions</code>(<span class="SimpleMath">\(\alpha\)</span>), otherwise the output is <code class="code">MorphismBetweenProjectiveResolutions</code>(<span class="SimpleMath">\(\alpha\)</span>) after trying to find its bounds.</p>
+
+<p><a id="X7833CE8A860A4A7B" name="X7833CE8A860A4A7B"></a></p>
+
+<h5>6.2-11 MorphismBetweenProjectiveCochainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveCochainResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X85C4F69183AAE63F" name="X85C4F69183AAE63F"></a></p>
+
+<h5>6.2-12 MorphismBetweenProjectiveCochainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveCochainResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X803281A07A9F6644" name="X803281A07A9F6644"></a></p>
+
+<h5>6.2-13 MorphismBetweenProjectiveChainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveChainResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X7FC27EF67B255AE0" name="X7FC27EF67B255AE0"></a></p>
+
+<h5>6.2-14 MorphismBetweenProjectiveChainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenProjectiveChainResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X82D380978469357C" name="X82D380978469357C"></a></p>
+
+<h5>6.2-15 InjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveResolution</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain complex</p>
+
+<p>If the input is bounded above chain complex or bounded below cochain complex then the output is injective resolution in the sense of the above definition. If the input is an object <span class="SimpleMath">\(M\)</span> which is not a complex and its category has enough injectives, then the output is its injective resolution in the classical sense , i.e., complex <span class="SimpleMath">\(I^\bullet\)</span> which is exact everywhere but in index <span class="SimpleMath">\(0\)</span>, where <span class="SimpleMath">\(H^0(I^\bullet)\cong M\)</span>.</p>
+
+<p><a id="X811705FB8636727B" name="X811705FB8636727B"></a></p>
+
+<h5>6.2-16 InjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveResolution</code>( <var class="Arg">C</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain complex</p>
+
+<p>The arguments are an object <var class="Arg">C</var> and a boolian <var class="Arg">bool</var>. If <var class="Arg">bool</var> = <code class="keyw">false</code> then the ouput is <code class="code">InjectiveResolution</code>(<var class="Arg">C</var>), otherwise the output is <code class="code">InjectiveResolution</code>(<var class="Arg">C</var>) after trying to find its bounds.</p>
+
+<p><a id="X85D517F784D49D8E" name="X85D517F784D49D8E"></a></p>
+
+<h5>6.2-17 InjectiveCochainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveCochainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough injectives. The output is <code class="code">InjectiveResolution</code>(<var class="Arg">M</var>) as a cochain complex.</p>
+
+<p><a id="X7A48915E7B1B3B60" name="X7A48915E7B1B3B60"></a></p>
+
+<h5>6.2-18 InjectiveCochainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveCochainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough injectives. The output is <code class="code">InjectiveResolution</code>(<var class="Arg">M</var>) as a cochain complex after trying to set its bounds.</p>
+
+<p><a id="X7DDC5705791D7893" name="X7DDC5705791D7893"></a></p>
+
+<h5>6.2-19 InjectiveChainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveChainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough injectives. The output is <code class="code">InjectiveResolution</code>(<var class="Arg">M</var>) as a chain complex after trying to set its bounds.</p>
+
+<p><a id="X853BDA9481EA4B85" name="X853BDA9481EA4B85"></a></p>
+
+<h5>6.2-20 InjectiveChainResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InjectiveChainResolution</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain complex</p>
+
+<p>The input is an object <span class="SimpleMath">\(M\)</span> in an abelian category with enough injectives. The output is <code class="code">InjectiveResolution</code>(<var class="Arg">M</var>) as a chain complex after trying to set its bounds.</p>
+
+<p><a id="X84356BC2868A0B14" name="X84356BC2868A0B14"></a></p>
+
+<h5>6.2-21 MorphismBetweenInjectiveResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain morphism</p>
+
+<p>The input is a morphism <span class="SimpleMath">\(\alpha\)</span> whose category is abelian with enough injectives. The output is the induced cochain morphism between the injective resolutions of the source and range of <span class="SimpleMath">\(\alpha\)</span>. This morphism is unique up to homotopy.</p>
+
+<p><a id="X821292297C312A46" name="X821292297C312A46"></a></p>
+
+<h5>6.2-22 MorphismBetweenInjectiveResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain morphism</p>
+
+<p>The arguments are a morphism <span class="SimpleMath">\(\alpha\)</span> and a boolian <var class="Arg">bool</var>. If <var class="Arg">bool</var> = <code class="keyw">false</code> then the ouput is <code class="code">MorphismBetweenInjectiveResolutions</code>(<span class="SimpleMath">\(\alpha\)</span>), otherwise the output is <code class="code">MorphismBetweenInjectiveResolutions</code>(<span class="SimpleMath">\(\alpha\)</span>) after trying to find its bounds.</p>
+
+<p><a id="X84A04C8A7EA31C66" name="X84A04C8A7EA31C66"></a></p>
+
+<h5>6.2-23 MorphismBetweenInjectiveCochainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveCochainResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X793CF1147E52A9C9" name="X793CF1147E52A9C9"></a></p>
+
+<h5>6.2-24 MorphismBetweenInjectiveCochainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveCochainResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X86D729567B4D2B11" name="X86D729567B4D2B11"></a></p>
+
+<h5>6.2-25 MorphismBetweenInjectiveChainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveChainResolutions</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X7A4B5170816BD834" name="X7A4B5170816BD834"></a></p>
+
+<h5>6.2-26 MorphismBetweenInjectiveChainResolutions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenInjectiveChainResolutions</code>( <var class="Arg">alpha</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>#TODO</p>
+
+<p><a id="X8306076E823EEEF7" name="X8306076E823EEEF7"></a></p>
+
+<h5>6.2-27 QuasiIsomorphismFromProjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismFromProjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismFromProjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain epimorphism</p>
+
+<p>The input is an above bounded cochain complex <span class="SimpleMath">\(C^\bullet\)</span>. The output is a quasi-isomorphism <span class="SimpleMath">\(q:P^\bullet \rightarrow C^\bullet\)</span> such that <span class="SimpleMath">\(P^\bullet\)</span> is upper bounded and all its objects are projective in the underlying abelian category. In the second command the input is a below bounded chain complex <span class="SimpleMath">\(C_\bullet\)</span>. The output is a quasi-isomorphism <span class="SimpleMath">\(q:P_\bullet \rightarrow C_\bullet\)</span> such that <span class="SimpleMath">\(P_\bullet\)</span> is lower bounded and all its objects are projective in the underlying abelian category.</p>
+
+<p><a id="X7EE9297D84934455" name="X7EE9297D84934455"></a></p>
+
+<h5>6.2-28 QuasiIsomorphismFromProjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismFromProjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a bounded (co)chain epimorphism</p>
+
+<p>The input is chain or cochain complex and the output is a quasi-isomorphism from its projective resolution, after trying to find its bounds.</p>
+
+<p><a id="X84C55CF57F00EA41" name="X84C55CF57F00EA41"></a></p>
+
+<h5>6.2-29 QuasiIsomorphismIntoInjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismIntoInjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismIntoInjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain epimorphism</p>
+
+<p>The input is a below bounded cochain complex <span class="SimpleMath">\(C^\bullet\)</span>. The output is a quasi-isomorphism <span class="SimpleMath">\(q:C^\bullet \rightarrow I^\bullet\)</span> such that <span class="SimpleMath">\(I^\bullet\)</span> is below bounded and all its objects are injective in the underlying abelian category. In the second command the input is an above bounded chain complex <span class="SimpleMath">\(C_\bullet\)</span>. The output is a quasi-isomorphism <span class="SimpleMath">\(q: C_\bullet\rightarrow I_\bullet\)</span> such that <span class="SimpleMath">\(I_\bullet\)</span> is below bounded and all its objects are injective in the underlying abelian category.</p>
+
+<p><a id="X863D629E83E273F0" name="X863D629E83E273F0"></a></p>
+
+<h5>6.2-30 QuasiIsomorphismIntoInjectiveResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphismIntoInjectiveResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a bounded (co)chain epimorphism</p>
+
+<p>The input is chain or cochain complex and the output is a quasi-isomorphism into its injective resolution, after trying to find its bounds.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>6.3 <span class="Heading">Examples</span></h4>
+
+<p><a id="X863611D97882EE85" name="X863611D97882EE85"></a></p>
+
+<h5>6.3-1 MorphismFromHorseshoeResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromHorseshoeResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: chain morphism of chain complexes</p>
+
+<p>The input is a short exact sequence defined as a chain complex and the output is a chain morphism from the Horseshoe resolution (which is a complex of complexes and each object in this complex is again a complex that consists of a short exact sequence of projective objects). The total complex of the resolution is quasi isomorphic to <span class="SimpleMath">\(C\)</span> and both are exact complexes.</p>
+
+<p><a id="X7DD93C677EDFDFF0" name="X7DD93C677EDFDFF0"></a></p>
+
+<h5>6.3-2 HorseshoeResolution</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HorseshoeResolution</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: chain complex of chain complexes</p>
+
+<p>The input is a short exact sequence defined as a chain complex and the output is the source of the morphism from Horseshoe resolution.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

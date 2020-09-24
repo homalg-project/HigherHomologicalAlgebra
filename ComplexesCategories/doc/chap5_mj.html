@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (ComplexesCategories) - Chapter 5: Double complexes</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5.html">[MathJax off]</a></p>
+<p><a id="X7882C1DA7A1FE93A" name="X7882C1DA7A1FE93A"></a></p>
+<div class="ChapSects"><a href="chap5_mj.html#X7882C1DA7A1FE93A">5 <span class="Heading">Double complexes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X84F9487F8101A106">5.1 <span class="Heading">Creating double complexes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X79E2DEEF7950AD85">5.1-1 DoubleChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A0B01BE86CAC93B">5.1-2 DoubleChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X821FCF087F227075">5.1-3 DoubleChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X84380A3183225A99">5.1-4 DoubleChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7A7857837D754862">5.1-5 DoubleCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X85488A1C81553E03">5.1-6 DoubleCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7BFF8C297A427BFF">5.1-7 DoubleCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X83D8A63979A9F7C9">5.1-8 DoubleCochainComplex</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X8739F6CD78C90B14">5.2 <span class="Heading">Attributes and operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7BBE574C7977E301">5.2-1 Rows</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X822C30367C000846">5.2-2 Columns</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X849E01957CF42707">5.2-3 CertainRow</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7AF1820782A75875">5.2-4 CertainColumn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7BC558807FA07A1C">5.2-5 ObjectAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7FCF08E679384840">5.2-6 HorizontalDifferentialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X8564396D7FDBAF47">5.2-7 VerticalDifferentialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7D520CE880096E64">5.2-8 SetAboveBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7ED700C378200FF1">5.2-9 TotalChainComplex</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Double complexes</span></h3>
+
+<p><a id="X84F9487F8101A106" name="X84F9487F8101A106"></a></p>
+
+<h4>5.1 <span class="Heading">Creating double complexes</span></h4>
+
+<p><a id="X79E2DEEF7950AD85" name="X79E2DEEF7950AD85"></a></p>
+
+<h5>5.1-1 DoubleChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">A</var>, <var class="Arg">rows</var>, <var class="Arg">cols</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double chain complex</p>
+
+<p>The input is a Cap category <span class="SimpleMath">\(\mathcal{A}\)</span> and two <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions <span class="SimpleMath">\(rows\)</span> and <span class="SimpleMath">\(cols\)</span>. The entry in index <span class="SimpleMath">\(j\)</span> of <span class="SimpleMath">\(rows\)</span> should be an \mathbb{Z}-function that represents the <span class="SimpleMath">\(j\)</span>'th row of the double complex. I.e., <span class="SimpleMath">\(h^D_{i,j}:= rows[j][i]\)</span> for all <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>. Again, the entry in index <span class="SimpleMath">\(i\)</span> of <span class="SimpleMath">\(cols\)</span> should be an \mathbb{Z}-function that represents the <span class="SimpleMath">\(i\)</span>'th column of the double complex. I.e., <span class="SimpleMath">\(v^D_{i,j}:=cols[i][j]\)</span>.</p>
+
+<p><a id="X7A0B01BE86CAC93B" name="X7A0B01BE86CAC93B"></a></p>
+
+<h5>5.1-2 DoubleChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">A</var>, <var class="Arg">H</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double chain complex</p>
+
+<p>The input is a Cap category <span class="SimpleMath">\(\mathcal{A}\)</span> and two functions <span class="SimpleMath">\(R\)</span> and <span class="SimpleMath">\(V\)</span>. The output is the double chain complex <span class="SimpleMath">\(D\)</span> defined by <span class="SimpleMath">\(h^D_{i,j}=H(i,j)\)</span> and <span class="SimpleMath">\(v^D_{i,j}=V(i,j)\)</span>.</p>
+
+<p><a id="X821FCF087F227075" name="X821FCF087F227075"></a></p>
+
+<h5>5.1-3 DoubleChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double chain complex</p>
+
+<p>The input is chain complex of chain complexes <span class="SimpleMath">\(C\)</span>. The output is the double chain complex <span class="SimpleMath">\(D\)</span> defined using sign trick. I.e., <span class="SimpleMath">\(h^D_{i,j}=(d^C_i)_j\)</span> and <span class="SimpleMath">\(v^D_{i,j}=(-1)^id^{C_i}_j\)</span>.</p>
+
+<p><a id="X84380A3183225A99" name="X84380A3183225A99"></a></p>
+
+<h5>5.1-4 DoubleChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double chain complex</p>
+
+<p>The input is double cochain complex <span class="SimpleMath">\(D\)</span>. The output is the double chain complex <span class="SimpleMath">\(E\)</span> defined by <span class="SimpleMath">\(h^E_{i,j}=h_D^{-i,-j}\)</span> and <span class="SimpleMath">\(v^E_{i,j}=v_D^{-i,-j}\)</span>.</p>
+
+<p><a id="X7A7857837D754862" name="X7A7857837D754862"></a></p>
+
+<h5>5.1-5 DoubleCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">A</var>, <var class="Arg">rows</var>, <var class="Arg">cols</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double cochain complex</p>
+
+<p>The input is a Cap category <span class="SimpleMath">\(\mathcal{A}\)</span> and two <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions <span class="SimpleMath">\(rows\)</span> and <span class="SimpleMath">\(cols\)</span>. The entry in index <span class="SimpleMath">\(j\)</span> of <span class="SimpleMath">\(rows\)</span> should be an \mathbb{Z}-function that represents the <span class="SimpleMath">\(j\)</span>'th row of the double complex. I.e., <span class="SimpleMath">\(h_D^{i,j}:= rows[j][i]\)</span> for all <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>. Again, the entry in index <span class="SimpleMath">\(i\)</span> of <span class="SimpleMath">\(cols\)</span> should be an \mathbb{Z}-function that represents the <span class="SimpleMath">\(i\)</span>'th column of the double complex. I.e., <span class="SimpleMath">\(v_D^{i,j}:=cols[i][j]\)</span>.</p>
+
+<p><a id="X85488A1C81553E03" name="X85488A1C81553E03"></a></p>
+
+<h5>5.1-6 DoubleCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">A</var>, <var class="Arg">H</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double cochain complex</p>
+
+<p>The input is a Cap category <span class="SimpleMath">\(\mathcal{A}\)</span> and two functions <span class="SimpleMath">\(R\)</span> and <span class="SimpleMath">\(V\)</span>. The output is the double chain complex <span class="SimpleMath">\(D\)</span> defined by <span class="SimpleMath">\(h_D^{i,j}=H(i,j)\)</span> and <span class="SimpleMath">\(v_D^{i,j}=V(i,j)\)</span>.</p>
+
+<p><a id="X7BFF8C297A427BFF" name="X7BFF8C297A427BFF"></a></p>
+
+<h5>5.1-7 DoubleCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double cochain complex</p>
+
+<p>The input is cochain complex of cochain complexes <span class="SimpleMath">\(C\)</span>. The output is the double cochain complex <span class="SimpleMath">\(D\)</span> defined using sign trick. I.e., <span class="SimpleMath">\(h_D^{i,j}=(d_C^i)^j\)</span> and <span class="SimpleMath">\(v_D^{i,j}=(-1)^id_{C^i}^j\)</span>.</p>
+
+<p><a id="X83D8A63979A9F7C9" name="X83D8A63979A9F7C9"></a></p>
+
+<h5>5.1-8 DoubleCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a double cochain complex</p>
+
+<p>The input is double chain complex <span class="SimpleMath">\(D\)</span>. The output is the double cochain complex <span class="SimpleMath">\(E\)</span> defined by <span class="SimpleMath">\(h_E^{i,j}=h^D_{-i,-j}\)</span> and <span class="SimpleMath">\(v_E^{i,j}=v^D_{-i,-j}\)</span>.</p>
+
+<p><a id="X8739F6CD78C90B14" name="X8739F6CD78C90B14"></a></p>
+
+<h4>5.2 <span class="Heading">Attributes and operations</span></h4>
+
+<p><a id="X7BBE574C7977E301" name="X7BBE574C7977E301"></a></p>
+
+<h5>5.2-1 Rows</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rows</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an \mathbb{Z}-function of <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions.</p>
+
+<p>The input is double chain or cochain complex <span class="SimpleMath">\(D\)</span>. The output is the \mathbb{Z}-function of rows.</p>
+
+<p><a id="X822C30367C000846" name="X822C30367C000846"></a></p>
+
+<h5>5.2-2 Columns</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Columns</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an \mathbb{Z}-function of <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions.</p>
+
+<p>The input is double chain or cochain complex <span class="SimpleMath">\(D\)</span>. The output is the \mathbb{Z}-function of columns.</p>
+
+<p><a id="X849E01957CF42707" name="X849E01957CF42707"></a></p>
+
+<h5>5.2-3 CertainRow</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CertainRow</code>( <var class="Arg">D</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an \mathbb{Z}-function</p>
+
+<p>The input is double chain or cochain complex <span class="SimpleMath">\(D\)</span> and integer <span class="SimpleMath">\(j\)</span>. The output is the \mathbb{Z}-function that represents the <span class="SimpleMath">\(j\)</span>'th row of <span class="SimpleMath">\(D\)</span>.</p>
+
+<p><a id="X7AF1820782A75875" name="X7AF1820782A75875"></a></p>
+
+<h5>5.2-4 CertainColumn</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CertainColumn</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an \mathbb{Z}-function</p>
+
+<p>The input is double chain or cochain complex <span class="SimpleMath">\(D\)</span> and integer <span class="SimpleMath">\(i\)</span>. The output is the \mathbb{Z}-function that represents the <span class="SimpleMath">\(i\)</span>'th column of <span class="SimpleMath">\(D\)</span>.</p>
+
+<p><a id="X7BC558807FA07A1C" name="X7BC558807FA07A1C"></a></p>
+
+<h5>5.2-5 ObjectAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an \mathbb{Z}-function</p>
+
+<p>The input is double chain or cochain complex <span class="SimpleMath">\(D\)</span> and integers <span class="SimpleMath">\(i,j\)</span>. The output is the object of <span class="SimpleMath">\(D\)</span> in position <span class="SimpleMath">\((i,j)\)</span>.</p>
+
+<p><a id="X7FCF08E679384840" name="X7FCF08E679384840"></a></p>
+
+<h5>5.2-6 HorizontalDifferentialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HorizontalDifferentialAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is double chain (resp. cochain) complex <span class="SimpleMath">\(D\)</span> and integers <span class="SimpleMath">\(i,j\)</span>. The output is the horizontal differential <span class="SimpleMath">\(h^D_{i,j}\)</span> (resp. <span class="SimpleMath">\(h_D^{i,j}\)</span>)</p>
+
+<p><a id="X8564396D7FDBAF47" name="X8564396D7FDBAF47"></a></p>
+
+<h5>5.2-7 VerticalDifferentialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VerticalDifferentialAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is double chain (resp. cochain) complex <span class="SimpleMath">\(D\)</span> and integers <span class="SimpleMath">\(i,j\)</span>. The output is the vertical differential <span class="SimpleMath">\(v^D_{i,j}\)</span> (resp. <span class="SimpleMath">\(v_D^{i,j}\)</span>)</p>
+
+<p><a id="X7D520CE880096E64" name="X7D520CE880096E64"></a></p>
+
+<h5>5.2-8 SetAboveBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetAboveBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetBelowBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetRightBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetLeftBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>Here we can set bounds for the double complex.</p>
+
+<p><a id="X7ED700C378200FF1" name="X7ED700C378200FF1"></a></p>
+
+<h5>5.2-9 TotalChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TotalChainComplex</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TotalCochainComplex</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>To be able to compute the total complex the double complex we must have one of the following cases: 1. <span class="SimpleMath">\(D\)</span> has left and right bounds. 2. <span class="SimpleMath">\(D\)</span> has below and above bounds. 3. <span class="SimpleMath">\(D\)</span> has left and below bounds. 4. <span class="SimpleMath">\(D\)</span> has right and above bounds.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

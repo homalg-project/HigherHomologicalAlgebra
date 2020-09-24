@@ -1,0 +1,374 @@
+  
+  [1X3 [33X[0;0YComplexes morphisms[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YCategories and filters[133X[101X
+  
+  [1X3.1-1 IsChainOrCochainMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsChainOrCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedBelowChainOrCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedAboveChainOrCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedChainOrCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsChainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedBelowChainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedAboveChainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedChainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedBelowCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedAboveCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsBoundedCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YGap-categories for chain and cochains morphisms.[133X
+  
+  
+  [1X3.2 [33X[0;0YCreating chain and cochain morphisms[133X[101X
+  
+  [1X3.2-1 ChainMorphism[101X
+  
+  [33X[1;0Y[29X[2XChainMorphism[102X( [3XC[103X, [3XD[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0YThe input is two chain complexes [23XC,D[123X and a [23X\mathbb{Z}[123X-function [23Xl[123X. The output
+  is the chain morphism [23X\phi:C\rightarrow D[123X defined by [23X\phi_i :=l[i][123X.[133X
+  
+  [1X3.2-2 ChainMorphism[101X
+  
+  [33X[1;0Y[29X[2XChainMorphism[102X( [3XC[103X, [3XD[103X, [3Xl[103X, [3Xk[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0YThe  input  is  two  chain complexes [23XC,D[123X, dense list [23Xl[123X and an integer [23Xk[123X. The
+  output  is  the  chain morphism [23X\phi:C\rightarrow D[123X such that [23X\phi_{k}=l[1][123X,
+  [23X\phi_{k+1}=l[2][123X, etc.[133X
+  
+  [1X3.2-3 ChainMorphism[101X
+  
+  [33X[1;0Y[29X[2XChainMorphism[102X( [3Xc[103X, [3Xm[103X, [3Xd[103X, [3Xn[103X, [3Xl[103X, [3Xk[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0YThe  output is the chain morphism [23X\phi:C\rightarrow D[123X, where [23Xd^C_m = c[ 1 ],
+  d^C_{m+1}  =c[  2  ],[123X  etc.  [23Xd^D_n  =  d[  1  ], d^D_{n+1} =d[ 2 ],[123X etc. and
+  [23X\phi_{k}=l[1][123X, [23X\phi_{k+1}=l[2][123X, etc.[133X
+  
+  [1X3.2-4 CochainMorphism[101X
+  
+  [33X[1;0Y[29X[2XCochainMorphism[102X( [3XC[103X, [3XD[103X, [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0YThe  input  is  two  cochain  complexes [23XC,D[123X and a [23X\mathbb{Z}[123X-function [23Xl[123X. The
+  output is the cochain morphism [23X\phi:C\rightarrow D[123X defined by [23X\phi_i :=l[i][123X.[133X
+  
+  [1X3.2-5 CochainMorphism[101X
+  
+  [33X[1;0Y[29X[2XCochainMorphism[102X( [3XC[103X, [3XD[103X, [3Xl[103X, [3Xk[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0YThe  input  is two cochain complexes [23XC,D[123X, dense list [23Xl[123X and an integer [23Xk[123X. The
+  output  is the cochain morphism [23X\phi:C\rightarrow D[123X such that [23X\phi^{k}=l[1][123X,
+  [23X\phi^{k+1}=l[2][123X, etc.[133X
+  
+  [1X3.2-6 CochainMorphism[101X
+  
+  [33X[1;0Y[29X[2XCochainMorphism[102X( [3Xc[103X, [3Xm[103X, [3Xd[103X, [3Xn[103X, [3Xl[103X, [3Xk[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0YThe  output is the cochain morphism [23X\phi:C\rightarrow D[123X, where [23XC^m = c[ 1 ],
+  C^{m+1} =c[ 2 ],[123X etc. [23XD^n = d[ 1 ], D^{n+1} =d[ 2 ],[123X etc. and [23X\phi^{k}=l[1][123X,
+  [23X\phi^{k+1}=l[2][123X, etc.[133X
+  
+  [1X3.2-7 StalkChainMorphism[101X
+  
+  [33X[1;0Y[29X[2XStalkChainMorphism[102X( [3Xf[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStalkCochainMorphism[102X( [3Xf[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain morphism[133X
+  
+  [33X[0;0YThe  input  is  a  morphism  [23Xf:a\rightarrow b[123X in a category [23XA[123X. The output is
+  chain                 (resp.                cochain)                morphism
+  [23Xf_{\bullet}\in\mathrm{Ch}_\bullet(A)(f^{\bullet}\in\mathrm{Ch}^\bullet(A))[123X
+  where [23Xf^{\bullet}_n=f( f_{\bullet}^n=f)[123X and [23Xf^{\bullet}_i=0(f_{\bullet}^i=0)[123X
+  whenever [23Xi\neq n[123X.[133X
+  
+  [1X3.2-8 HomologyFunctorialAt[101X
+  
+  [33X[1;0Y[29X[2XHomologyFunctorialAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCohomologyFunctorialAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YThe  input is a (co)chain complex morphism [23X\phi:C\to D[123X and an integer [23Xn[123X. The
+  outout  is  the  associated  morphism  between the (co)homology objects of [23XC[123X
+  resp. [23XD[123X at index [23Xn[123X.[133X
+  
+  
+  [1X3.3 [33X[0;0YAttributes[133X[101X
+  
+  [1X3.3-1 Morphisms[101X
+  
+  [33X[1;0Y[29X[2XMorphisms[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Y[23X\mathbb{Z}[123X-function[133X
+  
+  [33X[0;0YThe   output   is   morphisms   of  the  chain  or  cochain  morphism  as  a
+  [23X\mathbb{Z}[123X-function.[133X
+  
+  [1X3.3-2 AsChainMorphism[101X
+  
+  [33X[1;0Y[29X[2XAsChainMorphism[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0YThe  input is a cochain morphism [23X\phi[123X and the output is the associated chain
+  morphism.[133X
+  
+  [1X3.3-3 AsCochainMorphism[101X
+  
+  [33X[1;0Y[29X[2XAsCochainMorphism[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0YThe  input is a chain morphism [23X\phi[123X and the output is the associated cochain
+  morphism.[133X
+  
+  [1X3.3-4 MappingCone[101X
+  
+  [33X[1;0Y[29X[2XMappingCone[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ycomplex[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is its mapping cone chain (resp. cochain) complex [23X\mathrm{Cone}(\phi )[123X.[133X
+  
+  [1X3.3-5 NaturalInjectionInMappingCone[101X
+  
+  [33X[1;0Y[29X[2XNaturalInjectionInMappingCone[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ychain (resp. cochain) morphism[133X
+  
+  [33X[0;0YThe  input  a chain (resp. cochain) morphism [23X\phi:C\rightarrow D[123X. The output
+  is the natural injection [23Xi:D\rightarrow \mathrm{Cone}(\phi )[123X.[133X
+  
+  [1X3.3-6 NaturalProjectionFromMappingCone[101X
+  
+  [33X[1;0Y[29X[2XNaturalProjectionFromMappingCone[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ychain (resp. cochain) morphism[133X
+  
+  [33X[0;0YThe  input a chain ( resp. cochain) morphism [23X\phi:C\rightarrow D[123X. The output
+  is  the  natural  projection [23X\pi:\mathrm{Cone}(\phi ) \rightarrow C[u][123X where
+  [23Xu=-1[123X if [23X\phi[123X is chain morphism and [23Xu=1[123X if [23X\phi[123X is cochain morphism.[133X
+  
+  [1X3.3-7 MappingCylinder[101X
+  
+  [33X[1;0Y[29X[2XMappingCylinder[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ycomplex[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is its mapping cylinder chain (resp. cochain) complex[133X
+  
+  [1X3.3-8 NaturalInjectionOfSourceInMappingCylinder[101X
+  
+  [33X[1;0Y[29X[2XNaturalInjectionOfSourceInMappingCylinder[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ymorphism[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is  the  natural  embedding  [23XC\rightarrow  \mathrm{Cyl}(\phi  )[123X.  I.e.,  the
+  composition[133X
+  
+  [1X3.3-9 NaturalInjectionOfRangeInMappingCylinder[101X
+  
+  [33X[1;0Y[29X[2XNaturalInjectionOfRangeInMappingCylinder[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ymorphism[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is  the  natural  embedding  [23XD  \rightarrow  \mathrm{Cyl}(\phi  )[123X. I.e., the
+  composition This morphism can be proven to be quasi-isomorphism. See Weibel,
+  page 21.[133X
+  
+  [1X3.3-10 NaturalMorphismFromMappingCylinderInRange[101X
+  
+  [33X[1;0Y[29X[2XNaturalMorphismFromMappingCylinderInRange[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ymorphism[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is  the  natural  morphism [23X\mathrm{Cyl}(\phi )\rightarrow D[123X. It can be shown
+  that  [23XD[123X  and  [23X\mathrm{Cyl}(\phi  )[123X  are  homotopy  equivalent. This homotopy
+  equivalence is given by the two morphisms[133X
+  
+  
+  [24X[33X[0;6Y\mathrm{NaturalInjectionOfRangeInMappingCylinder}(\phi):D        \rightarrow
+  \mathrm{Cyl}(\phi )[133X
+  
+  [124X
+  
+  [33X[0;0Yand[133X
+  
+  
+  [24X[33X[0;6Y\mathrm{NaturalMorphismFromMappingCylinderInRange}(\phi):\mathrm{Cyl}(\phi )
+  \rightarrow D.[133X
+  
+  [124X
+  
+  [33X[0;0YSee Weibel, page 21.[133X
+  
+  [1X3.3-11 NaturalMorphismFromMappingCylinderInMappingCone[101X
+  
+  [33X[1;0Y[29X[2XNaturalMorphismFromMappingCylinderInMappingCone[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ymorphism[133X
+  
+  [33X[0;0YThe  input a chain (resp. cochain) morphism [23X\phi:C \rightarrow D[123X. The output
+  is the natural morphism [23X\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )[123X.
+  It can be shown that[133X
+  
+  
+  [24X[33X[0;6Y0      \rightarrow      C\xrightarrow[]{\alpha}      \mathrm{Cyl}(\phi     )
+  \xrightarrow[]{\beta} \mathrm{Cone}(\phi )\rightarrow 0[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere[133X
+  
+  
+  [24X[33X[0;6Y\alpha := \mathrm{NaturalInjectionOfSourceInMappingCylinder}(\phi)[133X
+  
+  [124X
+  
+  [33X[0;0Yand[133X
+  
+  
+  [24X[33X[0;6Y\beta := \mathrm{NaturalMorphismFromMappingCylinderInMappingCone}(\phi),[133X
+  
+  [124X
+  
+  [33X[0;0Yis a short exact sequence. See Weibel, page 21.[133X
+  
+  [1X3.3-12 HomotopyMorphisms[101X
+  
+  [33X[1;0Y[29X[2XHomotopyMorphisms[102X( [3Xphi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA ZFunction[133X
+  
+  [33X[0;0YThe  input  is  a  null-homotopic  chain  (resp.  cochain)  morphism  [23X\phi:C
+  \rightarrow   D[123X.   The   output   is  the  homotopy  morphisms  given  as  a
+  [23X\mathbb{Z}[123X-function   [23X(h_i:C_i   \rightarrow   D_{i+1})[123X   (  resp.  [23X(h_i:C_i
+  \rightarrow  D_{i-1})[123X  ).  Note that this method can be called only if it is
+  added to the category, see [23X\texttt{AddHomotopyMorphisms}[123X.[133X
+  
+  
+  [1X3.4 [33X[0;0YProperties[133X[101X
+  
+  [1X3.4-1 IsQuasiIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XIsQuasiIsomorphism[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input a chain ( resp. cochain) morphism [23X\phi:C\rightarrow D[123X. The output
+  is  [13Xtrue[113X  if  [23X\phi[123X  is quasi-isomorphism and [13Xfalse[113X otherwise. If [23X\phi[123X is not
+  bounded an error is raised.[133X
+  
+  [1X3.4-2 IsNullHomotopic[101X
+  
+  [33X[1;0Y[29X[2XIsNullHomotopic[102X( [3Xphi[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input is a chain or cochain morphism [23X\phi[123X and output is [13Xtrue[113X if [23X\phi[123X is
+  null-homotopic and [13Xfalse[113X otherwise.[133X
+  
+  
+  [1X3.5 [33X[0;0YOperations[133X[101X
+  
+  [1X3.5-1 SetUpperBound[101X
+  
+  [33X[1;0Y[29X[2XSetUpperBound[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya side effect[133X
+  
+  [33X[0;0YThe command sets an upper bound to the morphism [23X\phi[123X. An upper bound of [23X\phi[123X
+  is  an  integer  [23Xu[123X  with  [23X\phi_{i}=  0[123X for [23Xi>n[123X. The integer [23Xu[123X will be called
+  [13Xactive[113X  upper  bound of [23X\phi[123X. If [23X\phi[123X already has an active upper bound, say
+  [23Xu^\prime[123X, then [23Xu^\prime[123X will be replaced by [23Xu[123X only if [23Xu^\prime>u[123X.[133X
+  
+  [1X3.5-2 SetLowerBound[101X
+  
+  [33X[1;0Y[29X[2XSetLowerBound[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya side effect[133X
+  
+  [33X[0;0YThe  command sets an lower bound to the morphism [23X\phi[123X. A lower bound of [23X\phi[123X
+  is  an  integer  [23Xl[123X  with  [23X\phi_{i}=  0[123X for [23Xl>i[123X. The integer [23Xl[123X will be called
+  [13Xactive[113X  lower  bound of [23X\phi[123X. If [23X\phi[123X already has an active lower bound, say
+  [23Xl^\prime[123X, then [23Xl^\prime[123X will be replaced by [23Xl[123X only if [23Xl>l^\prime[123X.[133X
+  
+  [1X3.5-3 HasActiveUpperBound[101X
+  
+  [33X[1;0Y[29X[2XHasActiveUpperBound[102X( [3Xphi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  input is chain or cochain morphism [23X\phi[123X. The output is [3Xtrue[103X if an upper
+  bound has been set to [23X\phi[123X and [3Xfalse[103X otherwise.[133X
+  
+  [1X3.5-4 HasActiveLowerBound[101X
+  
+  [33X[1;0Y[29X[2XHasActiveLowerBound[102X( [3Xphi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  input  is chain or cochain morphism [23X\phi[123X. The output is [3Xtrue[103X if a lower
+  bound has been set to [23X\phi[123X and [3Xfalse[103X otherwise.[133X
+  
+  [1X3.5-5 ActiveUpperBound[101X
+  
+  [33X[1;0Y[29X[2XActiveUpperBound[102X( [3Xphi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YThe input is chain or cochain morphism. The output is its active upper bound
+  if such has been set to [23X\phi[123X. Otherwise we get error.[133X
+  
+  [1X3.5-6 ActiveLowerBound[101X
+  
+  [33X[1;0Y[29X[2XActiveLowerBound[102X( [3Xphi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YThe input is chain or cochain morphism. The output is its active lower bound
+  if such has been set to [23X\phi[123X. Otherwise we get error.[133X
+  
+  [1X3.5-7 MorphismAt[101X
+  
+  [33X[1;0Y[29X[2XMorphismAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
+  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
+  
+  [1X3.5-8 CyclesFunctorialAt[101X
+  
+  [33X[1;0Y[29X[2XCyclesFunctorialAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
+  the morphism between the kernels in index [23Xn[123X.[133X
+  
+  [1X3.5-9 \[\][101X
+  
+  [33X[1;0Y[29X[2X\[\][102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
+  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
+  
+  [1X3.5-10 IsQuasiIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XIsQuasiIsomorphism[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
+  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
+  
+  [1X3.5-11 MorphismsSupport[101X
+  
+  [33X[1;0Y[29X[2XMorphismsSupport[102X( [3Xphi[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
+  
+  [33X[0;0YThe command gives back the list of indices between [23Xm[123X and [23Xn[123X where the complex
+  morphism is not zero.[133X
+  
+  [1X3.5-12 Display[101X
+  
+  [33X[1;0Y[29X[2XDisplay[102X( [3Xphi[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
+  
+  [33X[0;0YThe command displays the components of the morphism between [23Xm[123X and [23Xn[123X.[133X
+  
+  [1X3.5-13 IsWellDefined[101X
+  
+  [33X[1;0Y[29X[2XIsWellDefined[102X( [3Xtrue[103X, [3Xor[103X, [3Xfalse[103X ) [32X operation[133X
+  
+  [33X[0;0YThe command checks if the morphism is well defined between [23Xm[123X and [23Xn[123X.[133X
+  

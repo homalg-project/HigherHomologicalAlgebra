@@ -1,0 +1,233 @@
+  
+  
+  [1XIndex[101X
+  
+  [2X\[\][102X, for IsChainOrCochainComplex, IsInt 2.4-1 
+      for IsChainOrCochainMorphism, IsInt 3.5-9 
+      for IsZFunction, IsInt 7.2-5 
+  [2X\^[102X, for IsChainOrCochainComplex, IsInt 2.4-2 
+  [2XActiveLowerBound[102X, for IsChainOrCochainComplex 2.4-23 
+      for IsChainOrCochainMorphism 3.5-6 
+  [2XActiveUpperBound[102X, for IsChainOrCochainComplex 2.4-22 
+      for IsChainOrCochainMorphism 3.5-5 
+  [2XAddIsNullHomotopic[102X, for IsCapCategory, IsFunction 1.1-11 
+  [2XAppliedMap[102X, for IsZFunction 7.2-19 
+  [2XApplyMap[102X, for IsDenseList, IsFunction 7.2-17 
+      for IsZFunction, IsFunction 7.2-16 
+  [2XApplyShift[102X, for IsZFunction, IsInt 7.2-15 
+  [2XAsChainComplex[102X, for IsChainOrCochainComplex 2.3-3 
+  [2XAsChainMorphism[102X, for IsChainOrCochainMorphism 3.3-2 
+  [2XAsCochainComplex[102X, for IsChainOrCochainComplex 2.3-4 
+  [2XAsCochainMorphism[102X, for IsChainOrCochainMorphism 3.3-3 
+  [2XAsComplexOverCapFullSubcategory[102X, for IsCapCategory, IsChainOrCochainComplex 2.4-14 
+  [2XAsZFunction[102X, for IsFunction 7.2-2 
+  [2XBaseZFunctions[102X, for IsZFunction 7.2-18 
+  [2XBoundariesAt[102X, for IsChainOrCochainComplex, IsInt 2.4-4 
+  [2XBrutalTruncationAbove[102X, for IsChainComplex, IsInt 2.5-6 
+      for IsCochainComplex, IsInt 2.5-7 
+  [2XBrutalTruncationAboveFunctor[102X, for IsChainOrCochainComplexCategory, IsInt 4.1-8 
+  [2XBrutalTruncationBelow[102X, for IsChainComplex, IsInt 2.5-5 
+      for IsCochainComplex, IsInt 2.5-8 
+  [2XBrutalTruncationBelowFunctor[102X, for IsChainOrCochainComplexCategory, IsInt 4.1-9 
+  [2XCertainColumn[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-4 
+  [2XCertainRow[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-3 
+  [2XChainComplex[102X, for IsCapCategory, IsZList 2.2-1 
+      for IsDenseList 2.2-3 
+      for IsDenseList, IsInt 2.2-2 
+  [2XChainComplexCategory[102X, for IsCapCategory 1.1-7 
+  [2XChainComplexWithInductiveNegativeSide[102X, for IsCapCategoryMorphism, IsFunction 2.2-8 
+  [2XChainComplexWithInductivePositiveSide[102X, for IsCapCategoryMorphism, IsFunction 2.2-9 
+  [2XChainComplexWithInductiveSides[102X, for IsCapCategoryMorphism, IsFunction, IsFunction 2.2-5 
+      for IsInt, IsCapCategoryMorphism, IsFunction, IsFunction 2.2-6 
+  [2XChainMorphism[102X, for IsChainComplex, IsChainComplex, IsDenseList, IsInt 3.2-2 
+      for IsChainComplex, IsChainComplex, IsZFunction 3.2-1 
+      for IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt 3.2-3 
+  [2XChainToCochainComplexFunctor[102X, for IsChainComplexCategory, IsCochainComplexCategory 4.1-4 
+  [2XCochainComplex[102X, for IsCapCategory, IsZList 2.2-1 
+      for IsDenseList 2.2-3 
+      for IsDenseList, IsInt 2.2-2 
+  [2XCochainComplexCategory[102X, for IsCapCategory 1.1-8 
+  [2XCochainComplexWithInductiveNegativeSide[102X, for IsCapCategoryMorphism, IsFunction 2.2-10 
+  [2XCochainComplexWithInductivePositiveSide[102X, for IsCapCategoryMorphism, IsFunction 2.2-11 
+  [2XCochainComplexWithInductiveSides[102X, for IsCapCategoryMorphism, IsFunction, IsFunction 2.2-7 
+  [2XCochainMorphism[102X, for IsCochainComplex, IsCochainComplex, IsDenseList, IsInt 3.2-5 
+      for IsCochainComplex, IsCochainComplex, IsZFunction 3.2-4 
+      for IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt 3.2-6 
+  [2XCochainToChainComplexFunctor[102X, for IsCochainComplexCategory, IsChainComplexCategory 4.1-5 
+  [2XCohomologyAt[102X, for IsCochainComplex, IsInt 2.4-9 
+  [2XCohomologyFunctor[102X, for IsCochainComplexCategory, IsInt 4.1-1 
+  [2XCohomologyFunctorialAt[102X, for IsCochainMorphism, IsInt 3.2-8 
+  [2XCohomologySupport[102X, for IsBoundedCochainComplex 2.4-11 
+      for IsCochainComplex, IsInt, IsInt 2.4-10 
+  [2XColumns[102X, for IsDoubleChainOrCochainComplex 5.2-2 
+  [2XCombineZFunctions[102X, for IsDenseList 7.2-20 
+  [2XCompareFunction[102X, for IsZFunctionWithInductiveSides 7.2-7 
+  [2XCyclesAt[102X, for IsChainOrCochainComplex, IsInt 2.4-3 
+  [2XCyclesFunctorialAt[102X, for IsChainOrCochainMorphism, IsInt 3.5-8 
+  [2XDefectOfExactnessAt[102X, for IsChainOrCochainComplex, IsInt 2.4-9 
+  [2XDifferentials[102X, for IsChainOrCochainComplex 2.3-1 
+  [2XDifferentialsSupport[102X, for IsBoundedChainOrCochainComplex 2.4-13 
+      for IsChainOrCochainComplex, IsInt, IsInt 2.4-12 
+  [2XDisplay[102X, for IsChainOrCochainMorphism, IsInt, IsInt 3.5-12 
+  [2XDisplayComplex[102X, for IsChainOrCochainComplex, IsInt, IsInt 2.4-24 
+  [2XDoubleChainComplex[102X, for IsCapCategory, IsFunction, IsFunction 5.1-2 
+      for IsCapCategory, IsZFunction, IsZFunction 5.1-1 
+      for IsChainComplex 5.1-3 
+      for IsDoubleCochainComplex 5.1-4 
+  [2XDoubleCochainComplex[102X, for IsCapCategory, IsFunction, IsFunction 5.1-6 
+      for IsCapCategory, IsZFunction, IsZFunction 5.1-5 
+      for IsCochainComplex 5.1-7 
+      for IsDoubleChainComplex 5.1-8 
+  [2XExtendFunctorToChainComplexCategories[102X, for IsCapFunctor 4.1-6 
+  [2XExtendFunctorToCochainComplexCategories[102X, for IsCapFunctor 4.1-7 
+  [2XExtendNaturalTransformationToChainComplexCategories[102X, for IsCapNaturalTransformation 4.3-1 
+  [2XExtendNaturalTransformationToCochainComplexCategories[102X, for IsCapNaturalTransformation 4.3-2 
+  [2XFirstIndex[102X, for IsZFunctionWithInductiveSides 7.2-7 
+  [2XFirstValue[102X, for IsZFunctionWithInductiveSides 7.2-7 
+  [2XFullSubcategoryGeneratedByComplexesConcentratedInDegree[102X, for IsChainOrCochainComplexCategory, IsInt 1.1-10 
+  [2XGeneralizedEmbeddingOfCohomologyAt[102X, for IsCochainComplex, IsInt 2.4-7 
+  [2XGeneralizedEmbeddingOfHomologyAt[102X, for IsChainComplex, IsInt 2.4-5 
+  [2XGeneralizedProjectionOntoCohomologyAt[102X, for IsCochainComplex, IsInt 2.4-8 
+  [2XGeneralizedProjectionOntoHomologyAt[102X, for IsChainComplex, IsInt 2.4-6 
+  [2XGoodTruncationAbove[102X, for IsChainComplex, IsInt 2.5-2 
+      for IsCochainComplex, IsInt 2.5-3 
+  [2XGoodTruncationAboveFunctor[102X, for IsCapCategory, IsInt 4.2-1 
+  [2XGoodTruncationBelow[102X, for IsChainComplex, IsInt 2.5-1 
+      for IsCochainComplex, IsInt 2.5-4 
+  [2XHasActiveLowerBound[102X, for IsChainOrCochainComplex 2.4-21 
+      for IsChainOrCochainMorphism 3.5-4 
+  [2XHasActiveUpperBound[102X, for IsChainOrCochainComplex 2.4-20 
+      for IsChainOrCochainMorphism 3.5-3 
+  [2XHomologyAt[102X, for IsChainComplex, IsInt 2.4-9 
+  [2XHomologyFunctor[102X, for IsChainComplexCategory, IsInt 4.1-1 
+  [2XHomologyFunctorialAt[102X, for IsChainMorphism, IsInt 3.2-8 
+  [2XHomologySupport[102X, for IsBoundedChainComplex 2.4-11 
+      for IsChainComplex, IsInt, IsInt 2.4-10 
+  [2XHomotopyMorphisms[102X, for IsCapCategoryMorphism 3.3-12 
+  [2XHorizontalDifferentialAt[102X, for IsDoubleChainOrCochainComplex, IsInt, IsInt 5.2-6 
+  [2XHorseshoeResolution[102X, for IsBoundedChainComplex 6.3-2 
+  [2XIndexOfStableLowerValue[102X, for IsZFunction 7.2-12 
+  [2XIndexOfStableUpperValue[102X, for IsZFunction 7.2-9 
+  [2XInjectiveChainResolution[102X, for IsCapCategoryObject 6.2-19 
+      for IsCapCategoryObject, IsBool 6.2-20 
+  [2XInjectiveCochainResolution[102X, for IsCapCategoryObject 6.2-17 
+      for IsCapCategoryObject, IsBool 6.2-18 
+  [2XInjectiveResolution[102X, for IsCapCategoryObject 6.2-15 
+      for IsCapCategoryObject, IsBool 6.2-16 
+  [2XIsAbelianCategoryWithComputableEnoughInjectives[102X, for IsCapCategory 6.2-2 
+  [2XIsAbelianCategoryWithComputableEnoughProjectives[102X, for IsCapCategory 6.2-1 
+  [2XIsBoundedAboveChainComplex[102X, for IsBoundedAboveChainOrCochainComplex and IsChainComplex 2.1-1 
+  [2XIsBoundedAboveChainMorphism[102X, for IsBoundedAboveChainOrCochainMorphism and IsChainMorphism 3.1-1 
+  [2XIsBoundedAboveChainOrCochainComplex[102X, for IsChainOrCochainComplex 2.1-1 
+  [2XIsBoundedAboveChainOrCochainMorphism[102X, for IsChainOrCochainMorphism 3.1-1 
+  [2XIsBoundedAboveCochainComplex[102X, for IsBoundedAboveChainOrCochainComplex and IsCochainComplex 2.1-1 
+  [2XIsBoundedAboveCochainMorphism[102X, for IsBoundedAboveChainOrCochainMorphism and IsCochainMorphism 3.1-1 
+  [2XIsBoundedBelowChainComplex[102X, for IsBoundedBelowChainOrCochainComplex and IsChainComplex 2.1-1 
+  [2XIsBoundedBelowChainMorphism[102X, for IsBoundedBelowChainOrCochainMorphism and IsChainMorphism 3.1-1 
+  [2XIsBoundedBelowChainOrCochainComplex[102X, for IsChainOrCochainComplex 2.1-1 
+  [2XIsBoundedBelowChainOrCochainMorphism[102X, for IsChainOrCochainMorphism 3.1-1 
+  [2XIsBoundedBelowCochainComplex[102X, for IsBoundedBelowChainOrCochainComplex and IsCochainComplex 2.1-1 
+  [2XIsBoundedBelowCochainMorphism[102X, for IsBoundedBelowChainOrCochainMorphism and IsCochainMorphism 3.1-1 
+  [2XIsBoundedChainComplex[102X, for IsBoundedChainOrCochainComplex and IsChainComplex 2.1-1 
+  [2XIsBoundedChainComplexCategory[102X, for IsBoundedChainOrCochainComplexCategory 1.1-4 
+  [2XIsBoundedChainMorphism[102X, for IsBoundedChainOrCochainMorphism and IsChainMorphism 3.1-1 
+  [2XIsBoundedChainOrCochainComplex[102X, for IsBoundedBelowChainOrCochainComplex and IsBoundedAboveChainOrCochainComplex 2.1-1 
+  [2XIsBoundedChainOrCochainComplexCategory[102X, for IsChainOrCochainComplexCategory 1.1-2 
+  [2XIsBoundedChainOrCochainMorphism[102X, for IsBoundedBelowChainOrCochainMorphism and IsBoundedAboveChainOrCochainMorphism 3.1-1 
+  [2XIsBoundedCochainComplex[102X, for IsBoundedChainOrCochainComplex and IsCochainComplex 2.1-1 
+  [2XIsBoundedCochainComplexCategory[102X, for IsBoundedChainOrCochainComplexCategory 1.1-6 
+  [2XIsBoundedCochainMorphism[102X, for IsBoundedChainOrCochainMorphism and IsCochainMorphism 3.1-1 
+  [2XIsChainComplex[102X, for IsChainOrCochainComplex 2.1-1 
+  [2XIsChainComplexCategory[102X, for IsChainOrCochainComplexCategory 1.1-3 
+  [2XIsChainMorphism[102X, for IsChainOrCochainMorphism 3.1-1 
+  [2XIsChainOrCochainComplex[102X, for IsCapCategoryObject 2.1-1 
+  [2XIsChainOrCochainComplexCategory[102X, for IsCapCategory 1.1-1 
+  [2XIsChainOrCochainMorphism[102X, for IsCapCategoryMorphism 3.1-1 
+  [2XIsCochainComplex[102X, for IsChainOrCochainComplex 2.1-1 
+  [2XIsCochainComplexCategory[102X, for IsChainOrCochainComplexCategory 1.1-5 
+  [2XIsCochainMorphism[102X, for IsChainOrCochainMorphism 3.1-1 
+  [2XIsExact[102X, for IsChainOrCochainComplex 2.3-5 
+  [2XIsExactInIndex[102X, for IsChainOrCochainComplex, IsInt 2.4-17 
+  [2XIsNullHomotopic[102X, for IsCapCategoryMorphism 3.4-2 
+  [2XIsQuasiIsomorphism[102X, for IsChainOrCochainMorphism 3.4-1 
+      for IsChainOrCochainMorphism, IsInt, IsInt 3.5-10 
+  [2XIsWellDefined[102X, for IsBoundedChainOrCochainComplex 2.4-16 
+      for IsChainOrCochainComplex, IsInt, IsInt 2.4-15 
+      for IsChainOrCochainMorphism, IsInt, IsInt 3.5-13 
+  [2XIsZFunction[102X, for IsObject 7.1-1 
+  [2XIsZFunctionWithInductiveSides[102X, for IsZFunction 7.1-2 
+  [2XLowerFunction[102X, for IsZFunctionWithInductiveSides 7.2-7 
+  [2XMappingCone[102X, for IsChainOrCochainMorphism 3.3-4 
+  [2XMappingCylinder[102X, for IsChainOrCochainMorphism 3.3-7 
+  [2XMorphismAt[102X, for IsChainOrCochainMorphism, IsInt 3.5-7 
+  [2XMorphismBetweenInjectiveChainResolutions[102X, for IsCapCategoryMorphism 6.2-25 
+      for IsCapCategoryMorphism, IsBool 6.2-26 
+  [2XMorphismBetweenInjectiveCochainResolutions[102X, for IsCapCategoryMorphism 6.2-23 
+      for IsCapCategoryMorphism, IsBool 6.2-24 
+  [2XMorphismBetweenInjectiveResolutions[102X, for IsCapCategoryMorphism 6.2-21 
+      for IsCapCategoryMorphism, IsBool 6.2-22 
+  [2XMorphismBetweenProjectiveChainResolutions[102X, for IsCapCategoryMorphism 6.2-13 
+      for IsCapCategoryMorphism, IsBool 6.2-14 
+  [2XMorphismBetweenProjectiveCochainResolutions[102X, for IsCapCategoryMorphism 6.2-11 
+      for IsCapCategoryMorphism, IsBool 6.2-12 
+  [2XMorphismBetweenProjectiveResolutions[102X, for IsCapCategoryMorphism 6.2-9 
+      for IsCapCategoryMorphism, IsBool 6.2-10 
+  [2XMorphismFromHorseshoeResolution[102X, for IsBoundedChainComplex 6.3-1 
+  [2XMorphisms[102X, for IsChainOrCochainMorphism 3.3-1 
+  [2XMorphismsSupport[102X, for IsChainOrCochainMorphism, IsInt, IsInt 3.5-11 
+  [2XNaturalInjectionInMappingCone[102X, for IsChainOrCochainMorphism 3.3-5 
+  [2XNaturalInjectionOfRangeInMappingCylinder[102X, for IsChainOrCochainMorphism 3.3-9 
+  [2XNaturalInjectionOfSourceInMappingCylinder[102X, for IsChainOrCochainMorphism 3.3-8 
+  [2XNaturalMorphismFromMappingCylinderInMappingCone[102X, for IsChainOrCochainMorphism 3.3-11 
+  [2XNaturalMorphismFromMappingCylinderInRange[102X, for IsChainOrCochainMorphism 3.3-10 
+  [2XNaturalProjectionFromMappingCone[102X, for IsChainOrCochainMorphism 3.3-6 
+  [2XObjectAt[102X, for IsDoubleChainOrCochainComplex, IsInt, IsInt 5.2-5 
+  [2XObjects[102X, for IsChainOrCochainComplex 2.3-2 
+  [2XObjectsSupport[102X, for IsBoundedChainOrCochainComplex 2.4-13 
+      for IsChainOrCochainComplex, IsInt, IsInt 2.4-12 
+  [2XProjectiveChainResolution[102X, for IsCapCategoryObject 6.2-7 
+      for IsCapCategoryObject, IsBool 6.2-8 
+  [2XProjectiveCochainResolution[102X, for IsCapCategoryObject 6.2-5 
+      for IsCapCategoryObject, IsBool 6.2-6 
+  [2XProjectiveResolution[102X, for IsCapCategoryObject 6.2-3 
+      for IsCapCategoryObject, IsBool 6.2-4 
+  [2XQuasiIsomorphismFromProjectiveResolution[102X, for IsBoundedAboveCochainComplex 6.2-27 
+      for IsBoundedBelowChainComplex 6.2-27 
+      for IsBoundedChainOrCochainComplex, IsBool 6.2-28 
+  [2XQuasiIsomorphismIntoInjectiveResolution[102X, for IsBoundedAboveChainComplex 6.2-29 
+      for IsBoundedBelowCochainComplex 6.2-29 
+      for IsBoundedChainOrCochainComplex, IsBool 6.2-30 
+  [2XReflection[102X, for IsZFunction 7.2-14 
+  [2XReplace[102X, for IsZFunction, IsInt, IsDenseList 7.2-21 
+  [2XRows[102X, for IsDoubleChainOrCochainComplex 5.2-1 
+  [2XSetAboveBound[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-8 
+  [2XSetBelowBound[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-8 
+  [2XSetLeftBound[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-8 
+  [2XSetLowerBound[102X, for IsChainOrCochainComplex, IsInt 2.4-19 
+      for IsChainOrCochainMorphism, IsInt 3.5-2 
+  [2XSetRightBound[102X, for IsDoubleChainOrCochainComplex, IsInt 5.2-8 
+  [2XSetStableLowerValue[102X, for IsZFunction, IsInt, IsObject 7.2-13 
+  [2XSetStableUpperValue[102X, for IsZFunction, IsInt, IsObject 7.2-10 
+  [2XSetUpperBound[102X, for IsChainOrCochainComplex, IsInt 2.4-18 
+      for IsChainOrCochainMorphism, IsInt 3.5-1 
+  [2XShiftFunctor[102X, for IsChainOrCochainComplexCategory, IsInt 4.1-2 
+  [2XStableLowerValue[102X, for IsZFunction 7.2-11 
+  [2XStableUpperValue[102X, for IsZFunction 7.2-8 
+  [2XStalkChainComplex[102X, for IsCapCategoryObject, IsInt 2.2-4 
+  [2XStalkChainMorphism[102X, for IsCapCategoryMorphism, IsInt 3.2-7 
+  [2XStalkCochainComplex[102X, for IsCapCategoryObject, IsInt 2.2-4 
+  [2XStalkCochainMorphism[102X, for IsCapCategoryMorphism, IsInt 3.2-7 
+  [2XTotalChainComplex[102X, for IsDoubleChainComplex 5.2-9 
+  [2XTotalCochainComplex[102X, for IsDoubleCochainComplex 5.2-9 
+  [2XUnderlyingCategory[102X, for IsChainOrCochainComplexCategory 1.1-9 
+  [2XUnderlyingFunction[102X, for IsZFunction 7.2-3 
+  [2XUnsignedShiftFunctor[102X, for IsChainOrCochainComplexCategory, IsInt 4.1-3 
+  [2XUpperFunction[102X, for IsZFunctionWithInductiveSides 7.2-7 
+  [2XVerticalDifferentialAt[102X, for IsDoubleChainOrCochainComplex, IsInt, IsInt 5.2-7 
+  [2XViewComplex[102X, for IsChainOrCochainComplex, IsInt, IsInt 2.4-25 
+  [2XVoidZFunction[102X 7.2-1 
+  [2XZFunctionValue[102X, for IsZFunction, IsInt 7.2-4 
+  [2XZFunctionWithInductiveSides[102X, for IsInt, IsObject, IsFunction, IsFunction, IsFunction 7.2-6 
+  
+  
+  -------------------------------------------------------

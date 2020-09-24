@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (ComplexesCategories) - Chapter 3: Complexes morphisms</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3.html">[MathJax off]</a></p>
+<p><a id="X7A48B7D8878B0214" name="X7A48B7D8878B0214"></a></p>
+<div class="ChapSects"><a href="chap3_mj.html#X7A48B7D8878B0214">3 <span class="Heading">Complexes morphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X810E0C5D7864CF1E">3.1 <span class="Heading">Categories and filters</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79E5C43978B36E4C">3.1-1 IsChainOrCochainMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7F56311B7D6667A4">3.2 <span class="Heading">Creating chain and cochain morphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FC28665811DBFFB">3.2-1 ChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8139992481759D07">3.2-2 ChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X793EDAE87A90E818">3.2-3 ChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X839356D687143185">3.2-4 CochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86F2E1E6791B10EE">3.2-5 CochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7EF4588178EF9F43">3.2-6 CochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X840714847AEC3CDB">3.2-7 StalkChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FE3BDA3846A62BC">3.2-8 HomologyFunctorialAt</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7C701DBF7BAE649A">3.3 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X852133B081633416">3.3-1 Morphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83F13C5278312696">3.3-2 AsChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E1EE1847F1E76A3">3.3-3 AsCochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X798AC6A280720BC4">3.3-4 MappingCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F5AE4437A8D1CB5">3.3-5 NaturalInjectionInMappingCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E4DB56A79C3AA1E">3.3-6 NaturalProjectionFromMappingCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8004AA1D7C177852">3.3-7 MappingCylinder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7D8FFBD5822DCD9B">3.3-8 NaturalInjectionOfSourceInMappingCylinder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86562A7E807B8A97">3.3-9 NaturalInjectionOfRangeInMappingCylinder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CBBD569869B51ED">3.3-10 NaturalMorphismFromMappingCylinderInRange</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B84E5E2876CDAB6">3.3-11 NaturalMorphismFromMappingCylinderInMappingCone</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F42B9757FCBAD35">3.3-12 HomotopyMorphisms</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X871597447BB998A1">3.4 <span class="Heading">Properties</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X830B9CC68047169F">3.4-1 IsQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87ECDF22788FF294">3.4-2 IsNullHomotopic</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7DE8E16C7C2D387B">3.5 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E21BD1882CE2428">3.5-1 SetUpperBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F9552D17FE466A7">3.5-2 SetLowerBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F3E1ED07CC2923E">3.5-3 HasActiveUpperBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B7BC83385E04504">3.5-4 HasActiveLowerBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X871857297CC5C1B5">3.5-5 ActiveUpperBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X835D81CA7FFE08C0">3.5-6 ActiveLowerBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8289EF39792DB653">3.5-7 MorphismAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B1DB6CA86ADF012">3.5-8 CyclesFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7D72B4FC82CE113A"><code>3.5-9 \[\]</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8344641C7C7CF8CC">3.5-10 IsQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86F5183A7A04C679">3.5-11 MorphismsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C46301E7C4439B4">3.5-12 Display</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X84E3620B786DBE5F">3.5-13 IsWellDefined</a></span>
+</div></div>
+</div>
+
+<h3>3 <span class="Heading">Complexes morphisms</span></h3>
+
+<p><a id="X810E0C5D7864CF1E" name="X810E0C5D7864CF1E"></a></p>
+
+<h4>3.1 <span class="Heading">Categories and filters</span></h4>
+
+<p><a id="X79E5C43978B36E4C" name="X79E5C43978B36E4C"></a></p>
+
+<h5>3.1-1 IsChainOrCochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainOrCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowChainOrCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveChainOrCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedChainOrCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>Gap-categories for chain and cochains morphisms.</p>
+
+<p><a id="X7F56311B7D6667A4" name="X7F56311B7D6667A4"></a></p>
+
+<h4>3.2 <span class="Heading">Creating chain and cochain morphisms</span></h4>
+
+<p><a id="X7FC28665811DBFFB" name="X7FC28665811DBFFB"></a></p>
+
+<h5>3.2-1 ChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMorphism</code>( <var class="Arg">C</var>, <var class="Arg">D</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>The input is two chain complexes <span class="SimpleMath">\(C,D\)</span> and a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <span class="SimpleMath">\(l\)</span>. The output is the chain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span> defined by <span class="SimpleMath">\(\phi_i :=l[i]\)</span>.</p>
+
+<p><a id="X8139992481759D07" name="X8139992481759D07"></a></p>
+
+<h5>3.2-2 ChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMorphism</code>( <var class="Arg">C</var>, <var class="Arg">D</var>, <var class="Arg">l</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>The input is two chain complexes <span class="SimpleMath">\(C,D\)</span>, dense list <span class="SimpleMath">\(l\)</span> and an integer <span class="SimpleMath">\(k\)</span>. The output is the chain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span> such that <span class="SimpleMath">\(\phi_{k}=l[1]\)</span>, <span class="SimpleMath">\(\phi_{k+1}=l[2]\)</span>, etc.</p>
+
+<p><a id="X793EDAE87A90E818" name="X793EDAE87A90E818"></a></p>
+
+<h5>3.2-3 ChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainMorphism</code>( <var class="Arg">c</var>, <var class="Arg">m</var>, <var class="Arg">d</var>, <var class="Arg">n</var>, <var class="Arg">l</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>The output is the chain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span>, where <span class="SimpleMath">\(d^C_m = c[ 1 ], d^C_{m+1} =c[ 2 ],\)</span> etc. <span class="SimpleMath">\(d^D_n = d[ 1 ], d^D_{n+1} =d[ 2 ],\)</span> etc. and <span class="SimpleMath">\(\phi_{k}=l[1]\)</span>, <span class="SimpleMath">\(\phi_{k+1}=l[2]\)</span>, etc.</p>
+
+<p><a id="X839356D687143185" name="X839356D687143185"></a></p>
+
+<h5>3.2-4 CochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainMorphism</code>( <var class="Arg">C</var>, <var class="Arg">D</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>The input is two cochain complexes <span class="SimpleMath">\(C,D\)</span> and a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <span class="SimpleMath">\(l\)</span>. The output is the cochain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span> defined by <span class="SimpleMath">\(\phi_i :=l[i]\)</span>.</p>
+
+<p><a id="X86F2E1E6791B10EE" name="X86F2E1E6791B10EE"></a></p>
+
+<h5>3.2-5 CochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainMorphism</code>( <var class="Arg">C</var>, <var class="Arg">D</var>, <var class="Arg">l</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>The input is two cochain complexes <span class="SimpleMath">\(C,D\)</span>, dense list <span class="SimpleMath">\(l\)</span> and an integer <span class="SimpleMath">\(k\)</span>. The output is the cochain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span> such that <span class="SimpleMath">\(\phi^{k}=l[1]\)</span>, <span class="SimpleMath">\(\phi^{k+1}=l[2]\)</span>, etc.</p>
+
+<p><a id="X7EF4588178EF9F43" name="X7EF4588178EF9F43"></a></p>
+
+<h5>3.2-6 CochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainMorphism</code>( <var class="Arg">c</var>, <var class="Arg">m</var>, <var class="Arg">d</var>, <var class="Arg">n</var>, <var class="Arg">l</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>The output is the cochain morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span>, where <span class="SimpleMath">\(C^m = c[ 1 ], C^{m+1} =c[ 2 ],\)</span> etc. <span class="SimpleMath">\(D^n = d[ 1 ], D^{n+1} =d[ 2 ],\)</span> etc. and <span class="SimpleMath">\(\phi^{k}=l[1]\)</span>, <span class="SimpleMath">\(\phi^{k+1}=l[2]\)</span>, etc.</p>
+
+<p><a id="X840714847AEC3CDB" name="X840714847AEC3CDB"></a></p>
+
+<h5>3.2-7 StalkChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StalkChainMorphism</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StalkCochainMorphism</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a (co)chain morphism</p>
+
+<p>The input is a morphism <span class="SimpleMath">\(f:a\rightarrow b\)</span> in a category <span class="SimpleMath">\(A\)</span>. The output is chain (resp. cochain) morphism <span class="SimpleMath">\(f_{\bullet}\in\mathrm{Ch}_\bullet(A)(f^{\bullet}\in\mathrm{Ch}^\bullet(A))\)</span> where <span class="SimpleMath">\(f^{\bullet}_n=f( f_{\bullet}^n=f)\)</span> and <span class="SimpleMath">\(f^{\bullet}_i=0(f_{\bullet}^i=0)\)</span> whenever <span class="SimpleMath">\(i\neq n\)</span>.</p>
+
+<p><a id="X7FE3BDA3846A62BC" name="X7FE3BDA3846A62BC"></a></p>
+
+<h5>3.2-8 HomologyFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is a (co)chain complex morphism <span class="SimpleMath">\(\phi:C\to D\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The outout is the associated morphism between the (co)homology objects of <span class="SimpleMath">\(C\)</span> resp. <span class="SimpleMath">\(D\)</span> at index <span class="SimpleMath">\(n\)</span>.</p>
+
+<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
+
+<h4>3.3 <span class="Heading">Attributes</span></h4>
+
+<p><a id="X852133B081633416" name="X852133B081633416"></a></p>
+
+<h5>3.3-1 Morphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Morphisms</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
+
+<p>The output is morphisms of the chain or cochain morphism as a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function.</p>
+
+<p><a id="X83F13C5278312696" name="X83F13C5278312696"></a></p>
+
+<h5>3.3-2 AsChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain morphism</p>
+
+<p>The input is a cochain morphism <span class="SimpleMath">\(\phi\)</span> and the output is the associated chain morphism.</p>
+
+<p><a id="X7E1EE1847F1E76A3" name="X7E1EE1847F1E76A3"></a></p>
+
+<h5>3.3-3 AsCochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a cochain morphism</p>
+
+<p>The input is a chain morphism <span class="SimpleMath">\(\phi\)</span> and the output is the associated cochain morphism.</p>
+
+<p><a id="X798AC6A280720BC4" name="X798AC6A280720BC4"></a></p>
+
+<h5>3.3-4 MappingCone</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingCone</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: complex</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is its mapping cone chain (resp. cochain) complex <span class="SimpleMath">\(\mathrm{Cone}(\phi )\)</span>.</p>
+
+<p><a id="X7F5AE4437A8D1CB5" name="X7F5AE4437A8D1CB5"></a></p>
+
+<h5>3.3-5 NaturalInjectionInMappingCone</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalInjectionInMappingCone</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: chain (resp. cochain) morphism</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span>. The output is the natural injection <span class="SimpleMath">\(i:D\rightarrow \mathrm{Cone}(\phi )\)</span>.</p>
+
+<p><a id="X7E4DB56A79C3AA1E" name="X7E4DB56A79C3AA1E"></a></p>
+
+<h5>3.3-6 NaturalProjectionFromMappingCone</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalProjectionFromMappingCone</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: chain (resp. cochain) morphism</p>
+
+<p>The input a chain ( resp. cochain) morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span>. The output is the natural projection <span class="SimpleMath">\(\pi:\mathrm{Cone}(\phi ) \rightarrow C[u]\)</span> where <span class="SimpleMath">\(u=-1\)</span> if <span class="SimpleMath">\(\phi\)</span> is chain morphism and <span class="SimpleMath">\(u=1\)</span> if <span class="SimpleMath">\(\phi\)</span> is cochain morphism.</p>
+
+<p><a id="X8004AA1D7C177852" name="X8004AA1D7C177852"></a></p>
+
+<h5>3.3-7 MappingCylinder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingCylinder</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: complex</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is its mapping cylinder chain (resp. cochain) complex</p>
+
+<p><a id="X7D8FFBD5822DCD9B" name="X7D8FFBD5822DCD9B"></a></p>
+
+<h5>3.3-8 NaturalInjectionOfSourceInMappingCylinder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalInjectionOfSourceInMappingCylinder</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: morphism</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is the natural embedding <span class="SimpleMath">\(C\rightarrow \mathrm{Cyl}(\phi )\)</span>. I.e., the composition</p>
+
+<p><a id="X86562A7E807B8A97" name="X86562A7E807B8A97"></a></p>
+
+<h5>3.3-9 NaturalInjectionOfRangeInMappingCylinder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalInjectionOfRangeInMappingCylinder</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: morphism</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is the natural embedding <span class="SimpleMath">\(D \rightarrow \mathrm{Cyl}(\phi )\)</span>. I.e., the composition This morphism can be proven to be quasi-isomorphism. See Weibel, page 21.</p>
+
+<p><a id="X7CBBD569869B51ED" name="X7CBBD569869B51ED"></a></p>
+
+<h5>3.3-10 NaturalMorphismFromMappingCylinderInRange</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalMorphismFromMappingCylinderInRange</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: morphism</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is the natural morphism <span class="SimpleMath">\(\mathrm{Cyl}(\phi )\rightarrow D\)</span>. It can be shown that <span class="SimpleMath">\(D\)</span> and <span class="SimpleMath">\(\mathrm{Cyl}(\phi )\)</span> are homotopy equivalent. This homotopy equivalence is given by the two morphisms</p>
+
+<p class="center">\[\mathrm{NaturalInjectionOfRangeInMappingCylinder}(\phi):D \rightarrow \mathrm{Cyl}(\phi )\]</p>
+
+<p>and</p>
+
+<p class="center">\[\mathrm{NaturalMorphismFromMappingCylinderInRange}(\phi):\mathrm{Cyl}(\phi ) \rightarrow D.\]</p>
+
+<p>See Weibel, page 21.</p>
+
+<p><a id="X7B84E5E2876CDAB6" name="X7B84E5E2876CDAB6"></a></p>
+
+<h5>3.3-11 NaturalMorphismFromMappingCylinderInMappingCone</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalMorphismFromMappingCylinderInMappingCone</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: morphism</p>
+
+<p>The input a chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is the natural morphism <span class="SimpleMath">\(\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )\)</span>. It can be shown that</p>
+
+<p class="center">\[0 \rightarrow C\xrightarrow[]{\alpha} \mathrm{Cyl}(\phi ) \xrightarrow[]{\beta} \mathrm{Cone}(\phi )\rightarrow 0\]</p>
+
+<p>where</p>
+
+<p class="center">\[\alpha := \mathrm{NaturalInjectionOfSourceInMappingCylinder}(\phi)\]</p>
+
+<p>and</p>
+
+<p class="center">\[\beta := \mathrm{NaturalMorphismFromMappingCylinderInMappingCone}(\phi),\]</p>
+
+<p>is a short exact sequence. See Weibel, page 21.</p>
+
+<p><a id="X7F42B9757FCBAD35" name="X7F42B9757FCBAD35"></a></p>
+
+<h5>3.3-12 HomotopyMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomotopyMorphisms</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: A ZFunction</p>
+
+<p>The input is a null-homotopic chain (resp. cochain) morphism <span class="SimpleMath">\(\phi:C \rightarrow D\)</span>. The output is the homotopy morphisms given as a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <span class="SimpleMath">\((h_i:C_i \rightarrow D_{i+1})\)</span> ( resp. <span class="SimpleMath">\((h_i:C_i \rightarrow D_{i-1})\)</span> ). Note that this method can be called only if it is added to the category, see <span class="SimpleMath">\(\texttt{AddHomotopyMorphisms}\)</span>.</p>
+
+<p><a id="X871597447BB998A1" name="X871597447BB998A1"></a></p>
+
+<h4>3.4 <span class="Heading">Properties</span></h4>
+
+<p><a id="X830B9CC68047169F" name="X830B9CC68047169F"></a></p>
+
+<h5>3.4-1 IsQuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiIsomorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The input a chain ( resp. cochain) morphism <span class="SimpleMath">\(\phi:C\rightarrow D\)</span>. The output is <em>true</em> if <span class="SimpleMath">\(\phi\)</span> is quasi-isomorphism and <em>false</em> otherwise. If <span class="SimpleMath">\(\phi\)</span> is not bounded an error is raised.</p>
+
+<p><a id="X87ECDF22788FF294" name="X87ECDF22788FF294"></a></p>
+
+<h5>3.4-2 IsNullHomotopic</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNullHomotopic</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The input is a chain or cochain morphism <span class="SimpleMath">\(\phi\)</span> and output is <em>true</em> if <span class="SimpleMath">\(\phi\)</span> is null-homotopic and <em>false</em> otherwise.</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>3.5 <span class="Heading">Operations</span></h4>
+
+<p><a id="X7E21BD1882CE2428" name="X7E21BD1882CE2428"></a></p>
+
+<h5>3.5-1 SetUpperBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetUpperBound</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a side effect</p>
+
+<p>The command sets an upper bound to the morphism <span class="SimpleMath">\(\phi\)</span>. An upper bound of <span class="SimpleMath">\(\phi\)</span> is an integer <span class="SimpleMath">\(u\)</span> with <span class="SimpleMath">\(\phi_{i}= 0\)</span> for <span class="SimpleMath">\(i&gt;n\)</span>. The integer <span class="SimpleMath">\(u\)</span> will be called <em>active</em> upper bound of <span class="SimpleMath">\(\phi\)</span>. If <span class="SimpleMath">\(\phi\)</span> already has an active upper bound, say <span class="SimpleMath">\(u^\prime\)</span>, then <span class="SimpleMath">\(u^\prime\)</span> will be replaced by <span class="SimpleMath">\(u\)</span> only if <span class="SimpleMath">\(u^\prime&gt;u\)</span>.</p>
+
+<p><a id="X7F9552D17FE466A7" name="X7F9552D17FE466A7"></a></p>
+
+<h5>3.5-2 SetLowerBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetLowerBound</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a side effect</p>
+
+<p>The command sets an lower bound to the morphism <span class="SimpleMath">\(\phi\)</span>. A lower bound of <span class="SimpleMath">\(\phi\)</span> is an integer <span class="SimpleMath">\(l\)</span> with <span class="SimpleMath">\(\phi_{i}= 0\)</span> for <span class="SimpleMath">\(l&gt;i\)</span>. The integer <span class="SimpleMath">\(l\)</span> will be called <em>active</em> lower bound of <span class="SimpleMath">\(\phi\)</span>. If <span class="SimpleMath">\(\phi\)</span> already has an active lower bound, say <span class="SimpleMath">\(l^\prime\)</span>, then <span class="SimpleMath">\(l^\prime\)</span> will be replaced by <span class="SimpleMath">\(l\)</span> only if <span class="SimpleMath">\(l&gt;l^\prime\)</span>.</p>
+
+<p><a id="X7F3E1ED07CC2923E" name="X7F3E1ED07CC2923E"></a></p>
+
+<h5>3.5-3 HasActiveUpperBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasActiveUpperBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The input is chain or cochain morphism <span class="SimpleMath">\(\phi\)</span>. The output is <var class="Arg">true</var> if an upper bound has been set to <span class="SimpleMath">\(\phi\)</span> and <var class="Arg">false</var> otherwise.</p>
+
+<p><a id="X7B7BC83385E04504" name="X7B7BC83385E04504"></a></p>
+
+<h5>3.5-4 HasActiveLowerBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasActiveLowerBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The input is chain or cochain morphism <span class="SimpleMath">\(\phi\)</span>. The output is <var class="Arg">true</var> if a lower bound has been set to <span class="SimpleMath">\(\phi\)</span> and <var class="Arg">false</var> otherwise.</p>
+
+<p><a id="X871857297CC5C1B5" name="X871857297CC5C1B5"></a></p>
+
+<h5>3.5-5 ActiveUpperBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActiveUpperBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>The input is chain or cochain morphism. The output is its active upper bound if such has been set to <span class="SimpleMath">\(\phi\)</span>. Otherwise we get error.</p>
+
+<p><a id="X835D81CA7FFE08C0" name="X835D81CA7FFE08C0"></a></p>
+
+<h5>3.5-6 ActiveLowerBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActiveLowerBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>The input is chain or cochain morphism. The output is its active lower bound if such has been set to <span class="SimpleMath">\(\phi\)</span>. Otherwise we get error.</p>
+
+<p><a id="X8289EF39792DB653" name="X8289EF39792DB653"></a></p>
+
+<h5>3.5-7 MorphismAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismAt</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is chain (resp. cochain) morphism and an integer <span class="SimpleMath">\(n\)</span>. The output is the component of <span class="SimpleMath">\(\phi\)</span> in index <span class="SimpleMath">\(n\)</span>, i.e., <span class="SimpleMath">\(\phi_n\)</span>(resp. <span class="SimpleMath">\(\phi^n\)</span>).</p>
+
+<p><a id="X7B1DB6CA86ADF012" name="X7B1DB6CA86ADF012"></a></p>
+
+<h5>3.5-8 CyclesFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is chain (resp. cochain) morphism and an integer <span class="SimpleMath">\(n\)</span>. The output is the morphism between the kernels in index <span class="SimpleMath">\(n\)</span>.</p>
+
+<p><a id="X7D72B4FC82CE113A" name="X7D72B4FC82CE113A"></a></p>
+
+<h5><code>3.5-9 \[\]</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>The input is chain (resp. cochain) morphism and an integer <span class="SimpleMath">\(n\)</span>. The output is the component of <span class="SimpleMath">\(\phi\)</span> in index <span class="SimpleMath">\(n\)</span>, i.e., <span class="SimpleMath">\(\phi_n\)</span>(resp. <span class="SimpleMath">\(\phi^n\)</span>).</p>
+
+<p><a id="X8344641C7C7CF8CC" name="X8344641C7C7CF8CC"></a></p>
+
+<h5>3.5-10 IsQuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiIsomorphism</code>( <var class="Arg">phi</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>The input is chain (resp. cochain) morphism and an integer <span class="SimpleMath">\(n\)</span>. The output is the component of <span class="SimpleMath">\(\phi\)</span> in index <span class="SimpleMath">\(n\)</span>, i.e., <span class="SimpleMath">\(\phi_n\)</span>(resp. <span class="SimpleMath">\(\phi^n\)</span>).</p>
+
+<p><a id="X86F5183A7A04C679" name="X86F5183A7A04C679"></a></p>
+
+<h5>3.5-11 MorphismsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismsSupport</code>( <var class="Arg">phi</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The command gives back the list of indices between <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span> where the complex morphism is not zero.</p>
+
+<p><a id="X7C46301E7C4439B4" name="X7C46301E7C4439B4"></a></p>
+
+<h5>3.5-12 Display</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">phi</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The command displays the components of the morphism between <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span>.</p>
+
+<p><a id="X84E3620B786DBE5F" name="X84E3620B786DBE5F"></a></p>
+
+<h5>3.5-13 IsWellDefined</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWellDefined</code>( <var class="Arg">true</var>, <var class="Arg">or</var>, <var class="Arg">false</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The command checks if the morphism is well defined between <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

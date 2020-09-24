@@ -1,0 +1,144 @@
+  
+  [1X4 [33X[0;0YFunctors[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YBasic functors for complex categories.[133X[101X
+  
+  [1X4.1-1 HomologyFunctor[101X
+  
+  [33X[1;0Y[29X[2XHomologyFunctor[102X( [3XCh_\bullet(A)[103X, [3XA[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCohomologyFunctor[102X( [3XCh^\bullet(A)[103X, [3XA[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe  first  argument  in the input must be the chain (resp. cochain) complex
+  category  of an abelian category [23XA[123X, the second argument is an integer [3Xn[103X. The
+  output     is    the    [23Xn[123X'th    homology    (resp.    cohomology)    functor
+  [23X\mathrm{Ch}_\bullet(A)   \rightarrow   A[123X   (   resp.  [23X\mathrm{Ch}^\bullet(A)
+  \rightarrow A[123X)[133X
+  
+  [1X4.1-2 ShiftFunctor[101X
+  
+  [33X[1;0Y[29X[2XShiftFunctor[102X( [3XComp(A)[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe  inputs are complex category [23X\mathrm{Comp}(A)[123X and an integer. The output
+  is  a  the endofunctor [23XT[n][123X that sends any complex [23XC[123X to [23XC[n][123X and any complex
+  morphism  [23X\phi:C\rightarrow  D[123X  to  [23X\phi[n]:C[n]\rightarrow  D[n][123X. The shift
+  chain  complex  [23XC[n][123X  of  a  chain  complex  [23XC[123X is defined by [23XC[n]_i=C_{n+i},
+  d_{i}^{C[n]}=(-1)^{n}d_{n+i}^{C}[123X  and  the same for chain complex morphisms,
+  i.e.,  [23X\phi[n]_i=\phi_{n+i}[123X.  The  same  holds  for  cochain  complexes  and
+  morphisms.[133X
+  
+  [1X4.1-3 UnsignedShiftFunctor[101X
+  
+  [33X[1;0Y[29X[2XUnsignedShiftFunctor[102X( [3XComp(A)[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe  inputs are complex category [23X\mathrm{Comp}(A)[123X and an integer. The output
+  is  a  the endofunctor [23XT[n][123X that sends any complex [23XC[123X to [23XC[n][123X and any complex
+  morphism  [23X\phi:C\rightarrow  D[123X  to  [23X\phi[n]:C[n]\rightarrow  D[n][123X. The shift
+  chain  complex  [23XC[n][123X  of  a  chain  complex  [23XC[123X is defined by [23XC[n]_i=C_{n+i},
+  d_{i}^{C[n]}=d_{n+i}^{C}[123X  and  the  same  for chain complex morphisms, i.e.,
+  [23X\phi[n]_i=\phi_{n+i}[123X. The same holds for cochain complexes and morphisms.[133X
+  
+  [1X4.1-4 ChainToCochainComplexFunctor[101X
+  
+  [33X[1;0Y[29X[2XChainToCochainComplexFunctor[102X( [3XCh(A)_\bullet[103X, [3XCh(A)^\bullet[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe arguments are [23X\mathrm{Ch}_\bullet(A)[123X and [23X\mathrm{Ch}^\bullet(A)[123X for some
+  category        [23XA[123X.        The        output       is       the       functor
+  [23XF:\mathrm{Ch}_\bullet(A)\rightarrow\mathrm{Ch}^\bullet(A)[123X     defined     by
+  [23XC_{\bullet}\mapsto  C^{\bullet}[123X for any for any chain complex [23XC_{\bullet}\in
+  \mathrm{Ch}_\bullet(A)[123X  and  by [23X\phi_{\bullet}\mapsto \phi^{\bullet}[123X for any
+  morphism     [23X\phi_\bullet[123X     where     [23XC^\bullet_{i}=C_\bullet^{-i}[123X     and
+  [23X\phi^\bullet_{i}=\phi_\bullet^{-i}[123X for any [23Xi\in\mathbb{Z}[123X.[133X
+  
+  [1X4.1-5 CochainToChainComplexFunctor[101X
+  
+  [33X[1;0Y[29X[2XCochainToChainComplexFunctor[102X( [3XCh(A)^\bullet[103X, [3XCh(A)_\bullet[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe arguments are [23X\mathrm{Ch}^\bullet(A)[123X and [23X\mathrm{Ch}_\bullet(A)[123X for some
+  category        [23XA[123X.        The        output       is       the       functor
+  [23XF:\mathrm{Ch}^\bullet(A)\rightarrow\mathrm{Ch}_\bullet(A)[123X     defined     by
+  [23XC^\bullet\mapsto  C_\bullet[123X  for  any  for  any  chain  complex [23XC^\bullet\in
+  \mathrm{Ch}^\bullet(A)[123X  and  by  [23X\phi^\bullet\mapsto  \phi_\bullet[123X  for  any
+  morphism     [23X\phi^\bullet[123X     where     [23XC_\bullet^{i}=C^\bullet_{-i}[123X     and
+  [23X\phi_\bullet^{i}=\phi^\bullet_{-i}[123X for any [23Xi\in\mathbb{Z}[123X.[133X
+  
+  [1X4.1-6 ExtendFunctorToChainComplexCategories[101X
+  
+  [33X[1;0Y[29X[2XExtendFunctorToChainComplexCategories[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe input is a functor [23XF:A\rightarrow B[123X. The output is its extention functor[133X
+  
+  
+  [24X[33X[0;6Y\mathrm{Ch}_\bullet                      F:\mathrm{Ch}_\bullet(A)\rightarrow
+  \mathrm{Ch}_\bullet(B).[133X
+  
+  [124X
+  
+  [1X4.1-7 ExtendFunctorToCochainComplexCategories[101X
+  
+  [33X[1;0Y[29X[2XExtendFunctorToCochainComplexCategories[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe input is a functor [23XF:A\rightarrow B[123X. The output is its extention functor[133X
+  
+  
+  [24X[33X[0;6Y\mathrm{Ch}^\bullet                      F:\mathrm{Ch}^\bullet(A)\rightarrow
+  \mathrm{Ch}^\bullet(B)[133X
+  
+  [124X
+  
+  [33X[0;0Y.[133X
+  
+  [1X4.1-8 BrutalTruncationAboveFunctor[101X
+  
+  [33X[1;0Y[29X[2XBrutalTruncationAboveFunctor[102X( [3XCom(A)[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya endofunctor[133X
+  
+  [33X[0;0YThe  input  is a complex category [23X\mathrm{Com}(A)[123X of some Cap category [23XA[123X and
+  an  integer [23Xn[123X. The output is an endofunctor from [23X\mathrm{Com}(A) \rightarrow
+  \mathrm{Com}(A)[123X.[133X
+  
+  [1X4.1-9 BrutalTruncationBelowFunctor[101X
+  
+  [33X[1;0Y[29X[2XBrutalTruncationBelowFunctor[102X( [3XCom(A)[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya endofunctor[133X
+  
+  [33X[0;0YThe  input  is a complex category [23X\mathrm{Com}(A)[123X of some Cap category [23XA[123X and
+  an  integer [23Xn[123X. The output is an endofunctor from [23X\mathrm{Com}(A) \rightarrow
+  \mathrm{Com}(A)[123X.[133X
+  
+  
+  [1X4.2 [33X[0;0YExamples[133X[101X
+  
+  [1X4.2-1 GoodTruncationAboveFunctor[101X
+  
+  [33X[1;0Y[29X[2XGoodTruncationAboveFunctor[102X( [3XA[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YTo do.[133X
+  
+  
+  [1X4.3 [33X[0;0YNatural transformations[133X[101X
+  
+  [1X4.3-1 ExtendNaturalTransformationToChainComplexCategories[101X
+  
+  [33X[1;0Y[29X[2XExtendNaturalTransformationToChainComplexCategories[102X( [3Xeta[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
+  
+  [33X[0;0YThe  input  is  a  natural  transformation  [23X\eta:F\to  G[123X.  The output is its
+  extension to the chain complexes.[133X
+  
+  [1X4.3-2 ExtendNaturalTransformationToCochainComplexCategories[101X
+  
+  [33X[1;0Y[29X[2XExtendNaturalTransformationToCochainComplexCategories[102X( [3Xeta[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
+  
+  [33X[0;0YThe  input  is  a  natural  transformation  [23X\eta:F\to  G[123X.  The output is its
+  extension to the cochain complexes.[133X
+  

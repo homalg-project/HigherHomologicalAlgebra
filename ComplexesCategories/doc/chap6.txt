@@ -1,0 +1,300 @@
+  
+  [1X6 [33X[0;0YResolutions[133X[101X
+  
+  
+  [1X6.1 [33X[0;0YDefinitions[133X[101X
+  
+  
+  [1X6.2 [33X[0;0YComputing resolutions[133X[101X
+  
+  [1X6.2-1 IsAbelianCategoryWithComputableEnoughProjectives[101X
+  
+  [33X[1;0Y[29X[2XIsAbelianCategoryWithComputableEnoughProjectives[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  argument  is  a  category [3XC[103X. The output is whether the [3XC[103X is abelian and
+  have    the    following    methods    [10XIsProjective[110X,   [10XSomeProjectiveObject[110X,
+  [10XEpimorphismFromSomeProjectiveObject[110X and [10XProjectiveLift[110X are installed.[133X
+  
+  [1X6.2-2 IsAbelianCategoryWithComputableEnoughInjectives[101X
+  
+  [33X[1;0Y[29X[2XIsAbelianCategoryWithComputableEnoughInjectives[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ytrue or false[133X
+  
+  [33X[0;0YThe  argument  is  a  category [3XC[103X. The output is whether the [3XC[103X is abelian and
+  have     the    following    methods    [10XIsInjective[110X,    [10XSomeInjectiveObject[110X,
+  [10XMonomorphismIntoSomeInjectiveObject[110X and [10XInjectiveColift[110X are installed.[133X
+  
+  [1X6.2-3 ProjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveResolution[102X( [3XC[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain complex[133X
+  
+  [33X[0;0YIf the input is bounded above cochain complex or bounded below chain complex
+  then  the  output  is  projective  resolution  in  the  sense  of  the above
+  definition.  If  the  input  is  an  object [23XM[123X which is not a complex and its
+  category   has  enough  projectives,  then  the  output  is  its  projective
+  resolution  in  the classical sense , i.e., complex [23XP^\bullet[123X which is exact
+  everywhere but in index [23X0[123X, where [23XH^0(P^\bullet)\cong M[123X.[133X
+  
+  [1X6.2-4 ProjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveResolution[102X( [3XC[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain complex[133X
+  
+  [33X[0;0YThe  arguments  are an object [3XC[103X and a boolian [3Xbool[103X. If [3Xbool[103X = [9Xfalse[109X then the
+  ouput     is    [10XProjectiveResolution[110X([3XC[103X),    otherwise    the    output    is
+  [10XProjectiveResolution[110X([3XC[103X) after trying to find its bounds.[133X
+  
+  [1X6.2-5 ProjectiveCochainResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveCochainResolution[102X( [3XM[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain complex[133X
+  
+  [33X[0;0YThe input is an object [23XM[123X in an abelian category with enough projectives. The
+  output is [10XProjectiveResolution[110X([3XM[103X) as a cochain complex.[133X
+  
+  [1X6.2-6 ProjectiveCochainResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveCochainResolution[102X( [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain complex[133X
+  
+  [33X[0;0YThe input is an object [23XM[123X in an abelian category with enough projectives. The
+  output  is  [10XProjectiveResolution[110X([3XM[103X) as a cochain complex after trying to set
+  its bounds.[133X
+  
+  [1X6.2-7 ProjectiveChainResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveChainResolution[102X( [3XM[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya chain complex[133X
+  
+  [33X[0;0YThe input is an object [23XM[123X in an abelian category with enough projectives. The
+  output is [10XProjectiveResolution[110X([3XM[103X) as a chain complex.[133X
+  
+  [1X6.2-8 ProjectiveChainResolution[101X
+  
+  [33X[1;0Y[29X[2XProjectiveChainResolution[102X( [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain complex[133X
+  
+  [33X[0;0YThe input is an object [23XM[123X in an abelian category with enough projectives. The
+  output is [10XProjectiveResolution[110X([3XM[103X) as a chain complex after trying to set its
+  bounds.[133X
+  
+  [1X6.2-9 MorphismBetweenProjectiveResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain morphism[133X
+  
+  [33X[0;0YThe  input  is  a  morphism  [23X\alpha[123X  whose  category  is abelian with enough
+  projectives.  The  output  is  the  induced  cochain  morphism  between  the
+  projective  resolutions  of the source and range of [23X\alpha[123X. This morphism is
+  unique up to homotopy.[133X
+  
+  [1X6.2-10 MorphismBetweenProjectiveResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain morphism[133X
+  
+  [33X[0;0YThe arguments are a morphism [23X\alpha[123X and a boolian [3Xbool[103X. If [3Xbool[103X = [9Xfalse[109X then
+  the  ouput  is  [10XMorphismBetweenProjectiveResolutions[110X([23X\alpha[123X),  otherwise the
+  output  is [10XMorphismBetweenProjectiveResolutions[110X([23X\alpha[123X) after trying to find
+  its bounds.[133X
+  
+  [1X6.2-11 MorphismBetweenProjectiveCochainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveCochainResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-12 MorphismBetweenProjectiveCochainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveCochainResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-13 MorphismBetweenProjectiveChainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveChainResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-14 MorphismBetweenProjectiveChainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenProjectiveChainResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-15 InjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveResolution[102X( [3Xarg[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain complex[133X
+  
+  [33X[0;0YIf the input is bounded above chain complex or bounded below cochain complex
+  then  the  output  is  injective  resolution  in  the  sense  of  the  above
+  definition.  If  the  input  is  an  object [23XM[123X which is not a complex and its
+  category  has enough injectives, then the output is its injective resolution
+  in  the  classical sense , i.e., complex [23XI^\bullet[123X which is exact everywhere
+  but in index [23X0[123X, where [23XH^0(I^\bullet)\cong M[123X.[133X
+  
+  [1X6.2-16 InjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveResolution[102X( [3XC[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain complex[133X
+  
+  [33X[0;0YThe  arguments  are an object [3XC[103X and a boolian [3Xbool[103X. If [3Xbool[103X = [9Xfalse[109X then the
+  ouput     is     [10XInjectiveResolution[110X([3XC[103X),    otherwise    the    output    is
+  [10XInjectiveResolution[110X([3XC[103X) after trying to find its bounds.[133X
+  
+  [1X6.2-17 InjectiveCochainResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveCochainResolution[102X( [3XM[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain complex[133X
+  
+  [33X[0;0YThe  input is an object [23XM[123X in an abelian category with enough injectives. The
+  output is [10XInjectiveResolution[110X([3XM[103X) as a cochain complex.[133X
+  
+  [1X6.2-18 InjectiveCochainResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveCochainResolution[102X( [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain complex[133X
+  
+  [33X[0;0YThe  input is an object [23XM[123X in an abelian category with enough injectives. The
+  output  is  [10XInjectiveResolution[110X([3XM[103X)  as a cochain complex after trying to set
+  its bounds.[133X
+  
+  [1X6.2-19 InjectiveChainResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveChainResolution[102X( [3XM[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya chain complex[133X
+  
+  [33X[0;0YThe  input is an object [23XM[123X in an abelian category with enough injectives. The
+  output  is [10XInjectiveResolution[110X([3XM[103X) as a chain complex after trying to set its
+  bounds.[133X
+  
+  [1X6.2-20 InjectiveChainResolution[101X
+  
+  [33X[1;0Y[29X[2XInjectiveChainResolution[102X( [3XM[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain complex[133X
+  
+  [33X[0;0YThe  input is an object [23XM[123X in an abelian category with enough injectives. The
+  output  is [10XInjectiveResolution[110X([3XM[103X) as a chain complex after trying to set its
+  bounds.[133X
+  
+  [1X6.2-21 MorphismBetweenInjectiveResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain morphism[133X
+  
+  [33X[0;0YThe  input  is  a  morphism  [23X\alpha[123X  whose  category  is abelian with enough
+  injectives. The output is the induced cochain morphism between the injective
+  resolutions of the source and range of [23X\alpha[123X. This morphism is unique up to
+  homotopy.[133X
+  
+  [1X6.2-22 MorphismBetweenInjectiveResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain morphism[133X
+  
+  [33X[0;0YThe arguments are a morphism [23X\alpha[123X and a boolian [3Xbool[103X. If [3Xbool[103X = [9Xfalse[109X then
+  the  ouput  is  [10XMorphismBetweenInjectiveResolutions[110X([23X\alpha[123X),  otherwise  the
+  output  is  [10XMorphismBetweenInjectiveResolutions[110X([23X\alpha[123X) after trying to find
+  its bounds.[133X
+  
+  [1X6.2-23 MorphismBetweenInjectiveCochainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveCochainResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-24 MorphismBetweenInjectiveCochainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveCochainResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya cochain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-25 MorphismBetweenInjectiveChainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveChainResolutions[102X( [3Xalpha[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-26 MorphismBetweenInjectiveChainResolutions[101X
+  
+  [33X[1;0Y[29X[2XMorphismBetweenInjectiveChainResolutions[102X( [3Xalpha[103X, [3Xbool[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya chain morphism[133X
+  
+  [33X[0;0Y#TODO[133X
+  
+  [1X6.2-27 QuasiIsomorphismFromProjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XQuasiIsomorphismFromProjectiveResolution[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XQuasiIsomorphismFromProjectiveResolution[102X( [3XC[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain epimorphism[133X
+  
+  [33X[0;0YThe  input  is  an  above bounded cochain complex [23XC^\bullet[123X. The output is a
+  quasi-isomorphism  [23Xq:P^\bullet  \rightarrow C^\bullet[123X such that [23XP^\bullet[123X is
+  upper  bounded  and all its objects are projective in the underlying abelian
+  category.  In  the second command the input is a below bounded chain complex
+  [23XC_\bullet[123X.   The  output  is  a  quasi-isomorphism  [23Xq:P_\bullet  \rightarrow
+  C_\bullet[123X  such  that  [23XP_\bullet[123X  is  lower  bounded and all its objects are
+  projective in the underlying abelian category.[133X
+  
+  [1X6.2-28 QuasiIsomorphismFromProjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XQuasiIsomorphismFromProjectiveResolution[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya bounded (co)chain epimorphism[133X
+  
+  [33X[0;0YThe  input is chain or cochain complex and the output is a quasi-isomorphism
+  from its projective resolution, after trying to find its bounds.[133X
+  
+  [1X6.2-29 QuasiIsomorphismIntoInjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XQuasiIsomorphismIntoInjectiveResolution[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XQuasiIsomorphismIntoInjectiveResolution[102X( [3XC[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya (co)chain epimorphism[133X
+  
+  [33X[0;0YThe  input  is  a  below  bounded cochain complex [23XC^\bullet[123X. The output is a
+  quasi-isomorphism  [23Xq:C^\bullet  \rightarrow I^\bullet[123X such that [23XI^\bullet[123X is
+  below  bounded  and  all its objects are injective in the underlying abelian
+  category.  In the second command the input is an above bounded chain complex
+  [23XC_\bullet[123X.   The  output  is  a  quasi-isomorphism  [23Xq:  C_\bullet\rightarrow
+  I_\bullet[123X  such  that  [23XI_\bullet[123X  is  below  bounded and all its objects are
+  injective in the underlying abelian category.[133X
+  
+  [1X6.2-30 QuasiIsomorphismIntoInjectiveResolution[101X
+  
+  [33X[1;0Y[29X[2XQuasiIsomorphismIntoInjectiveResolution[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya bounded (co)chain epimorphism[133X
+  
+  [33X[0;0YThe  input is chain or cochain complex and the output is a quasi-isomorphism
+  into its injective resolution, after trying to find its bounds.[133X
+  
+  
+  [1X6.3 [33X[0;0YExamples[133X[101X
+  
+  [1X6.3-1 MorphismFromHorseshoeResolution[101X
+  
+  [33X[1;0Y[29X[2XMorphismFromHorseshoeResolution[102X( [3XC[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ychain morphism of chain complexes[133X
+  
+  [33X[0;0YThe  input  is  a  short  exact  sequence defined as a chain complex and the
+  output is a chain morphism from the Horseshoe resolution (which is a complex
+  of  complexes  and  each  object  in  this  complex  is again a complex that
+  consists of a short exact sequence of projective objects). The total complex
+  of the resolution is quasi isomorphic to [23XC[123X and both are exact complexes.[133X
+  
+  [1X6.3-2 HorseshoeResolution[101X
+  
+  [33X[1;0Y[29X[2XHorseshoeResolution[102X( [3XC[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ychain complex of chain complexes[133X
+  
+  [33X[0;0YThe  input  is  a  short  exact  sequence defined as a chain complex and the
+  output is the source of the morphism from Horseshoe resolution.[133X
+  
