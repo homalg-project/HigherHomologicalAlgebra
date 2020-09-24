@@ -950,6 +950,7 @@ DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCa
 
 ## Syns
 
+if false then
 Append( LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS,
   [
     [ "cone", StandardConeObject ],
@@ -960,3 +961,4 @@ Append( LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS,
     [ "mcocone", MorphismBetweenStandardCoConeObjects ]
   ]
 );
+fi;
