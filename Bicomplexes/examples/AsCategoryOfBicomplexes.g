@@ -1,3 +1,5 @@
+# THIS EXAMPLE NEEDS TO BE FIXED
+
 #! @Chunk AsCategoryOfBicomplexes
 
 LoadPackage( "IntrinsicModules" );
