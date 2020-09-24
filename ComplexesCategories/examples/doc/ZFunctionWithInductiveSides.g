@@ -3,13 +3,7 @@
 LoadPackage( "ComplexesCategories" );
 
 #! @Example
-upper_func :=
-  function(a)
-    if a[ 2 ] <> 0 then
-      return [ a[ 2 ], a[ 1 ] mod a[ 2 ] ];
-    fi;
-    return a;
-end;;
+upper_func := function(a) if a[ 2 ] <> 0 then return [ a[ 2 ], a[ 1 ] mod a[ 2 ] ]; fi; return a; end;;
 lower_func := IdFunc;;
 gcd_seq := ZFunctionWithInductiveSides( 0, [ 111, 259 ],
               lower_func, upper_func, \= );
