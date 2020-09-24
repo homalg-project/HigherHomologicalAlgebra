@@ -7,6 +7,8 @@
 ##
 #############################################################################
 
+#! @InsertChunk stable_cat_by_projectives
+
 DeclareCategory( "IsStableCategory",
                  IsQuotientCategory );
 
