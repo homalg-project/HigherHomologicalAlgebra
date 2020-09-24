@@ -1,0 +1,106 @@
+  
+  
+                              [1X DerivedCategories [101X
+  
+  
+                   [1X Derived categories of Abelian categories [101X
+  
+  
+                                   2020.09.05
+  
+  
+                                5 September 2020
+  
+  
+                                  Kamal Saleh
+  
+  
+  
+  Kamal Saleh
+      Email:    [7Xmailto:kamal.saleh@uni-siegen.de[107X
+      Homepage: [7Xhttps://github.com/kamalsaleh[107X
+      Address:  [33X[0;14YDepartment Mathematik[133X
+                [33X[0;14YUniversität Siegen[133X
+                [33X[0;14YWalter-Flex-Straße 3[133X
+                [33X[0;14Y57068 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (DerivedCategories)[101X
+  
+  1 [33X[0;0YExceptional collections[133X
+    1.1 [33X[0;0YConstructors[133X
+      1.1-1 IsExceptionalCollection
+      1.1-2 CreateExceptionalCollection
+      1.1-3 ExceptionalCollection
+      1.1-4 DefiningFullSubcategory
+      1.1-5 AmbientCategory
+      1.1-6 EndomorphismAlgebraAttr
+      1.1-7 EndomorphismAlgebra
+      1.1-8 DefiningExceptionalCollection
+      1.1-9 Algebroid
+      1.1-10 QuiverRows
+      1.1-11 TiltingObject
+      1.1-12 NumberOfObjects
+      1.1-13 UnderlyingObjects
+      1.1-14 AdditiveClosure
+      1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra
+      1.1-16 HomotopyCategoryAttr
+      1.1-17 AdditiveClosureAsFullSubcategory
+      1.1-18 InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject
+      1.1-19 \[\]
+      1.1-20 PathsOfLengthGreaterThanOne
+      1.1-21 PathsOfLengthOne
+      1.1-22 Arrows
+      1.1-23 AllPaths
+      1.1-24 BasisOfPaths
+      1.1-25 LabelsForPathsOfLengthOne
+      1.1-26 LabelsForPathsOfLengthGreaterThanOne
+      1.1-27 LabelsForAllPaths
+      1.1-28 LabelsForBasisOfPaths
+    1.2 [33X[0;0YGeneral Operations[133X
+      1.2-1 InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure
+      1.2-2 RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection
+      1.2-3 RelationsBetweenMorphisms
+      1.2-4 FullSubcategoryGeneratedByProjectiveObjects
+      1.2-5 FullSubcategoryGeneratedByInjectiveObjects
+      1.2-6 FullSubcategoryGeneratedByIndecProjectiveObjects
+      1.2-7 FullSubcategoryGeneratedByIndecInjectiveObjects
+      1.2-8 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      1.2-9 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      1.2-10 AdditiveClosureAsFullSubcategory
+  2 [33X[0;0YFunctors and natural transformations[133X
+    2.1 [33X[0;0YFunctors[133X
+      2.1-1 EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects
+      2.1-2 EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects
+      2.1-3 EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects
+      2.1-4 EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects
+      2.1-5 IsomorphismOntoAlgebroid
+      2.1-6 IsomorphismFromAlgebroid
+      2.1-7 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      2.1-8 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      2.1-9 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      2.1-10 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra
+      2.1-11 LocalizationFunctor
+      2.1-12 UniversalFunctorFromDerivedCategory
+      2.1-13 LeftDerivedFunctor
+      2.1-14 RightDerivedFunctor
+      2.1-15 TensorFunctor
+      2.1-16 TensorFunctorOnIndecProjectiveObjects
+      2.1-17 TensorFunctorOnProjectiveObjects
+    2.2 [33X[0;0YNatural transformations[133X
+      2.2-1 UnitOfTensorHomAdjunction
+      2.2-2 CounitOfTensorHomAdjunction
+  3 [33X[0;0YDerivedCategories automatic generated documentation[133X
+    3.1 [33X[0;0YDerivedCategories automatic generated documentation of methods[133X
+      3.1-1 HomFunctor
+    3.2 [33X[0;0YDerivedCategories automatic generated documentation of attributes[133X
+      3.2-1 HomFunctorOnIndecInjectiveObjects
+      3.2-2 HomFunctorOnInjectiveObjects
+  
+  
+  [32X

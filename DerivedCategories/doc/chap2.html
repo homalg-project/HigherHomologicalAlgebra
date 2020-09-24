@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (DerivedCategories) - Chapter 2: Functors and natural transformations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X7B54E9998301376B" name="X7B54E9998301376B"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7B54E9998301376B">2 <span class="Heading">Functors and natural transformations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X78D1062D78BE08C1">2.1 <span class="Heading">Functors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79FA83C0837BFC8C">2.1-1 EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X872414C7859D3E3A">2.1-2 EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80EB598B7E9A68C6">2.1-3 EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CABA38D7C671CDA">2.1-4 EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84442CFE7FC39E21">2.1-5 IsomorphismOntoAlgebroid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E6AE1B77CE2171B">2.1-6 IsomorphismFromAlgebroid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D06AEA87AA1052E">2.1-7 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A14AF507E3A58F9">2.1-8 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X820C65417D1BD1C3">2.1-9 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87B2529579808C14">2.1-10 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X851C0B9A79F52695">2.1-11 LocalizationFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8459F7A27C4715CF">2.1-12 UniversalFunctorFromDerivedCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CAA0EA4842B47E6">2.1-13 LeftDerivedFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X869D85547F3B3078">2.1-14 RightDerivedFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EDFC44C863BAEAC">2.1-15 TensorFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80B05162837370E1">2.1-16 TensorFunctorOnIndecProjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87D1E4C7833FAD83">2.1-17 TensorFunctorOnProjectiveObjects</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X836749D8814FEEE6">2.2 <span class="Heading">Natural transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X81CF24527B1A5724">2.2-1 UnitOfTensorHomAdjunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85A5D84F81CC06C3">2.2-2 CounitOfTensorHomAdjunction</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Functors and natural transformations</span></h3>
+
+<p><a id="X78D1062D78BE08C1" name="X78D1062D78BE08C1"></a></p>
+
+<h4>2.1 <span class="Heading">Functors</span></h4>
+
+<p><a id="X79FA83C0837BFC8C" name="X79FA83C0837BFC8C"></a></p>
+
+<h5>2.1-1 EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from full subcategory generated by the projective representations into the additive closure of the full subcategory generated by indecomposable projective representations.</p>
+
+<p><a id="X872414C7859D3E3A" name="X872414C7859D3E3A"></a></p>
+
+<h5>2.1-2 EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from the additive closure of the full subcategory generated by indecomposable projective representations into full subcategory generated by the projective representations.</p>
+
+<p><a id="X80EB598B7E9A68C6" name="X80EB598B7E9A68C6"></a></p>
+
+<h5>2.1-3 EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from full subcategory generated by the injective representations into the additive closure of the full subcategory generated by indecomposable injective representations.</p>
+
+<p><a id="X7CABA38D7C671CDA" name="X7CABA38D7C671CDA"></a></p>
+
+<h5>2.1-4 EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from the additive closure of the full subcategory generated by indecomposable injective representations into full subcategory generated by the injective representations.</p>
+
+<p><a id="X84442CFE7FC39E21" name="X84442CFE7FC39E21"></a></p>
+
+<h5>2.1-5 IsomorphismOntoAlgebroid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismOntoAlgebroid</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an exceptional collection <span class="Math">E</span> and the output is an isomorphism functor into algebroid defined over the endomorphism algebra of <span class="Math">\bigoplus_i E_i</span> for <span class="Math">E_i\in</span><var class="Arg">E</var>.</p>
+
+<p><a id="X7E6AE1B77CE2171B" name="X7E6AE1B77CE2171B"></a></p>
+
+<h5>2.1-6 IsomorphismFromAlgebroid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFromAlgebroid</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism functor from algebroid defined over the endomorphism algebra of <span class="Math">\bigoplus_i E_i</span> for <span class="Math">E_i \in</span> <var class="Arg">E</var>.</p>
+
+<p><a id="X7D06AEA87AA1052E" name="X7D06AEA87AA1052E"></a></p>
+
+<h5>2.1-7 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an algebroid <var class="Arg">alg</var> defined by a finite dimensional quiver algebra <span class="Math">A</span>. The output is the isomorphism functor from <var class="Arg">alg</var> into the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
+
+<p><a id="X7A14AF507E3A58F9" name="X7A14AF507E3A58F9"></a></p>
+
+<h5>2.1-8 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism from the full subcategory generated by the exceptional collection into the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
+
+<p><a id="X820C65417D1BD1C3" name="X820C65417D1BD1C3"></a></p>
+
+<h5>2.1-9 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism into the full subcategory generated by the exceptional collection from the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
+
+<p><a id="X87B2529579808C14" name="X87B2529579808C14"></a></p>
+
+<h5>2.1-10 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is an algebroid <var class="Arg">alg</var> defined by a finite dimensional quiver algebra <span class="Math">A</span>. The output is the isomorphism functor from the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects into <var class="Arg">alg</var>.</p>
+
+<p><a id="X851C0B9A79F52695" name="X851C0B9A79F52695"></a></p>
+
+<h5>2.1-11 LocalizationFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LocalizationFunctor</code>( <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is a homotopy category <var class="Arg">H</var> := <code class="code">HomotopyCategory</code>(<span class="Math">C</span>) of some abelian category <span class="Math">C</span>. The output is the localization functor <span class="Math">L</span> from <var class="Arg">H</var> into <code class="code">DerivedCategory</code>(<span class="Math">C</span>).</p>
+
+<p><a id="X8459F7A27C4715CF" name="X8459F7A27C4715CF"></a></p>
+
+<h5>2.1-12 UniversalFunctorFromDerivedCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalFunctorFromDerivedCategory</code>( <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is a localization functor for some homotopy category <var class="Arg">H</var> := <code class="code">HomotopyCategory</code>(<span class="Math">C</span>) of some abelian category <span class="Math">C</span> in some category <span class="Math">B</span>, i.e., send quasi-isomorphisms in <var class="Arg">H</var> to isomorphisms in <span class="Math">B</span>. The output is the universal functor from <code class="code">DerivedCategory</code>(<span class="Math">C</span>) into <span class="Math">B</span>.</p>
+
+<p><a id="X7CAA0EA4842B47E6" name="X7CAA0EA4842B47E6"></a></p>
+
+<h5>2.1-13 LeftDerivedFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDerivedFunctor</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is a functor <var class="Arg">G</var>:<span class="Math">D\to C</span> such that <span class="Math">D</span> is abelian category with computable enough projectives or extension of such a functor to homotopy categories. The output the left derived functor <span class="Math">LG:D^b(D)\to D^b(C)</span>.</p>
+
+<p><a id="X869D85547F3B3078" name="X869D85547F3B3078"></a></p>
+
+<h5>2.1-14 RightDerivedFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDerivedFunctor</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The input is a functor <var class="Arg">F</var>:<span class="Math">C\to D</span> such that <span class="Math">C</span> is abelian category with computable enough injectives or extension of such a functor to homotopy categories. The output the right derived functor <span class="Math">RF:D^b(C)\to D^b(D)</span>.</p>
+
+<p><a id="X7EDFC44C863BAEAC" name="X7EDFC44C863BAEAC"></a></p>
+
+<h5>2.1-15 TensorFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorFunctor</code>( <var class="Arg">collection</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is an exceptional collection <var class="Arg">E</var> which is defined by some full subcategory generated by finite number of objects <span class="Math">(E_i)_i</span> in some category <span class="Math">C</span> with homomorphism structure. The output is the functor <span class="Math">- \otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i:\mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i) \to C</span>.</p>
+
+<p><a id="X80B05162837370E1" name="X80B05162837370E1"></a></p>
+
+<h5>2.1-16 TensorFunctorOnIndecProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorFunctorOnIndecProjectiveObjects</code>( <var class="Arg">collection</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is an exceptional collection <var class="Arg">E</var> which is defined by some full subcategory generated by finite number of objects <span class="Math">(E_i)_i</span> in some category <span class="Math">C</span> with homomorphism structure. The output is the functor <span class="Math">- \otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i</span>: <code class="code">FullSubcategoryGeneratedByIndecProjectiveObjects</code><span class="Math">(\mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)) \to C</span>.</p>
+
+<p><a id="X87D1E4C7833FAD83" name="X87D1E4C7833FAD83"></a></p>
+
+<h5>2.1-17 TensorFunctorOnProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorFunctorOnProjectiveObjects</code>( <var class="Arg">collection</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>The argument is an exceptional collection <var class="Arg">E</var> which is defined by some full subcategory generated by finite number of objects <span class="Math">(E_i)_i</span> in some category <span class="Math">C</span> with homomorphism structure. The output is the functor <span class="Math">- \otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i</span>: <code class="code">FullSubcategoryGeneratedByProjectiveObjects</code><span class="Math">(\mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)) \to C</span>.</p>
+
+<p><a id="X836749D8814FEEE6" name="X836749D8814FEEE6"></a></p>
+
+<h4>2.2 <span class="Heading">Natural transformations</span></h4>
+
+<p><a id="X81CF24527B1A5724" name="X81CF24527B1A5724"></a></p>
+
+<h5>2.2-1 UnitOfTensorHomAdjunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnitOfTensorHomAdjunction</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation</p>
+
+<p>The input is an exceptional collection <var class="Arg">E</var> in some abelian category <code class="code">C</code>. The output is the unit of the tensor-hom adjunction <span class="Math">\lambda:\mathrm{Id}_{ \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)} \to \mathrm{Hom}(T,-\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i)</span>.</p>
+
+<p><a id="X85A5D84F81CC06C3" name="X85A5D84F81CC06C3"></a></p>
+
+<h5>2.2-2 CounitOfTensorHomAdjunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CounitOfTensorHomAdjunction</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation</p>
+
+<p>The input is an exceptional collection <var class="Arg">E</var>. The output is the unit of the tensor-hom adjunction <span class="Math">\eta: \mathrm{Hom}(\oplus_i E_i,-)\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i \to \mathrm{Id}_C</span>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

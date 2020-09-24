@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (DerivedCategories) - Chapter 1: Exceptional collections</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap1"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
+<p><a id="X7B41E760813FE471" name="X7B41E760813FE471"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X7B41E760813FE471">1 <span class="Heading">Exceptional collections</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X86EC0F0A78ECBC10">1.1 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80403847829F7EE0">1.1-1 IsExceptionalCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EC2B2C47AC345AE">1.1-2 CreateExceptionalCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FA2035685B54F7C">1.1-3 ExceptionalCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8180BF79782F2856">1.1-4 DefiningFullSubcategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A9257CC796599DA">1.1-5 AmbientCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7867798F8794DBF5">1.1-6 EndomorphismAlgebraAttr</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83E6B3ED7A79A8E5">1.1-7 EndomorphismAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D028CFB78859B7A">1.1-8 DefiningExceptionalCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X856DC10383BC8C6D">1.1-9 Algebroid</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X869AAE6785A852EA">1.1-10 QuiverRows</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X790946ED831B2098">1.1-11 TiltingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F1913A07994B13D">1.1-12 NumberOfObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8236A39E7F377728">1.1-13 UnderlyingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86CEC78B82A925DB">1.1-14 AdditiveClosure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7CA53D377DEF004B">1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D8216998666F029">1.1-16 HomotopyCategoryAttr</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7AA351CE85F64670">1.1-17 AdditiveClosureAsFullSubcategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7988743580F1F01A">1.1-18 InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8013E3208464E5F0"><code>1.1-19 \[\]</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8101924982DD22EA">1.1-20 PathsOfLengthGreaterThanOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E2FE26B7FA03C2D">1.1-21 PathsOfLengthOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X82E1CDA57A563540">1.1-22 Arrows</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X87446365831695DA">1.1-23 AllPaths</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8511008C80C37591">1.1-24 BasisOfPaths</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B7AF78A82FDB9F8">1.1-25 LabelsForPathsOfLengthOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X81A90C0B79CA6C28">1.1-26 LabelsForPathsOfLengthGreaterThanOne</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86B8B0C3820DD56D">1.1-27 LabelsForAllPaths</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X795FD64A86D6A5B6">1.1-28 LabelsForBasisOfPaths</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7AB3D4ED7A4EF781">1.2 <span class="Heading">General Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7801CE4282313EAC">1.2-1 InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7DA854197BD8047C">1.2-2 RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86E304877BD3ACE9">1.2-3 RelationsBetweenMorphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F60D1AA830405B6">1.2-4 FullSubcategoryGeneratedByProjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7AB5DD427A55289B">1.2-5 FullSubcategoryGeneratedByInjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8666D8308150F3BE">1.2-6 FullSubcategoryGeneratedByIndecProjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X874D9EA2879F36F8">1.2-7 FullSubcategoryGeneratedByIndecInjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7BAE94EA79909F7B">1.2-8 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83AAC28F7971B2BC">1.2-9 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A3013757976B3D0">1.2-10 AdditiveClosureAsFullSubcategory</a></span>
+</div></div>
+</div>
+
+<h3>1 <span class="Heading">Exceptional collections</span></h3>
+
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+
+<h4>1.1 <span class="Heading">Constructors</span></h4>
+
+<p><a id="X80403847829F7EE0" name="X80403847829F7EE0"></a></p>
+
+<h5>1.1-1 IsExceptionalCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExceptionalCollection</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>The GAP category of exceptional collections.</p>
+
+<p><a id="X7EC2B2C47AC345AE" name="X7EC2B2C47AC345AE"></a></p>
+
+<h5>1.1-2 CreateExceptionalCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateExceptionalCollection</code>( <var class="Arg">full</var>, <var class="Arg">vertices_labels</var>, <var class="Arg">cache</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsExceptionalCollection</p>
+
+<p>#TODO If the input is full subcategory <var class="Arg">A</var> in some category <code class="code">C</code>, generated by finite number of objects <var class="Arg">A!.Objects</var>, then the output is the strong exceptional collection defined by these objects. If the input is a list of objects <var class="Arg">L</var> of objects in some category <code class="code">C</code>, then the output is <var class="Arg">CreateExceptionalCollection( A )</var>, where <var class="Arg">A := FullSubcategoryGeneratedByListOfObjects(C,L)</var>.</p>
+
+<p><a id="X7FA2035685B54F7C" name="X7FA2035685B54F7C"></a></p>
+
+<h5>1.1-3 ExceptionalCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExceptionalCollection</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: IsExceptionalCollection</p>
+
+<p>If the input is full subcategory <var class="Arg">A</var> in some category <code class="code">C</code>, generated by finite number of objects <var class="Arg">A!.Objects</var>, then the output is the strong exceptional collection defined by these objects returned as an attribute for <var class="Arg">A</var>.</p>
+
+<p><a id="X8180BF79782F2856" name="X8180BF79782F2856"></a></p>
+
+<h5>1.1-4 DefiningFullSubcategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningFullSubcategory</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns the full subcategory that is generated by the elements of the strong exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X7A9257CC796599DA" name="X7A9257CC796599DA"></a></p>
+
+<h5>1.1-5 AmbientCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AmbientCategory</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns the ambient category of <code class="code">DefiningFullSubcategory</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X7867798F8794DBF5" name="X7867798F8794DBF5"></a></p>
+
+<h5>1.1-6 EndomorphismAlgebraAttr</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismAlgebraAttr</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a quiver algebra</p>
+
+<p>Returns the endomorphism quiver algebra of the exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X83E6B3ED7A79A8E5" name="X83E6B3ED7A79A8E5"></a></p>
+
+<h5>1.1-7 EndomorphismAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndomorphismAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a quiver algebra</p>
+
+<p>delegates to <code class="code">EndomorphismAlgebraAttr</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X7D028CFB78859B7A" name="X7D028CFB78859B7A"></a></p>
+
+<h5>1.1-8 DefiningExceptionalCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefiningExceptionalCollection</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an exceptional collection</p>
+
+<p>Returns the exceptional collection that defines the quiver algebra <var class="Arg">A</var>.</p>
+
+<p><a id="X856DC10383BC8C6D" name="X856DC10383BC8C6D"></a></p>
+
+<h5>1.1-9 Algebroid</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Algebroid</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an algebroid</p>
+
+<p>Returns the algebroid defined by the endomorphism quiver algebra of the exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X869AAE6785A852EA" name="X869AAE6785A852EA"></a></p>
+
+<h5>1.1-10 QuiverRows</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuiverRows</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>Returns the category of quiver rows over the endomorphism algebra of <var class="Arg">E</var>.</p>
+
+<p><a id="X790946ED831B2098" name="X790946ED831B2098"></a></p>
+
+<h5>1.1-11 TiltingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TiltingObject</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object</p>
+
+<p>Returns the direct sum of the objects of the exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X7F1913A07994B13D" name="X7F1913A07994B13D"></a></p>
+
+<h5>1.1-12 NumberOfObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberOfObjects</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: IsInt</p>
+
+<p>Returns the number of objects of the exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X8236A39E7F377728" name="X8236A39E7F377728"></a></p>
+
+<h5>1.1-13 UnderlyingObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingObjects</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>Returns a list of the objects of the exceptional collection <var class="Arg">E</var>.</p>
+
+<p><a id="X86CEC78B82A925DB" name="X86CEC78B82A925DB"></a></p>
+
+<h5>1.1-14 AdditiveClosure</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdditiveClosure</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an additive category</p>
+
+<p>Returns the additive closure of the <code class="code">DefiningFullSubcategory</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X7CA53D377DEF004B" name="X7CA53D377DEF004B"></a></p>
+
+<h5>1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryOfQuiverRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an abelian category</p>
+
+<p>Returns the category of right quiver representations over the opposite algebra of the endomorphism algebra of the collection.</p>
+
+<p><a id="X7D8216998666F029" name="X7D8216998666F029"></a></p>
+
+<h5>1.1-16 HomotopyCategoryAttr</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomotopyCategoryAttr</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>Returns the homotopy category of the additive closure of <code class="code">DefiningFullSubcategory</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X7AA351CE85F64670" name="X7AA351CE85F64670"></a></p>
+
+<h5>1.1-17 AdditiveClosureAsFullSubcategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdditiveClosureAsFullSubcategory</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an additive category</p>
+
+<p>Returns the additive closure of the <code class="code">DefiningFullSubcategory</code>(<var class="Arg">E</var>) as an additive full subcategory in <code class="code">AmbientCategory</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X7988743580F1F01A" name="X7988743580F1F01A"></a></p>
+
+<h5>1.1-18 InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>Returns the embedding functor of <code class="code">DefiningFullSubcategory</code>(<var class="Arg">E</var>) in <code class="code">TiltingObjectAsCategory</code>(<var class="Arg">E</var>).</p>
+
+<p><a id="X8013E3208464E5F0" name="X8013E3208464E5F0"></a></p>
+
+<h5><code>1.1-19 \[\]</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">E</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an object</p>
+
+<p>Returns the <span class="SimpleMath">\(i\)</span>'th object in <var class="Arg">E</var>.</p>
+
+<p><a id="X8101924982DD22EA" name="X8101924982DD22EA"></a></p>
+
+<h5>1.1-20 PathsOfLengthGreaterThanOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathsOfLengthGreaterThanOne</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>Returns a generating set for the vector space of morphisms from <span class="SimpleMath">\(E_i\)</span> to <span class="SimpleMath">\(E_j\)</span> that can be factored along at least one object <span class="SimpleMath">\(E_l\)</span> in <span class="SimpleMath">\(E\)</span> with <span class="SimpleMath">\(i+1\leq l\leq j-1\)</span>.</p>
+
+<p><a id="X7E2FE26B7FA03C2D" name="X7E2FE26B7FA03C2D"></a></p>
+
+<h5>1.1-21 PathsOfLengthOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PathsOfLengthOne</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>Returns a basis for a complementing vector space in Hom<span class="SimpleMath">\((E_i,E_j)\)</span> to the vector space generated by <code class="code">PathsOfLengthGreaterThanOne</code><span class="SimpleMath">\((E,i,j)\)</span>.</p>
+
+<p><a id="X82E1CDA57A563540" name="X82E1CDA57A563540"></a></p>
+
+<h5>1.1-22 Arrows</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Arrows</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>Delegates to <code class="code">PathsOfLengthOne</code><span class="SimpleMath">\((E,[i,j])\)</span>.</p>
+
+<p><a id="X87446365831695DA" name="X87446365831695DA"></a></p>
+
+<h5>1.1-23 AllPaths</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllPaths</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>It returns the union of <code class="code">PathsOfLengthOne</code> and <code class="code">PathsOfLengthGreaterThanOne</code> applied on the same arguments. In other words it returns a generating set for the vector space Hom<span class="SimpleMath">\((E_i,E_j)\)</span>.</p>
+
+<p><a id="X8511008C80C37591" name="X8511008C80C37591"></a></p>
+
+<h5>1.1-24 BasisOfPaths</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasisOfPaths</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>It returns a basis for Hom<span class="SimpleMath">\((E_i,E_j)\)</span> which cosists only from paths.</p>
+
+<p><a id="X7B7AF78A82FDB9F8" name="X7B7AF78A82FDB9F8"></a></p>
+
+<h5>1.1-25 LabelsForPathsOfLengthOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LabelsForPathsOfLengthOne</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: IsList</p>
+
+<p>It returns labels for <code class="code">PathsOfLengthOne</code><span class="SimpleMath">\((E,i,j)\)</span>. A label for path of length one gives information about the source, target and position of the path.</p>
+
+<p><a id="X81A90C0B79CA6C28" name="X81A90C0B79CA6C28"></a></p>
+
+<h5>1.1-26 LabelsForPathsOfLengthGreaterThanOne</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LabelsForPathsOfLengthGreaterThanOne</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>It returns labels for <code class="code">PathsOfLengthGreaterThanOne</code><span class="SimpleMath">\((E,i,j)\)</span> A label for a path of length greater than one gives information about the labels of the arrows whose composition is the path.</p>
+
+<p><a id="X86B8B0C3820DD56D" name="X86B8B0C3820DD56D"></a></p>
+
+<h5>1.1-27 LabelsForAllPaths</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LabelsForAllPaths</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>It returns labels for <code class="code">AllPaths</code><span class="SimpleMath">\((E,i,j)\)</span>.</p>
+
+<p><a id="X795FD64A86D6A5B6" name="X795FD64A86D6A5B6"></a></p>
+
+<h5>1.1-28 LabelsForBasisOfPaths</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LabelsForBasisOfPaths</code>( <var class="Arg">E</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>It returns labels for <code class="code">BasisOfPaths</code><span class="SimpleMath">\((E,i,j)\)</span>.</p>
+
+<p><a id="X7AB3D4ED7A4EF781" name="X7AB3D4ED7A4EF781"></a></p>
+
+<h4>1.2 <span class="Heading">General Operations</span></h4>
+
+<p><a id="X7801CE4282313EAC" name="X7801CE4282313EAC"></a></p>
+
+<h5>1.2-1 InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure</code>( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in range category of homomorphism structure</p>
+
+<p>The arguments are two objects <var class="Arg">A</var>, <var class="Arg">B</var> and a list of morphisms <var class="Arg">L</var><span class="SimpleMath">\(:=(f_i:A\to B)\)</span> for <span class="SimpleMath">\(i=1,\dots,n\)</span> that live in a category equipped with homomorphism structure <span class="SimpleMath">\((1,H(-,-),\nu)\)</span>. The output is the morphism <span class="SimpleMath">\(\langle \nu(f_1),\nu(f_2),\dots,\nu(f_n)\rangle:\oplus_{i=1}^n 1 \to H(A,B)\)</span>.</p>
+
+<p><a id="X7DA854197BD8047C" name="X7DA854197BD8047C"></a></p>
+
+<h5>1.2-2 RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection</code>( <var class="Arg">F</var>, <var class="Arg">m</var>, <var class="Arg">n</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a quiver path algebra</p>
+
+<p>The arguments are a field <var class="Arg">F</var> and three non-negative integers <var class="Arg">m</var>, <var class="Arg">n</var> and <var class="Arg">r</var> It returns a quiver algebra with <var class="Arg">m</var> vertices, <var class="Arg">n</var> arrows and at most <var class="Arg">r</var> relations; and whose indecomposable projective or injective objects define an exceptional collection.</p>
+
+<p><a id="X86E304877BD3ACE9" name="X86E304877BD3ACE9"></a></p>
+
+<h5>1.2-3 RelationsBetweenMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelationsBetweenMorphisms</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a list of ring elements</p>
+
+<p>The argument is a list of morphism <var class="Arg">L</var> in some <span class="SimpleMath">\(k\)</span>-linear category equipped with homomorphism structure. The output is the relations between the morphisms.</p>
+
+<p><a id="X7F60D1AA830405B6" name="X7F60D1AA830405B6"></a></p>
+
+<h5>1.2-4 FullSubcategoryGeneratedByProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is an abelian category <var class="Arg">C</var> with enouph projectives. The output the full subcategory generated by projective objects in <var class="Arg">C</var>.</p>
+
+<p><a id="X7AB5DD427A55289B" name="X7AB5DD427A55289B"></a></p>
+
+<h5>1.2-5 FullSubcategoryGeneratedByInjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is an abelian category <var class="Arg">C</var> with enouph injectives. The output the full subcategory generated by injective objects in <var class="Arg">C</var>.</p>
+
+<p><a id="X8666D8308150F3BE" name="X8666D8308150F3BE"></a></p>
+
+<h5>1.2-6 FullSubcategoryGeneratedByIndecProjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByIndecProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra or a category of functors into a matrix category of some homalg field. The output the full subcategory generated by the indecomposable projective objects.</p>
+
+<p><a id="X874D9EA2879F36F8" name="X874D9EA2879F36F8"></a></p>
+
+<h5>1.2-7 FullSubcategoryGeneratedByIndecInjectiveObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByIndecInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is a category of quiver representations over some finite dimensional quiver algebra or a category of functors into a matrix category of some homalg field. The output the full subcategory generated by the indecomposable injectives objects.</p>
+
+<p><a id="X7BAE94EA79909F7B" name="X7BAE94EA79909F7B"></a></p>
+
+<h5>1.2-8 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">algebroid</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is an algebroid <var class="Arg">algebroid</var> over some algebra <span class="SimpleMath">\(A\)</span>. The output is <code class="code">FullSubcategoryGeneratedByIndecProjectiveObjects</code>(<span class="SimpleMath">\(A^{op}\)</span>).</p>
+
+<p><a id="X83AAC28F7971B2BC" name="X83AAC28F7971B2BC"></a></p>
+
+<h5>1.2-9 FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a full subcategory</p>
+
+<p>The argument is an exceptional collection <var class="Arg">E</var>. The output is <code class="code">FullSubcategoryGeneratedByIndecProjectiveObjects</code>(<span class="SimpleMath">\(A^{op}\)</span>) where <span class="SimpleMath">\(A\)</span> is the endomorphism algebra of the exceptional collection.</p>
+
+<p><a id="X7A3013757976B3D0" name="X7A3013757976B3D0"></a></p>
+
+<h5>1.2-10 AdditiveClosureAsFullSubcategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdditiveClosureAsFullSubcategory</code>( <var class="Arg">full</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an additive full subcategory</p>
+
+<p>The argument is a non-additive full subcategory <var class="Arg">full</var> whose ambient category <span class="SimpleMath">\(C\)</span> is additive. The output is an additive full subcategory of <span class="SimpleMath">\(C\)</span> generated by all direct sums of objects in <var class="Arg">full</var>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
