@@ -104,7 +104,6 @@ KeyDependentOperation( "StalkChainComplex", IsCapCategoryObject, IsInt, ReturnTr
 #! @Arguments M, n
 KeyDependentOperation( "StalkCochainComplex", IsCapCategoryObject, IsInt, ReturnTrue );
 
-#! @InsertChunk 3
 #! @Description
 #! The input is a morphism $d\in A$ and two functions $F,G$. 
 #! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{0}=d$ 
@@ -682,8 +681,7 @@ KeyDependentOperation( "BrutalTruncationAbove", IsCochainComplex, IsInt, ReturnT
 KeyDependentOperation( "BrutalTruncationBelow", IsCochainComplex, IsInt, ReturnTrue );
 
 #! @Section Examples
-#! @InsertChunk vec_1
-# @InsertChunk complexes_example_2
+#? @InsertChunk vec_1
 
 DeclareOperation( "BoxProduct",
     [ IsBoundedChainComplex, IsBoundedChainComplex, IsCapCategory ] );

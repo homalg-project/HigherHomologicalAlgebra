@@ -487,7 +487,7 @@ KeyDependentOperation( "BrutalTruncationBelowFunctor", IsChainOrCochainComplexCa
 DeclareOperation( "ChainCategoryToCochainCategoryOfOppositeCategory", [ IsCapCategory ] );
 
 #! @Section Examples
-#! @InsertChunk vec_3
+#? @InsertChunk vec_3
 
 
 DeclareOperation( "CochainCategoryToChainCategoryOfOppositeCategory", [ IsCapCategory ] );

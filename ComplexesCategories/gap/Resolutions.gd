@@ -263,7 +263,7 @@ DeclareOperation( "QuasiIsomorphismIntoInjectiveResolution", [ IsBoundedChainOrC
 
 
 #! @Section Examples
-#! @InsertChunk Z_0
+#? @InsertChunk Z_0
 
 #! @Description
 #! The input is a short exact sequence defined as a chain complex and the 

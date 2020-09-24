@@ -138,7 +138,7 @@ DeclareOperation( "\/", [ IsCapCategoryMorphism, IsChainOrCochainComplexCategory
 # DeclareProperty( "IsNullHomotopic", IsChainOrCochainMorphism );
 
 #! @Section Examples
-#! @InsertChunk vec_0
+#? @InsertChunk vec_0
 
 DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_CHAIN_COMPLEXES" );
 

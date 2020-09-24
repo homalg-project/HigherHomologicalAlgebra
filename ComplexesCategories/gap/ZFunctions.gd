@@ -32,7 +32,7 @@ DeclareGlobalFunction( "VoidZFunction" );
 #! @Arguments func
 #! @Returns a $\mathbb{Z}$-function
 DeclareAttribute( "AsZFunction", IsFunction );
-#! @InsertChunk AsZFunction
+#? @InsertChunk AsZFunction
 
 #! @Description
 #! The argument is a <A>z_func</A>. The output is its <C>UnderlyingFunction</C> function. I.e., the function that will be applied on index <C>i</C>
@@ -69,7 +69,7 @@ DeclareOperation( "\[\]", [ IsZFunction, IsInt ] );
 #! @Returns a $\mathbb{Z}$-function with inductive sides
 DeclareOperation( "ZFunctionWithInductiveSides",
       [ IsInt, IsObject, IsFunction, IsFunction, IsFunction ] );
-#! @InsertChunk AsZFunctionWithInductiveSides
+#? @InsertChunk AsZFunctionWithInductiveSides
 
 #! @BeginGroup 9228
 #! @Description
@@ -149,7 +149,7 @@ DeclareOperation( "SetStableLowerValue",
 #! @Arguments z_func
 #! @Returns a $\mathbb{Z}$-function 
 DeclareAttribute( "Reflection", IsZFunction );
-#! @InsertChunk Reflection
+#? @InsertChunk Reflection
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A> and an integer <A>n</A>. The output is
@@ -179,7 +179,7 @@ DeclareOperation( "ApplyMap", [ IsZFunction, IsFunction ] );
 #! @Arguments L, F
 #! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "ApplyMap", [ IsDenseList, IsFunction ] );
-#! @InsertChunk ApplyMap
+#? @InsertChunk ApplyMap
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A> that has been defined by applying a map <C>F</C>
