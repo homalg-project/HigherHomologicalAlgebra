@@ -1,0 +1,9 @@
+package_links:
+    - name: BBGG
+    - name: Bicomplexes
+    - name: ComplexesCategories
+    - name: DerivedCategories
+    - name: HomotopyCategories
+    - name: QuotientCategories
+    - name: StableCategories
+    - name: TriangulatedCategories
