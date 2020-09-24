@@ -398,6 +398,8 @@ DeclareOperation( "MorphismsSupport", [ IsChainOrCochainMorphism, IsInt, IsInt ]
 
 DeclareOperation( "MorphismsSupport", [ IsBoundedChainOrCochainMorphism ] );
 
+DeclareOperation( "LaTeXStringOp", [ IsBoundedChainOrCochainMorphism ] );
+
 #!  @Description
 #!  The command displays the components of the morphism between $m$ and $n$. 
 #!  @Arguments phi, m, n

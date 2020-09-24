@@ -660,6 +660,12 @@ InstallMethod( LaTeXOutput,
 );
 
 ##
+InstallMethod( LaTeXStringOp,
+          [ IsBoundedChainOrCochainComplex ],
+  LaTeXOutput
+);
+
+##
 InstallMethod( Display,
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )

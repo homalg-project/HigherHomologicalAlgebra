@@ -697,6 +697,13 @@ InstallMethod( LaTeXOutput,
   phi -> LaTeXOutput( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
 );
 
+##
+InstallMethod( LaTeXStringOp,
+          [ IsBoundedChainOrCochainMorphism ],
+  LaTeXOutput
+);
+
+
 #################################
 #
 # Operations

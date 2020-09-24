@@ -538,6 +538,8 @@ DeclareOperation( "ViewComplex", [ IsChainOrCochainComplex, IsInt, IsInt ] );
 
 DeclareOperation( "ViewComplex", [ IsBoundedChainOrCochainComplex ] );
 
+DeclareOperation( "LaTeXStringOp", [ IsBoundedChainOrCochainComplex ] );
+
 #! @Section Truncations
 
 #! @Description
