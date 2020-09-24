@@ -5,8 +5,6 @@
 # metadata in PackageInfo.g.
 #
 LoadPackage( "ComplexesCategories" );
-LoadPackage( "RingsForHomalg" );
-LoadPackage( "GaussForHomalg" );
 LoadPackage( "FreydCategoriesForCAP" );
 LoadPackage( "ModulePresentations" );
 

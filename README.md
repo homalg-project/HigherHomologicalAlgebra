@@ -31,11 +31,12 @@ Required packages
 * You will also need [homalg_project](https://github.com/homalg-project/homalg_project.git)
 
 * Other needed packages
-  - https://github.com/sunnyquiver/QPA2.git
-  - https://github.com/homalg-project/Algebroids/
-  - https://github.com/homalg-project/SubcategoriesForCAP/
+  - https://github.com/homalg-project/Toposes/
   - https://github.com/homalg-project/FinSetsForCAP/
+  - https://github.com/sunnyquiver/QPA2/
+  - https://github.com/homalg-project/Algebroids/
   - https://github.com/homalg-project/CategoryConstructor/
+  - https://github.com/homalg-project/SubcategoriesForCAP/
  
 * For the installation of Gap see [gap-system-website](https://www.gap-system.org)
 

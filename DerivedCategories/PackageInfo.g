@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
-Subtitle := "Gap package to create derived categories",
+Subtitle := "Derived categories of Abelian categories",
 Version := "2020.07.20",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),

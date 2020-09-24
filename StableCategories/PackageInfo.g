@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "StableCategories",
-Subtitle := "Gap package for constructing stable category of a given Cap category",
+Subtitle := "Stable categories of additive categories",
 Version := "2020.07.16",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),

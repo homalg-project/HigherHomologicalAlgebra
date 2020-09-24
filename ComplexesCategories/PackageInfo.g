@@ -9,7 +9,7 @@
 SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
-Subtitle := "Gap package to create (co)chain complexes category of a given Cap category",
+Subtitle := "Category of (co)chain complexes of an additive category",
 Version := "2020.09.02",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),

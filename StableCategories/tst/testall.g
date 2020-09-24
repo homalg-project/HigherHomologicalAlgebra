@@ -6,7 +6,6 @@
 #
 LoadPackage( "StableCategories" );
 LoadPackage( "ModulePresentations" );
-LoadPackage( "RingsForHomalg" );
 
 TestDirectory( DirectoriesPackageLibrary( "StableCategories", "tst" ),
   rec(exitGAP := true, testOptions := rec(compareFunction := "uptowhitespace") )
