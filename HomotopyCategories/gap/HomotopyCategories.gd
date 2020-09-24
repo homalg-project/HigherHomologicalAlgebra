@@ -1,8 +1,8 @@
-############################################################################
-#                                     GAP package
 #
-#  Copyright 2020,                    Kamal Saleh
-#                                     Siegen University
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Declarations
+#
 #
 #! @Chapter HomotopyCategories
 #

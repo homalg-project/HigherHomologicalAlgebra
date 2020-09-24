@@ -1,5 +1,5 @@
 #
-# DerivedCategories: Gap package to create derived categories
+# DerivedCategories: Derived categories of Abelian categories
 #
 # Reading the implementation part of the package.
 #

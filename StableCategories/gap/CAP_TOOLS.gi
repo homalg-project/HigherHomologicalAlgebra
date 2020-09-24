@@ -1,6 +1,9 @@
-
+#
+# StableCategories: Stable categories of additive categories
+#
+# Implementations
+#
 # The following two functions tells whether the lift or colift is unique
-
 
 ## PreCompose( alpha , Colift( alpha, beta ) ) = beta
 

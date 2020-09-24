@@ -1,32 +1,36 @@
 #
+# TriangulatedCategories: Framework for triangulated categories
+#
 # This file is a script which compiles the package manual.
 #
-
-if fail = LoadPackage("AutoDoc", ">= 2019.09.04") then
-    Error("AutoDoc version 2016.02.16 or newer is required.");
+if fail = LoadPackage( "AutoDoc", "2019.05.20" ) then
+    
+    Error( "AutoDoc version 2019.05.20 or newer is required." );
+    
 fi;
 
-AutoDoc( 
-      rec(
-            
-        gapdoc := rec(
-          LaTeXOptions := rec( EarlyExtraPreamble :="""
-                  \usepackage{amsmath}
-                  \usepackage[T1]{fontenc}
-                  \usepackage{tikz}
-                  \usetikzlibrary{shapes,arrows,matrix}
-              """ ) ),
-        
-        extract_examples := rec(
-          units := "Single",
+AutoDoc( rec(
+    autodoc := rec(
+        files := [ "doc/Doc.autodoc" ],
+        scan_dirs := [ "doc", "gap", "examples", "examples/doc" ],
+    ),
+    extract_examples := rec(
+        units := "Single",
+    ),
+    gapdoc := rec(
+        LaTeXOptions := rec(
+            LateExtraPreamble := """
+                \usepackage{amsmath}
+                \usepackage[T1]{fontenc}
+                \usepackage{tikz}
+                \usetikzlibrary{shapes,arrows,matrix}
+                \usepackage{tikz-cd}
+            """,
         ),
-        
-        scaffold := rec( 
-          entities := [ "GAP4", "homalg" ],       
-        ),
-            
-        autodoc := rec( files := [ "doc/Intro.autodoc" ] ),
-        )
-      );
+    ),
+    scaffold := rec(
+        entities := [ "homalg", "CAP" ],
+    ),
+) );
 
 QUIT;

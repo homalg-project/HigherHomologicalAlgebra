@@ -1,8 +1,8 @@
-#############################################################################
-##
-##  DerivedCategories: Derived categories for additive categories
-##
-##  Copyright 2020, Kamal Saleh, University of Siegen
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Declarations
+#
 ##
 #! @Chapter Functors and natural transformations
 #! @Section Functors

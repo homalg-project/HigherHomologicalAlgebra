@@ -1,4 +1,8 @@
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Implementations
+#
 if not IsBound( WithComments ) then    
   DeclareGlobalVariable( "WithComments" );    
   MakeReadWriteGlobal("WithComments");

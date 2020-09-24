@@ -1,8 +1,8 @@
-
-#############################
-##
-## Representations
-##
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 #############################
 
 DeclareRepresentation( "IsCapCategoryExtensionRep",

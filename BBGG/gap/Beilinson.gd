@@ -1,4 +1,8 @@
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Declarations
+#
 #! @Chapter Beilinson Monads and $\mathrm{Coh}(\mathbb{P}^m)$
 
 #! @Section Operations

@@ -1,13 +1,16 @@
 #
-# TriangulatedCategoriesForCAP: frame work for triangulated categories
+# TriangulatedCategories: Framework for triangulated categories
 #
 # This file runs package tests. It is also referenced in the package
 # metadata in PackageInfo.g.
 #
-LoadPackage( "DerivedCategories" );
-
-TestDirectory(DirectoriesPackageLibrary( "TriangulatedCategories", "tst" ),
-  rec(exitGAP := true, testOptions := rec(compareFunction := "uptowhitespace") )
+options := rec(
+    exitGAP := true,
+    testOptions := rec(
+        compareFunction := "uptowhitespace",
+    ),
 );
 
-FORCE_QUIT_GAP(1); # if we ever get here, there was an error
+TestDirectory( DirectoriesPackageLibrary( "TriangulatedCategories", "tst" ), options );
+
+FORCE_QUIT_GAP( 1 ); # if we ever get here, there was an error

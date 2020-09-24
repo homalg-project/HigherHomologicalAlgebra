@@ -1,3 +1,8 @@
+#
+# Bicomplexes: Bicomplexes for Abelian categories
+#
+# Declarations
+#
 
 # These are only for internal use
 DeclareGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX" );

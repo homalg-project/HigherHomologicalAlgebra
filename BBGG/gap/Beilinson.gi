@@ -1,5 +1,8 @@
-
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Implementations
+#
 BindGlobal( "BBGG", rec( ) );
 BBGG!.QQ := HomalgFieldOfRationals( );
 

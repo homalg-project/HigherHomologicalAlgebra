@@ -1,11 +1,10 @@
-############################################################################
-#                                     GAP package
 #
-#  Copyright 2015,       Kamal Saleh  RWTH Aachen University
+# StableCategories: Stable categories of additive categories
 #
+# Declarations
+#
+
 #! @Chapter StableCategoriesForCap
-##
-#############################################################################
 
 #! @InsertChunk stable_cat_by_projectives
 

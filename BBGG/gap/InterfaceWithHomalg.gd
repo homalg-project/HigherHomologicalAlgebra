@@ -1,4 +1,8 @@
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Declarations
+#
 #! @Chapter Interface with homalg
 #! @Section Operations
 

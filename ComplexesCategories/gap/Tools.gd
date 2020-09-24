@@ -1,4 +1,8 @@
-
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Declarations
+#
 DeclareOperation( "LiftInfos", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 DeclareOperation( "ColiftInfos", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 

@@ -1,5 +1,8 @@
-
-
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Declarations
+#
 #! @Chapter Functors
 
 #! @Section Natural transformations

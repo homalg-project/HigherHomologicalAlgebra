@@ -1,20 +1,10 @@
-#############################################################################
-##
-##  TriangulatedCategories.gi             TriangulatedCategories package
-##
-##  Copyright 2020,                       Kamal Saleh, Siegen University, Germany
-##
-#############################################################################
-
-
-#################################
-##
-##  Declarations
-##
-#################################
+#
+# TriangulatedCategories: Framework for triangulated categories
+#
+# Declarations
+#
 
 DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
-
 
 ####################################
 #

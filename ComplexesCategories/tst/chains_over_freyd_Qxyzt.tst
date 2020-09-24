@@ -1,3 +1,5 @@
+gap> field := HomalgFieldOfRationalsInSingular( );;
+gap> S := field * "x,y,z,t";;
 gap> rows := CategoryOfRows( S );;
 gap> freyd := FreydCategory( rows );;
 gap> chains := ChainComplexCategory( freyd );;

@@ -1,7 +1,8 @@
-
-
-
-
+#
+# StableCategories: Stable categories of additive categories
+#
+# Implementations
+#
 
 InstallMethod( AsTriangulatedCategory,
                 [ IsCapCategory ],

@@ -1,5 +1,8 @@
-
-
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 ##
 BindGlobal( "EXTEND_NAT_TRANS_TO_COMPLEX_CAT",
   function( eta, chain_or_cochain )
