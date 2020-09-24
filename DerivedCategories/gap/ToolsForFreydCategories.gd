@@ -1,6 +1,8 @@
-
-
-
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Declarations
+#
 DeclareGlobalFunction( "BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_ROWS" );
 DeclareAttribute( "BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW", IsGradedRow );
 DeclareGlobalFunction( "COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM" );

@@ -1,8 +1,8 @@
-#############################################################################
-##
-##  ComplexesCategories.gi             ComplexesCategories package
-##
-##  Copyright 2018,                Kamal Saleh, Siegen University, Germany
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 ##
 #############################################################################
 

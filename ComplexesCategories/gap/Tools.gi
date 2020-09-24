@@ -1,3 +1,8 @@
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 DeclareGlobalVariable( "DISABLE_ALL_SANITY_CHECKS" );
 DeclareGlobalVariable( "SWITCH_LOGIC_OFF" );
 DeclareGlobalVariable( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );

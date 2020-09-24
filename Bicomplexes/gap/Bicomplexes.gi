@@ -617,12 +617,12 @@ InstallGlobalFunction( TODOLIST_TO_PUSH_BOUNDS_TO_BICOMPLEXES,
             
         l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
         
-			  if l = [ ] then
+        if l = [ ] then
           
           l := [ ActiveLowerBound( C ) - 1.. ActiveUpperBound( C ) ];
           
         fi;
-            
+        
         lu := List( l, u -> [ C[ u ], "FAU_BOUND" ] );
           
         ll := List( l, u -> [ C[ u ], "FAL_BOUND" ] );
@@ -1260,9 +1260,9 @@ InstallMethod( SupportInWindow,
     for j in Reversed( [ below .. above ] ) do
     for i in [ left .. right ] do
     if IsZeroForObjects( ObjectAt( B, i, j ) ) then
-	Print( ". ");
+        Print( ". ");
     else
-	Print( TextAttr.1, TextAttr.bold, ". ", TextAttr.reset );
+        Print( TextAttr.1, TextAttr.bold, ". ", TextAttr.reset );
     fi;
     od;
     Print( "  |", j, "\n" );

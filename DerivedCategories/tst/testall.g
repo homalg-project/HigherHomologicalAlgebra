@@ -1,15 +1,18 @@
 #
-# DerivedCategories: Gap package to create derived categories
+# DerivedCategories: Derived categories of Abelian categories
 #
 # This file runs package tests. It is also referenced in the package
 # metadata in PackageInfo.g.
 #
+options := rec(
+    exitGAP := true,
+    testOptions := rec(
+        compareFunction := "uptowhitespace",
+    ),
+);
 
-ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
+LoadPackage( "FreydCategoriesForCAP" );
 
-S := HomalgFieldOfRationalsInSingular( ) * "x,y,z,t";
+TestDirectory( DirectoriesPackageLibrary( "DerivedCategories", "tst" ), options );
 
-TestDirectory(DirectoriesPackageLibrary( "DerivedCategories", "tst" ),
-  rec(exitGAP := true));
-
-FORCE_QUIT_GAP(1); # if we ever get here, there was an error
+FORCE_QUIT_GAP( 1 ); # if we ever get here, there was an error

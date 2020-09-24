@@ -1,8 +1,8 @@
-######################################################################
 #
-#   HomotopyCategories.gi                   Homotopy Categories
-#                                           Siegen University
-#   2020                                    Kamal Saleh
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Declarations
+#
 #
 #####################################################################
 

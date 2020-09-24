@@ -1,10 +1,8 @@
-#############################################################################
-##
-##  TriangulatedCategories.gi             TriangulatedCategories package
-##
-##  Copyright 2020,                       Kamal Saleh, Siegen University, Germany
-##
-#############################################################################
+#
+# TriangulatedCategories: Framework for triangulated categories
+#
+# Implementations
+#
 
 ################################################
 ##

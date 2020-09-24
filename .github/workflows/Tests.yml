@@ -1,0 +1,93 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - "master"
+      - "*-ci"
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        image: [gapsystem/gap-docker, gapsystem/gap-docker-master]
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: mkdir -p /home/gap/.gap/pkg/
+      - run: sudo cp -a $GITHUB_WORKSPACE /home/gap/.gap/pkg/
+      - run: sudo chown -R gap:gap /home/gap/.gap/pkg/
+      - run: |
+          export HOME="/home/gap"
+          cd /home/gap/.gap/pkg/
+          sudo apt update
+          sudo apt dist-upgrade -y
+          sudo apt install -y texlive-latex-extra texlive-science
+          git clone --depth 1 https://github.com/gap-packages/AutoDoc.git
+          git clone --depth 1 https://github.com/homalg-project/homalg_project.git
+          git clone --depth 1 https://github.com/homalg-project/CAP_project.git
+          git clone --depth 1 https://github.com/homalg-project/Toposes.git
+          git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
+          git clone --depth 1 https://github.com/homalg-project/QPA2.git
+          git clone --depth 1 https://github.com/homalg-project/Algebroids.git
+          git clone --depth 1 https://github.com/homalg-project/SubcategoriesForCAP.git
+          git clone --depth 1 https://github.com/homalg-project/CategoryConstructor.git
+          # set SOURCE_DATE_EPOCH for reproducible PDFs
+          export SOURCE_DATE_EPOCH=0
+          TERM=dumb make -C HigherHomologicalAlgebra -j $(nproc) --output-sync ci-test
+          cp ./HigherHomologicalAlgebra/.codecov.yml ./
+          curl -s https://codecov.io/bash | bash
+          cd HigherHomologicalAlgebra
+          CUR_SHA=$(git rev-parse --verify HEAD)
+          git worktree add branch_doc/ doc || (echo "There was an error. Make sure there is a branch named 'doc'. See https://github.com/homalg-project/PackageJanitor#error-there-was-an-error-make-sure-there-is-a-branch-named-doc"; exit 1)
+          cp BBGG/doc/manual.pdf branch_doc/BBGG.pdf
+          cd branch_doc
+          git add BBGG.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add BBGG.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp Bicomplexes/doc/manual.pdf branch_doc/Bicomplexes.pdf
+          cd branch_doc
+          git add Bicomplexes.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add Bicomplexes.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp ComplexesCategories/doc/manual.pdf branch_doc/ComplexesCategories.pdf
+          cd branch_doc
+          git add ComplexesCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add ComplexesCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp DerivedCategories/doc/manual.pdf branch_doc/DerivedCategories.pdf
+          cd branch_doc
+          git add DerivedCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add DerivedCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp HomotopyCategories/doc/manual.pdf branch_doc/HomotopyCategories.pdf
+          cd branch_doc
+          git add HomotopyCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add HomotopyCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp QuotientCategories/doc/manual.pdf branch_doc/QuotientCategories.pdf
+          cd branch_doc
+          git add QuotientCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add QuotientCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp StableCategories/doc/manual.pdf branch_doc/StableCategories.pdf
+          cd branch_doc
+          git add StableCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add StableCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          cp TriangulatedCategories/doc/manual.pdf branch_doc/TriangulatedCategories.pdf
+          cd branch_doc
+          git add TriangulatedCategories.pdf
+          git -c user.name='Doc Bot' -c user.email='empty' commit -m "Add TriangulatedCategories.pdf for $CUR_SHA" --allow-empty
+          cd ..
+          # push iff using gap-stable and if on master branch
+          if [ "${{ matrix.image }}" = "gapsystem/gap-docker" ] && [ "$CUR_SHA" = "$(git rev-parse origin/master)" ]; then \
+            git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git doc:doc; \
+          else \
+            echo "Not pushing result."; \
+          fi; \

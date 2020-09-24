@@ -1,5 +1,5 @@
 #
-# DerivedCategories: Gap package to create derived categories
+# DerivedCategories: Derived categories of Abelian categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -10,9 +10,9 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2020.07.20",
+Version := "2020.09.05",
 Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -34,13 +34,17 @@ Persons := [
   ),
 ],
 
-SourceRepository := rec( Type := "git", URL := "https://github.com/kamalsaleh/DerivedCategories" ),
-IssueTrackerURL := "https://github.com/kamalsaleh/DerivedCategories/issues",
-PackageWWWHome := "https://github.com/kamalsaleh/DerivedCategories",
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.PackageWWWHome,
-                                 "/", ~.PackageName, "-", ~.Version ),
+# BEGIN URLS
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/DerivedCategories",
+PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/DerivedCategories/PackageInfo.g",
+README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/DerivedCategories/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-", ~.Version, "/DerivedCategories-", ~.Version ),
+# END URLS
 
 ArchiveFormats := ".tar.gz",
 
@@ -62,7 +66,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Gap package to create derived categories",
+  LongTitle := "Derived categories of Abelian categories",
 ),
 
 Dependencies := rec(
@@ -89,5 +93,3 @@ TestFile := "tst/testall.g",
 #Keywords := [ "TODO" ],
 
 ));
-
-

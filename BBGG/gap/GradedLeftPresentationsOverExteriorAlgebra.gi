@@ -1,4 +1,8 @@
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Implementations
+#
 BindGlobal( "ADD_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA", 
 
 function( cat )

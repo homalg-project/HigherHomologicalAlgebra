@@ -1,3 +1,8 @@
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Implementations
+#
 
 BindGlobal( "ANNIHILATOR_OF_GRADED_MODULE_OVER_COX_RING_OF_PPS",
             

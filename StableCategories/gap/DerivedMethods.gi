@@ -1,3 +1,8 @@
+#
+# StableCategories: Stable categories of additive categories
+#
+# Implementations
+#
 
 ##
 AddDerivationToCAP( IsLiftableThroughLiftingObject,

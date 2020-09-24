@@ -1,5 +1,8 @@
-
-
+#
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Declarations
+#
 
 if false then
   

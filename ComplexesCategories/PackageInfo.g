@@ -1,5 +1,5 @@
 #
-# ComplexesCategories: Gap package to create (co)chain complexes category of a given Cap category
+# ComplexesCategories: Category of (co)chain complexes of an additive category
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -10,9 +10,9 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2020.09.02",
+Version := "2020.09.05",
 Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -37,13 +37,18 @@ SourceRepository := rec(
     URL := Concatenation( "https://github.com/homalg-project/", ~.PackageName )
 ),
 
-PackageWWWHome := Concatenation( "https://homalg-project.github.io/", ~.PackageName ),
-README_URL     := Concatenation( ~.PackageWWWHome, "/README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
+# BEGIN URLS
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
+),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
+PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/ComplexesCategories",
+PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/ComplexesCategories/PackageInfo.g",
+README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/ComplexesCategories/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-", ~.Version, "/ComplexesCategories-", ~.Version ),
+# END URLS
+
 ArchiveFormats  := ".tar.gz",
 
 ##  Status information. Currently the following cases are recognized:
@@ -64,7 +69,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Gap package to create (co)chain complexes category of a given Cap category",
+  LongTitle := "Category of (co)chain complexes of an additive category",
 ),
 
 Dependencies := rec(
@@ -76,7 +81,6 @@ Dependencies := rec(
                          ],
   SuggestedOtherPackages := [
         [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ],
-        [ "InfiniteLists", ">= 2017.08.01" ]
       ],
    
   ExternalConditions := [ ],
@@ -91,5 +95,3 @@ TestFile := "tst/testall.g",
 Keywords := [ "Chains", "Cochains", "MappingCone", "MappingCylinder", "Homotopy" ],
 
 ));
-
-

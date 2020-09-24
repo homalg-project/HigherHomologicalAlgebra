@@ -1,5 +1,5 @@
 #
-# ComplexesCategories: Gap package to create (co)chain complexes category of a given Cap category
+# ComplexesCategories: Category of (co)chain complexes of an additive category
 #
 # Reading the declaration part of the package.
 #

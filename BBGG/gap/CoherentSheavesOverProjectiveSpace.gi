@@ -1,5 +1,8 @@
-
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Implementations
+#
 ##
 BindGlobal( "IS_ZERO_SHEAF_OVER_PROJECTIVE_SPACE",
     function( N )

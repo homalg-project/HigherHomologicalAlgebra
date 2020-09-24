@@ -1,3 +1,8 @@
+#
+# Bicomplexes: Bicomplexes for Abelian categories
+#
+# Implementations
+#
 
 # concentrated in
 # x0 =< x =< x1

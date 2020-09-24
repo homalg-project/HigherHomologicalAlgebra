@@ -1,8 +1,8 @@
-#############################################################################
-##
-## DerivedCategories: Derived categories for abelian categories
-##
-## Copyright 2020, Kamal Saleh, University of Siegen
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Declarations
+#
 ##
 ## Some qpa tweaks to improve performance and functionality
 ##

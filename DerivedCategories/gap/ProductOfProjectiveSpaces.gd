@@ -1,5 +1,8 @@
-
-
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Declarations
+#
 DeclareOperation( "CoxRingForProductOfProjectiveSpaces", [ IsRationalsForHomalg, IsList ] );
 DeclareAttribute( "CoherentSheavesOverProductOfProjectiveSpaces", IsHomalgGradedRing );
 DeclareAttribute( "BoxProductOnProductOfProjectiveSpaces", IsHomalgGradedRing );

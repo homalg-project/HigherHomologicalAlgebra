@@ -1,5 +1,8 @@
-
-
+#
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Declarations
+#
 # field := HomalgFieldOfRationals( );
 # objects := [ "A", "B", "C" ];
 # morphisms := [ [ "alpha", 1, 2 ], [ "beta", 2, 3 ], [ "gamma", 1, 3 ] ];
