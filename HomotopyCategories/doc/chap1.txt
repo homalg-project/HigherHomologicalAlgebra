@@ -1,0 +1,16 @@
+  
+  [1X1 [33X[0;0YFunctors[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YBasic functors for homotopy categories.[133X[101X
+  
+  [1X1.1-1 HomologyFunctor[101X
+  
+  [33X[1;0Y[29X[2XHomologyFunctor[102X( [3XH(A)[103X, [3XA[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YThe  first  argument in the input must be the chain (resp. cochain) homotopy
+  category  of  an additive category [23XA[123X, the second argument is [3XA[103X and the third
+  argument is an integer [3Xn[103X. The output is the [23Xn[123X'th homology (resp. cohomology)
+  functor [23X:\mathrm{H}(A) \rightarrow A[123X.[133X
+  
