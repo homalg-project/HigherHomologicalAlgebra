@@ -666,6 +666,9 @@ InstallMethod( LaTeXStringOp,
 );
 
 ##
+MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainComplex );
+
+##
 InstallMethod( Display,
                [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )

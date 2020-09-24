@@ -703,6 +703,8 @@ InstallMethod( LaTeXStringOp,
   LaTeXOutput
 );
 
+##
+MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainMorphism );
 
 #################################
 #
