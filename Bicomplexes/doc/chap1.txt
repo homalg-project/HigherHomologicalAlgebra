@@ -1,0 +1,140 @@
+  
+  [1X1 [33X[0;0YBicomplexes[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YCategories[133X[101X
+  
+  [1X1.1-1 IsCapCategoryBicomplexCell[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryBicomplexCell[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of cells in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-2 IsCapCategoryBicomplexObject[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of bicomplex objects in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-3 IsCapCategoryHomologicalBicomplexObject[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryHomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  homological  bicomplex  objects in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-4 IsCapCategoryCohomologicalBicomplexObject[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryCohomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  cohomological bicomplex objects in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-5 IsCapCategoryBicomplexMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of bicomplex morphisms in a [5XCAP[105X category of bicomplexes.[133X
+  
+  [1X1.1-6 IsCapCategoryHomologicalBicomplexMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryHomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of  homological bicomplex morphisms in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  [1X1.1-7 IsCapCategoryCohomologicalBicomplexMorphism[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryCohomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category of cohomological bicomplex morphisms in a [5XCAP[105X category of
+  bicomplexes.[133X
+  
+  
+  [1X1.2 [33X[0;0YConstructors[133X[101X
+  
+  [1X1.2-1 AssociatedBicomplexObject[101X
+  
+  [33X[1;0Y[29X[2XAssociatedBicomplexObject[102X( [3Xcx[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X object[133X
+  
+  [33X[0;0YReturn the bicomplex associated to the complex of complexes [3Xcx[103X.[133X
+  
+  [1X1.2-2 AssociatedBicomplexMorphism[101X
+  
+  [33X[1;0Y[29X[2XAssociatedBicomplexMorphism[102X( [3Xmu[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X morphism[133X
+  
+  [33X[0;0YReturn  the morphism of bicomplexes associated to the chain morphism between
+  two complexes of complexes [3Xmu[103X.[133X
+  
+  [1X1.2-3 AssociatedBicomplexFunctor[101X
+  
+  [33X[1;0Y[29X[2XAssociatedBicomplexFunctor[102X( [3XF[103X, [3Xname[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAssociatedBicomplexFunctor[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X functor[133X
+  
+  [1X1.2-4 AssociatedBicomplex[101X
+  
+  [33X[1;0Y[29X[2XAssociatedBicomplex[102X( [3Xeta[103X, [3Xname[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAssociatedBicomplex[102X( [3Xeta[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X natural transformation[133X
+  
+  [1X1.2-5 AsCategoryOfBicomplexes[101X
+  
+  [33X[1;0Y[29X[2XAsCategoryOfBicomplexes[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya [5XCAP[105X category[133X
+  
+  [33X[0;0YReturn the category of bicomplexes of the Abelian category [3XA[103X of complexes of
+  complexes.[133X
+  
+  
+  [1X1.3 [33X[0;0YAttributes[133X[101X
+  
+  [1X1.3-1 UnderlyingCategoryOfComplexesOfComplexes[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingCategoryOfComplexesOfComplexes[102X( [3XBicx[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  category  of  double  complexes  underlying the category of bicomplexes
+  [3XBicx[103X.[133X
+  
+  [1X1.3-2 UnderlyingCapCategoryCell[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingCapCategoryCell[102X( [3XB[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe complex of complexes underlying the bicomplex [3XB[103X.[133X
+  
+  
+  [1X1.4 [33X[0;0YOperations[133X[101X
+  
+  [1X1.4-1 HomologicalBicomplex[101X
+  
+  [33X[1;0Y[29X[2XHomologicalBicomplex[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YB[133X
+  
+  [33X[0;0YThe   input   is  a  chain  of  chains.  The  output  is  the  corresponding
+  anti-commutative homological bicomplex.[133X
+  
+  [1X1.4-2 HomologicalBicomplex[101X
+  
+  [33X[1;0Y[29X[2XHomologicalBicomplex[102X( [3XC[103X, [3Xh[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YB[133X
+  
+  [33X[0;0YThe  input is Cap category and two infinite lists(??????). The output is the
+  corresponding anti-commutative homological bicomplex.[133X
+  
+  [1X1.4-3 HomologicalBicomplex[101X
+  
+  [33X[1;0Y[29X[2XHomologicalBicomplex[102X( [3XC[103X, [3Xh[103X, [3Xv[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YB[133X
+  
+  [33X[0;0YThe input is Cap category and two functions. The output is the corresponding
+  anti-commutative homological bicomplex.[133X
+  
