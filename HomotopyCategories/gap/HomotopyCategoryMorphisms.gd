@@ -59,3 +59,5 @@ DeclareOperation( "BoxProduct",
 
 DeclareOperation( "ViewHomotopyCategoryMorphism",
             [ IsHomotopyCategoryMorphism ] );
+
+DeclareOperation( "LaTeXStringOp", [ IsHomotopyCategoryCell ] );
