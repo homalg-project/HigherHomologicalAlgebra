@@ -1,0 +1,42 @@
+  
+  
+  [1XIndex[101X
+  
+  [2XAsPresentationInCAP[102X, for IsHomalgGradedModule 4.1-2 
+  [2XAsPresentationInHomalg[102X, for IsGradedLeftOrRightPresentation 4.1-1 
+  [2XAsPresentationMorphismInCAP[102X, for IsHomalgGradedMap 4.1-4 
+  [2XAsPresentationMorphismInHomalg[102X, for IsGradedLeftOrRightPresentationMorphism 4.1-3 
+  [2XBasisBetweenTwistedCotangentModulesAsGLP[102X, for IsHomalgGradedRing, IsInt, IsInt 2.1-8 
+  [2XBasisBetweenTwistedGradedFreeModules[102X, for IsHomalgGradedRing, IsInt, IsInt 2.1-7 
+  [2XBasisBetweenTwistedOmegaModules[102X, for IsExteriorRing, IsInt, IsInt 2.1-6 
+  [2XBeilinsonReplacement[102X, for IsCapCategoryMorphism 2.1-10 
+      for IsCapCategoryObject 2.1-9 
+  [2XCastelnuovoMumfordRegularity[102X, for IsCapCategoryObject 1.1-1 
+  [2XCoherentSheavesOverProjectiveSpace[102X, for IsHomalgGradedRing 3.1-1 
+  [2XGLPGeneratedByHomogeneousPartFunctor[102X, for IsHomalgGradedRing, IsInt 1.1-13 
+  [2XHomogeneousPartOverCoefficientsRingFunctor[102X, for IsHomalgGradedRing, IsInt 1.1-15 
+  [2XLChainFunctor[102X, for IsHomalgGradedRing 1.1-7 
+  [2XLCochainFunctor[102X, for IsHomalgGradedRing 1.1-6 
+  [2XMorphismFromGLPToZerothHomologyOfBeilinsonReplacement[102X, for IsGradedLeftPresentation 2.1-12 
+  [2XMorphismFromGLPToZerothObjectOfBeilinsonReplacement[102X, for IsGradedLeftPresentation 2.1-11 
+  [2XMorphismFromZerothHomologyOfBeilinsonReplacementToGLP[102X, for IsGradedLeftPresentation 2.1-14 
+  [2XMorphismFromZerothObjectOfBeilinsonReplacementToGLP[102X, for IsGradedLeftPresentation 2.1-13 
+  [2XNatTransFromGLPGeneratedByHomogeneousPartToIdentityFunctor[102X, for IsHomalgGradedRing, IsInt 1.1-14 
+  [2XNatTransFromTruncationUsingHomalgToIdentityFunctor[102X, for IsHomalgGradedRing, IsInt 1.1-11 
+  [2XNatTransFromTruncationUsingTateResolutionToIdentityFunctor[102X, for IsHomalgGradedRing, IsInt 1.1-9 
+  [2XNatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg[102X, for IsHomalgGradedRing, IsInt 1.1-12 
+  [2XRChainFunctor[102X, for IsHomalgGradedRing 1.1-5 
+  [2XRCochainFunctor[102X, for IsHomalgGradedRing 1.1-4 
+  [2XShowMatrix[102X 2.1-15 
+  [2XTateResolution[102X, for IsCapCategoryMorphism 1.1-3 
+      for IsCapCategoryObject 1.1-2 
+  [2XTruncationFunctorUsingHomalg[102X, for IsHomalgGradedRing, IsInt 1.1-10 
+  [2XTruncationFunctorUsingTateResolution[102X, for IsHomalgGradedRing, IsInt 1.1-8 
+  [2XTwistedCotangentModule[102X, for IsHomalgGradedRing, IsInt 2.1-3 
+  [2XTwistedCotangentModuleAsChain[102X, for IsHomalgGradedRing, IsInt 2.1-4 
+  [2XTwistedCotangentModuleAsCochain[102X, for IsHomalgGradedRing, IsInt 2.1-5 
+  [2XTwistedGradedFreeModule[102X, for IsHomalgGradedRing, IsInt 2.1-2 
+  [2XTwistedOmegaModule[102X, for IsExteriorRing, IsInt 2.1-1 
+  
+  
+  -------------------------------------------------------

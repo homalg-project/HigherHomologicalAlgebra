@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (BBGG) - Chapter 2: Beilinson Monads and $\mathrm{Coh}(\mathbb{P}^m)$</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X7AAAE22D78DD9774" name="X7AAAE22D78DD9774"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7AAAE22D78DD9774">2 <span class="Heading">Beilinson Monads and $\mathrm{Coh}(\mathbb{P}^m)$</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7DE8E16C7C2D387B">2.1 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D866831879B550A">2.1-1 TwistedOmegaModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CFDEA747F7B39A1">2.1-2 TwistedGradedFreeModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7AF625857FA16F06">2.1-3 TwistedCotangentModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X877DFD1584E70784">2.1-4 TwistedCotangentModuleAsChain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8267229A8147A592">2.1-5 TwistedCotangentModuleAsCochain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F8B4ABD8502421D">2.1-6 BasisBetweenTwistedOmegaModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87D5C363835FED3C">2.1-7 BasisBetweenTwistedGradedFreeModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E57596C875737CF">2.1-8 BasisBetweenTwistedCotangentModulesAsGLP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FD152E87EFD99BC">2.1-9 BeilinsonReplacement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85CE14517DE61B56">2.1-10 BeilinsonReplacement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X835FADCE7BDA7A9A">2.1-11 MorphismFromGLPToZerothObjectOfBeilinsonReplacement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8027CCF4804BE24F">2.1-12 MorphismFromGLPToZerothHomologyOfBeilinsonReplacement</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801C3AAC7A1FFEE0">2.1-13 MorphismFromZerothObjectOfBeilinsonReplacementToGLP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C38F9F1799392BD">2.1-14 MorphismFromZerothHomologyOfBeilinsonReplacementToGLP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X786208C07855D07A">2.1-15 ShowMatrix</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Beilinson Monads and $\mathrm{Coh}(\mathbb{P}^m)$</span></h3>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>2.1 <span class="Heading">Operations</span></h4>
+
+<p><a id="X7D866831879B550A" name="X7D866831879B550A"></a></p>
+
+<h5>2.1-1 TwistedOmegaModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedOmegaModule</code>( <var class="Arg">A</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: graded lp</p>
+
+<p>The input is a graded exterior algebra <span class="Math">A</span> and an integer <span class="Math">i</span>. The output is the graded <span class="Math">A</span>-lp <span class="Math">\omega_A(i)</span>.</p>
+
+<p><a id="X7CFDEA747F7B39A1" name="X7CFDEA747F7B39A1"></a></p>
+
+<h5>2.1-2 TwistedGradedFreeModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedGradedFreeModule</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: graded lp</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S</span> and an integer <span class="Math">i</span>. The output is the graded <span class="Math">S</span>-lp <span class="Math">S(i)</span>. The sheafification of <span class="Math">S(i)</span> is the structure sheaf <span class="Math">\mathcal{O}_{\mathbb{P}^m}(i)</span>.</p>
+
+<p><a id="X7AF625857FA16F06" name="X7AF625857FA16F06"></a></p>
+
+<h5>2.1-3 TwistedCotangentModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedCotangentModule</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: graded lp</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S</span> and an integer <span class="Math">i</span>. The output is the graded <span class="Math">S</span>-lp <span class="Math">\Omega^i(i)</span>. The sheafification of <span class="Math">\Omega^i(i)</span> is the twisted cotangent sheaf <span class="Math">\Omega^i_{\mathbb{P}^m}(i)</span>.</p>
+
+<p><a id="X877DFD1584E70784" name="X877DFD1584E70784"></a></p>
+
+<h5>2.1-4 TwistedCotangentModuleAsChain</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedCotangentModuleAsChain</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: chain complex</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S</span> and an integer <span class="Math">i</span>. The output is the chain complex of <span class="Math">S</span>-lp's whose objects are direct sums of twists of <span class="Math">S</span> and its homology at <span class="Math">0</span> is <span class="Math">\Omega^i(i)</span>. I.e., a chain complex that is quasi-isomorphic to <span class="Math">\Omega^i(i)</span>.</p>
+
+<p><a id="X8267229A8147A592" name="X8267229A8147A592"></a></p>
+
+<h5>2.1-5 TwistedCotangentModuleAsCochain</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwistedCotangentModuleAsCochain</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: cochain complex</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S</span> and an integer <span class="Math">i</span>. The output is the chain complex of <span class="Math">S</span>-lp's whose objects are direct sums of twists of <span class="Math">S</span> and its homology at <span class="Math">0</span> is <span class="Math">\Omega^i(i)</span>. I.e., a chain complex that is quasi-isomorphic to <span class="Math">\Omega^i(i)</span>.</p>
+
+<p><a id="X7F8B4ABD8502421D" name="X7F8B4ABD8502421D"></a></p>
+
+<h5>2.1-6 BasisBetweenTwistedOmegaModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasisBetweenTwistedOmegaModules</code>( <var class="Arg">A</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>The input is a graded exterior ring <code class="code">A := KoszulDualRing(S)</code> with <span class="Math">S:=k[x_0,\dots,x_m]</span> and two integers <span class="Math">i,j</span> with <span class="Math">i\geq j</span>. The output is a basis of the external hom: <span class="Math">\mathrm{Hom}_A(\omega_A(i), \omega_A(j))</span>. If we denote the indeterminates of <span class="Math">A</span> by <span class="Math">e_0,\dots, e_m</span> and the <span class="Math">\ell</span>'th entry of the output by <span class="Math">\sigma_{ij}^{\ell}</span> then we have <span class="Math">\sigma_{i+1,i}^{\ell}=e_{\ell-1}</span>, thus <span class="Math">\sigma_{i+1,i}^{\ell_1} \sigma_{i,i-1}^{\ell_2}= -\sigma_{i+1,i}^{\ell_2} \sigma_{i,i-1}^{\ell_1}</span>.</p>
+
+<p><a id="X87D5C363835FED3C" name="X87D5C363835FED3C"></a></p>
+
+<h5>2.1-7 BasisBetweenTwistedGradedFreeModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasisBetweenTwistedGradedFreeModules</code>( <var class="Arg">S</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S=k[x_0, \dots, x_m]</span> and two integers <span class="Math">i,j</span> with <span class="Math">i\leq j</span>. The output is a basis of the external hom: <span class="Math">\mathrm{Hom}_S(S(i), S(j))</span>. If we denote the <span class="Math">\ell</span>'th entry of the output by <span class="Math">\psi_{ij}^{\ell}</span> then we have <span class="Math">\psi_{i-1,i}^{\ell}=x_{\ell-1}</span>, thus <span class="Math">\psi_{i-1,i}^{\ell_1} \psi_{i,i+1}^{\ell_2}= \psi_{i-1,i}^{\ell_2} \psi_{i,i+1}^{\ell_1}</span>.</p>
+
+<p><a id="X7E57596C875737CF" name="X7E57596C875737CF"></a></p>
+
+<h5>2.1-8 BasisBetweenTwistedCotangentModulesAsGLP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasisBetweenTwistedCotangentModulesAsGLP</code>( <var class="Arg">S</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list</p>
+
+<p>The input is a graded polynomial ring <span class="Math">S=k[x_0, \dots, x_m]</span> and two integers <span class="Math">0\leq j \leq i \leq m</span>. The output is a basis of the external hom: <span class="Math">\mathrm{Hom}_S(\Omega^i(i), \Omega^i(j))</span>. If we denote the <span class="Math">\ell</span>'th entry of the output by <span class="Math">\varphi_{ij}^{\ell}</span> then we have <span class="Math">\varphi_{i+1,i}^{\ell} \varphi_{i,i-1}^{\ell}=0</span> and <span class="Math">\varphi_{i+1,i}^{\ell_1} \varphi_{i,i-1}^{\ell_2}= -\varphi_{i+1,i}^{\ell_2} \varphi_{i,i-1}^{\ell_1}</span>.</p>
+
+<p><a id="X7FD152E87EFD99BC" name="X7FD152E87EFD99BC"></a></p>
+
+<h5>2.1-9 BeilinsonReplacement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BeilinsonReplacement</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain or cochain complex</p>
+
+<p>The input is graded <span class="Math">S</span>-lp, graded <span class="Math">A</span>-lp, chain complex or cochain complex of <span class="Math">S</span>-lp's. The output is a Beilinson monad of <span class="Math">M</span>.</p>
+
+<p><a id="X85CE14517DE61B56" name="X85CE14517DE61B56"></a></p>
+
+<h5>2.1-10 BeilinsonReplacement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BeilinsonReplacement</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a chain or cochain complex</p>
+
+<p>The input is graded <span class="Math">S</span>-lp morphism, graded <span class="Math">A</span>-lp morphism, chain morphism or cochain morphism of <span class="Math">S</span>-lp's. The output is a Beilinson monad morphism of <span class="Math">\phi</span>.</p>
+
+<p><a id="X835FADCE7BDA7A9A" name="X835FADCE7BDA7A9A"></a></p>
+
+<h5>2.1-11 MorphismFromGLPToZerothObjectOfBeilinsonReplacement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromGLPToZerothObjectOfBeilinsonReplacement</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is graded <span class="Math">S</span>-lp <span class="Math">M</span>. The output is a morphism from the sheafification of <span class="Math">M</span> to the sheafification of the <span class="Math">0</span>'th object of its Beilinson replacement. This morphism induces a quasi-isomorphism from sheafification of <span class="Math">M</span> considered as a chain complex concentrated in degree <span class="Math">0</span> to the sheafification of the Beilinson replacement of <span class="Math">M</span>.</p>
+
+<p><a id="X8027CCF4804BE24F" name="X8027CCF4804BE24F"></a></p>
+
+<h5>2.1-12 MorphismFromGLPToZerothHomologyOfBeilinsonReplacement</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromGLPToZerothHomologyOfBeilinsonReplacement</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is graded <span class="Math">S</span>-lp <span class="Math">M</span>. The output is an isomorphism from the Sheafification of <span class="Math">M</span> to the sheafification of the <span class="Math">0</span>'th homology of its Beilinson replacement.</p>
+
+<p><a id="X801C3AAC7A1FFEE0" name="X801C3AAC7A1FFEE0"></a></p>
+
+<h5>2.1-13 MorphismFromZerothObjectOfBeilinsonReplacementToGLP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromZerothObjectOfBeilinsonReplacementToGLP</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is graded <span class="Math">S</span>-lp <span class="Math">M</span>. The output is a morphism from the sheafification of the <span class="Math">0</span>'th object of the Beilinson replacement of <span class="Math">M</span> to the sheafification of <span class="Math">M</span>. This morphism induces a quasi-isomorphism from the sheafification of the Beilinson replacement of <span class="Math">M</span> to sheafification of <span class="Math">M</span> considered as a chain complex concentrated in degree <span class="Math">0</span>.</p>
+
+<p><a id="X7C38F9F1799392BD" name="X7C38F9F1799392BD"></a></p>
+
+<h5>2.1-14 MorphismFromZerothHomologyOfBeilinsonReplacementToGLP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromZerothHomologyOfBeilinsonReplacementToGLP</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism</p>
+
+<p>The input is graded <span class="Math">S</span>-lp <span class="Math">M</span>. The output is an isomorphism from the the sheafification of the <span class="Math">0</span>'th homology of its Beilinson replacement to Sheafification of <span class="Math">M</span>.</p>
+
+<p><a id="X786208C07855D07A" name="X786208C07855D07A"></a></p>
+
+<h5>2.1-15 ShowMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowMatrix</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The inpute is a homalg matrix or anything that has attribute <code class="code">UnderlyingMatrix</code>. It views the entries using the browse package. To quit: <code class="code">q+y</code>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

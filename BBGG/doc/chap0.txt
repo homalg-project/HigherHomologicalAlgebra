@@ -1,0 +1,80 @@
+  
+  
+                                     [1X BBGG [101X
+  
+  
+    [1X Beilinson monads and derived categories for coherent sheaves over P^n [101X
+  
+  
+                                   2020.09.05
+  
+  
+                                5 September 2020
+  
+  
+                                  Kamal Saleh
+  
+  
+  
+  Kamal Saleh
+      Email:    [7Xmailto:kamal.saleh@uni-siegen.de[107X
+      Homepage: [7Xhttps://github.com/kamalsaleh[107X
+      Address:  [33X[0;14YDepartment Mathematik[133X
+                [33X[0;14YUniversität Siegen[133X
+                [33X[0;14YWalter-Flex-Straße 3[133X
+                [33X[0;14Y57072 Siegen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (BBGG)[101X
+  
+  1 [33X[0;0YOperations and attributes[133X
+    1.1 [33X[0;0YAttributes[133X
+      1.1-1 CastelnuovoMumfordRegularity
+      1.1-2 TateResolution
+      1.1-3 TateResolution
+      1.1-4 RCochainFunctor
+      1.1-5 RChainFunctor
+      1.1-6 LCochainFunctor
+      1.1-7 LChainFunctor
+      1.1-8 TruncationFunctorUsingTateResolution
+      1.1-9 NatTransFromTruncationUsingTateResolutionToIdentityFunctor
+      1.1-10 TruncationFunctorUsingHomalg
+      1.1-11 NatTransFromTruncationUsingHomalgToIdentityFunctor
+      1.1-12 NatTransFromTruncationUsingTateResolutionToTruncationFunctorUsingHomalg
+      1.1-13 GLPGeneratedByHomogeneousPartFunctor
+      1.1-14 NatTransFromGLPGeneratedByHomogeneousPartToIdentityFunctor
+      1.1-15 HomogeneousPartOverCoefficientsRingFunctor
+  2 [33X[0;0YBeilinson Monads and $\mathrm{Coh}(\mathbb{P}^m)$[133X
+    2.1 [33X[0;0YOperations[133X
+      2.1-1 TwistedOmegaModule
+      2.1-2 TwistedGradedFreeModule
+      2.1-3 TwistedCotangentModule
+      2.1-4 TwistedCotangentModuleAsChain
+      2.1-5 TwistedCotangentModuleAsCochain
+      2.1-6 BasisBetweenTwistedOmegaModules
+      2.1-7 BasisBetweenTwistedGradedFreeModules
+      2.1-8 BasisBetweenTwistedCotangentModulesAsGLP
+      2.1-9 BeilinsonReplacement
+      2.1-10 BeilinsonReplacement
+      2.1-11 MorphismFromGLPToZerothObjectOfBeilinsonReplacement
+      2.1-12 MorphismFromGLPToZerothHomologyOfBeilinsonReplacement
+      2.1-13 MorphismFromZerothObjectOfBeilinsonReplacementToGLP
+      2.1-14 MorphismFromZerothHomologyOfBeilinsonReplacementToGLP
+      2.1-15 ShowMatrix
+  3 [33X[0;0YBBGG automatic generated documentation[133X
+    3.1 [33X[0;0YBBGG automatic generated documentation of attributes[133X
+      3.1-1 CoherentSheavesOverProjectiveSpace
+  4 [33X[0;0YInterface with homalg[133X
+    4.1 [33X[0;0YOperations[133X
+      4.1-1 AsPresentationInHomalg
+      4.1-2 AsPresentationInCAP
+      4.1-3 AsPresentationMorphismInHomalg
+      4.1-4 AsPresentationMorphismInCAP
+  
+  
+  [32X
