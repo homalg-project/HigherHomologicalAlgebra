@@ -1,2 +1,9 @@
-markdown: kramdown
+markdown:    kramdown
 highlighter: rouge
+
+baseurl:     /HigherHomologicalAlgebra
+
+include: ['BBGG', 'Bicomplexes', 'ComplexesCategories', 'DerivedCategories', 'HomotopyCategories', 'QuotientCategories', 'StableCategories', 'TriangulatedCategories']
+exclude: [ "index_default.template" ]
+
+repository: homalg-project/HigherHomologicalAlgebra

@@ -2,60 +2,44 @@
 layout: default
 ---
 
-# GAP Package {{site.data.package.name}}
+# The Higher Homological Algebra project
 
-{{site.data.package.abstract}}
+This is the home of the Higher Homological Algebra project. It consists of several [GAP](https://www.gap-system.org/) packages,
+all of which depend on [`homalg_project`](https://github.com/homalg-project/homalg_project) and [`CAP_project`](https://github.com/homalg-project/CAP_project).
 
-The current version of this package is version {{site.data.package.version}}, released on {{site.data.package.date}}.
-For more information, please refer to [the package manual]({{site.data.package.doc-html}}).
-There is also a [README](README.html) file.
+## Packages in the CAP project
+
+{% for package in site.data.packages.package_links %}
+  [{{package.name}}]({{site.baseurl}}/{{package.name}})
+{% endfor %}
 
 ## Dependencies
 
-This package requires GAP version {{site.data.package.GAP}}
-{% if site.data.package.needed-pkgs %}
-The following other GAP packages are needed:
-{% for pkg in site.data.package.needed-pkgs %}
-- {% if pkg.url %}<a href="{{ pkg.url }}">{{ pkg.name }}</a> {% else %}{{ pkg.name }} {% endif %}
-  {{- pkg.version -}}
+This project requires GAP version {{site.data.DerivedCategories.GAP}}.
+For more information about the dependencies take a look at the individual packages' sites.
+
+## Installation
+
+To install the project, start by installing the latest version of GAP
+from [gap-system.org](http://www.gap-system.org). Please refer to the
+installation description there for details. Since the project has
+fairly new dependencies, earlier versions of GAP might not work.
+
+Then download the tarballs of the Higher Homological Algebra project
+packages from the above links into `~/.gap/pkg/`.
+
+_Alternatively_, clone or download the repository
+
+* [HigherHomologicalAlgebra](https://github.com/homalg-project/HigherHomologicalAlgebra/)
+
+via [git](http://git-scm.com) and put it into `~/.gap/pkg/`.
+
+Now you should be able `LoadPackage( "DerivedCategories" );`.
+
+## Author{% if site.data.frontpage.authors.size != 1 %}s{% endif %}
+{% for person in site.data.frontpage.authors %}
+{% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}{% unless forloop.last %}, {% endunless %}{% else %}
 {% endfor %}
-{% endif %}
-{% if site.data.package.suggested-pkgs %}
-The following additional GAP packages are not required, but suggested:
-{% for pkg in site.data.package.suggested-pkgs %}
-- {% if pkg.url %}<a href="{{ pkg.url }}">{{ pkg.name }}</a> {% else %}{{ pkg.name }} {% endif %}
-  {{- pkg.version -}}
-{% endfor %}
-{% endif %}
-
-
-## Author{% if site.data.package.authors.size != 1 %}s{% endif %}
-{% for person in site.data.package.authors %}
- {% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}
- {%- if forloop.last -%}.{% else %}, {%- endif -%}
-{% endfor %}
-
-{% if site.data.package.contributors and site.data.package.contributors.size > 0 %}
-## Contributor{% if site.data.package.contributors.size != 1 %}s{% endif %}
- {% for person in site.data.package.contributors %}
-  {% if person.url %}<a href="{{ person.url }}">{{ person.name }}</a>{% else %}{{ person.name }}{% endif %}
-  {%- if forloop.last -%}.{% else %}, {%- endif -%}
- {% endfor %}
-{% endif %}
-
-{% if site.data.package.citeas %}
-## Citing
-
-Please, cite this package as
-
-{{site.data.package.citeas}}
-
-You can get more info by typing `Cite("{{ site.data.package.name }}");` in the gap prompt.
-
-{% include button-bibtex.html %}
-
-{% endif %}
-
 
 {% if site.github.issues_url %}
 ## Feedback
