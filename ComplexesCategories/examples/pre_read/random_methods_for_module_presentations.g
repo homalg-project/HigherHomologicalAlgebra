@@ -450,3 +450,23 @@ InstallMethod( LeftPresentations,
     
 end, 1000 );
 
+##
+InstallMethod( RightPresentations,
+          [ IsHomalgRing ],
+  function( S )
+    local random_methods, cat;
+    
+    random_methods := ValueOption( "random_methods" );
+    
+    if random_methods = false then
+      TryNextMethod( );
+    fi;
+    
+    cat := RightPresentations( S : FinalizeCategory := false, random_methods := false );
+    
+    ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "right" );
+    
+    return cat;
+    
+end, 1000 );
+
