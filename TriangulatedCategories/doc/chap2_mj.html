@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (TriangulatedCategories) - Chapter 2: Operations</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+<div class="ChapSects"><a href="chap2_mj.html#X7DE8E16C7C2D387B">2 <span class="Heading">Operations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7B54E9998301376B">2.1 <span class="Heading">Functors and natural transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X80BEFEE77B28A20D">2.1-1 ShiftFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X839D209D833631AF">2.1-2 InverseShiftFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X81D524E07DCEBDFF">2.1-3 NaturalIsomorphismFromIdentityIntoInverseShiftOfShift</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8386D56C78B8B761">2.1-4 NaturalIsomorphismFromIdentityIntoShiftOfInverseShift</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X815381CD7CF0ABB7">2.1-5 NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X80037FF186B0BE5A">2.1-6 NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X87C57D138553295C">2.1-7 CommutativityNaturalTransformationWithShiftFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8098FDAB7CE28277">2.1-8 ExtendFunctorToCategoryOfTriangles</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X86E243F782C64E9A">2.1-9 RotationFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X879E9897821903E7">2.1-10 InverseRotationFunctor</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Operations</span></h3>
+
+<p><a id="X7B54E9998301376B" name="X7B54E9998301376B"></a></p>
+
+<h4>2.1 <span class="Heading">Functors and natural transformations</span></h4>
+
+<p><a id="X80BEFEE77B28A20D" name="X80BEFEE77B28A20D"></a></p>
+
+<h5>2.1-1 ShiftFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftFunctor</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor <span class="SimpleMath">\(\mathcal{T}\to\mathcal{T}\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the shift autoequivalence <span class="SimpleMath">\(\Sigma:\mathcal{T}\to\mathcal{T}\)</span>.</p>
+
+<p><a id="X839D209D833631AF" name="X839D209D833631AF"></a></p>
+
+<h5>2.1-2 InverseShiftFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftFunctor</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor <span class="SimpleMath">\(\mathcal{T}\to\mathcal{T}\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the auto-equivalence <span class="SimpleMath">\(\Sigma^{-1}:\mathcal{T}\to\mathcal{T}\)</span>.</p>
+
+<p><a id="X81D524E07DCEBDFF" name="X81D524E07DCEBDFF"></a></p>
+
+<h5>2.1-3 NaturalIsomorphismFromIdentityIntoInverseShiftOfShift</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalIsomorphismFromIdentityIntoInverseShiftOfShift</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation <span class="SimpleMath">\(\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma\)</span>.</p>
+
+<p><a id="X8386D56C78B8B761" name="X8386D56C78B8B761"></a></p>
+
+<h5>2.1-4 NaturalIsomorphismFromIdentityIntoShiftOfInverseShift</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalIsomorphismFromIdentityIntoShiftOfInverseShift</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation <span class="SimpleMath">\(\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}\)</span>.</p>
+
+<p><a id="X815381CD7CF0ABB7" name="X815381CD7CF0ABB7"></a></p>
+
+<h5>2.1-5 NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation <span class="SimpleMath">\(\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}\)</span>.</p>
+
+<p><a id="X80037FF186B0BE5A" name="X80037FF186B0BE5A"></a></p>
+
+<h5>2.1-6 NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural isomorphism <span class="SimpleMath">\(\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}\)</span></p>
+
+<p>The argument is a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}\)</span>.</p>
+
+<p><a id="X87C57D138553295C" name="X87C57D138553295C"></a></p>
+
+<h5>2.1-7 CommutativityNaturalTransformationWithShiftFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CommutativityNaturalTransformationWithShiftFunctor</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation <span class="SimpleMath">\(F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F\)</span></p>
+
+<p>The argument is an exact functor <span class="SimpleMath">\(F:\mathcal{T}_1\to\mathcal{T}_2\)</span> between triangulated categories. The output is a natural isomorphism <span class="SimpleMath">\(\eta:F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F\)</span>.</p>
+
+<p><a id="X8098FDAB7CE28277" name="X8098FDAB7CE28277"></a></p>
+
+<h5>2.1-8 ExtendFunctorToCategoryOfTriangles</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendFunctorToCategoryOfTriangles</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural isomorphism <span class="SimpleMath">\(F\circ \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F\)</span></p>
+
+<p>The argument is an exact functor <span class="SimpleMath">\(F:\mathcal{T}_1\to\mathcal{T}_2\)</span> between triangulated categories, for which the attribute <code class="code">CommutativityNaturalIsomorphismForExactFunctor</code> has already been set. The output is the extension functor of <span class="SimpleMath">\(F\)</span> to the categories of triangles over <span class="SimpleMath">\(\mathcal{T}_1\)</span> and <span class="SimpleMath">\(\mathcal{T}_2\)</span>.</p>
+
+<p><a id="X86E243F782C64E9A" name="X86E243F782C64E9A"></a></p>
+
+<h5>2.1-9 RotationFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RotationFunctor</code>( <var class="Arg">T</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an endofunctor <span class="SimpleMath">\(T\to T\)</span></p>
+
+<p>The arguments are a category of exact triangles <span class="SimpleMath">\(T\)</span> of some triangulated category and a boolian <span class="SimpleMath">\(b\)</span>. The output is the rotation endofunctor on <span class="SimpleMath">\(T\)</span>. If <span class="SimpleMath">\(b\)</span> = <code class="code">true</code>, then the functor computes witnesses when applied on objects.</p>
+
+<p><a id="X879E9897821903E7" name="X879E9897821903E7"></a></p>
+
+<h5>2.1-10 InverseRotationFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseRotationFunctor</code>( <var class="Arg">T</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an endofunctor <span class="SimpleMath">\(T\to T\)</span></p>
+
+<p>The arguments are a category of exact triangles <span class="SimpleMath">\(T\)</span> of some triangulated category and a boolian <span class="SimpleMath">\(b\)</span>. The output is the inverse rotation endofunctor on <span class="SimpleMath">\(T\)</span>. If <span class="SimpleMath">\(b\)</span> = <code class="code">true</code>, then the functor computes witnesses when applied on objects.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

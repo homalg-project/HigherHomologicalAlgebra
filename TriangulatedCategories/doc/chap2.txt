@@ -1,0 +1,102 @@
+  
+  [1X2 [33X[0;0YOperations[133X[101X
+  
+  
+  [1X2.1 [33X[0;0YFunctors and natural transformations[133X[101X
+  
+  [1X2.1-1 ShiftFunctor[101X
+  
+  [33X[1;0Y[29X[2XShiftFunctor[102X( [3XT[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor [23X\mathcal{T}\to\mathcal{T}[123X[133X
+  
+  [33X[0;0YThe argument is a triangulated category [23X\mathcal{T}[123X. The output is the shift
+  autoequivalence [23X\Sigma:\mathcal{T}\to\mathcal{T}[123X.[133X
+  
+  [1X2.1-2 InverseShiftFunctor[101X
+  
+  [33X[1;0Y[29X[2XInverseShiftFunctor[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya functor [23X\mathcal{T}\to\mathcal{T}[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
+  auto-equivalence [23X\Sigma^{-1}:\mathcal{T}\to\mathcal{T}[123X.[133X
+  
+  [1X2.1-3 NaturalIsomorphismFromIdentityIntoInverseShiftOfShift[101X
+  
+  [33X[1;0Y[29X[2XNaturalIsomorphismFromIdentityIntoInverseShiftOfShift[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
+            [23X\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
+  natural                                                          isomorphism
+  [23X\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma[123X.[133X
+  
+  [1X2.1-4 NaturalIsomorphismFromIdentityIntoShiftOfInverseShift[101X
+  
+  [33X[1;0Y[29X[2XNaturalIsomorphismFromIdentityIntoShiftOfInverseShift[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
+            [23X\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
+  natural                                                          isomorphism
+  [23X\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}[123X.[133X
+  
+  [1X2.1-5 NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity[101X
+  
+  [33X[1;0Y[29X[2XNaturalIsomorphismFromInverseShiftOfShiftIntoIdentity[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
+            [23X\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
+  natural                                                          isomorphism
+  [23X\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X.[133X
+  
+  [1X2.1-6 NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity[101X
+  
+  [33X[1;0Y[29X[2XNaturalIsomorphismFromShiftOfInverseShiftIntoIdentity[102X( [3XT[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya                        natural                       isomorphism
+            [23X\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
+  natural                                                          isomorphism
+  [23X\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X.[133X
+  
+  [1X2.1-7 CommutativityNaturalTransformationWithShiftFunctor[101X
+  
+  [33X[1;0Y[29X[2XCommutativityNaturalTransformationWithShiftFunctor[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya natural transformation [23XF\circ \Sigma_{\mathcal{T}_1} \Rightarrow
+            \Sigma_{\mathcal{T}_2} \circ F[123X[133X
+  
+  [33X[0;0YThe  argument  is  an  exact functor [23XF:\mathcal{T}_1\to\mathcal{T}_2[123X between
+  triangulated  categories.  The  output  is a natural isomorphism [23X\eta:F\circ
+  \Sigma_{\mathcal{T}_1} \Rightarrow \Sigma_{\mathcal{T}_2} \circ F[123X.[133X
+  
+  [1X2.1-8 ExtendFunctorToCategoryOfTriangles[101X
+  
+  [33X[1;0Y[29X[2XExtendFunctorToCategoryOfTriangles[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya  natural  isomorphism  [23XF\circ \Sigma_{\mathcal{T}_1} \Rightarrow
+            \Sigma_{\mathcal{T}_2} \circ F[123X[133X
+  
+  [33X[0;0YThe  argument  is  an  exact functor [23XF:\mathcal{T}_1\to\mathcal{T}_2[123X between
+  triangulated       categories,       for       which      the      attribute
+  [10XCommutativityNaturalIsomorphismForExactFunctor[110X  has  already  been  set. The
+  output  is  the  extension  functor of [23XF[123X to the categories of triangles over
+  [23X\mathcal{T}_1[123X and [23X\mathcal{T}_2[123X.[133X
+  
+  [1X2.1-9 RotationFunctor[101X
+  
+  [33X[1;0Y[29X[2XRotationFunctor[102X( [3XT[103X, [3Xb[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan endofunctor [23XT\to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are  a  category  of  exact triangles [23XT[123X of some triangulated
+  category  and a boolian [23Xb[123X. The output is the rotation endofunctor on [23XT[123X. If [23Xb[123X
+  = [10Xtrue[110X, then the functor computes witnesses when applied on objects.[133X
+  
+  [1X2.1-10 InverseRotationFunctor[101X
+  
+  [33X[1;0Y[29X[2XInverseRotationFunctor[102X( [3XT[103X, [3Xb[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan endofunctor [23XT\to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are  a  category  of  exact triangles [23XT[123X of some triangulated
+  category  and a boolian [23Xb[123X. The output is the inverse rotation endofunctor on
+  [23XT[123X. If [23Xb[123X = [10Xtrue[110X, then the functor computes witnesses when applied on objects.[133X
+  
