@@ -12,5 +12,5 @@ clean:
 	(cd doc ; ./clean)
 
 test:	doc
-	gap tst/testall.g
+	( gap makedoc.g; gap tst/testall.g )
 
