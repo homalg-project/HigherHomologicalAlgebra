@@ -112,6 +112,12 @@ KeyDependentOperation( "StalkCochainComplex", IsCapCategoryObject, IsInt, Return
 #! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductiveSides", [ IsCapCategoryMorphism, IsFunction, IsFunction ] );
 
+#! @Description
+#! The input is an integer $n$, a morphism $d\in A$ and two functions $F,G$.
+#! The output is chain complex $M_{\bullet}\in\mathrm{Ch}_\bullet(A)$ where $d^{M}_{n}=d$ 
+#! and $d^M_{i}=G^{i}(d)$ for all $i\leq -1$ and $d^M_{i}=F^{i}(d )$ for all $i \geq 1$.
+#! @Arguments n, d, G, F
+#! @Returns a chain complex
 DeclareOperation( "ChainComplexWithInductiveSides", [ IsInt, IsCapCategoryMorphism, IsFunction, IsFunction ] );
 
 #! @Description
