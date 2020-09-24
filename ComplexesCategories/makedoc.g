@@ -16,7 +16,11 @@ AutoDoc(
                   \usepackage{tikz}
                   \usetikzlibrary{shapes,arrows,matrix}
               """ ) ),
-
+        
+        extract_examples := rec(
+          units := "Single",
+        ),
+        
         scaffold := rec( 
           entities := [ "GAP4", "homalg" ],       
         ),
