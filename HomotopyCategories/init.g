@@ -1,5 +1,5 @@
 #
-# HomotopyCategories: Package to create homotopy categories of an additive category
+# HomotopyCategories: Homotopy categories of additive categories
 #
 # Reading the declaration part of the package.
 #

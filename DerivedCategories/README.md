@@ -1,16 +1,20 @@
-# The GAP package DerivedCategories
+<!-- BEGIN HEADER -->
+# DerivedCategories – Derived categories of Abelian categories
 
-A Gap/Cap package to create derived categories and equivalences between them.
+| **Documentation**         | **Build Status of [HigherHomologicalAlgebra](/../../)**                                            |
+|:-------------------------:|:-----------------------------------------------------------:|
+| [![][docs-img]][docs-url] | [![][tests-img]][tests-url] [![][codecov-img]][codecov-url] |
+<!-- END HEADER -->
 
+The package can be used to construct derived categories and equivalences between them.
 
-# Contact
+<!-- BEGIN FOOTER -->
+[docs-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/doc/chap0_mj.html
 
-Of course you are welcome to e-mail me if there are any questions, remarks, suggestions
+[tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg
+[tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions?query=workflow%3ATests
 
-Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
-
-# License
-
-DerivedCategories is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2 of the License, or (at your opinion) any later version.
-
+[codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra
+<!-- END FOOTER -->

@@ -1,4 +1,8 @@
-
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Declarations
+#
 
 DeclareCategory( "IsCapCategoryExtension", IsObject );
 

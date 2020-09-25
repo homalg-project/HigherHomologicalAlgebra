@@ -1,4 +1,8 @@
-
+#
+# BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
+#
+# Implementations
+#
 ##
 InstallGlobalFunction( PREPARE_CATEGORIES_OF_HOMALG_GRADED_POLYNOMIAL_RING, 
 function( S )

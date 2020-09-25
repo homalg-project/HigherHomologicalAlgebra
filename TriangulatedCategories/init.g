@@ -1,5 +1,5 @@
 #
-# TriangulatedCategories: frame work for triangulated categories
+# TriangulatedCategories: Framework for triangulated categories
 #
 # Reading the declaration part of the package.
 #

@@ -1,4 +1,8 @@
-
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Implementations
+#
 ##
 InstallGlobalFunction( ENHANCE_HOMALG_GRADED_RING_WITH_RANDOM_FUNCTIONS,
   function( S )

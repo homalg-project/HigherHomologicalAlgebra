@@ -1,5 +1,5 @@
 #
-# StableCategories: Gap packge for constructing stable category of a given Cap category
+# StableCategories: Stable categories of additive categories
 #
 # Reading the declaration part of the package.
 #

@@ -1,3 +1,8 @@
+#
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Implementations
+#
 ##
 InstallMethod( HomotopyCategoryObject,
         [ IsJuliaObject, IsInt ],

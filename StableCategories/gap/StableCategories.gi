@@ -1,8 +1,8 @@
-#####################################################################
 #
-#   StableCategoriesForCapi.gi              StableCategoriesForCap
-#                                           Siegen University
-#   29.09.2016                              Kamal Saleh
+# StableCategories: Stable categories of additive categories
+#
+# Implementations
+#
 #
 #####################################################################
 

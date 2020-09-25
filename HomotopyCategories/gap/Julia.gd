@@ -1,3 +1,9 @@
+#
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Declarations
+#
+
 ##
 DeclareOperation( "HomotopyCategoryObject",
         [ IsJuliaObject, IsInt ] );

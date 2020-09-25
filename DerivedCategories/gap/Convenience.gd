@@ -1,4 +1,8 @@
-
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Declarations
+#
 DeclareOperation( "\/", [ IsList, IsCapCategory ] );
 DeclareOperation( "\/", [ IsCapCategoryCell, IsCategoryOfGradedRows ] );
 DeclareOperation( "FindSomeFunctor", [ IsCapCategory, IsCapCategory ] );

@@ -1,8 +1,8 @@
-#############################################################################
-##
-##  ComplexesCategories package             Kamal Saleh 
-##  2017                                University of Siegen
-##
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 #! @Chapter Complexes
 ##
 #############################################################################

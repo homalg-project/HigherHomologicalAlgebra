@@ -1,5 +1,5 @@
 #
-# StableCategoriesForCap: Gap packge for constructing stable category of a given Cap category
+# StableCategories: Stable categories of additive categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -9,10 +9,10 @@
 SetPackageInfo( rec(
 
 PackageName := "StableCategories",
-Subtitle := "Gap package for constructing stable category of a given Cap category",
-Version := "2020.07.16",
+Subtitle := "Stable categories of additive categories",
+Version := "2020.09.06",
 Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -34,18 +34,17 @@ Persons := [
   ),
 ],
 
+# BEGIN URLS
 SourceRepository := rec(
     Type := "git",
-    URL := Concatenation( "https://github.com/kamalsaleh/", ~.PackageName ),
+    URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-#SupportEmail   := "TODO",
-PackageWWWHome  := "https://github.com/kamalsaleh/StableCategories",
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL,
-                                 "/releases/download/v", ~.Version,
-                                 "/", ~.PackageName, "-", ~.Version ),
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-", ~.Version, "/StableCategories-", ~.Version ),
+# END URLS
 
 ArchiveFormats := ".tar.gz",
 
@@ -62,12 +61,12 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "StableCategoriesForCap",
+  BookName  := "StableCategories",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Gap package for constructing stable category of a given Cap category",
+  LongTitle := "Stable categories of additive categories",
 ),
 
 Dependencies := rec(
@@ -92,5 +91,3 @@ TestFile := "tst/testall.g",
 #Keywords := [ "TODO" ],
 
 ));
-
-

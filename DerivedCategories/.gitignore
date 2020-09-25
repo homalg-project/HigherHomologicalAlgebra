@@ -1,6 +1,3 @@
-/maketest.g
-/doc/*.xml
-
 /doc/chap*.html
 /doc/chap*.txt
 /doc/*.css
@@ -21,6 +18,17 @@
 /doc/*.tex
 /doc/*.toc
 /doc/manual.pdf
+/doc/_*.xml
+
+/bin/
+/gen/
+/Makefile
 
 /tmp/
 /gh-pages/
+
+/coverage.json
+/doc/*.xml
+/doc_tmp/
+/stats
+/tst/derivedcategories*.tst

@@ -1,3 +1,9 @@
+#
+# DerivedCategories: Derived categories of Abelian categories
+#
+# Implementations
+#
+
 ##
 InstallMethod( CreateExceptionalCollection,
         [ IsObject, IsJuliaObject ],

@@ -1,4 +1,8 @@
-
+#
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 DeclareRepresentation( "IsZFunctionRep",
                        IsComponentObjectRep and IsAttributeStoringRep,
                        [ ] );

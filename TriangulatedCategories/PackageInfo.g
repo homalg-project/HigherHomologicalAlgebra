@@ -1,5 +1,5 @@
 #
-# TriangulatedCategories: framework for triangulated categories
+# TriangulatedCategories: Framework for triangulated categories
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -9,10 +9,10 @@
 SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
-Subtitle := "framework for triangulated categories",
-Version := "2020.09.02",
+Subtitle := "Framework for triangulated categories",
+Version := "2020.09.06",
 Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
+Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -34,12 +34,17 @@ Persons := [
   ),
 ],
 
-PackageWWWHome := "https://github.com/kamalsaleh/TriangulatedCategories",
-
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-ArchiveURL     := Concatenation( ~.PackageWWWHome,
-                                 "/", ~.PackageName, "-", ~.Version ),
+# BEGIN URLS
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-", ~.Version, "/TriangulatedCategories-", ~.Version ),
+# END URLS
 
 ArchiveFormats := ".tar.gz",
 
@@ -61,7 +66,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "framework for triangulated categories",
+  LongTitle := "Framework for triangulated categories",
 ),
 
 Dependencies := rec(

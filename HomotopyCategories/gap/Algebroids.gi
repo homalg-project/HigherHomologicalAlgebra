@@ -1,4 +1,8 @@
-
+#
+# HomotopyCategories: Homotopy categories of additive categories
+#
+# Implementations
+#
 ##
 InstallMethod( \.,
         [ IsHomotopyCategory, IsPosInt ],
