@@ -59,29 +59,29 @@ These packages are free software; you can redistribute it and/or modify it under
 published by the Free Software Foundation; either version 2 of the License, or (at your opinion) any later version.
 
 <!-- BEGIN FOOTER -->
-[docs-BBGG-img]: https://img.shields.io/badge/BBGG-PDF-blue.svg
-[docs-BBGG-url]: /../../raw/doc/BBGG.pdf
+[docs-BBGG-img]: https://img.shields.io/badge/BBGG-HTML-blue.svg
+[docs-BBGG-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/doc/chap0_mj.html
 
-[docs-Bicomplexes-img]: https://img.shields.io/badge/Bicomplexes-PDF-blue.svg
-[docs-Bicomplexes-url]: /../../raw/doc/Bicomplexes.pdf
+[docs-Bicomplexes-img]: https://img.shields.io/badge/Bicomplexes-HTML-blue.svg
+[docs-Bicomplexes-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/doc/chap0_mj.html
 
-[docs-ComplexesCategories-img]: https://img.shields.io/badge/ComplexesCategories-PDF-blue.svg
-[docs-ComplexesCategories-url]: /../../raw/doc/ComplexesCategories.pdf
+[docs-ComplexesCategories-img]: https://img.shields.io/badge/ComplexesCategories-HTML-blue.svg
+[docs-ComplexesCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/doc/chap0_mj.html
 
-[docs-DerivedCategories-img]: https://img.shields.io/badge/DerivedCategories-PDF-blue.svg
-[docs-DerivedCategories-url]: /../../raw/doc/DerivedCategories.pdf
+[docs-DerivedCategories-img]: https://img.shields.io/badge/DerivedCategories-HTML-blue.svg
+[docs-DerivedCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/doc/chap0_mj.html
 
-[docs-HomotopyCategories-img]: https://img.shields.io/badge/HomotopyCategories-PDF-blue.svg
-[docs-HomotopyCategories-url]: /../../raw/doc/HomotopyCategories.pdf
+[docs-HomotopyCategories-img]: https://img.shields.io/badge/HomotopyCategories-HTML-blue.svg
+[docs-HomotopyCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/doc/chap0_mj.html
 
-[docs-QuotientCategories-img]: https://img.shields.io/badge/QuotientCategories-PDF-blue.svg
-[docs-QuotientCategories-url]: /../../raw/doc/QuotientCategories.pdf
+[docs-QuotientCategories-img]: https://img.shields.io/badge/QuotientCategories-HTML-blue.svg
+[docs-QuotientCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/doc/chap0_mj.html
 
-[docs-StableCategories-img]: https://img.shields.io/badge/StableCategories-PDF-blue.svg
-[docs-StableCategories-url]: /../../raw/doc/StableCategories.pdf
+[docs-StableCategories-img]: https://img.shields.io/badge/StableCategories-HTML-blue.svg
+[docs-StableCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/doc/chap0_mj.html
 
-[docs-TriangulatedCategories-img]: https://img.shields.io/badge/TriangulatedCategories-PDF-blue.svg
-[docs-TriangulatedCategories-url]: /../../raw/doc/TriangulatedCategories.pdf
+[docs-TriangulatedCategories-img]: https://img.shields.io/badge/TriangulatedCategories-HTML-blue.svg
+[docs-TriangulatedCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/doc/chap0_mj.html
 
 [tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg
 [tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions?query=workflow%3ATests

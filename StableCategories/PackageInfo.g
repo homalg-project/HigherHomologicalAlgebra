@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2020.09.05",
+Version := "2020.09.06",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -40,9 +40,9 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/StableCategories",
-PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/StableCategories/PackageInfo.g",
-README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/StableCategories/README.md",
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-", ~.Version, "/StableCategories-", ~.Version ),
 # END URLS
 
