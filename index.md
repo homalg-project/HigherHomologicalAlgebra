@@ -7,7 +7,7 @@ layout: default
 This is the home of the Higher Homological Algebra project. It consists of several [GAP](https://www.gap-system.org/) packages,
 all of which depend on [`homalg_project`](https://github.com/homalg-project/homalg_project) and [`CAP_project`](https://github.com/homalg-project/CAP_project).
 
-## Packages in the CAP project
+## Packages in the project
 
 {% for package in site.data.packages.package_links %}
   [{{package.name}}]({{site.baseurl}}/{{package.name}})
