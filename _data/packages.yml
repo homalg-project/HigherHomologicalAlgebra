@@ -6,4 +6,5 @@ package_links:
     - name: HomotopyCategories
     - name: QuotientCategories
     - name: StableCategories
+    - name: ToolsForHigherHomologicalAlgebra
     - name: TriangulatedCategories
