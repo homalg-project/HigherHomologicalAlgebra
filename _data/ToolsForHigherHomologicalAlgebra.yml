@@ -1,0 +1,72 @@
+name: ToolsForHigherHomologicalAlgebra
+version: "2020.09.26"
+license: "GPL-2.0-or-later"
+date: 2020-09-26
+description: |
+    Tools for the Higher Homological Algebra project
+
+authors:
+    - name: Kamal Saleh
+      url: https://github.com/kamalsaleh
+
+maintainers:
+    - name: Kamal Saleh
+      url: https://github.com/kamalsaleh
+
+GAP: ">= 4.11"
+
+needed-pkgs:
+    - name: "AutoDoc"
+      version: ">=2018.02.14"
+      url: "https://gap-packages.github.io/AutoDoc"
+    - name: "CAP"
+      version: ">=2020.05.03"
+      url: "https://homalg-project.github.io/CAP_project/CAP"
+
+suggested-pkgs:
+    - name: "GradedModulePresentationsForCAP"
+      version: ">= 2019.08.07"
+      url: "https://homalg-project.github.io/CAP_project/"
+    - name: "FreydCategoriesForCAP"
+      version: ">= 2020.09.21"
+      url: "https://github.com/homalg-project/CAP_project/tree/master/FreydCategoriesForCAP"
+
+www: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra
+readme: README.md
+packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/PackageInfo.g
+
+downloads:
+    - name: .tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2020.09.26/ToolsForHigherHomologicalAlgebra-2020.09.26.tar.gz
+
+abstract: |
+
+status: dev
+doc-html: doc/chap0.html
+doc-pdf: doc/manual.pdf
+citeas: |
+    <p class='BibEntry'>
+    [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+     <i class='BibTitle'>ToolsForHigherHomologicalAlgebra, Tools for the Higher Homological Algebra project,
+             Version 2020.09.26</i>
+     (<span class='BibYear'>2020</span>)<br />
+    (<span class='BibNote'>GAP package</span>),
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra</a></span>.
+    </p>
+    
+
+bibtex: |
+    @misc{ ToolsForHigherHomologicalAlgebra2020.09.26,
+      author =           {Saleh, K.},
+      title =            {{ToolsForHigherHomologicalAlgebra},  Tools  for  the  Higher  Homological Algebra project, {V}ersion
+                          2020.09.26},
+      month =            {Sep},
+      year =             {2020},
+      note =             {GAP package},
+      howpublished =     {\href   {https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra}
+                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{ToolsForHigherHomologicalAlgebra}}},
+      printedkey =       {Sal20}
+    }
+
