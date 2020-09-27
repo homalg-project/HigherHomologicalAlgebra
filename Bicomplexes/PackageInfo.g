@@ -13,7 +13,7 @@ PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
 
 Version := Maximum( [
-                   "2020.09.06", ## Kamals's version
+                   "2020.09.07", ## Kamals's version
                    ## this line prevents merge conflicts
                    "2017.05.02", ## Mohamed's version
                    ] ),
