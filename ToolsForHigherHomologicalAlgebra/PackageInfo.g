@@ -1,5 +1,5 @@
 #
-# DerivedCategories: Derived categories of Abelian categories
+# ToolsForHigherHomologicalAlgebra: Tools for the Higher Homological Algebra project
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,28 +8,27 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "DerivedCategories",
-Subtitle := "Derived categories of Abelian categories",
-Version := "2020.09.06",
-Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+PackageName := "ToolsForHigherHomologicalAlgebra",
+Subtitle := "Tools for the Higher Homological Algebra project",
+Version := "2020.09.25",
+Date := "25/09/2020", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
-    IsAuthor := true,
-    IsMaintainer := true,
     FirstNames := "Kamal",
     LastName := "Saleh",
     WWWHome := "https://github.com/kamalsaleh",
     Email := "kamal.saleh@uni-siegen.de",
+    IsAuthor := true,
+    IsMaintainer := true,
     PostalAddress := Concatenation(
                "Department Mathematik\n",
                "Universität Siegen\n",
                "Walter-Flex-Straße 3\n",
-               "57068 Siegen\n",
+               "57072 Siegen\n",
                "Germany" ),
-    Place := "Siegen University",
+    Place := "Siegen",
     Institution := "University of Siegen",
   ),
 ],
@@ -40,10 +39,10 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories",
-PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/PackageInfo.g",
-README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/README.md",
-ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-", ~.Version, "/DerivedCategories-", ~.Version ),
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-", ~.Version, "/ToolsForHigherHomologicalAlgebra-", ~.Version ),
 # END URLS
 
 ArchiveFormats := ".tar.gz",
@@ -61,29 +60,26 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "DerivedCategories",
+  BookName  := "ToolsForHigherHomologicalAlgebra",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Derived categories of Abelian categories",
+  LongTitle := "Tools for the Higher Homological Algebra project",
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.9",
-  NeededOtherPackages := [ 
-        [ "ToolsForHigherHomologicalAlgebra", "2020.09.25" ],
-        [ "QPA", ">= 2.0-dev"], # https://github.com/homalg-project/QPA2.git
-        [ "CAP", ">= 2020.04.16" ],
-        [ "Algebroids", ">= 2020.04.24" ],
-        [ "SubcategoriesForCAP", ">= 2020.02.01" ],
-        [ "HomotopyCategories", ">= 2020.08.15" ],
-        [ "BBGG", "2020.05.01" ]
-          ],
-  SuggestedOtherPackages := [
-            [ "NConvex", ">= 2019.12.06" ],
-            [ "4ti2Interface", ">= 2019.09.03" ]
-          ],
+  GAP := ">= 4.11",
+  NeededOtherPackages :=
+        [
+          [ "AutoDoc", ">=2018.02.14" ],
+          [ "CAP", ">=2020.05.03" ],
+        ],
+  SuggestedOtherPackages :=
+        [
+          [ "GradedModulePresentationsForCAP", ">= 2019.08.07" ],
+          [ "FreydCategoriesForCAP", ">= 2020.09.21" ]
+        ],
   ExternalConditions := [ ],
 ),
 
@@ -94,3 +90,5 @@ TestFile := "tst/testall.g",
 #Keywords := [ "TODO" ],
 
 ));
+
+

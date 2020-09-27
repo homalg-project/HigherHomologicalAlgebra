@@ -2,7 +2,7 @@ all: doc test
 
 .PHONY: test
 
-test: BBGG_test Bicomplexes_test ComplexesCategories_test DerivedCategories_test HomotopyCategories_test QuotientCategories_test StableCategories_test TriangulatedCategories_test
+test: BBGG_test Bicomplexes_test ComplexesCategories_test DerivedCategories_test HomotopyCategories_test QuotientCategories_test StableCategories_test ToolsForHigherHomologicalAlgebra_test TriangulatedCategories_test
 
 BBGG_test:
 	cd BBGG && make test
@@ -25,10 +25,13 @@ QuotientCategories_test:
 StableCategories_test:
 	cd StableCategories && make test
 
+ToolsForHigherHomologicalAlgebra_test:
+	cd ToolsForHigherHomologicalAlgebra && make test
+
 TriangulatedCategories_test:
 	cd TriangulatedCategories && make test
 
-doc: BBGG_doc Bicomplexes_doc ComplexesCategories_doc DerivedCategories_doc HomotopyCategories_doc QuotientCategories_doc StableCategories_doc TriangulatedCategories_doc
+doc: BBGG_doc Bicomplexes_doc ComplexesCategories_doc DerivedCategories_doc HomotopyCategories_doc QuotientCategories_doc StableCategories_doc ToolsForHigherHomologicalAlgebra_doc TriangulatedCategories_doc
 
 BBGG_doc:
 	cd BBGG && make doc
@@ -51,6 +54,9 @@ QuotientCategories_doc:
 StableCategories_doc:
 	cd StableCategories && make doc
 
+ToolsForHigherHomologicalAlgebra_doc:
+	cd ToolsForHigherHomologicalAlgebra && make doc
+
 TriangulatedCategories_doc:
 	cd TriangulatedCategories && make doc
 
@@ -62,4 +68,5 @@ ci-test: doc
 	cd HomotopyCategories && make ci-test
 	cd QuotientCategories && make ci-test
 	cd StableCategories && make ci-test
+	cd ToolsForHigherHomologicalAlgebra && make ci-test
 	cd TriangulatedCategories && make ci-test

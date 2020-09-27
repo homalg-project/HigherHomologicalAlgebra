@@ -1,10 +1,11 @@
-LoadPackage( "ModulePresentations" );
-
-
-##
+#
+# ToolsForHigherHomologicalAlgebra: Tools for the Higher Homological Algebra project
+#
+# Implementations
+#
 ## Random methods
 ##
-RRANDOM_OBJECT :=
+RRANDOM_MODULE_PRESENTATION :=
   function( category, L, left_or_right )
     local homalg_ring, mat;
     
@@ -45,7 +46,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of rows and colms of the matrix of the object is less or equal to n.
-ADD_RRANDOM_OBJECT :=
+ADD_RRANDOM_OBJECT_FOR_MODULE_PRESENTATIONS :=
 
   function( category, left_or_right )
     
@@ -61,11 +62,11 @@ ADD_RRANDOM_OBJECT :=
         
         if left_or_right = "left" then
           
-          return RRANDOM_OBJECT( C, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
+          return RRANDOM_MODULE_PRESENTATION( C, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
         
         else
           
-          return RRANDOM_OBJECT( C, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
+          return RRANDOM_MODULE_PRESENTATION( C, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
         
         fi;
       
@@ -76,7 +77,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of relations of the range of the created random morphism is n.
-ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT_FOR_MODULE_PRESENTATIONS :=
     function( category )
       local homalg_ring;
       
@@ -115,7 +116,7 @@ end;
 ##
 ## Interpretation of n:
 ## The number of generators of the source of the created random morphism is n.
-ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT_FOR_MODULE_PRESENTATIONS :=
     function( category )
       local homalg_ring;
       
@@ -157,7 +158,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT :=
 end;
 
 ##
-ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT_FOR_MODULE_PRESENTATIONS :=
     function( category )
       local homalg_ring;
       
@@ -195,7 +196,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
 end;
 
 ##
-ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT := 
+ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT_FOR_MODULE_PRESENTATIONS:= 
     function( category )
       local homalg_ring;
       
@@ -238,7 +239,7 @@ end;
 ## In this method: we find a random linear combination of random elements in Hom(M,N) with coefficients |n|-powers of random ring elements.
 ##
 
-ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE :=
+ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE_FOR_MODULE_PRESENTATIONS:=
     function( category, left_or_right )
       local homalg_ring;
       
@@ -288,138 +289,45 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE :=
     
 end;
 
-##
-TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS :=
-  function( R )
-    local random_element_func, random_matrix_func;
-    
-    if IsBound( R!.random_element_func ) and IsBound( R!.random_matrix_func ) then
-      
-      return true;
-    
-    fi;
-    
-    if ( HasIsFreePolynomialRing( R ) and IsFreePolynomialRing( R ) ) or 
-        ( HasIsExteriorRing( R ) and IsExteriorRing( R ) ) then
-      
-      random_element_func :=
-        function(  )
-             local ind, n, l1, l2;
-             
-             ind := Concatenation(  [ One( R ) ], Indeterminates( R ), Indeterminates( R ) );
-             
-             n := Random( [ 1, 1, 1, 2, 2, 3 ] );
-             
-             l1 := List( [ 1 .. n ], i -> Product( Random( Combinations( ind, i ) ) ) );
-             
-             l2 := List( [ 1 .. n ], i -> Random( [ -2, -1, -1, 0, 1, 1, 2 ] ) * One( R ) );
-             
-             return l1 * l2;
-        
-        end;
-        
-      R!.random_element_func := random_element_func;
-    
-    elif ( HasIsFieldForHomalg( R ) and IsFieldForHomalg( R ) ) or
-          ( HasIsIntegersForHomalg( R ) and IsIntegersForHomalg( R ) ) then
-      
-      random_element_func :=
-        function( )
-          
-          return Random( [ -20 .. 20 ] )*One( R );
-        
-        end;
-      
-      R!.random_element_func := random_element_func;
-    
-    elif HasAmbientRing( R ) and IsBound( AmbientRing( R )!.random_element_func ) then
-    
-      random_element_func :=
-        function( )
-          
-          return AmbientRing( R )!.random_element_func(  )/R;
-        
-        end;
-      
-      R!.random_element_func := random_element_func;
-     
-     fi;
-     
-     random_matrix_func :=
-        function( m, n )
-          local L;
-          
-          if m * n = 0 then
-            
-            return HomalgZeroMatrix( m, n, R );
-          
-          else
-            
-            L := List( [ 1 .. m ], i -> List( [ 1 .. n ], j -> R!.random_element_func(  ) ) );
-            
-            return HomalgMatrix( L, m, n, R );
-          
-          fi;
-        
-        end;
-     
-     if IsBound( R!.random_element_func ) then
-       
-       R!.random_matrix_func := random_matrix_func;
-       
-       return true;
-     
-     else
-       
-       return false;
-     
-     fi;
-    
-end;
-
-
 ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS :=
   function( category, left_or_right )
     local S;
 
     S := category!.ring_for_representation_category;
     
-    TRY_TO_ENHANCE_HOMALG_RING_WITH_RRANDOM_FUNCTIONS( S );
+    if not EnhanceHomalgRingWithRandomFunctions( S ) = true then
+      
+      Finalize( category );
+      
+      return;
+      
+    fi;
     
     if left_or_right = "left"  then
       
-      if IsBound( S!.random_element_func ) and 
-           IsBound( S!.random_matrix_func ) then
-        
-        ADD_RRANDOM_OBJECT( category, "left" );
-        
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT( category );
-        
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT( category );
-        
-        if HasIsCommutative( S ) and IsCommutative( S ) then
-          
-          ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "left" );
-        
-        fi;
+      ADD_RRANDOM_OBJECT_FOR_MODULE_PRESENTATIONS( category, "left" );
       
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT_FOR_MODULE_PRESENTATIONS( category );
+      
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT_FOR_MODULE_PRESENTATIONS( category );
+      
+      if HasIsCommutative( S ) and IsCommutative( S ) then
+        
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE_FOR_MODULE_PRESENTATIONS( category, "left" );
+        
       fi;
       
     elif left_or_right = "right" then
-    
-      if IsBound( S ) and IsBound( S ) then
+      
+      ADD_RRANDOM_OBJECT_FOR_MODULE_PRESENTATIONS( category, "right" );
+      
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT_FOR_MODULE_PRESENTATIONS( category );
+      
+      ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT_FOR_MODULE_PRESENTATIONS( category );
+      
+      if HasIsCommutative( S ) and IsCommutative( S ) then
         
-        ADD_RRANDOM_OBJECT( category, "right" );
-        
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT( category );
-        
-        ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT( category );
-        
-        if HasIsCommutative( S ) and IsCommutative( S ) then
-          
-          ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE( category, "right" );
-        
-        fi;
+        ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE_FOR_MODULE_PRESENTATIONS( category, "right" );
       
       fi;
       
@@ -429,26 +337,26 @@ ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS :=
   
 end;
 
-
 ##
 InstallMethod( LeftPresentations,
           [ IsHomalgRing ],
+          
   function( S )
     local random_methods, cat;
     
-    random_methods := ValueOption( "random_methods" );
+    random_methods := ValueOption( "RandomMethod_ToolsForHigherHomologicalAlgebra" );
     
     if random_methods = false then
       TryNextMethod( );
     fi;
     
-    cat := LeftPresentations( S : FinalizeCategory := false, random_methods := false );
+    cat := LeftPresentations( S : FinalizeCategory := false, RandomMethod_ToolsForHigherHomologicalAlgebra := false );
     
     ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "left" );
     
     return cat;
     
-end, 1000 );
+end, 100 );
 
 ##
 InstallMethod( RightPresentations,
@@ -456,17 +364,107 @@ InstallMethod( RightPresentations,
   function( S )
     local random_methods, cat;
     
-    random_methods := ValueOption( "random_methods" );
+    random_methods := ValueOption( "RandomMethod_ToolsForHigherHomologicalAlgebra" );
     
     if random_methods = false then
       TryNextMethod( );
     fi;
     
-    cat := RightPresentations( S : FinalizeCategory := false, random_methods := false );
+    cat := RightPresentations( S : FinalizeCategory := false, RandomMethod_ToolsForHigherHomologicalAlgebra := false );
     
     ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "right" );
     
     return cat;
     
-end, 1000 );
+end );
 
+
+##
+InstallMethod( LaTeXStringOp,
+               [ IsLeftOrRightPresentation ],
+  function( object )
+    local rel, ring_name, rel_dat;
+    
+    rel := UnderlyingMatrix( object );
+    
+    ring_name := LaTeXStringOp( HomalgRing( rel ) );
+    
+    rel_dat := LaTeXStringOp( rel );
+    
+    if IsLeftPresentation( object ) then
+      return
+       Concatenation(
+        "\\big(",
+        ring_name,
+        "^{1\\times ",
+        String( NrRows( rel ) ),
+        "}",
+        "\\xrightarrow{",
+        rel_dat,
+        "}",
+        ring_name,
+        "^{1\\times ",
+        String( NrCols( rel ) ),
+        "}",
+        "\\big)_{",
+        ring_name,
+        "\\mbox{-fpres}",
+        "}"
+      );
+       
+    else
+      
+      return
+       Concatenation(
+        "\\big(",
+        ring_name,
+        "^{",
+        String( NrCols( rel ) ),
+        "\\times 1}",
+        "\\xrightarrow{",
+        rel_dat,
+        "}",
+        ring_name,
+        "^{",
+        String( NrRows( rel ) ),
+        "\\times 1}",
+        "\\big)_{",
+        "\\mbox{fpres-}",
+        ring_name,
+        "}"
+      );
+    
+    fi;
+    
+end );
+
+##
+InstallMethod( LaTeXStringOp,
+          [ IsLeftOrRightPresentationMorphism ],
+          
+  function( mor )
+    local datum;
+    
+    datum := LaTeXStringOp( UnderlyingMatrix( mor ) );
+    
+    if ValueOption( "OnlyDatum" ) = true then
+       
+       return Concatenation(
+        """{\color{blue}{""",
+        datum,
+        """}}"""
+      );
+      
+    else
+      
+      return Concatenation(
+        "{ \\tiny ", LaTeXStringOp( Source( mor ) ), "}",
+        """{\color{blue}{\xrightarrow{""",
+        datum,
+        """}}}""",
+        "{ \\tiny ", LaTeXStringOp( Range( mor ) ), "}"
+      );
+      
+    fi;
+    
+end );

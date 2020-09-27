@@ -1,6 +1,6 @@
 #/bin/bash
 
-packages="BBGG Bicomplexes ComplexesCategories DerivedCategories HomotopyCategories QuotientCategories StableCategories TriangulatedCategories"
+packages="BBGG Bicomplexes ComplexesCategories DerivedCategories HomotopyCategories QuotientCategories StableCategories ToolsForHigherHomologicalAlgebra TriangulatedCategories"
 
 base_dir="$PWD"
 
