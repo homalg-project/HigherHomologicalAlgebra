@@ -1,7 +1,7 @@
 name: BBGG
-version: "2020.09.05"
+version: "2020.09.07"
 license: "GPL-2.0-or-later"
-date: 2020-09-05
+date: 2020-09-07
 description: |
     Beilinson monads and derived categories for coherent sheaves over P^n
 
@@ -30,27 +30,27 @@ needed-pkgs:
       url: "https://homalg-project.github.io/homalg_project/GradedRingForHomalg/"
     - name: "Bicomplexes"
       version: ">= 2020.03.11"
-      url: "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/Bicomplexes"
+      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes"
     - name: "StableCategories"
       version: ">= 2019.12.04"
-      url: "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/StableCategories"
+      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories"
     - name: "LinearAlgebraForCAP"
       version: ">= 2020.04.16"
       url: "http://homalg-project.github.io/CAP_project/LinearAlgebraForCAP/"
     - name: "SubcategoriesForCAP"
       version: ">= 2020.04.05"
-      url: "https://homalg-project.github.io/SubcategoriesForCAP"
+      url: "https://github.com/homalg-project/SubcategoriesForCAP/"
     - name: "FreydCategoriesForCAP"
       version: ">= 2019.11.02"
       url: "https://github.com/homalg-project/CAP_project/tree/master/FreydCategoriesForCAP"
 
-www: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/BBGG
+www: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG
 readme: README.md
-packageinfo: https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/BBGG/PackageInfo.g
+packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/BBGG-2020.09.05/BBGG-2020.09.05.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/BBGG-2020.09.07/BBGG-2020.09.07.tar.gz
 
 abstract: |
     The <span class='pkgname'>BBGG</span> package provides a GAP package to implement the Bernstein, Gelfand and Gelfand correspondence, in order to give several models for the derived category of coherent sheaves, over the projective space. First as a triangulated stable category over left modules over exterior algebras and the secondly by constructing the Beilinson monads.
@@ -64,23 +64,24 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>BBGG, Beilinson monads and derived categories for coherent sheaves over P^n,
-             Version 2020.09.05</i>
+             Version 2020.09.07</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/BBGG">https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/BBGG</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG">https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ BBGG2020.09.05,
+    @misc{ BBGG2020.09.07,
       author =           {Saleh, K.},
-      title =            {{BBGG}, Beilinson monads and derived categories for coherent sheaves over P\texttt{\symbol{94}}n, {V}ersion 2020.09.05},
+      title =            {{BBGG},  Beilinson  monads  and derived categories for coherent sheaves over P\texttt{\symbol{94}}n,
+                          {V}ersion 2020.09.07},
       month =            {Sep},
       year =             {2020},
       note =             {GAP package},
-      howpublished =     {\href              {https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/BBGG}             {\texttt{https://github.com/}\discretionary
-                          {}{}{}\texttt{homalg-project/}\discretionary          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary          {}{}{}\texttt{tree/}\discretionary
-                          {}{}{}\texttt{master/}\discretionary {}{}{}\texttt{BBGG}}},
+      howpublished =     {\href                               {https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG}
+                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary {}{}{}\texttt{BBGG}}},
       keywords =         {Beilinson monads; Tate resolutions; Derived categories; Projective space; Coherent sheaves},
       printedkey =       {Sal20}
     }
