@@ -13,7 +13,7 @@ PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
 
 Version := Maximum( [
-                   "2020.09.05", ## Kamals's version
+                   "2020.09.07", ## Kamals's version
                    ## this line prevents merge conflicts
                    "2017.05.02", ## Mohamed's version
                    ] ),
@@ -59,9 +59,9 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/Bicomplexes",
-PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/Bicomplexes/PackageInfo.g",
-README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/Bicomplexes/README.md",
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-", ~.Version, "/Bicomplexes-", ~.Version ),
 # END URLS
 
