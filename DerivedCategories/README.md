@@ -9,8 +9,8 @@
 The package can be used to construct derived categories and equivalences between them.
 
 <!-- BEGIN FOOTER -->
-[docs-img]: https://img.shields.io/badge/PDF-dev-blue.svg
-[docs-url]: /../../raw/doc/DerivedCategories.pdf
+[docs-img]: https://img.shields.io/badge/docs-stable-blue.svg
+[docs-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/doc/chap0_mj.html
 
 [tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg
 [tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions?query=workflow%3ATests

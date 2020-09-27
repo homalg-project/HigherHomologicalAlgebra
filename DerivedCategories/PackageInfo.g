@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2020.09.05",
+Version := "2020.09.07",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -40,9 +40,9 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/DerivedCategories",
-PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/DerivedCategories/PackageInfo.g",
-README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/DerivedCategories/README.md",
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-", ~.Version, "/DerivedCategories-", ~.Version ),
 # END URLS
 
@@ -71,13 +71,14 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.9",
-  NeededOtherPackages := [
+  NeededOtherPackages := [ 
+        [ "ToolsForHigherHomologicalAlgebra", "2020.09.25" ],
         [ "QPA", ">= 2.0-dev"], # https://github.com/homalg-project/QPA2.git
         [ "CAP", ">= 2020.04.16" ],
         [ "Algebroids", ">= 2020.04.24" ],
         [ "SubcategoriesForCAP", ">= 2020.02.01" ],
         [ "HomotopyCategories", ">= 2020.08.15" ],
-        [ "BBGG", "2020.05.01" ],
+        [ "BBGG", "2020.05.01" ]
           ],
   SuggestedOtherPackages := [
             [ "NConvex", ">= 2019.12.06" ],
