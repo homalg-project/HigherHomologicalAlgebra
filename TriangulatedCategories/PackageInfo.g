@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
 Subtitle := "Framework for triangulated categories",
-Version := "2020.09.05",
+Version := "2020.09.07",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -40,9 +40,9 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/TriangulatedCategories",
-PackageInfoURL  := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/TriangulatedCategories/PackageInfo.g",
-README_URL      := "https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/TriangulatedCategories/README.md",
+PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories",
+PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-", ~.Version, "/TriangulatedCategories-", ~.Version ),
 # END URLS
 
