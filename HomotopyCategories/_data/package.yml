@@ -1,7 +1,7 @@
 name: HomotopyCategories
-version: "2020.09.05"
+version: "2020.09.07"
 license: "GPL-2.0-or-later"
-date: 2020-09-05
+date: 2020-09-07
 description: |
     Homotopy categories of additive categories
 
@@ -24,29 +24,29 @@ needed-pkgs:
       url: "https://homalg-project.github.io/CAP_project/CAP"
     - name: "ComplexesCategories"
       version: ">= 2020.09.01"
-      url: "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/ComplexesCategories"
+      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories"
     - name: "GeneralizedMorphismsForCAP"
       version: "2019.01.16"
       url: "http://homalg-project.github.io/CAP_project/GeneralizedMorphismsForCAP/"
     - name: "StableCategories"
       version: ">= 2020.07.16"
-      url: "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/StableCategories"
+      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories"
     - name: "TriangulatedCategories"
       version: ">= 2020.07.20"
-      url: "https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/TriangulatedCategories"
+      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories"
 
 suggested-pkgs:
     - name: "Algebroids"
       version: ">= 2020.04.25"
       url: "https://homalg-project.github.io/Algebroids"
 
-www: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories
+www: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories
 readme: README.md
-packageinfo: https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/HomotopyCategories/PackageInfo.g
+packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.09.05/HomotopyCategories-2020.09.05.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.09.07/HomotopyCategories-2020.09.07.tar.gz
 
 abstract: |
 
@@ -57,23 +57,23 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>HomotopyCategories, Homotopy categories of additive categories,
-             Version 2020.09.05</i>
+             Version 2020.09.07</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories">https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ HomotopyCategories2020.09.05,
+    @misc{ HomotopyCategories2020.09.07,
       author =           {Saleh, K.},
-      title =            {{HomotopyCategories}, Homotopy categories of additive categories, {V}ersion 2020.09.05},
+      title =            {{HomotopyCategories}, Homotopy categories of additive categories, {V}ersion 2020.09.07},
       month =            {Sep},
       year =             {2020},
       note =             {GAP package},
-      howpublished =     {\href       {https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories}      {\texttt{https://github.com/}\discretionary
-                          {}{}{}\texttt{homalg-project/}\discretionary          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary          {}{}{}\texttt{tree/}\discretionary
-                          {}{}{}\texttt{master/}\discretionary {}{}{}\texttt{HomotopyCategories}}},
+      howpublished =     {\href                 {https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories}
+                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary {}{}{}\texttt{HomotopyCategories}}},
       printedkey =       {Sal20}
     }
 
