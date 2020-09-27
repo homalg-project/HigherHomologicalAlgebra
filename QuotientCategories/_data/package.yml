@@ -1,7 +1,7 @@
 name: QuotientCategories
-version: "2020.09.05"
+version: "2020.09.07"
 license: "GPL-2.0-or-later"
-date: 2020-09-05
+date: 2020-09-07
 description: |
     Quotient categories of CAP categories by two-sided ideals
 
@@ -26,13 +26,13 @@ needed-pkgs:
       version: ">= 2020.04.05"
       url: "https://github.com/homalg-project/CategoryConstructor"
 
-www: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/QuotientCategories
+www: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories
 readme: README.md
-packageinfo: https://raw.githubusercontent.com/homalg-project/HigherHomologicalAlgebra/master/QuotientCategories/PackageInfo.g
+packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2020.09.05/QuotientCategories-2020.09.05.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2020.09.07/QuotientCategories-2020.09.07.tar.gz
 
 abstract: |
 
@@ -43,23 +43,24 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>QuotientCategories, Quotient categories of CAP categories by two-sided ideals,
-             Version 2020.09.05</i>
+             Version 2020.09.07</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/QuotientCategories">https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/QuotientCategories</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ QuotientCategories2020.09.05,
+    @misc{ QuotientCategories2020.09.07,
       author =           {Saleh, K.},
-      title =            {{QuotientCategories}, Quotient categories of CAP categories by two-sided ideals, {V}ersion 2020.09.05},
+      title =            {{QuotientCategories},   Quotient  categories  of  CAP  categories  by  two-sided  ideals,  {V}ersion
+                          2020.09.07},
       month =            {Sep},
       year =             {2020},
       note =             {GAP package},
-      howpublished =     {\href       {https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/QuotientCategories}      {\texttt{https://github.com/}\discretionary
-                          {}{}{}\texttt{homalg-project/}\discretionary          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary          {}{}{}\texttt{tree/}\discretionary
-                          {}{}{}\texttt{master/}\discretionary {}{}{}\texttt{QuotientCategories}}},
+      howpublished =     {\href                 {https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories}
+                          {\texttt{https://homalg-project.github.io/}\discretionary
+                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary {}{}{}\texttt{QuotientCategories}}},
       printedkey =       {Sal20}
     }
 
