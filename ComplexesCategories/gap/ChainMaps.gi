@@ -559,8 +559,152 @@ InstallMethod( IsWellDefined,
 end );
 
 ##
+InstallOtherMethod( LaTeXStringOp,
+        [ IsChainOrCochainMorphism, IsInt, IsInt ],
+        
+  function( phi, l, u )
+    local OnlyDatum, s, i;
+    
+    OnlyDatum := ValueOption( "OnlyDatum" );
+    
+    if OnlyDatum = true then
+      
+      s := "\\begin{array}{lc}\n ";
+      
+      for i in [ l .. u ] do
+        
+        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXStringOp( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
+        
+      od;
+      
+    else
+      
+      s := "\\begin{array}{ccc}\n ";
+      
+      if IsChainMorphism( phi ) then
+        
+        s := Concatenation(
+                s,
+                LaTeXStringOp( Source( phi )[ l ] ),
+                "&-\\phantom{-}{",
+                LaTeXStringOp( phi[ l ] : OnlyDatum := true ),
+                "}\\phantom{-}\\rightarrow&",
+                LaTeXStringOp( Range( phi )[ l ] ),
+                "\n \\\\ \n"
+              );
+              
+        for i in [ l + 1 .. u ] do
+          
+          s := Concatenation(
+                  s,
+                  " \\uparrow_{\\phantom{", String( i ), "}}",
+                  "&&",
+                  " \n \\uparrow_{\\phantom{", String( i ), "}}",
+                  "\n \\\\ \n "
+                );
+                
+          s := Concatenation(
+                  s,
+                  LaTeXStringOp( Source( phi ) ^ i : OnlyDatum := true ),
+                  "&&",
+                  LaTeXStringOp( Range( phi ) ^ i : OnlyDatum := true ),
+                  "\n \\\\ \n "
+                );
+                
+          s := Concatenation(
+                  s,
+                  "\\vert_{", String( i ), "} ",
+                  "&&",
+                  "\\vert_{", String( i ), "} ",
+                  "\n \\\\ \n "
+                );
+                
+          s := Concatenation(
+                s,
+                LaTeXStringOp( Source( phi )[ i ] ),
+                "&-\\phantom{-}{",
+                LaTeXStringOp( phi[ i ] : OnlyDatum := true ),
+                "}\\phantom{-}\\rightarrow&",
+                LaTeXStringOp( Range( phi )[ i ] ),
+                "\n \\\\ \n "
+              );
+              
+        od;
+        
+      else
+        
+        for i in [ l .. u - 1 ] do
+          
+          s := Concatenation(
+                s,
+                "\\\\ \n",
+                LaTeXStringOp( Source( phi )[ i ] ),
+                "&-\\phantom{-}{",
+                LaTeXStringOp( phi[ i ] : OnlyDatum := true ),
+                "}\\phantom{-}\\rightarrow&",
+                LaTeXStringOp( Range( phi )[ i ] ),
+                "\n "
+              );
+              
+          s := Concatenation(
+                  s,
+                  "\\\\ \n \\vert^{", String( i ), "} ",
+                  "&&",
+                  "\\vert^{", String( i ), "} ",
+                  "\n \\\\ \n "
+                );
+                
+          s := Concatenation(
+                  s,
+                  LaTeXStringOp( Source( phi ) ^ i : OnlyDatum := true ),
+                  "&&",
+                  LaTeXStringOp( Range( phi ) ^ i : OnlyDatum := true ),
+                  "\n \\\\ \n "
+                );
+                
+          s := Concatenation(
+                  s,
+                  " \\downarrow_{\\phantom{", String( i ), "}}",
+                  "&&",
+                  " \n \\downarrow_{\\phantom{", String( i ), "}}"
+                );
+                
+        od;
+        
+        s := Concatenation(
+                s,
+                "\\\\ \n",
+                LaTeXStringOp( Source( phi )[ u ] ),
+                "&-\\phantom{-}{",
+                LaTeXStringOp( phi[ u ] : OnlyDatum := true ),
+                "}\\phantom{-}\\rightarrow&",
+                LaTeXStringOp( Range( phi )[ u ] ),
+                "\n \\\\ \n "
+              );
+              
+      fi;
+      
+    fi;
+    
+    s := Concatenation( s, "\\end{array}" );
+    
+    return s;
+    
+end );
+
+##
+InstallMethod( LaTeXStringOp,
+          [ IsBoundedChainOrCochainMorphism ],
+  phi -> LaTeXStringOp( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
+);
+
+##
+#MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainMorphism );
+
+##
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainMorphism, IsInt, IsInt ],
+        
   function( phi, l, u )
     local OnlyDatum, s, i;
     
@@ -591,7 +735,7 @@ InstallOtherMethod( LaTeXOutput,
                 LaTeXOutput( Range( phi )[ l ] ),
                 "\n \\\\ \n"
               );
-        
+              
         for i in [ l + 1 .. u ] do
           
           s := Concatenation(
@@ -601,7 +745,7 @@ InstallOtherMethod( LaTeXOutput,
                   " \n \\uparrow_{\\phantom{", String( i ), "}}",
                   "\n \\\\ \n "
                 );
-          
+                
           s := Concatenation(
                   s,
                   LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
@@ -609,7 +753,7 @@ InstallOtherMethod( LaTeXOutput,
                   LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
                   "\n \\\\ \n "
                 );
-          
+                
           s := Concatenation(
                   s,
                   "\\vert_{", String( i ), "} ",
@@ -617,7 +761,7 @@ InstallOtherMethod( LaTeXOutput,
                   "\\vert_{", String( i ), "} ",
                   "\n \\\\ \n "
                 );
-          
+                
           s := Concatenation(
                 s,
                 LaTeXOutput( Source( phi )[ i ] ),
@@ -627,9 +771,9 @@ InstallOtherMethod( LaTeXOutput,
                 LaTeXOutput( Range( phi )[ i ] ),
                 "\n \\\\ \n "
               );
-          
+              
         od;
-      
+        
       else
         
         for i in [ l .. u - 1 ] do
@@ -644,7 +788,7 @@ InstallOtherMethod( LaTeXOutput,
                 LaTeXOutput( Range( phi )[ i ] ),
                 "\n "
               );
-          
+              
           s := Concatenation(
                   s,
                   "\\\\ \n \\vert^{", String( i ), "} ",
@@ -652,7 +796,7 @@ InstallOtherMethod( LaTeXOutput,
                   "\\vert^{", String( i ), "} ",
                   "\n \\\\ \n "
                 );
-          
+                
           s := Concatenation(
                   s,
                   LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
@@ -660,14 +804,14 @@ InstallOtherMethod( LaTeXOutput,
                   LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
                   "\n \\\\ \n "
                 );
-          
+                
           s := Concatenation(
                   s,
                   " \\downarrow_{\\phantom{", String( i ), "}}",
                   "&&",
                   " \n \\downarrow_{\\phantom{", String( i ), "}}"
                 );
-           
+                
         od;
         
         s := Concatenation(
@@ -680,13 +824,13 @@ InstallOtherMethod( LaTeXOutput,
                 LaTeXOutput( Range( phi )[ u ] ),
                 "\n \\\\ \n "
               );
-                      
+              
       fi;
-    
+      
     fi;
     
-    s := Concatenation( s, "\\end{array}" );  
-        
+    s := Concatenation( s, "\\end{array}" );
+    
     return s;
     
 end );
@@ -697,15 +841,6 @@ InstallMethod( LaTeXOutput,
   phi -> LaTeXOutput( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
 );
 
-##
-InstallMethod( LaTeXStringOp,
-          [ IsBoundedChainOrCochainMorphism ],
-  LaTeXOutput
-);
-
-##
-MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainMorphism );
-
 #################################
 #
 # Operations
@@ -714,8 +849,8 @@ MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainMo
 
 ##
 InstallMethod( HasActiveLowerBound,
-               [ IsChainOrCochainMorphism ],
-  
+          [ IsChainOrCochainMorphism ],
+          
   function( phi )
     
     if HasActiveLowerBound( Source( phi ) ) or HasActiveLowerBound( Range( phi ) ) then
@@ -967,7 +1102,7 @@ InstallMethod( ActiveLowerBoundForSourceAndRange,
 
 ##
 InstallMethod( AsChainMorphism,
-    [ IsCochainMorphism ],
+          [ IsCochainMorphism ],
   function( phi )
     local F, cochains, chains, psi;
     

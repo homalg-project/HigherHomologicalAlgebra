@@ -562,6 +562,105 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
 end );
 
 ##
+InstallOtherMethod( LaTeXStringOp,
+        [ IsChainOrCochainComplex, IsInt, IsInt ],
+  function( C, l, u )
+    local OnlyDifferentials, OnlyDatum, s, i, Color;
+    
+    OnlyDifferentials := ValueOption( "OnlyDifferentials" );
+        
+    if OnlyDifferentials = true then
+      
+      OnlyDatum := false;
+      
+    else
+      
+      OnlyDatum := true;
+      
+    fi;
+    
+    Color := ValueOption( "Color" );
+    
+    if Color in [ fail, false ] then
+      
+      Color := "black";
+      
+    elif Color = true then
+      
+      Color := "red";
+      
+    elif not IsString( Color ) then
+      
+      Color := "black";
+      
+    fi;
+    
+    s := "\\begin{array}{c}\n ";
+    
+    if IsChainComplex( C ) then
+      
+      if OnlyDifferentials <> true then
+        
+        s := Concatenation( s, LaTeXStringOp( C[ l ] ), "\n " );
+        
+      fi;
+      
+      for i in [ l + 1 .. u ] do
+         
+        s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\phantom{", String( i ), "}}} \n \\\\ \n " );
+        
+        s := Concatenation( s, LaTeXStringOp( C ^ i : OnlyDatum := OnlyDatum ), "\n \\\\ \n " );
+        
+        s := Concatenation( s, "{ \\color{", Color, "}\\vert_{", String( i ), "}} \n " );
+        
+        if OnlyDifferentials <> true then
+          
+          s := Concatenation( s, "\n \\\\ \n", LaTeXStringOp( C[ i ] ) );
+          
+        fi;
+        
+      od;
+    
+    else
+      
+      for i in [ l .. u - 1 ] do
+        
+        if OnlyDifferentials <> true then
+          
+          s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ i ] ), " \n " );
+          
+        fi;
+        
+        s := Concatenation( s, "\\\\ \n  { \\color{", Color, "}\\vert^{", String( i ), "}} \n \\\\ \n " );
+        
+        s := Concatenation( s, LaTeXStringOp( C ^ i : OnlyDatum := OnlyDatum ), " \n \\\\ \n " );
+        
+        s := Concatenation( s, "{ \\color{", Color, "} \\downarrow_{\\phantom{", String( i ), "}}} \n " ); 
+        
+      od;
+      
+      if OnlyDifferentials <> true then
+        
+        s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ u ] ) );
+        
+      fi;
+      
+    fi;
+    
+    s := Concatenation( s, "\\end{array}" );
+        
+    return s;
+    
+end );
+
+##
+InstallMethod( LaTeXStringOp,
+          [ IsBoundedChainOrCochainComplex ],
+  C -> LaTeXStringOp( C, ActiveLowerBound( C ), ActiveUpperBound( C ) )
+);
+
+
+##
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, l, u )
@@ -660,13 +759,7 @@ InstallMethod( LaTeXOutput,
 );
 
 ##
-InstallMethod( LaTeXStringOp,
-          [ IsBoundedChainOrCochainComplex ],
-  LaTeXOutput
-);
-
-##
-MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainComplex );
+#MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainComplex );
 
 ##
 InstallMethod( Display,

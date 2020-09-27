@@ -232,3 +232,15 @@ InstallOtherMethod( LaTeXOutput,
   { c, l, u } -> LaTeXOutput( UnderlyingCell( c, l, u ) )
 );
 
+##
+InstallMethod( LaTeXStringOp,
+          [ IsHomotopyCategoryCell ],
+  c -> LaTeXStringOp( UnderlyingCell( c ) )
+);
+
+##
+InstallOtherMethod( LaTeXStringOp,
+          [ IsHomotopyCategoryCell, IsInt, IsInt ],
+  { c, l, u } -> LaTeXStringOp( UnderlyingCell( c, l, u ) )
+);
+
