@@ -34,16 +34,16 @@ BindGlobal( "_StRiNg",
 end );
 
 BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
-  function( main_vertices, maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
-    local l, u, k, vertices, diffs, maps, arrows, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
+  function( main_vertices, generating_maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
+    local l, u, k, vertices, main_vertices_latex, vertices_latex, diffs, diffs_latex, maps, generating_maps_latex, maps_latex, arrows, extra_arrows_latex, arrows_latex, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
     
     #MAKE_READ_WRITE_GLOBAL( "REREADING" );
     #REREADING := true;
     #SetInfoLevel( InfoWarning, 0 );
     
-    if Size( maps_labels ) > 0 and IsInt( maps_labels[ 1 ][ 2 ] ) then
+    if Size( generating_maps_labels ) > 0 and IsInt( generating_maps_labels[ 1 ][ 2 ] ) then
       
-      maps_labels := List( maps_labels, m -> [ m[ 1 ], main_vertices[ m[ 2 ] ], main_vertices[ m[ 3 ] ] ] );
+      generating_maps_labels := List( generating_maps_labels, m -> [ m[ 1 ], main_vertices[ m[ 2 ] ], main_vertices[ m[ 3 ] ] ] );
       
     fi;
     
@@ -53,10 +53,26 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     k := HomalgFieldOfRationals( );
      
-    vertices := ListX( main_vertices, [ l .. u ], 
+    vertices := ListX( main_vertices, [ l .. u ],
                     { V, i } -> Concatenation( V, "_", _StRiNg( i ) )
                   );
     
+    main_vertices_latex := ValueOption( "OLaTeXStrings" );
+    
+    if main_vertices_latex = fail then
+      
+      main_vertices_latex := main_vertices;
+      
+    elif Size( main_vertices_latex ) <> Size( main_vertices ) then
+      
+      Error( "Bad LaTeX labels for vertices" );
+      
+    fi;
+    
+    vertices_latex := ListX( main_vertices_latex, [ l .. u ],
+                    { V, i } -> Concatenation( "{", V, "}^{", String( i ), "}" )
+                  );
+ 
     diffs := ListX( main_vertices, [ l .. u - 1 ],
                     { V, i } -> Concatenation(
                                       "d", V, "_", _StRiNg( i ),
@@ -66,8 +82,12 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
                                       V, "_", _StRiNg( i + 1 )
                                     )
                   );
-
-    maps := ListX( maps_labels, [ l .. u ],
+    
+    diffs_latex := ListX( main_vertices_latex, [ l .. u - 1 ],
+                      { V, i } -> Concatenation( "\\partial_{", V, "}^{", String( i ), "}" )
+                  );
+   
+    maps := ListX( generating_maps_labels, [ l .. u ],
                     { map, i } -> Concatenation(
                                       map[ 1 ], "_", _StRiNg( i ),
                                       ":",
@@ -77,8 +97,20 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
                                     )
                        );
     
-    arrows := Concatenation( diffs, maps, extra_arrows );
+    generating_maps_latex := ValueOption( "MLaTeXStrings" );
     
+    if generating_maps_latex = fail then
+      
+      generating_maps_latex := List( generating_maps_labels, g -> g[ 1 ] );
+      
+    fi;
+
+    maps_latex := ListX( generating_maps_latex, [ l .. u ],
+                    { map, i } -> Concatenation( "{", map, "}^{", String( i ), "}" )
+                  );
+    
+    arrows := Concatenation( diffs, maps, extra_arrows );
+        
     Q := RightQuiver(
             Concatenation(
                 "q(",
@@ -88,6 +120,24 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
                 "]"
               )
           );
+    
+    extra_arrows_latex := ValueOption( "ELaTeXStrings" );
+    
+    if extra_arrows_latex <> fail then
+      
+      arrows_latex := Concatenation( diffs_latex, maps_latex, extra_arrows_latex );
+      
+      if NumberOfVertices( Q ) <> Size( vertices_latex ) or NumberOfArrows( Q ) <> Size( arrows_latex ) then
+        
+        Info( InfoWarning, 1, "AlgebroidOfDiagramInHomotopyCategory method needs to be checked!" );
+        
+      else
+        
+        SetLabelsAsLaTeXStrings( Q, vertices_latex, arrows_latex );
+        
+      fi;
+      
+    fi;
     
     kQ := PathAlgebra( k, Q );
     
@@ -104,7 +154,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     diffs_rel := Filtered( diffs_rel, r -> not IsZero( r ) );
     
-    maps_rel := ListX( maps_labels, [ l .. u - 1 ],
+    maps_rel := ListX( generating_maps_labels, [ l .. u - 1 ],
                   { m, i } -> 
                     UnderlyingQuiverAlgebraElement(
                         oid.( Concatenation( "d", m[ 2 ], "_", _StRiNg( i ) ) )
@@ -158,7 +208,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
       
     od;
     
-    for map in maps_labels do
+    for map in generating_maps_labels do
       
       s := ValueGlobal( map[ 2 ] );
       
@@ -199,7 +249,7 @@ end );
 
 BindGlobal( "MakeMorphismNullHomotopic",
   function( L )
-    local map, s, r, lb, ub, diffs_s, diffs_r, maps, extra_arrows, diffs_s_h, diffs_r_h, rels, extra_relations, cat, vertices, vertices_id, i, j;
+    local map, s, r, lb, ub, diffs_s, diffs_r, maps, extra_arrows, diffs_s_h, diffs_r_h, rels, extra_relations, cat, vertices, vertices_id, i, j, extra_arrows_latex;
   
     map := EvalString( L[ 1 ] );
     
@@ -266,7 +316,7 @@ BindGlobal( "MakeMorphismNullHomotopic",
                       o -> Concatenation( "(", String( UnderlyingVertex(o) ), ")" )
                     );
     else
-      
+       
       vertices := List( SetOfObjects(
                         UnderlyingCategory(
                           UnderlyingCategory(
@@ -303,26 +353,47 @@ BindGlobal( "MakeMorphismNullHomotopic",
                          )
                        )
                 );
+      
+      if IsBound( L[ 3 ] ) then
+        
+        extra_arrows_latex := List( [ lb .. ub ],
+                      i -> Concatenation( "{", L[ 3 ], "}^{", String( i ), "}" )
+                );
+        
+      else
+        
+        extra_arrows_latex := fail;
+        
+      fi;
+      
     else
       
       extra_arrows := [ ];
       
+      extra_arrows_latex := fail;
+      
     fi;
     
-    return [ extra_arrows, extra_relations ];
+    return [ extra_arrows, extra_relations, extra_arrows_latex ];
 
 end );
 
 InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
           [ IsList, IsList, IsList, IsList, IsList ],
   function( objects, maps, bounds, pre_rels, other_rels )
-    local extra_arrows, extra_relations, e, m, relations, oid;
+    local olatex, mlatex, extra_arrows, extra_relations, e, m, relations, oid, extra_arrows_latex;
+    
+    olatex := ValueOption( "OLaTeXStrings" );
+    
+    mlatex := ValueOption( "MLaTeXStrings" );
     
     CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, [ ], [ ], false );
     
     extra_arrows := [ ];
     
     extra_relations := [ ];
+    
+    extra_arrows_latex := [ ];
     
     for m in pre_rels do
       
@@ -332,9 +403,15 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
       
       extra_relations := Concatenation( extra_relations, e[ 2 ] );
       
+      if extra_arrows_latex <> fail and e[ 3 ] <> fail then
+        extra_arrows_latex := Concatenation( extra_arrows_latex, e[ 3 ] );
+      else
+        extra_arrows_latex := fail;
+      fi;
+      
     od;
     
-    oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true );
+    oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true : ELaTeXStrings := extra_arrows_latex, OLaTeXStrings := olatex, MLaTeXStrings := mlatex );
     
     for relations in other_rels do
       
@@ -345,21 +422,27 @@ InstallMethod( AlgebroidOfDiagramInHomotopyCategory,
         extra_arrows := Concatenation( extra_arrows, e[ 1 ] );
         
         extra_relations := Concatenation( extra_relations, e[ 2 ] );
-      
+        
+        if extra_arrows_latex <> fail and e[ 3 ] <> fail then
+          extra_arrows_latex := Concatenation( extra_arrows_latex, e[ 3 ] );
+        else
+          extra_arrows_latex := fail;
+        fi;
+        
       od;
       
-      oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true );
+      oid := CREATE_ALGEBROID_OF_DIAGRAM( objects, maps, bounds, extra_arrows, extra_relations, true : ELaTeXStrings := extra_arrows_latex, OLaTeXStrings := olatex, MLaTeXStrings := mlatex );
       
     od;
      
-    oid!.defining_data := [ objects, maps, bounds, extra_arrows, extra_relations, true ];
+    oid!.defining_data := [ objects, maps, bounds, extra_arrows, extra_arrows_latex, extra_relations, true ];
     
     return oid;
     
 end );
 
 #bounds := [ -3, 3 ];
-#maps_labels :=
+#generating_maps_labels :=
 # [
 #       [ "a1", "A1", "A2" ],
 #       [ "a2", "A2", "A3" ],
