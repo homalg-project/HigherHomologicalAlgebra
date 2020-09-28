@@ -27,11 +27,17 @@ InstallMethod( Algebroid,
       
       A!.alternative_name := name;
       
+    elif HasName( A ) then
+      
+      A!.alternative_name := Name( A );
+      
     else
       
-      name := Name( A );
+      A!.alternative_name := String( A );
       
     fi;
+    
+    name := A!.alternative_name;
     
     r := RandomTextColor( "" );
     
