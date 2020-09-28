@@ -10,6 +10,27 @@
 
 ##
 InstallMethod( VisualizeLaTeXString,
+          [ IsCapCategoryCell ],
+  function( c )
+  
+    if ApplicableMethod( LaTeXStringOp, [ c ], 0, 1 ) <> fail then
+      
+      VisualizeLaTeXString( LaTeXStringOp( c ) );
+      
+    elif ApplicableMethod( LaTeXOutput, [ c ], 0, 1 ) <> fail then
+      
+      VisualizeLaTeXString( LaTeXOutput( c ) );
+      
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+end );
+
+##
+InstallMethod( VisualizeLaTeXString,
           [ IsString ],
           
   function( str )
