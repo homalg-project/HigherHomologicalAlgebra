@@ -362,7 +362,9 @@ BindGlobal( "MakeMorphismNullHomotopic",
         
       else
         
-        extra_arrows_latex := fail;
+        extra_arrows_latex := List( [ lb .. ub ],
+                      i -> Concatenation( "{", L[ 2 ], "}^{", String( i ), "}" )
+                );
         
       fi;
       
