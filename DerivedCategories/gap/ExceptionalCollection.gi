@@ -1405,7 +1405,7 @@ end );
 ##
 InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
-    local sources_of_arrows, ranges_of_arrows, arrows, labels, quiver, A, G, H, df_H, rel, g, e, cat, i;
+    local sources_of_arrows, ranges_of_arrows, arrows, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, G, H, df_H, rel, g, e, i;
     
     sources_of_arrows := List( [ 1 .. nr_arrows ],
       i -> Random( [ 1 .. nr_vertices - 1 ] ) );
@@ -1416,16 +1416,39 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     arrows := ListN( sources_of_arrows, ranges_of_arrows, {s,r} -> [ s, r ] );
     
     arrows := Collected( arrows );
-    
+        
     sources_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 1 ] ) ) );
     
     ranges_of_arrows := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], k -> a[ 1 ][ 2 ] ) ) );
     
     labels := Concatenation( List( arrows, a -> List( [ 1 .. a[ 2 ] ], 
-      k -> Concatenation( "o", String( a[ 1 ][ 1 ] ), "_o", String( a[ 1 ][ 2 ] ), "_", String( k )  ) ) ) );
+      k -> Concatenation( 
+                "r",
+                String( a[ 1 ][ 1 ] ),
+                "_",
+                String( a[ 1 ][ 2 ] ),
+                "_",
+                String( k ) 
+              ) ) ) );
     
+    extract_latex_string :=
+      function( s )
+        local r;
+        
+        r := SplitString( s{ [ 2 .. Size( s ) ] }, "_" );
+        
+        return Concatenation( "r_{", r[ 1 ], ",", r[ 2 ], "}^{", r[ 3 ], "}" );
+        
+      end;
+    
+    arrows_latex := List( labels, extract_latex_string );
+    
+    vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "V_", String( i ) ) );
+
     quiver := RightQuiver( "Q", [ 1 .. nr_vertices ],
                 labels, sources_of_arrows, ranges_of_arrows );
+    
+    SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
     
     A := PathAlgebra( field, quiver );
     
