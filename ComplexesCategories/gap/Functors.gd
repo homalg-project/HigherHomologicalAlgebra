@@ -28,6 +28,12 @@ if not ( IsBound( HomologyFunctorOp ) and IsBound( CohomologyFunctorOp ) ) then
   KeyDependentOperation( "CohomologyFunctor", IsCochainComplexCategory, IsInt, ReturnTrue );
 fi;
 
+KeyDependentOperation( "LeftDerivedFunctorAttr", IsCapFunctor, IsInt, ReturnTrue );
+KeyDependentOperation( "RightDerivedFunctorAttr", IsCapFunctor, IsInt, ReturnTrue );
+
+DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor, IsInt ] );
+DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor, IsInt ] );
+
 #! @Description
 #! The inputs are complex category $\mathrm{Comp}(A)$ and an integer. The output is a the endofunctor $T[n]$ that sends any complex $C$ to $C[n]$ and any complex morphism
 #! $\phi:C\rightarrow D$ to $\phi[n]:C[n]\rightarrow D[n]$. The shift chain complex $C[n]$ of a chain complex $C$ is defined by $C[n]_i=C_{n+i}, d_{i}^{C[n]}=(-1)^{n}d_{n+i}^{C}$ 

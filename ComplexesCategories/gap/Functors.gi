@@ -1161,3 +1161,104 @@ InstallMethod( MinusOneFunctor,
     return F;
     
 end );
+
+##
+InstallMethod( LeftDerivedFunctorAttrOp,
+          [ IsCapFunctor, IsInt ],
+  function( F, n )
+    local s_cat, r_cat, name, Ln_F, ChF, Hn, ChF_Hn;
+    
+    if n < 0 then
+      
+      Error( "The second argument should be a positive integer!\n" );
+      
+    fi;
+    
+    s_cat := SourceOfFunctor( F );
+    
+    if not IsAbelianCategoryWithComputableEnoughProjectives( s_cat ) then
+      
+      Error( "The source category should be abelian with computable enough projectives!\n" );
+      
+    fi;
+    
+    r_cat := RangeOfFunctor( F );
+    
+    name := Concatenation( String( n ), "- left derived functor of ", Name( F ) );
+    
+    Ln_F := CapFunctor( name, s_cat, r_cat );
+    
+    ChF := ExtendFunctorToChainComplexCategories( F );
+    
+    Hn := HomologyFunctor( RangeOfFunctor( ChF ), n );
+    
+    ChF_Hn := PreCompose( ChF, Hn );
+    
+    AddObjectFunction( Ln_F,
+      a -> ChF_Hn( ProjectiveChainResolution( a ) )
+    );
+    
+    AddMorphismFunction( Ln_F,
+      { s, alpha, r } -> ChF_Hn( MorphismBetweenProjectiveChainResolutions( alpha ) )
+    );
+    
+    return Ln_F;
+    
+end );
+
+##
+InstallMethod( LeftDerivedFunctor,
+          [ IsCapFunctor, IsInt ],
+  LeftDerivedFunctorAttr
+);
+
+##
+InstallMethod( RightDerivedFunctorAttrOp,
+          [ IsCapFunctor, IsInt ],
+  function( F, n )
+    local s_cat, r_cat, name, Rn_F, ChF, Hn, ChF_Hn;
+    
+    if n < 0 then
+      
+      Error( "The second argument should be a positive integer!\n" );
+      
+    fi;
+    
+    s_cat := SourceOfFunctor( F );
+    
+    if not IsAbelianCategoryWithComputableEnoughInjectives( s_cat ) then
+      
+      Error( "The source category should be abelian with computable enough injectives!\n" );
+      
+    fi;
+    
+    r_cat := RangeOfFunctor( F );
+    
+    name := Concatenation( String( n ), "- right derived functor of ", Name( F ) );
+    
+    Rn_F := CapFunctor( name, s_cat, r_cat );
+    
+    ChF := ExtendFunctorToChainComplexCategories( F );
+    
+    Hn := HomologyFunctor( RangeOfFunctor( ChF ), -n );
+    
+    ChF_Hn := PreCompose( ChF, Hn );
+    
+    AddObjectFunction( Rn_F,
+      a -> ChF_Hn( InjectiveChainResolution( a ) )
+    );
+    
+    AddMorphismFunction( Rn_F,
+      { s, alpha, r } -> ChF_Hn( MorphismBetweenInjectiveChainResolutions( alpha ) )
+    );
+    
+    return Rn_F;
+    
+end );
+
+##
+InstallMethod( RightDerivedFunctor,
+          [ IsCapFunctor, IsInt ],
+  RightDerivedFunctorAttr
+);
+
