@@ -552,16 +552,16 @@ InstallMethod( StandardCoConeObject,
     
 end );
 
+## at some time I was returning the additive inverse of this, but
+## it turns out, this new method make things simpler.
 ##
 InstallMethod( MorphismFromStandardCoConeObject,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return AdditiveInverseForMorphisms(
-              InverseShiftOnMorphism(
+    return InverseShiftOnMorphism(
                   MorphismFromStandardConeObject( alpha )
-                )
-              );
+                );
     
 end );
 
