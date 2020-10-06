@@ -53,7 +53,7 @@ InstallMethod( HomFunctorAttr,
     
     AddObjectFunction( F,
       function( V )
-        local dim_vec, bases, mats, i, j, k, B, a, Ei_to_V, current_mat, rel, r, label, alpha;
+        local dim_vec, bases, mats, i, j, k, B, a, Ei_to_V, current_mat, rel, pos, r, label, alpha, p;
         
         dim_vec := [ ];
         
@@ -110,6 +110,18 @@ InstallMethod( HomFunctorAttr,
           Add( mats, MatrixByRows( field, [ dim_vec[ j ], dim_vec[ i ] ], current_mat ) );
         
         od;
+        
+        if not IsDenseList( dim_vec ) then
+          
+          pos := PositionsProperty( [ 1 .. Length( dim_vec ) ], p -> not IsBound( dim_vec[ p ] ) );
+          
+          for p in pos do
+            
+            dim_vec[ p ] := Size( BasisOfExternalHom( UnderlyingCell( collection[ p ] ), V ) );
+            
+          od;
+          
+        fi;
         
         r := QuiverRepresentation( A_op, dim_vec, mats );
         
