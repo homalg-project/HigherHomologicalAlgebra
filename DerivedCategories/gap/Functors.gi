@@ -935,17 +935,25 @@ InstallMethod( EmbeddingFunctorFromAdditiveClosure,
 InstallMethod( EmbeddingFunctorFromHomotopyCategory,
           [ IsExceptionalCollection ],
   function( collection )
-    local iota;
+    local iota, ambient_cat, complexes_cat;
     
     iota := EmbeddingFunctorFromAdditiveClosure( collection );
     
-    if ValueOption( "by_cochains" ) = true then
+    ambient_cat := AmbientCategory( collection );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
+    
+    if IsCochainComplexCategory( complexes_cat ) then
       
       return ExtendFunctorToHomotopyCategories( iota, true );
       
-    else
+    elif IsChainComplexCategory( complexes_cat ) then
       
       return ExtendFunctorToHomotopyCategories( iota, false );
+      
+    else
+      
+      Error( "The ambient category of the collection should be a homotopy category!\n" );
       
     fi;
     
@@ -990,27 +998,27 @@ end );
 InstallMethod( ReplacementFunctor,
           [ IsExceptionalCollection ],
   function( collection )
-    local C, H, name, rep;
+    local ambient_cat, homotopy_cat, name, Rep;
     
-    C := AmbientCategory( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    H := HomotopyCategory( collection );
+    homotopy_cat := HomotopyCategory( collection );
     
     name := "Replacement functor";
     
-    rep := CapFunctor( name, C, H );
+    Rep := CapFunctor( name, ambient_cat, homotopy_cat );
     
-    AddObjectFunction( rep,
+    AddObjectFunction( Rep,
       a -> ExceptionalReplacement( a, collection, true )
     );
     
-    AddMorphismFunction( rep,
+    AddMorphismFunction( Rep,
       { s, alpha, r } -> ExceptionalReplacement( alpha, collection, true )
     );
     
-    SET_COMMUTATIVITY_NAT_ISO_BETWEEN_REPLACEMENT_AND_SHIFT( collection, rep );
+    SET_COMMUTATIVITY_NAT_ISO_BETWEEN_REPLACEMENT_AND_SHIFT( collection, Rep );
     
-    return rep;
+    return Rep;
     
 end );
 
@@ -1018,40 +1026,52 @@ end );
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
           [ IsExceptionalCollection ],
   function( collection )
-    local G, eta_G, J, eta_J, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
+    local ambient_cat, complexes_cat, J, eta_J, G, eta_G, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
-    G := ReplacementFunctor( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
+    complexes_cat := UnderlyingCategory( ambient_cat );
     
     J := IsomorphismOntoAlgebroid( collection );
     
     J := ExtendFunctorToAdditiveClosureOfSource( J );
     
-    J := ExtendFunctorToHomotopyCategories( J );
+    if IsChainComplexCategory( complexes_cat ) then
+      
+      J := ExtendFunctorToHomotopyCategories( J, false );
+      
+    else
+      
+      J := ExtendFunctorToHomotopyCategories( J, true );
+      
+    fi;
     
     eta_J := CommutativityNaturalTransformationWithShiftFunctor( J );
+    
+    G := ReplacementFunctor( collection );
+    
+    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
     
     GJ := PreCompose( G, J );
     
     sigma_S := ShiftFunctor( SourceOfFunctor( GJ ) );
-
+    
     sigma_T := ShiftFunctor( RangeOfFunctor( GJ ) );
-
+    
     GJ_o_sigma_S := PostCompose( GJ, sigma_S );
-
+    
     sigma_T_o_GJ := PostCompose( sigma_T, GJ );
-
+    
     eta := NaturalTransformation( "Natural isomorphism G o Σ => Σ o G", GJ_o_sigma_S, sigma_T_o_GJ );
     
     AddNaturalTransformationFunction( eta,
       function( GJ_o_sigma_S_a, a, sigma_T_o_GJ_a )
-      
+        
         return PreCompose(
                   ApplyFunctor( J, ApplyNaturalTransformation( eta_G, a ) ),
                   ApplyNaturalTransformation( eta_J, ApplyFunctor( G, a ) )
                 );
-        
+                
     end );
     
     SetCommutativityNaturalTransformationWithShiftFunctor( GJ, eta );
@@ -1066,11 +1086,11 @@ end );
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
           [ IsExceptionalCollection ],
   function( collection )
-    local G, eta_G, C, J, eta_J, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
+    local ambient_cat, complexes_cat, C, J, eta_J, G, eta_G, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
-    G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
+    complexes_cat := UnderlyingCategory( ambient_cat );
     
     C := Algebroid( collection );
     
@@ -1078,30 +1098,42 @@ InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
     
     J := IsomorphismOntoQuiverRows( C );
     
-    J := ExtendFunctorToHomotopyCategories( J );
-        
+    if IsChainComplexCategory( complexes_cat ) then
+      
+      J := ExtendFunctorToHomotopyCategories( J, false );
+      
+    else
+      
+      J := ExtendFunctorToHomotopyCategories( J, true );
+      
+    fi;
+    
     eta_J := CommutativityNaturalTransformationWithShiftFunctor( J );
     
+    G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid( collection );
+    
+    eta_G := CommutativityNaturalTransformationWithShiftFunctor( G );
+
     GJ := PreCompose( G, J );
     
     sigma_S := ShiftFunctor( SourceOfFunctor( GJ ) );
-
+    
     sigma_T := ShiftFunctor( RangeOfFunctor( GJ ) );
-
+    
     GJ_o_sigma_S := PostCompose( GJ, sigma_S );
-
+    
     sigma_T_o_GJ := PostCompose( sigma_T, GJ );
-
+    
     eta := NaturalTransformation( "Natural isomorphism G o Σ => Σ o G", GJ_o_sigma_S, sigma_T_o_GJ );
     
     AddNaturalTransformationFunction( eta,
       function( GJ_o_sigma_S_a, a, sigma_T_o_GJ_a )
-      
+        
         return PreCompose(
                   ApplyFunctor( J, ApplyNaturalTransformation( eta_G, a ) ),
                   ApplyNaturalTransformation( eta_J, ApplyFunctor( G, a ) )
                 );
-        
+                
     end );
     
     SetCommutativityNaturalTransformationWithShiftFunctor( GJ, eta );
@@ -1164,9 +1196,17 @@ end );
 InstallMethod( ConvolutionFunctor,
           [ IsExceptionalCollection ],
   function( collection )
-    local conv;
+    local homotopy_cat, ambient_cat, conv;
     
-    conv := CONVOLUTION_FUNCTOR( HomotopyCategory( collection ) );
+    homotopy_cat := HomotopyCategory( collection );
+    
+    ambient_cat := AmbientCategory( collection );
+    
+    conv := CapFunctor( "Convolution functor", homotopy_cat, ambient_cat );
+    
+    AddObjectFunction( conv, BackwardConvolution );
+    
+    AddMorphismFunction( conv, { s, alpha, r } -> BackwardConvolution( alpha ) );
     
     SET_COMMUTATIVITY_NAT_ISO_BETWEEN_CONVOLUTION_AND_SHIFT( collection, conv );
     
@@ -1178,13 +1218,25 @@ end );
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     [ IsExceptionalCollection ],
   function( collection )
-    local I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
+    local ambient_cat, complexes_cat, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
+    
+    ambient_cat := AmbientCategory( collection );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
     
     I := IsomorphismFromAlgebroid( collection );
     
     I := ExtendFunctorToAdditiveClosureOfSource( I );
     
-    I := ExtendFunctorToHomotopyCategories( I );
+    if IsChainComplexCategory( complexes_cat ) then
+      
+      I := ExtendFunctorToHomotopyCategories( I, false );
+      
+    else
+      
+      I := ExtendFunctorToHomotopyCategories( I, true );
+      
+    fi;
     
     eta_I := CommutativityNaturalTransformationWithShiftFunctor( I );
     
@@ -1227,15 +1279,27 @@ end );
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     [ IsExceptionalCollection ],
   function( collection )
-    local C, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
+    local ambient_cat, complexes_cat, oid, oid_plus, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
     
-    C := Algebroid( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    C := AdditiveClosure( C );
+    complexes_cat := UnderlyingCategory( ambient_cat );
+   
+    oid := Algebroid( collection );
     
-    I := IsomorphismFromQuiverRows( C ); 
+    oid_plus := AdditiveClosure( oid );
     
-    I := ExtendFunctorToHomotopyCategories( I );
+    I := IsomorphismFromQuiverRows( oid_plus );
+    
+    if IsChainComplexCategory( complexes_cat ) then
+      
+      I := ExtendFunctorToHomotopyCategories( I, false );
+      
+    else
+      
+      I := ExtendFunctorToHomotopyCategories( I, true );
+      
+    fi;
      
     eta_I := CommutativityNaturalTransformationWithShiftFunctor( I );
     
@@ -1272,91 +1336,6 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     return IF;
     
 end );
-
-##
-InstallMethod( CONVOLUTION_FUNCTOR,
-          [ IsHomotopyCategory ],
-  function( Ho_Ho_0_C )
-    local Ho_0_C, Ho_C, Inc, name, conv;
-    
-    if not IsHomotopyCategory( Ho_Ho_0_C ) then
-      
-      Error( "The input should be a homotopy category!\n" );
-      
-    fi;
-    
-    Ho_0_C := DefiningCategory( Ho_Ho_0_C );
-    
-    if not IsCapFullSubcategory( Ho_0_C ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    Ho_C := AmbientCategory( Ho_0_C );
-    
-    if not IsHomotopyCategory( Ho_C ) then
-      
-      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
-      
-    fi;
-    
-    Inc := ExtendFunctorToHomotopyCategories( InclusionFunctor( Ho_0_C ) );
-    
-    name := "Convolution functor";
-    
-    conv := CapFunctor( name, Ho_Ho_0_C, Ho_C );
-    
-    AddObjectFunction( conv,
-      a -> BackwardConvolution( ApplyFunctor( Inc, a ) )
-    );
-    
-    AddMorphismFunction( conv,
-      { s, alpha, r } -> BackwardConvolution( ApplyFunctor( Inc, alpha ) )
-    );
-   
-    return conv;
-    
-end );
-
-##
-InstallMethod( CONVOLUTION_FUNCTOR,
-          [ IsHomotopyCategory ],
-  function( Ho_Ho_0_C )
-    local Ho_0_C, D, I, H, Conv;
-    
-    if not IsHomotopyCategory( Ho_Ho_0_C ) then
-      
-      Error( "The input should be a homotopy category!\n" );
-      
-    fi;
-    
-    Ho_0_C := DefiningCategory( Ho_Ho_0_C );
-    
-    if not IsAdditiveClosureCategory( Ho_0_C ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    D := UnderlyingCategory( Ho_0_C );
-    
-    I := EquivalenceFromAdditiveClosure( D );
-    
-    I := ExtendFunctorToHomotopyCategories( I );
-    
-    H := RangeOfFunctor( I );
-    
-    Conv := CONVOLUTION_FUNCTOR( H );
-    
-    Conv := PreCompose( I, Conv );
-    
-    Conv!.Name := "Convolution functor";
-    
-    return Conv;
-    
-end );
-
 
 ####################################
 #
