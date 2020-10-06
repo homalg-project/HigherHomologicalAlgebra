@@ -207,31 +207,24 @@ InstallMethod( ExtendFunctorToHomotopyCategoriesOp,
         return ApplyFunctor( ChF, UnderlyingCell( phi ) ) / T;
         
       end );
+      
+    sigma_S := ShiftFunctor( S );
     
-    if not over_cochains then
-      
-      sigma_S := ShiftFunctor( S );
-      
-      sigma_T := ShiftFunctor( T );
-      
-      F_o_sigma_S := PostCompose( F, sigma_S );
-      
-      sigma_T_o_F := PostCompose( sigma_T, F );
-      
-      name := "Natural isomorphism F o Σ => Σ o F";
-      
-      eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
-      
-      AddNaturalTransformationFunction( eta,
-        function( F_o_sigma_S_a, a, sigma_T_o_F_a )
-           
-          return IdentityMorphism( F_o_sigma_S_a );
-          
-      end );
-      
-      SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
+    sigma_T := ShiftFunctor( T );
     
-    fi;
+    F_o_sigma_S := PostCompose( F, sigma_S );
+    
+    sigma_T_o_F := PostCompose( sigma_T, F );
+    
+    name := "Natural isomorphism F o Σ => Σ o F";
+    
+    eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
+    
+    AddNaturalTransformationFunction( eta,
+      { F_o_sigma_S_a, a, sigma_T_o_F_a } -> IdentityMorphism( F_o_sigma_S_a )
+    );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
     
     return F;
     
