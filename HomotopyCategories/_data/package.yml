@@ -1,7 +1,7 @@
 name: HomotopyCategories
-version: "2020.09.07"
+version: "2020.10.01"
 license: "GPL-2.0-or-later"
-date: 2020-09-07
+date: 2020-10-01
 description: |
     Homotopy categories of additive categories
 
@@ -32,7 +32,7 @@ needed-pkgs:
       version: ">= 2020.07.16"
       url: "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories"
     - name: "TriangulatedCategories"
-      version: ">= 2020.07.20"
+      version: ">= 2020.10.01"
       url: "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories"
 
 suggested-pkgs:
@@ -46,7 +46,7 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyC
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.09.07/HomotopyCategories-2020.09.07.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10.01/HomotopyCategories-2020.10.01.tar.gz
 
 abstract: |
 
@@ -57,7 +57,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>HomotopyCategories, Homotopy categories of additive categories,
-             Version 2020.09.07</i>
+             Version 2020.10.01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories</a></span>.
@@ -65,15 +65,15 @@ citeas: |
     
 
 bibtex: |
-    @misc{ HomotopyCategories2020.09.07,
+    @misc{ HomotopyCategories2020.10.01,
       author =           {Saleh, K.},
-      title =            {{HomotopyCategories}, Homotopy categories of additive categories, {V}ersion 2020.09.07},
-      month =            {Sep},
+      title =            {{HomotopyCategories}, Homotopy categories of additive categories, {V}ersion 2020.10.01},
+      month =            {Oct},
       year =             {2020},
       note =             {GAP package},
-      howpublished =     {\href                 {https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories}
-                          {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary {}{}{}\texttt{HomotopyCategories}}},
+      howpublished =     {\href                                     {https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories}
+                          {\texttt{https://homalg-project.github.io/}\discretionary         {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{HomotopyCategories}}},
       printedkey =       {Sal20}
     }
 
