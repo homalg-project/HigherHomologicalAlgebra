@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # ToolsForHigherHomologicalAlgebra: Tools for the Higher Homological Algebra project
 #
 # This file is a script which compiles the package manual and prints overfull hbox warnings.

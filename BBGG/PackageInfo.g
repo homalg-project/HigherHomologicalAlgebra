@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
 #
 # This file contains package meta data. For additional information on

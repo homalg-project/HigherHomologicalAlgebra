@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # BBGG: Beilinson monads and derived categories for coherent sheaves over P^n
 #
 # This file is a script which compiles the package manual and prints overfull hbox warnings.

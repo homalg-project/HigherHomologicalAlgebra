@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # StableCategories: Stable categories of additive categories
 #
 # Reading the implementation part of the package.

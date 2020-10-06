@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Bicomplexes: Bicomplexes for Abelian categories
 #
 # This file tests if the package can be loaded without errors or warnings.

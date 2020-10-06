@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # DerivedCategories: Derived categories of Abelian categories
 #
 # Reading the declaration part of the package.

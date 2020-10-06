@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # TriangulatedCategories: Framework for triangulated categories
 #
 # This file contains package meta data. For additional information on
