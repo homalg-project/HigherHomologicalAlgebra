@@ -734,9 +734,26 @@ InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
 ##
 InstallMethod( HomotopyCategoryAttr,
           [ IsExceptionalCollection ],
-          
-  collection -> HomotopyCategory( AdditiveClosure( DefiningFullSubcategory( collection ) ) )
-);
+  function( collection )
+    local ambient_category, complexes_category, collection_plus;
+    
+    ambient_category := AmbientCategory( collection );
+    
+    complexes_category := UnderlyingCategory( ambient_category );
+    
+    collection_plus := AdditiveClosure( DefiningFullSubcategory( collection ) );
+    
+    if IsChainComplexCategory( complexes_category ) then
+      
+      return HomotopyCategory( collection_plus, false );
+      
+    elif IsCochainComplexCategory( complexes_category ) then
+    
+      return HomotopyCategory( collection_plus, true );
+      
+    fi;
+    
+end );
 
 InstallOtherMethod( HomotopyCategory,
           [ IsExceptionalCollection ],
