@@ -245,11 +245,53 @@ end );
 InstallMethod( ViewObj,
             [ IsHomotopyCategoryMorphism ],
   function( map )
+    local m, l, u, w, a, string;
     
-    Print( "<A morphism in ", Name( CapCategory( map ) ) );
-    Print( " with active lower bound ", ActiveLowerBound( map ) );
-    Print( " and active upper bound ", ActiveUpperBound( map ) );
-    Print(">" );
+    m := Concatenation( "A morphism in ", Name( CapCategory( map ) ) );
+    
+    if HasActiveLowerBound( map ) then
+      
+      l := Concatenation( "active lower bound ", String( ActiveLowerBound( map ) ) );
+      
+    else
+      
+      l := "";
+      
+    fi;
+    
+    if HasActiveUpperBound( map ) then
+      
+      u := Concatenation( "active upper bound ", String( ActiveUpperBound( map ) ) );
+      
+    else
+      
+      u := "";
+      
+    fi;
+    
+    if l <> "" or u <> "" then
+      
+      w := " with ";
+      
+    else
+      
+      w := "";
+      
+    fi;
+   
+    if l <> "" and u <> "" then
+      
+      a := " and ";
+      
+    else
+      
+      a := "";
+      
+    fi;
+    
+    string := Concatenation( "<", m, w, l, a, u, ">" );
+    
+    Print( string );
 
 end );
 
@@ -282,5 +324,5 @@ InstallOtherMethod( LaTeXStringOp,
 );
 
 ##
-MakeShowable( [ "text/latex", "application/x-latex" ], IsHomotopyCategoryCell );
+## MakeShowable( [ "text/latex", "application/x-latex" ], IsHomotopyCategoryCell );
 
