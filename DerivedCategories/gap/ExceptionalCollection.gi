@@ -598,8 +598,32 @@ InstallMethod( EndomorphismAlgebra,
       a -> Concatenation( v, String( a[ 1 ] ),
               "_", String( a[ 2 ] ), "_", String( a[ 3 ] ) ) );
     
+    extract_latex_string :=
+      function( s )
+        local r;
+        
+        r := SplitString( s{ [ 2 .. Size( s ) ] }, "_" );
+        
+        return Concatenation( v, "_{", r[ 1 ], ",", r[ 2 ], "}^{", r[ 3 ], "}" );
+        
+      end;
+    
+    arrows_latex := List( labels, extract_latex_string );
+    
+    if ForAny( collection!.vertices_labels, l -> Int( l ) <> fail ) then
+      
+      vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String( i ), "}" ) );
+      
+    else
+      
+      vertices_latex := collection!.vertices_labels;
+      
+    fi;
+    
     quiver := RightQuiver( collection!.quiver,
                 collection!.vertices_labels, labels, sources, ranges );
+    
+    SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
     
     A := PathAlgebra( field, quiver );
     
