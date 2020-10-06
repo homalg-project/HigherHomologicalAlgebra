@@ -396,7 +396,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
     r := RandomTextColor( "" );
      
     Print( "\n" );
-    for i in [ m .. n ] do
+    for i in Reversed( [ m .. n ] ) do
       
       s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
@@ -443,7 +443,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
     r := RandomTextColor( "" );
      
     Print( "\n" );
-    for i in [ m .. n ] do
+    for i in Reversed( [ m .. n ] ) do
       
       s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
@@ -581,19 +581,19 @@ InstallOtherMethod( LaTeXStringOp,
       
       s := "\\begin{array}{ccc}\n ";
       
-      if IsChainMorphism( phi ) then
+      if IsCochainMorphism( phi ) then
         
         s := Concatenation(
                 s,
-                LaTeXStringOp( Source( phi )[ l ] ),
+                LaTeXStringOp( Source( phi )[ u ] ),
                 "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ l ] : OnlyDatum := true ),
+                LaTeXStringOp( phi[ u ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ l ] ),
+                LaTeXStringOp( Range( phi )[ u ] ),
                 "\n \\\\ \n"
               );
               
-        for i in [ l + 1 .. u ] do
+        for i in Reversed( [ l .. u - 1 ] ) do
           
           s := Concatenation(
                   s,
@@ -633,7 +633,7 @@ InstallOtherMethod( LaTeXStringOp,
         
       else
         
-        for i in [ l .. u - 1 ] do
+        for i in Reversed( [ l + 1 .. u ] ) do
           
           s := Concatenation(
                 s,
@@ -674,11 +674,11 @@ InstallOtherMethod( LaTeXStringOp,
         s := Concatenation(
                 s,
                 "\\\\ \n",
-                LaTeXStringOp( Source( phi )[ u ] ),
+                LaTeXStringOp( Source( phi )[ l ] ),
                 "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ u ] : OnlyDatum := true ),
+                LaTeXStringOp( phi[ l ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ u ] ),
+                LaTeXStringOp( Range( phi )[ l ] ),
                 "\n \\\\ \n "
               );
               

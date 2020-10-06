@@ -505,10 +505,10 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
     
     r := RandomTextColor( "" );
     
-    if IsChainComplex( C ) then
+    if IsCochainComplex( C ) then
       
-      for i in [ m .. n ] do
-        if i <> m then
+      for i in Reversed( [ m .. n ] ) do
+        if i <> n then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           DisplayCapCategoryCell( C^i );
@@ -527,9 +527,9 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n\n" );
       od;
       
-    elif IsCochainComplex( C ) then
+    elif IsChainComplex( C ) then
       
-      for i in [ m .. n ] do
+      for i in Reversed( [ m .. n ] ) do
         
         s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
         Print( s );
@@ -541,7 +541,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
             Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "=" ) )
           );
         Print( "\n\n" );
-        if i <> n then
+        if i <> m then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           DisplayCapCategoryCell( C^i );
           Print( "\n" );
@@ -568,7 +568,7 @@ InstallOtherMethod( LaTeXStringOp,
     local OnlyDifferentials, OnlyDatum, s, i, Color;
     
     OnlyDifferentials := ValueOption( "OnlyDifferentials" );
-        
+    
     if OnlyDifferentials = true then
       
       OnlyDatum := false;
@@ -597,16 +597,16 @@ InstallOtherMethod( LaTeXStringOp,
     
     s := "\\begin{array}{c}\n ";
     
-    if IsChainComplex( C ) then
+    if IsCochainComplex( C ) then
       
       if OnlyDifferentials <> true then
         
-        s := Concatenation( s, LaTeXStringOp( C[ l ] ), "\n " );
+        s := Concatenation( s, LaTeXStringOp( C[ u ] ), "\n " );
         
       fi;
       
-      for i in [ l + 1 .. u ] do
-         
+      for i in Reversed( [ l .. u - 1 ] ) do
+        
         s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\phantom{", String( i ), "}}} \n \\\\ \n " );
         
         s := Concatenation( s, LaTeXStringOp( C ^ i : OnlyDatum := OnlyDatum ), "\n \\\\ \n " );
@@ -620,10 +620,10 @@ InstallOtherMethod( LaTeXStringOp,
         fi;
         
       od;
-    
+      
     else
       
-      for i in [ l .. u - 1 ] do
+      for i in Reversed( [ l + 1 .. u ] ) do
         
         if OnlyDifferentials <> true then
           
@@ -641,14 +641,14 @@ InstallOtherMethod( LaTeXStringOp,
       
       if OnlyDifferentials <> true then
         
-        s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ u ] ) );
+        s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ l ] ) );
         
       fi;
       
     fi;
     
     s := Concatenation( s, "\\end{array}" );
-        
+    
     return s;
     
 end );
@@ -799,10 +799,10 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
     
     r := RandomTextColor( "" );
     
-    if IsChainComplex( C ) then
+    if IsCochainComplex( C ) then
       
-      for i in [ m .. n ] do
-        if i <> m then
+      for i in Reversed( [ m .. n ] ) do
+        if i <> n then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           ViewCapCategoryCell( C^i );
@@ -823,7 +823,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
       
     else
       
-      for i in [ m .. n ] do
+      for i in Reversed( [ m .. n ] ) do
         
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
@@ -835,7 +835,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
             Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
           );
         Print( "\n\n" );
-        if i <> n then
+        if i <> m then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           ViewCapCategoryCell( C^i );
           Print( "\n" );
