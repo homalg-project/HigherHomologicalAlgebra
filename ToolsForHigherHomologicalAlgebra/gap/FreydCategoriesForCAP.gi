@@ -77,8 +77,24 @@ InstallMethod( LaTeXStringOp,
           [ IsQuiverRowsObject ],
           
   function( obj )
-    local l, exp_func;
+    local Qrows, Q, vertices, l, exp_func, v;
     
+    Qrows := CapCategory( obj );
+    
+    Q := UnderlyingQuiver( Qrows );
+    
+    vertices := Vertices( Q );
+    
+    if ForAll( vertices, v -> Int( String( v ) ) <> fail and not HasLabelAsLaTeXString( v ) ) then
+        
+      for v in vertices do
+        
+        SetLabelAsLaTeXString( v, Concatenation( "V_{", String( v ), "}" ) );
+        
+      od;
+      
+    fi;
+ 
     l := ListOfQuiverVertices( obj );
     
     if IsEmpty( l ) then
@@ -106,7 +122,23 @@ InstallMethod( LaTeXStringOp,
           [ IsQuiverRowsMorphism ],
                
   function( morphism )
-    local matrix, source, range;
+    local Qrows, Q, vertices, matrix, v, source, range;
+    
+    Qrows := CapCategory( morphism );
+    
+    Q := UnderlyingQuiver( Qrows );
+    
+    vertices := Vertices( Q );
+    
+    if ForAll( vertices, v -> Int( String( v ) ) <> fail and not HasLabelAsLaTeXString( v ) ) then
+        
+      for v in vertices do
+        
+        SetLabelAsLaTeXString( v, Concatenation( "V_{", String( v ), "}" ) );
+        
+      od;
+      
+    fi;
     
     matrix := MorphismMatrix( morphism );
     
@@ -134,6 +166,12 @@ InstallMethod( LaTeXStringOp,
         matrix := ReplacedString( matrix, "CAPINTMARKER", "" );
         
         matrix := ReplacedString( matrix, "*", "" );
+        
+        if matrix = "" then
+          
+          matrix := "\\\\";
+          
+        fi;
         
         matrix :=  Concatenation( "\\begin{pmatrix}", matrix, "\\end{pmatrix}" );
     
@@ -206,6 +244,12 @@ InstallMethod( LaTeXStringOp,
             "\\\\ \n"
           );
           
+        if matrix = "" then
+          
+          matrix := "\\\\";
+          
+        fi;
+        
         matrix :=  Concatenation( "\\begin{pmatrix}", matrix, "\\end{pmatrix}" );
         
     fi;
