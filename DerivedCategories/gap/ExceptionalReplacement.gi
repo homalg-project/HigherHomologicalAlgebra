@@ -9,36 +9,37 @@
 #############################################################################
 
 ##
-InstallMethod( CandidatesForExceptionalShifts,
+InstallMethodWithCache( CandidatesForExceptionalShifts,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local C, T, u_T, l_T, u_a, l_a;
+          
+  function( A, collection )
+    local ambient_cat, T, u_T, l_T, u_A, l_A;
      
-    C := AmbientCategory( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    if not IsHomotopyCategory( C ) then
+    if not IsHomotopyCategory( ambient_cat ) then
       
-      Error( "The ambient category of the exceptional collection should be a homotopy category!\n" );
+      Error( "The ambient category of the exceptional collection should be A homotopy category!\n" );
       
     fi;
-       
+    
     T := TiltingObject( collection );
     
     u_T := ActiveUpperBound( T );
     
     l_T := ActiveLowerBound( T );
     
-    u_a := ActiveUpperBound( a );
+    u_A := ActiveUpperBound( A );
     
-    l_a := ActiveLowerBound( a );
+    l_A := ActiveLowerBound( A );
     
-    if IsChainComplex( UnderlyingCell( a ) ) then
+    if IsChainComplex( UnderlyingCell( A ) ) then
       
-      return [ l_T - u_a .. u_T - l_a ];
+      return [ l_T - u_A .. u_T - l_A ];
       
     else
       
-      return [ l_a - u_T .. u_a - l_T ];
+      return [ l_A - u_T .. u_A - l_T ];
       
     fi;
     
@@ -47,14 +48,15 @@ end );
 ##
 InstallMethodWithCache( ExceptionalShifts,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
+          
+  function( A, collection )
     local E, I;
      
     E := List( UnderlyingObjects( collection ), UnderlyingCell );
     
-    I := CandidatesForExceptionalShifts( a, collection );
+    I := CandidatesForExceptionalShifts( A, collection );
     
-    I := Filtered( I, N -> ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) );
+    I := Filtered( I, N -> ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( A, N ) ) ) ) );
     
     return I;
     
@@ -63,16 +65,17 @@ end );
 ##
 InstallMethodWithCache( MinimalExceptionalShift,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local E, I, shift_of_a, N;
-     
+          
+  function( A, collection )
+    local E, I, N;
+    
     E := List( UnderlyingObjects( collection ), UnderlyingCell );
     
-    I := CandidatesForExceptionalShifts( a, collection );
+    I := CandidatesForExceptionalShifts( A, collection );
     
     for N in I do
       
-      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) then
+      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( A, N ) ) ) ) then
         
         return N;
         
@@ -87,16 +90,17 @@ end );
 ##
 InstallMethodWithCache( MaximalExceptionalShift,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local E, I, shift_of_a, N;
-     
+          
+  function( A, collection )
+    local E, I, N;
+    
     E := List( UnderlyingObjects( collection ), UnderlyingCell );
     
-    I := CandidatesForExceptionalShifts( a, collection );
+    I := CandidatesForExceptionalShifts( A, collection );
     
     for N in Reversed( I ) do
       
-      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( a, N ) ) ) ) then
+      if ForAny( E, e -> not IsZeroForObjects( HomStructure( e, Shift( A, N ) ) ) ) then
         
         return N;
         
@@ -109,20 +113,21 @@ InstallMethodWithCache( MaximalExceptionalShift,
 end );
 
 ##
-InstallMethod( MorphismFromExceptionalObjectAsList,
+InstallMethodWithCache( MorphismFromExceptionalObjectAsList,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local C, H, H_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
+          
+  function( A, collection )
+    local ambient_cat, H, H_A, min_gen, positions, vectors, positions_of_non_zeros;
     
-    C := AmbientCategory( collection );
+    ambient_cat := AmbientCategory( collection );
     
-    if not IsIdenticalObj( CapCategory( a ), C ) then
+    if not IsIdenticalObj( CapCategory( A ), ambient_cat ) then
       
       Error( "The object should belong to the ambient category of the exceptional collection!\n" );
       
     fi;
     
-    if HasIsZeroForObjects( a ) and IsZeroForObjects( a ) then
+    if HasIsZeroForObjects( A ) and IsZeroForObjects( A ) then
       
       return [ ];
       
@@ -130,9 +135,9 @@ InstallMethod( MorphismFromExceptionalObjectAsList,
     
     H := HomFunctor( collection );
     
-    H_a := ApplyFunctor( H, a );
+    H_A := ApplyFunctor( H, A );
     
-    min_gen := MinimalGeneratingSet( H_a );
+    min_gen := MinimalGeneratingSet( H_A );
     
     if IsEmpty( min_gen ) then
       
@@ -151,23 +156,24 @@ InstallMethod( MorphismFromExceptionalObjectAsList,
     return List( [ 1 .. Size( min_gen ) ],
       i -> vectors[ i ]{ positions_of_non_zeros[ i ] } *
               BasisOfExternalHom(
-                UnderlyingCell( collection[ positions[ i ] ] ), a )
+                UnderlyingCell( collection[ positions[ i ] ] ), A )
                   { positions_of_non_zeros[ i ] }
           );
-    
+          
 end );
 
 ##
-InstallMethod( MorphismFromExceptionalObject,
+InstallMethodWithCache( MorphismFromExceptionalObject,
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
+          
+  function( A, collection )
     local m;
     
-    m := MorphismFromExceptionalObjectAsList( a, collection );
+    m := MorphismFromExceptionalObjectAsList( A, collection );
     
     if IsEmpty( m ) then
       
-      return UniversalMorphismFromZeroObject( a );
+      return UniversalMorphismFromZeroObject( A );
       
     else
       
@@ -178,8 +184,9 @@ InstallMethod( MorphismFromExceptionalObject,
 end );
 
 ##
-InstallMethod( MorphismBetweenExceptionalObjects,
+InstallMethodWithCache( MorphismBetweenExceptionalObjects,
           [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          
   function( alpha, collection )
     local H, H_alpha, D, full, I, J, m;
     
@@ -203,248 +210,511 @@ InstallMethod( MorphismBetweenExceptionalObjects,
     
 end );
 
+#
+# For Cochains
+#
+
+##          -> R_i
+##  q^i-1  /      \ r^i
+##        /        \
+##   X_im1          -> X_i
 ##
-InstallMethodWithCache( EXCEPTIONAL_REPLACEMENT_DATA,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local C, N, maps, diffs, res;
+##  [ r_i, q_im1, r_i_list, q_im1_list ];
+##
+InstallMethodWithCache( ExceptionalReplacementData,
+              "for homotopy objects defined by cochains",
+         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          
+  function( A, collection )
+    local homotopy_cat, complexes_cat, N, data;
     
-    C := CapCategory( a );
+    homotopy_cat := CapCategory( A );
     
-    N := MaximalExceptionalShift( a, collection );
+    complexes_cat := UnderlyingCategory( homotopy_cat );
     
-    maps := AsZFunction(
+    if not IsCochainComplexCategory( complexes_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    N := MaximalExceptionalShift( A, collection );
+    
+    data := AsZFunction(
               function( i )
-                local alpha, beta, alpha_as_list, beta_as_list, c, k, sources;
+                local r_i, r_im1, X_im1, q_im1, X_i, q_i, r_i_list, q_im1_list, s, k;
                 
-                if i < -N then
+                if i > N then
                   
-                  alpha := UniversalMorphismFromZeroObject( Shift( a, -i ) ); # or ZeroObject( C )
+                  r_i := UniversalMorphismFromZeroObject( Shift( A, i ) );
                   
-                  beta := UniversalMorphismIntoZeroObject( Range( maps[ i + 1 ][ 1 ] ) );
+                  r_im1 := data[ i - 1 ][ 1 ];
                   
-                  return [ alpha, beta, [ ], [ ] ];
+                  X_im1 := Range( r_im1 );
+                  
+                  q_im1 := UniversalMorphismIntoZeroObject( X_im1 );
+                  
+                  return [ r_i, q_im1, [ ], [ ] ];
+                  
+                elif i = N then
+                  
+                  X_i := Shift( A, N );
+                  
+                else
+                  
+                  q_i := data[ i + 1 ][ 2 ];
+                  
+                  X_i := Source( q_i );
+                  
+                fi;
+                
+                r_i_list := MorphismFromExceptionalObjectAsList( X_i, collection );
                  
-                elif i = -N then
+                if not IsEmpty( r_i_list ) then
                   
-                  c := Shift( a, N );
-                  
-                else
-                  
-                  c := Source( maps[ i - 1 ][ 2 ] );
-                  
-                fi;
-                
-                alpha_as_list := MorphismFromExceptionalObjectAsList( c, collection );
-                
-                sources := List( alpha_as_list, Source );
-                
-                if not IsEmpty( alpha_as_list ) then
-                  
-                  alpha := MorphismBetweenDirectSums( TransposedMat( [ alpha_as_list ] ) );
+                  r_i := MorphismBetweenDirectSums( TransposedMat( [ r_i_list ] ) );
                   
                 else
                   
-                  alpha := UniversalMorphismFromZeroObject( c );
+                  r_i := UniversalMorphismFromZeroObject( X_i );
                   
                 fi;
                 
-                beta := DomainMorphismByInverseRotationAxiom( alpha );
+                q_im1 := MorphismFromStandardCoConeObject( r_i );
                 
-                beta_as_list := [ ];
+                q_im1_list := [ ];
                 
-                for k in [ 1 .. Size( alpha_as_list ) ] do
+                if not IsEmpty( r_i_list ) then
                   
-                  Add( beta_as_list, PreCompose( beta, ProjectionInFactorOfDirectSum( sources, k ) ) );
+                  s := List( r_i_list, Source );
+                    
+                  for k in [ 1 .. Size( r_i_list ) ] do
+                    
+                    Add( q_im1_list, PreCompose( q_im1, ProjectionInFactorOfDirectSum( s, k ) ) );
+                    
+                  od;
                   
-                od;
+                fi;
                 
-                return [ alpha, beta, alpha_as_list, beta_as_list ];
+                return [ r_i, q_im1, r_i_list, q_im1_list ];
                 
               end );
+              
+    data!.maximal_exceptional_shift := N;
     
-    maps!.shift := N;
-    
-    return maps;
+    return data;
     
 end );
 
+
+##          -> R_i
+##  q^i-1  /      \ r^i
+##        /        \
+##   X_im1          -> X_i
 ##
-InstallMethod( EXCEPTIONAL_REPLACEMENT_DATA,
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
-  function( phi, collection )
-    local C, A, U, a, N_a, b, N_b, N, rep_a, rep_b, maps;
-    
-    C := CapCategory( phi );
-    
-    A := AdditiveClosure( collection );
-    
-    U := EmbeddingFunctorFromAdditiveClosure( collection );
-    
-    a := Source( phi );
-    
-    N_a := MaximalExceptionalShift( a, collection );
-    
-    b := Range( phi );
-    
-    N_b := MaximalExceptionalShift( b, collection );
-    
-    N := Maximum( N_a, N_b );
-    
-    rep_a := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
-    
-    rep_b := EXCEPTIONAL_REPLACEMENT_DATA( b, collection );
-    
-    maps := AsZFunction(
-              function( i )
-                local psi, eta;
-                
-                if i < -N then
-                 
-                  psi := Shift( phi, i );
-                  
-                  eta := UniversalMorphismIntoZeroObject( ZeroObject( A ) );
-                  
-                  return [ psi, eta ];
-                  
-                elif i = -N then
-                  
-                  psi := Shift( phi, N );
-                  
-                  eta := MorphismBetweenExceptionalObjects( psi, collection );
-                  
-                  return [ psi, eta ];
-                  
-                else
-                   
-                  psi := MorphismBetweenStandardConeObjects(
-                            rep_a[ i - 1 ][ 1 ], 
-                            ApplyFunctor( U, maps[ i - 1 ][ 2 ] ),
-                            maps[ i - 1 ][ 1 ],
-                            rep_b[ i - 1 ][ 1 ]
-                          );
-                  
-                  psi := Shift( psi, -1 );
-                  
-                  eta := MorphismBetweenExceptionalObjects( psi, collection );
-                  
-                  return [ psi, eta ];
-                  
-                fi;
-                
-            end );
-    
-    return maps;
-    
-end );
-
+## [ r_i, q_im1, r_i_list, q_im1_list ];
 ##
 InstallMethodWithCache( ExceptionalReplacement,
+             "for homotopy objects defined by cochains",
           [ IsHomotopyCategoryObject, IsExceptionalCollection ],
-  function( a, collection )
-    local defining_category, additive_closure, homotopy_category, maps, diffs, res, N;
+          
+  function( A, collection )
+    local ambient_cat, complexes_cat, defining_cat, additive_closure, homotopy_cat, data, diffs, rep_A, N;
     
-    defining_category := DefiningFullSubcategory( collection );
+    ambient_cat := CapCategory( A );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
+    
+    if not IsCochainComplexCategory( complexes_cat ) then
+      TryNextMethod( );
+    fi;
+    
+    defining_cat := DefiningFullSubcategory( collection );
     
     additive_closure := AdditiveClosure( collection );
     
-    homotopy_category := HomotopyCategory( collection );
+    homotopy_cat := HomotopyCategory( collection );
 
-    maps := EXCEPTIONAL_REPLACEMENT_DATA( a, collection );
+    data := ExceptionalReplacementData( A, collection );
     
     diffs := AsZFunction(
               function( i )
-                local alpha_as_list, beta_as_list, source, range, matrix;
+                local r_i_list, q_i_list, s, r, matrix;
                 
-                alpha_as_list := maps[ i ][ 3 ];
+                r_i_list := data[ i ][ 3 ];
                 
-                beta_as_list := maps[ i - 1 ][ 4 ];
+                q_i_list := data[ i + 1 ][ 4 ];
                 
-                source := List( alpha_as_list, a -> Source( a ) / defining_category );
+                s := List( r_i_list, m -> Source( m ) / defining_cat );
                 
-                range := List( beta_as_list, b -> Range( b ) / defining_category );
+                r := List( q_i_list, m -> Range( m ) / defining_cat );
                 
-                if IsEmpty( source ) or IsEmpty( range ) then
+                if IsEmpty( s ) or IsEmpty( r ) then
                    
                   matrix := [ ];
                   
                 else
                   
-                  matrix := List( alpha_as_list, a -> List( beta_as_list, b -> PreCompose( a, b ) / defining_category ) );
+                  matrix := List( r_i_list, m1 -> List( q_i_list, m2 -> PreCompose( m1, m2 ) / defining_cat ) );
                 
                 fi;
                 
-                source := AdditiveClosureObject( source, additive_closure );
+                s := AdditiveClosureObject( s, additive_closure );
                 
-                range := AdditiveClosureObject( range, additive_closure );
+                r := AdditiveClosureObject( r, additive_closure );
                 
-                return AdditiveClosureMorphism( source, matrix, range );
+                return AdditiveClosureMorphism( s, matrix, r );
                 
               end );
+              
+    rep_A := CochainComplex( additive_closure, diffs ) / homotopy_cat;
     
-    res := ChainComplex( additive_closure, diffs ) / homotopy_category;
+    rep_A!.exceptional_replacement_data := data;
     
-    res!.exceptional_replacement_data := maps;
+    N := MaximalExceptionalShift( A, collection );
     
-    N := MaximalExceptionalShift( a, collection );
+    SetUpperBound( rep_A, N );
     
-    SetLowerBound( res, -N );
+    return rep_A;
     
-    return res;
-
 end );
 
 ##
 InstallMethodWithCache( ExceptionalReplacement,
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
-  function( alpha, collection )
-    local homotopy_category, rep_a, rep_b, maps, map;
+            "for homotopy objects defined by chains",
+          [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
+          
+  function( A, collection, bool )
+    local ambient_cat, complexes_cat, rep_A, data, l, z, X_l;
     
-    homotopy_category := HomotopyCategory( collection );
+    ambient_cat := CapCategory( A );
     
-    rep_a := ExceptionalReplacement( Source( alpha ), collection );
+    complexes_cat := UnderlyingCategory( ambient_cat );
     
-    rep_b := ExceptionalReplacement( Range( alpha ), collection );
+    if not IsCochainComplexCategory( complexes_cat ) then
+      TryNextMethod( );
+    fi;
     
-    maps := EXCEPTIONAL_REPLACEMENT_DATA( alpha, collection );
+    rep_A := ExceptionalReplacement( A, collection );
     
-    maps := ApplyMap( maps, m -> m[ 2 ] );
+    data := rep_A!.exceptional_replacement_data;
     
-    map := ChainMorphism( UnderlyingCell( rep_a ), UnderlyingCell( rep_b ), maps ) / homotopy_category;
+    l := ActiveUpperBound( rep_A );
     
-    return map;
+    z := ZeroObject( AdditiveClosure( collection ) );
+    
+    while bool do
+       
+      if IsEqualForObjects( rep_A[ l ], z ) then # IsZeroForObjects could be expensive, and in this case they are equivalent
+        
+        X_l := Range( data[ l ][ 1 ] );
+        
+        if MaximalExceptionalShift( X_l, collection ) = -infinity then
+          
+          SetLowerBound( rep_A, l + 1 );
+          
+          return rep_A;
+          
+        else
+          
+          l := l - 1;
+          
+        fi;
+        
+      else
+        
+        l := l - 1;
+        
+      fi;
+      
+    od;
+    
+    return rep_A;
     
 end );
- 
+
 ##
-InstallMethod( ExceptionalReplacement,
+InstallMethodWithCache( ExceptionalReplacementData,
+             "for homotopy morphisms defined by cochain morphisms",
+         [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+         
+  function( phi, collection )
+    local homotopy_cat, complexes_cat, collection_plus, I, A, N_A, B, N_B, N, rep_A, rep_B, data;
+    
+    homotopy_cat := CapCategory( phi );
+    
+    complexes_cat := UnderlyingCategory( homotopy_cat );
+    
+    if not IsCochainComplexCategory( complexes_cat ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    collection_plus := AdditiveClosure( collection );
+    
+    I := EmbeddingFunctorFromAdditiveClosure( collection );
+    
+    A := Source( phi );
+    
+    N_A := MaximalExceptionalShift( A, collection );
+    
+    B := Range( phi );
+    
+    N_B := MaximalExceptionalShift( B, collection );
+    
+    N := Maximum( N_A, N_B );
+    
+    rep_A := ExceptionalReplacementData( A, collection );
+    
+    rep_B := ExceptionalReplacementData( B, collection );
+    
+    data := AsZFunction(
+              function( i )
+                local x_i, y_i;
+                
+                if i > N then
+                  
+                  x_i := Shift( phi, i );
+                  
+                  y_i := ZeroObjectFunctorial( homotopy_cat );
+                  
+                  return [ x_i, y_i ];
+                  
+                elif i = N then
+                  
+                  x_i := Shift( phi, i );
+                  
+                  y_i := MorphismBetweenExceptionalObjects( x_i, collection );
+                  
+                  return [ x_i, y_i ];
+                  
+                else
+                  
+                  x_i := MorphismBetweenStandardCoConeObjects(
+                            rep_A[ i + 1 ][ 1 ],
+                            I( data[ i + 1 ][ 2 ] ),
+                            data[ i + 1 ][ 1 ],
+                            rep_B[ i + 1 ][ 1 ]
+                          );
+                          
+                  y_i := MorphismBetweenExceptionalObjects( x_i, collection );
+                  
+                  return [ x_i, y_i ];
+                  
+                fi;
+                
+            end );
+            
+    return data;
+    
+end );
+
+#
+# For Chains
+#
+
+
+##            R_i <-
+##      r^i /       \ q^i+1
+##         /         \
+##   X_i <-           X_i+1
+##
+##
+## returns  [ r^i, q^i+1, r^i as list, q^i+1 as list ]
+##
+InstallMethodWithCache( ExceptionalReplacementData,
+             "for homotopy objects defined by chains", 
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          
+  function( A, collection )
+    local homotopy_cat, complexes_cat, N, data;
+    
+    homotopy_cat := CapCategory( A );
+    
+    complexes_cat := UnderlyingCategory( homotopy_cat );
+    
+    if not IsChainComplexCategory( complexes_cat ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    N := MaximalExceptionalShift( A, collection );
+    
+    data := AsZFunction(
+              function( i )
+                local r_i, r_ip1, X_ip1, q_ip1, X_i, q_i, r_i_list, q_ip1_list, s, k;
+                
+                if i < -N then
+                  
+                  r_i := UniversalMorphismFromZeroObject( Shift( A, -i ) );
+                  
+                  r_ip1 := data[ i + 1 ][ 1 ];
+                  
+                  X_ip1 := Range( r_ip1 );
+                  
+                  q_ip1 := UniversalMorphismIntoZeroObject( X_ip1 );
+                  
+                  return [ r_i, q_ip1, [ ], [ ] ];
+                 
+                elif i = -N then
+                  
+                  X_i := Shift( A, N );
+                  
+                else
+                  
+                  q_i := data[ i - 1 ][ 2 ];
+                  
+                  X_i := Source( q_i );
+                  
+                fi;
+                
+                r_i_list := MorphismFromExceptionalObjectAsList( X_i, collection );
+                 
+                if not IsEmpty( r_i_list ) then
+                  
+                  r_i := MorphismBetweenDirectSums( TransposedMat( [ r_i_list ] ) );
+                  
+                else
+                  
+                  r_i := UniversalMorphismFromZeroObject( X_i );
+                  
+                fi;
+                
+                q_ip1 := MorphismFromStandardCoConeObject( r_i );
+                
+                q_ip1_list := [ ];
+                
+                if not IsEmpty( r_i_list ) then
+                  
+                  s := List( r_i_list, Source );
+                  
+                  for k in [ 1 .. Size( r_i_list ) ] do
+                    
+                    Add( q_ip1_list, PreCompose( q_ip1, ProjectionInFactorOfDirectSum( s, k ) ) );
+                    
+                  od;
+                
+                fi;
+                
+                return [ r_i, q_ip1, r_i_list, q_ip1_list ];
+                
+              end );
+              
+    data!.maximal_exceptional_shift := N;
+    
+    return data;
+    
+end );
+
+##            R_i <-
+##      r^i /       \ q^i+1
+##         /         \
+##   X_i <-           X_i+1
+##
+##
+## returns  [ r^i, q^i+1, r^i as list, q^i+1 as list ]
+##
+##
+InstallMethodWithCache( ExceptionalReplacement,
+            "for homotopy objects defined by chains",
+          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          
+  function( A, collection )
+    local ambient_cat, complexes_cat, defining_cat, additive_closure, homotopy_cat, data, diffs, rep_A, N;
+    
+    ambient_cat := CapCategory( A );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
+    
+    if not IsChainComplexCategory( complexes_cat ) then
+      TryNextMethod( );
+    fi;
+    
+    defining_cat := DefiningFullSubcategory( collection );
+    
+    additive_closure := AdditiveClosure( collection );
+    
+    homotopy_cat := HomotopyCategory( collection );
+
+    data := ExceptionalReplacementData( A, collection );
+    
+    diffs := AsZFunction(
+              function( i )
+                local r_i_list, q_i_list, s, r, matrix;
+                
+                r_i_list := data[ i ][ 3 ];
+                
+                q_i_list := data[ i - 1 ][ 4 ];
+                
+                s := List( r_i_list, m -> Source( m ) / defining_cat );
+                
+                r := List( q_i_list, m -> Range( m ) / defining_cat );
+                
+                if IsEmpty( s ) or IsEmpty( r ) then
+                   
+                  matrix := [ ];
+                  
+                else
+                  
+                  matrix := List( r_i_list, m1 -> List( q_i_list, m2 -> PreCompose( m1, m2 ) / defining_cat ) );
+                
+                fi;
+                
+                s := AdditiveClosureObject( s, additive_closure );
+                
+                r := AdditiveClosureObject( r, additive_closure );
+                
+                return AdditiveClosureMorphism( s, matrix, r );
+                
+              end );
+              
+    rep_A := ChainComplex( additive_closure, diffs ) / homotopy_cat;
+    
+    rep_A!.exceptional_replacement_data := data;
+    
+    N := MaximalExceptionalShift( A, collection );
+    
+    SetLowerBound( rep_A, -N );
+    
+    return rep_A;
+    
+end );
+
+##
+InstallMethodWithCache( ExceptionalReplacement,
+            "for homotopy objects defined by chains",
           [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
-  function( a, collection, bool )
-    local C, rep_a, data, u, b, I;
+          
+  function( A, collection, bool )
+    local ambient_cat, complexes_cat, rep_A, data, u, X_u;
     
-    C := CapCategory( a );
+    ambient_cat := CapCategory( A );
     
-    rep_a := ExceptionalReplacement( a, collection );
+    complexes_cat := UnderlyingCategory( ambient_cat );
     
-    data := rep_a!.exceptional_replacement_data;
+    if not IsChainComplexCategory( complexes_cat ) then
+      TryNextMethod( );
+    fi;
     
-    u := ActiveLowerBound( rep_a );
+    rep_A := ExceptionalReplacement( A, collection );
+    
+    data := rep_A!.exceptional_replacement_data;
+    
+    u := ActiveLowerBound( rep_A );
     
     while bool do
       
-      if IsZeroForObjects( rep_a[ u ] ) then
+      if IsZeroForObjects( rep_A[ u ] ) then
         
-        b := Range( data[ u ][ 1 ] );
+        X_u := Range( data[ u ][ 1 ] );
         
-        I := CandidatesForExceptionalShifts( b, collection );
-        
-        if IsEmpty( I ) or
-            I[ 1 ] >= 0 or
-              MaximalExceptionalShift( b, collection ) = -infinity then
+        if MaximalExceptionalShift( X_u, collection ) = -infinity then
               
-          SetUpperBound( rep_a, u - 1 );
+          SetUpperBound( rep_A, u - 1 );
           
-          return rep_a;
+          return rep_A;
           
         else
           
@@ -460,23 +730,157 @@ InstallMethod( ExceptionalReplacement,
       
     od;
     
-    return rep_a;
+    return rep_A;
     
 end );
 
 ##
-InstallMethod( ExceptionalReplacement,
+InstallMethodWithCache( ExceptionalReplacementData,
+             "for homotopy morphisms defined by chains",
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          
+  function( phi, collection )
+    local homotopy_cat, complexes_cat, collection_plus, I, A, N_A, B, N_B, N, rep_A, rep_B, data;
+    
+    homotopy_cat := CapCategory( phi );
+    
+    complexes_cat := UnderlyingCategory( homotopy_cat );
+    
+    if not IsChainComplexCategory( complexes_cat ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    collection_plus := AdditiveClosure( collection );
+    
+    I := EmbeddingFunctorFromAdditiveClosure( collection );
+    
+    A := Source( phi );
+    
+    N_A := MaximalExceptionalShift( A, collection );
+    
+    B := Range( phi );
+    
+    N_B := MaximalExceptionalShift( B, collection );
+    
+    N := Maximum( N_A, N_B );
+    
+    rep_A := ExceptionalReplacementData( A, collection );
+    
+    rep_B := ExceptionalReplacementData( B, collection );
+    
+    data := AsZFunction(
+              function( i )
+                local x_i, y_i;
+                
+                if i < -N then
+                  
+                  x_i := Shift( phi, -i );
+                  
+                  y_i := ZeroObjectFunctorial( homotopy_cat );
+                  
+                  return [ x_i, y_i ];
+                  
+                elif i = -N then
+                  
+                  x_i := Shift( phi, -i );
+                  
+                  y_i := MorphismBetweenExceptionalObjects( x_i, collection );
+                  
+                  return [ x_i, y_i ];
+                  
+                else
+                  
+                  x_i := MorphismBetweenStandardCoConeObjects(
+                            rep_A[ i - 1 ][ 1 ],
+                            I( data[ i - 1 ][ 2 ] ),
+                            data[ i - 1 ][ 1 ],
+                            rep_B[ i - 1 ][ 1 ]
+                          );
+                          
+                  y_i := MorphismBetweenExceptionalObjects( x_i, collection );
+                  
+                  return [ x_i, y_i ];
+                  
+                fi;
+                
+            end );
+            
+    return data;
+    
+end );
+
+##
+InstallMethodWithCache( ExceptionalReplacement,
+            "for homotopy morphisms",
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          
+  function( alpha, collection )
+    local ambient_cat, complexes_cat, homotopy_cat, rep_A, rep_B, data, maps;
+    
+    ambient_cat := CapCategory( alpha );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
+   
+    homotopy_cat := HomotopyCategory( collection );
+    
+    rep_A := ExceptionalReplacement( Source( alpha ), collection );
+    
+    rep_B := ExceptionalReplacement( Range( alpha ), collection );
+    
+    data := ExceptionalReplacementData( alpha, collection );
+    
+    maps := ApplyMap( data, m -> m[ 2 ] );
+    
+    return [ rep_A, maps, rep_B ] / homotopy_cat;
+    
+end );
+
+##
+InstallMethodWithCache( ExceptionalReplacement,
+            "for homotopy morphisms defined by chain morphisms",
+          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+  function( alpha, collection )
+    local ambient_cat, complexes_cat, homotopy_cat, rep_A, rep_B, data, maps;
+    
+    ambient_cat := CapCategory( alpha );
+    
+    complexes_cat := UnderlyingCategory( ambient_cat );
+    
+    if not IsChainComplexCategory( complexes_cat ) then
+        
+        TryNextMethod( );
+        
+    fi;
+   
+    homotopy_cat := HomotopyCategory( collection );
+    
+    rep_A := ExceptionalReplacement( Source( alpha ), collection );
+    
+    rep_B := ExceptionalReplacement( Range( alpha ), collection );
+    
+    data := ExceptionalReplacementData( alpha, collection );
+    
+    maps := ApplyMap( data, m -> m[ 2 ] );
+    
+    return [ rep_A, maps, rep_B ] / homotopy_cat;
+    
+end );
+
+##
+InstallMethodWithCache( ExceptionalReplacement,
           [ IsHomotopyCategoryMorphism, IsExceptionalCollection, IsBool ],
   function( alpha, collection, bool )
-    local a, b, rep_a, rep_b;
-  
-    a := Source( alpha );
+    local A, B, rep_A, rep_B;
     
-    b := Range( alpha );
+    A := Source( alpha );
     
-    rep_a := ExceptionalReplacement( a, collection, bool );
+    B := Range( alpha );
     
-    rep_b := ExceptionalReplacement( b, collection, bool );
+    rep_A := ExceptionalReplacement( A, collection, bool );
+    
+    rep_B := ExceptionalReplacement( B, collection, bool );
     
     return ExceptionalReplacement( alpha, collection );
     

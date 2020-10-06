@@ -32,10 +32,7 @@ DeclareOperation( "MorphismBetweenExceptionalObjects",
 DeclareOperation( "ExceptionalReplacement",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
-DeclareOperation( "EXCEPTIONAL_REPLACEMENT_DATA",
-            [ IsHomotopyCategoryObject, IsInt, IsExceptionalCollection ] );
-
-DeclareOperation( "EXCEPTIONAL_REPLACEMENT_DATA",
+DeclareOperation( "ExceptionalReplacementData",
             [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
 
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
