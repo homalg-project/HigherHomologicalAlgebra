@@ -237,7 +237,7 @@ DeclareOperation( "BoxProduct",
     [ IsExceptionalCollection, IsExceptionalCollection, IsCapCategory ]
 );
 
-DeclareOperation( "QuiverAlgebraFromExceptionalCollection",
+DeclareOperation( "EndomorphismAlgebra",
     [ IsExceptionalCollection, IsField ] );
 
 

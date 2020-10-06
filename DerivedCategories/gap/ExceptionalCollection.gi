@@ -569,11 +569,11 @@ InstallGlobalFunction( RelationsBetweenMorphisms,
 end );
 
 ##
-InstallMethod( QuiverAlgebraFromExceptionalCollection,
+InstallMethod( EndomorphismAlgebra,
         [ IsExceptionalCollection, IsField ],
         
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, labels, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, i, j, algebroid, name, r, v, vertices_labels;
+    local nr_vertices, arrows, sources, ranges, v, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, name, r, i, j;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -669,14 +669,14 @@ end );
 InstallMethod( EndomorphismAlgebraAttr,
     [ IsExceptionalCollection ],
     
-  collection -> QuiverAlgebraFromExceptionalCollection( collection, GLOBAL_FIELD_FOR_QPA!.default_field )
+  collection -> EndomorphismAlgebra( collection, GLOBAL_FIELD_FOR_QPA!.default_field )
 );
 
 ##
 InstallMethod( EndomorphismAlgebra,
           [ IsExceptionalCollection ],
           
-  E -> EndomorphismAlgebraAttr( E )
+  EndomorphismAlgebraAttr
 );
 
 ##
