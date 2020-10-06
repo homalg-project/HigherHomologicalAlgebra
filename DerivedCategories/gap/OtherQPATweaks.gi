@@ -34,30 +34,30 @@ BindGlobal( "LINEAR_QUIVER",
       constructor := "LeftQuiver";
       
     fi;
-
+    
     if m <= n then
       
-    	L := ValueGlobal( constructor )(
+      L := ValueGlobal( constructor )(
             Concatenation( "L(v", String(m), ")[d", String(m), "]" ),
             n - m + 1,
-    		    List( [ m .. n - 1 ],
+            List( [ m .. n - 1 ],
               i -> [ Concatenation( "v", String( i ) ), Concatenation( "v", String( i + 1 ) ) ]  )
           );
       
-    	A := PathAlgebra( field, L );
+      A := PathAlgebra( field, L );
       
-    	c := ArrowLabels( L );
+      c := ArrowLabels( L );
       
-    	l := List( [ 1 .. Length( c ) - 1 ], i -> [ c[ i ], c[ i + 1 ] ] );
+      l := List( [ 1 .. Length( c ) - 1 ], i -> [ c[ i ], c[ i + 1 ] ] );
       
-	    if d = RIGHT then
+      if d = RIGHT then
       
-    	  l := List( l, label -> PrimitivePathByLabel( L, label[ 1 ] ) * PrimitivePathByLabel( L, label[ 2 ] ) );
-	  
+        l := List( l, label -> PrimitivePathByLabel( L, label[ 1 ] ) * PrimitivePathByLabel( L, label[ 2 ] ) );
+    
       else
-	    
+      
         l := List( l, label -> PrimitivePathByLabel( L, label[ 2 ] ) * PrimitivePathByLabel( L, label[ 1 ] ) );
-	    
+      
       fi;
     
       l := List( l, r -> QuiverAlgebraElement( A, [ 1 ], [ r ] ) );
@@ -69,34 +69,34 @@ BindGlobal( "LINEAR_QUIVER",
       L := ValueGlobal( constructor )(
               Concatenation( "L(v", String( n ), ")[d", String( n + 1 ), "]" ),
               m - n + 1,
-	            List( [ n .. m - 1 ],
+              List( [ n .. m - 1 ],
                 i-> [ Concatenation( "v", String( i + 1 ) ), Concatenation( "v", String( i ) ) ]  )
             );
-      
+            
       A := PathAlgebra( field, L );
       
-	    c := ArrowLabels( L );
+      c := ArrowLabels( L );
       
-	    l := List( [ 1 .. Length( c ) - 1 ], i -> [ c[ i + 1 ], c[ i ] ] );
-    
-	    if d = RIGHT then
+      l := List( [ 1 .. Length( c ) - 1 ], i -> [ c[ i + 1 ], c[ i ] ] );
+      
+      if d = RIGHT then
         
-	      l := List( l, label -> PrimitivePathByLabel( L, label[ 1 ] ) * PrimitivePathByLabel( L, label[ 2 ] ) );
+        l := List( l, label -> PrimitivePathByLabel( L, label[ 1 ] ) * PrimitivePathByLabel( L, label[ 2 ] ) );
         
-	    else
-	      
+      else
+        
         l := List( l, label -> PrimitivePathByLabel( L, label[ 2 ] ) * PrimitivePathByLabel( L, label[ 1 ] ) );
         
-	    fi;
+      fi;
       
-    	l := List( l, r -> QuiverAlgebraElement( A, [1], [r] ) );
-    	
+      l := List( l, r -> QuiverAlgebraElement( A, [1], [r] ) );
+      
       L!.( "m" ) := m;
       
-    	L!.( "n" ) := n;
-	    
+      L!.( "n" ) := n;
+      
       return [ L, A, l ];
-    
+      
     fi;
     
 end );
@@ -104,7 +104,7 @@ end );
 ##
 BindGlobal( "LINEAR_LEFT_QUIVER",
   function( field, m, n )
-  
+    
     return LINEAR_QUIVER( LEFT, field, m, n );
     
 end );
@@ -118,7 +118,7 @@ end );
 ##
 BindGlobal( "LINEAR_RIGHT_QUIVER",
   function( field, m, n )
-  
+    
     return LINEAR_QUIVER( RIGHT, field, m, n );
     
 end );
@@ -247,11 +247,11 @@ BindGlobal( "CONVERT_QUIVER_REP_MORPHISM_TO_COMPLEX_MORPHISM_OF_QUIVER_REPS",
     if IsChainComplex( C1 ) then
       
       return ChainMorphism( C1, C2, mats, m );
-    
+      
     else
       
       return CochainMorphism( C1, C2, mats, m );
-    
+      
     fi;
     
 end );
@@ -284,11 +284,11 @@ BindGlobal( "COMPUTE_LIFT_IN_COMPLEXES_OF_QUIVER_REPS",
     if lift = fail then
       
       return fail;
-    
+      
     else
       
       return CONVERT_QUIVER_REP_MORPHISM_TO_COMPLEX_MORPHISM_OF_QUIVER_REPS( Source( f ), Source( g ), lift, A );
-    
+      
     fi;
     
 end );
@@ -321,11 +321,11 @@ BindGlobal( "COMPUTE_COLIFT_IN_COMPLEXES_OF_QUIVER_REPS",
     if colift = fail then
       
       return fail;
-    
+      
     else
       
       return CONVERT_QUIVER_REP_MORPHISM_TO_COMPLEX_MORPHISM_OF_QUIVER_REPS( Range( f ), Range( g ), colift, A );
-    
+      
     fi;
     
 end );
@@ -374,7 +374,6 @@ InstallMethod( _WeakKernelEmbedding,
     
     full := UnderlyingCategory( cat );
     
-    
     if not ( IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( full )
               and IsQuiverRepresentationCategory( AmbientCategory( full ) )
             ) then
@@ -388,7 +387,7 @@ InstallMethod( _WeakKernelEmbedding,
         full!.full_subcategory_generated_by_indec_projective_objects then
         
         J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient_cat );
-    
+        
     elif IsBound( full!.full_subcategory_generated_by_indec_injective_objects ) and
          full!.full_subcategory_generated_by_indec_injective_objects then
          
@@ -397,10 +396,10 @@ InstallMethod( _WeakKernelEmbedding,
     else
       TryNextMethod( );
     fi;
-
+    
     Inc := InclusionFunctor( full );
     I := ExtendFunctorToAdditiveClosureOfSource( Inc );
-      
+    
     alpha := I( alpha );
     alpha := KernelEmbedding( alpha );
     alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
@@ -419,7 +418,6 @@ InstallMethod( _WeakKernelEmbedding,
     
     full := UnderlyingCategory( cat );
     
-    
     if not ( IsCapFullSubcategory( full ) and IsBound( AmbientCategory( full )!.ring_for_representation_category ) ) then
       
       TryNextMethod( );
@@ -429,7 +427,7 @@ InstallMethod( _WeakKernelEmbedding,
     if IsZero( Source( alpha ) ) then
       
       return UniversalMorphismFromZeroObject( Source( alpha ) );
-    
+      
     fi;
     
     ambient_cat := AmbientCategory( full );
@@ -439,7 +437,7 @@ InstallMethod( _WeakKernelEmbedding,
     I := InclusionFunctor( full );
     
     I := ExtendFunctorToAdditiveClosureOfSource( I );
-      
+    
     alpha := I( alpha );
     
     alpha := KernelEmbedding( alpha );
@@ -457,14 +455,14 @@ InstallMethod( _WeakKernelEmbedding,
       return UniversalMorphismFromZeroObject( Range( alpha ) );
       
     else
-    
+      
       return List( [ 1 .. Size( source ) ],
             i -> List( [ 1 .. Size( range ) ],
                   j -> GradedPresentationMorphism( source[i], HomalgMatrix( [ [ mat[ i, j ] ] ], 1, 1, S ), range[ j ] ) / full
                 ) ) / cat;
                 
     fi;
-     
+    
 end );
 
 ##
@@ -478,7 +476,7 @@ InstallMethod( _WeakKernelEmbedding,
     alpha := KernelEmbedding( UnderlyingCell( alpha ) );
     
     return PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha ) / full;
-   
+    
 end );
 
 ##

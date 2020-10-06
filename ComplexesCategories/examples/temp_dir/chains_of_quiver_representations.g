@@ -9,60 +9,60 @@ DeclareOperation( "LinearLeftQuiver", [ IsObject, IsInt, IsInt ] );
 DeclareOperation( "ArrowsBetweenTwoVertices", [ IsQuiverVertex, IsQuiverVertex ] );
 
 InstallMethod( LinearQuiver, 
-	[ IsDirection, IsObject, IsInt, IsInt ],
+  [ IsDirection, IsObject, IsInt, IsInt ],
   function( d, k, m, n )
     local L, kL, c, l, constructor;
     if d = RIGHT then 
-      	constructor := "RightQuiver";
+        constructor := "RightQuiver";
     else
         constructor := "LeftQuiver";
     fi;
 
     if m<=n then
-    	L := ValueGlobal(constructor)(  Concatenation( "L(v", String(m), ")[d", String(m), "]" ), n - m + 1, 
-    		List( [ m .. n - 1 ], i-> [ Concatenation( "v", String(i) ), Concatenation( "v", String(i+1) ) ]  ) );
-    	kL := PathAlgebra( k, L );
-    	c := ArrowLabels( L );
-    	l := List( [ 1 .. Length( c )-1 ], i -> [ c[i], c[i+1] ] );
-	if d = RIGHT then
-    	    l := List( l, label -> PrimitivePathByLabel( L, label[1] )*PrimitivePathByLabel( L, label[2] ) );
-	else
-	    l := List( l, label -> PrimitivePathByLabel( L, label[2] )*PrimitivePathByLabel( L, label[1] ) );
-	fi;
-    	l := List( l, r -> QuiverAlgebraElement( kL, [1], [r] ) );
-    	return [ L, kL, l ];
+      L := ValueGlobal(constructor)(  Concatenation( "L(v", String(m), ")[d", String(m), "]" ), n - m + 1, 
+        List( [ m .. n - 1 ], i-> [ Concatenation( "v", String(i) ), Concatenation( "v", String(i+1) ) ]  ) );
+      kL := PathAlgebra( k, L );
+      c := ArrowLabels( L );
+      l := List( [ 1 .. Length( c )-1 ], i -> [ c[i], c[i+1] ] );
+  if d = RIGHT then
+          l := List( l, label -> PrimitivePathByLabel( L, label[1] )*PrimitivePathByLabel( L, label[2] ) );
+  else
+      l := List( l, label -> PrimitivePathByLabel( L, label[2] )*PrimitivePathByLabel( L, label[1] ) );
+  fi;
+      l := List( l, r -> QuiverAlgebraElement( kL, [1], [r] ) );
+      return [ L, kL, l ];
     else
         L := ValueGlobal(constructor)(  Concatenation( "L(v", String(n), ")[d", String(n+1), "]" ), m - n + 1,
-	        List( [ n .. m - 1 ], i-> [ Concatenation( "v", String(i+1) ), Concatenation( "v", String(i) ) ]  ) );
+          List( [ n .. m - 1 ], i-> [ Concatenation( "v", String(i+1) ), Concatenation( "v", String(i) ) ]  ) );
         kL := PathAlgebra( k, L );
-	c := ArrowLabels( L );
-	l := List( [ 1 .. Length( c )-1 ], i -> [ c[i+1], c[i] ] );
-	if d = RIGHT then
-	    l := List( l, label -> PrimitivePathByLabel( L, label[1] )*PrimitivePathByLabel( L, label[2] ) );
-	else 
-	    l := List( l, label -> PrimitivePathByLabel( L, label[2] )*PrimitivePathByLabel( L, label[1] ) );
-	fi;
-	l := List( l, r -> QuiverAlgebraElement( kL, [1], [r] ) );
-	L!.("m") := m;
-	L!.("n") := n;
-	return [ L, kL, l ];
+  c := ArrowLabels( L );
+  l := List( [ 1 .. Length( c )-1 ], i -> [ c[i+1], c[i] ] );
+  if d = RIGHT then
+      l := List( l, label -> PrimitivePathByLabel( L, label[1] )*PrimitivePathByLabel( L, label[2] ) );
+  else 
+      l := List( l, label -> PrimitivePathByLabel( L, label[2] )*PrimitivePathByLabel( L, label[1] ) );
+  fi;
+  l := List( l, r -> QuiverAlgebraElement( kL, [1], [r] ) );
+  L!.("m") := m;
+  L!.("n") := n;
+  return [ L, kL, l ];
     fi;
 end );
 
 InstallMethod( LinearRightQuiver, 
-	[ IsObject, IsInt, IsInt ],
+  [ IsObject, IsInt, IsInt ],
   function( k, m, n )
     return LinearQuiver( RIGHT, k, m, n );
 end );
 
 InstallMethod( LinearLeftQuiver, 
-	[ IsObject, IsInt, IsInt ],
+  [ IsObject, IsInt, IsInt ],
   function( k, m, n )
     return LinearQuiver( LEFT, k, m, n );
 end );
 
 InstallMethod( ArrowsBetweenTwoVertices, 
-		[ IsQuiverVertex, IsQuiverVertex ],
+    [ IsQuiverVertex, IsQuiverVertex ],
   function( v1, v2 )
     return Intersection( OutgoingArrows( v1 ), IncomingArrows( v2 ) );
 end );
@@ -215,9 +215,9 @@ compute_colift_in_quiver_rep :=
     # Thus g must be zero in order for colift to exist.
     if homs_basis = [ ] then
       if IsZeroForMorphisms( g ) then
-	return ZeroMorphism( Range( f ), Range( g ) );
+  return ZeroMorphism( Range( f ), Range( g ) );
       else
-	return fail;
+  return fail;
       fi;
     fi;
     Q := QuiverOfRepresentation( Source( f ) );
@@ -333,9 +333,9 @@ compute_homotopy_chain_morphisms_for_null_homotopic_morphism :=
       return fail;
     else
       return MapLazy( IntegersList, 
-      		n -> PreCompose( 
-		MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ), ZeroMorphism( B[ n ], B[ n + 1 ] ) ] ] ),
-		colift[ n + 1 ] ), 1 );
+          n -> PreCompose( 
+    MorphismBetweenDirectSums( [ [ IdentityMorphism( B[ n ] ), ZeroMorphism( B[ n ], B[ n + 1 ] ) ] ] ),
+    colift[ n + 1 ] ), 1 );
     fi;
     # Here: l[n]: B[n] --> C[n+1], n in Z.
 end;
