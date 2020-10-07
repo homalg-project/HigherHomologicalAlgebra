@@ -9,9 +9,13 @@ gap> LoadPackage( "HomotopyCategories", false );
 true
 gap> LoadPackage( "ModulePresentations", false );
 true
+gap> LoadPackage( "FreydCategoriesForCAP", false );
+true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "HomotopyCategories" );
 true
 gap> LoadPackage( "ModulePresentations" );
+true
+gap> LoadPackage( "FreydCategoriesForCAP" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

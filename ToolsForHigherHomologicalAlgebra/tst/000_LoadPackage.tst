@@ -7,7 +7,11 @@ gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
 gap> LoadPackage( "ToolsForHigherHomologicalAlgebra", false );
 true
+gap> LoadPackage( "FreydCategoriesForCAP", false );
+true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "ToolsForHigherHomologicalAlgebra" );
+true
+gap> LoadPackage( "FreydCategoriesForCAP" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

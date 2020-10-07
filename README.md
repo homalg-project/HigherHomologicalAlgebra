@@ -6,71 +6,24 @@
 | [![Build Status][tests-img]][tests-url] | [![Code Coverage][codecov-img]][codecov-url] |
 
 <!-- END HEADER -->
-HigherHomologicalAlgebra
-=========================
-
 
 Introduction
 ------------
-The repository is a collection of the Gap packages:
-
-- ComplexesCategories
-- Bicomplexes
-- HomotopyCategories
-- DerivedCategories
-- TriangulatedCategories
-- QuotientCategories
-- StableCategories
-- BBGG
-
-The aim of these packages is to carry out categorical and homological constructions on complexes, homotopy or derived categories. The main focus is the construction of derived equivalences that arise via full strong exceptional collections. 
-
-Installation
------------
-The packages can easily be obtained by cloning the repository
-[HigherHomologicalAlgebra](https://github.com/homalg-project/HigherHomologicalAlgebra)
-in the pkg directory of the Gap installation.
-
-Required packages
------------------
-
-* This package is written to handle categories that are already implemented in CAP, so you will need a fresh version of CAP. You may install it from [CAP_project](https://github.com/homalg-project/CAP_project)
-
-* You will also need [homalg_project](https://github.com/homalg-project/homalg_project.git)
-
-* Other needed packages
-  - https://github.com/homalg-project/Toposes/
-  - https://github.com/homalg-project/FinSetsForCAP/
-  - https://github.com/sunnyquiver/QPA2/
-  - https://github.com/homalg-project/Algebroids/
-  - https://github.com/homalg-project/CategoryConstructor/
-  - https://github.com/homalg-project/SubcategoriesForCAP/
- 
-* For the installation of Gap see [gap-system-website](https://www.gap-system.org)
-
-Remarks
--------
-Of course you are welcome to e-mail me if there are any questions, remarks, suggestions ;)
-
- Kamal Saleh e-mail: saleh@mathematik.uni-siegen.de
-
-License
--------
-These packages are free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation; either version 2 of the License, or (at your opinion) any later version.
+The repository is a collection of the Gap packages. The aim of these packages is to carry out categorical and homological constructions on complexes, homotopy or derived categories. The main focus is the construction of derived equivalences that arise via full strong exceptional collections.
 
 <!-- BEGIN FOOTER -->
 ## Packages of [HigherHomologicalAlgebra](/../../):
-| Name | Documentation |
-| ---- | ------------- |
-| [BBGG](BBGG) | [![HTML stable documentation][docs-BBGG-img]][docs-BBGG-url] |
-| [Bicomplexes](Bicomplexes) | [![HTML stable documentation][docs-Bicomplexes-img]][docs-Bicomplexes-url] |
-| [ComplexesCategories](ComplexesCategories) | [![HTML stable documentation][docs-ComplexesCategories-img]][docs-ComplexesCategories-url] |
-| [DerivedCategories](DerivedCategories) | [![HTML stable documentation][docs-DerivedCategories-img]][docs-DerivedCategories-url] |
-| [HomotopyCategories](HomotopyCategories) | [![HTML stable documentation][docs-HomotopyCategories-img]][docs-HomotopyCategories-url] |
-| [QuotientCategories](QuotientCategories) | [![HTML stable documentation][docs-QuotientCategories-img]][docs-QuotientCategories-url] |
-| [StableCategories](StableCategories) | [![HTML stable documentation][docs-StableCategories-img]][docs-StableCategories-url] |
-| [TriangulatedCategories](TriangulatedCategories) | [![HTML stable documentation][docs-TriangulatedCategories-img]][docs-TriangulatedCategories-url] |
+| Name | Description | Documentation |
+| ---- | ----------- | ------------- |
+| [BBGG](BBGG) | Beilinson monads and derived categories for coherent sheaves over P^n | [![HTML stable documentation][docs-BBGG-img]][docs-BBGG-url] |
+| [Bicomplexes](Bicomplexes) | Bicomplexes for Abelian categories | [![HTML stable documentation][docs-Bicomplexes-img]][docs-Bicomplexes-url] |
+| [ComplexesCategories](ComplexesCategories) | Category of (co)chain complexes of an additive category | [![HTML stable documentation][docs-ComplexesCategories-img]][docs-ComplexesCategories-url] |
+| [DerivedCategories](DerivedCategories) | Derived categories of Abelian categories | [![HTML stable documentation][docs-DerivedCategories-img]][docs-DerivedCategories-url] |
+| [HomotopyCategories](HomotopyCategories) | Homotopy categories of additive categories | [![HTML stable documentation][docs-HomotopyCategories-img]][docs-HomotopyCategories-url] |
+| [QuotientCategories](QuotientCategories) | Quotient categories of CAP categories by two-sided ideals | [![HTML stable documentation][docs-QuotientCategories-img]][docs-QuotientCategories-url] |
+| [StableCategories](StableCategories) | Stable categories of additive categories | [![HTML stable documentation][docs-StableCategories-img]][docs-StableCategories-url] |
+| [ToolsForHigherHomologicalAlgebra](ToolsForHigherHomologicalAlgebra) | Tools for the Higher Homological Algebra project | [![HTML stable documentation][docs-ToolsForHigherHomologicalAlgebra-img]][docs-ToolsForHigherHomologicalAlgebra-url] |
+| [TriangulatedCategories](TriangulatedCategories) | Framework for triangulated categories | [![HTML stable documentation][docs-TriangulatedCategories-img]][docs-TriangulatedCategories-url] |
 
 [docs-BBGG-img]: https://img.shields.io/badge/HTML-stable-blue.svg
 [docs-BBGG-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/doc/chap0_mj.html
@@ -92,6 +45,9 @@ published by the Free Software Foundation; either version 2 of the License, or (
 
 [docs-StableCategories-img]: https://img.shields.io/badge/HTML-stable-blue.svg
 [docs-StableCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/doc/chap0_mj.html
+
+[docs-ToolsForHigherHomologicalAlgebra-img]: https://img.shields.io/badge/HTML-stable-blue.svg
+[docs-ToolsForHigherHomologicalAlgebra-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/doc/chap0_mj.html
 
 [docs-TriangulatedCategories-img]: https://img.shields.io/badge/HTML-stable-blue.svg
 [docs-TriangulatedCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/doc/chap0_mj.html

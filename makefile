@@ -70,3 +70,34 @@ ci-test: doc
 	cd StableCategories && make ci-test
 	cd ToolsForHigherHomologicalAlgebra && make ci-test
 	cd TriangulatedCategories && make ci-test
+# BEGIN PACKAGE JANITOR
+doc: doc_BBGG doc_Bicomplexes doc_ComplexesCategories doc_DerivedCategories doc_HomotopyCategories doc_QuotientCategories doc_StableCategories doc_ToolsForHigherHomologicalAlgebra doc_TriangulatedCategories
+
+doc_BBGG:
+	$(MAKE) -C BBGG doc
+
+doc_Bicomplexes:
+	$(MAKE) -C Bicomplexes doc
+
+doc_ComplexesCategories:
+	$(MAKE) -C ComplexesCategories doc
+
+doc_DerivedCategories:
+	$(MAKE) -C DerivedCategories doc
+
+doc_HomotopyCategories:
+	$(MAKE) -C HomotopyCategories doc
+
+doc_QuotientCategories:
+	$(MAKE) -C QuotientCategories doc
+
+doc_StableCategories:
+	$(MAKE) -C StableCategories doc
+
+doc_ToolsForHigherHomologicalAlgebra:
+	$(MAKE) -C ToolsForHigherHomologicalAlgebra doc
+
+doc_TriangulatedCategories:
+	$(MAKE) -C TriangulatedCategories doc
+
+# END PACKAGE JANITOR

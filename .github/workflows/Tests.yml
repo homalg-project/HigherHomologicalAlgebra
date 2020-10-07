@@ -42,3 +42,7 @@ jobs:
           TERM=dumb make -C HigherHomologicalAlgebra -j $(nproc) --output-sync ci-test
           cp ./HigherHomologicalAlgebra/.codecov.yml ./
           curl -s https://codecov.io/bash | bash
+          git config --global user.name "Bot"
+          git config --global user.email "empty"
+          cd HigherHomologicalAlgebra
+          CUR_SHA=$(git rev-parse --verify HEAD)
