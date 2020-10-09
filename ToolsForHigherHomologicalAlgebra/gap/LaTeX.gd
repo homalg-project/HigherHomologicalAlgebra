@@ -4,5 +4,5 @@
 # Declarations
 #
 
-DeclareOperation( "VisualizeLaTeXString", [ IsCapCategoryCell ] );
-DeclareOperation( "VisualizeLaTeXString", [ IsString ] );
+DeclareOperation( "Show", [ IsCapCategoryCell ] );
+DeclareOperation( "Show", [ IsString ] );

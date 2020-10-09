@@ -9,7 +9,7 @@
 ##########################
 
 ##
-InstallMethod( VisualizeLaTeXString,
+InstallMethod( Show,
         [ IsString ],
         
   function( str )

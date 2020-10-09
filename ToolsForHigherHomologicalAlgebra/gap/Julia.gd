@@ -4,6 +4,6 @@
 # Declarations
 #
 
-if not IsBound( VisualizeLaTeXString ) then
-  DeclareOperation( "VisualizeLaTeXString", [ IsString ] );
+if not IsBound( Show ) then
+  DeclareOperation( "Show", [ IsString ] );
 fi;

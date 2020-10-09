@@ -9,17 +9,17 @@
 ##########################
 
 ##
-InstallMethod( VisualizeLaTeXString,
+InstallMethod( Show,
           [ IsCapCategoryCell ],
   function( c )
   
     if ApplicableMethod( LaTeXStringOp, [ c ], 0, 1 ) <> fail then
       
-      VisualizeLaTeXString( LaTeXStringOp( c ) );
+      Show( LaTeXStringOp( c ) );
       
     elif ApplicableMethod( LaTeXOutput, [ c ], 0, 1 ) <> fail then
       
-      VisualizeLaTeXString( LaTeXOutput( c ) );
+      Show( LaTeXOutput( c ) );
       
     else
       
@@ -30,7 +30,7 @@ InstallMethod( VisualizeLaTeXString,
 end );
 
 ##
-InstallMethod( VisualizeLaTeXString,
+InstallMethod( Show,
           [ IsString ],
           
   function( str )
