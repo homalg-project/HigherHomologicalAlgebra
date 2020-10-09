@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2020.10.01",
+Version := "2020.10.02",
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
@@ -75,7 +75,7 @@ Dependencies := rec(
         [ "ToolsForHigherHomologicalAlgebra", "2020.09.25" ],
         [ "QPA", ">= 2.0-dev"], # https://github.com/homalg-project/QPA2.git
         [ "CAP", ">= 2020.04.16" ],
-        [ "Algebroids", ">= 2020.04.24" ],
+        [ "Algebroids", ">= 2020.09.08" ],
         [ "SubcategoriesForCAP", ">= 2020.02.01" ],
         [ "HomotopyCategories", ">= 2020.10.01" ],
         [ "BBGG", "2020.05.01" ]
