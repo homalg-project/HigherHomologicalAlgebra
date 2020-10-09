@@ -6,10 +6,10 @@
                [1X Tools for the Higher Homological Algebra project [101X
   
   
-                                   2020.09.26
+                                   2020.09.27
   
   
-                               26 September 2020
+                               27 September 2020
   
   
                                   Kamal Saleh
@@ -32,8 +32,8 @@
   
   [1XContents (ToolsForHigherHomologicalAlgebra)[101X
   
+  1 [33X[0;0YIntroduction[133X
+  2 [33X[0;0YFunctionality[133X
   
   
   [32X
-  [33X[0;0Y [133X
-  
