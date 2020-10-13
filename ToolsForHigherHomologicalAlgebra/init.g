@@ -6,6 +6,8 @@
 
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/LaTeX.gd");
 
+ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/Functors.gd");
+
 if IsPackageMarkedForLoading( "MatricesForHomalg", ">= 2020.06.27" ) then
     ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/Homalg.gd" );
 fi;
