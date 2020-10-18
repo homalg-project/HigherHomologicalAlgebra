@@ -1,5 +1,5 @@
 
-using HomalgProject
+using CapAndHomalg
 
 LoadPackage( "DerivedCategories" )
 
@@ -12,7 +12,7 @@ q = RightQuiver( "q_𝓞",
           [ "x0", "x1", "x2", "y0", "y1", "y2" ],
           [ 1, 1, 1, 2, 2, 2 ],
           [ 2, 2, 2, 3, 3, 3 ] )
-SetLabelsAsLaTeXStrings( q, julia_to_gap([ g"x_1", g"x_2", g"x_3", g"y_0", g"y_1", g"y_2" ]) )
+SetLabelsAsLaTeXStrings( q, [ "x_1", "x_2", "x_3", "y_0", "y_1", "y_2" ] )
 
 Qq = PathAlgebra( ℚ, q )
 
