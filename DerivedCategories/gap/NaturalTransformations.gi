@@ -3,27 +3,24 @@
 #
 # Implementations
 #
-##
-##  NaturalTransformations
-##
-#############################################################################
 
 ##
 InstallMethod( UnitOfTensorHomAdjunction,
           [ IsExceptionalCollection ],
+          
   function( collection )
     local full, ambient_cat, HH, TT, D, k, name, nat;
     
     full := DefiningFullSubcategory( collection );
     
     ambient_cat := AmbientCategory( full );
-   
+    
     if not ( HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat ) ) then
       
       TryNextMethod( );
       
     fi;
-   
+    
     HH := HomFunctor( collection );
     
     TT := TensorFunctor( collection );
@@ -65,7 +62,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         min_gen := List( min_gen, g -> ElementVectors( g ) );
         
         positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
-               
+        
         htr := ApplyFunctor( HH, tr );
         
         vec_spaces := VectorSpacesOfRepresentation( htr );
@@ -73,7 +70,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         zero_vectors := List( vec_spaces, Zero );
         
         maps := [ ];
- 
+        
         for i in [ 1 .. Size( min_gen ) ] do
           
           if IsZero( a[ i ] ) then
@@ -87,7 +84,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
             e[ positions[ i ] ] := Vector( vec_spaces[ positions[ i ] ], a[ i ] );
             
             Add( maps, HomFromProjective( QuiverRepresentationElementNC( htr, e ), htr ) );
-          
+            
           fi;
           
         od;
@@ -105,6 +102,7 @@ end );
 ##
 InstallMethod( CounitOfTensorHomAdjunction,
           [ IsExceptionalCollection ],
+          
   function( collection )
     local full, ambient_cat, HH, TT, C, k, name, nat;
     
@@ -158,15 +156,15 @@ InstallMethod( CounitOfTensorHomAdjunction,
                     UnderlyingCell( collection[ positions[ i ] ] ), a )
                       { positions_of_non_zeros[ i ] }
               );
-        
+              
         mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
         
         return CokernelColift( ht_a!.embedded_defining_morphism_of_cokernel_object, mor );
         
       end );
-    
+      
     return nat;
-  
+    
 end );
 
 ##
@@ -189,7 +187,7 @@ InstallMethod( UnitOfConvolutionReplacementAdjunction,
     AddNaturalTransformationFunction( nat,
       ReturnNothing # It must be similar to counit, it must use the octahedral axiom!
     );
-   
+    
     return;
     
 end );
@@ -219,10 +217,12 @@ InstallMethod( CounitOfConvolutionReplacementAdjunction,
     return nat;
     
 end );
-    
+
+## This method is for all objects, it uses the standard isomorphisms bellow
 ##
 InstallMethod( COMPUTE_ISOMORPHISM,
         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+        
   function( a, collection )
     local N, iota;
     
@@ -236,9 +236,11 @@ InstallMethod( COMPUTE_ISOMORPHISM,
     
 end );
 
+## This method is for objects whose maximal exceptional shift is 0.
 ##
 InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+        
   function( A, collection )
     local ambient_cat, complexes_cat, I, data, R, z_func, func;
     
@@ -270,7 +272,7 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
     
     func :=
       function( n )
-        local r_1, st_r_1, r_0, st_r_0, U, j_1, st_j_1, r_n, st_r_n, shift_st_r_n, t, j_n, st_j_n, shift_st_j_n;
+        local r_1, st_r_1, r_0, st_r_0, uvw, j_1, st_j_1, r_n, st_r_n, shift_st_r_n, t, j_n, st_j_n, shift_st_j_n;
         
         if n < 1 then
           
@@ -278,23 +280,24 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
           
         elif n = 1 then
           
-          r_1 := data[ n ][ 1 ];
+          r_1 := data[ 1 ][ 1 ];
           st_r_1 := StandardExactTriangle( r_1 );
           
-          r_0 := data[ n - 1 ][ 1 ];
-          st_r_0 := StandardExactTriangle( r_0 );
-          U := ExactTriangle(
-                  Shift( st_r_0^2, -1 ),
-                  st_r_0^0,
-                  AdditiveInverseForMorphisms( st_r_0^1 )
-                );
+          r_0 := data[ 0 ][ 1 ];
           
-          j_1 := BackwardPostnikovSystemAt( R, n - 1 ) ^ n;
+          uvw := ExactTriangle(
+                    Shift( MorphismFromStandardConeObject( r_0 ), -1 ),
+                    r_0,
+                    AdditiveInverseForMorphisms( MorphismIntoStandardConeObject( r_0 ) )
+                  );
+                  
+          j_1 := BackwardPostnikovSystemAt( R, 0 )^1;
           st_j_1 := StandardExactTriangle( j_1 );
           
-          Assert( 2, IsCongruentForMorphisms( PreCompose( st_r_1^0, U^0 ), st_j_1^0 ) );
+          Assert( 2, IsCongruentForMorphisms( PreCompose( st_r_1^0, uvw^0 ), st_j_1^0 ) );
           
-          return [ st_r_1, U, st_j_1 ];
+          # Create octahedral input to compute the next triangle uvw:
+          return [ st_r_1, uvw, st_j_1 ];
           
         elif n <= ActiveUpperBound( R ) + 1 then
           
@@ -304,18 +307,19 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
           
           t := z_func[ n - 1 ];
           
-          U := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
+          uvw := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
           
-          j_n := BackwardPostnikovSystemAt( R, n - 1 ) ^ n;
+          j_n := BackwardPostnikovSystemAt( R, n - 1 )^n;
           st_j_n := StandardExactTriangle( j_n );
           shift_st_j_n := Shift( st_j_n, n - 1 );
           
           Assert( 2, IsCongruentForMorphisms(
-                          PreCompose( [ shift_st_r_n^0, U^0, t[ 3 ]^2 ] ),
+                          PreCompose( [ shift_st_r_n^0, uvw^0, t[ 3 ]^2 ] ),
                           PreCompose( shift_st_j_n^0, t[ 3 ]^2 )
                         ) );
-          
-          return [ shift_st_r_n, U, shift_st_j_n ];
+                        
+          # Create octahedral input to compute the next triangle uvw:
+          return [ shift_st_r_n, uvw, shift_st_j_n ];
           
         else
           
@@ -331,9 +335,11 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
     
 end );
 
+## This method is for objects whose maximal exceptional shift is 0.
 ##
 InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+        
   function( A, collection )
     local ambient_cat, complexes_cat, I, data, R, z_func, func;
     
@@ -365,7 +371,7 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
     
     func :=
       function( n )
-        local r_m1, st_r_m1, r_0, st_r_0, U, j_m1, st_j_m1, r_n, st_r_n, shift_st_r_n, t, j_n, st_j_n, shift_st_j_n;
+        local r_m1, st_r_m1, r_0, uvw, j_m1, st_j_m1, r_n, st_r_n, shift_st_r_n, t, j_n, st_j_n, shift_st_j_n;
         
         if n > -1 then
           
@@ -373,44 +379,45 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
           
         elif n = -1 then
           
-          r_m1 := data[ n ][ 1 ];
+          r_m1 := data[ -1 ][ 1 ];
           st_r_m1 := StandardExactTriangle( r_m1 );
           
-          r_0 := data[ n + 1 ][ 1 ];
-          st_r_0 := StandardExactTriangle( r_0 );
-          U := ExactTriangle(
-                  Shift( st_r_0^2, -1 ),
-                  st_r_0^0,
-                  AdditiveInverseForMorphisms( st_r_0^1 )
-                );
-          
-          j_m1 := BackwardPostnikovSystemAt( R, n + 1 ) ^ n;
+          r_0 := data[ 0 ][ 1 ];
+          uvw := ExactTriangle(
+                    Shift( MorphismFromStandardConeObject( r_0 ), -1 ),
+                    r_0,
+                    AdditiveInverseForMorphisms( MorphismIntoStandardConeObject( r_0 ) )
+                  );
+                  
+          j_m1 := BackwardPostnikovSystemAt( R, 0 )^-1;
           st_j_m1 := StandardExactTriangle( j_m1 );
           
-          Assert( 2, IsCongruentForMorphisms( PreCompose( st_r_m1^0, U^0 ), st_j_m1^0 ) );
+          Assert( 2, IsCongruentForMorphisms( PreCompose( st_r_m1^0, uvw^0 ), st_j_m1^0 ) );
           
-          return [ st_r_m1, U, st_j_m1 ];
+          # Create octahedral input to compute the next triangle uvw:
+          return [ st_r_m1, uvw, st_j_m1 ];
           
         elif n >= ActiveLowerBound( R ) - 1 then
           
           r_n := data[ n ][ 1 ];
           st_r_n := StandardExactTriangle( r_n );
-          shift_st_r_n := Shift( st_r_n, - n - 1 );
+          shift_st_r_n := Shift( st_r_n, -n - 1 );
           
           t := z_func[ n + 1 ];
           
-          U := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
+          uvw := ExactTriangleByOctahedralAxiom( t[ 1 ], t[ 2 ], t[ 3 ], true );
           
-          j_n := BackwardPostnikovSystemAt( R, n + 1 ) ^ n;
+          j_n := BackwardPostnikovSystemAt( R, n + 1 )^n;
           st_j_n := StandardExactTriangle( j_n );
           shift_st_j_n := Shift( st_j_n, -n - 1 );
           
           Assert( 2, IsCongruentForMorphisms(
-                          PreCompose( [ shift_st_r_n^0, U^0, t[ 3 ]^2 ] ),
+                          PreCompose( [ shift_st_r_n^0, uvw^0, t[ 3 ]^2 ] ),
                           PreCompose( shift_st_j_n^0, t[ 3 ]^2 )
                         ) );
-          
-          return [ shift_st_r_n, U, shift_st_j_n ];
+                        
+          # Create input for the octahedral axiom to compute the next triangle uvw:
+          return [ shift_st_r_n, uvw, shift_st_j_n ];
           
         else
           
