@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "BBGG",
 Subtitle := "Beilinson monads and derived categories for coherent sheaves over P^n",
-Version := "2020.10-01",
+Version := "2020.10-02",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -45,7 +45,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/BB
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/BBGG-", ~.Version, "/BBGG-", ~.Version ),
 # END URLS
 
-ArchiveFormats  := ".tar.gz",
+ArchiveFormats  := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
@@ -99,4 +99,3 @@ TestFile := "tst/testall.g",
 Keywords := [ "Beilinson monads", "Tate resolutions", "Derived categories", "Projective space", "Coherent sheaves" ],
 
 ));
-ArchiveFormats := ".tar.gz .zip",

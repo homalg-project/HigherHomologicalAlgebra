@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2020.10-03",
+Version := "2020.10-04",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -48,7 +48,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Co
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-", ~.Version, "/ComplexesCategories-", ~.Version ),
 # END URLS
 
-ArchiveFormats  := ".tar.gz",
+ArchiveFormats  := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
@@ -95,4 +95,3 @@ TestFile := "tst/testall.g",
 Keywords := [ "Chains", "Cochains", "MappingCone", "MappingCylinder", "Homotopy" ],
 
 ));
-ArchiveFormats := ".tar.gz .zip",
