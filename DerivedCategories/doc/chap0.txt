@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2020.10.03
+                                   2020.10-04
   
   
-                                 3 October 2020
+                                24 October 2020
   
   
                                   Kamal Saleh
