@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2020.09.07"
+version: "2020.10-01"
 license: "GPL-2.0-or-later"
-date: 2020-09-07
+date: 2020-10-24
 description: |
     Stable categories of additive categories
 
@@ -32,7 +32,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2020.09.07/StableCategories-2020.09.07.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2020.10-01/StableCategories-2020.10-01.tar.gz
+    - name: .zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2020.10-01/StableCategories-2020.10-01.zip
+
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2020.10-01/StableCategories-2020.10-01.pdf
 
 abstract: |
 
@@ -43,7 +47,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2020.09.07</i>
+             Version 2020.10-01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories</a></span>.
@@ -51,15 +55,18 @@ citeas: |
     
 
 bibtex: |
-    @misc{ StableCategories2020.09.07,
+    @misc{ StableCategories2020.10-01,
       author =           {Saleh, K.},
-      title =            {{StableCategories}, Stable categories of additive categories, {V}ersion 2020.09.07},
-      month =            {Sep},
+      title =            {{StableCategories},   Stable  categories  of  additive
+                          categories, {V}ersion 2020.10-01},
+      month =            {Oct},
       year =             {2020},
       note =             {GAP package},
-      howpublished =     {\href                   {https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories}
+      howpublished =     {\href
+                          {https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary {}{}{}\texttt{StableCategories}}},
+                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{StableCategories}}},
       printedkey =       {Sal20}
     }
 
