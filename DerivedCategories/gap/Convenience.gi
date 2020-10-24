@@ -520,32 +520,6 @@ InstallMethod( FindSomeFunctor,
     return ExtendFunctorToChainComplexCategories( I );
 end );
 
-##
-InstallMethod( FindSomeFunctor,
-          [ IsCapCategory, IsCapCategory ],
-          -10000,
-  function( C1, C2 )
-    local F;
-    
-    F := SetOfKnownFunctors( C1, C2 );
-    
-    if IsEmpty( F ) then
-      
-      TryNextMethod( );
-      
-    else
-      
-      if Size( F ) > 1 then
-        Info( InfoWarning, 1, Concatenation( "Returning the first out of many functors between ", Name( C1 ), " and ", Name( C2 ) ) );
-        Info( InfoWarning, 1, "It is recommended to use the operation: SetOfKnownFunctors( category_1, category_2 )" );
-      fi;
-      
-      return F[1];
-      
-    fi;
-  
-end );
-
 ##############################################
 #
 # Convenience methods to Homotopy categories

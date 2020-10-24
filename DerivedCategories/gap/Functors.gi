@@ -519,6 +519,35 @@ InstallMethod( IsomorphismOntoAlgebroid,
     
 end );
 
+
+##
+functor :=
+  [
+    IsCapFullSubcategory,
+    IsAlgebroid,
+    function( full, oid )
+      local collection;
+      if not HasExceptionalCollection( full ) then
+        return false;
+      fi;
+      collection := ExceptionalCollection( full );
+      if not HasAlgebroid( collection ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( oid, Algebroid( collection ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { full, oid } -> IsomorphismOntoAlgebroid( ExceptionalCollection( full ) ),
+    "Isomorphism functor from an exceptional collection onto the associated algebroid"
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToAdditiveClosureAndComplexCategories( functor );
+ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories( functor );
+
+
 ##
 InstallMethod( IsomorphismFromAlgebroid,
         [ IsExceptionalCollection ],
@@ -602,6 +631,34 @@ InstallMethod( IsomorphismFromAlgebroid,
     
 end );
 
+##
+functor :=
+  [
+    IsAlgebroid,
+    IsCapFullSubcategory,
+    function( oid, full )
+      local collection;
+      if not HasExceptionalCollection( full ) then
+        return false;
+      fi;
+      collection := ExceptionalCollection( full );
+      if not HasAlgebroid( collection ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( oid, Algebroid( collection ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { oid, full } -> IsomorphismFromAlgebroid( ExceptionalCollection( full ) ),
+    "Isomorphism functor from algebroid associated to an exceptional collection onto the exceptional collection"
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToAdditiveClosureAndComplexCategories( functor );
+ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories( functor );
+
+##
 InstallMethod( LocalizationFunctor,
               [ IsHomotopyCategory ],
   function( homotopy )
@@ -1336,6 +1393,46 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
     return IF;
     
 end );
+
+##
+AddFunctor(
+    IsHomotopyCategory,
+    IsHomotopyCategory,
+    { category_1, category_2 }
+          -> IsAdditiveClosureCategory( DefiningCategory( category_1 ) ) and
+              IsAdditiveClosureCategory( DefiningCategory( category_2 ) ) and
+                HasExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
+                  IsIdenticalObj( category_2, AmbientCategory( ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
+    function( category_1, category_2 )
+      local collection;
+      
+      collection := ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
+      
+      return ConvolutionFunctor( collection );
+      
+    end,
+    "The convolution functor"
+);
+     
+##
+AddFunctor(
+    IsHomotopyCategory,
+    IsHomotopyCategory,
+    { category_2, category_1 }
+          -> IsAdditiveClosureCategory( DefiningCategory( category_1 ) ) and
+              IsAdditiveClosureCategory( DefiningCategory( category_2 ) ) and
+                HasExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
+                  IsIdenticalObj( category_2, AmbientCategory( ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
+    function( category_2, category_1 )
+      local collection;
+      
+      collection := ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
+      
+      return ReplacementFunctor( collection );
+      
+    end,
+    "The exceptional replacement functor"
+);
 
 ####################################
 #
