@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Bicomplexes: Bicomplexes for Abelian categories
 #
 # This file contains package meta data. For additional information on
@@ -13,13 +13,12 @@ PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
 
 Version := Maximum( [
-                   "2020.09.07", ## Kamals's version
+                   "2020.10-01", ## Kamals's version
                    ## this line prevents merge conflicts
-                   "2017.05.02", ## Mohamed's version
+                   "2017.05-02", ## Mohamed's version
                    ] ),
 
-Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Date := "24/10/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -65,7 +64,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bi
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-", ~.Version, "/Bicomplexes-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
