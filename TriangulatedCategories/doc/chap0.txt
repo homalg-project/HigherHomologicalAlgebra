@@ -6,10 +6,10 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2020.10.02
+                                   2020.10-03
   
   
-                                 2 October 2020
+                                24 October 2020
   
   
                                   Kamal Saleh
