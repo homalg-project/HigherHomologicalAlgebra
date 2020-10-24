@@ -12,10 +12,10 @@
 InstallMethod( Show,
           [ IsCapCategoryCell ],
   function( c )
-  
-    if ApplicableMethod( LaTeXStringOp, [ c ], 0, 1 ) <> fail then
+    
+    if IsBound( LaTeXStringOp ) and ApplicableMethod( ValueGlobal( "LaTeXStringOp" ), [ c ], 0, 1 ) <> fail then
       
-      Show( LaTeXStringOp( c ) );
+      Show( ValueGlobal( "LaTeXStringOp" )( c ) );
       
     elif ApplicableMethod( LaTeXOutput, [ c ], 0, 1 ) <> fail then
       

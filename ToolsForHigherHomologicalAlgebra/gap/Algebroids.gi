@@ -48,19 +48,41 @@ InstallMethod( Algebroid,
 end );
 
 ##
-AddSomeFunctor(
+functor :=
+  [
     IsQuiverRowsCategory,
     IsAdditiveClosureCategory,
-    { c1, c2 } -> IsAlgebroid( UnderlyingCategory( c2 ) ) and IsIdenticalObj( UnderlyingQuiver( c1 ), UnderlyingQuiver( UnderlyingCategory( c2 ) ) ),
+    { c1, c2 } -> IsAlgebroid( UnderlyingCategory( c2 ) ) and
+                    IsIdenticalObj(
+                        UnderlyingQuiver( c1 ),
+                        UnderlyingQuiver( UnderlyingCategory( c2 ) )
+                      ),
     { c1, c2 } -> IsomorphismOntoAdditiveClosureOfAlgebroid( c1 ),
     "Isomorphism from quiver rows category onto the additive closure of algebroid"
-);
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+if IsPackageLoaded( "homotopycategories" ) then
+  ExtendFunctorMethodToHomotopyCategories( functor );
+fi;
 
 ##
-AddSomeFunctor(
+functor :=
+  [
     IsAdditiveClosureCategory,
     IsQuiverRowsCategory,
-    { c1, c2 } -> IsAlgebroid( UnderlyingCategory( c1 ) ) and IsIdenticalObj( UnderlyingQuiver( c2 ), UnderlyingQuiver( UnderlyingCategory( c1 ) ) ),
+    { c1, c2 } -> IsAlgebroid( UnderlyingCategory( c1 ) ) and
+                    IsIdenticalObj(
+                      UnderlyingQuiver( c2 ),
+                      UnderlyingQuiver( UnderlyingCategory( c1 ) )
+                    ),
     { c1, c2 } -> IsomorphismFromAdditiveClosureOfAlgebroid( c2 ),
     "Isomorphism from additive closure of algebroid onto quiver rows category"
-);
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+if IsPackageLoaded( "homotopycategories" ) then
+  ExtendFunctorMethodToHomotopyCategories( functor );
+fi;
