@@ -1260,82 +1260,6 @@ InstallMethod( MappingCone,
 end );
 
 ##
-InstallMethod( _MappingCone,
-            [ IsChainOrCochainMorphism ],
-  function ( phi )
-    local complex_cat, B, C, diffs, complex;
-    
-    complex_cat := CapCategory( phi );
-    
-    B := Source( phi );
-    
-    C := Range( phi );
-    
-    if IsChainMorphism( phi ) then
-      
-      diffs := AsZFunction( n ->
-                    MorphismBetweenDirectSums(
-                      [
-                        [ C ^ n     , ZeroMorphism( C[n], B[n - 2] ) ],
-                        [ phi[n - 1], AdditiveInverse( B ^ (n - 1) ) ]
-                      ]
-                    )
-                  );
-                  
-      complex := ChainComplex( UnderlyingCategory( complex_cat ), diffs );
-        
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
-           function (  )
-                if not HasFAL_BOUND( complex ) then
-                    SetLowerBound( complex, Minimum( ActiveLowerBound( B ) + 1, ActiveLowerBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-           function (  )
-                if not HasFAU_BOUND( complex ) then
-                    SetUpperBound( complex, Maximum( ActiveUpperBound( B ) + 1, ActiveUpperBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
-    else
-      
-      diffs := AsZFunction( n ->
-                  MorphismBetweenDirectSums(
-                    [
-                      [ C ^ n     , ZeroMorphism( C[ n ], B[ n + 2 ] ) ],
-                      [ phi[n + 1], AdditiveInverse( B ^ ( n + 1 ) )   ]
-                    ]
-                  )
-                );
-                
-      complex := CochainComplex( UnderlyingCategory( complex_cat ), diffs );
-      
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
-           function (  )
-                if not HasFAL_BOUND( complex ) then
-                    SetLowerBound( complex, Minimum( ActiveLowerBound( B ) - 1, ActiveLowerBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-           function (  )
-                if not HasFAU_BOUND( complex ) then
-                    SetUpperBound( complex, Maximum( ActiveUpperBound( B ) - 1, ActiveUpperBound( C ) ) );
-                fi;
-                return;
-            end ) );
-    fi;
-    
-    return complex;
-    
-end );
-
-
-##
 InstallMethod( NaturalInjectionInMappingCone,
                [ IsChainOrCochainMorphism ],
   function( phi )
@@ -1367,46 +1291,6 @@ InstallMethod( NaturalInjectionInMappingCone,
                         ] )
                       );
       
-      return CochainMorphism( C, cone, morphisms );
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( _NaturalInjectionInMappingCone,
-               [ IsChainOrCochainMorphism ],
-  function( phi )
-    local B, C, cone, morphisms;
-    
-    B := Source( phi );
-    
-    C := Range( phi );
-    
-    cone := _MappingCone( phi );
-    
-    if IsChainMorphism( phi ) then
-      
-      morphisms := AsZFunction( n ->
-                      MorphismBetweenDirectSums(
-                        [
-                          [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], B[ n - 1 ] ) ]
-                        ]
-                      )
-                    );
-      
-      return ChainMorphism( C, cone, morphisms );
-      
-    else
-      
-      morphisms := AsZFunction( n ->
-                      MorphismBetweenDirectSums(
-                        [
-                          [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], B[ n + 1 ] ) ]
-                        ]
-                      )
-                    );
-                    
       return CochainMorphism( C, cone, morphisms );
       
     fi;
@@ -1455,48 +1339,6 @@ InstallMethod( NaturalProjectionFromMappingCone,
 end );
 
 ##
-InstallMethod( _NaturalProjectionFromMappingCone,
-               [ IsChainOrCochainMorphism ],
-  function ( phi )
-    local B, C, cone, morphisms;
-    
-    B := Source( phi );
-    
-    C := Range( phi );
-    
-    cone := _MappingCone( phi );
-    
-    if IsChainMorphism( phi ) then
-        
-        morphisms := AsZFunction( n ->
-                        MorphismBetweenDirectSums(
-                          [
-                            [ ZeroMorphism( C[ n ], B[ n - 1 ] ) ],
-                            [ IdentityMorphism( B[ n - 1 ] )   ]
-                          ]
-                        )
-                      );
-                      
-        return ChainMorphism( cone, ShiftLazy( B, -1 ), morphisms );
-        
-    else
-        
-        morphisms := AsZFunction( n ->
-                        MorphismBetweenDirectSums(
-                          [
-                            [ ZeroMorphism( C[ n ], B[ n + 1 ] ) ],
-                            [ IdentityMorphism( B[ n + 1 ] )   ]
-                          ]
-                        )
-                      );
-                      
-        return CochainMorphism( cone, ShiftLazy( B, 1 ), morphisms );
-        
-    fi;
-    
-end );
-
-
 InstallMethodWithCrispCache( MappingConeColift,
     [ IsChainMorphism, IsChainMorphism ],
   function( phi, psi )
