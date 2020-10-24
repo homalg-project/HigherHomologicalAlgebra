@@ -13,32 +13,15 @@
     [4X[28XZ[128X[104X
     [4X[25Xgap>[125X [27Xcat := LeftPresentations( ZZ );[127X[104X
     [4X[28XCategory of left presentations of Z[128X[104X
-    [4X[25Xgap>[125X [27Xis_equivalent_morphisms :=[127X[104X
-    [4X[28X       function( alpha, beta )[128X[104X
-    [4X[28X         local epi;[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X         if not IsEqualForObjects( Source( alpha ), Source( beta ) ) or[128X[104X
-    [4X[28X              not IsEqualForObjects( Range( alpha ), Range( beta ) ) then[128X[104X
-    [4X[28X                Error( "Wrong input for the test function!" );[128X[104X
-    [4X[28X         fi;[128X[104X
-    [4X[28X         [128X[104X
-    [4X[28X         epi := EpimorphismFromSomeProjectiveObject( Range( alpha ) );[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X         return Lift( alpha - beta, epi ) <> fail;[128X[104X
-    [4X[28X         [128X[104X
-    [4X[28X     end;;[128X[104X
-    [4X[25Xgap>[125X [27Xquotient_cat := QuotientCategory( cat, is_equivalent_morphisms );[127X[104X
-    [4X[28XThe Quotient category of Category of left presentations of Z by [128X[104X
-    [4X[28Xis_equivalent_morphisms[128X[104X
-    [4X[25Xgap>[125X [27XF := Projection( quotient_cat );[127X[104X
-    [4X[28XCanonical projection functor from Category of left presentations of Z in [128X[104X
-    [4X[28XThe Quotient category of Category of left presentations of Z by [128X[104X
-    [4X[28Xis_equivalent_morphisms[128X[104X
+    [4X[25Xgap>[125X [27Xepi := EpimorphismFromSomeProjectiveObject;;[127X[104X
+    [4X[25Xgap>[125X [27Xcongruence_func := { alpha, beta } -> IsLiftable( alpha - beta, epi( Range( alpha ) ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xquotient_cat := QuotientCategory( cat, congruence_func );[127X[104X
+    [4X[28XQuotient category( Category of left presentations of Z ) by congruence_func[128X[104X
+    [4X[25Xgap>[125X [27XF := ProjectionFunctor( quotient_cat );;[127X[104X
     [4X[25Xgap>[125X [27Xa := FreeLeftPresentation( 3, ZZ );[127X[104X
     [4X[28X<An object in Category of left presentations of Z>[128X[104X
     [4X[25Xgap>[125X [27Xquotient_a := ApplyFunctor( F, a );[127X[104X
-    [4X[28X<An object in The Quotient category of Category of left presentations of Z by [128X[104X
-    [4X[28Xis_equivalent_morphisms>[128X[104X
+    [4X[28X<An object in Quotient category( Category of left presentations of Z ) by congruence_func>[128X[104X
     [4X[25Xgap>[125X [27XIsZero( quotient_a );[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X

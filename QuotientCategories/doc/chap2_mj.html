@@ -46,32 +46,15 @@ true
 Z
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cat := LeftPresentations( ZZ );</span>
 Category of left presentations of Z
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">is_equivalent_morphisms :=</span>
-       function( alpha, beta )
-         local epi;
-
-         if not IsEqualForObjects( Source( alpha ), Source( beta ) ) or
-              not IsEqualForObjects( Range( alpha ), Range( beta ) ) then
-                Error( "Wrong input for the test function!" );
-         fi;
-         
-         epi := EpimorphismFromSomeProjectiveObject( Range( alpha ) );
-
-         return Lift( alpha - beta, epi ) &lt;&gt; fail;
-         
-     end;;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_cat := QuotientCategory( cat, is_equivalent_morphisms );</span>
-The Quotient category of Category of left presentations of Z by 
-is_equivalent_morphisms
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := Projection( quotient_cat );</span>
-Canonical projection functor from Category of left presentations of Z in 
-The Quotient category of Category of left presentations of Z by 
-is_equivalent_morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epi := EpimorphismFromSomeProjectiveObject;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">congruence_func := { alpha, beta } -&gt; IsLiftable( alpha - beta, epi( Range( alpha ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_cat := QuotientCategory( cat, congruence_func );</span>
+Quotient category( Category of left presentations of Z ) by congruence_func
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := ProjectionFunctor( quotient_cat );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := FreeLeftPresentation( 3, ZZ );</span>
 &lt;An object in Category of left presentations of Z&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_a := ApplyFunctor( F, a );</span>
-&lt;An object in The Quotient category of Category of left presentations of Z by 
-is_equivalent_morphisms&gt;
+&lt;An object in Quotient category( Category of left presentations of Z ) by congruence_func&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( quotient_a );</span>
 true
 </pre></div>

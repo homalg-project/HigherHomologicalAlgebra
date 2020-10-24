@@ -1,4 +1,4 @@
-#
+# SPDX-License-Identifier: GPL-2.0-or-later
 # QuotientCategories: Quotient categories of CAP categories by two-sided ideals
 #
 # This file contains package meta data. For additional information on
@@ -10,9 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "QuotientCategories",
 Subtitle := "Quotient categories of CAP categories by two-sided ideals",
-Version := "2020.09.07",
-Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Version := "2020.10-01",
+Date := "24/10/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -46,7 +45,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Qu
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-", ~.Version, "/QuotientCategories-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
