@@ -508,5 +508,7 @@ KeyDependentOperation( "GoodTruncationBelowFunctor", IsCapCategory, IsInt, Retur
 
 DeclareOperation( "KernelObjectFunctor",   [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
 DeclareOperation( "CokernelObjectFunctor", [ IsChainOrCochainComplexCategory, IsCapCategory,  IsInt ] );
-
 DeclareAttribute( "MinusOneFunctor", IsChainOrCochainComplexCategory );
+
+DeclareOperation( "ExtendFunctorMethodToComplexCategories", [ IsDenseList ] );
+DeclareOperation( "ExtendFunctorMethodToAdditiveClosureAndComplexCategories", [ IsDenseList ] );

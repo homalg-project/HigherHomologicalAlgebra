@@ -1262,3 +1262,45 @@ InstallMethod( RightDerivedFunctor,
   RightDerivedFunctorAttr
 );
 
+##
+InstallMethod( ExtendFunctorMethodToComplexCategories,
+          [ IsDenseList ],
+          
+  function( E )
+    
+    ExtendFunctorMethod(
+      E,
+      IsChainComplexCategory,
+      UnderlyingCategory,
+      ExtendFunctorToChainComplexCategories,
+      "ExtendFunctorToChainComplexCategories"
+    );
+    
+    ExtendFunctorMethod(
+      E,
+      IsCochainComplexCategory,
+      UnderlyingCategory,
+      ExtendFunctorToCochainComplexCategories,
+      "ExtendFunctorToCochainComplexCategories"
+    );
+    
+end );
+
+##
+InstallMethod( ExtendFunctorMethodToAdditiveClosureAndComplexCategories,
+          [ IsDenseList ],
+          
+  function( F )
+    local E;
+    
+    E := ExtendFunctorMethod(
+            F,
+            ValueGlobal( "IsAdditiveClosureCategory" ),
+            UnderlyingCategory,
+            ValueGlobal( "ExtendFunctorToAdditiveClosures" ),
+            "ExtendFunctorToAdditiveClosures"
+          );
+          
+    ExtendFunctorMethodToComplexCategories( E );
+    
+end );
