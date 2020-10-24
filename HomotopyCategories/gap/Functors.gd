@@ -58,8 +58,6 @@ DeclareAttribute( "EquivalenceOntoHomotopyCategoryByChainComplexes", IsHomotopyC
 
 DeclareAttribute( "EquivalenceFromHomotopyCategoryByChainComplexes", IsHomotopyCategory );
 
-# DeclareOperation( "LeftDerivedFunctor", [ IsCapFunctor ] );
+DeclareOperation( "ExtendFunctorMethodToHomotopyCategories", [ IsDenseList ] );
 
-# DeclareOperation( "RightDerivedFunctor", [ IsCapFunctor ] );
-
-
+DeclareOperation( "ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories", [ IsDenseList ] );

@@ -666,4 +666,46 @@ InstallMethod( EquivalenceOntoHomotopyCategoryByChainComplexes,
     
 end );
 
+##
+InstallMethod( ExtendFunctorMethodToHomotopyCategories,
+          [ IsDenseList ],
+          
+  function( E )
+    
+    ExtendFunctorMethod(
+      E,
+      category -> IsHomotopyCategory( category ) and IsChainComplexCategory( UnderlyingCategory( category ) ),
+      DefiningCategory,
+      functor -> ExtendFunctorToHomotopyCategories( functor, false ),
+      "ExtendFunctorToHomotopyCategories"
+    );
+    
+    ExtendFunctorMethod(
+      E,
+      category -> IsHomotopyCategory( category ) and IsCochainComplexCategory( UnderlyingCategory( category ) ),
+      DefiningCategory,
+      functor -> ExtendFunctorToHomotopyCategories( functor, true ),
+      "ExtendFunctorToHomotopyCategories"
+    );
+    
+end );
+
+##
+InstallMethod( ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories,
+          [ IsDenseList ],
+          
+  function( F )
+    local E;
+    
+    E := ExtendFunctorMethod(
+            F,
+            IsAdditiveClosureCategory,
+            UnderlyingCategory,
+            ExtendFunctorToAdditiveClosures,
+            "ExtendFunctorToAdditiveClosures"
+          );
+          
+    ExtendFunctorMethodToHomotopyCategories( E );
+    
+end );
 
