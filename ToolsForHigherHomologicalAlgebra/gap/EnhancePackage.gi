@@ -1,7 +1,8 @@
-
-
-
-
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ToolsForHigherHomologicalAlgebra: Tools for the Higher Homological Algebra project
+#
+# Implementations
+#
 
 InstallValue( LIST_OF_ENHANCED_PACKAGES, [ ] );
 InstallValue( LIST_OF_ENHANCABLE_PACKAGES,

@@ -10,9 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2020.09.07",
-Date := ~.Version{[ 1 .. 10 ]},
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Version := "2020.10-01",
+Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -46,7 +45,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/St
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-", ~.Version, "/StableCategories-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages

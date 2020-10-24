@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ToolsForHigherHomologicalAlgebra",
 Subtitle := "Tools for the Higher Homological Algebra project",
-Version := "2020.09.28",
-Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+Version := "2020.10-01",
+Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -45,7 +45,7 @@ README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/To
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-", ~.Version, "/ToolsForHigherHomologicalAlgebra-", ~.Version ),
 # END URLS
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
