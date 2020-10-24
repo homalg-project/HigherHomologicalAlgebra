@@ -1940,3 +1940,15 @@ InstallMethod( FullSubcategoryGeneratedByComplexesConcentratedInDegreeOp,
     return full;
     
 end );
+
+##
+InstallMethod( \.,
+        [ IsChainComplexCategory, IsPosInt ],
+   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
+);
+
+##
+InstallMethod( \.,
+        [ IsCochainComplexCategory, IsPosInt ],
+   { C, string_as_int } -> ( UnderlyingCategory( C ).( NameRNam( string_as_int ) ) ) / C
+);
