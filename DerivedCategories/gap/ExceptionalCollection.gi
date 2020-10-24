@@ -1445,7 +1445,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "V_", String( i ) ) );
 
-    quiver := RightQuiver( "Q", [ 1 .. nr_vertices ],
+    quiver := RightQuiver( "quiver", [ 1 .. nr_vertices ],
                 labels, sources_of_arrows, ranges_of_arrows );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );

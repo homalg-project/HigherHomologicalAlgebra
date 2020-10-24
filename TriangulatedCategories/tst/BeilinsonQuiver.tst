@@ -27,4 +27,4 @@ gap> Tr := CategoryOfExactTriangles( Ho_AC );
 Category of exact triangles( Homotopy category( Additive closure( Algebroid( 
 (Q * quiver) / [ -1*(x1*y0) + 1*(x0*y1), -1*(x2*y0) + 1*(x0*y2), -1*(x2*y1) + 1*(x1*y2) ] ) ) ) )
 gap> I := EmbeddingFunctorIntoDerivedCategory( Ho_AC );
-Equivalence functor from homotopy category into derived category
+Equivalence functor from homotopy category onto derived category

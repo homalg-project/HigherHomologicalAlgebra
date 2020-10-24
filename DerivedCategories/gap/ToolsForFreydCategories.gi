@@ -5,6 +5,12 @@
 #
 
 ##
+EnhancePackage( "GradedRingForHomalg" );
+EnhancePackage( "MatricesForHomalg" );
+EnhancePackage( "FreydCategoriesForCAP" );
+EnhancePackage( "Algebroids" );
+
+##
 InstallMethod( MONOMIALS_WITH_GIVEN_DEGREE,
           [ IsHomalgGradedRing, IsHomalgModuleElement ],
   function( S, degree )
