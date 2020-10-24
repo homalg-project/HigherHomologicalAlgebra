@@ -937,18 +937,3 @@ DeclareOperation( "InverseShiftFactoringIsomorphism", [ IsList ] );
 ######################################
 
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY", IsCapCategory );
-
-## Syns
-
-if false then
-Append( LIST_OF_SYNONYMS_FOR_CAP_OPERATIONS,
-  [
-    [ "cone", StandardConeObject ],
-    [ "cocone", StandardCoConeObject ],
-    [ "iota", MorphismIntoStandardConeObject ],
-    [ "pi", MorphismFromStandardConeObject ],
-    [ "mcone", MorphismBetweenStandardConeObjects ],
-    [ "mcocone", MorphismBetweenStandardCoConeObjects ]
-  ]
-);
-fi;
