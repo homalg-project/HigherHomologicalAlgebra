@@ -1,7 +1,7 @@
 name: HomotopyCategories
-version: "2020.10.02"
+version: "2020.10-03"
 license: "GPL-2.0-or-later"
-date: 2020-10-02
+date: 2020-10-24
 description: |
     Homotopy categories of additive categories
 
@@ -47,7 +47,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyC
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10.02/HomotopyCategories-2020.10.02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-03/HomotopyCategories-2020.10-03.tar.gz
+    - name: .zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-03/HomotopyCategories-2020.10-03.zip
+
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-03/HomotopyCategories-2020.10-03.pdf
 
 abstract: |
 
@@ -58,7 +62,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>HomotopyCategories, Homotopy categories of additive categories,
-             Version 2020.10.02</i>
+             Version 2020.10-03</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories</a></span>.
@@ -66,10 +70,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ HomotopyCategories2020.10.02,
+    @misc{ HomotopyCategories2020.10-03,
       author =           {Saleh, K.},
       title =            {{HomotopyCategories},  Homotopy categories of additive
-                          categories, {V}ersion 2020.10.02},
+                          categories, {V}ersion 2020.10-03},
       month =            {Oct},
       year =             {2020},
       note =             {GAP package},
