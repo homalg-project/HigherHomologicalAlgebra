@@ -1,5 +1,4 @@
 LoadPackage( "HomotopyCategories" );
-SET_SPECIAL_SETTINGS();
 
 N := 5; # Nr ob objects in each object in HoHo
 l := -4; # the position of the lower bound

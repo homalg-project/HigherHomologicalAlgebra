@@ -1,5 +1,4 @@
 LoadPackage( "HomotopyCategories" );
-SET_SPECIAL_SETTINGS();
 
 objects := [ "A0", "A1", "A2", "A3", "B0", "B1", "B2" ];
 maps :=

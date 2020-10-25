@@ -5,4 +5,4 @@ LoadPackage( "DerivedCategories" );
 SetInfoLevel( InfoDerivedCategories, 0 );
 SetInfoLevel( InfoHomotopyCategories, 0 );
 SetInfoLevel( InfoComplexesCategories, 0 );
-SET_SPECIAL_SETTINGS( );
+SetSpecialSettings( );

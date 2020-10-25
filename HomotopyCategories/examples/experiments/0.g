@@ -1,5 +1,4 @@
 LoadPackage( "HomotopyCategories" );
-SET_SPECIAL_SETTINGS();
 
 create_algebroid :=
 function( N, l, bounds, labels_of_objects, labels_of_morphisms )
