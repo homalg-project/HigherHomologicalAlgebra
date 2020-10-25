@@ -287,8 +287,16 @@ end );
 ##
 InstallMethod( ApplyShiftOp,
           [ IsZFunction, IsInt ],
-  { z_function, n } -> AsZFunction( i -> z_function[ i + n ] )
-);
+  function( z_function, n )
+    local shift;
+    
+    shift := AsZFunction( i -> z_function[ i + n ] );
+    
+    SetApplyShift( shift, -n, z_function );
+    
+    return shift;
+    
+end );
 
 ##
 InstallMethod( ViewObj,

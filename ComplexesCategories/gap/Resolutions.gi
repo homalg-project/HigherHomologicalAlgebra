@@ -799,9 +799,9 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
           
         else
           
-          temp_C := BaseZFunctions( BaseZFunctions( Differentials( i_C ) )[ 1 ] )[ 1 ][ k ][ 3 ];
+          temp_C := BaseZFunctions( ApplyShift( Differentials( i_C ), -1 ) )[ 1 ][ k ][ 3 ];
           
-          temp_D := BaseZFunctions( BaseZFunctions( Differentials( i_D ) )[ 1 ] )[ 1 ][ k ][ 3 ];
+          temp_D := BaseZFunctions( ApplyShift( Differentials( i_D ), -1 ) )[ 1 ][ k ][ 3 ];
           
           m := DirectSumFunctorial( [ phi[ k ], maps[ k - 1 ] ] );
           
@@ -1196,7 +1196,7 @@ InstallMethod( MorphismBetweenInjectiveResolutions,
          
       end;
       
-    maps := ApplyMap( func );
+    maps := AsZFunction( func );
     
     return CochainMorphism( P, Q, maps );
     
