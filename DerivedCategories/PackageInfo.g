@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2020.10-04",
-Date := "24/10/2020",
+Version := "2020.10-06",
+Date := "25/10/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -71,17 +71,16 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.9",
   NeededOtherPackages := [ 
-        [ "ToolsForHigherHomologicalAlgebra", "2020.09.25" ],
-        [ "QPA", ">= 2.0-dev"], # https://github.com/homalg-project/QPA2.git
-        [ "CAP", ">= 2020.04.16" ],
-        [ "Algebroids", ">= 2020.09.08" ],
-        [ "SubcategoriesForCAP", ">= 2020.02.01" ],
-        [ "HomotopyCategories", ">= 2020.10.01" ],
-        [ "BBGG", "2020.05.01" ]
+        [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-01" ],
+        [ "QPA", ">= 2.0-dev"],
+        [ "Algebroids", ">= 2020.10-02" ],
+        [ "SubcategoriesForCAP", ">= 2020.10-02" ],
+        [ "HomotopyCategories", ">= 2020.10-04" ],
+        [ "BBGG", "2020.10-02" ]
           ],
   SuggestedOtherPackages := [
             [ "NConvex", ">= 2019.12.06" ],
-            [ "4ti2Interface", ">= 2019.09.03" ]
+            [ "4ti2Interface", ">= 2010.10-02" ]
           ],
   ExternalConditions := [ ],
 ),
