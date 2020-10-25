@@ -199,3 +199,31 @@ gap> DifferentialsSupport( Source( alpha ) );
 [ -1, 0, 1, 2 ]
 gap> IsWellDefined( ShiftUnsignedLazy( Source( alpha ), 34 ) );
 true
+gap> IsWellDefined( CokernelObjectFunctor( chains, matrix_cat, 0 )( alpha ) );
+true
+gap> IsWellDefined( KernelObjectFunctor( chains, matrix_cat, 0 )( alpha ) );
+true
+gap> IsWellDefined( KernelObjectFunctor( cochains, matrix_cat, 0 )( AsCochainMorphism( alpha ) ) );
+true
+gap> IsWellDefined( CokernelObjectFunctor( cochains, matrix_cat, 0 )( AsCochainMorphism( alpha ) ) );
+true
+gap> UnsignedShiftFunctor( chains, 3 )( alpha );
+<A morphism in Chain complexes( Category of matrices over Q ) with active lower bound -5 and active upper bound -1>
+gap> BrutalTruncationBelowFunctor( chains, 3 )( alpha );
+<A morphism in Chain complexes( Category of matrices over Q ) with active lower bound 2 and active upper bound 2>
+gap> BrutalTruncationAboveFunctor( chains, 3 )( alpha );
+<A morphism in Chain complexes( Category of matrices over Q ) with active lower bound -2 and active upper bound 2>
+gap> StalkCochainFunctor( chains, 0 )( alpha );
+<A morphism in Cochain complexes( Chain complexes( Category of matrices over Q ) ) with active lower bound 0 and active upper bound 0>
+gap> D1 := DoubleChainComplex( ChainComplex( [ alpha ], 3 ) );
+<A double chain complex concentrated in window [ 2 .. 3 ] x [ -2 .. 2 ]>
+gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( D1, 2, 3 ), -5, 5 );
+true
+gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX( D1, -2, 2 ), -5, 5 );
+true
+gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX( D1, -2, 2 ), -5, 5 );
+true
+gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( D1, -2, 2 ), -5, 5 );
+true
+gap> IsWellDefined( TotalCochainComplex( DoubleCochainComplex( CochainComplex( [ AsCochainMorphism( alpha ) ], 3 ) ) ) );
+true
