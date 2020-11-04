@@ -1,7 +1,7 @@
 name: HomotopyCategories
-version: "2020.10-05"
+version: "2020.11-01"
 license: "GPL-2.0-or-later"
-date: 2020-10-25
+date: 2020-11-04
 description: |
     Homotopy categories of additive categories
 
@@ -44,11 +44,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyC
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-05/HomotopyCategories-2020.10-05.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.11-01/HomotopyCategories-2020.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-05/HomotopyCategories-2020.10-05.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.11-01/HomotopyCategories-2020.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.10-05/HomotopyCategories-2020.10-05.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2020.11-01/HomotopyCategories-2020.11-01.pdf
 
 abstract: |
 
@@ -59,7 +59,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>HomotopyCategories, Homotopy categories of additive categories,
-             Version 2020.10-05</i>
+             Version 2020.11-01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories</a></span>.
@@ -67,11 +67,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ HomotopyCategories2020.10-05,
+    @misc{ HomotopyCategories2020.11-01,
       author =           {Saleh, K.},
       title =            {{HomotopyCategories},  Homotopy categories of additive
-                          categories, {V}ersion 2020.10-05},
-      month =            {Oct},
+                          categories, {V}ersion 2020.11-01},
+      month =            {Nov},
       year =             {2020},
       note =             {GAP package},
       howpublished =     {\href
