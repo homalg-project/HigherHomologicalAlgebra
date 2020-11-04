@@ -1,7 +1,7 @@
 name: TriangulatedCategories
-version: "2020.10-03"
+version: "2020.11-01"
 license: "GPL-2.0-or-later"
-date: 2020-10-24
+date: 2020-11-04
 description: |
     Framework for triangulated categories
 
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Triangula
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.10-03/TriangulatedCategories-2020.10-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.11-01/TriangulatedCategories-2020.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.10-03/TriangulatedCategories-2020.10-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.11-01/TriangulatedCategories-2020.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.10-03/TriangulatedCategories-2020.10-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2020.11-01/TriangulatedCategories-2020.11-01.pdf
 
 abstract: |
 
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>TriangulatedCategories, Framework for triangulated categories,
-             Version 2020.10-03</i>
+             Version 2020.11-01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories</a></span>.
@@ -52,11 +52,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ TriangulatedCategories2020.10-03,
+    @misc{ TriangulatedCategories2020.11-01,
       author =           {Saleh, K.},
       title =            {{TriangulatedCategories},  Framework  for triangulated
-                          categories, {V}ersion 2020.10-03},
-      month =            {Oct},
+                          categories, {V}ersion 2020.11-01},
+      month =            {Nov},
       year =             {2020},
       note =             {GAP package},
       howpublished =     {\href
