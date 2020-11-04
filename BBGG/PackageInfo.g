@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "BBGG",
 Subtitle := "Beilinson monads and derived categories for coherent sheaves over P^n",
-Version := "2020.10-02",
-Date := "24/10/2020",
+Version := "2020.11-01",
+Date := "04/11/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
