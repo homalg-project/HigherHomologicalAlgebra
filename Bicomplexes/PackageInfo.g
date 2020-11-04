@@ -15,10 +15,10 @@ Subtitle := "Bicomplexes for Abelian categories",
 Version := Maximum( [
                    "2020.10-01", ## Kamals's version
                    ## this line prevents merge conflicts
-                   "2017.05-02", ## Mohamed's version
+                   "2020.11-01", ## Mohamed's version
                    ] ),
 
-Date := "24/10/2020",
+Date := "04/11/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [

@@ -1,7 +1,7 @@
 name: Bicomplexes
-version: "2020.10-01"
+version: "2020.11-01"
 license: "GPL-2.0-or-later"
-date: 2020-10-24
+date: 2020-11-04
 description: |
     Bicomplexes for Abelian categories
 
@@ -33,11 +33,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplex
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.10-01/Bicomplexes-2020.10-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.11-01/Bicomplexes-2020.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.10-01/Bicomplexes-2020.10-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.11-01/Bicomplexes-2020.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.10-01/Bicomplexes-2020.10-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2020.11-01/Bicomplexes-2020.11-01.pdf
 
 abstract: |
 
@@ -50,7 +50,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>BS20</span>]   <b class='BibAuthor'>Barakat, M. and Saleh, K.</b>,
      <i class='BibTitle'>Bicomplexes, Bicomplexes for Abelian categories,
-             Version 2020.10-01</i>
+             Version 2020.11-01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes">https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes</a></span>.
@@ -58,11 +58,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ Bicomplexes2020.10-01,
+    @misc{ Bicomplexes2020.11-01,
       author =           {Barakat, M. and Saleh, K.},
       title =            {{Bicomplexes},  Bicomplexes  for  Abelian  categories,
-                          {V}ersion 2020.10-01},
-      month =            {Oct},
+                          {V}ersion 2020.11-01},
+      month =            {Nov},
       year =             {2020},
       note =             {GAP package},
       howpublished =     {\href
