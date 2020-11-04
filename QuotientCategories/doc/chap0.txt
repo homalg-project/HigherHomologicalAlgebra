@@ -6,10 +6,10 @@
           [1X Quotient categories of CAP categories by two-sided ideals [101X
   
   
-                                   2020.10-01
+                                   2020.11-01
   
   
-                                24 October 2020
+                                4 November 2020
   
   
                                   Kamal Saleh
