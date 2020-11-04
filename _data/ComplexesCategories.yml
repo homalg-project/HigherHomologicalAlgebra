@@ -1,7 +1,7 @@
 name: ComplexesCategories
-version: "2020.10-06"
+version: "2020.11-01"
 license: "GPL-2.0-or-later"
-date: 2020-10-25
+date: 2020-11-04
 description: |
     Category of (co)chain complexes of an additive category
 
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Complexes
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.10-06/ComplexesCategories-2020.10-06.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-01/ComplexesCategories-2020.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.10-06/ComplexesCategories-2020.10-06.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-01/ComplexesCategories-2020.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.10-06/ComplexesCategories-2020.10-06.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-01/ComplexesCategories-2020.11-01.pdf
 
 abstract: |
 
@@ -57,7 +57,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ComplexesCategories, Category of (co)chain complexes of an additive category,
-             Version 2020.10-06</i>
+             Version 2020.11-01</i>
      (<span class='BibYear'>2020</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories</a></span>.
@@ -65,11 +65,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ ComplexesCategories2020.10-06,
+    @misc{ ComplexesCategories2020.11-01,
       author =           {Saleh, K.},
       title =            {{ComplexesCategories}, Category of (co)chain complexes
-                          of an additive category, {V}ersion 2020.10-06},
-      month =            {Oct},
+                          of an additive category, {V}ersion 2020.11-01},
+      month =            {Nov},
       year =             {2020},
       note =             {GAP package},
       howpublished =     {\href
