@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "BBGG",
 Subtitle := "Beilinson monads and derived categories for coherent sheaves over P^n",
-Version := "2020.10-02",
+Version := "2020.11-01",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -99,3 +99,4 @@ TestFile := "tst/testall.g",
 Keywords := [ "Beilinson monads", "Tate resolutions", "Derived categories", "Projective space", "Coherent sheaves" ],
 
 ));
+ArchiveFormats := ".tar.gz .zip",

@@ -1,5 +1,5 @@
 <!-- BEGIN HEADER -->
-# HomotopyCategories
+# HomotopyCategories&ensp;<sup><sup>[![View code][code-img]][code-url]</sup></sup>
 
 ### Homotopy categories of additive categories
 
@@ -20,16 +20,16 @@ step toward implementing derived categories and Tilting equivalences
 between them.
 
 <!-- BEGIN FOOTER -->
-[html-img]: https://img.shields.io/badge/HTML-stable-blue.svg
+[html-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
 [html-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/doc/chap0_mj.html
 
-[pdf-img]: https://img.shields.io/badge/PDF-stable-blue.svg
+[pdf-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
 [pdf-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/download_pdf.html
 
-[version-img]: https://img.shields.io/endpoint?url=https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/badge_version.json
+[version-img]: https://img.shields.io/endpoint?url=https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/badge_version.json&label=🔗%20version&color=yellow
 [version-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/view_release.html
 
-[date-img]: https://img.shields.io/endpoint?url=https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/badge_date.json
+[date-img]: https://img.shields.io/endpoint?url=https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/badge_date.json&label=🔗%20released%20on&color=yellow
 [date-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/view_release.html
 
 [tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg?branch=master
@@ -37,4 +37,7 @@ between them.
 
 [codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra
+
+[code-img]: https://img.shields.io/badge/-View%20code-blue?logo=github
+[code-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories#top
 <!-- END FOOTER -->
