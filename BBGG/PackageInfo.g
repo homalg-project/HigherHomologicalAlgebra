@@ -99,4 +99,3 @@ TestFile := "tst/testall.g",
 Keywords := [ "Beilinson monads", "Tate resolutions", "Derived categories", "Projective space", "Coherent sheaves" ],
 
 ));
-ArchiveFormats := ".tar.gz .zip",

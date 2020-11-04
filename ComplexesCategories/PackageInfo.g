@@ -95,4 +95,3 @@ TestFile := "tst/testall.g",
 Keywords := [ "Chains", "Cochains", "MappingCone", "MappingCylinder", "Homotopy" ],
 
 ));
-ArchiveFormats := ".tar.gz .zip",
