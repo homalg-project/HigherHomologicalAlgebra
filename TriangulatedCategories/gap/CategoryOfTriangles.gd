@@ -238,7 +238,7 @@ DeclareOperation( "Rotation", [ IsCapExactTriangle, IsBool ] );
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle
 #! defined by the inverse rotation axiom, i.e., the exact triangle
 #! $(-\eta(A)\circ\Sigma^{-1}\pi,\alpha,\mu(C)\circ\iota)$, such that 
-#! $\eta$ := <C>IsomorphismFromInverseShiftOfShift</C>, $\mu$ := <C>IsomorphismOntoShiftOfInverseShift</C>,
+#! $\eta$ := <C>CounitIsomorphism</C>, $\mu$ := <C>UnitIsomorphism</C>,
 #! $A$ := <C>Source</C>$(\alpha)$ and
 #! $C$ := <C>Range</C>$(\iota)$.
 #! @Arguments t

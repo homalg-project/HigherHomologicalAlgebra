@@ -689,12 +689,12 @@ InstallMethod( InverseRotation,
         ExactTriangle(
               PreCompose(
                 AdditiveInverse( InverseShiftOnMorphism( t ^ 2 ) ),
-                IsomorphismFromInverseShiftOfShift( t[ 0 ] )
+                CounitIsomorphism( t[ 0 ] )
                         ),
               t ^ 0,
               PreCompose(
                 t ^ 1,
-                IsomorphismOntoShiftOfInverseShift( t[ 2 ] )
+                Unit( t[ 2 ] )
                         )
                     );
     
@@ -727,13 +727,13 @@ InstallMethod( InverseRotation,
         v_1 := MorphismBetweenStandardConeObjects(
                   PreCompose(
                     AdditiveInverse( InverseShiftOnMorphism( st_t ^ 2 ) ),
-                    IsomorphismFromInverseShiftOfShift( t[ 0 ] )
+                    CounitIsomorphism( t[ 0 ] )
                   ),
                   InverseShiftOnMorphism( i[ 2 ] ),
                   IdentityMorphism( t[ 0 ] ),
                   PreCompose(
                     AdditiveInverse( InverseShiftOnMorphism( t ^ 2 ) ),
-                    IsomorphismFromInverseShiftOfShift( t[ 0 ] )
+                    CounitIsomorphism( t[ 0 ] )
                   )
                 );
         

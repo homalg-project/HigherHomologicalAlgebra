@@ -106,67 +106,67 @@ IsExactTriangle := rec(
   return_type := "bool"
 ),
 
-IsomorphismOntoShiftOfInverseShiftWithGivenObject := rec(
-  installation_name := "IsomorphismOntoShiftOfInverseShiftWithGivenObject",
+UnitIsomorphismWithGivenObject := rec(
+  installation_name := "UnitIsomorphismWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-  cache_name := "IsomorphismOntoShiftOfInverseShiftWithGivenObject",
+  cache_name := "UnitIsomorphismWithGivenObject",
   return_type := "morphism"
 ),
 
-#IsomorphismOntoShiftOfInverseShift := rec(
-#  installation_name := "IsomorphismOntoShiftOfInverseShift",
+#UnitIsomorphism := rec(
+#  installation_name := "UnitIsomorphism",
 #  filter_list := [ "object" ],
 #  io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-#  cache_name := "IsomorphismOntoShiftOfInverseShift",
+#  cache_name := "UnitIsomorphism",
 #  return_type := "morphism"
 #),
 
-IsomorphismOntoInverseShiftOfShiftWithGivenObject := rec(
-  installation_name := "IsomorphismOntoInverseShiftOfShiftWithGivenObject",
+InverseOfCounitIsomorphismWithGivenObject := rec(
+  installation_name := "InverseOfCounitIsomorphismWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-  cache_name := "IsomorphismOntoInverseShiftOfShiftWithGivenObject",
+  cache_name := "InverseOfCounitIsomorphismWithGivenObject",
   return_type := "morphism"
 ),
 
-#IsomorphismOntoInverseShiftOfShift := rec(
-#  installation_name := "IsomorphismOntoInverseShiftOfShift",
+#InverseOfCounitIsomorphism := rec(
+#  installation_name := "InverseOfCounitIsomorphism",
 #  filter_list := [ "object" ],
 #  io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-#  cache_name := "IsomorphismOntoInverseShiftOfShift",
+#  cache_name := "InverseOfCounitIsomorphism",
 #  return_type := "morphism"
 #),
 
-IsomorphismFromShiftOfInverseShiftWithGivenObject := rec(
-  installation_name := "IsomorphismFromShiftOfInverseShiftWithGivenObject",
+InverseOfUnitIsomorphismWithGivenObject := rec(
+  installation_name := "InverseOfUnitIsomorphismWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromShiftOfInverseShiftWithGivenObject",
+  cache_name := "InverseOfUnitIsomorphismWithGivenObject",
   return_type := "morphism"
 ),
 
-#IsomorphismFromShiftOfInverseShift := rec(
-#  installation_name := "IsomorphismFromShiftOfInverseShift",
+#InverseOfUnitIsomorphism := rec(
+#  installation_name := "InverseOfUnitIsomorphism",
 #  filter_list := [ "object" ],
 #  io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
-#  cache_name := "IsomorphismFromShiftOfInverseShift",
+#  cache_name := "InverseOfUnitIsomorphism",
 #  return_type := "morphism"
 #),
 
-IsomorphismFromInverseShiftOfShiftWithGivenObject := rec(
-  installation_name := "IsomorphismFromInverseShiftOfShiftWithGivenObject",
+CounitIsomorphismWithGivenObject := rec(
+  installation_name := "CounitIsomorphismWithGivenObject",
   filter_list := [ "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
-  cache_name := "IsomorphismFromInverseShiftOfShiftWithGivenObject",
+  cache_name := "CounitIsomorphismWithGivenObject",
   return_type := "morphism"
 ),
 
-#IsomorphismFromInverseShiftOfShift := rec(
-#  installation_name := "IsomorphismFromInverseShiftOfShift",
+#CounitIsomorphism := rec(
+#  installation_name := "CounitIsomorphism",
 #  filter_list := [ "object" ],
 #  io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
-#  cache_name := "IsomorphismFromInverseShiftOfShift",
+#  cache_name := "CounitIsomorphism",
 #  return_type := "morphism"
 #),
 
@@ -423,7 +423,7 @@ InstallMethod( DomainMorphismByInverseRotationAxiom,
     
     return PreCompose(
               AdditiveInverseForMorphisms( InverseShiftOnMorphism( u ) ),
-              IsomorphismFromInverseShiftOfShift( Source( alpha ) )
+              CounitIsomorphism( Source( alpha ) )
             );
     
 end );
@@ -440,7 +440,7 @@ InstallMethod( MorphismFromConeObjectByInverseRotationAxiom,
     
     return PreCompose(
               MorphismIntoStandardConeObject( alpha ),
-              IsomorphismOntoShiftOfInverseShift( StandardConeObject( alpha ) )
+              UnitIsomorphism( StandardConeObject( alpha ) )
             );
     
 end );

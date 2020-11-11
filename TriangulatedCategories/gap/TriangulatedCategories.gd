@@ -250,116 +250,116 @@ DeclareOperation( "InverseShift", [ IsCapCategoryCell ] );
 #! The output is the natural isomorphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Returns a morphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Arguments A, sigma_o_rev_sigma_A
-DeclareOperation( "IsomorphismOntoShiftOfInverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "UnitIsomorphismWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismOntoShiftOfInverseShiftWithGivenObject</C>.
+#! the category for the basic operation <C>UnitIsomorphismWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddUnitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddUnitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddUnitIsomorphismWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddUnitIsomorphismWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Returns a morphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Arguments A
-DeclareOperation( "IsomorphismOntoShiftOfInverseShift", [ IsCapCategoryObject ] );
+DeclareOperation( "UnitIsomorphism", [ IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismOntoShiftOfInverseShift</C>.
+#! the category for the basic operation <C>UnitIsomorphism</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShift", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddUnitIsomorphism", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShift", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShift", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoShiftOfInverseShift", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddUnitIsomorphism", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddUnitIsomorphism", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddUnitIsomorphism", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma^{-1} \circ \Sigma) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Returns a morphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Arguments A, rev_sigma_o_sigma_A
-DeclareOperation( "IsomorphismOntoInverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "InverseOfCounitIsomorphismWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismOntoInverseShiftOfShiftWithGivenObject</C>.
+#! the category for the basic operation <C>InverseOfCounitIsomorphismWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismOntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseOfCounitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismOntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismOntoInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseOfCounitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseOfCounitIsomorphismWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseOfCounitIsomorphismWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Returns a morphism $A \to (\Sigma^{-1} \circ \Sigma) A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismOntoInverseShiftOfShift", IsCapCategoryObject );
+DeclareAttribute( "InverseOfCounitIsomorphism", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma \circ \Sigma^{-1}) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Returns a morphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Arguments A, sigma_o_rev_sigma_A
-DeclareOperation( "IsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "InverseOfUnitIsomorphismWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromShiftOfInverseShiftWithGivenObject</C>.
+#! the category for the basic operation <C>InverseOfUnitIsomorphismWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddInverseOfUnitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromShiftOfInverseShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddInverseOfUnitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInverseOfUnitIsomorphismWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInverseOfUnitIsomorphismWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument in an objects $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Returns a morphism $(\Sigma \circ \Sigma^{-1}) A \to A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismFromShiftOfInverseShift", IsCapCategoryObject );
+DeclareAttribute( "InverseOfUnitIsomorphism", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are two objects $A$ and $(\Sigma^{-1} \circ \Sigma) A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Returns a morphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Arguments A, rev_sigma_o_sigma_A
-DeclareOperation( "IsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "CounitIsomorphismWithGivenObject", [ IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>IsomorphismFromInverseShiftOfShiftWithGivenObject</C>.
+#! the category for the basic operation <C>CounitIsomorphismWithGivenObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddCounitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsomorphismFromInverseShiftOfShiftWithGivenObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddCounitIsomorphismWithGivenObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddCounitIsomorphismWithGivenObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddCounitIsomorphismWithGivenObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is an object $A$ in a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Returns a morphism $(\Sigma^{-1} \circ \Sigma) A \to A$
 #! @Arguments A
-DeclareAttribute( "IsomorphismFromInverseShiftOfShift", IsCapCategoryObject );
+DeclareAttribute( "CounitIsomorphism", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are an object $C_{\alpha_1}$, four morphisms $\alpha_1:A_1\to B_1$, $u:A_1\to A_2$,

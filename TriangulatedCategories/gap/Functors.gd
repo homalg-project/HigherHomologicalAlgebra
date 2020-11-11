@@ -30,26 +30,10 @@ DeclareAttribute( "InverseShiftFunctor", IsTriangulatedCategory );
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
 #! The output is the natural isomorphism
-#! $\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$.
-#! @Arguments T
-#! @Returns a natural transformation $\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$
-DeclareAttribute( "NaturalIsomorphismFromIdentityIntoInverseShiftOfShift", IsTriangulatedCategory );
-
-#! @Description
-#! The argument is a triangulated category $\mathcal{T}$.
-#! The output is the natural isomorphism
 #! $\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}$.
 #! @Arguments T
 #! @Returns a natural transformation $\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}$
-DeclareAttribute( "NaturalIsomorphismFromIdentityIntoShiftOfInverseShift", IsTriangulatedCategory );
-
-#! @Description
-#! The argument is a triangulated category $\mathcal{T}$.
-#! The output is the natural isomorphism
-#! $\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$.
-#! @Arguments T
-#! @Returns a natural transformation $\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$
-DeclareAttribute( "NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity", IsTriangulatedCategory );
+DeclareAttribute( "Unit", IsTriangulatedCategory );
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
@@ -57,7 +41,23 @@ DeclareAttribute( "NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity", IsTri
 #! $\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}$.
 #! @Arguments T
 #! @Returns a natural isomorphism $\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}$
-DeclareAttribute( "NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity", IsTriangulatedCategory );
+DeclareAttribute( "InverseOfUnit", IsTriangulatedCategory );
+
+#! @Description
+#! The argument is a triangulated category $\mathcal{T}$.
+#! The output is the natural isomorphism
+#! $\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$.
+#! @Arguments T
+#! @Returns a natural transformation $\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$
+DeclareAttribute( "Counit", IsTriangulatedCategory );
+
+#! @Description
+#! The argument is a triangulated category $\mathcal{T}$.
+#! The output is the natural isomorphism
+#! $\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$.
+#! @Arguments T
+#! @Returns a natural transformation $\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$
+DeclareAttribute( "InverseOfCounit", IsTriangulatedCategory );
 
 #! @Description
 #! The argument is an exact functor $F:\mathcal{T}_1\to\mathcal{T}_2$ between triangulated categories.
