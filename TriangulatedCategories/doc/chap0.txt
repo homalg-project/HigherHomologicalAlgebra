@@ -6,10 +6,10 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2020.11-01
+                                   2020.11-04
   
   
-                                4 November 2020
+                                10 November 2020
   
   
                                   Kamal Saleh
@@ -70,10 +70,10 @@
     2.1 [33X[0;0YFunctors and natural transformations[133X
       2.1-1 ShiftFunctor
       2.1-2 InverseShiftFunctor
-      2.1-3 NaturalIsomorphismFromIdentityIntoInverseShiftOfShift
-      2.1-4 NaturalIsomorphismFromIdentityIntoShiftOfInverseShift
-      2.1-5 NaturalIsomorphismFromInverseShiftOfShiftIntoIdentity
-      2.1-6 NaturalIsomorphismFromShiftOfInverseShiftIntoIdentity
+      2.1-3 Unit
+      2.1-4 InverseOfUnit
+      2.1-5 Counit
+      2.1-6 InverseOfCounit
       2.1-7 CommutativityNaturalTransformationWithShiftFunctor
       2.1-8 ExtendFunctorToCategoryOfTriangles
       2.1-9 RotationFunctor
@@ -102,19 +102,19 @@
       3.1-20 AddInverseShiftOnMorphismWithGivenObjects
       3.1-21 InverseShiftOnMorphism
       3.1-22 InverseShift
-      3.1-23 IsomorphismOntoShiftOfInverseShiftWithGivenObject
-      3.1-24 AddIsomorphismOntoShiftOfInverseShiftWithGivenObject
-      3.1-25 IsomorphismOntoShiftOfInverseShift
-      3.1-26 AddIsomorphismOntoShiftOfInverseShift
-      3.1-27 IsomorphismOntoInverseShiftOfShiftWithGivenObject
-      3.1-28 AddIsomorphismOntoInverseShiftOfShiftWithGivenObject
-      3.1-29 IsomorphismOntoInverseShiftOfShift
-      3.1-30 IsomorphismFromShiftOfInverseShiftWithGivenObject
-      3.1-31 AddIsomorphismFromShiftOfInverseShiftWithGivenObject
-      3.1-32 IsomorphismFromShiftOfInverseShift
-      3.1-33 IsomorphismFromInverseShiftOfShiftWithGivenObject
-      3.1-34 AddIsomorphismFromInverseShiftOfShiftWithGivenObject
-      3.1-35 IsomorphismFromInverseShiftOfShift
+      3.1-23 UnitIsomorphismWithGivenObject
+      3.1-24 AddUnitIsomorphismWithGivenObject
+      3.1-25 UnitIsomorphism
+      3.1-26 AddUnitIsomorphism
+      3.1-27 InverseOfCounitIsomorphismWithGivenObject
+      3.1-28 AddInverseOfCounitIsomorphismWithGivenObject
+      3.1-29 InverseOfCounitIsomorphism
+      3.1-30 InverseOfUnitIsomorphismWithGivenObject
+      3.1-31 AddInverseOfUnitIsomorphismWithGivenObject
+      3.1-32 InverseOfUnitIsomorphism
+      3.1-33 CounitIsomorphismWithGivenObject
+      3.1-34 AddCounitIsomorphismWithGivenObject
+      3.1-35 CounitIsomorphism
       3.1-36 MorphismBetweenStandardConeObjectsWithGivenObjects
       3.1-37 AddMorphismBetweenStandardConeObjectsWithGivenObjects
       3.1-38 MorphismBetweenStandardConeObjects

@@ -265,9 +265,8 @@
   [33X[0;0YThe  argument  is  an exact triangle [23Xt=(\alpha,\iota,\pi)[123X. The output is the
   exact  triangle  defined  by  the  inverse  rotation  axiom, i.e., the exact
   triangle  [23X(-\eta(A)\circ\Sigma^{-1}\pi,\alpha,\mu(C)\circ\iota)[123X,  such  that
-  [23X\eta[123X        :=        [10XIsomorphismFromInverseShiftOfShift[110X,       [23X\mu[123X       :=
-  [10XIsomorphismOntoShiftOfInverseShift[110X,   [23XA[123X   :=   [10XSource[110X[23X(\alpha)[123X   and   [23XC[123X   :=
-  [10XRange[110X[23X(\iota)[123X.[133X
+  [23X\eta[123X := [10XCounitIsomorphism[110X, [23X\mu[123X := [10XUnitIsomorphism[110X, [23XA[123X := [10XSource[110X[23X(\alpha)[123X and [23XC[123X
+  := [10XRange[110X[23X(\iota)[123X.[133X
   
   [1X1.2-28 InverseRotation[101X
   

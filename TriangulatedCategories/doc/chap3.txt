@@ -198,114 +198,114 @@
   or  morphisms.  The  operation  delegates  to either [10XInverseShiftOnObject[110X or
   [10XInverseShiftOnMorphism[110X.[133X
   
-  [1X3.1-23 IsomorphismOntoShiftOfInverseShiftWithGivenObject[101X
+  [1X3.1-23 UnitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XIsomorphismOntoShiftOfInverseShiftWithGivenObject[102X( [3XA[103X, [3Xsigma_o_rev_sigma_A[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnitIsomorphismWithGivenObject[102X( [3XA[103X, [3Xsigma_o_rev_sigma_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to (\Sigma \circ \Sigma^{-1}) A[123X[133X
   
   [33X[0;0YThe  arguments  are  two  objects  [23XA[123X  and  [23X(\Sigma \circ \Sigma^{-1}) A[123X in a
   triangulated  category  [23X\mathcal{T}[123X. The output is the natural isomorphism [23XA
   \to (\Sigma \circ \Sigma^{-1}) A[123X[133X
   
-  [1X3.1-24 AddIsomorphismOntoShiftOfInverseShiftWithGivenObject[101X
+  [1X3.1-24 AddUnitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XAddIsomorphismOntoShiftOfInverseShiftWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddUnitIsomorphismWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XIsomorphismOntoShiftOfInverseShiftWithGivenObject[110X.[133X
+  [10XUnitIsomorphismWithGivenObject[110X.[133X
   
-  [1X3.1-25 IsomorphismOntoShiftOfInverseShift[101X
+  [1X3.1-25 UnitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XIsomorphismOntoShiftOfInverseShift[102X( [3XA[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnitIsomorphism[102X( [3XA[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to (\Sigma \circ \Sigma^{-1}) A[123X[133X
   
   [33X[0;0YThe  argument  is  an  object  [23XA[123X in a triangulated category [23X\mathcal{T}[123X. The
   output is the natural isomorphism [23XA \to (\Sigma \circ \Sigma^{-1}) A[123X[133X
   
-  [1X3.1-26 AddIsomorphismOntoShiftOfInverseShift[101X
+  [1X3.1-26 AddUnitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XAddIsomorphismOntoShiftOfInverseShift[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddUnitIsomorphism[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XIsomorphismOntoShiftOfInverseShift[110X.[133X
+  [10XUnitIsomorphism[110X.[133X
   
-  [1X3.1-27 IsomorphismOntoInverseShiftOfShiftWithGivenObject[101X
+  [1X3.1-27 InverseOfCounitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XIsomorphismOntoInverseShiftOfShiftWithGivenObject[102X( [3XA[103X, [3Xrev_sigma_o_sigma_A[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInverseOfCounitIsomorphismWithGivenObject[102X( [3XA[103X, [3Xrev_sigma_o_sigma_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to (\Sigma^{-1} \circ \Sigma) A[123X[133X
   
   [33X[0;0YThe  arguments  are  two  objects  [23XA[123X  and  [23X(\Sigma^{-1} \circ \Sigma) A[123X in a
   triangulated  category  [23X\mathcal{T}[123X. The output is the natural isomorphism [23XA
   \to (\Sigma^{-1} \circ \Sigma) A[123X[133X
   
-  [1X3.1-28 AddIsomorphismOntoInverseShiftOfShiftWithGivenObject[101X
+  [1X3.1-28 AddInverseOfCounitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XAddIsomorphismOntoInverseShiftOfShiftWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseOfCounitIsomorphismWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XIsomorphismOntoInverseShiftOfShiftWithGivenObject[110X.[133X
+  [10XInverseOfCounitIsomorphismWithGivenObject[110X.[133X
   
-  [1X3.1-29 IsomorphismOntoInverseShiftOfShift[101X
+  [1X3.1-29 InverseOfCounitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XIsomorphismOntoInverseShiftOfShift[102X( [3XA[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInverseOfCounitIsomorphism[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to (\Sigma^{-1} \circ \Sigma) A[123X[133X
   
   [33X[0;0YThe  argument  is  an  object  [23XA[123X in a triangulated category [23X\mathcal{T}[123X. The
   output is the natural isomorphism [23XA \to (\Sigma^{-1} \circ \Sigma) A[123X[133X
   
-  [1X3.1-30 IsomorphismFromShiftOfInverseShiftWithGivenObject[101X
+  [1X3.1-30 InverseOfUnitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XIsomorphismFromShiftOfInverseShiftWithGivenObject[102X( [3XA[103X, [3Xsigma_o_rev_sigma_A[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInverseOfUnitIsomorphismWithGivenObject[102X( [3XA[103X, [3Xsigma_o_rev_sigma_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X(\Sigma \circ \Sigma^{-1}) A \to A[123X[133X
   
   [33X[0;0YThe  arguments  are  two  objects  [23XA[123X  and  [23X(\Sigma \circ \Sigma^{-1}) A[123X in a
   triangulated  category  [23X\mathcal{T}[123X.  The  output is the natural isomorphism
   [23X(\Sigma \circ \Sigma^{-1}) A \to A[123X[133X
   
-  [1X3.1-31 AddIsomorphismFromShiftOfInverseShiftWithGivenObject[101X
+  [1X3.1-31 AddInverseOfUnitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XAddIsomorphismFromShiftOfInverseShiftWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseOfUnitIsomorphismWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XIsomorphismFromShiftOfInverseShiftWithGivenObject[110X.[133X
+  [10XInverseOfUnitIsomorphismWithGivenObject[110X.[133X
   
-  [1X3.1-32 IsomorphismFromShiftOfInverseShift[101X
+  [1X3.1-32 InverseOfUnitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XIsomorphismFromShiftOfInverseShift[102X( [3XA[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInverseOfUnitIsomorphism[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X(\Sigma \circ \Sigma^{-1}) A \to A[123X[133X
   
   [33X[0;0YThe  argument  in  an  objects [23XA[123X in a triangulated category [23X\mathcal{T}[123X. The
   output is the natural isomorphism [23X(\Sigma \circ \Sigma^{-1}) A \to A[123X[133X
   
-  [1X3.1-33 IsomorphismFromInverseShiftOfShiftWithGivenObject[101X
+  [1X3.1-33 CounitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XIsomorphismFromInverseShiftOfShiftWithGivenObject[102X( [3XA[103X, [3Xrev_sigma_o_sigma_A[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCounitIsomorphismWithGivenObject[102X( [3XA[103X, [3Xrev_sigma_o_sigma_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X(\Sigma^{-1} \circ \Sigma) A \to A[123X[133X
   
   [33X[0;0YThe  arguments  are  two  objects  [23XA[123X  and  [23X(\Sigma^{-1} \circ \Sigma) A[123X in a
   triangulated  category  [23X\mathcal{T}[123X.  The  output is the natural isomorphism
   [23X(\Sigma^{-1} \circ \Sigma) A \to A[123X[133X
   
-  [1X3.1-34 AddIsomorphismFromInverseShiftOfShiftWithGivenObject[101X
+  [1X3.1-34 AddCounitIsomorphismWithGivenObject[101X
   
-  [33X[1;0Y[29X[2XAddIsomorphismFromInverseShiftOfShiftWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddCounitIsomorphismWithGivenObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XIsomorphismFromInverseShiftOfShiftWithGivenObject[110X.[133X
+  [10XCounitIsomorphismWithGivenObject[110X.[133X
   
-  [1X3.1-35 IsomorphismFromInverseShiftOfShift[101X
+  [1X3.1-35 CounitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XIsomorphismFromInverseShiftOfShift[102X( [3XA[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCounitIsomorphism[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X(\Sigma^{-1} \circ \Sigma) A \to A[123X[133X
   
   [33X[0;0YThe  argument  is  an  object  [23XA[123X in a triangulated category [23X\mathcal{T}[123X. The
