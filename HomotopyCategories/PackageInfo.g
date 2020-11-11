@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
 Subtitle := "Homotopy categories of additive categories",
-Version := "2020.11-01",
-Date := "04/11/2020",
+Version := "2020.11-02",
+Date := "10/11/2020",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -76,7 +76,7 @@ Dependencies := rec(
                            [ "ComplexesCategories", ">= 2020.10-04" ],
                            [ "GeneralizedMorphismsForCAP", ">= 2020.10.01" ],
                            [ "StableCategories", ">= 2020.10-01" ],
-                           [ "TriangulatedCategories", ">= 2020.10-03" ],
+                           [ "TriangulatedCategories", ">= 2020.10-04" ],
                            [ "Algebroids", ">= 2020.10-02" ],
                          ],
   SuggestedOtherPackages := [ ],
