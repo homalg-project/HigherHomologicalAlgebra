@@ -266,7 +266,7 @@ DeclareAttribute( "TotalChainComplex", IsDoubleChainComplex );
 #! @Arguments D
 DeclareAttribute( "TotalCochainComplex", IsDoubleCochainComplex );
 
-DeclareAttribute( "CatOfDoubleComplex", IsDoubleChainOrCochainComplex );
+DeclareAttribute( "UnderlyingCategory", IsDoubleChainOrCochainComplex );
 
 KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleChainComplex, IsInt, ReturnTrue );
 KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleCochainComplex, IsInt, ReturnTrue );

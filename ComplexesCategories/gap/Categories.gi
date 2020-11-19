@@ -1804,7 +1804,7 @@ InstallMethodWithCrispCache( DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS,
         
         H := function ( i, j )
               
-               if (i + j + 1) mod 2 = 0 then
+               if ( i + j ) mod 2 = 1 then
                  
                  return HomomorphismStructureOnMorphisms( C ^ (- i + 1), IdentityMorphism( D[j] ) );
                  

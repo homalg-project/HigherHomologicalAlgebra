@@ -3,10 +3,6 @@
 #
 # Implementations
 #
-##  Chapter Double complexes
-##
-#############################################################################
-
 
 ########################################
 #
@@ -44,201 +40,275 @@ BindGlobal( "TheTypeOfDoubleCochainComplex",
 ########################################
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX",
- function( cat, h, v, name )
- local C;
 
- C := rec( IndicesOfTotalComplex := rec( ) );
-
- ObjectifyWithAttributes( C, ValueGlobal( name ),
-
-                          Rows, h,
-
-                          Columns, v,
-
-                          CatOfDoubleComplex, cat );
- 
- return C; 
-
- end );
-
-
-InstallMethod( DoubleChainComplex, 
-               [ IsCapCategory, IsZFunction, IsZFunction ],
- function( cat, h, v )
-
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleChainComplex" );
-
+  function( cat, h, v, name )
+    local C;
+    
+    C := rec( IndicesOfTotalComplex := rec( ) );
+    
+    ObjectifyWithAttributes(
+        C, ValueGlobal( name ),
+        Rows, h,
+        Columns, v,
+        UnderlyingCategory, cat
+      );
+      
+  return C;
+    
 end );
 
-InstallMethod( DoubleCochainComplex, 
-               [ IsCapCategory, IsZFunction, IsZFunction ],
- function( cat, h, v )
 
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleCochainComplex" );
+InstallMethod( DoubleChainComplex,
+          [ IsCapCategory, IsZFunction, IsZFunction ],
+          
+  function( cat, h, v )
+    
+    return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleChainComplex" );
+    
+end );
 
+InstallMethod( DoubleCochainComplex,
+          [ IsCapCategory, IsZFunction, IsZFunction ],
+          
+  function( cat, h, v )
+    
+    return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, h, v, "TheTypeOfDoubleCochainComplex" );
+    
 end );
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS",
- function( cat, R, V, name )
- local r,v;
 
- r := AsZFunction(  j -> AsZFunction(  i -> R( i, j ) ) );
-
- v := AsZFunction(  i -> AsZFunction(  j -> V( i, j ) ) );
-
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, r, v, name );
-
+  function( cat, R, V, name )
+    local r,v;
+    
+    r := AsZFunction(  j -> AsZFunction(  i -> R( i, j ) ) );
+    
+    v := AsZFunction(  i -> AsZFunction(  j -> V( i, j ) ) );
+    
+    return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX( cat, r, v, name );
+    
 end );
 
-InstallMethod( DoubleChainComplex, 
-               [ IsCapCategory, IsFunction, IsFunction ],
- function( cat, R, V )
-
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleChainComplex" );
-
+InstallMethod( DoubleChainComplex,
+          [ IsCapCategory, IsFunction, IsFunction ],
+          
+  function( cat, R, V )
+    
+    return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleChainComplex" );
+    
 end );
 
-InstallMethod( DoubleCochainComplex, 
-               [ IsCapCategory, IsFunction, IsFunction ],
- function( cat, R, V )
-
- return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleCochainComplex" );
- 
+InstallMethod( DoubleCochainComplex,
+          [ IsCapCategory, IsFunction, IsFunction ],
+          
+  function( cat, R, V )
+    
+    return DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, "TheTypeOfDoubleCochainComplex" );
+    
 end );
 
 BindGlobal( "DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES",
- function( C, name )
- local cat, R, V;
 
- cat := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
- 
- R := function( i, j )
-         return DifferentialAt( C, i )[ j ];
-      end;
-
- V := function( i, j )
-      if i mod 2 = 0 then 
-         return ObjectAt( C, i )^j;
-      else
-         return AdditiveInverseForMorphisms( C[i]^j );
-      fi;
-      end;
-
- return  DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, name );
-
+  function( C, name )
+    local cat, R, V;
+    
+    cat := UnderlyingCategory( UnderlyingCategory( CapCategory( C ) ) );
+    
+    R := { i, j } -> ( C ^ i )[ j ];
+    
+    V := { i, j } -> ( -1 ) ^ i * C[ i ] ^ j;
+    
+    return  DOUBLE_CHAIN_OR_COCHAIN_COMPLEX_BY_TWO_FUNCTIONS( cat, R, V, name );
+    
 end );
 
-InstallMethod( DoubleChainComplex, 
-               [ IsChainComplex ],
- function( C )
- local d, l;
+InstallMethod( DoubleChainComplex,
+          [ IsChainComplex ],
+          
+  function( C )
+    local d, l;
+    
+    d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleChainComplex" );
+    
+    AddToToDoList(
+      ToDoListEntry(
+          [ [ C, "HAS_FAU_BOUND", true ] ],
+          function( )
+            SetRightBound( d, ActiveUpperBound( C ) );
+          end
+      )
+    );
+    
+    AddToToDoList(
+      ToDoListEntry(
+          [ [ C, "HAS_FAL_BOUND", true ] ],
+          function( )
+            SetLeftBound( d, ActiveLowerBound( C ) );
+          end
+      )
+    );
+    
+    AddToToDoList(
+      ToDoListEntry(
+          [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
+          function( )
+            local l, ll, lu;
+            l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
+            lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
+            ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
+            
+            AddToToDoList(
+              ToDoListEntry(
+                lu,
+                function( )
+                  SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
+                end
+              )
+            );
+            
+            AddToToDoList(
+              ToDoListEntry(
+                ll,
+                function( )
+                  SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
+                end
+              )
+            );
+          end ) );
 
- d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleChainComplex" );
+    return d;
 
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
-                                                                 SetRightBound( d, ActiveUpperBound( C ) );
-                                                                 end ) );
-
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
-                                                                 SetLeftBound( d, ActiveLowerBound( C ) );
-                                                                 end ) );
-
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-                                 function( ) 
-                                 local l, ll, lu;
-                                 l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
-                                 lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
-                                 ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
-                                 AddToToDoList( ToDoListEntry( lu, function( ) 
-                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 AddToToDoList( ToDoListEntry( ll, function( ) 
-                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 end ) );
-
-return d;
 end );
 
 
 # TODO: use to do lists as above
-InstallMethod( DoubleCochainComplex, 
-               [ IsCochainComplex ],
- function( C)
- local d, l;
- 
- d :=  DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleCochainComplex" );
- 
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAU_BOUND", true ] ], function( ) 
-                                                                 SetRightBound( d, ActiveUpperBound( C ) );
-                                                                 end ) );
-
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ] ], function( ) 
-                                                                 SetLeftBound( d, ActiveLowerBound( C ) );
-                                                                 end ) );
-
- AddToToDoList( ToDoListEntry( [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-                                 function( ) 
-                                 local l, ll, lu;
-                                 l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
-                                 lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
-                                 ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
-                                 AddToToDoList( ToDoListEntry( lu, function( )
-                                                                   SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 AddToToDoList( ToDoListEntry( ll, function( ) 
-                                                                   SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
-                                                                   end ) );
-                                 end ) );
-
- return d;
-  
+InstallMethod( DoubleCochainComplex,
+          [ IsCochainComplex ],
+          
+  function( C)
+    local d, l;
+    
+    d := DOUBLE_CHAIN_OR_COCHAIN_BY_COMPLEX_Of_COMPLEXES( C, "TheTypeOfDoubleCochainComplex" );
+    
+    AddToToDoList(
+      ToDoListEntry(
+        [ [ C, "HAS_FAU_BOUND", true ] ],
+        function( )
+          SetRightBound( d, ActiveUpperBound( C ) );
+        end
+      )
+    );
+    
+    AddToToDoList(
+      ToDoListEntry(
+        [ [ C, "HAS_FAL_BOUND", true ] ],
+        function( )
+          SetLeftBound( d, ActiveLowerBound( C ) );
+        end
+      )
+    );
+    
+    AddToToDoList(
+      ToDoListEntry(
+        [ [ C, "HAS_FAL_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ],
+        function( )
+          local l, ll, lu;
+          l := [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ];
+          lu := List( l, u -> [ C[ u ], "HAS_FAU_BOUND", true ] );
+          ll := List( l, u -> [ C[ u ], "HAS_FAL_BOUND", true ] );
+          
+          AddToToDoList(
+            ToDoListEntry(
+              lu,
+              function( )
+                SetAboveBound( d, Maximum( List( l, u -> ActiveUpperBound( C[ u ] ) ) ) );
+              end
+            )
+          );
+          
+          AddToToDoList(
+            ToDoListEntry(
+              ll,
+              function( ) 
+                SetBelowBound( d, Minimum( List( l, u -> ActiveLowerBound( C[ u ] ) ) ) );
+              end
+            )
+          );
+          
+        end ) );
+        
+    return d;
+    
 end );
 
 ##
 InstallMethod( DoubleChainComplex,
-               [ IsDoubleCochainComplex ], 
+          [ IsDoubleCochainComplex ],
+          
   function( d )
-  local R, V, dd;
-  R := function( i, j )
-       return HorizontalDifferentialAt(d, -i, -j );
-       end;
-  V := function( i, j )
-       return VerticalDifferentialAt(d, -i, -j );
-       end;
-  dd := DoubleChainComplex( CatOfDoubleComplex( d ), R, V );
-  
-  if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
-  if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
-  if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
-  if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
-  
-#   d!.EquivalentDoubleChainComplex := dd;
-  
-  return dd;
+    local R, V, dd;
+    
+    R := { i, j } -> HorizontalDifferentialAt(d, -i, -j );
+    
+    V := { i, j } -> VerticalDifferentialAt(d, -i, -j );
+    
+    dd := DoubleChainComplex( UnderlyingCategory( d ), R, V );
+    
+    if IsBound( d!.BelowBound ) then
+      SetAboveBound( dd, -d!.BelowBound );
+    fi;
+    
+    if IsBound( d!.AboveBound ) then
+      SetBelowBound( dd, -d!.AboveBound );
+    fi;
+    
+    if IsBound( d!.LeftBound ) then
+      SetRightBound( dd, -d!.LeftBound );
+    fi;
+    
+    if IsBound( d!.RightBound ) then
+      SetLeftBound( dd, -d!.RightBound );
+    fi;
+    
+    #d!.EquivalentDoubleChainComplex := dd;
+    
+    return dd;
+    
 end );
 
 ##
 InstallMethod( DoubleCochainComplex,
-               [ IsDoubleChainComplex ], 
+          [ IsDoubleChainComplex ],
+          
   function( d )
-  local R, V, dd;
-  R := function( i, j )
-       return HorizontalDifferentialAt( d, -i, -j );
-       end;
-  V := function( i, j )
-       return VerticalDifferentialAt( d, -i, -j );
-       end;
-  dd := DoubleCochainComplex( CatOfDoubleComplex( d ), R, V );
-  
-  if IsBound( d!.BelowBound ) then SetAboveBound( dd, - d!.BelowBound ); fi;
-  if IsBound( d!.AboveBound ) then SetBelowBound( dd, - d!.AboveBound ); fi;
-  if IsBound( d!.LeftBound ) then SetRightBound( dd, - d!.LeftBound ); fi;
-  if IsBound( d!.RightBound ) then SetLeftBound( dd, - d!.RightBound ); fi;
-
-#   d!.EquivalentDoubleCochainComplex := dd;
-
-  return dd;
+    local R, V, dd;
+    
+    R := { i, j } -> HorizontalDifferentialAt( d, -i, -j );
+    
+    V := { i, j } -> VerticalDifferentialAt( d, -i, -j );
+    
+    dd := DoubleCochainComplex( UnderlyingCategory( d ), R, V );
+    
+    if IsBound( d!.BelowBound ) then
+      SetAboveBound( dd, - d!.BelowBound );
+    fi;
+    
+    if IsBound( d!.AboveBound ) then
+      SetBelowBound( dd, - d!.AboveBound );
+    fi;
+    
+    if IsBound( d!.LeftBound ) then
+      SetRightBound( dd, - d!.LeftBound );
+    fi;
+    
+    if IsBound( d!.RightBound ) then
+      SetLeftBound( dd, - d!.RightBound );
+    fi;
+    
+    #d!.EquivalentDoubleCochainComplex := dd;
+    
+    return dd;
+    
 end );
 
 ###############################
@@ -247,34 +317,51 @@ end );
 #
 ###############################
 
-InstallMethod( CertainRowOp, 
-               [ IsDoubleChainOrCochainComplex, IsInt ],
- function( C, n )
- return Rows( C )[ n ];
+##
+InstallMethod( CertainRowOp,
+          [ IsDoubleChainOrCochainComplex, IsInt ],
+          
+  function( C, n )
+    
+    return Rows( C )[ n ];
+    
 end );
 
-InstallMethod( CertainColumnOp, 
-               [ IsDoubleChainOrCochainComplex, IsInt ],
- function( C, m )
- return Columns( C )[ m ];
+##
+InstallMethod( CertainColumnOp,
+          [ IsDoubleChainOrCochainComplex, IsInt ],
+          
+  function( C, m )
+    
+    return Columns( C )[ m ];
+    
 end );
 
-InstallMethod( HorizontalDifferentialAt, 
-               [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
- function( C, m, n )
-return CertainRow( C, n )[ m ];
+InstallMethod( HorizontalDifferentialAt,
+          [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
+          
+  function( C, m, n )
+    
+    return CertainRow( C, n )[ m ];
+    
 end );
 
-InstallMethod( VerticalDifferentialAt, 
-               [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
- function( C, m, n )
-return CertainColumn( C, m )[ n ];
+InstallMethod( VerticalDifferentialAt,
+          [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
+          
+  function( C, m, n )
+    
+    return CertainColumn( C, m )[ n ];
+    
 end );
 
-InstallOtherMethod( ObjectAt, 
-               [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
- function( C, m, n )
- return Source( HorizontalDifferentialAt( C, m, n ) );
+InstallOtherMethod( ObjectAt,
+          [ IsDoubleChainOrCochainComplex, IsInt, IsInt ],
+          
+  function( C, m, n )
+    
+    return Source( HorizontalDifferentialAt( C, m, n ) );
+    
 end );
 
 #####################################
@@ -287,160 +374,198 @@ end );
 # x0 =< x =< x1
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, x0, x1 )
-local d, cat, diff;
 
-cat := CatOfDoubleComplex( C );
-
-diff := AsZFunction(  function( m )
-                               local list;
-                               
-                               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
-                               
-                               list := List( [ 1 .. x1 - x0 + 1 ], i ->   List( [ 1 .. x1 - x0 + 1 ], 
-                                                                     function( j )
-                                                                     local zero;
-                                                                     zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                                                                           ObjectAt( C, x0 + j - 1, m - x0 - j ) );
-                                                                     if i <> j and i - 1 <> j then return zero;
-                                                                     elif i = j then return VerticalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                     else return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                     fi;
-                                                                     end ) );
-                               
-                               return MorphismBetweenDirectSums( list );
-                               end );
-d := ChainComplex( cat, diff );
-
-d!.UnderlyingDoubleComplex := C;
-
-#AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
-
-return d;
-
+  function ( C, x0, x1 )
+    local d, cat, diff;
+    
+    cat := UnderlyingCategory( C );
+    
+    diff := AsZFunction(
+          function ( m )
+            local list;
+            
+            C!.IndicesOfTotalComplex.(String( m )) := [ x0, x1 ];
+            
+            list := List( [ 1 .. x1 - x0 + 1 ],
+                function ( i )
+                  return List( [ 1 .. x1 - x0 + 1 ],
+                    function ( j )
+                      local zero;
+                      zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1 ), ObjectAt( C, x0 + j - 1, m - x0 - j ) );
+                      if i <> j and i - 1 <> j then
+                          return zero;
+                      elif i = j then
+                          return VerticalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
+                      else
+                          return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
+                      fi;
+                      return;
+                    end );
+                end );
+                
+            return MorphismBetweenDirectSums( list );
+            
+          end );
+    
+    d := ChainComplex( cat, diff );
+    
+    d!.UnderlyingDoubleComplex := C;
+    
+    return d;
+    
 end );
 
 # concentrated in
 # y >= y0 and y =< y1
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, y0, y1 )
-local d, cat, diff;
-
-cat := CatOfDoubleComplex( C );
-
-
-diff := AsZFunction(  function( m )
-                               local list;
-                               
-                               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
-                               
-                               list := List( [ 1 .. y1 - y0 + 1 ], i ->   List( [ 1 .. y1 - y0 + 1 ], 
-                                                                     function( j )
-                                                                     local zero;
-                                                                     zero := ZeroMorphism( ObjectAt( C, m -y1 + i - 1, y1 - i + 1  ), 
-                                                                                           ObjectAt( C, m -y1 + j - 2, y1 - j + 1 ) );
-                                                                     if i <> j and i + 1 <> j then return zero;
-                                                                     elif i = j then return HorizontalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
-                                                                     else return VerticalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
-                                                                     fi;
-                                                                     end ) );
-                               return MorphismBetweenDirectSums( list );
-                                end );
-d := ChainComplex( cat, diff );
-
-d!.UnderlyingDoubleComplex := C;
-
-#AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
-
-return d;
-
+  function( C, y0, y1 )
+    local d, cat, diff;
+    
+    cat := UnderlyingCategory( C );
+    
+    diff := AsZFunction(
+              function( m )
+                local list;
+                
+                C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
+                
+                list := List( [ 1 .. y1 - y0 + 1 ], i -> List( [ 1 .. y1 - y0 + 1 ],
+                    function( j )
+                      local zero;
+                      
+                      zero := ZeroMorphism(
+                                  ObjectAt( C, m -y1 + i - 1, y1 - i + 1  ),
+                                  ObjectAt( C, m -y1 + j - 2, y1 - j + 1 )
+                                );
+                      
+                      if i <> j and i + 1 <> j then
+                          return zero;
+                      elif i = j then
+                          return HorizontalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
+                      else
+                          return VerticalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
+                      fi;
+                      
+                    end ) );
+                    
+                return MorphismBetweenDirectSums( list );
+                
+              end );
+              
+    d := ChainComplex( cat, diff );
+    
+    d!.UnderlyingDoubleComplex := C;
+    
+    #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
+    
+    return d;
+    
 end );
 
 # concentrated in
 # x >= x0 and y >= y0
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, x0, y0 )
-local cat, zero_object, diff, complex;
+  function( C, x0, y0 )
+    local cat, zero_object, diff, complex;
+    
+    cat := UnderlyingCategory( C );
+    
+    zero_object := ZeroObject( cat );
+    
+    diff := AsZFunction(
+          function( m )
+            local l;
+            
+            if m = x0 + y0 then
+               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x0 ];
+               return UniversalMorphismIntoZeroObject( ObjectAt( C, x0, y0 ) );
+            elif m < x0 + y0 then
+               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
+               return UniversalMorphismIntoZeroObject( zero_object );
+            fi;
+            
+            C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, m - y0 ];
+            
+            l := List( [ 1 .. m - x0 - y0 + 1 ], i -> List( [ 1 .. m - x0 - y0 ],
+                    function( j )
+                      local zero;
+                      
+                      zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ),
+                                            ObjectAt( C, x0 + j - 1, m - x0 - j ) );
+                      
+                      if i <> j and i - 1 <> j then
+                        return zero;
+                      elif i-1=j then
+                        return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
+                      else
+                        return VerticalDifferentialAt(C, x0 + i - 1, m - x0 - i + 1 );
+                      fi;
+                      
+                    end ) );
+                    
+            return MorphismBetweenDirectSums( l );
+            
+          end
+        );
 
-cat := CatOfDoubleComplex( C );
-
-zero_object := ZeroObject( cat );
-
-diff := AsZFunction(  function( m )
-                               local l;
-                               
-                               if m = x0 + y0 then
-                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x0 ];
-                                  return UniversalMorphismIntoZeroObject( ObjectAt( C, x0, y0 ) );
-                               elif m < x0 + y0 then
-                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
-                                  return UniversalMorphismIntoZeroObject( zero_object );
-                               fi;
-                               
-                               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, m - y0 ];
-                               
-                               l := List( [ 1 .. m - x0 - y0 + 1 ], i -> List( [ 1 .. m - x0 - y0 ], function( j )
-                                                                  local zero;
-                                                                  zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                                                                        ObjectAt( C, x0 + j - 1, m - x0 - j ) );
-                                                                  if i <> j and i - 1 <> j then return zero;
-                                                                  elif i-1=j then return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                                                                  else return VerticalDifferentialAt(C, x0 + i - 1, m - x0 - i + 1 );
-                                                                  fi;
-                                                                  end ) );
-                               return MorphismBetweenDirectSums( l );
-                               end );
-
-complex := ChainComplex( cat, diff );
-
-complex!.UnderlyingDoubleComplex := C;
-
-SetLowerBound( complex, x0 + y0 );
-
-#AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
-
-return complex;
-
+    complex := ChainComplex( cat, diff );
+    
+    complex!.UnderlyingDoubleComplex := C;
+    
+    SetLowerBound( complex, x0 + y0 );
+    
+    #AddToGenesis( complex, "UnderlyingDoubleComplex", [ C ] );
+    
+    return complex;
+    
 end );
 
 # concentrated in
 # x <= x0 and y <= y0
 #
 BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX",
-function( C, x0, y0 )
-local d, cat, zero_object, diff, complex;
 
-cat := CatOfDoubleComplex( C );
-
-zero_object := ZeroObject( cat );
-
-diff := AsZFunction(  function( m )
-                               local l;
-                               
-                               if m = x0 + y0 + 1 then 
-                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ x0 + 1, x0 + 1 ];
-                                  return UniversalMorphismFromZeroObject( ObjectAt( C, x0, y0 ) );
-                               elif m > x0 + y0 + 1 then
-                                  C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
-                                  return UniversalMorphismFromZeroObject( zero_object );
-                               fi;
-
-                               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, x0 ];
-                               l := List( [ 1 .. x0 + y0 -m + 1 ], i -> List( [ 1 .. x0 + y0 -m + 2 ], 
-                                                                     function( j )
-                                                                     local zero;
-                                                                     zero := ZeroMorphism( ObjectAt( C, -y0 + m + i - 1 , y0 - i + 1  ), 
-                                                                                           ObjectAt( C, -y0 + m + j - 2 , y0 - j + 1 ) );
-                                                                     if i <> j and j - 1 <> i then return zero;
-                                                                     elif i = j then return HorizontalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
-                                                                     else return VerticalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
-                                                                     fi;
-                                                                     end ) );
-                               return MorphismBetweenDirectSums( l );
-                               end );
-
+  function( C, x0, y0 )
+    local d, cat, zero_object, diff, complex;
+    
+    cat := UnderlyingCategory( C );
+    
+    zero_object := ZeroObject( cat );
+    
+    diff := AsZFunction(
+          function( m )
+            local l;
+            
+            if m = x0 + y0 + 1 then
+               C!.IndicesOfTotalComplex.( String( m ) ) := [ x0 + 1, x0 + 1 ];
+               return UniversalMorphismFromZeroObject( ObjectAt( C, x0, y0 ) );
+            elif m > x0 + y0 + 1 then
+               C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, m - y0 ];
+               return UniversalMorphismFromZeroObject( zero_object );
+            fi;
+            
+            C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, x0 ];
+            
+            l := List( [ 1 .. x0 + y0 -m + 1 ], i -> List( [ 1 .. x0 + y0 -m + 2 ],
+                  function( j )
+                    local zero;
+                    zero := ZeroMorphism( ObjectAt( C, -y0 + m + i - 1 , y0 - i + 1  ),
+                                         ObjectAt( C, -y0 + m + j - 2 , y0 - j + 1 ) );
+                    if i <> j and j - 1 <> i then
+                      return zero;
+                    elif i = j then
+                      return HorizontalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
+                    else
+                      return VerticalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
+                    fi;
+                  end ) );
+                  
+            return MorphismBetweenDirectSums( l );
+            
+          end );
+      
 complex := ChainComplex( cat, diff );
 
 complex!.UnderlyingDoubleComplex := C;
@@ -453,68 +578,73 @@ return complex;
 
 end );
 
-InstallMethod( TotalChainComplex, 
-               [ IsDoubleChainComplex ],
- function( C )
- local T, T1;
- 
- if IsBound( C!.RightBound ) and IsBound( C!.AboveBound ) then 
-    T := TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.RightBound, C!.AboveBound );
- fi;
- 
- if IsBound( C!.LeftBound ) and IsBound( C!.BelowBound ) then
-    T1 := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.BelowBound );
-    if IsBound( T ) then
-       SetLowerBound( T, ActiveLowerBound( T1 ) );
-       return T;
-    else
-       return T1;
+InstallMethod( TotalChainComplex,
+          [ IsDoubleChainComplex ],
+          
+  function( C )
+    local T, T1;
+    
+    if IsBound( C!.RightBound ) and IsBound( C!.AboveBound ) then
+       T := TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.RightBound, C!.AboveBound );
     fi;
- fi;
- 
- if IsBound( C!.LeftBound ) and IsBound( C!.RightBound ) then 
-    T := TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.RightBound );
- fi;
- 
- if IsBound( C!.AboveBound ) and IsBound( C!.BelowBound ) then 
-    T := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.BelowBound, C!.AboveBound );
- fi;
- 
- if IsBound( T ) then return T; fi;
- 
- Error( "The double chain complex does not have the required bounds" );
-  
+    
+    if IsBound( C!.LeftBound ) and IsBound( C!.BelowBound ) then
+       T1 := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.BelowBound );
+       if IsBound( T ) then
+          SetLowerBound( T, ActiveLowerBound( T1 ) );
+          return T;
+       else
+          return T1;
+       fi;
+    fi;
+     
+    if IsBound( C!.LeftBound ) and IsBound( C!.RightBound ) then
+       T := TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.LeftBound, C!.RightBound );
+    fi;
+    
+    if IsBound( C!.AboveBound ) and IsBound( C!.BelowBound ) then
+       T := TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_DOUBLE_CHAIN_COMPLEX( C, C!.BelowBound, C!.AboveBound );
+    fi;
+    
+    if IsBound( T ) then
+      return T;
+    fi;
+    
+    Error( "The double chain complex does not have the required bounds" );
+    
 end );
 
 InstallMethod( TotalCochainComplex,
-               [ IsDoubleCochainComplex ],
- function( d )
- local dd, T, cat, chain_cat, cochain_cat, F;
-
- dd := DoubleChainComplex( d );
-
- T := TotalChainComplex( dd );
-
- chain_cat := CapCategory( T );
-
- cat := UnderlyingCategory( chain_cat );
-
- cochain_cat := CochainComplexCategory( cat );
-
- F := ChainToCochainComplexFunctor( chain_cat, cochain_cat );
-
- T := ApplyFunctor( F, T );
- 
- #AddToGenesis( T, "UnderlyingDoubleComplex", [ d ] );
-
- return T;
-
+          [ IsDoubleCochainComplex ],
+          
+  function( d )
+    local dd, T, cat, chain_cat, cochain_cat, F;
+    
+    dd := DoubleChainComplex( d );
+    
+    T := TotalChainComplex( dd );
+    
+    chain_cat := CapCategory( T );
+    
+    cat := UnderlyingCategory( chain_cat );
+    
+    cochain_cat := CochainComplexCategory( cat );
+    
+    F := ChainToCochainComplexFunctor( chain_cat, cochain_cat );
+    
+    T := ApplyFunctor( F, T );
+    
+    #AddToGenesis( T, "UnderlyingDoubleComplex", [ d ] );
+    
+    return T;
+    
 end );
 
 ##
 InstallMethod( IndicesUsedToComputeTotalComplexAtOp,
-               [ IsDoubleChainComplex, IsInt ],
-    function( C, m )
+          [ IsDoubleChainComplex, IsInt ],
+  
+  function( C, m )
     local obj;
     
     # computing obj make it possible to read the indices used to compute obj.
@@ -544,40 +674,42 @@ InstallMethod( SetLeftBound, [ IsDoubleChainOrCochainComplex, IsInt ],  function
 #####################################
 
 InstallMethod( ViewObj,
-               [ IsDoubleChainOrCochainComplex ],
- function( C )
- if IsDoubleChainComplex( C ) then 
-    Print( "<A double chain complex" );
- else
-    Print( "<A double cochain complex" );
- fi;
+          [ IsDoubleChainOrCochainComplex ],
+          
+  function( C )
+  
+    if IsDoubleChainComplex( C ) then
+       Print( "<A double chain complex" );
+    else
+       Print( "<A double cochain complex" );
+    fi;
 
- Print( " concentrated in window [ " );
+    Print( " concentrated in window [ " );
 
- if IsBound( C!.LeftBound ) then 
-    Print( C!.LeftBound, " .. " );
- else 
-    Print( "-inf", " .. " );
- fi;
- 
- if IsBound( C!.RightBound ) then 
-    Print( C!.RightBound, " ] x " );
- else 
-    Print( "inf", " ] x " );
- fi;
- Print( "[ " );
- if IsBound( C!.BelowBound ) then 
-    Print( C!.BelowBound, " .. " );
- else 
-    Print( "-inf", " .. " );
- fi;
- 
- if IsBound( C!.AboveBound ) then 
-    Print( C!.AboveBound, " ]" );
- else 
-    Print( "inf", " ]" );
- fi;
- 
- Print( ">" );
+    if IsBound( C!.LeftBound ) then
+       Print( C!.LeftBound, " .. " );
+    else 
+       Print( "-inf", " .. " );
+    fi;
+    
+    if IsBound( C!.RightBound ) then
+       Print( C!.RightBound, " ] x " );
+    else 
+       Print( "inf", " ] x " );
+    fi;
+    Print( "[ " );
+    if IsBound( C!.BelowBound ) then
+       Print( C!.BelowBound, " .. " );
+    else 
+       Print( "-inf", " .. " );
+    fi;
+    
+    if IsBound( C!.AboveBound ) then
+       Print( C!.AboveBound, " ]" );
+    else 
+       Print( "inf", " ]" );
+    fi;
+    
+    Print( ">" );
  end );
 
