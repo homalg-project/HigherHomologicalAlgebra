@@ -225,5 +225,5 @@ gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_DOUBLE_CHAIN_CO
 true
 gap> IsWellDefined( TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_DOUBLE_CHAIN_COMPLEX( D1, -2, 2 ), -5, 5 );
 true
-gap> IsWellDefined( TotalCochainComplex( DoubleCochainComplex( CochainComplex( [ AsCochainMorphism( alpha ) ], 3 ) ) ) );
+gap> IsWellDefined( TotalComplex( DoubleCochainComplex( CochainComplex( [ AsCochainMorphism( alpha ) ], 3 ) ) ) );
 true

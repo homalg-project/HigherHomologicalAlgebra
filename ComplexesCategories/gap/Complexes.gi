@@ -2377,7 +2377,7 @@ InstallMethod( BoxProduct,
     
     SetAboveBound( d, ActiveUpperBound( D ) );
     
-    d := TotalChainComplex( d );
+    d := TotalComplex( d );
     
     return d;
     

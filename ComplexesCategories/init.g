@@ -6,6 +6,7 @@
 ReadPackage( "ComplexesCategories", "gap/ZFunctions.gd" );
 ReadPackage( "ComplexesCategories", "gap/Complexes.gd" );
 ReadPackage( "ComplexesCategories", "gap/DoubleComplexes.gd" );
+ReadPackage( "ComplexesCategories", "gap/HomStructure.gd" );
 ReadPackage( "ComplexesCategories", "gap/Categories.gd" );
 ReadPackage( "ComplexesCategories", "gap/Functors.gd" );
 ReadPackage( "ComplexesCategories", "gap/ChainMaps.gd" );

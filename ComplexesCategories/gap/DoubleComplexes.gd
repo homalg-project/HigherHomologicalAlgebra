@@ -13,6 +13,10 @@ DeclareCategory( "IsDoubleChainOrCochainComplex", IsObject );
 DeclareCategory( "IsDoubleChainComplex", IsDoubleChainOrCochainComplex );
 DeclareCategory( "IsDoubleCochainComplex", IsDoubleChainOrCochainComplex );
 
+DeclareCategory( "IsDoubleChainOrCochainMorphism", IsObject );
+DeclareCategory( "IsDoubleChainMorphism", IsDoubleChainOrCochainMorphism );
+DeclareCategory( "IsDoubleCochainMorphism", IsDoubleChainOrCochainMorphism );
+
 ##############################
 #
 # Creating double  complexes
@@ -188,6 +192,17 @@ DeclareAttribute( "Rows", IsDoubleChainOrCochainComplex );
 #! @Returns an \mathbb{Z}-function of $\mathbb{Z}$-functions.
 DeclareAttribute( "Columns", IsDoubleChainOrCochainComplex );
 
+DeclareAttribute( "Morphisms", IsDoubleChainOrCochainMorphism );
+DeclareAttribute( "Source", IsDoubleChainOrCochainMorphism );
+DeclareAttribute( "Range", IsDoubleChainOrCochainMorphism );
+DeclareAttribute( "UnderlyingCategory", IsDoubleChainOrCochainMorphism );
+
+DeclareAttribute( "TotalMorphism", IsDoubleChainOrCochainMorphism );
+DeclareOperation( "TotalMorphism", [ IsChainOrCochainComplex, IsDoubleChainOrCochainMorphism, IsChainOrCochainComplex ] );
+
+DeclareOperation( "DoubleChainMorphism", [ IsDoubleChainComplex, IsDoubleChainComplex, IsFunction ] );
+DeclareOperation( "DoubleCochainMorphism", [ IsDoubleCochainComplex, IsDoubleCochainComplex, IsFunction ] );
+
 #################################
 #
 # Exploring the double complexes
@@ -260,11 +275,7 @@ DeclareOperation( "SetLeftBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
 #! @Group double_2
 #! @Arguments D
 #! @Returns a morphism
-DeclareAttribute( "TotalChainComplex", IsDoubleChainComplex );
-
-#! @Group double_2
-#! @Arguments D
-DeclareAttribute( "TotalCochainComplex", IsDoubleCochainComplex );
+DeclareAttribute( "TotalComplex", IsDoubleChainOrCochainComplex );
 
 DeclareAttribute( "UnderlyingCategory", IsDoubleChainOrCochainComplex );
 

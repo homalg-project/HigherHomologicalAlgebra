@@ -1009,7 +1009,7 @@ InstallMethod( ExtendFunctorFromProductCategoryToChainComplexCategories,
             
         end ) );
         
-        return TotalChainComplex( d );
+        return TotalComplex( d );
         
       end );
       
