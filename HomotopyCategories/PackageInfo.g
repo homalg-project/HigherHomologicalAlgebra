@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
 Subtitle := "Homotopy categories of additive categories",
-Version := "2020.11-02",
+Version := "2020.11-20",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -73,7 +73,7 @@ Dependencies := rec(
   NeededOtherPackages := [
                            [ "GAPDoc", ">= 1.5" ],
                            [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
-                           [ "ComplexesCategories", ">= 2020.10-04" ],
+                           [ "ComplexesCategories", ">= 2020.11-20" ],
                            [ "GeneralizedMorphismsForCAP", ">= 2020.10.01" ],
                            [ "StableCategories", ">= 2020.10-01" ],
                            [ "TriangulatedCategories", ">= 2020.10-04" ],

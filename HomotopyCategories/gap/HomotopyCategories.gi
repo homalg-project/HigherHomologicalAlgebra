@@ -256,17 +256,17 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_OBJECTS_IN_HOMOTOPY_CATEGORY_OVER_CH
           fi;
         fi; 
         
-        d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
+        d := DoubleChainComplexForHomStructure( C, D );
         
         if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
           
-          return HomologyAt( TotalChainComplex( d ), 0 );
+          return HomologyAt( TotalComplex( d ), 0 );
           
         else
           
           Error( "to do" );
           
-          return HomotopyCategoryObject( homotopy_category, TotalChainComplex( d ) );
+          return HomotopyCategoryObject( homotopy_category, TotalComplex( d ) );
           
         fi;
   
@@ -293,13 +293,13 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_MORPHISMS_IN_HOMOTOPY_CATEGORY_OVER_
         
         psi := UnderlyingCell( h_psi );
         
-        ss := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Range( phi ), Source( psi ) );
+        ss := DoubleChainComplexForHomStructure( Range( phi ), Source( psi ) );
         
-        rr := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( Source( phi ), Range( psi ) );
+        rr := DoubleChainComplexForHomStructure( Source( phi ), Range( psi ) );
         
-        Tot1 := TotalChainComplex( ss );
+        Tot1 := TotalComplex( ss );
         
-        Tot2 := TotalChainComplex( rr );
+        Tot2 := TotalComplex( rr );
         
         l := AsZFunction( function ( m )
                 local ind_s, ind_t, morphisms, obj;
@@ -384,9 +384,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJ
           
           morphism := MorphismBetweenDirectSums( [ morphisms_from_distinguished_object ] );
           
-          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
+          d := DoubleChainComplexForHomStructure( C, D );
           
-          T := TotalChainComplex( d );
+          T := TotalComplex( d );
           
           if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
            
@@ -433,9 +433,9 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           upper_bound := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
-          d := DOUBLE_COMPLEX_FOR_HOM_STRUCTURE_ON_CHAINS( C, D );
+          d := DoubleChainComplexForHomStructure( C, D );
           
-          T := TotalChainComplex( d );
+          T := TotalComplex( d );
           
           if HasIsAbelianCategory( range_cat_of_hom_struc ) and IsAbelianCategory( range_cat_of_hom_struc ) then
             
