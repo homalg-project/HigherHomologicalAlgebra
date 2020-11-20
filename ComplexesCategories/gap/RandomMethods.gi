@@ -127,6 +127,12 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
   function( C, D, L )
     local b;
     
+    if not CanCompute( CapCategory( C ), "BasisOfExternalHom" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
     b := BasisOfExternalHom( C, D );
     
     if IsEmpty( b ) then
