@@ -6,10 +6,10 @@
            [1X Category of (co)chain complexes of an additive category [101X
   
   
-                                   2020.11-01
+                                   2020.11-20
   
   
-                                4 November 2020
+                                20 November 2020
   
   
                                   Kamal Saleh
@@ -176,7 +176,7 @@
       5.2-6 HorizontalDifferentialAt
       5.2-7 VerticalDifferentialAt
       5.2-8 SetAboveBound
-      5.2-9 TotalChainComplex
+      5.2-9 TotalComplex
   6 [33X[0;0YResolutions[133X
     6.1 [33X[0;0YDefinitions[133X
     6.2 [33X[0;0YComputing resolutions[133X

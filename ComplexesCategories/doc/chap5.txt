@@ -149,10 +149,9 @@
   
   [33X[0;0YHere we can set bounds for the double complex.[133X
   
-  [1X5.2-9 TotalChainComplex[101X
+  [1X5.2-9 TotalComplex[101X
   
-  [33X[1;0Y[29X[2XTotalChainComplex[102X( [3XD[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XTotalCochainComplex[102X( [3XD[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTotalComplex[102X( [3XD[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism[133X
   
   [33X[0;0YTo  be able to compute the total complex the double complex we must have one

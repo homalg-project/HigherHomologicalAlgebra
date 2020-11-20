@@ -217,8 +217,7 @@
   [2XStalkChainMorphism[102X, for IsCapCategoryMorphism, IsInt 3.2-7 
   [2XStalkCochainComplex[102X, for IsCapCategoryObject, IsInt 2.2-4 
   [2XStalkCochainMorphism[102X, for IsCapCategoryMorphism, IsInt 3.2-7 
-  [2XTotalChainComplex[102X, for IsDoubleChainComplex 5.2-9 
-  [2XTotalCochainComplex[102X, for IsDoubleCochainComplex 5.2-9 
+  [2XTotalComplex[102X, for IsDoubleChainOrCochainComplex 5.2-9 
   [2XUnderlyingCategory[102X, for IsChainOrCochainComplexCategory 1.1-9 
   [2XUnderlyingFunction[102X, for IsZFunction 7.2-3 
   [2XUnsignedShiftFunctor[102X, for IsChainOrCochainComplexCategory, IsInt 4.1-3 
