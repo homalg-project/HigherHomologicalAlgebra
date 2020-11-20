@@ -7,6 +7,7 @@
 ReadPackage( "HomotopyCategories", "gap/TriangulatedStructure.gi" );
 ReadPackage( "HomotopyCategories", "gap/CAP_TOOLS.gi" );
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gi" );
+ReadPackage( "HomotopyCategories", "gap/HomStructure.gi" );
 ReadPackage( "HomotopyCategories", "gap/Functors.gi" );
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gi" );
 ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gi" );
