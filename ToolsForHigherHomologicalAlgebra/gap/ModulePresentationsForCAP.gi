@@ -5,6 +5,9 @@
 #
 ## Random methods
 ##
+
+EnhancePackage( "RingsForHomalg" );
+
 RRANDOM_MODULE_PRESENTATION :=
   function( category, L, left_or_right )
     local homalg_ring, mat;
@@ -351,7 +354,7 @@ InstallMethod( LeftPresentations,
     fi;
     
     cat := LeftPresentations( S : FinalizeCategory := false, RandomMethod_ToolsForHigherHomologicalAlgebra := false );
-    
+     
     ADD_RRANDOM_METHODS_TO_MODULE_PRESENTATIONS( cat, "left" );
     
     return cat;
