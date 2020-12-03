@@ -999,6 +999,12 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
       
     fi;
     
+    if IsQuiverRepresentationCategory( cat ) and not IsAdmissibleQuiverAlgebra( AlgebraOfCategory( cat ) ) then
+      
+      Error( "The quiver algebra of the category is not admissible!" );
+      
+    fi;
+    
     projs := IndecProjectiveObjects( cat );
     
     r := RandomTextColor( Name( cat ) );
