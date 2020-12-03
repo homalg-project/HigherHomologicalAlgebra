@@ -862,6 +862,40 @@ end );
 #
 #####################################
 
+InstallMethod( SupportInWindow,
+    [ IsDoubleChainOrCochainComplex, IsInt, IsInt, IsInt, IsInt ],
+    function( B, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+    for i in [ left .. right ] do
+    if IsZeroForObjects( ObjectAt( B, i, j ) ) then
+        Print( ". ");
+    else
+        Print( TextAttr.1, TextAttr.bold, ". ", TextAttr.reset );
+    fi;
+    od;
+    Print( "  |", j, "\n" );
+    od;
+end );
+
+InstallMethod( SupportInWindow,
+    [ IsDoubleChainOrCochainMorphism, IsInt, IsInt, IsInt, IsInt ],
+    function( phi, left, right, below, above )
+    local i, j;
+    for j in Reversed( [ below .. above ] ) do
+      for i in [ left .. right ] do
+        if IsZeroForMorphisms( MorphismAt( phi, i, j ) ) then
+          Print( ". ");
+        else
+          Print( "* ");
+        fi;
+      od;
+      
+      Print( "  |", j, "\n" );
+    od;
+    
+end );
+
 InstallMethod( ViewObj,
           [ IsDoubleChainOrCochainComplex ],
           

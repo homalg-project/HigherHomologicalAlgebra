@@ -266,6 +266,9 @@ DeclareOperation( "SetRightBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
 #! @Arguments D, i
 DeclareOperation( "SetLeftBound", [ IsDoubleChainOrCochainComplex, IsInt ] );
 
+DeclareOperation( "SupportInWindow", [ IsDoubleChainOrCochainComplex, IsInt, IsInt, IsInt, IsInt ] );
+DeclareOperation( "SupportInWindow", [ IsDoubleChainOrCochainMorphism, IsInt, IsInt, IsInt, IsInt ] );
+
 #! @Description
 #! To be able to compute the total complex the double complex we must have one of the following cases:
 #! 1. $D$ has left and right bounds.
