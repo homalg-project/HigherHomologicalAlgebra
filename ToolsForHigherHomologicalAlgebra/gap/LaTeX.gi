@@ -30,6 +30,24 @@ InstallMethod( Show,
 end );
 
 ##
+InstallOtherMethod( Show,
+          [ IsCapCategoryCell, IsObject ],
+  function( c, r )
+    
+    Show( c : ScaleBox := r );
+    
+end );
+
+##
+InstallOtherMethod( Show,
+          [ IsString, IsObject ],
+  function( c, r )
+    
+    Show( c : ScaleBox := r );
+    
+end );
+
+##
 InstallMethod( Show,
           [ IsString ],
           
