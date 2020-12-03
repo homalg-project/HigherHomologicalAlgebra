@@ -279,5 +279,4 @@ DeclareAttribute( "TotalComplex", IsDoubleChainOrCochainComplex );
 
 DeclareAttribute( "UnderlyingCategory", IsDoubleChainOrCochainComplex );
 
-KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleChainComplex, IsInt, ReturnTrue );
-KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleCochainComplex, IsInt, ReturnTrue );
+KeyDependentOperation( "IndicesUsedToComputeTotalComplexAt", IsDoubleChainOrCochainComplex, IsInt, ReturnTrue );

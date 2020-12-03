@@ -811,7 +811,7 @@ InstallMethod( TotalComplex,
 
 ##
 InstallMethod( IndicesUsedToComputeTotalComplexAtOp,
-          [ IsDoubleChainComplex, IsInt ],
+          [ IsDoubleChainOrCochainComplex, IsInt ],
   
   function( D, m )
     local obj;
