@@ -39,13 +39,13 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/BBGG",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/BBGG-", ~.Version, "/BBGG-", ~.Version ),
 # END URLS
 
-ArchiveFormats  := ".tar.gz .zip",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages

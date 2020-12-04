@@ -58,7 +58,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/Bicomplexes",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-", ~.Version, "/Bicomplexes-", ~.Version ),

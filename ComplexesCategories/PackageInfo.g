@@ -42,13 +42,13 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/ComplexesCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-", ~.Version, "/ComplexesCategories-", ~.Version ),
 # END URLS
 
-ArchiveFormats  := ".tar.gz .zip",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages

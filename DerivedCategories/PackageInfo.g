@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/DerivedCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-", ~.Version, "/DerivedCategories-", ~.Version ),
