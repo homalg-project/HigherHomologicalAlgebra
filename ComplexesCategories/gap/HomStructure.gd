@@ -1,7 +1,7 @@
 
 
 
-DeclareOperation( "DoubleChainComplexForHomStructure", [ IsChainComplex, IsChainComplex ] );
+DeclareOperation( "DoubleChainComplexByHomStructure", [ IsChainComplex, IsChainComplex ] );
 
 DeclareGlobalFunction( "ADD_HOM_STRUCTURE_ON_CHAINS" );
 
@@ -13,7 +13,7 @@ DeclareGlobalFunction( "ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMO
 
 DeclareGlobalFunction( "ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_FOR_CHAINS" );
 
-DeclareOperation( "DoubleCochainComplexForHomStructure", [ IsCochainComplex, IsCochainComplex ] );
+DeclareOperation( "DoubleCochainComplexByHomStructure", [ IsCochainComplex, IsCochainComplex ] );
 
 DeclareGlobalFunction( "ADD_HOM_STRUCTURE_ON_COCHAINS" );
 

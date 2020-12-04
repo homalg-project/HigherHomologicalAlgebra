@@ -6,7 +6,7 @@
 ##################
 
 ##
-InstallMethodWithCache( DoubleChainComplexForHomStructure,
+InstallMethodWithCache( DoubleChainComplexByHomStructure,
           [ IsChainComplex, IsChainComplex ],
           
   function ( B, C )
@@ -56,7 +56,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
       AddHomomorphismStructureOnObjects( category,
       
         { B, C } -> Source( CyclesAt(
-                              TotalComplex( DoubleChainComplexForHomStructure( B, C ) ),
+                              TotalComplex( DoubleChainComplexByHomStructure( B, C ) ),
                               0
                             )
                           )
@@ -68,7 +68,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
         function ( B, C )
           local d, I;
                     
-          d := DoubleChainComplexForHomStructure( B, C );
+          d := DoubleChainComplexByHomStructure( B, C );
           
           I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
           
@@ -81,7 +81,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
     else
     
       AddHomomorphismStructureOnObjects( category,
-        { B, C } -> TotalComplex( DoubleChainComplexForHomStructure( B, C ) )
+        { B, C } -> TotalComplex( DoubleChainComplexByHomStructure( B, C ) )
       );
      
     fi;
@@ -103,9 +103,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM;
           
-          DS := DoubleChainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleChainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleChainMorphism(
                       DS,
@@ -125,9 +125,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM, I; 
           
-          DS := DoubleChainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleChainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleChainMorphism(
                       DS,
@@ -151,9 +151,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM;
           
-          DS := DoubleChainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleChainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleChainMorphism(
                       DS,
@@ -212,7 +212,7 @@ InstallGlobalFunction( ADD_INTERPRET_CHAIN_MORPHISM_AS_MORPHISM_FROM_DISTINGUISH
           
         fi;
         
-        T := TotalComplex( DoubleChainComplexForHomStructure( B, C ) );
+        T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
         
         Assert( 3, IsZero( PreCompose( morphism, T^0 ) ) );
         
@@ -298,7 +298,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleChainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
           
           phi := PreCompose( ell, CyclesAt( T, 0 ) );
           
@@ -333,7 +333,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleChainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
           
           I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
           
@@ -372,7 +372,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleChainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
           
           phi := ell[ 0 ];
           
@@ -448,7 +448,7 @@ end );
 ##################
 
 ##
-InstallMethod( DoubleCochainComplexForHomStructure,
+InstallMethod( DoubleCochainComplexByHomStructure,
           [ IsCochainComplex, IsCochainComplex ],
           
   function ( B, C )
@@ -499,7 +499,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS,
         function ( B, C )
           local D;
           
-          D := DoubleCochainComplexForHomStructure( B, C );
+          D := DoubleCochainComplexByHomStructure( B, C );
           
           return Source( CyclesAt( TotalComplex( D ), 0 ) );
           
@@ -512,7 +512,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS,
         function ( B, C )
           local D, I;
           
-          D := DoubleCochainComplexForHomStructure( B, C );
+          D := DoubleCochainComplexByHomStructure( B, C );
           
           I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
           
@@ -528,7 +528,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS,
         function ( B, C )
           local D;
           
-          D := DoubleCochainComplexForHomStructure( B, C );
+          D := DoubleCochainComplexByHomStructure( B, C );
           
           return TotalComplex( D );
           
@@ -553,9 +553,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM;
           
-          DS := DoubleCochainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleCochainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleCochainMorphism(
                       DS,
@@ -575,9 +575,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM, I;
           
-          DS := DoubleCochainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleCochainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleCochainMorphism(
                       DS,
@@ -601,9 +601,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
         function( s, alpha, beta, r )
           local DS, DR, DM, TM;
           
-          DS := DoubleCochainComplexForHomStructure( Range( alpha ), Source( beta ) );
+          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
           
-          DR := DoubleCochainComplexForHomStructure( Source( alpha ), Range( beta ) );
+          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
           
           DM := DoubleCochainMorphism(
                       DS,
@@ -662,7 +662,7 @@ InstallGlobalFunction( ADD_INTERPRET_COCHAIN_MORPHISM_AS_MORPHISM_FROM_DISTINGUI
           
         fi;
         
-        T := TotalComplex( DoubleCochainComplexForHomStructure( B, C ) );
+        T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
         
         Assert( 3, IsZero( PreCompose( morphism, T^0 ) ) );
         
@@ -748,7 +748,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleCochainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
           
           phi := PreCompose( ell, CyclesAt( T, 0 ) );
           
@@ -784,7 +784,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleCochainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
           
           I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
           
@@ -824,7 +824,7 @@ InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOM
           
           u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
           
-          T := TotalComplex( DoubleCochainComplexForHomStructure( B, C ) );
+          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
           
           phi := ell[ 0 ];
           

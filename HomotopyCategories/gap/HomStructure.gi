@@ -29,7 +29,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
         function ( C, D )
           local d;
           
-          d := DoubleChainComplexForHomStructure(
+          d := DoubleChainComplexByHomStructure(
                   UnderlyingCell( C ),
                   UnderlyingCell( D )
                 );
@@ -43,12 +43,12 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
         function( s, phi, psi, r )
           local dSource, dRange, dMap, tMap;
           
-          dSource := DoubleChainComplexForHomStructure(
+          dSource := DoubleChainComplexByHomStructure(
                         UnderlyingCell( Range( phi ) ),
                         UnderlyingCell( Source( psi ) )
                       );
                       
-          dRange := DoubleChainComplexForHomStructure(
+          dRange := DoubleChainComplexByHomStructure(
                         UnderlyingCell( Source( phi ) ),
                         UnderlyingCell( Range( psi ) )
                       );
@@ -94,7 +94,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
           fi;
           
           T := TotalComplex(
-                  DoubleChainComplexForHomStructure(
+                  DoubleChainComplexByHomStructure(
                         UnderlyingCell( Source( phi ) ),
                         UnderlyingCell( Range( phi ) )
                       )
@@ -121,7 +121,7 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
           u := Maximum( ActiveUpperBound( C ), ActiveUpperBound( D ) );
           
           T := TotalComplex(
-                    DoubleChainComplexForHomStructure(
+                    DoubleChainComplexByHomStructure(
                         UnderlyingCell( C ),
                         UnderlyingCell( D )
                       )
