@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/TriangulatedCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-", ~.Version, "/TriangulatedCategories-", ~.Version ),

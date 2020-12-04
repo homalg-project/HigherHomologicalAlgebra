@@ -3,9 +3,6 @@
 #
 # Implementations
 #
-#! @Chapter Complexes
-##
-#############################################################################
 
 #############################################
 #
@@ -2472,4 +2469,3 @@ InstallGlobalFunction( TODO_LIST_TO_PUSH_PULL_BOUNDS,
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( arg1, arg2 );
     
 end );
-
