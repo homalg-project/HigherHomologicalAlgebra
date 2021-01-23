@@ -22,7 +22,43 @@ function( homotopy_category, n )
   
   functor := CapFunctor( name, homotopy_category, cat );
   
-  AddObjectFunction( functor, 
+  AddObjectFunction( functor,
+    
+    function( complex )
+      
+      return ApplyFunctor( Hn, UnderlyingCell( complex ) );
+      
+  end );
+  
+  AddMorphismFunction( functor,
+    
+    function( new_source, map, new_range )
+      
+      return ApplyFunctor( Hn, UnderlyingCell( map ) );
+      
+  end );
+  
+  return functor;
+  
+end );
+
+##
+InstallOtherMethod( CohomologyFunctorOp,
+               [ IsHomotopyCategory, IsInt ],
+function( homotopy_category, n )
+  local cat, complex_cat, Hn, name, functor;
+  
+  cat := DefiningCategory( homotopy_category );
+  
+  complex_cat := CochainComplexCategory( cat );
+  
+  Hn := CohomologyFunctor( complex_cat, n );
+  
+  name := Concatenation( String( n ), "-th cohomology functor" );
+  
+  functor := CapFunctor( name, homotopy_category, cat );
+  
+  AddObjectFunction( functor,
     
     function( complex )
       
