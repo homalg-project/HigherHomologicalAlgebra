@@ -347,8 +347,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         "IsZeroForMorphisms",
         "IsMonomorphism",
         "IsEpimorphism",
-        "IsSplitEpimorphism",
-        "IsSplitMonomorphism",
+        #"IsSplitEpimorphism",
+        #"IsSplitMonomorphism",
         "IsIsomorphism"
       ];
 
