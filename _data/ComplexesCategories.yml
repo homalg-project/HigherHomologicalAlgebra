@@ -1,7 +1,7 @@
 name: ComplexesCategories
-version: "2020.11-21"
+version: "2020.11-22"
 license: "GPL-2.0-or-later"
-date: 2020-12-04
+date: 2021-01-23
 description: |
     Category of (co)chain complexes of an additive category
 
@@ -21,30 +21,30 @@ needed-pkgs:
       url: "https://gap-packages.github.io/AutoDoc"
     - name: "CAP"
       version: ">= 2020.10-01"
-      url: "https://homalg-project.github.io/CAP_project/CAP"
+      url: "https://homalg-project.github.io/pkg/CAP"
     - name: "MonoidalCategories"
       version: ">= 2020.10-01"
-      url: "https://homalg-project.github.io/CAP_project/MonoidalCategories"
+      url: "https://homalg-project.github.io/pkg/MonoidalCategories"
     - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra"
+      url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
 
 suggested-pkgs:
     - name: "GeneralizedMorphismsForCAP"
       version: ">= 2019.08.10"
-      url: "https://homalg-project.github.io/CAP_project/GeneralizedMorphismsForCAP"
+      url: "https://homalg-project.github.io/pkg/GeneralizedMorphismsForCAP"
 
-www: https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories
+www: https://homalg-project.github.io/pkg/ComplexesCategories
 readme: README.md
 packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-21/ComplexesCategories-2020.11-21.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-22/ComplexesCategories-2020.11-22.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-21/ComplexesCategories-2020.11-21.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-22/ComplexesCategories-2020.11-22.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-21/ComplexesCategories-2020.11-21.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2020.11-22/ComplexesCategories-2020.11-22.pdf
 
 abstract: |
 
@@ -55,30 +55,30 @@ keywords: |
     Chains, Cochains, MappingCone, MappingCylinder, Homotopy.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ComplexesCategories, Category of (co)chain complexes of an additive category,
-             Version 2020.11-21</i>
-     (<span class='BibYear'>2020</span>)<br />
+             Version 2020.11-22</i>
+     (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ComplexesCategories">https://homalg-project.github.io/pkg/ComplexesCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ ComplexesCategories2020.11-21,
+    @misc{ ComplexesCategories2020.11-22,
       author =           {Saleh, K.},
       title =            {{ComplexesCategories}, Category of (co)chain complexes
-                          of an additive category, {V}ersion 2020.11-21},
-      month =            {Dec},
-      year =             {2020},
+                          of an additive category, {V}ersion 2020.11-22},
+      month =            {Jan},
+      year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
-                          {https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories}
+                          {https://homalg-project.github.io/pkg/ComplexesCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{ComplexesCategories}}},
       keywords =         {Chains;    Cochains;   MappingCone;   MappingCylinder;
                           Homotopy},
-      printedkey =       {Sal20}
+      printedkey =       {Sal21}
     }
 

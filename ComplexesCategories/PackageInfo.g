@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2020.11-21",
-Date := "04/12/2020",
+Version := "2020.11-22",
+Date := "23/01/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -42,13 +42,13 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/ComplexesCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/ComplexesCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-", ~.Version, "/ComplexesCategories-", ~.Version ),
 # END URLS
 
-ArchiveFormats  := ".tar.gz .zip",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
