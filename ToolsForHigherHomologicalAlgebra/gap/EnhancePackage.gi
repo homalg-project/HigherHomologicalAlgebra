@@ -12,7 +12,9 @@ InstallValue( LIST_OF_ENHANCABLE_PACKAGES,
     "GradedRingForHomalg",
     "FreydCategoriesForCAP",
     "ModulePresentationsForCAP",
-    "Algebroids"
+    "GradedModulePresentationsForCAP",
+    "Algebroids",
+    "FunctorCategories"
   ]
 );
 
@@ -71,6 +73,16 @@ InstallOtherMethod( EnhancePackage,
       
     fi;
     
-    return List( list, l -> CallFuncList( EnhancePackage, l ) );
+    List( list, l -> [ l[ 1 ], CallFuncList( EnhancePackage, l ) ] );
+    
+end );
+
+##
+BindGlobal( "EnhanceAllPackages",
+  function( )
+  
+    EnhancePackage( LIST_OF_ENHANCABLE_PACKAGES );
+    
+    return LIST_OF_ENHANCED_PACKAGES;
     
 end );
