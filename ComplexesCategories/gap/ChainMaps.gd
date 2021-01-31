@@ -44,14 +44,14 @@ DeclareCategoryFamily( "IsCochainMorphism" );
 
 ######################################
 #
-# Constructors of co-chain morphisms 
+# Constructors of co-chain morphisms
 #
 ######################################
 
 #!  @Section Creating chain and cochain morphisms
 
 #!  @Description
-#!  The input is two chain complexes $C,D$ and a $\mathbb{Z}$-function $l$. 
+#!  The input is two chain complexes $C,D$ and a $\mathbb{Z}$-function $l$.
 #!  The output is the chain morphism $\phi:C\rightarrow D$ defined by $\phi_i :=l[i]$.
 #!  @Arguments C, D, l
 #!  @Returns a chain morphism
@@ -59,8 +59,8 @@ DeclareOperation( "ChainMorphism",
                    [ IsChainComplex, IsChainComplex, IsZFunction ] );
 
 #!  @Description
-#!  The input is two chain complexes $C,D$, dense list $l$ and an integer $k$. 
-#!  The output is the chain morphism $\phi:C\rightarrow D$ such that $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc. 
+#!  The input is two chain complexes $C,D$, dense list $l$ and an integer $k$.
+#!  The output is the chain morphism $\phi:C\rightarrow D$ such that $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc.
 #!  @Arguments C, D, l, k
 #!  @Returns a chain morphism
 DeclareOperation( "ChainMorphism",
@@ -68,7 +68,7 @@ DeclareOperation( "ChainMorphism",
 
 #!  @Description
 #!  The output is the chain morphism $\phi:C\rightarrow D$, where $d^C_m = c[ 1 ], d^C_{m+1} =c[ 2 ],$ etc.
-#!  $d^D_n = d[ 1 ], d^D_{n+1} =d[ 2 ],$ etc. and $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc. 
+#!  $d^D_n = d[ 1 ], d^D_{n+1} =d[ 2 ],$ etc. and $\phi_{k}=l[1]$, $\phi_{k+1}=l[2]$, etc.
 #!  @Arguments c,m,d,n,l, k
 #!  @Returns a chain morphism
 DeclareOperation( "ChainMorphism",
@@ -76,7 +76,7 @@ DeclareOperation( "ChainMorphism",
 
 
 #!  @Description
-#!  The input is two cochain complexes $C,D$ and a $\mathbb{Z}$-function $l$. 
+#!  The input is two cochain complexes $C,D$ and a $\mathbb{Z}$-function $l$.
 #!  The output is the cochain morphism $\phi:C\rightarrow D$ defined by $\phi_i :=l[i]$.
 #!  @Arguments C, D, l
 #!  @Returns a cochain morphism
@@ -85,8 +85,8 @@ DeclareOperation( "CochainMorphism",
 
 
 #!  @Description
-#!  The input is two cochain complexes $C,D$, dense list $l$ and an integer $k$. 
-#!  The output is the cochain morphism $\phi:C\rightarrow D$ such that $\phi^{k}=l[1]$, $\phi^{k+1}=l[2]$, etc. 
+#!  The input is two cochain complexes $C,D$, dense list $l$ and an integer $k$.
+#!  The output is the cochain morphism $\phi:C\rightarrow D$ such that $\phi^{k}=l[1]$, $\phi^{k+1}=l[2]$, etc.
 #!  @Arguments C, D, l, k
 #!  @Returns a chain morphism
 DeclareOperation( "CochainMorphism",
@@ -94,7 +94,7 @@ DeclareOperation( "CochainMorphism",
 
 #!  @Description
 #!  The output is the cochain morphism $\phi:C\rightarrow D$, where $C^m = c[ 1 ], C^{m+1} =c[ 2 ],$ etc.
-#!  $D^n = d[ 1 ], D^{n+1} =d[ 2 ],$ etc. and $\phi^{k}=l[1]$, $\phi^{k+1}=l[2]$, etc. 
+#!  $D^n = d[ 1 ], D^{n+1} =d[ 2 ],$ etc. and $\phi^{k}=l[1]$, $\phi^{k+1}=l[2]$, etc.
 #!  @Arguments c,m,d,n,l, k
 #!  @Returns a cochain morphism
 DeclareOperation( "CochainMorphism",
@@ -114,7 +114,7 @@ KeyDependentOperation( "StalkCochainMorphism", IsCapCategoryMorphism, IsInt, Ret
 
 #! @BeginGroup 42
 #! @Description
-#! The input is a (co)chain complex morphism $\phi:C\to D$ and an integer $n$. The outout is the 
+#! The input is a (co)chain complex morphism $\phi:C\to D$ and an integer $n$. The outout is the
 #! associated morphism between the (co)homology objects of $C$ resp. $D$ at index $n$.
 #! @Arguments phi, n
 #! @Returns a morphism
@@ -151,7 +151,7 @@ DeclareAttribute( "AsChainMorphism", IsChainOrCochainMorphism );
 DeclareAttribute( "AsCochainMorphism", IsChainOrCochainMorphism );
 
 #! @Description
-#! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
+#! The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its
 #! mapping cone chain (resp. cochain) complex $\mathrm{Cone}(\phi )$.
 #! @BeginLatexOnly
 #! If the input is a chain complex then the mapping cone is the chain complex whose differential at index $n$ is defined by
@@ -192,7 +192,7 @@ DeclareAttribute( "AsCochainMorphism", IsChainOrCochainMorphism );
 DeclareAttribute( "MappingCone", IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural injection 
+#!  The input a chain (resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural injection
 #!  $i:D\rightarrow \mathrm{Cone}(\phi )$.
 #!  @Arguments phi
 #!  @Returns chain (resp. cochain) morphism
@@ -200,13 +200,13 @@ DeclareAttribute( "NaturalInjectionInMappingCone", IsChainOrCochainMorphism );
 
 #!  @Description
 #!  The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is the natural projection
-#!  $\pi:\mathrm{Cone}(\phi ) \rightarrow C[u]$ where $u=-1$ if $\phi$ is chain morphism and $u=1$ if $\phi$ is cochain morphism. 
+#!  $\pi:\mathrm{Cone}(\phi ) \rightarrow C[u]$ where $u=-1$ if $\phi$ is chain morphism and $u=1$ if $\phi$ is cochain morphism.
 #!  @Arguments phi
 #!  @Returns chain (resp. cochain) morphism
 DeclareAttribute( "NaturalProjectionFromMappingCone", IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its 
+#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is its
 #!  mapping cylinder chain (resp. cochain) complex
 #! @BeginLatexOnly
 #! $\mathrm{Cyl}(\phi ):=\mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C)$.
@@ -220,7 +220,7 @@ DeclareAttribute( "NaturalMorphismFromSourceInMappingCocylinder", IsChainOrCocha
 DeclareAttribute( "NaturalMorphismFromMappingCocylinderToRange", IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
+#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding
 #!  $C\rightarrow \mathrm{Cyl}(\phi )$. I.e., the composition
 #! @BeginLatexOnly
 #! $$C \xrightarrow[]{\bigl( \begin{smallmatrix}0 & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C \xrightarrow[]{\iota} \mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C),$$
@@ -231,7 +231,7 @@ DeclareAttribute( "NaturalMorphismFromMappingCocylinderToRange", IsChainOrCochai
 DeclareAttribute( "NaturalInjectionOfSourceInMappingCylinder", IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding 
+#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural embedding
 #!  $D \rightarrow \mathrm{Cyl}(\phi )$. I.e., the composition
 #! @BeginLatexOnly
 #! $$D \xrightarrow[]{\bigl( \begin{smallmatrix}\mathrm{id}_D & 0 \end{smallmatrix}\bigr)} D \oplus C \xrightarrow[]{\iota} \mathrm{Cone}(C \xrightarrow[]{\bigl( \begin{smallmatrix}-\phi & \mathrm{id}_C\end{smallmatrix}\bigr)} D \oplus C),$$
@@ -243,18 +243,18 @@ DeclareAttribute( "NaturalInjectionOfSourceInMappingCylinder", IsChainOrCochainM
 DeclareAttribute( "NaturalInjectionOfRangeInMappingCylinder" , IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism 
-#!  $\mathrm{Cyl}(\phi )\rightarrow D$. 
+#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism
+#!  $\mathrm{Cyl}(\phi )\rightarrow D$.
 #! @BeginLatexOnly
 #! If the input is chains morphism then the natural map has in each homological index the morphism
 #! $$C_{n-1}\oplus D_n \oplus C_n \xrightarrow[]{ \biggl( \begin{smallmatrix}0 \\ \mathrm{id}^D_n \\ \phi_n \end{smallmatrix}\biggr)} D_n.$$
 #! If the input is cochains morphism then the natural map has in each cohomological index the morphism
 #! $$C^{n+1}\oplus D^n \oplus C^n \xrightarrow[]{ \biggl( \begin{smallmatrix}0 \\ \mathrm{id}_D^n \\ \phi^n \end{smallmatrix}\biggr)} D^n.$$
 #! @EndLatexOnly
-#! It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent. 
+#! It can be shown that $D$ and $\mathrm{Cyl}(\phi )$ are homotopy equivalent.
 #! This homotopy equivalence is given by the two morphisms
 #! $$\mathrm{NaturalInjectionOfRangeInMappingCylinder}(\phi):D \rightarrow \mathrm{Cyl}(\phi )$$
-#! and 
+#! and
 #! $$\mathrm{NaturalMorphismFromMappingCylinderInRange}(\phi):\mathrm{Cyl}(\phi ) \rightarrow D.$$
 #! See Weibel, page 21.
 #!  @Arguments phi
@@ -262,8 +262,8 @@ DeclareAttribute( "NaturalInjectionOfRangeInMappingCylinder" , IsChainOrCochainM
 DeclareAttribute( "NaturalMorphismFromMappingCylinderInRange", IsChainOrCochainMorphism );
 
 #!  @Description
-#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism 
-#!  $\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )$. 
+#!  The input a chain (resp. cochain) morphism $\phi:C \rightarrow D$. The output is the natural morphism
+#!  $\mathrm{Cyl}(\phi )\rightarrow \mathrm{Cone}(\phi )$.
 #! @BeginLatexOnly
 #! If the input is chains morphism then the natural map has in each homological index the morphism
 #! $$C_{n-1}\oplus D_n \oplus C_n \xrightarrow[]{ \biggl( \begin{smallmatrix}\mathrm{id}^C_{n-1} & 0\\ 0 & -\mathrm{id}^D_{n}\\ 0 & 0 \end{smallmatrix}\biggr)} C_{n-1} \oplus D_n.$$
@@ -272,7 +272,7 @@ DeclareAttribute( "NaturalMorphismFromMappingCylinderInRange", IsChainOrCochainM
 #! @EndLatexOnly
 #! It can be shown that $$0 \rightarrow C\xrightarrow[]{\alpha} \mathrm{Cyl}(\phi ) \xrightarrow[]{\beta} \mathrm{Cone}(\phi )\rightarrow 0$$ 
 #! where $$\alpha := \mathrm{NaturalInjectionOfSourceInMappingCylinder}(\phi)$$
-#! and  
+#! and
 #! $$\beta := \mathrm{NaturalMorphismFromMappingCylinderInMappingCone}(\phi),$$
 #! is a short exact sequence. See Weibel, page 21.
 #!  @Arguments phi
@@ -295,15 +295,15 @@ DeclareAttribute( "HomotopyMorphisms", IsCapCategoryMorphism );
 #!  @Section Properties
 
 #!  @Description
-#!  The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is **true** if $\phi$ is quasi-isomorphism and **false** otherwise. If $\phi$ 
-#!  is not bounded an error is raised. 
+#!  The input a chain ( resp. cochain) morphism $\phi:C\rightarrow D$. The output is **true** if $\phi$ is quasi-isomorphism and **false** otherwise. If $\phi$
+#!  is not bounded an error is raised.
 
 
 #!  @Arguments phi
 DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 
 #! @Description
-#! The input is a chain or cochain morphism 
+#! The input is a chain or cochain morphism
 #! $\phi$ and output is **true** if  $\phi$ is null-homotopic and **false** otherwise.
 #! @Arguments phi
 DeclareProperty( "IsNullHomotopic", IsCapCategoryMorphism );
@@ -328,14 +328,14 @@ DeclareOperation( "SetUpperBound", [ IsChainOrCochainMorphism, IsInt ] );
 DeclareOperation( "SetLowerBound", [ IsChainOrCochainMorphism, IsInt ] );
 
 #!  @Description
-#!  The input is chain or cochain morphism $\phi$. 
+#!  The input is chain or cochain morphism $\phi$.
 #!  The output is <A>true</A> if an upper bound has been set to $\phi$ and <A>false</A> otherwise.
 #!  @Arguments phi
 #!  @Returns true or false
 DeclareOperation( "HasActiveUpperBound", [ IsChainOrCochainMorphism ] );
 
 #!  @Description
-#!  The input is chain or cochain morphism $\phi$. 
+#!  The input is chain or cochain morphism $\phi$.
 #!  The output is <A>true</A> if a lower bound has been set to $\phi$ and <A>false</A> otherwise.
 #!  @Arguments phi
 #!  @Returns true or false
@@ -358,7 +358,7 @@ DeclareOperation( "ActiveLowerBound", [ IsChainOrCochainMorphism ] );
 DeclareOperation( "ActiveLowerBoundForSourceAndRange", [ IsChainOrCochainMorphism ] );
 
 #!  @Description
-#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component 
+#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the component
 #! of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #!  @Arguments phi, n
 #!  @Returns a morphism
@@ -386,7 +386,7 @@ DeclareOperation( "IsQuasiIsomorphism", [ IsChainOrCochainMorphism, IsInt, IsInt
 # DeclareOperation( "\*", [ IsRingElement, IsChainOrCochainMorphism ] );
 
 #!  @Description
-#!  The command gives back the list of indices between $m$ and $n$ where the complex morphism is not zero. 
+#!  The command gives back the list of indices between $m$ and $n$ where the complex morphism is not zero.
 #!  @Arguments phi, m, n
 DeclareOperation( "MorphismsSupport", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
@@ -395,7 +395,7 @@ DeclareOperation( "MorphismsSupport", [ IsBoundedChainOrCochainMorphism ] );
 DeclareOperation( "LaTeXStringOp", [ IsBoundedChainOrCochainMorphism ] );
 
 #!  @Description
-#!  The command displays the components of the morphism between $m$ and $n$. 
+#!  The command displays the components of the morphism between $m$ and $n$.
 #!  @Arguments phi, m, n
 DeclareOperation( "Display", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
@@ -418,7 +418,7 @@ DeclareOperation( "ViewCochainMorphism", [ IsCochainMorphism, IsInt, IsInt ] );
 DeclareOperation( "ViewCochainMorphism", [ IsBoundedCochainMorphism ] );
 
 #!  @Description
-#!  The command checks if the morphism is well defined between $m$ and $n$. 
+#!  The command checks if the morphism is well defined between $m$ and $n$.
 #!  @Arguments true or false
 DeclareOperation( "IsWellDefined", [ IsChainOrCochainMorphism, IsInt, IsInt ] );
 
@@ -437,7 +437,11 @@ DeclareOperation( "AsCochainMorphismOverCapFullSubcategory",
 
 DeclareOperation( "MappingConeColift", [ IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 
-DeclareOperation( "MappingConePseudoFunctorial", 
+DeclareOperation( "MappingConePseudoFunctorial",
+  [ IsChainOrCochainMorphism, IsChainOrCochainMorphism,
+      IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
+
+DeclareOperation( "MappingConeFunctorial",
   [ IsChainOrCochainMorphism, IsChainOrCochainMorphism,
       IsChainOrCochainMorphism, IsChainOrCochainMorphism ] );
 

@@ -1360,6 +1360,38 @@ InstallMethodWithCrispCache( MappingConeColift,
     
 end );
 
+#    Commutes on the nose
+#
+#    A ----- phi ----> B ----------> Cone( phi )
+#    |                 |
+#    | alpha_0         | alpha_1
+#    |                 |
+#    v                 v
+#    A' --- psi -----> B' ---------> Cone( psi )
+#
+InstallMethodWithCrispCache( MappingConeFunctorial,
+   [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
+  function( phi, psi, alpha_0, alpha_1 )
+    local cone_phi, cone_psi, s, maps;
+    
+    cone_phi := MappingCone( phi );
+    
+    cone_psi := MappingCone( psi );
+    
+    maps := AsZFunction( i ->
+              MorphismBetweenDirectSums(
+                [
+                  [ alpha_0[ i - 1 ], ZeroMorphism( Source( alpha_0 )[ i - 1 ], Range( alpha_1 )[ i ] ) ],
+                  [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i - 1 ] ), alpha_1[ i ] ]
+                ] )
+              );
+              
+    return ChainMorphism( cone_phi, cone_psi, maps );
+    
+end );
+
+#    Commutes up to homotopy
+#
 #    A ----- phi ----> B ----------> Cone( phi )
 #    |                 |
 #    | alpha_0         | alpha_1
@@ -1410,6 +1442,38 @@ InstallMethodWithCrispCache( MappingConeColift,
     return CochainMorphism( MappingCone( phi ), Range( psi ), maps );
     
 end );
+
+
+#    Commutes on the nose
+#
+#    A ----- phi ----> B ----------> Cone( phi )
+#    |                 |
+#    | alpha_0         | alpha_1
+#    |                 |
+#    v                 v
+#    A' --- psi -----> B' ---------> Cone( psi )
+#
+InstallMethodWithCrispCache( MappingConeFunctorial,
+          [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],
+  function( phi, psi, alpha_0, alpha_1 )
+    local cone_phi, cone_psi, s, maps;
+    
+    cone_phi := MappingCone( phi );
+    
+    cone_psi := MappingCone( psi );
+    
+    maps := AsZFunction( i ->
+              MorphismBetweenDirectSums(
+                [
+                  [ alpha_0[ i + 1 ], ZeroMorphism( Source( alpha_0 )[ i + 1 ], Range( alpha_1 )[ i ] ) ],
+                  [ ZeroMorphism( Source( alpha_1 )[ i ], Range( alpha_0 )[ i + 1 ] ), alpha_1[ i ] ]
+                ] )
+              );
+              
+    return CochainMorphism( cone_phi, cone_psi, maps );
+    
+end );
+
 
 InstallMethodWithCrispCache( MappingConePseudoFunctorial,
           [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],
