@@ -60,38 +60,48 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
       
     fi;
     
-    u := ActiveUpperBound( C ) + 1;
+    u := ActiveUpperBound( C );
     
     zero := ZeroObject( cat );
     
     maps := AsZFunction(
       function( k )
-        local temp, m, p1, p2, ker, pk;
+        local diff_kp1, m, p1, p2, ker, pk;
         
-        if k >= u then
+        if k > u then
           
-          return [ ZeroMorphism( zero, zero ), ZeroMorphism( zero, C[ k ] ), ZeroMorphism( zero, zero ) ];
-          
+          return
+            [
+              ZeroMorphism( zero, zero ),
+              ZeroMorphism( zero, C[ k ] ),
+              ZeroMorphism( zero, zero )
+            ];
+            
         else
           
-          temp := maps[ k + 1 ][ 1 ];
+          diff_kp1 := maps[ k + 1 ][ 1 ];
           
           m := MorphismBetweenDirectSums(
                         [
-                          [ AdditiveInverse( temp ), maps[ k + 1 ][ 2 ] ],
-                          [ ZeroMorphism( C[ k ], Range( temp ) ), C^k ]
+                          [ AdditiveInverse( diff_kp1 ), maps[ k + 1 ][ 2 ] ],
+                          [ ZeroMorphism( C[ k ], Range( diff_kp1 ) ), C^k ]
                         ]
                       );
                       
-          p1 := ProjectionInFactorOfDirectSum( [ Source( temp ), C[ k ] ], 1 );
+          p1 := ProjectionInFactorOfDirectSum( [ Source( diff_kp1 ), C[ k ] ], 1 );
           
-          p2 := ProjectionInFactorOfDirectSum( [ Source( temp ), C[ k ] ], 2 );
+          p2 := ProjectionInFactorOfDirectSum( [ Source( diff_kp1 ), C[ k ] ], 2 );
           
           ker := KernelEmbedding( m );
           
           pk := EpimorphismFromSomeProjectiveObject( Source( ker ) );
           
-          return [ PreCompose( [ pk, ker, p1 ] ), PreCompose( [ pk, ker, p2 ] ), m ];
+          return
+            [
+              PreCompose( [ pk, ker, p1 ] ),
+              AdditiveInverse( PreCompose( [ pk, ker, p2 ] ) ),
+              m
+            ];
           
         fi;
         
@@ -99,23 +109,9 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolution,
       
     r := CochainComplex( cat, ApplyMap( maps, j -> j[ 1 ] ) );
     
-    SetUpperBound( r, u - 1 );
+    SetUpperBound( r, u );
     
-    return CochainMorphism( r, C,
-      AsZFunction(
-        function( j )
-          if j mod 2 = 0 then
-            
-            return  maps[ j ][ 2 ];
-            
-          else
-            
-            return AdditiveInverse( maps[ j ][ 2 ] );
-            
-          fi;
-          
-        end ) );
-        
+    return CochainMorphism( r, C, AsZFunction( j -> maps[ j ][ 2 ] ) );
 end );
 
 ##
