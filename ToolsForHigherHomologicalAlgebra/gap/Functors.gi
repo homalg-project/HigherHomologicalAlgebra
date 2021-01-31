@@ -50,7 +50,10 @@ InstallMethod( ExtendFunctorMethod,
       [
         filter,
         filter,
-        { category_1, category_2 } -> F[3]( underlying_category( category_1 ), underlying_category( category_2 ) ),
+        { category_1, category_2 } ->
+              F[1]( underlying_category( category_1 ) ) and
+              F[2]( underlying_category( category_2 ) ) and
+              F[3]( underlying_category( category_1 ), underlying_category( category_2 ) ),
         { category_1, category_2 } -> functor_constructor( F[ 4 ]( underlying_category( category_1 ), underlying_category( category_2 ) ) ),
         Concatenation( "The functor defined by applying ", name, " on (", F[ 5 ], ")" )
       ];
@@ -70,7 +73,9 @@ InstallMethod( KnownFunctors,
     
     positions := PositionsProperty(
                     ALL_FUNCTORS_METHODS,
-                    F -> F[1]( category_1 ) and F[2]( category_2 ) and F[3]( category_1, category_2 )
+                    function( F )
+                      return F[1]( category_1 ) and F[2]( category_2 ) and F[3]( category_1, category_2 );
+                    end
                   );
                   
     for i in [ 1 .. Size( positions ) ] do
