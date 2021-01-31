@@ -381,7 +381,6 @@ InstallMethod( RightPresentations,
     
 end );
 
-
 ##
 InstallMethod( LaTeXStringOp,
                [ IsLeftOrRightPresentation ],
@@ -471,3 +470,70 @@ InstallMethod( LaTeXStringOp,
     fi;
     
 end );
+
+##
+functor :=
+  [
+    c1 -> IsBound( c1!.ring_for_representation_category ),
+    IsFreydCategory,
+    { c1, c2 } -> IsCategoryOfRows( UnderlyingCategory( c2 ) ) and
+                    IsIdenticalObj(
+                        c1!.ring_for_representation_category,
+                        UnderlyingRing( UnderlyingCategory( c2 ) )
+                      ),
+    function( c1, c2 )
+      local name, F;
+      
+      name := "Isomorphism from the category of finite left presentations to the equivalent Freyd category";
+      
+      F := CapFunctor( name, c1, c2 );
+      
+      AddObjectFunction( F, o -> UnderlyingMatrix( o ) / c2 );
+      
+      AddMorphismFunction( F, { s, phi, r } -> FreydCategoryMorphism( s, UnderlyingMatrix( phi ) / UnderlyingCategory( c2 ), r ) );
+      
+      return F;
+      
+    end,
+    "Isomorphism from the category of finite left presentations to the equivalent Freyd category"
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+if IsPackageLoaded( "homotopycategories" ) then
+  ExtendFunctorMethodToHomotopyCategories( functor );
+fi;
+
+##
+functor :=
+  [
+  
+    IsFreydCategory,
+    c1 -> IsBound( c1!.ring_for_representation_category ),
+    { c2, c1 } -> IsCategoryOfRows( UnderlyingCategory( c2 ) ) and
+                    IsIdenticalObj(
+                        c1!.ring_for_representation_category,
+                        UnderlyingRing( UnderlyingCategory( c2 ) )
+                      ),
+    function( c2, c1 )
+      local name, F;
+      
+      name := "Isomorphism from Freyd category of rows to the equivalent category of finite left presentations";
+      
+      F := CapFunctor( name, c2, c1 );
+      
+      AddObjectFunction( F, o -> AsLeftPresentation( UnderlyingMatrix( RelationMorphism( o ) ) ) );
+      
+      AddMorphismFunction( F, { s, phi, r } -> PresentationMorphism( s, UnderlyingMatrix( MorphismDatum( phi ) ), r ) );
+      
+      return F;
+      
+    end,
+    "Isomorphism from Freyd category of rows to the equivalent category of left finite presentations",
+  ];
+
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+if IsPackageLoaded( "homotopycategories" ) then
+  ExtendFunctorMethodToHomotopyCategories( functor );
+fi;
