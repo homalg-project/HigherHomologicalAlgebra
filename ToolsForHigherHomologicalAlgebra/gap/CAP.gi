@@ -179,3 +179,240 @@ InstallMethod( _WeakKernelEmbedding,
     fi;
   
 end, 5000 );
+
+##
+InstallMethod( SimplifySource,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return PreCompose( SimplifyObject_IsoToInputObject( Source( phi ), i ), phi );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySource_IsoFromInputObject,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoFromInputObject( Source( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySource_IsoToInputObject,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoToInputObject( Source( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifyRange,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return PreCompose( phi, SimplifyObject_IsoFromInputObject( Range( phi ), i ) );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifyRange_IsoFromInputObject,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoFromInputObject( Range( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifyRange_IsoToInputObject,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoToInputObject( Range( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySourceAndRange,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return PreCompose(
+              [
+                SimplifyObject_IsoToInputObject( Source( phi ), i ),
+                phi,
+                SimplifyObject_IsoFromInputObject( Range( phi ), i )
+              ]
+            );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySourceAndRange_IsoFromInputSource,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoFromInputObject( Source( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySourceAndRange_IsoToInputSource,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoToInputObject( Source( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySourceAndRange_IsoFromInputRange,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoFromInputObject( Range( phi ), i );
+    
+end, -1 );
+
+##
+InstallMethod( SimplifySourceAndRange_IsoToInputRange,
+          [ IsCapCategoryMorphism, IsObject ],
+          
+  function( phi, i )
+    local category;
+    
+    category := CapCategory( phi );
+    
+    #if not ( CanCompute( category, "SimplifyObject" ) and 
+    #          CanCompute( category, "SimplifyObject_IsoToInputObject" ) and
+    #            CanCompute( category, "SimplifyObject_IsoFromInputObject" ) 
+    #              ) then
+    #              
+    #  TryNextMethod( );
+    #fi;
+    
+    return SimplifyObject_IsoToInputObject( Range( phi ), i );
+    
+end, -1 );
