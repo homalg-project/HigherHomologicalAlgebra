@@ -953,7 +953,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
             SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat );
         elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-            SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat ) );
+            SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat : FinalizeCategory := true ) );
         else
             if IsIdenticalObj( range_cat, cat ) then
                 SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
@@ -977,7 +977,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
             SetRangeCategoryOfHomomorphismStructure( complex_cat, range_cat );
         elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-            SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat ) );
+            SetRangeCategoryOfHomomorphismStructure( complex_cat, ValueGlobal( "FreydCategory" )( range_cat : FinalizeCategory := true ) );
         else
             if IsIdenticalObj( range_cat, cat ) then
                 SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
