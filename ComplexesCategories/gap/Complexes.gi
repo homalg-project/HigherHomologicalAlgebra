@@ -2380,6 +2380,94 @@ InstallMethod( BoxProduct,
     
 end );
 
+##
+InstallMethod( SimplifyObject,
+          [ IsChainOrCochainComplex, IsObject ],
+  function( C, i )
+    local cat, diffs, D;
+    
+    cat := UnderlyingCategory( CapCategory( C ) );
+    
+    diffs := Differentials( C );
+    
+    diffs := ApplyMap( diffs, diff ->
+               SimplifyMorphism( 
+                  PreCompose(
+                     [
+                       SimplifyObject_IsoToInputObject( Source( diff ), i ),
+                       diff,
+                       SimplifyObject_IsoFromInputObject( Range( diff ), i )
+                     ]
+                   ), i )
+              );
+    
+    if IsChainComplex( C ) then
+      
+      D := ChainComplex( cat, diffs );
+      
+    else
+      
+      D := CochainComplex( cat, diffs );
+      
+    fi;
+    
+    if HasActiveUpperBound( C ) then
+      SetUpperBound( D, ActiveUpperBound( C ) );
+    fi;
+    
+    if HasActiveLowerBound( C ) then
+      SetLowerBound( D, ActiveLowerBound( C ) );
+    fi;
+    
+    return D;
+    
+end, -1 );
+
+##
+InstallMethod( SimplifyObject_IsoFromInputObject,
+          [ IsChainOrCochainComplex, IsObject ],
+  function( C, i )
+    local D, maps;
+    
+    D := SimplifyObject( C, i );
+    
+    maps := AsZFunction( j -> SimplifyObject_IsoFromInputObject( C[ j ], i ) );
+    
+    if IsChainComplex( C ) then
+      
+      return ChainMorphism( C, D, maps );
+      
+    else
+      
+      return CochainMorphism( C, D, maps );
+      
+    fi;
+    
+end, -1 );
+
+##
+InstallMethod( SimplifyObject_IsoToInputObject,
+          [ IsChainOrCochainComplex, IsObject ],
+  function( C, i )
+    local D, maps;
+    
+    D := SimplifyObject( C, i );
+    
+    maps := AsZFunction( j -> SimplifyObject_IsoToInputObject( C[ j ], i ) );
+    
+    if IsChainComplex( C ) then
+      
+      return ChainMorphism( D, C, maps );
+      
+    else
+      
+      return CochainMorphism( D, C, maps );
+      
+    fi;
+    
+end, -1 );
+
+
 #####################################
 #
 # To Do Lists operations
