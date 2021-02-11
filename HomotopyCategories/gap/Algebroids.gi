@@ -35,7 +35,7 @@ end );
 
 BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
   function( main_vertices, generating_maps_labels, bounds, extra_arrows, extra_relations, over_homotopy )
-    local l, u, k, vertices, main_vertices_latex, vertices_latex, diffs, diffs_latex, maps, generating_maps_latex, maps_latex, arrows, extra_arrows_latex, arrows_latex, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map;
+    local l, u, k, vertices, main_vertices_latex, vertices_latex, diffs, diffs_latex, maps, generating_maps_latex, maps_latex, arrows, extra_arrows_latex, arrows_latex, Q, kQ, oid, gmaps, diffs_rel, maps_rel, rels, kQ_mod_rels, Aoid, H, C, s, r, V, map, over_Z;
     
     #MAKE_READ_WRITE_GLOBAL( "REREADING" );
     #REREADING := true;
@@ -148,14 +148,14 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     gmaps := SetOfGeneratingMorphisms( oid );
     
-    diffs_rel := List( [ 1 .. Size( gmaps ) - 1 ], 
+    diffs_rel := List( [ 1 .. Size( gmaps ) - 1 ],
               i -> UnderlyingQuiverAlgebraElement( gmaps[ i ] * gmaps[ i + 1 ] )
             );
     
     diffs_rel := Filtered( diffs_rel, r -> not IsZero( r ) );
     
     maps_rel := ListX( generating_maps_labels, [ l .. u - 1 ],
-                  { m, i } -> 
+                  { m, i } ->
                     UnderlyingQuiverAlgebraElement(
                         oid.( Concatenation( "d", m[ 2 ], "_", _StRiNg( i ) ) )
                       * oid.( Concatenation( m[ 1 ], "_", _StRiNg( i + 1 ) ) )
@@ -172,7 +172,13 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     kQ_mod_rels := kQ / rels;
     
-    oid := Algebroid( kQ_mod_rels );
+    over_Z := ValueOption( "over_Z" );
+    
+    if over_Z = true then
+      oid := Algebroid( kQ_mod_rels, true );
+    else
+      oid := Algebroid( kQ_mod_rels );
+    fi;
     
     AssignSetOfGeneratingMorphisms( oid );
     AssignSetOfObjects( oid );
@@ -259,7 +265,7 @@ BindGlobal( "MakeMorphismNullHomotopic",
     lb := Maximum( ActiveLowerBound( s ), ActiveLowerBound( r ) + 1 );
     ub := Minimum( ActiveUpperBound( s ), ActiveUpperBound( r ) + 1 );
     
-    maps := List( [ lb - 1 .. ub ], 
+    maps := List( [ lb - 1 .. ub ],
                   i -> String( Representative( UnderlyingQuiverAlgebraElement( MorphismMatrix( map[ i ] )[1,1] ) ) )
                 );
     
