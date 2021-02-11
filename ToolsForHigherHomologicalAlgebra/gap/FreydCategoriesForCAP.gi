@@ -499,3 +499,140 @@ InstallMethod( RandomMorphismByInteger,
     
 end );
 
+
+##################################
+#
+# Freyd over category of rows
+#
+#################################
+
+##
+InstallMethod( RandomObjectByInteger,
+          [ IsFreydCategory, IsInt ],
+          -1,
+  function( freyd, n )
+    local S, fpres, J;
+    
+    if not IsCategoryOfRows( UnderlyingCategory( freyd ) ) then
+      TryNextMethod( );
+    fi;
+    
+    S := UnderlyingRing( UnderlyingCategory( freyd ) );
+    
+    fpres := LeftPresentations( S );
+    
+    J := Functor( fpres, freyd, 1 );
+    
+    return J( RandomObjectByInteger( fpres, n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceByInteger,
+          [ IsFreydCategoryObject, IsInt ],
+          -1,
+  function( o, n )
+    local freyd, S, fpres, I, J;
+    
+    freyd := CapCategory( o );
+    
+    if not IsCategoryOfRows( UnderlyingCategory( freyd ) ) then
+      TryNextMethod( );
+    fi;
+    
+    S := UnderlyingRing( UnderlyingCategory( freyd ) );
+    
+    fpres := LeftPresentations( S );
+ 
+    I := Functor( freyd, fpres, 1 );
+    J := Functor( fpres, freyd, 1 );
+    
+    return J( RandomMorphismWithFixedSourceByInteger( I( o ), n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedRangeByInteger,
+          [ IsFreydCategoryObject, IsInt ],
+          -1,
+  function( o, n ) 
+    local freyd, S, fpres, I, J;
+    
+    freyd := CapCategory( o );
+    
+    if not IsCategoryOfRows( UnderlyingCategory( freyd ) ) then
+      TryNextMethod( );
+    fi;
+    
+    S := UnderlyingRing( UnderlyingCategory( freyd ) );
+    
+    fpres := LeftPresentations( S );
+ 
+    I := Functor( freyd, fpres, 1 );
+    J := Functor( fpres, freyd, 1 );
+    
+    return J( RandomMorphismWithFixedRangeByInteger( I( o ), n ) );
+  
+end );
+
+##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
+          [ IsFreydCategoryObject, IsFreydCategoryObject, IsInt ],
+          -1,
+  function( s, r, n )
+    local freyd, S, fpres, I, J;
+    
+    freyd := CapCategory( s );
+    
+    if not IsCategoryOfRows( UnderlyingCategory( freyd ) ) then
+      TryNextMethod( );
+    fi;
+    
+    S := UnderlyingRing( UnderlyingCategory( freyd ) );
+    
+    fpres := LeftPresentations( S );
+ 
+    I := Functor( freyd, fpres, 1 );
+    J := Functor( fpres, freyd, 1 );
+   
+    return J( RandomMorphismWithFixedSourceAndRangeByInteger( I( s ), I( r ), n ) );
+    
+end );
+
+##
+InstallMethod( RandomMorphismByInteger,
+          [ IsFreydCategory, IsInt ],
+          -1,
+  function( freyd, n )
+    local a;
+    
+    a := RandomObjectByInteger( freyd, n );
+    
+    return RandomMorphismWithFixedSourceByInteger( a, Random( [ AbsInt( n ) - 1 .. AbsInt( n ) + 1 ] ) );
+    
+end );
+
+##
+InstallMethod( SimplifyMorphism,
+          [ IsFreydCategoryMorphism, IsObject ],
+  
+  function( phi, i )
+    local freyd_cat, underlying_cat, datum_mat, range_mat, datum;
+    
+    freyd_cat := CapCategory( phi );
+    
+    underlying_cat := UnderlyingCategory( freyd_cat );
+    
+    if not IsCategoryOfRows( underlying_cat ) then
+      TryNextMethod( );
+    fi;
+    
+    datum_mat := UnderlyingMatrix( MorphismDatum( phi ) );
+    
+    range_mat := UnderlyingMatrix( RelationMorphism( Range( phi ) ) );
+    
+    datum := DecideZeroRows(  datum_mat, range_mat ) / underlying_cat;
+    
+    return FreydCategoryMorphism( Source( phi ), datum, Range( phi ) );
+     
+end, -1 );
