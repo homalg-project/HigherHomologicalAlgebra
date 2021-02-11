@@ -143,6 +143,41 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
     
 end, -1 );
 
+
+## L is list with one integer entry
+##
+InstallMethod( RandomMorphismWithFixedSourceAndRangeByList,
+          [ IsBoundedChainOrCochainComplex, IsBoundedChainOrCochainComplex, IsList ],
+  function( C, D, L )
+    local complexes, range_cat, H_CD, U, r;
+    
+    complexes := CapCategory( C );
+    
+    if not CanCompute( complexes, "HomomorphismStructureOnObjects" ) then
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( complexes );
+    
+    #if not CanCompute( range_cat, "RandomMorphismWithFixedSourceAndRangeByInteger" ) then
+      
+    #  TryNextMethod( );
+      
+    #fi;
+      
+    H_CD := HomomorphismStructureOnObjects( C, D );
+    
+    U := DistinguishedObjectOfHomomorphismStructure( complexes );
+    
+    r := RandomMorphismWithFixedSourceAndRangeByInteger( U, H_CD, L[ 1 ] );
+    
+    return InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( C, D, r );
+    
+end, -1 );
+
+
 ##
 InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
           [ IsBoundedChainOrCochainComplex, IsBoundedChainOrCochainComplex, IsInt ],
