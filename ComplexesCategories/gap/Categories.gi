@@ -30,7 +30,7 @@ InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec(
     installation_name := "HomotopyMorphisms", 
     filter_list := [ "morphism" ],
     cache_name := "HomotopyMorphisms",
-    return_type := [ IsZFunction ] ),
+    return_type := IsZFunction ),
 
 ) );
 
