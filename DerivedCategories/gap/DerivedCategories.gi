@@ -74,6 +74,10 @@ InstallMethod( PreComposeRoofs,
     
     Ho_C := AmbientCategory( roof_1 );
     
+    if not IsChainComplexCategory( UnderlyingCategory( Ho_C ) ) then
+      TryNextMethod();
+    fi;
+    
     s := SourceMorphism( roof_2 );
     
     r := RangeMorphism( roof_1 );
@@ -98,7 +102,7 @@ InstallMethod( PreComposeRoofs,
                     [ ZeroMorphism( B[ i + 1], A[ i ] ) ]
                   ] ) );
                   
-    rr := ChainMorphism( UnderlyingCell( D ), UnderlyingCell( A ), rr_maps ) / Ho_C;
+    rr := HomotopyCategoryMorphism( D, A, rr_maps );
     
     ss_maps := AsZFunction(
                 i -> MorphismBetweenDirectSums(
@@ -108,7 +112,7 @@ InstallMethod( PreComposeRoofs,
                     [ ZeroMorphism( B[ i + 1], C[ i ] ) ]
                   ] ) );
     
-    ss := ChainMorphism( UnderlyingCell( D ), UnderlyingCell( C ), ss_maps ) / Ho_C;
+    ss := HomotopyCategoryMorphism( D, C, ss_maps );
     
     ss := PreCompose( ss, SourceMorphism( roof_1 ) );
     
@@ -116,6 +120,30 @@ InstallMethod( PreComposeRoofs,
     
     return Roof( ss, rr );
     
+end );
+
+##
+InstallMethod( PreComposeRoofs,
+          [ IsRoof, IsRoof ],
+  function( roof_1, roof_2 )
+    local Ho_C, roof;
+    
+    Ho_C := AmbientCategory( roof_1 );
+    
+    if not IsCochainComplexCategory( UnderlyingCategory( Ho_C ) ) then
+      TryNextMethod();
+    fi;
+    
+    roof_1 := Roof( AsChainMorphism( SourceMorphism( roof_1 ) ), AsChainMorphism( RangeMorphism( roof_1 ) ) );
+    
+    roof_2 := Roof( AsChainMorphism( SourceMorphism( roof_2 ) ), AsChainMorphism( RangeMorphism( roof_2 ) ) );
+   
+    roof := PreComposeRoofs( roof_1, roof_2 );
+    
+    roof := Roof( AsCochainMorphism( SourceMorphism( roof ) ), AsCochainMorphism( RangeMorphism( roof ) ) );
+    
+    return roof;
+
 end );
 
 ##
