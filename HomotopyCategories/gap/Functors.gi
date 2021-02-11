@@ -378,7 +378,7 @@ end );
 InstallMethod( LocalizationFunctorByProjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
-    local cat, projs, homotopy_category_projs, name, F, oper;
+    local cat, projs, homotopy_category_projs, oper, name, F, sigma_S, sigma_T, F_o_sigma_S, sigma_T_o_F, eta, epsilon, epsilon_m1;
     
     cat := DefiningCategory( homotopy_category );
     
@@ -433,6 +433,28 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
         return psi / homotopy_category_projs;
         
     end );
+    
+    sigma_S := ShiftFunctor( homotopy_category );
+    
+    sigma_T := ShiftFunctor( homotopy_category_projs );
+    
+    F_o_sigma_S := PostCompose( F, sigma_S );
+    
+    sigma_T_o_F := PostCompose( sigma_T, F );
+    
+    name := "Natural isomorphism F o Σ => Σ o F";
+    
+    eta := NaturalTransformation( name, F_o_sigma_S, sigma_T_o_F );
+    
+    epsilon := NaturalIsomorphismFromIdentityIntoMinusOneFunctor( homotopy_category );
+    
+    epsilon_m1 := NaturalIsomorphismFromMinusOneFunctorIntoIdentity( homotopy_category_projs );
+    
+    AddNaturalTransformationFunction( eta,
+      { F_o_sigma_S_a, a, sigma_T_o_F_a } -> PreCompose( F( epsilon( Shift( a ) ) ), epsilon_m1( Shift( F( a ) ) ) )
+    );
+    
+    SetCommutativityNaturalTransformationWithShiftFunctor( F, eta );
     
     return F;
     
