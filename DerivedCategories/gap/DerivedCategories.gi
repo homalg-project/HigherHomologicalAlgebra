@@ -600,3 +600,186 @@ InstallMethod( ViewObj,
     
 end );
 
+##
+InstallOtherMethod( LaTeXStringOp,
+        [ IsDerivedCategoryMorphism ],
+        
+  function( phi )
+    local roof, f, g, l, u;
+    
+    roof := UnderlyingRoof( phi );
+    
+    f := SourceMorphism( roof );
+    
+    g := RangeMorphism( roof );
+    
+    l := Minimum(
+            [
+              ActiveLowerBound( Range( f ) ),
+              ActiveLowerBound( Source( f ) ),
+              ActiveLowerBound( Range( g ) )
+            ]
+          );
+    
+    u := Maximum(
+            [
+              ActiveUpperBound( Range( f ) ),
+              ActiveUpperBound( Source( f ) ),
+              ActiveUpperBound( Range( g ) )
+            ]
+          );
+    
+    return LaTeXStringOp( phi, l, u );
+    
+end );
+
+##
+InstallOtherMethod( LaTeXStringOp,
+        [ IsDerivedCategoryMorphism, IsInt, IsInt ],
+        
+  function( phi, l, u )
+    local f, g, s, OnlyDatum, i;
+    
+    f := SourceMorphism( UnderlyingRoof( phi ) );
+    
+    g := RangeMorphism( UnderlyingRoof( phi ) );
+      
+    s := "\\begin{array}{ccccc}\n ";
+    
+    if IsChainMorphism( phi ) then
+      
+      s := Concatenation(
+              s,
+              LaTeXStringOp( Range( f )[ l ] ),
+              "&\\leftarrow\\phantom{-}{",
+              LaTeXStringOp( f[ l ] : OnlyDatum := true ),
+              "}\\phantom{-}-&{",
+              LaTeXStringOp( Source( f )[ l ] ),
+              "}&-\\phantom{-}{",
+              LaTeXStringOp( g[ l ] : OnlyDatum := true ),
+              "}\\phantom{-}\\rightarrow&{",
+              LaTeXStringOp( Range( g )[ l ] ),
+              "}\n \\\\ \n"
+            );
+            
+      for i in [ l + 1 .. u ] do
+        
+        s := Concatenation(
+                s,
+                " \\uparrow_{\\phantom{", String( i ), "}}",
+                "&&",
+                " \n \\uparrow_{\\phantom{", String( i ), "}}",
+                "&&",
+                " \n \\uparrow_{\\phantom{", String( i ), "}}",
+                "\n \\\\ \n "
+              );
+              
+        s := Concatenation(
+                s,
+                LaTeXStringOp( Range( f ) ^ i : OnlyDatum := true ),
+                "&&",
+                LaTeXStringOp( Source( f ) ^ i : OnlyDatum := true ),
+                "&&",
+                LaTeXStringOp( Range( g ) ^ i : OnlyDatum := true ),
+                "\n \\\\ \n "
+              );
+              
+        s := Concatenation(
+                s,
+                "\\vert_{", String( i ), "} ",
+                "&&",
+                "\\vert_{", String( i ), "} ",
+                "&&",
+                "\\vert_{", String( i ), "} ",                
+                "\n \\\\ \n "
+              );
+              
+        s := Concatenation(
+              s,
+              LaTeXStringOp( Range( f )[ i ] ),
+              "&\\leftarrow\\phantom{-}",
+              LaTeXStringOp( f[ i ] : OnlyDatum := true ),
+              "\\phantom{-}-&",
+              LaTeXStringOp( Source( f )[ i ] ),
+              "&-\\phantom{-}{",
+              LaTeXStringOp( g[ i ] : OnlyDatum := true ),
+              "}\\phantom{-}\\rightarrow&",
+              LaTeXStringOp( Range( g )[ i ] ),
+              "\n \\\\ \n "
+            );
+            
+      od;
+      
+    else
+      
+      for i in [ l .. u - 1 ] do
+        
+        s := Concatenation(
+              s,
+              "\\\\ \n",
+              LaTeXStringOp( Range( f )[ i ] ),
+              "&\\leftarrow\\phantom{-}{",
+              LaTeXStringOp( f[ i ] : OnlyDatum := true ),
+              "}\\phantom{-}-&",
+              LaTeXStringOp( Source( f )[ i ] ),
+              "&-\\phantom{-}{",
+              LaTeXStringOp( g[ i ] : OnlyDatum := true ),
+              "}\\phantom{-}\\rightarrow&",
+              LaTeXStringOp( Range( g )[ i ] ),
+              "\n "
+            );
+            
+        s := Concatenation(
+                s,
+                "\\\\ \n \\vert^{", String( i ), "} ",
+                "&& \n",
+                "\\vert^{", String( i ), "}",
+                "&&",
+                "\\vert^{", String( i ), "} ",
+                "\n \\\\ \n "
+              );
+              
+        s := Concatenation(
+                s,
+                LaTeXStringOp( Range( f ) ^ i : OnlyDatum := true ),
+                "&&",
+                LaTeXStringOp( Source( f ) ^ i : OnlyDatum := true ),
+                "&&",
+                LaTeXStringOp( Range( g ) ^ i : OnlyDatum := true ),
+                "\n \\\\ \n "
+              );
+              
+        s := Concatenation(
+                s,
+                " \\downarrow_{\\phantom{", String( i ), "}}",
+                "&&",
+                " \\downarrow_{\\phantom{", String( i ), "}}",
+                "&&",
+                " \n \\downarrow_{\\phantom{", String( i ), "}}"
+              );
+              
+      od;
+      
+      s := Concatenation(
+              s,
+              "\\\\ \n",
+              LaTeXStringOp( Range( f )[ u ] ),
+              "&\\leftarrow\\phantom{-}{",
+              LaTeXStringOp( f[ u ] : OnlyDatum := true ),
+              "}\\phantom{-}-&",
+              LaTeXStringOp( Source( f )[ u ] ),
+              "&-\\phantom{-}{",
+              LaTeXStringOp( g[ u ] : OnlyDatum := true ),
+              "}\\phantom{-}\\rightarrow&",
+              LaTeXStringOp( Range( g )[ u ] ),
+              "\n \\\\ \n "
+            );
+            
+    fi;
+     
+    s := Concatenation( s, "\\end{array}" );
+    
+    return s;
+    
+end );
+
