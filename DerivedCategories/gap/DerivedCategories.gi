@@ -284,20 +284,47 @@ InstallMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ],
 );
 
 ##
-InstallMethod( DerivedCategory,
+InstallOtherMethod( Shift, [ IsDerivedCategoryObject, IsInt ],
+  { a, n } -> Shift( UnderlyingCell( a ), n ) / CapCategory( a )
+);
+
+##
+InstallMethod( DerivedCategoryAttr,
           [ IsCapCategory ],
-  function( C )
+  C -> DerivedCategory( C, false )
+);
+
+##
+InstallOtherMethod( DerivedCategory,
+          [ IsCapCategory ],
+  C -> DerivedCategoryAttr( C )
+);
+
+##
+InstallMethod( DerivedCategoryOp,
+          [ IsCapCategory, IsBool ],
+  function( C, over_cochains )
     local r, name, D;
     
     r := RandomTextColor( Name( C ) );
     
-    name := Concatenation( r[ 1 ], "Derived category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
+    if over_cochains then
+      
+      name := Concatenation( r[ 1 ], "Derived^• category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
+      
+    else
+      
+      name := Concatenation( r[ 1 ], "Derived_• category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
+      
+    fi;
     
     D := CreateCapCategory( name );
     
     SetFilterObj( D, IsDerivedCategory );
     
     SetDefiningCategory( D, C );
+    
+    SetUnderlyingCategory( D, HomotopyCategory( C, over_cochains ) );
     
     AddObjectRepresentation( D, IsDerivedCategoryObject );
     
@@ -371,6 +398,11 @@ InstallMethod( DerivedCategory,
     end );
     
     ##
+    AddZeroObject( D,
+      {} -> ZeroObject( UnderlyingCategory( D ) ) / D
+    );
+    
+    ##
     AddZeroMorphism( D,
       function( a, b )
         
@@ -440,8 +472,8 @@ InstallMethod( DerivedCategory,
         roof := UnderlyingRoof( alpha );
         
         return Roof(
-                  AdditiveInverseForMorphisms( SourceMorphism( roof ) ),
-                  RangeMorphism( roof )
+                  SourceMorphism( roof ),
+                  AdditiveInverseForMorphisms( RangeMorphism( roof ) )
                 ) / D;
                 
     end );
@@ -467,7 +499,7 @@ end );
 ##
 InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
   function( D )
-    local C, P, I, Ho_C, L;
+    local C, P, I, Ho_C, L, range_cat;
     
     D!.is_computable := true;
     
@@ -525,6 +557,71 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
         
     end );
     
+    if HasRangeCategoryOfHomomorphismStructure( Ho_C ) then
+      
+      range_cat := RangeCategoryOfHomomorphismStructure( Ho_C );
+      
+      if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
+        
+        SetRangeCategoryOfHomomorphismStructure( D, range_cat );
+        
+        AddDistinguishedObjectOfHomomorphismStructure( D,
+          {} -> DistinguishedObjectOfHomomorphismStructure( Ho_C )
+        );
+        
+        AddHomomorphismStructureOnObjects( D,
+          function( a, b )
+            local Pa, Pb;
+            
+            Pa := ProjectiveResolution( UnderlyingCell( a ), true );
+            
+            Pb := ProjectiveResolution( UnderlyingCell( b ), true );
+            
+            return HomomorphismStructureOnObjects( Pa, Pb );
+            
+        end );
+        
+        AddHomomorphismStructureOnMorphismsWithGivenObjects( D,
+          function( s, phi, psi, r )
+            local roof_phi, roof_psi;
+            
+            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
+            
+            psi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( psi ) );
+            
+            return HomomorphismStructureOnMorphismsWithGivenObjects( s, phi, psi, r );
+            
+        end );
+        
+        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( D,
+          function( phi )
+            local roof_phi;
+            
+            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
+            
+            return InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi );
+            
+        end );
+        
+        AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( D,
+          function( s, r, phi )
+            local qs, qr;
+            
+            qs := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( s ), true );
+            
+            qr := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( r ), true );
+            
+            phi := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( Source( qs ), Source( qr ), phi );
+            
+            return Roof( qs, PreCompose( phi, qr ) ) / D;
+            
+        end );
+       
+     fi;
+      
+    fi;
+    
+    
     if CanCompute( Ho_C, "BasisOfExternalHom" ) and
         CanCompute( Ho_C, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
         
@@ -536,29 +633,23 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
             
             qb := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( b ), true );
             
-            U := UniversalFunctorFromDerivedCategory( L );
+            B := BasisOfExternalHom( Source( qa ), Source( qb ) );
             
-            Ua := ApplyFunctor( U, a );
-            
-            Ub := ApplyFunctor( U, b );
-            
-            B := BasisOfExternalHom( Ua, Ub );
-            
-            return List( B, m -> Roof( qa, PreCompose( ApplyFunctor( I, m ), qb ) ) / D );
+            return List( B, m -> Roof( qa, PreCompose( m, qb ) ) / D );
             
         end );
         
         AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( D,
-          function( alpha, B )
-            local U;
+          function( phi, B )
+            local roof_phi;
             
-            U := UniversalFunctorFromDerivedCategory( L );
+            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
             
-            return CoefficientsOfMorphism( ApplyFunctor( U, alpha ) );
+            return CoefficientsOfMorphism( phi );
             
         end );
         
-      fi;
+    fi;
       
 end );
 
@@ -589,15 +680,15 @@ end );
 InstallMethod( Display,
           [ IsRoof ],
   function( roof )
-  
+    
     Print( "A roof s <~~ a --> r, defined over ", Name( CapCategory( SourceMorphism( roof ) ) ), " by the following data:\n\n" );
-  
+    
     Print( TextAttr.b4, "Source Morphism:", TextAttr.reset, "\n\n" );
     Display( SourceMorphism( roof ) );
-  
+    
     Print( TextAttr.b4, "Range Morphism:", TextAttr.reset, "\n\n" );
     Display( RangeMorphism( roof ) );
-  
+    
 end );
 
 ##
@@ -623,8 +714,20 @@ InstallMethod( ViewObj,
           [ IsDerivedCategoryObject ],
   function( a )
     
-    Print( "<An object in ", Name( CapCategory( a ) ), ">" );
-
+    Print( "<An object in ", Name( CapCategory( a ) ) );
+    
+    a := UnderlyingCell( a );
+    
+    if HasActiveLowerBound( a ) then
+      Print( " with active lower bound ", ActiveLowerBound( a ) );
+    fi;
+    
+    if HasActiveUpperBound( a ) then
+      Print( " and active upper bound ", ActiveUpperBound( a ) );
+    fi;
+    
+    Print(">" );
+    
 end );
  
 ##
@@ -633,7 +736,7 @@ InstallMethod( Display,
   function( a )
     
     Display( UnderlyingRoof( a ) );
-
+    
     Print( "\nA morphism in ", Name( CapCategory( a ) ), " given by the above roof\n" );
     
 end );
@@ -645,6 +748,11 @@ InstallMethod( ViewObj,
     Print( "<A morphism in ", Name( CapCategory( a ) ), ">" );
     
 end );
+
+InstallOtherMethod( LaTeXStringOp,
+              [ IsDerivedCategoryObject ],
+  a -> LaTeXStringOp( UnderlyingCell( a ) )
+);
 
 ##
 InstallOtherMethod( LaTeXStringOp,
@@ -684,7 +792,9 @@ InstallOtherMethod( LaTeXStringOp,
         [ IsDerivedCategoryMorphism, IsInt, IsInt ],
         
   function( phi, l, u )
-    local f, g, s, OnlyDatum, i;
+    local over_cochains, f, g, s, i;
+    
+    over_cochains := IsCochainComplexCategory( UnderlyingCategory( UnderlyingCategory( CapCategory( phi ) ) ) );
     
     f := SourceMorphism( UnderlyingRoof( phi ) );
     
@@ -692,23 +802,23 @@ InstallOtherMethod( LaTeXStringOp,
       
     s := "\\begin{array}{ccccc}\n ";
     
-    if IsChainMorphism( phi ) then
+    if over_cochains then
       
       s := Concatenation(
               s,
-              LaTeXStringOp( Range( f )[ l ] ),
+              LaTeXStringOp( Range( f )[ u ] ),
               "&\\leftarrow\\phantom{-}{",
-              LaTeXStringOp( f[ l ] : OnlyDatum := true ),
+              LaTeXStringOp( f[ u ] : OnlyDatum := true ),
               "}\\phantom{-}-&{",
-              LaTeXStringOp( Source( f )[ l ] ),
+              LaTeXStringOp( Source( f )[ u ] ),
               "}&-\\phantom{-}{",
-              LaTeXStringOp( g[ l ] : OnlyDatum := true ),
+              LaTeXStringOp( g[ u ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&{",
-              LaTeXStringOp( Range( g )[ l ] ),
+              LaTeXStringOp( Range( g )[ u ] ),
               "}\n \\\\ \n"
             );
             
-      for i in [ l + 1 .. u ] do
+      for i in Reversed( [ l .. u - 1 ] ) do
         
         s := Concatenation(
                 s,
@@ -758,7 +868,7 @@ InstallOtherMethod( LaTeXStringOp,
       
     else
       
-      for i in [ l .. u - 1 ] do
+      for i in Reversed( [ l + 1 .. u ] ) do
         
         s := Concatenation(
               s,
@@ -809,15 +919,15 @@ InstallOtherMethod( LaTeXStringOp,
       s := Concatenation(
               s,
               "\\\\ \n",
-              LaTeXStringOp( Range( f )[ u ] ),
+              LaTeXStringOp( Range( f )[ l ] ),
               "&\\leftarrow\\phantom{-}{",
-              LaTeXStringOp( f[ u ] : OnlyDatum := true ),
+              LaTeXStringOp( f[ l ] : OnlyDatum := true ),
               "}\\phantom{-}-&",
-              LaTeXStringOp( Source( f )[ u ] ),
+              LaTeXStringOp( Source( f )[ l ] ),
               "&-\\phantom{-}{",
-              LaTeXStringOp( g[ u ] : OnlyDatum := true ),
+              LaTeXStringOp( g[ l ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&",
-              LaTeXStringOp( Range( g )[ u ] ),
+              LaTeXStringOp( Range( g )[ l ] ),
               "\n \\\\ \n "
             );
             

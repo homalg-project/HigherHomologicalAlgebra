@@ -71,7 +71,9 @@ DeclareOperation( "\/", [ IsHomotopyCategoryMorphism, IsDerivedCategory ] );
 
 DeclareAttribute( "UnderlyingRoof", IsDerivedCategoryMorphism );
 
-DeclareAttribute( "DerivedCategory", IsCapCategory );
+KeyDependentOperation( "DerivedCategory", IsCapCategory, IsBool, ReturnTrue );
+
+DeclareAttribute( "DerivedCategoryAttr", IsCapCategory );
 
 DeclareAttribute( "DefiningCategory", IsDerivedCategory );
 
