@@ -60,6 +60,24 @@ InstallMethod( AsHonestMorphism,
   roof -> PreCompose( Inverse( QuasiIsomorphism( roof ) ), RangeMorphism( roof ) )
 );
 
+##
+InstallMethod( AsMorphismBetweenProjectiveResolutions,
+          [ IsRoof ],
+  roof -> PreCompose(
+            Inverse( MorphismBetweenProjectiveResolutions( QuasiIsomorphism( roof ), true ) ),
+            MorphismBetweenProjectiveResolutions( RangeMorphism( roof ), true )
+          )
+);
+
+##
+InstallMethod( AsMorphismBetweenInjectiveResolutions,
+          [ IsRoof ],
+  roof -> PreCompose(
+            Inverse( MorphismBetweenInjectiveResolutions( QuasiIsomorphism( roof ), true ) ),
+            MorphismBetweenInjectiveResolutions( RangeMorphism( roof ), true )
+          )
+);
+
 #       D
 #      / \
 #    C     A

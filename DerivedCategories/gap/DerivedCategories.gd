@@ -37,6 +37,10 @@ DeclareAttribute( "MiddleObject", IsRoof );
 
 DeclareAttribute( "AmbientCategory", IsRoof );
 
+DeclareAttribute( "AsMorphismBetweenProjectiveResolutions", IsRoof );
+
+DeclareAttribute( "AsMorphismBetweenInjectiveResolutions", IsRoof );
+
 DeclareAttribute( "AsHonestMorphism", IsRoof );
 
 DeclareProperty( "IsHonest", IsRoof );
