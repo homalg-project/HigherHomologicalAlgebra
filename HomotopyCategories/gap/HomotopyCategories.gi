@@ -68,7 +68,7 @@ InstallMethod( HomotopyCategoryOp,
       if not CanCompute( complex_cat, "MorphismIntoColiftingObject" ) or
           not CanCompute( complex_cat, "IsColiftableThroughColiftingObject" ) then
           
-          Error( "The chains complex category seems to have been finalized without adding colifting structure" );
+          Error( "The complex category seems to have been finalized without adding colifting structure" );
           
       fi;
       
