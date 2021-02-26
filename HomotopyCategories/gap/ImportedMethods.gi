@@ -90,6 +90,31 @@ InstallOtherMethod( QuasiIsomorphismIntoInjectiveResolution,
 );
 
 ##
+InstallOtherMethod( CohomologyAt,
+          [ IsHomotopyCategoryObject, IsInt ],
+    { a, i } -> CohomologyAt( UnderlyingCell( a ), i )
+);
+
+##
+InstallOtherMethod( ComputedCohomologyAts,
+          [ IsHomotopyCategoryObject ],
+    a -> ComputedCohomologyAts( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( CohomologyFunctorialAt,
+          [ IsHomotopyCategoryMorphism, IsInt ],
+    { alpha, i } -> CohomologyFunctorialAt( UnderlyingCell( alpha ), i )
+);
+
+##
+InstallOtherMethod( ComputedCohomologyFunctorialAts,
+          [ IsHomotopyCategoryMorphism ],
+    a -> ComputedCohomologyFunctorialAts( UnderlyingCell( a ) )
+);
+
+
+##
 InstallOtherMethod( HomologyAt,
           [ IsHomotopyCategoryObject, IsInt ],
     { a, i } -> HomologyAt( UnderlyingCell( a ), i )
@@ -135,6 +160,13 @@ InstallOtherMethod( HomologySupport,
           [ IsHomotopyCategoryObject ],
     a -> HomologySupport( UnderlyingCell( a ) )
 );
+
+##
+InstallOtherMethod( CohomologySupport,
+          [ IsHomotopyCategoryObject ],
+    a -> CohomologySupport( UnderlyingCell( a ) )
+);
+
 
 ##
 InstallOtherMethod( ActiveLowerBound,
