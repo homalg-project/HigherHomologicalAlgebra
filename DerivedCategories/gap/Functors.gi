@@ -668,25 +668,23 @@ InstallMethod( LocalizationFunctor,
     
     cat := UnderlyingCategory( complexes );
     
-    D := DerivedCategory( cat );
+    if IsChainComplexCategory( complexes ) then
+      
+      D := DerivedCategory( cat, false );
+      
+    else
+      
+      D := DerivedCategory( cat, true );
+      
+    fi;
     
     name := "Localization functor in derived category";
     
     F := CapFunctor( name, homotopy, D );
     
-    AddObjectFunction( F,
-      function( a )
-        
-        return a / D;
-        
-    end );
+    AddObjectFunction( F, a -> a / D );
     
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        return alpha / D;
-        
-    end );
+    AddMorphismFunction( F, { s, alpha, r } -> alpha / D );
     
     return F;
     
