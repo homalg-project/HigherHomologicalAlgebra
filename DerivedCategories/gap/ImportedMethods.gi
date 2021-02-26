@@ -21,6 +21,22 @@ InstallOtherMethod( HomologyFunctorialAt,
 );
 
 ##
+InstallOtherMethod( CohomologyAt,
+          [ IsDerivedCategoryObject, IsInt ],
+    { a, i } -> CohomologyAt( UnderlyingCell( a ), i )
+);
+
+##
+InstallOtherMethod( CohomologyFunctorialAt,
+          [ IsDerivedCategoryMorphism, IsInt ],
+    { alpha, i } ->
+      PreCompose(
+        Inverse( CohomologyFunctorialAt( SourceMorphism( UnderlyingRoof( alpha ) ), i ) ),
+        CohomologyFunctorialAt( RangeMorphism( UnderlyingRoof( alpha ) ), i )
+      )
+);
+
+##
 InstallOtherMethod( ObjectsSupport,
           [ IsDerivedCategoryObject ],
     a -> ObjectsSupport( UnderlyingCell( a ) )
@@ -35,6 +51,12 @@ InstallOtherMethod( DifferentialsSupport,
 InstallOtherMethod( HomologySupport,
           [ IsDerivedCategoryObject ],
     a -> HomologySupport( UnderlyingCell( a ) )
+);
+
+##
+InstallOtherMethod( CohomologySupport,
+          [ IsDerivedCategoryObject ],
+    a -> CohomologySupport( UnderlyingCell( a ) )
 );
 
 ##
