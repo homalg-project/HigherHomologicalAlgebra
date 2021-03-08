@@ -175,7 +175,7 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   filter_list := [ "object", "morphism", "morphism", "morphism", "morphism", "object" ],
   io_type := [ ["cone_alpha", "alpha",  "mu", "nu", "alpha_prime", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
   cache_name := "MorphismBetweenStandardConeObjectsWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
   is_with_given := false
 ),
 
@@ -183,21 +183,21 @@ DomainMorphismByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
   filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
@@ -205,7 +205,7 @@ WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec
   filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "cone_g", "f", "g", "h", "st_cone" ], [ "cone_g", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
@@ -213,7 +213,7 @@ WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec
   filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "g", "h", "cone_g" ], [ "st_cone", "cone_g" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
@@ -221,7 +221,7 @@ WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
@@ -229,7 +229,7 @@ WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
@@ -237,7 +237,7 @@ WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects :
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
@@ -245,7 +245,7 @@ WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects :
   filter_list := [ "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
-  return_type := [ "morphism" ],
+  return_type := "morphism",
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
