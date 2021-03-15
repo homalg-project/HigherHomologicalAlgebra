@@ -182,7 +182,7 @@ end, 5000 );
 
 ##
 InstallMethod( SimplifySource,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -199,11 +199,11 @@ InstallMethod( SimplifySource,
     
     return PreCompose( SimplifyObject_IsoToInputObject( Source( phi ), i ), phi );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySource_IsoFromInputObject,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -220,11 +220,11 @@ InstallMethod( SimplifySource_IsoFromInputObject,
     
     return SimplifyObject_IsoFromInputObject( Source( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySource_IsoToInputObject,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -241,11 +241,11 @@ InstallMethod( SimplifySource_IsoToInputObject,
     
     return SimplifyObject_IsoToInputObject( Source( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifyRange,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -262,11 +262,11 @@ InstallMethod( SimplifyRange,
     
     return PreCompose( phi, SimplifyObject_IsoFromInputObject( Range( phi ), i ) );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifyRange_IsoFromInputObject,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -283,11 +283,11 @@ InstallMethod( SimplifyRange_IsoFromInputObject,
     
     return SimplifyObject_IsoFromInputObject( Range( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifyRange_IsoToInputObject,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -304,11 +304,11 @@ InstallMethod( SimplifyRange_IsoToInputObject,
     
     return SimplifyObject_IsoToInputObject( Range( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySourceAndRange,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -331,11 +331,11 @@ InstallMethod( SimplifySourceAndRange,
               ]
             );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySourceAndRange_IsoFromInputSource,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -352,11 +352,11 @@ InstallMethod( SimplifySourceAndRange_IsoFromInputSource,
     
     return SimplifyObject_IsoFromInputObject( Source( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySourceAndRange_IsoToInputSource,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -373,11 +373,11 @@ InstallMethod( SimplifySourceAndRange_IsoToInputSource,
     
     return SimplifyObject_IsoToInputObject( Source( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySourceAndRange_IsoFromInputRange,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -394,11 +394,11 @@ InstallMethod( SimplifySourceAndRange_IsoFromInputRange,
     
     return SimplifyObject_IsoFromInputObject( Range( phi ), i );
     
-end, -1 );
+end );
 
 ##
 InstallMethod( SimplifySourceAndRange_IsoToInputRange,
-          [ IsCapCategoryMorphism, IsObject ],
+          [ IsCapCategoryMorphism, IsObject ], -1,
           
   function( phi, i )
     local category;
@@ -415,4 +415,4 @@ InstallMethod( SimplifySourceAndRange_IsoToInputRange,
     
     return SimplifyObject_IsoToInputObject( Range( phi ), i );
     
-end, -1 );
+end );
