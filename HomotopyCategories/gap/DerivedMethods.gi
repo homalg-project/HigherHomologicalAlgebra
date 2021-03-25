@@ -7,7 +7,7 @@
 AddFinalDerivation( MorphismIntoColiftingObject,
                     [ ],
                     [ MorphismIntoColiftingObject ],
-  function( a )
+  function( cat, a )
     
     return NaturalInjectionInMappingCone( IdentityMorphism( a ) );
   
@@ -25,7 +25,7 @@ AddFinalDerivation( IsColiftableThroughColiftingObject,
                       IsColiftableThroughColiftingObject,
                       MorphismIntoColiftingObject  
                     ],
-  function( alpha )
+  function( cat, alpha )
     local a, I_a;
      
     a := Source( alpha );
@@ -48,7 +48,7 @@ AddFinalDerivation( IsColiftableThroughColiftingObject,
                       IsColiftableThroughColiftingObject,
                       MorphismIntoColiftingObject  
                     ],
-  function( alpha )
+  function( cat, alpha )
     local a, I_a;
     
     a := Source( alpha );
@@ -71,7 +71,7 @@ AddFinalDerivation( IsColiftableThroughColiftingObject,
                       IsColiftableThroughColiftingObject,
                       MorphismIntoColiftingObject  
                     ],
-  IsNullHomotopic : CategoryFilter := IsChainOrCochainComplexCategory,
+  { cat, alpha } -> IsNullHomotopic( alpha ) : CategoryFilter := IsChainOrCochainComplexCategory,
       Description:= "IsColiftableThroughColiftingObject by IsNullHomotopic"
       );
 

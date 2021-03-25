@@ -11,7 +11,7 @@ AddDerivationToCAP( IsLiftableThroughLiftingObject,
                     [ MorphismFromLiftingObject,  1 ]
                 ],
     
-  function( alpha )
+  function( cat, alpha )
     local b, P_b;
     
     b := Range( alpha );
@@ -30,7 +30,7 @@ AddDerivationToCAP( IsLiftableThroughLiftingObject,
                     [ MorphismFromLiftingObject,  1 ]
                 ],
     
-  function( alpha )
+  function( cat, alpha )
     local b, P_b;
     
     b := Range( alpha );
@@ -48,7 +48,7 @@ AddDerivationToCAP( WitnessForBeingLiftableThroughLiftingObject,
                     [ MorphismFromLiftingObject,  1 ]
                 ],
     
-  function( alpha )
+  function( cat, alpha )
     local b, P_b;
     
     b := Range( alpha );
@@ -68,7 +68,7 @@ AddDerivationToCAP( IsColiftableThroughColiftingObject,
                     [ MorphismIntoColiftingObject,  1 ]
                 ],
   
-  function( alpha )
+  function( cat, alpha )
     local a, I_a;
     
     a := Source( alpha );
@@ -87,7 +87,7 @@ AddDerivationToCAP( IsColiftableThroughColiftingObject,
                     [ MorphismIntoColiftingObject,  1 ]
                 ],
     
-  function( alpha )
+  function( cat, alpha )
     local a, I_a;
     
     a := Source( alpha );
@@ -105,7 +105,7 @@ AddDerivationToCAP( WitnessForBeingColiftableThroughColiftingObject,
                     [ MorphismIntoColiftingObject,  1 ]
                 ],
     
-  function( alpha )
+  function( cat, alpha )
     local a, I_a;
     
     a := Source( alpha );

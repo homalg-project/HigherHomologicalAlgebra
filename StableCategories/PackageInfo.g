@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2020.11-01",
+Version := "2021.03-01",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -70,7 +70,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.8",
-  NeededOtherPackages := [ [ "CAP", ">= 2020.04.27" ],
+  NeededOtherPackages := [ [ "CAP", ">= 2021.03-01" ],
                            [ "GAPDoc", ">= 1.5" ],
                             #[ "TriangulatedCategories", ">= 2020.07.15" ],
                             #[ "FrobeniusCategories", ">= 2019.12.06" ],

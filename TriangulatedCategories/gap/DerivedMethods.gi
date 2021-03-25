@@ -15,7 +15,7 @@ AddDerivationToCAP( IsExactTriangle,
                 [
                   [ WitnessIsomorphismOntoStandardConeObject, 1 ],
                 ],
-  function( alpha, iota, pi )
+  function( cat, alpha, iota, pi )
     
     return WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi ) <> fail;
     
@@ -34,7 +34,7 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
                   WitnessIsomorphismOntoStandardConeObject,
                   WitnessIsomorphismFromStandardConeObject
                 ],
-  function( alpha, iota, pi )
+  function( cat, alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
     
     if not IsEqualForObjects( ShiftOnObject( Source( alpha ) ), Range( pi ) ) then
@@ -68,7 +68,7 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
   end,
 [
   WitnessIsomorphismFromStandardConeObject,
-    function( alpha, iota, pi )
+    function( cat, alpha, iota, pi )
       local w;
       
       w := WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi );
@@ -98,7 +98,7 @@ AddFinalDerivation( IsIsomorphism,
                 [
                     IsIsomorphism
                 ],
-  function( alpha )
+  function( cat, alpha )
   
     return IsZeroForObjects( StandardConeObject( alpha ) );
     
@@ -113,7 +113,7 @@ AddDerivationToCAP( DomainMorphismByOctahedralAxiomWithGivenObjects,
                     [ IdentityMorphism, 1 ],
                     [ MorphismBetweenStandardConeObjectsWithGivenObjects,  1 ]
                 ],
-  function( s, alpha, beta, gamma, r )
+  function( cat, s, alpha, beta, gamma, r )
     local A, id_A;
     
     A := Source( alpha );
@@ -132,7 +132,7 @@ AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
                   [ ShiftOnObject, 1 ],
                   [ ShiftOnMorphismWithGivenObjects, 1 ]
                 ],
-  function( s, alpha, beta, gamma, r )
+  function( cat, s, alpha, beta, gamma, r )
     local B, pi_beta, cone_alpha, iota_alpha;
     
     B := Range( alpha );
@@ -164,7 +164,7 @@ AddDerivationToCAP( IsSplitEpimorphism,
                 [
                     [ IsEpimorphism, 1 ]
                 ],
-  function( alpha )
+  function( cat, alpha )
     return IsEpimorphism( alpha );
 end:
   CategoryFilter := IsTriangulatedCategory,
@@ -176,7 +176,7 @@ AddDerivationToCAP( IsSplitMonomorphism,
                 [
                     [ IsMonomorphism, 1 ]
                 ],
-  function( alpha )
+  function( cat, alpha )
     return IsMonomorphism( alpha );
 end:
   CategoryFilter := IsTriangulatedCategory,
@@ -188,7 +188,7 @@ AddDerivationToCAP( IsEpimorphism,
                 [
                     [ IsSplitEpimorphism, 1 ]
                 ],
-  function( alpha )
+  function( cat, alpha )
     return IsSplitEpimorphism( alpha );
 end:
   CategoryFilter := IsTriangulatedCategory,
@@ -200,7 +200,7 @@ AddDerivationToCAP( IsMonomorphism,
                 [
                     [ IsSplitMonomorphism, 1 ]
                 ],
-  function( alpha )
+  function( cat, alpha )
     return IsSplitMonomorphism( alpha );
 end:
   CategoryFilter := IsTriangulatedCategory,
@@ -213,7 +213,7 @@ AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
                     [ InjectionOfCofactorOfDirectSum, 1 ],
                     [ ShiftOnMorphismWithGivenObjects, 1 ]
                 ],
-  function( s, L, r  )
+  function( cat, s, L, r  )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
@@ -230,7 +230,7 @@ AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
                     [ ProjectionInFactorOfDirectSum, 1 ],
                     [ ShiftOnMorphismWithGivenObjects, 1 ]
                 ],
-  function( s, L, r  )
+  function( cat, s, L, r  )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
@@ -249,7 +249,7 @@ AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
                     [ InjectionOfCofactorOfDirectSum, 1 ],
                     [ InverseShiftOnMorphismWithGivenObjects, 1 ]
                 ],
-  function( s, L, r )
+  function( cat, s, L, r )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
@@ -267,7 +267,7 @@ AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
                     [ ProjectionInFactorOfDirectSum, 1 ],
                     [ InverseShiftOnMorphismWithGivenObjects, 1 ]
                 ],
-  function( s, L, r )
+  function( cat, s, L, r )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
