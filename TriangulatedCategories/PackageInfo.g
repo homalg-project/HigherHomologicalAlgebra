@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
 Subtitle := "Framework for triangulated categories",
-Version := "2020.11-04",
-Date := "10/11/2020",
+Version := "2021.03-01",
+Date := "13/04/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/TriangulatedCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-", ~.Version, "/TriangulatedCategories-", ~.Version ),
@@ -70,7 +70,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.8",
-  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ], [ "CAP", ">= 2020.04.27" ] ],
+  NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ], [ "CAP", ">= 2021.03-01" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
 ),
