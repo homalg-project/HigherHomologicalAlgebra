@@ -14,14 +14,14 @@ InstallValue( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, rec(
 
 StandardConeObject:= rec(
   installation_name := "StandardConeObject",
-  filter_list := [ "morphism" ],
+  filter_list := [ "category", "morphism" ],
   cache_name := "StandardConeObject",
   return_type := "object"
 ),
 
 MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
   installation_name := "MorphismIntoStandardConeObjectWithGivenStandardConeObject",
-  filter_list := [ "morphism", "object" ],
+  filter_list := [ "category", "morphism", "object" ],
   io_type := [ [ "alpha", "cone_alpha" ], [ "range_alpha", "cone_alpha" ] ],
   number_of_diagram_arguments := 1,
   cache_name := "MorphismIntoStandardConeObjectWithGivenStandardConeObject",
@@ -30,7 +30,7 @@ MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
 
 MorphismFromStandardConeObjectWithGivenStandardConeObject := rec(
   installation_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
-  filter_list := [ "morphism", "object" ],
+  filter_list := [ "category", "morphism", "object" ],
   io_type := [ [ "alpha", "cone_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
   number_of_diagram_arguments := 1,  
   cache_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
@@ -39,7 +39,7 @@ MorphismFromStandardConeObjectWithGivenStandardConeObject := rec(
 
 MorphismIntoStandardConeObject := rec(
   installation_name := "MorphismIntoStandardConeObject",
-  filter_list := [ "morphism" ],
+  filter_list := [ "category", "morphism" ],
   io_type := [ [ "alpha" ], [ "range_alpha", "cone_alpha" ] ],
   cache_name := "MorphismIntoStandardConeObject",
   return_type := "morphism"
@@ -47,7 +47,7 @@ MorphismIntoStandardConeObject := rec(
 
 MorphismFromStandardConeObject := rec(
   installation_name := "MorphismFromStandardConeObject",
-  filter_list := [ "morphism" ],
+  filter_list := [ "category", "morphism" ],
   io_type := [ [ "alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
   cache_name := "MorphismFromStandardConeObject",
   return_type := "morphism"
@@ -55,7 +55,7 @@ MorphismFromStandardConeObject := rec(
 
 ShiftOnObject:= rec(
   installation_name := "ShiftOnObject",
-  filter_list := [ "object" ],
+  filter_list := [ "category", "object" ],
   cache_name := "ShiftOnObject",
   return_type := "object"
 ),
@@ -63,14 +63,14 @@ ShiftOnObject:= rec(
 ShiftOnMorphismWithGivenObjects := rec(
   installation_name := "ShiftOnMorphismWithGivenObjects",
   io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   cache_name := "ShiftOnMorphismWithGivenObjects",
   return_type := "morphism"
 ),
 
 InverseShiftOnObject := rec(
   installation_name := "InverseShiftOnObject",
-  filter_list := [ "object" ],
+  filter_list := [ "category", "object" ],
   cache_name := "InverseShiftOnObject",
   return_type := "object"
 ),
@@ -78,7 +78,7 @@ InverseShiftOnObject := rec(
 InverseShiftOnMorphismWithGivenObjects := rec(
   installation_name := "InverseShiftOnMorphismWithGivenObjects",
   io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   cache_name := "InverseShiftOnMorphismWithGivenObjects",
   return_type := "morphism"
 ),
@@ -86,7 +86,7 @@ InverseShiftOnMorphismWithGivenObjects := rec(
 WitnessIsomorphismOntoStandardConeObject := rec(
   installation_name := "WitnessIsomorphismOntoStandardConeObject",
   io_type := [ [ "alpha", "iota", "pi" ], [ "range_iota", "cone_alpha" ] ],
-  filter_list := [ "morphism", "morphism", "morphism" ],
+  filter_list := [ "category", "morphism", "morphism", "morphism" ],
   cache_name := "WitnessIsomorphismOntoStandardConeObject",
   return_type := "morphism_or_fail"
 ),
@@ -94,21 +94,21 @@ WitnessIsomorphismOntoStandardConeObject := rec(
 WitnessIsomorphismFromStandardConeObject := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObject",
   io_type := [ [ "alpha", "iota", "pi" ], [ "cone_alpha", "range_iota" ] ],
-  filter_list := [ "morphism", "morphism", "morphism" ],
+  filter_list := [ "category", "morphism", "morphism", "morphism" ],
   cache_name := "WitnessIsomorphismFromStandardConeObject",
   return_type := "morphism_or_fail"
 ),
 
 IsExactTriangle := rec(
   installation_name := "IsExactTriangle",
-  filter_list := [ "morphism", "morphism", "morphism" ],
+  filter_list := [ "category", "morphism", "morphism", "morphism" ],
   cache_name := "IsExactTriangle",
   return_type := "bool"
 ),
 
 UnitIsomorphismWithGivenObject := rec(
   installation_name := "UnitIsomorphismWithGivenObject",
-  filter_list := [ "object", "object" ],
+  filter_list := [ "category", "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
   cache_name := "UnitIsomorphismWithGivenObject",
   return_type := "morphism"
@@ -116,7 +116,7 @@ UnitIsomorphismWithGivenObject := rec(
 
 #UnitIsomorphism := rec(
 #  installation_name := "UnitIsomorphism",
-#  filter_list := [ "object" ],
+#  filter_list := [ "category", "object" ],
 #  io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
 #  cache_name := "UnitIsomorphism",
 #  return_type := "morphism"
@@ -124,7 +124,7 @@ UnitIsomorphismWithGivenObject := rec(
 
 InverseOfCounitIsomorphismWithGivenObject := rec(
   installation_name := "InverseOfCounitIsomorphismWithGivenObject",
-  filter_list := [ "object", "object" ],
+  filter_list := [ "category", "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
   cache_name := "InverseOfCounitIsomorphismWithGivenObject",
   return_type := "morphism"
@@ -132,7 +132,7 @@ InverseOfCounitIsomorphismWithGivenObject := rec(
 
 #InverseOfCounitIsomorphism := rec(
 #  installation_name := "InverseOfCounitIsomorphism",
-#  filter_list := [ "object" ],
+#  filter_list := [ "category", "object" ],
 #  io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
 #  cache_name := "InverseOfCounitIsomorphism",
 #  return_type := "morphism"
@@ -140,7 +140,7 @@ InverseOfCounitIsomorphismWithGivenObject := rec(
 
 InverseOfUnitIsomorphismWithGivenObject := rec(
   installation_name := "InverseOfUnitIsomorphismWithGivenObject",
-  filter_list := [ "object", "object" ],
+  filter_list := [ "category", "object", "object" ],
   io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
   cache_name := "InverseOfUnitIsomorphismWithGivenObject",
   return_type := "morphism"
@@ -148,7 +148,7 @@ InverseOfUnitIsomorphismWithGivenObject := rec(
 
 #InverseOfUnitIsomorphism := rec(
 #  installation_name := "InverseOfUnitIsomorphism",
-#  filter_list := [ "object" ],
+#  filter_list := [ "category", "object" ],
 #  io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
 #  cache_name := "InverseOfUnitIsomorphism",
 #  return_type := "morphism"
@@ -156,7 +156,7 @@ InverseOfUnitIsomorphismWithGivenObject := rec(
 
 CounitIsomorphismWithGivenObject := rec(
   installation_name := "CounitIsomorphismWithGivenObject",
-  filter_list := [ "object", "object" ],
+  filter_list := [ "category", "object", "object" ],
   io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
   cache_name := "CounitIsomorphismWithGivenObject",
   return_type := "morphism"
@@ -164,12 +164,13 @@ CounitIsomorphismWithGivenObject := rec(
 
 #CounitIsomorphism := rec(
 #  installation_name := "CounitIsomorphism",
-#  filter_list := [ "object" ],
+#  filter_list := [ "category", "object" ],
 #  io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
 #  cache_name := "CounitIsomorphism",
 #  return_type := "morphism"
 #),
 
+# this cannot have the category as the first argument due to GAP only supporting operations with at most 6 arguments :-(
 MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   installation_name := "MorphismBetweenStandardConeObjectsWithGivenObjects",
   filter_list := [ "object", "morphism", "morphism", "morphism", "morphism", "object" ],
@@ -181,28 +182,28 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
 
 DomainMorphismByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
   return_type := "morphism",
 ),
 
 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := "morphism",
 ),
 
 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   cache_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := "morphism",
 ),
 
 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "cone_g", "f", "g", "h", "st_cone" ], [ "cone_g", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := "morphism",
@@ -210,7 +211,7 @@ WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec
 
 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "g", "h", "cone_g" ], [ "st_cone", "cone_g" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
   return_type := "morphism",
@@ -218,7 +219,7 @@ WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec
 
 WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
   return_type := "morphism",
@@ -226,7 +227,7 @@ WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
 
 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects",
   return_type := "morphism",
@@ -234,7 +235,7 @@ WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
 
 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   cache_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   return_type := "morphism",
@@ -242,7 +243,7 @@ WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects :
 
 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
   installation_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
-  filter_list := [ "object", "morphism", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   cache_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   return_type := "morphism",
@@ -250,7 +251,7 @@ WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects :
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
   installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
+  filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftExpandingIsomorphismWithGivenObjects",
   return_type := "morphism"
@@ -258,7 +259,7 @@ ShiftExpandingIsomorphismWithGivenObjects := rec(
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
+  filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "ShiftFactoringIsomorphismWithGivenObjects",
   return_type := "morphism"
@@ -266,7 +267,7 @@ ShiftFactoringIsomorphismWithGivenObjects := rec(
 
 InverseShiftExpandingIsomorphismWithGivenObjects := rec(
   installation_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
+  filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
   return_type := "morphism"
@@ -274,7 +275,7 @@ InverseShiftExpandingIsomorphismWithGivenObjects := rec(
 
 InverseShiftFactoringIsomorphismWithGivenObjects := rec(
   installation_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
-  filter_list := [ "object", IsList, "object" ],
+  filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   cache_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
   return_type := "morphism"

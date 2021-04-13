@@ -5,5 +5,4 @@
 #
 
 gap> LoadPackage( "DerivedCategories", false );
-#I  method installed for IsInjective matches more than one declaration
 true

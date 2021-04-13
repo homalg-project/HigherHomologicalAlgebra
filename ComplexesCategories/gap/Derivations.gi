@@ -19,7 +19,7 @@ AddDerivationToCAP( IsNullHomotopic,
                 [
                     [ HomotopyMorphisms, 1 ],
                 ],
-    function( phi )
+    function( cat, phi )
     
       return HomotopyMorphisms( phi ) <> fail;
       
@@ -31,7 +31,7 @@ AddDerivationToCAP( HomotopyMorphisms,
                 [
                     #[ IdentityMorphism, 1 ] # this should be modified!
                 ],
-  function( phi )
+  function( cat, phi )
     local A, B, m, n, L, K, b, sol, H;
     
     A := Source( phi );
@@ -148,7 +148,7 @@ AddDerivationToCAP( HomotopyMorphisms,
                 [
                     #[ IdentityMorphism, 1 ]
                 ],
-  function( phi )
+  function( cat, phi )
     local A, B, m, n, L, K, b, sol, H;
     
     A := Source( phi );
@@ -269,7 +269,7 @@ AddFinalDerivation( HomotopyMorphisms,
                 [
                   HomotopyMorphisms
                 ],
-  function( phi )
+  function( cat, phi )
     local C, D, colift;
     
     C := Source( phi );
@@ -313,7 +313,7 @@ AddFinalDerivation( HomotopyMorphisms,
                 [
                   HomotopyMorphisms
                 ],
-  function( phi )
+  function( cat, phi )
     local C, D, colift;
     
     C := Source( phi );
@@ -359,10 +359,8 @@ AddDerivationToCAP( Lift,
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
               [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
-  function( alpha, beta )
-    local cat, P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
-    
-    cat := CapCategory( alpha );
+  function( cat, alpha, beta )
+    local P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
     
     P := Source( alpha );
     
@@ -469,11 +467,9 @@ AddDerivationToCAP( Colift,
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
               [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
-  function( alpha, beta )
-    local cat, M, N, I, D, D_to_hom_MI, NI_to_MI, m1, m2, lift;
+  function( cat, alpha, beta )
+    local M, N, I, D, D_to_hom_MI, NI_to_MI, m1, m2, lift;
   
-    cat := CapCategory( alpha );
-    
     M := Source( alpha );
     
     N := Range( alpha );
@@ -578,7 +574,7 @@ AddDerivationToCAP( Lift,
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
               [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
-  function( alpha, beta )
+  function( cat, alpha, beta )
     local f, g, l;
     
     f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
@@ -630,7 +626,7 @@ AddDerivationToCAP( Colift,
               [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
               [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
             ],
-  function( alpha, beta )
+  function( cat, alpha, beta )
     local f, g, l;
     
     f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( beta );
