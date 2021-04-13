@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2020.11-01",
-Date := "04/11/2020",
+Version := "2021.03-01",
+Date := "13/04/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/StableCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-", ~.Version, "/StableCategories-", ~.Version ),
@@ -70,7 +70,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.8",
-  NeededOtherPackages := [ [ "CAP", ">= 2020.04.27" ],
+  NeededOtherPackages := [ [ "CAP", ">= 2021.03-01" ],
                            [ "GAPDoc", ">= 1.5" ],
                             #[ "TriangulatedCategories", ">= 2020.07.15" ],
                             #[ "FrobeniusCategories", ">= 2019.12.06" ],
