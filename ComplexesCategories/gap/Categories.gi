@@ -446,7 +446,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         "LiftAlongMonomorphism",
         "ColiftAlongEpimorphism",
         "AdditiveInverseForMorphisms",
-        "InverseImmutable"
+        "InverseForMorphisms"
       ];
        
     create_func_from_name :=
