@@ -23,13 +23,11 @@ InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec(
   IsNullHomotopic := rec(
     installation_name := "IsNullHomotopic", 
     filter_list := [ "category", "morphism" ],
-    cache_name := "IsNullHomotopic",
     return_type := "bool" ),
 
   HomotopyMorphisms := rec( 
     installation_name := "HomotopyMorphisms", 
     filter_list := [ "category", "morphism" ],
-    cache_name := "HomotopyMorphisms",
     return_type := IsZFunction ),
 
 ) );
