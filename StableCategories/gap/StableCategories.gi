@@ -49,87 +49,73 @@ InstallValue( STABLE_CATEGORIES_METHOD_NAME_RECORD, rec(
 IsLiftingObject := rec(
   installation_name := "IsLiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "IsLiftingObject",
   return_type := "bool" ),
 
 LiftingObject := rec(
   installation_name := "LiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "LiftingObject",
   return_type := "object" ),
 
 LiftingMorphismWithGivenLiftingObjects := rec(
     installation_name := "LiftingMorphismWithGivenLiftingObjects",
     filter_list := [ "category", "morphism", "object", "object" ],
-    cache_name := "LiftingMorphismWithGivenLiftingObjects",
     return_type := "morphism" ),
     
 MorphismFromLiftingObjectWithGivenLiftingObject := rec(
   installation_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
   filter_list := [ "category", "object", "object" ],
-  cache_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
-  number_of_diagram_arguments := 1,
   return_type := "morphism" ),
 
 MorphismFromLiftingObject := rec(
   installation_name := "MorphismFromLiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "MorphismFromLiftingObject",
+  with_given_object_position := "Source",
   return_type := "morphism" ),
 
 IsLiftableThroughLiftingObject := rec(
   installation_name := "IsLiftableThroughLiftingObject",
   filter_list := [ "category", "morphism" ],
-  cache_name := "IsLiftableThroughLiftingObject",
   return_type := "bool" ),
 
 WitnessForBeingLiftableThroughLiftingObject := rec(
   installation_name := "WitnessForBeingLiftableThroughLiftingObject",
   filter_list := [ "category", "morphism" ],
-  cache_name := "WitnessForBeingLiftableThroughLiftingObject",
   return_type := "morphism" ),
 
 IsColiftingObject := rec(
   installation_name := "IsColiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "IsColiftingObject",
   return_type := "bool" ),
 
 ColiftingObject := rec(
   installation_name := "ColiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "ColiftingObject",
   return_type := "object" ),
 
 ColiftingMorphismWithGivenColiftingObjects := rec(
   installation_name := "ColiftingMorphismWithGivenColiftingObjects",
   filter_list := [ "category", "morphism", "object", "object" ],
-  cache_name := "ColiftingMorphismWithGivenColiftingObjects",
   return_type := "morphism" ),
   
 MorphismIntoColiftingObjectWithGivenColiftingObject := rec(
   installation_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
   filter_list := [ "category", "object", "object" ],
-  cache_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
-  number_of_diagram_arguments := 1,
   return_type := "morphism" ),
 
 MorphismIntoColiftingObject := rec(
   installation_name := "MorphismIntoColiftingObject",
   filter_list := [ "category", "object" ],
-  cache_name := "MorphismIntoColiftingObject",
+  with_given_object_position := "Range",
   return_type := "morphism" ),
 
 IsColiftableThroughColiftingObject := rec(
   installation_name := "IsColiftableThroughColiftingObject",
   filter_list := [ "category", "morphism" ],
-  cache_name := "IsColiftableThroughColiftingObject",
   return_type := "bool" ),
 
 WitnessForBeingColiftableThroughColiftingObject := rec(
   installation_name := "WitnessForBeingColiftableThroughColiftingObject",
   filter_list := [ "category", "morphism" ],
-  cache_name := "WitnessForBeingColiftableThroughColiftingObject",
   return_type := "morphism" ),
 
 ) );

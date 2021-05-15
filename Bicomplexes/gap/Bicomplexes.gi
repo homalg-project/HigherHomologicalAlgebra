@@ -269,11 +269,11 @@ InstallMethod( AsCategoryOfBicomplexes,
                 ## with-given-universal-object counterpart
                 Add( recnames, info.with_given_without_given_name_pair[2] );
                 continue;
-            elif IsBound( info.universal_object ) and
-              Position( recnames, info.universal_object ) = fail then
+            elif IsBound( info.with_given_object_name ) and
+              Position( recnames, info.with_given_object_name ) = fail then
                 ## add the corresponding universal object
                 ## at the end of the list for its method to be installed
-                Add( recnames, info.universal_object );
+                Add( recnames, info.with_given_object_name );
             fi;
 
             if IsList( info.with_given_without_given_name_pair ) then
