@@ -653,7 +653,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
         
         list_of_operations :=
           [
-            "MorphismBetweenDirectSums"
+            "MorphismBetweenDirectSumsWithGivenDirectSums"
           ];
           
         create_func_from_name :=
@@ -666,15 +666,17 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             
             return
               function( arg )
-                local src_rng, morphisms;
+                local src_rng, morphisms, source_diagram, range_diagram;
                 
                 src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
                 
-                morphisms := List( arg[ 2 ], r -> CombineZFunctions( List( r, Morphisms ) ) );
+                morphisms := List( arg[ 3 ], r -> CombineZFunctions( List( r, Morphisms ) ) );
                 
                 morphisms := CombineZFunctions( morphisms );
                 
-                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), morphisms, Objects( src_rng[ 2 ] ) ], oper );
+                # TODO: compute source_diagram and range_diagram from arg[2] and arg[4]
+                
+                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), source_diagram, morphisms, range_diagram, Objects( src_rng[ 2 ] ) ], oper );
                 
                 return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
                 

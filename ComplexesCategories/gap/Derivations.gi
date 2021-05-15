@@ -439,7 +439,7 @@ CategoryFilter := function( chains )
       fi;
       
       conditions := [
-        "MorphismBetweenDirectSums",
+        "MorphismBetweenDirectSumsWithGivenDirectSums",
         "Lift",
       ];
 
@@ -547,7 +547,7 @@ CategoryFilter := function( chains )
       fi;
       
       conditions := [
-        "MorphismBetweenDirectSums",
+        "MorphismBetweenDirectSumsWithGivenDirectSums",
         "Lift",
       ];
 

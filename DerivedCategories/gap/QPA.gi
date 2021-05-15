@@ -3151,7 +3151,7 @@ InstallMethod( CategoryOfQuiverRepresentations,
     
     ##
     AddDirectSumFunctorialWithGivenDirectSums( cat,      
-      function( D1, morphisms, D2 )
+      function( D1, source_diagram, morphisms, range_diagram, D2 )
         local matrices;
         
         matrices := List( morphisms, MatricesOfRepresentationHomomorphism );
@@ -3163,8 +3163,8 @@ InstallMethod( CategoryOfQuiverRepresentations,
       end );
     
     ##
-    AddMorphismBetweenDirectSums( cat,
-      function( D1, morphisms, D2 )
+    AddMorphismBetweenDirectSumsWithGivenDirectSums( cat,
+      function( D1, source_diagram, morphisms, range_diagram, D2 )
         local matrices;
         
         if IsEmpty( morphisms ) or IsEmpty( morphisms[ 1 ] ) then

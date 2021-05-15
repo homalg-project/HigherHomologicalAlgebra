@@ -89,7 +89,16 @@ InstallMethod( UnitOfTensorHomAdjunction,
           
         od;
         
-        map := MorphismBetweenDirectSums( pr, TransposedMat( [ maps ] ), htr );
+        # TODO: can this case happen?
+        if IsEmpty( maps ) or IsEmpty( maps[1] ) then
+            
+            map := ZeroMorphism( pr, htr );
+            
+        else
+            
+            map := MorphismBetweenDirectSums( TransposedMat( [ maps ] ) );
+            
+        fi;
         
         return ColiftAlongEpimorphism( EpimorphismFromSomeProjectiveObject( r ), map );
         
