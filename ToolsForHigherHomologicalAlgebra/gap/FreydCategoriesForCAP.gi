@@ -4,6 +4,147 @@
 # Implementations
 #
 
+#######################
+#
+# Dual functor
+#
+######################
+
+##
+InstallOtherMethod( UnderlyingMatrix, [ IsGradedRowMorphism ], UnderlyingHomalgMatrix );
+InstallOtherMethod( GradedRow, [ IsList, IsCategoryOfGradedRows ], { degrees, rows } -> GradedRow( degrees, UnderlyingGradedRing( rows ) ) );
+
+
+##
+InstallMethod( DualOfFpModuleByFreyd,
+          [ IsFreydCategoryObject ],
+  function( M )
+    local rows, rel_map, m;
+    
+    rows := UnderlyingCategory( CapCategory( M ) );
+    
+    rel_map := RelationMorphism( M );
+    
+    if IsCategoryOfGradedRows( rows ) then
+      
+      m := AsFreydCategoryMorphism(
+              GradedRowOrColumnMorphism(
+                GradedRow( List( DegreeList( Range( rel_map ) ), d -> [ -d[1], d[2] ] ), rows ),
+                Involution( UnderlyingMatrix( rel_map ) ),
+                GradedRow( List( DegreeList( Source( rel_map ) ), d -> [ -d[1], d[2] ] ), rows )
+              )
+          );
+    
+    elif IsCategoryOfRows( rows ) then
+      
+      m := AsFreydCategoryMorphism(
+              CategoryOfRowsMorphism(
+                Range( rel_map ),
+                Involution( UnderlyingMatrix( rel_map ) ),
+                Source( rel_map )
+              )
+          );
+    
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+     
+    return KernelObject( m );
+    
+    
+end );
+
+##
+InstallMethod( DualOfFpModuleHomomorphismByFreyd,
+          [ IsFreydCategoryMorphism ],
+  function( phi )
+    local rows, s_map, phi_map, r_map;
+    
+    rows := UnderlyingCategory( CapCategory( phi ) );
+    
+    s_map := RelationMorphism( Source( phi ) );
+    
+    phi_map := MorphismDatum( phi );
+     
+    r_map := RelationMorphism( Range( phi ) );
+    
+    if IsCategoryOfGradedRows( rows ) then
+        
+        s_map := AsFreydCategoryMorphism(
+              GradedRowOrColumnMorphism(
+                GradedRow( List( DegreeList( Range( s_map ) ), d -> [ -d[1], d[2] ] ), rows ),
+                Involution( UnderlyingMatrix( s_map ) ),
+                GradedRow( List( DegreeList( Source( s_map ) ), d -> [ -d[1], d[2] ] ), rows )
+              )
+            );
+        
+        phi_map := AsFreydCategoryMorphism(
+              GradedRowOrColumnMorphism(
+                GradedRow( List( DegreeList( Range( phi_map ) ), d -> [ -d[1], d[2] ] ), rows ),
+                Involution( UnderlyingMatrix( phi_map ) ),
+                GradedRow( List( DegreeList( Source( phi_map ) ), d -> [ -d[1], d[2] ] ), rows )
+              )
+            );
+        
+        r_map := AsFreydCategoryMorphism(
+              GradedRowOrColumnMorphism(
+                GradedRow( List( DegreeList( Range( r_map ) ), d -> [ -d[1], d[2] ] ), rows ),
+                Involution( UnderlyingMatrix( r_map ) ),
+                GradedRow( List( DegreeList( Source( r_map ) ), d -> [ -d[1], d[2] ] ), rows )
+              )
+            );
+        
+    fi;
+      
+    return KernelObjectFunctorial( r_map, phi_map, s_map );
+    
+end );
+
+##
+InstallMethod( IsomorphismOntoDoubleDualOfFpModuleByFreyd,
+          [ IsFreydCategoryObject ],
+  function( M )
+    local rel_map, rows, m, iota;
+    
+    rel_map := RelationMorphism( M );
+    
+    rows := CapCategory( rel_map );
+    
+    if IsCategoryOfGradedRows( rows ) then
+      
+      m := AsFreydCategoryMorphism(
+              GradedRowOrColumnMorphism(
+                GradedRow( List( DegreeList( Range( rel_map ) ), d -> [ -d[1], d[2] ] ), rows ),
+                Involution( UnderlyingMatrix( rel_map ) ),
+                GradedRow( List( DegreeList( Source( rel_map ) ), d -> [ -d[1], d[2] ] ), rows )
+              )
+          );
+    
+    elif IsCategoryOfRows( rows ) then
+      
+      m := AsFreydCategoryMorphism(
+              CategoryOfRowsMorphism(
+                Range( rel_map ),
+                Involution( UnderlyingMatrix( rel_map ) ),
+                Source( rel_map )
+              )
+          );
+    
+    else
+      
+      TryNextMethod( );
+      
+    fi;
+    
+    rel_map := AsFreydCategoryMorphism( rel_map );
+    
+    iota := KernelEmbedding( m );
+    
+    return CokernelColift( rel_map, DualOfFpModuleHomomorphismByFreyd( iota ) );
+     
+end );
 ##
 InstallMethod( QuiverRows,
           [ IsQuiverAlgebra ],

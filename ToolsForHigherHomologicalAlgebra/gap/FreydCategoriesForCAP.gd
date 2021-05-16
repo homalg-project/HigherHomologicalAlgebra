@@ -4,6 +4,11 @@
 # Declarations
 #
 
+DeclareAttribute( "DualOfFpModuleByFreyd", IsFreydCategoryObject );
+
+DeclareAttribute( "DualOfFpModuleHomomorphismByFreyd", IsFreydCategoryMorphism );
+
+DeclareAttribute( "IsomorphismOntoDoubleDualOfFpModuleByFreyd", IsFreydCategoryObject );
 DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryObject ] );
 
 DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryMorphism ] );
