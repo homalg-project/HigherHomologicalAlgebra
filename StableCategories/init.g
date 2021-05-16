@@ -5,6 +5,4 @@
 #
 
 ReadPackage( "StableCategories", "gap/StableCategories.gd");
-ReadPackage( "StableCategories", "gap/HomotopyCategory.gd");
-#ReadPackage( "StableCategories", "gap/TriangulatedStructure.gd" );
-
+ReadPackage( "StableCategories", "gap/FrobeniusCategories.gd");
