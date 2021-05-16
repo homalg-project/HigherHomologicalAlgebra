@@ -38,18 +38,13 @@ Category of left presentations of Z
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AddMorphismFromLiftingObject( cat, EpimorphismFromSomeProjectiveObject );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Finalize( cat );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stable_cat := StableCategoryBySystemOfLiftingObjects( cat );</span>
-Stable category( Category of left presentations of Z ) defined by 
-IsLiftableThroughLiftingObject
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stable_functor := ProjectionFunctor( stable_cat );</span>
-Canonical projection functor from Category of left presentations of Z in Stable
-category( Category of left presentations of Z ) defined by
-IsLiftableThroughLiftingObject
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stable_cat := StableCategoryBySystemOfLiftingObjects( cat );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stable_functor := ProjectionFunctor( stable_cat );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := AsLeftPresentation( HomalgMatrix( "[[0,0],[0,2],[0,3]]", 3, 2, ZZ ) );</span>
 &lt;An object in Category of left presentations of Z&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">stable_a := ApplyFunctor( stable_functor, a );</span>
 &lt;An object in Stable category( Category of left presentations of Z ) defined by
-IsLiftableThroughLiftingObject&gt;
+IsLiftableAlongMorphismFromLiftingObject&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( a );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( stable_a );</span>
