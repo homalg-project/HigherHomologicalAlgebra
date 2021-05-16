@@ -191,6 +191,7 @@ AddFinalDerivation( MonomorphismIntoSomeInjectiveObject,
       
       end
 );
+
 ##
 InstallMethod( UniversalEquivalenceFromFreydCategory,
           [ IsCapFunctor ],
@@ -416,6 +417,68 @@ InstallMethod( LaTeXStringOp,
     return Concatenation( source, "\\xrightarrow{", matrix, "}", range );
     
 end );
+
+##
+InstallOtherMethod( LaTeXStringOp,
+          [ IsGradedRow ],
+          
+  function( obj )
+    local ring, degrees, exp_func, l;
+    
+    ring := UnderlyingHomalgGradedRing( obj );
+    
+    degrees := CollectEntries( UnzipDegreeList( obj ) );
+    degrees := List( degrees, d -> [ String( HomalgElementToInteger( d[1] ) ), d[2] ] );
+    
+    if IsEmpty( degrees ) then
+        
+        return "0";
+        
+    fi;
+    
+    exp_func := function( i )
+        if i = 1 then
+            return "";
+        else
+            return Concatenation( "\\oplus", String( i ) );
+        fi;
+    end;
+    
+    l := List( degrees, pair -> Concatenation( "{", LaTeXStringOp( ring ),"(", pair[1] ,")}^{", exp_func( pair[2] ), "}" ) );
+    
+    return JoinStringsWithSeparator( l, " \\oplus " );
+    
+end );
+
+InstallOtherMethod( LaTeXOutput, [ IsGradedRow ], LaTeXStringOp );
+
+##
+InstallOtherMethod( LaTeXStringOp,
+          [ IsGradedRowMorphism ],
+               
+  function( morphism )
+    local matrix, source, range;
+    
+    matrix := UnderlyingHomalgMatrix( morphism );
+    
+    matrix := LaTeXStringOp( matrix );
+    
+    if ValueOption( "OnlyDatum" ) = true then
+        
+        return matrix;
+        
+    fi;
+    
+    source := LaTeXStringOp( Source( morphism ) );
+    
+    range := LaTeXStringOp( Range( morphism ) );
+    
+    return Concatenation( source, "\\xrightarrow{", matrix, "}", range );
+    
+end );
+
+##
+InstallOtherMethod( LaTeXOutput, [ IsGradedRowMorphism ], LaTeXStringOp );
 
 ##
 InstallMethod( LaTeXStringOp,
