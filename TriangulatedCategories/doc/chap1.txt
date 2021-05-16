@@ -62,9 +62,9 @@
   [33X[0;0YThe arguments is an exact triangle defined by three morphisms [23X\alpha:A\to B[123X,
   [23X\iota:B\to C[123X and [23X\pi:C\to\Sigma A[123X. The output is [23X\alpha:A\to B[123X.[133X
   
-  [1X1.2-5 MorphismIntoConeObject[101X
+  [1X1.2-5 MorphismToConeObject[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoConeObject[102X( [3Xt[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMorphismToConeObject[102X( [3Xt[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism[133X
   
   [33X[0;0YThe arguments is an exact triangle defined by three morphisms [23X\alpha:A\to B[123X,

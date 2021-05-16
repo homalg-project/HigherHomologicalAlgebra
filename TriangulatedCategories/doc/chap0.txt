@@ -6,7 +6,7 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2021.05-01
+                                   2021.05-02
   
   
                                   16 May 2021
@@ -42,7 +42,7 @@
       1.2-2 UnderlyingCategory
       1.2-3 ExactTriangle
       1.2-4 DomainMorphism
-      1.2-5 MorphismIntoConeObject
+      1.2-5 MorphismToConeObject
       1.2-6 MorphismFromConeObject
       1.2-7 ObjectAt
       1.2-8 \[\]
@@ -82,10 +82,10 @@
     3.1 [33X[0;0YCategorical operations[133X
       3.1-1 StandardConeObject
       3.1-2 AddStandardConeObject
-      3.1-3 MorphismIntoStandardConeObjectWithGivenStandardConeObject
-      3.1-4 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject
-      3.1-5 MorphismIntoStandardConeObject
-      3.1-6 AddMorphismIntoStandardConeObject
+      3.1-3 MorphismToStandardConeObjectWithGivenStandardConeObject
+      3.1-4 AddMorphismToStandardConeObjectWithGivenStandardConeObject
+      3.1-5 MorphismToStandardConeObject
+      3.1-6 AddMorphismToStandardConeObject
       3.1-7 MorphismFromStandardConeObjectWithGivenStandardConeObject
       3.1-8 AddMorphismFromStandardConeObjectWithGivenStandardConeObject
       3.1-9 MorphismFromStandardConeObject
@@ -121,8 +121,8 @@
       3.1-39 ConeObjectByOctahedralAxiom
       3.1-40 DomainMorphismByOctahedralAxiomWithGivenObjects
       3.1-41 AddDomainMorphismByOctahedralAxiomWithGivenObjects
-      3.1-42 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
-      3.1-43 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-42 MorphismToConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-43 AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects
       3.1-44 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects
       3.1-45 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects
       3.1-46 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects
@@ -133,7 +133,7 @@
       3.1-51 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom
       3.1-52 ConeObjectByRotationAxiom
       3.1-53 DomainMorphismByRotationAxiom
-      3.1-54 MorphismIntoConeObjectByRotationAxiom
+      3.1-54 MorphismToConeObjectByRotationAxiom
       3.1-55 MorphismFromConeObjectByRotationAxiom
       3.1-56 WitnessIsomorphismOntoStandardConeObjectByRotationAxiom
       3.1-57 WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects
@@ -143,7 +143,7 @@
       3.1-61 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects
       3.1-62 ConeObjectByInverseRotationAxiom
       3.1-63 DomainMorphismByInverseRotationAxiom
-      3.1-64 MorphismIntoConeObjectByInverseRotationAxiom
+      3.1-64 MorphismToConeObjectByInverseRotationAxiom
       3.1-65 MorphismFromConeObjectByInverseRotationAxiom
       3.1-66 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom
       3.1-67 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects

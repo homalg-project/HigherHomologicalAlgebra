@@ -17,9 +17,9 @@
   [2XAddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-45 
   [2XAddMorphismFromStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-10 
   [2XAddMorphismFromStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-8 
-  [2XAddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-43 
-  [2XAddMorphismIntoStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-6 
-  [2XAddMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-4 
+  [2XAddMorphismToConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-43 
+  [2XAddMorphismToStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-6 
+  [2XAddMorphismToStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategory, IsFunction 3.1-4 
   [2XAddShiftExpandingIsomorphismWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-73 
   [2XAddShiftFactoringIsomorphismWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-76 
   [2XAddShiftOnMorphismWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-14 
@@ -84,14 +84,14 @@
   [2XMorphismFromConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 3.1-55 
   [2XMorphismFromStandardConeObject[102X, for IsCapCategoryMorphism 3.1-9 
   [2XMorphismFromStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 3.1-7 
-  [2XMorphismIntoConeObject[102X, for IsCapExactTriangle 1.2-5 
-  [2XMorphismIntoConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 3.1-64 
-  [2XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 3.1-42 
-  [2XMorphismIntoConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 3.1-54 
-  [2XMorphismIntoStandardConeObject[102X, for IsCapCategoryMorphism 3.1-5 
-  [2XMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 3.1-3 
   [2XMorphismOfExactTriangles[102X, for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-16 
       for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-20 
+  [2XMorphismToConeObject[102X, for IsCapExactTriangle 1.2-5 
+  [2XMorphismToConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 3.1-64 
+  [2XMorphismToConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 3.1-42 
+  [2XMorphismToConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 3.1-54 
+  [2XMorphismToStandardConeObject[102X, for IsCapCategoryMorphism 3.1-5 
+  [2XMorphismToStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 3.1-3 
   [2XObjectAt[102X, for IsCapExactTriangle, IsInt 1.2-7 
   [2XRotation[102X, for IsCapExactTriangle 1.2-25 
       for IsCapExactTriangle, IsBool 1.2-26 

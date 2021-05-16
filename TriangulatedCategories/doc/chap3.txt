@@ -21,41 +21,41 @@
   operation  adds the given function [23XF[123X to the category for the basic operation
   [10XStandardConeObject[110X.[133X
   
-  [1X3.1-3 MorphismIntoStandardConeObjectWithGivenStandardConeObject[101X
+  [1X3.1-3 MorphismToStandardConeObjectWithGivenStandardConeObject[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X( [3Xalpha[103X, [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMorphismToStandardConeObjectWithGivenStandardConeObject[102X( [3Xalpha[103X, [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X\iota(\alpha):B\to C(\alpha)[123X[133X
   
   [33X[0;0YThe  arguments are a morphism [23X\alpha: A \to B[123X in a triangulated category and
   an  object  [23XC:=C(\alpha)[123X.  The  output  is  the  morphism [23X\iota(\alpha):B\to
   C(\alpha)[123X into the standard cone object [23XC(\alpha)[123X.[133X
   
-  [1X3.1-4 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject[101X
+  [1X3.1-4 AddMorphismToStandardConeObjectWithGivenStandardConeObject[101X
   
-  [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismToStandardConeObjectWithGivenStandardConeObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XMorphismIntoStandardConeObjectWithGivenStandardConeObject[110X.[133X
+  [10XMorphismToStandardConeObjectWithGivenStandardConeObject[110X.[133X
   
-  [1X3.1-5 MorphismIntoStandardConeObject[101X
+  [1X3.1-5 MorphismToStandardConeObject[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoStandardConeObject[102X( [3Xalpha[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMorphismToStandardConeObject[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X\iota(\alpha):B\to C(\alpha)[123X[133X
   
   [33X[0;0YThe  argument  is a morphism [23X\alpha: A \to B[123X in a triangulated category. The
   output  is  the morphism [23X\iota(\alpha):B\to C(\alpha)[123X into the standard cone
   object [23XC(\alpha)[123X.[133X
   
-  [1X3.1-6 AddMorphismIntoStandardConeObject[101X
+  [1X3.1-6 AddMorphismToStandardConeObject[101X
   
-  [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismToStandardConeObject[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XMorphismIntoStandardConeObject[110X.[133X
+  [10XMorphismToStandardConeObject[110X.[133X
   
   [1X3.1-7 MorphismFromStandardConeObjectWithGivenStandardConeObject[101X
   
@@ -218,7 +218,7 @@
   
   [1X3.1-25 UnitIsomorphism[101X
   
-  [33X[1;0Y[29X[2XUnitIsomorphism[102X( [3XA[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnitIsomorphism[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to (\Sigma \circ \Sigma^{-1}) A[123X[133X
   
   [33X[0;0YThe  argument  is  an  object  [23XA[123X in a triangulated category [23X\mathcal{T}[123X. The
@@ -370,9 +370,9 @@
   operation  adds the given function [23XF[123X to the category for the basic operation
   [10XDomainMorphismByOctahedralAxiomWithGivenObjects[110X.[133X
   
-  [1X3.1-42 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[101X
+  [1X3.1-42 MorphismToConeObjectByOctahedralAxiomWithGivenObjects[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X( [3Xalpha[103X, [3Xbeta[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMorphismToConeObjectByOctahedralAxiomWithGivenObjects[102X( [3Xalpha[103X, [3Xbeta[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC(\beta\circ\alpha) \to C(\beta)[123X[133X
   
   [33X[0;0YThe arguments are two morphisms [23X\alpha:A\to B[123X, [23X\beta:B\to C[123X. The output is a
@@ -380,14 +380,14 @@
   [23X\iota_{\alpha,\beta}\circ\iota(\beta\circ\alpha)=\iota(\beta)[123X            and
   [23X\Sigma\alpha\circ\pi(\beta\circ\alpha)=\pi(\beta)[123X.[133X
   
-  [1X3.1-43 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[101X
+  [1X3.1-43 AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects[101X
   
-  [33X[1;0Y[29X[2XAddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismToConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XT[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe arguments are a triangulated category [23X\mathcal{T}[123X and a function [23XF[123X. This
   operation  adds the given function [23XF[123X to the category for the basic operation
-  [10XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[110X.[133X
+  [10XMorphismToConeObjectByOctahedralAxiomWithGivenObjects[110X.[133X
   
   [1X3.1-44 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects[101X
   
@@ -478,9 +478,9 @@
   [33X[0;0YThe  argument  is a morphism [23X\alpha:A\to B[123X. The output is [23X\iota(\alpha):B\to
   C(\alpha)[123X.[133X
   
-  [1X3.1-54 MorphismIntoConeObjectByRotationAxiom[101X
+  [1X3.1-54 MorphismToConeObjectByRotationAxiom[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoConeObjectByRotationAxiom[102X( [3Xalpha[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMorphismToConeObjectByRotationAxiom[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC(\alpha)\to \Sigma A[123X[133X
   
   [33X[0;0YThe  argument  is  a  morphism  [23X\alpha:A\to  B[123X.  The  output  is  a morphism
@@ -564,9 +564,9 @@
   [33X[0;0YThe  argument  is a morphism [23X\alpha:A\to B[123X. The output is [23X\iota(\alpha):B\to
   C(\alpha)[123X.[133X
   
-  [1X3.1-64 MorphismIntoConeObjectByInverseRotationAxiom[101X
+  [1X3.1-64 MorphismToConeObjectByInverseRotationAxiom[101X
   
-  [33X[1;0Y[29X[2XMorphismIntoConeObjectByInverseRotationAxiom[102X( [3Xalpha[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XMorphismToConeObjectByInverseRotationAxiom[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC(\alpha)\to \Sigma A[123X[133X
   
   [33X[0;0YThe  argument  is  a  morphism  [23X\alpha:A\to  B[123X.  The  output  is  a morphism
