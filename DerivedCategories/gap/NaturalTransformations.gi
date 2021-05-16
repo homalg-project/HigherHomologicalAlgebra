@@ -89,8 +89,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
           
         od;
         
-        # TODO: can this case happen?
-        if IsEmpty( maps ) or IsEmpty( maps[1] ) then
+        if IsEmpty( maps ) then
             
             map := ZeroMorphism( pr, htr );
             

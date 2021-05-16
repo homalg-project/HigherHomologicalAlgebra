@@ -674,7 +674,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 
                 morphisms := CombineZFunctions( morphisms );
                 
-                # TODO: compute source_diagram and range_diagram from arg[2] and arg[4]
+                source_diagram := CombineZFunctions( List( arg[ 2 ], Objects ) );
+                
+                range_diagram := CombineZFunctions( List( arg[ 4 ], Objects ) );
                 
                 morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), source_diagram, morphisms, range_diagram, Objects( src_rng[ 2 ] ) ], oper );
                 
