@@ -117,9 +117,9 @@
   [33X[0;0YReturns  the  category  of  right  quiver  representations over the opposite
   algebra of the endomorphism algebra of the collection.[133X
   
-  [1X1.1-16 HomotopyCategoryAttr[101X
+  [1X1.1-16 HomotopyCategory[101X
   
-  [33X[1;0Y[29X[2XHomotopyCategoryAttr[102X( [3XE[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XHomotopyCategory[102X( [3XE[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya category[133X
   
   [33X[0;0YReturns    the    homotopy    category    of   the   additive   closure   of

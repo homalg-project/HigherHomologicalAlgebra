@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2020.11-01
+                                   2021.05-01
   
   
-                                4 November 2020
+                                  16 May 2021
   
   
                                   Kamal Saleh
@@ -49,7 +49,7 @@
       1.1-13 UnderlyingObjects
       1.1-14 AdditiveClosure
       1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra
-      1.1-16 HomotopyCategoryAttr
+      1.1-16 HomotopyCategory
       1.1-17 AdditiveClosureAsFullSubcategory
       1.1-18 InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject
       1.1-19 \[\]

@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2020.11-01"
+version: "2021.05-01"
 license: "GPL-2.0-or-later"
-date: 2020-11-04
+date: 2021-05-16
 description: |
     Derived categories of Abelian categories
 
@@ -18,22 +18,22 @@ GAP: ">= 4.9"
 needed-pkgs:
     - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra"
+      url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
     - name: "QPA"
       version: ">= 2.0-dev"
       url: "http://www.math.ntnu.no/~oyvinso/QPA/"
     - name: "Algebroids"
       version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/Algebroids"
+      url: "https://homalg-project.github.io/pkg/Algebroids"
     - name: "SubcategoriesForCAP"
       version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/SubcategoriesForCAP"
+      url: "https://homalg-project.github.io/pkg/SubcategoriesForCAP"
     - name: "HomotopyCategories"
       version: ">= 2020.10-04"
-      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories"
+      url: "https://homalg-project.github.io/pkg/HomotopyCategories"
     - name: "BBGG"
       version: "2020.10-02"
-      url: "https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG"
+      url: "https://homalg-project.github.io/pkg/BBGG"
 
 suggested-pkgs:
     - name: "NConvex"
@@ -41,19 +41,19 @@ suggested-pkgs:
       url: "https://homalg-project.github.io/NConvex"
     - name: "4ti2Interface"
       version: ">= 2010.10-02"
-      url: "https://homalg-project.github.io/homalg_project/4ti2Interface"
+      url: "https://homalg-project.github.io/pkg/4ti2Interface"
 
-www: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories
+www: https://homalg-project.github.io/pkg/DerivedCategories
 readme: README.md
 packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2020.11-01/DerivedCategories-2020.11-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.05-01/DerivedCategories-2021.05-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2020.11-01/DerivedCategories-2020.11-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.05-01/DerivedCategories-2021.05-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2020.11-01/DerivedCategories-2020.11-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.05-01/DerivedCategories-2021.05-01.pdf
 
 abstract: |
 
@@ -62,28 +62,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2020.11-01</i>
-     (<span class='BibYear'>2020</span>)<br />
+             Version 2021.05-01</i>
+     (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ DerivedCategories2020.11-01,
+    @misc{ DerivedCategories2021.05-01,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  Derived  categories  of  Abelian
-                          categories, {V}ersion 2020.11-01},
-      month =            {Nov},
-      year =             {2020},
+                          categories, {V}ersion 2021.05-01},
+      month =            {May},
+      year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
-                          {https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCategories}
+                          {https://homalg-project.github.io/pkg/DerivedCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{DerivedCategories}}},
-      printedkey =       {Sal20}
+      printedkey =       {Sal21}
     }
 

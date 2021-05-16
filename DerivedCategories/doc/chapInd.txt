@@ -32,7 +32,7 @@
   [2XHomFunctor[102X, for IsExceptionalCollection 3.1-1 
   [2XHomFunctorOnIndecInjectiveObjects[102X, for IsExceptionalCollection 3.2-1 
   [2XHomFunctorOnInjectiveObjects[102X, for IsExceptionalCollection 3.2-2 
-  [2XHomotopyCategoryAttr[102X, for IsExceptionalCollection 1.1-16 
+  [2XHomotopyCategory[102X, for IsExceptionalCollection 1.1-16 
   [2XInterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure[102X, for IsCapCategoryObject, IsCapCategoryObject, IsList 1.2-1 
   [2XInterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject[102X, for IsExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory 1.1-18 
   [2XIsExceptionalCollection[102X, for IsObject 1.1-1 
