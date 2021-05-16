@@ -254,7 +254,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
       
       beta := C ^ m;
       
-      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+      H := HomotopyMorphisms( AdditiveInverse( PreCompose( alpha, beta ) ) );
       
       if H = fail then
         
@@ -262,7 +262,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
         
       fi;
       
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
@@ -733,7 +733,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
       
       beta := C ^ m;
       
-      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
+      H := HomotopyMorphisms( AdditiveInverse( PreCompose( alpha, beta ) ) );
       
       if H = fail then
         
@@ -741,7 +741,7 @@ InstallMethod( BackwardPostnikovSystemAtOp,
         
       fi;
       
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], -H[ i ] ] ] ) );
+      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], H[ i ] ] ] ) );
       
       d := HomotopyCategoryMorphism(
                   Source( alpha ),
