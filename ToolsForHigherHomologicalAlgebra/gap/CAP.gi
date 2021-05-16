@@ -186,7 +186,11 @@ BindGlobal( "SetSpecialSettings",
     if IsBound( IsFreydCategory ) then
       Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsFreydCategory" ) );
     fi; 
-       
+    
+    if IsBound( IsStableCategory ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsStableCategory" ) );
+    fi;
+    
 end );
 
 ##
