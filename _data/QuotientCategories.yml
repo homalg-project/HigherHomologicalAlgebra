@@ -1,7 +1,7 @@
 name: QuotientCategories
-version: "2020.11-01"
+version: "2021.05-01"
 license: "GPL-2.0-or-later"
-date: 2020-11-04
+date: 2021-05-16
 description: |
     Quotient categories of CAP categories by two-sided ideals
 
@@ -20,23 +20,23 @@ needed-pkgs:
       version: ">=2018.02.14"
       url: "https://gap-packages.github.io/AutoDoc"
     - name: "CAP"
-      version: ">=2020.01.03"
-      url: "https://homalg-project.github.io/CAP_project/CAP"
+      version: ">= 2021.05-02"
+      url: "https://homalg-project.github.io/pkg/CAP"
     - name: "CategoryConstructor"
       version: ">= 2020.04.05"
-      url: "https://homalg-project.github.io/CategoryConstructor"
+      url: "https://homalg-project.github.io/pkg/CategoryConstructor"
 
-www: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories
+www: https://homalg-project.github.io/pkg/QuotientCategories
 readme: README.md
 packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2020.11-01/QuotientCategories-2020.11-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2021.05-01/QuotientCategories-2021.05-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2020.11-01/QuotientCategories-2020.11-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2021.05-01/QuotientCategories-2021.05-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2020.11-01/QuotientCategories-2020.11-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2021.05-01/QuotientCategories-2021.05-01.pdf
 
 abstract: |
 
@@ -45,28 +45,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>QuotientCategories, Quotient categories of CAP categories by two-sided ideals,
-             Version 2020.11-01</i>
-     (<span class='BibYear'>2020</span>)<br />
+             Version 2021.05-01</i>
+     (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories">https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/QuotientCategories">https://homalg-project.github.io/pkg/QuotientCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ QuotientCategories2020.11-01,
+    @misc{ QuotientCategories2021.05-01,
       author =           {Saleh, K.},
       title =            {{QuotientCategories},   Quotient   categories  of  CAP
-                          categories by two-sided ideals, {V}ersion 2020.11-01},
-      month =            {Nov},
-      year =             {2020},
+                          categories by two-sided ideals, {V}ersion 2021.05-01},
+      month =            {May},
+      year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
-                          {https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories}
+                          {https://homalg-project.github.io/pkg/QuotientCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{QuotientCategories}}},
-      printedkey =       {Sal20}
+      printedkey =       {Sal21}
     }
 

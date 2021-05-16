@@ -19,7 +19,7 @@
     [4X[28XQuotient category( Category of left presentations of Z ) by congruence_func[128X[104X
     [4X[25Xgap>[125X [27XF := ProjectionFunctor( quotient_cat );;[127X[104X
     [4X[25Xgap>[125X [27Xa := FreeLeftPresentation( 3, ZZ );[127X[104X
-    [4X[28X<An object in Category of left presentations of Z>[128X[104X
+    [4X[28X<A projective object in Category of left presentations of Z>[128X[104X
     [4X[25Xgap>[125X [27Xquotient_a := ApplyFunctor( F, a );[127X[104X
     [4X[28X<An object in Quotient category( Category of left presentations of Z ) by congruence_func>[128X[104X
     [4X[25Xgap>[125X [27XIsZero( quotient_a );[127X[104X

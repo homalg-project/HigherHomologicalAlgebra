@@ -40,7 +40,7 @@
   [33X[1;0Y[29X[2XQuotientCategory[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya Cap category[133X
   
-  [33X[0;0YThe  input  is  a categpry [23XC[123X and a function [23XF[123X. For two objects [23Xa[123X and [23Xb[123X in [23XC[123X,
+  [33X[0;0YThe  input  is  a category [23XC[123X and a function [23XF[123X. For two objects [23Xa[123X and [23Xb[123X in [23XC[123X,
   the   function   [23XF[123X   can  be  applied  on  two  morphisms  [23X\alpha,\beta  \in
   \mathrm{Hom}_C(a,b)[123X  and  returns  [10Xtrue[110X  if  [23X\alpha  \sim  \beta[123X  and  [10Xfalse[110X
   otherwise. The output is the quotient category [23XC/F[123X.[133X

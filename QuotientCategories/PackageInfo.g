@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "QuotientCategories",
 Subtitle := "Quotient categories of CAP categories by two-sided ideals",
-Version := "2020.11-01",
-Date := "04/11/2020",
+Version := "2021.05-01",
+Date := "16/05/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -39,7 +39,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/QuotientCategories",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-", ~.Version, "/QuotientCategories-", ~.Version ),
@@ -72,7 +72,7 @@ Dependencies := rec(
   GAP := ">= 4.9",
   NeededOtherPackages := [
                 [ "AutoDoc", ">=2018.02.14" ],
-                [ "CAP", ">=2020.01.03" ],
+                [ "CAP", ">= 2021.05-02" ],
                 [ "CategoryConstructor", ">= 2020.04.05" ]
                 ],
   SuggestedOtherPackages := [ ],
