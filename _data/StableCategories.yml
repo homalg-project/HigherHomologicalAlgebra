@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2021.03-01"
+version: "2021.05-01"
 license: "GPL-2.0-or-later"
-date: 2021-04-13
+date: 2021-05-16
 description: |
     Stable categories of additive categories
 
@@ -17,7 +17,7 @@ GAP: ">= 4.8"
 
 needed-pkgs:
     - name: "CAP"
-      version: ">= 2021.03-01"
+      version: ">= 2021.05-02"
       url: "https://homalg-project.github.io/pkg/CAP"
     - name: "GAPDoc"
       version: ">= 1.5"
@@ -32,11 +32,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.03-01/StableCategories-2021.03-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.05-01/StableCategories-2021.05-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.03-01/StableCategories-2021.03-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.05-01/StableCategories-2021.05-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.03-01/StableCategories-2021.03-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.05-01/StableCategories-2021.05-01.pdf
 
 abstract: |
 
@@ -47,7 +47,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2021.03-01</i>
+             Version 2021.05-01</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/StableCategories">https://homalg-project.github.io/pkg/StableCategories</a></span>.
@@ -55,11 +55,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ StableCategories2021.03-01,
+    @misc{ StableCategories2021.05-01,
       author =           {Saleh, K.},
       title =            {{StableCategories},   Stable  categories  of  additive
-                          categories, {V}ersion 2021.03-01},
-      month =            {Apr},
+                          categories, {V}ersion 2021.05-01},
+      month =            {May},
       year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
