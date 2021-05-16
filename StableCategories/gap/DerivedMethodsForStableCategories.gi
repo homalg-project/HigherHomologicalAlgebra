@@ -5,7 +5,7 @@
 #
 
 ##
-AddDerivationToCAP( IsLiftableThroughLiftingObject,
+AddDerivationToCAP( IsLiftableAlongMorphismFromLiftingObject,
                 [
                     [ Lift, 1 ],
                     [ MorphismFromLiftingObject,  1 ]
@@ -20,11 +20,11 @@ AddDerivationToCAP( IsLiftableThroughLiftingObject,
     
     return Lift( alpha, P_b ) <> fail;
     
-end: Description:= "IsLiftableThroughLiftingObject using Lift & MorphismFromLiftingObject" );
+end: Description:= "IsLiftableAlongMorphismFromLiftingObject using Lift & MorphismFromLiftingObject" );
 
 
 ##
-AddDerivationToCAP( IsLiftableThroughLiftingObject,
+AddDerivationToCAP( IsLiftableAlongMorphismFromLiftingObject,
                 [
                     [ IsLiftable, 1 ],
                     [ MorphismFromLiftingObject,  1 ]
@@ -39,10 +39,10 @@ AddDerivationToCAP( IsLiftableThroughLiftingObject,
     
     return IsLiftable( alpha, P_b );
     
-end: Description:= "IsLiftableThroughLiftingObject using IsLiftable & MorphismFromLiftingObject methods" );
+end: Description:= "IsLiftableAlongMorphismFromLiftingObject using IsLiftable & MorphismFromLiftingObject methods" );
 
 ##
-AddDerivationToCAP( WitnessForBeingLiftableThroughLiftingObject,
+AddDerivationToCAP( WitnessForBeingLiftableAlongMorphismFromLiftingObject,
                 [
                     [ Lift, 1 ],
                     [ MorphismFromLiftingObject,  1 ]
@@ -58,14 +58,14 @@ AddDerivationToCAP( WitnessForBeingLiftableThroughLiftingObject,
     return Lift( alpha, P_b );
  
    
-end: Description:= "WitnessForBeingLiftableThroughLiftingObject using Lift & MorphismFromLiftingObject methods" );
+end: Description:= "WitnessForBeingLiftableAlongMorphismFromLiftingObject using Lift & MorphismFromLiftingObject methods" );
 
 
 ##
-AddDerivationToCAP( IsColiftableThroughColiftingObject,
+AddDerivationToCAP( IsColiftableAlongMorphismToColiftingObject,
                 [
                     [ Colift, 1 ],
-                    [ MorphismIntoColiftingObject,  1 ]
+                    [ MorphismToColiftingObject,  1 ]
                 ],
   
   function( cat, alpha )
@@ -73,18 +73,18 @@ AddDerivationToCAP( IsColiftableThroughColiftingObject,
     
     a := Source( alpha );
     
-    I_a := MorphismIntoColiftingObject( a );
+    I_a := MorphismToColiftingObject( a );
     
     return Colift( I_a, alpha ) <> fail;
     
-end: Description:= "IsColiftableThroughColiftingObject using Colift & MorphismIntoColiftingObject" );
+end: Description:= "IsColiftableAlongMorphismToColiftingObject using Colift & MorphismToColiftingObject" );
 
 
 ##
-AddDerivationToCAP( IsColiftableThroughColiftingObject,
+AddDerivationToCAP( IsColiftableAlongMorphismToColiftingObject,
                 [
                     [ IsColiftable, 1 ],
-                    [ MorphismIntoColiftingObject,  1 ]
+                    [ MorphismToColiftingObject,  1 ]
                 ],
     
   function( cat, alpha )
@@ -92,17 +92,17 @@ AddDerivationToCAP( IsColiftableThroughColiftingObject,
     
     a := Source( alpha );
     
-    I_a := MorphismIntoColiftingObject( a );
+    I_a := MorphismToColiftingObject( a );
     
     return IsColiftable( I_a, alpha );
    
-end: Description:= "IsColiftableThroughColiftingObject using IsColiftable & MorphismIntoColiftingObject methods" );
+end: Description:= "IsColiftableAlongMorphismToColiftingObject using IsColiftable & MorphismToColiftingObject methods" );
 
 ##
-AddDerivationToCAP( WitnessForBeingColiftableThroughColiftingObject,
+AddDerivationToCAP( WitnessForBeingColiftableAlongMorphismToColiftingObject,
                 [
                     [ Colift, 1 ],
-                    [ MorphismIntoColiftingObject,  1 ]
+                    [ MorphismToColiftingObject,  1 ]
                 ],
     
   function( cat, alpha )
@@ -110,9 +110,8 @@ AddDerivationToCAP( WitnessForBeingColiftableThroughColiftingObject,
     
     a := Source( alpha );
     
-    I_a := MorphismIntoColiftingObject( a );
+    I_a := MorphismToColiftingObject( a );
     
     return Colift( I_a, alpha );
    
-end: Description:= "WitnessForBeingColiftableThroughColiftingObject using Colift & MorphismIntoColiftingObject methods" );
-
+end: Description:= "WitnessForBeingColiftableAlongMorphismToColiftingObject using Colift & MorphismToColiftingObject methods" );

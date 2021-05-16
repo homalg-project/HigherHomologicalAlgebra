@@ -52,39 +52,39 @@ DeclareOperation( "AddColiftingObject",
 
 
 ###
-DeclareOperation( "MorphismIntoColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "MorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategoryObject, IsCapCategoryObject ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ##
-DeclareAttribute( "MorphismIntoColiftingObject", IsCapCategoryObject );
+DeclareAttribute( "MorphismToColiftingObject", IsCapCategoryObject );
 
-DeclareOperation( "AddMorphismIntoColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddMorphismIntoColiftingObject",
+DeclareOperation( "AddMorphismToColiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ##
 DeclareOperation( "ColiftingMorphismWithGivenColiftingObjects",
-                  [ IsCapCategoryMorphism, IsCapCategoryObject, IsCapCategoryObject ] );
+                  [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
                   [ IsCapCategory, IsFunction ] );
@@ -100,34 +100,34 @@ DeclareOperation( "AddColiftingMorphismWithGivenColiftingObjects",
 
 DeclareAttribute( "ColiftingMorphism", IsCapCategoryMorphism );
 
-DeclareProperty( "IsColiftableThroughColiftingObject",
+DeclareProperty( "IsColiftableAlongMorphismToColiftingObject",
                   IsCapCategoryMorphism );
 
-DeclareOperation( "AddIsColiftableThroughColiftingObject",
+DeclareOperation( "AddIsColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsColiftableThroughColiftingObject",
+DeclareOperation( "AddIsColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddIsColiftableThroughColiftingObject",
+DeclareOperation( "AddIsColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddIsColiftableThroughColiftingObject",
+DeclareOperation( "AddIsColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ##
-DeclareAttribute( "WitnessForBeingColiftableThroughColiftingObject", IsCapCategoryMorphism );
+DeclareAttribute( "WitnessForBeingColiftableAlongMorphismToColiftingObject", IsCapCategoryMorphism );
 
-DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddWitnessForBeingColiftableThroughColiftingObject",
+DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ## Stable lifting structure
@@ -192,7 +192,7 @@ DeclareOperation( "AddMorphismFromLiftingObject",
 
 ##
 DeclareOperation( "LiftingMorphismWithGivenLiftingObjects",
-                  [ IsCapCategoryMorphism, IsCapCategoryObject, IsCapCategoryObject ] );
+                  [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
                   [ IsCapCategory, IsFunction ] );
@@ -208,34 +208,34 @@ DeclareOperation( "AddLiftingMorphismWithGivenLiftingObjects",
 
 DeclareAttribute( "LiftingMorphism", IsCapCategoryMorphism );
 
-DeclareProperty( "IsLiftableThroughLiftingObject",
+DeclareProperty( "IsLiftableAlongMorphismFromLiftingObject",
                   IsCapCategoryMorphism );
 
-DeclareOperation( "AddIsLiftableThroughLiftingObject",
+DeclareOperation( "AddIsLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddIsLiftableThroughLiftingObject",
+DeclareOperation( "AddIsLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddIsLiftableThroughLiftingObject",
+DeclareOperation( "AddIsLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddIsLiftableThroughLiftingObject",
+DeclareOperation( "AddIsLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ##
-DeclareAttribute( "WitnessForBeingLiftableThroughLiftingObject", IsCapCategoryMorphism );
+DeclareAttribute( "WitnessForBeingLiftableAlongMorphismFromLiftingObject", IsCapCategoryMorphism );
 
-DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddWitnessForBeingLiftableThroughLiftingObject",
+DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
                   [ IsCapCategory, IsList ] );
 
 DeclareOperation( "StableCategory",
@@ -243,6 +243,10 @@ DeclareOperation( "StableCategory",
 
 DeclareOperation( "StableCategoryObject",
             [ IsStableCategory, IsCapCategoryObject ] );
+
+DeclareOperation( "StableCategoryMorphism",
+            [ IsStableCategoryObject, IsCapCategoryMorphism, IsStableCategoryObject ] );
+
 
 DeclareOperation( "StableCategoryMorphism",
             [ IsStableCategory, IsCapCategoryMorphism ] );

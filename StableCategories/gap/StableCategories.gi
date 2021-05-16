@@ -58,7 +58,7 @@ LiftingObject := rec(
 
 LiftingMorphismWithGivenLiftingObjects := rec(
     installation_name := "LiftingMorphismWithGivenLiftingObjects",
-    filter_list := [ "category", "morphism", "object", "object" ],
+    filter_list := [ "category", "object", "morphism", "object" ],
     return_type := "morphism" ),
     
 MorphismFromLiftingObjectWithGivenLiftingObject := rec(
@@ -72,13 +72,13 @@ MorphismFromLiftingObject := rec(
   with_given_object_position := "Source",
   return_type := "morphism" ),
 
-IsLiftableThroughLiftingObject := rec(
-  installation_name := "IsLiftableThroughLiftingObject",
+IsLiftableAlongMorphismFromLiftingObject := rec(
+  installation_name := "IsLiftableAlongMorphismFromLiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "bool" ),
 
-WitnessForBeingLiftableThroughLiftingObject := rec(
-  installation_name := "WitnessForBeingLiftableThroughLiftingObject",
+WitnessForBeingLiftableAlongMorphismFromLiftingObject := rec(
+  installation_name := "WitnessForBeingLiftableAlongMorphismFromLiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "morphism" ),
 
@@ -94,27 +94,27 @@ ColiftingObject := rec(
 
 ColiftingMorphismWithGivenColiftingObjects := rec(
   installation_name := "ColiftingMorphismWithGivenColiftingObjects",
-  filter_list := [ "category", "morphism", "object", "object" ],
+  filter_list := [ "category", "object", "morphism", "object" ],
   return_type := "morphism" ),
   
-MorphismIntoColiftingObjectWithGivenColiftingObject := rec(
-  installation_name := "MorphismIntoColiftingObjectWithGivenColiftingObject",
+MorphismToColiftingObjectWithGivenColiftingObject := rec(
+  installation_name := "MorphismToColiftingObjectWithGivenColiftingObject",
   filter_list := [ "category", "object", "object" ],
   return_type := "morphism" ),
 
-MorphismIntoColiftingObject := rec(
-  installation_name := "MorphismIntoColiftingObject",
+MorphismToColiftingObject := rec(
+  installation_name := "MorphismToColiftingObject",
   filter_list := [ "category", "object" ],
   with_given_object_position := "Range",
   return_type := "morphism" ),
 
-IsColiftableThroughColiftingObject := rec(
-  installation_name := "IsColiftableThroughColiftingObject",
+IsColiftableAlongMorphismToColiftingObject := rec(
+  installation_name := "IsColiftableAlongMorphismToColiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "bool" ),
 
-WitnessForBeingColiftableThroughColiftingObject := rec(
-  installation_name := "WitnessForBeingColiftableThroughColiftingObject",
+WitnessForBeingColiftableAlongMorphismToColiftingObject := rec(
+  installation_name := "WitnessForBeingColiftableAlongMorphismToColiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "morphism" ),
 
@@ -123,6 +123,32 @@ WitnessForBeingColiftableThroughColiftingObject := rec(
 CAP_INTERNAL_ENHANCE_NAME_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
 
 CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( STABLE_CATEGORIES_METHOD_NAME_RECORD );
+
+########################
+#
+# convenience methods
+#
+########################
+
+##
+InstallMethod( LiftingMorphism,
+          [ IsCapCategoryMorphism ],
+  alpha -> LiftingMorphismWithGivenLiftingObjects(
+                LiftingObject( Source( alpha ) ),
+                alpha,
+                LiftingObject( Range( alpha ) )
+              )
+);
+
+##
+InstallMethod( ColiftingMorphism,
+          [ IsCapCategoryMorphism ],
+  alpha -> ColiftingMorphismWithGivenColiftingObjects(
+                ColiftingObject( Source( alpha ) ),
+                alpha,
+                ColiftingObject( Range( alpha ) )
+              )
+);
 
 ########################
 #
@@ -136,9 +162,9 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
     local name, can_be_factored_through_colifting_object, special_filters, stable_category,
       SpecialFilters, with_hom_structure, category_of_hom_structure, to_be_finalized;
     
-    if not CanCompute( category, "MorphismIntoColiftingObject" ) then
+    if not CanCompute( category, "MorphismToColiftingObject" ) then
       
-      Error( "The method 'MorphismIntoColiftingObject' should be added to ", Name( category ) );
+      Error( "The method 'MorphismToColiftingObject' should be added to ", Name( category ) );
     
     fi;
     
@@ -150,7 +176,7 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
     
     name := ValueOption( "NameOfCategory" );
     
-    can_be_factored_through_colifting_object := IsColiftableThroughColiftingObject;
+    can_be_factored_through_colifting_object := IsColiftableAlongMorphismToColiftingObject;
      
     stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
     
@@ -211,7 +237,7 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
      
     name := ValueOption( "NameOfCategory" );
     
-    can_be_factored_through_lifting_object := IsLiftableThroughLiftingObject;
+    can_be_factored_through_lifting_object := IsLiftableAlongMorphismFromLiftingObject;
     
     stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
     
@@ -353,17 +379,28 @@ InstallMethod( \/,
     
 end );
 
+InstallMethod( StableCategoryMorphism,
+          [ IsStableCategoryObject, IsCapCategoryMorphism, IsStableCategoryObject ],
+  function( s, alpha, r )
+    
+    alpha := QuotientCategoryMorphism( s, alpha, r );
+    
+    SetFilterObj( alpha, IsStableCategoryMorphism );
+    
+    return alpha;
+    
+end );
+
 ##
 InstallMethod( StableCategoryMorphism,
             [ IsStableCategory, IsCapCategoryMorphism ],
   function( stable_category, alpha )
-    local stable_alpha;
     
-    stable_alpha := QuotientCategoryMorphism( stable_category, alpha );
+    alpha := QuotientCategoryMorphism( stable_category, alpha );
     
-    SetFilterObj( stable_alpha, IsStableCategoryMorphism );
+    SetFilterObj( alpha, IsStableCategoryMorphism );
     
-    return stable_alpha;
+    return alpha;
     
 end );
 
@@ -395,7 +432,7 @@ InstallMethodWithCache( HOMOMORPHISM_STRUCTURE_ON_STABLE_OBJECTS_BY_COLIFTING_OB
         
     b := UnderlyingCell( stable_b );
         
-    a_to_I_a := MorphismIntoColiftingObject( a );
+    a_to_I_a := MorphismToColiftingObject( a );
         
     return HomomorphismStructureOnMorphisms( a_to_I_a, IdentityMorphism( b ) );
   
