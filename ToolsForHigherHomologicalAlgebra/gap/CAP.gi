@@ -4,6 +4,47 @@
 # Implementations
 #
 
+BindGlobal( "SECTION_AND_RETRACTION_METHOD_RECORD", rec(
+
+  Section := rec(
+    installation_name := "Section",
+    filter_list := [ "category", "morphism" ],
+    cache_name := "Section",
+    return_type := "morphism"
+  ),
+  
+  Retraction := rec(
+    installation_name := "Retraction",
+    filter_list := [ "category", "morphism" ],
+    cache_name := "Retraction",
+    return_type := "morphism"
+  )
+) );
+
+CAP_INTERNAL_ENHANCE_NAME_RECORD( SECTION_AND_RETRACTION_METHOD_RECORD );
+CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( SECTION_AND_RETRACTION_METHOD_RECORD );
+
+AddDerivationToCAP( Section,
+            [
+              [ Lift, 1 ],
+              [ IdentityMorphism, 1 ]
+            ],
+            
+  {cat, alpha} -> Lift( IdentityMorphism( Range( alpha ) ), alpha )
+  : Description:= "Section using Lift and IdentityMorphism"
+);
+
+AddDerivationToCAP( Retraction,
+            [
+              [ Colift, 1 ],
+              [ IdentityMorphism, 1 ]
+            ],
+            
+  {cat, alpha} -> Colift( alpha, IdentityMorphism( Source( alpha ) ) )
+  : Description:= "Retraction using Colift and IdentityMorphism"
+);
+
+
 ##
 MakeReadWriteGlobal( "DISABLE_ALL_SANITY_CHECKS" );
 MakeReadWriteGlobal( "SWITCH_LOGIC_OFF" );
