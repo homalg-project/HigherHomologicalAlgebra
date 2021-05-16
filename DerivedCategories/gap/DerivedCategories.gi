@@ -106,7 +106,7 @@ InstallMethod( PreComposeRoofs,
     
     C := Source( r );
     
-    tau := MorphismIntoStandardConeObject( s );
+    tau := MorphismToStandardConeObject( s );
     
     r_o_tau := PreCompose( r, tau );
     

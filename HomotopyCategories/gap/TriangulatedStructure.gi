@@ -78,7 +78,7 @@ function( Ho_C )
     alpha -> MappingCone( UnderlyingCell( alpha ) ) / Ho_C
   );
   
-  AddMorphismIntoStandardConeObjectWithGivenStandardConeObject( Ho_C,
+  AddMorphismToStandardConeObjectWithGivenStandardConeObject( Ho_C,
     function( alpha, st_cone )
       local cell;
       
@@ -88,7 +88,7 @@ function( Ho_C )
       
   end );
   
-  AddMorphismIntoStandardConeObject( Ho_C,
+  AddMorphismToStandardConeObject( Ho_C,
     function( alpha )
       local cell;
       
@@ -268,7 +268,7 @@ function( Ho_C )
   end );
   
   ##
-  AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
+  AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects( Ho_C,
     function( s, alpha, beta, gamma, r )
       local A, B, C, h, maps;
       

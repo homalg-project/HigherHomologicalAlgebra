@@ -302,7 +302,7 @@ InstallMethod( ExactTriangle,
     ObjectifyObjectForCAPWithAttributes(
                 t, triangles,
                 DomainMorphism, alpha,
-                MorphismIntoConeObject, iota,
+                MorphismToConeObject, iota,
                 MorphismFromConeObject, pi
               );
     
@@ -316,7 +316,7 @@ InstallMethod( StandardExactTriangle,
   function( alpha )
     local triangle, iota_alpha, pi_alpha;
     
-    iota_alpha := MorphismIntoStandardConeObject( alpha );
+    iota_alpha := MorphismToStandardConeObject( alpha );
     
     pi_alpha := MorphismFromStandardConeObject( alpha );
     
@@ -346,7 +346,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     return
       ExactTriangle(
         DomainMorphismByOctahedralAxiom( alpha, beta, gamma ),
-        MorphismIntoConeObjectByOctahedralAxiom( alpha, beta, gamma ),
+        MorphismToConeObjectByOctahedralAxiom( alpha, beta, gamma ),
         MorphismFromConeObjectByOctahedralAxiom( alpha, beta, gamma )
       );
      
@@ -432,7 +432,7 @@ InstallMethod( MorphismAtOp,
       
     elif i = 1 then
       
-      return MorphismIntoConeObject( triangle );
+      return MorphismToConeObject( triangle );
       
     elif i = 2 then
       

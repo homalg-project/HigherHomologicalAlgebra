@@ -43,7 +43,7 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
       
     fi;
     
-    iota_alpha := MorphismIntoStandardConeObject( alpha );
+    iota_alpha := MorphismToStandardConeObject( alpha );
     
     pi_alpha := MorphismFromStandardConeObject( alpha );
     
@@ -128,7 +128,7 @@ AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
                 [
                   [ StandardConeObject, 2 ],
                   [ MorphismFromStandardConeObjectWithGivenStandardConeObject, 1 ],
-                  [ MorphismIntoStandardConeObjectWithGivenStandardConeObject, 1 ],
+                  [ MorphismToStandardConeObjectWithGivenStandardConeObject, 1 ],
                   [ ShiftOnObject, 1 ],
                   [ ShiftOnMorphismWithGivenObjects, 1 ]
                 ],
@@ -144,7 +144,7 @@ AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
     
     cone_alpha := StandardConeObject( alpha );
     
-    iota_alpha := MorphismIntoStandardConeObjectWithGivenStandardConeObject(
+    iota_alpha := MorphismToStandardConeObjectWithGivenStandardConeObject(
                           alpha,
                           cone_alpha
                       );

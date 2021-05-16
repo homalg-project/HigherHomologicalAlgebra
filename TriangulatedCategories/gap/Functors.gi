@@ -24,7 +24,7 @@ InstallMethod( ShiftFunctorAttr,
     AddObjectFunction( Sigma, ShiftOnObject );
     
     AddMorphismFunction( Sigma, ShiftOnMorphismWithGivenObjects );
-        
+    
     return Sigma;
     
 end );
@@ -36,7 +36,7 @@ InstallOtherMethod( ShiftFunctor,
 );
 
 InstallMethod( InverseShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],  
+          [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
     local name, rev_Sigma, Sigma, G_1, G_2, eta;
     
@@ -54,30 +54,32 @@ InstallMethod( InverseShiftFunctor,
     AddObjectFunction( rev_Sigma, InverseShiftOnObject );
     
     AddMorphismFunction( rev_Sigma, InverseShiftOnMorphismWithGivenObjects );
-        
+    
     return rev_Sigma;
     
 end );
 
 ##
 InstallMethod( Unit,
-          [ IsCapCategory and IsTriangulatedCategory ],        
+          [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
-    local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
+    local id, shift, ishift, shift_after_ishift, name, nat;
     
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
     
-    reverse_shift := InverseShiftFunctor( category );
+    ishift := InverseShiftFunctor( category );
     
-    shift_after_reverse_shift := PreCompose( reverse_shift, shift );
+    shift_after_ishift := PreCompose( ishift, shift );
     
     name := "The unit η: 1 => Σ o Σ^-1 of the adjunction Σ^-1 ⊣  Σ";
     
-    nat := NaturalTransformation( name, id, shift_after_reverse_shift );
+    nat := NaturalTransformation( name, id, shift_after_ishift );
     
-    AddNaturalTransformationFunction( nat, UnitIsomorphismWithGivenObject );
+    AddNaturalTransformationFunction( nat,
+      {s, a, r} -> UnitIsomorphismWithGivenObject( a, r )
+    );
     
     return nat;
     
@@ -87,21 +89,23 @@ end );
 InstallMethod( InverseOfUnit,
           [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
-    local id, shift, reverse_shift, shift_after_reverse_shift, name, nat;
+    local id, shift, ishift, shift_after_ishift, name, nat;
     
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
     
-    reverse_shift := InverseShiftFunctor( category );
+    ishift := InverseShiftFunctor( category );
     
-    shift_after_reverse_shift := PreCompose( reverse_shift, shift );
+    shift_after_ishift := PreCompose( ishift, shift );
     
     name := "The inverse-unit η^-1: Σ o Σ^-1 => 1 of the adjunction Σ^-1 ⊣  Σ";
-     
-    nat := NaturalTransformation( name, id, shift_after_reverse_shift );
     
-    AddNaturalTransformationFunction( nat, InverseOfUnitIsomorphism );
+    nat := NaturalTransformation( name, id, shift_after_ishift );
+    
+    AddNaturalTransformationFunction( nat,
+      {s, a, r} -> InverseOfUnitIsomorphismWithGivenObject( a, s )
+    );
     
     return nat;
     
@@ -112,21 +116,23 @@ InstallMethod( Counit,
           [ IsCapCategory and IsTriangulatedCategory ],
           
   function( category )
-    local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
+    local id, shift, ishift, ishift_of_shift, name, nat;
     
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
     
-    reverse_shift := InverseShiftFunctor( category );
+    ishift := InverseShiftFunctor( category );
     
-    reverse_shift_after_shift := PreCompose( shift, reverse_shift);
+    ishift_of_shift := PreCompose( shift, ishift);
     
     name := "The counit ϵ : Σ^-1 o Σ => 1 of the adjunction Σ^-1 ⊣  Σ";
     
-    nat := NaturalTransformation( name, id, reverse_shift_after_shift );
+    nat := NaturalTransformation( name, id, ishift_of_shift );
     
-    AddNaturalTransformationFunction( nat, Counit );
+    AddNaturalTransformationFunction( nat,
+      {s, a, r} -> CounitIsomorphismWithGivenObject( a, s )
+    );
     
     return nat;
     
@@ -136,21 +142,23 @@ end );
 InstallMethod( InverseOfCounit,
           [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
-    local id, shift, reverse_shift, reverse_shift_after_shift, name, nat;
+    local id, shift, ishift, ishift_of_shift, name, nat;
     
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
     
-    reverse_shift := InverseShiftFunctor( category );
+    ishift := InverseShiftFunctor( category );
     
-    reverse_shift_after_shift := PreCompose( shift, reverse_shift);
+    ishift_of_shift := PreCompose( shift, ishift);
     
     name := "The inverse-counit ϵ ^ -1 : 1 => Σ^-1 o Σ of the adjunction Σ^-1 ⊣  Σ";
     
-    nat := NaturalTransformation( name, id, reverse_shift_after_shift );
+    nat := NaturalTransformation( name, id, ishift_of_shift );
     
-    AddNaturalTransformationFunction( nat, InverseOfCounitIsomorphism );
+    AddNaturalTransformationFunction( nat,
+      {s, a, r} -> InverseOfCounitIsomorphismWithGivenObject( a, r )
+    );
     
     return nat;
     
@@ -190,7 +198,7 @@ InstallMethod( ExtendFunctorToCategoryOfTriangles,
     AddMorphismFunction( TF,
       function( s, phi, r )
         
-        return MorphismOfExactTriangles( 
+        return MorphismOfExactTriangles(
                   s,
                   ApplyFunctor( F, phi[ 0 ] ),
                   ApplyFunctor( F, phi[ 1 ] ),
@@ -209,7 +217,7 @@ InstallMethod( RotationFunctorOp,
           [ IsCapCategoryOfExactTriangles, IsBool ],
   function( triangles, bool )
     local name, rot;
-  
+    
     name := "Rotation functor";
     
     rot := CapFunctor( name, triangles, triangles );

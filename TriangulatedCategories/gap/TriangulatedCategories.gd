@@ -71,18 +71,18 @@ DeclareOperation( "MorphismBetweenStandardCoConeObjects",
 #! into the standard cone object $C(\alpha)$.
 #! @Arguments alpha, C
 #! @Returns a morphism $\iota(\alpha):B\to C(\alpha)$
-DeclareOperation( "MorphismIntoStandardConeObjectWithGivenStandardConeObject", [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+DeclareOperation( "MorphismToStandardConeObjectWithGivenStandardConeObject", [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismIntoStandardConeObjectWithGivenStandardConeObject</C>.
+#! the category for the basic operation <C>MorphismToStandardConeObjectWithGivenStandardConeObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismToStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismToStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismToStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismToStandardConeObjectWithGivenStandardConeObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The argument is a morphism $\alpha: A \to B$ in a triangulated category.
@@ -90,18 +90,18 @@ DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject"
 #! into the standard cone object $C(\alpha)$.
 #! @Arguments alpha
 #! @Returns a morphism $\iota(\alpha):B\to C(\alpha)$
-DeclareAttribute( "MorphismIntoStandardConeObject", IsCapCategoryMorphism );
+DeclareAttribute( "MorphismToStandardConeObject", IsCapCategoryMorphism );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$. This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismIntoStandardConeObject</C>.
+#! the category for the basic operation <C>MorphismToStandardConeObject</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismToStandardConeObject", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismIntoStandardConeObject", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismToStandardConeObject", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismToStandardConeObject", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismToStandardConeObject", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are a morphism $\alpha: A \to B$ in a triangulated category and an object $C:=C(\alpha)$.
@@ -269,7 +269,7 @@ DeclareOperation( "AddUnitIsomorphismWithGivenObject", [ IsCapCategory, IsList ]
 #! The output is the natural isomorphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Returns a morphism $A \to (\Sigma \circ \Sigma^{-1}) A$
 #! @Arguments A
-DeclareOperation( "UnitIsomorphism", [ IsCapCategoryObject ] );
+DeclareAttribute( "UnitIsomorphism", IsCapCategoryObject );
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
@@ -503,24 +503,24 @@ DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects", [ IsCapC
 #! and $\Sigma\alpha\circ\pi(\beta\circ\alpha)=\pi(\beta)$.
 #! @Returns a morphism $C(\beta\circ\alpha) \to C(\beta)$ 
 #! @Arguments alpha, beta
-DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects",
+DeclareOperation( "MorphismToConeObjectByOctahedralAxiomWithGivenObjects",
    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
-DeclareOperation( "MorphismIntoConeObjectByOctahedralAxiom",
+DeclareOperation( "MorphismToConeObjectByOctahedralAxiom",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 
 #! @Description
 #! The arguments are a triangulated category $\mathcal{T}$ and a function $F$.
 #! This operation adds the given function $F$ to
-#! the category for the basic operation <C>MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</C>.
+#! the category for the basic operation <C>MorphismToConeObjectByOctahedralAxiomWithGivenObjects</C>.
 #! @Returns nothing
 #! @Arguments T, F
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
+DeclareOperation( "AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
+DeclareOperation( "AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects", [ IsCapCategory, IsList ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$.
@@ -645,7 +645,7 @@ DeclareAttribute( "DomainMorphismByRotationAxiom",
 #! The output is a morphism $\pi(\alpha):C(\alpha)\to \Sigma A$.
 #! @Returns a morphism $C(\alpha)\to \Sigma A$
 #! @Arguments alpha
-DeclareAttribute( "MorphismIntoConeObjectByRotationAxiom",
+DeclareAttribute( "MorphismToConeObjectByRotationAxiom",
     IsCapCategoryMorphism );
 
 #! @Description
@@ -743,7 +743,7 @@ DeclareAttribute( "DomainMorphismByInverseRotationAxiom",
 #! The output is a morphism $\pi(\alpha):C(\alpha)\to \Sigma A$.
 #! @Returns a morphism $C(\alpha)\to \Sigma A$
 #! @Arguments alpha
-DeclareAttribute( "MorphismIntoConeObjectByInverseRotationAxiom",
+DeclareAttribute( "MorphismToConeObjectByInverseRotationAxiom",
     IsCapCategoryMorphism );
 
 #! @Description

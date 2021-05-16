@@ -66,7 +66,7 @@ DeclareAttribute( "DomainMorphism", IsCapExactTriangle );
 #! The output is $\iota:B\to C$.
 #! @Arguments t
 #! @Returns a morphism
-DeclareAttribute( "MorphismIntoConeObject", IsCapExactTriangle );
+DeclareAttribute( "MorphismToConeObject", IsCapExactTriangle );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
