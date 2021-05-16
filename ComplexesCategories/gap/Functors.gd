@@ -223,7 +223,7 @@ DeclareAttribute( "ExtendFunctorFromProductCategoryToChainComplexCategories", Is
 #! The output is an endofunctor from $\mathrm{Com}(A) \rightarrow \mathrm{Com}(A)$.
 #! @BeginLatexOnly
 #! If $\mathrm{Com}(A)=\mathrm{Ch_\bullet}(A)$ is a chain complex category then the output is the functor
-#! $$\sigma_{< n}:\mathrm{Ch_\bullet}(A)\rightarrow \mathrm{Ch_\bullet}(A)$$
+#! $$\sigma_{\leq n}:\mathrm{Ch_\bullet}(A)\rightarrow \mathrm{Ch_\bullet}(A)$$
 #! \begin{center}
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
@@ -258,27 +258,27 @@ DeclareAttribute( "ExtendFunctorFromProductCategoryToChainComplexCategories", Is
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$\sigma_{<n}(C_\bullet)$};
-#!   \node (0V0) at (0,0) {$\sigma_{<n}(D_\bullet)$};
+#!   \node (0V1) at (0,1) {$\sigma_{\leq n}(C_\bullet)$};
+#!   \node (0V0) at (0,0) {$\sigma_{\leq n}(D_\bullet)$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$C_{n-1}$};
-#!   \node (3V1) at (3,1) {$0$};
+#!   \node (3V1) at (3,1) {$C_{n}$};
 #!   \node (4V1) at (4,1) {$0$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
 #!   \node (2V0) at (2,0) {$D_{n-1}$};
-#!   \node (3V0) at (3,0) {$0$};
+#!   \node (3V0) at (3,0) {$D_{n}$};
 #!   \node (4V0) at (4,0) {$0$};
 #!   \node (5V0) at (5,0) {$\cdots$};
-#!   \draw[->,thick] (0V1)-- node[left]{$\sigma_{<n}(\phi)$} (0V0);
+#!   \draw[->,thick] (0V1)-- node[left]{$\sigma_{\leq n}(\phi)$} (0V0);
 #!   \draw[->,thick] (2V1)-- node[left]{$\phi_{n-1}$} (2V0);
-#!   \draw[->,thick] (3V1)-- (3V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi_{n}$} (3V0);
 #!   \draw[->,thick] (4V1)-- (4V0);
 #!   \draw[->,thick] (2V0)-- node[below]{$d_{n-1}$} (1V0);
-#!   \draw[->,thick] (3V0)-- (2V0);
+#!   \draw[->,thick] (3V0)-- node[below]{$d_{n}$} (2V0);
 #!   \draw[->,thick] (4V0)-- (3V0);
 #!   \draw[->,thick] (2V1)-- node[above]{$d_{n-1}$} (1V1);
-#!   \draw[->,thick] (3V1)-- (2V1);
+#!   \draw[->,thick] (3V1)-- node[above]{$d_{n}$} (2V1);
 #!   \draw[->,thick] (4V1)-- (3V1);
 #!   \draw[->,thick] (5V0)-- (4V0);
 #!   \draw[->,thick] (5V1)-- (4V1);
@@ -454,28 +454,28 @@ KeyDependentOperation( "BrutalTruncationAboveFunctor", IsChainOrCochainComplexCa
 #!   \begin{tikzpicture}[x=2.5cm,y=2cm,transform shape,
 #!   mylabel/.style={thick, draw=black, 
 #!   align=center, minimum width=0.5cm, minimum height=0.5cm,fill=white} ]
-#!   \node (0V1) at (0,1) {$\sigma^{> n}(C^\bullet)$};
-#!   \node (0V0) at (0,0) {$\sigma^{> n}(D^\bullet)$};
+#!   \node (0V1) at (0,1) {$\sigma^{\geq n}(C^\bullet)$};
+#!   \node (0V0) at (0,0) {$\sigma^{\geq n}(D^\bullet)$};
 #!   \node (1V1) at (1,1) {$\cdots$};
 #!   \node (2V1) at (2,1) {$0$};
-#!   \node (3V1) at (3,1) {$0$};
+#!   \node (3V1) at (3,1) {$C^{n}$};
 #!   \node (4V1) at (4,1) {$C^{n+1}$};
 #!   \node (5V1) at (5,1) {$\cdots$};
 #!   \node (1V0) at (1,0) {$\cdots$};
 #!   \node (2V0) at (2,0) {$0$};
-#!   \node (3V0) at (3,0) {$0$};
+#!   \node (3V0) at (3,0) {$D^{n}$};
 #!   \node (4V0) at (4,0) {$D^{n+1}$};
 #!   \node (5V0) at (5,0) {$\cdots$};
-#!   \draw[->,thick] (0V1)-- node[left]{$\sigma^{> n}(\phi)$} (0V0);
+#!   \draw[->,thick] (0V1)-- node[left]{$\sigma^{\geq n}(\phi)$} (0V0);
 #!   \draw[->,thick] (2V1)-- (2V0);
-#!   \draw[->,thick] (3V1)-- (3V0);
+#!   \draw[->,thick] (3V1)-- node[left]{$\phi^{n}$} (3V0);
 #!   \draw[->,thick] (4V1)-- node[left]{$\phi^{n+1}$} (4V0);
 #!   \draw[<-,thick] (2V0)-- (1V0);
 #!   \draw[<-,thick] (3V0)-- (2V0);
-#!   \draw[<-,thick] (4V0)-- (3V0);
+#!   \draw[<-,thick] (4V0)-- node[below]{$d^{n}$} (3V0);
 #!   \draw[<-,thick] (2V1)-- (1V1);
 #!   \draw[<-,thick] (3V1)-- (2V1);
-#!   \draw[<-,thick] (4V1)-- (3V1);
+#!   \draw[<-,thick] (4V1)-- node[above]{$d^{n}$} (3V1);
 #!   \draw[<-,thick] (5V0)-- node[below]{$d^{n+1}$} (4V0);
 #!   \draw[<-,thick] (5V1)-- node[above]{$d^{n+1}$} (4V1);
 #!   \end{tikzpicture}

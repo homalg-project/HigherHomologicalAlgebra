@@ -31,7 +31,7 @@ gap> Display( proj_Z2^-301 );
 modulo [ 6 ]
 
 A morphism in Category of left presentations of Z/( 6 )
-gap> A := AsChainComplex( BrutalTruncationBelow( proj_Z2, -10 ) );
+gap> A := AsChainComplex( BrutalTruncationBelow( proj_Z2, -9 ) );
 <An object in Chain complexes( Category of left presentations of Z/( 6 ) ) with active lower bound 0 and active upper bound 9>
 gap> IsWellDefined( TensorProduct( IdentityMorphism(A), IdentityMorphism(A) ) );
 true

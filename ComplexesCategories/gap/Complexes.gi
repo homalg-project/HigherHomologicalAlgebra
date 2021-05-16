@@ -2168,8 +2168,6 @@ InstallMethod( BrutalTruncationBelowOp,
     
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
     
-    diffs := Differentials( C );
-    
     diffs := AsZFunction(
       function( i )
         
@@ -2202,9 +2200,9 @@ InstallMethod( BrutalTruncationBelowOp,
     
 end );
 
-## sigma_>n =
+## sigma_>=n 
 ##  <------ C_n-1 <---- C_n <---- C_n+1 <-----
-##  <------ C_n-1 <----  0  <----   0   <-----
+##  <------ C_n-1 <---- C_n  <----   0  <-----
 
 InstallMethod( BrutalTruncationAboveOp,
           [ IsChainComplex, IsInt ],
@@ -2213,22 +2211,20 @@ InstallMethod( BrutalTruncationAboveOp,
     
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
     
-    diffs := Differentials( C );
-    
     diffs := AsZFunction(
       function( i )
         
-        if i >= n + 1  then
+        if i >= n + 2  then
           
           return ZeroMorphism( zero, zero );
           
-        elif i = n then
+        elif i = n + 1 then
           
           return ZeroMorphism( zero, C[ n-1 ]  );
           
         else
           
-          return C^i;
+          return C ^ i;
           
         fi;
         
@@ -2236,19 +2232,19 @@ InstallMethod( BrutalTruncationAboveOp,
       
     tr_C := ChainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
-    #G this.
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
     
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );
     
-    SetUpperBound( tr_C, n - 1 );
+    SetUpperBound( tr_C, n );
     
     return tr_C;
     
 end );
 
+
 ##  -------> C_n-1 -----> C_n -----> C_n+1 ------>
-##  -------> 0     ----->  0 -----> C_n+1 ------>
+##  -------> 0     -----> C_n -----> C_n+1 ------>
 
 InstallMethod( BrutalTruncationBelowOp,
           [ IsCochainComplex, IsInt ],
@@ -2257,22 +2253,20 @@ InstallMethod( BrutalTruncationBelowOp,
     
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
     
-    diffs := Differentials( C );
-    
     diffs := AsZFunction(
       function( i )
         
-        if i < n  then
+        if i < n - 1  then
           
           return ZeroMorphism( zero, zero ); 
           
-        elif i = n then
+        elif i = n - 1 then
           
-          return ZeroMorphism( zero, C[ n + 1 ] );
+          return ZeroMorphism( zero, C[ n ] );
           
         else
           
-          return C^i;
+          return C ^ i;
           
         fi;
         
@@ -2280,19 +2274,18 @@ InstallMethod( BrutalTruncationBelowOp,
     
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
-    #G this.
     TODO_LIST_TO_PUSH_FIRST_LOWER_BOUND( C, tr_C );
     
     TODO_LIST_TO_PUSH_PULL_FIRST_UPPER_BOUND( C, tr_C );
     
-    SetLowerBound( tr_C, n + 1 );
+    SetLowerBound( tr_C, n );
     
     return tr_C;
     
 end );
 
-##  ------> C_i-1 -----> C_i -----> C_i+1 ------>
-##  ------> C_i-1 -----> C_i ----->  0    ------>
+##  ------> C_n-1 -----> C_n -----> C_n+1 ------>
+##  ------> C_n-1 -----> C_n ----->  0    ------>
 
 InstallMethod( BrutalTruncationAboveOp,
                [ IsCochainComplex, IsInt ],
@@ -2301,12 +2294,10 @@ InstallMethod( BrutalTruncationAboveOp,
     
     zero := ZeroObject( UnderlyingCategory( CapCategory( C ) ) );
     
-    diffs := Differentials( C );
-    
     diffs := AsZFunction(
       function( i )
         
-        if i > n   then
+        if i > n then
           
           return ZeroMorphism( zero, zero );
           
@@ -2316,7 +2307,7 @@ InstallMethod( BrutalTruncationAboveOp,
           
         else
           
-          return C^i;
+          return C ^ i;
           
         fi;
         
@@ -2324,7 +2315,6 @@ InstallMethod( BrutalTruncationAboveOp,
       
     tr_C := CochainComplex( UnderlyingCategory( CapCategory( C ) ), diffs );
     
-    #G this.
     TODO_LIST_TO_PUSH_FIRST_UPPER_BOUND( C, tr_C );
     
     TODO_LIST_TO_PUSH_PULL_FIRST_LOWER_BOUND( C, tr_C );

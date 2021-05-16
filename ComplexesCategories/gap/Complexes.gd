@@ -656,10 +656,9 @@ KeyDependentOperation( "BrutalTruncationBelow", IsChainComplex, IsInt, ReturnTru
 
 #! @Description
 #! @BeginLatexOnly
-#! Let $C_\bullet$ be chain complex. A brutal truncation of $C_\bullet$ above $n$ is the chain 
-#! quotient chain complex $\sigma_{<n}C_\bullet:=C_\bullet/\sigma_{\geq n}C_\bullet$.
-#! Hence $(\sigma_{<n}C_\bullet)_i=C_i$ when 
-#! $i< n$ and $(\sigma_{< n}C_\bullet)_i=0$ otherwise.
+#! Let $C_\bullet$ be chain complex. A brutal truncation of $C_\bullet$ above $n$ is the chain
+#! complex $(\sigma_{\leq n}C_\bullet)_i=C_i$ when 
+#! $i \leq n$ and $(\sigma_{\leq n}C_\bullet)_i=0$ otherwise.
 #! @EndLatexOnly
 #! @Arguments C, n
 #! @Returns chain complex
@@ -678,9 +677,8 @@ KeyDependentOperation( "BrutalTruncationAbove", IsCochainComplex, IsInt, ReturnT
 #! @Description
 #! @BeginLatexOnly
 #! Let $C^\bullet$ be cochain complex. A brutal truncation of $C^\bullet$ bellow $n$ is the
-#! quotient cochain complex $\sigma^{>n}C^\bullet:=C^\bullet/\sigma^{\leq n}C_\bullet$.
-#! Hence $(\sigma^{>n}C^\bullet)_i=C_i$ when 
-#! $i> n$ and $(\sigma^{< n}C^\bullet)_i=0$ otherwise.
+#! complex $(\sigma^{\geq n}C^\bullet)_i=C_i$ when
+#! $i \geq n$ and $(\sigma^{\geq n}C^\bullet)_i=0$ otherwise.
 #! @EndLatexOnly
 #! @Arguments C, n
 #! @Returns chain complex
