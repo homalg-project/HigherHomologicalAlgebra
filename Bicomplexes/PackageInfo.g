@@ -16,9 +16,11 @@ Version := Maximum( [
                    "2020.10-01", ## Kamals's version
                    ## this line prevents merge conflicts
                    "2020.11-01", ## Mohamed's version
+                   ## this line prevents merge conflicts
+                   "2021.05-01", ## Fabian's version
                    ] ),
 
-Date := "04/11/2020",
+Date := "16/05/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -58,7 +60,7 @@ SourceRepository := rec(
     URL := "https://github.com/homalg-project/HigherHomologicalAlgebra",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes",
+PackageWWWHome  := "https://homalg-project.github.io/pkg/Bicomplexes",
 PackageInfoURL  := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/PackageInfo.g",
 README_URL      := "https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/README.md",
 ArchiveURL      := Concatenation( "https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-", ~.Version, "/Bicomplexes-", ~.Version ),
@@ -90,6 +92,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.8",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
+                   [ "CAP", ">= 2021.05-02" ],
                    [ "ComplexesCategories", ">= 2020.03.12" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
