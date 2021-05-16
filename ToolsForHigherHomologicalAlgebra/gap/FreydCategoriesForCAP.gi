@@ -145,6 +145,52 @@ InstallMethod( IsomorphismOntoDoubleDualOfFpModuleByFreyd,
     return CokernelColift( rel_map, DualOfFpModuleHomomorphismByFreyd( iota ) );
      
 end );
+
+
+AddFinalDerivation( MonomorphismIntoSomeInjectiveObject,
+              [
+                [ KernelLift, 1 ],
+                [ CokernelColift, 1 ],
+                [ EpimorphismFromSomeProjectiveObject, 1 ]
+              ],
+              [
+                MonomorphismIntoSomeInjectiveObject
+              ],
+  { category, o } -> PreCompose(
+              IsomorphismOntoDoubleDualOfFpModuleByFreyd( o ),
+              DualOfFpModuleHomomorphismByFreyd(
+                EpimorphismFromSomeProjectiveObject(
+                  DualOfFpModuleByFreyd( o )
+                )
+              )
+            )
+  :
+  FunctionCalledBeforeInstallation :=
+  function( cat )
+    SetIsAbelianCategoryWithEnoughInjectives( cat, true );
+  end,
+  CategoryFilter :=
+      function( cat )
+        local ring;
+        
+        if not IsFreydCategory( cat ) then
+          return false;
+        fi;
+        
+        cat := UnderlyingCategory( cat );
+        
+        if IsCategoryOfGradedRows( cat  ) then
+          ring := UnderlyingNonGradedRing( UnderlyingGradedRing( cat ) );
+        elif IsCategoryOfRows( cat ) then
+          ring := UnderlyingRing( cat );
+        else
+          return false;
+        fi;
+        
+        return HasIsExteriorRing( ring ) and IsExteriorRing( ring );
+      
+      end
+);
 ##
 InstallMethod( QuiverRows,
           [ IsQuiverAlgebra ],
