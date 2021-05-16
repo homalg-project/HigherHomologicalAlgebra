@@ -192,6 +192,45 @@ AddFinalDerivation( MonomorphismIntoSomeInjectiveObject,
       end
 );
 ##
+InstallMethod( UniversalEquivalenceFromFreydCategory,
+          [ IsCapFunctor ],
+          
+  function( F )
+    local freyd_category, range_category, name, FF;
+    
+    freyd_category := FreydCategory( SourceOfFunctor( F ) );
+    
+    range_category := RangeOfFunctor( F );
+    
+    if not ( HasIsAbelianCategory( range_category ) and IsAbelianCategory( range_category ) ) then
+      
+      Error( "The range category of the passed functor must be abelian!\n" );
+      
+    fi;
+    
+    name := "Universal equivalence from Freyd category";
+    
+    FF := CapFunctor( name, freyd_category, range_category );
+    
+    AddObjectFunction( FF,
+      object -> CokernelObject( ApplyFunctor( F, RelationMorphism( object ) ) )
+    );
+    
+    AddMorphismFunction( FF,
+      {s, morphism, r} -> CokernelObjectFunctorialWithGivenCokernelObjects(
+                              s,
+                              ApplyFunctor( F, RelationMorphism( Source( morphism ) ) ),
+                              ApplyFunctor( F, MorphismDatum( morphism ) ),
+                              ApplyFunctor( F, RelationMorphism( Range( morphism ) ) ),
+                              r
+                          )
+    );
+    
+    return FF;
+    
+end );
+
+##
 InstallMethod( QuiverRows,
           [ IsQuiverAlgebra ],
   function( A )

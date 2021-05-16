@@ -9,6 +9,10 @@ DeclareAttribute( "DualOfFpModuleByFreyd", IsFreydCategoryObject );
 DeclareAttribute( "DualOfFpModuleHomomorphismByFreyd", IsFreydCategoryMorphism );
 
 DeclareAttribute( "IsomorphismOntoDoubleDualOfFpModuleByFreyd", IsFreydCategoryObject );
+
+DeclareAttribute( "UniversalEquivalenceFromFreydCategory",
+                  IsCapFunctor );
+
 DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryObject ] );
 
 DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryMorphism ] );
