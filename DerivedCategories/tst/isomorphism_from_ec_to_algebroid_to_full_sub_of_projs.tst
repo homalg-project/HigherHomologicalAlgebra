@@ -3,13 +3,13 @@ gap> field := HomalgFieldOfRationals( );;
 gap> ok := false;;
 gap> while ok = false do
 > N := NanosecondsSinceEpoch( );;
-> A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 4 + ( N mod 7 ), 8 + ( N mod 7 ), 4 + ( N mod 10) );;
+> A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection( field, 4 + ( N mod 7 ), 8 + ( N mod 7 ), 4 + ( N mod 10) );;
 > if Dimension( A ) > 0 then
 > ok := true;
 > fi;
 > od;;
 gap> cat := CategoryOfQuiverRepresentations( A );;
-gap> collection := CreateExceptionalCollection( IndecProjRepresentations( A ) );;
+gap> collection := CreateStrongExceptionalCollection( IndecProjRepresentations( A ) );;
 gap> B := EndomorphismAlgebra( collection );;
 gap> algebroid := Algebroid( B );;
 gap> F := IsomorphismOntoAlgebroid( collection );;

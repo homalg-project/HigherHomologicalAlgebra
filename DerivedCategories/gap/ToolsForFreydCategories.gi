@@ -10,154 +10,49 @@ EnhancePackage( "MatricesForHomalg" );
 EnhancePackage( "FreydCategoriesForCAP" );
 EnhancePackage( "Algebroids" );
 
-##
-InstallMethod( MONOMIALS_WITH_GIVEN_DEGREE,
+InstallMethod( MonomialsWithGivenDegreeOp,
           [ IsHomalgGradedRing, IsHomalgModuleElement ],
+          
   function( S, degree )
     
-    if ForAll( WeightsOfIndeterminates( S ), w -> w = 1 ) then
-      return EntriesOfHomalgMatrix( MonomialMatrix( HomalgElementToInteger( degree ), S ) );
+    if ForAll( WeightsOfIndeterminates( S ), w -> w = 1 )
+          or ForAll( WeightsOfIndeterminates( S ), w -> w = -1 ) then
+          
+        return EntriesOfHomalgMatrix( MonomialMatrix( HomalgElementToInteger( degree ), S ) );
+        
     else
-      return MonomialsWithGivenDegree( S, degree );
-    fi;
-    
-end );
-
-##
-InstallMethod( BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW,
-          [ IsGradedRow ],
-function( o )
-  local S, G, dG, positions, L, mats, current_mat, i;
-  
-  if Rank( o ) = 0 then
-    return [  ];
-  fi;
-  
-  S := UnderlyingHomalgGradedRing( o );
-  
-  G := UnzipDegreeList( o );
-  dG := DuplicateFreeList( G );
-  dG := List( dG, d -> MONOMIALS_WITH_GIVEN_DEGREE( S, d ) );
-  
-  positions := List( DuplicateFreeList( G ), d -> Positions( G, d ) );
-  
-  L := ListWithIdenticalEntries( Length( G ), 0 );
-  
-  List( [ 1 .. Length( dG ) ], i -> List( positions[ i ], function( p ) L[p] := dG[i]; return 0; end ) );
-  
-  mats := [  ];
-  
-  for i in [ 1 .. Length( L ) ] do
-    
-    if not IsZero( L[ i ] ) then
-      
-      current_mat := ListWithIdenticalEntries( Length( G ), [ Zero( S ) ] );
-      
-      current_mat[ i ] := L[ i ];
-      
-      mats := Concatenation( mats, Cartesian( current_mat ) );
-      
-    fi;
-    
-  od;
-  
-  return mats;
-  
-end );
-
-##
-InstallGlobalFunction( BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_ROWS,
-  function( a, b )
-    local S, degrees_a, degrees_b, degrees, hom_a_b, mats;
-
-    S := UnderlyingHomalgGradedRing( a );
-    
-    degrees_a := UnzipDegreeList( a );
-
-    degrees_b := UnzipDegreeList( b );
-
-    degrees := Concatenation( List( degrees_a, a -> List( degrees_b, b -> -a + b ) ) );
-
-    degrees := List( degrees, d -> [ d, 1 ] );
-    
-    hom_a_b := GradedRow( degrees, S );
-
-    mats := BASIS_OF_EXTERNAL_HOM_FROM_TENSOR_UNIT_TO_GRADED_ROW( hom_a_b );
-
-    return List( mats, 
-              mat -> GradedRowOrColumnMorphism( a, HomalgMatrix( mat, Rank( a ), Rank( b ), S ), b ) );
-
-end );
-
-##
-InstallGlobalFunction( COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM,
-  function( phi, B )
-    local category, K, S, a, b, degrees_a, degrees_b, degrees, hom_a_b, A, list_of_entries, sol, position_of_non_zero_entry, current_entry, current_coeff_mat, current_coeff, current_mono, current_term, position_in_basis, j;
-    
-    category := CapCategory( phi );
-    
-    K := CommutativeRingOfLinearCategory( category );
-   
-    S := UnderlyingHomalgGradedRing( phi );
-
-    a := Source( phi );
-    
-    b := Range( phi );
-    
-    if Rank( a ) = 0 or Rank( b ) = 0 then
-      
-      return [  ];
-    
-    fi;
-    
-    degrees_a := UnzipDegreeList( a );
-
-    degrees_b := UnzipDegreeList( b );
-
-    degrees := Concatenation( List( degrees_a, a -> List( degrees_b, b -> -a + b ) ) );
-
-    degrees := List( degrees, d -> [ d, 1 ] );
-
-    hom_a_b := GradedRow( degrees, S );
-    
-    A := UnderlyingHomalgMatrix( phi );
-
-    list_of_entries := ShallowCopy( EntriesOfHomalgMatrix( A ) );
-
-    B := List( B, b -> EntriesOfHomalgMatrixAttr( UnderlyingHomalgMatrix( b ) ) );
-    
-    if B = [  ] then
-      
-      return [  ];
-
-    fi;
-
-    sol := ListWithIdenticalEntries( Length( B ), Zero( K) );
-    
-    # the run time depends on how many non-zero elements list_of_entries has.
-    
-    while PositionProperty( list_of_entries, a -> not IsZero( a ) ) <> fail do
-
-      position_of_non_zero_entry := PositionProperty( list_of_entries, a -> not IsZero( a ) );
-      current_entry := list_of_entries[ position_of_non_zero_entry ];
-      current_coeff_mat := Coefficients( EvalRingElement( current_entry ) );
-      
-      for j in [ 1 .. NrRows( current_coeff_mat ) ] do
         
-        current_coeff := current_coeff_mat[ j, 1 ];
-        current_mono := current_coeff_mat!.monomials[ j ]/S;
-        current_term := current_coeff / S * current_mono;
-        position_in_basis := PositionProperty( B, b -> b[ position_of_non_zero_entry ] = current_mono );
-        sol[ position_in_basis ] := current_coeff / K;
+        TryNextMethod( );
         
+    fi;
+  
+end );
+
+##
+BindGlobal( "BASIS_OF_GRADED_ROW",
+  
+  function( o )
+    local S, G, mats, z, i, j;
+    
+    S := UnderlyingHomalgGradedRing( o );
+    
+    G := List( DegreeList( o ), d -> [ MonomialsWithGivenDegree( S, d[ 1 ] ), d[ 2 ] ] );
+    G := Concatenation( List( G, d -> ListWithIdenticalEntries( d[ 2 ], d[ 1 ] ) ) );
+    
+    mats := [ ];
+    
+    z := ListWithIdenticalEntries( Rank( o ), Zero( S ) );
+    
+    for i in [ 1 .. Rank( o ) ] do
+      for j in [ 1 .. Size( G[i] ) ] do
+        z[i] := G[i,j];
+        Add( mats, ShallowCopy( z ) );
+        z[i] := Zero( S );
       od;
-      
-      list_of_entries[ position_of_non_zero_entry ] := Zero( S );
-
     od;
     
-    return sol;
-
+    return mats;
+    
 end );
 
 ##
@@ -197,19 +92,97 @@ InstallMethod( CategoryOfGradedRows,
       ADD_RANDOM_METHODS_TO_GRADED_ROWS( rows );
     
       ## Adding the external hom methods 
-      AddBasisOfExternalHom( rows, BASIS_OF_EXTERNAL_HOM_BETWEEN_GRADED_ROWS );
+      AddBasisOfExternalHom( rows,
       
+        function( a, b )
+          local S, degrees_a, degrees_b, degrees, hom_a_b, mats;
+          
+          S := UnderlyingHomalgGradedRing( a );
+          
+          degrees_a := UnzipDegreeList( a );
+          
+          degrees_b := UnzipDegreeList( b );
+          
+          degrees := CollectEntries( Concatenation( List( degrees_a, a -> List( degrees_b, b -> b - a ) ) ) );
+          
+          hom_a_b := GradedRow( degrees, S );
+          
+          mats := BASIS_OF_GRADED_ROW( hom_a_b );
+          
+          return List( mats, 
+                    mat -> GradedRowOrColumnMorphism(
+                                a,
+                                HomalgMatrix( mat, Rank( a ), Rank( b ), S ),
+                                b
+                              )
+                  );
+          
+      end );
+      
+      ##
       AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( rows,
-        COEFFICIENTS_OF_MORPHISM_OF_GRADED_ROWS_WITH_GIVEN_BASIS_OF_EXTENRAL_HOM
+        
+        { phi, B } -> CoefficientsOfMorphism( phi )
       );
-    
+      
+      ##
+      InstallMethod( CoefficientsOfMorphism,
+                [ IsGradedRowOrColumnMorphism and MorphismFilter( rows ) ],
+                
+        function( phi )
+          local K, degrees_s, degrees_r, degrees, hom_s_r, B, sol, positions, coeff, mon, position_in_basis, p, j;
+          
+          K := CommutativeRingOfLinearCategory( rows );
+          
+          degrees_s := UnzipDegreeList( Source( phi ) );
+          
+          degrees_r := UnzipDegreeList( Range( phi ) );
+          
+          degrees := CollectEntries( Concatenation( List( degrees_s, a -> List( degrees_r, b -> b - a ) ) ) );
+          
+          hom_s_r := GradedRow( degrees, UnderlyingHomalgGradedRing( phi ) );
+          
+          B := BASIS_OF_GRADED_ROW( hom_s_r );
+
+          phi := UnderlyingHomalgMatrix( phi );
+          
+          phi := EntriesOfHomalgMatrix( phi );
+                    
+          if B = [  ] then
+            
+            return [  ];
+            
+          fi;
+          
+          sol := ListWithIdenticalEntries( Length( B ), Zero( K) );
+          
+          # the run time depends on the number of monomials in phi
+          
+          positions := PositionsProperty( phi, e -> not IsZero( e ) );
+          
+          for p in positions do
+            
+            mon := MonomialsOfGradedRingElement( phi[ p ] );
+            
+            coeff := CoefficientsOfGradedRingElement( phi[ p ] );
+            
+            for j in [ 1 .. Size( coeff ) ] do
+              
+              position_in_basis := PositionProperty( B, b -> b[ p ] = mon[ j ] );
+              sol[ position_in_basis ] := coeff[ j ] / K;
+              
+            od;
+            
+          od;
+          
+          return sol;
+         
+      end );
+       
     fi;
     
     Finalize( rows );;
-    
-    # To derive a nice homomorphism structore on Freyd category of the rows
-    SetIsProjective( DistinguishedObjectOfHomomorphismStructure( rows ), true );
-    
+        
     return rows;
     
 end );

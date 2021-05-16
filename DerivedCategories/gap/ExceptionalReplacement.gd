@@ -9,34 +9,34 @@
 #############################################################################
 
 DeclareOperation( "CandidatesForExceptionalShifts",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "MinimalExceptionalShift",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "MaximalExceptionalShift",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalShifts",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "MorphismFromExceptionalObjectAsList",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "MorphismFromExceptionalObject",
-            [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "MorphismBetweenExceptionalObjects",
-            [ IsHomotopyCategoryMorphism, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacementData",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "EXCEPTIONAL_REPLACEMENT",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection ] );
 
 DeclareOperation( "ExceptionalReplacement",
-            [ IsHomotopyCategoryCell, IsExceptionalCollection, IsBool ] );
+            [ IsHomotopyCategoryCell, IsStrongExceptionalCollection, IsBool ] );

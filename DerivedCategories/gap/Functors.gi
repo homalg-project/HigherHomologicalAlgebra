@@ -276,7 +276,7 @@ end );
 
 ##
 InstallMethod( IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
     
@@ -301,7 +301,7 @@ end );
 
 ##
 InstallMethod( IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
     
@@ -407,7 +407,7 @@ end );
 
 ##
 InstallMethod( IsomorphismOntoAlgebroid,
-        [ IsExceptionalCollection ],
+        [ IsStrongExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, r, name, object_func, morphism_func, conv, algebroid_ring;
     
@@ -527,10 +527,10 @@ functor :=
     IsAlgebroid,
     function( full, oid )
       local collection;
-      if not HasExceptionalCollection( full ) then
+      if not HasStrongExceptionalCollection( full ) then
         return false;
       fi;
-      collection := ExceptionalCollection( full );
+      collection := StrongExceptionalCollection( full );
       if not HasAlgebroid( collection ) then
         return false;
       fi;
@@ -539,7 +539,7 @@ functor :=
       fi;
       return true;
     end,
-    { full, oid } -> IsomorphismOntoAlgebroid( ExceptionalCollection( full ) ),
+    { full, oid } -> IsomorphismOntoAlgebroid( StrongExceptionalCollection( full ) ),
     "Isomorphism functor from an exceptional collection onto the associated algebroid"
   ];
 
@@ -550,7 +550,7 @@ ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories( functor );
 
 ##
 InstallMethod( IsomorphismFromAlgebroid,
-        [ IsExceptionalCollection ],
+        [ IsStrongExceptionalCollection ],
   function( collection )
     local n, full, A, algebroid, r, name, object_func, morphism_func;
     
@@ -638,10 +638,10 @@ functor :=
     IsCapFullSubcategory,
     function( oid, full )
       local collection;
-      if not HasExceptionalCollection( full ) then
+      if not HasStrongExceptionalCollection( full ) then
         return false;
       fi;
-      collection := ExceptionalCollection( full );
+      collection := StrongExceptionalCollection( full );
       if not HasAlgebroid( collection ) then
         return false;
       fi;
@@ -650,7 +650,7 @@ functor :=
       fi;
       return true;
     end,
-    { oid, full } -> IsomorphismFromAlgebroid( ExceptionalCollection( full ) ),
+    { oid, full } -> IsomorphismFromAlgebroid( StrongExceptionalCollection( full ) ),
     "Isomorphism functor from algebroid associated to an exceptional collection onto the exceptional collection"
   ];
 
@@ -954,13 +954,13 @@ end );
 
 ##
 InstallMethod( EquivalenceFromAdditiveClosure,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   collection -> EquivalenceFromAdditiveClosure( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( EquivalenceFromHomotopyCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   collection -> ExtendFunctorToHomotopyCategories( EquivalenceFromAdditiveClosure( collection ) )
 );
 
@@ -982,13 +982,13 @@ end );
 
 ##
 InstallMethod( EmbeddingFunctorFromAdditiveClosure,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   collection -> EmbeddingFunctorFromAdditiveClosure( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( EmbeddingFunctorFromHomotopyCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local iota, ambient_cat, complexes_cat;
     
@@ -1051,7 +1051,7 @@ end );
 
 ##
 InstallMethod( ReplacementFunctor,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, homotopy_cat, name, Rep;
     
@@ -1079,7 +1079,7 @@ end );
 
 ##
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, complexes_cat, J, eta_J, G, eta_G, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
@@ -1139,7 +1139,7 @@ end );
 
 ##
 InstallMethod( ReplacementFunctorIntoHomotopyCategoryOfQuiverRows,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, complexes_cat, C, J, eta_J, G, eta_G, GJ, sigma_S, sigma_T, GJ_o_sigma_S, sigma_T_o_GJ, eta;
     
@@ -1203,12 +1203,12 @@ BindGlobal( "SET_COMMUTATIVITY_NAT_ISO_BETWEEN_CONVOLUTION_AND_SHIFT",
   function( collection, conv )
     local D, sigma_D, C, sigma_C, conv_o_sigma_D, sigma_C_o_conv, name, eta;
     
+    C := AmbientCategory( collection );
+    
     D := HomotopyCategory( collection );
     
     sigma_D := ShiftFunctor( D );
-    
-    C := AmbientCategory( collection );
-    
+     
     sigma_C := ShiftFunctor( C );
     
     conv_o_sigma_D := PostCompose( conv, sigma_D );
@@ -1249,14 +1249,24 @@ end );
 
 ##
 InstallMethod( ConvolutionFunctor,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
-    local homotopy_cat, ambient_cat, conv;
-    
-    homotopy_cat := HomotopyCategory( collection );
-    
+    local ambient_cat, complexes_cat, homotopy_cat, conv;
+     
     ambient_cat := AmbientCategory( collection );
     
+    complexes_cat := UnderlyingCategory( ambient_cat );
+    
+    if IsCochainComplexCategory( complexes_cat ) or IsChainComplexCategory( complexes_cat ) then
+      
+      homotopy_cat := HomotopyCategory( collection );
+      
+    else
+      
+      Error( "The ambient category of the collection should be a homotopy category!\n" );
+      
+    fi;
+
     conv := CapFunctor( "Convolution functor", homotopy_cat, ambient_cat );
     
     AddObjectFunction( conv, BackwardConvolution );
@@ -1271,7 +1281,7 @@ end );
 
 ##
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, complexes_cat, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
     
@@ -1331,7 +1341,7 @@ end );
 
 ##
 InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfQuiverRows,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, complexes_cat, oid, oid_plus, I, eta_I, F, eta_F, IF, sigma_S, sigma_T, IF_o_sigma_S, sigma_T_o_IF, eta;
     
@@ -1398,12 +1408,12 @@ AddFunctor(
     { category_1, category_2 }
           -> IsAdditiveClosureCategory( DefiningCategory( category_1 ) ) and
               IsAdditiveClosureCategory( DefiningCategory( category_2 ) ) and
-                HasExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
-                  IsIdenticalObj( category_2, AmbientCategory( ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
+                HasStrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
+                  IsIdenticalObj( category_2, AmbientCategory( StrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
     function( category_1, category_2 )
       local collection;
       
-      collection := ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
+      collection := StrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
       
       return ConvolutionFunctor( collection );
       
@@ -1418,12 +1428,12 @@ AddFunctor(
     { category_2, category_1 }
           -> IsAdditiveClosureCategory( DefiningCategory( category_1 ) ) and
               IsAdditiveClosureCategory( DefiningCategory( category_2 ) ) and
-                HasExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
-                  IsIdenticalObj( category_2, AmbientCategory( ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
+                HasStrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) and
+                  IsIdenticalObj( category_2, AmbientCategory( StrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) ) ) ),
     function( category_2, category_1 )
       local collection;
       
-      collection := ExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
+      collection := StrongExceptionalCollection( UnderlyingCategory( DefiningCategory( category_1 ) ) );
       
       return ReplacementFunctor( collection );
       
@@ -1624,7 +1634,7 @@ end );
 
 ##
 InstallMethod( EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   collection -> EmbeddingFunctorIntoDerivedCategory( AmbientCategory( collection ) )
 );
 
@@ -1737,7 +1747,7 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
           
           objs := List( [ 1 .. N ], i -> LinearClosureObject( U, i/CP ) );
           
-          collection := CreateExceptionalCollection( objs );
+          collection := CreateStrongExceptionalCollection( objs );
           
           full := DefiningFullSubcategory( collection );
           
@@ -2002,7 +2012,7 @@ end );
 
 ##
 InstallOtherMethod( IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories,
-      [ IsCapFunctor, IsCapFunctor, IsExceptionalCollection ],
+      [ IsCapFunctor, IsCapFunctor, IsStrongExceptionalCollection ],
   { F_1, F_2, collection } -> IsomorphismFromTensorProductOfAlgebroidsOntoBoxProductOfFullSubcategories( F_1, F_2, DefiningFullSubcategory( collection ) )
 );
 
@@ -2034,7 +2044,7 @@ end );
 
 ##
 InstallOtherMethod( IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids,
-      [ IsCapFunctor, IsCapFunctor, IsExceptionalCollection ],
+      [ IsCapFunctor, IsCapFunctor, IsStrongExceptionalCollection ],
   { F_1, F_2, collection } -> IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids( F_1, F_2, DefiningFullSubcategory( collection ) )
 );
 

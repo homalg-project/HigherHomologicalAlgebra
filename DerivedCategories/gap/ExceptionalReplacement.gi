@@ -10,7 +10,7 @@
 
 ##
 InstallMethodWithCache( CandidatesForExceptionalShifts,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local ambient_cat, T, u_T, l_T, u_A, l_A;
@@ -47,7 +47,7 @@ end );
 
 ##
 InstallMethodWithCache( ExceptionalShifts,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local E, I;
@@ -64,7 +64,7 @@ end );
 
 ##
 InstallMethodWithCache( MinimalExceptionalShift,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local E, I, N;
@@ -89,7 +89,7 @@ end );
 
 ##
 InstallMethodWithCache( MaximalExceptionalShift,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local E, I, N;
@@ -114,7 +114,7 @@ end );
 
 ##
 InstallMethodWithCache( MorphismFromExceptionalObjectAsList,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local ambient_cat, H, H_A, min_gen, positions, vectors, positions_of_non_zeros;
@@ -164,7 +164,7 @@ end );
 
 ##
 InstallMethodWithCache( MorphismFromExceptionalObject,
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local m;
@@ -185,7 +185,7 @@ end );
 
 ##
 InstallMethodWithCache( MorphismBetweenExceptionalObjects,
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
           
   function( alpha, collection )
     local H, H_alpha, D, full, I, J, m;
@@ -223,7 +223,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacementData,
               "for homotopy objects defined by cochains",
-         [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+         [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local homotopy_cat, complexes_cat, N, data;
@@ -316,7 +316,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
              "for homotopy objects defined by cochains",
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local ambient_cat, complexes_cat, defining_cat, additive_closure, homotopy_cat, data, diffs, rep_A, N;
@@ -382,7 +382,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
             "for homotopy objects defined by chains",
-          [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection, IsBool ],
           
   function( A, collection, bool )
     local ambient_cat, complexes_cat, rep_A, data, l, z, X_l;
@@ -436,7 +436,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacementData,
              "for homotopy morphisms defined by cochain morphisms",
-         [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+         [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
          
   function( phi, collection )
     local homotopy_cat, complexes_cat, collection_plus, I, A, N_A, B, N_B, N, rep_A, rep_B, data;
@@ -525,7 +525,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacementData,
              "for homotopy objects defined by chains", 
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local homotopy_cat, complexes_cat, N, data;
@@ -619,7 +619,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
             "for homotopy objects defined by chains",
-          [ IsHomotopyCategoryObject, IsExceptionalCollection ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
     local ambient_cat, complexes_cat, defining_cat, additive_closure, homotopy_cat, data, diffs, rep_A, N;
@@ -685,7 +685,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
             "for homotopy objects defined by chains",
-          [ IsHomotopyCategoryObject, IsExceptionalCollection, IsBool ],
+          [ IsHomotopyCategoryObject, IsStrongExceptionalCollection, IsBool ],
           
   function( A, collection, bool )
     local ambient_cat, complexes_cat, rep_A, data, u, X_u;
@@ -737,7 +737,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacementData,
              "for homotopy morphisms defined by chains",
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
           
   function( phi, collection )
     local homotopy_cat, complexes_cat, collection_plus, I, A, N_A, B, N_B, N, rep_A, rep_B, data;
@@ -814,7 +814,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
             "for homotopy morphisms",
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
           
   function( alpha, collection )
     local ambient_cat, complexes_cat, homotopy_cat, rep_A, rep_B, data, maps;
@@ -840,7 +840,7 @@ end );
 ##
 InstallMethodWithCache( ExceptionalReplacement,
             "for homotopy morphisms defined by chain morphisms",
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection ],
+          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
   function( alpha, collection )
     local ambient_cat, complexes_cat, homotopy_cat, rep_A, rep_B, data, maps;
     
@@ -870,7 +870,7 @@ end );
 
 ##
 InstallMethodWithCache( ExceptionalReplacement,
-          [ IsHomotopyCategoryMorphism, IsExceptionalCollection, IsBool ],
+          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection, IsBool ],
   function( alpha, collection, bool )
     local A, B, rep_A, rep_B;
     

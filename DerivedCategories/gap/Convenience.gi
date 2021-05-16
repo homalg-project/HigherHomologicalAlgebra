@@ -178,11 +178,11 @@ InstallMethod( FindSomeFunctor,
   function( full, algebroid )
     local collection;
     
-    if not HasExceptionalCollection( full ) then
+    if not HasStrongExceptionalCollection( full ) then
       TryNextMethod( );
     fi;
     
-    collection := ExceptionalCollection( full );
+    collection := StrongExceptionalCollection( full );
     
     if not IsIdenticalObj( Algebroid( collection ), algebroid ) then
       TryNextMethod( );
@@ -198,11 +198,11 @@ InstallMethod( FindSomeFunctor,
   function( full, indec_projs )
     local collection, A;
     
-    if not HasExceptionalCollection( full ) then
+    if not HasStrongExceptionalCollection( full ) then
       TryNextMethod( );
     fi;
     
-    collection := ExceptionalCollection( full );
+    collection := StrongExceptionalCollection( full );
     
     if not ( IsBound( indec_projs!.full_subcategory_generated_by_indec_projective_objects ) and
                 indec_projs!.full_subcategory_generated_by_indec_projective_objects ) then
@@ -227,11 +227,11 @@ InstallMethod( FindSomeFunctor,
   function( full, reps )
     local collection, A, I;
     
-    if not HasExceptionalCollection( full ) then
+    if not HasStrongExceptionalCollection( full ) then
       TryNextMethod( );
     fi;
     
-    collection := ExceptionalCollection( full );
+    collection := StrongExceptionalCollection( full );
     
     A := EndomorphismAlgebra( collection );
     
@@ -251,11 +251,11 @@ InstallMethod( FindSomeFunctor,
   function( indec_projs, full )
     local collection, A;
     
-    if not HasExceptionalCollection( full ) then
+    if not HasStrongExceptionalCollection( full ) then
       TryNextMethod( );
     fi;
     
-    collection := ExceptionalCollection( full );
+    collection := StrongExceptionalCollection( full );
     
     if not ( IsBound( indec_projs!.full_subcategory_generated_by_indec_projective_objects ) and
                 indec_projs!.full_subcategory_generated_by_indec_projective_objects ) then
@@ -281,11 +281,11 @@ InstallMethod( FindSomeFunctor,
   function( algebroid, full )
     local collection;
     
-    if not HasExceptionalCollection( full ) then
+    if not HasStrongExceptionalCollection( full ) then
       TryNextMethod( );
     fi;
     
-    collection := ExceptionalCollection( full );
+    collection := StrongExceptionalCollection( full );
     
     if not IsIdenticalObj( Algebroid( collection ), algebroid ) then
       TryNextMethod( );
@@ -545,10 +545,10 @@ InstallMethod( FindSomeFunctor,
       underlying_category_1 := UnderlyingCategory( defining_cat_1 );
       
       if IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( underlying_category_1 ) and
-          HasExceptionalCollection( underlying_category_1 ) and
+          HasStrongExceptionalCollection( underlying_category_1 ) and
             IsIdenticalObj( homotopy_category_2, AmbientCategory( underlying_category_1 ) ) then
             
-            collection := ExceptionalCollection( underlying_category_1 );
+            collection := StrongExceptionalCollection( underlying_category_1 );
             
             return ConvolutionFunctor( collection );
             
@@ -563,10 +563,10 @@ InstallMethod( FindSomeFunctor,
       underlying_category_2 := UnderlyingCategory( defining_cat_2 );
       
       if IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( underlying_category_2 ) and
-          HasExceptionalCollection( underlying_category_2 ) and
+          HasStrongExceptionalCollection( underlying_category_2 ) and
             IsIdenticalObj( homotopy_category_1, AmbientCategory( underlying_category_2 ) ) then
             
-            collection := ExceptionalCollection( underlying_category_2 );
+            collection := StrongExceptionalCollection( underlying_category_2 );
             
             return ReplacementFunctor( collection );
             

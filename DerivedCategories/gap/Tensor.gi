@@ -10,7 +10,7 @@
 
 ##
 InstallMethod( TensorFunctorOnIndecProjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local full, iso, indec_projs, name, T;
     
@@ -34,7 +34,7 @@ end );
 
 ##
 InstallMethod( TensorFunctorOnProjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local G, add_G, C, can, can_add_G, projs, D, name, R;
     
@@ -67,7 +67,7 @@ end );
 ## In case the ambient category of the collection is abelian
 ##
 InstallMethod( TensorFunctor,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
     
   function( collection )
     local full, cat, T, I, TI, projs, reps, name, F;
@@ -144,7 +144,7 @@ end );
 ## In case the ambient category of the collection is homotopy category
 ##
 InstallMethod( TensorFunctor,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
     
   function( collection )
     local ambient_cat, A, D, Ho_D, T;

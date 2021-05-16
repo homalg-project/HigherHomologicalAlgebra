@@ -11,7 +11,7 @@
 ##
 ##
 InstallMethod( HomFunctorAttr,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
     
   function( collection )
     local full, A, field, A_op, quiver, arrows, labels, ambient_cat, reps, r, name, F;
@@ -67,27 +67,21 @@ InstallMethod( HomFunctorAttr,
           
           j := label[ 2 ];
           
+          for k in [ i, j ] do
+            
+            if not IsBound( bases[ k ] ) then
+              
+              B := BasisOfExternalHom( UnderlyingCell( collection[ k ] ), V );
+              
+              bases[ k ] := B;
+              
+              dim_vec[ k ] := Size( B );
+              
+            fi;
+          
+          od;
+          
           k := label[ 3 ];
-          
-          if not IsBound( bases[ i ] ) then
-            
-            B := BasisOfExternalHom( UnderlyingCell( collection[ i ] ), V );
-            
-            bases[ i ] := B;
-            
-            dim_vec[ i ] := Size( B );
-            
-          fi;
-          
-          if not IsBound( bases[ j ] ) then
-            
-            B := BasisOfExternalHom( UnderlyingCell( collection[ j ] ), V );
-            
-            bases[ j ] := B;
-            
-            dim_vec[ j ] := Size( B );
-             
-          fi;
           
           a := UnderlyingCell( Arrows( collection, i, j )[ k ] );
           
@@ -176,7 +170,7 @@ InstallMethod( HomFunctorAttr,
 end );
 
 ##
-InstallMethod( HomFunctor, [ IsExceptionalCollection ], HomFunctorAttr );
+InstallMethod( HomFunctor, [ IsStrongExceptionalCollection ], HomFunctorAttr );
 
 ########################################################
 #
@@ -187,7 +181,7 @@ InstallMethod( HomFunctor, [ IsExceptionalCollection ], HomFunctorAttr );
 
 ##
 InstallMethod( HomFunctorOnIndecInjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, inj_indec, name, cell_func;
      
@@ -215,7 +209,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnInjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, can, can_H, name;
     
@@ -245,7 +239,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnIndecProjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, proj_indec, name, cell_func;
      
@@ -273,7 +267,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnProjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, can, can_H, name;
     
@@ -311,7 +305,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnInjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, projs;
     
@@ -343,7 +337,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnProjectiveObjects,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, projs;
     
@@ -381,7 +375,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnBaseCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local H, Ho_C, C, B, reps, cell_func, name;
     
@@ -425,7 +419,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnDefiningCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local Ho_C, C, H;
     
@@ -457,7 +451,7 @@ end );
 
 ##
 InstallMethod( HomFunctorOnDefiningCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
   function( collection )
     local H, Ho_C, C, I;
     

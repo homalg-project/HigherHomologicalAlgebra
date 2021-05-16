@@ -68,7 +68,7 @@ InstallMethod( EndomorphismAlgebraOfCotangentBeilinsonCollection,
     
     B := UnderlyingCategory( DefiningCategory( RangeOfFunctor( B ) ) );
     
-    return EndomorphismAlgebra( ExceptionalCollection( B ) );
+    return EndomorphismAlgebra( StrongExceptionalCollection( B ) );
     
 end );
 
@@ -94,7 +94,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
     
     labels := List( Reversed( [ 0 .. n - 1 ] ), i -> Concatenation( "Ω^", String( i ),"(", String( i ) , ")" ) );
     
-    collection := CreateExceptionalCollection( full, labels );
+    collection := CreateStrongExceptionalCollection( full, labels );
     
     homotopy_cat := HomotopyCategory( collection );
     
@@ -176,7 +176,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid,
     
     C := UnderlyingCategory( C );
     
-    collection := ExceptionalCollection( C );
+    collection := StrongExceptionalCollection( C );
     
     C := IsomorphismOntoAlgebroid( collection );
     
@@ -241,7 +241,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProje
     
     C := UnderlyingCategory( C );
     
-    C := ExceptionalCollection( C );
+    C := StrongExceptionalCollection( C );
   
     C := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( C );
     

@@ -51,7 +51,7 @@ gap> mats :=
 >       [ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ] ];;
 gap> mats := List( mats, m -> MatrixByRows( field, m ) );;
 gap> Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );;
-gap> collection := CreateExceptionalCollection( T );;
+gap> collection := CreateStrongExceptionalCollection( T );;
 gap> HH := HomFunctor( collection );;
 gap> C := AsCapCategory( Source( HH ) );;
 gap> D := AsCapCategory( Range( HH ) );;

@@ -9,7 +9,7 @@
 #############################################################################
 
 DeclareAttribute( "HomFunctorAttr",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 #! @Description
 #!  The argument is an exceptional collection <A>E</A> which is defined by some full
@@ -19,7 +19,7 @@ DeclareAttribute( "HomFunctorAttr",
 #! @Arguments collection
 #! @Returns a functor
 DeclareOperation( "HomFunctor",
-        [ IsExceptionalCollection ] );
+        [ IsStrongExceptionalCollection ] );
 
 #! @Description
 #!  The argument is an exceptional collection <A>E</A> which is defined by some full
@@ -30,7 +30,7 @@ DeclareOperation( "HomFunctor",
 #! @Arguments collection
 #! @Returns a functor
 DeclareAttribute( "HomFunctorOnIndecInjectiveObjects",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 #! @Description
 #!  The argument is an exceptional collection <A>E</A> which is defined by some
@@ -41,18 +41,18 @@ DeclareAttribute( "HomFunctorOnIndecInjectiveObjects",
 #! @Arguments collection
 #! @Returns a functor
 DeclareAttribute( "HomFunctorOnInjectiveObjects",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 
 DeclareAttribute( "HomFunctorOnIndecProjectiveObjects",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 DeclareAttribute( "HomFunctorOnProjectiveObjects",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 DeclareAttribute( "HomFunctorOnDefiningCategory",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 
 DeclareAttribute( "HomFunctorOnBaseCategory",
-        IsExceptionalCollection );
+        IsStrongExceptionalCollection );
 

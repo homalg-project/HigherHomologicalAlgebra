@@ -50,7 +50,7 @@ gap> a_0 := QuiverRowsObject( [ [ q.("𝓞(0)"), 1 ] ], QRows );;
 gap> d_0 := UniversalMorphismIntoZeroObject( a_0 );;
 gap> omega_2 := HomotopyCategoryObject( [ d_0 ], 0 );;
 gap> vl := [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ];;
-gap> c := CreateExceptionalCollection( [ omega_0, omega_1, omega_2 ] : vertices_labels := vl );;
+gap> c := CreateStrongExceptionalCollection( [ omega_0, omega_1, omega_2 ] : vertices_labels := vl );;
 gap> G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( c );;
 gap> F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( c );;
 gap> I := EmbeddingFunctorIntoDerivedCategory( SourceOfFunctor( G ) );;

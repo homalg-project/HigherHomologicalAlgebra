@@ -17,18 +17,18 @@
 #! $\lambda:\mathrm{Id}_{ \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)} \to \mathrm{Hom}(T,-\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i)$.
 #! @Arguments E
 #! @Returns a natural transformation
-DeclareAttribute( "UnitOfTensorHomAdjunction", IsExceptionalCollection );
+DeclareAttribute( "UnitOfTensorHomAdjunction", IsStrongExceptionalCollection );
 
 #! @Description
 #!  The input is an exceptional collection <A>E</A>. The output is the unit of the tensor-hom adjunction
 #! $\eta: \mathrm{Hom}(\oplus_i E_i,-)\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i \to \mathrm{Id}_C$.
 #! @Arguments E
 #! @Returns a natural transformation
-DeclareAttribute( "CounitOfTensorHomAdjunction", IsExceptionalCollection );
+DeclareAttribute( "CounitOfTensorHomAdjunction", IsStrongExceptionalCollection );
 
-DeclareAttribute( "CounitOfConvolutionReplacementAdjunction", IsExceptionalCollection );
-DeclareAttribute( "UnitOfConvolutionReplacementAdjunction", IsExceptionalCollection );
+DeclareAttribute( "CounitOfConvolutionReplacementAdjunction", IsStrongExceptionalCollection );
+DeclareAttribute( "UnitOfConvolutionReplacementAdjunction", IsStrongExceptionalCollection );
 
-DeclareOperation( "COMPUTE_STANDARD_ISOMORPHISM", [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
-DeclareOperation( "COMPUTE_ISOMORPHISM", [ IsHomotopyCategoryObject, IsExceptionalCollection ] );
+DeclareOperation( "COMPUTE_STANDARD_ISOMORPHISM", [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ] );
+DeclareOperation( "COMPUTE_ISOMORPHISM", [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ] );
 

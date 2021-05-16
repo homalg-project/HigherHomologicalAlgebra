@@ -2,7 +2,7 @@ gap> field := HomalgFieldOfRationals( );;
 gap> ok := false;;
 gap> while ok = false do
 > N := NanosecondsSinceEpoch( );;
-> A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection( field, 4 + ( N mod 7 ), 8 + ( N mod 7 ), 4 + ( N mod 10) );;
+> A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection( field, 4 + ( N mod 7 ), 8 + ( N mod 7 ), 4 + ( N mod 10) );;
 > if Dimension( A ) > 0 then
 > ok := true;
 > fi;

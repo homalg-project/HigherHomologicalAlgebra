@@ -15,8 +15,8 @@
 ##
 #############################
 
-DeclareRepresentation( "IsExceptionalCollectionRep",
-                          IsExceptionalCollection and IsAttributeStoringRep,
+DeclareRepresentation( "IsStrongExceptionalCollectionRep",
+                          IsStrongExceptionalCollection and IsAttributeStoringRep,
                             [ ] );
                          
 ##################################
@@ -26,13 +26,13 @@ DeclareRepresentation( "IsExceptionalCollectionRep",
 ##################################
 
 ##
-BindGlobal( "ExceptionalCollectionFamily",
-  NewFamily( "ExceptionalCollectionFamily", IsObject ) );
+BindGlobal( "StrongExceptionalCollectionFamily",
+  NewFamily( "StrongExceptionalCollectionFamily", IsObject ) );
 
 ##
-BindGlobal( "TheTypeExceptionalCollection",
-  NewType( ExceptionalCollectionFamily,
-                      IsExceptionalCollectionRep ) );
+BindGlobal( "TheTypeStrongExceptionalCollection",
+  NewType( StrongExceptionalCollectionFamily,
+                      IsStrongExceptionalCollectionRep ) );
 
 ##################################
 ##
@@ -41,16 +41,16 @@ BindGlobal( "TheTypeExceptionalCollection",
 #################################
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsCapFullSubcategory, IsList, IsString ],
   function( full, vertices_labels, cache )
     local L, range, positions, algebra, quiver, collection, n, i, j;
     
-    if HasExceptionalCollection( full ) then
+    if HasStrongExceptionalCollection( full ) then
       
       SetCachingOfCategory( full, cache );
       
-      return ExceptionalCollection( full );
+      return StrongExceptionalCollection( full );
       
     fi;
     
@@ -120,83 +120,83 @@ InstallMethod( CreateExceptionalCollection,
     n := Length( L );
     
     ObjectifyWithAttributes(
-      collection, TheTypeExceptionalCollection,
+      collection, TheTypeStrongExceptionalCollection,
         UnderlyingObjects, L,
         NumberOfObjects, n,
         DefiningFullSubcategory, full );
         
-    SetExceptionalCollection( full, collection );
+    SetStrongExceptionalCollection( full, collection );
     
     return collection;
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsList, IsList, IsString ],
   function( objects, vertices_labels, cache )
     local full;
     
     full := FullSubcategoryGeneratedByListOfObjects( objects );
     
-    return CreateExceptionalCollection( full, vertices_labels, cache );
+    return CreateStrongExceptionalCollection( full, vertices_labels, cache );
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsCapFullSubcategory, IsList ],
   function( full, vertices_labels )
     
-    return CreateExceptionalCollection( full, vertices_labels, "crisp" );
+    return CreateStrongExceptionalCollection( full, vertices_labels, "crisp" );
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsList, IsList ],
   function( objects, vertices_labels )
     local full;
     
     full := FullSubcategoryGeneratedByListOfObjects( objects );
     
-    return CreateExceptionalCollection( full, vertices_labels );
+    return CreateStrongExceptionalCollection( full, vertices_labels );
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsCapFullSubcategory ],
   function( full )
     local vertices_labels;
     
     vertices_labels := List( [ 1 .. Size( SetOfKnownObjects( full ) ) ], String );
     
-    return CreateExceptionalCollection( full, vertices_labels );
+    return CreateStrongExceptionalCollection( full, vertices_labels );
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
           [ IsList ],
   function( objects )
     local full;
     
     full := FullSubcategoryGeneratedByListOfObjects( objects );
     
-    return CreateExceptionalCollection( full );
+    return CreateStrongExceptionalCollection( full );
     
 end );
 
 ##
-InstallMethod( ExceptionalCollection,
+InstallMethod( StrongExceptionalCollection,
           [ IsCapFullSubcategory ],
-  CreateExceptionalCollection
+  CreateStrongExceptionalCollection
 );
 
 ##
 InstallMethod( TiltingObject,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   function( collection )
     local full, I, objs;
@@ -214,8 +214,8 @@ InstallMethod( TiltingObject,
 end );
 
 ##
-InstallMethod( InterpretMorphismInExceptionalCollectionAsEndomorphismOfTiltingObject,
-          [ IsExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
+InstallMethod( InterpretMorphismInStrongExceptionalCollectionAsEndomorphismOfTiltingObject,
+          [ IsStrongExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
           
   function( collection, phi )
     local nr_objects, objs, p_source, p_range, L;
@@ -241,7 +241,7 @@ end );
 
 ##
 InstallMethod( \[\],
-          [ IsExceptionalCollection, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt ],
           
   function( collection, i )
     local n;
@@ -260,7 +260,7 @@ end );
 
 ##
 InstallMethod( PathsOfLengthGreaterThanOneOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
           
   function( collection, indices )
     local i, j, n;
@@ -300,13 +300,13 @@ end );
 
 ##
 InstallOtherMethod( PathsOfLengthGreaterThanOne,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt, IsInt ],
   { collection, i, j } -> PathsOfLengthGreaterThanOne( collection, [ i, j ] )
 );
 
 ##
 InstallMethod( PathsOfLengthOneOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
     
   function( collection, indices )
     local i, s, j, r, n, full, hom_ij, D, maps, long_paths, arrows, beta, nr_arrows, m;
@@ -385,19 +385,19 @@ end );
 
 ##
 InstallOtherMethod( PathsOfLengthOne,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt, IsInt ],
   { collection, i, j } -> PathsOfLengthOne( collection, [ i, j ] )
 );
 
 ##
 InstallOtherMethod( Arrows,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt, IsInt ],
   { collection, i, j } -> PathsOfLengthOne( collection, [ i, j ] )
 );
 
 ##
 InstallMethod( AllPathsOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
           
   function( collection, indices )
     
@@ -411,13 +411,13 @@ end );
 
 ##
 InstallOtherMethod( AllPaths,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt, IsInt ],
   { collection, i, j } -> AllPaths( collection, [ i, j ] )
 );
 
 ##
 InstallMethod( BasisOfPathsOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
               
   function( collection, indices )
     local dim, arrows, arrows_labels, long_paths, long_paths_labels, B, B_labels, p, rel, labels;
@@ -468,13 +468,13 @@ end );
 
 ##
 InstallOtherMethod( BasisOfPaths,
-          [ IsExceptionalCollection, IsInt, IsInt ],
+          [ IsStrongExceptionalCollection, IsInt, IsInt ],
   { collection, i, j } -> BasisOfPaths( collection, [ i, j ] )
 );
 
 ##
 InstallMethod( LabelsForPathsOfLengthOneOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
           
   function( collection, indices )
     local nr_arrows;
@@ -487,7 +487,7 @@ end );
 
 ##
 InstallMethod( LabelsForPathsOfLengthGreaterThanOneOp,
-          [ IsExceptionalCollection, IsList ],
+          [ IsStrongExceptionalCollection, IsList ],
           
   function( collection, indices )
     local i, j, n, labels;
@@ -532,7 +532,7 @@ end );
 
 ##
 InstallMethod( LabelsForAllPathsOp,
-      [ IsExceptionalCollection, IsList ],
+      [ IsStrongExceptionalCollection, IsList ],
       
   function( collection, indices )
     
@@ -545,7 +545,7 @@ end );
 
 ##
 InstallMethod( LabelsForBasisOfPathsOp,
-              [ IsExceptionalCollection, IsList ],
+              [ IsStrongExceptionalCollection, IsList ],
               
   function( collection, indices )
     local b;
@@ -570,7 +570,7 @@ end );
 
 ##
 InstallMethod( EndomorphismAlgebra,
-        [ IsExceptionalCollection, IsField ],
+        [ IsStrongExceptionalCollection, IsField ],
         
   function( collection, field )
     local nr_vertices, arrows, sources, ranges, v, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, name, r, i, j;
@@ -609,22 +609,23 @@ InstallMethod( EndomorphismAlgebra,
       end;
     
     arrows_latex := List( labels, extract_latex_string );
-    
-    if ForAny( collection!.vertices_labels, l -> Int( l ) <> fail ) then
+          
+    if IsBound( collection!.vertices_latex ) then
       
-      vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String( i ), "}" ) );
+      vertices_latex := collection!.vertices_latex;
       
     else
       
-      vertices_latex := collection!.vertices_labels;
+      vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String( i ), "}" ) );
       
     fi;
+
     
     quiver := RightQuiver( collection!.quiver,
                 collection!.vertices_labels, labels, sources, ranges );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
-    
+     
     A := PathAlgebra( field, quiver );
     
     relations := [ ];
@@ -661,7 +662,7 @@ InstallMethod( EndomorphismAlgebra,
     
     A := QuotientOfPathAlgebra( A, relations ); 
     
-    SetDefiningExceptionalCollection( A, collection );
+    SetDefiningStrongExceptionalCollection( A, collection );
     
     if collection!.algebra <> fail then
       
@@ -691,62 +692,66 @@ end );
 
 ##
 InstallMethod( EndomorphismAlgebraAttr,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
     
   collection -> EndomorphismAlgebra( collection, GLOBAL_FIELD_FOR_QPA!.default_field )
 );
 
 ##
 InstallMethod( EndomorphismAlgebra,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   EndomorphismAlgebraAttr
 );
 
 ##
 InstallMethod( AmbientCategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> AmbientCategory( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( Algebroid,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> Algebroid( EndomorphismAlgebra( collection ) )
 );
 
 ##
 InstallMethod( QuiverRows,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> QuiverRows( EndomorphismAlgebra( collection ) )
 );
 
 ##
 InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebra( collection ) ) )
 );
 
 ##
 InstallOtherMethod( HomotopyCategory,
-          [ IsExceptionalCollection, IsBool ],
-  function( collection, over_cochains )
+          [ IsStrongExceptionalCollection ],
+          
+  function( collection )
     local collection_plus;
-    
+     
     collection_plus := AdditiveClosure( DefiningFullSubcategory( collection ) );
     
-    return HomotopyCategory( collection_plus, over_cochains );
+    if IsCochainComplexCategory( UnderlyingCategory( AmbientCategory( collection ) ) ) then
+      
+      return HomotopyCategory( collection_plus, true );
+      
+    else
+      
+      return HomotopyCategory( collection_plus, false );
+      
+    fi;
     
 end );
-
-InstallOtherMethod( HomotopyCategory,
-          [ IsExceptionalCollection ],
-  collection -> HomotopyCategory( collection, false )
-);
 
 ##
 InstallMethod( AdditiveClosureAsFullSubcategory,
@@ -784,28 +789,28 @@ end );
 
 ##
 InstallMethod( AdditiveClosureAsFullSubcategory,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> AdditiveClosureAsFullSubcategory( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( AdditiveClosure,
-          [ IsExceptionalCollection ],
+          [ IsStrongExceptionalCollection ],
           
   collection -> AdditiveClosure( DefiningFullSubcategory( collection ) )
 );
 
 ##
 InstallMethodWithCache( BoxProduct,
-          [ IsExceptionalCollection, IsExceptionalCollection, IsCapCategory ],
+          [ IsStrongExceptionalCollection, IsStrongExceptionalCollection, IsCapCategory ],
           
   function( collection_1, collection_2, category )
     local full;
     
     full := BoxProduct( DefiningFullSubcategory( collection_1 ), DefiningFullSubcategory( collection_2 ), category );
     
-    return CreateExceptionalCollection( full );
+    return CreateStrongExceptionalCollection( full );
     
 end );
 
@@ -1134,7 +1139,7 @@ end );
 
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-        [ IsExceptionalCollection ],
+        [ IsStrongExceptionalCollection ],
   collection -> FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( Algebroid( collection ) )
 );
 
@@ -1397,9 +1402,9 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphis
 end );
 
 ##
-InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptionalCollection,
+InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
-    local sources_of_arrows, ranges_of_arrows, arrows, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, G, H, df_H, rel, g, e, i;
+    local sources_of_arrows, ranges_of_arrows, arrows, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, G, H, df_H, rel, g, e, i, name, name_op;
     
     sources_of_arrows := List( [ 1 .. nr_arrows ],
       i -> Random( [ 1 .. nr_vertices - 1 ] ) );
@@ -1439,7 +1444,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "V_", String( i ) ) );
 
-    quiver := RightQuiver( "quiver", [ 1 .. nr_vertices ],
+    quiver := RightQuiver( "Quiver", [ 1 .. nr_vertices ],
                 labels, sources_of_arrows, ranges_of_arrows );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
@@ -1476,7 +1481,22 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreExceptional
     
     rel := ComputeGroebnerBasis( rel );
     
+    if not IsEmpty( rel ) then
+      
+      name := Concatenation( "(", Name( A ), ") / [ ", String( Size( rel ) ), " relations ]" );
+      name_op := Concatenation( "(", Name( OppositeAlgebra( A ) ), ") / [ ", String( Size( rel ) ), " relations ]" );
+      
+    else
+      
+      name := Name( A );
+      name_op := Name( OppositeAlgebra( A ) );
+      
+    fi;
+    
     A := QuotientOfPathAlgebra( A, rel );
+    
+    A!.alternative_name := name;
+    OppositeAlgebra(A)!.alternative_name := name_op;
         
     return A;
   
@@ -1490,7 +1510,7 @@ end );
 
 ##
 InstallMethod( ViewObj,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
   function( collection )
     local full;
     
@@ -1502,7 +1522,7 @@ end );
 
 ##
 InstallMethod( Display,
-    [ IsExceptionalCollection ],
+    [ IsStrongExceptionalCollection ],
   function( collection )
     local N, i;
     
