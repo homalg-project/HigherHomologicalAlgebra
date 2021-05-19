@@ -5,21 +5,21 @@
 #
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
         [ IsObject, IsJuliaObject ],
         
   function( full, vertices_labels )
     
-    return CreateExceptionalCollection( full, ConvertJuliaToGAP( vertices_labels ) );
+    return CreateStrongExceptionalCollection( full, ConvertJuliaToGAP( vertices_labels ) );
     
 end );
 
 ##
-InstallMethod( CreateExceptionalCollection,
+InstallMethod( CreateStrongExceptionalCollection,
         [ IsJuliaObject, IsJuliaObject ],
         
   function( full, vertices_labels )
     
-    return CreateExceptionalCollection( ConvertJuliaToGAP( full ), ConvertJuliaToGAP( vertices_labels ) );
+    return CreateStrongExceptionalCollection( ConvertJuliaToGAP( full ), ConvertJuliaToGAP( vertices_labels ) );
     
 end );

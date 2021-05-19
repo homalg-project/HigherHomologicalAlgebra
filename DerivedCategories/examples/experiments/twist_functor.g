@@ -46,7 +46,7 @@ image_B_1 := ImageOfFullyFaithfullFunctor( B_1 );
 
 # create strong full exceptional collection
 labels := [ "𝓞 (-2)", "𝓞 (-1)", "𝓞 (0)" ];
-collection_1 := CreateExceptionalCollection( image_B_1 : vertices_labels := labels );
+collection_1 := CreateStrongExcepptionalCollection( image_B_1 : vertices_labels := labels );
 
 # connect full_1 with image_B_1
 U_1 := IsomorphismOntoImageOfFullyFaithfulFunctor( B_1 );
@@ -71,7 +71,7 @@ V_2 := ExtendFunctorToHomotopyCategories( V_2 );
 
 # create strong full exceptional collection
 labels := [ "𝓞 (-1)", "𝓞 (0)", "𝓞 (1)" ];
-collection_2 := CreateExceptionalCollection( image_B_2 : vertices_labels := labels );
+collection_2 := CreateStrongExcepptionalCollection( image_B_2 : vertices_labels := labels );
 
 #
 TT_1 := PreCompose(

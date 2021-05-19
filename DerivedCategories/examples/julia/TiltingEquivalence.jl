@@ -73,7 +73,7 @@ d_0 = UniversalMorphismIntoZeroObject( a_0 )
 
 Ω22 = HomotopyCategoryObject( [ d_0 ], 0 )
 
-Ω = CreateExceptionalCollection( [ Ω00, Ω11, Ω22 ], [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ] )
+Ω = CreateStrongExceptionalCollection( [ Ω00, Ω11, Ω22 ], [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ] )
 
 EndT_Ω = EndomorphismAlgebra( Ω )
 
