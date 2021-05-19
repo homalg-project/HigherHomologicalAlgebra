@@ -25,7 +25,7 @@ I := PreCompose( full/rows/freyd, U );
 
 image := ImageOfFullyFaithfullFunctor( I );
 
-c := CreateExceptionalCollection( image, [ "𝓞(1)", "𝓞(2)" ] );
+c := CreateStrongExcepptionalCollection( image, [ "𝓞(1)", "𝓞(2)" ] );
 algebra_c := EndomorphismAlgebra( c );
 algebroid_c := Algebroid( c );
 qrows_c := QuiverRows( algebra_c );

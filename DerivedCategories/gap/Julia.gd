@@ -1,3 +1,9 @@
+
+
+
+
+
+
 ##
-DeclareOperation( "CreateExceptionalCollection",
+DeclareOperation( "CreateStrongExceptionalCollection",
         [ IsObject, IsJuliaObject ] );

@@ -89,7 +89,7 @@ Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );
 
 name_for_quiver := "quiver{𝓞 -{3}-> 𝓞 (1) -{3}-> 𝓞 (2) }";
 name_for_algebra := "End(⊕ {𝓞 (i)|i=0,1,2})";
-collection := CreateExceptionalCollection( T : name_for_underlying_quiver := name_for_quiver,
+collection := CreateStrongExcepptionalCollection( T : name_for_underlying_quiver := name_for_quiver,
                                                 name_for_endomorphism_algebra := name_for_algebra );
 
 H := HomFunctor( collection );
