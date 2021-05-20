@@ -614,6 +614,10 @@ InstallMethod( EndomorphismAlgebra,
       
       vertices_latex := collection!.vertices_latex;
       
+    elif IsBound( collection!.vertices_labels ) then
+      
+      vertices_latex := collection!.vertices_labels;
+      
     else
       
       vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String( i ), "}" ) );
@@ -621,8 +625,13 @@ InstallMethod( EndomorphismAlgebra,
     fi;
 
     
-    quiver := RightQuiver( collection!.quiver,
-                collection!.vertices_labels, labels, sources, ranges );
+    quiver := RightQuiver(
+                collection!.quiver,
+                collection!.vertices_labels,
+                labels,
+                sources,
+                ranges
+              );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
      
