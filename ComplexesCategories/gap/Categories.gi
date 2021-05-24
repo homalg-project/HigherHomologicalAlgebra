@@ -693,10 +693,55 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
     fi;
     
     if HasIsAbelianCategory( complex_cat ) and IsAbelianCategory( complex_cat ) then
-         
+        
+        # Kernel & Cokernel should have a unified create_func_from_name!
         list_of_operations :=
           [
             "KernelObject",
+          ];
+          
+        create_func_from_name :=
+          function( name )
+            local oper, info, functorial;
+            
+            oper := ValueGlobal( name );
+            
+            info := CAP_INTERNAL_METHOD_NAME_RECORD.( name );
+            
+            functorial := ValueGlobal( info.functorial );
+            
+            return
+              function( arg )
+                local mu, alpha_s, s, alpha_r, r, z_func, complex;
+                
+                mu := Differentials( Source( arg[ 1 ] ) );
+                
+                alpha_s := Morphisms( arg[ 1 ] );
+                
+                s := ApplyMap( alpha_s, oper );
+                
+                alpha_r := ApplyShift( alpha_s, shift_index );
+                
+                r := ApplyShift( s, shift_index );
+                
+                z_func := ApplyMap( [ s, alpha_s, mu, alpha_r, r ], functorial );
+                
+                complex := complex_constructor( cat, z_func );
+                
+                SetLowerBound( complex, ActiveLowerBoundForSourceAndRange( arg[ 1 ] ) );
+                
+                SetUpperBound( complex, ActiveUpperBoundForSourceAndRange( arg[ 1 ] ) );
+                
+                return complex;
+                
+              end;
+          
+          end;
+        
+        add_methods( list_of_operations, create_func_from_name );
+       
+        list_of_operations :=
+          [
             "CokernelObject",
           ];
           
@@ -712,9 +757,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
             
             return
               function( arg )
-                local mu, nu, alpha_s, s, alpha_r, r, z_func, complex;
-                
-                mu := Differentials( Source( arg[ 1 ] ) );
+                local nu, alpha_s, s, alpha_r, r, z_func, complex;
                 
                 nu := Differentials( Range( arg[ 1 ] ) );
                 
@@ -726,7 +769,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 
                 r := ApplyShift( s, shift_index );
                 
-                z_func := ApplyMap( [ s, alpha_s, mu, nu, alpha_r, r ], functorial );
+                z_func := ApplyMap( [ s, alpha_s, nu, alpha_r, r ], functorial );
                 
                 complex := complex_constructor( cat, z_func );
                 
@@ -737,10 +780,10 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 return complex;
                 
               end;
-          
+              
           end;
         
-        add_methods( list_of_operations, create_func_from_name ); 
+        add_methods( list_of_operations, create_func_from_name );
         
         list_of_operations :=
           [
