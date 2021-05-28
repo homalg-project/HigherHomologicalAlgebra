@@ -40,6 +40,19 @@ InstallOtherMethod( HomotopyCategory,
 # otherwise, the standard one will be used.
 ##
 
+##
+InstallMethod( HomotopyCategoryByChains,
+          [ IsCapCategory ],
+  cat -> HomotopyCategory( cat, false )
+);
+
+##
+InstallMethod( HomotopyCategoryByCochains,
+          [ IsCapCategory ],
+  cat -> HomotopyCategory( cat, true )
+);
+
+##
 InstallMethod( HomotopyCategoryOp,
       [ IsCapCategory, IsBool ],
   function( cat, over_cochains )

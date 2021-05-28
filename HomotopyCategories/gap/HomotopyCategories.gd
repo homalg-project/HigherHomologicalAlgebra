@@ -17,6 +17,10 @@ DeclareCategory( "IsHomotopyCategory",
 
 KeyDependentOperation( "HomotopyCategory", IsCapCategory, IsBool, ReturnTrue );
 
+DeclareAttribute( "HomotopyCategoryByChains", IsCapCategory );
+
+DeclareAttribute( "HomotopyCategoryByCochains", IsCapCategory );
+
 DeclareAttribute( "HomotopyCategoryAttr", IsCapCategory );
 
 DeclareAttribute( "DefiningCategory", IsHomotopyCategory );
