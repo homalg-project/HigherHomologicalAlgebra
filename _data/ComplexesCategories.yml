@@ -1,7 +1,7 @@
 name: ComplexesCategories
-version: "2021.05-03"
+version: "2021.05-04"
 license: "GPL-2.0-or-later"
-date: 2021-05-26
+date: 2021-05-28
 description: |
     Category of (co)chain complexes of an additive category
 
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Complexes
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-03/ComplexesCategories-2021.05-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-04/ComplexesCategories-2021.05-04.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-03/ComplexesCategories-2021.05-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-04/ComplexesCategories-2021.05-04.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-03/ComplexesCategories-2021.05-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.05-04/ComplexesCategories-2021.05-04.pdf
 
 abstract: |
 
@@ -57,7 +57,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ComplexesCategories, Category of (co)chain complexes of an additive category,
-             Version 2021.05-03</i>
+             Version 2021.05-04</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ComplexesCategories">https://homalg-project.github.io/pkg/ComplexesCategories</a></span>.
@@ -65,10 +65,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ ComplexesCategories2021.05-03,
+    @misc{ ComplexesCategories2021.05-04,
       author =           {Saleh, K.},
       title =            {{ComplexesCategories}, Category of (co)chain complexes
-                          of an additive category, {V}ersion 2021.05-03},
+                          of an additive category, {V}ersion 2021.05-04},
       month =            {May},
       year =             {2021},
       note =             {GAP package},
