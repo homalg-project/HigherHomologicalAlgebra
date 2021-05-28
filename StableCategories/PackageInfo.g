@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2021.05-02",
-Date := "16/05/2021",
+Version := "2021.05-03",
+Date := "28/05/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
