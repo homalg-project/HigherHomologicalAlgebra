@@ -45,7 +45,7 @@ InstallMethod( EnhancePackage,
       
     else
       
-      Print( "The package ", name, " should be loaded first!\n" );
+      #Print( "The package ", name, " should be loaded first!\n" );
       
       return false;
       
