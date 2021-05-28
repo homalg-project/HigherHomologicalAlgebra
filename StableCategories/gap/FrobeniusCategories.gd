@@ -76,19 +76,31 @@ DeclareOperation( "AddExactFiberProduct",
 DeclareOperation( "AddExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
-DeclareOperation( "ProjectionInFactorOfExactFiberProduct",
-    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsInt ] );
+DeclareOperation( "ProjectionInFirstFactorOfExactFiberProduct",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "ProjectionInFactorOfExactFiberProduct", [ IsList, IsInt ] );
-
-DeclareOperation( "AddProjectionInFactorOfExactFiberProduct",
+DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddProjectionInFactorOfExactFiberProduct",
+DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
                   [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddProjectionInFactorOfExactFiberProduct",
+DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
                   [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddProjectionInFactorOfExactFiberProduct",
+DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
+                  [ IsCapCategory, IsList ] );
+
+
+DeclareOperation( "ProjectionInSecondFactorOfExactFiberProduct",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
 DeclareOperation( "UniversalMorphismIntoExactFiberProduct",
@@ -141,18 +153,31 @@ DeclareOperation( "AddExactPushout",
 DeclareOperation( "AddExactPushout",
                   [ IsCapCategory, IsList ] );
 
-DeclareOperation( "InjectionOfCofactorOfExactPushout", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsInt ] );
+DeclareOperation( "InjectionOfFirstCofactorOfExactPushout",
+  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddInjectionOfCofactorOfExactPushout",
+DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddInjectionOfCofactorOfExactPushout",
+DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
                   [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddInjectionOfCofactorOfExactPushout",
+DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
                   [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddInjectionOfCofactorOfExactPushout",
+DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
                   [ IsCapCategory, IsList ] );
 
+DeclareOperation( "InjectionOfSecondCofactorOfExactPushout",
+  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
+                  [ IsCapCategory, IsList ] );
 
 DeclareOperation( "UniversalMorphismFromExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );

@@ -102,10 +102,16 @@ installation_name := "ExactFiberProduct",
 filter_list := [ "category", "morphism" , "morphism" ],
 return_type := "object" ),
 
-ProjectionInFactorOfExactFiberProduct := rec(
+ProjectionInFirstFactorOfExactFiberProduct := rec(
 
-installation_name := "ProjectionInFactorOfExactFiberProduct",
-filter_list := [ "category", "morphism", "morphism", IsInt ],
+installation_name := "ProjectionInFirstFactorOfExactFiberProduct",
+filter_list := [ "category", "morphism", "morphism" ],
+return_type := "morphism" ),
+
+ProjectionInSecondFactorOfExactFiberProduct := rec(
+
+installation_name := "ProjectionInSecondFactorOfExactFiberProduct",
+filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 UniversalMorphismIntoExactFiberProduct:= rec(
@@ -120,11 +126,16 @@ installation_name := "ExactPushout",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "object" ),
 
+InjectionOfFirstCofactorOfExactPushout := rec(
 
-InjectionOfCofactorOfExactPushout := rec(
+installation_name := "InjectionOfFirstCofactorOfExactPushout",
+filter_list := [ "category", "morphism", "morphism" ],
+return_type := "morphism" ),
 
-installation_name := "InjectionOfCofactorOfExactPushout",
-filter_list := [ "category", "morphism", "morphism", IsInt ],
+InjectionOfSecondCofactorOfExactPushout := rec(
+
+installation_name := "InjectionOfSecondCofactorOfExactPushout",
+filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 UniversalMorphismFromExactPushout:= rec(
@@ -477,9 +488,9 @@ InstallMethod( SchanuelsIsomorphism,
     
     B2 := Range( def_2 );
     
-    phi_1 := InjectionOfCofactorOfExactPushout( inf_1, inf_2, 1 );
+    phi_1 := InjectionOfFirstCofactorOfExactPushout( inf_1, inf_2 );
     
-    phi_2 := InjectionOfCofactorOfExactPushout( inf_1, inf_2, 2 );
+    phi_2 := InjectionOfSecondCofactorOfExactPushout( inf_1, inf_2 );
     
     h1 := UniversalMorphismFromExactPushout( inf_1, inf_2, def_1, ZeroMorphism( I2, B1  ) );
     
@@ -534,9 +545,9 @@ InstallMethod( SchanuelsIsomorphism,
     
     P2 := Range( inf_2 );
     
-    phi_1 := ProjectionInFactorOfExactFiberProduct( def_1, def_2, 1 );
+    phi_1 := ProjectionInFirstFactorOfExactFiberProduct( def_1, def_2 );
     
-    phi_2 := ProjectionInFactorOfExactFiberProduct( def_1, def_2, 2 );
+    phi_2 := ProjectionInSecondFactorOfExactFiberProduct( def_1, def_2 );
     
     h1 := UniversalMorphismIntoExactFiberProduct( def_1, def_2, inf_1, ZeroMorphism( A1, P2  ) );
     

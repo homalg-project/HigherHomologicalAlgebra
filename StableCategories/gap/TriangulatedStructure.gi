@@ -196,7 +196,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         inf := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
         
-        m := InjectionOfCofactorOfExactPushout( inf, alpha, 2 );
+        m := InjectionOfSecondCofactorOfExactPushout( inf, alpha );
         
         return StableCategoryMorphism( s, m, r );
         
@@ -254,7 +254,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         l := ExactInjectiveColift( inf_1, PreCompose( u, inf_2 ) );
         
-        i := InjectionOfCofactorOfExactPushout( inf_2, beta, 1 );
+        i := InjectionOfFirstCofactorOfExactPushout( inf_2, beta );
         
         m := UniversalMorphismFromExactPushout(
                     inf_1,
