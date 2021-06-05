@@ -17,7 +17,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         inf := InflationIntoSomeExactInjectiveObject( a );
         
-        def := CompleteInflationToConflation( inf );
+        def := ExactCokernelProjection( inf );
         
         return StableCategoryObject( stable_cat, Range( def ) );
         
@@ -49,7 +49,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         def := DeflationFromSomeExactProjectiveObject( a );
         
-        inf := CompleteDeflationToConflation( def );
+        inf := ExactKernelEmbedding( def );
         
         return StableCategoryObject( stable_cat, Source( inf ) );
         
@@ -83,11 +83,11 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         def_1 := DeflationFromSomeExactProjectiveObject( a );
         
-        inf_1 := CompleteDeflationToConflation( def_1 );
+        inf_1 := ExactKernelEmbedding( def_1 );
         
         inf_2 := InflationIntoSomeExactInjectiveObject( Source( inf_1 ) );
         
-        def_2 := CompleteInflationToConflation( inf_2 );
+        def_2 := ExactCokernelProjection( inf_2 );
                 
         m := SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" );
         
@@ -109,11 +109,11 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         def_1 := DeflationFromSomeExactProjectiveObject( a );
         
-        inf_1 := CompleteDeflationToConflation( def_1 );
+        inf_1 := ExactKernelEmbedding( def_1 );
         
         inf_2 := InflationIntoSomeExactInjectiveObject( Source( inf_1 ) );
         
-        def_2 := CompleteInflationToConflation( inf_2 );
+        def_2 := ExactCokernelProjection( inf_2 );
                 
         m := InverseForMorphisms( SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" ) );
         
@@ -136,10 +136,10 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         i_eta_a := UnderlyingCell( i_eta_a );
         
         inf_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_a ) );
-        def_1 := CompleteInflationToConflation( inf_1 );
+        def_1 := ExactCokernelProjection( inf_1 );
         
         inf_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( _a_ ) );
-        def_2 := CompleteInflationToConflation( inf_2 );
+        def_2 := ExactCokernelProjection( inf_2 );
         
         i := ExactProjectiveLift( PreCompose( def_1, i_eta_a ), def_2 );
         i := LiftAlongInflation( inf_2, PreCompose( inf_1, i ) );
@@ -160,10 +160,10 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         eta_a := UnderlyingCell( eta_a );
         
         inf_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_a ) );
-        def_1 := CompleteInflationToConflation( inf_1 );
+        def_1 := ExactCokernelProjection( inf_1 );
         
         inf_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( _a_ ) );
-        def_2 := CompleteInflationToConflation( inf_2 );
+        def_2 := ExactCokernelProjection( inf_2 );
         
         i := ExactProjectiveLift( PreCompose( def_2, eta_a ), def_1 );
         i := LiftAlongInflation( inf_1, PreCompose( inf_2, i ) );
@@ -211,7 +211,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         inf := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
         
-        def := CompleteInflationToConflation( inf );
+        def := ExactCokernelProjection( inf );
         
         m := UniversalMorphismFromExactPushout(
                       inf,
@@ -282,10 +282,10 @@ AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( stab
     c_alpha := UnderlyingCell( alpha );
     
     inf_1 := InflationIntoSomeExactInjectiveObject( Source( c_alpha ) );
-    def_1 := CompleteInflationToConflation( inf_1 );
+    def_1 := ExactCokernelProjection( inf_1 );
     
     inf_2 := InflationIntoSomeExactInjectiveObject( Range( c_alpha ) );
-    def_2 := CompleteInflationToConflation( inf_2 );
+    def_2 := ExactCokernelProjection( inf_2 );
     
     psi := UniversalMorphismFromExactPushout( 
                   inf_1,
@@ -463,11 +463,11 @@ end );
 #        
 #        inf_1 := InflationIntoSomeExactInjectiveObject( a );
 #        
-#        def_1 := CompleteInflationToConflation( inf_1 );
+#        def_1 := ExactCokernelProjection( inf_1 );
 #        
 #        def_2 := DeflationFromSomeExactProjectiveObject( Range( def_1 ) );
 #        
-#        inf_2 := CompleteDeflationToConflation( def_2 );
+#        inf_2 := ExactKernelEmbedding( def_2 );
 #                
 #        m := SchanuelsIsomorphism( inf_2, def_2, inf_1, def_1, "right" );
 #        
@@ -488,11 +488,11 @@ end );
 #        
 #        inf_1 := InflationIntoSomeExactInjectiveObject( a );
 #        
-#        def_1 := CompleteInflationToConflation( inf_1 );
+#        def_1 := ExactCokernelProjection( inf_1 );
 #        
 #        def_2 := DeflationFromSomeExactProjectiveObject( Range( def_1 ) );
 #        
-#        inf_2 := CompleteDeflationToConflation( def_2 );
+#        inf_2 := ExactKernelEmbedding( def_2 );
 #        
 #        m := InverseForMorphisms( SchanuelsIsomorphism( inf_2, def_2, inf_1, def_1, "right" ) );
 #        
