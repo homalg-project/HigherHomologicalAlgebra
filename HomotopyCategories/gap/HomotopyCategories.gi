@@ -21,19 +21,36 @@ BindGlobal( "TheTypeOfHomotopyCategory",
                 IsHomotopyCategoryRep ) );
 
 ##
-InstallMethod( HomotopyCategoryAttr,
+InstallMethod( HomotopyCategoryByChains,
           [ IsCapCategory ],
+          
   cat -> HomotopyCategory( cat, false )
 );
 
 ##
 InstallOtherMethod( HomotopyCategory,
           [ IsCapCategory ],
-  cat -> HomotopyCategoryAttr( cat )
+          
+  HomotopyCategoryByChains
 );
 
+##
+InstallMethod( HomotopyCategoryByCochains,
+          [ IsCapCategory ],
+          
+  cat -> HomotopyCategory( cat, true )
+);
+
+##
+InstallMethod( CohomotopyCategory,
+          [ IsCapCategory ],
+          
+  HomotopyCategoryByCochains
+);
+
+
 # The StandardHomomorphismStructure is the one that comes from the stable structure.
-# There is another way to enhance the homotopy categories with a homomorphism structure,
+# There is another way to equip the homotopy categories with a homomorphism structure,
 # By the use of double complexes.
 #
 # if WithStandardHomomorphismStructure = false then the second way will be used,
@@ -41,32 +58,21 @@ InstallOtherMethod( HomotopyCategory,
 ##
 
 ##
-InstallMethod( HomotopyCategoryByChains,
-          [ IsCapCategory ],
-  cat -> HomotopyCategory( cat, false )
-);
-
-##
-InstallMethod( HomotopyCategoryByCochains,
-          [ IsCapCategory ],
-  cat -> HomotopyCategory( cat, true )
-);
-
-##
 InstallMethod( HomotopyCategoryOp,
-      [ IsCapCategory, IsBool ],
+          [ IsCapCategory, IsBool ],
+          
   function( cat, over_cochains )
-    local complex_cat, bullet, coliftable_function, name, to_be_finalized, special_filters, homotopy_category, r;
+    local complex_cat, bullet, coliftable_function, name, finalize, special_filters, homotopy_category, r;
     
     if over_cochains then
       
-      complex_cat := CochainComplexCategory( cat : FinalizeCategory := false );
-      bullet := "^•"; #"^●";
+      complex_cat := CochainComplexCategory( cat );
+      bullet := "^•";
       
     else
       
-      complex_cat := ChainComplexCategory( cat : FinalizeCategory := false );
-      bullet := ""; #"_•";
+      complex_cat := ChainComplexCategory( cat );
+      bullet := "";
 
     fi;
     
@@ -75,41 +81,14 @@ InstallMethod( HomotopyCategoryOp,
       Error( "The input category should be at least additive category" );
       
     fi;
-    
-    if HasIsFinalized( complex_cat ) then
       
-      if not CanCompute( complex_cat, "MorphismToColiftingObject" ) or
-          not CanCompute( complex_cat, "IsColiftableAlongMorphismToColiftingObject" ) then
-          
-          Error( "The complex category seems to have been finalized without adding colifting structure" );
-          
-      fi;
-      
-    else
-      
-      coliftable_function := ValueOption( "is_coliftable_through_colifting_object_func" );
-      
-      if IsFunction( coliftable_function ) then
-        
-        AddIsColiftableAlongMorphismToColiftingObject( complex_cat, coliftable_function );
-        
-      fi;
-      
-      Finalize( complex_cat );
-      
-      if not CanCompute( complex_cat, "IsColiftableAlongMorphismToColiftingObject" ) then
+    if not CanCompute( complex_cat, "IsColiftableAlongMorphismToColiftingObject" ) then
         
         Error( "The method IsColiftableAlongMorphismToColiftingObject should be added to the category of chains!" );
         
-      fi;
-       
     fi;
-    
-    r := RandomTextColor( Name( cat ) );
-     
-    name := Concatenation( r[ 1 ], "Homotopy", bullet, " category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
+        
+    finalize := ValueOption( "FinalizeCategory" );
     
     special_filters := ValueOption( "SpecialFilters" );
     
@@ -119,12 +98,17 @@ InstallMethod( HomotopyCategoryOp,
       
     fi;
     
-    homotopy_category := StableCategoryBySystemOfColiftingObjects(
-                              complex_cat: NameOfCategory := name,
+    homotopy_category := StableCategoryBySystemOfColiftingObjects( complex_cat :
                               FinalizeCategory := false,
                               WithHomomorphismStructure := true,
                               SpecialFilters := special_filters
                             );
+    
+    r := RandomTextColor( Name( cat ) );
+    
+    name := Concatenation( r[ 1 ], "Homotopy", bullet, " category( ", r[ 2 ],  Name( cat ), r[ 1 ], " )", r[ 2 ] );
+
+    homotopy_category!.Name := name;
     
     ADD_FUNCTIONS_FOR_TRIANGULATED_OPERATIONS( homotopy_category );
     
@@ -150,15 +134,17 @@ InstallMethod( HomotopyCategoryOp,
         
     fi;
     
-    if to_be_finalized = false then
+    if finalize = false then
+      
+      return homotopy_category;
+      
+    else
+      
+      Finalize( homotopy_category );
       
       return homotopy_category;
       
     fi;
-    
-    Finalize( homotopy_category );
-    
-    return homotopy_category;
     
 end );
 
