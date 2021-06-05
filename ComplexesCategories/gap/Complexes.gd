@@ -216,6 +216,14 @@ DeclareAttribute( "AsCochainCell", IsCapCategoryCell );
 #! @Returns a boolian
 DeclareProperty( "IsExact", IsChainOrCochainComplex );
 
+#! @Description
+#! The input is a bounded chain (resp. cochain) complex $C$ and two integers $m,n$. 
+#! The output is true when $C$ is a contractible complex, otherwise the output is
+#! false.
+#! @Arguments C
+#! @Returns a boolian
+DeclareProperty( "IsContractable", IsChainOrCochainComplex );
+
 # These two attributes and properties will be used to activate to do lists.
 # FAU_BOUND means first active upper bound. FAL_BOUND is for lower bound.
 # They are written only for internal use.

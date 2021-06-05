@@ -1398,11 +1398,11 @@ InstallMethod( GeneralizedEmbeddingOfCohomologyAtOp,
   INJECTION_OF_HOMOLOGY_OR_COHOMOLOGY_OF_COMPLEX );
 
 ##
-InstallMethod( DefectOfExactnessAtOp, 
+InstallMethod( DefectOfExactnessAtOp,
           [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
     
-    if IsChainComplex( C ) then 
+    if IsChainComplex( C ) then
       
       return HomologyAt( C, n );
       
@@ -1415,14 +1415,14 @@ InstallMethod( DefectOfExactnessAtOp,
 end );
 
 ##
-InstallMethod( IsExactInIndexOp, 
+InstallMethod( IsExactInIndexOp,
           [ IsChainOrCochainComplex, IsInt ],
   function( C, n )
     local bool;
     
     bool := IsZeroForObjects( DefectOfExactnessAt( C, n ) );
     
-    if bool = false then 
+    if bool = false then
       
       SetIsExact( C, false );
       
@@ -1434,11 +1434,11 @@ end );
 
 ##
 InstallMethod( IsExact,
-          [ IsChainOrCochainComplex ], 
+          [ IsChainOrCochainComplex ],
   function( C )
     local i;
     
-    if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then 
+    if not HasActiveLowerBound( C ) or not HasActiveUpperBound( C ) then
       
       Error( "The complex must have upper and lower bounds" );
       
@@ -1446,7 +1446,7 @@ InstallMethod( IsExact,
     
     for i in [ ActiveLowerBound( C ) .. ActiveUpperBound( C ) ] do
       
-      if not IsExactInIndex( C, i ) then 
+      if not IsExactInIndex( C, i ) then
         
         return false;
         
@@ -1459,14 +1459,21 @@ InstallMethod( IsExact,
 end );
 
 ##
-InstallMethod( CohomologySupport, 
+InstallMethod( IsContractable,
+          [ IsChainOrCochainComplex ],
+          
+  C -> IsNullHomotopic( IdentityMorphism( C ) )
+);
+
+##
+InstallMethod( CohomologySupport,
           [ IsCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
     l := [ ];
     
-    for i in [ m .. n ] do 
+    for i in [ m .. n ] do
       
       if not IsZeroForObjects( CohomologyAt( C, i ) ) then
         
@@ -1481,14 +1488,14 @@ InstallMethod( CohomologySupport,
 end );
 
 ##
-InstallMethod( HomologySupport, 
+InstallMethod( HomologySupport,
           [ IsChainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
     l := [ ];
     
-    for i in [ m .. n ] do 
+    for i in [ m .. n ] do
       
       if not IsZeroForObjects( HomologyAt( C, i ) ) then
         
@@ -1503,7 +1510,7 @@ InstallMethod( HomologySupport,
 end );
 
 ##
-InstallMethod( ObjectsSupport, 
+InstallMethod( ObjectsSupport,
           [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
@@ -1536,14 +1543,14 @@ InstallMethod( ObjectsSupport,
 end );
 
 ##
-InstallMethod( DifferentialsSupport, 
+InstallMethod( DifferentialsSupport,
           [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, m, n )
     local l, i;
     
     l := [ ];
     
-    for i in [ m .. n ] do 
+    for i in [ m .. n ] do
       
       if not IsZeroForMorphisms( C^i ) then
         
@@ -2157,7 +2164,7 @@ InstallMethod( GoodTruncationAboveOp,
     
 end );
 
-## sigma_>= n 
+## sigma_>= n
 ##  <------ C_n-1 <---- C_n <---- C_n+1 <-----
 ##  <------  0    <---- C_n <---- C_n+1 <-----
 
@@ -2200,7 +2207,7 @@ InstallMethod( BrutalTruncationBelowOp,
     
 end );
 
-## sigma_>=n 
+## sigma_>=n
 ##  <------ C_n-1 <---- C_n <---- C_n+1 <-----
 ##  <------ C_n-1 <---- C_n  <----   0  <-----
 
@@ -2258,7 +2265,7 @@ InstallMethod( BrutalTruncationBelowOp,
         
         if i < n - 1  then
           
-          return ZeroMorphism( zero, zero ); 
+          return ZeroMorphism( zero, zero );
           
         elif i = n - 1 then
           
