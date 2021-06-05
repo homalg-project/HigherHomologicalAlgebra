@@ -16,10 +16,6 @@ DeclareCategory( "IsCapCategoryShortExactSequence", IsCapCategoryShortSequence )
 
 DeclareCategory( "IsCapCategoryConflation", IsCapCategoryShortExactSequence );
 
-DeclareCategory( "IsCapCategoryInflation", IsCapCategoryMorphism );
-
-DeclareCategory( "IsCapCategoryDeflation", IsCapCategoryMorphism );
-
 ####################################
 ##
 ##  Methods Declarations in Records
@@ -27,7 +23,31 @@ DeclareCategory( "IsCapCategoryDeflation", IsCapCategoryMorphism );
 ####################################
 
  
-DeclareOperation( "IsConflationPair", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareAttribute( "IsInflation", IsCapCategoryMorphism );
+
+DeclareOperation( "AddIsInflation",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsInflation",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsInflation",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsInflation",
+                  [ IsCapCategory, IsList ] );
+DeclareAttribute( "IsDeflation", IsCapCategoryMorphism );
+
+DeclareOperation( "AddIsDeflation",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsDeflation",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsDeflation",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsDeflation",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "IsConflationPair",
+  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddIsConflationPair",
                   [ IsCapCategory, IsFunction ] );
@@ -39,31 +59,136 @@ DeclareOperation( "AddIsConflationPair",
 DeclareOperation( "AddIsConflationPair",
                   [ IsCapCategory, IsList ] );
 
+DeclareAttribute( "ExactCokernelObject", IsCapCategoryMorphism );
 
-DeclareAttribute( "CompleteInflationToConflation", IsCapCategoryMorphism );
-
-DeclareOperation( "AddCompleteInflationToConflation",
+DeclareOperation( "AddExactCokernelObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddCompleteInflationToConflation",
+DeclareOperation( "AddExactCokernelObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddCompleteInflationToConflation",
+DeclareOperation( "AddExactCokernelObject",
                   [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddCompleteInflationToConflation",
+DeclareOperation( "AddExactCokernelObject",
                   [ IsCapCategory, IsList ] );
 
-DeclareAttribute( "CompleteDeflationToConflation", IsCapCategoryMorphism );
+DeclareAttribute( "ExactCokernelProjection", IsCapCategoryMorphism );
 
-DeclareOperation( "AddCompleteDeflationToConflation",
+DeclareOperation( "AddExactCokernelProjection",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddCompleteDeflationToConflation",
+DeclareOperation( "AddExactCokernelProjection",
                   [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddCompleteDeflationToConflation",
+DeclareOperation( "AddExactCokernelProjection",
                   [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddCompleteDeflationToConflation",
+DeclareOperation( "AddExactCokernelProjection",
                   [ IsCapCategory, IsList ] );
 
+DeclareOperation( "ExactCokernelProjectionWithGivenExactCokernelObject",
+    [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "ExactCokernelColift",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddExactCokernelColift",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactCokernelColift",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactCokernelColift",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactCokernelColift",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "ColiftAlongDeflation",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddColiftAlongDeflation",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddColiftAlongDeflation",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddColiftAlongDeflation",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddColiftAlongDeflation",
+                  [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ExactKernelObject", IsCapCategoryMorphism );
+
+DeclareOperation( "AddExactKernelObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactKernelObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactKernelObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactKernelObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "ExactKernelEmbedding", IsCapCategoryMorphism );
+
+DeclareOperation( "AddExactKernelEmbedding",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactKernelEmbedding",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactKernelEmbedding",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactKernelEmbedding",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "ExactKernelEmbeddingWithGivenExactKernelObject",
+  [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "ExactKernelLift",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddExactKernelLift",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactKernelLift",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactKernelLift",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactKernelLift",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "LiftAlongInflation",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+DeclareOperation( "AddLiftAlongInflation",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddLiftAlongInflation",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddLiftAlongInflation",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddLiftAlongInflation",
+                  [ IsCapCategory, IsList ] );
+
+#! @InsertChunk freyd_categories_graded_exterior_algebra
+
+
+#! @Subsection Exact Fiber Product
 DeclareOperation( "ExactFiberProduct", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactFiberProduct",
@@ -116,30 +241,24 @@ DeclareOperation( "AddUniversalMorphismIntoExactFiberProduct",
 DeclareOperation( "AddUniversalMorphismIntoExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
-DeclareOperation( "LiftAlongInflation", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "UniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
-DeclareOperation( "AddLiftAlongInflation",
+DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddLiftAlongInflation",
+DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
                   [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddLiftAlongInflation",
+DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
                   [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddLiftAlongInflation",
+DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
 
-DeclareOperation( "ColiftAlongDeflation", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "AddColiftAlongDeflation",
-                  [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddColiftAlongDeflation",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddColiftAlongDeflation",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddColiftAlongDeflation",
-                  [ IsCapCategory, IsList ] );
+
 
 DeclareOperation( "ExactPushout", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -166,6 +285,8 @@ DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
 DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
                   [ IsCapCategory, IsList ] );
 
+
+#! @Description
 DeclareOperation( "InjectionOfSecondCofactorOfExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -192,6 +313,19 @@ DeclareOperation( "AddUniversalMorphismFromExactPushout",
 DeclareOperation( "AddUniversalMorphismFromExactPushout",
                   [ IsCapCategory, IsList ] );
 
+DeclareOperation( "UniversalMorphismFromExactPushoutWithGivenExactPushout",
+  [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
+                  [ IsCapCategory, IsList ] );
+
 DeclareProperty( "IsExactProjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddIsExactProjectiveObject",
@@ -202,68 +336,6 @@ DeclareOperation( "AddIsExactProjectiveObject",
 DeclareOperation( "AddIsExactProjectiveObject",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddIsExactProjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-DeclareProperty( "IsExactInjectiveObject", IsCapCategoryObject );
-
-DeclareOperation( "AddIsExactInjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddIsExactInjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsExactInjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsExactInjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-DeclareOperation( "SomeExactProjectiveObject", [ IsCapCategoryObject ] );
-
-DeclareOperation( "AddSomeExactProjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddSomeExactProjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddSomeExactProjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddSomeExactProjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-
-DeclareOperation( "DeflationFromSomeExactProjectiveObject", [ IsCapCategoryObject ] );
-
-DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-DeclareOperation( "SomeExactInjectiveObject", [ IsCapCategoryObject ] );
-
-DeclareOperation( "AddSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddSomeExactInjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddSomeExactInjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-
-DeclareOperation( "InflationIntoSomeExactInjectiveObject", [ IsCapCategoryObject ] );
-
-DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
 DeclareOperation( "ExactProjectiveLift", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
@@ -278,6 +350,46 @@ DeclareOperation( "AddExactProjectiveLift",
 DeclareOperation( "AddExactProjectiveLift",
                   [ IsCapCategory, IsList ] );
 
+DeclareAttribute( "SomeExactProjectiveObject", IsCapCategoryObject );
+
+DeclareOperation( "AddSomeExactProjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddSomeExactProjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddSomeExactProjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddSomeExactProjectiveObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareAttribute( "DeflationFromSomeExactProjectiveObject", IsCapCategoryObject );
+
+DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
+                  [ IsCapCategory, IsList ] );
+
+#!  an inflation $\iota_A:A \to I_A$ where $I_A$ is an $\EE$-injective object.
+
+
+#! @Description
+DeclareProperty( "IsExactInjectiveObject", IsCapCategoryObject );
+
+DeclareOperation( "AddIsExactInjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsExactInjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsExactInjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsExactInjectiveObject",
+                  [ IsCapCategory, IsList ] );
+
 DeclareOperation( "ExactInjectiveColift", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactInjectiveColift",
@@ -288,6 +400,30 @@ DeclareOperation( "AddExactInjectiveColift",
 DeclareOperation( "AddExactInjectiveColift",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddExactInjectiveColift",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "SomeExactInjectiveObject", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddSomeExactInjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddSomeExactInjectiveObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareOperation( "InflationIntoSomeExactInjectiveObject", [ IsCapCategoryObject ] );
+
+DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
 ##
@@ -303,20 +439,6 @@ DeclareOperation( "AddIsLiftableAlongDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddIsLiftableAlongDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-##
-DeclareProperty( "IsColiftableAlongInflationIntoSomeExactInjectiveObject", IsCapCategoryMorphism );
-
-DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsList, IsInt ] );
-DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
-                  [ IsCapCategory, IsList ] );
-
-##
 DeclareAttribute( "LiftAlongDeflationFromSomeExactProjectiveObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
@@ -327,6 +449,18 @@ DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
+                  [ IsCapCategory, IsList ] );
+
+DeclareProperty( "IsColiftableAlongInflationIntoSomeExactInjectiveObject", IsCapCategoryMorphism );
+
+DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
 ##
@@ -370,11 +504,6 @@ DeclareAttribute( "IsShortExactSequence_", IsCapCategoryShortSequence );
 
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_FROBENIUS_CATEGORY", IsCapCategory );
 DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_EXACT_CATEGORY", IsCapCategory );
-
-DeclareAttribute( "SetFilterOnInflations", IsCapCategoryMorphism );
-
-DeclareAttribute( "SetFilterOnDeflations", IsCapCategoryMorphism );
-DeclareAttribute( "SetFilterOnConflations", IsCapCategoryShortSequence );
         
 #################################
 ##

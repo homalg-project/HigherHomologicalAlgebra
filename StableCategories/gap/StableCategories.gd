@@ -238,6 +238,7 @@ DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
 DeclareOperation( "StableCategory",
             [ IsCapCategory, IsFunction ] );
 
+DeclareAttribute( "CongruencyTestFunction", IsStableCategory );
 DeclareOperation( "StableCategoryObject",
             [ IsStableCategory, IsCapCategoryObject ] );
 

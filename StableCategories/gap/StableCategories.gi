@@ -343,7 +343,7 @@ InstallMethod( StableCategory,
     # to set some attributes, for example HomotopyMorphism in case the stable category is some homotopy category.
     AddIsZeroForMorphisms( stable_category, phi -> membership_function( UnderlyingCell( phi ) ) );
     
-    SetCongruencyTestFunctionForStableCategory( stable_category, membership_function );
+    SetCongruencyTestFunction( stable_category, membership_function );
     
     if to_be_finalized = true then
       
