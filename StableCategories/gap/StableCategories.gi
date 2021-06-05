@@ -170,20 +170,22 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
     if not CanCompute( category, "MorphismToColiftingObject" ) then
       
       Error( "The method 'MorphismToColiftingObject' should be added to ", Name( category ) );
-    
+      
     fi;
     
     if not CanCompute( category, "Colift" ) then
       
       Error( "The method 'Colift' should be added to ", Name( category ) );
-    
+      
     fi;
     
-    name := ValueOption( "NameOfCategory" );
-    
     can_be_factored_through_colifting_object := IsColiftableAlongMorphismToColiftingObject;
-     
-    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
+    
+    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false );
+    
+    name := Concatenation( "Stable category( ", Name( category ), " ) defined by a system of colifting objects" );
+    
+    stable_category!.Name := name;
     
     with_hom_structure := ValueOption( "WithHomomorphismStructure" );
     
@@ -194,19 +196,19 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
                CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
                  CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
                    CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
-                   
+                    
                     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
-                   
+                    
                     if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
-                     
+                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                  
+                    
                     elif  LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
                     
                     fi;
-    
+                    
     fi;
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
@@ -231,20 +233,22 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
     if not CanCompute( category, "MorphismFromLiftingObject" ) then
       
       Error( "The method 'MorphismFromLiftingObject' should be added to ", Name( category ) );
-    
+      
     fi;
     
     if not CanCompute( category, "Lift" ) then
       
       Error( "The method 'Lift' should be added to ", Name( category ) );
-    
+      
     fi;
-     
-    name := ValueOption( "NameOfCategory" );
     
     can_be_factored_through_lifting_object := IsLiftableAlongMorphismFromLiftingObject;
     
-    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
+    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false );
+    
+    name := Concatenation( "Stable category( ", Name( category ), " ) defined by a system of lifting objects" );
+    
+    stable_category!.Name := name;
     
     with_hom_structure := ValueOption( "WithHomomorphismStructure" );
     
@@ -261,13 +265,13 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
                     if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                    
+                      
                     elif LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
-                    
+                      
                     fi;
-    
+                    
     fi;
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
