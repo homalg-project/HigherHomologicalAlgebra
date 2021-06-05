@@ -710,7 +710,7 @@ InstallMethod( GradedLeftPresentations,
     
     return category;
     
-end, 100 );
+end );
 
 ##
 InstallMethod( GradedRightPresentations,
@@ -739,7 +739,7 @@ InstallMethod( GradedRightPresentations,
    
     return category;
     
-end, 100 );
+end );
 
 
 ############################################

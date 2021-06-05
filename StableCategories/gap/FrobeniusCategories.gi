@@ -72,150 +72,154 @@ InstallValue( CAP_INTERNAL_FROBENIUS_CATEGORIES_BASIC_OPERATIONS, rec( ) );
 
 InstallValue( FROBENIUS_CATEGORIES_METHOD_NAME_RECORD, rec(
 
+IsInflation := rec(
+filter_list := [ "category", "morphism" ],
+return_type := "bool" ),
+
+IsDeflation := rec(
+filter_list := [ "category", "morphism" ],
+return_type := "bool" ),
+
 IsConflationPair := rec(
-installation_name := "IsConflationPair",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "bool" ),
 
-CompleteInflationToConflation := rec(
-installation_name := "CompleteInflationToConflation",
+ExactCokernelObject := rec(
+filter_list := [ "category", "morphism" ],
+return_type := "object" ),
+
+ExactCokernelProjection := rec(
+io_type := [ [ "iota" ], [ "iota_range", "K" ] ],
+with_given_object_position := "Range",
+universal_type := "Colimit",
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
-CompleteDeflationToConflation := rec(
-installation_name := "CompleteDeflationToConflation",
-filter_list := [ "category", "morphism" ],
+ExactCokernelProjectionWithGivenExactCokernelObject := rec(
+filter_list := [ "category", "morphism", "object" ],
 return_type := "morphism" ),
 
-LiftAlongInflation := rec(
-installation_name := "LiftAlongInflation",
+ExactCokernelColift := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 ColiftAlongDeflation := rec(
-installation_name := "ColiftAlongDeflation",
+filter_list := [ "category", "morphism", "morphism" ],
+return_type := "morphism" ),
+
+ExactKernelObject := rec(
+filter_list := [ "category", "morphism" ],
+return_type := "object" ),
+
+ExactKernelEmbedding := rec(
+io_type := [ [ "iota" ], [ "K", "iota_source" ] ],
+with_given_object_position := "Source",
+universal_type := "Limit",
+filter_list := [ "category", "morphism" ],
+return_type := "morphism" ),
+
+ExactKernelEmbeddingWithGivenExactKernelObject := rec(
+filter_list := [ "category", "morphism", "object" ],
+return_type := "morphism" ),
+
+ExactKernelLift := rec(
+filter_list := [ "category", "morphism", "morphism" ],
+return_type := "morphism" ),
+
+LiftAlongInflation := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 ExactFiberProduct:= rec(
-installation_name := "ExactFiberProduct",
 filter_list := [ "category", "morphism" , "morphism" ],
 return_type := "object" ),
 
 ProjectionInFirstFactorOfExactFiberProduct := rec(
 
-installation_name := "ProjectionInFirstFactorOfExactFiberProduct",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 ProjectionInSecondFactorOfExactFiberProduct := rec(
-
-installation_name := "ProjectionInSecondFactorOfExactFiberProduct",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 UniversalMorphismIntoExactFiberProduct:= rec(
-
-installation_name := "UniversalMorphismIntoExactFiberProduct",
 filter_list := [ "category", "morphism", "morphism", "morphism", "morphism" ],
+with_given_object_position := "Range",
+return_type := "morphism" ),
+
+UniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct := rec(
+filter_list := [ "category", "morphism", "morphism", "morphism", "morphism", "object" ],
 return_type := "morphism" ),
 
 ExactPushout:= rec(
-
-installation_name := "ExactPushout",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "object" ),
 
 InjectionOfFirstCofactorOfExactPushout := rec(
-
-installation_name := "InjectionOfFirstCofactorOfExactPushout",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 InjectionOfSecondCofactorOfExactPushout := rec(
-
-installation_name := "InjectionOfSecondCofactorOfExactPushout",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
-UniversalMorphismFromExactPushout:= rec(
-
-installation_name := "UniversalMorphismFromExactPushout",
+UniversalMorphismFromExactPushout := rec(
 filter_list := [ "category", "morphism", "morphism", "morphism", "morphism" ],
+with_given_object_position := "Source",
+return_type := "morphism" ),
+
+UniversalMorphismFromExactPushoutWithGivenExactPushout := rec(
+filter_list := [ "category", "morphism", "morphism", "morphism", "morphism", "object" ],
 return_type := "morphism" ),
 
 IsExactProjectiveObject := rec(
-
-installation_name := "IsExactProjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "bool" ),
 
 IsExactInjectiveObject := rec(
-
-installation_name := "IsExactInjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "bool" ),
 
 SomeExactProjectiveObject := rec(
-
-installation_name := "SomeExactProjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "object" ),
 
-
 DeflationFromSomeExactProjectiveObject := rec(
-
-installation_name := "DeflationFromSomeExactProjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "morphism" ),
 
 SomeExactInjectiveObject := rec(
-
-installation_name := "SomeExactInjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "object" ),
 
 InflationIntoSomeExactInjectiveObject := rec(
-
-installation_name := "InflationIntoSomeExactInjectiveObject",
 filter_list := [ "category", "object" ],
 return_type := "morphism" ),
 
 ExactProjectiveLift := rec(
-
-installation_name := "ExactProjectiveLift",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 ExactInjectiveColift := rec(
-
-installation_name := "ExactInjectiveColift",
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
 IsColiftableAlongInflationIntoSomeExactInjectiveObject := rec(
-
-installation_name := "IsColiftableAlongInflationIntoSomeExactInjectiveObject",
 filter_list := [ "category", "morphism" ],
 return_type := "bool" ),
 
 IsLiftableAlongDeflationFromSomeExactProjectiveObject := rec(
-
-installation_name := "IsLiftableAlongDeflationFromSomeExactProjectiveObject",
 filter_list := [ "category", "morphism" ],
 return_type := "bool" ),
 
 ##
 ColiftAlongInflationIntoSomeExactInjectiveObject := rec(
-
-installation_name := "ColiftAlongInflationIntoSomeExactInjectiveObject",
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
 ##
 LiftAlongDeflationFromSomeExactProjectiveObject := rec(
-
-installation_name := "LiftAlongDeflationFromSomeExactProjectiveObject",
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" )
 

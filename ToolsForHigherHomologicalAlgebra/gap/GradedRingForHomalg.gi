@@ -360,13 +360,13 @@ end );
 ##
 InstallMethod( CoefficientsOfGradedRingElement,
       [ IsHomalgGradedRingElement ],
-  e -> EntriesOfHomalgMatrix( Coefficients( EvalRingElement( e ) ) ) 
+  e -> EntriesOfHomalgMatrix( Coefficients( e ) ) 
 );
 
 ##
 InstallMethod( MonomialsOfGradedRingElement,
       [ IsHomalgGradedRingElement ],
-  e -> Coefficients( EvalRingElement( e ) )!.monomials
+  e -> Coefficients( e )!.monomials
 );
 
 ##

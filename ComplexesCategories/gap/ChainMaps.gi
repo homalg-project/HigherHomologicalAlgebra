@@ -241,6 +241,11 @@ InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsZFunction ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
+##
+InstallOtherMethod( ChainMorphism,
+        [ IsChainComplex, IsZFunction, IsChainComplex ],
+  { S, mor, R } -> ChainMorphism( S, R, mor )
+);
 
 ##
 InstallMethod( CochainMorphism,
@@ -248,14 +253,33 @@ InstallMethod( CochainMorphism,
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
 ##
+InstallOtherMethod( CochainMorphism,
+        [ IsCochainComplex, IsZFunction, IsCochainComplex ],
+  { S, mor, R } -> CochainMorphism( S, R, mor )
+);
+
+##
 InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsDenseList, IsInt ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST );
 
 ##
+InstallOtherMethod( ChainMorphism,
+        [ IsChainComplex, IsDenseList, IsInt, IsChainComplex ],
+  { S, mor, lower_bound, R } -> ChainMorphism( S, R, mor, lower_bound )
+);
+
+
+##
 InstallMethod( CochainMorphism,
                [ IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST );
+
+##
+InstallOtherMethod( CochainMorphism,
+        [ IsCochainComplex, IsDenseList, IsInt, IsCochainComplex ],
+  { S, mor, lower_bound, R } -> CochainMorphism( S, R, mor, lower_bound )
+);
 
 ##
 InstallMethod( ChainMorphism,
@@ -1369,14 +1393,12 @@ end );
 #    v                 v
 #    A' --- psi -----> B' ---------> Cone( psi )
 #
-InstallMethodWithCrispCache( MappingConeFunctorial,
-   [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
-  function( phi, psi, alpha_0, alpha_1 )
-    local cone_phi, cone_psi, s, maps;
-    
-    cone_phi := MappingCone( phi );
-    
-    cone_psi := MappingCone( psi );
+
+InstallOtherMethod( MappingConeFunctorial,
+          [ IsChainComplex, IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainComplex ],
+          
+  function( cone_phi, phi, alpha_0, alpha_1, psi, cone_psi )
+    local maps;
     
     maps := AsZFunction( i ->
               MorphismBetweenDirectSums(
@@ -1387,6 +1409,20 @@ InstallMethodWithCrispCache( MappingConeFunctorial,
               );
               
     return ChainMorphism( cone_phi, cone_psi, maps );
+    
+end );
+
+##
+InstallMethod( MappingConeFunctorial,
+   [ IsChainMorphism, IsChainMorphism, IsChainMorphism, IsChainMorphism ],
+  function( phi, psi, alpha_0, alpha_1 )
+    local cone_phi, cone_psi;
+    
+    cone_phi := MappingCone( phi );
+    
+    cone_psi := MappingCone( psi );
+    
+    return MappingConeFunctorial( cone_phi, phi, alpha_0, alpha_1, psi, cone_psi );
     
 end );
 
@@ -1453,15 +1489,13 @@ end );
 #    v                 v
 #    A' --- psi -----> B' ---------> Cone( psi )
 #
-InstallMethodWithCrispCache( MappingConeFunctorial,
-          [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],
-  function( phi, psi, alpha_0, alpha_1 )
-    local cone_phi, cone_psi, s, maps;
-    
-    cone_phi := MappingCone( phi );
-    
-    cone_psi := MappingCone( psi );
-    
+
+##
+InstallOtherMethod( MappingConeFunctorial,
+          [ IsCochainComplex, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainComplex ],
+  function( cone_phi, phi, alpha_0, alpha_1, psi, cone_psi )
+    local maps;
+     
     maps := AsZFunction( i ->
               MorphismBetweenDirectSums(
                 [
@@ -1474,6 +1508,18 @@ InstallMethodWithCrispCache( MappingConeFunctorial,
     
 end );
 
+InstallMethod( MappingConeFunctorial,
+          [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],
+  function( phi, alpha_0, alpha_1, psi )
+    local cone_phi, cone_psi, s, maps;
+    
+    cone_phi := MappingCone( phi );
+    
+    cone_psi := MappingCone( psi );
+    
+    return MappingConeFunctorial( cone_phi, phi, alpha_0, alpha_1, psi, cone_psi );
+    
+end );
 
 InstallMethodWithCrispCache( MappingConePseudoFunctorial,
           [ IsCochainMorphism, IsCochainMorphism, IsCochainMorphism, IsCochainMorphism ],

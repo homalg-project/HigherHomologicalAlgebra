@@ -47,74 +47,79 @@ InstallValue( CAP_INTERNAL_STABLE_CATEGORIES_BASIC_OPERATIONS, rec( ) );
 InstallValue( STABLE_CATEGORIES_METHOD_NAME_RECORD, rec(
 
 IsLiftingObject := rec(
-  installation_name := "IsLiftingObject",
   filter_list := [ "category", "object" ],
   return_type := "bool" ),
 
 LiftingObject := rec(
-  installation_name := "LiftingObject",
   filter_list := [ "category", "object" ],
   return_type := "object" ),
 
 LiftingMorphismWithGivenLiftingObjects := rec(
-    installation_name := "LiftingMorphismWithGivenLiftingObjects",
+
     filter_list := [ "category", "object", "morphism", "object" ],
     return_type := "morphism" ),
     
 MorphismFromLiftingObjectWithGivenLiftingObject := rec(
-  installation_name := "MorphismFromLiftingObjectWithGivenLiftingObject",
   filter_list := [ "category", "object", "object" ],
   return_type := "morphism" ),
 
 MorphismFromLiftingObject := rec(
-  installation_name := "MorphismFromLiftingObject",
   filter_list := [ "category", "object" ],
   with_given_object_position := "Source",
   return_type := "morphism" ),
 
-IsLiftableAlongMorphismFromLiftingObject := rec(
-  installation_name := "IsLiftableAlongMorphismFromLiftingObject",
-  filter_list := [ "category", "morphism" ],
-  return_type := "bool" ),
-
-WitnessForBeingLiftableAlongMorphismFromLiftingObject := rec(
-  installation_name := "WitnessForBeingLiftableAlongMorphismFromLiftingObject",
-  filter_list := [ "category", "morphism" ],
-  return_type := "morphism" ),
-
-IsColiftingObject := rec(
-  installation_name := "IsColiftingObject",
-  filter_list := [ "category", "object" ],
-  return_type := "bool" ),
-
-ColiftingObject := rec(
-  installation_name := "ColiftingObject",
-  filter_list := [ "category", "object" ],
-  return_type := "object" ),
-
-ColiftingMorphismWithGivenColiftingObjects := rec(
-  installation_name := "ColiftingMorphismWithGivenColiftingObjects",
-  filter_list := [ "category", "object", "morphism", "object" ],
-  return_type := "morphism" ),
-  
-MorphismToColiftingObjectWithGivenColiftingObject := rec(
-  installation_name := "MorphismToColiftingObjectWithGivenColiftingObject",
+SectionOfMorphismFromLiftingObjectWithGivenLiftingObject := rec(
   filter_list := [ "category", "object", "object" ],
   return_type := "morphism" ),
 
-MorphismToColiftingObject := rec(
-  installation_name := "MorphismToColiftingObject",
+SectionOfMorphismFromLiftingObject := rec(
   filter_list := [ "category", "object" ],
   with_given_object_position := "Range",
   return_type := "morphism" ),
 
+IsLiftableAlongMorphismFromLiftingObject := rec(
+  filter_list := [ "category", "morphism" ],
+  return_type := "bool" ),
+
+WitnessForBeingLiftableAlongMorphismFromLiftingObject := rec(
+  filter_list := [ "category", "morphism" ],
+  return_type := "morphism" ),
+
+IsColiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  return_type := "bool" ),
+
+ColiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  return_type := "object" ),
+
+ColiftingMorphismWithGivenColiftingObjects := rec(
+  filter_list := [ "category", "object", "morphism", "object" ],
+  return_type := "morphism" ),
+  
+MorphismToColiftingObjectWithGivenColiftingObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  return_type := "morphism" ),
+
+MorphismToColiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  with_given_object_position := "Range",
+  return_type := "morphism" ),
+
+RetractionOfMorphismToColiftingObjectWithGivenColiftingObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  return_type := "morphism" ),
+
+RetractionOfMorphismToColiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  with_given_object_position := "Source",
+  return_type := "morphism" ),
+
 IsColiftableAlongMorphismToColiftingObject := rec(
-  installation_name := "IsColiftableAlongMorphismToColiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "bool" ),
 
 WitnessForBeingColiftableAlongMorphismToColiftingObject := rec(
-  installation_name := "WitnessForBeingColiftableAlongMorphismToColiftingObject",
   filter_list := [ "category", "morphism" ],
   return_type := "morphism" ),
 
@@ -165,20 +170,22 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
     if not CanCompute( category, "MorphismToColiftingObject" ) then
       
       Error( "The method 'MorphismToColiftingObject' should be added to ", Name( category ) );
-    
+      
     fi;
     
     if not CanCompute( category, "Colift" ) then
       
       Error( "The method 'Colift' should be added to ", Name( category ) );
-    
+      
     fi;
     
-    name := ValueOption( "NameOfCategory" );
-    
     can_be_factored_through_colifting_object := IsColiftableAlongMorphismToColiftingObject;
-     
-    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false, NameOfCategory := name );
+    
+    stable_category := StableCategory( category, can_be_factored_through_colifting_object : FinalizeCategory := false );
+    
+    name := Concatenation( "Stable category( ", Name( category ), " ) defined by a system of colifting objects" );
+    
+    stable_category!.Name := name;
     
     with_hom_structure := ValueOption( "WithHomomorphismStructure" );
     
@@ -189,19 +196,19 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
                CanCompute( category, "DistinguishedObjectOfHomomorphismStructure" ) and
                  CanCompute( category, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure" ) and
                    CanCompute( category, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) then
-                   
+                    
                     category_of_hom_structure := RangeCategoryOfHomomorphismStructure( category );
-                   
+                    
                     if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
-                     
+                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                  
+                    
                     elif  LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE( stable_category );
                     
                     fi;
-    
+                    
     fi;
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
@@ -226,20 +233,22 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
     if not CanCompute( category, "MorphismFromLiftingObject" ) then
       
       Error( "The method 'MorphismFromLiftingObject' should be added to ", Name( category ) );
-    
+      
     fi;
     
     if not CanCompute( category, "Lift" ) then
       
       Error( "The method 'Lift' should be added to ", Name( category ) );
-    
+      
     fi;
-     
-    name := ValueOption( "NameOfCategory" );
     
     can_be_factored_through_lifting_object := IsLiftableAlongMorphismFromLiftingObject;
     
-    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false, NameOfCategory := name );
+    stable_category := StableCategory( category, can_be_factored_through_lifting_object : FinalizeCategory := false );
+    
+    name := Concatenation( "Stable category( ", Name( category ), " ) defined by a system of lifting objects" );
+    
+    stable_category!.Name := name;
     
     with_hom_structure := ValueOption( "WithHomomorphismStructure" );
     
@@ -256,13 +265,13 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
                     if HasIsAbelianCategory( category_of_hom_structure ) and IsAbelianCategory( category_of_hom_structure ) then
                      
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT( stable_category );
-                    
+                      
                     elif LoadPackage( "FreydCategories" ) = true then
                       
                       ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_LIFTING_STRUCTURE( stable_category );
-                    
+                      
                     fi;
-    
+                    
     fi;
     
     to_be_finalized := ValueOption( "FinalizeCategory" );
@@ -334,7 +343,7 @@ InstallMethod( StableCategory,
     # to set some attributes, for example HomotopyMorphism in case the stable category is some homotopy category.
     AddIsZeroForMorphisms( stable_category, phi -> membership_function( UnderlyingCell( phi ) ) );
     
-    SetCongruencyTestFunctionForStableCategory( stable_category, membership_function );
+    SetCongruencyTestFunction( stable_category, membership_function );
     
     if to_be_finalized = true then
       
