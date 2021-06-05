@@ -241,6 +241,11 @@ InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsZFunction ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
+##
+InstallOtherMethod( ChainMorphism,
+        [ IsChainComplex, IsZFunction, IsChainComplex ],
+  { S, mor, R } -> ChainMorphism( S, R, mor )
+);
 
 ##
 InstallMethod( CochainMorphism,
@@ -248,14 +253,33 @@ InstallMethod( CochainMorphism,
 CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION );
 
 ##
+InstallOtherMethod( CochainMorphism,
+        [ IsCochainComplex, IsZFunction, IsCochainComplex ],
+  { S, mor, R } -> CochainMorphism( S, R, mor )
+);
+
+##
 InstallMethod( ChainMorphism,
                [ IsChainComplex, IsChainComplex, IsDenseList, IsInt ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST );
 
 ##
+InstallOtherMethod( ChainMorphism,
+        [ IsChainComplex, IsDenseList, IsInt, IsChainComplex ],
+  { S, mor, lower_bound, R } -> ChainMorphism( S, R, mor, lower_bound )
+);
+
+
+##
 InstallMethod( CochainMorphism,
                [ IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ],
 CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST );
+
+##
+InstallOtherMethod( CochainMorphism,
+        [ IsCochainComplex, IsDenseList, IsInt, IsCochainComplex ],
+  { S, mor, lower_bound, R } -> CochainMorphism( S, R, mor, lower_bound )
+);
 
 ##
 InstallMethod( ChainMorphism,
