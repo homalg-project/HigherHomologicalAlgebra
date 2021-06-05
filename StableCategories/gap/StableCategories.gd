@@ -6,10 +6,7 @@
 
 #! @Chapter StableCategoriesForCap
 
-#! @InsertChunk stable_cat_by_projectives
 
-DeclareCategory( "IsStableCategory",
-                 IsQuotientCategory );
 
 DeclareProperty( "IsLiftingObject", IsCapCategoryObject );
 
@@ -273,13 +270,25 @@ DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
 DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
                   [ IsCapCategory, IsList ] );
 
+DeclareCategory( "IsStableCategory",
+                 IsQuotientCategory );
+DeclareCategory( "IsStableCategoryCell",
+                 IsQuotientCategoryCell );
+DeclareCategory( "IsStableCategoryObject",
+                 IsStableCategoryCell and IsQuotientCategoryObject );
+DeclareCategory( "IsStableCategoryMorphism",
+                 IsStableCategoryCell and IsQuotientCategoryMorphism );
 DeclareOperation( "StableCategory",
             [ IsCapCategory, IsFunction ] );
 
 DeclareAttribute( "CongruencyTestFunction", IsStableCategory );
+DeclareAttribute( "ProjectionFunctor", IsStableCategory );
 DeclareOperation( "StableCategoryObject",
             [ IsStableCategory, IsCapCategoryObject ] );
 
+if false then
+DeclareAttribute( UnderlyingCell, IsStableCategoryObject );
+fi;
 DeclareOperation( "StableCategoryMorphism",
             [ IsStableCategoryObject, IsCapCategoryMorphism, IsStableCategoryObject ] );
 
@@ -287,13 +296,18 @@ DeclareOperation( "StableCategoryMorphism",
 DeclareOperation( "StableCategoryMorphism",
             [ IsStableCategory, IsCapCategoryMorphism ] );
 
-DeclareAttribute( "StableCategoryBySystemOfColiftingObjects", IsCapCategory );
-
+if false then
+DeclareAttribute( UnderlyingCell, IsStableCategoryMorphism );
+fi;
 DeclareAttribute( "StableCategoryBySystemOfLiftingObjects", IsCapCategory );
 
-DeclareAttribute( "CongruencyTestFunctionForStableCategory", IsStableCategory );
 
-DeclareAttribute( "ProjectionFunctor", IsStableCategory );
+
+DeclareAttribute( "StableCategoryBySystemOfColiftingObjects", IsCapCategory );
+
+
+
+
 
 DeclareGlobalFunction( "ADD_HOMOMORPHISM_STRUCTURE_TO_STABLE_CATEGORY_BY_COLIFTING_STRUCTURE_WITH_ABELIAN_RANGE_CAT" );
 
