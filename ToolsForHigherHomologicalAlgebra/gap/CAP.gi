@@ -51,6 +51,8 @@ DISABLE_ALL_SANITY_CHECKS := false;
 SWITCH_LOGIC_OFF := false;
 DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
 
+## This is the only way I can perform these changes,
+## I hope I can remove this operation very soon
 ##
 InstallMethod( Finalize,
           [ IsCapCategory ],
@@ -77,7 +79,9 @@ InstallMethod( Finalize,
       DeactivateCachingOfCategory( category );
     fi;
     
-end, 5000 );
+    return true;
+    
+end );
 
 ##
 InstallGlobalFunction( DeactivateCachingForCertainOperations,
