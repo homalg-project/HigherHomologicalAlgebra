@@ -4,26 +4,50 @@
 ##
 #################################
 
+#! @Chapter Exact and Frobenius Categories
+#! @Section GAP categories
+
 DeclareGlobalVariable( "CAP_INTERNAL_FROBENIUS_CATEGORIES_BASIC_OPERATIONS" );
 
 DeclareGlobalVariable( "FROBENIUS_CATEGORIES_METHOD_NAME_RECORD" );
 
+#! @Description
+#! The &GAP; category of short sequences.
+#! @Arguments seq_obj
 DeclareCategory( "IsCapCategoryShortSequence", IsCapCategoryObject );
 
+#! @Description
+#! The &GAP; category of morphisms of short sequences.
+#! @Arguments seq_mor
 DeclareCategory( "IsCapCategoryMorphismOfShortSequences", IsCapCategoryMorphism );
 
+#! @Description
+#! The &GAP; category of short exact sequences.
+#! @Arguments seq_obj
 DeclareCategory( "IsCapCategoryShortExactSequence", IsCapCategoryShortSequence );
 
+#! @Description
+#! The &GAP; category of conflations. If a short sequence is a conflation, then it is a short exact sequence.
+#! @Arguments seq_obj
 DeclareCategory( "IsCapCategoryConflation", IsCapCategoryShortExactSequence );
 
 ####################################
 ##
-##  Methods Declarations in Records
+#! @Section Exact categories operations
 ##
 ####################################
 
+#! @Description
+#!  The input is a &CAP; category. The output is <C>true</C> if $\CC$ is an exact category with respect to some
+#!  class $\EE$ of short exact sequences.
+#! @Arguments C
 DeclareProperty( "IsExactCategory", IsCapCategory );
- 
+
+#! @Description
+#!  The argument is a morphism $\iota:A\to B$ in $\CC$.
+#!  The output is whether or not $\iota$ is an inflation.
+#! @Arguments iota
+#! @Returns a boolian
 DeclareAttribute( "IsInflation", IsCapCategoryMorphism );
 
 DeclareOperation( "AddIsInflation",
@@ -35,6 +59,12 @@ DeclareOperation( "AddIsInflation",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddIsInflation",
                   [ IsCapCategory, IsList ] );
+
+#! @Description
+#!  The argument is a morphism $\pi:B\to C$ in $\CC$.
+#!  The output is whether or not $\pi$ is a deflation.
+#! @Arguments pi
+#! @Returns a boolian
 DeclareAttribute( "IsDeflation", IsCapCategoryMorphism );
 
 DeclareOperation( "AddIsDeflation",
@@ -47,6 +77,11 @@ DeclareOperation( "AddIsDeflation",
 DeclareOperation( "AddIsDeflation",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is a pair of morphisms $\iota:A\to B$ and $\pi:B\to C$.
+#!  The output is whether or not the pair $(\iota,\pi)$ defines a conflation.
+#! @Arguments iota, pi
+#! @Returns a boolian
 DeclareOperation( "IsConflationPair",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -60,6 +95,11 @@ DeclareOperation( "AddIsConflationPair",
 DeclareOperation( "AddIsConflationPair",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is an inflation $\iota:A\to B$.
+#!  The output is the cokernel object $C$ of $\iota$.
+#! @Arguments iota
+#! @Returns an object $C$
 DeclareAttribute( "ExactCokernelObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddExactCokernelObject",
@@ -72,6 +112,12 @@ DeclareOperation( "AddExactCokernelObject",
 DeclareOperation( "AddExactCokernelObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is an inflation $\iota:A\to B$. The output is a deflation $\pi(\iota):B\to C$ with
+#!  $C=\mathrm{ExactCokernelObject}(\iota)$ such that
+#!  the pair $(\iota,\pi(\iota))$ defines a conflation.
+#! @Arguments iota
+#! @Returns a deflation $B\to C$
 DeclareAttribute( "ExactCokernelProjection", IsCapCategoryMorphism );
 
 DeclareOperation( "AddExactCokernelProjection",
@@ -84,6 +130,11 @@ DeclareOperation( "AddExactCokernelProjection",
 DeclareOperation( "AddExactCokernelProjection",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is an inflation $\iota:A\to B$ and an object $C=\mathrm{ExactCokernelObject}(\iota)$.
+#!  The output is a deflation $\pi(\iota):B\to C$ such that $(\iota,\pi(\iota))$ defines a conflation.
+#! @Arguments iota, C
+#! @Returns a deflation $B\to C$
 DeclareOperation( "ExactCokernelProjectionWithGivenExactCokernelObject",
     [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
@@ -97,6 +148,21 @@ DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
 DeclareOperation( "AddExactCokernelProjectionWithGivenExactCokernelObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#! The arguments are an inflation $\iota: A \rightarrow B$
+#! and a test morphism $\tau: B \rightarrow T$ satisfying $\comp{\iota}{\tau} \sim 0$.
+#! The output is the morphism $\lambda: C \rightarrow T$ with $C=\mathrm{ExactCokernelObject}(\iota)$ and $\lambda$ is
+#! given by the universal property of the cokernel object, i.e., $\comp{\pi(\iota)}{\lambda} \sim \tau$ where
+#! $\pi(\iota) = \mathrm{ExactCokernelProjection}(\iota)$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzcd}
+#! A \arrow[r, "\iota", hook] & B \arrow[r, "\pi(\iota)", two heads] \arrow[rd, "\tau"'] & C \arrow[d, "\exists!~\lambda", dashed] \\ & & \phantom{.}T.
+#! \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+#! @Returns a morphism $C \to T$
+#! @Arguments iota, tau
 DeclareOperation( "ExactCokernelColift",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -110,6 +176,20 @@ DeclareOperation( "AddExactCokernelColift",
 DeclareOperation( "AddExactCokernelColift",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#! The arguments are a deflation $\pi: B \rightarrow C$ and a morphism $\tau: B \to T$
+#! such that $\tau$ is coliftable along $\pi$. That is, $\comp{\iota(\pi)}{\tau} \sim 0$.
+#! The output is the unique colift morphism $\lambda:C\to T$ of $\tau$ along $\pi$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzcd}
+#! K \arrow[r, "\iota(\pi)", hook] & B \arrow[r, "\pi", two heads] \arrow[rd, "\tau"'] & C \arrow[d, "\exists !~\lambda", dashed] \\
+#!                                &                                                   & \phantom{.}T. 
+#! \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+#! @Returns a morphism $C \to T$
+#! @Arguments pi, tau
 DeclareOperation( "ColiftAlongDeflation",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -123,6 +203,11 @@ DeclareOperation( "AddColiftAlongDeflation",
 DeclareOperation( "AddColiftAlongDeflation",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is a deflation $\pi:B\to C$.
+#!  The output is the kernel object $K$ of $\pi$.
+#! @Arguments pi
+#! @Returns an object $K$
 DeclareAttribute( "ExactKernelObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddExactKernelObject",
@@ -135,6 +220,13 @@ DeclareOperation( "AddExactKernelObject",
 DeclareOperation( "AddExactKernelObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is a deflation $\pi:B\to C$.
+#!  The output is an inflation $\iota(\pi):K\to B$ with
+#!  $K=\mathrm{ExactKernelObject}(\pi)$ such that
+#!  the pair $(\iota(\pi),\pi)$ defines a conflation.
+#! @Arguments pi
+#! @Returns an inflation $K\to B$
 DeclareAttribute( "ExactKernelEmbedding", IsCapCategoryMorphism );
 
 DeclareOperation( "AddExactKernelEmbedding",
@@ -147,6 +239,12 @@ DeclareOperation( "AddExactKernelEmbedding",
 DeclareOperation( "AddExactKernelEmbedding",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is a deflation $\pi:B\to C$ and an object $K=\mathrm{ExactKernelObject}(\pi)$.
+#!  The output is an inflation $\iota(\pi):K\to B$ such that
+#!  the pair $(\iota(\pi),\pi)$ defines a conflation.
+#! @Arguments pi, K
+#! @Returns an inflation $K\to B$
 DeclareOperation( "ExactKernelEmbeddingWithGivenExactKernelObject",
   [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
@@ -160,6 +258,22 @@ DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
 DeclareOperation( "AddExactKernelEmbeddingWithGivenExactKernelObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are a deflation $\pi: B \rightarrow C$
+#!  and a test morphism $\tau: T \rightarrow B$ satisfying $\comp{\tau}{\pi} \sim 0$.
+#!  The output is the morphism $\lambda: T \rightarrow K$ with $K=\mathrm{ExactKernelObject}(\pi)$ and $\lambda$ is
+#!  given by the universal property of the kernel object, i.e., $\comp{\lambda}{\iota(\pi)} \sim \tau$ where
+#!  $\iota(\pi) = \mathrm{ExactKernelEmbedding}(\pi)$.
+#!  @BeginLatexOnly
+#!  \begin{center}
+#!  \begin{tikzcd}
+#!  K \arrow[r, "\iota(\pi)", hook]                             & B \arrow[r, "\pi", two heads] & C \\
+#!  \phantom{.}T. \arrow[ru, "\tau"'] \arrow[u, "\exists!~\lambda", dashed] &                               &  
+#!  \end{tikzcd}
+#!  \end{center}
+#!  @EndLatexOnly
+#! @Returns a morphism $T \to K$
+#! @Arguments pi, tau
 DeclareOperation( "ExactKernelLift",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -173,6 +287,20 @@ DeclareOperation( "AddExactKernelLift",
 DeclareOperation( "AddExactKernelLift",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#! The arguments are an inflation $\iota: A \rightarrow B$ and a morphism $\tau: T \to B$
+#! such that $\tau$ is liftable along $\iota$. That is, $\comp{\tau}{\pi(\iota)} \sim 0$.
+#! The output is the unique lift morphism $\lambda:T\to A$ of $\tau$ along $\iota$.
+#! @BeginLatexOnly
+#! \begin{center}
+#! \begin{tikzcd}
+#! A \arrow[r, "\iota", hook] & B \arrow[r, "\pi(\iota)", two heads] & C \\
+#! \phantom{.}T. \arrow[ru, "\tau"'] \arrow[u, "\exists!~\lambda", dashed] &&
+#! \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+#! @Returns a morphism $C \to T$
+#! @Arguments iota, tau
 DeclareOperation( "LiftAlongInflation",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -190,6 +318,25 @@ DeclareOperation( "AddLiftAlongInflation",
 
 
 #! @Subsection Exact Fiber Product
+#!
+#! Given a deflation $\pi:A\to C$ and a morphism $\alpha:B\to C$, an exact fiber product diagram of $(\pi,\alpha)$ is defined by an object $A\times_C B$, a morphism $p_A:A\times_C B\to A$
+#! and a deflation $p_B:A\times_C B\to B$ such that $\comp{p_A}{\pi}\sim \comp{p_B}{\alpha}$ and for any two morphisms $p'_A:T\to A,p'_B:T\to B$ with $\comp{p'_A}{\pi}\sim \comp{p'_B}{\alpha}$, there exists
+#! a unique morphism $u:T\to A\times_C B$ with $\comp{u}{p_A} \sim p'_A$ and $\comp{u}{p_B} \sim p'_B$.
+#! @BeginLatexOnly
+#! \begin{center}
+#!        \begin{tikzcd}
+#!            T \arrow[rrd, "p'_A"] \arrow[rdd, "p'_B"'] \arrow[rd, "u" description, dashed] &                                                           &                               \\
+#!                                                                                   & A\times_C B \arrow[r, "p_A"', dashed] \arrow[d, "p_B", two heads, dashed] & A \arrow[d, "\pi", two heads] \\
+#!                                                                                   & B \arrow[r, "\alpha"']                                    & C.                          
+#!            \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+
+#! @Description
+#! The arguments are a deflation $\pi:A\to C$ and a morphism $\alpha:B\to C$.
+#! The output is the fiber product object $A\times_C B$ of $\pi$ and $\alpha$.
+#! @Returns an object
+#! @Arguments pi, alpha
 DeclareOperation( "ExactFiberProduct", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactFiberProduct",
@@ -202,6 +349,11 @@ DeclareOperation( "AddExactFiberProduct",
 DeclareOperation( "AddExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are a deflation $\pi:A\to C$ and a morphism $\alpha:B\to C$.
+#!  The output is a morphism $p_A:A\times_C B \to A$ which is a part of a fiber product diagram of $\pi$ and $\alpha$.
+#! @Returns a morphism $p_A:A\times_C B\to A$
+#! @Arguments pi, alpha
 DeclareOperation( "ProjectionInFirstFactorOfExactFiberProduct",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -215,7 +367,11 @@ DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
 DeclareOperation( "AddProjectionInFirstFactorOfExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
-
+#! @Description
+#!  The arguments are a deflation $\pi:A\to C$ and a morphism $\alpha:B\to C$.
+#!  The output is a morphism $p_B:A\times_C B \to B$ which is a part of a fiber product diagram of $\pi$ and $\alpha$.
+#! @Returns a morphism $p_B:A\times_C B\to B$
+#! @Arguments pi, alpha
 DeclareOperation( "ProjectionInSecondFactorOfExactFiberProduct",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -229,6 +385,11 @@ DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
 DeclareOperation( "AddProjectionInSecondFactorOfExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#! The arguments are a deflation $\pi:A\to C$ and three morphisms $\alpha:B\to C$, $p'_A:T\to A$ and $p'_B:T\to B$ such that  $\comp{p'_A}{\pi} \sim \comp{p'_B}{\alpha}$.
+#! The output is the universal morphism $u:T\to A\times_C B$ with $\comp{u}{p_A} \sim p'_A$ and $\comp{u}{p_B}\sim p'_B$.
+#! @Returns a morphism $u:T \to A \times_C B$
+#! @Arguments pi, alpha, pprime_A, pprime_B
 DeclareOperation( "UniversalMorphismIntoExactFiberProduct",
     [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -260,7 +421,25 @@ DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberP
 
 
 
+#! @Subsection Exact Pushout
+#!  Given an inflation $\iota:C\to A$ and a morphism $\alpha:C\to B$, an exact pushout diagram of $(\iota,\alpha)$ is defined by an object $A\oplus_C B$, a morphism $q_A:A \to A\oplus_C B$
+#!  and an inflation $q_B:B\to A\oplus_C B$ such that $\comp{\iota}{q_A} \sim \comp{\alpha}{q_B}$ and for any two morphisms $q'_A:A\to T,q'_B:B\to T$ with
+#!  $\comp{\iota}{q'_A}\sim \comp{\alpha}{q'_B}$, there exists a unique morphism $u: A\oplus_C B \to T$ with $\comp{q_A}{ u}\sim q'_A$ and $\comp{q_B}{ u} \sim q'_B$.
+#! @BeginLatexOnly
+#! \begin{center}
+#!        \begin{tikzcd}
+#!            C \arrow[r, "\alpha"] \arrow[d, "\iota"', hook] & B \arrow[d, "q_B"', hook] \arrow[rdd, "q'_B"] &   \\
+#!            A \arrow[r, "q_A"] \arrow[rrd, "q'_A"']         & A \oplus_C B \arrow[rd, "u" description]      &   \\
+#!                                                            &                                               & T.
+#!        \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
 
+#! @Description
+#!  The arguments are an inflation $\iota:C\to A$ and a morphism $\alpha:C\to B$.
+#!  The output is the pushout object $A\oplus_C B$ of $\iota$ and $\alpha$.
+#! @Returns an object
+#! @Arguments iota, alpha
 DeclareOperation( "ExactPushout", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactPushout",
@@ -273,6 +452,11 @@ DeclareOperation( "AddExactPushout",
 DeclareOperation( "AddExactPushout",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are an inflation $\iota:C\to A$ and a morphism $\alpha:C\to B$.
+#!  The output is a morphism $q_A:A \to A\oplus_C B$ which is a part of a pushout diagram of $\iota$ and $\alpha$.
+#! @Returns a morphism $A \to A\oplus_C B$
+#! @Arguments iota, alpha
 DeclareOperation( "InjectionOfFirstCofactorOfExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -288,6 +472,10 @@ DeclareOperation( "AddInjectionOfFirstCofactorOfExactPushout",
 
 
 #! @Description
+#!  The arguments are an inflation $\iota:C\to A$ and a morphism $\alpha:C\to B$.
+#!  The output is an inflation $q_B:B \to A\oplus_C B$ which is a part of a pushout diagram of $\iota$ and $\alpha$.
+#! @Returns a inflation $B \to A\oplus_C B$
+#! @Arguments iota, alpha
 DeclareOperation( "InjectionOfSecondCofactorOfExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -301,6 +489,12 @@ DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
 DeclareOperation( "AddInjectionOfSecondCofactorOfExactPushout",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are a inflation $\iota:C\to A$ and three morphisms $\alpha:C\to B$, $q'_A:A\to T$ 
+#!  and $q'_B:B\to T$ such that $\comp{\iota}{ q'_A}\sim \comp{\alpha}{ q'_B}$.
+#!  The output is the universal morphism $u:A\oplus_C B\to T$ with $\comp{q_A}{ u}\sim q'_A$ and $\comp{q_B}{u} \sim q'_B$.
+#! @Returns a morphism $A\oplus_C B \to T$
+#! @Arguments iota, alpha, qprime_A, qprime_B
 DeclareOperation( "UniversalMorphismFromExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
@@ -314,6 +508,13 @@ DeclareOperation( "AddUniversalMorphismFromExactPushout",
 DeclareOperation( "AddUniversalMorphismFromExactPushout",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are a inflation $\iota:C\to A$, three morphisms $\alpha:C\to B$, $q'_A:A\to T$,
+#!  $q'_B:B\to T$ and an object $P=A\oplus_C B=\mathrm{ExactPushout}(\iota,\alpha)$
+#!  such that $\comp{\iota}{ q'_A}\sim \comp{\alpha}{ q'_B}$.
+#!  The output is the universal morphism $u:P \to T$ with $\comp{q_A}{ u}\sim q'_A$ and $\comp{q_B}{u} \sim q'_B$.
+#! @Returns a morphism $P \to T$
+#! @Arguments iota, alpha, qprime_A, qprime_B, P
 DeclareOperation( "UniversalMorphismFromExactPushoutWithGivenExactPushout",
   [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
@@ -327,7 +528,35 @@ DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
 DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
+
+#! @Subsection Exact Categories With Enough E-projectives
+#!  Let $(\CC,\EE)$ be an exact category. An object $P$ is called $\mathcal{E}$-projective if for every
+#!  morphism $\tau:P\to C$ and every deflation $\pi:B\to C$, there exists a lift morphism $\lambda:P\to B$
+#!  of $\tau$ along $\pi$, i.e., $\comp{\lambda}{\pi}=\tau$.
+#!  @BeginLatexOnly
+#!  \begin{center}
+#! \begin{tikzcd}
+#!                                & P \arrow[d, "\tau"] \arrow[ld, "\lambda"', dashed] \\
+#! B \arrow[r, "\pi"', two heads] & C. 
+#! \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+
+#!  The exact category $(\CC,\EE)$ is said to have enough $\EE$-projectives if for each object $A$ in $\CC$, there exists
+#!  a deflation $p_A:P_A \to A$ where $P_A$ is an $\EE$-projecitve object.
+
+#! @Description
+#!  The input is a &CAP; category. The output is <C>true</C> if $\CC$ is an exact category with respect to some
+#!  class $\EE$ of short exact sequences and $(\CC,\EE)$ has enough $\EE$-projectives.
+#! @Arguments C
 DeclareProperty( "IsExactCategoryWithEnoughExactProjectives", IsCapCategory );
+
+#! @Description
+#!  The argument is an object $P$ in $\CC$.
+#!  The output is whether or not $P$ is an $\EE$-projective object.
+#! @Returns a boolian 
+#! @Arguments P
 DeclareProperty( "IsExactProjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddIsExactProjectiveObject",
@@ -340,6 +569,13 @@ DeclareOperation( "AddIsExactProjectiveObject",
 DeclareOperation( "AddIsExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are a morphism $\tau:P\to C$ where $P$ is an $\EE$-projective object
+#!  and a deflation $\pi:B\to C$.
+#!  The output is a lift morphism $\lambda:P\to B$ of $\tau$ along $\pi$, i.e.,
+#!  $\comp{\lambda}{\pi} \sim \tau$.
+#! @Returns a morphism $\lambda:P\to B$
+#! @Arguments tau, pi
 DeclareOperation( "ExactProjectiveLift", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactProjectiveLift",
@@ -352,6 +588,14 @@ DeclareOperation( "AddExactProjectiveLift",
 DeclareOperation( "AddExactProjectiveLift",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-exact-projectives
+
+#! @Description
+#!  The argument is an object $A$ in $\CC$.
+#!  The output is an $\EE$-projective object $P_A$ such that
+#!  there exists a deflation $P_A \to A$.
+#! @Returns an $\EE$-projective object 
+#! @Arguments A
 DeclareAttribute( "SomeExactProjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddSomeExactProjectiveObject",
@@ -364,6 +608,12 @@ DeclareOperation( "AddSomeExactProjectiveObject",
 DeclareOperation( "AddSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is an object $A$ in $\CC$.
+#!  The output is a deflation morphism $p_A:P_A \to A$ where
+#!  $P_A = \mathrm{SomeExactProjectiveObject}(A)$.
+#! @Returns a deflation $P_A \to A$
+#! @Arguments A
 DeclareAttribute( "DeflationFromSomeExactProjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
@@ -376,11 +626,36 @@ DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives
+
+#! @Subsection Exact Categories With Enough E-injecitves
+#!  Let $(\CC,\EE)$ be an exact category. An object $I$ is called $\mathcal{E}$-injective if for
+#!  every inflation $\iota:A\to B$ and every morphism $\tau:A \to I$, there exists a colift morphism
+#!  of $\tau$ along $\iota$.
+#!  @BeginLatexOnly
+#!  \begin{center}
+#! \begin{tikzcd}
+#! A \arrow[r, "\iota", hook] \arrow[d, "\tau"'] & B \arrow[ld, "\lambda", dashed]                \\
+#! I                                             & {}
+#! \end{tikzcd}
+#! \end{center}
+#! @EndLatexOnly
+
+#!  The exact category $(\CC,\EE)$ is said to have enough $\EE$-injectives if for each object $A$ in $\CC$, there exists
 #!  an inflation $\iota_A:A \to I_A$ where $I_A$ is an $\EE$-injective object.
 
 
 #! @Description
+#!  The input is a &CAP; category. The output is <C>true</C> if $\CC$ is an exact category with respect to some
+#!  class $\EE$ of short exact sequences and $(\CC,\EE)$ has enough $\EE$-injectives.
+#! @Arguments C
 DeclareProperty( "IsExactCategoryWithEnoughExactInjectives", IsCapCategory );
+
+#! @Description
+#!  The argument is an object $I$ in $\CC$.
+#!  The output is whether or not $I$ is an $\EE$-injective object.
+#! @Returns a boolian
+#! @Arguments I
 DeclareProperty( "IsExactInjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddIsExactInjectiveObject",
@@ -393,6 +668,13 @@ DeclareOperation( "AddIsExactInjectiveObject",
 DeclareOperation( "AddIsExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The arguments are an inflation $\iota:A\to B$ and a morphism $\tau:A\to I$
+#!  where $I$ is an $\EE$-injective object.
+#!  The output is a colift morphism $\lambda:B \to I$ of $\tau$ along $\iota$, i.e.,
+#!  $\comp{\iota}{\lambda} \sim \tau$.
+#! @Returns a morphism $\lambda:B \to I$
+#! @Arguments iota, tau
 DeclareOperation( "ExactInjectiveColift", [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 DeclareOperation( "AddExactInjectiveColift",
@@ -405,6 +687,14 @@ DeclareOperation( "AddExactInjectiveColift",
 DeclareOperation( "AddExactInjectiveColift",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-exact-injectives
+
+#! @Description
+#!  The argument is an object $A$ in $\CC$.
+#!  The output is an $\EE$-injective object $I_A$ such that
+#!  there exists an inflation $A \to I_A$.
+#! @Returns an $\EE$-injective object 
+#! @Arguments A
 DeclareOperation( "SomeExactInjectiveObject", [ IsCapCategoryObject ] );
 
 DeclareOperation( "AddSomeExactInjectiveObject",
@@ -417,6 +707,12 @@ DeclareOperation( "AddSomeExactInjectiveObject",
 DeclareOperation( "AddSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is an object $A$ in $\CC$.
+#!  The output is an inflation $\iota_A:A \to I_A$ where
+#!  $I_A = \mathrm{SomeExactInjectiveObject}(A)$.
+#! @Returns an inflation $A \to I_A$
+#! @Arguments A
 DeclareOperation( "InflationIntoSomeExactInjectiveObject", [ IsCapCategoryObject ] );
 
 DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
@@ -429,7 +725,12 @@ DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-##
+#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives
+
+#! @Description
+#!  The argument if a morphism $\alpha:A\to B$ in an exact category $(\CC,\EE)$ with enough $\EE$-projectives.
+#!  The output is whether or not $\alpha$ lifts along $p_B:P_B\to B$ where $p_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)$.
+#! @Arguments alpha
 DeclareProperty( "IsLiftableAlongDeflationFromSomeExactProjectiveObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddIsLiftableAlongDeflationFromSomeExactProjectiveObject",
@@ -442,6 +743,11 @@ DeclareOperation( "AddIsLiftableAlongDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddIsLiftableAlongDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @Description
+#!  The argument is a morphism $\alpha:A\to B$ such that $\alpha$ lifts along $p_B:P_B \to B$ where
+#!  $p_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)$.
+#!  The output is a lift morphism $\lambda: A \to P_B$ of $\alpha$ along $p_B$.
+#! @Arguments alpha
 DeclareAttribute( "LiftAlongDeflationFromSomeExactProjectiveObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
@@ -454,6 +760,12 @@ DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives-liftable-along-deflation
+
+#! @Description
+#!  The argument if a morphism $\alpha:A\to B$ in an exact category $(\CC,\EE)$ with enough $\EE$-injectives.
+#!  The output is whether or not $\alpha$ colifts along $\iota_A:A\to I_A$ where $\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)$.
+#! @Arguments alpha
 DeclareProperty( "IsColiftableAlongInflationIntoSomeExactInjectiveObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
@@ -466,7 +778,11 @@ DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddIsColiftableAlongInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-##
+#! @Description
+#!  The argument is a morphism $\alpha:A\to B$ such that $\alpha$ colifts along $\iota_A:A \to I_A$ where
+#!  $\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)$.
+#!  The output is a colift morphism $\lambda: I_A \to B$ of $\alpha$ along $\iota_A$.
+#! @Arguments alpha
 DeclareAttribute( "ColiftAlongInflationIntoSomeExactInjectiveObject", IsCapCategoryMorphism );
 
 DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
@@ -479,7 +795,18 @@ DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives-coliftable-along-inflation
+
+#! @Description
+#!  The argument is a &CAP; category. The output is <C>true</C> if 
+#!  * $\CC$ is exact with respect to some class $\EE$ of short exact sequences,
+#!  * $(\CC,\EE)$ has enough $\EE$-projectives and $\EE$-injectives,
+#!  * an object in $\CC$ is $\EE$-projective if and only if it is $\EE$-injective.
+#! @Arguments C
 DeclareProperty( "IsFrobeniusCategory", IsCapCategory );
+
+#? @InsertChunk freyd_categories_graded_exterior_algebra-is-frobenius
+
 #################################
 ##
 ## Methods 

@@ -1,0 +1,21 @@
+@Chapter Exact and Frobenius Categories
+
+@Section GAP categories
+@Section Exact categories operations
+
+@Chapter Lifting and Colifting systems
+
+@Section Systems of lifting objects
+@Section Examples for systems of lifting objects
+@Section Systems of colifting objects
+@Section Examples for systems of colifting objects
+
+@Chapter Stable Categories
+
+@Section GAP categories 
+@Section Constructors
+@Section Example for a stable category
+@Section Stable categories defined by systems of lifting objects
+@Section Stable categories defined by systems of colifting objects
+
+@Chapter Bibliography

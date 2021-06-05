@@ -1,0 +1,15 @@
+@Chapter Bibliography
+
+@BeginLatexOnly
+\begingroup
+% hide "Bibliography" title
+\renewcommand{\chapter}[2]{}
+\nocite{*}
+\bibliography{tex/literature}{}
+\bibliographystyle{tex/my_amsalpha}
+\endgroup
+@EndLatexOnly
+
+@BeginNotLatex
+See the PDF version of this manual.
+@EndNotLatex

@@ -213,10 +213,12 @@ IsLiftableAlongDeflationFromSomeExactProjectiveObject := rec(
 filter_list := [ "category", "morphism" ],
 return_type := "bool" ),
 
+##
 ColiftAlongInflationIntoSomeExactInjectiveObject := rec(
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
+##
 LiftAlongDeflationFromSomeExactProjectiveObject := rec(
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" )
