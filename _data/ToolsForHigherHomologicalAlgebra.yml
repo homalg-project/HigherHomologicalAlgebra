@@ -1,7 +1,7 @@
 name: ToolsForHigherHomologicalAlgebra
-version: "2020.11-01"
+version: "2021.06-01"
 license: "GPL-2.0-or-later"
-date: 2020-11-04
+date: 2021-06-05
 description: |
     Tools for the Higher Homological Algebra project
 
@@ -21,19 +21,19 @@ needed-pkgs:
       url: "https://gap-packages.github.io/AutoDoc"
     - name: "CAP"
       version: ">=2020.05.03"
-      url: "https://homalg-project.github.io/CAP_project/CAP"
+      url: "https://homalg-project.github.io/pkg/CAP"
 
-www: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra
+www: https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra
 readme: README.md
 packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2020.11-01/ToolsForHigherHomologicalAlgebra-2020.11-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.06-01/ToolsForHigherHomologicalAlgebra-2021.06-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2020.11-01/ToolsForHigherHomologicalAlgebra-2020.11-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.06-01/ToolsForHigherHomologicalAlgebra-2021.06-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2020.11-01/ToolsForHigherHomologicalAlgebra-2020.11-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.06-01/ToolsForHigherHomologicalAlgebra-2021.06-01.pdf
 
 abstract: |
 
@@ -42,29 +42,29 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal20</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ToolsForHigherHomologicalAlgebra, Tools for the Higher Homological Algebra project,
-             Version 2020.11-01</i>
-     (<span class='BibYear'>2020</span>)<br />
+             Version 2021.06-01</i>
+     (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ ToolsForHigherHomologicalAlgebra2020.11-01,
+    @misc{ ToolsForHigherHomologicalAlgebra2021.06-01,
       author =           {Saleh, K.},
       title =            {{ToolsForHigherHomologicalAlgebra},   Tools   for  the
                           Higher    Homological   Algebra   project,   {V}ersion
-                          2020.11-01},
-      month =            {Nov},
-      year =             {2020},
+                          2021.06-01},
+      month =            {Jun},
+      year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
-                          {https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra}
+                          {https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra}
                           {\texttt{https://homalg-project.github.io/}\discretionary
-                          {}{}{}\texttt{HigherHomologicalAlgebra/}\discretionary
+                          {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{ToolsForHigherHomologicalAlgebra}}},
-      printedkey =       {Sal20}
+      printedkey =       {Sal21}
     }
 
