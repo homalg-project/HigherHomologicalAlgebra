@@ -8,9 +8,10 @@ AddFinalDerivation( IsConflationPair,
                     [
                       [ IsMonomorphism, 1 ],
                       [ IsEpimorphism, 1 ],
+                      [ IsIsomorphism, 1 ],
                       [ IsZeroForMorphisms, 1 ],
-                      [ LiftAlongMonomorphism, 1 ],
-                      [ ColiftAlongEpimorphism, 1 ],
+                      [ KernelLift, 1 ],
+                      [ CokernelColift, 1 ],
                       [ FiberProduct, 1 ],
                       [ ProjectionInFactorOfFiberProduct, 1 ],
                       [ UniversalMorphismIntoFiberProduct, 1 ],
@@ -21,10 +22,14 @@ AddFinalDerivation( IsConflationPair,
                     ],
                     [
                       IsConflationPair,
-                      CompleteDeflationToConflation,
-                      CompleteInflationToConflation,
-                      LiftAlongInflation,
-                      ColiftAlongDeflation,
+                      IsInflation,
+                      IsDeflation,
+                      ExactKernelObject,
+                      ExactKernelEmbedding,
+                      ExactKernelLift,
+                      ExactCokernelObject,
+                      ExactCokernelProjection,
+                      ExactCokernelColift,
                       ExactFiberProduct,
                       ProjectionInFirstFactorOfExactFiberProduct,
                       ProjectionInSecondFactorOfExactFiberProduct,
@@ -35,23 +40,90 @@ AddFinalDerivation( IsConflationPair,
                       UniversalMorphismFromExactPushout
                     ],
   
-  { cat, alpha, beta } ->
-      IsMonomorphism( alpha )
-        and IsEpimorphism( beta )
-          and IsZeroForMorphisms( PreCompose( alpha, beta ) ),
-
-[ CompleteDeflationToConflation, { cat, def } -> KernelEmbedding( cat, def )  ],
-[ CompleteInflationToConflation, { cat, inf } -> CokernelProjection( cat, inf ) ],
-[ LiftAlongInflation, { cat, inf, tau } -> LiftAlongMonomorphism( cat, inf, tau ) ],
-[ ColiftAlongDeflation, { cat, def, tau } -> ColiftAlongEpimorphism( cat, def, tau ) ],
-[ ExactFiberProduct, { cat, alpha_1, alpha_2 } -> FiberProduct( cat, [ alpha_1, alpha_2 ] ) ],
-[ ProjectionInFirstFactorOfExactFiberProduct, { cat, def, alpha_2 } -> ProjectionInFactorOfFiberProduct( cat, [ def, alpha_2 ], 1 ) ],
-[ ProjectionInSecondFactorOfExactFiberProduct, { cat, def, alpha_2 } -> ProjectionInFactorOfFiberProduct( cat, [ def, alpha_2 ], 2 ) ],
-[ UniversalMorphismIntoExactFiberProduct, { cat, alpha_1, alpha_2, u_1, u_2 } -> UniversalMorphismIntoFiberProduct( cat, [ alpha_1, alpha_2 ], [ u_1, u_2 ] ) ],
-[ ExactPushout, { cat, alpha_1, alpha_2 } -> Pushout( cat, [ alpha_1, alpha_2 ] ) ],
-[ InjectionOfFirstCofactorOfExactPushout, { cat, inf, alpha_2 } -> InjectionOfCofactorOfPushout( cat, [ inf, alpha_2 ], 1 ) ],
-[ InjectionOfSecondCofactorOfExactPushout, { cat, inf, alpha_2 } -> InjectionOfCofactorOfPushout( cat, [ inf, alpha_2 ], 2 ) ],
-[ UniversalMorphismFromExactPushout, { cat, alpha_1, alpha_2, u_1, u_2 } -> UniversalMorphismFromPushout( cat, [ alpha_1, alpha_2 ], [ u_1, u_2 ] ) ]
+  { cat, iota, pi } ->
+      IsIsomorphism( KernelLift( pi, iota ) )
+        and IsIsomorphism( CokernelColift( iota, pi ) ),
+[
+  IsInflation,
+    { cat, iota } -> IsMonomorphism( iota )
+],
+[
+  IsDeflation,
+    { cat, pi } -> IsEpimorphism( pi )
+],
+[ 
+  ExactKernelObject,
+    { cat, pi } -> KernelObject( cat, pi )
+],
+[
+  ExactKernelEmbedding,
+    { cat, pi } -> KernelEmbedding( cat, pi ) 
+],
+[ ExactKernelEmbeddingWithGivenExactKernelObject,
+    { cat, pi, ker } -> KernelEmbeddingWithGivenKernelObject( cat, pi, ker )
+],
+[
+  ExactKernelLift,
+    { cat, pi, tau } -> KernelLift( cat, pi, tau )
+],
+[
+  LiftAlongInflation,
+    { cat, iota, tau } -> LiftAlongMonomorphism( cat, iota, tau )
+],
+[
+  ExactCokernelObject,
+    { cat, iota } -> CokernelObject( cat, iota )
+],
+[
+  ExactCokernelProjection,
+    { cat, iota } -> CokernelProjection( cat, iota )
+],
+[
+  ExactCokernelProjectionWithGivenExactCokernelObject,
+    { cat, iota, coker } -> CokernelProjectionWithGivenCokernelObject( cat, iota, coker )
+],
+[
+  ExactCokernelColift,
+    { cat, iota, tau } -> CokernelColift( cat, iota, tau )
+],
+[
+  ColiftAlongDeflation,
+    { cat, pi, tau } -> ColiftAlongEpimorphism( cat, pi, tau )
+],
+[
+  ExactFiberProduct,
+    { cat, pi, alpha } -> FiberProduct( cat, [ pi, alpha ] )
+],
+[
+  ProjectionInFirstFactorOfExactFiberProduct,
+    { cat, pi, alpha } -> ProjectionInFactorOfFiberProduct( cat, [ pi, alpha ], 1 )
+],
+[ 
+  ProjectionInSecondFactorOfExactFiberProduct,
+    { cat, pi, alpha } -> ProjectionInFactorOfFiberProduct( cat, [ pi, alpha ], 2 )
+],
+[
+  UniversalMorphismIntoExactFiberProduct,
+    { cat, pi, alpha, p_A, p_B }
+      -> UniversalMorphismIntoFiberProduct( cat, [ pi, alpha ], [ p_A, p_B ] )
+],
+[
+  ExactPushout,
+    { cat, inf, alpha } -> Pushout( cat, [ inf, alpha ] )
+],
+[
+  InjectionOfFirstCofactorOfExactPushout,
+    { cat, inf, alpha } -> InjectionOfCofactorOfPushout( cat, [ inf, alpha ], 1 )
+],
+[
+  InjectionOfSecondCofactorOfExactPushout,
+    { cat, inf, alpha } -> InjectionOfCofactorOfPushout( cat, [ inf, alpha ], 2 )
+],
+[
+  UniversalMorphismFromExactPushout,
+    { cat, inf, alpha, inf_prime, alpha_prime } 
+      -> UniversalMorphismFromPushout( cat, [ inf, alpha ], [ inf_prime, alpha_prime ] )
+]
 : ConditionsListComplete := true,
   FunctionCalledBeforeInstallation :=
     function( cat )
@@ -73,10 +145,16 @@ AddFinalDerivation( IsExactProjectiveObject,
                 ExactProjectiveLift
               ],
   { cat, o } -> IsProjective( cat, o ),
-[ SomeExactProjectiveObject, { cat, o } -> SomeProjectiveObject( o ) ],
-[ DeflationFromSomeExactProjectiveObject, { cat, o } -> EpimorphismFromSomeProjectiveObject( cat, o ) ],
-[ ExactProjectiveLift, { cat, alpha, def } -> ProjectiveLift( cat, alpha, def ) ]
-: ConditionsListComplete := false,
+[ 
+  SomeExactProjectiveObject,
+  { cat, o } -> SomeProjectiveObject( o ) ],
+[ 
+  DeflationFromSomeExactProjectiveObject,
+  { cat, o } -> EpimorphismFromSomeProjectiveObject( cat, o ) ],
+[ 
+  ExactProjectiveLift, 
+  { cat, alpha, def } -> ProjectiveLift( cat, alpha, def )
+] : ConditionsListComplete := false,
   FunctionCalledBeforeInstallation :=
     function( cat )
       SetIsExactCategoryWithEnoughExactProjectives( cat, true );
