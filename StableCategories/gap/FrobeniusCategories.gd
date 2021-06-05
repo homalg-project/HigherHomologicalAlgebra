@@ -22,6 +22,7 @@ DeclareCategory( "IsCapCategoryConflation", IsCapCategoryShortExactSequence );
 ##
 ####################################
 
+DeclareProperty( "IsExactCategory", IsCapCategory );
  
 DeclareAttribute( "IsInflation", IsCapCategoryMorphism );
 
@@ -326,6 +327,7 @@ DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
 DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
                   [ IsCapCategory, IsList ] );
 
+DeclareProperty( "IsExactCategoryWithEnoughExactProjectives", IsCapCategory );
 DeclareProperty( "IsExactProjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddIsExactProjectiveObject",
@@ -378,6 +380,7 @@ DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
 
 
 #! @Description
+DeclareProperty( "IsExactCategoryWithEnoughExactInjectives", IsCapCategory );
 DeclareProperty( "IsExactInjectiveObject", IsCapCategoryObject );
 
 DeclareOperation( "AddIsExactInjectiveObject",
@@ -476,6 +479,7 @@ DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
+DeclareProperty( "IsFrobeniusCategory", IsCapCategory );
 #################################
 ##
 ## Methods 
@@ -510,11 +514,6 @@ DeclareAttribute( "INSTALL_LOGICAL_IMPLICATIONS_FOR_EXACT_CATEGORY", IsCapCatego
 ## Properties
 ##
 #################################
-
-DeclareProperty( "IsExactCategory", IsCapCategory );
-DeclareProperty( "IsExactCategoryWithEnoughExactProjectives", IsCapCategory );
-DeclareProperty( "IsExactCategoryWithEnoughExactInjectives", IsCapCategory );
-DeclareProperty( "IsFrobeniusCategory", IsCapCategory );
 
 DeclareAttribute( "AsResidueClassOfInflation", IsStableCategoryMorphism );
 DeclareAttribute( "IsoFromRangeToRangeOfResidueClassOfInflation", IsStableCategoryMorphism );
