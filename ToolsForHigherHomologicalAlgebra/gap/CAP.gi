@@ -6,17 +6,13 @@
 
 BindGlobal( "SECTION_AND_RETRACTION_METHOD_RECORD", rec(
 
-  Section := rec(
-    installation_name := "Section",
+  SectionForMorphisms := rec(
     filter_list := [ "category", "morphism" ],
-    cache_name := "Section",
     return_type := "morphism"
   ),
   
-  Retraction := rec(
-    installation_name := "Retraction",
+  RetractionForMorphisms := rec(
     filter_list := [ "category", "morphism" ],
-    cache_name := "Retraction",
     return_type := "morphism"
   )
 ) );
@@ -24,7 +20,7 @@ BindGlobal( "SECTION_AND_RETRACTION_METHOD_RECORD", rec(
 CAP_INTERNAL_ENHANCE_NAME_RECORD( SECTION_AND_RETRACTION_METHOD_RECORD );
 CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( SECTION_AND_RETRACTION_METHOD_RECORD );
 
-AddDerivationToCAP( Section,
+AddDerivationToCAP( SectionForMorphisms,
             [
               [ Lift, 1 ],
               [ IdentityMorphism, 1 ]
@@ -34,7 +30,7 @@ AddDerivationToCAP( Section,
   : Description:= "Section using Lift and IdentityMorphism"
 );
 
-AddDerivationToCAP( Retraction,
+AddDerivationToCAP( RetractionForMorphisms,
             [
               [ Colift, 1 ],
               [ IdentityMorphism, 1 ]

@@ -4,39 +4,35 @@
 # Declarations
 #
 
-DeclareAttribute( "Section",
+DeclareAttribute( "SectionForMorphisms",
                   IsCapCategoryMorphism );
 
-DeclareOperation( "AddSection",
+DeclareOperation( "AddSectionForMorphisms",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddSection",
+DeclareOperation( "AddSectionForMorphisms",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddSection",
+DeclareOperation( "AddSectionForMorphisms",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddSection",
+DeclareOperation( "AddSectionForMorphisms",
                   [ IsCapCategory, IsList ] );
 
-
-
-DeclareAttribute( "Retraction",
+DeclareAttribute( "RetractionForMorphisms",
                   IsCapCategoryMorphism );
 
-DeclareOperation( "AddRetraction",
+DeclareOperation( "AddRetractionForMorphisms",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddRetraction",
+DeclareOperation( "AddRetractionForMorphisms",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddRetraction",
+DeclareOperation( "AddRetractionForMorphisms",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddRetraction",
+DeclareOperation( "AddRetractionForMorphisms",
                   [ IsCapCategory, IsList ] );
-
-
 
 DeclareGlobalVariable( "DISABLE_ALL_SANITY_CHECKS" );
 DeclareGlobalVariable( "SWITCH_LOGIC_OFF" );
