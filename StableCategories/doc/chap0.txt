@@ -6,10 +6,10 @@
                    [1X Stable categories of additive categories [101X
   
   
-                                   2021.05-03
+                                   2021.06-01
   
   
-                                  28 May 2021
+                                  5 June 2021
   
   
                                   Kamal Saleh
@@ -32,7 +32,111 @@
   
   [1XContents (StableCategories)[101X
   
-  1 [33X[0;0YStableCategoriesForCap[133X
+  1 [33X[0;0YExact and Frobenius Categories[133X
+    1.1 [33X[0;0YGAP categories[133X
+      1.1-1 IsCapCategoryShortSequence
+      1.1-2 IsCapCategoryMorphismOfShortSequences
+      1.1-3 IsCapCategoryShortExactSequence
+      1.1-4 IsCapCategoryConflation
+    1.2 [33X[0;0YExact categories operations[133X
+      1.2-1 IsExactCategory
+      1.2-2 IsInflation
+      1.2-3 IsDeflation
+      1.2-4 IsConflationPair
+      1.2-5 ExactCokernelObject
+      1.2-6 ExactCokernelProjection
+      1.2-7 ExactCokernelProjectionWithGivenExactCokernelObject
+      1.2-8 ExactCokernelColift
+      1.2-9 ColiftAlongDeflation
+      1.2-10 ExactKernelObject
+      1.2-11 ExactKernelEmbedding
+      1.2-12 ExactKernelEmbeddingWithGivenExactKernelObject
+      1.2-13 ExactKernelLift
+      1.2-14 LiftAlongInflation
+      1.2-15 [33X[0;0YExact Fiber Product[133X
+      1.2-16 ExactFiberProduct
+      1.2-17 ProjectionInFirstFactorOfExactFiberProduct
+      1.2-18 ProjectionInSecondFactorOfExactFiberProduct
+      1.2-19 UniversalMorphismIntoExactFiberProduct
+      1.2-20 [33X[0;0YExact Pushout[133X
+      1.2-21 ExactPushout
+      1.2-22 InjectionOfFirstCofactorOfExactPushout
+      1.2-23 InjectionOfSecondCofactorOfExactPushout
+      1.2-24 UniversalMorphismFromExactPushout
+      1.2-25 UniversalMorphismFromExactPushoutWithGivenExactPushout
+      1.2-26 [33X[0;0YExact Categories With Enough E-projectives[133X
+      1.2-27 IsExactCategoryWithEnoughExactProjectives
+      1.2-28 IsExactProjectiveObject
+      1.2-29 ExactProjectiveLift
+      1.2-30 SomeExactProjectiveObject
+      1.2-31 DeflationFromSomeExactProjectiveObject
+      1.2-32 [33X[0;0YExact Categories With Enough E-injecitves[133X
+      1.2-33 IsExactCategoryWithEnoughExactInjectives
+      1.2-34 IsExactInjectiveObject
+      1.2-35 ExactInjectiveColift
+      1.2-36 SomeExactInjectiveObject
+      1.2-37 InflationIntoSomeExactInjectiveObject
+      1.2-38 IsLiftableAlongDeflationFromSomeExactProjectiveObject
+      1.2-39 LiftAlongDeflationFromSomeExactProjectiveObject
+      1.2-40 IsColiftableAlongInflationIntoSomeExactInjectiveObject
+      1.2-41 ColiftAlongInflationIntoSomeExactInjectiveObject
+      1.2-42 IsFrobeniusCategory
+  2 [33X[0;0YLifting and Colifting systems[133X
+    2.1 [33X[0;0YSystems of lifting objects[133X
+      2.1-1 IsLiftingObject
+      2.1-2 LiftingObject
+      2.1-3 MorphismFromLiftingObject
+      2.1-4 MorphismFromLiftingObjectWithGivenLiftingObject
+      2.1-5 SectionOfMorphismFromLiftingObjectWithGivenLiftingObject
+      2.1-6 SectionOfMorphismFromLiftingObject
+      2.1-7 LiftingMorphismWithGivenLiftingObjects
+      2.1-8 LiftingMorphism
+      2.1-9 IsLiftableAlongMorphismFromLiftingObject
+      2.1-10 WitnessForBeingLiftableAlongMorphismFromLiftingObject
+    2.2 [33X[0;0YExamples for systems of lifting objects[133X
+    2.3 [33X[0;0YSystems of colifting objects[133X
+      2.3-1 IsColiftingObject
+      2.3-2 ColiftingObject
+      2.3-3 MorphismToColiftingObject
+      2.3-4 MorphismToColiftingObjectWithGivenColiftingObject
+      2.3-5 RetractionOfMorphismToColiftingObjectWithGivenColiftingObject
+      2.3-6 RetractionOfMorphismToColiftingObject
+      2.3-7 ColiftingMorphismWithGivenColiftingObjects
+      2.3-8 ColiftingMorphism
+      2.3-9 IsColiftableAlongMorphismToColiftingObject
+      2.3-10 WitnessForBeingColiftableAlongMorphismToColiftingObject
+    2.4 [33X[0;0YExamples for systems of colifting objects[133X
+      2.4-1 [33X[0;0YThe class of E-injective objects in exact categories with enough
+      E-injectives[133X
+      2.4-2 [33X[0;0YThe class of all objects in arrows categories represented by
+      split-epimorphisms[133X
+      2.4-3 [33X[0;0YCode example 1[133X
+      2.4-4 [33X[0;0YThe class of all contractible objects in complexes categories[133X
+      2.4-5 [33X[0;0YCode example 2[133X
+  3 [33X[0;0YStable Categories[133X
+    3.1 [33X[0;0YGAP categories[133X
+      3.1-1 IsStableCategory
+      3.1-2 IsStableCategoryCell
+      3.1-3 IsStableCategoryObject
+      3.1-4 IsStableCategoryMorphism
+    3.2 [33X[0;0YConstructors[133X
+      3.2-1 StableCategory
+      3.2-2 CongruencyTestFunction
+      3.2-3 ProjectionFunctor
+      3.2-4 StableCategoryObject
+      3.2-5 UnderlyingCell
+      3.2-6 StableCategoryMorphism
+      3.2-7 StableCategoryMorphism
+      3.2-8 UnderlyingCell
+      3.2-9 [33X[0;0YCode example[133X
+    3.3 [33X[0;0YStable categories defined by systems of lifting objects[133X
+      3.3-1 StableCategoryBySystemOfLiftingObjects
+      3.3-2 [33X[0;0YCode example[133X
+    3.4 [33X[0;0YStable categories defined by systems of colifting objects[133X
+      3.4-1 StableCategoryBySystemOfColiftingObjects
+      3.4-2 [33X[0;0YCode example 1[133X
+      3.4-3 [33X[0;0YCode example 2[133X
+  4 [33X[0;0YBibliography[133X
   
   
   [32X

@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (StableCategories) - Chapter 3: Stable Categories</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap3"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
+<p><a id="X809397A87BC27640" name="X809397A87BC27640"></a></p>
+<div class="ChapSects"><a href="chap3.html#X809397A87BC27640">3 <span class="Heading">Stable Categories</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D03633A7D98026B">3.1 <span class="Heading">GAP categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D756CBD847FEB15">3.1-1 IsStableCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85CFC0707E87A7E0">3.1-2 IsStableCategoryCell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C86A9E57F7BF752">3.1-3 IsStableCategoryObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7A6ED0CA8060B7C1">3.1-4 IsStableCategoryMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86EC0F0A78ECBC10">3.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7AED4E817E571112">3.2-1 StableCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78C9371884A2B808">3.2-2 CongruencyTestFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78D856448454FAD4">3.2-3 ProjectionFunctor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E94877F860BDD4C">3.2-4 StableCategoryObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7BADB9ED7BAFE2A9">3.2-5 UnderlyingCell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X86054AD0819F5EB5">3.2-6 StableCategoryMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X80CD314C831D590F">3.2-7 StableCategoryMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F0D8E8784F91AD">3.2-8 UnderlyingCell</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8098D3287CFFFF89">3.2-9 <span class="Heading">Code example</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7FDE1D3786C0F649">3.3 <span class="Heading">Stable categories defined by systems of lifting objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E16447F79CA4FD1">3.3-1 StableCategoryBySystemOfLiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8098D3287CFFFF89">3.3-2 <span class="Heading">Code example</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X863E2A9081867177">3.4 <span class="Heading">Stable categories defined by systems of colifting objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8740509B7D61AF61">3.4-1 StableCategoryBySystemOfColiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7FFD76ED78AD78BD">3.4-2 <span class="Heading">Code example 1</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X866DE3F67F6B6AE0">3.4-3 <span class="Heading">Code example 2</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>3 <span class="Heading">Stable Categories</span></h3>
+
+<p><a id="X7D03633A7D98026B" name="X7D03633A7D98026B"></a></p>
+
+<h4>3.1 <span class="Heading">GAP categories</span></h4>
+
+<p><a id="X7D756CBD847FEB15" name="X7D756CBD847FEB15"></a></p>
+
+<h5>3.1-1 IsStableCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStableCategory</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of stable categories</p>
+
+<p><a id="X85CFC0707E87A7E0" name="X85CFC0707E87A7E0"></a></p>
+
+<h5>3.1-2 IsStableCategoryCell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStableCategoryCell</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of stable categories cells.</p>
+
+<p><a id="X7C86A9E57F7BF752" name="X7C86A9E57F7BF752"></a></p>
+
+<h5>3.1-3 IsStableCategoryObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStableCategoryObject</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of stable categories objects.</p>
+
+<p><a id="X7A6ED0CA8060B7C1" name="X7A6ED0CA8060B7C1"></a></p>
+
+<h5>3.1-4 IsStableCategoryMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStableCategoryMorphism</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of stable categories morphisms.</p>
+
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+
+<h4>3.2 <span class="Heading">Constructors</span></h4>
+
+<p><a id="X7AED4E817E571112" name="X7AED4E817E571112"></a></p>
+
+<h5>3.2-1 StableCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategory</code>( <var class="Arg">category</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an additive category <span class="Math">\CC/I</span></p>
+
+<p>The arguments are an additive category <span class="Math">\CC</span> and a function <span class="Math">f</span> which decides whether or a not a morphism <span class="Math">\alpha:A \to B</span> in <span class="Math">\CC</span> belongs to some two-sided ideal <span class="Math">I</span> of morphisms in <span class="Math">\CC</span>. The output is the stable category <span class="Math">\CC/I</span>.</p>
+
+<p><a id="X78C9371884A2B808" name="X78C9371884A2B808"></a></p>
+
+<h5>3.2-2 CongruencyTestFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CongruencyTestFunction</code>( <var class="Arg">stable_category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a gap function</p>
+
+<p>The argument is a stable category <span class="Math">\CC/I</span>. The output is is a gap function <span class="Math">f</span> such that for any <span class="Math">\alpha</span> in <span class="Math">\CC</span>, <span class="Math">[\alpha] \sim 0</span> if and only if <span class="Math">f(\alpha)=\mathrm{true}</span>.</p>
+
+<p><a id="X78D856448454FAD4" name="X78D856448454FAD4"></a></p>
+
+<h5>3.2-3 ProjectionFunctor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectionFunctor</code>( <var class="Arg">stable_category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a functor <span class="Math">\CC \to \CC/I</span></p>
+
+<p>The argument is a stable category <span class="Math">\CC/I</span>. The output is the natural projection functor <span class="Math">\pi: \CC \to \CC/I</span>.</p>
+
+<p><a id="X7E94877F860BDD4C" name="X7E94877F860BDD4C"></a></p>
+
+<h5>3.2-4 StableCategoryObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryObject</code>( <var class="Arg">stable_category</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <span class="Math">[A]</span> in <span class="Math">\CC/I</span></p>
+
+<p>The arguments are a stable category <span class="Math">\CC/I</span> and an object <span class="Math">A</span> in <span class="Math">\CC</span>. The output is <span class="Math">[A]</span> in <span class="Math">\CC/I</span>.</p>
+
+<p><a id="X7BADB9ED7BAFE2A9" name="X7BADB9ED7BAFE2A9"></a></p>
+
+<h5>3.2-5 UnderlyingCell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCell</code>( <var class="Arg">class_A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in <span class="Math">\CC</span></p>
+
+<p>The argument is an object <span class="Math">[A]</span> in a stable category <span class="Math">\CC/I</span>. The output is <span class="Math">A</span>.</p>
+
+<p><a id="X86054AD0819F5EB5" name="X86054AD0819F5EB5"></a></p>
+
+<h5>3.2-6 StableCategoryMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryMorphism</code>( <var class="Arg">class_A</var>, <var class="Arg">alpha</var>, <var class="Arg">class_B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <span class="Math">[\alpha]:[A]\to [B]</span> in <span class="Math">\CC/I</span></p>
+
+<p>The arguments are an object <span class="Math">[A]</span> in a stable category <span class="Math">\CC/I</span>, a morphism <span class="Math">\alpha:A\to B</span> in <span class="Math">\CC</span> and an object <span class="Math">[B]</span> in <span class="Math">\CC/I</span>. The output is <span class="Math">[\alpha]</span> in <span class="Math">\CC/I</span>.</p>
+
+<p><a id="X80CD314C831D590F" name="X80CD314C831D590F"></a></p>
+
+<h5>3.2-7 StableCategoryMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: <span class="Math">[\alpha]:[A]\to [B]</span> in <span class="Math">\CC/I</span></p>
+
+<p>The arguments are a stable category <span class="Math">\CC/I</span> and a morphism <span class="Math">\alpha:A\to B</span> in <span class="Math">\CC</span>. The output is <span class="Math">[\alpha]</span> in <span class="Math">\CC/I</span>.</p>
+
+<p><a id="X81F0D8E8784F91AD" name="X81F0D8E8784F91AD"></a></p>
+
+<h5>3.2-8 UnderlyingCell</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCell</code>( <var class="Arg">class_alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in <span class="Math">\CC</span></p>
+
+<p>The argument is a morphism <span class="Math">[\alpha]</span> in a stable category <span class="Math">\CC/I</span>. The output is <span class="Math">\alpha</span>.</p>
+
+<p><a id="X8098D3287CFFFF89" name="X8098D3287CFFFF89"></a></p>
+
+<h5>3.2-9 <span class="Heading">Code example</span></h5>
+
+<p>If <span class="Math">\CC</span> is an abelian category with enough projectives, then the set of all morphisms which factor through some projective object in <span class="Math">\CC</span> defines a two-sided ideal <span class="Math">I</span> of morphisms. For every object <span class="Math">A</span> in <span class="Math">\CC</span>, we fix an epimorphism <span class="Math">p_A:P_A \to A</span> with <span class="Math">P_A</span> a projective object. One can easily verify that a morphism <span class="Math">\alpha:A \to B</span> factors through some projective object if and only if it lifts along <span class="Math">p_B:P_B \to B</span>. The stable category <span class="Math">\CC/I</span> is usually called the stable category of <span class="Math">\CC</span> by projectives. Let us illustrate this for the category of finitely presented <span class="Math">\mathbb{Z}</span>-modules.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FreydCategoriesForCAP" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "StableCategories" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ := HomalgRingOfIntegers( );</span>
+Z
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_rows := CategoryOfRows( ZZ );</span>
+Rows( Z )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod := FreydCategory( ZZ_rows );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := m -&gt; IsLiftable( m, EpimorphismFromSomeProjectiveObject( Range( m ) ) );</span>
+function( m ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod_by_projs := StableCategory( ZZ_mod, f );</span>
+Stable category( Freyd( Rows( Z ) ) ) defined by f
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, ZZ ) / ZZ_rows / ZZ_mod;</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( A );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( ZZ_mod_by_projs, A );</span>
+&lt;An object in Stable category( Freyd( Rows( Z ) ) ) defined by f&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( IdentityMorphism( class_A ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( class_A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsProjective( A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeCategoryOfHomomorphismStructure( ZZ_mod );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasRangeCategoryOfHomomorphismStructure( ZZ_mod_by_projs );</span>
+false
+</pre></div>
+
+<p>In order to be able to lift the homomorphism structure from <span class="Math">\CC</span> to <span class="Math">\CC/I</span>, we need to equip <span class="Math">\CC</span> with more categorical operations (see the next section).</p>
+
+<p><a id="X7FDE1D3786C0F649" name="X7FDE1D3786C0F649"></a></p>
+
+<h4>3.3 <span class="Heading">Stable categories defined by systems of lifting objects</span></h4>
+
+<p>Let <span class="Math">\CC</span> be a category equipped with a system <span class="Math">\LL</span> of lifting objects. The set of all morphisms <span class="Math">\alpha:A \to B</span> which lift along <span class="Math">\ell_B:L_B \to B</span> defines a two-sided ideal <span class="Math">I_{\LL}</span> of morphisms in <span class="Math">\CC</span>. It can be shown that a morphism <span class="Math">\alpha: A \to B</span> belongs to <span class="Math">I_{\LL}</span> if and only if it factors through at least on object in <span class="Math">\LL</span>. The extra structure which is bundled with the system of lifting objects enables us to lift more than additive structure form <span class="Math">\CC</span> to <span class="Math">\CC/I_{\LL}</span>. This will be illustrated in the next example. The category <span class="Math">\CC/{I_{\LL}}</span> can be constructed by the following operation:</p>
+
+<p><a id="X7E16447F79CA4FD1" name="X7E16447F79CA4FD1"></a></p>
+
+<h5>3.3-1 StableCategoryBySystemOfLiftingObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryBySystemOfLiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a stable category</p>
+
+<p>The argument is an additive category equipped with a system of lifting objects <span class="Math">\LL</span>. The output is the stable category <span class="Math">\CC/I_{\LL}</span> where <span class="Math">I_{\LL}</span> is the two-sided ideal of morphisms <span class="Math">\alpha: A \to B</span> in <span class="Math">\CC</span> that lift along <span class="Math">\ell_B:L_B \to B</span>.</p>
+
+<p><a id="X8098D3287CFFFF89" name="X8098D3287CFFFF89"></a></p>
+
+<h5>3.3-2 <span class="Heading">Code example</span></h5>
+
+<p>We found earlier that the class of all <span class="Math">\EE</span>-projective objects in any exact category <span class="Math">(\CC,\EE)</span> defines a system of lifting objects. Let us illustrate this for the category of finitely presented <span class="Math">\mathbb{Z}</span>-modules.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FreydCategoriesForCAP" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "StableCategories" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ := HomalgRingOfIntegers( );</span>
+Z
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_rows := CategoryOfRows( ZZ );</span>
+Rows( Z )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod := FreydCategory( ZZ_rows );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategoryWithEnoughExactProjectives( ZZ_mod );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod_by_projs := StableCategoryBySystemOfLiftingObjects( ZZ_mod );</span>
+Stable category( Freyd( Rows( Z ) ) ) defined by a system of lifting objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruencyTestFunction( ZZ_mod_by_projs );</span>
+&lt;Property "IsLiftableAlongMorphismFromLiftingObject"&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, ZZ ) / ZZ_rows / ZZ_mod;</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( A );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( ZZ_mod_by_projs, A );</span>
+&lt;An object in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( IdentityMorphism( class_A ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( class_A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsProjective( A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeCategoryOfHomomorphismStructure( ZZ_mod );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasRangeCategoryOfHomomorphismStructure( ZZ_mod_by_projs );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeCategoryOfHomomorphismStructure( ZZ_mod_by_projs );</span>
+Freyd( Rows( Z ) )
+</pre></div>
+
+<p>In the following we create two <span class="Math">\mathbb{Z}</span>-modules <span class="Math">A</span> and <span class="Math">B</span> In the following, we constructe a nonzero morphism <span class="Math">\alpha:A \to B</span> with <span class="Math">[\alpha]\sim 0</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat_A := HomalgMatrix(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                [ [    0,    4,  -10,    6 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [   10,   -8,   10,  -10 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [    1,    5,  -14,    5 ] ] , 3, 4, ZZ</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := mat_A / ZZ_rows / ZZ_mod;</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( ZZ_mod_by_projs, A );</span>
+&lt;An object in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat_B := HomalgMatrix(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                [ [   8,  -6,  -9 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [   8,  -4,  -9 ] ] , 2, 3, ZZ</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := mat_B / ZZ_rows / ZZ_mod;</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_B := StableCategoryObject( ZZ_mod_by_projs, B );</span>
+&lt;An object in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat_alpha := HomalgMatrix(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                [ [       1899716,        264976,   90332035416 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [       2974213,        474929,  241963187751 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [       2974213,        474929,   87104606157 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [       2974213,        209953,  -16134448239 ] ] , 4, 3, ZZ</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := FreydCategoryMorphism( A, mat_alpha / ZZ_rows, B );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( alpha );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_alpha := StableCategoryMorphism( class_A, alpha, class_B );</span>
+&lt;A morphism in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( class_alpha );</span>
+true
+</pre></div>
+
+<p>This means <span class="Math">\alpha</span> lifts along <span class="Math">\ell_B:L_B \to B</span>. In the following, we compute a lift morphism of <span class="Math">\alpha</span> along <span class="Math">\ell_B</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftableAlongMorphismFromLiftingObject( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := WitnessForBeingLiftableAlongMorphismFromLiftingObject( alpha );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( lambda );</span>
+
+--------------------------------
+Source:
+--------------------------------
+
+Source: 
+A row module over Z of rank 3
+
+Matrix: 
+[ [    0,    4,  -10,    6 ],
+  [   10,   -8,   10,  -10 ],
+  [    1,    5,  -14,    5 ] ]
+
+Range: 
+A row module over Z of rank 4
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+Morphism datum:
+--------------------------------
+
+Source: 
+A row module over Z of rank 4
+
+Matrix: 
+[ [   -44715405386652,    89250478674756,    50395165232580 ],
+  [  -119773407285675,   239063782164525,   134987049730125 ],
+  [   -43118426622843,    86062961579229,    48595337902845 ],
+  [     7984893819045,   -15937585477635,    -8999136648675 ] ]
+
+Range: 
+A row module over Z of rank 3
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+Range:
+--------------------------------
+
+Source: 
+A row module over Z of rank 0
+
+Matrix: 
+(an empty 0 x 3 matrix)
+
+Range: 
+A row module over Z of rank 3
+
+A zero, split monomorphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+A morphism in Freyd( Rows( Z ) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ell_B := MorphismFromLiftingObject( B );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( ell_B );</span>
+
+--------------------------------
+Source:
+--------------------------------
+
+Source: 
+A row module over Z of rank 0
+
+Matrix: 
+(an empty 0 x 3 matrix)
+
+Range: 
+A row module over Z of rank 3
+
+A zero, split monomorphism in Rows( Z )
+
+
+--------------------------------
+Morphism datum:
+--------------------------------
+
+Source: 
+A row module over Z of rank 3
+
+Matrix: 
+[ [  1,  0,  0 ],
+  [  0,  1,  0 ],
+  [  0,  0,  1 ] ]
+
+Range: 
+A row module over Z of rank 3
+
+An identity morphism in Rows( Z )
+
+
+--------------------------------
+Range:
+--------------------------------
+
+Source: 
+A row module over Z of rank 2
+
+Matrix: 
+[ [   8,  -6,  -9 ],
+  [   8,  -4,  -9 ] ]
+
+Range: 
+A row module over Z of rank 3
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+A morphism in Freyd( Rows( Z ) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( lambda, ell_B ), alpha );</span>
+true
+</pre></div>
+
+<p>Let us compute <span class="Math">\mathrm{Hom}(A,B)</span> and <span class="Math">\mathrm{Hom}([A],[B])</span> as <span class="Math">\mathbb{Z}</span>-modules a generating set of morphisms for <span class="Math">\mathrm{Hom}([A],[B])</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeCategoryOfHomomorphismStructure( ZZ_mod );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeCategoryOfHomomorphismStructure( ZZ_mod_by_projs );</span>
+Freyd( Rows( Z ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_AB := HomStructure( A, B );</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_AB );</span>
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Z of rank 8
+
+Matrix: 
+[ [   -7,    6,    0,    1,    0,   16,    0,    1,    0 ],
+  [   -2,    4,    0,    1,    0,    4,   10,    0,    1 ],
+  [    8,    0,    0,   12,    0,   -8,    0,    5,    0 ],
+  [    9,    0,    0,    8,    4,    0,   -8,    0,    5 ],
+  [  -17,    8,    0,  -16,    0,   18,    0,  -14,    0 ],
+  [  -23,    8,    0,   -4,  -10,    8,   10,    0,  -14 ],
+  [   12,    6,    9,    6,    0,  -10,    0,    5,    0 ],
+  [   13,    4,    9,    0,    6,    0,  -10,    0,    5 ] ]
+
+Range: 
+A row module over Z of rank 9
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Z ) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sim_Hom_AB := SimplifyObject( Hom_AB, infinity );</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Sim_Hom_AB );</span>
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Z of rank 3
+
+Matrix: 
+[ [  2,  0,  0,  0 ],
+  [  0,  2,  0,  0 ],
+  [  0,  0,  2,  0 ] ]
+
+Range: 
+A row module over Z of rank 4
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Z ) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_class_A_class_B := HomStructure( class_A, class_B );</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_class_A_class_B );</span>
+
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Z of rank 11
+
+Matrix: 
+[ [     -7,      6,      0,       1,     0,     16,     0,     1,     0 ],
+  [     -2,      4,      0,       1,     0,      4,    10,     0,     1 ],
+  [      8,      0,      0,      12,     0,     -8,     0,     5,     0 ],
+  [      9,      0,      0,       8,     4,      0,    -8,     0,     5 ],
+  [    -17,      8,      0,     -16,     0,     18,     0,   -14,     0 ],
+  [    -23,      8,      0,      -4,   -10,      8,    10,     0,   -14 ],
+  [     12,      6,      9,       6,     0,    -10,     0,     5,     0 ],
+  [     13,      4,      9,       0,     6,      0,   -10,     0,     5 ],
+  [  56694,   5395,   9550,  156285,     0,  -9550,     0,     0,     0 ],
+  [  11665,   1110,   1965,   32156,     0,  -1965,     0,     0,     0 ],
+  [ -11191,  -1064,  -1885,  -30848,     0,   1886,     0,     0,     0 ] ]
+
+Range: 
+A row module over Z of rank 9
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Z ) )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sim_Hom_class_A_class_B := SimplifyObject( Hom_class_A_class_B, infinity );</span>
+&lt;An object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Sim_Hom_class_A_class_B );</span>
+
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Z of rank 2
+
+Matrix: 
+[ [  2,  0 ],
+  [  0,  2 ] ]
+
+Range: 
+A row module over Z of rank 2
+
+A morphism in Rows( Z )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Z ) )
+
+</pre></div>
+
+<p>This means <span class="Math">\mathrm{Hom}(A,B) \cong \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}</span> and <span class="Math">\mathrm{Hom}([A],[B]) \cong \mathbb{Z}/2\mathbb{Z} \oplus \mathbb{Z}/2\mathbb{Z}</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">eta := SimplifyObject_IsoToInputObject( Hom_class_A_class_B, infinity );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Source( eta ), Sim_Hom_class_A_class_B );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Range( eta ), Hom_class_A_class_B );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( eta );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MorphismDatum( eta ) );</span>
+Source: 
+A row module over Z of rank 2
+
+Matrix: 
+[ [   0,   0,   0,  -1,   1,  -1,  -1,   1,   0 ],
+  [   0,   0,   0,   0,   1,  -1,   0,   0,   1 ] ]
+
+Range: 
+A row module over Z of rank 9
+
+A morphism in Rows( Z )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DistinguishedObjectOfHomomorphismStructure( ZZ_mod_by_projs );</span>
+&lt;A projective object in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := HomalgMatrix( [[1,0]], 1, 2, ZZ );</span>
+&lt;A 1 x 2 matrix over an internal ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := FreydCategoryMorphism( D, g1 / ZZ_rows, Sim_Hom_class_A_class_B );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := PreCompose( g1, eta );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 :=</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            class_A, class_B, g1 );</span>
+&lt;A morphism in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Source( g1 ), class_A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Range( g1 ), class_B );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MorphismDatum( UnderlyingCell( g1 ) ) );</span>
+Source: 
+A row module over Z of rank 4
+
+Matrix: 
+[ [   224824,   217054,   810891 ],
+  [   893412,   362992,  1844424 ],
+  [   274828,   165777,   716643 ],
+  [  -168860,    57774,        0 ] ]
+
+Range: 
+A row module over Z of rank 3
+
+A morphism in Rows( Z )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( AdditionForMorphisms( g1, g1 ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 := HomalgMatrix( [[0,1]], 1, 2, ZZ );</span>
+&lt;A 1 x 2 matrix over an internal ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 := FreydCategoryMorphism( D, g2 / ZZ_rows, Sim_Hom_class_A_class_B );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 := PreCompose( g2, eta );</span>
+&lt;A morphism in Freyd( Rows( Z ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 :=</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            class_A, class_B, g2 );</span>
+&lt;A morphism in Stable category( Freyd( Rows( Z ) ) ) defined by a system of
+lifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Source( g2 ), class_A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEqualForObjects( Range( g2 ), class_B );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( MorphismDatum( UnderlyingCell( g2 ) ) );</span>
+Source: 
+A row module over Z of rank 4
+
+Matrix: 
+[ [   457088,   441291,  1648629 ],
+  [  1816402,   737986,  3749904 ],
+  [   558754,   337038,  1457010 ],
+  [  -343310,   117463,        0 ] ]
+
+Range: 
+A row module over Z of rank 3
+
+A morphism in Rows( Z )
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( AdditionForMorphisms( g2, g2 ) );</span>
+true
+</pre></div>
+
+<p><a id="X863E2A9081867177" name="X863E2A9081867177"></a></p>
+
+<h4>3.4 <span class="Heading">Stable categories defined by systems of colifting objects</span></h4>
+
+<p>Let <span class="Math">\CC</span> be a category equipped with a system <span class="Math">\QQ</span> of colifting objects. The set of all morphisms <span class="Math">\alpha:A \to B</span> which colift along <span class="Math">q_A:A \to Q_A</span> defines a two-sided ideal <span class="Math">I_{\QQ}</span> of morphisms in <span class="Math">\CC</span>. It can be shown that a morphism <span class="Math">\alpha: A \to B</span> belongs to <span class="Math">I_{\QQ}</span> if and only if it factors through at least on object in <span class="Math">\QQ</span>. The extra structure which is bundled with the system of colifting objects enables us to lift more than additive structure form <span class="Math">\CC</span> to <span class="Math">\CC/I_{\LL}</span>. The category <span class="Math">\CC/{I_{\QQ}}</span> can be constructed by the following operation:</p>
+
+<p><a id="X8740509B7D61AF61" name="X8740509B7D61AF61"></a></p>
+
+<h5>3.4-1 StableCategoryBySystemOfColiftingObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryBySystemOfColiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a stable category</p>
+
+<p>The argument is an additive category equipped with a system of colifting objects <span class="Math">\QQ</span>. The output is the stable category <span class="Math">\CC/I_{\QQ}</span> where <span class="Math">I_{\QQ}</span> is the two-sided ideal of morphisms <span class="Math">\alpha: A \to B</span> in <span class="Math">\CC</span> that colift along <span class="Math">q_A:A \to Q_A</span>.</p>
+
+<p><a id="X7FFD76ED78AD78BD" name="X7FFD76ED78AD78BD"></a></p>
+
+<h5>3.4-2 <span class="Heading">Code example 1</span></h5>
+
+<p>In this example we continue the Code example in Subsection We will construct the stable category of <span class="Math">\mathrm{Arr}(\CC)</span> where <span class="Math">\CC</span> is the additive closure of the <span class="Math">\mathbb{Q}</span>-algebroid defined by the quiver</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AAoid;</span>
+The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_AAoid := StableCategoryBySystemOfColiftingObjects( AAoid );</span>
+Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( St_AAoid, A );</span>
+&lt;An object in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_A );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_B := StableCategoryObject( St_AAoid, B );</span>
+&lt;An object in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_B );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_U := StableCategoryObject( St_AAoid, U );</span>
+&lt;An object in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_U );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_phi := StableCategoryMorphism( class_A, phi, class_B );</span>
+&lt;A morphism in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( class_phi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_psi := StableCategoryMorphism( class_A, psi, class_B );</span>
+&lt;A morphism in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( class_psi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftable( [ [ psi_2 ] ] / Aoid, [ [ beta ] ] / Aoid );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        PreCompose( [ [ w ] ] / Aoid, [ [ beta ] ] / Aoid ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ [ psi_2 ] ] / Aoid</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HomStructure( A, B );</span>
+&lt;A vector space object over Q of dimension 4&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HomStructure( class_A, class_B );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );</span>
+[ &lt;A morphism in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_class_A_class_B[ 1 ] );</span>
+A morphism in Stable category( The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+defined by a system of colifting objects defined by the underlying morphism:
+
+A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+defined by the following data:
+
+Image of &lt;(1)&gt;:
+A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
+
+[1,1]: (A_1)-[{ 1*(tau) }]-&gt;(B_1)
+
+Image of &lt;(2)&gt;:
+A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
+
+[1,1]: (A_2)-[{ 1*(phi_2) }]-&gt;(B_2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Freyd_Aoid := FreydCategory( Aoid );</span>
+Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FA := FreydCategoryObject( [ [ alpha ] ] / Aoid );</span>
+&lt;An object in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( FA );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FB := FreydCategoryObject( [ [ beta ] ] / Aoid );</span>
+&lt;An object in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( FB );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FU := FreydCategoryObject( [ [ u ] ] / Aoid );</span>
+&lt;An object in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( FU );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fphi := FreydCategoryMorphism( FA, [ [ phi_2 ] ] / Aoid, FB );</span>
+&lt;A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( Fphi );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fpsi := FreydCategoryMorphism( FA, [ [ psi_2 ] ] / Aoid, FB );</span>
+&lt;A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( Fpsi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HomStructure( FA, FB );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_FA_FB := BasisOfExternalHom( FA, FB );</span>
+[ &lt;A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_FA_FB[ 1 ] );</span>
+
+--------------------------------
+Source:
+--------------------------------
+
+A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
+
+[1,1]: (A_1)-[{ 1*(alpha) }]-&gt;(A_2)
+
+--------------------------------
+Morphism datum:
+--------------------------------
+
+A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
+
+[1,1]: (A_2)-[{ 1*(phi_2) }]-&gt;(B_2)
+
+--------------------------------
+Range:
+--------------------------------
+
+A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
+
+[1,1]: (B_1)-[{ 1*(beta) }]-&gt;(B_2)
+
+--------------------------------
+General description:
+--------------------------------
+
+A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )
+</pre></div>
+
+<p><a id="X866DE3F67F6B6AE0" name="X866DE3F67F6B6AE0"></a></p>
+
+<h5>3.4-3 <span class="Heading">Code example 2</span></h5>
+
+<p>In this example we continue the Code example in Subsection the additive closure of the <span class="Math">\mathbb{Q}</span>-algebroid defined by the quiver The stable category <span class="Math">\Ch{\CC}/I</span> is isomorphic to the bounded homotopy category <span class="Math">\Ho{\CC}</span>. This follows from the fact that a morphism <span class="Math">\alpha:A \to B</span> in <span class="Math">\Ch{\CC}</span> is null-homotopic if and only if it colifts along the <span class="Math">q_A:A \to Q_A</span> where <span class="Math">q_A</span> is the natural injection of <span class="Math">A</span> in the mapping cone of <span class="Math">\id_A</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "StableCategories", "examples/doc/ComplexesCategories-0.g" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ch_Aoid;</span>
+Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_Ch_Aoid := StableCategoryBySystemOfColiftingObjects( Ch_Aoid );</span>
+Stable category( Cochain complexes( Additive closure( 
+Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( St_Ch_Aoid, A );</span>
+&lt;An object in Stable category( Cochain complexes(
+Additive closure( Algebroid( V=6, E=12, Rel=9 ) )
+) ) defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_B := StableCategoryObject( St_Ch_Aoid, B );</span>
+&lt;An object in Stable category( Cochain complexes(
+Additive closure( Algebroid( V=6, E=12, Rel=9 
+) ) ) ) defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_AB := HomStructure( A, B );</span>
+&lt;A vector space object over Q of dimension 3&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_A_B := BasisOfExternalHom( A, B );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_A_B[ 1 ] );</span>
+
+== 2 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 0 }]-&gt;(B_2)
+== 1 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(a_1*h_2) + 1*(beta_1) - 1*(alpha_1) }]-&gt;(B_1)
+== 0 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_0)-[{ 1*(beta_0) - 1*(alpha_0) }]-&gt;(B_0)
+
+A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) 
+) ) given by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_A_B[ 2 ] );</span>
+
+== 2 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 1*(alpha_2) }]-&gt;(B_2)
+== 1 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(alpha_1) }]-&gt;(B_1)
+== 0 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_0)-[{ 1*(alpha_0) }]-&gt;(B_0)
+
+A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+) ) given by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_A_B[ 3 ] );</span>
+
+== 2 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 1*(beta_2) }]-&gt;(B_2)
+== 1 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(beta_1) }]-&gt;(B_1)
+== 0 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_0)-[{ 1*(beta_0) }]-&gt;(B_0)
+
+A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+) ) given by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_class_A_class_B := HomStructure( class_A, class_B );</span>
+&lt;A vector space object over Q of dimension 1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_class_A_class_B[ 1 ] );</span>
+A morphism in Stable category( Cochain complexes( Additive closure( 
+Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting 
+objects defined by the underlying morphism:
+
+
+== 2 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 1*(alpha_2) }]-&gt;(B_2)
+== 1 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(alpha_1) }]-&gt;(B_1)
+== 0 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_0)-[{ 1*(alpha_0) }]-&gt;(B_0)
+
+A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) 
+) ) given by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_alpha := StableCategoryMorphism( St_Ch_Aoid, alpha );</span>
+&lt;A morphism in Stable category( Cochain complexes( Additive closure( 
+Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_beta := StableCategoryMorphism( St_Ch_Aoid, beta );</span>
+&lt;A morphism in Stable category( Cochain complexes( Additive closure( 
+Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( class_alpha, class_beta );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma := alpha - beta;</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftableAlongMorphismToColiftingObject( gamma );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := WitnessForBeingColiftableAlongMorphismToColiftingObject( gamma );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, w ), gamma );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( w );</span>
+
+== 2 =======================
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ -1*(beta_2) + 1*(alpha_2) }]-&gt;(B_2)
+== 1 =======================
+A 2 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 1*(h_2) }]-&gt;(B_1)
+[2,1]: (A_1)-[{ -1*(beta_1) + 1*(alpha_1) }]-&gt;(B_1)
+== 0 =======================
+A 2 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(h_1) }]-&gt;(B_0)
+[2,1]: (A_0)-[{ -1*(beta_0) + 1*(alpha_0) }]-&gt;(B_0)
+
+A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+) ) given by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">H := HomotopyMorphisms( gamma );</span>
+&lt;ZFunction&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( H[ 1 ] );</span>
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_1)-[{ 1*(h_1) }]-&gt;(B_0)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( H[ 2 ] );</span>
+A 1 x 1 matrix with entries in Algebroid( V=6, E=12, Rel=9 )
+
+[1,1]: (A_2)-[{ 1*(h_2) }]-&gt;(B_1)
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

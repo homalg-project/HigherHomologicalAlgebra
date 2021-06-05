@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (StableCategories) - Chapter 2: Lifting and Colifting systems</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
+<p><a id="X7962FB67785B8E60" name="X7962FB67785B8E60"></a></p>
+<div class="ChapSects"><a href="chap2_mj.html#X7962FB67785B8E60">2 <span class="Heading">Lifting and Colifting systems</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7F8905E27A9B84E2">2.1 <span class="Heading">Systems of lifting objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F5E79427F0B733E">2.1-1 IsLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X83010A6081D0CF64">2.1-2 LiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F9A22EC8404FAD7">2.1-3 MorphismFromLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X86A2476280248CF1">2.1-4 MorphismFromLiftingObjectWithGivenLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X87781E0A86143070">2.1-5 SectionOfMorphismFromLiftingObjectWithGivenLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X86039B8F7E01B6F1">2.1-6 SectionOfMorphismFromLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7A336A3081B06CD6">2.1-7 LiftingMorphismWithGivenLiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X83D7411579DD1A24">2.1-8 LiftingMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7B86DA8785162F39">2.1-9 IsLiftableAlongMorphismFromLiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7B28DE0986A9AF1C">2.1-10 WitnessForBeingLiftableAlongMorphismFromLiftingObject</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7DEFD404806FFD01">2.2 <span class="Heading">Examples for systems of lifting objects</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7FFFE70F85F5D78B">2.3 <span class="Heading">Systems of colifting objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7D9ABDF987324823">2.3-1 IsColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8284D2047F61587A">2.3-2 ColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X861B2E0A7F608C18">2.3-3 MorphismToColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X84C9595178285765">2.3-4 MorphismToColiftingObjectWithGivenColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F794AF47E32AB25">2.3-5 RetractionOfMorphismToColiftingObjectWithGivenColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F2F93B27EC37B0B">2.3-6 RetractionOfMorphismToColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7EAFD4A987677C52">2.3-7 ColiftingMorphismWithGivenColiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8687F652860FC7A1">2.3-8 ColiftingMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X846C71BE7EEF2A1B">2.3-9 IsColiftableAlongMorphismToColiftingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7834AF28855A853F">2.3-10 WitnessForBeingColiftableAlongMorphismToColiftingObject</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7CCB94F57BF99801">2.4 <span class="Heading">Examples for systems of colifting objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8432A55684F91BDA">2.4-1 <span class="Heading">The class of E-injective objects in exact categories with enough E-injectives</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X84A6EDB27E3852A4">2.4-2 <span class="Heading">The class of all objects in arrows categories represented by split-epimorphisms</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7FFD76ED78AD78BD">2.4-3 <span class="Heading">Code example 1</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F3BF46F7B2220D9">2.4-4 <span class="Heading">The class of all contractible objects in complexes categories</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X866DE3F67F6B6AE0">2.4-5 <span class="Heading">Code example 2</span></a>
+</span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Lifting and Colifting systems</span></h3>
+
+<p><a id="X7F8905E27A9B84E2" name="X7F8905E27A9B84E2"></a></p>
+
+<h4>2.1 <span class="Heading">Systems of lifting objects</span></h4>
+
+<p>Let <span class="SimpleMath">\(\CC\)</span> be an additive category. A system of lifting objects in <span class="SimpleMath">\(\CC\)</span> consists of the following data:</p>
+
+
+<ul>
+<li><p>A distinguished class <span class="SimpleMath">\(\LL\)</span> of objects.</p>
+
+</li>
+<li><p>Every object <span class="SimpleMath">\(A\)</span> is equipped with a distinguished object <span class="SimpleMath">\(L_A\)</span> in <span class="SimpleMath">\(\LL\)</span> and a distinguished morphism <span class="SimpleMath">\(\ell_A:L_A \to A\)</span>. Furthermore, if <span class="SimpleMath">\(A\)</span> belongs to <span class="SimpleMath">\(\LL\)</span>, then <span class="SimpleMath">\(\ell_A\)</span> is a split-epimorphism.</p>
+
+</li>
+<li><p>For every morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>, there exists a morphism <span class="SimpleMath">\(L_{\alpha}\)</span> with <span class="SimpleMath">\(\comp{L_\alpha}{\ell_B} \sim \comp{\ell_A}{\alpha}\)</span>, i.e., we get a commutative diagram:</p>
+
+</li>
+</ul>
+<p><a id="X7F5E79427F0B733E" name="X7F5E79427F0B733E"></a></p>
+
+<h5>2.1-1 IsLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is whether or not <span class="SimpleMath">\(A\)</span> belongs to <span class="SimpleMath">\(\LL\)</span>.</p>
+
+<p><a id="X83010A6081D0CF64" name="X83010A6081D0CF64"></a></p>
+
+<h5>2.1-2 LiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in <span class="SimpleMath">\(\LL\)</span></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is an object <span class="SimpleMath">\(L_A\)</span> in <span class="SimpleMath">\(\LL\)</span>.</p>
+
+<p><a id="X7F9A22EC8404FAD7" name="X7F9A22EC8404FAD7"></a></p>
+
+<h5>2.1-3 MorphismFromLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromLiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(L_A \to A\)</span></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is the distinguished morphism <span class="SimpleMath">\(\ell_A:L_A \to A\)</span> where <span class="SimpleMath">\(L_A=\mathrm{LiftingObject}(A)\)</span>.</p>
+
+<p><a id="X86A2476280248CF1" name="X86A2476280248CF1"></a></p>
+
+<h5>2.1-4 MorphismFromLiftingObjectWithGivenLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromLiftingObjectWithGivenLiftingObject</code>( <var class="Arg">A</var>, <var class="Arg">L_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(L_A \to A\)</span></p>
+
+<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(L_A=\mathrm{LiftingObject}(A)\)</span>. The output is the distinguished morphism <span class="SimpleMath">\(\ell_A:L_A \to A\)</span>.</p>
+
+<p><a id="X87781E0A86143070" name="X87781E0A86143070"></a></p>
+
+<h5>2.1-5 SectionOfMorphismFromLiftingObjectWithGivenLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SectionOfMorphismFromLiftingObjectWithGivenLiftingObject</code>( <var class="Arg">A</var>, <var class="Arg">L_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(A \to L_A\)</span></p>
+
+<p>The argument is a lifting object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\LL\)</span> and <span class="SimpleMath">\(L_A=\mathrm{LiftingObject}(A)\)</span>. The output is a section morphism <span class="SimpleMath">\(s_A:A \to L_A\)</span> of <span class="SimpleMath">\(\ell_A = \mathrm{MorphismFromLiftingObjectWithGivenLiftingObject}(A,L_A)\)</span>.</p>
+
+<p><a id="X86039B8F7E01B6F1" name="X86039B8F7E01B6F1"></a></p>
+
+<h5>2.1-6 SectionOfMorphismFromLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SectionOfMorphismFromLiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(A \to L_A\)</span></p>
+
+<p>The argument is a lifting object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\LL\)</span>. The output is a section morphism <span class="SimpleMath">\(s_A:A \to L_A\)</span> of <span class="SimpleMath">\(\ell_A = \mathrm{MorphismFromLiftingObject}(A)\)</span>.</p>
+
+<p><a id="X7A336A3081B06CD6" name="X7A336A3081B06CD6"></a></p>
+
+<h5>2.1-7 LiftingMorphismWithGivenLiftingObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftingMorphismWithGivenLiftingObjects</code>( <var class="Arg">L_A</var>, <var class="Arg">alpha</var>, <var class="Arg">L_B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(L_A \to L_B\)</span></p>
+
+<p>The arguments are an object <span class="SimpleMath">\(L_A=\mathrm{LiftingObject}(A)\)</span>, a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span> and an object <span class="SimpleMath">\(L_B=\mathrm{LiftingObject}(B)\)</span>. The output is a morphism <span class="SimpleMath">\(L_{\alpha}:L_A \to L_B\)</span> with <span class="SimpleMath">\(\comp{L_\alpha}{\ell_B} \sim \comp{\ell_A}{\alpha}\)</span> where <span class="SimpleMath">\(\ell_A=\mathrm{MorphismFromLiftingObject}(A)\)</span> and <span class="SimpleMath">\(\ell_B=\mathrm{MorphismFromLiftingObject}(B)\)</span>.</p>
+
+<p><a id="X83D7411579DD1A24" name="X83D7411579DD1A24"></a></p>
+
+<h5>2.1-8 LiftingMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftingMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(L_A \to L_B\)</span></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span>. The output is a morphism <span class="SimpleMath">\(L_{\alpha}:L_A \to L_B\)</span> with <span class="SimpleMath">\(\comp{L_\alpha}{\ell_B} \sim \comp{\ell_A}{\alpha}\)</span> where <span class="SimpleMath">\(L_A=\mathrm{LiftingObject}(A)\)</span>, <span class="SimpleMath">\(L_B=\mathrm{LiftingObject}(B)\)</span>, <span class="SimpleMath">\(\ell_A=\mathrm{MorphismFromLiftingObject}(A)\)</span> and <span class="SimpleMath">\(\ell_B=\mathrm{MorphismFromLiftingObject}(B)\)</span>.</p>
+
+<p><a id="X7B86DA8785162F39" name="X7B86DA8785162F39"></a></p>
+
+<h5>2.1-9 IsLiftableAlongMorphismFromLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLiftableAlongMorphismFromLiftingObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span>. The output is whether or not <span class="SimpleMath">\(\alpha\)</span> lifts along <span class="SimpleMath">\(\ell_B: L_B \to B\)</span> where <span class="SimpleMath">\(\ell_B=\mathrm{MorphismFromLiftingObject}(B)\)</span>.</p>
+
+<p><a id="X7B28DE0986A9AF1C" name="X7B28DE0986A9AF1C"></a></p>
+
+<h5>2.1-10 WitnessForBeingLiftableAlongMorphismFromLiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessForBeingLiftableAlongMorphismFromLiftingObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(\lambda:A \to L_B\)</span></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span> which lifts along <span class="SimpleMath">\(\ell_B:L_B \to B\)</span>, where <span class="SimpleMath">\(\ell_B=\mathrm{MorphismFromLiftingObject}(B)\)</span>. The output is a lift morphism <span class="SimpleMath">\(\lambda:A \to L_B\)</span> of <span class="SimpleMath">\(\alpha\)</span> along <span class="SimpleMath">\(\ell_B\)</span>, i.e., <span class="SimpleMath">\(\comp{\lambda}{\ell_B} \sim \alpha\)</span>.</p>
+
+<p><a id="X7DEFD404806FFD01" name="X7DEFD404806FFD01"></a></p>
+
+<h4>2.2 <span class="Heading">Examples for systems of lifting objects</span></h4>
+
+<p>Let <span class="SimpleMath">\((\CC,\EE)\)</span> is an exact category with enough <span class="SimpleMath">\(\EE\)</span>-projective objects. For any object <span class="SimpleMath">\(A\)</span>, there exists a deflation <span class="SimpleMath">\(p_A:P_A \to A\)</span> from some <span class="SimpleMath">\(\EE\)</span>-projective object <span class="SimpleMath">\(P_A\)</span>. We define <span class="SimpleMath">\(\LL\)</span> by the class of all <span class="SimpleMath">\(\EE\)</span>-projective objects in <span class="SimpleMath">\(\CC\)</span>. For an object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\CC\)</span>, we define the the distinguished object <span class="SimpleMath">\(L_A\)</span> by <span class="SimpleMath">\(P_A\)</span> and the distinguished morphism <span class="SimpleMath">\(\ell_A:L_A\to A\)</span> by <span class="SimpleMath">\(p_A:P_A \to A\)</span>. If <span class="SimpleMath">\(A\)</span> happens to be an <span class="SimpleMath">\(\EE\)</span>-projective object, then <span class="SimpleMath">\(\ell_A\)</span> is a split-epimorphism and its section morphism <span class="SimpleMath">\(s_A:A \to L_A\)</span> is given by the <span class="SimpleMath">\(\EE\)</span>-projective lift of <span class="SimpleMath">\(\id_A\)</span> along the deflation <span class="SimpleMath">\(\ell_A\)</span>. For a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span>, we define <span class="SimpleMath">\(L_\alpha:L_A \to L_B\)</span> by the <span class="SimpleMath">\(\EE\)</span>-projective lift of <span class="SimpleMath">\(\comp{\ell_A}{\alpha}\)</span> along the deflation <span class="SimpleMath">\(\ell_B\)</span>.</p>
+
+<p>Every abelian category <span class="SimpleMath">\(\CC\)</span> is exact with respect to the class <span class="SimpleMath">\(\EE\)</span> of <em>all</em> short exact sequences in <span class="SimpleMath">\(\CC\)</span>. The fact that in abelian categories every monomorphism is a kernel of its cokernel and every epimorphism is a cokernel of its kernel implies that a morphism in this category is an inflation if and only if it is a monomorphism; and is a deflation if and only if it is an epimorphism. It also implies that an object in <span class="SimpleMath">\(\CC\)</span> is <span class="SimpleMath">\(\EE\)</span>-injective if and only if it is injective in the usual sense, and is <span class="SimpleMath">\(\EE\)</span>-projective if and only if it is projective in the usual sense.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := mu;</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Source( alpha );</span>
+&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := Range( alpha );</span>
+&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ell_A := MorphismFromLiftingObject( A );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ell_B := MorphismFromLiftingObject( B );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L_alpha := LiftingMorphism( alpha );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      PreCompose( L_alpha, ell_B ), PreCompose( ell_A, alpha ) </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftableAlongMorphismFromLiftingObject( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := WitnessForBeingLiftableAlongMorphismFromLiftingObject( alpha );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( lambda, ell_B ), alpha );</span>
+true
+</pre></div>
+
+<p><a id="X7FFFE70F85F5D78B" name="X7FFFE70F85F5D78B"></a></p>
+
+<h4>2.3 <span class="Heading">Systems of colifting objects</span></h4>
+
+<p>Let <span class="SimpleMath">\(\CC\)</span> be an additive category. A system of colifting objects in <span class="SimpleMath">\(\CC\)</span> consists of the following data:</p>
+
+
+<ul>
+<li><p>A distinguished class <span class="SimpleMath">\(\QQ\)</span> of objects.</p>
+
+</li>
+<li><p>Every object <span class="SimpleMath">\(A\)</span> is equipped with a distinguished object <span class="SimpleMath">\(Q_A\)</span> in <span class="SimpleMath">\(\QQ\)</span> and a distinguished morphism <span class="SimpleMath">\(q_A:A \to Q_A\)</span>. Furthermore, if <span class="SimpleMath">\(A\)</span> belongs to <span class="SimpleMath">\(\QQ\)</span>, then <span class="SimpleMath">\(q_A\)</span> is a split-monomorphism.</p>
+
+</li>
+<li><p>For every morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>, there exists a morphism <span class="SimpleMath">\(Q_{\alpha}\)</span> with <span class="SimpleMath">\(\comp{q_A}{Q_\alpha} \sim \comp{\alpha}{q_B}\)</span>, i.e., we get a commutative diagram:</p>
+
+</li>
+</ul>
+<p><a id="X7D9ABDF987324823" name="X7D9ABDF987324823"></a></p>
+
+<h5>2.3-1 IsColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsColiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is whether or not <span class="SimpleMath">\(A\)</span> belongs to <span class="SimpleMath">\(\QQ\)</span>.</p>
+
+<p><a id="X8284D2047F61587A" name="X8284D2047F61587A"></a></p>
+
+<h5>2.3-2 ColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ColiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in <span class="SimpleMath">\(\QQ\)</span></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is an object <span class="SimpleMath">\(Q_A\)</span> in <span class="SimpleMath">\(\QQ\)</span>.</p>
+
+<p><a id="X861B2E0A7F608C18" name="X861B2E0A7F608C18"></a></p>
+
+<h5>2.3-3 MorphismToColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToColiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(A \to Q_A\)</span></p>
+
+<p>The argument is an object <span class="SimpleMath">\(A\)</span>. The output is the distinguished morphism <span class="SimpleMath">\(q_A:A \to Q_A\)</span> where <span class="SimpleMath">\(Q_A=\mathrm{ColiftingObject}(A)\)</span>.</p>
+
+<p><a id="X84C9595178285765" name="X84C9595178285765"></a></p>
+
+<h5>2.3-4 MorphismToColiftingObjectWithGivenColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToColiftingObjectWithGivenColiftingObject</code>( <var class="Arg">A</var>, <var class="Arg">Q_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(A \to Q_A\)</span></p>
+
+<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\(Q_A=\mathrm{ColiftingObject}(A)\)</span>. The output is the distinguished morphism <span class="SimpleMath">\(q_A:A \to Q_A\)</span>.</p>
+
+<p><a id="X7F794AF47E32AB25" name="X7F794AF47E32AB25"></a></p>
+
+<h5>2.3-5 RetractionOfMorphismToColiftingObjectWithGivenColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RetractionOfMorphismToColiftingObjectWithGivenColiftingObject</code>( <var class="Arg">A</var>, <var class="Arg">Q_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(Q_A \to A\)</span></p>
+
+<p>The argument is a colifting object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\QQ\)</span> and <span class="SimpleMath">\(Q_A=\mathrm{ColiftingObject}(A)\)</span>. The output is a retraction morphism <span class="SimpleMath">\(r_A:Q_A \to A\)</span> of <span class="SimpleMath">\(q_A = \mathrm{MorphismToColiftingObjectWithGivenColiftingObject}(A,Q_A)\)</span>.</p>
+
+<p><a id="X7F2F93B27EC37B0B" name="X7F2F93B27EC37B0B"></a></p>
+
+<h5>2.3-6 RetractionOfMorphismToColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RetractionOfMorphismToColiftingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(Q_A \to A\)</span></p>
+
+<p>The argument is a colifting object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\QQ\)</span>. The output is a retraction morphism <span class="SimpleMath">\(r_A:Q_A \to A\)</span> of <span class="SimpleMath">\(q_A = \mathrm{MorphismToColiftingObject}(A)\)</span>.</p>
+
+<p><a id="X7EAFD4A987677C52" name="X7EAFD4A987677C52"></a></p>
+
+<h5>2.3-7 ColiftingMorphismWithGivenColiftingObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ColiftingMorphismWithGivenColiftingObjects</code>( <var class="Arg">Q_A</var>, <var class="Arg">alpha</var>, <var class="Arg">Q_B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(Q_A \to Q_B\)</span></p>
+
+<p>The arguments are an object <span class="SimpleMath">\(Q_A=\mathrm{ColiftingObject}(A)\)</span>, a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span> and an object <span class="SimpleMath">\(Q_B=\mathrm{ColiftingObject}(B)\)</span>. The output is a morphism <span class="SimpleMath">\(Q_{\alpha}:Q_A \to Q_B\)</span> with <span class="SimpleMath">\(\comp{q_A}{Q_\alpha} \sim \comp{\alpha}{q_B}\)</span> where <span class="SimpleMath">\(q_A=\mathrm{MorphismToColiftingObject}(A)\)</span> and <span class="SimpleMath">\(q_B=\mathrm{MorphismToColiftingObject}(B)\)</span>.</p>
+
+<p><a id="X8687F652860FC7A1" name="X8687F652860FC7A1"></a></p>
+
+<h5>2.3-8 ColiftingMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ColiftingMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(Q_A \to Q_B\)</span></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha : A \to B\)</span>. The output is a morphism <span class="SimpleMath">\(Q_{\alpha}:Q_A \to Q_B\)</span> with <span class="SimpleMath">\(\comp{q_A}{Q_\alpha} \sim \comp{\alpha}{q_B}\)</span> where <span class="SimpleMath">\(Q_A=\mathrm{ColiftingObject}(A)\)</span>, <span class="SimpleMath">\(Q_B=\mathrm{ColiftingObject}(B)\)</span>, <span class="SimpleMath">\(q_A=\mathrm{MorphismToColiftingObject}(A)\)</span> and <span class="SimpleMath">\(q_B=\mathrm{MorphismToColiftingObject}(B)\)</span>.</p>
+
+<p><a id="X846C71BE7EEF2A1B" name="X846C71BE7EEF2A1B"></a></p>
+
+<h5>2.3-9 IsColiftableAlongMorphismToColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsColiftableAlongMorphismToColiftingObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span>. The output is whether or not <span class="SimpleMath">\(\alpha\)</span> colifts along <span class="SimpleMath">\(q_A: A \to Q_A\)</span> where <span class="SimpleMath">\(q_A=\mathrm{MorphismToColiftingObject}(A)\)</span>.</p>
+
+<p><a id="X7834AF28855A853F" name="X7834AF28855A853F"></a></p>
+
+<h5>2.3-10 WitnessForBeingColiftableAlongMorphismToColiftingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessForBeingColiftableAlongMorphismToColiftingObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism <span class="SimpleMath">\(\lambda:A \to L_B\)</span></p>
+
+<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A \to B\)</span> which colifts along <span class="SimpleMath">\(q_A:A \to Q_A\)</span>, where <span class="SimpleMath">\(q_A=\mathrm{MorphismToColiftingObject}(A)\)</span>. The output is a colift morphism <span class="SimpleMath">\(\lambda:Q_A \to B\)</span> of <span class="SimpleMath">\(\alpha\)</span> along <span class="SimpleMath">\(q_A\)</span>, i.e., <span class="SimpleMath">\(\comp{q_A}{\lambda} \sim \alpha\)</span>.</p>
+
+<p><a id="X7CCB94F57BF99801" name="X7CCB94F57BF99801"></a></p>
+
+<h4>2.4 <span class="Heading">Examples for systems of colifting objects</span></h4>
+
+<p><a id="X8432A55684F91BDA" name="X8432A55684F91BDA"></a></p>
+
+<h5>2.4-1 <span class="Heading">The class of E-injective objects in exact categories with enough E-injectives</span></h5>
+
+<p>Let <span class="SimpleMath">\((\CC,\EE)\)</span> is an exact category with enough <span class="SimpleMath">\(\EE\)</span>-injective objects. That is, for any object <span class="SimpleMath">\(A\)</span>, there exists an inflation <span class="SimpleMath">\(\iota_A:A \to I_A\)</span> into some <span class="SimpleMath">\(\EE\)</span>-injective object <span class="SimpleMath">\(I_A\)</span>. We define <span class="SimpleMath">\(\QQ\)</span> by the class of all <span class="SimpleMath">\(\EE\)</span>-injective objects in <span class="SimpleMath">\(\CC\)</span>. For an object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\CC\)</span>, we define the the distinguished object <span class="SimpleMath">\(Q_A\)</span> by <span class="SimpleMath">\(I_A\)</span> and the distinguished morphism <span class="SimpleMath">\(q_A:A\to Q_A\)</span> by <span class="SimpleMath">\(\iota_A:A \to I_A\)</span>. If <span class="SimpleMath">\(A\)</span> happens to be an <span class="SimpleMath">\(\EE\)</span>-injective object, then <span class="SimpleMath">\(q_A\)</span> is a split-monomorphism and its retraction morphism <span class="SimpleMath">\(r_A:Q_A \to A\)</span> is given by the <span class="SimpleMath">\(\EE\)</span>-injective colift of <span class="SimpleMath">\(\id_A\)</span> along the inflation <span class="SimpleMath">\(q_A\)</span>. For a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span>, we define <span class="SimpleMath">\(Q_\alpha:Q_A\to Q_B\)</span> by the <span class="SimpleMath">\(\EE\)</span>-injective colift of <span class="SimpleMath">\(\comp{\alpha}{q_B}\)</span> along the inflation <span class="SimpleMath">\(q_A\)</span>.</p>
+
+<p>For instance, the class of all injective objects in an abelian category with enough injective objects defines a system of colifting objects.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := mu;</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Source( alpha );</span>
+&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := Range( alpha );</span>
+&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_A := MorphismToColiftingObject( A );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_B := MorphismToColiftingObject( B );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_alpha := ColiftingMorphism( alpha );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      PreCompose( q_A, Q_alpha ), PreCompose( alpha, q_B )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftableAlongMorphismToColiftingObject( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := WitnessForBeingColiftableAlongMorphismToColiftingObject( alpha );</span>
+&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
+(with weights [ -1, -1 ])&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, lambda ), alpha );</span>
+true
+</pre></div>
+
+<p><a id="X84A6EDB27E3852A4" name="X84A6EDB27E3852A4"></a></p>
+
+<h5>2.4-2 <span class="Heading">The class of all objects in arrows categories represented by split-epimorphisms</span></h5>
+
+<p>Let <span class="SimpleMath">\(\CC\)</span> be an additive category and <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span> its category of arrows, i.e., its objects are morphisms in <span class="SimpleMath">\(\CC\)</span> and its morphisms are commutative squars in <span class="SimpleMath">\(\CC\)</span>. The class <span class="SimpleMath">\(\QQ\)</span> of all objects in <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span> that are represented by split-epimorphisms defines a system of colifting objects in <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span>. For an object <span class="SimpleMath">\(A=(\alpha:A_1 \to A_2)\)</span> in <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span>, we define <span class="SimpleMath">\(Q_A\)</span> by and <span class="SimpleMath">\(q_A: A \to Q_A\)</span> by the commutative square whose legs are and <span class="SimpleMath">\(\id_{A_2}:A_2 \to A_2\)</span>.</p>
+
+<p>If <span class="SimpleMath">\(A\)</span> belong to <span class="SimpleMath">\(\QQ\)</span>, then <span class="SimpleMath">\(\alpha:A_1 \to A_2\)</span> is a split-epimorphism and it has a section morphism is <span class="SimpleMath">\(\gamma: A_2 \to A_1\)</span>. In this case <span class="SimpleMath">\(q_A\)</span> is a split-monomorphism and its retraction morphism is given by the commutative square Let <span class="SimpleMath">\(B=(\beta:B_1 \to B_2)\)</span> be an object in <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span> and <span class="SimpleMath">\(\varphi: A \to B\)</span> be a morphism defined by a commutative square We define <span class="SimpleMath">\(Q_{\varphi}: Q_A \to Q_B\)</span> by the commutative square</p>
+
+<p>The arrows category <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span> is isomorphic to the category of functors <span class="SimpleMath">\(\mathrm{Hom}(1\to 2,\CC)\)</span>, where <span class="SimpleMath">\(1 \to 2\)</span> is the interval category which is the <span class="SimpleMath">\(\mathbb{Z}\)</span>-linear closure of the quiver consisting of two vertices <span class="SimpleMath">\(v_1,v_2\)</span> and an arrow <span class="SimpleMath">\(m:v_1\to v_2\)</span>.</p>
+
+<p>The following operation takes and additive category <span class="SimpleMath">\(\CC\)</span> and constructs its arrows category <span class="SimpleMath">\(\mathrm{Arr}(\CC)\)</span> and equipps it with the above system of colifting objects. It requires the <strong class="pkg">GAP</strong> package</p>
+
+<p><a id="X7FFD76ED78AD78BD" name="X7FFD76ED78AD78BD"></a></p>
+
+<h5>2.4-3 <span class="Heading">Code example 1</span></h5>
+
+<p>In the next chapter we will see that the associated stable category is equivalent to the Freyd category of <span class="SimpleMath">\(\CC\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-0.g" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MAKE_READ_WRITE_GLOBAL( "REREADING" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">REREADING := true;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoWarning, 0 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vertices := [ "A_1", "A_2", "B_1", "B_2" ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sources := [ 1, 1, 1, 1, 1, 2, 2, 2, 2, 3 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">targets := [ 2, 2, 3, 3, 3, 1, 3, 4, 4, 4 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">arrows :=  [ "u", "alpha",   "tau", "phi_1", "psi_1",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             "v", "w", "phi_2", "psi_2", "beta" ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quiver := RightQuiver( "quiver", vertices, arrows, sources, targets );</span>
+quiver(A_1,A_2,B_1,B_2)[u:A_1-&gt;A_2,alpha:A_1-&gt;A_2,tau:A_1-&gt;B_1,phi_1:A_1-&gt;B_1,
+psi_1:A_1-&gt;B_1,v:A_2-&gt;A_1,w:A_2-&gt;B_1,phi_2:A_2-&gt;B_2,psi_2:A_2-&gt;B_2,beta:B_1-&gt;B_2]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := Algebroid( QQ, quiver );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfObjects( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfGeneratingMorphisms( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rels := [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( v, alpha ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( v, tau ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( v, phi_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( v, psi_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( v, u ) - IdentityMorphism( A_2 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( alpha, phi_2 ) - PreCompose( phi_1, beta ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( alpha, phi_2 ) - PreCompose( tau, beta ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( alpha, psi_2 ) - PreCompose( psi_1, beta ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              PreCompose( w, beta ) - psi_2</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           ];</span>
+[ (A_2)-[1*(v*alpha)]-&gt;(A_2), (A_2)-[1*(v*tau)]-&gt;(B_1),
+  (A_2)-[1*(v*phi_1)]-&gt;(B_1), (A_2)-[1*(v*psi_1)]-&gt;(B_1), 
+  (A_2)-[1*(v*u) - 1*(A_2)]-&gt;(A_2),
+  (A_1)-[-1*(phi_1*beta) + 1*(alpha*phi_2)]-&gt;(B_2), 
+  (A_1)-[-1*(tau*beta) + 1*(alpha*phi_2)]-&gt;(B_2),
+  (A_1)-[-1*(psi_1*beta) + 1*(alpha*psi_2)]-&gt;(B_2), 
+  (A_2)-[1*(w*beta) - 1*(psi_2)]-&gt;(B_2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := oid / rels;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid!.Name := "Algebroid( V=4, E=10, Rel=7 )";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfObjects( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfGeneratingMorphisms( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Aoid := AdditiveClosure( oid );</span>
+Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AAoid := CategoryOfArrows( Aoid );</span>
+The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1_m_2 := Source( AAoid );</span>
+Algebroid( q(2)[m:1-&gt;2] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Aoid = Range( AAoid );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := CategoryOfArrowsObject( AAoid, [ [ alpha ] ] / Aoid );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( A );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := CategoryOfArrowsObject( AAoid, [ [ beta ] ] / Aoid );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( B );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := CategoryOfArrowsMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            A,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ phi_1 ] ] / Aoid,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ phi_2 ] ] / Aoid,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            B</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := CategoryOfArrowsMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            A,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ psi_1 ] ] / Aoid,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ psi_2 ] ] / Aoid,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            B</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_A := ColiftingObject( A );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_B := ColiftingObject( B );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_phi := ColiftingMorphismWithGivenColiftingObjects( Q_A, phi, Q_B );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, Q_phi ), PreCompose( phi, q_B ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_psi := ColiftingMorphismWithGivenColiftingObjects( Q_A, psi, Q_B );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, Q_psi ), PreCompose( psi, q_B ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSplitEpimorphism( [ [ u ] ] / Aoid );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := CategoryOfArrowsObject( AAoid, [ [ u ] ] / Aoid );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( U );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_U := ColiftingObject( U );</span>
+&lt;An object in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_U := MorphismToColiftingObjectWithGivenColiftingObject( U, Q_U );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSplitMonomorphism( q_U );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r_U := RetractionOfMorphismToColiftingObject( U );</span>
+&lt;A morphism in The category of functors:
+Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( r_U );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_U, r_U ), IdentityMorphism( U ) );</span>
+true
+</pre></div>
+
+<p><a id="X7F3BF46F7B2220D9" name="X7F3BF46F7B2220D9"></a></p>
+
+<h5>2.4-4 <span class="Heading">The class of all contractible objects in complexes categories</span></h5>
+
+<p>Let <span class="SimpleMath">\(\CC\)</span> be an additive category and <span class="SimpleMath">\(\Ch{\CC}\)</span> be its cochain complexes category. An object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\Ch{\CC}\)</span> is called contractible if the identity morphism <span class="SimpleMath">\(\id_{A}\)</span> is null-homotopic. That is, there exists a family of morphisms <span class="SimpleMath">\((\lambda^i:A^i\to A^{i-1})_{i\in\mathbb{Z}}\)</span> such that <span class="SimpleMath">\(\comp{\partial_{A}^i}{\lambda^{i+1}}+\comp{\lambda^i}{\partial_{A}^{i-1}}\sim \id_{A^i}\)</span> for all <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>. An easy verification shows that <span class="SimpleMath">\(\comp{\alpha}{q_B}\sim\comp{q_A}{Q_\alpha}\)</span>.</p>
+
+<p><a id="X866DE3F67F6B6AE0" name="X866DE3F67F6B6AE0"></a></p>
+
+<h5>2.4-5 <span class="Heading">Code example 2</span></h5>
+
+<p>The following example is an illustration for the system of colifting objects on <span class="SimpleMath">\(\Ch{\CC}\)</span> where <span class="SimpleMath">\(\CC\)</span> be additive closure category of the <span class="SimpleMath">\(\mathbb{Q}\)</span>-algebroid <span class="SimpleMath">\(\Lambda_{\mathrm{oid}}\)</span> defined by the following quiver</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "StableCategories" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FunctorCategories" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FreydCategories" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vertices := [ "A_0", "A_1", "A_2", "B_0", "B_1", "B_2" ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sources := [ 1, 2, 4, 5, 2, 3, 1, 2, 3, 1, 2, 3 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">targets := [ 2, 3, 5, 6, 4, 5, 4, 5, 6, 4, 5, 6 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">arrows :=  [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              "a_0", "a_1", "b_0", "b_1", "h_1", "h_2",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              "alpha_0", "alpha_1", "alpha_2",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">              "beta_0", "beta_1", "beta_2"</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">            ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quiver := RightQuiver( "quiver", vertices, arrows, sources, targets );</span>
+quiver(A_0,A_1,A_2,B_0,B_1,B_2)[a_0:A_0-&gt;A_1,a_1:A_1-&gt;A_2,b_0:B_0-&gt;B_1,
+b_1:B_1-&gt;B_2,h_1:A_1-&gt;B_0,h_2:A_2-&gt;B_1,alpha_0:A_0-&gt;B_0,alpha_1:A_1-&gt;B_1,
+alpha_2:A_2-&gt;B_2,beta_0:A_0-&gt;B_0,beta_1:A_1-&gt;B_1,beta_2:A_2-&gt;B_2]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := Algebroid( QQ, quiver );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfObjects( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfGeneratingMorphisms( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rels := [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           PreCompose( a_0, a_1 ), PreCompose( b_0, b_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           PreCompose( a_0, alpha_1 ) - PreCompose( alpha_0, b_0),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           PreCompose( a_1, alpha_2 ) - PreCompose( alpha_1, b_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           PreCompose( a_0, beta_1 ) - PreCompose( beta_0, b_0 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           PreCompose( a_1, beta_2 ) - PreCompose( beta_1, b_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           alpha_0 - beta_0 - PreCompose( a_0, h_1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           alpha_1 - beta_1 - PreCompose( a_1, h_2 ) - PreCompose( h_1, b_0 ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           alpha_2 - beta_2 - PreCompose( h_2, b_1 )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        ];</span>
+[ (A_0)-[1*(a_0*a_1)]-&gt;(A_2), (B_0)-[1*(b_0*b_1)]-&gt;(B_2), 
+  (A_0)-[-1*(alpha_0*b_0) + 1*(a_0*alpha_1)]-&gt;(B_1), 
+  (A_1)-[-1*(alpha_1*b_1) + 1*(a_1*alpha_2)]-&gt;(B_2),
+  (A_0)-[-1*(beta_0*b_0) + 1*(a_0*beta_1)]-&gt;(B_1), 
+  (A_1)-[-1*(beta_1*b_1) + 1*(a_1*beta_2)]-&gt;(B_2),
+  (A_0)-[-1*(a_0*h_1) - 1*(beta_0) + 1*(alpha_0)]-&gt;(B_0), 
+  (A_1)-[-1*(h_1*b_0) - 1*(a_1*h_2) - 1*(beta_1) + 1*(alpha_1)]-&gt;(B_1), 
+  (A_2)-[-1*(h_2*b_1) - 1*(beta_2) + 1*(alpha_2)]-&gt;(B_2) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := oid / rels;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid!.Name := "Algebroid( V=6, E=12, Rel=9 )";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfObjects( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfGeneratingMorphisms( oid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Aoid := AdditiveClosure( oid );</span>
+Additive closure( Algebroid( V=6, E=12, Rel=9 ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ch_Aoid := CochainComplexCategory( Aoid );</span>
+Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := CochainComplex( [ [[a_0]]/Aoid, [[a_1]]/Aoid ], 0 );</span>
+&lt;An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_A := ColiftingObject( A );</span>
+&lt;An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -1 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftingObject( Q_A );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_Q_A := ColiftingObject( Q_A );</span>
+&lt;An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -2 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_Q_A := MorphismToColiftingObject( Q_A );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -1 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r_Q_A := RetractionOfMorphismToColiftingObject( Q_A );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -1 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        PreCompose( q_Q_A, r_Q_A ), IdentityMorphism( Q_A )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := CochainComplex( [ [[b_0]]/Aoid, [[b_1]]/Aoid ], 0 );</span>
+&lt;An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_B := ColiftingObject( B );</span>
+&lt;An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -1 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := CochainMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             A, B,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [ [[alpha_0]]/Aoid, [[alpha_1]]/Aoid, [[alpha_2]]/Aoid ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             0</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">         );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_alpha := ColiftingMorphismWithGivenColiftingObjects( Q_A, alpha, Q_B );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound -1 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      PreCompose( alpha, q_B ), PreCompose( q_A, Q_alpha )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">beta :=  CochainMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             A, B,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             [ [[beta_0]]/Aoid, [[beta_1]]/Aoid, [[beta_2]]/Aoid ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">             0</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">         );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( beta );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma := alpha - beta;</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftableAlongMorphismToColiftingObject( gamma );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := WitnessForBeingColiftableAlongMorphismToColiftingObject( gamma );</span>
+&lt;A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
+ ) ) with active lower bound 0 and active upper bound 2&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, w ), gamma );</span>
+true
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

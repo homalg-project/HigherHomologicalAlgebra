@@ -1,24 +1,707 @@
   
-  [1X1 [33X[0;0YStableCategoriesForCap[133X[101X
+  [1X1 [33X[0;0YExact and Frobenius Categories[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YGAP categories[133X[101X
+  
+  [1X1.1-1 IsCapCategoryShortSequence[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryShortSequence[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of short sequences.[133X
+  
+  [1X1.1-2 IsCapCategoryMorphismOfShortSequences[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryMorphismOfShortSequences[102X( [3Xseq_mor[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of morphisms of short sequences.[133X
+  
+  [1X1.1-3 IsCapCategoryShortExactSequence[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryShortExactSequence[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of short exact sequences.[133X
+  
+  [1X1.1-4 IsCapCategoryConflation[101X
+  
+  [33X[1;0Y[29X[2XIsCapCategoryConflation[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category of conflations. If a short sequence is a conflation, then
+  it is a short exact sequence.[133X
+  
+  
+  [1X1.2 [33X[0;0YExact categories operations[133X[101X
+  
+  [1X1.2-1 IsExactCategory[101X
+  
+  [33X[1;0Y[29X[2XIsExactCategory[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  with respect to some class [23X\EE[123X of short exact sequences.[133X
+  
+  [1X1.2-2 IsInflation[101X
+  
+  [33X[1;0Y[29X[2XIsInflation[102X( [3Xiota[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya boolian[133X
+  
+  [33X[0;0YThe argument is a morphism [23X\iota:A\to B[123X in [23X\CC[123X. The output is whether or not
+  [23X\iota[123X is an inflation.[133X
+  
+  [1X1.2-3 IsDeflation[101X
+  
+  [33X[1;0Y[29X[2XIsDeflation[102X( [3Xpi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya boolian[133X
+  
+  [33X[0;0YThe  argument  is a morphism [23X\pi:B\to C[123X in [23X\CC[123X. The output is whether or not
+  [23X\pi[123X is a deflation.[133X
+  
+  [1X1.2-4 IsConflationPair[101X
+  
+  [33X[1;0Y[29X[2XIsConflationPair[102X( [3Xiota[103X, [3Xpi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya boolian[133X
+  
+  [33X[0;0YThe  argument is a pair of morphisms [23X\iota:A\to B[123X and [23X\pi:B\to C[123X. The output
+  is whether or not the pair [23X(\iota,\pi)[123X defines a conflation.[133X
+  
+  [1X1.2-5 ExactCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelObject[102X( [3Xiota[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan object [23XC[123X[133X
+  
+  [33X[0;0YThe argument is an inflation [23X\iota:A\to B[123X. The output is the cokernel object
+  [23XC[123X of [23X\iota[123X.[133X
+  
+  [1X1.2-6 ExactCokernelProjection[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelProjection[102X( [3Xiota[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya deflation [23XB\to C[123X[133X
+  
+  [33X[0;0YThe  argument  is  an  inflation  [23X\iota:A\to  B[123X.  The  output is a deflation
+  [23X\pi(\iota):B\to  C[123X  with [23XC=\mathrm{ExactCokernelObject}(\iota)[123X such that the
+  pair [23X(\iota,\pi(\iota))[123X defines a conflation.[133X
+  
+  [1X1.2-7 ExactCokernelProjectionWithGivenExactCokernelObject[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelProjectionWithGivenExactCokernelObject[102X( [3Xiota[103X, [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya deflation [23XB\to C[123X[133X
+  
+  [33X[0;0YThe    argument    is    an   inflation   [23X\iota:A\to   B[123X   and   an   object
+  [23XC=\mathrm{ExactCokernelObject}(\iota)[123X.    The    output   is   a   deflation
+  [23X\pi(\iota):B\to C[123X such that [23X(\iota,\pi(\iota))[123X defines a conflation.[133X
+  
+  [1X1.2-8 ExactCokernelColift[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelColift[102X( [3Xiota[103X, [3Xtau[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XC \to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are  an inflation [23X\iota: A \rightarrow B[123X and a test morphism
+  [23X\tau:  B  \rightarrow  T[123X satisfying [23X\comp{\iota}{\tau} \sim 0[123X. The output is
+  the       morphism       [23X\lambda:       C       \rightarrow      T[123X      with
+  [23XC=\mathrm{ExactCokernelObject}(\iota)[123X  and [23X\lambda[123X is given by the universal
+  property  of the cokernel object, i.e., [23X\comp{\pi(\iota)}{\lambda} \sim \tau[123X
+  where [23X\pi(\iota) = \mathrm{ExactCokernelProjection}(\iota)[123X.[133X
+  
+  [1X1.2-9 ColiftAlongDeflation[101X
+  
+  [33X[1;0Y[29X[2XColiftAlongDeflation[102X( [3Xpi[103X, [3Xtau[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XC \to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are  a deflation [23X\pi: B \rightarrow C[123X and a morphism [23X\tau: B
+  \to    T[123X    such   that   [23X\tau[123X   is   coliftable   along   [23X\pi[123X.   That   is,
+  [23X\comp{\iota(\pi)}{\tau}  \sim  0[123X.  The  output is the unique colift morphism
+  [23X\lambda:C\to T[123X of [23X\tau[123X along [23X\pi[123X.[133X
+  
+  [1X1.2-10 ExactKernelObject[101X
+  
+  [33X[1;0Y[29X[2XExactKernelObject[102X( [3Xpi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan object [23XK[123X[133X
+  
+  [33X[0;0YThe argument is a deflation [23X\pi:B\to C[123X. The output is the kernel object [23XK[123X of
+  [23X\pi[123X.[133X
+  
+  [1X1.2-11 ExactKernelEmbedding[101X
+  
+  [33X[1;0Y[29X[2XExactKernelEmbedding[102X( [3Xpi[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan inflation [23XK\to B[123X[133X
+  
+  [33X[0;0YThe  argument  is  a  deflation  [23X\pi:B\to  C[123X.  The  output  is  an inflation
+  [23X\iota(\pi):K\to  B[123X with [23XK=\mathrm{ExactKernelObject}(\pi)[123X such that the pair
+  [23X(\iota(\pi),\pi)[123X defines a conflation.[133X
+  
+  [1X1.2-12 ExactKernelEmbeddingWithGivenExactKernelObject[101X
+  
+  [33X[1;0Y[29X[2XExactKernelEmbeddingWithGivenExactKernelObject[102X( [3Xpi[103X, [3XK[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan inflation [23XK\to B[123X[133X
+  
+  [33X[0;0YThe    argument    is    a    deflation    [23X\pi:B\to    C[123X   and   an   object
+  [23XK=\mathrm{ExactKernelObject}(\pi)[123X.    The    output    is    an    inflation
+  [23X\iota(\pi):K\to B[123X such that the pair [23X(\iota(\pi),\pi)[123X defines a conflation.[133X
+  
+  [1X1.2-13 ExactKernelLift[101X
+  
+  [33X[1;0Y[29X[2XExactKernelLift[102X( [3Xpi[103X, [3Xtau[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XT \to K[123X[133X
+  
+  [33X[0;0YThe arguments are a deflation [23X\pi: B \rightarrow C[123X and a test morphism [23X\tau:
+  T  \rightarrow  B[123X  satisfying  [23X\comp{\tau}{\pi}  \sim  0[123X.  The output is the
+  morphism [23X\lambda: T \rightarrow K[123X with [23XK=\mathrm{ExactKernelObject}(\pi)[123X and
+  [23X\lambda[123X  is  given  by  the  universal  property of the kernel object, i.e.,
+  [23X\comp{\lambda}{\iota(\pi)}      \sim     \tau[123X     where     [23X\iota(\pi)     =
+  \mathrm{ExactKernelEmbedding}(\pi)[123X.[133X
+  
+  [1X1.2-14 LiftAlongInflation[101X
+  
+  [33X[1;0Y[29X[2XLiftAlongInflation[102X( [3Xiota[103X, [3Xtau[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XC \to T[123X[133X
+  
+  [33X[0;0YThe arguments are an inflation [23X\iota: A \rightarrow B[123X and a morphism [23X\tau: T
+  \to    B[123X    such   that   [23X\tau[123X   is   liftable   along   [23X\iota[123X.   That   is,
+  [23X\comp{\tau}{\pi(\iota)}  \sim  0[123X.  The  output  is  the unique lift morphism
+  [23X\lambda:T\to A[123X of [23X\tau[123X along [23X\iota[123X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XZZ := HomalgRingOfIntegers( );[127X[104X
-    [4X[28XZ[128X[104X
-    [4X[25Xgap>[125X [27Xcat := LeftPresentations( ZZ : FinalizeCategory := false );[127X[104X
-    [4X[28XCategory of left presentations of Z[128X[104X
-    [4X[25Xgap>[125X [27XAddMorphismFromLiftingObject( cat, EpimorphismFromSomeProjectiveObject );;[127X[104X
-    [4X[25Xgap>[125X [27XFinalize( cat );[127X[104X
+    [4X[25Xgap>[125X [27XQ := HomalgFieldOfRationalsInSingular( );[127X[104X
+    [4X[28XQ[128X[104X
+    [4X[25Xgap>[125X [27XEEE := KoszulDualRing( GradedRing( Q * "x,y" ) );[127X[104X
+    [4X[28XQ{e0,e1}[128X[104X
+    [4X[28X(weights: [ -1, -1 ])[128X[104X
+    [4X[25Xgap>[125X [27XGrows_E := CategoryOfGradedRows( EEE );[127X[104X
+    [4X[28XGraded rows( Q{e0,e1} (with weights [ -1, -1 ]) )[128X[104X
+    [4X[25Xgap>[125X [27XGrmod_E := FreydCategory( Grows_E );[127X[104X
+    [4X[28XCategory of f.p. graded left modules over Q{e0,e1} (with weights [ -1, -1 ])[128X[104X
+    [4X[25Xgap>[125X [27XIsExactCategory( Grmod_E );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xstable_cat := StableCategoryBySystemOfLiftingObjects( cat );;[127X[104X
-    [4X[25Xgap>[125X [27Xstable_functor := ProjectionFunctor( stable_cat );;[127X[104X
-    [4X[25Xgap>[125X [27Xa := AsLeftPresentation( HomalgMatrix( "[[0,0],[0,2],[0,3]]", 3, 2, ZZ ) );[127X[104X
-    [4X[28X<An object in Category of left presentations of Z>[128X[104X
-    [4X[25Xgap>[125X [27Xstable_a := ApplyFunctor( stable_functor, a );[127X[104X
-    [4X[28X<An object in Stable category( Category of left presentations of Z ) defined by[128X[104X
-    [4X[28XIsLiftableAlongMorphismFromLiftingObject>[128X[104X
-    [4X[25Xgap>[125X [27XIsZero( a );[127X[104X
+    [4X[25Xgap>[125X [27XsU := GradedRow( [ [ [1], 2 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27XrU := GradedRow( [ [ [0], 2 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27XmU := HomalgMatrix( "[[2*e0,4*e0+e1],[-e0+e1,-e0]]", 2, 2, EEE );[127X[104X
+    [4X[28X<A 2 x 2 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27XU := GradedRowOrColumnMorphism( sU, mU, rU ) / Grmod_E;[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( U );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XsV := GradedRow( [ [ [1], 1 ], [ [0], 1 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27XrV := GradedRow( [ [ [-1], 1 ], [ [0], 1 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 2>[128X[104X
+    [4X[25Xgap>[125X [27XmV := HomalgMatrix( "[[0,-2*e0],[e0+e1,0]]", 2, 2, EEE );[127X[104X
+    [4X[28X<A 2 x 2 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27XV := GradedRowOrColumnMorphism( sV, mV, rV ) / Grmod_E;[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( V );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat := HomalgMatrix( "[[-e1,0],[-e1,0]]", 2, 2, EEE );[127X[104X
+    [4X[28X<A 2 x 2 matrix over a graded ring>[128X[104X
+    [4X[25Xgap>[125X [27Xmu := GradedRowOrColumnMorphism( rU, mat, rV );[127X[104X
+    [4X[28X<A morphism in Category of graded rows over Q{e0,e1} (with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xmu := FreydCategoryMorphism( U, mu, V );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( ExactKernelEmbedding( mu ), mu );[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XIsZero( stable_a );[127X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( mu, ExactCokernelProjection( mu ) );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xiota := KernelEmbedding( mu );[127X[104X
+    [4X[28X<A monomorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpi_iota := ExactCokernelProjection( iota );[127X[104X
+    [4X[28X<An epimorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( iota, pi_iota );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpi := CokernelProjection( mu );[127X[104X
+    [4X[28X<An epimorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xiota_pi := ExactKernelEmbedding( pi );[127X[104X
+    [4X[28X<A monomorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( iota_pi, pi );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := ExactCokernelColift( iota, mu );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( pi_iota, lambda ), mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := ExactKernelLift( pi, mu );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( lambda, iota_pi ), mu );[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
+  
+  
+  [1X1.2-15 [33X[0;0YExact Fiber Product[133X[101X
+  
+  [33X[0;0YGiven  a  deflation  [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X, an exact fiber
+  product  diagram  of  [23X(\pi,\alpha)[123X  is  defined  by an object [23XA\times_C B[123X, a
+  morphism [23Xp_A:A\times_C B\to A[123X and a deflation [23Xp_B:A\times_C B\to B[123X such that
+  [23X\comp{p_A}{\pi}\sim  \comp{p_B}{\alpha}[123X  and for any two morphisms [23Xp'_A:T\to
+  A,p'_B:T\to  B[123X with [23X\comp{p'_A}{\pi}\sim \comp{p'_B}{\alpha}[123X, there exists a
+  unique  morphism  [23Xu:T\to  A\times_C  B[123X  with  [23X\comp{u}{p_A}  \sim  p'_A[123X  and
+  [23X\comp{u}{p_B} \sim p'_B[123X.[133X
+  
+  [1X1.2-16 ExactFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object[133X
+  
+  [33X[0;0YThe  arguments  are a deflation [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X. The
+  output is the fiber product object [23XA\times_C B[123X of [23X\pi[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-17 ProjectionInFirstFactorOfExactFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XProjectionInFirstFactorOfExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23Xp_A:A\times_C B\to A[123X[133X
+  
+  [33X[0;0YThe  arguments  are a deflation [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X. The
+  output  is  a  morphism  [23Xp_A:A\times_C  B  \to  A[123X which is a part of a fiber
+  product diagram of [23X\pi[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-18 ProjectionInSecondFactorOfExactFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XProjectionInSecondFactorOfExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23Xp_B:A\times_C B\to B[123X[133X
+  
+  [33X[0;0YThe  arguments  are a deflation [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X. The
+  output  is  a  morphism  [23Xp_B:A\times_C  B  \to  B[123X which is a part of a fiber
+  product diagram of [23X\pi[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-19 UniversalMorphismIntoExactFiberProduct[101X
+  
+  [33X[1;0Y[29X[2XUniversalMorphismIntoExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X, [3Xpprime_A[103X, [3Xpprime_B[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23Xu:T \to A \times_C B[123X[133X
+  
+  [33X[0;0YThe  arguments are a deflation [23X\pi:A\to C[123X and three morphisms [23X\alpha:B\to C[123X,
+  [23Xp'_A:T\to    A[123X   and   [23Xp'_B:T\to   B[123X   such   that   [23X\comp{p'_A}{\pi}   \sim
+  \comp{p'_B}{\alpha}[123X. The output is the universal morphism [23Xu:T\to A\times_C B[123X
+  with [23X\comp{u}{p_A} \sim p'_A[123X and [23X\comp{u}{p_B}\sim p'_B[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xalpha := mu;[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XB := Source( alpha );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XC := Range( alpha );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpi := EpimorphismFromSomeProjectiveObject( C );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xp_A := ProjectionInFirstFactorOfExactFiberProduct( pi, alpha );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xp_B := ProjectionInSecondFactorOfExactFiberProduct( pi, alpha );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( p_A, pi ), PreCompose( p_B, alpha ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpprime_B := EpimorphismFromSomeProjectiveObject( B );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpprime_A := ProjectiveLift( PreCompose( pprime_B, alpha ), pi );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
+    [4X[25X>[125X [27X      PreCompose( pprime_A, pi ), PreCompose( pprime_B, alpha )[127X[104X
+    [4X[25X>[125X [27X  );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xu := UniversalMorphismIntoExactFiberProduct( pi, alpha, pprime_A, pprime_B );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( u, p_B ), pprime_B );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( u, p_A ), pprime_A );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphism( u );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.2-20 [33X[0;0YExact Pushout[133X[101X
+  
+  [33X[0;0YGiven  an  inflation  [23X\iota:C\to  A[123X  and  a morphism [23X\alpha:C\to B[123X, an exact
+  pushout  diagram  of  [23X(\iota,\alpha)[123X  is defined by an object [23XA\oplus_C B[123X, a
+  morphism  [23Xq_A:A  \to  A\oplus_C B[123X and an inflation [23Xq_B:B\to A\oplus_C B[123X such
+  that  [23X\comp{\iota}{q_A}  \sim  \comp{\alpha}{q_B}[123X  and for any two morphisms
+  [23Xq'_A:A\to  T,q'_B:B\to  T[123X  with  [23X\comp{\iota}{q'_A}\sim \comp{\alpha}{q'_B}[123X,
+  there  exists a unique morphism [23Xu: A\oplus_C B \to T[123X with [23X\comp{q_A}{ u}\sim
+  q'_A[123X and [23X\comp{q_B}{ u} \sim q'_B[123X.[133X
+  
+  [1X1.2-21 ExactPushout[101X
+  
+  [33X[1;0Y[29X[2XExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object[133X
+  
+  [33X[0;0YThe  arguments  are  an inflation [23X\iota:C\to A[123X and a morphism [23X\alpha:C\to B[123X.
+  The output is the pushout object [23XA\oplus_C B[123X of [23X\iota[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-22 InjectionOfFirstCofactorOfExactPushout[101X
+  
+  [33X[1;0Y[29X[2XInjectionOfFirstCofactorOfExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to A\oplus_C B[123X[133X
+  
+  [33X[0;0YThe  arguments  are  an inflation [23X\iota:C\to A[123X and a morphism [23X\alpha:C\to B[123X.
+  The  output is a morphism [23Xq_A:A \to A\oplus_C B[123X which is a part of a pushout
+  diagram of [23X\iota[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-23 InjectionOfSecondCofactorOfExactPushout[101X
+  
+  [33X[1;0Y[29X[2XInjectionOfSecondCofactorOfExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya inflation [23XB \to A\oplus_C B[123X[133X
+  
+  [33X[0;0YThe  arguments  are  an inflation [23X\iota:C\to A[123X and a morphism [23X\alpha:C\to B[123X.
+  The  output  is  an  inflation  [23Xq_B:B  \to  A\oplus_C B[123X which is a part of a
+  pushout diagram of [23X\iota[123X and [23X\alpha[123X.[133X
+  
+  [1X1.2-24 UniversalMorphismFromExactPushout[101X
+  
+  [33X[1;0Y[29X[2XUniversalMorphismFromExactPushout[102X( [3Xiota[103X, [3Xalpha[103X, [3Xqprime_A[103X, [3Xqprime_B[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XA\oplus_C B \to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are a inflation [23X\iota:C\to A[123X and three morphisms [23X\alpha:C\to
+  B[123X,   [23Xq'_A:A\to   T[123X   and  [23Xq'_B:B\to  T[123X  such  that  [23X\comp{\iota}{  q'_A}\sim
+  \comp{\alpha}{  q'_B}[123X. The output is the universal morphism [23Xu:A\oplus_C B\to
+  T[123X with [23X\comp{q_A}{ u}\sim q'_A[123X and [23X\comp{q_B}{u} \sim q'_B[123X.[133X
+  
+  [1X1.2-25 UniversalMorphismFromExactPushoutWithGivenExactPushout[101X
+  
+  [33X[1;0Y[29X[2XUniversalMorphismFromExactPushoutWithGivenExactPushout[102X( [3Xiota[103X, [3Xalpha[103X, [3Xqprime_A[103X, [3Xqprime_B[103X, [3XP[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XP \to T[123X[133X
+  
+  [33X[0;0YThe  arguments  are a inflation [23X\iota:C\to A[123X, three morphisms [23X\alpha:C\to B[123X,
+  [23Xq'_A:A\to     T[123X,     [23Xq'_B:B\to     T[123X     and     an    object    [23XP=A\oplus_C
+  B=\mathrm{ExactPushout}(\iota,\alpha)[123X   such  that  [23X\comp{\iota}{  q'_A}\sim
+  \comp{\alpha}{  q'_B}[123X.  The  output is the universal morphism [23Xu:P \to T[123X with
+  [23X\comp{q_A}{ u}\sim q'_A[123X and [23X\comp{q_B}{u} \sim q'_B[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xalpha := mu;[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XB := Source( alpha );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XC := Range( alpha );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpi := EpimorphismFromSomeProjectiveObject( C );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xp_A := ProjectionInFirstFactorOfExactFiberProduct( pi, alpha );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xp_B := ProjectionInSecondFactorOfExactFiberProduct( pi, alpha );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( p_A, pi ), PreCompose( p_B, alpha ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpprime_B := EpimorphismFromSomeProjectiveObject( B );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xpprime_A := ProjectiveLift( PreCompose( pprime_B, alpha ), pi );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
+    [4X[25X>[125X [27X      PreCompose( pprime_A, pi ), PreCompose( pprime_B, alpha )[127X[104X
+    [4X[25X>[125X [27X  );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xu := UniversalMorphismIntoExactFiberProduct( pi, alpha, pprime_A, pprime_B );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( u, p_B ), pprime_B );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( u, p_A ), pprime_A );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphism( u );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.2-26 [33X[0;0YExact Categories With Enough E-projectives[133X[101X
+  
+  [33X[0;0YLet   [23X(\CC,\EE)[123X   be   an   exact   category.   An   object   [23XP[123X   is  called
+  [23X\mathcal{E}[123X-projective if for every morphism [23X\tau:P\to C[123X and every deflation
+  [23X\pi:B\to  C[123X,  there exists a lift morphism [23X\lambda:P\to B[123X of [23X\tau[123X along [23X\pi[123X,
+  i.e., [23X\comp{\lambda}{\pi}=\tau[123X. The exact category [23X(\CC,\EE)[123X is said to have
+  enough [23X\EE[123X-projectives if for each object [23XA[123X in [23X\CC[123X, there exists a deflation
+  [23Xp_A:P_A \to A[123X where [23XP_A[123X is an [23X\EE[123X-projecitve object.[133X
+  
+  [1X1.2-27 IsExactCategoryWithEnoughExactProjectives[101X
+  
+  [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactProjectives[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
+  enough [23X\EE[123X-projectives.[133X
+  
+  [1X1.2-28 IsExactProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XIsExactProjectiveObject[102X( [3XP[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ya boolian[133X
+  
+  [33X[0;0YThe  argument  is  an  object [23XP[123X in [23X\CC[123X. The output is whether or not [23XP[123X is an
+  [23X\EE[123X-projective object.[133X
+  
+  [1X1.2-29 ExactProjectiveLift[101X
+  
+  [33X[1;0Y[29X[2XExactProjectiveLift[102X( [3Xtau[103X, [3Xpi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23X\lambda:P\to B[123X[133X
+  
+  [33X[0;0YThe arguments are a morphism [23X\tau:P\to C[123X where [23XP[123X is an [23X\EE[123X-projective object
+  and  a deflation [23X\pi:B\to C[123X. The output is a lift morphism [23X\lambda:P\to B[123X of
+  [23X\tau[123X along [23X\pi[123X, i.e., [23X\comp{\lambda}{\pi} \sim \tau[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xpi := CokernelProjection( mu );[127X[104X
+    [4X[28X<An epimorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( ExactKernelEmbedding( pi ), pi );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XC := Range( pi );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1} [128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XP := GradedRow( [ [ [0], 2 ], [ [1], 1 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 3>[128X[104X
+    [4X[25Xgap>[125X [27XP := AsFreydCategoryObject( P );[127X[104X
+    [4X[28X<A projective object in Category of f.p. graded left modules over Q{e0,e1} [128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsExactProjectiveObject( P );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XHom_PC := BasisOfExternalHom( P, C );;[127X[104X
+    [4X[25Xgap>[125X [27XSize( Hom_PC );[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27Xtau := Random( Hom_PC );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := ExactProjectiveLift( tau, pi );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( lambda, pi ), tau );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-30 SomeExactProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XSomeExactProjectiveObject[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan [23X\EE[123X-projective object[133X
+  
+  [33X[0;0YThe  argument  is an object [23XA[123X in [23X\CC[123X. The output is an [23X\EE[123X-projective object
+  [23XP_A[123X such that there exists a deflation [23XP_A \to A[123X.[133X
+  
+  [1X1.2-31 DeflationFromSomeExactProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XDeflationFromSomeExactProjectiveObject[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya deflation [23XP_A \to A[123X[133X
+  
+  [33X[0;0YThe  argument  is  an  object  [23XA[123X  in [23X\CC[123X. The output is a deflation morphism
+  [23Xp_A:P_A \to A[123X where [23XP_A = \mathrm{SomeExactProjectiveObject}(A)[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsExactCategoryWithEnoughExactProjectives( Grmod_E );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XV;[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XP_V := SomeExactProjectiveObject( U );[127X[104X
+    [4X[28X<A projective object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsExactProjectiveObject( P_V );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpi_V := DeflationFromSomeExactProjectiveObject( V );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( ExactKernelEmbedding( pi_V ), pi_V );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.2-32 [33X[0;0YExact Categories With Enough E-injecitves[133X[101X
+  
+  [33X[0;0YLet   [23X(\CC,\EE)[123X   be   an   exact   category.   An   object   [23XI[123X   is  called
+  [23X\mathcal{E}[123X-injective if for every inflation [23X\iota:A\to B[123X and every morphism
+  [23X\tau:A  \to I[123X, there exists a colift morphism of [23X\tau[123X along [23X\iota[123X. The exact
+  category  [23X(\CC,\EE)[123X is said to have enough [23X\EE[123X-injectives if for each object
+  [23XA[123X  in  [23X\CC[123X,  there  exists  an  inflation  [23X\iota_A:A \to I_A[123X where [23XI_A[123X is an
+  [23X\EE[123X-injective object.[133X
+  
+  [1X1.2-33 IsExactCategoryWithEnoughExactInjectives[101X
+  
+  [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactInjectives[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
+  enough [23X\EE[123X-injectives.[133X
+  
+  [1X1.2-34 IsExactInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XIsExactInjectiveObject[102X( [3XI[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Ya boolian[133X
+  
+  [33X[0;0YThe  argument  is  an  object [23XI[123X in [23X\CC[123X. The output is whether or not [23XI[123X is an
+  [23X\EE[123X-injective object.[133X
+  
+  [1X1.2-35 ExactInjectiveColift[101X
+  
+  [33X[1;0Y[29X[2XExactInjectiveColift[102X( [3Xiota[103X, [3Xtau[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23X\lambda:B \to I[123X[133X
+  
+  [33X[0;0YThe arguments are an inflation [23X\iota:A\to B[123X and a morphism [23X\tau:A\to I[123X where
+  [23XI[123X  is an [23X\EE[123X-injective object. The output is a colift morphism [23X\lambda:B \to
+  I[123X of [23X\tau[123X along [23X\iota[123X, i.e., [23X\comp{\iota}{\lambda} \sim \tau[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xiota := KernelEmbedding( mu );[127X[104X
+    [4X[28X<A monomorphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( iota, ExactCokernelProjection( iota ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XA := Source( iota );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1} [128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XI := GradedRow( [ [ [0], 2 ], [ [-1], 2 ], [ [-2], 1 ] ], EEE );[127X[104X
+    [4X[28X<A graded row of rank 5>[128X[104X
+    [4X[25Xgap>[125X [27XI := AsFreydCategoryObject( I );[127X[104X
+    [4X[28X<A projective object in Category of f.p. graded left modules over Q{e0,e1} [128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsExactInjectiveObject( I );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XHom_AI := BasisOfExternalHom( A, I );;[127X[104X
+    [4X[25Xgap>[125X [27XSize( Hom_AI );[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xtau := Random( Hom_AI );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := ExactInjectiveColift( iota, tau );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( iota, lambda ), tau );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-36 SomeExactInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XSomeExactInjectiveObject[102X( [3XA[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan [23X\EE[123X-injective object[133X
+  
+  [33X[0;0YThe  argument  is  an object [23XA[123X in [23X\CC[123X. The output is an [23X\EE[123X-injective object
+  [23XI_A[123X such that there exists an inflation [23XA \to I_A[123X.[133X
+  
+  [1X1.2-37 InflationIntoSomeExactInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XInflationIntoSomeExactInjectiveObject[102X( [3XA[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan inflation [23XA \to I_A[123X[133X
+  
+  [33X[0;0YThe argument is an object [23XA[123X in [23X\CC[123X. The output is an inflation [23X\iota_A:A \to
+  I_A[123X where [23XI_A = \mathrm{SomeExactInjectiveObject}(A)[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIsExactCategoryWithEnoughExactInjectives( Grmod_E );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XU;[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XI_U := SomeExactInjectiveObject( U );[127X[104X
+    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsExactInjectiveObject( I_U );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xiota_U := InflationIntoSomeExactInjectiveObject( U );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsConflationPair( iota_U, ExactCokernelProjection( iota_U ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-38 IsLiftableAlongDeflationFromSomeExactProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XIsLiftableAlongDeflationFromSomeExactProjectiveObject[102X( [3Xalpha[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe argument if a morphism [23X\alpha:A\to B[123X in an exact category [23X(\CC,\EE)[123X with
+  enough  [23X\EE[123X-projectives.  The  output  is  whether or not [23X\alpha[123X lifts along
+  [23Xp_B:P_B\to B[123X where [23Xp_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)[123X.[133X
+  
+  [1X1.2-39 LiftAlongDeflationFromSomeExactProjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XLiftAlongDeflationFromSomeExactProjectiveObject[102X( [3Xalpha[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  argument  is  a  morphism  [23X\alpha:A\to  B[123X  such that [23X\alpha[123X lifts along
+  [23Xp_B:P_B  \to B[123X where [23Xp_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)[123X.
+  The output is a lift morphism [23X\lambda: A \to P_B[123X of [23X\alpha[123X along [23Xp_B[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XV = Range( mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xpi_V := DeflationFromSomeExactProjectiveObject( V );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsLiftableAlongDeflationFromSomeExactProjectiveObject( mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := LiftAlongDeflationFromSomeExactProjectiveObject( mu );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( lambda, pi_V ), mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-40 IsColiftableAlongInflationIntoSomeExactInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XIsColiftableAlongInflationIntoSomeExactInjectiveObject[102X( [3Xalpha[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe argument if a morphism [23X\alpha:A\to B[123X in an exact category [23X(\CC,\EE)[123X with
+  enough  [23X\EE[123X-injectives.  The  output  is whether or not [23X\alpha[123X colifts along
+  [23X\iota_A:A\to                            I_A[123X                            where
+  [23X\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)[123X.[133X
+  
+  [1X1.2-41 ColiftAlongInflationIntoSomeExactInjectiveObject[101X
+  
+  [33X[1;0Y[29X[2XColiftAlongInflationIntoSomeExactInjectiveObject[102X( [3Xalpha[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  argument  is  a  morphism  [23X\alpha:A\to B[123X such that [23X\alpha[123X colifts along
+  [23X\iota_A:A                   \to                   I_A[123X                  where
+  [23X\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)[123X.  The  output is a
+  colift morphism [23X\lambda: I_A \to B[123X of [23X\alpha[123X along [23X\iota_A[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XU = Source( mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xiota_U := InflationIntoSomeExactInjectiveObject( U );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsColiftableAlongInflationIntoSomeExactInjectiveObject( mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xlambda := ColiftAlongInflationIntoSomeExactInjectiveObject( mu );[127X[104X
+    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
+    [4X[28X(with weights [ -1, -1 ])>[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( iota_U, lambda ), mu );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X1.2-42 IsFrobeniusCategory[101X
+  
+  [33X[1;0Y[29X[2XIsFrobeniusCategory[102X( [3XC[103X ) [32X property[133X
+  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  
+  [33X[0;0YThe argument is a [5XCAP[105X category. The output is [10Xtrue[110X if[133X
+  
+  [30X    [33X[0;6Y[23X\CC[123X is exact with respect to some class [23X\EE[123X of short exact sequences,[133X
+  
+  [30X    [33X[0;6Y[23X(\CC,\EE)[123X has enough [23X\EE[123X-projectives and [23X\EE[123X-injectives,[133X
+  
+  [30X    [33X[0;6Yan object in [23X\CC[123X is [23X\EE[123X-projective if and only if it is [23X\EE[123X-injective.[133X
   

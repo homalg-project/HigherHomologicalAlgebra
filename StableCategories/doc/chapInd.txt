@@ -2,6 +2,82 @@
   
   [1XIndex[101X
   
+  [2XColiftAlongDeflation[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-9 
+  [2XColiftAlongInflationIntoSomeExactInjectiveObject[102X, for IsCapCategoryMorphism 1.2-41 
+  [2XColiftingMorphism[102X, for IsCapCategoryMorphism 2.3-8 
+  [2XColiftingMorphismWithGivenColiftingObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 2.3-7 
+  [2XColiftingObject[102X, for IsCapCategoryObject 2.3-2 
+  [2XCongruencyTestFunction[102X, for IsStableCategory 3.2-2 
+  [2XDeflationFromSomeExactProjectiveObject[102X, for IsCapCategoryObject 1.2-31 
+  [2XExactCokernelColift[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-8 
+  [2XExactCokernelObject[102X, for IsCapCategoryMorphism 1.2-5 
+  [2XExactCokernelProjection[102X, for IsCapCategoryMorphism 1.2-6 
+  [2XExactCokernelProjectionWithGivenExactCokernelObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 1.2-7 
+  [2XExactFiberProduct[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-16 
+  [2XExactInjectiveColift[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-35 
+  [2XExactKernelEmbedding[102X, for IsCapCategoryMorphism 1.2-11 
+  [2XExactKernelEmbeddingWithGivenExactKernelObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 1.2-12 
+  [2XExactKernelLift[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-13 
+  [2XExactKernelObject[102X, for IsCapCategoryMorphism 1.2-10 
+  [2XExactProjectiveLift[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-29 
+  [2XExactPushout[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-21 
+  [2XInflationIntoSomeExactInjectiveObject[102X, for IsCapCategoryObject 1.2-37 
+  [2XInjectionOfFirstCofactorOfExactPushout[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-22 
+  [2XInjectionOfSecondCofactorOfExactPushout[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-23 
+  [2XIsCapCategoryConflation[102X, for IsCapCategoryShortExactSequence 1.1-4 
+  [2XIsCapCategoryMorphismOfShortSequences[102X, for IsCapCategoryMorphism 1.1-2 
+  [2XIsCapCategoryShortExactSequence[102X, for IsCapCategoryShortSequence 1.1-3 
+  [2XIsCapCategoryShortSequence[102X, for IsCapCategoryObject 1.1-1 
+  [2XIsColiftableAlongInflationIntoSomeExactInjectiveObject[102X, for IsCapCategoryMorphism 1.2-40 
+  [2XIsColiftableAlongMorphismToColiftingObject[102X, for IsCapCategoryMorphism 2.3-9 
+  [2XIsColiftingObject[102X, for IsCapCategoryObject 2.3-1 
+  [2XIsConflationPair[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-4 
+  [2XIsDeflation[102X, for IsCapCategoryMorphism 1.2-3 
+  [2XIsExactCategory[102X, for IsCapCategory 1.2-1 
+  [2XIsExactCategoryWithEnoughExactInjectives[102X, for IsCapCategory 1.2-33 
+  [2XIsExactCategoryWithEnoughExactProjectives[102X, for IsCapCategory 1.2-27 
+  [2XIsExactInjectiveObject[102X, for IsCapCategoryObject 1.2-34 
+  [2XIsExactProjectiveObject[102X, for IsCapCategoryObject 1.2-28 
+  [2XIsFrobeniusCategory[102X, for IsCapCategory 1.2-42 
+  [2XIsInflation[102X, for IsCapCategoryMorphism 1.2-2 
+  [2XIsLiftableAlongDeflationFromSomeExactProjectiveObject[102X, for IsCapCategoryMorphism 1.2-38 
+  [2XIsLiftableAlongMorphismFromLiftingObject[102X, for IsCapCategoryMorphism 2.1-9 
+  [2XIsLiftingObject[102X, for IsCapCategoryObject 2.1-1 
+  [2XIsStableCategory[102X, for IsQuotientCategory 3.1-1 
+  [2XIsStableCategoryCell[102X, for IsQuotientCategoryCell 3.1-2 
+  [2XIsStableCategoryMorphism[102X, for IsStableCategoryCell and IsQuotientCategoryMorphism 3.1-4 
+  [2XIsStableCategoryObject[102X, for IsStableCategoryCell and IsQuotientCategoryObject 3.1-3 
+  [2XLiftAlongDeflationFromSomeExactProjectiveObject[102X, for IsCapCategoryMorphism 1.2-39 
+  [2XLiftAlongInflation[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-14 
+  [2XLiftingMorphism[102X, for IsCapCategoryMorphism 2.1-8 
+  [2XLiftingMorphismWithGivenLiftingObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 2.1-7 
+  [2XLiftingObject[102X, for IsCapCategoryObject 2.1-2 
+  [2XMorphismFromLiftingObject[102X, for IsCapCategoryObject 2.1-3 
+  [2XMorphismFromLiftingObjectWithGivenLiftingObject[102X, for IsCapCategoryObject, IsCapCategoryObject 2.1-4 
+  [2XMorphismToColiftingObject[102X, for IsCapCategoryObject 2.3-3 
+  [2XMorphismToColiftingObjectWithGivenColiftingObject[102X, for IsCapCategoryObject, IsCapCategoryObject 2.3-4 
+  [2XProjectionFunctor[102X, for IsStableCategory 3.2-3 
+  [2XProjectionInFirstFactorOfExactFiberProduct[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-17 
+  [2XProjectionInSecondFactorOfExactFiberProduct[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-18 
+  [2XRetractionOfMorphismToColiftingObject[102X, for IsCapCategoryObject 2.3-6 
+  [2XRetractionOfMorphismToColiftingObjectWithGivenColiftingObject[102X, for IsCapCategoryObject, IsCapCategoryObject 2.3-5 
+  [2XSectionOfMorphismFromLiftingObject[102X, for IsCapCategoryObject 2.1-6 
+  [2XSectionOfMorphismFromLiftingObjectWithGivenLiftingObject[102X, for IsCapCategoryObject, IsCapCategoryObject 2.1-5 
+  [2XSomeExactInjectiveObject[102X, for IsCapCategoryObject 1.2-36 
+  [2XSomeExactProjectiveObject[102X, for IsCapCategoryObject 1.2-30 
+  [2XStableCategory[102X, for IsCapCategory, IsFunction 3.2-1 
+  [2XStableCategoryBySystemOfColiftingObjects[102X, for IsCapCategory 3.4-1 
+  [2XStableCategoryBySystemOfLiftingObjects[102X, for IsCapCategory 3.3-1 
+  [2XStableCategoryMorphism[102X, for IsStableCategory, IsCapCategoryMorphism 3.2-7 
+      for IsStableCategoryObject, IsCapCategoryMorphism, IsStableCategoryObject 3.2-6 
+  [2XStableCategoryObject[102X, for IsStableCategory, IsCapCategoryObject 3.2-4 
+  [2XUnderlyingCell[102X, for IsStableCategoryMorphism 3.2-8 
+      for IsStableCategoryObject 3.2-5 
+  [2XUniversalMorphismFromExactPushout[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-24 
+  [2XUniversalMorphismFromExactPushoutWithGivenExactPushout[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 1.2-25 
+  [2XUniversalMorphismIntoExactFiberProduct[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-19 
+  [2XWitnessForBeingColiftableAlongMorphismToColiftingObject[102X, for IsCapCategoryMorphism 2.3-10 
+  [2XWitnessForBeingLiftableAlongMorphismFromLiftingObject[102X, for IsCapCategoryMorphism 2.1-10 
   
   
   -------------------------------------------------------
