@@ -72,6 +72,15 @@ MorphismFromLiftingObject := rec(
   with_given_object_position := "Source",
   return_type := "morphism" ),
 
+SectionOfMorphismFromLiftingObjectWithGivenLiftingObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  return_type := "morphism" ),
+
+SectionOfMorphismFromLiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  with_given_object_position := "Range",
+  return_type := "morphism" ),
+
 IsLiftableAlongMorphismFromLiftingObject := rec(
   installation_name := "IsLiftableAlongMorphismFromLiftingObject",
   filter_list := [ "category", "morphism" ],
@@ -106,6 +115,15 @@ MorphismToColiftingObject := rec(
   installation_name := "MorphismToColiftingObject",
   filter_list := [ "category", "object" ],
   with_given_object_position := "Range",
+  return_type := "morphism" ),
+
+RetractionOfMorphismToColiftingObjectWithGivenColiftingObject := rec(
+  filter_list := [ "category", "object", "object" ],
+  return_type := "morphism" ),
+
+RetractionOfMorphismToColiftingObject := rec(
+  filter_list := [ "category", "object" ],
+  with_given_object_position := "Source",
   return_type := "morphism" ),
 
 IsColiftableAlongMorphismToColiftingObject := rec(

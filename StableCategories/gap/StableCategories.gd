@@ -51,20 +51,19 @@ DeclareOperation( "AddColiftingObject",
                   [ IsCapCategory, IsList ] );
 
 
-###
-DeclareOperation( "MorphismToColiftingObjectWithGivenColiftingObject",
-                  [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "SectionOfMorphismFromLiftingObjectWithGivenLiftingObject",
+    [ IsCapCategoryObject, IsCapCategoryObject ] );
 
-DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddSectionOfMorphismFromLiftingObjectWithGivenLiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddSectionOfMorphismFromLiftingObjectWithGivenLiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddSectionOfMorphismFromLiftingObjectWithGivenLiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddMorphismToColiftingObjectWithGivenColiftingObject",
+DeclareOperation( "AddSectionOfMorphismFromLiftingObjectWithGivenLiftingObject",
                   [ IsCapCategory, IsList ] );
 
 ##
@@ -160,23 +159,21 @@ DeclareOperation( "AddLiftingObject",
 DeclareOperation( "AddLiftingObject",
                   [ IsCapCategory, IsList ] );
 
-###
-DeclareOperation( "MorphismFromLiftingObjectWithGivenLiftingObject",
-                  [ IsCapCategoryObject, IsCapCategoryObject ] );
+DeclareOperation( "RetractionOfMorphismToColiftingObjectWithGivenColiftingObject", 
+    [ IsCapCategoryObject, IsCapCategoryObject ] );
 
-DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+DeclareOperation( "AddRetractionOfMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+DeclareOperation( "AddRetractionOfMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+DeclareOperation( "AddRetractionOfMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddMorphismFromLiftingObjectWithGivenLiftingObject",
+DeclareOperation( "AddRetractionOfMorphismToColiftingObjectWithGivenColiftingObject",
                   [ IsCapCategory, IsList ] );
-##
-DeclareAttribute( "MorphismFromLiftingObject", IsCapCategoryObject );
+
 
 DeclareOperation( "AddMorphismFromLiftingObject",
                   [ IsCapCategory, IsFunction ] );
