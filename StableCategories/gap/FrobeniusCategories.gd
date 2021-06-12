@@ -226,7 +226,7 @@ DeclareOperation( "AddExactCokernelObjectFunctorialWithGivenExactCokernelObjects
 #! \begin{center}
 #! \begin{tikzcd}
 #! K \arrow[r, "\iota(\pi)", hook] & B \arrow[r, "\pi", two heads] \arrow[rd, "\tau"'] & C \arrow[d, "\exists !~\lambda", dashed] \\
-#!                                &                                                   & \phantom{.}T. 
+#!                                &                                                   & \phantom{.}T.
 #! \end{tikzcd}
 #! \end{center}
 #! @EndLatexOnly
@@ -368,6 +368,7 @@ DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
                   [ IsCapCategory, IsList ] );
+
 
 #! @Description
 #! The arguments are an inflation $\iota: A \rightarrow B$ and a morphism $\tau: T \to B$
@@ -906,7 +907,22 @@ DeclareOperation( "CreateShortExactSequence",
 DeclareOperation( "CreateConflation", 
                       [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
-DeclareOperation( "SchanuelsIsomorphism", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsString ] );
+#! @Description
+#!  The arguments are an inflation $i:A\to I$, a deflation $s:I \to B$, an inflation $j:A \to J$, a deflation $t: J \to C$
+#!  in an exact category $(\CC,\EE)$ such that $I$ and $J$ are $\EE$-injective objects and the pairs $(i,s)$ and $(j,t)$ are conflations.
+#! The output is a morphism $u: B \to C$ such that $u$ becomes an isomorphism in the stable category of $\CC$ by the class of exact injective objects.
+#! @Arguments i, s, j, t
+DeclareOperation( "SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects",
+        [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  The arguments are an inflation $i:A\to I$, a deflation $s:I \to C$, an inflation $j:B \to J$, a deflation $t: J \to C$
+#!  in an exact category $(\CC,\EE)$ such that $I$ and $J$ are $\EE$-projective objects and the pairs $(i,s)$ and $(j,t)$ are conflations.
+#!  The output is a morphism $u: A \to B$ such that $u$ becomes an isomorphism in the stable category of $\CC$ by the class of exact projective objects.
+#! @Arguments i, s, j, t
+DeclareOperation( "SchanuelsIsomorphismByDeflationsFromSomeExactProjectiveObjects",
+        [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
 
 DeclareAttribute( "IsShortExactSequence_", IsCapCategoryShortSequence );
 #################################

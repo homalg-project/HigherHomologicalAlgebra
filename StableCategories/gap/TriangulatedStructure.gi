@@ -89,7 +89,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         def_2 := ExactCokernelProjection( inf_2 );
                 
-        m := SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" );
+        m := SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects( inf_1, def_1, inf_2, def_2 );
         
         i  := InjectionOfCofactorOfDirectSum( [ Source( def_2 ), Range( def_1 ) ], 2 );
         
@@ -115,7 +115,7 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         def_2 := ExactCokernelProjection( inf_2 );
                 
-        m := InverseForMorphisms( SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" ) );
+        m := SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects( inf_2, def_2, inf_1, def_1 );
         
         i := InjectionOfCofactorOfDirectSum( [ Source( def_1 ), Range( def_2 ) ], 2 );
         
