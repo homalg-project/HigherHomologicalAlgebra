@@ -103,6 +103,10 @@ ExactCokernelColift := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
+ExactCokernelObjectFunctorialWithGivenExactCokernelObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  return_type := "morphism" ),
+
 ColiftAlongDeflation := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
@@ -125,6 +129,10 @@ return_type := "morphism" ),
 ExactKernelLift := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
+
+ExactKernelObjectFunctorialWithGivenExactKernelObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  return_type := "morphism" ),
 
 LiftAlongInflation := rec(
 filter_list := [ "category", "morphism", "morphism" ],
@@ -383,6 +391,36 @@ end );
 InstallMethod( \^, [ IsCapCategoryShortSequence, IsInt ],
   function( seq, i )
     return MorphismAt( seq, i );
+end );
+
+##
+InstallMethod( ExactKernelObjectFunctorial,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+          
+  function( pi_1, mu, pi_2 )
+    local K_1, K_2;
+    
+    K_1 := ExactKernelObject( pi_1 );
+    
+    K_2 := ExactKernelObject( pi_2 );
+    
+    return ExactKernelObjectFunctorialWithGivenExactKernelObjects( K_1, pi_1, mu, pi_2, K_2 );
+    
+end );
+
+##
+InstallMethod( ExactCokernelObjectFunctorial,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+          
+  function( iota_1, nu, iota_2 )
+    local C_1, C_2;
+    
+    C_1 := ExactCokernelObject( iota_1 );
+    
+    C_2 := ExactCokernelObject( iota_2 );
+    
+    return ExactCokernelObjectFunctorialWithGivenExactCokernelObjects( C_1, iota_1, nu, iota_2, C_2 );
+    
 end );
 
 ##############################

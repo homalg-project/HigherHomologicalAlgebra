@@ -177,6 +177,48 @@ DeclareOperation( "AddExactCokernelColift",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
+#!  The arguments are an inflation $\iota_1:A_1 \to B_1$, a morphism $\nu: B_1 \to B_2$ and an inflation $\iota_2:A_2 \to B_2$
+#!  such that there $\mu: A_1 \to A_2$ with $\comp{\iota_1}{\nu} \sim \comp{\mu}{\iota_2}$.
+#!  The operation delegates to the operation
+#!  $\mathrm{ExactCokernelObjectFunctorialWithGivenExactCokernelObjects}(C_1,\iota_1,\nu,\iota_2,C_2)$ such that
+#!  $C_1=\mathrm{ExactCokernelObject}(\iota_1)$, $C_2=\mathrm{ExactCokernelObject}(\iota_2)$.
+#! @Returns a morphism $C_1 \to C_2$
+#! @Arguments iota_1, nu, iota_2
+DeclareOperation( "ExactCokernelObjectFunctorial",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  The arguments are an object $C_1$, an inflation $\iota_1:A_1 \to B_1$, a morphism $\nu: B_1 \to B_2$, an inflation $\iota_2:A_2 \to B_2$ and
+#!  an object $C_2$ such that $C_1=\mathrm{ExactCokernelObject}(\iota_1)$, $C_2=\mathrm{ExactCokernelObject}(\iota_2)$ and there exists
+#!  a morphism $\mu: A_1 \to A_2$ with $\comp{\iota_1}{\nu} \sim \comp{\mu}{\iota_2}$.
+#!  The output is the universal morphism $\lambda: C_1 \rightarrow C_2$ given by the universal property of the cokernel object,
+#!  i.e., $\comp{\pi(\iota_1)}{\lambda} \sim \comp{\nu}{\pi(\iota_2)}$ where
+#!  $\pi(\iota_1) = \mathrm{ExactCokernelProjection}(\iota_1)$ and $\pi(\iota_2) = \mathrm{ExactCokernelProjection}(\iota_2)$.
+#!  @BeginLatexOnly
+#!  \begin{center}
+#! \begin{tikzcd}
+#! A_1 \arrow[r, "\iota_1", hook] \arrow[d, "\exists ~\mu"', dashed] & B_1 \arrow[r, "\pi(\iota_1)", two heads] \arrow[d, "\nu"] & \phantom{.}C_1 \arrow[d, "\exists!~\lambda", dashed] \\
+#! A_2 \arrow[r, "\iota_2"', hook]                                   & B_2 \arrow[r, "\pi(\iota_2)"', two heads]                 & \phantom{.}C_2.
+#! \end{tikzcd}
+#!  \end{center}
+#!  @EndLatexOnly
+#! @Returns a morphism $C_1 \to C_2$
+#! @Arguments C_1, iota_1, nu, iota_2, C_2
+DeclareOperation( "ExactCokernelObjectFunctorialWithGivenExactCokernelObjects",
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddExactCokernelObjectFunctorialWithGivenExactCokernelObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactCokernelObjectFunctorialWithGivenExactCokernelObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactCokernelObjectFunctorialWithGivenExactCokernelObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactCokernelObjectFunctorialWithGivenExactCokernelObjects",
+                  [ IsCapCategory, IsList ] );
+
+
+#! @Description
 #! The arguments are a deflation $\pi: B \rightarrow C$ and a morphism $\tau: B \to T$
 #! such that $\tau$ is coliftable along $\pi$. That is, $\comp{\iota(\pi)}{\tau} \sim 0$.
 #! The output is the unique colift morphism $\lambda:C\to T$ of $\tau$ along $\pi$.
@@ -285,6 +327,46 @@ DeclareOperation( "AddExactKernelLift",
 DeclareOperation( "AddExactKernelLift",
                   [ IsCapCategory, IsList, IsInt ] );
 DeclareOperation( "AddExactKernelLift",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#!  The arguments are a deflation $\pi_1:B_1 \to C_1$, a morphism $\mu: B_1 \to B_2$ and a deflation $\pi_2: B_2 \to C_2$
+#!  such that there exists a morphism $\nu: C_1 \to C_2$ with $\comp{\pi_1}{\nu} \sim \comp{\mu}{\pi_2}$.
+#!  The operation delegates to the operation $\mathrm{ExactKernelObjectFunctorialWithGivenExactKernelObjects}(K_1,\pi_1,\mu,\pi_2,K_2)$
+#!  where $K_1=\mathrm{ExactKernelObject}(\pi_1)$ and $K_2=\mathrm{ExactKernelObject}(\pi_2)$.
+#! @Returns a morphism $K_1 \to K_2$
+#! @Arguments pi_1, mu, pi_2
+DeclareOperation( "ExactKernelObjectFunctorial",
+    [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  The arguments are an object $K_1$, a deflation $\pi_1:B_1 \to C_1$, a morphism $\mu: B_1 \to B_2$, a deflation $\pi_2: B_2 \to C_2$ and
+#!  an object $K_2$ such that $K_1 = \mathrm{ExactKernelObject}(\pi_1)$, $K_2 = \mathrm{ExactKernelObject}(\pi_2)$ and there exists
+#!  a morphism $\nu: C_1 \to C_2$ with $\comp{\pi_1}{\nu} \sim \comp{\mu}{\pi_2}$.
+#!  The output is the universal morphism $\lambda: K_1 \rightarrow K_2$ given by the universal property of the kernel object,
+#!  i.e., $\comp{\lambda}{\iota(\pi_2)} \sim \comp{\iota(\pi_1)}{\mu}$ where
+#!  $\iota(\pi_1) = \mathrm{ExactKernelEmbedding}(\pi_1)$ and $\iota(\pi_2) = \mathrm{ExactKernelEmbedding}(\pi_2)$.
+#!  @BeginLatexOnly
+#!  \begin{center}
+#! \begin{tikzcd}
+#! K_1 \arrow[r, "\iota(\pi_1)", hook] \arrow[d, "\exists !~\lambda"', dashed] & B_1 \arrow[r, "\pi_1", two heads] \arrow[d, "\mu"] & \phantom{.}C_1 \arrow[d, "\exists~\nu", dashed] \\
+#! K_2 \arrow[r, "\iota(\pi_2)"', hook]                                        & B_2 \arrow[r, "\pi_2"', two heads]                 & \phantom{.}C_2.
+#! \end{tikzcd}
+#!  \end{center}
+#!  @EndLatexOnly
+#! @Returns a morphism $K_1 \to K_2$
+#! @Arguments K_1, pi_1, mu, pi_2, K_2
+DeclareOperation( "ExactKernelObjectFunctorialWithGivenExactKernelObjects",
+    [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+DeclareOperation( "AddExactKernelObjectFunctorialWithGivenExactKernelObjects",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
