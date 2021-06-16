@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2021.06-01"
+version: "2021.06-02"
 license: "GPL-2.0-or-later"
-date: 2021-06-05
+date: 2021-06-16
 description: |
     Stable categories of additive categories
 
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-01/StableCategories-2021.06-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-02/StableCategories-2021.06-02.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-01/StableCategories-2021.06-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-02/StableCategories-2021.06-02.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-01/StableCategories-2021.06-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.06-02/StableCategories-2021.06-02.pdf
 
 abstract: |
 
@@ -55,7 +55,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2021.06-01</i>
+             Version 2021.06-02</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/StableCategories">https://homalg-project.github.io/pkg/StableCategories</a></span>.
@@ -63,10 +63,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ StableCategories2021.06-01,
+    @misc{ StableCategories2021.06-02,
       author =           {Saleh, K.},
       title =            {{StableCategories},   Stable  categories  of  additive
-                          categories, {V}ersion 2021.06-01},
+                          categories, {V}ersion 2021.06-02},
       month =            {Jun},
       year =             {2021},
       note =             {GAP package},

@@ -6,10 +6,10 @@
                    [1X Stable categories of additive categories [101X
   
   
-                                   2021.06-01
+                                   2021.06-02
   
   
-                                  5 June 2021
+                                  16 June 2021
   
   
                                   Kamal Saleh
@@ -47,40 +47,46 @@
       1.2-6 ExactCokernelProjection
       1.2-7 ExactCokernelProjectionWithGivenExactCokernelObject
       1.2-8 ExactCokernelColift
-      1.2-9 ColiftAlongDeflation
-      1.2-10 ExactKernelObject
-      1.2-11 ExactKernelEmbedding
-      1.2-12 ExactKernelEmbeddingWithGivenExactKernelObject
-      1.2-13 ExactKernelLift
-      1.2-14 LiftAlongInflation
-      1.2-15 [33X[0;0YExact Fiber Product[133X
-      1.2-16 ExactFiberProduct
-      1.2-17 ProjectionInFirstFactorOfExactFiberProduct
-      1.2-18 ProjectionInSecondFactorOfExactFiberProduct
-      1.2-19 UniversalMorphismIntoExactFiberProduct
-      1.2-20 [33X[0;0YExact Pushout[133X
-      1.2-21 ExactPushout
-      1.2-22 InjectionOfFirstCofactorOfExactPushout
-      1.2-23 InjectionOfSecondCofactorOfExactPushout
-      1.2-24 UniversalMorphismFromExactPushout
-      1.2-25 UniversalMorphismFromExactPushoutWithGivenExactPushout
-      1.2-26 [33X[0;0YExact Categories With Enough E-projectives[133X
-      1.2-27 IsExactCategoryWithEnoughExactProjectives
-      1.2-28 IsExactProjectiveObject
-      1.2-29 ExactProjectiveLift
-      1.2-30 SomeExactProjectiveObject
-      1.2-31 DeflationFromSomeExactProjectiveObject
-      1.2-32 [33X[0;0YExact Categories With Enough E-injecitves[133X
-      1.2-33 IsExactCategoryWithEnoughExactInjectives
-      1.2-34 IsExactInjectiveObject
-      1.2-35 ExactInjectiveColift
-      1.2-36 SomeExactInjectiveObject
-      1.2-37 InflationIntoSomeExactInjectiveObject
-      1.2-38 IsLiftableAlongDeflationFromSomeExactProjectiveObject
-      1.2-39 LiftAlongDeflationFromSomeExactProjectiveObject
-      1.2-40 IsColiftableAlongInflationIntoSomeExactInjectiveObject
-      1.2-41 ColiftAlongInflationIntoSomeExactInjectiveObject
-      1.2-42 IsFrobeniusCategory
+      1.2-9 ExactCokernelObjectFunctorial
+      1.2-10 ExactCokernelObjectFunctorialWithGivenExactCokernelObjects
+      1.2-11 ColiftAlongDeflation
+      1.2-12 ExactKernelObject
+      1.2-13 ExactKernelEmbedding
+      1.2-14 ExactKernelEmbeddingWithGivenExactKernelObject
+      1.2-15 ExactKernelLift
+      1.2-16 ExactKernelObjectFunctorial
+      1.2-17 ExactKernelObjectFunctorialWithGivenExactKernelObjects
+      1.2-18 LiftAlongInflation
+      1.2-19 [33X[0;0YExact Fiber Product[133X
+      1.2-20 ExactFiberProduct
+      1.2-21 ProjectionInFirstFactorOfExactFiberProduct
+      1.2-22 ProjectionInSecondFactorOfExactFiberProduct
+      1.2-23 UniversalMorphismIntoExactFiberProduct
+      1.2-24 [33X[0;0YExact Pushout[133X
+      1.2-25 ExactPushout
+      1.2-26 InjectionOfFirstCofactorOfExactPushout
+      1.2-27 InjectionOfSecondCofactorOfExactPushout
+      1.2-28 UniversalMorphismFromExactPushout
+      1.2-29 UniversalMorphismFromExactPushoutWithGivenExactPushout
+      1.2-30 [33X[0;0YExact Categories With Enough E-projectives[133X
+      1.2-31 IsExactCategoryWithEnoughExactProjectives
+      1.2-32 IsExactProjectiveObject
+      1.2-33 ExactProjectiveLift
+      1.2-34 SomeExactProjectiveObject
+      1.2-35 DeflationFromSomeExactProjectiveObject
+      1.2-36 [33X[0;0YExact Categories With Enough E-injecitves[133X
+      1.2-37 IsExactCategoryWithEnoughExactInjectives
+      1.2-38 IsExactInjectiveObject
+      1.2-39 ExactInjectiveColift
+      1.2-40 SomeExactInjectiveObject
+      1.2-41 InflationIntoSomeExactInjectiveObject
+      1.2-42 IsLiftableAlongDeflationFromSomeExactProjectiveObject
+      1.2-43 LiftAlongDeflationFromSomeExactProjectiveObject
+      1.2-44 IsColiftableAlongInflationIntoSomeExactInjectiveObject
+      1.2-45 ColiftAlongInflationIntoSomeExactInjectiveObject
+      1.2-46 IsFrobeniusCategory
+      1.2-47 SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects
+      1.2-48 SchanuelsIsomorphismByDeflationsFromSomeExactProjectiveObjects
   2 [33X[0;0YLifting and Colifting systems[133X
     2.1 [33X[0;0YSystems of lifting objects[133X
       2.1-1 IsLiftingObject

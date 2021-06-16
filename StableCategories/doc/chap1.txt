@@ -106,7 +106,36 @@
   property  of the cokernel object, i.e., [23X\comp{\pi(\iota)}{\lambda} \sim \tau[123X
   where [23X\pi(\iota) = \mathrm{ExactCokernelProjection}(\iota)[123X.[133X
   
-  [1X1.2-9 ColiftAlongDeflation[101X
+  [1X1.2-9 ExactCokernelObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelObjectFunctorial[102X( [3Xiota_1[103X, [3Xnu[103X, [3Xiota_2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XC_1 \to C_2[123X[133X
+  
+  [33X[0;0YThe  arguments are an inflation [23X\iota_1:A_1 \to B_1[123X, a morphism [23X\nu: B_1 \to
+  B_2[123X  and  an  inflation [23X\iota_2:A_2 \to B_2[123X such that there [23X\mu: A_1 \to A_2[123X
+  with  [23X\comp{\iota_1}{\nu}  \sim \comp{\mu}{\iota_2}[123X. The operation delegates
+  to                               the                               operation
+  [23X\mathrm{ExactCokernelObjectFunctorialWithGivenExactCokernelObjects}(C_1,\iota_1,\nu,\iota_2,C_2)[123X
+  such             that             [23XC_1=\mathrm{ExactCokernelObject}(\iota_1)[123X,
+  [23XC_2=\mathrm{ExactCokernelObject}(\iota_2)[123X.[133X
+  
+  [1X1.2-10 ExactCokernelObjectFunctorialWithGivenExactCokernelObjects[101X
+  
+  [33X[1;0Y[29X[2XExactCokernelObjectFunctorialWithGivenExactCokernelObjects[102X( [3XC_1[103X, [3Xiota_1[103X, [3Xnu[103X, [3Xiota_2[103X, [3XC_2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XC_1 \to C_2[123X[133X
+  
+  [33X[0;0YThe  arguments  are  an  object  [23XC_1[123X,  an  inflation  [23X\iota_1:A_1 \to B_1[123X, a
+  morphism  [23X\nu:  B_1  \to B_2[123X, an inflation [23X\iota_2:A_2 \to B_2[123X and an object
+  [23XC_2[123X        such        that       [23XC_1=\mathrm{ExactCokernelObject}(\iota_1)[123X,
+  [23XC_2=\mathrm{ExactCokernelObject}(\iota_2)[123X  and  there exists a morphism [23X\mu:
+  A_1 \to A_2[123X with [23X\comp{\iota_1}{\nu} \sim \comp{\mu}{\iota_2}[123X. The output is
+  the  universal  morphism [23X\lambda: C_1 \rightarrow C_2[123X given by the universal
+  property  of  the  cokernel  object, i.e., [23X\comp{\pi(\iota_1)}{\lambda} \sim
+  \comp{\nu}{\pi(\iota_2)}[123X            where           [23X\pi(\iota_1)           =
+  \mathrm{ExactCokernelProjection}(\iota_1)[123X       and      [23X\pi(\iota_2)      =
+  \mathrm{ExactCokernelProjection}(\iota_2)[123X.[133X
+  
+  [1X1.2-11 ColiftAlongDeflation[101X
   
   [33X[1;0Y[29X[2XColiftAlongDeflation[102X( [3Xpi[103X, [3Xtau[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC \to T[123X[133X
@@ -116,7 +145,7 @@
   [23X\comp{\iota(\pi)}{\tau}  \sim  0[123X.  The  output is the unique colift morphism
   [23X\lambda:C\to T[123X of [23X\tau[123X along [23X\pi[123X.[133X
   
-  [1X1.2-10 ExactKernelObject[101X
+  [1X1.2-12 ExactKernelObject[101X
   
   [33X[1;0Y[29X[2XExactKernelObject[102X( [3Xpi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan object [23XK[123X[133X
@@ -124,7 +153,7 @@
   [33X[0;0YThe argument is a deflation [23X\pi:B\to C[123X. The output is the kernel object [23XK[123X of
   [23X\pi[123X.[133X
   
-  [1X1.2-11 ExactKernelEmbedding[101X
+  [1X1.2-13 ExactKernelEmbedding[101X
   
   [33X[1;0Y[29X[2XExactKernelEmbedding[102X( [3Xpi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan inflation [23XK\to B[123X[133X
@@ -133,7 +162,7 @@
   [23X\iota(\pi):K\to  B[123X with [23XK=\mathrm{ExactKernelObject}(\pi)[123X such that the pair
   [23X(\iota(\pi),\pi)[123X defines a conflation.[133X
   
-  [1X1.2-12 ExactKernelEmbeddingWithGivenExactKernelObject[101X
+  [1X1.2-14 ExactKernelEmbeddingWithGivenExactKernelObject[101X
   
   [33X[1;0Y[29X[2XExactKernelEmbeddingWithGivenExactKernelObject[102X( [3Xpi[103X, [3XK[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan inflation [23XK\to B[123X[133X
@@ -142,7 +171,7 @@
   [23XK=\mathrm{ExactKernelObject}(\pi)[123X.    The    output    is    an    inflation
   [23X\iota(\pi):K\to B[123X such that the pair [23X(\iota(\pi),\pi)[123X defines a conflation.[133X
   
-  [1X1.2-13 ExactKernelLift[101X
+  [1X1.2-15 ExactKernelLift[101X
   
   [33X[1;0Y[29X[2XExactKernelLift[102X( [3Xpi[103X, [3Xtau[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XT \to K[123X[133X
@@ -154,7 +183,36 @@
   [23X\comp{\lambda}{\iota(\pi)}      \sim     \tau[123X     where     [23X\iota(\pi)     =
   \mathrm{ExactKernelEmbedding}(\pi)[123X.[133X
   
-  [1X1.2-14 LiftAlongInflation[101X
+  [1X1.2-16 ExactKernelObjectFunctorial[101X
+  
+  [33X[1;0Y[29X[2XExactKernelObjectFunctorial[102X( [3Xpi_1[103X, [3Xmu[103X, [3Xpi_2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XK_1 \to K_2[123X[133X
+  
+  [33X[0;0YThe arguments are a deflation [23X\pi_1:B_1 \to C_1[123X, a morphism [23X\mu: B_1 \to B_2[123X
+  and  a  deflation  [23X\pi_2: B_2 \to C_2[123X such that there exists a morphism [23X\nu:
+  C_1  \to  C_2[123X  with  [23X\comp{\pi_1}{\nu} \sim \comp{\mu}{\pi_2}[123X. The operation
+  delegates                  to                  the                 operation
+  [23X\mathrm{ExactKernelObjectFunctorialWithGivenExactKernelObjects}(K_1,\pi_1,\mu,\pi_2,K_2)[123X
+  where                [23XK_1=\mathrm{ExactKernelObject}(\pi_1)[123X               and
+  [23XK_2=\mathrm{ExactKernelObject}(\pi_2)[123X.[133X
+  
+  [1X1.2-17 ExactKernelObjectFunctorialWithGivenExactKernelObjects[101X
+  
+  [33X[1;0Y[29X[2XExactKernelObjectFunctorialWithGivenExactKernelObjects[102X( [3XK_1[103X, [3Xpi_1[103X, [3Xmu[103X, [3Xpi_2[103X, [3XK_2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism [23XK_1 \to K_2[123X[133X
+  
+  [33X[0;0YThe  arguments  are an object [23XK_1[123X, a deflation [23X\pi_1:B_1 \to C_1[123X, a morphism
+  [23X\mu: B_1 \to B_2[123X, a deflation [23X\pi_2: B_2 \to C_2[123X and an object [23XK_2[123X such that
+  [23XK_1         =         \mathrm{ExactKernelObject}(\pi_1)[123X,        [23XK_2        =
+  \mathrm{ExactKernelObject}(\pi_2)[123X  and  there exists a morphism [23X\nu: C_1 \to
+  C_2[123X  with  [23X\comp{\pi_1}{\nu}  \sim  \comp{\mu}{\pi_2}[123X.  The  output  is  the
+  universal  morphism  [23X\lambda:  K_1  \rightarrow  K_2[123X  given by the universal
+  property  of  the  kernel  object,  i.e.,  [23X\comp{\lambda}{\iota(\pi_2)} \sim
+  \comp{\iota(\pi_1)}{\mu}[123X            where           [23X\iota(\pi_1)           =
+  \mathrm{ExactKernelEmbedding}(\pi_1)[123X        and        [23X\iota(\pi_2)        =
+  \mathrm{ExactKernelEmbedding}(\pi_2)[123X.[133X
+  
+  [1X1.2-18 LiftAlongInflation[101X
   
   [33X[1;0Y[29X[2XLiftAlongInflation[102X( [3Xiota[103X, [3Xtau[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC \to T[123X[133X
@@ -240,7 +298,7 @@
   [4X[32X[104X
   
   
-  [1X1.2-15 [33X[0;0YExact Fiber Product[133X[101X
+  [1X1.2-19 [33X[0;0YExact Fiber Product[133X[101X
   
   [33X[0;0YGiven  a  deflation  [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X, an exact fiber
   product  diagram  of  [23X(\pi,\alpha)[123X  is  defined  by an object [23XA\times_C B[123X, a
@@ -250,7 +308,7 @@
   unique  morphism  [23Xu:T\to  A\times_C  B[123X  with  [23X\comp{u}{p_A}  \sim  p'_A[123X  and
   [23X\comp{u}{p_B} \sim p'_B[123X.[133X
   
-  [1X1.2-16 ExactFiberProduct[101X
+  [1X1.2-20 ExactFiberProduct[101X
   
   [33X[1;0Y[29X[2XExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan object[133X
@@ -258,7 +316,7 @@
   [33X[0;0YThe  arguments  are a deflation [23X\pi:A\to C[123X and a morphism [23X\alpha:B\to C[123X. The
   output is the fiber product object [23XA\times_C B[123X of [23X\pi[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-17 ProjectionInFirstFactorOfExactFiberProduct[101X
+  [1X1.2-21 ProjectionInFirstFactorOfExactFiberProduct[101X
   
   [33X[1;0Y[29X[2XProjectionInFirstFactorOfExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23Xp_A:A\times_C B\to A[123X[133X
@@ -267,7 +325,7 @@
   output  is  a  morphism  [23Xp_A:A\times_C  B  \to  A[123X which is a part of a fiber
   product diagram of [23X\pi[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-18 ProjectionInSecondFactorOfExactFiberProduct[101X
+  [1X1.2-22 ProjectionInSecondFactorOfExactFiberProduct[101X
   
   [33X[1;0Y[29X[2XProjectionInSecondFactorOfExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23Xp_B:A\times_C B\to B[123X[133X
@@ -276,7 +334,7 @@
   output  is  a  morphism  [23Xp_B:A\times_C  B  \to  B[123X which is a part of a fiber
   product diagram of [23X\pi[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-19 UniversalMorphismIntoExactFiberProduct[101X
+  [1X1.2-23 UniversalMorphismIntoExactFiberProduct[101X
   
   [33X[1;0Y[29X[2XUniversalMorphismIntoExactFiberProduct[102X( [3Xpi[103X, [3Xalpha[103X, [3Xpprime_A[103X, [3Xpprime_B[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23Xu:T \to A \times_C B[123X[133X
@@ -329,7 +387,7 @@
   [4X[32X[104X
   
   
-  [1X1.2-20 [33X[0;0YExact Pushout[133X[101X
+  [1X1.2-24 [33X[0;0YExact Pushout[133X[101X
   
   [33X[0;0YGiven  an  inflation  [23X\iota:C\to  A[123X  and  a morphism [23X\alpha:C\to B[123X, an exact
   pushout  diagram  of  [23X(\iota,\alpha)[123X  is defined by an object [23XA\oplus_C B[123X, a
@@ -339,7 +397,7 @@
   there  exists a unique morphism [23Xu: A\oplus_C B \to T[123X with [23X\comp{q_A}{ u}\sim
   q'_A[123X and [23X\comp{q_B}{ u} \sim q'_B[123X.[133X
   
-  [1X1.2-21 ExactPushout[101X
+  [1X1.2-25 ExactPushout[101X
   
   [33X[1;0Y[29X[2XExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan object[133X
@@ -347,7 +405,7 @@
   [33X[0;0YThe  arguments  are  an inflation [23X\iota:C\to A[123X and a morphism [23X\alpha:C\to B[123X.
   The output is the pushout object [23XA\oplus_C B[123X of [23X\iota[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-22 InjectionOfFirstCofactorOfExactPushout[101X
+  [1X1.2-26 InjectionOfFirstCofactorOfExactPushout[101X
   
   [33X[1;0Y[29X[2XInjectionOfFirstCofactorOfExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to A\oplus_C B[123X[133X
@@ -356,7 +414,7 @@
   The  output is a morphism [23Xq_A:A \to A\oplus_C B[123X which is a part of a pushout
   diagram of [23X\iota[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-23 InjectionOfSecondCofactorOfExactPushout[101X
+  [1X1.2-27 InjectionOfSecondCofactorOfExactPushout[101X
   
   [33X[1;0Y[29X[2XInjectionOfSecondCofactorOfExactPushout[102X( [3Xiota[103X, [3Xalpha[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya inflation [23XB \to A\oplus_C B[123X[133X
@@ -365,7 +423,7 @@
   The  output  is  an  inflation  [23Xq_B:B  \to  A\oplus_C B[123X which is a part of a
   pushout diagram of [23X\iota[123X and [23X\alpha[123X.[133X
   
-  [1X1.2-24 UniversalMorphismFromExactPushout[101X
+  [1X1.2-28 UniversalMorphismFromExactPushout[101X
   
   [33X[1;0Y[29X[2XUniversalMorphismFromExactPushout[102X( [3Xiota[103X, [3Xalpha[103X, [3Xqprime_A[103X, [3Xqprime_B[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA\oplus_C B \to T[123X[133X
@@ -375,7 +433,7 @@
   \comp{\alpha}{  q'_B}[123X. The output is the universal morphism [23Xu:A\oplus_C B\to
   T[123X with [23X\comp{q_A}{ u}\sim q'_A[123X and [23X\comp{q_B}{u} \sim q'_B[123X.[133X
   
-  [1X1.2-25 UniversalMorphismFromExactPushoutWithGivenExactPushout[101X
+  [1X1.2-29 UniversalMorphismFromExactPushoutWithGivenExactPushout[101X
   
   [33X[1;0Y[29X[2XUniversalMorphismFromExactPushoutWithGivenExactPushout[102X( [3Xiota[103X, [3Xalpha[103X, [3Xqprime_A[103X, [3Xqprime_B[103X, [3XP[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XP \to T[123X[133X
@@ -429,7 +487,7 @@
   [4X[32X[104X
   
   
-  [1X1.2-26 [33X[0;0YExact Categories With Enough E-projectives[133X[101X
+  [1X1.2-30 [33X[0;0YExact Categories With Enough E-projectives[133X[101X
   
   [33X[0;0YLet   [23X(\CC,\EE)[123X   be   an   exact   category.   An   object   [23XP[123X   is  called
   [23X\mathcal{E}[123X-projective if for every morphism [23X\tau:P\to C[123X and every deflation
@@ -438,7 +496,7 @@
   enough [23X\EE[123X-projectives if for each object [23XA[123X in [23X\CC[123X, there exists a deflation
   [23Xp_A:P_A \to A[123X where [23XP_A[123X is an [23X\EE[123X-projecitve object.[133X
   
-  [1X1.2-27 IsExactCategoryWithEnoughExactProjectives[101X
+  [1X1.2-31 IsExactCategoryWithEnoughExactProjectives[101X
   
   [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactProjectives[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -447,7 +505,7 @@
   with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
   enough [23X\EE[123X-projectives.[133X
   
-  [1X1.2-28 IsExactProjectiveObject[101X
+  [1X1.2-32 IsExactProjectiveObject[101X
   
   [33X[1;0Y[29X[2XIsExactProjectiveObject[102X( [3XP[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ya boolian[133X
@@ -455,7 +513,7 @@
   [33X[0;0YThe  argument  is  an  object [23XP[123X in [23X\CC[123X. The output is whether or not [23XP[123X is an
   [23X\EE[123X-projective object.[133X
   
-  [1X1.2-29 ExactProjectiveLift[101X
+  [1X1.2-33 ExactProjectiveLift[101X
   
   [33X[1;0Y[29X[2XExactProjectiveLift[102X( [3Xtau[103X, [3Xpi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X\lambda:P\to B[123X[133X
@@ -493,7 +551,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X1.2-30 SomeExactProjectiveObject[101X
+  [1X1.2-34 SomeExactProjectiveObject[101X
   
   [33X[1;0Y[29X[2XSomeExactProjectiveObject[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan [23X\EE[123X-projective object[133X
@@ -501,7 +559,7 @@
   [33X[0;0YThe  argument  is an object [23XA[123X in [23X\CC[123X. The output is an [23X\EE[123X-projective object
   [23XP_A[123X such that there exists a deflation [23XP_A \to A[123X.[133X
   
-  [1X1.2-31 DeflationFromSomeExactProjectiveObject[101X
+  [1X1.2-35 DeflationFromSomeExactProjectiveObject[101X
   
   [33X[1;0Y[29X[2XDeflationFromSomeExactProjectiveObject[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya deflation [23XP_A \to A[123X[133X
@@ -528,7 +586,7 @@
   [4X[32X[104X
   
   
-  [1X1.2-32 [33X[0;0YExact Categories With Enough E-injecitves[133X[101X
+  [1X1.2-36 [33X[0;0YExact Categories With Enough E-injecitves[133X[101X
   
   [33X[0;0YLet   [23X(\CC,\EE)[123X   be   an   exact   category.   An   object   [23XI[123X   is  called
   [23X\mathcal{E}[123X-injective if for every inflation [23X\iota:A\to B[123X and every morphism
@@ -537,7 +595,7 @@
   [23XA[123X  in  [23X\CC[123X,  there  exists  an  inflation  [23X\iota_A:A \to I_A[123X where [23XI_A[123X is an
   [23X\EE[123X-injective object.[133X
   
-  [1X1.2-33 IsExactCategoryWithEnoughExactInjectives[101X
+  [1X1.2-37 IsExactCategoryWithEnoughExactInjectives[101X
   
   [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactInjectives[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -546,7 +604,7 @@
   with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
   enough [23X\EE[123X-injectives.[133X
   
-  [1X1.2-34 IsExactInjectiveObject[101X
+  [1X1.2-38 IsExactInjectiveObject[101X
   
   [33X[1;0Y[29X[2XIsExactInjectiveObject[102X( [3XI[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ya boolian[133X
@@ -554,7 +612,7 @@
   [33X[0;0YThe  argument  is  an  object [23XI[123X in [23X\CC[123X. The output is whether or not [23XI[123X is an
   [23X\EE[123X-injective object.[133X
   
-  [1X1.2-35 ExactInjectiveColift[101X
+  [1X1.2-39 ExactInjectiveColift[101X
   
   [33X[1;0Y[29X[2XExactInjectiveColift[102X( [3Xiota[103X, [3Xtau[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X\lambda:B \to I[123X[133X
@@ -592,7 +650,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X1.2-36 SomeExactInjectiveObject[101X
+  [1X1.2-40 SomeExactInjectiveObject[101X
   
   [33X[1;0Y[29X[2XSomeExactInjectiveObject[102X( [3XA[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan [23X\EE[123X-injective object[133X
@@ -600,7 +658,7 @@
   [33X[0;0YThe  argument  is  an object [23XA[123X in [23X\CC[123X. The output is an [23X\EE[123X-injective object
   [23XI_A[123X such that there exists an inflation [23XA \to I_A[123X.[133X
   
-  [1X1.2-37 InflationIntoSomeExactInjectiveObject[101X
+  [1X1.2-41 InflationIntoSomeExactInjectiveObject[101X
   
   [33X[1;0Y[29X[2XInflationIntoSomeExactInjectiveObject[102X( [3XA[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan inflation [23XA \to I_A[123X[133X
@@ -626,7 +684,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X1.2-38 IsLiftableAlongDeflationFromSomeExactProjectiveObject[101X
+  [1X1.2-42 IsLiftableAlongDeflationFromSomeExactProjectiveObject[101X
   
   [33X[1;0Y[29X[2XIsLiftableAlongDeflationFromSomeExactProjectiveObject[102X( [3Xalpha[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -635,7 +693,7 @@
   enough  [23X\EE[123X-projectives.  The  output  is  whether or not [23X\alpha[123X lifts along
   [23Xp_B:P_B\to B[123X where [23Xp_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)[123X.[133X
   
-  [1X1.2-39 LiftAlongDeflationFromSomeExactProjectiveObject[101X
+  [1X1.2-43 LiftAlongDeflationFromSomeExactProjectiveObject[101X
   
   [33X[1;0Y[29X[2XLiftAlongDeflationFromSomeExactProjectiveObject[102X( [3Xalpha[103X ) [32X attribute[133X
   
@@ -658,7 +716,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X1.2-40 IsColiftableAlongInflationIntoSomeExactInjectiveObject[101X
+  [1X1.2-44 IsColiftableAlongInflationIntoSomeExactInjectiveObject[101X
   
   [33X[1;0Y[29X[2XIsColiftableAlongInflationIntoSomeExactInjectiveObject[102X( [3Xalpha[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -668,7 +726,7 @@
   [23X\iota_A:A\to                            I_A[123X                            where
   [23X\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)[123X.[133X
   
-  [1X1.2-41 ColiftAlongInflationIntoSomeExactInjectiveObject[101X
+  [1X1.2-45 ColiftAlongInflationIntoSomeExactInjectiveObject[101X
   
   [33X[1;0Y[29X[2XColiftAlongInflationIntoSomeExactInjectiveObject[102X( [3Xalpha[103X ) [32X attribute[133X
   
@@ -692,7 +750,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X1.2-42 IsFrobeniusCategory[101X
+  [1X1.2-46 IsFrobeniusCategory[101X
   
   [33X[1;0Y[29X[2XIsFrobeniusCategory[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
@@ -704,4 +762,26 @@
   [30X    [33X[0;6Y[23X(\CC,\EE)[123X has enough [23X\EE[123X-projectives and [23X\EE[123X-injectives,[133X
   
   [30X    [33X[0;6Yan object in [23X\CC[123X is [23X\EE[123X-projective if and only if it is [23X\EE[123X-injective.[133X
+  
+  [1X1.2-47 SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects[101X
+  
+  [33X[1;0Y[29X[2XSchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects[102X( [3Xi[103X, [3Xs[103X, [3Xj[103X, [3Xt[103X ) [32X operation[133X
+  
+  [33X[0;0YThe arguments are an inflation [23Xi:A\to I[123X, a deflation [23Xs:I \to B[123X, an inflation
+  [23Xj:A \to J[123X, a deflation [23Xt: J \to C[123X in an exact category [23X(\CC,\EE)[123X such that [23XI[123X
+  and  [23XJ[123X  are  [23X\EE[123X-injective  objects  and  the  pairs  [23X(i,s)[123X  and  [23X(j,t)[123X  are
+  conflations.  The  output  is  a  morphism [23Xu: B \to C[123X such that [23Xu[123X becomes an
+  isomorphism  in  the  stable category of [23X\CC[123X by the class of exact injective
+  objects.[133X
+  
+  [1X1.2-48 SchanuelsIsomorphismByDeflationsFromSomeExactProjectiveObjects[101X
+  
+  [33X[1;0Y[29X[2XSchanuelsIsomorphismByDeflationsFromSomeExactProjectiveObjects[102X( [3Xi[103X, [3Xs[103X, [3Xj[103X, [3Xt[103X ) [32X operation[133X
+  
+  [33X[0;0YThe arguments are an inflation [23Xi:A\to I[123X, a deflation [23Xs:I \to C[123X, an inflation
+  [23Xj:B \to J[123X, a deflation [23Xt: J \to C[123X in an exact category [23X(\CC,\EE)[123X such that [23XI[123X
+  and  [23XJ[123X  are  [23X\EE[123X-projective  objects  and  the  pairs  [23X(i,s)[123X  and  [23X(j,t)[123X are
+  conflations.  The  output  is  a  morphism [23Xu: A \to B[123X such that [23Xu[123X becomes an
+  isomorphism  in  the stable category of [23X\CC[123X by the class of exact projective
+  objects.[133X
   
