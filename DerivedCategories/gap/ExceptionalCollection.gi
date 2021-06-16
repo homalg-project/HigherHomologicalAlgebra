@@ -845,7 +845,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
       end );
       
       AddRandomMorphismWithFixedSourceByInteger( full,
-        function( o, n )
+        function( full, o, n )
           local objects, p, b; 
           
           objects := Shuffle( ShallowCopy( SetOfKnownObjects( full ) ) );
@@ -863,7 +863,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
       end );
       
       AddRandomMorphismWithFixedRangeByInteger( full,
-        function( o, n )
+        function( full, o, n )
           local objects, p, b;
           
           objects := Shuffle( ShallowCopy( SetOfKnownObjects( full ) ) );
@@ -881,7 +881,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
       end );
       
       AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
-        function( s, r, n )
+        function( full, s, r, n )
           local b;
           
           b := BasisOfExternalHom( s, r );
@@ -915,12 +915,12 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
     
     if IsQuiverRepresentationCategory( ambient ) then
       AddIsEqualForObjects( full,
-        { a, b } -> IsIdenticalObj( a, b ) or
+        { cat, a, b } -> IsIdenticalObj( a, b ) or
           DimensionVector( UnderlyingCell( a ) ) = DimensionVector( UnderlyingCell( b ) )
       );
       
       AddIsEqualForMorphisms( full,
-        function( alpha, beta )
+        function( cat, alpha, beta )
           return
           DimensionVector( Source( UnderlyingCell( alpha ) ) )
             = DimensionVector( Source( UnderlyingCell( beta ) ) ) and
@@ -1172,7 +1172,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
       end );
       
       AddRandomMorphismWithFixedSourceByInteger( full,
-        function( s, n )
+        function( full, s, n )
           local I, J;
           J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
           I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
@@ -1180,7 +1180,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
       end );
     
       AddRandomMorphismWithFixedRangeByInteger( full,
-        function( r, n )
+        function( full, r, n )
           local I, J;
           J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
           I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
@@ -1188,7 +1188,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
       end );
      
       AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
-        function( s, r, n )
+        function( full, s, r, n )
           local I, J;
           J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
           I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
@@ -1221,7 +1221,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
        
       ##
       AddIsWellDefinedForObjects( full,
-        function( a )
+        function( full, a )
         
           return IsWellDefined( UnderlyingCell( a ) ) and IsProjective( UnderlyingCell( a ) );
     
@@ -1229,7 +1229,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       
       ##
       AddIsWellDefinedForMorphisms( full,
-        function( phi )
+        function( full, phi )
           
           return IsWellDefined( Source( phi ) ) and IsWellDefined( Range( phi ) ) and IsWellDefined( UnderlyingCell( phi ) );
       
@@ -1241,7 +1241,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       
       ##
       AddBasisOfExternalHom( full,
-        function( a, b )
+        function( full, a, b )
           local B;
           
           B := BasisOfExternalHom( UnderlyingCell( a ), UnderlyingCell( b ) );
@@ -1252,7 +1252,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       
       ##
       AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-        function( alpha, B )
+        function( full, alpha, B )
           
           return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
           

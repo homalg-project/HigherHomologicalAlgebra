@@ -103,6 +103,10 @@ ExactCokernelColift := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
 
+ExactCokernelObjectFunctorialWithGivenExactCokernelObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  return_type := "morphism" ),
+
 ColiftAlongDeflation := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
@@ -125,6 +129,10 @@ return_type := "morphism" ),
 ExactKernelLift := rec(
 filter_list := [ "category", "morphism", "morphism" ],
 return_type := "morphism" ),
+
+ExactKernelObjectFunctorialWithGivenExactKernelObjects := rec(
+  filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
+  return_type := "morphism" ),
 
 LiftAlongInflation := rec(
 filter_list := [ "category", "morphism", "morphism" ],
@@ -385,6 +393,36 @@ InstallMethod( \^, [ IsCapCategoryShortSequence, IsInt ],
     return MorphismAt( seq, i );
 end );
 
+##
+InstallMethod( ExactKernelObjectFunctorial,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+          
+  function( pi_1, mu, pi_2 )
+    local K_1, K_2;
+    
+    K_1 := ExactKernelObject( pi_1 );
+    
+    K_2 := ExactKernelObject( pi_2 );
+    
+    return ExactKernelObjectFunctorialWithGivenExactKernelObjects( K_1, pi_1, mu, pi_2, K_2 );
+    
+end );
+
+##
+InstallMethod( ExactCokernelObjectFunctorial,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+          
+  function( iota_1, nu, iota_2 )
+    local C_1, C_2;
+    
+    C_1 := ExactCokernelObject( iota_1 );
+    
+    C_2 := ExactCokernelObject( iota_2 );
+    
+    return ExactCokernelObjectFunctorialWithGivenExactCokernelObjects( C_1, iota_1, nu, iota_2, C_2 );
+    
+end );
+
 ##############################
 ##
 ## View
@@ -459,121 +497,45 @@ end );
 ##
 #####################################
 
-#           f1        g1
-#        A ----> I1 -----> B1
+#           i        s
+#        A >----> I ----->> B
 #
 #
-#        A ----> I2 -----> B2
-#           f2        g2
-#
-#        SchanuelsIsomorphism : I2 𐌈 B1 ----> I1 𐌈 B2
-# In the stable category,  B1 ------> I2 𐌈 B1 -------> I1 𐌈 B2 -------> B2 is also supposed to be isomorphism.
+#        A >----> J ----->> C
+#           j        t
 
 ##
-InstallMethod( SchanuelsIsomorphism,
-            [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsString ],
-            
-  function( inf_1, def_1, inf_2, def_2, string )
-    local I1, B1, I2, B2, phi_1, phi_2, h1, h2, i_phi_1, i_phi_2, alpha, beta, m;
+InstallMethod( SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+          
+  function( i, s, j, t )
+    local lambda;
     
-    if not string = "left" then
-      TryNextMethod();
-    fi;
+    lambda := ExactInjectiveColift( i, j );
     
-    if not IsEqualForObjects( Source( inf_1 ), Source( inf_2 ) ) then
-      Error( "Wrong input!" );
-    fi;
-    
-    I1 := Source( def_1 );
-    
-    B1 := Range( def_1 );
-    
-    I2 := Source( def_2 );
-    
-    B2 := Range( def_2 );
-    
-    phi_1 := InjectionOfFirstCofactorOfExactPushout( inf_1, inf_2 );
-    
-    phi_2 := InjectionOfSecondCofactorOfExactPushout( inf_1, inf_2 );
-    
-    h1 := UniversalMorphismFromExactPushout( inf_1, inf_2, def_1, ZeroMorphism( I2, B1  ) );
-    
-    h2 := UniversalMorphismFromExactPushout( inf_1, inf_2, ZeroMorphism( I1, B2  ), def_2 );
-    
-    i_phi_1 := ExactInjectiveColift( phi_1, IdentityMorphism( I1 ) );
-    
-    i_phi_2 := ExactInjectiveColift( phi_2, IdentityMorphism( I2 ) );
-    
-    alpha := MorphismBetweenDirectSums(
-      [
-        [ i_phi_2, h1  ]
-      ] );
-    
-    beta := MorphismBetweenDirectSums(
-      [
-        [ i_phi_1, h2  ]
-      ] );
-    
-    m := PreCompose( InverseForMorphisms( alpha ), beta );
-    
-    return m;
+    return ColiftAlongDeflation( s, PreCompose( lambda, t ) );
     
 end );
 
 
-#           inf_1        def_1
-#        A1 ------> P1 ------------> B
+#             i         s
+#        A >-----> I ------->> C
 #
 #
-#        A2 ------> P2 ------------> B
-#           inf_2        def_2
+#        B >-----> J ------->> C
+#             j         t
 #
-#        SchanuelsIsomorphism : A1 𐌈 P2 ----> A2 𐌈 P1
-# In the stable category,  A1 ------> A1 𐌈 P2 ----> A2 𐌈 P1 -------> A2 is also supposed to be isomorphism.
 
-InstallMethod( SchanuelsIsomorphism,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsString ],
+##
+InstallMethod( SchanuelsIsomorphismByDeflationsFromSomeExactProjectiveObjects,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
           
-  function( inf_1, def_1, inf_2, def_2, string )
-    local A1, P1, A2, P2, phi_1, phi_2, h1, h2, i_phi_1, i_phi_2, alpha, beta;
+  function( i, s, j, t )
+    local lambda;
     
-    if not string = "right" then
-      TryNextMethod();
-    fi;
+    lambda := ExactProjectiveLift( s, t );
     
-    A1 := Source( inf_1 );
-    
-    P1 := Range( inf_1 );
-    
-    A2 := Source( inf_2 );
-    
-    P2 := Range( inf_2 );
-    
-    phi_1 := ProjectionInFirstFactorOfExactFiberProduct( def_1, def_2 );
-    
-    phi_2 := ProjectionInSecondFactorOfExactFiberProduct( def_1, def_2 );
-    
-    h1 := UniversalMorphismIntoExactFiberProduct( def_1, def_2, inf_1, ZeroMorphism( A1, P2  ) );
-    
-    h2 := UniversalMorphismIntoExactFiberProduct( def_1, def_2, ZeroMorphism( A2, P1 ), inf_2 );
-    
-    i_phi_1 := ExactProjectiveLift( IdentityMorphism( P1 ), phi_1 );
-    
-    i_phi_2 := ExactProjectiveLift( IdentityMorphism( P2 ), phi_2 );
-    
-    alpha := MorphismBetweenDirectSums(
-      [
-        [ h1 ],
-        [ i_phi_2 ]
-      ] );
-    
-    beta := MorphismBetweenDirectSums(
-      [
-        [ h2 ],
-        [ i_phi_1 ]
-      ] );
-    
-    return PreCompose( alpha, InverseForMorphisms( beta ) );
+    return LiftAlongInflation( PreCompose( i, lambda ), j );
     
 end );
 

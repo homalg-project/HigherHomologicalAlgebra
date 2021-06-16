@@ -3,234 +3,250 @@
 #
 # Implementations
 #
+
 BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
   
   function( stable_cat )
     
     SetFilterObj( stable_cat, IsTriangulatedCategory );
-
+    
+    ##
     AddShiftOnObject( stable_cat,
-      function( a )
-        local inf, def;
+      function( A )
+        local iota, shift_A;
         
-        a := UnderlyingCell( a );
+        A := UnderlyingCell( A );
         
-        inf := InflationIntoSomeExactInjectiveObject( a );
+        iota := InflationIntoSomeExactInjectiveObject( A );
         
-        def := ExactCokernelProjection( inf );
+        shift_A := ExactCokernelObject( iota );
         
-        return StableCategoryObject( stable_cat, Range( def ) );
+        return StableCategoryObject( stable_cat, shift_A );
         
     end );
-      
+    
+    ##
     AddShiftOnMorphismWithGivenObjects( stable_cat,
-      function( sigma_s, phi, sigma_r )
-        local inf1, inf2, m;
+      function( shift_s, phi, shift_r )
+        local iota_1, iota_2, nu;
         
         phi := UnderlyingCell( phi );
         
-        inf1 := InflationIntoSomeExactInjectiveObject( Source( phi ) );
+        iota_1 := InflationIntoSomeExactInjectiveObject( Source( phi ) );
         
-        inf2 := InflationIntoSomeExactInjectiveObject( Range( phi ) );
+        iota_2 := InflationIntoSomeExactInjectiveObject( Range( phi ) );
         
-        m := ExactInjectiveColift( inf1, PreCompose( phi, inf2 ) );
+        nu := ExactInjectiveColift( iota_1, PreCompose( phi, iota_2 ) );
         
-        m := CokernelObjectFunctorial( inf1, m, inf2 );
+        nu := ExactCokernelObjectFunctorial( iota_1, nu, iota_2 );
         
-        return StableCategoryMorphism( sigma_s, m, sigma_r );
+        return StableCategoryMorphism( shift_s, nu, shift_r );
         
     end );
-      
+     
+    ##
     AddInverseShiftOnObject( stable_cat,
-      function( a )
-        local def, inf;
+      function( A )
+        local pi, K;
         
-        a := UnderlyingCell( a );
+        A := UnderlyingCell( A );
         
-        def := DeflationFromSomeExactProjectiveObject( a );
+        pi := DeflationFromSomeExactProjectiveObject( A );
         
-        inf := ExactKernelEmbedding( def );
+        K := ExactKernelObject( pi );
         
-        return StableCategoryObject( stable_cat, Source( inf ) );
+        return StableCategoryObject( stable_cat, K );
         
     end );
-        
+    
+    ##
     AddInverseShiftOnMorphismWithGivenObjects( stable_cat,
-      function( i_sigma_s, phi, i_sigma_r )
-        local def1, def2, m;
+      function( i_shift_s, phi, i_shift_r )
+        local pi_1, pi_2, mu;
         
         phi := UnderlyingCell( phi );
         
-        def1 := DeflationFromSomeExactProjectiveObject( Source( phi ) );
+        pi_1 := DeflationFromSomeExactProjectiveObject( Source( phi ) );
         
-        def2 := DeflationFromSomeExactProjectiveObject( Range( phi ) );
+        pi_2 := DeflationFromSomeExactProjectiveObject( Range( phi ) );
         
-        m := ExactProjectiveLift( PreCompose( def1, phi ), def2 );
+        mu := ExactProjectiveLift( PreCompose( pi_1, phi ), pi_2 );
         
-        m := KernelObjectFunctorial( def1, m, def2 );
+        mu := ExactKernelObjectFunctorial( pi_1, mu, pi_2 );
         
-        return StableCategoryMorphism( i_sigma_s, m, i_sigma_r );
+        return StableCategoryMorphism( i_shift_s, mu, i_shift_r );
         
     end );
-
+    
     ##
     AddUnitIsomorphismWithGivenObject( stable_cat,
       
-      function( _a_, shift_of_ishift_a )
-        local a, def_1, inf_1, inf_2, def_2, m, i, p;
+      function( A, shift_of_ishift_A )
+        local cell_A, pi_1, iota_1, iota_2, pi_2, m, i, p;
         
-        a := UnderlyingCell( _a_ );
+        cell_A := UnderlyingCell( A );
         
-        def_1 := DeflationFromSomeExactProjectiveObject( a );
+        pi_1 := DeflationFromSomeExactProjectiveObject( cell_A );
         
-        inf_1 := ExactKernelEmbedding( def_1 );
+        iota_1 := ExactKernelEmbedding( pi_1 );
         
-        inf_2 := InflationIntoSomeExactInjectiveObject( Source( inf_1 ) );
+        iota_2 := InflationIntoSomeExactInjectiveObject( Source( iota_1 ) );
         
-        def_2 := ExactCokernelProjection( inf_2 );
-                
-        m := SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" );
+        pi_2 := ExactCokernelProjection( iota_2 );
         
-        i  := InjectionOfCofactorOfDirectSum( [ Source( def_2 ), Range( def_1 ) ], 2 );
+        m := SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects( iota_1, pi_1, iota_2, pi_2 );
         
-        p := ProjectionInFactorOfDirectSum( [ Source( def_1 ), Range( def_2 ) ], 2 );
+        i  := InjectionOfCofactorOfDirectSum( [ Source( pi_2 ), Range( pi_1 ) ], 2 );
         
-        return StableCategoryMorphism( _a_, PreCompose( [ i, m, p ] ), shift_of_ishift_a );
+        p := ProjectionInFactorOfDirectSum( [ Source( pi_1 ), Range( pi_2 ) ], 2 );
+        
+        return StableCategoryMorphism( A, PreCompose( [ i, m, p ] ), shift_of_ishift_A );
         
     end );
     
     ##
     AddInverseOfUnitIsomorphismWithGivenObject( stable_cat,
       
-      function( _a_, shift_of_ishift_a )
-        local a, def_1, inf_1, inf_2, def_2, m, i, p;
+      function( A, shift_of_ishift_A )
+        local cell_A, pi_1, iota_1, iota_2, pi_2, m, i, p;
         
-        a := UnderlyingCell( _a_ );
+        cell_A := UnderlyingCell( A );
         
-        def_1 := DeflationFromSomeExactProjectiveObject( a );
+        pi_1 := DeflationFromSomeExactProjectiveObject( cell_A );
         
-        inf_1 := ExactKernelEmbedding( def_1 );
+        iota_1 := ExactKernelEmbedding( pi_1 );
         
-        inf_2 := InflationIntoSomeExactInjectiveObject( Source( inf_1 ) );
+        iota_2 := InflationIntoSomeExactInjectiveObject( Source( iota_1 ) );
         
-        def_2 := ExactCokernelProjection( inf_2 );
+        pi_2 := ExactCokernelProjection( iota_2 );
                 
-        m := InverseForMorphisms( SchanuelsIsomorphism( inf_1, def_1, inf_2, def_2, "left" ) );
+        m := SchanuelsIsomorphismByInflationsIntoSomeExactInjectiveObjects( iota_2, pi_2, iota_1, pi_1 );
         
-        i := InjectionOfCofactorOfDirectSum( [ Source( def_1 ), Range( def_2 ) ], 2 );
+        i := InjectionOfCofactorOfDirectSum( [ Source( pi_1 ), Range( pi_2 ) ], 2 );
         
-        p  := ProjectionInFactorOfDirectSum( [ Source( def_2 ), Range( def_1 ) ], 2 );
+        p  := ProjectionInFactorOfDirectSum( [ Source( pi_2 ), Range( pi_1 ) ], 2 );
         
-        return StableCategoryMorphism( shift_of_ishift_a, PreCompose( [ i, m, p ] ), _a_ );
+        return StableCategoryMorphism( shift_of_ishift_A, PreCompose( [ i, m, p ] ), A );
         
     end );
 
     ##
     AddCounitIsomorphismWithGivenObject( stable_cat,
       
-      function( _a_, ishift_of_shift_a )
-        local shift_a, i_eta_a, inf_1, def_1, inf_2, def_2, i;
+      function( A, ishift_of_shift_A )
+        local shift_A, i_eta_A, iota_1, pi_1, iota_2, pi_2, i;
         
-        shift_a := ShiftOnObject( _a_ );
-        i_eta_a := InverseOfUnitIsomorphism( shift_a );
-        i_eta_a := UnderlyingCell( i_eta_a );
+        shift_A := ShiftOnObject( A );
         
-        inf_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_a ) );
-        def_1 := ExactCokernelProjection( inf_1 );
+        i_eta_A := InverseOfUnitIsomorphism( shift_A );
         
-        inf_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( _a_ ) );
-        def_2 := ExactCokernelProjection( inf_2 );
+        i_eta_A := UnderlyingCell( i_eta_A );
         
-        i := ExactProjectiveLift( PreCompose( def_1, i_eta_a ), def_2 );
-        i := LiftAlongInflation( inf_2, PreCompose( inf_1, i ) );
+        iota_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_A ) );
         
-        return StableCategoryMorphism( ishift_of_shift_a, i, _a_ );
+        pi_1 := ExactCokernelProjection( iota_1 );
+        
+        iota_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( A ) );
+        
+        pi_2 := ExactCokernelProjection( iota_2 );
+        
+        i := ExactProjectiveLift( PreCompose( pi_1, i_eta_A ), pi_2 );
+        
+        i := LiftAlongInflation( iota_2, PreCompose( iota_1, i ) );
+        
+        return StableCategoryMorphism( ishift_of_shift_A, i, A );
         
     end );
 
     ##
     AddInverseOfCounitIsomorphismWithGivenObject( stable_cat,
       
-      function( _a_, ishift_of_shift_a )
-        local shift_a, eta_a, inf_1, def_1, inf_2, def_2, i;
+      function( A, ishift_of_shift_A )
+        local shift_A, eta_A, iota_1, pi_1, iota_2, pi_2, i;
         
-        shift_a := ShiftOnObject( _a_ );
+        shift_A := ShiftOnObject( A );
         
-        eta_a := UnitIsomorphism( shift_a );
-        eta_a := UnderlyingCell( eta_a );
+        eta_A := UnitIsomorphism( shift_A );
         
-        inf_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_a ) );
-        def_1 := ExactCokernelProjection( inf_1 );
+        eta_A := UnderlyingCell( eta_A );
         
-        inf_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( _a_ ) );
-        def_2 := ExactCokernelProjection( inf_2 );
+        iota_1 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( ishift_of_shift_A ) );
         
-        i := ExactProjectiveLift( PreCompose( def_2, eta_a ), def_1 );
-        i := LiftAlongInflation( inf_1, PreCompose( inf_2, i ) );
+        pi_1 := ExactCokernelProjection( iota_1 );
         
-        return StableCategoryMorphism( _a_, i, ishift_of_shift_a );
-                
+        iota_2 := InflationIntoSomeExactInjectiveObject( UnderlyingCell( A ) );
+        
+        pi_2 := ExactCokernelProjection( iota_2 );
+        
+        i := ExactProjectiveLift( PreCompose( pi_2, eta_A ), pi_1 );
+        
+        i := LiftAlongInflation( iota_1, PreCompose( iota_2, i ) );
+        
+        return StableCategoryMorphism( A, i, ishift_of_shift_A );
+        
     end );
-  
+    
     ##
     AddStandardConeObject( stable_cat,
       function( alpha )
-        local inf;
+        local iota, cone;
         
         alpha := UnderlyingCell( alpha );
         
-        inf := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
+        iota := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
         
-        return StableCategoryObject( stable_cat, ExactPushout( inf, alpha ) );
+        cone := ExactPushout( iota, alpha );
+        
+        return StableCategoryObject( stable_cat, cone );
         
     end );
     
     ##
     AddMorphismToStandardConeObjectWithGivenStandardConeObject( stable_cat,
-      function( alpha, r )
-        local s, inf, m;
+      function( alpha, cone )
+        local B, iota, q_B;
         
-        s := Range( alpha );
+        B := Range( alpha );
         
         alpha := UnderlyingCell( alpha );
         
-        inf := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
+        iota := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
         
-        m := InjectionOfSecondCofactorOfExactPushout( inf, alpha );
+        q_B := InjectionOfSecondCofactorOfExactPushout( iota, alpha );
         
-        return StableCategoryMorphism( s, m, r );
+        return StableCategoryMorphism( B, q_B, cone );
         
     end );
-
+    
     ##
     AddMorphismFromStandardConeObjectWithGivenStandardConeObject( stable_cat,
-      function( alpha, s )
-        local inf, def, m, r;
+      function( alpha, cone )
+        local iota, pi, u, shift_A;
         
         alpha := UnderlyingCell( alpha );
         
-        inf := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
+        iota := InflationIntoSomeExactInjectiveObject( Source( alpha ) );
         
-        def := ExactCokernelProjection( inf );
+        pi := ExactCokernelProjection( iota );
         
-        m := UniversalMorphismFromExactPushout(
-                      inf,
+        u := UniversalMorphismFromExactPushout(
+                      iota,
                       alpha,
-                      def,
-                      ZeroMorphism( Range( alpha ), Range( def ) )
+                      pi,
+                      ZeroMorphism( Range( alpha ), Range( pi ) )
                   );
         
-        r := StableCategoryObject( stable_cat, Range( m ) );
+        shift_A := StableCategoryObject( stable_cat, Range( u ) );
         
-        return StableCategoryMorphism( s, m, r );
+        return StableCategoryMorphism( cone, u, shift_A );
         
     end );
-
+    
     ##
     AddMorphismBetweenStandardConeObjectsWithGivenObjects( stable_cat,
       
-      function( s, alpha, u, v, beta, r )
-        local i_beta, z, inf_1, b, inf_2, l, i, m;
+      function( cone_alpha, alpha, u, v, beta, cone_beta )
+        local i_beta, z, iota_1, b, iota_2, c, i;
         
         i_beta := MorphismToStandardConeObject( beta );
         
@@ -246,261 +262,312 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
         
         z :=  PreCompose( alpha, v ) - PreCompose( u, beta );
         
-        inf_1 := InflationIntoSomeExactInjectiveObject( Source( u ) );
+        iota_1 := InflationIntoSomeExactInjectiveObject( Source( u ) );
         
         b := ColiftAlongInflationIntoSomeExactInjectiveObject( z );
         
-        inf_2 := InflationIntoSomeExactInjectiveObject( Range( u ) );
+        iota_2 := InflationIntoSomeExactInjectiveObject( Range( u ) );
         
-        l := ExactInjectiveColift( inf_1, PreCompose( u, inf_2 ) );
+        c := ExactInjectiveColift( iota_1, PreCompose( u, iota_2 ) );
         
-        i := InjectionOfFirstCofactorOfExactPushout( inf_2, beta );
+        i := InjectionOfFirstCofactorOfExactPushout( iota_2, beta );
         
-        m := UniversalMorphismFromExactPushout(
-                    inf_1,
+        u := UniversalMorphismFromExactPushout(
+                    iota_1,
                     alpha,
                     AdditionForMorphisms(
-                        PreCompose( l, i ),
+                        PreCompose( c, i ),
                         PreCompose( b, i_beta )
                     ),
                     PreCompose( v, i_beta )
                   );
         
-        return StableCategoryMorphism( s, m, r );
+        return StableCategoryMorphism( cone_alpha, u, cone_beta );
         
     end );
 
-##
-AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( stable_cat,
-  
-  function( s, alpha, r )
-    local i_alpha, p_alpha, c_alpha, inf_1, def_1, inf_2, def_2, psi, u, t, f;
-     
-    i_alpha := UnderlyingCell( MorphismToStandardConeObject( alpha ) );
-    p_alpha := UnderlyingCell( MorphismFromStandardConeObject( alpha ) );
+    ##
+    AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( stable_cat,
+      
+      function( shift_A, alpha, cone_i_alpha )
+        local i_alpha, p_alpha, cell_alpha, iota_1, pi_1, iota_2, pi_2, psi, u, t, f;
+        
+        i_alpha := MorphismToStandardConeObject( alpha );
+        
+        i_alpha := UnderlyingCell( i_alpha );
+         
+        p_alpha := MorphismFromStandardConeObject( alpha );
+        
+        p_alpha := UnderlyingCell( p_alpha );
+        
+        cell_alpha := UnderlyingCell( alpha );
+        
+        iota_1 := InflationIntoSomeExactInjectiveObject( Source( cell_alpha ) );
+        
+        pi_1 := ExactCokernelProjection( iota_1 );
+        
+        iota_2 := InflationIntoSomeExactInjectiveObject( Range( cell_alpha ) );
+        
+        pi_2 := ExactCokernelProjection( iota_2 );
+        
+        psi := UniversalMorphismFromExactPushout(
+                      iota_1,
+                      cell_alpha,
+                      ColiftingMorphism( cell_alpha ),
+                      iota_2
+                   );
+        
+        u := UniversalMorphismFromExactPushout(
+                    iota_2,
+                    i_alpha,
+                    InjectionOfCofactorOfDirectSum(
+                        [ Range( iota_2 ), Range( p_alpha ) ],
+                        1
+                      ),
+                    MorphismBetweenDirectSums(
+                        [ [ psi, p_alpha ] ]
+                      )
+                );
+        
+        t := PreCompose(
+                  InjectionOfCofactorOfDirectSum( [ Range( iota_2 ), Range( p_alpha ) ], 2 ),
+                  InverseForMorphisms( u )
+                );
+        
+        f := PreCompose(
+                  u,
+                  ProjectionInFactorOfDirectSum( [ Range( iota_2 ), Range( p_alpha ) ], 2 )
+                );
+        
+        SetWitnessIsomorphismFromStandardConeObjectByRotationAxiom( alpha, StableCategoryMorphism( cone_i_alpha, f, shift_A ) );
+        
+        return StableCategoryMorphism( shift_A, t, cone_i_alpha );
+        
+    end );
     
-    c_alpha := UnderlyingCell( alpha );
+    ##
+    AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( stable_cat,
+      
+      function( cone_i_alpha, alpha, shift_A )
+        local w;
+        
+        w := WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( shift_A, alpha, cone_i_alpha );
+        
+        return WitnessIsomorphismFromStandardConeObjectByRotationAxiom( alpha );
+        
+    end );
+        
+    ##
+    AddDomainMorphismByOctahedralAxiomWithGivenObjects( stable_cat,
+      function( cone_f, f, g, h, cone_h )
+        local iota_h, i_A, theta, gamma, u;
+        
+        iota_h := MorphismToStandardConeObject( h );
+        
+        iota_h := UnderlyingCell( iota_h );
+        
+        f := UnderlyingCell( f );
+        
+        g := UnderlyingCell( g );
+       
+        h := UnderlyingCell( h );
+        
+        i_A := InflationIntoSomeExactInjectiveObject( Source( f ) );
+                
+        theta := ColiftAlongInflationIntoSomeExactInjectiveObject( PreCompose( f, g ) - h ); 
+        
+        gamma := InjectionOfFirstCofactorOfExactPushout( i_A, h );
+        
+        u := UniversalMorphismFromExactPushout(
+                    i_A,
+                    f,
+                    gamma + PreCompose( theta, iota_h ),
+                    PreCompose( g, iota_h )
+              );
+        
+        return StableCategoryMorphism( cone_f, u, cone_h );
+        
+    end );
     
-    inf_1 := InflationIntoSomeExactInjectiveObject( Source( c_alpha ) );
-    def_1 := ExactCokernelProjection( inf_1 );
+    AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects( stable_cat,
+      function( cone_h, f, g, h, cone_g )
+        local iota_g, theta, i_A, i_B, i_f, lambda, u;
+        
+        iota_g := MorphismToStandardConeObject( g );
+        
+        iota_g := UnderlyingCell( iota_g );
+        
+        f := UnderlyingCell( f );
+        
+        g := UnderlyingCell( g );
+       
+        h := UnderlyingCell( h );
+        
+        theta := ColiftAlongInflationIntoSomeExactInjectiveObject( PreCompose( f, g ) - h );
+        
+        i_A := InflationIntoSomeExactInjectiveObject( Source( f ) );
+        
+        i_B := InflationIntoSomeExactInjectiveObject( Range( f ) );
+        
+        i_f := ExactInjectiveColift(
+                      i_A,
+                      PreCompose( f, i_B )
+                    );
+        
+        lambda := InjectionOfFirstCofactorOfExactPushout( i_B, g );
+        
+        u := UniversalMorphismFromExactPushout(
+                 i_A,
+                 h,
+                 PreCompose( i_f, lambda ) - PreCompose( theta, iota_g ),
+                 iota_g
+              );
+        
+        return StableCategoryMorphism( cone_h, u, cone_g );
+        
+    end );
     
-    inf_2 := InflationIntoSomeExactInjectiveObject( Range( c_alpha ) );
-    def_2 := ExactCokernelProjection( inf_2 );
-    
-    psi := UniversalMorphismFromExactPushout( 
-                  inf_1,
-                  c_alpha,
-                  ColiftingMorphism( c_alpha ),
-                  inf_2
-               );
-    
-    u := UniversalMorphismFromExactPushout(
-                inf_2,
-                i_alpha, 
-                InjectionOfCofactorOfDirectSum( [ Range( inf_2 ), Range( p_alpha ) ], 1 ),
-                MorphismBetweenDirectSums( [ [ psi, p_alpha ] ] )
-            );
-    
-    t := PreCompose(
-              InjectionOfCofactorOfDirectSum( [ Range( inf_2 ), Range( p_alpha ) ], 2 ),
-              InverseForMorphisms( u )
-            );
-    
-    f := PreCompose(
-              u,
-              ProjectionInFactorOfDirectSum( [ Range( inf_2 ), Range( p_alpha ) ], 2 )
-            );
-    
-    SetWitnessIsomorphismFromStandardConeObjectByRotationAxiom( alpha, StableCategoryMorphism( r, f, s ) );
-    
-    return StableCategoryMorphism( s, t, r );
-    
-end );
+    ##
+    AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects( stable_cat,
+      function( cone_g, f, g, h, shift_cone_f )
+        local cone_f, iota_f, A, B, C, i_A, i_B, i_cone_f, p_cone_f, mu, u;
+        
+        cone_f := StandardConeObject( f );
+        
+        cone_f := UnderlyingCell( cone_f );
+        
+        iota_f := MorphismToStandardConeObject( f );
+        
+        iota_f := UnderlyingCell( iota_f );
+               
+        f := UnderlyingCell( f );
+        
+        g := UnderlyingCell( g );
+       
+        A := Source( f );
+        
+        B := Range( f );
+        
+        C := Range( g );
 
-##
-AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( stable_cat,
-  
-  function( s, alpha, r )
-    local w;
+        i_A := InflationIntoSomeExactInjectiveObject( A );
+        
+        i_B := InflationIntoSomeExactInjectiveObject( B );
+        
+        i_cone_f := InflationIntoSomeExactInjectiveObject( cone_f );
+        
+        p_cone_f := ExactCokernelProjection( i_cone_f );
+        
+        mu := ExactInjectiveColift(
+                  i_B,
+                  PreCompose( iota_f, i_cone_f )
+                );
+        
+        u := UniversalMorphismFromExactPushout(
+                  i_B,
+                  g,
+                  PreCompose( mu, p_cone_f ),
+                  ZeroMorphism( C, UnderlyingCell( shift_cone_f ) )
+                );
+        
+        return StableCategoryMorphism( cone_g, u, shift_cone_f );
+        
+    end );
     
-    w := WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( r, alpha, s );
-    
-    return WitnessIsomorphismFromStandardConeObjectByRotationAxiom( alpha );
-    
-end );
+    ##
+    AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( stable_cat,
+      function( cone_g, f, g, h, cone_u )
+        local u, cone_f, i_cone_f, iota_f, iota_h, B, i_B, xi, mu, m, n, iso, eta;
+        
+        u := DomainMorphismByOctahedralAxiom( f, g, h );
+        
+        u := UnderlyingCell( u );
 
-##
-AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( stable_cat,
-  
-  function( s, alpha, r )
-    local A, counit_A, p_alpha, beta, lambda, inf, u, v, t;
+        cone_f := StandardConeObject( f );
+        
+        cone_f := UnderlyingCell( cone_f );
+        
+        i_cone_f := InflationIntoSomeExactInjectiveObject( cone_f );
+        
+        iota_f := MorphismToStandardConeObject( f );
+        
+        iota_f := UnderlyingCell( iota_f );
+        
+        iota_h := MorphismToStandardConeObject( h );
+        
+        iota_h := UnderlyingCell( iota_h );
+        
+        f := UnderlyingCell( f );
+        
+        g := UnderlyingCell( g );
+        
+        B := Range( f );
+        
+        i_B := InflationIntoSomeExactInjectiveObject( B );
+         
+        xi := InjectionOfFirstCofactorOfExactPushout( i_cone_f, u );
+        
+        mu := ExactInjectiveColift(
+                  i_B,
+                  PreCompose( iota_f, i_cone_f )
+              );
+        
+        m := PreCompose( mu, xi );
+        
+        eta := InjectionOfSecondCofactorOfExactPushout( i_cone_f, u );
+        
+        n := PreCompose( [ iota_h, eta ] );
+        
+        iso := UniversalMorphismFromExactPushout( i_B, g, m, n );
+        
+        return StableCategoryMorphism( cone_g, iso, cone_u );
+        
+    end );
     
-    A := Source( alpha );
-    counit_A := CounitIsomorphism( A ); 
-    
-    p_alpha := MorphismFromStandardConeObject( alpha );
-    
-    alpha := UnderlyingCell( alpha );
-    A := UnderlyingCell( A );
-    
-    beta := PreCompose( AdditiveInverse( InverseShiftOnMorphism( p_alpha ) ), counit_A );
-    beta := UnderlyingCell( beta );
-    
-    lambda := ColiftAlongInflationIntoSomeExactInjectiveObject( PreCompose( beta, alpha ) );
-    
-    inf := InflationIntoSomeExactInjectiveObject( Source( beta ) );
-    
-    u := MorphismBetweenDirectSums( [ [ ZeroMorphism( Range( inf ), Range( inf ) ), lambda ] ] );
-    v := MorphismBetweenDirectSums( [ [ ZeroMorphism( A, Range( inf ) ),  alpha ] ] );
-    
-    t := UniversalMorphismFromExactPushout( inf, beta, u, v );
-    
-end );
-
-##
-AddWitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( stable_cat,
-  
-  function( s, alpha, r )
-    local w;
-    
-    w := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( r, alpha, s );
-    
-    return WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom( alpha );
-    
-end );
-
-
-#
-#
-####
-#AddOctahedralAxiom( stable_cat, 
-#    
-#    function( sf, sg )
-#    local sh, f, g, h, A, B, C, tf, u_A, alpha, f1, th, gamma, h1, D, conf_D, u_D, pi_D, TD, B_to_I_D, conf_B_to_I_D, beta, g1, I_D, B1, push_object_to_B1, conf_B,
-#    I_B, T_B, u_B, beta_B, g_B, v_from, v_to, ctr_g_, iso, B1_TB, tr_g_, test1, test2, j, j1, u, u_, tr, E_TD, can_j, v;
-#    sh := PreCompose( sf, sg );
-#    f := UnderlyingCell( sf );
-#    g := UnderlyingCell( sg );
-#    h := UnderlyingCell( sh );
-#    A := Source( f );
-#    B := Range( f );
-#    C := Range( g );
-#
-#    tf := StandardExactTriangle( sf );
-#    u_A := InflationIntoSomeExactInjectiveObject( A )^0;
-#    alpha :=  InjectionOfCofactorOfExactPushout( [ u_A, f ], 1);
-#    f1 := UnderlyingCell( tf^1 );
-#
-#    th := StandardExactTriangle( sh );
-#    gamma := InjectionOfCofactorOfExactPushout( [ u_A, h ] , 1 );
-#    h1 := UnderlyingCell( th^1 );
-#
-#    D := UnderlyingCell( tf[ 2 ] );
-#    conf_D := InflationIntoSomeExactInjectiveObject( D );
-#    u_D := conf_D^0;
-#    pi_D := conf_D^1;
-#    TD := conf_D[ 2 ];
-#
-#    B_to_I_D := PreCompose( f1, u_D );
-#    conf_B_to_I_D := ConflationOfInflation( B_to_I_D );
-#    beta := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 1 );
-#    g1 := InjectionOfCofactorOfExactPushout( [ B_to_I_D, g ], 2 );
-#
-#    I_D := conf_B_to_I_D[ 1 ];
-#    B1 := conf_B_to_I_D[ 2 ];
-#
-#    push_object_to_B1 := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ conf_B_to_I_D^1, ZeroMorphism( C, B1 ) ] );
-#
-#    conf_B := InflationIntoSomeExactInjectiveObject( B );
-#    I_B := conf_B[ 1 ];
-#    T_B := conf_B[ 2 ];
-#    u_B := conf_B^0;
-#    beta_B := InjectionOfCofactorOfExactPushout( [ u_B, g ], 1 );
-#    g_B := InjectionOfCofactorOfExactPushout( [ u_B, g ], 2 );    
-#    v_from := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_B, g ], [ PreCompose( ExactInjectiveColift( u_B, B_to_I_D ), beta ), g1 ] ) );
-#    v_to :=   AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ PreCompose( ExactInjectiveColift( B_to_I_D, u_B ), beta_B ), g_B ] ) );
-#    ctr_g_ := StandardExactTriangle( sg );
-#
-#    iso := SchanuelsIsomorphism(  conf_B_to_I_D, conf_B, "left" );
-#    B1_TB := AdditiveInverseForMorphisms( PreCompose( [ InjectionOfCofactorOfDirectSum( [ I_B, B1 ], 2 ), 
-#                           iso,
-#                           ProjectionInFactorOfDirectSum( [ I_D, T_B ], 2 ) ] ) );
-#
-#    tr_g_ := CreateExactTriangle( sg,
-#                                 AsStableMorphism( g1 ),
-#                                 AsStableMorphism(PreCompose( push_object_to_B1, B1_TB ) ) );
-#
-#    test1 := CreateTrianglesMorphism( ctr_g_, tr_g_, IdentityMorphism( ctr_g_[0]), IdentityMorphism( ctr_g_[1]), v_from );
-#    test2 := CreateTrianglesMorphism( tr_g_, ctr_g_, IdentityMorphism( ctr_g_[0]), IdentityMorphism( ctr_g_[1]), v_to );
-#
-#    j := UniversalMorphismFromExactPushout( [ u_A, f ], [ gamma, PreCompose( g, h1 ) ] );
-#    j1 := UniversalMorphismFromExactPushout( [ u_A, h ], [ PreCompose( [ alpha, u_D, beta ] ), g1 ] );
-#
-#    E_TD := UniversalMorphismFromExactPushout( [ B_to_I_D, g ], [ pi_D, ZeroMorphism( C, TD ) ] );
-#    tr := CreateExactTriangle( AsStableMorphism( j ),
-#                                 PreCompose( AsStableMorphism( j1 ), v_to ),
-#                                 PreCompose( v_from, AsStableMorphism( E_TD ) ) );
-#    u := AsStableMorphism( UniversalMorphismFromExactPushout( [ u_D, j ], [ beta, j1 ] ) );
-#    u_ := AsStableMorphism( UniversalMorphismFromExactPushout( [ B_to_I_D, g ], 
-#                        [ InjectionOfCofactorOfExactPushout( [ u_D, j ], 1 ), PreCompose( h1, InjectionOfCofactorOfExactPushout( [ u_D, j ], 2 ) )  ] ) );
-#    can_j := StandardExactTriangle( AsStableMorphism( j ) );
-#    SetIsomorphismFromStandardExactTriangle( tr, CreateTrianglesMorphism( can_j, tr, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(u, v_to) ) );
-#    SetIsomorphismIntoStandardExactTriangle( tr, CreateTrianglesMorphism( tr, can_j, IdentityMorphism( tr[0] ), IdentityMorphism( tr[1] ), PreCompose(v_from, u_ ) ) );
-#
-#    return tr; 
-#    end );
-    
-end );
-
-
-#    ## The computer suggests this is really a counit, however, I can not prove it. (triangles identities)
-#    AddCounitIsomorphismWithGivenObject( stable_cat,
-#      
-#      function( _a_, ishift_of_shift_a )
-#        local a, inf_1, def_1, def_2, inf_2, m, i, p;
-#        
-#        a := UnderlyingCell( _a_ );
-#        
-#        inf_1 := InflationIntoSomeExactInjectiveObject( a );
-#        
-#        def_1 := ExactCokernelProjection( inf_1 );
-#        
-#        def_2 := DeflationFromSomeExactProjectiveObject( Range( def_1 ) );
-#        
-#        inf_2 := ExactKernelEmbedding( def_2 );
-#                
-#        m := SchanuelsIsomorphism( inf_2, def_2, inf_1, def_1, "right" );
-#        
-#        i := InjectionOfCofactorOfDirectSum( [ Source( inf_2 ), Range( inf_1 ) ], 1 );
-#        
-#        p := ProjectionInFactorOfDirectSum( [ Source( inf_1 ), Range( inf_2 ) ], 1 );
-#        
-#        return StableCategoryMorphism( ishift_of_shift_a, PreCompose( [ i, m, p ] ), _a_ );
-#        
-#    end );
 #    ##
-#    AddInverseOfCounitIsomorphismWithGivenObject( stable_cat,
-#      
-#      function( _a_, ishift_of_shift_a )
-#        local a, inf_1, def_1, def_2, inf_2, m, i, p;
+#    AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( stable_cat,
+#      function( cone_u, f, g, h, cone_g )
+#        local u, v, cone_f, i_cone_f, iota_f, B, i_B, lambda, mu, m, iso;
 #        
-#        a := UnderlyingCell( _a_ );
+#        u := DomainMorphismByOctahedralAxiom( f, g, h );
 #        
-#        inf_1 := InflationIntoSomeExactInjectiveObject( a );
+#        u := UnderlyingCell( u );
+#
+#        v := MorphismToConeObjectByOctahedralAxiom( f, g, h );
 #        
-#        def_1 := ExactCokernelProjection( inf_1 );
+#        v := UnderlyingCell( v );
 #        
-#        def_2 := DeflationFromSomeExactProjectiveObject( Range( def_1 ) );
+#        cone_f := StandardConeObject( f );
 #        
-#        inf_2 := ExactKernelEmbedding( def_2 );
+#        cone_f := UnderlyingCell( cone_f );
 #        
-#        m := InverseForMorphisms( SchanuelsIsomorphism( inf_2, def_2, inf_1, def_1, "right" ) );
+#        i_cone_f := InflationIntoSomeExactInjectiveObject( cone_f );
 #        
-#        i := InjectionOfCofactorOfDirectSum( [ Source( inf_1 ), Range( inf_2 ) ], 1 );
+#        iota_f := MorphismToStandardConeObject( f );
 #        
-#        p := ProjectionInFactorOfDirectSum( [ Source( inf_2 ), Range( inf_1 ) ], 1 );
+#        iota_f := UnderlyingCell( iota_f );
 #        
-#        return StableCategoryMorphism( _a_, PreCompose( [ i, m, p ] ), ishift_of_shift_a );
+#        f := UnderlyingCell( f );
+#        
+#        g := UnderlyingCell( g );
+#        
+#        B := Range( f );
+#        
+#        i_B := InflationIntoSomeExactInjectiveObject( B );
+#         
+#        lambda := InjectionOfFirstCofactorOfExactPushout( i_B, g );
+#        
+#        mu := ExactInjectiveColift(
+#                  PreCompose( iota_f, i_cone_f ),
+#                  i_B
+#              );
+#        
+#        m := PreCompose( mu, lambda );
+#         
+#        iso := UniversalMorphismFromExactPushout( i_cone_f, u, m, v );
+#        
+#        return StableCategoryMorphism( cone_u, iso, cone_g );
 #        
 #    end );
-
+   
+end );
