@@ -330,7 +330,7 @@ InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGO
     
       b := List( [ m .. n ], i -> phi[ i ] );
 
-      sol := SolveLinearSystemInAbCategory( L, K, b );
+      sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
     
       if sol = fail then
         
@@ -419,7 +419,7 @@ InstallGlobalFunction( IS_COLIFTABLE_THROUGH_COLIFTING_OBJECT_IN_HOMOTOPY_CATEGO
 
       b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
      
-      sol := SolveLinearSystemInAbCategory( L, K, b );
+      sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
       
       if sol = fail then
         

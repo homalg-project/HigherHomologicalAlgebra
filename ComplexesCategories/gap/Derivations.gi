@@ -98,8 +98,8 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     b := List( [ m .. n ], i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
-    sol := SolveLinearSystemInAbCategory( L, K, b );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
+    sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
@@ -132,7 +132,7 @@ CategoryFilter := function( cochains )
   
   cat := UnderlyingCategory( cochains );
   
-  if CanCompute( cat, "SolveLinearSystemInAbCategory" ) then
+  if CanCompute( cat, "SolveLinearSystemInAbCategoryOrFail" ) then
     
     return true;
     
@@ -218,8 +218,8 @@ AddDerivationToCAP( HomotopyMorphisms,
           
     b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategory ..." );
-    sol := SolveLinearSystemInAbCategory( L, K, b );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
+    sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
@@ -250,7 +250,7 @@ CategoryFilter := function( chains )
   
   cat := UnderlyingCategory( chains );
   
-  if CanCompute( cat, "SolveLinearSystemInAbCategory" ) then
+  if CanCompute( cat, "SolveLinearSystemInAbCategoryOrFail" ) then
     
     return true;
     
