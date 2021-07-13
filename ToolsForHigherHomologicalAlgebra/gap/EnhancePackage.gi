@@ -14,7 +14,8 @@ InstallValue( LIST_OF_ENHANCABLE_PACKAGES,
     "ModulePresentationsForCAP",
     "GradedModulePresentationsForCAP",
     "Algebroids",
-    "FunctorCategories"
+    "FunctorCategories",
+    "CategoryConstructor"
   ]
 );
 
@@ -44,8 +45,6 @@ InstallMethod( EnhancePackage,
       return true;
       
     else
-      
-      #Print( "The package ", name, " should be loaded first!\n" );
       
       return false;
       
