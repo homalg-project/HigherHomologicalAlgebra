@@ -146,6 +146,7 @@
   [2XIsCochainComplex[102X, for IsChainOrCochainComplex 2.1-1 
   [2XIsCochainComplexCategory[102X, for IsChainOrCochainComplexCategory 1.1-5 
   [2XIsCochainMorphism[102X, for IsChainOrCochainMorphism 3.1-1 
+  [2XIsContractable[102X, for IsChainOrCochainComplex 2.3-6 
   [2XIsExact[102X, for IsChainOrCochainComplex 2.3-5 
   [2XIsExactInIndex[102X, for IsChainOrCochainComplex, IsInt 2.4-17 
   [2XIsNullHomotopic[102X, for IsCapCategoryMorphism 3.4-2 

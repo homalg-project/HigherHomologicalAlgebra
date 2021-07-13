@@ -6,10 +6,10 @@
            [1X Category of (co)chain complexes of an additive category [101X
   
   
-                                   2021.05-04
+                                   2021.07-01
   
   
-                                  28 May 2021
+                                  13 July 2021
   
   
                                   Kamal Saleh
@@ -64,6 +64,7 @@
       2.3-3 AsChainComplex
       2.3-4 AsCochainComplex
       2.3-5 IsExact
+      2.3-6 IsContractable
     2.4 [33X[0;0YOperations[133X
       2.4-1 \[\]
       2.4-2 \^
