@@ -207,6 +207,7 @@ end );
 ##
 InstallMethod( QuiverRepresentation,
           [ IsQuiverAlgebra, IsDenseList, IsDenseList ],
+          5000,
   function( A, dimensions, matrices )
     local cat, Q, objects, m, morphisms, i, a, source, range;
     
@@ -234,7 +235,7 @@ InstallMethod( QuiverRepresentation,
     
     return QuiverRepresentationNC( cat, objects, morphisms );
     
-end, 5000 );
+end );
 
 #InstallGlobalFunction( QuiverRepresentationNoCheck, { A, dim, l } -> QuiverRepresentation( A, dim, l ) );
 
@@ -243,6 +244,7 @@ end, 5000 );
 ##
 InstallMethod( QuiverRepresentationHomomorphism,
           [ IsQuiverRepresentation, IsQuiverRepresentation, IsDenseList ],
+          5000,
   function( R1, R2, maps )
     local cat, ucat, Q, morphisms, V1, V2, morphism, m, i;
  
@@ -292,7 +294,7 @@ InstallMethod( QuiverRepresentationHomomorphism,
 
     return QuiverRepresentationHomomorphismNC( R1, R2, morphisms );
   
-end, 5000 );
+end );
 
 #InstallGlobalFunction( QuiverRepresentationHomomorphismNoCheck, { r1, r2, l } -> QuiverRepresentationHomomorphism( r1, r2, l ) );
 

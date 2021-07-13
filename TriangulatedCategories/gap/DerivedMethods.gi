@@ -27,7 +27,7 @@ end:
 ##
 AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
                 [
-                  [ SolveLinearSystemInAbCategory, 1 ],
+                  [ SolveLinearSystemInAbCategoryOrFail, 1 ],
                   [ ShiftOnObject, 1 ]
                 ],
                 [
@@ -53,7 +53,7 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
     
     right_side := [ iota_alpha, pi ];
     
-    sol := SolveLinearSystemInAbCategory( left_coeffs, right_coeffs, right_side );
+    sol := SolveLinearSystemInAbCategoryOrFail( left_coeffs, right_coeffs, right_side );
     
     if sol = fail then
       
@@ -86,7 +86,7 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
     end
 ]:
   CategoryFilter := IsTriangulatedCategory,
-  Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategory"
+  Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategoryOrFail"
 );
 
 # See categories and homological algebra (schapira)

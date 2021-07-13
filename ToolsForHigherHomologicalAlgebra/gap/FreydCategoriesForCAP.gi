@@ -808,7 +808,7 @@ InstallMethod( RandomObjectByInteger,
     
     S := UnderlyingRing( UnderlyingCategory( freyd ) );
     
-    fpres := LeftPresentations( S );
+    fpres := ValueGlobal( "LeftPresentations" )( S );
     
     J := Functor( fpres, freyd, 1 );
     
@@ -831,7 +831,7 @@ InstallMethod( RandomMorphismWithFixedSourceByInteger,
     
     S := UnderlyingRing( UnderlyingCategory( freyd ) );
     
-    fpres := LeftPresentations( S );
+    fpres := ValueGlobal( "LeftPresentations" )( S );
  
     I := Functor( freyd, fpres, 1 );
     J := Functor( fpres, freyd, 1 );
@@ -855,7 +855,7 @@ InstallMethod( RandomMorphismWithFixedRangeByInteger,
     
     S := UnderlyingRing( UnderlyingCategory( freyd ) );
     
-    fpres := LeftPresentations( S );
+    fpres := ValueGlobal( "LeftPresentations" )( S );
  
     I := Functor( freyd, fpres, 1 );
     J := Functor( fpres, freyd, 1 );
@@ -879,7 +879,7 @@ InstallMethod( RandomMorphismWithFixedSourceAndRangeByInteger,
     
     S := UnderlyingRing( UnderlyingCategory( freyd ) );
     
-    fpres := LeftPresentations( S );
+    fpres := ValueGlobal( "LeftPresentations" )( S );
  
     I := Functor( freyd, fpres, 1 );
     J := Functor( fpres, freyd, 1 );

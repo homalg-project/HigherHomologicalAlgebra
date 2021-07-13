@@ -4,4 +4,24 @@
 # Declarations
 #
 
+DeclareCategory( "IsCategoryOfArrowsObject", IsCapCategoryObject );
+
+DeclareCategory( "IsCategoryOfArrowsMorphism", IsCapCategoryMorphism );
+
 DeclareOperation( "LaTeXStringOp", [ IsCapCategoryCellInHomCategory ] );
+
+DeclareAttribute( "CategoryOfArrows", IsCapCategory );
+
+DeclareOperation( "CategoryOfArrowsObject",
+  [ IsCapCategory, IsCapCategoryMorphism ] );
+
+DeclareOperation( "CategoryOfArrowsMorphism",
+  [ IsCapCategoryObject, IsCapCategoryMorphism,
+      IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+DeclareOperation( "LaTeXStringOp",
+  [ IsCategoryOfArrowsObject ] );
+
+DeclareOperation( "LaTeXStringOp",
+  [ IsCategoryOfArrowsMorphism ] );
+

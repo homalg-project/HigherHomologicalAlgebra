@@ -97,7 +97,7 @@ IsExactTriangle := rec(
 UnitIsomorphismWithGivenObject := rec(
   installation_name := "UnitIsomorphismWithGivenObject",
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
+  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "sh_o_rev_sh_s" ] ],
   return_type := "morphism"
 ),
 
@@ -111,7 +111,7 @@ UnitIsomorphismWithGivenObject := rec(
 InverseOfCounitIsomorphismWithGivenObject := rec(
   installation_name := "InverseOfCounitIsomorphismWithGivenObject",
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
+  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "rev_sh_o_sh_s" ] ],
   return_type := "morphism"
 ),
 
@@ -125,7 +125,7 @@ InverseOfCounitIsomorphismWithGivenObject := rec(
 InverseOfUnitIsomorphismWithGivenObject := rec(
   installation_name := "InverseOfUnitIsomorphismWithGivenObject",
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ],
+  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "s" ] ],
   return_type := "morphism"
 ),
 
@@ -139,7 +139,7 @@ InverseOfUnitIsomorphismWithGivenObject := rec(
 CounitIsomorphismWithGivenObject := rec(
   installation_name := "CounitIsomorphismWithGivenObject",
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ],
+  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "s" ] ],
   return_type := "morphism"
 ),
 
@@ -571,7 +571,6 @@ InstallMethod( InverseOfUnitIsomorphism,
           [ IsCapCategoryObject ],
   a -> InverseOfUnitIsomorphismWithGivenObject( a, Shift( Shift( a, -1 ), 1 ) )
 );
-
 
 ###
 #InstallMethod( ShiftExpandingIsomorphism,
