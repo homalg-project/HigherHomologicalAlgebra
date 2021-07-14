@@ -38,7 +38,11 @@ InstallMethod( CategoryOfArrows,
     
     arrows := Hom( algebroid, C : FinalizeCategory := false );
     
-    arrows!.Name := Concatenation( "Arrows( ", Name( C ), ")" );
+    AddObjectRepresentation( arrows, IsCapCategoryObjectInHomCategory and IsCategoryOfArrowsObject );
+    
+    AddMorphismRepresentation( arrows, IsCapCategoryMorphismInHomCategory and IsCategoryOfArrowsMorphism );
+    
+    arrows!.Name := Concatenation( "Arrows( ", Name( C ), " )" );
     
     ## Defining the system of colifting objects
     
@@ -59,16 +63,15 @@ InstallMethod( CategoryOfArrows,
         
         A_m := A( algebroid.m );
         
-        QA_m := [
-                  MorphismBetweenDirectSums(
+        QA_m := MorphismBetweenDirectSums(
                     [
                       [ A_m ],
                       [ IdentityMorphism( A_2 ) ]
                     ]
-                  )
-                ];
+                  );
         
-        return AsObjectInHomCategory( algebroid, [ QA_1, QA_2 ], QA_m );
+        return CategoryOfArrowsObject( arrows, QA_m );
+        
     end );
     
     ##
@@ -88,10 +91,11 @@ InstallMethod( CategoryOfArrows,
         
         qA_2 := IdentityMorphism( A_2 );
         
-        return AsMorphismInHomCategory( A, [ qA_1, qA_2 ], QA );
+        return CategoryOfArrowsMorphism( A, qA_1, qA_2, QA );
         
       end );
-      
+    
+    ##
     AddRetractionOfMorphismToColiftingObjectWithGivenColiftingObject( arrows,
       function( category, A, QA )
         local A_1, A_2, alpha, gamma, rA_1, rA_2;
@@ -113,7 +117,7 @@ InstallMethod( CategoryOfArrows,
         
         rA_2 := IdentityMorphism( A_2 );
         
-        return AsMorphismInHomCategory( QA, [ rA_1, rA_2 ], A );
+        return CategoryOfArrowsMorphism( QA, rA_1, rA_2, A );
         
       end );
     
@@ -130,10 +134,10 @@ InstallMethod( CategoryOfArrows,
         
         Qphi_2 := phi_2;
         
-        return AsMorphismInHomCategory( QA, [ Qphi_1, Qphi_2 ], QB );
+        return CategoryOfArrowsMorphism( QA, Qphi_1, Qphi_2, QB );
         
       end );
-      
+    
     Finalize( arrows );
     
     return arrows;
@@ -145,11 +149,15 @@ InstallMethod( CategoryOfArrowsObject,
           [ IsCapCategory, IsCapCategoryMorphism ],
           
   function( category, alpha )
-    local 1_m_2;
+    local 1_m_2, arrow;
     
     1_m_2 := Source( category );
     
-    return AsObjectInHomCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
+    arrow := AsObjectInHomCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
+    
+    SetFilterObj( arrow, IsCategoryOfArrowsObject );
+    
+    return arrow;
     
 end );
 
@@ -158,8 +166,13 @@ InstallMethod( CategoryOfArrowsMorphism,
           [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ],
           
   function( A, phi_1, phi_2, B )
+    local eta;
     
-    return AsMorphismInHomCategory( A, [ phi_1, phi_2 ], B );
+    eta := AsMorphismInHomCategory( A, [ phi_1, phi_2 ], B );
+    
+    SetFilterObj( eta, IsCategoryOfArrowsMorphism );
+    
+    return eta;
     
 end );
 
