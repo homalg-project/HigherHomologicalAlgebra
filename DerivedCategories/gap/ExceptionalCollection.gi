@@ -896,7 +896,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_INDEC_PROJS_AND_INJS",
       
     else
       
-      Info( InfoWarning, 1, "Maybe you can add random methods?" );
+      Info( InfoWarning, 2, "Maybe you can add random methods?" );
       
       return;
       
@@ -1166,7 +1166,7 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
       AddRandomObjectByInteger( full,
         function( full, n )
           local I, C;
-          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          I := QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
           C := SourceOfFunctor( I );
           return I( RandomObjectByInteger( C, n ) );
       end );
@@ -1174,24 +1174,24 @@ BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
       AddRandomMorphismWithFixedSourceByInteger( full,
         function( full, s, n )
           local I, J;
-          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
-          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          J := DecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
+          I := QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
           return I( RandomMorphismWithFixedSourceByInteger( J( s ), n ) );
       end );
     
       AddRandomMorphismWithFixedRangeByInteger( full,
         function( full, r, n )
           local I, J;
-          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
-          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          J := DecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
+          I := QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
           return I( RandomMorphismWithFixedRangeByInteger( J( r ), n ) );
       end );
      
       AddRandomMorphismWithFixedSourceAndRangeByInteger( full,
         function( full, s, r, n )
           local I, J;
-          J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient );
-          I := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( ambient );
+          J := DecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
+          I := QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations( ambient );
           return I( RandomMorphismWithFixedSourceAndRangeByInteger( J( s ), J( r ), n ) );
         end );
       

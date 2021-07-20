@@ -225,7 +225,7 @@ InstallMethod( HomFunctorOnInjectiveObjects,
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
+    can := DecompositionFunctorOfInjectiveQuiverRepresentations( ambient_cat );
     
     can_H := PreCompose( can, H );
     
@@ -283,7 +283,7 @@ InstallMethod( HomFunctorOnProjectiveObjects,
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient_cat );
+    can := DecompositionFunctorOfProjectiveQuiverRepresentations( ambient_cat );
     
     can_H := PreCompose( can, H );
         

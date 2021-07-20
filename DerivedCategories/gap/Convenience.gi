@@ -217,7 +217,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    return IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+    return YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection );
     
 end );
 
@@ -239,7 +239,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+    I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection );
     
     return PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
     
@@ -270,7 +270,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    return IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection ); 
+    return InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection ); 
     
 end );
 
@@ -314,7 +314,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    return IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    return YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
 
 end );
 
@@ -337,7 +337,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    return IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    return InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
 
 end );
 
@@ -354,7 +354,7 @@ InstallMethod( FindSomeFunctor,
       TryNextMethod( );
     fi;
     
-    I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
     
     return PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
  

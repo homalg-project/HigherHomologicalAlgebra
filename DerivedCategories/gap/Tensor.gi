@@ -16,7 +16,7 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
     
     full := DefiningFullSubcategory( collection );
     
-    iso := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+    iso := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection );
     
     indec_projs := SourceOfFunctor( iso );
     
@@ -44,7 +44,7 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     C := AmbientCategory( SourceOfFunctor( G ) );
     
-    can := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
+    can := DecompositionFunctorOfProjectiveQuiverRepresentations( C );
     
     can_add_G := PreCompose( can, add_G );
     

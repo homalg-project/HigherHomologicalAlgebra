@@ -243,7 +243,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProje
     
     C := StrongExceptionalCollection( C );
   
-    C := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( C );
+    C := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( C );
     
     C := ExtendFunctorToAdditiveClosures( C );
     
@@ -273,7 +273,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects,
     
     C := AmbientCategory( C );
     
-    C := EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects( C );
+    C := QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations( C );
     
     C := ExtendFunctorToHomotopyCategories( C );
     

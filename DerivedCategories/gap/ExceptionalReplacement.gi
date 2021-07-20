@@ -198,9 +198,9 @@ InstallMethodWithCache( MorphismBetweenExceptionalObjects,
     
     full := FullSubcategoryGeneratedByProjectiveObjects( D );
     
-    I := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( D );
+    I := DecompositionFunctorOfProjectiveQuiverRepresentations( D );
     
-    J := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( collection );
+    J := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection );
     
     J := ExtendFunctorToAdditiveClosureOfSource( J );
     

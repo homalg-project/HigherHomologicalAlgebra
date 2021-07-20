@@ -346,7 +346,7 @@ InstallMethod( _WeakKernelEmbedding,
       TryNextMethod( );
     fi;
     
-    I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
     Inc := InclusionFunctor( RangeOfFunctor( I ) );
     I := ExtendFunctorToAdditiveClosureOfSource( PreCompose( I, Inc ) );
      
@@ -356,9 +356,9 @@ InstallMethod( _WeakKernelEmbedding,
     alpha := KernelEmbedding( alpha );
     alpha := PreCompose( EpimorphismFromSomeProjectiveObject( Source( alpha ) ), alpha );
     
-    J := IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( algebroid );
+    J := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
     J := ExtendFunctorToAdditiveClosures( J );
-    J := PreCompose( EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( reps_cat ), J );
+    J := PreCompose( DecompositionFunctorOfProjectiveQuiverRepresentations( reps_cat ), J );
     
     return J( alpha/ SourceOfFunctor(J) );
     
@@ -386,12 +386,12 @@ InstallMethod( _WeakKernelEmbedding,
     if IsBound( full!.full_subcategory_generated_by_indec_projective_objects ) and
         full!.full_subcategory_generated_by_indec_projective_objects then
         
-        J := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( ambient_cat );
+        J := DecompositionFunctorOfProjectiveQuiverRepresentations( ambient_cat );
         
     elif IsBound( full!.full_subcategory_generated_by_indec_injective_objects ) and
          full!.full_subcategory_generated_by_indec_injective_objects then
          
-        J := EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects( ambient_cat );
+        J := DecompositionFunctorOfInjectiveQuiverRepresentations( ambient_cat );
         
     else
       TryNextMethod( );
