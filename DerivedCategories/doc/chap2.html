@@ -25,16 +25,16 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X78D1062D78BE08C1">2.1 <span class="Heading">Functors</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79FA83C0837BFC8C">2.1-1 EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X872414C7859D3E3A">2.1-2 EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80EB598B7E9A68C6">2.1-3 EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CABA38D7C671CDA">2.1-4 EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8419C2847CAD2A37">2.1-1 DecompositionFunctorOfProjectiveQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8201E63283839628">2.1-2 QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79FD96CD7E3753A8">2.1-3 DecompositionFunctorOfInjectiveQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8766DDD084F037E1">2.1-4 QuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A4BA2AC7B59EA98">2.1-5 IsomorphismOntoAlgebroid</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X783FC929787863A2">2.1-6 IsomorphismFromAlgebroid</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D06AEA87AA1052E">2.1-7 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X859355B07FE969B6">2.1-8 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86AD6F6F7CC8E08C">2.1-9 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87B2529579808C14">2.1-10 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BF2E1C9870948C4">2.1-7 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F0E64C07FAD3155">2.1-8 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X870FFE1678872AAF">2.1-9 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BD2B8718137707D">2.1-10 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X851C0B9A79F52695">2.1-11 LocalizationFunctor</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8459F7A27C4715CF">2.1-12 UniversalFunctorFromDerivedCategory</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CAA0EA4842B47E6">2.1-13 LeftDerivedFunctor</a></span>
@@ -57,38 +57,38 @@
 
 <h4>2.1 <span class="Heading">Functors</span></h4>
 
-<p><a id="X79FA83C0837BFC8C" name="X79FA83C0837BFC8C"></a></p>
+<p><a id="X8419C2847CAD2A37" name="X8419C2847CAD2A37"></a></p>
 
-<h5>2.1-1 EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</h5>
+<h5>2.1-1 DecompositionFunctorOfProjectiveQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecompositionFunctorOfProjectiveQuiverRepresentations</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from full subcategory generated by the projective representations into the additive closure of the full subcategory generated by indecomposable projective representations.</p>
 
-<p><a id="X872414C7859D3E3A" name="X872414C7859D3E3A"></a></p>
+<p><a id="X8201E63283839628" name="X8201E63283839628"></a></p>
 
-<h5>2.1-2 EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</h5>
+<h5>2.1-2 QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from the additive closure of the full subcategory generated by indecomposable projective representations into full subcategory generated by the projective representations.</p>
 
-<p><a id="X80EB598B7E9A68C6" name="X80EB598B7E9A68C6"></a></p>
+<p><a id="X79FD96CD7E3753A8" name="X79FD96CD7E3753A8"></a></p>
 
-<h5>2.1-3 EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</h5>
+<h5>2.1-3 DecompositionFunctorOfInjectiveQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecompositionFunctorOfInjectiveQuiverRepresentations</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a full subcategory</p>
 
 <p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from full subcategory generated by the injective representations into the additive closure of the full subcategory generated by indecomposable injective representations.</p>
 
-<p><a id="X7CABA38D7C671CDA" name="X7CABA38D7C671CDA"></a></p>
+<p><a id="X8766DDD084F037E1" name="X8766DDD084F037E1"></a></p>
 
-<h5>2.1-4 EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</h5>
+<h5>2.1-4 QuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The argument is a category of quiver representations over some finite dimensional quiver algebra. The output is an equivalence from the additive closure of the full subcategory generated by indecomposable injective representations into full subcategory generated by the injective representations.</p>
@@ -111,38 +111,38 @@
 
 <p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism functor from algebroid defined over the endomorphism algebra of <span class="Math">\bigoplus_i E_i</span> for <span class="Math">E_i \in</span> <var class="Arg">E</var>.</p>
 
-<p><a id="X7D06AEA87AA1052E" name="X7D06AEA87AA1052E"></a></p>
+<p><a id="X7BF2E1C9870948C4" name="X7BF2E1C9870948C4"></a></p>
 
-<h5>2.1-7 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+<h5>2.1-7 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The input is an algebroid <var class="Arg">alg</var> defined by a finite dimensional quiver algebra <span class="Math">A</span>. The output is the isomorphism functor from <var class="Arg">alg</var> into the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
 
-<p><a id="X859355B07FE969B6" name="X859355B07FE969B6"></a></p>
+<p><a id="X7F0E64C07FAD3155" name="X7F0E64C07FAD3155"></a></p>
 
-<h5>2.1-8 IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+<h5>2.1-8 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism from the full subcategory generated by the exceptional collection into the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
 
-<p><a id="X86AD6F6F7CC8E08C" name="X86AD6F6F7CC8E08C"></a></p>
+<p><a id="X870FFE1678872AAF" name="X870FFE1678872AAF"></a></p>
 
-<h5>2.1-9 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+<h5>2.1-9 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The input is an exceptional collection <var class="Arg">E</var> and the output is an isomorphism into the full subcategory generated by the exceptional collection from the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects.</p>
 
-<p><a id="X87B2529579808C14" name="X87B2529579808C14"></a></p>
+<p><a id="X7BD2B8718137707D" name="X7BD2B8718137707D"></a></p>
 
-<h5>2.1-10 IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</h5>
+<h5>2.1-10 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations</code>( <var class="Arg">alg</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a functor</p>
 
 <p>The input is an algebroid <var class="Arg">alg</var> defined by a finite dimensional quiver algebra <span class="Math">A</span>. The output is the isomorphism functor from the full subcategory of category of <span class="Math">A^{op}</span>-quiver representations, which is generated by the indecomposable projective objects into <var class="Arg">alg</var>.</p>
