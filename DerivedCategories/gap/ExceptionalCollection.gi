@@ -911,8 +911,6 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
     
     ambient := AmbientCategory( full );
     
-    ## full is subcategory in quiver reps
-    
     if IsQuiverRepresentationCategory( ambient ) then
       AddIsEqualForObjects( full,
         { cat, a, b } -> IsIdenticalObj( a, b ) or
@@ -927,23 +925,35 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
           DimensionVector( Range( UnderlyingCell( alpha ) ) )
             = DimensionVector( Range( UnderlyingCell( beta ) ) ) and
           MatricesOfRepresentationHomomorphism( UnderlyingCell( alpha ) )
-            #{ Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
-              = MatricesOfRepresentationHomomorphism( UnderlyingCell( beta ) )
-                #{ Positions( DimensionVector( Source( UnderlyingCell( alpha )  ) ), 1 ) }
-                ;
-                
-        end );
-              
+            = MatricesOfRepresentationHomomorphism( UnderlyingCell( beta ) );
+      end );
+      
       AddIsEqualForCacheForObjects( full, IsEqualForObjects );
       
       AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
-    
+      
     else
-    
-      Info( InfoWarning, 1, "Maybe you can optimize the equality methods?" );
-    
-      return;
-    
+      
+      AddIsEqualForObjects( full,
+        { cat, a, b } -> IsIdenticalObj( a, b ) or
+          ValuesOnAllObjects( UnderlyingCell( a ) ) = ValuesOnAllObjects( UnderlyingCell( b ) )
+      );
+      
+      AddIsEqualForMorphisms( full,
+        function( cat, alpha, beta )
+          return
+          ValuesOnAllObjects( Source( UnderlyingCell( alpha ) ) )
+            = ValuesOnAllObjects( Source( UnderlyingCell( beta ) ) ) and
+          ValuesOnAllObjects( Range( UnderlyingCell( alpha ) ) )
+            = ValuesOnAllObjects( Range( UnderlyingCell( beta ) ) ) and
+          ValuesOnAllObjects( UnderlyingCell( alpha ) )
+            = ValuesOnAllObjects( UnderlyingCell( beta ) );
+      end );
+      
+      AddIsEqualForCacheForObjects( full, IsEqualForObjects );
+      
+      AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
+      
     fi;
     
 end );
@@ -951,6 +961,7 @@ end );
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
           [ IsCapFullSubcategory ],
+          
   function( full_subcategory_by_projs )
     local cat, projs, r, name, full;
     
@@ -1036,7 +1047,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     return full;
     
-end );
+end );    
 
 ##
 InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
@@ -1123,34 +1134,6 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
     return full;
     
 end );
-
-##
-InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-          [ IsAlgebroid ],
-  function( algebroid )
-    local A, A_op, cat, FinalizeCategory;
-    
-    A := UnderlyingQuiverAlgebra( algebroid );
-    
-    A_op := OppositeAlgebra( A );
-    
-    if IsAdmissibleQuiverAlgebra( A ) then
-      
-      SetIsAdmissibleQuiverAlgebra( A_op, true );
-      
-    fi;
-    
-    cat := CategoryOfQuiverRepresentations( A_op );
-    
-    return FullSubcategoryGeneratedByIndecProjectiveObjects( cat );
-    
-end );
-
-##
-InstallMethod( FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra,
-        [ IsStrongExceptionalCollection ],
-  collection -> FullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( Algebroid( collection ) )
-);
 
 ##
 BindGlobal( "ADD_RANDOM_METHODS_FOR_PROJS_AND_INJS",
@@ -1304,7 +1287,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       
       ##
       AddIsWellDefinedForObjects( full,
-        function( a )
+        function( cat, a )
         
           return IsWellDefined( UnderlyingCell( a ) ) and IsInjective( UnderlyingCell( a ) );
     
@@ -1312,7 +1295,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       
       ##
       AddIsWellDefinedForMorphisms( full,
-        function( phi )
+        function( cat, phi )
           
           return IsWellDefined( Source( phi ) ) and IsWellDefined( Range( phi ) ) and IsWellDefined( UnderlyingCell( phi ) );
       
@@ -1324,7 +1307,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       
       ##
       AddBasisOfExternalHom( full,
-        function( a, b )
+        function( cat, a, b )
           local B;
           
           B := BasisOfExternalHom( UnderlyingCell( a ), UnderlyingCell( b ) );
@@ -1335,7 +1318,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       
       ##
       AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-        function( alpha, B )
+        function( cat, alpha, B )
           
           return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
           
@@ -1457,6 +1440,7 @@ InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExcep
                 labels, sources_of_arrows, ranges_of_arrows );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
+    SetLabelsAsLaTeXStrings( OppositeQuiver( quiver ), vertices_latex, arrows_latex );
     
     A := PathAlgebra( field, quiver );
     
