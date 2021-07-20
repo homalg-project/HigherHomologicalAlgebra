@@ -59,5 +59,3 @@ DeclareAttribute( "EquivalenceOntoHomotopyCategoryByChainComplexes", IsHomotopyC
 DeclareAttribute( "EquivalenceFromHomotopyCategoryByChainComplexes", IsHomotopyCategory );
 
 DeclareOperation( "ExtendFunctorMethodToHomotopyCategories", [ IsDenseList ] );
-
-DeclareOperation( "ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories", [ IsDenseList ] );

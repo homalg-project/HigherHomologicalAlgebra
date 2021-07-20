@@ -1285,22 +1285,3 @@ InstallMethod( ExtendFunctorMethodToComplexCategories,
     );
     
 end );
-
-##
-InstallMethod( ExtendFunctorMethodToAdditiveClosureAndComplexCategories,
-          [ IsDenseList ],
-          
-  function( F )
-    local E;
-    
-    E := ExtendFunctorMethod(
-            F,
-            ValueGlobal( "IsAdditiveClosureCategory" ),
-            UnderlyingCategory,
-            ValueGlobal( "ExtendFunctorToAdditiveClosures" ),
-            "ExtendFunctorToAdditiveClosures"
-          );
-          
-    ExtendFunctorMethodToComplexCategories( E );
-    
-end );

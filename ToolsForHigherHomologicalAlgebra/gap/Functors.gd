@@ -14,6 +14,7 @@ DeclareOperation( "AddFunctor", [ IsDenseList ] );
 DeclareOperation( "AddFunctor", [ IsObject, IsObject, IsFunction, IsFunction, IsString ] );
 
 DeclareOperation( "ExtendFunctorMethod", [ IsDenseList, IsFunction, IsFunction, IsFunction, IsString ] );
+DeclareOperation( "ExtendFunctorMethodToAdditiveClosures", [ IsDenseList ] );
 
 DeclareGlobalFunction( "CheckNaturality" );
 DeclareGlobalFunction( "CheckFunctoriality" );

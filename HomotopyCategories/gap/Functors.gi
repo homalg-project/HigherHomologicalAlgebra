@@ -747,23 +747,3 @@ InstallMethod( ExtendFunctorMethodToHomotopyCategories,
     );
     
 end );
-
-##
-InstallMethod( ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories,
-          [ IsDenseList ],
-          
-  function( F )
-    local E;
-    
-    E := ExtendFunctorMethod(
-            F,
-            IsAdditiveClosureCategory,
-            UnderlyingCategory,
-            ExtendFunctorToAdditiveClosures,
-            "ExtendFunctorToAdditiveClosures"
-          );
-          
-    ExtendFunctorMethodToHomotopyCategories( E );
-    
-end );
-

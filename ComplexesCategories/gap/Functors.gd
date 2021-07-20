@@ -511,4 +511,3 @@ DeclareOperation( "CokernelObjectFunctor", [ IsChainOrCochainComplexCategory, Is
 DeclareAttribute( "MinusOneFunctor", IsChainOrCochainComplexCategory );
 
 DeclareOperation( "ExtendFunctorMethodToComplexCategories", [ IsDenseList ] );
-DeclareOperation( "ExtendFunctorMethodToAdditiveClosureAndComplexCategories", [ IsDenseList ] );

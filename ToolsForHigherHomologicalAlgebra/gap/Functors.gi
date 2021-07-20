@@ -40,6 +40,9 @@ InstallMethod( AddFunctor,
     
 end );
 
+## PreCompose of functor methods?
+
+##
 InstallMethod( ExtendFunctorMethod,
           [ IsDenseList, IsFunction, IsFunction, IsFunction, IsString ],
           
@@ -54,13 +57,34 @@ InstallMethod( ExtendFunctorMethod,
               F[1]( underlying_category( category_1 ) ) and
               F[2]( underlying_category( category_2 ) ) and
               F[3]( underlying_category( category_1 ), underlying_category( category_2 ) ),
-        { category_1, category_2 } -> functor_constructor( F[ 4 ]( underlying_category( category_1 ), underlying_category( category_2 ) ) ),
+        { category_1, category_2 } ->
+          functor_constructor(
+                  F[ 4 ]( underlying_category( category_1 ), 
+                  underlying_category( category_2 ) )
+                ),
         Concatenation( "The functor defined by applying ", name, " on (", F[ 5 ], ")" )
       ];
     
     AddFunctor( E );
     
     return E;
+    
+end );
+
+##
+InstallMethod( ExtendFunctorMethodToAdditiveClosures,
+          [ IsDenseList ],
+          
+  function( F )
+  
+    return
+      ExtendFunctorMethod(
+        F,
+        ValueGlobal( "IsAdditiveClosureCategory" ),
+        ValueGlobal( "UnderlyingCategory" ),
+        ValueGlobal( "ExtendFunctorToAdditiveClosures" ),
+        "ExtendFunctorToAdditiveClosures"
+      );
     
 end );
 

@@ -600,7 +600,6 @@ InstallMethod( IsomorphismOntoAlgebroid,
     
 end );
 
-
 ##
 functor :=
   [
@@ -625,9 +624,9 @@ functor :=
   ];
 
 AddFunctor( functor );
-ExtendFunctorMethodToAdditiveClosureAndComplexCategories( functor );
-ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories( functor );
-
+functor := ExtendFunctorMethodToAdditiveClosures( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
 
 ##
 InstallMethod( IsomorphismFromAlgebroid,
@@ -736,8 +735,9 @@ functor :=
   ];
 
 AddFunctor( functor );
-ExtendFunctorMethodToAdditiveClosureAndComplexCategories( functor );
-ExtendFunctorMethodToAdditiveClosureAndHomotopyCategories( functor );
+functor := ExtendFunctorMethodToAdditiveClosures( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
 
 ##
 InstallMethod( LocalizationFunctor,
