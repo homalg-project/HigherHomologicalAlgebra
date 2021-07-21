@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
 Subtitle := "Homotopy categories of additive categories",
-Version := "2021.07-01",
-Date := "13/07/2021",
+Version := "2021.07-02",
+Date := "21/07/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
