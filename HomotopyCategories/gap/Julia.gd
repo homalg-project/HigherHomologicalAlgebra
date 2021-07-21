@@ -8,5 +8,13 @@
 DeclareOperation( "HomotopyCategoryObject",
         [ IsHomotopyCategory, IsJuliaObject, IsInt ] );
 
+##
+DeclareOperation( "HomotopyCategoryMorphism",
+        [ IsHomotopyCategoryObject, IsJuliaObject, IsInt, IsHomotopyCategoryObject ] );
+
+##
+DeclareOperation( "HomotopyCategoryMorphism",
+        [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ] );
+
 DeclareOperation( "CreateDiagramInHomotopyCategory",
         [ IsJuliaObject, IsJuliaObject, IsJuliaObject, IsJuliaObject ] );
