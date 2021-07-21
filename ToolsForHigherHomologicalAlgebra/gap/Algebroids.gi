@@ -57,7 +57,7 @@ functor :=
                         UnderlyingQuiver( c1 ),
                         UnderlyingQuiver( UnderlyingCategory( c2 ) )
                       ),
-    { c1, c2 } -> IsomorphismOntoAdditiveClosureOfAlgebroid( c1 ),
+    { c1, c2 } -> IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( c1, c2 ),
     "Isomorphism from quiver rows category onto the additive closure of algebroid"
   ];
 
@@ -77,7 +77,7 @@ functor :=
                       UnderlyingQuiver( c2 ),
                       UnderlyingQuiver( UnderlyingCategory( c1 ) )
                     ),
-    { c1, c2 } -> IsomorphismFromAdditiveClosureOfAlgebroid( c2 ),
+    { c1, c2 } -> IsomorphismFromAdditiveClosureOfAlgebroidIntoQuiverRows( c1, c2 ),
     "Isomorphism from additive closure of algebroid onto quiver rows category"
   ];
 
