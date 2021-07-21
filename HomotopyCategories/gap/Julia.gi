@@ -4,12 +4,33 @@
 # Implementations
 #
 ##
+
 InstallMethod( HomotopyCategoryObject,
-        [ IsJuliaObject, IsInt ],
+        [ IsHomotopyCategory, IsJuliaObject, IsInt ],
         
-  function( diffs, N )
+  function( homotopy_cat, diffs, N )
     
-    return HomotopyCategoryObject( ConvertJuliaToGAP( diffs ), N );
+    return HomotopyCategoryObject( homotopy_cat, ConvertJuliaToGAP( diffs ), N );
+    
+end );
+
+##
+InstallMethod( HomotopyCategoryMorphism,
+        [ IsHomotopyCategoryObject, IsJuliaObject, IsInt, IsHomotopyCategoryObject ],
+        
+  function( a, maps, N, b )
+    
+    return HomotopyCategoryMorphism( a, ConvertJuliaToGAP( maps ), N, b );
+    
+end );
+
+##
+InstallMethod( HomotopyCategoryMorphism,
+        [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ],
+        
+  function( a, b, maps, N )
+    
+    return HomotopyCategoryMorphism( a, b, ConvertJuliaToGAP( maps ), N );
     
 end );
 

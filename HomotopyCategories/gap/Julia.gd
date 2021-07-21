@@ -6,7 +6,7 @@
 
 ##
 DeclareOperation( "HomotopyCategoryObject",
-        [ IsJuliaObject, IsInt ] );
+        [ IsHomotopyCategory, IsJuliaObject, IsInt ] );
 
 DeclareOperation( "CreateDiagramInHomotopyCategory",
         [ IsJuliaObject, IsJuliaObject, IsJuliaObject, IsJuliaObject ] );

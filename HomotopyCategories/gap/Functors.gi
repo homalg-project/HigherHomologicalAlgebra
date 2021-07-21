@@ -484,7 +484,7 @@ end );
 InstallMethod( LocalizationFunctorByInjectiveObjects,
           [ IsHomotopyCategory ],
   function( homotopy_category )
-    local cat, injs, homotopy_category_injs, name, F;
+    local cat, injs, homotopy_category_injs, oper, name, F;
     
     cat := DefiningCategory( homotopy_category );
     
@@ -496,7 +496,19 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
     
     injs := ValueGlobal( "FullSubcategoryGeneratedByInjectiveObjects" )( cat );
     
-    homotopy_category_injs := HomotopyCategory( injs );
+    if IsChainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      
+      homotopy_category_injs := HomotopyCategory( injs, false );
+      
+      oper := AsChainMorphismOverCapFullSubcategory;
+      
+    else
+      
+      homotopy_category_injs := HomotopyCategory( injs, true );
+      
+      oper := AsCochainMorphismOverCapFullSubcategory;
+      
+    fi;
     
     name := "Localization functor by injective objects";
     
@@ -522,7 +534,7 @@ InstallMethod( LocalizationFunctorByInjectiveObjects,
         
         psi := MorphismBetweenInjectiveResolutions( UnderlyingCell( phi ), true );
         
-        psi := AsChainMorphismOverCapFullSubcategory( UnderlyingCell( s ), psi, UnderlyingCell( r ) );
+        psi := oper( UnderlyingCell( s ), psi, UnderlyingCell( r ) );
         
         return psi / homotopy_category_injs;
         
