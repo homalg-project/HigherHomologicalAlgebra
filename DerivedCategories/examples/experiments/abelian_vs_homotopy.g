@@ -10,7 +10,7 @@ indec_C := FullSubcategoryGeneratedByIndecProjectiveObjects( C );
 
 #################################
 
-Eq := EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects( C );
+Eq := DecompositionFunctorOfProjectiveQuiverRepresentations( C );
 Eq := ExtendFunctorToHomotopyCategories( Eq );
 Loc := PreCompose( LocalizationFunctorByProjectiveObjects( HomotopyCategory( C ) ), Eq );
 

@@ -194,7 +194,7 @@ ExtendFunctorMethodToComplexCategories( functor );
 ExtendFunctorMethodToHomotopyCategories( functor );
 
 
-# from additive closure of indec projectives to additive subcategory of projectives
+# from additive closure of algebroid to additive subcategory of projectives
 functor :=
   [
     IsAdditiveClosureCategory,
@@ -261,6 +261,69 @@ functor :=
 AddFunctor( functor );
 ExtendFunctorMethodToComplexCategories( functor );
 ExtendFunctorMethodToHomotopyCategories( functor );
+
+functor :=
+  [
+    IsAdditiveClosureCategory,
+    IsCapFullSubcategory,
+    function( add_closure, projs )
+      local hom, algebroid, algebroid_op;
+      
+      hom := AmbientCategory( projs );
+      
+      if not IsCapHomCategory( hom ) then
+        return false;
+      fi;
+      algebroid := UnderlyingCategory( add_closure );
+      if not IsAlgebroid( algebroid ) then
+        return false;
+      fi;
+      if not HasFullSubcategoryGeneratedByProjectiveObjects( hom ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( projs, FullSubcategoryGeneratedByProjectiveObjects( hom ) ) then
+        return false;
+      fi;
+      
+      if not HasOppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) then
+        return false;
+      fi;
+      
+      algebroid_op := Source( hom );
+      
+      if not IsIdenticalObj( algebroid_op, OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) ) then
+        return false;
+      fi;
+     
+      return true;
+      
+    end,
+    
+    function( add_closure, projs )
+      local hom, algebroid, J;
+      
+      hom := AmbientCategory( projs );
+      
+      algebroid := UnderlyingCategory( add_closure );
+      
+      J := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( algebroid );
+      J := PreCompose( J, InclusionFunctor( RangeOfFunctor( J ) ) );
+      
+      J := RestrictFunctorToFullSubcategoryOfRange( J, projs );
+      J := ExtendFunctorToAdditiveClosureOfSource( J );
+      
+      J!.Name := "Yoneda embedding";
+      
+      return J;
+      
+    end,
+    "Yoneda embedding"
+  ]; 
+
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
+
 
 functor :=
   [
@@ -2703,3 +2766,51 @@ InstallOtherMethod( IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProduc
   { F_1, F_2, collection } -> IsomorphismFromBoxProductOfFullSubcategoriesOntoTensorProductOfAlgebroids( F_1, F_2, DefiningFullSubcategory( collection ) )
 );
 
+
+BindGlobal( "EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects",
+  function (o)
+    Error(
+      Concatenation( "WARNING: EquivalenceFromAdditiveClosureOfIndecProjectiveObjectsIntoFullSubcategoryGeneratedByProjectiveObjects is deprecated \n",
+      "Please use QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations instead"
+      ) );
+end );
+
+BindGlobal( "EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects",
+  function (o)
+    Error(
+      Concatenation( "WARNING: EquivalenceFromAdditiveClosureOfIndecInjectiveObjectsIntoFullSubcategoryGeneratedByInjectiveObjects is deprecated \n",
+      "Please use QuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations instead"
+      ) );
+end );
+
+BindGlobal( "EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects",
+  function (o)
+    Error(
+      Concatenation( "WARNING: EquivalenceFromFullSubcategoryGeneratedByProjectiveObjectsIntoAdditiveClosureOfIndecProjectiveObjects is deprecated \n",
+      "Please use DecompositionFunctorOfProjectiveQuiverRepresentations instead"
+      ) );
+end );
+
+BindGlobal( "EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects",
+  function (o)
+    Error(
+      Concatenation( "WARNING: EquivalenceFromFullSubcategoryGeneratedByInjectiveObjectsIntoAdditiveClosureOfIndecInjectiveObjects is deprecated \n",
+      "Please use DecompositionFunctorOfInjectiveQuiverRepresentations instead"
+      ) );
+end );
+
+BindGlobal( "IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
+  function (o)
+    Error(
+      Concatenation( "WARNING: IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra is deprecated \n",
+      "Please use YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations instead"
+      ) );
+end );
+
+BindGlobal( "IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra",
+  function (o)
+    Error(
+      Concatenation( "WARNING: IsomorphismFromFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra is deprecated \n",
+      "Please use InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations instead"
+      ) );
+end );
