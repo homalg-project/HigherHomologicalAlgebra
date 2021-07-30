@@ -495,6 +495,7 @@ functor :=
       return F;
       
     end,
+    "Isomorphism functor",
     "Isomorphism from the category of finite left presentations to the equivalent Freyd category"
   ];
 
@@ -529,6 +530,7 @@ functor :=
       return F;
       
     end,
+    "Isomorphism functor",
     "Isomorphism from Freyd category of rows to the equivalent category of left finite presentations",
   ];
 
