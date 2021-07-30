@@ -8,7 +8,7 @@
 ##
 #############################################################################
 
-DeclareAttribute( "HomFunctorAttr",
+DeclareAttribute( "HomFunctorToCategoryOfFunctors",
         IsStrongExceptionalCollection );
 
 #! @Description
@@ -18,8 +18,8 @@ DeclareAttribute( "HomFunctorAttr",
 #!  $\mathrm{Hom}(\oplus_i E_i,-):C \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareOperation( "HomFunctor",
-        [ IsStrongExceptionalCollection ] );
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentations",
+        IsStrongExceptionalCollection );
 
 #! @Description
 #!  The argument is an exceptional collection <A>E</A> which is defined by some full
@@ -29,7 +29,7 @@ DeclareOperation( "HomFunctor",
 #!  \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareAttribute( "HomFunctorOnIndecInjectiveObjects",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects",
         IsStrongExceptionalCollection );
 
 #! @Description
@@ -40,19 +40,19 @@ DeclareAttribute( "HomFunctorOnIndecInjectiveObjects",
 #!  \to \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)$.
 #! @Arguments collection
 #! @Returns a functor
-DeclareAttribute( "HomFunctorOnInjectiveObjects",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects",
         IsStrongExceptionalCollection );
 
 
-DeclareAttribute( "HomFunctorOnIndecProjectiveObjects",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjects",
         IsStrongExceptionalCollection );
 
-DeclareAttribute( "HomFunctorOnProjectiveObjects",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnProjectiveObjects",
         IsStrongExceptionalCollection );
 
-DeclareAttribute( "HomFunctorOnDefiningCategory",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnDefiningCategory",
         IsStrongExceptionalCollection );
 
-DeclareAttribute( "HomFunctorOnBaseCategory",
+DeclareAttribute( "HomFunctorToCategoryOfQuiverRepresentationsOnBaseCategory",
         IsStrongExceptionalCollection );
 

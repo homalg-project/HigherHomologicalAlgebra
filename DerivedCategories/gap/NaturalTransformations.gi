@@ -6,10 +6,10 @@
 
 ##
 InstallMethod( UnitOfTensorHomAdjunction,
-          [ IsStrongExceptionalCollection ],
+          [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ],
           
-  function( collection )
-    local full, ambient_cat, HH, TT, D, k, name, nat;
+  function( collection, tensorT, HomT )
+    local full, ambient_cat, reps, name, nat;
     
     full := DefiningFullSubcategory( collection );
     
@@ -21,51 +21,49 @@ InstallMethod( UnitOfTensorHomAdjunction,
       
     fi;
     
-    HH := HomFunctor( collection );
+    reps := SourceOfFunctor( tensorT );
+     
+    name := "Identity => Hom(T, -⊗_{End T} T)";
     
-    TT := TensorFunctor( collection );
-    
-    D := SourceOfFunctor( TT );
-    
-    k := CommutativeRingOfLinearCategory( D );
-    
-    name := "Id -> Hom(T, -⊗_{End T} T)";
-    
-    nat := NaturalTransformation( name, IdentityFunctor( D ), PreCompose( TT, HH ) );
+    nat := NaturalTransformation( name, IdentityFunctor( reps ), PreCompose( tensorT, HomT ) );
     
     AddNaturalTransformationFunction( nat,
-      function( id_r, r, th_r )
-        local pr, pr_summands, tr, defining_morphism, coker_epi, a, min_gen, positions, htr, vec_spaces, zero_vectors, maps, e, map, i;
+      function( s, R, r )
+        local pi_R, PR, PR_summands, RT, defining_morphism, coker_epi,
+          objs, injections, maps, coeffs, min_gen, positions, HomT_RT,
+            vec_spaces, zero_vectors, e, map, m, i;
         
-        pr := SomeProjectiveObject( r );
+        if IsCapCategoryObjectInHomCategory( R ) then
+          
+          R := ConvertToCellInCategoryOfQuiverRepresentations( R );
+          
+        fi;
         
-        pr_summands := UnderlyingProjectiveSummands( pr );
+        pi_R := EpimorphismFromSomeProjectiveObject( R );
         
-        tr := ApplyFunctor( TT, r );
+        PR := Source( pi_R );
+        
+        PR_summands := UnderlyingProjectiveSummands( PR );
+        
+        RT := TensorFunctorFromCategoryOfQuiverRepresentations( collection )( R );
          
-        defining_morphism := tr!.embedded_defining_morphism_of_cokernel_object;
+        defining_morphism := RT!.embedded_defining_morphism_of_cokernel_object;
         
         coker_epi := CokernelProjection( defining_morphism );
         
-        a := ObjectList( Range( tr!.defining_morphism_of_cokernel_object ) );
+        objs := List( ObjectList( Range( RT!.defining_morphism_of_cokernel_object ) ), UnderlyingCell );
         
-        a := List( a, UnderlyingCell );
-        
-        a := List( [ 1 .. Size( a ) ], i -> InjectionOfCofactorOfDirectSum( a, i ) );
-        
-        a := List( a, i -> PreCompose( i, coker_epi ) );
-        
-        a := List( a, CoefficientsOfMorphism );
-        
-        min_gen := MinimalGeneratingSet( r );
+        coeffs := List( [ 1 .. Size( objs ) ], i -> CoefficientsOfMorphism( PreCompose( InjectionOfCofactorOfDirectSum( objs, i ), coker_epi ) ) );
+         
+        min_gen := MinimalGeneratingSet( R );
         
         min_gen := List( min_gen, g -> ElementVectors( g ) );
         
         positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
         
-        htr := ApplyFunctor( HH, tr );
+        HomT_RT := HomFunctorToCategoryOfQuiverRepresentations( collection )( RT );
         
-        vec_spaces := VectorSpacesOfRepresentation( htr );
+        vec_spaces := VectorSpacesOfRepresentation( HomT_RT );
         
         zero_vectors := List( vec_spaces, Zero );
         
@@ -73,17 +71,17 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         for i in [ 1 .. Size( min_gen ) ] do
           
-          if IsZero( a[ i ] ) then
+          if IsZero( coeffs[ i ] ) then
             
-            Add( maps, ZeroMorphism( pr_summands[ i ], htr ) );
+            Add( maps, ZeroMorphism( PR_summands[ i ], HomT_RT ) );
             
           else
             
             e := ShallowCopy( zero_vectors );
             
-            e[ positions[ i ] ] := Vector( vec_spaces[ positions[ i ] ], a[ i ] );
+            e[ positions[ i ] ] := Vector( vec_spaces[ positions[ i ] ], coeffs[ i ] );
             
-            Add( maps, HomFromProjective( QuiverRepresentationElementNC( htr, e ), htr ) );
+            Add( maps, HomFromProjective( QuiverRepresentationElementNC( HomT_RT, e ), HomT_RT ) );
             
           fi;
           
@@ -91,7 +89,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         if IsEmpty( maps ) then
             
-            map := ZeroMorphism( pr, htr );
+            map := ZeroMorphism( PR, HomT_RT );
             
         else
             
@@ -99,8 +97,18 @@ InstallMethod( UnitOfTensorHomAdjunction,
             
         fi;
         
-        return ColiftAlongEpimorphism( EpimorphismFromSomeProjectiveObject( r ), map );
+        m := ColiftAlongEpimorphism( pi_R, map );
         
+        if IsCapCategoryObjectInHomCategory( s ) then
+          
+          return ConvertToCellInHomCategory( m );
+          
+        else
+          
+          return m;
+          
+        fi;
+          
     end );
     
     return nat;
@@ -108,11 +116,11 @@ InstallMethod( UnitOfTensorHomAdjunction,
 end );
 
 ##
-InstallMethod( CounitOfTensorHomAdjunction,
-          [ IsStrongExceptionalCollection ],
+InstallMethodWithCache( CounitOfTensorHomAdjunction,
+          [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ],
           
-  function( collection )
-    local full, ambient_cat, HH, TT, C, k, name, nat;
+  function( collection, tensorT, HomT )
+    local full, ambient_cat, category, k, name, nat;
     
     full := DefiningFullSubcategory( collection );
     
@@ -124,29 +132,29 @@ InstallMethod( CounitOfTensorHomAdjunction,
       
     fi;
     
-    HH := HomFunctor( collection );
+    category := SourceOfFunctor( HomT );
     
-    TT := TensorFunctor( collection );
-    
-    C := SourceOfFunctor( HH );
-    
-    k := CommutativeRingOfLinearCategory( C );
+    k := CommutativeRingOfLinearCategory( category );
     
     name := "Hom(T,-) ⊗_{End T} T --> Id";
     
-    nat := NaturalTransformation( name, PreCompose( HH, TT ), IdentityFunctor( C ) );
+    nat := NaturalTransformation(   
+              name,
+              PreCompose( HomT, tensorT ),
+              IdentityFunctor( category )
+            );
     
     AddNaturalTransformationFunction( nat,
-      function( ht_a, a, id_a )
-        local ha, min_gen, positions, vectors, positions_of_non_zeros, mor;
+      function( s, a, r )
+        local HomT_a, min_gen, positions, vectors, positions_of_non_zeros, mor;
         
-        ha := ApplyFunctor( HH, a );
+        HomT_a := HomFunctorToCategoryOfQuiverRepresentations( collection )( a );
         
-        min_gen := MinimalGeneratingSet( ha );
+        min_gen := MinimalGeneratingSet( HomT_a );
         
         if IsEmpty( min_gen ) then
           
-          return ZeroMorphism( ht_a, id_a );
+          return ZeroMorphism( s, r );
           
         fi;
         
@@ -167,7 +175,7 @@ InstallMethod( CounitOfTensorHomAdjunction,
               
         mor := MorphismBetweenDirectSums( TransposedMat( [ mor ] ) );
         
-        return CokernelColift( ht_a!.embedded_defining_morphism_of_cokernel_object, mor );
+        return CokernelColift( s!.embedded_defining_morphism_of_cokernel_object, mor );
         
       end );
       
@@ -438,5 +446,198 @@ InstallMethodWithCache( COMPUTE_STANDARD_ISOMORPHISM,
     SetUnderlyingFunction( z_func, func );
     
     return z_func[ ActiveLowerBound( R ) - 1 ][ 2 ]^1;
+    
+end );
+
+##############################################################################################
+#
+# Simplify objects in homotopy categories of quiver rows and additive closures of algebroids
+# 
+##############################################################################################
+
+
+## Quiver rows are currently very suitable for such computations than additive closures
+##
+InstallOtherMethod( SimplifyObject_IsoToInputObject,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsObject ],
+          
+  function( homotopy_category, a, index )
+    local over_cochains, additive_closure, algebroid, A_rows, I, J;
+    
+    if IsCochainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      over_cochains := true;
+    else
+      over_cochains := false;
+    fi;
+    
+    additive_closure := DefiningCategory( homotopy_category );
+    
+    if not ( IsAdditiveClosureCategory( additive_closure ) ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    algebroid := UnderlyingCategory( additive_closure );
+    
+    if not IsAlgebroid( algebroid ) then
+      
+        TryNextMethod( );
+        
+    fi;
+    
+    A_rows := QuiverRows( UnderlyingQuiverAlgebra( algebroid ) );
+    
+    I := IsomorphismFromAdditiveClosureOfAlgebroidIntoQuiverRows( additive_closure, A_rows );
+    I := ExtendFunctorToHomotopyCategories( I, over_cochains );
+    
+    J := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( A_rows, additive_closure );
+    J := ExtendFunctorToHomotopyCategories( J, over_cochains );
+    
+    return J( SimplifyObject_IsoToInputObject( I( a ), index ) );
+    
+end );
+
+
+##
+InstallOtherMethod( SimplifyObject,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsObject ],
+          
+  function( homotopy_category, a, index )
+    local over_cochains, additive_closure, algebroid, A_rows, I, J;
+    
+    if IsCochainComplexCategory( UnderlyingCategory( homotopy_category ) ) then
+      over_cochains := true;
+    else
+      over_cochains := false;
+    fi;
+    
+    additive_closure := DefiningCategory( homotopy_category );
+    
+    if not ( IsAdditiveClosureCategory( additive_closure ) ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    algebroid := UnderlyingCategory( additive_closure );
+    
+    if not IsAlgebroid( algebroid ) then
+      
+        TryNextMethod( );
+        
+    fi;
+    
+    A_rows := QuiverRows( UnderlyingQuiverAlgebra( algebroid ) );
+    
+    I := IsomorphismFromAdditiveClosureOfAlgebroidIntoQuiverRows( additive_closure, A_rows );
+    I := ExtendFunctorToHomotopyCategories( I, over_cochains );
+    
+    J := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( A_rows, additive_closure );
+    J := ExtendFunctorToHomotopyCategories( J, over_cochains );
+    
+    return J( SimplifyObject( I( a ), index ) );
+    
+end );
+
+##
+InstallOtherMethod( SimplifyObject_IsoToInputObject,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsObject ],
+          
+  function( homotopy_category, a, index )
+    local cat, collection;
+     
+    cat := DefiningCategory( homotopy_category );
+    
+    if not ( IsQuiverRowsCategory( cat ) ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    if IsBound( homotopy_category!.full_strong_exceptional_for_simplifying_objects ) then
+      
+      collection := homotopy_category!.full_strong_exceptional_for_simplifying_objects;
+      
+    else
+      
+      collection := 
+        CreateStrongExceptionalCollection(
+          List( Vertices( UnderlyingQuiver( cat ) ), v -> v / cat / homotopy_category )
+      );
+      
+      homotopy_category!.full_strong_exceptional_for_simplifying_objects := collection;
+      
+    fi;
+    
+    return COMPUTE_ISOMORPHISM( a, collection );
+    
+end );
+
+##
+InstallOtherMethod( SimplifyObject,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsObject ],
+          
+  function( homotopy_category, a, index )
+    local cat, collection;
+    
+    cat := DefiningCategory( homotopy_category );
+    
+    if not ( IsQuiverRowsCategory( cat ) ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    if IsBound( homotopy_category!.full_strong_exceptional_for_simplifying_objects ) then
+      
+      collection := homotopy_category!.full_strong_exceptional_for_simplifying_objects;
+      
+    else
+      Error( "??" );      
+      collection := 
+        CreateStrongExceptionalCollection(
+          List( Vertices( UnderlyingQuiver( cat ) ), v -> v / cat / homotopy_category )
+      );
+      
+      homotopy_category!.full_strong_exceptional_for_simplifying_objects := collection;
+      
+    fi;
+    
+    return ConvolutionFunctor( collection )( ReplacementFunctor( collection )( a ) );
+    
+end );
+
+##
+InstallOtherMethod( SimplifyObject_IsoToInputObject,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsObject ],
+          
+  function( homotopy_category, a, index )
+    local cat, collection;
+     
+    cat := DefiningCategory( homotopy_category );
+    
+    if not ( IsQuiverRowsCategory( cat ) ) then
+        
+        TryNextMethod( );
+        
+    fi;
+    
+    if IsBound( homotopy_category!.full_strong_exceptional_for_simplifying_objects ) then
+      
+      collection := homotopy_category!.full_strong_exceptional_for_simplifying_objects;
+      
+    else
+      
+      collection := 
+        CreateStrongExceptionalCollection(
+          List( Vertices( UnderlyingQuiver( cat ) ), v -> v / cat / homotopy_category )
+      );
+      
+      homotopy_category!.full_strong_exceptional_for_simplifying_objects := collection;
+      
+    fi;
+    
+    return COMPUTE_ISOMORPHISM( a, collection );
     
 end );

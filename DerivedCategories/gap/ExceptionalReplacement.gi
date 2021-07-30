@@ -133,7 +133,7 @@ InstallMethodWithCache( MorphismFromExceptionalObjectAsList,
       
     fi;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     H_A := ApplyFunctor( H, A );
     
@@ -190,7 +190,7 @@ InstallMethodWithCache( MorphismBetweenExceptionalObjects,
   function( alpha, collection )
     local H, H_alpha, D, full, I, J, m;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     H_alpha := ApplyFunctor( H, alpha );
     

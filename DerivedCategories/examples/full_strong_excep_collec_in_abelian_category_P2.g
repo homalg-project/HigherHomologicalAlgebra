@@ -1,6 +1,7 @@
 ReadPackage( "DerivedCategories", "examples/pre_settings.g" );
 #############################################################
 
+field := HomalgFieldOfRationals();
 
 quiver := RightQuiver( "quiver", 3, [ [ "x0", 1, 2 ], [ "x1", 1, 2 ], [ "x2", 1, 2 ],
                                   [ "y0", 2, 3 ], [ "y1", 2, 3 ], [ "y2", 2, 3 ] ] );;
@@ -24,7 +25,7 @@ A :=
     ]
 );;
 
-C := CategoryOfQuiverRepresentations( A, homalg_field );
+C := CategoryOfQuiverRepresentations( A, field );
 
 C_injs := FullSubcategoryGeneratedByInjectiveObjects( C );
 DeactivateCachingOfCategory( C_injs );
