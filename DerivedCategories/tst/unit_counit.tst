@@ -52,11 +52,12 @@ gap> mats :=
 gap> mats := List( mats, m -> MatrixByRows( field, m ) );;
 gap> Add( T, QuiverRepresentation( A, [ 6, 15, 10 ], mats ) );;
 gap> collection := CreateStrongExceptionalCollection( T );;
-gap> HH := HomFunctor( collection );;
+gap> HH := HomFunctorToCategoryOfQuiverRepresentations( collection );;
+gap> TT := TensorFunctorFromCategoryOfQuiverRepresentations( collection );;
 gap> C := AsCapCategory( Source( HH ) );;
 gap> D := AsCapCategory( Range( HH ) );;
-gap> eta := CounitOfTensorHomAdjunction( collection );;
-gap> lambda := UnitOfTensorHomAdjunction( collection );;
+gap> eta := CounitOfTensorHomAdjunction( collection, TT, HH );;
+gap> lambda := UnitOfTensorHomAdjunction( collection, TT, HH );;
 gap> alpha := RandomMorphism( C, 3 );;
 gap> CheckNaturality( eta, alpha );
 true

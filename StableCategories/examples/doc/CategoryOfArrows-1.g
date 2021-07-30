@@ -40,7 +40,7 @@ quiver := RightQuiver( "quiver", vertices, arrows, sources, targets );
 #! psi_1:A_1->B_1,v:A_2->A_1,w:A_2->B_1,phi_2:A_2->B_2,psi_2:A_2->B_2,beta:B_1->B_2]
 QQ := HomalgFieldOfRationals( );
 #! Q
-oid := Algebroid( QQ, quiver );;
+oid := Algebroid( QQ, quiver : range_of_HomStructure := MatrixCategory( QQ ) );;
 AssignSetOfObjects( oid );
 AssignSetOfGeneratingMorphisms( oid );
 rels := [

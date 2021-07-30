@@ -9,7 +9,32 @@
 #############################################################################
 
 ##
-InstallMethod( TensorFunctorOnIndecProjectiveObjects,
+#InstallMethod( TensorFunctorFromCategoryOfFunctorsOnIndecProjectiveObjects,
+#          [ IsStrongExceptionalCollection ],
+#          
+#  function( collection )
+#    local full, iso, indec_projs, name, T;
+#    
+#    full := DefiningFullSubcategory( collection );
+#    
+#    iso := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( collection );
+#    
+#    indec_projs := SourceOfFunctor( iso );
+#    
+#    name := "- ⊗_{(End T)^op} T functor";
+#    
+#    T := CapFunctor( name, indec_projs, full );
+#    
+#    AddObjectFunction( T, iso!.object_function_list[ 1 ][ 1 ] );
+#    
+#    AddMorphismFunction( T, iso!.morphism_function_list[ 1 ][ 1 ] );
+#    
+#    return T;
+#    
+#end );
+
+##
+InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local full, iso, indec_projs, name, T;
@@ -20,7 +45,7 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
     
     indec_projs := SourceOfFunctor( iso );
     
-    name := "- ⊗_{End T} T functor on indecomposable projective objects";
+    name := "- ⊗_{(End T)^op} T functor";
     
     T := CapFunctor( name, indec_projs, full );
     
@@ -33,12 +58,44 @@ InstallMethod( TensorFunctorOnIndecProjectiveObjects,
 end );
 
 ##
-InstallMethod( TensorFunctorOnProjectiveObjects,
+#InstallMethod( TensorFunctorFromCategoryOfFunctorsOnProjectiveObjects,
+#          [ IsStrongExceptionalCollection ],
+#  function( collection )
+#    local algebroid, algebroid_op, k, Hom, I, projs, T, F;
+#    
+#    algebroid := Algebroid( collection );
+#    
+#    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+#    
+#    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+#    
+#    k := CommutativeRingOfLinearCategory( algebroid );
+#    
+#    Hom := Hom( algebroid_op, MatrixCategory( k ) );
+#    
+#    I := IsomorphismOntoCategoryOfQuiverRepresentations( Hom );
+#    
+#    projs := FullSubcategoryGeneratedByProjectiveObjects( Hom );
+#    
+#    T := TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects( collection );
+#    
+#    I := RestrictFunctorToFullSubcategories( I, projs, SourceOfFunctor( T ) );
+#    
+#    F := PreCompose( I, T );
+#    
+#    F!.Name := "- ⊗_{(End T)^op} T functor";
+#    
+#    return F;
+#    
+#end );
+
+##
+InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local G, add_G, C, can, can_add_G, projs, D, name, R;
     
-    G := TensorFunctorOnIndecProjectiveObjects( collection );
+    G := TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosures( G );
     
@@ -52,7 +109,7 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
     D := RangeOfFunctor( can_add_G );
     
-    name := "- ⊗_{End T} T functor on projective objects";
+    name := "- ⊗_{(End T)^op} T functor";
     
     R := CapFunctor( name, projs, D );
     
@@ -64,9 +121,36 @@ InstallMethod( TensorFunctorOnProjectiveObjects,
     
 end );
 
+##
+InstallMethod( TensorFunctorFromCategoryOfFunctors,
+    [ IsStrongExceptionalCollection ],
+     
+  function( collection )
+    local algebroid, algebroid_op, k, functors, I;
+    
+    algebroid := Algebroid( collection );
+    
+    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    
+    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+    
+    k := CommutativeRingOfLinearCategory( algebroid_op );
+    
+    functors := Hom( algebroid_op, MatrixCategory( k ) );
+    
+    I := IsomorphismOntoCategoryOfQuiverRepresentations( functors );
+    
+    I := PostCompose( TensorFunctorFromCategoryOfQuiverRepresentations( collection ), I );
+    
+    I!.Name := "- ⊗_{(End T)^op} T functor";
+    
+    return I;
+    
+end );
+
 ## In case the ambient category of the collection is abelian
 ##
-InstallMethod( TensorFunctor,
+InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentations,
     [ IsStrongExceptionalCollection ],
     
   function( collection )
@@ -82,7 +166,7 @@ InstallMethod( TensorFunctor,
       
     fi;
     
-    T := TensorFunctorOnProjectiveObjects( collection );
+    T := TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects( collection );
     
     I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( full ) );
     
@@ -90,7 +174,7 @@ InstallMethod( TensorFunctor,
     
     reps := AmbientCategory( projs  );
      
-    name := "- ⊗_{End T} T functor on quiver representations";
+    name := "- ⊗_{(End T)^op} T functor on quiver representations";
     
     F := CapFunctor( name, reps, cat );
     
@@ -143,7 +227,7 @@ end );
 
 ## In case the ambient category of the collection is homotopy category
 ##
-InstallMethod( TensorFunctor,
+InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentations,
     [ IsStrongExceptionalCollection ],
     
   function( collection )
@@ -165,14 +249,14 @@ InstallMethod( TensorFunctor,
     
     Ho_D := HomotopyCategory( D );
     
-    T := TensorFunctorOnProjectiveObjects( collection );
+    T := TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects( collection );
     
     T := PreCompose(
                   LocalizationFunctorByProjectiveObjects( Ho_D ),
                   ExtendFunctorToHomotopyCategories( T )
                 );
     
-    T!.Name := "- ⊗_{End T} T functor";
+    T!.Name := "- ⊗_{(End T)^op} T functor";
     
     return T;
     

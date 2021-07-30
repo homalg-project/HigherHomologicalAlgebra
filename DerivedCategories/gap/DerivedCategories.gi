@@ -188,15 +188,57 @@ InstallMethod( DerivedCategoryObject,
 end );
 
 ##
+InstallOtherMethod( DerivedCategoryObject,
+          [ IsDerivedCategory, IsList, IsInt ],
+          
+  { D, diffs, lower_bound } -> 
+    DerivedCategoryObject(
+        D,
+        HomotopyCategoryObject(
+          UnderlyingCategory( D ),
+          diffs,
+          lower_bound
+        )
+      )
+);
+
+##
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+  
+  InstallOtherMethod( DerivedCategoryObject,
+          [ IsDerivedCategory, IsJuliaObject, IsInt ],
+      { D, diffs, lower_bound } -> 
+        DerivedCategoryObject(
+          D,
+          ConvertJuliaToGAP( diffs ),
+          lower_bound
+        )
+  );
+  
+fi;
+
+##
 InstallMethod( \[\],
           [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> UnderlyingCell( a )[ i ]
+  { a, i } -> ObjectAt( a, i )
+);
+
+##
+InstallOtherMethod( ObjectAt,
+          [ IsDerivedCategoryObject, IsInt ],
+  { a, i } -> ObjectAt( UnderlyingCell( UnderlyingCell( a ) ), i )
+);
+
+##
+InstallOtherMethod( DifferentialAt,
+          [ IsDerivedCategoryObject, IsInt ],
+  { a, i } -> DifferentialAt( UnderlyingCell( UnderlyingCell( a ) ), i )
 );
 
 ##
 InstallMethod( \^,
           [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> UnderlyingCell( a ) ^ i
+  { a, i } -> DifferentialAt( a, i )
 );
 
 ##

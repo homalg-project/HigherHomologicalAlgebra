@@ -128,10 +128,7 @@ DeclareAttribute( "UniversalFunctorFromDerivedCategory",
 #! @Arguments G
 #! @Returns a functor
 DeclareOperation( "LeftDerivedFunctor",
-        [ IsCapFunctor ] );
-
-DeclareAttribute( "LDerivedFunctor",
-        IsCapFunctor );
+        [ IsCapFunctor, IsBool ] );
 
 #! @Description
 #!  The input is a functor <A>F</A>:$C\to D$ such that $C$ is abelian category with computable enough injectives or extension of such a functor
@@ -139,10 +136,7 @@ DeclareAttribute( "LDerivedFunctor",
 #! @Arguments F
 #! @Returns a functor
 DeclareOperation( "RightDerivedFunctor",
-        [ IsCapFunctor ] );
-
-DeclareAttribute( "RDerivedFunctor",
-        IsCapFunctor );
+        [ IsCapFunctor, IsBool ] );
 
 DeclareAttribute( "InterpretationIsomorphismFromAlgebroid", IsAlgebroid );
 DeclareAttribute( "InterpretationIsomorphismOntoAlgebroid", IsAlgebroid );

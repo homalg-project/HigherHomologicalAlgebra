@@ -14,6 +14,27 @@
 InstallOtherMethod( UnderlyingMatrix, [ IsGradedRowMorphism ], UnderlyingHomalgMatrix );
 InstallOtherMethod( GradedRow, [ IsList, IsCategoryOfGradedRows ], { degrees, rows } -> GradedRow( degrees, UnderlyingGradedRing( rows ) ) );
 
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+
+  ##
+  InstallOtherMethod( AdditiveClosureObject,
+          [ IsJuliaObject, IsAdditiveClosureCategory ],
+    function( list_of_objects, category )
+      
+      return AdditiveClosureObject( ConvertJuliaToGAP( list_of_objects ), category );
+      
+  end );
+  
+  ##
+  InstallOtherMethod( AdditiveClosureMorphism,
+          [ IsAdditiveClosureObject, IsJuliaObject, IsAdditiveClosureObject ],
+    function( source, matrix, range )
+      
+      return AdditiveClosureMorphism( source, ConvertJuliaToGAP( matrix ), range );
+      
+  end );
+  
+fi;
 
 ##
 InstallMethod( DualOfFpModuleByFreyd,

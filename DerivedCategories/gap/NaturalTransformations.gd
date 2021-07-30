@@ -17,14 +17,16 @@
 #! $\lambda:\mathrm{Id}_{ \mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i)} \to \mathrm{Hom}(T,-\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i)$.
 #! @Arguments E
 #! @Returns a natural transformation
-DeclareAttribute( "UnitOfTensorHomAdjunction", IsStrongExceptionalCollection );
+DeclareOperation( "UnitOfTensorHomAdjunction", 
+      [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ] );
 
 #! @Description
 #!  The input is an exceptional collection <A>E</A>. The output is the unit of the tensor-hom adjunction
 #! $\eta: \mathrm{Hom}(\oplus_i E_i,-)\otimes_{\mathrm{End}(\oplus_i E_i)} \oplus_i E_i \to \mathrm{Id}_C$.
 #! @Arguments E
 #! @Returns a natural transformation
-DeclareAttribute( "CounitOfTensorHomAdjunction", IsStrongExceptionalCollection );
+DeclareOperation( "CounitOfTensorHomAdjunction",
+      [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ] );
 
 DeclareAttribute( "CounitOfConvolutionReplacementAdjunction", IsStrongExceptionalCollection );
 DeclareAttribute( "UnitOfConvolutionReplacementAdjunction", IsStrongExceptionalCollection );

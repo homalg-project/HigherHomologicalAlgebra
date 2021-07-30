@@ -8,9 +8,36 @@
 ##
 #############################################################################
 
+
 ##
+InstallMethod( HomFunctorToCategoryOfFunctors,
+    [ IsStrongExceptionalCollection ],
+  function( collection )
+    local algebroid, algebroid_op, k, functors, I;
+    
+    algebroid := Algebroid( collection );
+    
+    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    
+    ## This line should removed after changing the constructor in Algebroids package
+    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+    
+    k := CommutativeRingOfLinearCategory( algebroid_op );
+    
+    functors := Hom( algebroid_op, MatrixCategory( k ) );
+    
+    I := IsomorphismFromCategoryOfQuiverRepresentations( functors );
+    
+    I := PreCompose( HomFunctorToCategoryOfQuiverRepresentations( collection ), I );
+    
+    I!.Name := "Hom(T,-) functor";
+    
+    return I;
+    
+end );
+
 ##
-InstallMethod( HomFunctorAttr,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,
     [ IsStrongExceptionalCollection ],
     
   function( collection )
@@ -55,9 +82,9 @@ InstallMethod( HomFunctorAttr,
       function( V )
         local dim_vec, bases, mats, i, j, k, B, a, Ei_to_V, current_mat, rel, pos, r, label, alpha, p;
         
-        dim_vec := [ ];
+        dim_vec := List( [ 1 .. NumberOfVertices( quiver ) ], i -> "?" );
         
-        bases := [ ];
+        bases := List( [ 1 .. NumberOfVertices( quiver ) ], i -> "?" );
         
         mats := [ ];
         
@@ -69,7 +96,7 @@ InstallMethod( HomFunctorAttr,
           
           for k in [ i, j ] do
             
-            if not IsBound( bases[ k ] ) then
+            if bases[ k ] = "?" then
               
               B := BasisOfExternalHom( UnderlyingCell( collection[ k ] ), V );
               
@@ -84,7 +111,7 @@ InstallMethod( HomFunctorAttr,
           k := label[ 3 ];
           
           a := UnderlyingCell( Arrows( collection, i, j )[ k ] );
-          
+                    
           Ei_to_V := List( bases[ j ], b -> PreCompose( a, b ) );
           
           current_mat := [ ];
@@ -105,17 +132,15 @@ InstallMethod( HomFunctorAttr,
         
         od;
         
-        if not IsDenseList( dim_vec ) then
+        pos := Positions( dim_vec, "?" );
           
-          pos := PositionsProperty( [ 1 .. Length( dim_vec ) ], p -> not IsBound( dim_vec[ p ] ) );
-          
-          for p in pos do
+        for p in pos do
             
-            dim_vec[ p ] := Size( BasisOfExternalHom( UnderlyingCell( collection[ p ] ), V ) );
-            
-          od;
+          bases[ p ] := BasisOfExternalHom( UnderlyingCell( collection[ p ] ), V );
           
-        fi;
+          dim_vec[ p ] := Size( bases[ p ] );
+          
+        od;
         
         r := QuiverRepresentation( A_op, dim_vec, mats );
         
@@ -169,9 +194,6 @@ InstallMethod( HomFunctorAttr,
     
 end );
 
-##
-InstallMethod( HomFunctor, [ IsStrongExceptionalCollection ], HomFunctorAttr );
-
 ########################################################
 #
 # if the collection is defined by subcategory
@@ -180,7 +202,7 @@ InstallMethod( HomFunctor, [ IsStrongExceptionalCollection ], HomFunctorAttr );
 #########################################################
 
 ##
-InstallMethod( HomFunctorOnIndecInjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, inj_indec, name, cell_func;
@@ -193,7 +215,7 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
       
     fi;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     reps := RangeOfFunctor( H );
     
@@ -208,7 +230,7 @@ InstallMethod( HomFunctorOnIndecInjectiveObjects,
 end );
 
 ##
-InstallMethod( HomFunctorOnInjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, can, can_H, name;
@@ -221,7 +243,7 @@ InstallMethod( HomFunctorOnInjectiveObjects,
       
     fi;
    
-    H := HomFunctorOnIndecInjectiveObjects( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects( collection );
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
@@ -238,7 +260,7 @@ InstallMethod( HomFunctorOnInjectiveObjects,
 end );
 
 ##
-InstallMethod( HomFunctorOnIndecProjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, proj_indec, name, cell_func;
@@ -251,7 +273,7 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
       
     fi;
    
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     reps := RangeOfFunctor( H );
     
@@ -266,7 +288,7 @@ InstallMethod( HomFunctorOnIndecProjectiveObjects,
 end );
 
 ##
-InstallMethod( HomFunctorOnProjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, can, can_H, name;
@@ -279,7 +301,7 @@ InstallMethod( HomFunctorOnProjectiveObjects,
       
     fi;
        
-    H := HomFunctorOnIndecProjectiveObjects( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjects( collection );
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
@@ -304,7 +326,7 @@ end );
 ###############################################
 
 ##
-InstallMethod( HomFunctorOnInjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, projs;
@@ -323,7 +345,7 @@ InstallMethod( HomFunctorOnInjectiveObjects,
       
     fi;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     projs := FullSubcategoryGeneratedByInjectiveObjects( ambient_cat );
     
@@ -336,7 +358,7 @@ InstallMethod( HomFunctorOnInjectiveObjects,
 end );
 
 ##
-InstallMethod( HomFunctorOnProjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, projs;
@@ -355,7 +377,7 @@ InstallMethod( HomFunctorOnProjectiveObjects,
       
     fi;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     projs := FullSubcategoryGeneratedByProjectiveObjects( ambient_cat );
     
@@ -374,12 +396,12 @@ end );
 ########################################################
 
 ##
-InstallMethod( HomFunctorOnBaseCategory,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnBaseCategory,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local H, Ho_C, C, B, reps, cell_func, name;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     Ho_C := AmbientCategory( collection );
     
@@ -418,7 +440,7 @@ end );
 
 
 ##
-InstallMethod( HomFunctorOnDefiningCategory,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnDefiningCategory,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local Ho_C, C, H;
@@ -439,7 +461,7 @@ InstallMethod( HomFunctorOnDefiningCategory,
       
     fi;
     
-    H := HomFunctorOnBaseCategory( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentationsOnBaseCategory( collection );
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
@@ -450,12 +472,12 @@ InstallMethod( HomFunctorOnDefiningCategory,
 end );
 
 ##
-InstallMethod( HomFunctorOnDefiningCategory,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnDefiningCategory,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local H, Ho_C, C, I;
     
-    H := HomFunctor( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentations( collection );
     
     Ho_C := AmbientCategory( collection );
     

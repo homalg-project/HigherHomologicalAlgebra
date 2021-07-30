@@ -703,7 +703,10 @@ end );
 InstallMethod( EndomorphismAlgebraAttr,
     [ IsStrongExceptionalCollection ],
     
-  collection -> EndomorphismAlgebra( collection, GLOBAL_FIELD_FOR_QPA!.default_field )
+  collection -> EndomorphismAlgebra(
+                    collection,
+                    CommutativeRingOfLinearCategory( DefiningFullSubcategory( collection ) )
+                  )
 );
 
 ##
@@ -741,24 +744,34 @@ InstallMethod( CategoryOfQuiverRepresentationsOverOppositeAlgebra,
   collection -> CategoryOfQuiverRepresentations( OppositeAlgebra( EndomorphismAlgebra( collection ) ) )
 );
 
+
 ##
 InstallOtherMethod( HomotopyCategory,
           [ IsStrongExceptionalCollection ],
           
   function( collection )
+    local homotopy_cat;
+  
+    homotopy_cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    
+    if not IsHomotopyCategory( homotopy_cat ) or IsChainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
+      return HomotopyCategory( collection, false );
+    else
+      return HomotopyCategory( collection, true );
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( HomotopyCategory,
+          [ IsStrongExceptionalCollection, IsBool ],
+          
+  function( collection, over_cochains )
     local collection_plus;
      
     collection_plus := AdditiveClosure( DefiningFullSubcategory( collection ) );
     
-    if IsCochainComplexCategory( UnderlyingCategory( AmbientCategory( collection ) ) ) then
-      
-      return HomotopyCategory( collection_plus, true );
-      
-    else
-      
-      return HomotopyCategory( collection_plus, false );
-      
-    fi;
+    return HomotopyCategory( collection_plus, over_cochains );
     
 end );
 

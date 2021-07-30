@@ -279,6 +279,17 @@ InstallOtherMethod( ExtendFunctorToHomotopyCategories,
 );
 
 ##
+BindGlobal( "ExtendFunctorToHomotopyCategoriesByChains",
+  F -> ExtendFunctorToHomotopyCategories( F, false )
+);
+
+##
+BindGlobal( "ExtendFunctorToHomotopyCategoriesByCochains",
+  F -> ExtendFunctorToHomotopyCategories( F, true )
+);
+
+
+##
 InstallMethod( ExtendFunctorFromProductCategoryToHomotopyCategories,
           [ IsCapFunctor ],
   function( F )
@@ -337,26 +348,30 @@ InstallMethod( ExtendFunctorFromProductCategoryToHomotopyCategories,
 end );
 
 ##
-InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
-          [ IsCapNaturalTransformation ],
-  function( eta )
+InstallMethod( ExtendNaturalTransformationToHomotopyCategoriesOp,
+          [ IsCapNaturalTransformation, IsBool ],
+  function( eta, over_cochains )
     local F, G, homotopy_cat, HF, HG, C_eta, r1, r2, name, H_eta;
     
     F := Source( eta );
     
     G := Range( eta );
     
-    homotopy_cat := HomotopyCategory( AsCapCategory( Range( G ) ) );
+    homotopy_cat := HomotopyCategory( AsCapCategory( Range( G ) ), over_cochains );
     
-    HF := ExtendFunctorToHomotopyCategories( F );
+    HF := ExtendFunctorToHomotopyCategories( F, over_cochains );
     
-    HG := ExtendFunctorToHomotopyCategories( G );
+    HG := ExtendFunctorToHomotopyCategories( G, over_cochains );
     
-    C_eta := ExtendNaturalTransformationToChainComplexCategories( eta );
+    if over_cochains = false then
+      C_eta := ExtendNaturalTransformationToChainComplexCategories( eta );
+    else
+      C_eta := ExtendNaturalTransformationToCochainComplexCategories( eta );
+    fi;
     
     r1 := RandomBoldTextColor( );
     
-    r2 := RandomTextColor( );
+    r2 := RandomTextColor( "" );
     
     name := Concatenation( r2[ 1 ], "Extention of natural transformation ( ", r2[ 2 ], Name( eta ), " ", r2[ 1 ], ") ",
               r1[ 1 ], ":", r1[ 2 ], " ", Name( HF ), " ", r1[ 1 ], "===>", r1[ 2 ], " ", Name( HG ) );
@@ -373,6 +388,20 @@ InstallMethod( ExtendNaturalTransformationToHomotopyCategories,
     return H_eta;
     
 end );
+
+##
+InstallMethod( ExtendNaturalTransformationToHomotopyCategoriesByChain,
+          [ IsCapNaturalTransformation ],
+          
+  eta -> ExtendNaturalTransformationToHomotopyCategories( eta, false )
+);
+
+##
+InstallMethod( ExtendNaturalTransformationToHomotopyCategoriesByCochains,
+          [ IsCapNaturalTransformation ],
+          
+  eta -> ExtendNaturalTransformationToHomotopyCategories( eta, true )
+);
 
 ##
 InstallMethod( LocalizationFunctorByProjectiveObjects,
@@ -747,7 +776,7 @@ InstallMethod( ExtendFunctorMethodToHomotopyCategories,
       category -> IsHomotopyCategory( category ) and IsChainComplexCategory( UnderlyingCategory( category ) ),
       DefiningCategory,
       functor -> ExtendFunctorToHomotopyCategories( functor, false ),
-      "ExtendFunctorToHomotopyCategories"
+      "ExtendFunctorToHomotopyCategoriesByChains"
     );
     
     ExtendFunctorMethod(
@@ -755,7 +784,7 @@ InstallMethod( ExtendFunctorMethodToHomotopyCategories,
       category -> IsHomotopyCategory( category ) and IsCochainComplexCategory( UnderlyingCategory( category ) ),
       DefiningCategory,
       functor -> ExtendFunctorToHomotopyCategories( functor, true ),
-      "ExtendFunctorToHomotopyCategories"
+      "ExtendFunctorToHomotopyCategoriesByCochains"
     );
     
 end );

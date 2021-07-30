@@ -7,16 +7,16 @@
 MakeReadWriteGlobal( "ENABLE_COLORS" );
 ENABLE_COLORS := false;
 
-InstallValue( ALL_FUNCTORS_METHODS, [ ] );
+InstallValue( ALL_FUNCTORS_METHODS, rec( ) );
 
 
 ##
 InstallMethod( AddFunctor,
-          [ IsObject, IsObject, IsFunction, IsFunction, IsString ],
+          [ IsObject, IsObject, IsFunction, IsFunction, IsString, IsString ],
           
-  function( F1, F2, F3, F4, F5 )
+  function( F1, F2, F3, F4, name, ID )
     
-    AddFunctor( [ F1, F2, F3, F4, F5 ] );
+    AddFunctor( [ F1, F2, F3, F4, name, ID ] );
     
 end );
 
@@ -26,21 +26,66 @@ InstallMethod( AddFunctor,
           
   function( F )
     
-    if Size( F ) <> 5 then
+    if Size( F ) <> 6 then
       
-      Error( "The list should contain 5 entries" );
+      Error( "The list should contain 6 entries" );
       
     fi;
     
-    if not F in ALL_FUNCTORS_METHODS then
-      
-      Add( ALL_FUNCTORS_METHODS, F );
-      
+    if IsBound( ALL_FUNCTORS_METHODS.(F[6]) ) then
+        Error( "A functor with ID: ", F[6], " already exists!" );
     fi;
+    
+    ALL_FUNCTORS_METHODS.(F[6]) := F;
     
 end );
 
-## PreCompose of functor methods?
+##
+InstallMethod( PreComposeFunctorMethods,
+    [ IsList, IsList, IsFunction, IsFunction ],
+
+  function( F1, F2, first_checks, constructor )
+    local F;
+    
+    F :=
+      [
+        F1[ 1 ],
+        F2[ 2 ],
+        function( sF1, rF2 )
+          local category;
+          
+          if not first_checks( sF1, rF2 ) then
+            return false;
+          fi;
+          
+          category := constructor( sF1, rF2 );
+          
+          if not( F1[3]( sF1, category ) and F2[3]( category, rF2 ) ) then
+            return false;
+          fi;
+          
+          return true;
+          
+        end,
+        function( sF1, rF2 )
+          local category, I, J;
+          category := constructor( sF1, rF2 );
+          I := F1[ 4 ]( sF1, category );
+          J := F2[ 4 ]( category, rF2 );
+          return PreCompose( I, J );
+        end,
+        Concatenation(
+          "PreComposition of the following two functors:\n",
+          "     * ", F1[ 5 ], "\n     * ", F2[ 5 ]
+        ),
+        Concatenation( "PreComposition of ", F1[ 6 ], " and ", F2[ 6 ] )
+      ];
+      
+      AddFunctor( F );
+      
+      return F;
+      
+end );
 
 ##
 InstallMethod( ExtendFunctorMethod,
@@ -62,7 +107,8 @@ InstallMethod( ExtendFunctorMethod,
                   F[ 4 ]( underlying_category( category_1 ), 
                   underlying_category( category_2 ) )
                 ),
-        Concatenation( "The functor defined by applying ", name, " on (", F[ 5 ], ")" )
+        Concatenation( "Apply ", name, " on ( ", F[ 5 ], " )" ),
+        Concatenation( name, ":", F[ 6 ] )
       ];
     
     AddFunctor( E );
@@ -93,20 +139,39 @@ InstallMethod( KnownFunctors,
           [ IsCapCategory, IsCapCategory ],
           
   function( category_1, category_2 )
-    local positions, i;
+    local recs, positions, i;
+    
+    recs := RecNames( ALL_FUNCTORS_METHODS );
     
     positions := PositionsProperty(
-                    ALL_FUNCTORS_METHODS,
+                    recs,
                     function( F )
+                      local i;
+                      F := ALL_FUNCTORS_METHODS.(F);
                       return F[1]( category_1 ) and F[2]( category_2 ) and F[3]( category_1, category_2 );
                     end
                   );
-                  
+    
     for i in [ 1 .. Size( positions ) ] do
       
-      Print( i, ": ", ALL_FUNCTORS_METHODS[ positions[ i ] ][ 5 ], "\n" );
+      Print( i, ": ", ALL_FUNCTORS_METHODS.( recs[ positions[ i ] ] )[ 5 ], "\n" );
       
     od;
+    
+end );
+
+##
+InstallOtherMethod( Functor,
+          [ IsCapCategory, IsCapCategory, IsInt, IsString ],
+          
+  function( category_1, category_2, n, name )
+    local F;
+    
+    F := Functor( category_1, category_2, n );
+    
+    F!.Name := name;
+    
+    return F;
     
 end );
 
@@ -115,20 +180,26 @@ InstallMethod( Functor,
           [ IsCapCategory, IsCapCategory, IsInt ],
           
   function( category_1, category_2, n )
-    local positions, i;
+    local recs, positions, i;
+    
+    recs := RecNames( ALL_FUNCTORS_METHODS );
     
     positions := PositionsProperty(
-                    ALL_FUNCTORS_METHODS,
-                    F -> F[1]( category_1 ) and F[2]( category_2 ) and F[3]( category_1, category_2 )
+                    recs,
+                    function( F )
+                      local i;
+                      F := ALL_FUNCTORS_METHODS.(F);
+                      return F[1]( category_1 ) and F[2]( category_2 ) and F[3]( category_1, category_2 );
+                    end
                   );
-                  
+                     
     if n > Size( positions ) then
       
       return fail;
       
     fi;
     
-    return ALL_FUNCTORS_METHODS[ positions[ n ] ][ 4 ]( category_1, category_2 );
+    return ALL_FUNCTORS_METHODS.( recs[ positions[ n ] ] )[ 4 ]( category_1, category_2 );
     
 end );
 
@@ -137,7 +208,8 @@ AddFunctor(
     IsCapCategory,
     { category_1, category_2 } -> IsIdenticalObj( category_1, category_2 ),
     { category_1, category_2 } -> IdentityFunctor( category_1 ),
-    "Identity endofunctor"
+    "Identity functor",
+    "IdentityFunctor"
 );
 
 ###################################

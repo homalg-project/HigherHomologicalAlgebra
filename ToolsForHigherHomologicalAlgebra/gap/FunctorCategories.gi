@@ -20,6 +20,7 @@ functor :=
       fi;
     end,
     { reps, hom } -> IsomorphismFromCategoryOfQuiverRepresentations( hom ),
+    "Isomorphism functor",
     "Isomorphism from category of quiver representations to the corresponding category of functors"
   ];
 
@@ -40,13 +41,13 @@ functor :=
       fi;
     end,
     { hom, reps } -> IsomorphismOntoCategoryOfQuiverRepresentations( hom ),
+    "Isomorphism functor",
     "Isomorphism from category of functors onto the corresponding category of quiver representations"
   ];
 
 AddFunctor( functor );
 ExtendFunctorMethodToComplexCategories( functor );
 ExtendFunctorMethodToHomotopyCategories( functor );
-
 
 functor :=
   [
@@ -83,7 +84,8 @@ functor :=
                               indec_1,
                               indec_2
                             ),
-    "Isomorphism functor"
+    "Isomorphism functor",
+    "Isomorphism functor from indec projective objects in category of functors to indec projective quiver representations"
   ];
   
 AddFunctor( functor );
@@ -129,7 +131,8 @@ functor :=
                               indec_2,
                               indec_1
                             ),
-    "Isomorphism functor"
+    "Isomorphism functor",
+    "Isomorphism functor from indec projective quiver representations to indec projective objects in category of functors"
   ];
   
 AddFunctor( functor );
@@ -174,7 +177,8 @@ functor :=
                               proj_1,
                               proj_2
                             ),
-    "Isomorphism functor"
+    "Isomorphism functor",
+    "Isomorphism functor from projective objects in category of functors to projective quiver representations"
   ];
   
 AddFunctor( functor );
@@ -219,7 +223,8 @@ functor :=
                               proj_2,
                               proj_1
                             ),
-    "Isomorphism functor"
+    "Isomorphism functor",
+    "Isomorphism functor from projective quiver representations to projective objects in category of functors"
   ];
   
 AddFunctor( functor );
@@ -500,60 +505,26 @@ InstallMethod( LaTeXStringOp,
           [ IsCapCategoryMorphismInHomCategory ],
           
   function( eta )
-    local morphisms, only_datum, s, OnlyDatum, o;
+    local morphisms, s, o;
     
     morphisms := List( SetOfObjects( eta ), o -> [ o, ApplyCell( eta, o ) ] );
-     
-    only_datum := ValueOption( "OnlyDatum" );
-    
+      
     s := "\\begin{array}{ccc}\n";
-    
-    if only_datum <> true then
+          
+    for o in morphisms do
       
-      for o in morphisms do
-        
-        s := Concatenation(
-                s,
-                LaTeXStringOp( o[ 2 ] : OnlyDatum := true ),
-                " \\\\ & & \\\\"
-              );
-        
-      od;
+      s := Concatenation(
+              s,
+              LaTeXStringOp( o[ 1 ] ),
+              " & \\mapsto & ",
+              LaTeXStringOp( o[ 2 ] : OnlyDatum := true ),
+              " \\\\ & & \\\\"
+            );
       
-    else
-      
-      for o in morphisms do
-        
-        s := Concatenation(
-                s,
-                LaTeXStringOp( o[ 1 ] ),
-                " & \\mapsto & ",
-                LaTeXStringOp( o[ 2 ] : OnlyDatum := true ),
-                " \\\\ & & \\\\"
-              );
-        
-      od;
-    
-    fi;
+    od;
     
     s := Concatenation( s, "\\end{array}" );
     
-    #s := Concatenation( "{\\color{blue}", s, "}" );
-     
-    if only_datum = true then
+    return s;
       
-      return s;
-      
-    else
-      
-      return Concatenation(
-                LaTeXStringOp( Source( eta ) ),
-                "\\xrightarrow{",
-                s,
-                "}",
-                LaTeXStringOp( Range( eta ) )
-              );
-      
-    fi;
-    
 end );

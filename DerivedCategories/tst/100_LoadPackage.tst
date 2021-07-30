@@ -20,3 +20,4 @@ gap> LoadPackage( "FreydCategoriesForCAP" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;
 gap> HOMALG_IO.show_banners := false;;
+gap> S := HomalgFieldOfRationalsInSingular( ) * "x,y,z,t";;
