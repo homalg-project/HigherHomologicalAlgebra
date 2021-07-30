@@ -69,9 +69,9 @@ IsCongruentForMorphisms(
   );
 #! true
 HomStructure( A, B );
-#! <A vector space object over Q of dimension 4>
+#! <A row module over Q of rank 4>
 HomStructure( class_A, class_B );
-#! <A vector space object over Q of dimension 1>
+#! <A row module over Q of rank 1>
 Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );
 #! [ <A morphism in Stable category( The category of functors:
 #! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
@@ -117,7 +117,7 @@ Fpsi := FreydCategoryMorphism( FA, [ [ psi_2 ] ] / Aoid, FB );
 IsZeroForMorphisms( Fpsi );
 #! true
 HomStructure( FA, FB );
-#! <A vector space object over Q of dimension 1>
+#! <A row module over Q of rank 1>
 Hom_FA_FB := BasisOfExternalHom( FA, FB );
 #! [ <A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )> ]
 Display( Hom_FA_FB[ 1 ] );
