@@ -38,7 +38,11 @@ DeclareAttribute( "EmbeddingFunctorInHomotopyCategory", IsCapCategory );
 
 DeclareAttribute( "ExtendFunctorFromProductCategoryToHomotopyCategories", IsCapFunctor );
 
-DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategories", IsCapNaturalTransformation );
+KeyDependentOperation( "ExtendNaturalTransformationToHomotopyCategories", IsCapNaturalTransformation, IsBool, ReturnTrue );
+
+DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategoriesByChain", IsCapNaturalTransformation );
+
+DeclareAttribute( "ExtendNaturalTransformationToHomotopyCategoriesByCochains", IsCapNaturalTransformation );
 
 DeclareAttribute( "LocalizationFunctorByProjectiveObjects", IsHomotopyCategory );
 
