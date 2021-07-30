@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2021.07-01
+                                   2021.07-03
   
   
-                                  20 July 2021
+                                  30 July 2021
   
   
                                   Kamal Saleh
@@ -87,18 +87,17 @@
       2.1-12 UniversalFunctorFromDerivedCategory
       2.1-13 LeftDerivedFunctor
       2.1-14 RightDerivedFunctor
-      2.1-15 TensorFunctor
-      2.1-16 TensorFunctorOnIndecProjectiveObjects
-      2.1-17 TensorFunctorOnProjectiveObjects
+      2.1-15 TensorFunctorFromCategoryOfQuiverRepresentations
+      2.1-16 TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects
+      2.1-17 TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects
     2.2 [33X[0;0YNatural transformations[133X
       2.2-1 UnitOfTensorHomAdjunction
       2.2-2 CounitOfTensorHomAdjunction
   3 [33X[0;0YDerivedCategories automatic generated documentation[133X
-    3.1 [33X[0;0YDerivedCategories automatic generated documentation of methods[133X
-      3.1-1 HomFunctor
-    3.2 [33X[0;0YDerivedCategories automatic generated documentation of attributes[133X
-      3.2-1 HomFunctorOnIndecInjectiveObjects
-      3.2-2 HomFunctorOnInjectiveObjects
+    3.1 [33X[0;0YDerivedCategories automatic generated documentation of attributes[133X
+      3.1-1 HomFunctorToCategoryOfQuiverRepresentations
+      3.1-2 HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects
+      3.1-3 HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects
   
   
   [32X

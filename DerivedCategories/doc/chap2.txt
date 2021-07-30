@@ -143,9 +143,9 @@
   computable  enough  injectives  or  extension  of such a functor to homotopy
   categories. The output the right derived functor [23XRF:D^b(C)\to D^b(D)[123X.[133X
   
-  [1X2.1-15 TensorFunctor[101X
+  [1X2.1-15 TensorFunctorFromCategoryOfQuiverRepresentations[101X
   
-  [33X[1;0Y[29X[2XTensorFunctor[102X( [3Xcollection[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTensorFunctorFromCategoryOfQuiverRepresentations[102X( [3Xcollection[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya functor[133X
   
   [33X[0;0YThe  argument  is  an exceptional collection [3XE[103X which is defined by some full
@@ -154,9 +154,9 @@
   \otimes_{\mathrm{End}(\oplus_i                 E_i)}                \oplus_i
   E_i:\mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i E_i) \to C[123X.[133X
   
-  [1X2.1-16 TensorFunctorOnIndecProjectiveObjects[101X
+  [1X2.1-16 TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects[101X
   
-  [33X[1;0Y[29X[2XTensorFunctorOnIndecProjectiveObjects[102X( [3Xcollection[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects[102X( [3Xcollection[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya functor[133X
   
   [33X[0;0YThe  argument  is  an exceptional collection [3XE[103X which is defined by some full
@@ -166,9 +166,9 @@
   [10XFullSubcategoryGeneratedByIndecProjectiveObjects[110X[23X(\mathrm{mod}\mbox{-}\mathrm{End}(\oplus_i
   E_i)) \to C[123X.[133X
   
-  [1X2.1-17 TensorFunctorOnProjectiveObjects[101X
+  [1X2.1-17 TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects[101X
   
-  [33X[1;0Y[29X[2XTensorFunctorOnProjectiveObjects[102X( [3Xcollection[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects[102X( [3Xcollection[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya functor[133X
   
   [33X[0;0YThe  argument  is  an exceptional collection [3XE[103X which is defined by some full
@@ -183,7 +183,7 @@
   
   [1X2.2-1 UnitOfTensorHomAdjunction[101X
   
-  [33X[1;0Y[29X[2XUnitOfTensorHomAdjunction[102X( [3XE[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUnitOfTensorHomAdjunction[102X( [3XE[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
   
   [33X[0;0YThe  input  is  an  exceptional collection [3XE[103X in some abelian category [10XC[110X. The
@@ -193,7 +193,7 @@
   
   [1X2.2-2 CounitOfTensorHomAdjunction[101X
   
-  [33X[1;0Y[29X[2XCounitOfTensorHomAdjunction[102X( [3XE[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCounitOfTensorHomAdjunction[102X( [3XE[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
   
   [33X[0;0YThe  input  is  an  exceptional  collection [3XE[103X. The output is the unit of the

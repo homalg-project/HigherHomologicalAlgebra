@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2021.07-01",
-Date := "20/07/2021",
+Version := "2021.07-03",
+Date := "30/07/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -75,7 +75,7 @@ Dependencies := rec(
         [ "QPA", ">= 2.0-dev"],
         [ "Algebroids", ">= 2020.10-02" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
-        [ "HomotopyCategories", ">= 2021.05-01" ],
+        [ "HomotopyCategories", ">= 2021.07-02" ],
         [ "BBGG", "2020.10-02" ],
         [ "FunctorCategories", "2021.07-01" ]
           ],
