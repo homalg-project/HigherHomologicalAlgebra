@@ -111,14 +111,14 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     SetCommutativeRingOfLinearCategory( full, k );
     
     AddIsEqualForObjects( full,
-      function( a, b )
+      function( cat, a, b )
       
         return GeneratorDegrees( UnderlyingCell( a ) ) = GeneratorDegrees( UnderlyingCell( b ) );
         
     end );
    
     AddIsEqualForMorphisms( full,
-      function( alpha, beta )
+      function( cat, alpha, beta )
         
         return IsEqualForObjects( Source( alpha ), Source( beta ) ) and
                   IsEqualForObjects( Range( alpha ), Range( beta ) ) and
@@ -131,7 +131,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms );
     
     AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
-      function( e, alpha )
+      function( cat, e, alpha )
         local mat;
         
         alpha := UnderlyingCell( alpha );
@@ -146,7 +146,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     
     ##
     AddBasisOfExternalHom( full,
-      function( a, b )
+      function( cat, a, b )
         local cell_a, cell_b, twist_a, twist_b, B; 
         
         cell_a := UnderlyingCell( a );
@@ -165,7 +165,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     
     ##
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( alpha, B )
+      function( cat, alpha, B )
         
         if IsEmpty( B ) then
           
@@ -1621,7 +1621,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
     SetCommutativeRingOfLinearCategory( full, k );
     
     AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
-      function( r, alpha )
+      function( cat, r, alpha )
         local coeff, beta;
                  
         beta := UnderlyingCell( alpha );
@@ -1635,7 +1635,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
     end, 99 );
    
     AddBasisOfExternalHom( full,
-      function( M, N )
+      function( cat, M, N )
         local mat_M, dim_M, index_M, mat_N, dim_N, index_N, B;
         
         mat_M := UnderlyingMatrix( UnderlyingCell( M ) );
@@ -1661,7 +1661,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
     end, 99 );
     
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( phi, B )
+      function( cat, phi, B )
         local mat, sol;
         
         if B = [  ] then
