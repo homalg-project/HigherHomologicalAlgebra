@@ -50,6 +50,8 @@ MakeReadWriteGlobal( "DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS" );
 DISABLE_ALL_SANITY_CHECKS := false;
 SWITCH_LOGIC_OFF := false;
 DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
+DISABLE_CACHING_FOR_CELLS_CONSTRUCTORS_FOR_CATEGORIES_WITH_THESE_FILTERS := [ ];
+
 
 ## This is the only way I can perform these changes,
 ## I hope I can remove this operation very soon
@@ -79,6 +81,10 @@ InstallMethod( Finalize,
       DeactivateCachingOfCategory( category );
     fi;
     
+    if ForAny( DISABLE_CACHING_FOR_CELLS_CONSTRUCTORS_FOR_CATEGORIES_WITH_THESE_FILTERS, func -> func( category ) ) then
+      DeactivateCachingObject( category!.caches.MorphismConstructor );
+    fi;
+   
     return true;
     
 end );
@@ -152,7 +158,8 @@ BindGlobal( "SetSpecialSettings",
     fi;
   
     if IsBound( IsMatrixCategory ) then
-      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsMatrixCategory" ) );
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsMatrixCategory" ) ); 
+      Add( DISABLE_CACHING_FOR_CELLS_CONSTRUCTORS_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsMatrixCategory" ) );
     fi;
     
     if IsBound( IsHomotopyCategory ) then
@@ -161,6 +168,7 @@ BindGlobal( "SetSpecialSettings",
     
     if IsBound( IsAdditiveClosureCategory ) then
       Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsAdditiveClosureCategory" ) );
+      #Add( DISABLE_CACHING_FOR_CELLS_CONSTRUCTORS_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsAdditiveClosureCategory" ) );
     fi;
     
     if IsBound( IsQuiverRowsCategory ) then
@@ -183,6 +191,11 @@ BindGlobal( "SetSpecialSettings",
       Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsCategoryOfGradedRows" ) );
     fi;
     
+    if IsBound( IsCategoryOfRows ) then
+      Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsCategoryOfRows" ) );
+      Add( DISABLE_CACHING_FOR_CELLS_CONSTRUCTORS_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsCategoryOfRows" ) );
+    fi;
+   
     if IsBound( IsFreydCategory ) then
       Add( DISABLE_CACHING_FOR_CATEGORIES_WITH_THESE_FILTERS, ValueGlobal( "IsFreydCategory" ) );
     fi; 
