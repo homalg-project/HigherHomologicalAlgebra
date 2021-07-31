@@ -21,7 +21,7 @@
 #    
 #    indec_projs := SourceOfFunctor( iso );
 #    
-#    name := "- ⊗_{(End T)^op} T functor";
+#    name := "-⊗ T functor";
 #    
 #    T := CapFunctor( name, indec_projs, full );
 #    
@@ -45,7 +45,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjective
     
     indec_projs := SourceOfFunctor( iso );
     
-    name := "- ⊗_{(End T)^op} T functor";
+    name := "-⊗ T functor";
     
     T := CapFunctor( name, indec_projs, full );
     
@@ -83,7 +83,7 @@ end );
 #    
 #    F := PreCompose( I, T );
 #    
-#    F!.Name := "- ⊗_{(End T)^op} T functor";
+#    F!.Name := "-⊗ T functor";
 #    
 #    return F;
 #    
@@ -109,7 +109,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjec
     
     D := RangeOfFunctor( can_add_G );
     
-    name := "- ⊗_{(End T)^op} T functor";
+    name := "-⊗ T functor";
     
     R := CapFunctor( name, projs, D );
     
@@ -142,7 +142,7 @@ InstallMethod( TensorFunctorFromCategoryOfFunctors,
     
     I := PostCompose( TensorFunctorFromCategoryOfQuiverRepresentations( collection ), I );
     
-    I!.Name := "- ⊗_{(End T)^op} T functor";
+    I!.Name := "-⊗ T functor";
     
     return I;
     
@@ -174,7 +174,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentations,
     
     reps := AmbientCategory( projs  );
      
-    name := "- ⊗_{(End T)^op} T functor on quiver representations";
+    name := "-⊗ T functor";
     
     F := CapFunctor( name, reps, cat );
     
@@ -256,7 +256,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentations,
                   ExtendFunctorToHomotopyCategories( T )
                 );
     
-    T!.Name := "- ⊗_{(End T)^op} T functor";
+    T!.Name := "-⊗ T functor";
     
     return T;
     

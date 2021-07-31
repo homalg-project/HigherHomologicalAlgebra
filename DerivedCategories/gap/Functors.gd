@@ -150,6 +150,7 @@ DeclareAttribute( "EquivalenceFromHomotopyCategory", IsStrongExceptionalCollecti
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsStrongExceptionalCollection );
 
 DeclareAttribute( "EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory", IsStrongExceptionalCollection );
+DeclareAttribute( "EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations", IsCapCategory );
 DeclareAttribute( "EmbeddingFunctorIntoDerivedCategory", IsCapCategory );
 
 DeclareAttribute( "ConvolutionFunctor", IsStrongExceptionalCollection );

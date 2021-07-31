@@ -573,7 +573,7 @@ InstallMethod( EndomorphismAlgebra,
         [ IsStrongExceptionalCollection, IsField ],
         
   function( collection, field )
-    local nr_vertices, arrows, sources, ranges, v, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, name, r, i, j;
+    local nr_vertices, arrows, sources, ranges, v, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, relations, paths_in_collection, paths_in_quiver, rel, name, r, algebroid, i, j;
     
     nr_vertices := NumberOfObjects( collection );
     
@@ -634,7 +634,8 @@ InstallMethod( EndomorphismAlgebra,
               );
     
     SetLabelsAsLaTeXStrings( quiver, vertices_latex, arrows_latex );
-     
+    SetLabelsAsLaTeXStrings( OppositeQuiver( quiver ), vertices_latex, arrows_latex );
+    
     A := PathAlgebra( field, quiver );
     
     relations := [ ];
@@ -678,16 +679,20 @@ InstallMethod( EndomorphismAlgebra,
       name := collection!.algebra;
       
       SetName( A, name );
-      
+       
       SetName( OppositeAlgebra( A ), Concatenation( name, "^op" ) );
       
       r := RandomTextColor( name );
       
-      Algebroid( A )!.Name := Concatenation( r[ 1 ],
+      algebroid := Algebroid( A : range_of_HomStructure := MatrixCategory( field ) );
+      
+      algebroid!.Name := Concatenation( r[ 1 ],
                                 "Algebroid(", r[ 2 ], " ", name,
                                   " ", r[ 1 ], ")", r[ 2 ]
                                 );;
-                                
+      
+      SetAlgebroid( OppositeAlgebra( A ), OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) );
+      
       QuiverRows( A )!.Name := Concatenation( r[ 1 ],
                                  "Quiver rows(", r[ 2 ], " ", name,
                                   " ", r[ 1 ], ")", r[ 2 ]
@@ -727,8 +732,19 @@ InstallMethod( AmbientCategory,
 InstallMethod( Algebroid,
           [ IsStrongExceptionalCollection ],
           
-  collection -> Algebroid( EndomorphismAlgebra( collection ) )
-);
+  function( collection )
+    local full, k;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    k := CommutativeRingOfLinearCategory( full );
+    
+    return Algebroid(
+              EndomorphismAlgebra( collection )
+              : range_of_HomStructure := MatrixCategory( k )
+            );
+    
+end );
 
 ##
 InstallMethod( QuiverRows,

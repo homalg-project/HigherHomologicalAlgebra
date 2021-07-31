@@ -337,6 +337,20 @@ InstallMethod( DerivedCategoryAttr,
 );
 
 ##
+InstallMethod( DerivedCategoryByChains,
+          [ IsCapCategory ],
+          
+  C -> DerivedCategory( C, false )
+);
+
+##
+InstallMethod( DerivedCategoryByCochains,
+          [ IsCapCategory ],
+  
+  C -> DerivedCategory( C, true )
+);
+
+##
 InstallOtherMethod( DerivedCategory,
           [ IsCapCategory ],
   C -> DerivedCategoryAttr( C )

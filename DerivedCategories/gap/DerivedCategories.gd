@@ -73,6 +73,10 @@ DeclareAttribute( "UnderlyingRoof", IsDerivedCategoryMorphism );
 
 KeyDependentOperation( "DerivedCategory", IsCapCategory, IsBool, ReturnTrue );
 
+DeclareAttribute( "DerivedCategoryByChains", IsCapCategory );
+
+DeclareAttribute( "DerivedCategoryByCochains", IsCapCategory );
+
 DeclareAttribute( "DerivedCategoryAttr", IsCapCategory );
 
 DeclareAttribute( "DefiningCategory", IsDerivedCategory );

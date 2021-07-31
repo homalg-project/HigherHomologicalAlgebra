@@ -23,7 +23,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
     
     reps := SourceOfFunctor( tensorT );
      
-    name := "Identity => Hom(T, -⊗_{End T} T)";
+    name := "Id => Hom(T,-⊗ T)";
     
     nat := NaturalTransformation( name, IdentityFunctor( reps ), PreCompose( tensorT, HomT ) );
     
@@ -136,7 +136,7 @@ InstallMethodWithCache( CounitOfTensorHomAdjunction,
     
     k := CommutativeRingOfLinearCategory( category );
     
-    name := "Hom(T,-) ⊗_{End T} T --> Id";
+    name := "Hom(T,-) ⊗ T => Id";
     
     nat := NaturalTransformation(   
               name,
@@ -196,7 +196,7 @@ InstallMethod( UnitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( collection );
     
-    name := "Id( - ) -> Rep( Conv( - ) )";
+    name := "Id => Rep(Conv(-))";
     
     nat := NaturalTransformation( name, IdentityFunctor( ambient_cat ), PostCompose( G, F ) );
     
@@ -221,7 +221,7 @@ InstallMethod( CounitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( collection );
     
-    name := "Conv( Rep( - ) ) --> Id( - )";
+    name := "Conv(Rep(-) ) => Id";
     
     nat := NaturalTransformation( name, PreCompose( G, F ), IdentityFunctor( ambient_cat ) );
     
@@ -594,7 +594,7 @@ InstallOtherMethod( SimplifyObject,
       collection := homotopy_category!.full_strong_exceptional_for_simplifying_objects;
       
     else
-      Error( "??" );      
+      
       collection := 
         CreateStrongExceptionalCollection(
           List( Vertices( UnderlyingQuiver( cat ) ), v -> v / cat / homotopy_category )
