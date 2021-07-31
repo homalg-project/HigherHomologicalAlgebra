@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+\usepackage{tikz}
+
+\usetikzlibrary{cd}
+\usepackage{tikz-cd}
+
+\pgfrealjobname{diagram}
+
+\begin{document}
+
+\beginpgfgraphicnamed{quiver3-f}
+\begin{tikzcd}
+{[0101]} \arrow[rd, "{m_{1,3}^1}" description] &                                    &  &          \\
+                                               & {[0111]} \arrow[rr, "{m_{3,4}^1}"] &  & {[1111]} \\
+{[0011]} \arrow[ru, "{m_{2,3}^1}" description] &                                    &  &         
+\end{tikzcd}
+\endpgfgraphicnamed
+
+\end{document}

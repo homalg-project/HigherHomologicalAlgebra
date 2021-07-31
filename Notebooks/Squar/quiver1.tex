@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+
+\usepackage{tikz}
+
+\usetikzlibrary{cd}
+\usepackage{tikz-cd}
+
+\pgfrealjobname{diagram}
+
+\begin{document}
+
+\beginpgfgraphicnamed{quiver1-f}
+\begin{tikzcd}
+                                      & v_2 \arrow[rrd, "b"] &                      &     \\
+v_1 \arrow[ru, "a"] \arrow[rrd, "c"'] &                      &                      & v_4 \\
+                                      &                      & v_3 \arrow[ru, "d"'] &    
+\end{tikzcd}
+\endpgfgraphicnamed
+
+\end{document}
