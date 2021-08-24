@@ -42,8 +42,8 @@ BindGlobal( "TheTypeStrongExceptionalCollection",
 
 ##
 InstallMethod( CreateStrongExceptionalCollection,
-          [ IsCapFullSubcategory, IsList, IsString ],
-  function( full, vertices_labels, cache )
+          [ IsCapFullSubcategory, IsList, IsList, IsString ],
+  function( full, vertices_labels, vertices_latex, cache )
     local L, range, positions, algebra, quiver, collection, n, i, j;
     
     if HasStrongExceptionalCollection( full ) then
@@ -97,6 +97,8 @@ InstallMethod( CreateStrongExceptionalCollection,
     
     vertices_labels := List( positions, p -> vertices_labels[ p ] );
     
+    vertices_latex := List( positions, p -> vertices_latex[ p ] );
+    
     # to set better bounds
     if IsHomotopyCategory( AmbientCategory( full ) ) then
       
@@ -106,7 +108,7 @@ InstallMethod( CreateStrongExceptionalCollection,
     
     MakeImmutable( L );
     
-    algebra := Concatenation( "End( ", JoinStringsWithSeparator( vertices_labels, " ⊕ " ), " )" );
+    algebra := Concatenation( "end( ", JoinStringsWithSeparator( vertices_labels, " ⊕ " ), " )" );
     
     quiver := "quiver";
     
@@ -114,7 +116,8 @@ InstallMethod( CreateStrongExceptionalCollection,
                     char := "m",
                     quiver := quiver,
                     algebra := algebra,
-                    vertices_labels := vertices_labels
+                    vertices_labels := vertices_labels,
+                    vertices_latex := vertices_latex
                     );
     
     n := Length( L );
@@ -124,7 +127,13 @@ InstallMethod( CreateStrongExceptionalCollection,
         UnderlyingObjects, L,
         NumberOfObjects, n,
         DefiningFullSubcategory, full );
-        
+    
+    full!.Name := Concatenation(
+                    "The full subcategory { ",
+                    JoinStringsWithSeparator( vertices_labels, ", " ),
+                    " }"
+                  );
+    
     SetStrongExceptionalCollection( full, collection );
     
     return collection;
@@ -132,8 +141,31 @@ InstallMethod( CreateStrongExceptionalCollection,
 end );
 
 ##
-InstallMethod( CreateStrongExceptionalCollection,
+InstallOtherMethod( CreateStrongExceptionalCollection,
+          [ IsList, IsList, IsList ],
+  function( objects, vertices_labels, vertices_latex )
+    local full;
+    
+    full := FullSubcategoryGeneratedByListOfObjects( objects );
+    
+    return CreateStrongExceptionalCollection( full, vertices_labels, vertices_latex, "crisp" );
+    
+end );
+
+##
+InstallOtherMethod( CreateStrongExceptionalCollection,
+          [ IsCapFullSubcategory, IsList, IsString ],
+          
+  function( full, vertices_labels, cache )
+    
+    return CreateStrongExceptionalCollection( full, vertices_labels, vertices_labels, cache );
+    
+end );
+
+##
+InstallOtherMethod( CreateStrongExceptionalCollection,
           [ IsList, IsList, IsString ],
+          
   function( objects, vertices_labels, cache )
     local full;
     
@@ -170,7 +202,9 @@ InstallMethod( CreateStrongExceptionalCollection,
   function( full )
     local vertices_labels;
     
-    vertices_labels := List( [ 1 .. Size( SetOfKnownObjects( full ) ) ], String );
+    vertices_labels := List( [ 1 .. Size( SetOfKnownObjects( full ) ) ],
+                          i -> Concatenation( "E_{", String( i ), "}" )
+                       );
     
     return CreateStrongExceptionalCollection( full, vertices_labels );
     

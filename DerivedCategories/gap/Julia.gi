@@ -23,3 +23,17 @@ InstallMethod( CreateStrongExceptionalCollection,
     return CreateStrongExceptionalCollection( ConvertJuliaToGAP( full ), ConvertJuliaToGAP( vertices_labels ) );
     
 end );
+
+##
+InstallOtherMethod( CreateStrongExceptionalCollection,
+        [ IsJuliaObject, IsJuliaObject, IsJuliaObject ],
+        
+  function( full, vertices_labels, vertices_latex )
+    
+    return CreateStrongExceptionalCollection(
+                ConvertJuliaToGAP( full ),
+                ConvertJuliaToGAP( vertices_labels ),
+                ConvertJuliaToGAP( vertices_latex )
+           );
+    
+end );
