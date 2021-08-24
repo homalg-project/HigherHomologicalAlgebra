@@ -92,7 +92,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
     
     full := FullSubcategoryGeneratedByTwistedOmegaModules( A );
     
-    labels := List( Reversed( [ 0 .. n - 1 ] ), i -> Concatenation( "Ω^", String( i ),"(", String( i ) , ")" ) );
+    labels := List( [ 0 .. n - 1 ], i -> Concatenation( "Ω^", String( i ),"(", String( i ) , ")" ) );
     
     collection := CreateStrongExceptionalCollection( full, labels );
     
