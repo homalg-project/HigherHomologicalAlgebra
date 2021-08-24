@@ -224,7 +224,11 @@ InstallMethod( ExtendFunctorToHomotopyCategoriesOp,
     
     if name = fail then
       
-      name := "Extension of a functor to homotopy categories";
+      name := Concatenation(
+                "Extension of ( ",
+                Name( F ),
+                " ) to homotopy categories"
+              );
       
     fi;
     

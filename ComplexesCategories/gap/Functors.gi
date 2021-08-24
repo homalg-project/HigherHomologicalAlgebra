@@ -497,10 +497,12 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
     
     T := ChainComplexCategory( RangeOfFunctor( F ) );
     
-    r := RandomTextColor( Name( F ) );
-    
-    name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to chain complex categories", r[ 2 ] );
-    
+    name := Concatenation(
+                "Extension of ( ",
+                Name( F ),
+                " ) to complex categories"
+            );
+ 
     functor := CapFunctor( name, S, T );
     
     AddObjectFunction( functor,
