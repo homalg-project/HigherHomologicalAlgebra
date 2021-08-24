@@ -1056,6 +1056,32 @@ ExtendFunctorMethodToComplexCategories( functor );
 ExtendFunctorMethodToHomotopyCategories( functor );    
 
 ##
+InstallOtherMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
+          [ IsStrongExceptionalCollection ],
+  function( collection )
+    local full, iso_1, algebroid, iso_2, iso, ind_projs, r, name, cell_func;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    iso_1 := IsomorphismOntoAlgebroid( collection );
+    
+    algebroid := RangeOfFunctor( iso_1 );
+    
+    iso_2 := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( algebroid );
+    
+    iso := PreCompose( iso_1, iso_2 );
+    
+    ind_projs := RangeOfFunctor( iso );
+    
+    name := "Isomorphism: strong exceptional collection -> indecomposable projective objects";
+    
+    cell_func := c -> ApplyFunctor( iso, c );
+    
+    return FunctorFromLinearCategoryByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
+end );
+
+
+##
 InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations,
           [ IsStrongExceptionalCollection ],
   function( collection )
