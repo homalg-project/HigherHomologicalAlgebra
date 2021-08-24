@@ -330,6 +330,46 @@ InstallOtherMethod( Shift, [ IsDerivedCategoryObject, IsInt ],
   { a, n } -> Shift( UnderlyingCell( a ), n ) / CapCategory( a )
 );
 
+
+##
+InstallOtherMethod( DerivedCategoryByChains,
+          [ IsQuiverAlgebra ],
+          
+  function( A )
+    local k, k_mat, Aoid, functors;
+    
+    k := LeftActingDomain( A );
+    
+    k_mat := MatrixCategory( k );
+    
+    Aoid := Algebroid( A : range_of_HomStructure := k_mat );
+    
+    functors := Hom( Aoid, k_mat );
+    
+    return DerivedCategoryByChains( functors );
+    
+end );
+
+
+##
+InstallOtherMethod( DerivedCategoryByCochains,
+          [ IsQuiverAlgebra ],
+          
+  function( A )
+    local k, k_mat, Aoid, functors;
+    
+    k := LeftActingDomain( A );
+    
+    k_mat := MatrixCategory( k );
+    
+    Aoid := Algebroid( A : range_of_HomStructure := k_mat );
+    
+    functors := Hom( Aoid, k_mat );
+    
+    return DerivedCategoryByCochains( functors );
+    
+end );
+
 ##
 InstallMethod( DerivedCategoryAttr,
           [ IsCapCategory ],

@@ -149,9 +149,8 @@ DeclareAttribute( "EmbeddingFunctorFromAdditiveClosure", IsStrongExceptionalColl
 DeclareAttribute( "EquivalenceFromHomotopyCategory", IsStrongExceptionalCollection );
 DeclareAttribute( "EmbeddingFunctorFromHomotopyCategory", IsStrongExceptionalCollection );
 
-DeclareAttribute( "EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory", IsStrongExceptionalCollection );
-DeclareAttribute( "EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations", IsCapCategory );
-DeclareAttribute( "EmbeddingFunctorIntoDerivedCategory", IsCapCategory );
+DeclareAttribute( "EquivalenceOntoDerivedCategoryOfQuiverRepresentations", IsHomotopyCategory );
+DeclareAttribute( "EquivalenceOntoDerivedCategory", IsHomotopyCategory );
 
 DeclareAttribute( "ConvolutionFunctor", IsStrongExceptionalCollection );
 DeclareAttribute( "ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsStrongExceptionalCollection );

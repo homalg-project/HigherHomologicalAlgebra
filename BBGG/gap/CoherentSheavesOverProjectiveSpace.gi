@@ -142,7 +142,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     
     ##
     AddIsEqualForObjects( full,
-      function( M, N )
+      function( full, M, N )
         
         return IsIdenticalObj( M, N )
                 or GeneratorDegrees( UnderlyingHonestObject( UnderlyingCell( M ) ) )
@@ -151,7 +151,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     
     ##
     AddIsEqualForMorphisms( full,
-      function( alpha, beta )
+      function( full, alpha, beta )
         
         if IsIdenticalObj( alpha, beta ) then
           
@@ -174,7 +174,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     AddIsEqualForCacheForMorphisms( full, IsEqualForMorphisms, 99 );
       
     AddIsWellDefinedForObjects( full,
-      function( M )
+      function( full, M )
         
         M := UnderlyingCell( M );
         
@@ -185,7 +185,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     end );
     
     AddIsWellDefinedForMorphisms( full,
-      function( alpha )
+      function( full, alpha )
         return IsWellDefined( Source( alpha ) ) and IsWellDefined( Range( alpha ) )
                 and IsWellDefined( UnderlyingCell( alpha ) );
                 
@@ -196,7 +196,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     SetCommutativeRingOfLinearCategory( full, k );
     
     AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
-      function( r, alpha )
+      function( full, r, alpha )
         local coeff, beta;
         
         coeff := fail;
@@ -226,7 +226,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     end, 99 );
         
     AddBasisOfExternalHom( full,
-      function( M, N )
+      function( full, M, N )
         local twist_M, twist_N, B, identity_matrix;
         
         twist_M := HomalgElementToInteger( -GeneratorDegrees( UnderlyingHonestObject( UnderlyingCell( M ) ) )[ 1 ] );
@@ -246,7 +246,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
     end, 99 );
     
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( phi, B )
+      function( full, phi, B )
         local entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
         
         if B = [  ] then
@@ -364,7 +364,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
     SetCommutativeRingOfLinearCategory( full, k );
     
     AddMultiplyWithElementOfCommutativeRingForMorphisms( full,
-      function( r, alpha )
+      function( full, r, alpha )
         local coeff, beta;
         
         coeff := fail;
@@ -394,7 +394,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
     end, 99 );
       
     AddBasisOfExternalHom( full,
-      function( M, N )
+      function( full, M, N )
         local mat_M, dim_M, index_M, mat_N, dim_N, index_N;
         
         mat_M := UnderlyingMatrix( UnderlyingHonestObject( UnderlyingCell( M ) ) );
@@ -416,7 +416,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
     end, 99 );
     
     AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( phi, B )
+      function( full, phi, B )
         local mat, sol;
         
         if B = [  ] then

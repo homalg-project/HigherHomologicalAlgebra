@@ -221,7 +221,7 @@ InstallMethod( CounitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( collection );
     
-    name := "Conv(Rep(-) ) => Id";
+    name := "Conv( Rep( - ) ) => Id";
     
     nat := NaturalTransformation( name, PreCompose( G, F ), IdentityFunctor( ambient_cat ) );
     

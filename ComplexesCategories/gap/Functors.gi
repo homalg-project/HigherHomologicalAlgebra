@@ -497,10 +497,12 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
     
     T := ChainComplexCategory( RangeOfFunctor( F ) );
     
-    r := RandomTextColor( Name( F ) );
-    
-    name := Concatenation( r[ 1 ], "The extension functor of ", r[ 2 ], Name( F ), r[ 1 ], " to chain complex categories", r[ 2 ] );
-    
+    name := Concatenation(
+                "Extension of ( ",
+                Name( F ),
+                " ) to complex categories"
+            );
+ 
     functor := CapFunctor( name, S, T );
     
     AddObjectFunction( functor,
@@ -513,16 +515,16 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
         
         TODO_LIST_TO_PUSH_BOUNDS( C, functor_C );
         
-        AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
-          function( )
-            
-            if not HasIsZeroForObjects( functor_C ) then 
-              
-              SetIsZeroForObjects( functor_C, true );
-            
-            fi;
-          
-          end ) );
+        #AddToToDoList( ToDoListEntry( [ [ C, "IsZeroForObjects", true ] ],
+        #  function( )
+        #    
+        #    if not HasIsZeroForObjects( functor_C ) then 
+        #      
+        #      SetIsZeroForObjects( functor_C, true );
+        #    
+        #    fi;
+        #  
+        #  end ) );
         
         return functor_C;
         
@@ -543,17 +545,17 @@ InstallMethod( ExtendFunctorToChainComplexCategories,
         
         TODO_LIST_TO_PUSH_BOUNDS( phi, functor_phi );
         
-        AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ],
-          
-          function( )
-            
-            if not HasIsZeroForMorphisms( functor_phi ) then
-              
-              SetIsZeroForMorphisms( functor_phi, true );
-            
-            fi; 
-          
-          end ) );
+        #AddToToDoList( ToDoListEntry( [ [ phi, "IsZeroForMorphisms", true ] ],
+        #  
+        #  function( )
+        #    
+        #    if not HasIsZeroForMorphisms( functor_phi ) then
+        #      
+        #      SetIsZeroForMorphisms( functor_phi, true );
+        #    
+        #    fi; 
+        #  
+        #  end ) );
         
         return functor_phi;
         

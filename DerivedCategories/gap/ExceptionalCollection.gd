@@ -28,9 +28,9 @@ DeclareCategory( "IsStrongExceptionalCollection", IsObject );
 #!  <A>A!.Objects</A>, then the output is the strong exceptional collection defined by these objects.
 #!  If the input is a list of objects <A>L</A> of objects in some category <C>C</C>, 
 #!  then the output is <A>CreateStrongExceptionalCollection( A )</A>, where <A>A := FullSubcategoryGeneratedByListOfObjects(C,L)</A>.
-#! @Arguments full, vertices_labels, cache
+#! @Arguments full, vertices_labels, vertices_labels_latex, cache
 #! @Returns IsStrongExceptionalCollection
-DeclareOperation( "CreateStrongExceptionalCollection", [ IsCapFullSubcategory, IsList, IsString ] );
+DeclareOperation( "CreateStrongExceptionalCollection", [ IsCapFullSubcategory, IsList, IsList, IsString ] );
 
 DeclareOperation( "CreateStrongExceptionalCollection", [ IsCapFullSubcategory, IsList ] );
 

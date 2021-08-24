@@ -224,7 +224,11 @@ InstallMethod( ExtendFunctorToHomotopyCategoriesOp,
     
     if name = fail then
       
-      name := "Extension of a functor to homotopy categories";
+      name := Concatenation(
+                "Extension of ( ",
+                Name( F ),
+                " ) to homotopy categories"
+              );
       
     fi;
     
@@ -489,6 +493,29 @@ InstallMethod( LocalizationFunctorByProjectiveObjects,
     
 end );
 
+functor :=
+  [
+    IsHomotopyCategory,
+    IsHomotopyCategory,
+    function( homotopy_cat, homotopy_cat_projs )
+      local cat, projs;
+      cat := DefiningCategory( homotopy_cat );
+      projs := DefiningCategory( homotopy_cat_projs );
+      if not ValueGlobal( "HasFullSubcategoryGeneratedByProjectiveObjects" )( cat ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( projs, ValueGlobal( "FullSubcategoryGeneratedByProjectiveObjects" )( cat ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { homotopy_cat, homotopy_cat_projs } -> LocalizationFunctorByProjectiveObjects( homotopy_cat ),
+    "Localization functor by projective objects",
+    "Localization functor from homotopy category onto homotopy category of full subcategory of projectives"
+  ];
+  
+AddFunctor( functor );
+
 ##
 InstallOtherMethod( LocalizationFunctorByProjectiveObjects,
               [ IsCapCategory and IsAbelianCategory ],
@@ -508,6 +535,30 @@ InstallOtherMethod( LocalizationFunctorByProjectiveObjects,
     return I;
     
 end );
+
+functor :=
+  [
+    IsHomotopyCategory,
+    IsHomotopyCategory,
+    function( homotopy_cat, homotopy_cat_projs )
+      local cat, projs;
+      
+      cat := DefiningCategory( homotopy_cat );
+      projs := DefiningCategory( homotopy_cat_projs );
+      if not ValueGlobal( "HasFullSubcategoryGeneratedByInjectiveObjects" )( cat ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( projs, ValueGlobal( "FullSubcategoryGeneratedByInjectiveObjects" )( cat ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { homotopy_cat, homotopy_cat_projs } -> LocalizationFunctorByInjectiveObjects( homotopy_cat ),
+    "Localization functor by injective objects",
+    "Localization functor from homotopy category onto homotopy category of full subcategory of injectives"
+  ];
+  
+AddFunctor( functor );
 
 ##
 InstallMethod( LocalizationFunctorByInjectiveObjects,
