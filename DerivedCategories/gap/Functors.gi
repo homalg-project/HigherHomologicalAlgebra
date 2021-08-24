@@ -1641,6 +1641,66 @@ InstallMethod( LocalizationFunctor,
     
 end );
 
+functor :=
+  [
+    IsHomotopyCategory,
+    IsDerivedCategory,
+    { homotopy_cat, derived_cat } -> 
+      IsIdenticalObj( homotopy_cat, UnderlyingCategory( derived_cat ) ),
+    { homotopy_cat, derived_cat } -> LocalizationFunctor( homotopy_cat ),
+    "The natural localization functor",
+    "The natural localization functor from homotopy category onto derived category"
+  ];
+  
+AddFunctor( functor );
+
+
+functor :=
+  [
+    IsCapFullSubcategory,
+    IsCapCategory,
+    { full, category } -> 
+      HasIsAdditiveCategory( full ) and IsAdditiveCategory( full ) and 
+        IsIdenticalObj( AmbientCategory( full ), category ),
+    function( full, category )
+      local inc;
+      
+      inc := InclusionFunctor( full );
+      inc!.Name := "The inclusion functor";
+      
+      return inc;
+    end,
+    "The inclusion functor",
+    "The inclusion functor from full subcategory into its ambient category"
+  ];
+  
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
+
+PreComposeFunctorMethods(
+  ALL_FUNCTORS_METHODS.("ExtendFunctorToHomotopyCategoriesByCochains:The inclusion functor from full subcategory into its ambient category"),
+  ALL_FUNCTORS_METHODS.("The natural localization functor from homotopy category onto derived category"),
+  function( homotopy_projs, derived_cat )
+    local projs, cat;
+    
+    projs := DefiningCategory( homotopy_projs );
+    cat := DefiningCategory( derived_cat );
+    if not IsCapFullSubcategory( projs ) then
+      return false;
+    fi;
+    if not IsIdenticalObj( AmbientCategory( projs ), cat ) then
+      return false;
+    fi;
+    if not HasFullSubcategoryGeneratedByProjectiveObjects( cat ) and
+        IsIdenticalObj( projs, FullSubcategoryGeneratedByProjectiveObjects( cat ) ) then
+        return false;
+    fi;
+    return true;
+  end,
+  { homotopy_projs, derived_cat } -> UnderlyingCategory( derived_cat )
+);
+
 ##
 InstallMethod( UniversalFunctorFromDerivedCategory,
           [ IsCapFunctor ],
@@ -1691,6 +1751,68 @@ InstallMethod( UniversalFunctorFromDerivedCategory,
     return U;
     
 end );
+
+functor :=
+  [
+    IsDerivedCategory,
+    IsHomotopyCategory,
+    function( derived_cat, homotopy_cat )
+      local full, cat;
+      
+      full := DefiningCategory( homotopy_cat );
+      cat := DefiningCategory( derived_cat );
+      if not IsCapFullSubcategory( full ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( cat, AmbientCategory( full ) ) then
+        return false;
+      fi;
+      if not HasFullSubcategoryGeneratedByProjectiveObjects( cat ) then
+          return false;
+      fi;
+      if not IsIdenticalObj( full, FullSubcategoryGeneratedByProjectiveObjects( cat ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { derived_cat, homotopy_cat } -> 
+      UniversalFunctorFromDerivedCategory( LocalizationFunctorByProjectiveObjects( UnderlyingCategory( derived_cat ) ) ),
+    "Universal functor from derived category",
+    "Universal functor from derived category onto homotopy category of projectives"
+  ];
+  
+AddFunctor( functor );
+
+functor :=
+  [
+    IsDerivedCategory,
+    IsHomotopyCategory,
+    function( derived_cat, homotopy_cat )
+      local full, cat;
+      
+      full := DefiningCategory( homotopy_cat );
+      cat := DefiningCategory( derived_cat );
+      if not IsCapFullSubcategory( full ) then
+        return false;
+      fi;
+      if not IsIdenticalObj( cat, AmbientCategory( full ) ) then
+        return false;
+      fi;
+      if not HasFullSubcategoryGeneratedByInjectiveObjects( cat ) then
+          return false;
+      fi;
+      if not IsIdenticalObj( full, FullSubcategoryGeneratedByInjectiveObjects( cat ) ) then
+        return false;
+      fi;
+      return true;
+    end,
+    { derived_cat, homotopy_cat } -> 
+      UniversalFunctorFromDerivedCategory( LocalizationFunctorByInjectiveObjects( homotopy_cat ) ),
+    "Universal functor from derived category",
+    "Universal functor from derived category onto homotopy category of injectives"
+  ];
+  
+AddFunctor( functor );
 
 ##
 InstallMethod( LeftDerivedFunctor,
