@@ -1380,7 +1380,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
       
     fi;
     
-    name := "Isomorphism functor from exceptional collection onto algebroid";
+    name := "Abstraction isomorphism";
     
     object_func :=
       function( e )
@@ -1488,7 +1488,7 @@ functor :=
       return true;
     end,
     { full, oid } -> IsomorphismOntoAlgebroid( StrongExceptionalCollection( full ) ),
-    "Isomorphism functor",
+    "Abstraction isomorphism",
     "Isomorphism: strong exceptional collection -> algebroid"
   ];
 
@@ -1511,7 +1511,7 @@ InstallMethod( IsomorphismFromAlgebroid,
     
     algebroid := Algebroid( A );
     
-    name := "Isomorphism functor from algebroid onto exceptional collection";
+    name := "Realization isomorphism";
     
     object_func :=
       function( e )
@@ -1600,7 +1600,7 @@ functor :=
       return true;
     end,
     { oid, full } -> IsomorphismFromAlgebroid( StrongExceptionalCollection( full ) ),
-    "Isomorphism functor",
+    "Relatization isomorphism",
     "Isomorphism: algebroid -> strong exceptional collection"
   ];
 
