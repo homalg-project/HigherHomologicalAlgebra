@@ -742,6 +742,138 @@ InstallMethod( GradedRightPresentations,
 end );
 
 
+##
+InstallMethod( EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local fpres, rows, freyd, name, F;
+    
+    fpres := GradedLeftPresentations( S );
+    
+    rows := CategoryOfGradedRows( S );
+    
+    freyd := ValueGlobal( "FreydCategory" )( rows );
+    
+    name := "Isomorphism functor : Graded left presentations -> Freyd category of graded rows";
+    
+    F := CapFunctor( name, fpres, freyd );
+
+    AddObjectFunction( F,
+      function( o )
+        local degrees, range, m;
+        
+        degrees := ValueGlobal( "GeneratorDegrees" )( o );
+        
+        degrees := List( degrees, d -> [ -d, 1 ] );
+        
+        range := ValueGlobal( "GradedRow" )( degrees, S );
+        
+        m := UnderlyingMatrix( o );
+        
+        m := ValueGlobal( "DeduceSomeMapFromMatrixAndRangeForGradedRows" )( m, range );
+        
+        return ValueGlobal( "FreydCategoryObject" )( m );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        
+        alpha := ValueGlobal( "GradedRowOrColumnMorphism" )(
+                    Range( ValueGlobal( "RelationMorphism" )( s ) ),
+                    UnderlyingMatrix( alpha ),
+                    Range( ValueGlobal( "RelationMorphism" )( r ) )
+                  );
+                  
+        return ValueGlobal( "FreydCategoryMorphism" )( s, alpha, r );
+
+    end );
+    
+    return F;
+    
+end );
+
+##
+InstallMethod( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations,
+          [ IsHomalgGradedRing ],
+  function( S )
+    local fpres, rows, freyd, name, F;
+    
+    fpres := GradedLeftPresentations( S );
+    
+    rows := CategoryOfGradedRows( S );
+    
+    freyd := ValueGlobal( "FreydCategory" )( rows );
+    
+    name := "Isomorphism functor : Freyd category of graded rows -> Graded left presentations";
+    
+    F := CapFunctor( name, freyd, fpres );
+    
+    AddObjectFunction( F,
+      function( o )
+        local rm, degrees;
+        
+        rm := ValueGlobal( "RelationMorphism" )( o );
+        
+        degrees := ValueGlobal( "DegreeList" )( Range( rm ) );
+        
+        degrees := Concatenation( List( degrees, d -> ListWithIdenticalEntries( d[ 2 ], -d[ 1 ] ) ) );
+        
+        return AsGradedLeftPresentation( UnderlyingHomalgMatrix( rm ), degrees );
+        
+    end );
+    
+    AddMorphismFunction( F,
+      function( s, alpha, r )
+        
+        alpha := ValueGlobal( "MorphismDatum" )( alpha );
+        
+        return GradedPresentationMorphism( s, UnderlyingHomalgMatrix( alpha ), r );
+        
+    end );
+    
+    return F;
+    
+end );
+
+functor :=
+  [ grpres -> IsBound( grpres!.ring_for_representation_category ),
+    ValueGlobal( "IsFreydCategory" ),
+    { grpres, freyd_cat } ->
+      IsIdenticalObj(
+          ValueGlobal( "UnderlyingGradedRing" )( UnderlyingCategory( freyd_cat ) ),
+          grpres!.ring_for_representation_category
+        ),
+    { grpres, freyd_cat } -> EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows(
+                                      grpres!.ring_for_representation_category
+                                    ),
+    "Isomorphism onto Freyd category",
+    "Isomorphism from graded left presentations to Freyd category of graded rows",
+  ];
+  
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
+
+functor :=
+  [ ValueGlobal( "IsFreydCategory" ),
+    grpres -> IsBound( grpres!.ring_for_representation_category ),
+    { freyd_cat, grpres } ->
+      IsIdenticalObj(
+          ValueGlobal( "UnderlyingGradedRing" )( UnderlyingCategory( freyd_cat ) ),
+          grpres!.ring_for_representation_category
+        ),
+    { grpres, freyd_cat } -> EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations(
+                                      grpres!.ring_for_representation_category
+                                    ),
+    "Isomorphism from Freyd category",
+    "Isomorphism from Freyd category of graded rows onto graded left presentations",
+  ];
+  
+AddFunctor( functor );
+ExtendFunctorMethodToComplexCategories( functor );
+ExtendFunctorMethodToHomotopyCategories( functor );
+ 
 ############################################
 #
 # old code that might still be usefull

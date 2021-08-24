@@ -15,7 +15,8 @@ InstallValue( LIST_OF_ENHANCABLE_PACKAGES,
     "GradedModulePresentationsForCAP",
     "Algebroids",
     "FunctorCategories",
-    "CategoryConstructor"
+    "CategoryConstructor",
+    "SubcategoriesForCAP"
   ]
 );
 
