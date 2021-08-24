@@ -2561,103 +2561,51 @@ end );
 ###################################
 
 ##
-InstallMethod( EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory,
+InstallOtherMethod( EquivalenceOntoDerivedCategory,
           [ IsStrongExceptionalCollection ],
-  collection -> EmbeddingFunctorIntoDerivedCategory( AmbientCategory( collection ) )
-);
+  
+  function( collection )
+    local ambient_cat, over_cochains, abs, I;
+    
+    ambient_cat := AmbientCategory( collection );
+    
+    if IsCochainComplexCategory( UnderlyingCategory( ambient_cat ) ) then
+      over_cochains := true;
+    else
+      over_cochains := false;
+    fi;
+    
+    abs := IsomorphismOntoAlgebroid( collection );
+    abs := ExtendFunctorToAdditiveClosures( abs );
+    abs := ExtendFunctorToHomotopyCategories( abs, over_cochains );
+    
+    I := EquivalenceOntoDerivedCategory( RangeOfFunctor( abs ) );
+    I := PreCompose( abs, I );
+    
+    I!.Name := "Equivalence functor onto derived category of endomorphism algebra";
+    
+    return I;
+    
+end );
 
 ##
-InstallMethod( EmbeddingFunctorIntoDerivedCategory,
-          [ IsCapCategory ],
-  function( C )
-    local Ho_C, I, J, F, D, A, U, CP, N, objs, collection, full, name, k, algebroid, add_algebroid, over_cochains;
+InstallMethod( EquivalenceOntoDerivedCategory,
+          [ IsHomotopyCategory ],
+          
+  function( homotopy_cat )
+    local over_cochains, D, A, I, J, F, U, CP, N, objs, collection, full, name, k, A_oid, AA_oid;
     
-    if HasIsAbelianCategory( C ) and IsAbelianCategory( C ) then
-      
-      Ho_C := HomotopyCategory( C );
-      
-      I := EmbeddingFunctorInHomotopyCategory( C );
-      J := LocalizationFunctor( Ho_C );
-      
-      F := PreCompose( I, J );
-      
-      F!.Name := "Embedding functor of an abelian category in its derived category";
-      
-      return F;
-      
-    elif IsHomotopyCategory( C ) then
-      
-      over_cochains := IsCochainComplexCategory( UnderlyingCategory( C ) );
-      
-      D := DefiningCategory( C );
-      
-      if IsCapFullSubcategory( D ) then
+    over_cochains := IsCochainComplexCategory( UnderlyingCategory( homotopy_cat ) );
+    
+    D := DefiningCategory( homotopy_cat );
+    
+    if IsCapFullSubcategory( D ) and HasIsAdditiveCategory( D ) and IsAdditiveCategory( D ) then
         
-        if HasIsAdditiveCategory( D ) and IsAdditiveCategory( D ) then
-          
-          A := AmbientCategory( D );
-          
-          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
-            
-            I := InclusionFunctor( D );
-            
-            I := ExtendFunctorToHomotopyCategories( I, over_cochains );
-            
-            J := LocalizationFunctor( RangeOfFunctor( I ) );
-            
-            F := PreCompose( I, J );
-            
-            F!.Name := "Equivalence functor from homotopy category onto derived category";
-            
-            return F;
-            
-          else
-            
-            return fail;
-            
-          fi;
-          
-        else
-          
-          return fail;
-          
-        fi;
+        A := AmbientCategory( D );
         
-      elif IsAdditiveClosureCategory( D ) then
-        
-        U := UnderlyingCategory( D );
-        
-        if IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( U ) then
+        if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
           
-          A := AmbientCategory( U );
-          
-          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
-            
-            I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( U ) );
-            
-            I := ExtendFunctorToHomotopyCategories( I, over_cochains );
-            
-            J := LocalizationFunctor( RangeOfFunctor( I ) );
-            
-            F := PreCompose( I, J );
-            
-            F!.Name := "Equivalence functor from homotopy category onto derived category";
-            
-            return F;
-            
-          else
-            
-            return fail;
-            
-          fi;
-        
-        elif IsAlgebroid( U ) then
-          
-          I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( U );
-          
-          I := PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
-          
-          I := ExtendFunctorToAdditiveClosureOfSource( I );
+          I := InclusionFunctor( D );
           
           I := ExtendFunctorToHomotopyCategories( I, over_cochains );
           
@@ -2668,36 +2616,6 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
           F!.Name := "Equivalence functor from homotopy category onto derived category";
           
           return F;
-        
-        elif IsLinearClosure( U ) and IsProSetAsCategory( UnderlyingCategory( U ) ) then
-          
-          CP := UnderlyingCategory( U );
-          
-          N := Size( IncidenceMatrix( CP )[ 1 ] );
-          
-          objs := List( [ 1 .. N ], i -> LinearClosureObject( U, i/CP ) );
-          
-          collection := CreateStrongExceptionalCollection( objs );
-          
-          full := DefiningFullSubcategory( collection );
-          
-          name := "Isomorphism functor from ProSetAsCategory onto full subcategory generated by all its objects" ;
-          
-          I := CapFunctor( name, U, full );
-          
-          AddObjectFunction( I, a -> a / full );
-          
-          AddMorphismFunction( I, { s, alpha, r } -> alpha / full );
-          
-          I := PreCompose( I, IsomorphismOntoAlgebroid( collection ) );
-          
-          I := ExtendFunctorToAdditiveClosures( I );
-          
-          I := ExtendFunctorToHomotopyCategories( I, over_cochains );
-          
-          J := EmbeddingFunctorIntoDerivedCategory( RangeOfFunctor( I ) );
-          
-          return PreCompose( I, J );
           
         else
           
@@ -2705,35 +2623,65 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
           
         fi;
         
-      elif IsQuiverRowsCategory( D ) then
+    elif IsAdditiveClosureCategory( D ) then
+      
+      U := UnderlyingCategory( D );
+      
+      if IsAlgebroid( U ) then
         
-        A := UnderlyingQuiverAlgebra( D );
+        A := UnderlyingQuiverAlgebra( U );
         
-        k := CommutativeRingOfLinearCategory( D );
-        
-        if ( HasIsIntegersForHomalg( k ) and IsIntegersForHomalg( k ) ) or IsIntegers( k ) then
+        if not ( IsAdmissibleQuiverAlgebra( A ) and IsAcyclicQuiver( QuiverOfAlgebra( A ) ) ) then
           
-          algebroid := Algebroid( A, true );
-          
-        else
-          
-          algebroid := Algebroid( A );
+          return fail;
           
         fi;
         
-        add_algebroid := AdditiveClosure( algebroid );
+        I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( U );
         
-        I := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, add_algebroid );
+        I := PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
+        
+        I := ExtendFunctorToAdditiveClosureOfSource( I );
         
         I := ExtendFunctorToHomotopyCategories( I, over_cochains );
         
-        F := EmbeddingFunctorIntoDerivedCategory( HomotopyCategory( add_algebroid ) );
+        J := LocalizationFunctor( RangeOfFunctor( I ) );
         
-        F := PreCompose( I, F );
+        F := PreCompose( I, J );
         
         F!.Name := "Equivalence functor from homotopy category onto derived category";
         
         return F;
+        
+      elif IsLinearClosure( U ) and IsProSetAsCategory( UnderlyingCategory( U ) ) then
+        
+        CP := UnderlyingCategory( U );
+        
+        N := Size( IncidenceMatrix( CP )[ 1 ] );
+        
+        objs := List( [ 1 .. N ], i -> LinearClosureObject( U, i/CP ) );
+        
+        collection := CreateStrongExceptionalCollection( objs );
+        
+        full := DefiningFullSubcategory( collection );
+        
+        name := "Isomorphism functor from ProSetAsCategory onto full subcategory generated by all its objects" ;
+        
+        I := CapFunctor( name, U, full );
+        
+        AddObjectFunction( I, a -> a / full );
+        
+        AddMorphismFunction( I, { s, alpha, r } -> alpha / full );
+        
+        I := PreCompose( I, IsomorphismOntoAlgebroid( collection ) );
+        
+        I := ExtendFunctorToAdditiveClosures( I );
+        
+        I := ExtendFunctorToHomotopyCategories( I, over_cochains );
+        
+        J := EquivalenceOntoDerivedCategory( RangeOfFunctor( I ) );
+        
+        return PreCompose( I, J );
         
       else
         
@@ -2741,181 +2689,68 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategory,
         
       fi;
       
-    elif IsDerivedCategory( C ) then
+    elif IsQuiverRowsCategory( D ) then
       
-      return IdentityFunctor( C );
+      A := UnderlyingQuiverAlgebra( D );
       
-    else
+      k := CommutativeRingOfLinearCategory( D );
       
-      return fail;
+      if ( HasIsFieldForHomalg( k ) and IsFieldForHomalg( k ) ) or IsRationals( k ) then
+        
+        A_oid := Algebroid( A : range_of_HomStructure := MatrixCategory( k ) );
+        
+      else
+        
+        return fail;
+        
+      fi;
       
-    fi;
-    
-end );
-
-
-##
-InstallMethod( EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations,
-          [ IsCapCategory ],
-  function( C )
-    local Ho_C, I, J, F, D, A, U, CP, N, objs, collection, full, name, k, algebroid, add_algebroid;
-    
-    if HasIsAbelianCategory( C ) and IsAbelianCategory( C ) then
+      AA_oid := AdditiveClosure( A_oid );
       
-      Ho_C := HomotopyCategory( C );
+      I := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, AA_oid );
       
-      I := EmbeddingFunctorInHomotopyCategory( C );
-      J := LocalizationFunctor( Ho_C );
+      I := ExtendFunctorToHomotopyCategories( I, over_cochains );
       
-      F := PreCompose( I, J );
+      F := EquivalenceOntoDerivedCategory( HomotopyCategory( AA_oid, over_cochains ) );
       
-      F!.Name := "Embedding functor of an abelian category in its derived category";
+      F := PreCompose( I, F );
+      
+      F!.Name := "Equivalence functor from homotopy category onto derived category";
       
       return F;
       
-    elif IsHomotopyCategory( C ) then
+    else
       
-      D := DefiningCategory( C );
+      return fail;
       
-      if IsCapFullSubcategory( D ) then
+    fi;
+    
+end );
+
+##
+InstallMethod( EquivalenceOntoDerivedCategoryOfQuiverRepresentations,
+          [ IsHomotopyCategory ],
+          
+  function( homotopy_cat )
+    local over_cochains, D, A, I, J, F, U, CP, N, objs, collection, full, name, k, A_oid, AA_oid;
+    
+    over_cochains := IsCochainComplexCategory( UnderlyingCategory( homotopy_cat ) );
+    
+    D := DefiningCategory( homotopy_cat );
+    
+    if IsCapFullSubcategory( D ) and HasIsAdditiveCategory( D ) and IsAdditiveCategory( D ) then
+      
+      A := AmbientCategory( D );
+      
+      if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
         
-        if HasIsAdditiveCategory( D ) and IsAdditiveCategory( D ) then
-          
-          A := AmbientCategory( D );
-          
-          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
-            
-            I := InclusionFunctor( D );
-            
-            I := ExtendFunctorToHomotopyCategories( I );
-            
-            J := LocalizationFunctor( RangeOfFunctor( I ) );
-            
-            F := PreCompose( I, J );
-            
-            F!.Name := "Equivalence functor from homotopy category onto derived category";
-            
-            return F;
-            
-          else
-            
-            return fail;
-            
-          fi;
-          
-        else
-          
-          return fail;
-          
-        fi;
+        I := InclusionFunctor( D );
         
-      elif IsAdditiveClosureCategory( D ) then
+        I := ExtendFunctorToHomotopyCategories( I, over_cochains );
         
-        U := UnderlyingCategory( D );
+        J := LocalizationFunctor( RangeOfFunctor( I ) );
         
-        if IsCapFullSubcategoryGeneratedByFiniteNumberOfObjects( U ) then
-          
-          A := AmbientCategory( U );
-          
-          if HasIsAbelianCategory( A ) and IsAbelianCategory( A ) then
-            
-            I := ExtendFunctorToAdditiveClosureOfSource( InclusionFunctor( U ) );
-            
-            I := ExtendFunctorToHomotopyCategories( I );
-            
-            J := LocalizationFunctor( RangeOfFunctor( I ) );
-            
-            F := PreCompose( I, J );
-            
-            F!.Name := "Equivalence functor from homotopy category onto derived category";
-            
-            return F;
-            
-          else
-            
-            return fail;
-            
-          fi;
-        
-        elif IsAlgebroid( U ) then
-          
-          I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( U );
-          
-          I := PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
-          
-          I := ExtendFunctorToAdditiveClosureOfSource( I );
-          
-          I := ExtendFunctorToHomotopyCategories( I );
-          
-          J := LocalizationFunctor( RangeOfFunctor( I ) );
-          
-          F := PreCompose( I, J );
-          
-          F!.Name := "Equivalence functor from homotopy category onto derived category";
-          
-          return F;
-        
-        elif IsLinearClosure( U ) and IsProSetAsCategory( UnderlyingCategory( U ) ) then
-          
-          CP := UnderlyingCategory( U );
-          
-          N := Size( IncidenceMatrix( CP )[ 1 ] );
-          
-          objs := List( [ 1 .. N ], i -> LinearClosureObject( U, i/CP ) );
-          
-          collection := CreateStrongExceptionalCollection( objs );
-          
-          full := DefiningFullSubcategory( collection );
-          
-          name := "Isomorphism functor from ProSetAsCategory onto full subcategory generated by all its objects" ;
-          
-          I := CapFunctor( name, U, full );
-          
-          AddObjectFunction( I, a -> a / full );
-          
-          AddMorphismFunction( I, { s, alpha, r } -> alpha / full );
-          
-          I := PreCompose( I, IsomorphismOntoAlgebroid( collection ) );
-          
-          I := ExtendFunctorToAdditiveClosures( I );
-          
-          I := ExtendFunctorToHomotopyCategories( I );
-          
-          J := EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations( RangeOfFunctor( I ) );
-          
-          return PreCompose( I, J );
-          
-        else
-          
-          return fail;
-          
-        fi;
-        
-      elif IsQuiverRowsCategory( D ) then
-        
-        A := UnderlyingQuiverAlgebra( D );
-        
-        k := CommutativeRingOfLinearCategory( D );
-        
-        if ( HasIsIntegersForHomalg( k ) and IsIntegersForHomalg( k ) ) or IsIntegers( k ) then
-          
-          algebroid := Algebroid( A, true );
-          
-        else
-          
-          algebroid := Algebroid( A );
-          
-        fi;
-        
-        add_algebroid := AdditiveClosure( algebroid );
-        
-        I := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, add_algebroid );
-        
-        I := ExtendFunctorToHomotopyCategories( I );
-        
-        F := EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations( HomotopyCategory( add_algebroid ) );
-        
-        F := PreCompose( I, F );
+        F := PreCompose( I, J );
         
         F!.Name := "Equivalence functor from homotopy category onto derived category";
         
@@ -2927,109 +2762,107 @@ InstallMethod( EmbeddingFunctorIntoDerivedCategoryOfQuiverRepresentations,
         
       fi;
       
-    elif IsDerivedCategory( C ) then
+    elif IsAdditiveClosureCategory( D ) then
       
-      return IdentityFunctor( C );
+      U := UnderlyingCategory( D );
+      
+      if IsAlgebroid( U ) then
+        
+        A := UnderlyingQuiverAlgebra( U );
+        
+        if not ( IsAdmissibleQuiverAlgebra( A ) and IsAcyclicQuiver( QuiverOfAlgebra( A ) ) ) then
+          
+          return fail;
+          
+        fi;
+        
+        I := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( U );
+        
+        I := PreCompose( I, InclusionFunctor( RangeOfFunctor( I ) ) );
+        
+        I := ExtendFunctorToAdditiveClosureOfSource( I );
+        
+        I := ExtendFunctorToHomotopyCategories( I, over_cochains );
+        
+        J := LocalizationFunctor( RangeOfFunctor( I ) );
+        
+        F := PreCompose( I, J );
+        
+        F!.Name := "Equivalence functor from homotopy category onto derived category";
+        
+        return F;
+        
+      elif IsLinearClosure( U ) and IsProSetAsCategory( UnderlyingCategory( U ) ) then
+        
+        CP := UnderlyingCategory( U );
+        
+        N := Size( IncidenceMatrix( CP )[ 1 ] );
+        
+        objs := List( [ 1 .. N ], i -> LinearClosureObject( U, i/CP ) );
+        
+        collection := CreateStrongExceptionalCollection( objs );
+        
+        full := DefiningFullSubcategory( collection );
+        
+        name := "Isomorphism functor from ProSetAsCategory onto full subcategory generated by all its objects" ;
+        
+        I := CapFunctor( name, U, full );
+        
+        AddObjectFunction( I, a -> a / full );
+        
+        AddMorphismFunction( I, { s, alpha, r } -> alpha / full );
+        
+        I := PreCompose( I, IsomorphismOntoAlgebroid( collection ) );
+        
+        I := ExtendFunctorToAdditiveClosures( I );
+        
+        I := ExtendFunctorToHomotopyCategories( I, over_cochains );
+        
+        J := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( RangeOfFunctor( I ) );
+        
+        return PreCompose( I, J );
+        
+      else
+        
+        return fail;
+        
+      fi;
+      
+    elif IsQuiverRowsCategory( D ) then
+      
+      A := UnderlyingQuiverAlgebra( D );
+      
+      k := CommutativeRingOfLinearCategory( D );
+      
+      if ( HasIsFieldForHomalg( k ) and IsFieldForHomalg( k ) ) or IsRationals( k ) then
+        
+        A_oid := Algebroid( A: range_of_HomStructure := MatrixCategory( k ) );
+        
+      else
+        
+        return fail;
+        
+      fi;
+      
+      AA_oid := AdditiveClosure( A_oid );
+      
+      I := IsomorphismFromQuiverRowsIntoAdditiveClosureOfAlgebroid( D, AA_oid );
+      
+      I := ExtendFunctorToHomotopyCategories( I );
+      
+      F := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( HomotopyCategory( AA_oid, over_cochains ) );
+      
+      F := PreCompose( I, F );
+      
+      F!.Name := "Equivalence functor from homotopy category onto derived category";
+      
+      return F;
       
     else
       
       return fail;
       
     fi;
-    
-end );
-
-##
-InstallMethod( EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows,
-          [ IsHomalgGradedRing ],
-  function( S )
-    local fpres, rows, freyd, name, F;
-    
-    fpres := GradedLeftPresentations( S );
-    
-    rows := CategoryOfGradedRows( S );
-    
-    freyd := FreydCategory( rows );
-    
-    name := "Equivalence functor from graded left presentations onto Freyd category of graded rows";
-    
-    F := CapFunctor( name, fpres, freyd );
-
-    AddObjectFunction( F,
-      function( o )
-        local degrees, range, m;
-        
-        degrees := GeneratorDegrees( o );
-        
-        degrees := List( degrees, d -> [ -d, 1 ] );
-        
-        range := GradedRow( degrees, S );
-        
-        m := UnderlyingMatrix( o );
-        
-        m := DeduceSomeMapFromMatrixAndRangeForGradedRows( m, range );
-        
-        return FreydCategoryObject( m );
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        alpha := GradedRowOrColumnMorphism(
-                    Range( RelationMorphism( s ) ),
-                    UnderlyingMatrix( alpha ),
-                    Range( RelationMorphism( r ) )
-                  );
-                  
-        return FreydCategoryMorphism( s, alpha, r );
-
-    end );
-    
-    return F;
-    
-end );
-
-##
-InstallMethod( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations,
-          [ IsHomalgGradedRing ],
-  function( S )
-    local fpres, rows, freyd, name, F;
-    
-    fpres := GradedLeftPresentations( S );
-    
-    rows := CategoryOfGradedRows( S );
-    
-    freyd := FreydCategory( rows );
-    
-    name := "Equivalence functor from Freyd category of graded rows onto graded left presentations";
-    
-    F := CapFunctor( name, freyd, fpres );
-    
-    AddObjectFunction( F,
-      function( o )
-        local rm, degrees;
-        
-        rm := RelationMorphism( o );
-        
-        degrees := DegreeList( Range( rm ) );
-        
-        degrees := Concatenation( List( degrees, d -> ListWithIdenticalEntries( d[ 2 ], -d[ 1 ] ) ) );
-        
-        return AsGradedLeftPresentation( UnderlyingHomalgMatrix( rm ), degrees );
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        alpha := MorphismDatum( alpha );
-    
-        return GradedPresentationMorphism( s, UnderlyingHomalgMatrix( alpha ), r );
-        
-    end );
-    
-    return F;
     
 end );
 
