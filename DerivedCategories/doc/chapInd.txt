@@ -13,7 +13,7 @@
   [2XBasisOfPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-24 
   [2XCategoryOfQuiverRepresentationsOverOppositeAlgebra[102X, for IsStrongExceptionalCollection 1.1-15 
   [2XCounitOfTensorHomAdjunction[102X, for IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor 2.2-2 
-  [2XCreateStrongExceptionalCollection[102X, for IsCapFullSubcategory, IsList, IsString 1.1-2 
+  [2XCreateStrongExceptionalCollection[102X, for IsCapFullSubcategory, IsList, IsList, IsString 1.1-2 
   [2XDecompositionFunctorOfInjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-3 
   [2XDecompositionFunctorOfProjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-1 
   [2XDefiningFullSubcategory[102X, for IsStrongExceptionalCollection 1.1-4 
