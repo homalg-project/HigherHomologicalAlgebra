@@ -41,7 +41,7 @@ class_B := StableCategoryObject( St_Ch_Aoid, B );
 #! Additive closure( Algebroid( V=6, E=12, Rel=9 
 #! ) ) ) ) defined by a system of colifting objects>
 Hom_AB := HomStructure( A, B );
-#! <A row module over Q of rank 3>
+#! <A vector space object over Q of dimension 3>
 Hom_A_B := BasisOfExternalHom( A, B );;
 Display( Hom_A_B[ 1 ] );
 #! 
@@ -95,7 +95,7 @@ Display( Hom_A_B[ 3 ] );
 #! A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )
 #! ) ) given by the above data
 Hom_class_A_class_B := HomStructure( class_A, class_B );
-#! <A row module over Q of rank 1>
+#! <A vector space object over Q of dimension 1>
 Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );;
 Display( Hom_class_A_class_B[ 1 ] );
 #! A morphism in Stable category( Cochain complexes( Additive closure( 
