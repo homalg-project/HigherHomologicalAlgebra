@@ -248,6 +248,26 @@ InstallMethod( TiltingObject,
 end );
 
 ##
+InstallMethod( DirectSumOp,
+              [ IsList, IsStrongExceptionalCollection ],
+              
+  function( L, collection )
+    local full, I, objs;
+    
+    full := DefiningFullSubcategory( collection );
+    
+    I := InclusionFunctor( full );
+    
+    objs := UnderlyingObjects( collection );
+    
+    objs := List( objs, o -> ApplyFunctor( I, o ) );
+    
+    return DirectSum( objs );
+    
+end );
+     
+
+##
 InstallMethod( InterpretMorphismInStrongExceptionalCollectionAsEndomorphismOfTiltingObject,
           [ IsStrongExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory ],
           

@@ -98,6 +98,8 @@ DeclareAttribute( "QuiverRows", IsStrongExceptionalCollection );
 #! @Returns an object
 DeclareAttribute( "TiltingObject", IsStrongExceptionalCollection );
 
+DeclareOperation( "DirectSumOp", [ IsList, IsStrongExceptionalCollection ] );
+
 #! @Description
 #!  Returns the number of objects of the exceptional collection <A>E</A>.
 #! @Arguments E
