@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2021.08-02"
+version: "2021.08-03"
 license: "GPL-2.0-or-later"
-date: 2021-08-24
+date: 2021-08-27
 description: |
     Derived categories of Abelian categories
 
@@ -52,11 +52,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-02/DerivedCategories-2021.08-02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-03/DerivedCategories-2021.08-03.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-02/DerivedCategories-2021.08-02.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-03/DerivedCategories-2021.08-03.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-02/DerivedCategories-2021.08-02.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.08-03/DerivedCategories-2021.08-03.pdf
 
 abstract: |
 
@@ -67,7 +67,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2021.08-02</i>
+             Version 2021.08-03</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
@@ -75,10 +75,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ DerivedCategories2021.08-02,
+    @misc{ DerivedCategories2021.08-03,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  Derived  categories  of  Abelian
-                          categories, {V}ersion 2021.08-02},
+                          categories, {V}ersion 2021.08-03},
       month =            {Aug},
       year =             {2021},
       note =             {GAP package},
