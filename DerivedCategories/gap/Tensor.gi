@@ -65,7 +65,7 @@ end );
 #    
 #    algebroid := Algebroid( collection );
 #    
-#    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+#    algebroid_op := OppositeAlgebroid( algebroid );
 #    
 #    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
 #    
@@ -130,7 +130,7 @@ InstallMethod( TensorFunctorFromCategoryOfFunctors,
     
     algebroid := Algebroid( collection );
     
-    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    algebroid_op := OppositeAlgebroid( algebroid );
     
     SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
     

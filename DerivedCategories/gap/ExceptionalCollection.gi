@@ -725,7 +725,7 @@ InstallMethod( EndomorphismAlgebra,
                                   " ", r[ 1 ], ")", r[ 2 ]
                                 );;
       
-      SetAlgebroid( OppositeAlgebra( A ), OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) );
+      SetAlgebroid( OppositeAlgebra( A ), OppositeAlgebroid( algebroid ) );
       
       QuiverRows( A )!.Name := Concatenation( r[ 1 ],
                                  "Quiver rows(", r[ 2 ], " ", name,

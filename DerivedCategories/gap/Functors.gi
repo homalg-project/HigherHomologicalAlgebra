@@ -18,7 +18,7 @@ InstallMethod( DecompositionFunctorOfProjectiveQuiverRepresentations,
     
     A_oid := Algebroid( A );
     
-    A_oid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( A_oid );
+    A_oid_op := OppositeAlgebroid( A_oid );
     
     SetAlgebroid( UnderlyingQuiverAlgebra( A_oid_op ), A_oid_op );
 
@@ -363,13 +363,13 @@ functor :=
         return false;
       fi;
       
-      if not HasOppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) then
+      if not HasOppositeAlgebroid( algebroid ) then
         return false;
       fi;
       
       algebroid_op := Source( hom );
       
-      if not IsIdenticalObj( algebroid_op, OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) ) then
+      if not IsIdenticalObj( algebroid_op, OppositeAlgebroid( algebroid ) ) then
         return false;
       fi;
      
@@ -439,7 +439,7 @@ functor :=
       return true;
       
     end,
-    { quiver_rows, projs } -> AdditiveClosure( OppositeAlgebroidOverOppositeQuiverAlgebra( Source( AmbientCategory( projs ) ) ) )
+    { quiver_rows, projs } -> AdditiveClosure( OppositeAlgebroid( Source( AmbientCategory( projs ) ) ) )
 );
 
 ExtendFunctorMethodToComplexCategories( functor );
@@ -525,12 +525,12 @@ functor :=
         return false;
       fi;
       
-      if not HasOppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) then
+      if not HasOppositeAlgebroid( algebroid ) then
         return false;
       fi;
       
       if not IsIdenticalObj(
-                OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ),
+                OppositeAlgebroid( algebroid ),
                 Source( hom )
               ) then
               
@@ -605,7 +605,7 @@ functor := PreComposeFunctorMethods(
     end,
   
   function( projs, quiver_rows )
-    return AdditiveClosure( OppositeAlgebroidOverOppositeQuiverAlgebra( Source( AmbientCategory( projs ) ) ) );
+    return AdditiveClosure( OppositeAlgebroid( Source( AmbientCategory( projs ) ) ) );
   end
 );  
 
@@ -860,7 +860,7 @@ InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
   function( algebroid )
     local algebroid_op, k, functors, full, Y, name, F;
     
-    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    algebroid_op := OppositeAlgebroid( algebroid );
     
     SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
 
@@ -916,12 +916,12 @@ functor :=
         return false;
       fi;
       
-      if  not HasOppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) then
+      if  not HasOppositeAlgebroid( algebroid ) then
         return false;
       fi;
       
       if not IsIdenticalObj(
-                OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ),
+                OppositeAlgebroid( algebroid ),
                 Source( hom ) 
               ) then
               
@@ -1139,7 +1139,7 @@ InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors
   function( algebroid )
     local algebroid_op, k, functors, full, Y, name, F;
     
-    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    algebroid_op := OppositeAlgebroid( algebroid );
     
     SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
 
@@ -1195,12 +1195,12 @@ functor :=
         return false;
       fi;
       
-      if  not HasOppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ) then
+      if  not HasOppositeAlgebroid( algebroid ) then
         return false;
       fi;
       
       if not IsIdenticalObj(
-                OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid ),
+                OppositeAlgebroid( algebroid ),
                 Source( hom ) 
               ) then
               

@@ -17,7 +17,7 @@ InstallMethod( HomFunctorToCategoryOfFunctors,
     
     algebroid := Algebroid( collection );
     
-    algebroid_op := OppositeAlgebroidOverOppositeQuiverAlgebra( algebroid );
+    algebroid_op := OppositeAlgebroid( algebroid );
     
     ## This line should removed after changing the constructor in Algebroids package
     SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
