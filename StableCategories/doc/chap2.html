@@ -408,7 +408,7 @@ quiver(A_1,A_2,B_1,B_2)[u:A_1-&gt;A_2,alpha:A_1-&gt;A_2,tau:A_1-&gt;B_1,phi_1:A_
 psi_1:A_1-&gt;B_1,v:A_2-&gt;A_1,w:A_2-&gt;B_1,phi_2:A_2-&gt;B_2,psi_2:A_2-&gt;B_2,beta:B_1-&gt;B_2]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
 Q
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := Algebroid( QQ, quiver );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oid := Algebroid( QQ, quiver : range_of_HomStructure := MatrixCategory( QQ ) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfObjects( oid );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignSetOfGeneratingMorphisms( oid );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rels := [</span>
