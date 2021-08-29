@@ -126,7 +126,7 @@ InstallMethod( CreateStrongExceptionalCollection,
       collection, TheTypeStrongExceptionalCollection,
         UnderlyingObjects, L,
         NumberOfObjects, n,
-        DefiningFullSubcategory, full );
+        FullSubcategory, full );
     
     full!.Name := Concatenation(
                     "The full subcategory { ",
@@ -235,7 +235,7 @@ InstallMethod( TiltingObject,
   function( collection )
     local full, I, objs;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     I := InclusionFunctor( full );
     
@@ -254,7 +254,7 @@ InstallMethod( DirectSumOp,
   function( L, collection )
     local full, I, objs;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     I := InclusionFunctor( full );
     
@@ -387,7 +387,7 @@ InstallMethod( PathsOfLengthOneOp,
         
     else
       
-      full := DefiningFullSubcategory( collection );
+      full := FullSubcategory( collection );
       
       hom_ij := HomStructure( s, r );
       
@@ -764,7 +764,7 @@ InstallMethod( EndomorphismAlgebraAttr,
     
   collection -> EndomorphismAlgebra(
                     collection,
-                    CommutativeRingOfLinearCategory( DefiningFullSubcategory( collection ) )
+                    CommutativeRingOfLinearCategory( FullSubcategory( collection ) )
                   )
 );
 
@@ -779,7 +779,7 @@ InstallMethod( EndomorphismAlgebra,
 InstallMethod( AmbientCategory,
           [ IsStrongExceptionalCollection ],
           
-  collection -> AmbientCategory( DefiningFullSubcategory( collection ) )
+  collection -> AmbientCategory( FullSubcategory( collection ) )
 );
 
 ##
@@ -789,7 +789,7 @@ InstallMethod( Algebroid,
   function( collection )
     local full, k;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     k := CommutativeRingOfLinearCategory( full );
     
@@ -822,7 +822,7 @@ InstallOtherMethod( HomotopyCategory,
   function( collection )
     local homotopy_cat;
   
-    homotopy_cat := AmbientCategory( DefiningFullSubcategory( collection ) );
+    homotopy_cat := AmbientCategory( FullSubcategory( collection ) );
     
     if not IsHomotopyCategory( homotopy_cat ) or IsChainComplexCategory( UnderlyingCategory( homotopy_cat ) ) then
       return HomotopyCategory( collection, false );
@@ -839,7 +839,7 @@ InstallOtherMethod( HomotopyCategory,
   function( collection, over_cochains )
     local collection_plus;
      
-    collection_plus := AdditiveClosure( DefiningFullSubcategory( collection ) );
+    collection_plus := AdditiveClosure( FullSubcategory( collection ) );
     
     return HomotopyCategory( collection_plus, over_cochains );
     
@@ -873,7 +873,7 @@ InstallMethod( AdditiveClosureAsFullSubcategory,
     
     A := FullSubcategory( ambient_cat, name : is_additive := true );
     
-    A!.DefiningFullSubcategory := full;
+    A!.FullSubcategory := full;
     
     return A;
     
@@ -883,14 +883,14 @@ end );
 InstallMethod( AdditiveClosureAsFullSubcategory,
           [ IsStrongExceptionalCollection ],
           
-  collection -> AdditiveClosureAsFullSubcategory( DefiningFullSubcategory( collection ) )
+  collection -> AdditiveClosureAsFullSubcategory( FullSubcategory( collection ) )
 );
 
 ##
 InstallMethod( AdditiveClosure,
           [ IsStrongExceptionalCollection ],
           
-  collection -> AdditiveClosure( DefiningFullSubcategory( collection ) )
+  collection -> AdditiveClosure( FullSubcategory( collection ) )
 );
 
 ##
@@ -900,7 +900,7 @@ InstallMethodWithCache( BoxProduct,
   function( collection_1, collection_2, category )
     local full;
     
-    full := BoxProduct( DefiningFullSubcategory( collection_1 ), DefiningFullSubcategory( collection_2 ), category );
+    full := BoxProduct( FullSubcategory( collection_1 ), FullSubcategory( collection_2 ), category );
     
     return CreateStrongExceptionalCollection( full );
     
@@ -1590,7 +1590,7 @@ InstallMethod( ViewObj,
   function( collection )
     local full;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     Print( "<An exceptional collection defined by the objects of the ", Name( full ), ">" );
     

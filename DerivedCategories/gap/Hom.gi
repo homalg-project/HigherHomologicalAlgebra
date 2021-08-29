@@ -43,7 +43,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,
   function( collection )
     local full, A, field, A_op, quiver, arrows, labels, ambient_cat, reps, r, name, F;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     A := EndomorphismAlgebra( collection );
     

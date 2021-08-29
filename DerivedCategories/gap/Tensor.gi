@@ -15,7 +15,7 @@
 #  function( collection )
 #    local full, iso, indec_projs, name, T;
 #    
-#    full := DefiningFullSubcategory( collection );
+#    full := FullSubcategory( collection );
 #    
 #    iso := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors( collection );
 #    
@@ -39,7 +39,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjective
   function( collection )
     local full, iso, indec_projs, name, T;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     iso := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( collection );
     
@@ -156,7 +156,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentations,
   function( collection )
     local full, cat, T, I, TI, projs, reps, name, F;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     cat := AmbientCategory( collection );
     

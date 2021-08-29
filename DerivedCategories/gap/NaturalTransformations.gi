@@ -11,7 +11,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
   function( collection, tensorT, HomT )
     local full, ambient_cat, reps, name, nat;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     ambient_cat := AmbientCategory( full );
     
@@ -122,7 +122,7 @@ InstallMethodWithCache( CounitOfTensorHomAdjunction,
   function( collection, tensorT, HomT )
     local full, ambient_cat, category, k, name, nat;
     
-    full := DefiningFullSubcategory( collection );
+    full := FullSubcategory( collection );
     
     ambient_cat := AmbientCategory( full );
     

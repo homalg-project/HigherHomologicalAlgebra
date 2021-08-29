@@ -329,7 +329,7 @@ InstallMethodWithCache( ExceptionalReplacement,
       TryNextMethod( );
     fi;
     
-    defining_cat := DefiningFullSubcategory( collection );
+    defining_cat := FullSubcategory( collection );
     
     additive_closure := AdditiveClosure( collection );
     
@@ -632,7 +632,7 @@ InstallMethodWithCache( ExceptionalReplacement,
       TryNextMethod( );
     fi;
     
-    defining_cat := DefiningFullSubcategory( collection );
+    defining_cat := FullSubcategory( collection );
     
     additive_closure := AdditiveClosure( collection );
     
