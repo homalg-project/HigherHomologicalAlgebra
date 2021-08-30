@@ -96,6 +96,7 @@ filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
 ExactCokernelProjectionWithGivenExactCokernelObject := rec(
+io_type := [ [ "iota", "K" ], [ "iota_range", "K" ] ],
 filter_list := [ "category", "morphism", "object" ],
 return_type := "morphism" ),
 
@@ -123,6 +124,7 @@ filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
 ExactKernelEmbeddingWithGivenExactKernelObject := rec(
+io_type := [ [ "iota", "K" ], [ "K", "iota_source" ] ],
 filter_list := [ "category", "morphism", "object" ],
 return_type := "morphism" ),
 
