@@ -125,7 +125,7 @@ DeclareAttribute( "AdditiveClosure", IsStrongExceptionalCollection );
 #! @Returns an abelian category
 DeclareAttribute( "CategoryOfQuiverRepresentationsOverOppositeAlgebra", IsStrongExceptionalCollection );
 
-DeclareAttribute( "FullTriangulatedSubcategory", IsStrongExceptionalCollection );
+DeclareAttribute( "TriangulatedSubcategory", IsStrongExceptionalCollection );
 
 #! @Description
 #!  Returns the homotopy category of the additive closure of <C>FullSubcategory</C>(<A>E</A>).
