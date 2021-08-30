@@ -291,3 +291,5 @@ DeclareAttribute( "FullSubcategoryGeneratedByIndecInjectiveObjects",
 DeclareAttribute( "AdditiveClosureAsFullSubcategory",
         IsCapFullSubcategory );
 
+
+DeclareOperation( "RemainderObject", [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ] );

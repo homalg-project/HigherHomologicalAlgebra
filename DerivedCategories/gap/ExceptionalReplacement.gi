@@ -434,6 +434,27 @@ InstallMethodWithCache( ExceptionalReplacement,
 end );
 
 ##
+InstallMethod( RemainderObject,
+        [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
+  
+  function( A, collection )
+    local rep_A, l, data;
+    
+    if not IsCochainComplexCategory( CapCategory( UnderlyingCell( A ) ) ) then
+      TryNextMethod( );
+    fi;
+    
+    rep_A := ExceptionalReplacement( A, collection, true );
+    
+    l := ActiveLowerBound( rep_A ) - 1;
+    
+    data := rep_A!.exceptional_replacement_data;
+    
+    return Range( data[ l ][ 1 ] );
+    
+end );
+
+##
 InstallMethodWithCache( ExceptionalReplacementData,
              "for homotopy morphisms defined by cochain morphisms",
          [ IsHomotopyCategoryMorphism, IsStrongExceptionalCollection ],
