@@ -315,7 +315,7 @@ end );
 ## [ r_i, q_im1, r_i_list, q_im1_list ];
 ##
 InstallMethodWithCache( ExceptionalReplacement,
-             "for homotopy objects defined by cochains",
+             "for homotopy objects defined by cochains, strong exceptional collection",
           [ IsHomotopyCategoryObject, IsStrongExceptionalCollection ],
           
   function( A, collection )
@@ -381,7 +381,7 @@ end );
 
 ##
 InstallMethodWithCache( ExceptionalReplacement,
-            "for homotopy objects defined by chains",
+            "for homotopy objects defined by chains, strong exceptional collection and a boolian",
           [ IsHomotopyCategoryObject, IsStrongExceptionalCollection, IsBool ],
           
   function( A, collection, bool )

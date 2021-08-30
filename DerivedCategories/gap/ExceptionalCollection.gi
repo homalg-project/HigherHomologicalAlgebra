@@ -1696,7 +1696,7 @@ InstallMethod( ViewObj,
     
     full := FullSubcategory( collection );
     
-    Print( "<An exceptional collection defined by the objects of the ", Name( full ), ">" );
+    Print( "<A strong exceptional collection defined by the objects of ", Name( full ), ">" );
     
 end );
 

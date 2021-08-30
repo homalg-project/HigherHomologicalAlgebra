@@ -163,6 +163,8 @@ KeyDependentOperation( "PathsOfLengthGreaterThanOne", IsStrongExceptionalCollect
 #! @Returns IsList
 KeyDependentOperation( "PathsOfLengthOne", IsStrongExceptionalCollection, IsList, ReturnTrue );
 
+DeclareSynonym( "IrreducibleMorphisms", PathsOfLengthOne );
+
 #! @Description
 #!  Delegates to <C>PathsOfLengthOne</C>$(E,[i,j])$.
 #! @Arguments E, i, j
