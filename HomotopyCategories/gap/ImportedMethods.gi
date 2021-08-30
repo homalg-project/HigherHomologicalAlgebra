@@ -139,6 +139,28 @@ InstallOtherMethod( ComputedHomologyFunctorialAts,
 );
 
 ##
+InstallOtherMethod( ObjectAt,
+          [ IsHomotopyCategoryObject, IsInt ],
+          
+    {a, n} -> ObjectAt( UnderlyingCell( a ), n )
+);
+
+##
+InstallOtherMethod( DifferentialAt,
+          [ IsHomotopyCategoryObject, IsInt ],
+          
+    {a, n} -> DifferentialAt( UnderlyingCell( a ), n )
+);
+
+##
+InstallOtherMethod( MorphismAt,
+          [ IsHomotopyCategoryObject, IsInt ],
+          
+    {a, n} -> MorphismAt( UnderlyingCell( a ), n )
+);
+
+
+##
 InstallOtherMethod( ObjectsSupport,
           [ IsHomotopyCategoryObject ],
     a -> ObjectsSupport( UnderlyingCell( a ) )
