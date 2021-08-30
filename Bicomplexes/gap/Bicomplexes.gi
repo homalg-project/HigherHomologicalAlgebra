@@ -276,7 +276,7 @@ InstallMethod( AsCategoryOfBicomplexes,
                 Add( recnames, info.with_given_object_name );
             fi;
 
-            if IsList( info.with_given_without_given_name_pair ) then
+            if IsList( info.with_given_without_given_name_pair ) and IsBound( CAP_INTERNAL_METHOD_NAME_RECORD.(info.with_given_without_given_name_pair[2]).with_given_object_name ) then
                 func := create_func_universal_morphism( name );
             else
                 func := create_func_morphism( name );
