@@ -115,6 +115,10 @@ scale,
       
       Exec( Concatenation( "xdg-open ", Filename( dir, "main.pdf" ), " &" ) );
       
+    elif Filename( DirectoriesSystemPrograms(), "open" ) <> fail then
+      
+      Exec( Concatenation( "open ", Filename( dir, "main.pdf" ), " &" ) );
+      
     else
       
       Print( Filename( dir, "main.pdf" ) );
