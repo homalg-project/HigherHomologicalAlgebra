@@ -1,8 +1,8 @@
-
-
-
-
-
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ToolsForHigherHomologicalAlgebra: Tools for the Higher Homological Algebra project
+#
+# Implementations
+#
 
 BindGlobal( "BASIS_OF_POST_AND_PRE_ANNIHILATORS_METHOD_RECORD", rec(
     
