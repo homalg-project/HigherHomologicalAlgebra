@@ -11,16 +11,8 @@ SetPackageInfo( rec(
 
 PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
-
-Version := Maximum( [
-                   "2020.10-01", ## Kamals's version
-                   ## this line prevents merge conflicts
-                   "2020.11-01", ## Mohamed's version
-                   ## this line prevents merge conflicts
-                   "2021.05-01", ## Fabian's version
-                   ] ),
-
-Date := "16/05/2021",
+Version := "2021.08-01",
+Date := "31/08/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
