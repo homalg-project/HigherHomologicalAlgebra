@@ -26,5 +26,5 @@ gap> LoadPackage( "DerivedCategories" );
 true
 gap> LoadPackage( "FunctorCategories" );
 true
-gap> HOMALG_IO.show_banners := false;;
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;
+gap> HOMALG_IO.show_banners := false;;

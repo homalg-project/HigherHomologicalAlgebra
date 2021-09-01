@@ -1,8 +1,8 @@
-#################################
-##
-##  Declarations
-##
-#################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# StableCategories: Stable categories of additive categories
+#
+# Declarations
+#
 
 #! @Chapter Exact and Frobenius Categories
 #! @Section GAP categories

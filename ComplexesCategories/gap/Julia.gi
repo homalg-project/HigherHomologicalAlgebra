@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# DerivedCategories: Derived categories of Abelian categories
+# ComplexesCategories: Category of (co)chain complexes of an additive category
 #
 # Implementations
 #
