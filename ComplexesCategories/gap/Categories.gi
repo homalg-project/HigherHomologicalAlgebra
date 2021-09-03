@@ -557,15 +557,17 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
            
             return
               function ( arg ) 
-                local src_rng, morphisms;
+                local src_rng, source_diagram, morphisms, range_diagram;
                 
                 src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
                
-                morphisms := List( arg[ 2 ], Morphisms );
+                source_diagram := CombineZFunctions( List( arg[ 2 ], Objects ) );
                 
-                morphisms := CombineZFunctions( morphisms );
+                morphisms := CombineZFunctions( List( arg[ 3 ], Morphisms ) );
                 
-                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), morphisms, Objects( src_rng[ 2 ] ) ], oper );
+                range_diagram := CombineZFunctions( List( arg[ 4 ], Objects ) );
+                
+                morphisms := ApplyMap( [ Objects( src_rng[ 1 ] ), source_diagram, morphisms, range_diagram, Objects( src_rng[ 2 ] ) ], oper );
                 
                 return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
                 
@@ -637,9 +639,9 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 
                 objects := CombineZFunctions( List( arg[ 1 ], Objects ) );
                 
-                morphisms := CombineZFunctions( List( arg[ 2 ], Morphisms ) );
+                morphisms := CombineZFunctions( List( arg[ 3 ], Morphisms ) );
                 
-                morphisms := ApplyMap( [ objects, morphisms, Objects( arg[ 3 ] ) ], oper );
+                morphisms := ApplyMap( [ objects, Objects( arg[ 2 ] ), morphisms, Objects( arg[ 4 ] ) ], oper );
                 
                 return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
                 
@@ -836,7 +838,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 
                 src_rng := CAP_INTERNAL_GET_CORRESPONDING_OUTPUT_OBJECTS( type, arg );
                 
-                morphisms := ApplyMap( [ Morphisms( arg[ 1 ] ), Morphisms( arg[ 2 ] ), Objects( arg[ 3 ] ) ], oper );
+                morphisms := ApplyMap( [ Morphisms( arg[ 1 ] ), Objects( arg[2] ), Morphisms( arg[ 3 ] ), Objects( arg[ 4 ] ) ], oper );
                 
                 return morphism_constructor( src_rng[ 1 ], src_rng[ 2 ], morphisms );
                 
