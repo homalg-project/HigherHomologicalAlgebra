@@ -98,7 +98,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
       
     fi;
     
-    n := Size( Indeterminates( A ) );
+    n := Length( Indeterminates( A ) );
     
     cat := GradedLeftPresentations( A );
     
@@ -177,7 +177,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
         
         if IsZero( alpha ) then
           
-          return ListWithIdenticalEntries( Size( B ), Zero( k ) );
+          return ListWithIdenticalEntries( Length( B ), Zero( k ) );
           
         fi;
         
@@ -1467,7 +1467,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
         
         B := List( B, b -> b / full );
         
-        identity_matrix := EntriesOfHomalgMatrixAsListList( HomalgIdentityMatrix( Size( B ), k ) );
+        identity_matrix := EntriesOfHomalgMatrixAsListList( HomalgIdentityMatrix( Length( B ), k ) );
         
         ListN( B, identity_matrix, function( b, c ) SetCoefficientsOfMorphism( b, c ); return true; end );
         
@@ -1491,7 +1491,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
         
         if IsZero( entry ) then
           
-          return ListWithIdenticalEntries( Size( B ), Zero( k ) );
+          return ListWithIdenticalEntries( Length( B ), Zero( k ) );
           
         fi;
         
@@ -1499,7 +1499,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
         
         B := List( B, b -> EntriesOfHomalgMatrix( UnderlyingMatrix( b ) )[ 1 ] );
         
-        sol := ListWithIdenticalEntries( Size( B ), Zero( k ) );
+        sol := ListWithIdenticalEntries( Length( B ), Zero( k ) );
         
         coeff_mat := Coefficients( EvalRingElement( entry ) );
           
@@ -1600,7 +1600,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
          
     indeterminates := Indeterminates( S );
     
-    n := Size( indeterminates );
+    n := Length( indeterminates );
     
     omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
     
@@ -1795,9 +1795,9 @@ InstallMethod( ViewObj,
       
       if p = fail then
         
-        if Size( twists ) > 1 then
+        if Length( twists ) > 1 then
           
-          Print( "S(", twists[ 1 ], ")^", Size( twists ) );
+          Print( "S(", twists[ 1 ], ")^", Length( twists ) );
           
         else
           
@@ -1819,7 +1819,7 @@ InstallMethod( ViewObj,
           
         fi;
        
-        twists := twists{ [ p .. Size( twists ) ] };
+        twists := twists{ [ p .. Length( twists ) ] };
       
       fi;
       

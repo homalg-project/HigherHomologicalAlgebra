@@ -174,10 +174,10 @@ DeclareOperation( "ApplyMap", [ IsZFunction, IsFunction ] );
 #! @Description
 #! The arguments are a list $\mathbb{Z}$-functions
 #! <A>L</A> and a function <A>F</A> with 
-#! <C>Size</C>(<A>L</A>) arguments.
+#! <C>Length</C>(<A>L</A>) arguments.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
 #! <C>m</C>[<C>i</C>] is equal to <A>F</A>(<A>L</A>[1][<C>i</C>],...,
-#! <A>L</A>[<C>Size</C>(<A>L</A>)][<C>i</C>]). We call the list <A>L</A> the <C>BaseZFunctions</C>
+#! <A>L</A>[<C>Length</C>(<A>L</A>)][<C>i</C>]). We call the list <A>L</A> the <C>BaseZFunctions</C>
 #! of <C>m</C> and <A>F</A> the <C>AppliedMap</C>.
 #! @Arguments L, F
 #! @Returns a $\mathbb{Z}$-function
@@ -202,14 +202,14 @@ DeclareAttribute( "AppliedMap", IsZFunction );
 #! The argument is a dense list <A>L</A> of $\mathbb{Z}$-functions.
 #! The output is another $\mathbb{Z}$-function <C>m</C> such that
 #! <C>m</C>[<C>i</C>] is equal to [<A>L</A>[1][<C>i</C>],...,
-#! <A>L</A>[<C>Size</C>(<A>L</A>)][<C>i</C>]] for all indices <C>i</C>'s in $\mathbb{Z}$.
+#! <A>L</A>[<C>Length</C>(<A>L</A>)][<C>i</C>]] for all indices <C>i</C>'s in $\mathbb{Z}$.
 #! @Arguments L
 #! @Returns a $\mathbb{Z}$-function
 DeclareOperation( "CombineZFunctions", [ IsDenseList ] );
 
 #! @Description
 #! The argument is a $\mathbb{Z}$-function <A>z_func</A>, an integer <A>n</A> and a dense list <A>L</A>.
-#! The output is a new $\mathbb{Z}$-function whose values between <A>n</A> and <A>n</A>+<C>Size</C>(<A>L</A>)-1
+#! The output is a new $\mathbb{Z}$-function whose values between <A>n</A> and <A>n</A>+<C>Length</C>(<A>L</A>)-1
 #! are taken from <A>L</A>.
 #! @Arguments z_func, n, L
 #! @Returns a $\mathbb{Z}$-function

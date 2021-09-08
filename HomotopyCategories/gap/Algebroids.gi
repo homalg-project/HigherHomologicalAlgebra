@@ -41,7 +41,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     #REREADING := true;
     #SetInfoLevel( InfoWarning, 0 );
     
-    if Size( generating_maps_labels ) > 0 and IsInt( generating_maps_labels[ 1 ][ 2 ] ) then
+    if Length( generating_maps_labels ) > 0 and IsInt( generating_maps_labels[ 1 ][ 2 ] ) then
       
       generating_maps_labels := List( generating_maps_labels, m -> [ m[ 1 ], main_vertices[ m[ 2 ] ], main_vertices[ m[ 3 ] ] ] );
       
@@ -63,7 +63,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
       
       main_vertices_latex := main_vertices;
       
-    elif Size( main_vertices_latex ) <> Size( main_vertices ) then
+    elif Length( main_vertices_latex ) <> Length( main_vertices ) then
       
       Error( "Bad LaTeX labels for vertices" );
       
@@ -127,7 +127,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
       
       arrows_latex := Concatenation( diffs_latex, maps_latex, extra_arrows_latex );
       
-      if NumberOfVertices( Q ) <> Size( vertices_latex ) or NumberOfArrows( Q ) <> Size( arrows_latex ) then
+      if NumberOfVertices( Q ) <> Length( vertices_latex ) or NumberOfArrows( Q ) <> Length( arrows_latex ) then
         
         Info( InfoWarning, 1, "AlgebroidOfDiagramInHomotopyCategory method needs to be checked!" );
         
@@ -148,7 +148,7 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     
     gmaps := SetOfGeneratingMorphisms( oid );
     
-    diffs_rel := List( [ 1 .. Size( gmaps ) - 1 ],
+    diffs_rel := List( [ 1 .. Length( gmaps ) - 1 ],
               i -> UnderlyingQuiverAlgebraElement( gmaps[ i ] * gmaps[ i + 1 ] )
             );
     
@@ -184,8 +184,8 @@ BindGlobal( "CREATE_ALGEBROID_OF_DIAGRAM",
     AssignSetOfObjects( oid );
     
     oid!.Name := Concatenation(
-                      "Algebroid( V=", String( Size( vertices ) ), ", E=", 
-                      String( Size( gmaps ) ), ", rel=", String( Size( rels ) ), " )"
+                      "Algebroid( V=", String( Length( vertices ) ), ", E=", 
+                      String( Length( gmaps ) ), ", rel=", String( Length( rels ) ), " )"
                     );
     
     Aoid := AdditiveClosure( oid );
@@ -289,11 +289,11 @@ BindGlobal( "MakeMorphismNullHomotopic",
     
       diffs_s_h := ListN( diffs_s, extra_arrows, { d, h } -> JoinStringsWithSeparator( [ d, h ], "*" ) );
       diffs_r_h := ListN( extra_arrows, diffs_r, { h, d } -> JoinStringsWithSeparator( [ h, d ], "*" ) );
-      rels := ListN( diffs_s_h{[2..Size(diffs_s_h)]}, diffs_r_h{[1..Size(diffs_s_h)-1]},
+      rels := ListN( diffs_s_h{[2..Length(diffs_s_h)]}, diffs_r_h{[1..Length(diffs_s_h)-1]},
                     { s, r } -> Concatenation( s, "+", r )
                   );
       Add( rels, diffs_s_h[ 1 ], 1 );
-      Add( rels, diffs_r_h[ Size( diffs_r_h ) ] );
+      Add( rels, diffs_r_h[ Length( diffs_r_h ) ] );
   
       extra_relations := ListN( maps, rels,
                   function( m, r )
@@ -335,8 +335,8 @@ BindGlobal( "MakeMorphismNullHomotopic",
     
     vertices_id := List( vertices, v -> Concatenation( "IdentityMorphism", v ) );
     
-    for i in [ 1 .. Size( vertices ) ] do
-      for j in [ 1 .. Size( extra_relations ) ] do
+    for i in [ 1 .. Length( vertices ) ] do
+      for j in [ 1 .. Length( extra_relations ) ] do
        
        extra_relations[ j ] := ReplacedString( extra_relations[ j ], vertices[ i ], vertices_id[ i ] );
        

@@ -226,8 +226,8 @@ InstallMethod( KoszulChainComplexOp,
           
           mat := UnderlyingMatrix( K^i );
           
-          mat := List( [ 1 .. Size( ObjectList( source ) ) ],
-                  u -> List( [ 1 .. Size( ObjectList( range ) ) ],
+          mat := List( [ 1 .. Length( ObjectList( source ) ) ],
+                  u -> List( [ 1 .. Length( ObjectList( range ) ) ],
                         v -> GradedPresentationMorphism(
                                 UnderlyingCell( source[u] ),
                                 HomalgMatrix( [ [ mat[ u, v ] ] ], 1, 1, S ),

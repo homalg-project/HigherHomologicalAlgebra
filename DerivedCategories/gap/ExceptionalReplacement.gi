@@ -153,7 +153,7 @@ InstallMethodWithCache( MorphismFromExceptionalObjectAsList,
     
     positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
     
-    return List( [ 1 .. Size( min_gen ) ],
+    return List( [ 1 .. Length( min_gen ) ],
       i -> vectors[ i ]{ positions_of_non_zeros[ i ] } *
               BasisOfExternalHom(
                 UnderlyingCell( collection[ positions[ i ] ] ), A )
@@ -288,7 +288,7 @@ InstallMethodWithCache( ExceptionalReplacementData,
                   
                   s := List( r_i_list, Source );
                     
-                  for k in [ 1 .. Size( r_i_list ) ] do
+                  for k in [ 1 .. Length( r_i_list ) ] do
                     
                     Add( q_im1_list, PreCompose( q_im1, ProjectionInFactorOfDirectSum( s, k ) ) );
                     
@@ -611,7 +611,7 @@ InstallMethodWithCache( ExceptionalReplacementData,
                   
                   s := List( r_i_list, Source );
                   
-                  for k in [ 1 .. Size( r_i_list ) ] do
+                  for k in [ 1 .. Length( r_i_list ) ] do
                     
                     Add( q_ip1_list, PreCompose( q_ip1, ProjectionInFactorOfDirectSum( s, k ) ) );
                     

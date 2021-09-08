@@ -456,8 +456,8 @@ InstallMethod( _WeakKernelEmbedding,
       
     else
       
-      return List( [ 1 .. Size( source ) ],
-            i -> List( [ 1 .. Size( range ) ],
+      return List( [ 1 .. Length( source ) ],
+            i -> List( [ 1 .. Length( range ) ],
                   j -> GradedPresentationMorphism( source[i], HomalgMatrix( [ [ mat[ i, j ] ] ], 1, 1, S ), range[ j ] ) / full
                 ) ) / cat;
                 

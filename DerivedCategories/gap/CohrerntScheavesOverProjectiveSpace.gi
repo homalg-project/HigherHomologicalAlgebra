@@ -84,7 +84,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOme
       Error( "The input should be a polynomial ring whose indeterminates degrees are 1's" );
     fi;
     
-    n := Size( Indeterminates( S ) );
+    n := Length( Indeterminates( S ) );
     
     A := KoszulDualRing( S );
     
@@ -366,7 +366,7 @@ BindGlobal( "BeilinsonFunctor3",
   function( S )
     local n, A, cat, full, add_full, homotopy_cat, r, name, BB;
     
-    n := Size( Indeterminates( S ) );
+    n := Length( Indeterminates( S ) );
     
     A := KoszulDualRing( S );
     

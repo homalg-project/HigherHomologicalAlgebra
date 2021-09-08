@@ -382,7 +382,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
               
             fi;
               
-            n := Size( computed_cells ) / 2;
+            n := Length( computed_cells ) / 2;
               
             indices := List( [ 1 .. n ], i -> computed_cells[ 2 * i - 1 ] );
             

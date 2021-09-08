@@ -44,7 +44,7 @@ BindGlobal( "BASIS_OF_GRADED_ROW",
     z := ListWithIdenticalEntries( Rank( o ), Zero( S ) );
     
     for i in [ 1 .. Rank( o ) ] do
-      for j in [ 1 .. Size( G[i] ) ] do
+      for j in [ 1 .. Length( G[i] ) ] do
         z[i] := G[i,j];
         Add( mats, ShallowCopy( z ) );
         z[i] := Zero( S );
@@ -166,7 +166,7 @@ InstallMethod( CategoryOfGradedRows,
             
             coeff := CoefficientsOfGradedRingElement( phi[ p ] );
             
-            for j in [ 1 .. Size( coeff ) ] do
+            for j in [ 1 .. Length( coeff ) ] do
               
               position_in_basis := PositionProperty( B, b -> b[ p ] = mon[ j ] );
               sol[ position_in_basis ] := coeff[ j ] / K;
@@ -231,8 +231,8 @@ InstallMethod( IsomorphismOntoAdditiveClosureOfFullSubcategoryGeneratedByGradedR
         
         r_list := ObjectList( r );
         
-        m := List( [ 1 .. Size( s_list ) ],
-                i -> List( [ 1 .. Size( r_list ) ],
+        m := List( [ 1 .. Length( s_list ) ],
+                i -> List( [ 1 .. Length( r_list ) ],
                   j -> GradedRowOrColumnMorphism(
                               UnderlyingCell( s_list[i] ),
                               CertainRows( CertainColumns( m, [ j ] ), [ i ] ),
@@ -607,7 +607,7 @@ InstallMethod( FullSubcategoryGeneratedByBoxProductOfTwistedCotangentModules,
   function( S )
     local freyd, B1, B2, omegas_1, omegas_2;
     
-    if not IsBound( S!.factor_rings ) and Size( S!.factor_rings ) = 2 then
+    if not IsBound( S!.factor_rings ) and Length( S!.factor_rings ) = 2 then
       TryNextMethod( );
     fi;
     
@@ -757,7 +757,7 @@ InstallMethod( CoherentSheavesOverProjectiveSpace,
     
     coh := freyd / sub_cat;
     
-    factor := Concatenation( "P^", String( Size( Indeterminates( S ) ) - 1 ) );
+    factor := Concatenation( "P^", String( Length( Indeterminates( S ) ) - 1 ) );
     
     r := RandomTextColor( Name( freyd ) );
     
@@ -813,9 +813,9 @@ function( S, i )
       
       source_degs := DegreeList( Source( rm ) );
       
-      new_source_degs := List( [ 1 .. Size( source_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), source_degs[ j ][ 2 ] ] );
+      new_source_degs := List( [ 1 .. Length( source_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), source_degs[ j ][ 2 ] ] );
       
-      for j in [ 1 .. Size( source_degs ) ] do
+      for j in [ 1 .. Length( source_degs ) ] do
 
         new_source_degs[ j ][ 1 ][ i ] := source_degs[ j ][ 1 ];
 
@@ -825,9 +825,9 @@ function( S, i )
       
       range_degs := DegreeList( Range( rm ) );
       
-      new_range_degs := List( [ 1 .. Size( range_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), range_degs[ j ][ 2 ] ] );
+      new_range_degs := List( [ 1 .. Length( range_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), range_degs[ j ][ 2 ] ] );
       
-      for j in [ 1 .. Size( range_degs ) ] do
+      for j in [ 1 .. Length( range_degs ) ] do
 
         new_range_degs[ j ][ 1 ][ i ] := range_degs[ j ][ 1 ];
 
@@ -884,9 +884,9 @@ function( S, i )
       
       source_degs := DegreeList( o );
       
-      new_source_degs := List( [ 1 .. Size( source_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), source_degs[ j ][ 2 ] ] );
+      new_source_degs := List( [ 1 .. Length( source_degs ) ], j -> [ ShallowCopy( HomalgElementToListOfIntegers( Degree( One( S ) ) ) ), source_degs[ j ][ 2 ] ] );
       
-      for j in [ 1 .. Size( source_degs ) ] do
+      for j in [ 1 .. Length( source_degs ) ] do
 
         new_source_degs[ j ][ 1 ][ i ] := source_degs[ j ][ 1 ];
 
@@ -1050,7 +1050,7 @@ InstallMethod( BoxProduct,
       Error( "The given ring should be a Cox ring of product of projective spaces" );
     fi;
     
-    F := List( [ 1 .. Size( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoFreydCategory( S, i ) );
+    F := List( [ 1 .. Length( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoFreydCategory( S, i ) );
     
     cells := ListN( F, cells, ApplyFunctor );
     
@@ -1070,7 +1070,7 @@ InstallMethod( BoxProduct,
       Error( "The given ring should be a Cox ring of product of projective spaces" );
     fi;
     
-    F := List( [ 1 .. Size( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoGradedRows( S, i ) );
+    F := List( [ 1 .. Length( S!.factor_rings ) ], i -> PullbackFunctorAlongProjectionIntoGradedRows( S, i ) );
     
     cells := ListN( F, cells, ApplyFunctor );
     
@@ -1287,7 +1287,7 @@ InstallMethod( Display,
     
     L := Concatenation( L );
     
-    Print( "An object in ", Name( CapCategory( object ) ), " defined by ", Size( L ), " vertices:\n" );
+    Print( "An object in ", Name( CapCategory( object ) ), " defined by ", Length( L ), " vertices:\n" );
     
     for o in L do
       

@@ -237,7 +237,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
         
         B := List( B, b -> ApplyFunctor( sh, b ) / full );
         
-        identity_matrix := EntriesOfHomalgMatrixAsListList( HomalgIdentityMatrix( Size( B ), k ) );
+        identity_matrix := EntriesOfHomalgMatrixAsListList( HomalgIdentityMatrix( Length( B ), k ) );
         
         ListN( B, identity_matrix, function( b, c ) SetCoefficientsOfMorphism( b, c ); return true; end );
         
@@ -267,7 +267,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
         
         B := List( B, b -> EntriesOfHomalgMatrix( UnderlyingMatrix( b ) )[ 1 ] );
         
-        sol := ListWithIdenticalEntries( Size( B ), Zero( k ) );
+        sol := ListWithIdenticalEntries( Length( B ), Zero( k ) );
         
         coeff_mat := Coefficients( EvalRingElement( entry ) );
           
@@ -341,7 +341,7 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
          
     indeterminates := Indeterminates( S );
     
-    n := Size( indeterminates );
+    n := Length( indeterminates );
     
     omegas := List( [ 0 .. n - 1 ], i -> TwistedCotangentModule( S, i ) );
     

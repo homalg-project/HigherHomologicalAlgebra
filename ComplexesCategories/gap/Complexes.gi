@@ -519,7 +519,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "=" ) )
+            Length( s ) - Length( r[ 1 ] ) - Length( r[ 2 ] ), "=" ) )
           );
         Print( "\n\n" );
       od;
@@ -535,7 +535,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "=" ) )
+            Length( s ) - Length( r[ 1 ] ) - Length( r[ 2 ] ) , "=" ) )
           );
         Print( "\n\n" );
         if i <> m then
@@ -813,7 +813,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ) , "-" ) )
+            Length( s ) - Length( r[ 1 ] ) - Length( r[ 2 ] ) , "-" ) )
           );
         Print( "\n\n" );
       od;
@@ -829,7 +829,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
-            Size( s ) - Size( r[ 1 ] ) - Size( r[ 2 ] ), "-" ) )
+            Length( s ) - Length( r[ 1 ] ) - Length( r[ 2 ] ), "-" ) )
           );
         Print( "\n\n" );
         if i <> m then
@@ -1052,10 +1052,10 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
                   return UniversalMorphismIntoZeroObject( zero_obj );
                 elif i = N - 1 then
                   return UniversalMorphismIntoZeroObject( Range( diffs[ 1 ] ) );
-                elif i >= N and i <= N + Size( diffs ) - 1 then
+                elif i >= N and i <= N + Length( diffs ) - 1 then
                   return diffs[ i - N + 1 ]; 
-                elif i = N + Size( diffs ) then
-                  return UniversalMorphismFromZeroObject( Source( diffs[ Size( diffs ) ] ) );
+                elif i = N + Length( diffs ) then
+                  return UniversalMorphismFromZeroObject( Source( diffs[ Length( diffs ) ] ) );
                 else
                   return UniversalMorphismFromZeroObject( zero_obj );
                 fi;
@@ -1063,7 +1063,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
       
       lower_bound := N - 1;
       
-      upper_bound := N + Size( diffs ) - 1;
+      upper_bound := N + Length( diffs ) - 1;
       
     else
       
@@ -1075,10 +1075,10 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
                   return UniversalMorphismFromZeroObject( zero_obj );
                 elif i = N - 1 then
                   return UniversalMorphismFromZeroObject( Source( diffs[ 1 ] ) );
-                elif i >= N and i <= N + Size( diffs ) - 1 then
+                elif i >= N and i <= N + Length( diffs ) - 1 then
                   return diffs[ i - N + 1 ];
-                elif i = N + Size( diffs ) then
-                  return UniversalMorphismIntoZeroObject( Range( diffs[ Size( diffs ) ] ) );
+                elif i = N + Length( diffs ) then
+                  return UniversalMorphismIntoZeroObject( Range( diffs[ Length( diffs ) ] ) );
                 else
                   return UniversalMorphismIntoZeroObject( zero_obj );
                 fi;
@@ -1086,7 +1086,7 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_COMPLEX",
       
       lower_bound := N;
       
-      upper_bound := N + Size( diffs );
+      upper_bound := N + Length( diffs );
 
     fi;
     
@@ -1132,7 +1132,7 @@ InstallOtherMethod( \/,
       [ IsDenseList, IsChainOrCochainComplexCategory ],
   function( diffs_and_index, complex_cat )
     
-    if not Size( diffs_and_index ) = 2 then
+    if not Length( diffs_and_index ) = 2 then
       
       TryNextMethod( );
       

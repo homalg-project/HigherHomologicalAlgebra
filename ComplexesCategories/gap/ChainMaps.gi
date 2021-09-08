@@ -219,13 +219,13 @@ BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
     
     map := map_constructor( C1, C2, all_maps );
 
-    if n > l[ Size( l ) ] then
+    if n > l[ Length( l ) ] then
       
       SetIsZeroForMorphisms( map, true );
       
     fi;
 
-    if n + Size( mor ) - 1 < l[ 1 ] then
+    if n + Length( mor ) - 1 < l[ 1 ] then
     
       SetIsZeroForMorphisms( map, true );
    
@@ -300,7 +300,7 @@ InstallOtherMethod( \/,
       [ IsDenseList, IsChainOrCochainComplexCategory ],
   function( data_list, complex_cat )
     
-    if Size( data_list ) = 2 then
+    if Length( data_list ) = 2 then
       
       TryNextMethod( );
       

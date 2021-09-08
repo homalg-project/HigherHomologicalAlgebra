@@ -268,7 +268,7 @@ InstallMethod( Replace,
     func :=
       function( i )
         
-        if i in [ n .. n + Size( L ) - 1 ] then
+        if i in [ n .. n + Length( L ) - 1 ] then
           
           return L[ i - n + 1 ];
         

@@ -56,13 +56,13 @@ InstallGlobalFunction( CertainRowsOfQPAMatrix,
     
     if dim[ 2 ] = 0 then
       
-      return MakeZeroMatrix( BaseDomain( mat ), Size( L ), 0 );
+      return MakeZeroMatrix( BaseDomain( mat ), Length( L ), 0 );
       
     fi;
     
     rows := rows{ L };
    
-    return MatrixByRows( BaseDomain( mat ), [ Size( L ), dim[ 2 ] ], rows );
+    return MatrixByRows( BaseDomain( mat ), [ Length( L ), dim[ 2 ] ], rows );
   
 end );
 
@@ -89,13 +89,13 @@ InstallGlobalFunction( CertainColumnsOfQPAMatrix,
     
     if dim[ 1 ] = 0 then
       
-      return MakeZeroMatrix( BaseDomain( mat ), 0, Size( L ) );
+      return MakeZeroMatrix( BaseDomain( mat ), 0, Length( L ) );
       
     fi;
     
     cols := cols{ L };
     
-    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Size( L ) ], cols );
+    return MatrixByCols( BaseDomain( mat ), [ dim[ 1 ], Length( L ) ], cols );
   
 end );
 
@@ -143,14 +143,14 @@ InstallMethod( StackMatricesDiagonally,
           5000,
   function( L )
         
-    if Size( L ) = 1 then
+    if Length( L ) = 1 then
       return L[1];
-    elif Size( L ) = 2 then
+    elif Length( L ) = 2 then
       return StackMatricesDiagonally( L[ 1 ], L[ 2 ] );
     else
       return StackMatricesDiagonally(
-                StackMatricesDiagonally( L{ [ 1 .. Int( Size( L ) / 2 ) ] } ),
-                StackMatricesDiagonally( L{ [ Int( Size( L ) / 2 ) + 1 .. Size( L ) ] } )
+                StackMatricesDiagonally( L{ [ 1 .. Int( Length( L ) / 2 ) ] } ),
+                StackMatricesDiagonally( L{ [ Int( Length( L ) / 2 ) + 1 .. Length( L ) ] } )
             );
     fi;
 end );
@@ -221,7 +221,7 @@ InstallMethod( QuiverRepresentation,
     
     morphisms := [];
     
-    for i in [ 1 .. Size( matrices ) ] do
+    for i in [ 1 .. Length( matrices ) ] do
       
       a := Arrow( Q, i );
       
@@ -321,7 +321,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlge
     
     source_reps := List( source_reps, r -> [  r!.coefficients, r!.paths ] );
     
-    if not ForAll( source_reps, r -> Size( r[ 2 ] ) = 1 ) then
+    if not ForAll( source_reps, r -> Length( r[ 2 ] ) = 1 ) then
       
       Error( "This case is not yet covered" ); # and not needed in this package
       
@@ -339,7 +339,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlge
     
     range_reps := List( range_reps, r -> [  r!.coefficients, r!.paths ] );
     
-    if not ForAll( range_reps, r -> Size( r[ 2 ] ) = 1 ) then
+    if not ForAll( range_reps, r -> Length( r[ 2 ] ) = 1 ) then
       
       Error( "This case is not yet covered" ); # and not needed in this package
       
@@ -359,7 +359,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlge
     
     mat := List( images, image -> ListN( coeffs, CoefficientsOfPaths( paths, image ), \* ) );
     
-    return MatrixByRows( field, [ Size( source_list ), Size( range_reps ) ], mat );
+    return MatrixByRows( field, [ Length( source_list ), Length( range_reps ) ], mat );
   
 end );
 
@@ -380,7 +380,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlg
     
     source_reps := List( source_reps, r -> [  r!.coefficients, r!.paths ] );
     
-    if not ForAll( source_reps, r -> Size( r[ 2 ] ) = 1 ) then
+    if not ForAll( source_reps, r -> Length( r[ 2 ] ) = 1 ) then
       
       Error( "This case is not yet covered" ); # and not needed in this package
       
@@ -398,7 +398,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlg
     
     range_reps := List( range_reps, r -> [  r!.coefficients, r!.paths ] );
     
-    if not ForAll( range_reps, r -> Size( r[ 2 ] ) = 1 ) then
+    if not ForAll( range_reps, r -> Length( r[ 2 ] ) = 1 ) then
       
       Error( "This case is not yet covered" ); # and not needed in this package
       
@@ -418,7 +418,7 @@ InstallGlobalFunction( MatrixOfLinearMapDefinedByPreComposingFromTheRightWithAlg
     
     mat := List( images, image -> ListN( coeffs, CoefficientsOfPaths( paths, image ), \* ) );
     
-    return MatrixByRows( field, [ Size( source_list ), Size( range_reps ) ], mat );
+    return MatrixByRows( field, [ Length( source_list ), Length( range_reps ) ], mat );
     
 end );
 
@@ -440,9 +440,9 @@ InstallMethod( MorphismBetweenIndecProjectivesGivenByElement,
     
     basis := BasisOfProjectives( A );
     
-    b1 := basis[ PositionProperty( basis, p -> DimensionVector( p1 ) = List( p, Size ) ) ];
+    b1 := basis[ PositionProperty( basis, p -> DimensionVector( p1 ) = List( p, Length ) ) ];
     
-    b2 := basis[ PositionProperty( basis, p -> DimensionVector( p2 ) = List( p, Size ) ) ];
+    b2 := basis[ PositionProperty( basis, p -> DimensionVector( p2 ) = List( p, Length ) ) ];
     
     mats := ListN( b1, b2, { bb1 , bb2 } -> MatrixOfLinearMapDefinedByPreComposingFromTheLeftWithAlgebraElement( bb1, bb2, e ) );
     
@@ -573,7 +573,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     Info( InfoDerivedCategories, 2, "Decomposition of a projective object the easy way" );
     
-    return List( [ 1 .. Size( summands ) ],
+    return List( [ 1 .. Length( summands ) ],
       i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( summands, i, a ) );
       
 end );
@@ -664,7 +664,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
       i := 1;
       
-      while check_for_block and i <= Size( dims ) do
+      while check_for_block and i <= Length( dims ) do
         
         dims_of_mats := List( mats, DimensionsMat );
         
@@ -750,7 +750,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       
       i := 1;
       
-      while check_for_block and i <= Size( dims ) do
+      while check_for_block and i <= Length( dims ) do
         
         dims_of_mats := List( mats, DimensionsMat );
         
@@ -778,7 +778,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
             
             b := BasisOfExternalHom( projs[ i ], temp );
             
-            if not ( Size( b ) = 1 and IsIsomorphism( b[ 1 ] ) ) then
+            if not ( Length( b ) = 1 and IsIsomorphism( b[ 1 ] ) ) then
                 
                 i := i + 1;
                 
@@ -852,7 +852,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
     
     d := DirectSum( s );
     
-    output := List( [ 1 .. Size( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
+    output := List( [ 1 .. Length( s ) - 1 ], i -> InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, i, d ) );
     
     if IsZero( new_a ) then
       
@@ -867,7 +867,7 @@ InstallMethod( DecomposeProjectiveQuiverRepresentation,
       Info( InfoDerivedCategories, 2, "Decomposition of a projective object the very hard way" );
 
       # the following three lines can do the job, but it may take forever, hence we use them only if there is no better way.
-      morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Size( s ), d );
+      morphism_from_new_a := InjectionOfCofactorOfDirectSumWithGivenDirectSum( s, Length( s ), d );
       
       mingen := MinimalGeneratingSet( new_a );
       
@@ -920,7 +920,7 @@ InstallMethod( DecomposeInjectiveQuiverRepresentation,
     
     Info( InfoDerivedCategories, 2, "Decomposition of an injective object the easy way" );
     
-    return List( [ 1 .. Size( summands ) ],
+    return List( [ 1 .. Length( summands ) ],
       i -> ProjectionInFactorOfDirectSumWithGivenDirectSum( summands, i, a ) );
       
 end );
@@ -1778,7 +1778,7 @@ function( M, list_of_vectors )
   
   list := List( list_of_vectors, AsList );
   
-  nr_vectors := Size( list );
+  nr_vectors := Length( list );
   
   if dim[ 1 ] = 0 then
     
@@ -1846,7 +1846,7 @@ function( M, list_of_vectors )
     
     m := QPA_to_Homalg_Matrix( M );
     
-    v := HomalgMatrix( list, nr_vectors, Size( list[ 1 ] ), GLOBAL_FIELD_FOR_QPA!.field );
+    v := HomalgMatrix( list, nr_vectors, Length( list[ 1 ] ), GLOBAL_FIELD_FOR_QPA!.field );
     
     solution := List( [ 1 .. nr_vectors ], i -> fail );
     
@@ -1897,7 +1897,7 @@ InstallMethod( PreImagesRepresentative,
     
     x := ShallowCopy( SolutionMat( RightMatrixOfLinearTransformation( T ), list_of_vectors ) );
     
-    for i in [ 1 .. Size( x ) ] do
+    for i in [ 1 .. Length( x ) ] do
       
       if x[ i ] <> fail then
         

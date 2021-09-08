@@ -53,7 +53,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         objs := List( ObjectList( Range( RT!.defining_morphism_of_cokernel_object ) ), UnderlyingCell );
         
-        coeffs := List( [ 1 .. Size( objs ) ], i -> CoefficientsOfMorphism( PreCompose( InjectionOfCofactorOfDirectSum( objs, i ), coker_epi ) ) );
+        coeffs := List( [ 1 .. Length( objs ) ], i -> CoefficientsOfMorphism( PreCompose( InjectionOfCofactorOfDirectSum( objs, i ), coker_epi ) ) );
          
         min_gen := MinimalGeneratingSet( R );
         
@@ -69,7 +69,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         maps := [ ];
         
-        for i in [ 1 .. Size( min_gen ) ] do
+        for i in [ 1 .. Length( min_gen ) ] do
           
           if IsZero( coeffs[ i ] ) then
             
@@ -166,7 +166,7 @@ InstallMethodWithCache( CounitOfTensorHomAdjunction,
         
         positions_of_non_zeros := List( vectors, v -> PositionsProperty( v, e -> not IsZero( e ) ) );
         
-        mor := List( [ 1 .. Size( min_gen ) ],
+        mor := List( [ 1 .. Length( min_gen ) ],
           i -> vectors[ i ]{ positions_of_non_zeros[ i ] } * 
                   BasisOfExternalHom(
                     UnderlyingCell( collection[ positions[ i ] ] ), a )

@@ -120,7 +120,7 @@ InstallOtherMethod( \/,
               [ IsDenseList, IsHomotopyCategory ],
   function( data_list, homotopy_category )
     
-    if Size( data_list ) = 2 then
+    if Length( data_list ) = 2 then
       
       return CallFuncList( HomotopyCategoryObject, Concatenation( [ homotopy_category ], data_list ) );
       

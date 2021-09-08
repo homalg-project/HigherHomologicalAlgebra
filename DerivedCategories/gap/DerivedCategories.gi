@@ -296,7 +296,7 @@ InstallMethod( DerivedCategoryMorphism,
   function( D, L )
     local roof;
     
-    if not Size( L ) = 2 then
+    if not Length( L ) = 2 then
       
       Error( "wronge input" );
       

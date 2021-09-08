@@ -102,7 +102,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,
               
               bases[ k ] := B;
               
-              dim_vec[ k ] := Size( B );
+              dim_vec[ k ] := Length( B );
               
             fi;
           
@@ -138,7 +138,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,
             
           bases[ p ] := BasisOfExternalHom( UnderlyingCell( collection[ p ] ), V );
           
-          dim_vec[ p ] := Size( bases[ p ] );
+          dim_vec[ p ] := Length( bases[ p ] );
           
         od;
         
@@ -178,7 +178,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,
             
             rel := AdditiveInverse( Inverse( rel[ 1 ] ) ) * rel;
             
-            Add( current_mat, rel{ [ 2 .. Size( rel ) ] } );
+            Add( current_mat, rel{ [ 2 .. Length( rel ) ] } );
           
           od;
           
