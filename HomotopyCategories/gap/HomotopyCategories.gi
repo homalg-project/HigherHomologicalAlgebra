@@ -210,13 +210,11 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_COCHAINS,
           )
     );
     
-    AddHomomorphismStructureOnMorphismsWithGivenObjects( homotopy_category,
-      { s, alpha, beta, r } ->
-        HomomorphismStructureOnMorphismsWithGivenObjects(
-          s,
+    AddHomomorphismStructureOnMorphisms( homotopy_category,
+      { alpha, beta } ->
+        HomomorphismStructureOnMorphisms(
           AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat,
-          AsChainMorphism( UnderlyingCell( beta  ) ) / homotopy_cat,
-          r
+          AsChainMorphism( UnderlyingCell( beta  ) ) / homotopy_cat
         )
     );
     

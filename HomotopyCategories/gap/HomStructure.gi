@@ -38,9 +38,9 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
           
       end );
       
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( homotopy_category,
+      AddHomomorphismStructureOnMorphisms( homotopy_category,
         
-        function( s, phi, psi, r )
+        function( phi, psi )
           local dSource, dRange, dMap, tMap;
           
           dSource := DoubleChainComplexByHomStructure(
