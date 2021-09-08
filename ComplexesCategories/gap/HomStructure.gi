@@ -98,8 +98,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
           
     if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
       
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM;
           
           DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
@@ -120,8 +120,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         
     elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
        
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM, I; 
           
           DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
@@ -146,8 +146,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
         
     else
       
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM;
           
           DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
@@ -548,8 +548,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
           
     if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
       
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM;
           
           DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
@@ -570,8 +570,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
         
     elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
        
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM, I;
           
           DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
@@ -596,8 +596,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
         
     else
       
-      AddHomomorphismStructureOnMorphismsWithGivenObjects( category,
-        function( s, alpha, beta, r )
+      AddHomomorphismStructureOnMorphisms( category,
+        function( alpha, beta )
           local DS, DR, DM, TM;
           
           DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
