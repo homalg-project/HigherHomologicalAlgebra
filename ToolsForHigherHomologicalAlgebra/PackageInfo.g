@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ToolsForHigherHomologicalAlgebra",
 Subtitle := "Tools for the Higher Homological Algebra project",
-Version := "2021.09-01",
-Date := "01/09/2021",
+Version := "2021.10-01",
+Date := "11/10/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [
