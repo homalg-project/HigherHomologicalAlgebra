@@ -26,7 +26,7 @@ AddDerivationToCAP( SectionForMorphisms,
               [ IdentityMorphism, 1 ]
             ],
             
-  {cat, alpha} -> Lift( IdentityMorphism( Range( alpha ) ), alpha )
+  {cat, alpha} -> Lift( cat, IdentityMorphism( cat, Range( alpha ) ), alpha )
   : Description:= "Section using Lift and IdentityMorphism"
 );
 
@@ -36,7 +36,7 @@ AddDerivationToCAP( RetractionForMorphisms,
               [ IdentityMorphism, 1 ]
             ],
             
-  {cat, alpha} -> Colift( alpha, IdentityMorphism( Source( alpha ) ) )
+  {cat, alpha} -> Colift( cat, alpha, IdentityMorphism( cat, Source( alpha ) ) )
   : Description:= "Retraction using Colift and IdentityMorphism"
 );
 
