@@ -1006,7 +1006,7 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
                 SetRangeCategoryOfHomomorphismStructure( complex_cat, complex_cat );
             else
                 chains_range_cat := ChainComplexCategory( range_cat );
-                if not HasIsFinalized( chains_range_cat ) then
+                if not IsFinalized( chains_range_cat ) then
                     Info( InfoWarning, 2, "For some reason the category", Name( chains_range_cat ), " has not been finalized!\n" );
                     Finalize( chains_range_cat );
                 fi;
@@ -1059,12 +1059,8 @@ InstallMethod( CHAIN_OR_COCHAIN_COMPLEX_CATEGORYOp,
           end );
     fi;
      
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    if to_be_finalized = false then
-        return complex_cat;
-    else
-        Finalize( complex_cat );
-    fi;
+    Finalize( complex_cat );
+    
     return complex_cat;
 end );
 

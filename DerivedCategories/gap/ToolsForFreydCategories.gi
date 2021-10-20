@@ -254,7 +254,7 @@ InstallMethod( FullSubcategoryGeneratedByGradedRowsOfRankOne,
           [ IsHomalgGradedRing ],
   
   function( S )
-    local rows, r, name, full, FinalizeCategory;
+    local rows, r, name, full;
     
     rows := CategoryOfGradedRows( S );
     

@@ -210,15 +210,7 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
                     fi;
                     
     fi;
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
-    if to_be_finalized = false then
-      
-      return stable_category;
-      
-    fi;
-    
+        
     Finalize( stable_category );
     
     return stable_category;
@@ -228,7 +220,7 @@ end );
 InstallMethod( StableCategoryBySystemOfLiftingObjects,
             [ IsCapCategory ],
   function( category )
-    local name, can_be_factored_through_lifting_object, stable_category, with_hom_structure, category_of_hom_structure, to_be_finalized;
+    local name, can_be_factored_through_lifting_object, stable_category, with_hom_structure, category_of_hom_structure;
     
     if not CanCompute( category, "MorphismFromLiftingObject" ) then
       
@@ -274,14 +266,6 @@ InstallMethod( StableCategoryBySystemOfLiftingObjects,
                     
     fi;
     
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
-    if to_be_finalized = false then
-      
-      return stable_category;
-      
-    fi;
-    
     Finalize( stable_category );
     
     return stable_category;
@@ -299,16 +283,14 @@ InstallMethod( StableCategory,
     
     fi;
     
-    if not HasIsFinalized( category ) then
+    if not IsFinalized( category ) then
       
       Error( "The category in the input should be finalized category" );
     
     fi;
     
     congruency_test_function := function( alpha, beta ) return membership_function( alpha - beta ); end;
-    
-    to_be_finalized := ValueOption( "FinalizeCategory" );
-    
+        
     name := ValueOption( "NameOfCategory" );
     
     if name = fail then
@@ -345,11 +327,7 @@ InstallMethod( StableCategory,
     
     SetCongruencyTestFunction( stable_category, membership_function );
     
-    if to_be_finalized = true then
-      
-      Finalize( stable_category );
-      
-    fi;
+    Finalize( stable_category );
     
     return stable_category;
     

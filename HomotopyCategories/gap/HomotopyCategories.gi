@@ -87,9 +87,7 @@ InstallMethod( HomotopyCategoryOp,
         Error( "The method IsColiftableAlongMorphismToColiftingObject should be added to the category of chains!" );
         
     fi;
-        
-    finalize := ValueOption( "FinalizeCategory" );
-    
+     
     special_filters := ValueOption( "SpecialFilters" );
     
     if special_filters = fail then
@@ -134,17 +132,9 @@ InstallMethod( HomotopyCategoryOp,
         
     fi;
     
-    if finalize = false then
-      
-      return homotopy_category;
-      
-    else
-      
-      Finalize( homotopy_category );
-      
-      return homotopy_category;
-      
-    fi;
+    Finalize( homotopy_category );
+    
+    return homotopy_category;
     
 end );
 

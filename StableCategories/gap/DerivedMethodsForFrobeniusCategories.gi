@@ -162,6 +162,7 @@ AddFinalDerivation( IsConflationPair,
   Description := "Adding exact structure to abelian categories"
 );
 
+##
 AddFinalDerivation( IsExactProjectiveObject,
               [
                 [ IsProjective, 1 ],

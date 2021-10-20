@@ -504,7 +504,7 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
     
     r := UnderlyingNonGradedRing( R );
     
-    if HasIsFinalized( category ) then
+    if IsFinalized( category ) then
         return;
     fi;
     
@@ -521,6 +521,21 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
           obj_to_double_dual_obj := ApplyNaturalTransformation( nat, obj );
           return PreCompose( obj_to_double_dual_obj, dual_proj_cover );
       end );
+     
+    AddIsColiftable( category, function ( morphism1, morphism2 )
+          local N, M, A, B, I, B_over_M, zero_mat, A_over_zero, sol, XX, morphism_1, morphism_2;
+          morphism_1 := UnderlyingPresentationMorphism( morphism1 );
+          morphism_2 := UnderlyingPresentationMorphism( morphism2 );
+          I := UnderlyingMatrix( Range( morphism_2 ) );
+          N := UnderlyingMatrix( Source( morphism_1 ) );
+          M := UnderlyingMatrix( Range( morphism_1 ) );
+          B := UnderlyingMatrix( morphism_1 );
+          A := UnderlyingMatrix( morphism_2 );
+          B_over_M := UnionOfRows( B, M );
+          zero_mat := HomalgZeroMatrix( NrRows( M ), NrColumns( I ), HomalgRing( M ) );
+          A_over_zero := UnionOfRows( A, zero_mat );
+          return SolveTwoSidedEquationOverExteriorAlgebra( B_over_M, I, A_over_zero ) <> fail;
+      end );
     
     AddColift( category, function ( morphism1, morphism2 )
           local N, M, A, B, I, B_over_M, zero_mat, A_over_zero, sol, XX, morphism_1, morphism_2;
@@ -535,16 +550,79 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
           zero_mat := HomalgZeroMatrix( NrRows( M ), NrColumns( I ), HomalgRing( M ) );
           A_over_zero := UnionOfRows( A, zero_mat );
           sol := SolveTwoSidedEquationOverExteriorAlgebra( B_over_M, I, A_over_zero );
-          if sol = fail then
-              return fail;
-          else
-              return GradedPresentationMorphism( Range( morphism1 ), DecideZeroRows( sol[1], I ), Range( morphism2 ) );
-          fi;
-          return;
+          return GradedPresentationMorphism( Range( morphism1 ), DecideZeroRows( sol[1], I ), Range( morphism2 ) );
       end );
-    
+     
+    AddIsLiftable( category, function ( morphism1, morphism2 )
+          local P, N, M, A, B, l, basis_indices, Q, R_B, R_N, L_P, R_M, L_id_s, L_P_mod, morphism_1, morphism_2, A_deco,
+          A_deco_list, A_deco_list_vec, A_vec, mat1, mat2, A_vec_over_zero_vec, mat, sol, x, s, v;
+          
+          if not IsEqualForObjects( Range( morphism1 ), Range( morphism2 ) ) then
+              Error( "Wrong input!" );
+          fi;
+          morphism_1 := UnderlyingPresentationMorphism( morphism1 );
+          morphism_2 := UnderlyingPresentationMorphism( morphism2 );
+          P := UnderlyingMatrix( Source( morphism_1 ) );
+          N := UnderlyingMatrix( Range( morphism_1 ) );
+          M := UnderlyingMatrix( Source( morphism_2 ) );
+          A := UnderlyingMatrix( morphism_1 );
+          B := UnderlyingMatrix( morphism_2 );
+          l := Length( IndeterminatesOfExteriorRing( R ) );
+          basis_indices := IndicesForBasisOfExteriorAlgebra( R );
+          Q := CoefficientsRing( R );
+          if IsZero( P ) then
+              return RightDivide( A, UnionOfRows( B, N ) ) <> fail;
+          fi;
+          R_B := UnionOfRows( List( basis_indices, function ( u )
+                    return KroneckerMat( Involution( Q * RightMagic( u, B ) ), HomalgIdentityMatrix( NrRows( A ), Q ) );
+                end ) );
+          if not IsZero( N ) then
+              R_N := UnionOfRows( List( basis_indices, function ( u )
+                        return KroneckerMat( Involution( Q * RightMagic( u, N ) ), HomalgIdentityMatrix( NrRows( A ), Q ) );
+                    end ) );
+          fi;
+          L_P := UnionOfRows( List( basis_indices, function ( u )
+                    return KroneckerMat( HomalgIdentityMatrix( NrColumns( M ), Q ), Q * LeftMagic( u, P ) );
+                end ) );
+          R_M := UnionOfRows( List( basis_indices, function ( u )
+                    return KroneckerMat( Involution( Q * RightMagic( u, M ) ), HomalgIdentityMatrix( NrRows( P ), Q ) );
+                end ) );
+          L_id_s := UnionOfRows( List( basis_indices, function ( u )
+                    return KroneckerMat( HomalgIdentityMatrix( NrRows( B ), Q ),
+                       Q * LeftMagic( u, HomalgIdentityMatrix( NrRows( A ), R ) ) );
+                end ) );
+          L_P_mod := L_P * Involution( L_id_s );
+          A_deco := DecompositionOfHomalgMatrixOverExteriorAlgebra( A );
+          A_deco_list := List( A_deco, function ( i )
+                  return i[2];
+              end );
+          A_deco_list_vec := List( A_deco_list, function ( mat )
+                  return UnionOfRows( List( [ 1 .. NrColumns( A ) ], function ( i )
+                            return CertainColumns( mat, [ i ] );
+                        end ) );
+              end );
+          A_vec := Q * UnionOfRows( A_deco_list_vec );
+          if not IsZero( N ) then
+              mat1
+               := UnionOfColumns(
+                 [ R_B, R_N, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l, NrRows( M ) * NrRows( P ) * 2 ^ l, Q )
+                   ] );
+              mat2
+               := UnionOfColumns(
+                 [ L_P_mod, HomalgZeroMatrix( NrRows( P ) * NrColumns( M ) * 2 ^ l, NrRows( N ) * NrColumns( P ) * 2 ^ l, Q
+                       ), R_M ] );
+          else
+              mat1 := UnionOfColumns( R_B, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l,
+                   NrRows( M ) * NrRows( P ) * 2 ^ l, Q ) );
+              mat2 := UnionOfColumns( L_P_mod, R_M );
+          fi;
+          mat := UnionOfRows( mat1, mat2 );
+          A_vec_over_zero_vec := UnionOfRows( A_vec, HomalgZeroMatrix( NrColumns( M ) * NrRows( P ) * 2 ^ l, 1, Q ) );
+          return LeftDivide( mat, A_vec_over_zero_vec ) <> fail;
+      end );
+     
     AddLift( category, function ( morphism1, morphism2 )
-          local P, N, M, A, B, l, basis_indices, Q, R_B, R_N, L_P, R_M, L_id_s, L_P_mod, morphism_1, morphism_2, A_deco, 
+          local P, N, M, A, B, l, basis_indices, Q, R_B, R_N, L_P, R_M, L_id_s, L_P_mod, morphism_1, morphism_2, A_deco,
           A_deco_list, A_deco_list_vec, A_vec, mat1, mat2, A_vec_over_zero_vec, mat, sol, x, s, v;
           
           if not IsEqualForObjects( Range( morphism1 ), Range( morphism2 ) ) then
@@ -562,12 +640,10 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
           Q := CoefficientsRing( R );
           if IsZero( P ) then
               sol := RightDivide( A, UnionOfRows( B, N ) );
-              if sol = fail then
-                  return fail;
-              else
-                  return GradedPresentationMorphism( Source( morphism1 ), 
-                     DecideZeroRows( CertainColumns( sol, [ 1 .. NrRows( B ) ] ), M ), Source( morphism2 ) );
-              fi;
+              return GradedPresentationMorphism(
+                        Source( morphism1 ),
+                        DecideZeroRows( CertainColumns( sol, [ 1 .. NrRows( B ) ] ), M ), Source( morphism2 )
+                     );
           fi;
           R_B := UnionOfRows( List( basis_indices, function ( u )
                     return KroneckerMat( Involution( Q * RightMagic( u, B ) ), HomalgIdentityMatrix( NrRows( A ), Q ) );
@@ -584,7 +660,7 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
                     return KroneckerMat( Involution( Q * RightMagic( u, M ) ), HomalgIdentityMatrix( NrRows( P ), Q ) );
                 end ) );
           L_id_s := UnionOfRows( List( basis_indices, function ( u )
-                    return KroneckerMat( HomalgIdentityMatrix( NrRows( B ), Q ), 
+                    return KroneckerMat( HomalgIdentityMatrix( NrRows( B ), Q ),
                        Q * LeftMagic( u, HomalgIdentityMatrix( NrRows( A ), R ) ) );
                 end ) );
           L_P_mod := L_P * Involution( L_id_s );
@@ -599,25 +675,22 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
               end );
           A_vec := Q * UnionOfRows( A_deco_list_vec );
           if not IsZero( N ) then
-              mat1 
-               := UnionOfColumns( 
-                 [ R_B, R_N, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l, NrRows( M ) * NrRows( P ) * 2 ^ l, Q ) 
+              mat1
+               := UnionOfColumns(
+                 [ R_B, R_N, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l, NrRows( M ) * NrRows( P ) * 2 ^ l, Q )
                    ] );
-              mat2 
-               := UnionOfColumns( 
-                 [ L_P_mod, HomalgZeroMatrix( NrRows( P ) * NrColumns( M ) * 2 ^ l, NrRows( N ) * NrColumns( P ) * 2 ^ l, Q 
+              mat2
+               := UnionOfColumns(
+                 [ L_P_mod, HomalgZeroMatrix( NrRows( P ) * NrColumns( M ) * 2 ^ l, NrRows( N ) * NrColumns( P ) * 2 ^ l, Q
                        ), R_M ] );
           else
-              mat1 := UnionOfColumns( R_B, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l, 
+              mat1 := UnionOfColumns( R_B, HomalgZeroMatrix( NrRows( A ) * NrColumns( A ) * 2 ^ l,
                    NrRows( M ) * NrRows( P ) * 2 ^ l, Q ) );
               mat2 := UnionOfColumns( L_P_mod, R_M );
           fi;
           mat := UnionOfRows( mat1, mat2 );
           A_vec_over_zero_vec := UnionOfRows( A_vec, HomalgZeroMatrix( NrColumns( M ) * NrRows( P ) * 2 ^ l, 1, Q ) );
           sol := LeftDivide( mat, A_vec_over_zero_vec );
-          if sol = fail then
-              return fail;
-          fi;
           s := NrColumns( P );
           v := NrColumns( M );
           x := CertainRows( sol, [ 1 .. s * v * 2 ^ l ] );
@@ -682,13 +755,11 @@ InstallMethod( GradedLeftPresentations,
           [ IsHomalgGradedRing ],
           
   function( S )
-    local finalize, random_methods, category;
+    local enhance, category;
+     
+    enhance := ValueOption( "GradedLeftPresentations_ToolsForHigherHomologicalAlgebra" );
     
-    finalize := ValueOption( "FinalizeCategory" );
-    
-    random_methods := ValueOption( "GradedLeftPresentations_ToolsForHigherHomologicalAlgebra" );
-    
-    if random_methods = false then
+    if enhance = false then
       TryNextMethod( );
     fi;
     
@@ -701,12 +772,8 @@ InstallMethod( GradedLeftPresentations,
     fi;
     
     ADD_RRANDOM_METHODS_TO_GRADED_MODULE_PRESENTATIONS( category, "left" );
-    
-    if finalize <> false then
-      
-      Finalize( category );
-      
-    fi;
+   
+    Finalize( category );
     
     return category;
     

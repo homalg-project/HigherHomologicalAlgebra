@@ -3187,14 +3187,6 @@ InstallMethod( CategoryOfQuiverRepresentations,
         EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
       );
     
-    finalize_cat := ValueOption( "FinalizeCategory" );
-    
-    if finalize_cat = false then
-      
-      return cat;
-      
-    fi;
-    
     Finalize( cat );
      
     return cat;
