@@ -504,7 +504,7 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
     
     r := UnderlyingNonGradedRing( R );
     
-    if HasIsFinalized( category ) then
+    if IsFinalized( category ) then
         return;
     fi;
     
@@ -755,13 +755,11 @@ InstallMethod( GradedLeftPresentations,
           [ IsHomalgGradedRing ],
           
   function( S )
-    local finalize, random_methods, category;
+    local enhance, category;
+     
+    enhance := ValueOption( "GradedLeftPresentations_ToolsForHigherHomologicalAlgebra" );
     
-    finalize := ValueOption( "FinalizeCategory" );
-    
-    random_methods := ValueOption( "GradedLeftPresentations_ToolsForHigherHomologicalAlgebra" );
-    
-    if random_methods = false then
+    if enhance = false then
       TryNextMethod( );
     fi;
     
@@ -774,12 +772,8 @@ InstallMethod( GradedLeftPresentations,
     fi;
     
     ADD_RRANDOM_METHODS_TO_GRADED_MODULE_PRESENTATIONS( category, "left" );
-    
-    if finalize <> false then
-      
-      Finalize( category );
-      
-    fi;
+   
+    Finalize( category );
     
     return category;
     

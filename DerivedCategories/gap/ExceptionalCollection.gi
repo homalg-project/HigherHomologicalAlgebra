@@ -1373,7 +1373,7 @@ end );
 InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
           [ IsCapCategory ],
   function( cat )
-    local full, finalize, name, r;
+    local full, name, r;
     
     if not IsAbelianCategoryWithComputableEnoughProjectives( cat ) then
       
@@ -1435,15 +1435,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
-    
-    finalize := ValueOption( "FinalizeCategory" );
-    
-    if finalize = false then
-      
-      return full;
-    
-    fi;
-    
+        
     Finalize( full );
        
     DeactivateCachingOfCategory( full );
@@ -1456,7 +1448,7 @@ end );
 InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
           [ IsCapCategory ],
   function( cat )
-    local full, finalize, name, r;
+    local full, name, r;
     
     if not IsAbelianCategoryWithComputableEnoughInjectives( cat ) then
       
@@ -1516,15 +1508,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
     CapCategorySwitchLogicOff( full );
     
     DisableSanityChecks( full );
-     
-    finalize := ValueOption( "FinalizeCategory" );
-    
-    if finalize = false then
-      
-      return full;
-    
-    fi;
-    
+        
     DeactivateCachingOfCategory( full );
     
     Finalize( full );
