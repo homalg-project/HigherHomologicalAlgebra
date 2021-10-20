@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2021.07-01",
-Date := "13/07/2021",
+Version := "2021.10-01",
+Date := "20/10/2021",
 License := "GPL-2.0-or-later",
 
 Persons := [

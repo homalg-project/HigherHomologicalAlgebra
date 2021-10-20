@@ -311,7 +311,7 @@ Sym( [ 1 .. 2 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplyMap</code>( <var class="Arg">L</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
 
-<p>The arguments are a list <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions <var class="Arg">L</var> and a function <var class="Arg">F</var> with <code class="code">Size</code>(<var class="Arg">L</var>) arguments. The output is another <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to <var class="Arg">F</var>(<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Size</code>(<var class="Arg">L</var>)][<code class="code">i</code>]). We call the list <var class="Arg">L</var> the <code class="code">BaseZFunctions</code> of <code class="code">m</code> and <var class="Arg">F</var> the <code class="code">AppliedMap</code>.</p>
+<p>The arguments are a list <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions <var class="Arg">L</var> and a function <var class="Arg">F</var> with <code class="code">Length</code>(<var class="Arg">L</var>) arguments. The output is another <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to <var class="Arg">F</var>(<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Length</code>(<var class="Arg">L</var>)][<code class="code">i</code>]). We call the list <var class="Arg">L</var> the <code class="code">BaseZFunctions</code> of <code class="code">m</code> and <var class="Arg">F</var> the <code class="code">AppliedMap</code>.</p>
 
 
 <div class="example"><pre>
@@ -361,7 +361,7 @@ Sym( [ 1 .. 2 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombineZFunctions</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
 
-<p>The argument is a dense list <var class="Arg">L</var> of <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions. The output is another <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to [<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Size</code>(<var class="Arg">L</var>)][<code class="code">i</code>]] for all indices <code class="code">i</code>'s in <span class="SimpleMath">\(\mathbb{Z}\)</span>.</p>
+<p>The argument is a dense list <var class="Arg">L</var> of <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions. The output is another <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to [<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Length</code>(<var class="Arg">L</var>)][<code class="code">i</code>]] for all indices <code class="code">i</code>'s in <span class="SimpleMath">\(\mathbb{Z}\)</span>.</p>
 
 <p><a id="X83D1892185F38BDA" name="X83D1892185F38BDA"></a></p>
 
@@ -370,7 +370,7 @@ Sym( [ 1 .. 2 ] )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Replace</code>( <var class="Arg">z_func</var>, <var class="Arg">n</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
 
-<p>The argument is a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <var class="Arg">z_func</var>, an integer <var class="Arg">n</var> and a dense list <var class="Arg">L</var>. The output is a new <span class="SimpleMath">\(\mathbb{Z}\)</span>-function whose values between <var class="Arg">n</var> and <var class="Arg">n</var>+<code class="code">Size</code>(<var class="Arg">L</var>)-1 are taken from <var class="Arg">L</var>.</p>
+<p>The argument is a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <var class="Arg">z_func</var>, an integer <var class="Arg">n</var> and a dense list <var class="Arg">L</var>. The output is a new <span class="SimpleMath">\(\mathbb{Z}\)</span>-function whose values between <var class="Arg">n</var> and <var class="Arg">n</var>+<code class="code">Length</code>(<var class="Arg">L</var>)-1 are taken from <var class="Arg">L</var>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>

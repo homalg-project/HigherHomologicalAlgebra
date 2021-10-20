@@ -243,8 +243,8 @@
   [6XReturns:[106X  [33X[0;10Ya [23X\mathbb{Z}[123X-function[133X
   
   [33X[0;0YThe  arguments  are  a  list  [23X\mathbb{Z}[123X-functions  [3XL[103X  and a function [3XF[103X with
-  [10XSize[110X([3XL[103X)  arguments.  The  output  is another [23X\mathbb{Z}[123X-function [10Xm[110X such that
-  [10Xm[110X[[10Xi[110X]  is  equal  to  [3XF[103X([3XL[103X[1][[10Xi[110X],...,  [3XL[103X[[10XSize[110X([3XL[103X)][[10Xi[110X]).  We call the list [3XL[103X the
+  [10XLength[110X([3XL[103X)  arguments.  The output is another [23X\mathbb{Z}[123X-function [10Xm[110X such that
+  [10Xm[110X[[10Xi[110X]  is  equal  to  [3XF[103X([3XL[103X[1][[10Xi[110X],..., [3XL[103X[[10XLength[110X([3XL[103X)][[10Xi[110X]). We call the list [3XL[103X the
   [10XBaseZFunctions[110X of [10Xm[110X and [3XF[103X the [10XAppliedMap[110X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -294,7 +294,7 @@
   
   [33X[0;0YThe  argument  is  a  dense  list  [3XL[103X  of [23X\mathbb{Z}[123X-functions. The output is
   another  [23X\mathbb{Z}[123X-function  [10Xm[110X  such  that  [10Xm[110X[[10Xi[110X]  is equal to [[3XL[103X[1][[10Xi[110X],...,
-  [3XL[103X[[10XSize[110X([3XL[103X)][[10Xi[110X]] for all indices [10Xi[110X's in [23X\mathbb{Z}[123X.[133X
+  [3XL[103X[[10XLength[110X([3XL[103X)][[10Xi[110X]] for all indices [10Xi[110X's in [23X\mathbb{Z}[123X.[133X
   
   [1X7.2-21 Replace[101X
   
@@ -303,5 +303,5 @@
   
   [33X[0;0YThe  argument is a [23X\mathbb{Z}[123X-function [3Xz_func[103X, an integer [3Xn[103X and a dense list
   [3XL[103X.  The  output  is  a  new  [23X\mathbb{Z}[123X-function  whose values between [3Xn[103X and
-  [3Xn[103X+[10XSize[110X([3XL[103X)-1 are taken from [3XL[103X.[133X
+  [3Xn[103X+[10XLength[110X([3XL[103X)-1 are taken from [3XL[103X.[133X
   

@@ -54,7 +54,7 @@
   [33X[0;0YCreates  the  chain  complex  category  [23X\mathrm{Ch}_\bullet(A)[123X  an  additive
   category  [23XA[123X.  If  you want to contruct the category without finalizing it so
   that   you   can   add   your   own   methods,   you  can  run  the  command
-  [23X\texttt{ChainComplexCategory(A:FinalizeCategory := false)}[123X.[133X
+  [23X\texttt{ChainComplexCategory(A : FinalizeCategory := false )}[123X.[133X
   
   [1X1.1-8 CochainComplexCategory[101X
   
@@ -64,7 +64,7 @@
   [33X[0;0YCreates  the  cochain  complex  category  [23X\mathrm{Ch}^\bullet(A)[123X an additive
   category  [23XA[123X.  If  you want to contruct the category without finalizing it so
   that   you   can   add   your   own   methods,   you  can  run  the  command
-  [23X\texttt{CochainComplexCategory(A:FinalizeCategory := false)}[123X.[133X
+  [23X\texttt{CochainComplexCategory(A : FinalizeCategory := false )}[123X.[133X
   
   [1X1.1-9 UnderlyingCategory[101X
   
