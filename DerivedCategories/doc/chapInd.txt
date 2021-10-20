@@ -2,24 +2,24 @@
   
   [1XIndex[101X
   
-  [2X\[\][102X, for IsStrongExceptionalCollection, IsInt 1.1-19 
+  [2X\[\][102X, for IsStrongExceptionalCollection, IsInt 1.1-18 
   [2XAdditiveClosure[102X, for IsStrongExceptionalCollection 1.1-14 
   [2XAdditiveClosureAsFullSubcategory[102X, for IsCapFullSubcategory 1.2-8 
       for IsStrongExceptionalCollection 1.1-17 
   [2XAlgebroid[102X, for IsStrongExceptionalCollection 1.1-9 
-  [2XAllPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-23 
+  [2XAllPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-22 
   [2XAmbientCategory[102X, for IsStrongExceptionalCollection 1.1-5 
-  [2XArrows[102X, for IsStrongExceptionalCollection, IsInt, IsInt 1.1-22 
-  [2XBasisOfPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-24 
+  [2XArrows[102X, for IsStrongExceptionalCollection, IsInt, IsInt 1.1-21 
+  [2XBasisOfPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-23 
   [2XCategoryOfQuiverRepresentationsOverOppositeAlgebra[102X, for IsStrongExceptionalCollection 1.1-15 
   [2XCounitOfTensorHomAdjunction[102X, for IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor 2.2-2 
   [2XCreateStrongExceptionalCollection[102X, for IsCapFullSubcategory, IsList, IsList, IsString 1.1-2 
   [2XDecompositionFunctorOfInjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-3 
   [2XDecompositionFunctorOfProjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-1 
-  [2XDefiningFullSubcategory[102X, for IsStrongExceptionalCollection 1.1-4 
   [2XDefiningStrongExceptionalCollection[102X, for IsQuiverAlgebra 1.1-8 
   [2XEndomorphismAlgebra[102X, for IsStrongExceptionalCollection 1.1-7 
   [2XEndomorphismAlgebraAttr[102X, for IsStrongExceptionalCollection 1.1-6 
+  [2XFullSubcategory[102X, for IsStrongExceptionalCollection 1.1-4 
   [2XFullSubcategoryGeneratedByIndecInjectiveObjects[102X, for IsCapCategory 1.2-7 
   [2XFullSubcategoryGeneratedByIndecProjectiveObjects[102X, for IsCapCategory 1.2-6 
   [2XFullSubcategoryGeneratedByInjectiveObjects[102X, for IsCapCategory 1.2-5 
@@ -29,21 +29,20 @@
   [2XHomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects[102X, for IsStrongExceptionalCollection 3.1-3 
   [2XHomotopyCategory[102X, for IsStrongExceptionalCollection 1.1-16 
   [2XInterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure[102X, for IsCapCategoryObject, IsCapCategoryObject, IsList 1.2-1 
-  [2XInterpretMorphismInStrongExceptionalCollectionAsEndomorphismOfTiltingObject[102X, for IsStrongExceptionalCollection, IsCapCategoryMorphismInAFullSubcategory 1.1-18 
   [2XInverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations[102X, for IsAlgebroid 2.1-10 
       for IsStrongExceptionalCollection 2.1-9 
   [2XIsomorphismFromAlgebroid[102X, for IsStrongExceptionalCollection 2.1-6 
   [2XIsomorphismOntoAlgebroid[102X, for IsStrongExceptionalCollection 2.1-5 
   [2XIsStrongExceptionalCollection[102X, for IsObject 1.1-1 
-  [2XLabelsForAllPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-27 
-  [2XLabelsForBasisOfPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-28 
-  [2XLabelsForPathsOfLengthGreaterThanOne[102X, for IsStrongExceptionalCollection, IsList 1.1-26 
-  [2XLabelsForPathsOfLengthOne[102X, for IsStrongExceptionalCollection, IsList 1.1-25 
+  [2XLabelsForAllPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-26 
+  [2XLabelsForBasisOfPaths[102X, for IsStrongExceptionalCollection, IsList 1.1-27 
+  [2XLabelsForPathsOfLengthGreaterThanOne[102X, for IsStrongExceptionalCollection, IsList 1.1-25 
+  [2XLabelsForPathsOfLengthOne[102X, for IsStrongExceptionalCollection, IsList 1.1-24 
   [2XLeftDerivedFunctor[102X, for IsCapFunctor, IsBool 2.1-13 
   [2XLocalizationFunctor[102X, for IsHomotopyCategory 2.1-11 
   [2XNumberOfObjects[102X, for IsStrongExceptionalCollection 1.1-12 
-  [2XPathsOfLengthGreaterThanOne[102X, for IsStrongExceptionalCollection, IsList 1.1-20 
-  [2XPathsOfLengthOne[102X, for IsStrongExceptionalCollection, IsList 1.1-21 
+  [2XPathsOfLengthGreaterThanOne[102X, for IsStrongExceptionalCollection, IsList 1.1-19 
+  [2XPathsOfLengthOne[102X, for IsStrongExceptionalCollection, IsList 1.1-20 
   [2XQuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-4 
   [2XQuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations[102X, for IsQuiverRepresentationCategory 2.1-2 
   [2XQuiverRows[102X, for IsStrongExceptionalCollection 1.1-10 

@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2021.08-04
+                                   2021.10-01
   
   
-                                 27 August 2021
+                                20 October 2021
   
   
                                   Kamal Saleh
@@ -37,7 +37,7 @@
       1.1-1 IsStrongExceptionalCollection
       1.1-2 CreateStrongExceptionalCollection
       1.1-3 StrongExceptionalCollection
-      1.1-4 DefiningFullSubcategory
+      1.1-4 FullSubcategory
       1.1-5 AmbientCategory
       1.1-6 EndomorphismAlgebraAttr
       1.1-7 EndomorphismAlgebra
@@ -51,17 +51,16 @@
       1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra
       1.1-16 HomotopyCategory
       1.1-17 AdditiveClosureAsFullSubcategory
-      1.1-18 InterpretMorphismInStrongExceptionalCollectionAsEndomorphismOfTiltingObject
-      1.1-19 \[\]
-      1.1-20 PathsOfLengthGreaterThanOne
-      1.1-21 PathsOfLengthOne
-      1.1-22 Arrows
-      1.1-23 AllPaths
-      1.1-24 BasisOfPaths
-      1.1-25 LabelsForPathsOfLengthOne
-      1.1-26 LabelsForPathsOfLengthGreaterThanOne
-      1.1-27 LabelsForAllPaths
-      1.1-28 LabelsForBasisOfPaths
+      1.1-18 \[\]
+      1.1-19 PathsOfLengthGreaterThanOne
+      1.1-20 PathsOfLengthOne
+      1.1-21 Arrows
+      1.1-22 AllPaths
+      1.1-23 BasisOfPaths
+      1.1-24 LabelsForPathsOfLengthOne
+      1.1-25 LabelsForPathsOfLengthGreaterThanOne
+      1.1-26 LabelsForAllPaths
+      1.1-27 LabelsForBasisOfPaths
     1.2 [33X[0;0YGeneral Operations[133X
       1.2-1 InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure
       1.2-2 RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection
