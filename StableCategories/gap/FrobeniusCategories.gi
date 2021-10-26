@@ -94,7 +94,6 @@ return_type := "object" ),
 ExactCokernelProjection := rec(
 io_type := [ [ "iota" ], [ "iota_range", "K" ] ],
 with_given_object_position := "Range",
-universal_type := "Colimit",
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
@@ -122,7 +121,6 @@ return_type := "object" ),
 ExactKernelEmbedding := rec(
 io_type := [ [ "iota" ], [ "K", "iota_source" ] ],
 with_given_object_position := "Source",
-universal_type := "Limit",
 filter_list := [ "category", "morphism" ],
 return_type := "morphism" ),
 
