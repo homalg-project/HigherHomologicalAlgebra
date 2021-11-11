@@ -1,7 +1,7 @@
 name: ToolsForHigherHomologicalAlgebra
-version: "2021.10-03"
+version: "2021.11-01"
 license: "GPL-2.0-or-later"
-date: 2021-10-20
+date: 2021-11-11
 description: |
     Tools for the Higher Homological Algebra project
 
@@ -20,7 +20,7 @@ needed-pkgs:
       version: ">=2018.02.14"
       url: "https://gap-packages.github.io/AutoDoc"
     - name: "CAP"
-      version: ">=2020.05.03"
+      version: ">=2021.11-05"
       url: "https://homalg-project.github.io/pkg/CAP"
 
 www: https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForH
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.10-03/ToolsForHigherHomologicalAlgebra-2021.10-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.11-01/ToolsForHigherHomologicalAlgebra-2021.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.10-03/ToolsForHigherHomologicalAlgebra-2021.10-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.11-01/ToolsForHigherHomologicalAlgebra-2021.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.10-03/ToolsForHigherHomologicalAlgebra-2021.10-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2021.11-01/ToolsForHigherHomologicalAlgebra-2021.11-01.pdf
 
 abstract: |
 
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ToolsForHigherHomologicalAlgebra, Tools for the Higher Homological Algebra project,
-             Version 2021.10-03</i>
+             Version 2021.11-01</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra</a></span>.
@@ -52,12 +52,12 @@ citeas: |
     
 
 bibtex: |
-    @misc{ ToolsForHigherHomologicalAlgebra2021.10-03,
+    @misc{ ToolsForHigherHomologicalAlgebra2021.11-01,
       author =           {Saleh, K.},
       title =            {{ToolsForHigherHomologicalAlgebra},   Tools   for  the
                           Higher    Homological   Algebra   project,   {V}ersion
-                          2021.10-03},
-      month =            {Oct},
+                          2021.11-01},
+      month =            {Nov},
       year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
