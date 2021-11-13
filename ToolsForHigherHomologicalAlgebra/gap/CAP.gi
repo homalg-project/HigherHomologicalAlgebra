@@ -93,6 +93,16 @@ InstallMethod( Finalize,
 end );
 
 ##
+InstallMethod( SetUnderlyingNameForCapCategory,
+          [ IsCapCategory, IsString ],
+          
+  function( category, name )
+    
+    category!.Name := name;
+    
+end );
+
+##
 InstallGlobalFunction( DeactivateCachingForCertainOperations,
   function( category, list_of_operations )
     local current_name;
