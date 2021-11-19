@@ -245,8 +245,13 @@ BindGlobal( "ADD_TRIANGULATED_STRUCTURE",
     ##
     AddMorphismBetweenStandardConeObjectsWithGivenObjects( stable_cat,
       
-      function( cone_alpha, alpha, u, v, beta, cone_beta )
-        local i_beta, z, iota_1, b, iota_2, c, i;
+      function( cone_alpha, list, cone_beta )
+        local alpha, u, v, beta, i_beta, z, iota_1, b, iota_2, c, i;
+        
+        alpha := list[1];
+        u := list[2];
+        v := list[3];
+        beta := list[4];
         
         i_beta := MorphismToStandardConeObject( beta );
         

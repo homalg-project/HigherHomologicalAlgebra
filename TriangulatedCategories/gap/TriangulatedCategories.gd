@@ -362,7 +362,7 @@ DeclareOperation( "AddCounitIsomorphismWithGivenObject", [ IsCapCategory, IsList
 DeclareAttribute( "CounitIsomorphism", IsCapCategoryObject );
 
 #! @Description
-#! The arguments are an object $C_{\alpha_1}$, four morphisms $\alpha_1:A_1\to B_1$, $u:A_1\to A_2$,
+#! The arguments are an object $C_{\alpha_1}$, a list of four morphisms $\alpha_1:A_1\to B_1$, $u:A_1\to A_2$,
 #! $v:B_1\to B_2$, $\alpha_2:A_2\to B_2$ and an object $C_{\alpha_2}$ such that $C_{\alpha_1}:=C(\alpha_1)$,
 #! $C_{\alpha_2}:=C(\alpha_2)$ and $v\circ \alpha_1=\alpha_2\circ u$.
 #! The output is a morphism $w:C(\alpha_1) \to C(\alpha_2)$
@@ -378,7 +378,10 @@ DeclareAttribute( "CounitIsomorphism", IsCapCategoryObject );
 #! \end{center}
 #! @EndLatexOnly
 #! @Returns a morphism $C(\alpha_1) \to C(\alpha_2)$
-#! @Arguments C_alpha_1, alpha_1, u, v, alpha_2, C_alpha_2
+#! @Arguments C_alpha_1, list, C_alpha_2
+DeclareOperation( "MorphismBetweenStandardConeObjectsWithGivenObjects",
+          [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
+# convenience
 DeclareOperation( "MorphismBetweenStandardConeObjectsWithGivenObjects",
           [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ] );
 

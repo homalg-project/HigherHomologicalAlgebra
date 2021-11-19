@@ -150,11 +150,10 @@ CounitIsomorphismWithGivenObject := rec(
 #  return_type := "morphism"
 #),
 
-# this cannot have the category as the first argument due to GAP only supporting operations with at most 6 arguments :-(
 MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   installation_name := "MorphismBetweenStandardConeObjectsWithGivenObjects",
-  filter_list := [ "object", "morphism", "morphism", "morphism", "morphism", "object" ],
-  io_type := [ ["cone_alpha", "alpha",  "mu", "nu", "alpha_prime", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
+  filter_list := [ "category", "object", "list_of_morphisms", "object" ],
+  io_type := [ [ "cone_alpha", "list", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
   return_type := "morphism",
   is_with_given := false
 ),
@@ -300,7 +299,17 @@ InstallMethod( MorphismBetweenStandardConeObjects,
     cone_beta := StandardConeObject( beta );
     
     return MorphismBetweenStandardConeObjectsWithGivenObjects(
-            cone_alpha, alpha, mu, nu, beta, cone_beta );
+            cone_alpha, [ alpha, mu, nu, beta ], cone_beta );
+end );
+
+##
+InstallMethod( MorphismBetweenStandardConeObjectsWithGivenObjects,
+          [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject ],
+  function( cone_alpha, alpha, mu, nu, beta, cone_beta )
+    
+    return MorphismBetweenStandardConeObjectsWithGivenObjects(
+            cone_alpha, [ alpha, mu, nu, beta ], cone_beta );
+    
 end );
 
 ##

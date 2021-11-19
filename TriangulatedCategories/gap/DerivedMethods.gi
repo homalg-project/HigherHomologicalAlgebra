@@ -120,7 +120,7 @@ AddDerivationToCAP( DomainMorphismByOctahedralAxiomWithGivenObjects,
     
     id_A := IdentityMorphism( A );
     
-    return MorphismBetweenStandardConeObjectsWithGivenObjects( s, alpha, id_A, beta, gamma, r );
+    return MorphismBetweenStandardConeObjectsWithGivenObjects( s, [ alpha, id_A, beta, gamma ], r );
     
 end );
 
