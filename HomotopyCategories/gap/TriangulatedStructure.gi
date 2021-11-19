@@ -127,8 +127,13 @@ function( Ho_C )
 
   ##
   AddMorphismBetweenStandardConeObjectsWithGivenObjects( Ho_C,
-     function( s, alpha, mu, nu, beta, r )
-       local homotopy_maps, maps;
+     function( s, list, r )
+       local alpha, mu, nu, beta, homotopy_maps, maps;
+       
+       alpha := list[1];
+       mu := list[2];
+       nu := list[3];
+       beta := list[4];
        
        homotopy_maps := HomotopyMorphisms( PreCompose( alpha, nu ) - PreCompose( mu, beta ) );
        
@@ -263,7 +268,7 @@ function( Ho_C )
       
       id_A := IdentityMorphism( A );
       
-      return MorphismBetweenStandardConeObjectsWithGivenObjects( s, alpha, id_A, beta, gamma, r );
+      return MorphismBetweenStandardConeObjectsWithGivenObjects( s, [ alpha, id_A, beta, gamma ], r );
       
   end );
   
