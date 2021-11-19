@@ -313,15 +313,16 @@
   
   [1X3.1-36 MorphismBetweenStandardConeObjectsWithGivenObjects[101X
   
-  [33X[1;0Y[29X[2XMorphismBetweenStandardConeObjectsWithGivenObjects[102X( [3XC_alpha_1[103X, [3Xalpha_1[103X, [3Xu[103X, [3Xv[103X, [3Xalpha_2[103X, [3XC_alpha_2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMorphismBetweenStandardConeObjectsWithGivenObjects[102X( [3XC_alpha_1[103X, [3Xlist[103X, [3XC_alpha_2[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XC(\alpha_1) \to C(\alpha_2)[123X[133X
   
-  [33X[0;0YThe  arguments  are  an  object [23XC_{\alpha_1}[123X, four morphisms [23X\alpha_1:A_1\to
-  B_1[123X,   [23Xu:A_1\to  A_2[123X,  [23Xv:B_1\to  B_2[123X,  [23X\alpha_2:A_2\to  B_2[123X  and  an  object
-  [23XC_{\alpha_2}[123X  such that [23XC_{\alpha_1}:=C(\alpha_1)[123X, [23XC_{\alpha_2}:=C(\alpha_2)[123X
-  and  [23Xv\circ \alpha_1=\alpha_2\circ u[123X. The output is a morphism [23Xw:C(\alpha_1)
-  \to  C(\alpha_2)[123X such that [23Xw\circ \iota(\alpha_1)=\iota(\alpha_2)\circ v[123X and
-  [23X\Sigma u\circ\pi(\alpha_1)=\pi(\alpha_2)\circ w[123X.[133X
+  [33X[0;0YThe  arguments  are  an  object  [23XC_{\alpha_1}[123X,  a  list  of  four  morphisms
+  [23X\alpha_1:A_1\to  B_1[123X, [23Xu:A_1\to A_2[123X, [23Xv:B_1\to B_2[123X, [23X\alpha_2:A_2\to B_2[123X and an
+  object      [23XC_{\alpha_2}[123X      such      that      [23XC_{\alpha_1}:=C(\alpha_1)[123X,
+  [23XC_{\alpha_2}:=C(\alpha_2)[123X and [23Xv\circ \alpha_1=\alpha_2\circ u[123X. The output is
+  a    morphism    [23Xw:C(\alpha_1)    \to    C(\alpha_2)[123X    such   that   [23Xw\circ
+  \iota(\alpha_1)=\iota(\alpha_2)\circ          v[123X          and          [23X\Sigma
+  u\circ\pi(\alpha_1)=\pi(\alpha_2)\circ w[123X.[133X
   
   [1X3.1-37 AddMorphismBetweenStandardConeObjectsWithGivenObjects[101X
   

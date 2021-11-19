@@ -77,7 +77,7 @@
       for IsCapExactTrianglesMorphism, IsInt 1.2-17 
   [2XMorphismBetweenConeObjects[102X, for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-19 
   [2XMorphismBetweenStandardConeObjects[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryMorphism 3.1-38 
-  [2XMorphismBetweenStandardConeObjectsWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 3.1-36 
+  [2XMorphismBetweenStandardConeObjectsWithGivenObjects[102X, for IsCapCategoryObject, IsList, IsCapCategoryObject 3.1-36 
   [2XMorphismFromConeObject[102X, for IsCapExactTriangle 1.2-6 
   [2XMorphismFromConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 3.1-65 
   [2XMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 3.1-44 
