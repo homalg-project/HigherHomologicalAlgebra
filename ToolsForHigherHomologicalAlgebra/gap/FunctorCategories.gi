@@ -11,7 +11,7 @@ EnhancePackage( "LinearAlgebraForCAP" );
 functor :=
   [
     IsQuiverRepresentationCategory,
-    IsCapHomCategory,
+    IsFunctorCategory,
     function( reps, hom )
       if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
         return true;
@@ -31,7 +31,7 @@ ExtendFunctorMethodToHomotopyCategories( functor );
 ##
 functor :=
   [ 
-    IsCapHomCategory,
+    IsFunctorCategory,
     IsQuiverRepresentationCategory,
     function( hom, reps )
       if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
@@ -57,7 +57,7 @@ functor :=
       local hom, reps;
       hom := AmbientCategory( indec_1 );
       reps := AmbientCategory( indec_2 );
-      if not ( IsCapHomCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
         return false;
       fi;
       if not ( HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) and
@@ -102,7 +102,7 @@ functor :=
       local hom, reps;
       reps := AmbientCategory( indec_2 );
       hom := AmbientCategory( indec_1 );
-      if not ( IsCapHomCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
         return false;
       fi;
       
@@ -148,7 +148,7 @@ functor :=
       local hom, reps;
       hom := AmbientCategory( proj_1 );
       reps := AmbientCategory( proj_2 );
-      if not ( IsCapHomCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
         return false;
       fi;
       
@@ -194,7 +194,7 @@ functor :=
       local hom, reps;
       reps := AmbientCategory( proj_2 );
       hom := AmbientCategory( proj_1 );
-      if not ( IsCapHomCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
         return false;
       fi;
       
@@ -262,9 +262,9 @@ InstallMethod( CategoryOfArrows,
     
     arrows := Hom( algebroid, C : FinalizeCategory := false );
     
-    AddObjectRepresentation( arrows, IsCapCategoryObjectInHomCategory and IsCategoryOfArrowsObject );
+    AddObjectRepresentation( arrows, IsObjectInFunctorCategory and IsCategoryOfArrowsObject );
     
-    AddMorphismRepresentation( arrows, IsCapCategoryMorphismInHomCategory and IsCategoryOfArrowsMorphism );
+    AddMorphismRepresentation( arrows, IsMorphismInFunctorCategory and IsCategoryOfArrowsMorphism );
     
     arrows!.Name := Concatenation( "Arrows( ", Name( C ), " )" );
     
@@ -377,7 +377,7 @@ InstallMethod( CategoryOfArrowsObject,
     
     1_m_2 := Source( category );
     
-    arrow := AsObjectInHomCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
+    arrow := AsObjectInFunctorCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
     
     SetFilterObj( arrow, IsCategoryOfArrowsObject );
     
@@ -392,7 +392,7 @@ InstallMethod( CategoryOfArrowsMorphism,
   function( A, phi_1, phi_2, B )
     local eta;
     
-    eta := AsMorphismInHomCategory( A, [ phi_1, phi_2 ], B );
+    eta := AsMorphismInFunctorCategory( A, [ phi_1, phi_2 ], B );
     
     SetFilterObj( eta, IsCategoryOfArrowsMorphism );
     
@@ -458,7 +458,7 @@ end );
 
 ##
 InstallMethod( LaTeXStringOp,
-          [ IsCapCategoryObjectInHomCategory ],
+          [ IsObjectInFunctorCategory ],
           
   function( F )
     local objects, g_morphisms, s, o, m;
@@ -502,7 +502,7 @@ end );
 
 ##
 InstallMethod( LaTeXStringOp,
-          [ IsCapCategoryMorphismInHomCategory ],
+          [ IsMorphismInFunctorCategory ],
           
   function( eta )
     local morphisms, s, o;

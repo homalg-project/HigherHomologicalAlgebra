@@ -8,13 +8,13 @@
 
 ##
 InstallMethod( BoxProduct,
-      [ IsCapCategoryObjectInAlgebroid, IsCapCategoryObjectInAlgebroid, IsAlgebroid ],
+      [ IsObjectInAlgebroid, IsObjectInAlgebroid, IsAlgebroid ],
   ElementaryTensor
 );
 
 ##
 InstallMethod( BoxProduct,
-      [ IsCapCategoryMorphismInAlgebroid, IsCapCategoryMorphismInAlgebroid, IsAlgebroid ],
+      [ IsMorphismInAlgebroid, IsMorphismInAlgebroid, IsAlgebroid ],
   { alpha_1, alpha_2, algebroid } -> PreCompose(
                                         ElementaryTensor( Source( alpha_1 ), alpha_2, algebroid ),
                                         ElementaryTensor( alpha_1, Range( alpha_2 ), algebroid )

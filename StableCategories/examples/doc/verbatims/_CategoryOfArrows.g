@@ -123,7 +123,7 @@
 #!                      !cbracket?)|
 #!                   !cbracket?]|;
 #!    !gapinput?|                    
-#!           !ckey?return| AsObjectInHomCategory!cbracket?(| algebroid!cbracket?,| !cbracket?[| QA_1!cbracket?,| QA_2 !cbracket?]|!cbracket?,| QA_m !cbracket?)|;
+#!           !ckey?return| AsObjectInFunctorCategory!cbracket?(| algebroid!cbracket?,| !cbracket?[| QA_1!cbracket?,| QA_2 !cbracket?]|!cbracket?,| QA_m !cbracket?)|;
 #!    !gapinput?|
 #!         !ckey?end| !cbracket?)|;
 #!    !gapinput?|    
@@ -144,7 +144,7 @@
 #!   !gapinput?|                    
 #!           qA_2 !cequality?:=| IdentityMorphism!cbracket?(| A_2 !cbracket?)|;
 #!   !gapinput?|            
-#!           !ckey?return| AsMorphismInHomCategory!cbracket?(| A!cbracket?,| !cbracket?[| qA_1!cbracket?,| qA_2 !cbracket?]|!cbracket?,| QA !cbracket?)|;
+#!           !ckey?return| AsMorphismInFunctorCategory!cbracket?(| A!cbracket?,| !cbracket?[| qA_1!cbracket?,| qA_2 !cbracket?]|!cbracket?,| QA !cbracket?)|;
 #!   !gapinput?|            
 #!         !ckey?end| !cbracket?)|;
 #!   !gapinput?|
@@ -170,7 +170,7 @@
 #!           !gapinput?|
 #!           rA_2 !cequality?:=| IdentityMorphism!cbracket?(| A_2 !cbracket?)|;
 #!           !gapinput?|
-#!           !ckey?return| AsMorphismInHomCategory!cbracket?(| QA!cbracket?,| !cbracket?[| rA_1!cbracket?,| rA_2 !cbracket?]|!cbracket?,| A !cbracket?)|;
+#!           !ckey?return| AsMorphismInFunctorCategory!cbracket?(| QA!cbracket?,| !cbracket?[| rA_1!cbracket?,| rA_2 !cbracket?]|!cbracket?,| A !cbracket?)|;
 #!           !gapinput?|
 #!         !ckey?end| );
 #! !gapinput?|
@@ -187,7 +187,7 @@
 #!   !gapinput?|                    
 #!           Qphi_2 !cequality?:=| phi_2;
 #!   !gapinput?|                    
-#!           !ckey?return| AsMorphismInHomCategory!cbracket?(| QA!cbracket?,| !cbracket?[| Qphi_1!cbracket?,| Qphi_2 !cbracket?]|!cbracket?,| QB !cbracket?)|;
+#!           !ckey?return| AsMorphismInFunctorCategory!cbracket?(| QA!cbracket?,| !cbracket?[| Qphi_1!cbracket?,| Qphi_2 !cbracket?]|!cbracket?,| QB !cbracket?)|;
 #!    !gapinput?|
 #!         !ckey?end| !cbracket?)|;
 #!   !gapinput?|            
@@ -210,7 +210,7 @@
 #! !gapinput?|
 #!     1_m_2 !cequality?:=| Source!cbracket?(| category !cbracket?)|;
 #! !gapinput?|    
-#!     !ckey?return| AsObjectInHomCategory!cbracket?(|
+#!     !ckey?return| AsObjectInFunctorCategory!cbracket?(|
 #!                1_m_2!cbracket?,|
 #!                !cbracket?[| Source!cbracket?(| alpha !cbracket?)|!cbracket?,| Range!cbracket?(| alpha !cbracket?)| !cbracket?]|!cbracket?,|
 #!                !cbracket?[| alpha !cbracket?]|
@@ -230,7 +230,7 @@
 #! !gapinput?|
 #!   !ckey?function|!cbracket?(| A!cbracket?,| phi_1!cbracket?,| phi_2!cbracket?,| B !cbracket?)|
 #! !gapinput?|    
-#!     !ckey?return| AsMorphismInHomCategory!cbracket?(| A!cbracket?,| !cbracket?[| phi_1!cbracket?,| phi_2 !cbracket?]|!cbracket?,| B !cbracket?)|;
+#!     !ckey?return| AsMorphismInFunctorCategory!cbracket?(| A!cbracket?,| !cbracket?[| phi_1!cbracket?,| phi_2 !cbracket?]|!cbracket?,| B !cbracket?)|;
 #! !gapinput?|
 #! !ckey?end| !cbracket?)|;
 #! \end{Verbatim}
