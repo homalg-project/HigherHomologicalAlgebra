@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2021.10-01"
+version: "2021.11-01"
 license: "GPL-2.0-or-later"
-date: 2021-10-20
+date: 2021-11-23
 description: |
     Derived categories of Abelian categories
 
@@ -23,7 +23,7 @@ needed-pkgs:
       version: ">= 2.0-dev"
       url: "http://www.math.ntnu.no/~oyvinso/QPA/"
     - name: "Algebroids"
-      version: ">= 2020.10-02"
+      version: ">= 2021.11-07"
       url: "https://homalg-project.github.io/pkg/Algebroids"
     - name: "SubcategoriesForCAP"
       version: ">= 2020.10-02"
@@ -32,10 +32,10 @@ needed-pkgs:
       version: ">= 2021.07-02"
       url: "https://homalg-project.github.io/pkg/HomotopyCategories"
     - name: "BBGG"
-      version: "2020.10-02"
+      version: ">= 2020.10-02"
       url: "https://homalg-project.github.io/pkg/BBGG"
     - name: "FunctorCategories"
-      version: "2021.07-01"
+      version: ">= 2021.11-06"
       url: "https://homalg-project.github.io/pkg/FunctorCategories"
 
 suggested-pkgs:
@@ -52,11 +52,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.10-01/DerivedCategories-2021.10-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.10-01/DerivedCategories-2021.10-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.10-01/DerivedCategories-2021.10-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.pdf
 
 abstract: |
 
@@ -67,7 +67,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2021.10-01</i>
+             Version 2021.11-01</i>
      (<span class='BibYear'>2021</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
@@ -75,11 +75,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ DerivedCategories2021.10-01,
+    @misc{ DerivedCategories2021.11-01,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  Derived  categories  of  Abelian
-                          categories, {V}ersion 2021.10-01},
-      month =            {Oct},
+                          categories, {V}ersion 2021.11-01},
+      month =            {Nov},
       year =             {2021},
       note =             {GAP package},
       howpublished =     {\href
