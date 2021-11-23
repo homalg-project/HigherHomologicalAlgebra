@@ -8,7 +8,7 @@ DeclareCategory( "IsCategoryOfArrowsObject", IsCapCategoryObject );
 
 DeclareCategory( "IsCategoryOfArrowsMorphism", IsCapCategoryMorphism );
 
-DeclareOperation( "LaTeXStringOp", [ IsCapCategoryCellInHomCategory ] );
+DeclareOperation( "LaTeXStringOp", [ IsCellInFunctorCategory ] );
 
 DeclareAttribute( "CategoryOfArrows", IsCapCategory );
 

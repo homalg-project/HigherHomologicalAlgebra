@@ -349,7 +349,7 @@ functor :=
       
       hom := AmbientCategory( projs );
       
-      if not IsCapHomCategory( hom ) then
+      if not IsFunctorCategory( hom ) then
         return false;
       fi;
       algebroid := UnderlyingCategory( add_closure );
@@ -417,7 +417,7 @@ functor :=
         return false;
       fi;
       functors := AmbientCategory( projs );
-      if not IsCapHomCategory( functors ) then
+      if not IsFunctorCategory( functors ) then
         return false;
       fi;
       if not HasFullSubcategoryGeneratedByProjectiveObjects( functors ) then
@@ -454,7 +454,7 @@ functor :=
     function( projs, add_closure )
       local hom, indec;
       hom := AmbientCategory( projs );
-      if not IsCapHomCategory( hom ) then
+      if not IsFunctorCategory( hom ) then
         return false;
       fi;
       indec := UnderlyingCategory( add_closure );
@@ -515,7 +515,7 @@ functor :=
       
       hom := AmbientCategory( projs );
       
-      if not IsCapHomCategory( hom ) then
+      if not IsFunctorCategory( hom ) then
         return false;
       fi;
       
@@ -587,7 +587,7 @@ functor := PreComposeFunctorMethods(
     if not IsQuiverRowsCategory( quiver_rows ) then
       return false;
     fi;
-    if not ( IsCapFullSubcategory( projs ) and IsCapHomCategory( AmbientCategory( projs ) ) ) then
+    if not ( IsCapFullSubcategory( projs ) and IsFunctorCategory( AmbientCategory( projs ) ) ) then
       return false;
     fi;
     A := UnderlyingQuiverAlgebra( quiver_rows );
@@ -879,14 +879,14 @@ InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
     AddObjectFunction( F,
       function( a )
       
-        return AsSubcategoryCell( full, ConvertToCellInHomCategory( UnderlyingCell( Y( a ) ) ) );
+        return AsSubcategoryCell( full, ConvertToCellInFunctorCategory( UnderlyingCell( Y( a ) ) ) );
         
       end );
       
     AddMorphismFunction( F,
       function( s, alpha, r )
       
-        return AsSubcategoryCell( s, ConvertToCellInHomCategory( UnderlyingCell( Y( alpha ) ) ), r );
+        return AsSubcategoryCell( s, ConvertToCellInFunctorCategory( UnderlyingCell( Y( alpha ) ) ), r );
         
       end );
     
@@ -904,7 +904,7 @@ functor :=
       
       hom := AmbientCategory( full );
       
-      if not IsCapHomCategory( hom ) then
+      if not IsFunctorCategory( hom ) then
         return false;
       fi;
       
@@ -1183,7 +1183,7 @@ functor :=
       
       hom := AmbientCategory( full );
       
-      if not IsCapHomCategory( hom ) then
+      if not IsFunctorCategory( hom ) then
         return false;
       fi;
       

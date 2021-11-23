@@ -33,7 +33,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
           objs, injections, maps, coeffs, min_gen, positions, HomT_RT,
             vec_spaces, zero_vectors, e, map, m, i;
         
-        if IsCapCategoryObjectInHomCategory( R ) then
+        if IsObjectInFunctorCategory( R ) then
           
           R := ConvertToCellInCategoryOfQuiverRepresentations( R );
           
@@ -99,9 +99,9 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         m := ColiftAlongEpimorphism( pi_R, map );
         
-        if IsCapCategoryObjectInHomCategory( s ) then
+        if IsObjectInFunctorCategory( s ) then
           
-          return ConvertToCellInHomCategory( m );
+          return ConvertToCellInFunctorCategory( m );
           
         else
           

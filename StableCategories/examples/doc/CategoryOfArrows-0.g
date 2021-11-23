@@ -1,5 +1,5 @@
 LoadPackage( "StableCategories" );
-LoadPackage( "FunctorCategories" );
+LoadPackage( "FunctorCategories", ">= 2021.11-06" );
 
 DeclareAttribute( "CategoryOfArrows", IsCapCategory );
 
@@ -61,7 +61,7 @@ InstallMethod( CategoryOfArrows,
                   )
                 ];
         
-        return AsObjectInHomCategory( algebroid, [ QA_1, QA_2 ], QA_m );
+        return AsObjectInFunctorCategory( algebroid, [ QA_1, QA_2 ], QA_m );
     end );
     
     ##
@@ -81,7 +81,7 @@ InstallMethod( CategoryOfArrows,
         
         qA_2 := IdentityMorphism( A_2 );
         
-        return AsMorphismInHomCategory( A, [ qA_1, qA_2 ], QA );
+        return AsMorphismInFunctorCategory( A, [ qA_1, qA_2 ], QA );
         
       end );
       
@@ -106,7 +106,7 @@ InstallMethod( CategoryOfArrows,
         
         rA_2 := IdentityMorphism( A_2 );
         
-        return AsMorphismInHomCategory( QA, [ rA_1, rA_2 ], A );
+        return AsMorphismInFunctorCategory( QA, [ rA_1, rA_2 ], A );
         
       end );
     
@@ -123,7 +123,7 @@ InstallMethod( CategoryOfArrows,
         
         Qphi_2 := phi_2;
         
-        return AsMorphismInHomCategory( QA, [ Qphi_1, Qphi_2 ], QB );
+        return AsMorphismInFunctorCategory( QA, [ Qphi_1, Qphi_2 ], QB );
         
       end );
       
@@ -146,7 +146,7 @@ InstallMethod( CategoryOfArrowsObject,
     
     1_m_2 := Source( category );
     
-    return AsObjectInHomCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
+    return AsObjectInFunctorCategory( 1_m_2, [ Source( alpha ), Range( alpha ) ], [ alpha ] );
     
 end );
 
@@ -160,6 +160,6 @@ InstallMethod( CategoryOfArrowsMorphism,
           
   function( A, phi_1, phi_2, B )
     
-    return AsMorphismInHomCategory( A, [ phi_1, phi_2 ], B );
+    return AsMorphismInFunctorCategory( A, [ phi_1, phi_2 ], B );
     
 end );
