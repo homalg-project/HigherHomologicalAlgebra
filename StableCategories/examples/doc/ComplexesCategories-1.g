@@ -29,7 +29,7 @@ ReadPackage( "StableCategories", "examples/doc/ComplexesCategories-0.g" );
 #! true
 Ch_Aoid;
 #! Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )
-St_Ch_Aoid := StableCategoryBySystemOfColiftingObjects( Ch_Aoid );
+St_Ch_Aoid := StableCategoryByClassOfColiftingObjects( Ch_Aoid );
 #! Stable category( Cochain complexes( Additive closure( 
 #! Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects
 class_A := StableCategoryObject( St_Ch_Aoid, A );

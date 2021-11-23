@@ -27,7 +27,7 @@ ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );
 AAoid;
 #! The category of functors:
 #! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
-St_AAoid := StableCategoryBySystemOfColiftingObjects( AAoid );
+St_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );
 #! Stable category( The category of functors:
 #! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
 #! defined by a system of colifting objects
