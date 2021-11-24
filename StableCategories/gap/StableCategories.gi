@@ -161,7 +161,7 @@ InstallMethod( ColiftingMorphism,
 #
 ########################
 
-InstallMethod( StableCategoryBySystemOfColiftingObjects,
+InstallMethod( StableCategoryByClassOfColiftingObjects,
             [ IsCapCategory ],
   function( category )
     local name, can_be_factored_through_colifting_object, special_filters, stable_category,
@@ -217,7 +217,7 @@ InstallMethod( StableCategoryBySystemOfColiftingObjects,
     
 end );
 
-InstallMethod( StableCategoryBySystemOfLiftingObjects,
+InstallMethod( StableCategoryByClassOfLiftingObjects,
             [ IsCapCategory ],
   function( category )
     local name, can_be_factored_through_lifting_object, stable_category, with_hom_structure, category_of_hom_structure;

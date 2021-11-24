@@ -568,7 +568,7 @@ fi;
 #!  The output is the stable category $\CC/I_{\LL}$ where $I_{\LL}$ is the two-sided ideal of morphisms $\alpha: A \to B$ in $\CC$ that lift along $\ell_B:L_B \to B$.
 #! @Arguments category
 #! @Returns a stable category
-DeclareAttribute( "StableCategoryBySystemOfLiftingObjects", IsCapCategory );
+DeclareAttribute( "StableCategoryByClassOfLiftingObjects", IsCapCategory );
 
 #! @Subsection Code example
 #! @SubsectionLabel scbpalo
@@ -587,7 +587,7 @@ DeclareAttribute( "StableCategoryBySystemOfLiftingObjects", IsCapCategory );
 #!  The output is the stable category $\CC/I_{\QQ}$ where $I_{\QQ}$ is the two-sided ideal of morphisms $\alpha: A \to B$ in $\CC$ that colift along $q_A:A \to Q_A$.
 #! @Arguments category
 #! @Returns a stable category
-DeclareAttribute( "StableCategoryBySystemOfColiftingObjects", IsCapCategory );
+DeclareAttribute( "StableCategoryByClassOfColiftingObjects", IsCapCategory );
 
 
 #! @Subsection Code example 1

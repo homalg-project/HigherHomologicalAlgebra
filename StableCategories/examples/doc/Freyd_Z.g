@@ -63,7 +63,7 @@ ZZ_mod := FreydCategory( ZZ_rows );
 #! Freyd( Rows( Z ) )
 IsExactCategoryWithEnoughExactProjectives( ZZ_mod );
 #! true
-ZZ_mod_by_projs := StableCategoryBySystemOfLiftingObjects( ZZ_mod );
+ZZ_mod_by_projs := StableCategoryByClassOfLiftingObjects( ZZ_mod );
 #! Stable category( Freyd( Rows( Z ) ) ) defined by a system of lifting objects
 CongruencyTestFunction( ZZ_mod_by_projs );
 #! <Property "IsLiftableAlongMorphismFromLiftingObject">

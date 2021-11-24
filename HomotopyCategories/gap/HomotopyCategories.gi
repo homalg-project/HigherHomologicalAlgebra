@@ -96,7 +96,7 @@ InstallMethod( HomotopyCategoryOp,
       
     fi;
     
-    homotopy_category := StableCategoryBySystemOfColiftingObjects( complex_cat :
+    homotopy_category := StableCategoryByClassOfColiftingObjects( complex_cat :
                               FinalizeCategory := false,
                               WithHomomorphismStructure := true,
                               SpecialFilters := special_filters

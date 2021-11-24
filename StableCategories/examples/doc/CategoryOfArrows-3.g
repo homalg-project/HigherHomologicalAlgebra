@@ -7,7 +7,7 @@ S := GradedRing( Q * "x,y,z" );
 rows := CategoryOfGradedRows( S );
 freyd := FreydCategory( rows );
 arrows := CategoryOfArrows( rows );
-stable := StableCategoryBySystemOfColiftingObjects( arrows );
+stable := StableCategoryByClassOfColiftingObjects( arrows );
 
 a := RandomMorphism( rows, 5 );
 b := RandomMorphism( rows, 5 );
