@@ -6,7 +6,7 @@
                    [1X Stable categories of additive categories [101X
   
   
-                                   2021.11-02
+                                   2021.11-03
   
   
                                 23 November 2021
@@ -136,10 +136,10 @@
       3.2-8 UnderlyingCell
       3.2-9 [33X[0;0YCode example[133X
     3.3 [33X[0;0YStable categories defined by systems of lifting objects[133X
-      3.3-1 StableCategoryBySystemOfLiftingObjects
+      3.3-1 StableCategoryByClassOfLiftingObjects
       3.3-2 [33X[0;0YCode example[133X
     3.4 [33X[0;0YStable categories defined by systems of colifting objects[133X
-      3.4-1 StableCategoryBySystemOfColiftingObjects
+      3.4-1 StableCategoryByClassOfColiftingObjects
       3.4-2 [33X[0;0YCode example 1[133X
       3.4-3 [33X[0;0YCode example 2[133X
   4 [33X[0;0YBibliography[133X

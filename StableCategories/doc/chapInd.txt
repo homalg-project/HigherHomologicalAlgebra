@@ -72,8 +72,8 @@
   [2XSomeExactInjectiveObject[102X, for IsCapCategoryObject 1.2-40 
   [2XSomeExactProjectiveObject[102X, for IsCapCategoryObject 1.2-34 
   [2XStableCategory[102X, for IsCapCategory, IsFunction 3.2-1 
-  [2XStableCategoryBySystemOfColiftingObjects[102X, for IsCapCategory 3.4-1 
-  [2XStableCategoryBySystemOfLiftingObjects[102X, for IsCapCategory 3.3-1 
+  [2XStableCategoryByClassOfColiftingObjects[102X, for IsCapCategory 3.4-1 
+  [2XStableCategoryByClassOfLiftingObjects[102X, for IsCapCategory 3.3-1 
   [2XStableCategoryMorphism[102X, for IsStableCategory, IsCapCategoryMorphism 3.2-7 
       for IsStableCategoryObject, IsCapCategoryMorphism, IsStableCategoryObject 3.2-6 
   [2XStableCategoryObject[102X, for IsStableCategory, IsCapCategoryObject 3.2-4 

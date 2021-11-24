@@ -161,9 +161,9 @@
   to  [23X\CC/I_{\LL}[123X.  This will be illustrated in the next example. The category
   [23X\CC/{I_{\LL}}[123X can be constructed by the following operation:[133X
   
-  [1X3.3-1 StableCategoryBySystemOfLiftingObjects[101X
+  [1X3.3-1 StableCategoryByClassOfLiftingObjects[101X
   
-  [33X[1;0Y[29X[2XStableCategoryBySystemOfLiftingObjects[102X( [3Xcategory[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XStableCategoryByClassOfLiftingObjects[102X( [3Xcategory[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya stable category[133X
   
   [33X[0;0YThe  argument  is  an  additive  category  equipped with a system of lifting
@@ -191,7 +191,7 @@
     [4X[28XFreyd( Rows( Z ) )[128X[104X
     [4X[25Xgap>[125X [27XIsExactCategoryWithEnoughExactProjectives( ZZ_mod );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XZZ_mod_by_projs := StableCategoryBySystemOfLiftingObjects( ZZ_mod );[127X[104X
+    [4X[25Xgap>[125X [27XZZ_mod_by_projs := StableCategoryByClassOfLiftingObjects( ZZ_mod );[127X[104X
     [4X[28XStable category( Freyd( Rows( Z ) ) ) defined by a system of lifting objects[128X[104X
     [4X[25Xgap>[125X [27XCongruencyTestFunction( ZZ_mod_by_projs );[127X[104X
     [4X[28X<Property "IsLiftableAlongMorphismFromLiftingObject">[128X[104X
@@ -629,9 +629,9 @@
   structure  form  [23X\CC[123X  to  [23X\CC/I_{\LL}[123X.  The  category  [23X\CC/{I_{\QQ}}[123X  can be
   constructed by the following operation:[133X
   
-  [1X3.4-1 StableCategoryBySystemOfColiftingObjects[101X
+  [1X3.4-1 StableCategoryByClassOfColiftingObjects[101X
   
-  [33X[1;0Y[29X[2XStableCategoryBySystemOfColiftingObjects[102X( [3Xcategory[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XStableCategoryByClassOfColiftingObjects[102X( [3Xcategory[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya stable category[133X
   
   [33X[0;0YThe  argument  is  an  additive category equipped with a system of colifting
@@ -652,7 +652,7 @@
     [4X[25Xgap>[125X [27XAAoid;[127X[104X
     [4X[28XThe category of functors:[128X[104X
     [4X[28XAlgebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )[128X[104X
-    [4X[25Xgap>[125X [27XSt_AAoid := StableCategoryBySystemOfColiftingObjects( AAoid );[127X[104X
+    [4X[25Xgap>[125X [27XSt_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );[127X[104X
     [4X[28XStable category( The category of functors:[128X[104X
     [4X[28XAlgebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects[128X[104X
@@ -793,7 +793,7 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XCh_Aoid;[127X[104X
     [4X[28XCochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )[128X[104X
-    [4X[25Xgap>[125X [27XSt_Ch_Aoid := StableCategoryBySystemOfColiftingObjects( Ch_Aoid );[127X[104X
+    [4X[25Xgap>[125X [27XSt_Ch_Aoid := StableCategoryByClassOfColiftingObjects( Ch_Aoid );[127X[104X
     [4X[28XStable category( Cochain complexes( Additive closure( [128X[104X
     [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects[128X[104X
     [4X[25Xgap>[125X [27Xclass_A := StableCategoryObject( St_Ch_Aoid, A );[127X[104X

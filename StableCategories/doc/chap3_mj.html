@@ -50,14 +50,14 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X7FDE1D3786C0F649">3.3 <span class="Heading">Stable categories defined by systems of lifting objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E16447F79CA4FD1">3.3-1 StableCategoryBySystemOfLiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X826BDD34785C535C">3.3-1 StableCategoryByClassOfLiftingObjects</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8098D3287CFFFF89">3.3-2 <span class="Heading">Code example</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X863E2A9081867177">3.4 <span class="Heading">Stable categories defined by systems of colifting objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8740509B7D61AF61">3.4-1 StableCategoryBySystemOfColiftingObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78456EE47E46B70A">3.4-1 StableCategoryByClassOfColiftingObjects</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FFD76ED78AD78BD">3.4-2 <span class="Heading">Code example 1</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X866DE3F67F6B6AE0">3.4-3 <span class="Heading">Code example 2</span></a>
@@ -231,11 +231,11 @@ false
 
 <p>Let <span class="SimpleMath">\(\CC\)</span> be a category equipped with a system <span class="SimpleMath">\(\LL\)</span> of lifting objects. The set of all morphisms <span class="SimpleMath">\(\alpha:A \to B\)</span> which lift along <span class="SimpleMath">\(\ell_B:L_B \to B\)</span> defines a two-sided ideal <span class="SimpleMath">\(I_{\LL}\)</span> of morphisms in <span class="SimpleMath">\(\CC\)</span>. It can be shown that a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> belongs to <span class="SimpleMath">\(I_{\LL}\)</span> if and only if it factors through at least on object in <span class="SimpleMath">\(\LL\)</span>. The extra structure which is bundled with the system of lifting objects enables us to lift more than additive structure form <span class="SimpleMath">\(\CC\)</span> to <span class="SimpleMath">\(\CC/I_{\LL}\)</span>. This will be illustrated in the next example. The category <span class="SimpleMath">\(\CC/{I_{\LL}}\)</span> can be constructed by the following operation:</p>
 
-<p><a id="X7E16447F79CA4FD1" name="X7E16447F79CA4FD1"></a></p>
+<p><a id="X826BDD34785C535C" name="X826BDD34785C535C"></a></p>
 
-<h5>3.3-1 StableCategoryBySystemOfLiftingObjects</h5>
+<h5>3.3-1 StableCategoryByClassOfLiftingObjects</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryBySystemOfLiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryByClassOfLiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a stable category</p>
 
 <p>The argument is an additive category equipped with a system of lifting objects <span class="SimpleMath">\(\LL\)</span>. The output is the stable category <span class="SimpleMath">\(\CC/I_{\LL}\)</span> where <span class="SimpleMath">\(I_{\LL}\)</span> is the two-sided ideal of morphisms <span class="SimpleMath">\(\alpha: A \to B\)</span> in <span class="SimpleMath">\(\CC\)</span> that lift along <span class="SimpleMath">\(\ell_B:L_B \to B\)</span>.</p>
@@ -260,7 +260,7 @@ Rows( Z )
 Freyd( Rows( Z ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategoryWithEnoughExactProjectives( ZZ_mod );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod_by_projs := StableCategoryBySystemOfLiftingObjects( ZZ_mod );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZZ_mod_by_projs := StableCategoryByClassOfLiftingObjects( ZZ_mod );</span>
 Stable category( Freyd( Rows( Z ) ) ) defined by a system of lifting objects
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CongruencyTestFunction( ZZ_mod_by_projs );</span>
 &lt;Property "IsLiftableAlongMorphismFromLiftingObject"&gt;
@@ -690,11 +690,11 @@ true
 
 <p>Let <span class="SimpleMath">\(\CC\)</span> be a category equipped with a system <span class="SimpleMath">\(\QQ\)</span> of colifting objects. The set of all morphisms <span class="SimpleMath">\(\alpha:A \to B\)</span> which colift along <span class="SimpleMath">\(q_A:A \to Q_A\)</span> defines a two-sided ideal <span class="SimpleMath">\(I_{\QQ}\)</span> of morphisms in <span class="SimpleMath">\(\CC\)</span>. It can be shown that a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> belongs to <span class="SimpleMath">\(I_{\QQ}\)</span> if and only if it factors through at least on object in <span class="SimpleMath">\(\QQ\)</span>. The extra structure which is bundled with the system of colifting objects enables us to lift more than additive structure form <span class="SimpleMath">\(\CC\)</span> to <span class="SimpleMath">\(\CC/I_{\LL}\)</span>. The category <span class="SimpleMath">\(\CC/{I_{\QQ}}\)</span> can be constructed by the following operation:</p>
 
-<p><a id="X8740509B7D61AF61" name="X8740509B7D61AF61"></a></p>
+<p><a id="X78456EE47E46B70A" name="X78456EE47E46B70A"></a></p>
 
-<h5>3.4-1 StableCategoryBySystemOfColiftingObjects</h5>
+<h5>3.4-1 StableCategoryByClassOfColiftingObjects</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryBySystemOfColiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableCategoryByClassOfColiftingObjects</code>( <var class="Arg">category</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a stable category</p>
 
 <p>The argument is an additive category equipped with a system of colifting objects <span class="SimpleMath">\(\QQ\)</span>. The output is the stable category <span class="SimpleMath">\(\CC/I_{\QQ}\)</span> where <span class="SimpleMath">\(I_{\QQ}\)</span> is the two-sided ideal of morphisms <span class="SimpleMath">\(\alpha: A \to B\)</span> in <span class="SimpleMath">\(\CC\)</span> that colift along <span class="SimpleMath">\(q_A:A \to Q_A\)</span>.</p>
@@ -712,7 +712,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AAoid;</span>
 The category of functors:
 Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_AAoid := StableCategoryBySystemOfColiftingObjects( AAoid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );</span>
 Stable category( The category of functors:
 Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
 defined by a system of colifting objects
@@ -850,7 +850,7 @@ A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ch_Aoid;</span>
 Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_Ch_Aoid := StableCategoryBySystemOfColiftingObjects( Ch_Aoid );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_Ch_Aoid := StableCategoryByClassOfColiftingObjects( Ch_Aoid );</span>
 Stable category( Cochain complexes( Additive closure( 
 Algebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( St_Ch_Aoid, A );</span>
