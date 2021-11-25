@@ -1,8 +1,6 @@
 LoadPackage( "DerivedCategories" );
 
 field := HomalgFieldOfRationals( );;
-SET_GLOBAL_FIELD_FOR_QPA( field );
-SetInfoLevel( InfoDerivedCategories, 3 );
 
 
 quiver := RightQuiver( "q(4)[x0:1->2,x1:1->2,x2:1->2,x3:1->2,y0:2->3,y1:2->3,y2:2->3,y3:2->3,z0:3->4,z1:3->4,z2:3->4,z3:3->4]" );;

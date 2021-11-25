@@ -13,7 +13,7 @@ EEE := KoszulDualRing( GradedRing( Q * "x,y" ) );
 #! Q{e0,e1}
 #! (weights: [ -1, -1 ])
 Grows_E := CategoryOfGradedRows( EEE );
-#! Graded rows( Q{e0,e1} (with weights [ -1, -1 ]) )
+#! Category of graded rows over Q{e0,e1} (with weights [ -1, -1 ])
 Grmod_E := FreydCategory( Grows_E );
 #! Category of f.p. graded left modules over Q{e0,e1} (with weights [ -1, -1 ])
 IsExactCategory( Grmod_E );

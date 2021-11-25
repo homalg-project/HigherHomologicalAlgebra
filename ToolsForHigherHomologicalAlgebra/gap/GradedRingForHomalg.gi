@@ -356,7 +356,26 @@ InstallMethod( EnhanceHomalgGradedRingWithRandomFunctions,
     fi;
     
 end );
- 
+
+##
+InstallMethod( MonomialsWithGivenDegreeOp,
+          [ IsHomalgGradedRing, IsHomalgModuleElement ],
+          
+  function( S, degree )
+    
+    if ForAll( WeightsOfIndeterminates( S ), w -> w = 1 )
+          or ForAll( WeightsOfIndeterminates( S ), w -> w = -1 ) then
+          
+        return EntriesOfHomalgMatrix( MonomialMatrix( HomalgElementToInteger( degree ), S ) );
+        
+    else
+        
+        TryNextMethod( );
+        
+    fi;
+  
+end );
+
 ##
 InstallMethod( CoefficientsOfGradedRingElement,
       [ IsHomalgGradedRingElement ],
