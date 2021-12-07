@@ -1125,7 +1125,7 @@ end );
 InstallMethod( RandomMorphismWithFixedRangeByInteger,
       [ IsCategoryOfRows, IsCategoryOfRowsObject, IsInt ],
       
-  {category, b, n} -> RandomMorphismWithFixedSourceByList( category, b, [ 1 .. n ] )
+  {category, b, n} -> RandomMorphismWithFixedRangeByList( category, b, [ 1 .. n ] )
 );
 
 ##
