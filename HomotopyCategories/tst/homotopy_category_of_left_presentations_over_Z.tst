@@ -31,8 +31,8 @@ gap> H := HomotopyMorphisms( phi );;  # H[ i ] : Source( phi )[ i ] ----> Range(
 gap> Display( H[ 1 ] );
 (an empty 7 x 0 matrix)
 
-A morphism in Category of left presentations of Z
+A zero, split epimorphism in Category of left presentations of Z
 gap> Display( H[ -1 ] );
 (an empty 0 x 3 matrix)
 
-A morphism in Category of left presentations of Z
+A zero, split monomorphism in Category of left presentations of Z
