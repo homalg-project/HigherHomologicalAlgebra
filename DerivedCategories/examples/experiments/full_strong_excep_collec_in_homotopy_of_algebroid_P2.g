@@ -31,7 +31,7 @@ V := ExtendFunctorToHomotopyCategories( V );
 
 # use the image to define a strong full exceptional collection
 vertices_labels := [ "𝓞 (-2)", "𝓞 (-1)", "𝓞 (0)" ];
-collection := CreateStrongExcepptionalCollection( image_B : vertices_labels := vertices_labels );
+collection := CreateStrongExceptionalCollection( image_B : vertices_labels := vertices_labels );
 
 # embedd the ambient in some derived category where homology can be computed
 I := EmbeddingFunctorFromAmbientCategoryIntoDerivedCategory( collection );
