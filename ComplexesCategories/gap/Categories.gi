@@ -1071,6 +1071,9 @@ end );
 ###########################################
 
 ##
+InstallMethod( ComplexCategoryByChains, [ IsCapCategory ], ChainComplexCategory );
+
+##
 InstallMethod( ChainComplexCategory, 
           [ IsCapCategory ],
           
@@ -1085,6 +1088,9 @@ InstallMethod( ChainComplexCategory,
                                                         MorphismsEqualityForCache := morphisms_equality );
   
 end );
+
+##
+InstallMethod( ComplexCategoryByCochains, [ IsCapCategory ], CochainComplexCategory );
 
 ##
 InstallMethod( CochainComplexCategory,
