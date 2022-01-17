@@ -68,20 +68,20 @@ AssignSetOfGeneratingMorphisms( oid );
 Aoid := AdditiveClosure( oid );
 #! Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
 AAoid := CategoryOfArrows( Aoid );
-#! The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+#! FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) )
 1_m_2 := Source( AAoid );
 #! Algebroid( q(2)[m:1->2] )
 Aoid = Range( AAoid );
 #! true
 A := CategoryOfArrowsObject( AAoid, [ [ alpha ] ] / Aoid );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsZeroForObjects( A );
 #! false
 B := CategoryOfArrowsObject( AAoid, [ [ beta ] ] / Aoid );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsZeroForObjects( B );
 #! false
 phi := CategoryOfArrowsMorphism(
@@ -90,60 +90,60 @@ phi := CategoryOfArrowsMorphism(
             [ [ phi_2 ] ] / Aoid,
             B
         );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 psi := CategoryOfArrowsMorphism(
             A,
             [ [ psi_1 ] ] / Aoid,
             [ [ psi_2 ] ] / Aoid,
             B
         );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsWellDefined( phi );
 #! true
 IsWellDefined( psi );
 #! true
 Q_A := ColiftingObject( A );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 Q_B := ColiftingObject( B );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 q_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 q_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 Q_phi := ColiftingMorphismWithGivenColiftingObjects( Q_A, phi, Q_B );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsCongruentForMorphisms( PreCompose( q_A, Q_phi ), PreCompose( phi, q_B ) );
 #! true
 Q_psi := ColiftingMorphismWithGivenColiftingObjects( Q_A, psi, Q_B );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsCongruentForMorphisms( PreCompose( q_A, Q_psi ), PreCompose( psi, q_B ) );
 #! true
 IsSplitEpimorphism( [ [ u ] ] / Aoid );
 #! true
 U := CategoryOfArrowsObject( AAoid, [ [ u ] ] / Aoid );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsZeroForObjects( U );
 #! false
 Q_U := ColiftingObject( U );
-#! <An object in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \
+#! Algebroid( V=4, E=10, Rel=7 ) ) )>
 q_U := MorphismToColiftingObjectWithGivenColiftingObject( U, Q_U );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsSplitMonomorphism( q_U );
 #! true
 r_U := RetractionOfMorphismToColiftingObject( U );
-#! <A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )>
+#! <A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\
+#!  Algebroid( V=4, E=10, Rel=7 ) ) )>
 IsWellDefined( r_U );
 #! true
 IsCongruentForMorphisms( PreCompose( q_U, r_U ), IdentityMorphism( U ) );

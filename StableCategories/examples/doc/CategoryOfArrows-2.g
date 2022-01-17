@@ -25,39 +25,39 @@
 ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );
 #! true
 AAoid;
-#! The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+#! FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) )
 St_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );
-#! Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects
 class_A := StableCategoryObject( St_AAoid, A );
-#! <An object in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_A );
 #! false
 class_B := StableCategoryObject( St_AAoid, B );
-#! <An object in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_B );
 #! false
 class_U := StableCategoryObject( St_AAoid, U );
-#! <An object in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_U );
 #! true
 class_phi := StableCategoryMorphism( class_A, phi, class_B );
-#! <A morphism in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForMorphisms( class_phi );
 #! false
 class_psi := StableCategoryMorphism( class_A, psi, class_B );
-#! <A morphism in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForMorphisms( class_psi );
 #! true
@@ -73,16 +73,16 @@ HomStructure( A, B );
 HomStructure( class_A, class_B );
 #! <A vector space object over Q of dimension 1>
 Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );
-#! [ <A morphism in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! [ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects> ]
 Display( Hom_class_A_class_B[ 1 ] );
-#! A morphism in Stable category( The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) ) 
+#! A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects defined by the underlying morphism:
 #! 
-#! A morphism in The category of functors:
-#! Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
+#! A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) )
 #! defined by the following data:
 #! 
 #! Image of <(1)>:
