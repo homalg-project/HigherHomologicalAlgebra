@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2021.11-01"
+version: "2022.01-01"
 license: "GPL-2.0-or-later"
-date: 2021-11-23
+date: 2022-01-17
 description: |
     Derived categories of Abelian categories
 
@@ -52,11 +52,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.01-01/DerivedCategories-2022.01-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.01-01/DerivedCategories-2022.01-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2021.11-01/DerivedCategories-2021.11-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.01-01/DerivedCategories-2022.01-01.pdf
 
 abstract: |
 
@@ -65,28 +65,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2021.11-01</i>
-     (<span class='BibYear'>2021</span>)<br />
+             Version 2022.01-01</i>
+     (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ DerivedCategories2021.11-01,
+    @misc{ DerivedCategories2022.01-01,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  Derived  categories  of  Abelian
-                          categories, {V}ersion 2021.11-01},
-      month =            {Nov},
-      year =             {2021},
+                          categories, {V}ersion 2022.01-01},
+      month =            {Jan},
+      year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/DerivedCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{DerivedCategories}}},
-      printedkey =       {Sal21}
+      printedkey =       {Sal22}
     }
 
