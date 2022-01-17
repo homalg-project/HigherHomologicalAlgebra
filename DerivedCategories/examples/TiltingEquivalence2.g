@@ -31,7 +31,7 @@ od;
 #Q2 := HomologyAt( iota( P2 ), 0 );
 #Q3 := HomologyAt( iota( P3 ), 0 );
 #Q4 := HomologyAt( iota( P4 ), 0 );
-# C := CreateStrongExcepptionalCollection( [ Q1, Q2, Q3, Q4 ], [ "1111", "0101", "0011", "0111" ] );
+# C := CreateStrongExceptionalCollection( [ Q1, Q2, Q3, Q4 ], [ "1111", "0101", "0011", "0111" ] );
 #End_C := EndomorphismAlgebra( C );
 #Dimension( End_C );
 #QuiverOfAlgebra( End_C );
