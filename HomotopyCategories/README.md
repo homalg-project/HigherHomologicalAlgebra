@@ -3,7 +3,7 @@
 
 ### Homotopy categories of additive categories
 
-| Documentation | Latest Release | Build Status of [HigherHomologicalAlgebra](/../../) | Code Coverage of [HigherHomologicalAlgebra](/../../) |
+| Documentation | Latest Release | Build Status of [HigherHomologicalAlgebra](/../../) | Code Coverage |
 | ------------- | -------------- | ------------ | ------------- |
 | [![HTML stable documentation][html-img]][html-url] [![PDF stable documentation][pdf-img]][pdf-url] | [![version][version-img]][version-url] [![date][date-img]][date-url] | [![Build Status][tests-img]][tests-url] | [![Code Coverage][codecov-img]][codecov-url] |
 
@@ -35,8 +35,8 @@ between them.
 [tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg?branch=master
 [tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions?query=workflow%3ATests+branch%3Amaster
 
-[codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra
+[codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg?flag=HomotopyCategories
+[codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories
 
 [code-img]: https://img.shields.io/badge/-View%20code-blue?logo=github
 [code-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/HomotopyCategories#top

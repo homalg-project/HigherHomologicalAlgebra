@@ -4,3 +4,31 @@ fixes:
   - "/home/gap/.gap/pkg/HigherHomologicalAlgebra/::"
 ignore:
   - "home/"
+flags:
+  BBGG:
+    paths:
+      - "BBGG/"
+  Bicomplexes:
+    paths:
+      - "Bicomplexes/"
+  ComplexesCategories:
+    paths:
+      - "ComplexesCategories/"
+  DerivedCategories:
+    paths:
+      - "DerivedCategories/"
+  HomotopyCategories:
+    paths:
+      - "HomotopyCategories/"
+  QuotientCategories:
+    paths:
+      - "QuotientCategories/"
+  StableCategories:
+    paths:
+      - "StableCategories/"
+  ToolsForHigherHomologicalAlgebra:
+    paths:
+      - "ToolsForHigherHomologicalAlgebra/"
+  TriangulatedCategories:
+    paths:
+      - "TriangulatedCategories/"

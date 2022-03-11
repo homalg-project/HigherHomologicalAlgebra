@@ -69,7 +69,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.8",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [ [ "CAP", ">= 2021.05-02" ],
                            [ "GAPDoc", ">= 1.5" ],
                            [ "TriangulatedCategories", ">= 2021.11-01" ],
