@@ -23,4 +23,13 @@ shasum -a 256 -c codecov.SHA256SUM
 
 # execute
 chmod +x codecov
-./codecov -Z -f "coverage*.json"
+./codecov -Z || ./codecov -Z || ./codecov -Z
+./codecov -Z -F BBGG || ./codecov -Z -F BBGG || ./codecov -Z -F BBGG
+./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes
+./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories
+./codecov -Z -F DerivedCategories || ./codecov -Z -F DerivedCategories || ./codecov -Z -F DerivedCategories
+./codecov -Z -F HomotopyCategories || ./codecov -Z -F HomotopyCategories || ./codecov -Z -F HomotopyCategories
+./codecov -Z -F QuotientCategories || ./codecov -Z -F QuotientCategories || ./codecov -Z -F QuotientCategories
+./codecov -Z -F StableCategories || ./codecov -Z -F StableCategories || ./codecov -Z -F StableCategories
+./codecov -Z -F ToolsForHigherHomologicalAlgebra || ./codecov -Z -F ToolsForHigherHomologicalAlgebra || ./codecov -Z -F ToolsForHigherHomologicalAlgebra
+./codecov -Z -F TriangulatedCategories || ./codecov -Z -F TriangulatedCategories || ./codecov -Z -F TriangulatedCategories
