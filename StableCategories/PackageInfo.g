@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "StableCategories",
 Subtitle := "Stable categories of additive categories",
-Version := "2021.11-03",
-Date := "23/11/2021",
+Version := "2022.05-01",
+Date := "03/05/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,7 +69,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.8",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [ [ "CAP", ">= 2021.05-02" ],
                            [ "GAPDoc", ">= 1.5" ],
                            [ "TriangulatedCategories", ">= 2021.11-01" ],

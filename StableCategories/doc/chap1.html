@@ -99,7 +99,7 @@
 <h5>1.1-1 IsCapCategoryShortSequence</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryShortSequence</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of short sequences.</p>
 
@@ -108,7 +108,7 @@
 <h5>1.1-2 IsCapCategoryMorphismOfShortSequences</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryMorphismOfShortSequences</code>( <var class="Arg">seq_mor</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of morphisms of short sequences.</p>
 
@@ -117,7 +117,7 @@
 <h5>1.1-3 IsCapCategoryShortExactSequence</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryShortExactSequence</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of short exact sequences.</p>
 
@@ -126,7 +126,7 @@
 <h5>1.1-4 IsCapCategoryConflation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCapCategoryConflation</code>( <var class="Arg">seq_obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of conflations. If a short sequence is a conflation, then it is a short exact sequence.</p>
 
@@ -139,7 +139,7 @@
 <h5>1.2-1 IsExactCategory</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExactCategory</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The input is a <strong class="pkg">CAP</strong> category. The output is <code class="code">true</code> if <span class="Math">\CC</span> is an exact category with respect to some class <span class="Math">\EE</span> of short exact sequences.</p>
 
@@ -304,7 +304,7 @@ Q
 Q{e0,e1}
 (weights: [ -1, -1 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Grows_E := CategoryOfGradedRows( EEE );</span>
-Graded rows( Q{e0,e1} (with weights [ -1, -1 ]) )
+Category of graded rows over Q{e0,e1} (with weights [ -1, -1 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Grmod_E := FreydCategory( Grows_E );</span>
 Category of f.p. graded left modules over Q{e0,e1} (with weights [ -1, -1 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategory( Grmod_E );</span>
@@ -562,7 +562,7 @@ false
 <h5>1.2-31 IsExactCategoryWithEnoughExactProjectives</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExactCategoryWithEnoughExactProjectives</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The input is a <strong class="pkg">CAP</strong> category. The output is <code class="code">true</code> if <span class="Math">\CC</span> is an exact category with respect to some class <span class="Math">\EE</span> of short exact sequences and <span class="Math">(\CC,\EE)</span> has enough <span class="Math">\EE</span>-projectives.</p>
 
@@ -662,7 +662,7 @@ true
 <h5>1.2-37 IsExactCategoryWithEnoughExactInjectives</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExactCategoryWithEnoughExactInjectives</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The input is a <strong class="pkg">CAP</strong> category. The output is <code class="code">true</code> if <span class="Math">\CC</span> is an exact category with respect to some class <span class="Math">\EE</span> of short exact sequences and <span class="Math">(\CC,\EE)</span> has enough <span class="Math">\EE</span>-injectives.</p>
 
@@ -756,7 +756,7 @@ true
 <h5>1.2-42 IsLiftableAlongDeflationFromSomeExactProjectiveObject</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLiftableAlongDeflationFromSomeExactProjectiveObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The argument if a morphism <span class="Math">\alpha:A\to B</span> in an exact category <span class="Math">(\CC,\EE)</span> with enough <span class="Math">\EE</span>-projectives. The output is whether or not <span class="Math">\alpha</span> lifts along <span class="Math">p_B:P_B\to B</span> where <span class="Math">p_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)</span>.</p>
 
@@ -788,7 +788,7 @@ true
 <h5>1.2-44 IsColiftableAlongInflationIntoSomeExactInjectiveObject</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsColiftableAlongInflationIntoSomeExactInjectiveObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The argument if a morphism <span class="Math">\alpha:A\to B</span> in an exact category <span class="Math">(\CC,\EE)</span> with enough <span class="Math">\EE</span>-injectives. The output is whether or not <span class="Math">\alpha</span> colifts along <span class="Math">\iota_A:A\to I_A</span> where <span class="Math">\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)</span>.</p>
 
@@ -820,7 +820,7 @@ true
 <h5>1.2-46 IsFrobeniusCategory</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFrobeniusCategory</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="code">true</code> or <code class="code">false</code></p>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The argument is a <strong class="pkg">CAP</strong> category. The output is <code class="code">true</code> if</p>
 

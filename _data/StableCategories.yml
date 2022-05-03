@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2021.11-03"
+version: "2022.05-01"
 license: "GPL-2.0-or-later"
-date: 2021-11-23
+date: 2022-05-03
 description: |
     Stable categories of additive categories
 
@@ -13,7 +13,7 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh
 
-GAP: ">= 4.8"
+GAP: ">= 4.11.1"
 
 needed-pkgs:
     - name: "CAP"
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.11-03/StableCategories-2021.11-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.05-01/StableCategories-2022.05-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.11-03/StableCategories-2021.11-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.05-01/StableCategories-2022.05-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2021.11-03/StableCategories-2021.11-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.05-01/StableCategories-2022.05-01.pdf
 
 abstract: |
 
@@ -53,28 +53,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2021.11-03</i>
-     (<span class='BibYear'>2021</span>)<br />
+             Version 2022.05-01</i>
+     (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/StableCategories">https://homalg-project.github.io/pkg/StableCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ StableCategories2021.11-03,
+    @misc{ StableCategories2022.05-01,
       author =           {Saleh, K.},
       title =            {{StableCategories},   Stable  categories  of  additive
-                          categories, {V}ersion 2021.11-03},
-      month =            {Nov},
-      year =             {2021},
+                          categories, {V}ersion 2022.05-01},
+      month =            {May},
+      year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/StableCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{StableCategories}}},
-      printedkey =       {Sal21}
+      printedkey =       {Sal22}
     }
 
