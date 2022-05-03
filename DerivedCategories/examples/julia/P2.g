@@ -67,8 +67,8 @@ c := CreateStrongExceptionalCollection( [ omega_0, omega_1, omega_2 ], [ "Ω^0(0
 
 G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( c );
 F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( c );
-I := EmbeddingFunctorIntoDerivedCategory( SourceOfFunctor( G ) );
-J := EmbeddingFunctorIntoDerivedCategory( RangeOfFunctor( G ) );
+I := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( SourceOfFunctor( G ) );
+J := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( RangeOfFunctor( G ) );
 
 
 o0 := SourceOfFunctor( G ).( "𝓞(0)" );

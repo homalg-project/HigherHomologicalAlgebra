@@ -45,7 +45,7 @@ AssignSetOfGeneratingMorphisms( algebroid );
 
 AC := AdditiveClosure( algebroid );
 Ho_AC := HomotopyCategory( AC );
-I := EmbeddingFunctorIntoDerivedCategory( Ho_AC );
+I := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( Ho_AC );
 
 
 A := HomotopyCategoryObject( [ d1_A/AC, d2_A/AC, d3_A/AC ], 1 );

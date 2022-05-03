@@ -21,11 +21,11 @@ for P in [ P1, P2, P3, P4 ] do
   Display( Length(h)=1 and IsIsomorphism( h[1] ) );
 od;
 #I := IsomorphismOntoFullSubcategoryGeneratedByIndecProjRepresentationsOverOppositeAlgebra( Aoid );
-#iota := EmbeddingFunctorIntoDerivedCategory( SourceOfFunctor( Conv ) );
+#iota := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( SourceOfFunctor( Conv ) );
 # This exceptional collection comes form objects that lives in abelian category Hence, we
 # can create it in the abelian category and then use RHom(T,-) and LTensor(T,-)
 
-#iota := EmbeddingFunctorIntoDerivedCategory( HA );
+#iota := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( HA );
 #HomologySupport( iota( P4 ) );
 #Q1 := HomologyAt( iota( P1 ), 0 );
 #Q2 := HomologyAt( iota( P2 ), 0 );

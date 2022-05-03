@@ -109,11 +109,11 @@ FΩ11 = F( HoEndT_Ω."Ω^1(1)" )
 
 FΩ22 = F( HoEndT_Ω."Ω^2(2)" )
 
-I = EmbeddingFunctorIntoDerivedCategory( HoEndT_𝓞 )
+I = EquivalenceOntoDerivedCategoryOfQuiverRepresentations( HoEndT_𝓞 )
 
 Display( I )
 
-J = EmbeddingFunctorIntoDerivedCategory( HoEndT_Ω )
+J = EquivalenceOntoDerivedCategoryOfQuiverRepresentations( HoEndT_Ω )
 
 Display( J )
 

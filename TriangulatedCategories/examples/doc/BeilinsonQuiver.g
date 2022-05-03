@@ -31,7 +31,7 @@ Ho_AC := HomotopyCategory( AC );
 Tr := CategoryOfExactTriangles( Ho_AC );
 #! Category of exact triangles( Homotopy category( Additive closure( Algebroid( 
 #! (Q * quiver) / [ -1*(x1*y0) + 1*(x0*y1), -1*(x2*y0) + 1*(x0*y2), -1*(x2*y1) + 1*(x1*y2) ] ) ) ) )
-I := EmbeddingFunctorIntoDerivedCategory( Ho_AC );
+I := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( Ho_AC );
 #! Equivalence functor from homotopy category into derived category
 #! @EndExample
 quit;

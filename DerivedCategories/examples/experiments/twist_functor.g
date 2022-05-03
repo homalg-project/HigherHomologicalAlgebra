@@ -33,7 +33,7 @@ B := BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows( S );
 C := AsCapCategory( Range( B ) );
 
 # embedd C in some derived category
-I := EmbeddingFunctorIntoDerivedCategory( C );
+I := EquivalenceOntoDerivedCategoryOfQuiverRepresentations( C );
 
 # restrict B to {𝓞 (i)|i=-2,-1,0}
 B_1 := RestrictFunctorToFullSubcategoryOfSource( B, full_1 );
