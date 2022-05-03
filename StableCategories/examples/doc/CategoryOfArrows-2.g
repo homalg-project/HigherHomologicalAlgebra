@@ -81,19 +81,17 @@ Display( Hom_class_A_class_B[ 1 ] );
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects defined by the underlying morphism:
 #! 
-#! A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
-#! , E=10, Rel=7 ) ) )
-#! defined by the following data:
-#! 
 #! Image of <(1)>:
 #! A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
 #! 
 #! [1,1]: (A_1)-[{ 1*(tau) }]->(B_1)
-#! 
 #! Image of <(2)>:
 #! A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
 #! 
 #! [1,1]: (A_2)-[{ 1*(phi_2) }]->(B_2)
+#! A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! , E=10, Rel=7 ) ) )
+#! given by the above data
 Freyd_Aoid := FreydCategory( Aoid );
 #! Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )
 FA := FreydCategoryObject( [ [ alpha ] ] / Aoid );
