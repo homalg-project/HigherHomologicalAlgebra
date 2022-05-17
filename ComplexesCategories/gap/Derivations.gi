@@ -42,7 +42,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
-    if IsIdenticalToZeroMorphism( phi ) or m > n then
+    if IsEqualToZeroMorphism( phi ) or m > n then
       Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n - 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
@@ -159,7 +159,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
-    if IsIdenticalToZeroMorphism( phi ) or m > n then
+    if IsEqualToZeroMorphism( phi ) or m > n then
       Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n + 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
@@ -276,7 +276,7 @@ AddFinalDerivation( HomotopyMorphisms,
     
     D := Range( phi );
     
-    if IsIdenticalToZeroMorphism( phi ) then
+    if IsEqualToZeroMorphism( phi ) then
       Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n + 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
@@ -320,7 +320,7 @@ AddFinalDerivation( HomotopyMorphisms,
     
     D := Range( phi );
     
-    if IsIdenticalToZeroMorphism( phi ) then
+    if IsEqualToZeroMorphism( phi ) then
       Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n - 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );

@@ -407,11 +407,11 @@ InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
           
           return ZeroMorphism( s, r );
           
-        elif IsIdenticalToZeroMorphism( alpha ) then
+        elif IsEqualToZeroMorphism( alpha ) then
           
           return ZeroMorphism( s, r );
           
-        elif IsIdenticalToIdentityMorphism( alpha ) then
+        elif IsEqualToIdentityMorphism( alpha ) then
           
           return IdentityMorphism( s );
           
