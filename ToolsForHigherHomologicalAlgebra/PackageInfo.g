@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ToolsForHigherHomologicalAlgebra",
 Subtitle := "Tools for the Higher Homological Algebra project",
-Version := "2021.11-02",
-Date := "23/11/2021",
+Version := "2022.05-01",
+Date := "17/05/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,11 +69,11 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.11",
+  GAP := ">= 4.11.1",
   NeededOtherPackages :=
         [
           [ "AutoDoc", ">=2018.02.14" ],
-          [ "CAP", ">=2021.11-05" ],
+          [ "CAP", ">=2022.05-04" ],
         ],
   SuggestedOtherPackages :=
         [ ],
