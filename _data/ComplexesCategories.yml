@@ -1,7 +1,7 @@
 name: ComplexesCategories
-version: "2021.10-01"
+version: "2022.05-01"
 license: "GPL-2.0-or-later"
-date: 2021-10-20
+date: 2022-05-17
 description: |
     Category of (co)chain complexes of an additive category
 
@@ -13,14 +13,14 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh/
 
-GAP: ">= 4.8"
+GAP: ">= 4.11.1"
 
 needed-pkgs:
     - name: "AutoDoc"
       version: ">= 2019.09.04"
       url: "https://gap-packages.github.io/AutoDoc"
     - name: "CAP"
-      version: ">= 2021.06-02"
+      version: ">= 2022.05-04"
       url: "https://homalg-project.github.io/pkg/CAP"
     - name: "MonoidalCategories"
       version: ">= 2021.03-01"
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Complexes
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.10-01/ComplexesCategories-2021.10-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.05-01/ComplexesCategories-2022.05-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.10-01/ComplexesCategories-2021.10-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.05-01/ComplexesCategories-2022.05-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2021.10-01/ComplexesCategories-2021.10-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.05-01/ComplexesCategories-2022.05-01.pdf
 
 abstract: |
 
@@ -55,22 +55,22 @@ keywords: |
     Chains, Cochains, MappingCone, MappingCylinder, Homotopy.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ComplexesCategories, Category of (co)chain complexes of an additive category,
-             Version 2021.10-01</i>
-     (<span class='BibYear'>2021</span>)<br />
+             Version 2022.05-01</i>
+     (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ComplexesCategories">https://homalg-project.github.io/pkg/ComplexesCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ ComplexesCategories2021.10-01,
+    @misc{ ComplexesCategories2022.05-01,
       author =           {Saleh, K.},
       title =            {{ComplexesCategories}, Category of (co)chain complexes
-                          of an additive category, {V}ersion 2021.10-01},
-      month =            {Oct},
-      year =             {2021},
+                          of an additive category, {V}ersion 2022.05-01},
+      month =            {May},
+      year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/ComplexesCategories}
@@ -79,6 +79,6 @@ bibtex: |
                           {}{}{}\texttt{ComplexesCategories}}},
       keywords =         {Chains;    Cochains;   MappingCone;   MappingCylinder;
                           Homotopy},
-      printedkey =       {Sal21}
+      printedkey =       {Sal22}
     }
 

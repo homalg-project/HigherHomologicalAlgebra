@@ -18,7 +18,7 @@
   [33X[1;0Y[29X[2XIsBoundedBelowCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsBoundedAboveCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
   [33X[1;0Y[29X[2XIsBoundedCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGap-categories for chain and cochains morphisms.[133X
   
@@ -252,7 +252,7 @@
   [1X3.4-1 IsQuasiIsomorphism[101X
   
   [33X[1;0Y[29X[2XIsQuasiIsomorphism[102X( [3Xphi[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  input a chain ( resp. cochain) morphism [23X\phi:C\rightarrow D[123X. The output
   is  [13Xtrue[113X  if  [23X\phi[123X  is quasi-isomorphism and [13Xfalse[113X otherwise. If [23X\phi[123X is not
@@ -261,7 +261,7 @@
   [1X3.4-2 IsNullHomotopic[101X
   
   [33X[1;0Y[29X[2XIsNullHomotopic[102X( [3Xphi[103X ) [32X property[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  input is a chain or cochain morphism [23X\phi[123X and output is [13Xtrue[113X if [23X\phi[123X is
   null-homotopic and [13Xfalse[113X otherwise.[133X

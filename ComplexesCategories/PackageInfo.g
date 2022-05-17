@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2021.10-01",
-Date := "20/10/2021",
+Version := "2022.05-01",
+Date := "17/05/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -72,10 +72,10 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.8",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [
                             [ "AutoDoc", ">= 2019.09.04" ],
-                            [ "CAP", ">= 2021.06-02" ],
+                            [ "CAP", ">= 2022.05-04" ],
                             [ "MonoidalCategories", ">= 2021.03-01" ],
                             [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
                          ],
