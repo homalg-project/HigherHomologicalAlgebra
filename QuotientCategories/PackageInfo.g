@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "QuotientCategories",
 Subtitle := "Quotient categories of CAP categories by two-sided ideals",
-Version := "2021.10-01",
-Date := "20/10/2021",
+Version := "2022.05-01",
+Date := "17/05/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,10 +69,10 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.9",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [
                 [ "AutoDoc", ">=2018.02.14" ],
-                [ "CAP", ">= 2021.05-02" ],
+                [ "CAP", ">= 2022.05-04" ],
                 [ "CategoryConstructor", ">= 2020.04.05" ]
                 ],
   SuggestedOtherPackages := [ ],
