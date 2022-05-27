@@ -710,38 +710,38 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AAoid;</span>
-FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">St_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );</span>
-Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_A := StableCategoryObject( St_AAoid, A );</span>
-&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_A );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_B := StableCategoryObject( St_AAoid, B );</span>
-&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_B );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_U := StableCategoryObject( St_AAoid, U );</span>
-&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+&lt;An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( class_U );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_phi := StableCategoryMorphism( class_A, phi, class_B );</span>
-&lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+&lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( class_phi );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">class_psi := StableCategoryMorphism( class_A, psi, class_B );</span>
-&lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+&lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( class_psi );</span>
@@ -758,11 +758,11 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HomStructure( class_A, class_B );</span>
 &lt;A vector space object over Q of dimension 1&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );</span>
-[ &lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+[ &lt;A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects&gt; ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Hom_class_A_class_B[ 1 ] );</span>
-A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) ) ) 
 defined by a system of colifting objects defined by the underlying morphism:
 
@@ -774,7 +774,7 @@ Image of &lt;(2)&gt;:
 A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
 
 [1,1]: (A_2)-[{ 1*(phi_2) }]-&gt;(B_2)
-A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) )
 given by the above data
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Freyd_Aoid := FreydCategory( Aoid );</span>

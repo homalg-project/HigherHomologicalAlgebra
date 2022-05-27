@@ -396,19 +396,19 @@
     [4X[25Xgap>[125X [27XAoid := AdditiveClosure( oid );[127X[104X
     [4X[28XAdditive closure( Algebroid( V=4, E=10, Rel=7 ) )[128X[104X
     [4X[25Xgap>[125X [27XAAoid := CategoryOfArrows( Aoid );[127X[104X
-    [4X[28XFunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28XFunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) )[128X[104X
     [4X[25Xgap>[125X [27X1_m_2 := Source( AAoid );[127X[104X
     [4X[28XAlgebroid( q(2)[m:1->2] )[128X[104X
     [4X[25Xgap>[125X [27XAoid = Range( AAoid );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XA := CategoryOfArrowsObject( AAoid, [ [ alpha ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( A );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XB := CategoryOfArrowsObject( AAoid, [ [ beta ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( B );[127X[104X
     [4X[28Xfalse[128X[104X
@@ -418,7 +418,7 @@
     [4X[25X>[125X [27X            [ [ phi_2 ] ] / Aoid,[127X[104X
     [4X[25X>[125X [27X            B[127X[104X
     [4X[25X>[125X [27X        );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27Xpsi := CategoryOfArrowsMorphism([127X[104X
     [4X[25X>[125X [27X            A,[127X[104X
@@ -426,51 +426,51 @@
     [4X[25X>[125X [27X            [ [ psi_2 ] ] / Aoid,[127X[104X
     [4X[25X>[125X [27X            B[127X[104X
     [4X[25X>[125X [27X        );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( phi );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( psi );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XQ_A := ColiftingObject( A );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XQ_B := ColiftingObject( B );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27Xq_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27Xq_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XQ_phi := ColiftingMorphismWithGivenColiftingObjects( Q_A, phi, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, Q_phi ), PreCompose( phi, q_B ) );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XQ_psi := ColiftingMorphismWithGivenColiftingObjects( Q_A, psi, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, Q_psi ), PreCompose( psi, q_B ) );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsSplitEpimorphism( [ [ u ] ] / Aoid );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XU := CategoryOfArrowsObject( AAoid, [ [ u ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( U );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XQ_U := ColiftingObject( U );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( \[128X[104X
+    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
     [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27Xq_U := MorphismToColiftingObjectWithGivenColiftingObject( U, Q_U );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsSplitMonomorphism( q_U );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xr_U := RetractionOfMorphismToColiftingObject( U );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure(\[128X[104X
+    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
     [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( r_U );[127X[104X
     [4X[28Xtrue[128X[104X

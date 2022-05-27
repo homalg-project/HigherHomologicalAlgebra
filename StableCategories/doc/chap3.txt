@@ -650,38 +650,38 @@
     [4X[25Xgap>[125X [27XReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XAAoid;[127X[104X
-    [4X[28XFunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28XFunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) )[128X[104X
     [4X[25Xgap>[125X [27XSt_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );[127X[104X
-    [4X[28XStable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28XStable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects[128X[104X
     [4X[25Xgap>[125X [27Xclass_A := StableCategoryObject( St_AAoid, A );[127X[104X
-    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( class_A );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xclass_B := StableCategoryObject( St_AAoid, B );[127X[104X
-    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( class_B );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xclass_U := StableCategoryObject( St_AAoid, U );[127X[104X
-    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X<An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForObjects( class_U );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xclass_phi := StableCategoryMorphism( class_A, phi, class_B );[127X[104X
-    [4X[28X<A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X<A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForMorphisms( class_phi );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xclass_psi := StableCategoryMorphism( class_A, psi, class_B );[127X[104X
-    [4X[28X<A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X<A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroForMorphisms( class_psi );[127X[104X
@@ -698,11 +698,11 @@
     [4X[25Xgap>[125X [27XHomStructure( class_A, class_B );[127X[104X
     [4X[28X<A vector space object over Q of dimension 1>[128X[104X
     [4X[25Xgap>[125X [27XHom_class_A_class_B := BasisOfExternalHom( class_A, class_B );[127X[104X
-    [4X[28X[ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28X[ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects> ][128X[104X
     [4X[25Xgap>[125X [27XDisplay( Hom_class_A_class_B[ 1 ] );[127X[104X
-    [4X[28XA morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28XA morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
     [4X[28Xdefined by a system of colifting objects defined by the underlying morphism:[128X[104X
     [4X[28X[128X[104X
@@ -714,7 +714,7 @@
     [4X[28XA 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )[128X[104X
     [4X[28X[128X[104X
     [4X[28X[1,1]: (A_2)-[{ 1*(phi_2) }]->(B_2)[128X[104X
-    [4X[28XA morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\[128X[104X
+    [4X[28XA morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) )[128X[104X
     [4X[28Xgiven by the above data[128X[104X
     [4X[25Xgap>[125X [27XFreyd_Aoid := FreydCategory( Aoid );[127X[104X

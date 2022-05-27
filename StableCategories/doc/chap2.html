@@ -436,19 +436,19 @@ Q
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Aoid := AdditiveClosure( oid );</span>
 Additive closure( Algebroid( V=4, E=10, Rel=7 ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AAoid := CategoryOfArrows( Aoid );</span>
-FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( Algebroid( V=4\
+FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( Algebroid( V=4\
 , E=10, Rel=7 ) ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1_m_2 := Source( AAoid );</span>
 Algebroid( q(2)[m:1-&gt;2] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Aoid = Range( AAoid );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := CategoryOfArrowsObject( AAoid, [ [ alpha ] ] / Aoid );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( A );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := CategoryOfArrowsObject( AAoid, [ [ beta ] ] / Aoid );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( B );</span>
 false
@@ -458,7 +458,7 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ phi_2 ] ] / Aoid,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            B</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">        );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := CategoryOfArrowsMorphism(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            A,</span>
@@ -466,51 +466,51 @@ false
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            [ [ psi_2 ] ] / Aoid,</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">            B</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">        );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( phi );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( psi );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_A := ColiftingObject( A );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_B := ColiftingObject( B );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_phi := ColiftingMorphismWithGivenColiftingObjects( Q_A, phi, Q_B );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, Q_phi ), PreCompose( phi, q_B ) );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_psi := ColiftingMorphismWithGivenColiftingObjects( Q_A, psi, Q_B );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( q_A, Q_psi ), PreCompose( psi, q_B ) );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSplitEpimorphism( [ [ u ] ] / Aoid );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := CategoryOfArrowsObject( AAoid, [ [ u ] ] / Aoid );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( U );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q_U := ColiftingObject( U );</span>
-&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure( \
+&lt;An object in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure( \
 Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_U := MorphismToColiftingObjectWithGivenColiftingObject( U, Q_U );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSplitMonomorphism( q_U );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r_U := RetractionOfMorphismToColiftingObject( U );</span>
-&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ) -&gt; Additive closure(\
+&lt;A morphism in FunctorCategory( Algebroid( q(2)[m:1-&gt;2] ), Additive closure(\
  Algebroid( V=4, E=10, Rel=7 ) ) )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( r_U );</span>
 true
