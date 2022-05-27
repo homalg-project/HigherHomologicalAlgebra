@@ -25,38 +25,38 @@
 ReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-1.g" );
 #! true
 AAoid;
-#! FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) )
 St_AAoid := StableCategoryByClassOfColiftingObjects( AAoid );
-#! Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects
 class_A := StableCategoryObject( St_AAoid, A );
-#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_A );
 #! false
 class_B := StableCategoryObject( St_AAoid, B );
-#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_B );
 #! false
 class_U := StableCategoryObject( St_AAoid, U );
-#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! <An object in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForObjects( class_U );
 #! true
 class_phi := StableCategoryMorphism( class_A, phi, class_B );
-#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForMorphisms( class_phi );
 #! false
 class_psi := StableCategoryMorphism( class_A, psi, class_B );
-#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects>
 IsZeroForMorphisms( class_psi );
@@ -73,11 +73,11 @@ HomStructure( A, B );
 HomStructure( class_A, class_B );
 #! <A vector space object over Q of dimension 1>
 Hom_class_A_class_B := BasisOfExternalHom( class_A, class_B );
-#! [ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! [ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects> ]
 Display( Hom_class_A_class_B[ 1 ] );
-#! A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) ) ) 
 #! defined by a system of colifting objects defined by the underlying morphism:
 #! 
@@ -89,7 +89,7 @@ Display( Hom_class_A_class_B[ 1 ] );
 #! A 1 x 1 matrix with entries in Algebroid( V=4, E=10, Rel=7 )
 #! 
 #! [1,1]: (A_2)-[{ 1*(phi_2) }]->(B_2)
-#! A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ) -> Additive closure( Algebroid( V=4\
+#! A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\
 #! , E=10, Rel=7 ) ) )
 #! given by the above data
 Freyd_Aoid := FreydCategory( Aoid );
