@@ -1,5 +1,5 @@
 LoadPackage( "StableCategories" );
-LoadPackage( "FunctorCategories", ">= 2021.11-06" );
+LoadPackage( "FunctorCategories", ">= 2022.05-08" );
 
 DeclareAttribute( "CategoryOfArrows", IsCapCategory );
 
