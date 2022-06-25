@@ -156,7 +156,9 @@ end );
 BindGlobal( "SetSpecialSettings",
   function( )
     
-    ENABLE_COLORS := true;
+    #ENABLE_COLORS := true;
+    
+    EnhanceAllPackages( );
     
     DISABLE_ALL_SANITY_CHECKS := true;
     
