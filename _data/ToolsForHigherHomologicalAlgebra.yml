@@ -1,7 +1,7 @@
 name: ToolsForHigherHomologicalAlgebra
-version: "2022.05-01"
+version: "2022.06-01"
 license: "GPL-2.0-or-later"
-date: 2022-05-17
+date: 2022-06-26
 description: |
     Tools for the Higher Homological Algebra project
 
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForH
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.05-01/ToolsForHigherHomologicalAlgebra-2022.05-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.06-01/ToolsForHigherHomologicalAlgebra-2022.06-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.05-01/ToolsForHigherHomologicalAlgebra-2022.05-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.06-01/ToolsForHigherHomologicalAlgebra-2022.06-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.05-01/ToolsForHigherHomologicalAlgebra-2022.05-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2022.06-01/ToolsForHigherHomologicalAlgebra-2022.06-01.pdf
 
 abstract: |
 
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ToolsForHigherHomologicalAlgebra, Tools for the Higher Homological Algebra project,
-             Version 2022.05-01</i>
+             Version 2022.06-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra</a></span>.
@@ -52,12 +52,12 @@ citeas: |
     
 
 bibtex: |
-    @misc{ ToolsForHigherHomologicalAlgebra2022.05-01,
+    @misc{ ToolsForHigherHomologicalAlgebra2022.06-01,
       author =           {Saleh, K.},
       title =            {{ToolsForHigherHomologicalAlgebra},   Tools   for  the
                           Higher    Homological   Algebra   project,   {V}ersion
-                          2022.05-01},
-      month =            {May},
+                          2022.06-01},
+      month =            {Jun},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
