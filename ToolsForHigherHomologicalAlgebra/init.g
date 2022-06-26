@@ -4,10 +4,10 @@
 # Reading the declaration part of the package.
 #
 
+ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/EnhancePackage.gd");
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/CAP.gd");
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/LaTeX.gd");
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/Functors.gd");
-ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/EnhancePackage.gd");
 
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
     ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/JuliaInterface.gd" );
