@@ -101,7 +101,7 @@ InstallMethod( UnitOfTensorHomAdjunction,
         
         if IsObjectInFunctorCategory( s ) then
           
-          return ConvertToCellInFunctorCategory( m );
+          return ConvertToCellInFunctorCategory( s, m, r );
           
         else
           

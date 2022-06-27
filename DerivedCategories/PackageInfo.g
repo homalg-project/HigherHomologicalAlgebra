@@ -77,7 +77,7 @@ Dependencies := rec(
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
         [ "HomotopyCategories", ">= 2021.07-02" ],
         [ "BBGG", ">= 2020.10-02" ],
-        [ "FunctorCategories", ">= 2021.11-06" ],
+        [ "FunctorCategories", ">= 2022.06-26" ],
           ],
   SuggestedOtherPackages := [
             [ "NConvex", ">= 2019.12.06" ],

@@ -879,14 +879,14 @@ InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
     AddObjectFunction( F,
       function( a )
       
-        return AsSubcategoryCell( full, ConvertToCellInFunctorCategory( UnderlyingCell( Y( a ) ) ) );
+        return AsSubcategoryCell( full, ConvertToCellInFunctorCategory( UnderlyingCell( Y( a ) ), functors ) );
         
       end );
       
     AddMorphismFunction( F,
       function( s, alpha, r )
       
-        return AsSubcategoryCell( s, ConvertToCellInFunctorCategory( UnderlyingCell( Y( alpha ) ) ), r );
+        return AsSubcategoryCell( s, ConvertToCellInFunctorCategory( UnderlyingCell(s), UnderlyingCell( Y( alpha ) ), UnderlyingCell( r ) ), r );
         
       end );
     
