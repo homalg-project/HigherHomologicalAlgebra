@@ -401,7 +401,7 @@ InstallMethod( CategoryOfArrowsMorphism,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsCategoryOfArrowsObject ],
           10^6,
   function( o )
@@ -409,12 +409,12 @@ InstallMethod( LaTeXStringOp,
     
     1_m_2 := Source( CapCategory( o ) );
     
-    return LaTeXStringOp( o( 1_m_2.m ) );
+    return LaTeXOutput( o( 1_m_2.m ) );
     
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsCategoryOfArrowsMorphism ],
           10^6,
   function( phi )
@@ -422,27 +422,27 @@ InstallMethod( LaTeXStringOp,
     
     1_m_2 := Source( CapCategory( phi ) );
     
-    A1 := LaTeXStringOp( Source( phi )( 1_m_2.1 ) );
-    A := LaTeXStringOp( Source( phi )( 1_m_2.m ) : OnlyDatum := true );
+    A1 := LaTeXOutput( Source( phi )( 1_m_2.1 ) );
+    A := LaTeXOutput( Source( phi )( 1_m_2.m ) : OnlyDatum := true );
     A := Concatenation( "\\xrightarrow{", A, "}" );
-    A2 := LaTeXStringOp( Source( phi )( 1_m_2.2 ) );
+    A2 := LaTeXOutput( Source( phi )( 1_m_2.2 ) );
     
     A := JoinStringsWithSeparator( [ A1, A, A2 ], "\&" );
         
     tail := "\\vert \& \& \\vert";
     
-    phi_11 := LaTeXStringOp( phi( 1_m_2.1 ) : OnlyDatum := true );
+    phi_11 := LaTeXOutput( phi( 1_m_2.1 ) : OnlyDatum := true );
     phi_ := "";
-    phi_22 := LaTeXStringOp( phi( 1_m_2.2 ) : OnlyDatum := true );
+    phi_22 := LaTeXOutput( phi( 1_m_2.2 ) : OnlyDatum := true );
   
     phi_ := JoinStringsWithSeparator( [ phi_11, phi_, phi_22 ], "\&" );
     
     head := "\\downarrow \& \& \\downarrow";
     
-    B1 := LaTeXStringOp( Range( phi )( 1_m_2.1 ) );
-    B := LaTeXStringOp( Range( phi )( 1_m_2.m ) : OnlyDatum := true );
+    B1 := LaTeXOutput( Range( phi )( 1_m_2.1 ) );
+    B := LaTeXOutput( Range( phi )( 1_m_2.m ) : OnlyDatum := true );
     B := Concatenation( "\\xrightarrow{", B, "}" );
-    B2 := LaTeXStringOp( Range( phi )( 1_m_2.2 ) );
+    B2 := LaTeXOutput( Range( phi )( 1_m_2.2 ) );
     
     B := JoinStringsWithSeparator( [ B1, B, B2 ], "\&" );
     
@@ -457,7 +457,7 @@ InstallMethod( LaTeXStringOp,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsObjectInFunctorCategory ],
           
   function( F )
@@ -473,9 +473,9 @@ InstallMethod( LaTeXStringOp,
       
       s := Concatenation(
               s,
-              LaTeXStringOp( o[ 1 ] ),
+              LaTeXOutput( o[ 1 ] ),
               " & \\mapsto & ",
-              LaTeXStringOp( o[ 2 ] ),
+              LaTeXOutput( o[ 2 ] ),
               " \\\\ "
             );
       
@@ -487,9 +487,9 @@ InstallMethod( LaTeXStringOp,
       
       s := Concatenation(
               s,
-              LaTeXStringOp( m[ 1 ] : OnlyDatum := true ),
+              LaTeXOutput( m[ 1 ] : OnlyDatum := true ),
               " & \\mapsto & ",
-              LaTeXStringOp( m[ 2 ] : OnlyDatum := true ),
+              LaTeXOutput( m[ 2 ] : OnlyDatum := true ),
               " \\\\ & & \\\\"
             );
     od;
@@ -501,7 +501,7 @@ InstallMethod( LaTeXStringOp,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsMorphismInFunctorCategory ],
           
   function( eta )
@@ -515,9 +515,9 @@ InstallMethod( LaTeXStringOp,
       
       s := Concatenation(
               s,
-              LaTeXStringOp( o[ 1 ] ),
+              LaTeXOutput( o[ 1 ] ),
               " & \\mapsto & ",
-              LaTeXStringOp( o[ 2 ] : OnlyDatum := true ),
+              LaTeXOutput( o[ 2 ] : OnlyDatum := true ),
               " \\\\ & & \\\\"
             );
       

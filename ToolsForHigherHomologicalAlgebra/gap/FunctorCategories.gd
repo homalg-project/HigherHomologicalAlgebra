@@ -8,8 +8,6 @@ DeclareCategory( "IsCategoryOfArrowsObject", IsCapCategoryObject );
 
 DeclareCategory( "IsCategoryOfArrowsMorphism", IsCapCategoryMorphism );
 
-DeclareOperation( "LaTeXStringOp", [ IsCellInFunctorCategory ] );
-
 DeclareAttribute( "CategoryOfArrows", IsCapCategory );
 
 DeclareOperation( "CategoryOfArrowsObject",
@@ -18,10 +16,3 @@ DeclareOperation( "CategoryOfArrowsObject",
 DeclareOperation( "CategoryOfArrowsMorphism",
   [ IsCapCategoryObject, IsCapCategoryMorphism,
       IsCapCategoryMorphism, IsCapCategoryObject ] );
-
-DeclareOperation( "LaTeXStringOp",
-  [ IsCategoryOfArrowsObject ] );
-
-DeclareOperation( "LaTeXStringOp",
-  [ IsCategoryOfArrowsMorphism ] );
-

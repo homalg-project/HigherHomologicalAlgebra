@@ -845,13 +845,13 @@ InstallMethod( ViewObj,
     
 end );
 
-InstallOtherMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
               [ IsDerivedCategoryObject ],
-  a -> LaTeXStringOp( UnderlyingCell( a ) )
+  a -> LaTeXOutput( UnderlyingCell( a ) )
 );
 
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
         [ IsDerivedCategoryMorphism ],
         
   function( phi )
@@ -879,12 +879,12 @@ InstallOtherMethod( LaTeXStringOp,
             ]
           );
     
-    return LaTeXStringOp( phi, l, u );
+    return LaTeXOutput( phi, l, u );
     
 end );
 
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallOtherMethod( LaTeXOutput,
         [ IsDerivedCategoryMorphism, IsInt, IsInt ],
         
   function( phi, l, u )
@@ -902,15 +902,15 @@ InstallOtherMethod( LaTeXStringOp,
       
       s := Concatenation(
               s,
-              LaTeXStringOp( Range( f )[ u ] ),
+              LaTeXOutput( Range( f )[ u ] ),
               "&\\leftarrow\\phantom{-}{",
-              LaTeXStringOp( f[ u ] : OnlyDatum := true ),
+              LaTeXOutput( f[ u ] : OnlyDatum := true ),
               "}\\phantom{-}-&{",
-              LaTeXStringOp( Source( f )[ u ] ),
+              LaTeXOutput( Source( f )[ u ] ),
               "}&-\\phantom{-}{",
-              LaTeXStringOp( g[ u ] : OnlyDatum := true ),
+              LaTeXOutput( g[ u ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&{",
-              LaTeXStringOp( Range( g )[ u ] ),
+              LaTeXOutput( Range( g )[ u ] ),
               "}\n \\\\ \n"
             );
             
@@ -928,11 +928,11 @@ InstallOtherMethod( LaTeXStringOp,
               
         s := Concatenation(
                 s,
-                LaTeXStringOp( Range( f ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Range( f ) ^ i : OnlyDatum := true ),
                 "&&",
-                LaTeXStringOp( Source( f ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Source( f ) ^ i : OnlyDatum := true ),
                 "&&",
-                LaTeXStringOp( Range( g ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Range( g ) ^ i : OnlyDatum := true ),
                 "\n \\\\ \n "
               );
               
@@ -942,21 +942,21 @@ InstallOtherMethod( LaTeXStringOp,
                 "&&",
                 "\\vert_{", String( i ), "} ",
                 "&&",
-                "\\vert_{", String( i ), "} ",                
+                "\\vert_{", String( i ), "} ",
                 "\n \\\\ \n "
               );
               
         s := Concatenation(
               s,
-              LaTeXStringOp( Range( f )[ i ] ),
+              LaTeXOutput( Range( f )[ i ] ),
               "&\\leftarrow\\phantom{-}",
-              LaTeXStringOp( f[ i ] : OnlyDatum := true ),
+              LaTeXOutput( f[ i ] : OnlyDatum := true ),
               "\\phantom{-}-&",
-              LaTeXStringOp( Source( f )[ i ] ),
+              LaTeXOutput( Source( f )[ i ] ),
               "&-\\phantom{-}{",
-              LaTeXStringOp( g[ i ] : OnlyDatum := true ),
+              LaTeXOutput( g[ i ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&",
-              LaTeXStringOp( Range( g )[ i ] ),
+              LaTeXOutput( Range( g )[ i ] ),
               "\n \\\\ \n "
             );
             
@@ -969,15 +969,15 @@ InstallOtherMethod( LaTeXStringOp,
         s := Concatenation(
               s,
               "\\\\ \n",
-              LaTeXStringOp( Range( f )[ i ] ),
+              LaTeXOutput( Range( f )[ i ] ),
               "&\\leftarrow\\phantom{-}{",
-              LaTeXStringOp( f[ i ] : OnlyDatum := true ),
+              LaTeXOutput( f[ i ] : OnlyDatum := true ),
               "}\\phantom{-}-&",
-              LaTeXStringOp( Source( f )[ i ] ),
+              LaTeXOutput( Source( f )[ i ] ),
               "&-\\phantom{-}{",
-              LaTeXStringOp( g[ i ] : OnlyDatum := true ),
+              LaTeXOutput( g[ i ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&",
-              LaTeXStringOp( Range( g )[ i ] ),
+              LaTeXOutput( Range( g )[ i ] ),
               "\n "
             );
             
@@ -993,11 +993,11 @@ InstallOtherMethod( LaTeXStringOp,
               
         s := Concatenation(
                 s,
-                LaTeXStringOp( Range( f ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Range( f ) ^ i : OnlyDatum := true ),
                 "&&",
-                LaTeXStringOp( Source( f ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Source( f ) ^ i : OnlyDatum := true ),
                 "&&",
-                LaTeXStringOp( Range( g ) ^ i : OnlyDatum := true ),
+                LaTeXOutput( Range( g ) ^ i : OnlyDatum := true ),
                 "\n \\\\ \n "
               );
               
@@ -1015,15 +1015,15 @@ InstallOtherMethod( LaTeXStringOp,
       s := Concatenation(
               s,
               "\\\\ \n",
-              LaTeXStringOp( Range( f )[ l ] ),
+              LaTeXOutput( Range( f )[ l ] ),
               "&\\leftarrow\\phantom{-}{",
-              LaTeXStringOp( f[ l ] : OnlyDatum := true ),
+              LaTeXOutput( f[ l ] : OnlyDatum := true ),
               "}\\phantom{-}-&",
-              LaTeXStringOp( Source( f )[ l ] ),
+              LaTeXOutput( Source( f )[ l ] ),
               "&-\\phantom{-}{",
-              LaTeXStringOp( g[ l ] : OnlyDatum := true ),
+              LaTeXOutput( g[ l ] : OnlyDatum := true ),
               "}\\phantom{-}\\rightarrow&",
-              LaTeXStringOp( Range( g )[ l ] ),
+              LaTeXOutput( Range( g )[ l ] ),
               "\n \\\\ \n "
             );
             

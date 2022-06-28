@@ -4,8 +4,8 @@
 # Implementations
 #
 
-InstallOtherMethod( LaTeXStringOp,
+InstallOtherMethod( LaTeXOutput,
         [ IsCapCategoryCellInAFullSubcategory ],
         
-  cell -> LaTeXStringOp( UnderlyingCell( cell ) )
+  cell -> LaTeXOutput( UnderlyingCell( cell ) )
 );

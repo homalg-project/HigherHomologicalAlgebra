@@ -382,16 +382,16 @@ InstallMethod( RightPresentations,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
                [ IsLeftOrRightPresentation ],
   function( object )
     local rel, ring_name, rel_dat;
     
     rel := UnderlyingMatrix( object );
     
-    ring_name := LaTeXStringOp( HomalgRing( rel ) );
+    ring_name := LaTeXOutput( HomalgRing( rel ) );
     
-    rel_dat := LaTeXStringOp( rel );
+    rel_dat := LaTeXOutput( rel );
     
     if IsLeftPresentation( object ) then
       return
@@ -441,13 +441,13 @@ InstallMethod( LaTeXStringOp,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsLeftOrRightPresentationMorphism ],
           
   function( mor )
     local datum;
     
-    datum := LaTeXStringOp( UnderlyingMatrix( mor ) );
+    datum := LaTeXOutput( UnderlyingMatrix( mor ) );
     
     if ValueOption( "OnlyDatum" ) = true then
        
@@ -460,11 +460,11 @@ InstallMethod( LaTeXStringOp,
     else
       
       return Concatenation(
-        "{ \\tiny ", LaTeXStringOp( Source( mor ) ), "}",
+        "{ \\tiny ", LaTeXOutput( Source( mor ) ), "}",
         """{\color{blue}{\xrightarrow{""",
         datum,
         """}}}""",
-        "{ \\tiny ", LaTeXStringOp( Range( mor ) ), "}"
+        "{ \\tiny ", LaTeXOutput( Range( mor ) ), "}"
       );
       
     fi;

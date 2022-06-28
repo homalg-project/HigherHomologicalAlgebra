@@ -3,6 +3,4 @@
 #
 # Declarations
 #
-DeclareOperation( "LaTeXStringOp", [ IsLeftOrRightPresentation ] );
 
-DeclareOperation( "LaTeXStringOp", [ IsLeftOrRightPresentationMorphism ] );
