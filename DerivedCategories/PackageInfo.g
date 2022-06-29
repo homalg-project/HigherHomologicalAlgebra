@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2022.06-01",
-Date := "26/06/2022",
+Version := "2022.06-02",
+Date := "29/06/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -77,7 +77,7 @@ Dependencies := rec(
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
         [ "HomotopyCategories", ">= 2021.07-02" ],
         [ "BBGG", ">= 2020.10-02" ],
-        [ "FunctorCategories", ">= 2021.11-06" ],
+        [ "FunctorCategories", ">= 2022.06-26" ],
           ],
   SuggestedOtherPackages := [
             [ "NConvex", ">= 2019.12.06" ],
