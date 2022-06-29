@@ -121,10 +121,6 @@ gap> MorphismsSupport( alpha );
 [ -1, 0, 1, 2 ]
 gap> MorphismsSupport( AsCochainMorphism( alpha ) );
 [ -2, -1, 0, 1 ]
-gap> LaTeXStringOp( alpha );;
-gap> LaTeXStringOp( AsCochainMorphism( alpha ) );;
-gap> LaTeXOutput( alpha );;
-gap> LaTeXOutput( AsCochainMorphism( alpha ) );;
 gap> IsWellDefined( MappingConeColift( alpha, NaturalInjectionInMappingCone( alpha ) ) );
 true
 gap> IsWellDefined( MappingConeColift( AsCochainMorphism( alpha ), NaturalInjectionInMappingCone( AsCochainMorphism( alpha ) ) ) );
@@ -185,10 +181,6 @@ gap> eta := NaturalIsomorphismFromMinusOneFunctorIntoIdentity( chains );
 Natural isomorphism: ⊝  => Id
 gap> IsIsomorphism( eta( Source( alpha ) ) );
 true
-gap> LaTeXStringOp( Source( alpha ) );;
-gap> LaTeXStringOp( AsCochainComplex( Source( alpha ) ) );;
-gap> LaTeXOutput( Source( alpha ) );;
-gap> LaTeXOutput( AsCochainComplex( Source( alpha ) ) );;
 gap> DefectOfExactnessAt( Source( alpha ), 3 ) = DefectOfExactnessAt( AsCochainComplex( Source( alpha ) ), -3 );
 true
 gap> IsExact( Source( alpha ) ) = IsExact( AsCochainComplex( Source( alpha ) ) );

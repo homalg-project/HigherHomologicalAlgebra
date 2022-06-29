@@ -4,9 +4,6 @@
 # Declarations
 #
 
-DeclareOperation( "LaTeXStringOp", [ IsVectorSpaceObject ] );
-DeclareOperation( "LaTeXStringOp", [ IsVectorSpaceMorphism ] );
-
 if false then
 
   #? @Description

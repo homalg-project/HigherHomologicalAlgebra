@@ -310,19 +310,3 @@ InstallMethod( ViewHomotopyCategoryMorphism,
     Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
 
 end );
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsHomotopyCategoryCell ],
-  c -> LaTeXStringOp( UnderlyingCell( c ) )
-);
-
-##
-InstallOtherMethod( LaTeXStringOp,
-          [ IsHomotopyCategoryCell, IsInt, IsInt ],
-  { c, l, u } -> LaTeXStringOp( UnderlyingCell( c, l, u ) )
-);
-
-##
-## MakeShowable( [ "text/latex", "application/x-latex" ], IsHomotopyCategoryCell );
-

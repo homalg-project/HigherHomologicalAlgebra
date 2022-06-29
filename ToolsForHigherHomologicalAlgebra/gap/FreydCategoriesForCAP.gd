@@ -12,19 +12,3 @@ DeclareAttribute( "IsomorphismOntoDoubleDualOfFpModuleByFreyd", IsFreydCategoryO
 
 DeclareAttribute( "UniversalEquivalenceFromFreydCategory",
                   IsCapFunctor );
-
-DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryObject ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsFreydCategoryMorphism ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsCategoryOfRowsObject ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsCategoryOfRowsMorphism ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsAdditiveClosureObject ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsAdditiveClosureMorphism ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsQuiverRowsObject ] );
-
-DeclareOperation( "LaTeXStringOp", [ IsQuiverRowsMorphism ] );

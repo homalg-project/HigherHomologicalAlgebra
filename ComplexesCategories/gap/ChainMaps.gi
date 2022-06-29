@@ -583,7 +583,7 @@ InstallMethod( IsWellDefined,
 end );
 
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainMorphism, IsInt, IsInt ],
         
   function( phi, l, u )
@@ -597,7 +597,7 @@ InstallOtherMethod( LaTeXStringOp,
       
       for i in [ l .. u ] do
         
-        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXStringOp( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
+        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
         
       od;
       
@@ -609,11 +609,11 @@ InstallOtherMethod( LaTeXStringOp,
         
         s := Concatenation(
                 s,
-                LaTeXStringOp( Source( phi )[ u ] ),
+                LaTeXOutput( Source( phi )[ u ] ),
                 "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ u ] : OnlyDatum := true ),
+                LaTeXOutput( phi[ u ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ u ] ),
+                LaTeXOutput( Range( phi )[ u ] ),
                 "\n \\\\ \n"
               );
               
@@ -629,9 +629,9 @@ InstallOtherMethod( LaTeXStringOp,
                 
           s := Concatenation(
                   s,
-                  LaTeXStringOp( Source( phi ) ^ i : OnlyDatum := true ),
+                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
                   "&&",
-                  LaTeXStringOp( Range( phi ) ^ i : OnlyDatum := true ),
+                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
                   "\n \\\\ \n "
                 );
                 
@@ -645,11 +645,11 @@ InstallOtherMethod( LaTeXStringOp,
                 
           s := Concatenation(
                 s,
-                LaTeXStringOp( Source( phi )[ i ] ),
+                LaTeXOutput( Source( phi )[ i ] ),
                 "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ i ] : OnlyDatum := true ),
+                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ i ] ),
+                LaTeXOutput( Range( phi )[ i ] ),
                 "\n \\\\ \n "
               );
               
@@ -662,11 +662,11 @@ InstallOtherMethod( LaTeXStringOp,
           s := Concatenation(
                 s,
                 "\\\\ \n",
-                LaTeXStringOp( Source( phi )[ i ] ),
+                LaTeXOutput( Source( phi )[ i ] ),
                 "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ i ] : OnlyDatum := true ),
+                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ i ] ),
+                LaTeXOutput( Range( phi )[ i ] ),
                 "\n "
               );
               
@@ -680,9 +680,9 @@ InstallOtherMethod( LaTeXStringOp,
                 
           s := Concatenation(
                   s,
-                  LaTeXStringOp( Source( phi ) ^ i : OnlyDatum := true ),
+                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
                   "&&",
-                  LaTeXStringOp( Range( phi ) ^ i : OnlyDatum := true ),
+                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
                   "\n \\\\ \n "
                 );
                 
@@ -698,154 +698,11 @@ InstallOtherMethod( LaTeXStringOp,
         s := Concatenation(
                 s,
                 "\\\\ \n",
-                LaTeXStringOp( Source( phi )[ l ] ),
-                "&-\\phantom{-}{",
-                LaTeXStringOp( phi[ l ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXStringOp( Range( phi )[ l ] ),
-                "\n \\\\ \n "
-              );
-              
-      fi;
-      
-    fi;
-    
-    s := Concatenation( s, "\\end{array}" );
-    
-    return s;
-    
-end );
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsBoundedChainOrCochainMorphism ],
-  phi -> LaTeXStringOp( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
-);
-
-##
-#MakeShowable( [ "text/latex", "application/x-latex" ], IsBoundedChainOrCochainMorphism );
-
-##
-InstallOtherMethod( LaTeXOutput,
-        [ IsChainOrCochainMorphism, IsInt, IsInt ],
-        
-  function( phi, l, u )
-    local OnlyDatum, s, i;
-    
-    OnlyDatum := ValueOption( "OnlyDatum" );
-        
-    if OnlyDatum = true then
-      
-      s := "\\begin{array}{lc}\n ";
-      
-      for i in [ l .. u ] do
-        
-        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
-        
-      od;
-    
-    else
-      
-      s := "\\begin{array}{ccc}\n ";
-      
-      if IsChainMorphism( phi ) then
-        
-        s := Concatenation(
-                s,
                 LaTeXOutput( Source( phi )[ l ] ),
                 "&-\\phantom{-}{",
                 LaTeXOutput( phi[ l ] : OnlyDatum := true ),
                 "}\\phantom{-}\\rightarrow&",
                 LaTeXOutput( Range( phi )[ l ] ),
-                "\n \\\\ \n"
-              );
-              
-        for i in [ l + 1 .. u ] do
-          
-          s := Concatenation(
-                  s,
-                  " \\uparrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\uparrow_{\\phantom{", String( i ), "}}",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  "\\vert_{", String( i ), "} ",
-                  "&&",
-                  "\\vert_{", String( i ), "} ",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                s,
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n \\\\ \n "
-              );
-              
-        od;
-        
-      else
-        
-        for i in [ l .. u - 1 ] do
-          
-          s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n "
-              );
-              
-          s := Concatenation(
-                  s,
-                  "\\\\ \n \\vert^{", String( i ), "} ",
-                  "&&",
-                  "\\vert^{", String( i ), "} ",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  " \\downarrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\downarrow_{\\phantom{", String( i ), "}}"
-                );
-                
-        od;
-        
-        s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ u ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ u ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ u ] ),
                 "\n \\\\ \n "
               );
               

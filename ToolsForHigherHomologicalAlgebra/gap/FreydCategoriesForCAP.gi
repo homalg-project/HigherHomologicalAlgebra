@@ -406,31 +406,7 @@ end );
 #######################
 
 ##
-InstallMethod( LaTeXStringOp,
-          [ IsFreydCategoryObject ],
-  LaTeXOutput
-);
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsFreydCategoryMorphism ],
-  LaTeXOutput
-);
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsCategoryOfRowsObject ],
-  LaTeXOutput
-);
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsCategoryOfRowsMorphism ],
-  LaTeXOutput
-);
-
-##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsQuiverRowsObject ],
           
   function( obj )
@@ -451,7 +427,7 @@ InstallMethod( LaTeXStringOp,
       od;
       
     fi;
- 
+    
     l := ListOfQuiverVertices( obj );
     
     if IsEmpty( l ) then
@@ -475,9 +451,9 @@ InstallMethod( LaTeXStringOp,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsQuiverRowsMorphism ],
-               
+          
   function( morphism )
     local Qrows, Q, vertices, matrix, v, source, range;
     
@@ -540,16 +516,16 @@ InstallMethod( LaTeXStringOp,
         
     fi;
     
-    source := LaTeXStringOp( Source( morphism ) );
+    source := LaTeXOutput( Source( morphism ) );
     
-    range := LaTeXStringOp( Range( morphism ) );
+    range := LaTeXOutput( Range( morphism ) );
     
     return Concatenation( source, "\\xrightarrow{", matrix, "}", range );
     
 end );
 
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallOtherMethod( LaTeXOutput,
           [ IsGradedRow ],
           
   function( obj )
@@ -574,24 +550,22 @@ InstallOtherMethod( LaTeXStringOp,
         fi;
     end;
     
-    l := List( degrees, pair -> Concatenation( "{", LaTeXStringOp( ring ),"(", pair[1] ,")}^{", exp_func( pair[2] ), "}" ) );
+    l := List( degrees, pair -> Concatenation( "{", LaTeXOutput( ring ),"(", pair[1] ,")}^{", exp_func( pair[2] ), "}" ) );
     
     return JoinStringsWithSeparator( l, " \\oplus " );
     
 end );
 
-InstallOtherMethod( LaTeXOutput, [ IsGradedRow ], LaTeXStringOp );
-
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsGradedRowMorphism ],
-               
+          
   function( morphism )
     local matrix, source, range;
     
     matrix := UnderlyingHomalgMatrix( morphism );
     
-    matrix := LaTeXStringOp( matrix );
+    matrix := LaTeXOutput( matrix );
     
     if ValueOption( "OnlyDatum" ) = true then
         
@@ -599,19 +573,16 @@ InstallOtherMethod( LaTeXStringOp,
         
     fi;
     
-    source := LaTeXStringOp( Source( morphism ) );
+    source := LaTeXOutput( Source( morphism ) );
     
-    range := LaTeXStringOp( Range( morphism ) );
+    range := LaTeXOutput( Range( morphism ) );
     
     return Concatenation( source, "\\xrightarrow{", matrix, "}", range );
     
 end );
 
 ##
-InstallOtherMethod( LaTeXOutput, [ IsGradedRowMorphism ], LaTeXStringOp );
-
-##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsAdditiveClosureObject ],
           
   function( obj )
@@ -631,7 +602,7 @@ InstallMethod( LaTeXStringOp,
             function( pair )
               local s;
               
-              s := Concatenation( "{", LaTeXStringOp( pair[ 1 ] ), "}" );
+              s := Concatenation( "{", LaTeXOutput( pair[ 1 ] ), "}" );
               
               if pair[ 2 ] <> 1 then
                   s := Concatenation( s, "^{\\oplus ", String( pair[ 2 ] ), "}" );
@@ -646,7 +617,7 @@ InstallMethod( LaTeXStringOp,
 end );
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsAdditiveClosureMorphism ],
           
   function( morphism )
@@ -659,7 +630,7 @@ InstallMethod( LaTeXStringOp,
     else
         
         matrix := JoinStringsWithSeparator(
-            List( matrix, row -> JoinStringsWithSeparator( List( row, morphism -> LaTeXStringOp( morphism : OnlyDatum := true ) ), "\&" ) ),
+            List( matrix, row -> JoinStringsWithSeparator( List( row, morphism -> LaTeXOutput( morphism : OnlyDatum := true ) ), "\&" ) ),
             "\\\\ \n"
           );
           
@@ -679,9 +650,9 @@ InstallMethod( LaTeXStringOp,
         
     fi;
     
-    source := LaTeXStringOp( Source( morphism ) );
+    source := LaTeXOutput( Source( morphism ) );
     
-    range := LaTeXStringOp( Range( morphism ) );
+    range := LaTeXOutput( Range( morphism ) );
     
     return Concatenation( source, "\\xrightarrow{", matrix, "}", range );
     

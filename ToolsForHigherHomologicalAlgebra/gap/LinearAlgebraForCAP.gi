@@ -6,30 +6,23 @@
 #
 
 ##
-InstallMethod( LaTeXStringOp,
+InstallMethod( LaTeXOutput,
           [ IsVectorSpaceObject ],
           
   function( a )
     
-    return Concatenation( "{", LaTeXStringOp( UnderlyingRing( CapCategory( a ) ) ), "}^{1\\times ", String( Dimension( a ) ), "}" );
+    return Concatenation( "{", LaTeXOutput( UnderlyingRing( CapCategory( a ) ) ), "}^{1\\times ", String( Dimension( a ) ), "}" );
     
 end );
 
 ##
 InstallMethod( LaTeXOutput,
-          [ IsVectorSpaceObject ],
-          -1,
-  LaTeXStringOp
-);
-
-##
-InstallMethod( LaTeXStringOp,
           [ IsVectorSpaceMorphism ],
           
   function( alpha )
     local datum, only_datum;
     
-    datum := LaTeXStringOp( UnderlyingMatrix( alpha ) );
+    datum := LaTeXOutput( UnderlyingMatrix( alpha ) );
     
     only_datum := ValueOption( "OnlyDatum" );
     
@@ -40,23 +33,16 @@ InstallMethod( LaTeXStringOp,
     else
       
       return Concatenation(
-                LaTeXStringOp( Source( alpha ) ),
+                LaTeXOutput( Source( alpha ) ),
                 "\\xrightarrow{",
                 datum,
                 "}",
-                LaTeXStringOp( Range( alpha ) )
+                LaTeXOutput( Range( alpha ) )
               );
               
     fi;
     
 end );
-
-##
-InstallMethod( LaTeXOutput,
-          [ IsVectorSpaceMorphism ],
-          -1,
-  LaTeXStringOp
-);
 
 ##
 InstallMethod( RandomObjectByList,

@@ -558,8 +558,9 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
 
 end );
 
+
 ##
-InstallOtherMethod( LaTeXStringOp,
+InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainComplex, IsInt, IsInt ],
   function( C, l, u )
     local OnlyDifferentials, OnlyDatum, s, i, Color;
@@ -598,111 +599,12 @@ InstallOtherMethod( LaTeXStringOp,
       
       if OnlyDifferentials <> true then
         
-        s := Concatenation( s, LaTeXStringOp( C[ u ] ), "\n " );
+        s := Concatenation( s, LaTeXOutput( C[ u ] ), "\n " );
         
       fi;
       
       for i in Reversed( [ l .. u - 1 ] ) do
         
-        s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\phantom{", String( i ), "}}} \n \\\\ \n " );
-        
-        s := Concatenation( s, LaTeXStringOp( C ^ i : OnlyDatum := OnlyDatum ), "\n \\\\ \n " );
-        
-        s := Concatenation( s, "{ \\color{", Color, "}\\vert_{", String( i ), "}} \n " );
-        
-        if OnlyDifferentials <> true then
-          
-          s := Concatenation( s, "\n \\\\ \n", LaTeXStringOp( C[ i ] ) );
-          
-        fi;
-        
-      od;
-      
-    else
-      
-      for i in Reversed( [ l + 1 .. u ] ) do
-        
-        if OnlyDifferentials <> true then
-          
-          s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ i ] ), " \n " );
-          
-        fi;
-        
-        s := Concatenation( s, "\\\\ \n  { \\color{", Color, "}\\vert^{", String( i ), "}} \n \\\\ \n " );
-        
-        s := Concatenation( s, LaTeXStringOp( C ^ i : OnlyDatum := OnlyDatum ), " \n \\\\ \n " );
-        
-        s := Concatenation( s, "{ \\color{", Color, "} \\downarrow_{\\phantom{", String( i ), "}}} \n " ); 
-        
-      od;
-      
-      if OnlyDifferentials <> true then
-        
-        s := Concatenation( s, "\\\\ \n ", LaTeXStringOp( C[ l ] ) );
-        
-      fi;
-      
-    fi;
-    
-    s := Concatenation( s, "\\end{array}" );
-    
-    return s;
-    
-end );
-
-##
-InstallMethod( LaTeXStringOp,
-          [ IsBoundedChainOrCochainComplex ],
-  C -> LaTeXStringOp( C, ActiveLowerBound( C ), ActiveUpperBound( C ) )
-);
-
-
-##
-InstallOtherMethod( LaTeXOutput,
-        [ IsChainOrCochainComplex, IsInt, IsInt ],
-  function( C, l, u )
-    local OnlyDifferentials, OnlyDatum, s, i, Color;
-    
-    OnlyDifferentials := ValueOption( "OnlyDifferentials" );
-        
-    if OnlyDifferentials = true then
-      
-      OnlyDatum := false;
-      
-    else
-      
-      OnlyDatum := true;
-      
-    fi;
-    
-    Color := ValueOption( "Color" );
-    
-    if Color in [ fail, false ] then
-      
-      Color := "black";
-      
-    elif Color = true then
-      
-      Color := "red";
-      
-    elif not IsString( Color ) then
-      
-      Color := "black";
-      
-    fi;
-    
-    s := "\\begin{array}{c}\n ";
-    
-    if IsChainComplex( C ) then
-      
-      if OnlyDifferentials <> true then
-        
-        s := Concatenation( s, LaTeXOutput( C[ l ] ), "\n " );
-        
-      fi;
-      
-      for i in [ l + 1 .. u ] do
-         
         s := Concatenation( s, "\\\\ \n { \\color{", Color, "}\\uparrow_{\\phantom{", String( i ), "}}} \n \\\\ \n " );
         
         s := Concatenation( s, LaTeXOutput( C ^ i : OnlyDatum := OnlyDatum ), "\n \\\\ \n " );
@@ -716,10 +618,10 @@ InstallOtherMethod( LaTeXOutput,
         fi;
         
       od;
-    
+      
     else
       
-      for i in [ l .. u - 1 ] do
+      for i in Reversed( [ l + 1 .. u ] ) do
         
         if OnlyDifferentials <> true then
           
@@ -737,14 +639,14 @@ InstallOtherMethod( LaTeXOutput,
       
       if OnlyDifferentials <> true then
         
-        s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ u ] ) );
+        s := Concatenation( s, "\\\\ \n ", LaTeXOutput( C[ l ] ) );
         
       fi;
       
     fi;
     
     s := Concatenation( s, "\\end{array}" );
-        
+    
     return s;
     
 end );
