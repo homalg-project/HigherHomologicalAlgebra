@@ -6,45 +6,6 @@
 #
 
 ##
-InstallMethod( LaTeXOutput,
-          [ IsVectorSpaceObject ],
-          
-  function( a )
-    
-    return Concatenation( "{", LaTeXOutput( UnderlyingRing( CapCategory( a ) ) ), "}^{1\\times ", String( Dimension( a ) ), "}" );
-    
-end );
-
-##
-InstallMethod( LaTeXOutput,
-          [ IsVectorSpaceMorphism ],
-          
-  function( alpha )
-    local datum, only_datum;
-    
-    datum := LaTeXOutput( UnderlyingMatrix( alpha ) );
-    
-    only_datum := ValueOption( "OnlyDatum" );
-    
-    if only_datum = true then
-      
-      return datum;
-      
-    else
-      
-      return Concatenation(
-                LaTeXOutput( Source( alpha ) ),
-                "\\xrightarrow{",
-                datum,
-                "}",
-                LaTeXOutput( Range( alpha ) )
-              );
-              
-    fi;
-    
-end );
-
-##
 InstallMethod( RandomObjectByList,
           [ IsMatrixCategory, IsList ],
           
