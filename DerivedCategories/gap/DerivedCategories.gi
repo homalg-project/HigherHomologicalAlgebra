@@ -535,6 +535,20 @@ InstallMethod( DerivedCategoryOp,
     end );
     
     ##
+    AddInverseForMorphisms( D,
+      function( alpha )
+        local roof;
+        
+        roof := UnderlyingRoof( alpha );
+        
+        return Roof(
+                  RangeMorphism( roof ),
+                  SourceMorphism( roof )
+                ) / D;
+                
+    end );
+    
+    ##
     AddIsWellDefinedForObjects( D,
       function( a )
       
