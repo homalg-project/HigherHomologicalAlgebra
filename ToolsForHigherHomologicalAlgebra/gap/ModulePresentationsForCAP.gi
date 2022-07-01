@@ -55,7 +55,7 @@ ADD_RRANDOM_OBJECT_FOR_MODULE_PRESENTATIONS :=
     
     AddRandomObjectByInteger( category,
       
-      function( C, n )
+      function( cat, n )
         
         if n < 0 then
           
@@ -65,11 +65,11 @@ ADD_RRANDOM_OBJECT_FOR_MODULE_PRESENTATIONS :=
         
         if left_or_right = "left" then
           
-          return RRANDOM_MODULE_PRESENTATION( C, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
+          return RRANDOM_MODULE_PRESENTATION( cat, [ Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ), n ], "left" );
         
         else
           
-          return RRANDOM_MODULE_PRESENTATION( C, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
+          return RRANDOM_MODULE_PRESENTATION( cat, [ n, Random( [ Int( n/2 ) .. Int( 3*n/2 ) ] ) ], "right" );
         
         fi;
       
@@ -87,7 +87,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_LEFT_FOR_MODULE_PRESENTATIONS :=
       homalg_ring := category!.ring_for_representation_category;
       
       AddRandomMorphismWithFixedSourceByInteger( category,
-        function( M, n )
+        function( cat, M, n )
           local m, y, syz, x, u, U, e;
           
           if n < 0 then
@@ -127,7 +127,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT_FOR_MODULE_PRESENTATIONS :=
       
       
       AddRandomMorphismWithFixedRangeByInteger( category,
-        function( U, n )
+        function( cat, U, n )
           local u, x, syz, m, M, e;
           
           if n < 0 then
@@ -168,7 +168,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT_FOR_MODULE_PRESENTATIONS :=
       homalg_ring := category!.ring_for_representation_category;
       
       AddRandomMorphismWithFixedSourceByInteger( category,
-        function( U, n )
+        function( cat, U, n )
           local u, x, syz, e, m, M, y;
           
           if n < 0 then
@@ -194,7 +194,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT_FOR_MODULE_PRESENTATIONS :=
           # Now: m*x + y*u = 0
           return PresentationMorphism( U, y, M );
     
-    end ); 
+    end );
     
 end;
 
@@ -206,7 +206,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT_FOR_MODULE_PRESENTATIONS:=
       homalg_ring := category!.ring_for_representation_category;
       
       AddRandomMorphismWithFixedRangeByInteger( category,
-        function( M, n )
+        function( cat, M, n )
           local m, y, syz, e, u, U;
           
           if n < 0 then
@@ -218,7 +218,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT_FOR_MODULE_PRESENTATIONS:=
           if n = 0 then
             
             return UniversalMorphismFromZeroObject( M );
-          
+            
           fi;
           
           m := UnderlyingMatrix( M );
@@ -234,7 +234,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_RIGHT_FOR_MODULE_PRESENTATIONS:=
           U := AsRightPresentation( u );
           
           return PresentationMorphism( U, y, M );
-      
+          
      end );
     
 end;
@@ -248,9 +248,8 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE_FOR_MODULE_PRESENTATIONS:=
       
       homalg_ring := category!.ring_for_representation_category;
       
-
       AddRandomMorphismWithFixedSourceAndRangeByInteger( category,
-        function( M, N, n )
+        function( cat, M, N, n )
           local H, nr_generators, random_positions, maps;
           
           H := InternalHomOnObjects( M, N );
@@ -258,17 +257,17 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_AND_RANGE_FOR_MODULE_PRESENTATIONS:=
           if left_or_right = "left" then
             
             nr_generators := NrCols( UnderlyingMatrix( H ) );
-          
+            
           else
             
             nr_generators := NrRows( UnderlyingMatrix( H ) );
-          
+            
           fi;
           
           if nr_generators = 0 then
             
             return ZeroMorphism( M, N );
-          
+            
           fi;
           
           random_positions := List( [ 1 .. Random( [ 1 .. nr_generators ] ) ], i -> Random( [ 1 .. nr_generators ] ) );
@@ -413,7 +412,7 @@ InstallMethod( LaTeXOutput,
         "\\mbox{-fpres}",
         "}"
       );
-       
+      
     else
       
       return

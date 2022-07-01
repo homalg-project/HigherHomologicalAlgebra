@@ -21,7 +21,7 @@ ADD_RANDOM_GRADED_MODULE_PRESENTATION :=
       function( C, n )
         local homalg_ring, nr_rows, nr_cols, mat;
         
-        homalg_ring := category!.ring_for_representation_category;
+        homalg_ring := category!.ring_for_graded_representation_category;
         
         if n < 0 then
           
@@ -67,7 +67,7 @@ ADD_RANDOM_GRADED_PRESENTATION_MORPHISM_WITH_FIXED_SOURCE_LEFT :=
   function( category )
     local homalg_ring;
     
-    homalg_ring := category!.ring_for_representation_category;
+    homalg_ring := category!.ring_for_graded_representation_category;
     
     AddRandomMorphismWithFixedSourceByInteger( category,
     
@@ -160,7 +160,7 @@ ADD_RANDOM_GRADED_PRESENTATION_MORPHISM_WITH_FIXED_RANGE_LEFT :=
   function( category )
     local homalg_ring;
     
-    homalg_ring := category!.ring_for_representation_category;
+    homalg_ring := category!.ring_for_graded_representation_category;
     
     AddRandomMorphismWithFixedRangeByInteger( category,
     
@@ -267,7 +267,7 @@ ADD_RANDOM_GRADED_PRESENTATION_MORPHISM_WITH_FIXED_SOURCE_RIGHT :=
   function( category )
     local homalg_ring;
     
-    homalg_ring := category!.ring_for_representation_category;
+    homalg_ring := category!.ring_for_graded_representation_category;
     
     AddRandomMorphismWithFixedSourceByInteger( category,
     
@@ -364,7 +364,7 @@ ADD_RANDOM_GRADED_PRESENTATION_MORPHISM_WITH_FIXED_RANGE_RIGHT :=
   function( category )
     local homalg_ring;
     
-    homalg_ring := category!.ring_for_representation_category;
+    homalg_ring := category!.ring_for_graded_representation_category;
     
     AddRandomMorphismWithFixedRangeByInteger( category,
     
@@ -462,7 +462,7 @@ ADD_RRANDOM_METHODS_TO_GRADED_MODULE_PRESENTATIONS :=
   function( category, left_or_right )
     local S;
 
-    S := category!.ring_for_representation_category;
+    S := category!.ring_for_graded_representation_category;
     
     if not EnhanceHomalgGradedRingWithRandomFunctions( S ) = true then
        
@@ -500,7 +500,7 @@ ADD_EXTRA_METHODS_TO_GRADED_LEFT_PRESENTATIONS_OVER_EXTERIOR_ALGEBRA :=
   function( category )
     local R, r;
     
-    R := category!.ring_for_representation_category;
+    R := category!.ring_for_graded_representation_category;
     
     r := UnderlyingNonGradedRing( R );
     
@@ -904,15 +904,15 @@ InstallMethod( EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentatio
 end );
 
 functor :=
-  [ grpres -> IsBound( grpres!.ring_for_representation_category ),
+  [ grpres -> IsBound( grpres!.ring_for_graded_representation_category ),
     ValueGlobal( "IsFreydCategory" ),
     { grpres, freyd_cat } ->
       IsIdenticalObj(
           ValueGlobal( "UnderlyingGradedRing" )( UnderlyingCategory( freyd_cat ) ),
-          grpres!.ring_for_representation_category
+          grpres!.ring_for_graded_representation_category
         ),
     { grpres, freyd_cat } -> EquivalenceFromGradedLeftPresentationsOntoFreydCategoryOfGradedRows(
-                                      grpres!.ring_for_representation_category
+                                      grpres!.ring_for_graded_representation_category
                                     ),
     "Isomorphism onto Freyd category",
     "Isomorphism from graded left presentations to Freyd category of graded rows",
@@ -924,14 +924,14 @@ ExtendFunctorMethodToHomotopyCategories( functor );
 
 functor :=
   [ ValueGlobal( "IsFreydCategory" ),
-    grpres -> IsBound( grpres!.ring_for_representation_category ),
+    grpres -> IsBound( grpres!.ring_for_graded_representation_category ),
     { freyd_cat, grpres } ->
       IsIdenticalObj(
           ValueGlobal( "UnderlyingGradedRing" )( UnderlyingCategory( freyd_cat ) ),
-          grpres!.ring_for_representation_category
+          grpres!.ring_for_graded_representation_category
         ),
     { grpres, freyd_cat } -> EquivalenceFromFreydCategoryOfGradedRowsOntoGradedLeftPresentations(
-                                      grpres!.ring_for_representation_category
+                                      grpres!.ring_for_graded_representation_category
                                     ),
     "Isomorphism from Freyd category",
     "Isomorphism from Freyd category of graded rows onto graded left presentations",
