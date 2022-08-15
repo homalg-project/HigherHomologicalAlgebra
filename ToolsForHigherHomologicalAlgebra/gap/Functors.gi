@@ -154,7 +154,7 @@ InstallMethod( KnownFunctors,
     
     for i in [ 1 .. Size( positions ) ] do
       
-      Print( i, ": ", ALL_FUNCTORS_METHODS.( recs[ positions[ i ] ] )[ 5 ], "\n" );
+      PrintFormattedString( Concatenation( String( i ), ": ", ALL_FUNCTORS_METHODS.( recs[ positions[ i ] ] )[ 5 ], "\n" ) );
       
     od;
     
