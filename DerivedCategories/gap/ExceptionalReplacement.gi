@@ -248,9 +248,10 @@ InstallMethodWithCache( ExceptionalReplacementData,
                   
                   r_i := UniversalMorphismFromZeroObject( Shift( A, i ) );
                   
-                  r_im1 := data[ i - 1 ][ 1 ];
+                  #r_im1 := data[ i - 1 ][ 1 ];
                   
-                  X_im1 := Range( r_im1 );
+                  #X_im1 := Range( r_im1 );
+                  X_im1 := Shift( A, i - 1 );
                   
                   q_im1 := UniversalMorphismIntoZeroObject( X_im1 );
                   
@@ -373,10 +374,15 @@ InstallMethodWithCache( ExceptionalReplacement,
     
     N := MaximalExceptionalShift( A, collection );
     
-    SetUpperBound( rep_A, N );
+    if N = -infinity then
+        SetUpperBound( rep_A, 0 );
+        SetLowerBound( rep_A, 0 );
+        SetIsZeroForObjects( rep_A, true );
+    else
+        SetUpperBound( rep_A, N );
+    fi;
     
     return rep_A;
-    
 end );
 
 ##
@@ -571,9 +577,10 @@ InstallMethodWithCache( ExceptionalReplacementData,
                   
                   r_i := UniversalMorphismFromZeroObject( Shift( A, -i ) );
                   
-                  r_ip1 := data[ i + 1 ][ 1 ];
+                  #r_ip1 := data[ i + 1 ][ 1 ];
                   
-                  X_ip1 := Range( r_ip1 );
+                  #X_ip1 := Range( r_ip1 );
+                  X_ip1 := Shift( A, -i-1 );
                   
                   q_ip1 := UniversalMorphismIntoZeroObject( X_ip1 );
                   
@@ -697,7 +704,13 @@ InstallMethodWithCache( ExceptionalReplacement,
     
     N := MaximalExceptionalShift( A, collection );
     
-    SetLowerBound( rep_A, -N );
+    if N = -infinity then
+        SetLowerBound( rep_A, 0 );
+        SetUpperBound( rep_A, 0 );
+        SetIsZeroForObjects( rep_A, true );
+    else
+        SetLowerBound( rep_A, -N );
+    fi;
     
     return rep_A;
     
