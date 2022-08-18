@@ -37,3 +37,32 @@ InstallOtherMethod( CreateStrongExceptionalCollection,
            );
     
 end );
+
+##
+InstallOtherMethod( Show,
+    [ IsAlgebroid ],
+  function( algebroid )
+    local q, str;
+    
+    if not IsRunningInJupyter( ) then
+        TryNextMethod( );
+    fi;
+    
+    q := UnderlyingQuiver( algebroid );
+    
+    str := String( List( [ 1 .. NumberOfVertices( q ) ], i -> ArrowTargetIndices( q ){Positions( ArrowSourceIndices( q ), i )} ) );
+    
+    Julia.Base.display(
+            Julia.Base.MIME( GAPToJulia( "text/html" ) ),
+            ValueGlobal( "JuliaEvalString" )(
+                Concatenation(
+                    "graphplot(",
+                    str,
+                    ", names=",
+                    String( List(  VertexLabels( q ), v -> Concatenation( " ", String( v ), " " ) ) ),
+                    ", nodeshape=:circle, fontsize=10)"
+                )
+            )
+        );
+    
+end );
