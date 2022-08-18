@@ -72,6 +72,7 @@ Dependencies := rec(
   GAP := ">= 4.11.1",
   NeededOtherPackages := [ 
         [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+        [ "CAP", ">= 2022.08-04" ],
         [ "QPA", ">= 2.0-dev"],
         [ "Algebroids", ">= 2021.11-07" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
