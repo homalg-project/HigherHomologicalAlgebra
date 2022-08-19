@@ -14,7 +14,6 @@ ReadPackage( "ComplexesCategories", "gap/ChainMaps.gi" );
 ReadPackage( "ComplexesCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "ComplexesCategories", "gap/Resolutions.gi" );
 ReadPackage( "ComplexesCategories", "gap/Derivations.gi" );
-ReadPackage( "ComplexesCategories", "gap/Tools.gi" );
 ReadPackage( "ComplexesCategories", "gap/RandomMethods.gi" );
 
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
