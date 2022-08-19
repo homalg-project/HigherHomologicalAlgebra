@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
 Subtitle := "Framework for triangulated categories",
-Version := "2021.11-01",
-Date := "19/11/2021",
+Version := "2022.08-01",
+Date := "19/08/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,7 +69,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.8",
+  GAP := ">= 4.11.1",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ], [ "CAP", ">= 2021.06-02" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
