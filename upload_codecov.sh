@@ -23,7 +23,6 @@ shasum -a 256 -c codecov.SHA256SUM
 
 # execute
 chmod +x codecov
-./codecov -Z || ./codecov -Z || ./codecov -Z
 ./codecov -Z -F BBGG || ./codecov -Z -F BBGG || ./codecov -Z -F BBGG
 ./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes
 ./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories
