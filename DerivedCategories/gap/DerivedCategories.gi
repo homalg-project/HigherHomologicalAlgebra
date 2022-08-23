@@ -242,7 +242,7 @@ InstallMethod( \^,
 );
 
 ##
-InstallMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ],
+InstallOtherMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ],
   { a, D } -> DerivedCategoryObject( D, a )
 );
 
@@ -286,7 +286,7 @@ InstallMethod( DerivedCategoryMorphism,
 end );
 
 ##
-InstallMethod( \/, [ IsRoof, IsDerivedCategory ],
+InstallOtherMethod( \/, [ IsRoof, IsDerivedCategory ],
   { r, D } -> DerivedCategoryMorphism(D,r)
 );
 
@@ -321,7 +321,7 @@ InstallMethod( DerivedCategoryMorphism,
 end );
 
 ##
-InstallMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ],
+InstallOtherMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ],
   { alpha, D } -> DerivedCategoryMorphism( D, alpha )
 );
 

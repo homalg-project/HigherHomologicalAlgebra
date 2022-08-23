@@ -1538,7 +1538,7 @@ InstallGlobalFunction( ADD_INTERNAL_HOM_TO_TENSOR_PRODUCT_ADJUNCTION_MAP,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryObject, IsChainComplexCategory ],
   function( a, chains )
     
@@ -1551,7 +1551,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryObject, IsCochainComplexCategory ],
   function( a, cochains )
     
@@ -1564,7 +1564,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryMorphism, IsChainComplexCategory ],
   function( alpha, chains )
     
@@ -1577,7 +1577,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryMorphism, IsCochainComplexCategory ],
   function( alpha, cochains )
     

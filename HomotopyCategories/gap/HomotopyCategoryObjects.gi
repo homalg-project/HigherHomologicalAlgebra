@@ -97,7 +97,7 @@ InstallMethod( \^,
     { a, i } -> UnderlyingCell( a ) ^ i );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsChainOrCochainComplex, IsHomotopyCategory ],
   { a, H } -> HomotopyCategoryObject( H, a )
 );

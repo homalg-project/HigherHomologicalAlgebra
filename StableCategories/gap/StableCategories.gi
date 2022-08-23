@@ -354,7 +354,7 @@ InstallMethod( StableCategoryObject,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryObject, IsStableCategory ],
   function( a, Q )
     
@@ -392,7 +392,7 @@ InstallMethod( StableCategoryMorphism,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategoryMorphism, IsStableCategory ],
   function( a, Q )
     
