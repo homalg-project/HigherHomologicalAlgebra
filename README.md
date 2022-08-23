@@ -90,8 +90,8 @@ The repository is a collection of the Gap packages. The aim of these packages is
 [pdf-TriangulatedCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/TriangulatedCategories/download_pdf.html
 
 
-[tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/workflows/Tests/badge.svg?branch=master
-[tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions?query=workflow%3ATests+branch%3Amaster
+[tests-img]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions/workflows/Tests.yml/badge.svg?branch=master
+[tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions/workflows/Tests.yml?query=branch%3Amaster
 
 [codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra

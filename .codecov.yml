@@ -1,9 +1,8 @@
 codecov:
   disable_default_path_fixes: true
-fixes:
-  - "/home/gap/.gap/pkg/HigherHomologicalAlgebra/::"
-ignore:
-  - "home/"
+  require_ci_to_pass: false
+comment:
+  after_n_builds: 9
 flags:
   BBGG:
     paths:
