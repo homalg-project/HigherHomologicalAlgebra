@@ -4,13 +4,13 @@
 # Implementations
 #
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapCategory, IsCapCategory ],
   FindSomeFunctor
 );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsCapFunctor, IsCapCategory ],
   FindSomeFunctor
 );
@@ -46,7 +46,7 @@ InstallMethod( FindSomeFunctor,
 );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsList, IsCapCategory ],
   function( l, category )
     
@@ -785,7 +785,7 @@ InstallMethod( FindSomeFunctor,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsList, IsCategoryOfGradedRows ],
   function( l, rows )
     
@@ -798,7 +798,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsList , IsCategoryOfGradedRows ],
   function( l, rows )
     
@@ -811,7 +811,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsGradedLeftPresentation, IsCategoryOfGradedRows ],
   function( o, graded_rows )
     local S, degrees;
@@ -839,7 +839,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsGradedLeftPresentationMorphism, IsCategoryOfGradedRows ],
   function( alpha, graded_rows )
     local s, r;
@@ -853,7 +853,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsFreydCategoryObject, IsCategoryOfGradedRows ],
           
   function( o, graded_rows )
@@ -878,7 +878,7 @@ InstallMethod( \/,
 end );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsFreydCategoryMorphism, IsCategoryOfGradedRows ],
           
   function( alpha, graded_rows )

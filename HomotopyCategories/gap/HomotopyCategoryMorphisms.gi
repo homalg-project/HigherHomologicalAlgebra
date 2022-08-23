@@ -101,7 +101,7 @@ InstallMethod( \[\],
     { a, i } -> UnderlyingCell( a )[ i ] );
 
 ##
-InstallMethod( \/,
+InstallOtherMethod( \/,
           [ IsChainOrCochainMorphism, IsHomotopyCategory ],
   { a, H } -> HomotopyCategoryMorphism( H, a )
 );
