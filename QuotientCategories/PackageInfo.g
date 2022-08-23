@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "QuotientCategories",
 Subtitle := "Quotient categories of CAP categories by two-sided ideals",
-Version := "2022.05-01",
-Date := "17/05/2022",
+Version := "2022.08-01",
+Date := "23/08/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
