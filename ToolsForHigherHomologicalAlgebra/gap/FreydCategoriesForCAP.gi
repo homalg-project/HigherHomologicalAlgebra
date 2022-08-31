@@ -170,9 +170,8 @@ end );
 
 AddFinalDerivation( MonomorphismIntoSomeInjectiveObject,
               [
-                [ KernelLift, 1 ],
-                [ CokernelColift, 1 ],
-                [ EpimorphismFromSomeProjectiveObject, 1 ]
+                [ EpimorphismFromSomeProjectiveObject, 1 ],
+                [ PreCompose, 1 ],
               ],
               [
                 MonomorphismIntoSomeInjectiveObject

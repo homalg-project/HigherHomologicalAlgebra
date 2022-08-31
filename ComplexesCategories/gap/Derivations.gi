@@ -264,7 +264,12 @@ Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 ##
 AddFinalDerivation( HomotopyMorphisms,
                 [
-                  [ Colift, 1 ]
+                  [ IsEqualToZeroMorphism, 1 ],
+                  [ ZeroMorphism, 2 ],
+                  [ IdentityMorphism, 2 ],
+                  [ Colift, 1 ],
+                  [ MorphismBetweenDirectSums, 1 ],
+                  [ PreCompose, 1 ],
                 ],
                 [
                   HomotopyMorphisms
@@ -308,7 +313,12 @@ end: CategoryFilter := IsChainComplexCategory,
 ##
 AddFinalDerivation( HomotopyMorphisms,
                 [
-                  [ Colift, 1 ]
+                  [ IsEqualToZeroMorphism, 1 ],
+                  [ ZeroMorphism, 2 ],
+                  [ IdentityMorphism, 2 ],
+                  [ Colift, 1 ],
+                  [ MorphismBetweenDirectSums, 1 ],
+                  [ PreCompose, 1 ],
                 ],
                 [
                   HomotopyMorphisms

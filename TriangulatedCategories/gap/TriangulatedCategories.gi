@@ -260,6 +260,13 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECOR
 ##########################################
 
 ##
+CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
+  rec(
+    ShiftOnMorphism :=
+      [ [ "ShiftOnMorphismWithGivenObjects", 1 ], [ "ShiftOnObject", 2 ] ]
+  )
+);
+
 InstallMethod( ShiftOnMorphism,
           [ IsCapCategoryMorphism ],
   alpha -> ShiftOnMorphismWithGivenObjects(
@@ -270,6 +277,13 @@ InstallMethod( ShiftOnMorphism,
 );
 
 ##
+CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
+  rec(
+    InverseShiftOnMorphism :=
+      [ [ "InverseShiftOnMorphismWithGivenObjects", 1 ], [ "InverseShiftOnObject", 2 ] ]
+  )
+);
+
 InstallMethod( InverseShiftOnMorphism,
           [ IsCapCategoryMorphism ],
   alpha -> InverseShiftOnMorphismWithGivenObjects(
