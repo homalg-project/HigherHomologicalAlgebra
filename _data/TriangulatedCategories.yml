@@ -1,7 +1,7 @@
 name: TriangulatedCategories
-version: "2022.08-01"
+version: "2022.08-02"
 license: "GPL-2.0-or-later"
-date: 2022-08-19
+date: 2022-09-02
 description: |
     Framework for triangulated categories
 
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Triangula
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-01/TriangulatedCategories-2022.08-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-02/TriangulatedCategories-2022.08-02.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-01/TriangulatedCategories-2022.08-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-02/TriangulatedCategories-2022.08-02.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-01/TriangulatedCategories-2022.08-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.08-02/TriangulatedCategories-2022.08-02.pdf
 
 abstract: |
 
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>TriangulatedCategories, Framework for triangulated categories,
-             Version 2022.08-01</i>
+             Version 2022.08-02</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/TriangulatedCategories">https://homalg-project.github.io/pkg/TriangulatedCategories</a></span>.
@@ -52,11 +52,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ TriangulatedCategories2022.08-01,
+    @misc{ TriangulatedCategories2022.08-02,
       author =           {Saleh, K.},
       title =            {{TriangulatedCategories},  Framework  for triangulated
-                          categories, {V}ersion 2022.08-01},
-      month =            {Aug},
+                          categories, {V}ersion 2022.08-02},
+      month =            {Sep},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
