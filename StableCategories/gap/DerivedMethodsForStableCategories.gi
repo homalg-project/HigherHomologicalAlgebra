@@ -127,6 +127,7 @@ AddFinalDerivation( IsColiftingObject,
               IsColiftingObject,
               ColiftingObject,
               MorphismToColiftingObjectWithGivenColiftingObject,
+              RetractionOfMorphismToColiftingObjectWithGivenColiftingObject,
               ColiftingMorphismWithGivenColiftingObjects,
               IsColiftableAlongMorphismToColiftingObject,
               WitnessForBeingColiftableAlongMorphismToColiftingObject

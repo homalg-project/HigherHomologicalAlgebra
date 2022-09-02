@@ -27,8 +27,13 @@ end:
 ##
 AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
                 [
+                  [ IsEqualForObjects, 1 ],
+                  [ ShiftOnObject, 1 ],
+                  [ MorphismToStandardConeObject, 1 ],
+                  [ MorphismFromStandardConeObject, 1 ],
+                  [ IdentityMorphism, 2 ],
                   [ SolveLinearSystemInAbCategoryOrFail, 1 ],
-                  [ ShiftOnObject, 1 ]
+                  [ InverseForMorphisms, 1 ],
                 ],
                 [
                   WitnessIsomorphismOntoStandardConeObject,
@@ -126,11 +131,12 @@ end );
 
 AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
                 [
-                  [ StandardConeObject, 2 ],
+                  [ StandardConeObject, 1 ],
                   [ MorphismFromStandardConeObjectWithGivenStandardConeObject, 1 ],
                   [ MorphismToStandardConeObjectWithGivenStandardConeObject, 1 ],
                   [ ShiftOnObject, 1 ],
-                  [ ShiftOnMorphismWithGivenObjects, 1 ]
+                  [ ShiftOnMorphismWithGivenObjects, 1 ],
+                  [ PreCompose, 1 ]
                 ],
   function( cat, s, alpha, beta, gamma, r )
     local B, pi_beta, cone_alpha, iota_alpha;
@@ -210,8 +216,10 @@ end:
 ##
 AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
                 [
-                    [ InjectionOfCofactorOfDirectSum, 1 ],
-                    [ ShiftOnMorphismWithGivenObjects, 1 ]
+                    [ InjectionOfCofactorOfDirectSum, 2 ],
+                    [ ShiftOnMorphismWithGivenObjects, 2 ],
+                    [ ShiftOnObject, 4 ],
+                    [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r  )
     local l, Tl;
@@ -227,8 +235,10 @@ end:
 
 AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
                 [
-                    [ ProjectionInFactorOfDirectSum, 1 ],
-                    [ ShiftOnMorphismWithGivenObjects, 1 ]
+                    [ ProjectionInFactorOfDirectSum, 2 ],
+                    [ ShiftOnMorphismWithGivenObjects, 2 ],
+                    [ ShiftOnObject, 4 ],
+                    [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r  )
     local l, Tl;
@@ -246,8 +256,10 @@ end:
 ##
 AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
                 [
-                    [ InjectionOfCofactorOfDirectSum, 1 ],
-                    [ InverseShiftOnMorphismWithGivenObjects, 1 ]
+                    [ InjectionOfCofactorOfDirectSum, 2 ],
+                    [ InverseShiftOnMorphismWithGivenObjects, 2 ],
+                    [ InverseShiftOnObject, 4 ],
+                    [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r )
     local l, Tl;
@@ -264,8 +276,10 @@ AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
 ##
 AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
                 [
-                    [ ProjectionInFactorOfDirectSum, 1 ],
-                    [ InverseShiftOnMorphismWithGivenObjects, 1 ]
+                    [ ProjectionInFactorOfDirectSum, 2 ],
+                    [ InverseShiftOnMorphismWithGivenObjects, 2 ],
+                    [ InverseShiftOnObject, 4 ],
+                    [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r )
     local l, Tl;

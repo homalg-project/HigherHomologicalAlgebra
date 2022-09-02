@@ -43,7 +43,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
     if IsEqualToZeroMorphism( phi ) or m > n then
-      Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
+      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n - 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
     fi;
@@ -98,7 +98,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     b := List( [ m .. n ], i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
     sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
@@ -160,7 +160,7 @@ AddDerivationToCAP( HomotopyMorphisms,
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
     if IsEqualToZeroMorphism( phi ) or m > n then
-      Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
+      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n + 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
     fi;
@@ -218,7 +218,7 @@ AddDerivationToCAP( HomotopyMorphisms,
           
     b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
     sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
@@ -264,7 +264,12 @@ Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 ##
 AddFinalDerivation( HomotopyMorphisms,
                 [
-                  [ Colift, 1 ]
+                  [ IsEqualToZeroMorphism, 1 ],
+                  [ ZeroMorphism, 2 ],
+                  [ IdentityMorphism, 2 ],
+                  [ Colift, 1 ],
+                  [ MorphismBetweenDirectSums, 1 ],
+                  [ PreCompose, 1 ],
                 ],
                 [
                   HomotopyMorphisms
@@ -277,12 +282,12 @@ AddFinalDerivation( HomotopyMorphisms,
     D := Range( phi );
     
     if IsEqualToZeroMorphism( phi ) then
-      Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
+      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n + 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
     fi;
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way: Colift ..." );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way via colift ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexesCategories, 2, "Done!" );
     
@@ -308,7 +313,12 @@ end: CategoryFilter := IsChainComplexCategory,
 ##
 AddFinalDerivation( HomotopyMorphisms,
                 [
-                  [ Colift, 1 ]
+                  [ IsEqualToZeroMorphism, 1 ],
+                  [ ZeroMorphism, 2 ],
+                  [ IdentityMorphism, 2 ],
+                  [ Colift, 1 ],
+                  [ MorphismBetweenDirectSums, 1 ],
+                  [ PreCompose, 1 ],
                 ],
                 [
                   HomotopyMorphisms
@@ -321,12 +331,12 @@ AddFinalDerivation( HomotopyMorphisms,
     D := Range( phi );
     
     if IsEqualToZeroMorphism( phi ) then
-      Info( InfoComplexesCategories, 2, "Computing witness for being null-homotopic the easy way ..." );
+      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
       return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n - 1 ] ) );
       Info( InfoComplexesCategories, 2, "Done!" );
     fi;
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness for being null-homotopic the hard way ..." );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way ..." );
     colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
     Info( InfoComplexesCategories, 2, "Done!" );
     

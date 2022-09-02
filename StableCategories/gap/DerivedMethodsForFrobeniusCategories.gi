@@ -55,10 +55,14 @@ AddFinalDerivation( IsConflationPair,
                       IsDeflation,
                       ExactKernelObject,
                       ExactKernelEmbedding,
+                      ExactKernelEmbeddingWithGivenExactKernelObject,
                       ExactKernelLift,
+                      LiftAlongInflation,
                       ExactCokernelObject,
                       ExactCokernelProjection,
+                      ExactCokernelProjectionWithGivenExactCokernelObject,
                       ExactCokernelColift,
+                      ColiftAlongDeflation,
                       ExactFiberProduct,
                       ProjectionInFirstFactorOfExactFiberProduct,
                       ProjectionInSecondFactorOfExactFiberProduct,
@@ -166,11 +170,13 @@ AddFinalDerivation( IsConflationPair,
 AddFinalDerivation( IsExactProjectiveObject,
               [
                 [ IsProjective, 1 ],
+                [ SomeProjectiveObject, 1 ],
                 [ EpimorphismFromSomeProjectiveObject, 1 ],
                 [ ProjectiveLift, 1 ]
               ],
               [
                 IsExactProjectiveObject,
+                SomeExactProjectiveObject,
                 DeflationFromSomeExactProjectiveObject,
                 ExactProjectiveLift
               ],
@@ -196,11 +202,13 @@ AddFinalDerivation( IsExactProjectiveObject,
 AddFinalDerivation( IsExactInjectiveObject,
               [
                 [ IsInjective, 1 ],
+                [ SomeInjectiveObject, 1 ],
                 [ MonomorphismIntoSomeInjectiveObject, 1 ],
                 [ InjectiveColift, 1 ]
               ],
               [
                 IsExactInjectiveObject,
+                SomeExactInjectiveObject,
                 InflationIntoSomeExactInjectiveObject,
                 ExactInjectiveColift
               ],
@@ -258,8 +266,9 @@ AddFinalDerivation( IsColiftableAlongInflationIntoSomeExactInjectiveObject,
 ##
 AddFinalDerivation( ColiftingObject,
                 [
-                  [ InflationIntoSomeExactInjectiveObject, 1 ],
+                  [ InflationIntoSomeExactInjectiveObject, 2 ],
                   [ IsExactInjectiveObject, 1 ],
+                  [ PreCompose, 1 ],
                   [ ExactInjectiveColift, 1 ],
                   [ IsColiftableAlongInflationIntoSomeExactInjectiveObject, 1 ],
                   [ ColiftAlongInflationIntoSomeExactInjectiveObject, 1 ]
@@ -268,6 +277,7 @@ AddFinalDerivation( ColiftingObject,
                   ColiftingObject,
                   IsColiftingObject,
                   MorphismToColiftingObject,
+                  MorphismToColiftingObjectWithGivenColiftingObject,
                   ColiftingMorphismWithGivenColiftingObjects,
                   IsColiftableAlongMorphismToColiftingObject,
                   WitnessForBeingColiftableAlongMorphismToColiftingObject
@@ -294,16 +304,18 @@ Description := "Derivation of a system of colifting objects via exact structure 
 ##
 AddFinalDerivation( LiftingObject,
                 [
-                  [ DeflationFromSomeExactProjectiveObject, 1 ],
+                  [ DeflationFromSomeExactProjectiveObject, 2 ],
                   [ IsExactProjectiveObject, 1 ],
+                  [ PreCompose, 1 ],
                   [ ExactProjectiveLift, 1 ],
                   [ IsLiftableAlongDeflationFromSomeExactProjectiveObject, 1 ],
-                  [ IsLiftableAlongDeflationFromSomeExactProjectiveObject, 1 ]
+                  [ LiftAlongDeflationFromSomeExactProjectiveObject, 1 ]
                 ],
                 [
                   LiftingObject,
                   IsLiftingObject,
                   MorphismFromLiftingObject,
+                  MorphismFromLiftingObjectWithGivenLiftingObject,
                   LiftingMorphismWithGivenLiftingObjects,
                   IsLiftableAlongMorphismFromLiftingObject,
                   WitnessForBeingLiftableAlongMorphismFromLiftingObject

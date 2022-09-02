@@ -5,7 +5,9 @@
 #
 ##
 AddFinalDerivation( MorphismToColiftingObject,
-                    [ ],
+                    [
+                      [ IdentityMorphism, 1 ],
+                    ],
                     [ MorphismToColiftingObject ],
   function( cat, a )
     
@@ -18,7 +20,8 @@ end: CategoryFilter := IsChainOrCochainComplexCategory,
 ##
 AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
                     [ 
-                      [ IsColiftable, 1 ]
+                      [ IdentityMorphism, 1 ],
+                      [ IsColiftable, 1 ],
                     ],
                     
                     [ 
@@ -41,7 +44,8 @@ end: CategoryFilter := IsChainOrCochainComplexCategory,
 ##
 AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
                     [ 
-                      [ Colift, 1 ]
+                      [ IdentityMorphism, 1 ],
+                      [ Colift, 1 ],
                     ],
                     
                     [ 
