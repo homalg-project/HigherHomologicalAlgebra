@@ -366,11 +366,17 @@ AddDerivationToCAP( Lift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
               [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
-              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ HomomorphismStructureOnMorphisms, 1 ],
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ],
+              [ IdentityMorphism, 1 ],
+              [ ZeroMorphism, 1, RangeCategoryOfHomomorphismStructure ],
+              [ MorphismBetweenDirectSums, 2, RangeCategoryOfHomomorphismStructure ],
+              [ Lift, 1, RangeCategoryOfHomomorphismStructure ],
             ],
   function( cat, alpha, beta )
-    local P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
+    local range_cat, P, N, M, D, D_to_hom_PN, PM_to_PN, m1, m2, lift;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
     
     P := Source( alpha );
     
@@ -384,15 +390,15 @@ AddDerivationToCAP( Lift,
     
     PM_to_PN := HomomorphismStructureOnMorphisms( IdentityMorphism( P ), beta );
     
-    m1 := [ [ D_to_hom_PN[ 0 ], ZeroMorphism( D[ 0 ], Source( PM_to_PN )[ -1 ] ) ] ];
+    m1 := [ [ D_to_hom_PN[ 0 ], ZeroMorphism( range_cat, D[ 0 ], Source( PM_to_PN )[ -1 ] ) ] ];
     
-    m1 := MorphismBetweenDirectSums( m1 );
+    m1 := MorphismBetweenDirectSums( range_cat, m1 );
     
     m2 := [ [ PM_to_PN[ 0 ], Source( PM_to_PN )^0 ] ];
     
-    m2 := MorphismBetweenDirectSums( m2 );
+    m2 := MorphismBetweenDirectSums( range_cat, m2 );
     
-    lift := Lift( m1, m2 );
+    lift := Lift( range_cat, m1, m2 );
     
     if lift = fail then
       
@@ -407,6 +413,7 @@ AddDerivationToCAP( Lift,
     fi;
 
 end: ConditionsListComplete := true,
+CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
   
@@ -448,17 +455,6 @@ CategoryFilter := function( chains )
         
       fi;
       
-      conditions := [
-        "MorphismBetweenDirectSumsWithGivenDirectSums",
-        "Lift",
-      ];
-
-      if ForAll( conditions, c -> CanCompute( range_cat, c ) ) then
-         
-          return true;
-
-      fi;
-
   fi;
 
   return false;
@@ -474,12 +470,18 @@ AddDerivationToCAP( Colift,
             [
               [ DistinguishedObjectOfHomomorphismStructure, 1 ],
               [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
-              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ HomomorphismStructureOnMorphisms, 1 ],
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ],
+              [ IdentityMorphism, 1 ],
+              [ ZeroMorphism, 1, RangeCategoryOfHomomorphismStructure ],
+              [ MorphismBetweenDirectSums, 2, RangeCategoryOfHomomorphismStructure ],
+              [ Lift, 1, RangeCategoryOfHomomorphismStructure ],
             ],
   function( cat, alpha, beta )
-    local M, N, I, D, D_to_hom_MI, NI_to_MI, m1, m2, lift;
-  
+    local range_cat, M, N, I, D, D_to_hom_MI, NI_to_MI, m1, m2, lift;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    
     M := Source( alpha );
     
     N := Range( alpha );
@@ -492,15 +494,15 @@ AddDerivationToCAP( Colift,
     
     NI_to_MI := HomomorphismStructureOnMorphisms( alpha, IdentityMorphism( I ) );
     
-    m1 := [ [ D_to_hom_MI[ 0 ], ZeroMorphism( D[0], Source( NI_to_MI )[ -1 ] ) ] ];
+    m1 := [ [ D_to_hom_MI[ 0 ], ZeroMorphism( range_cat, D[0], Source( NI_to_MI )[ -1 ] ) ] ];
     
-    m1 := MorphismBetweenDirectSums( m1 );
+    m1 := MorphismBetweenDirectSums( range_cat, m1 );
     
     m2 := [ [ NI_to_MI[ 0 ], Source( NI_to_MI )^0 ] ];
     
-    m2 := MorphismBetweenDirectSums( m2 );
+    m2 := MorphismBetweenDirectSums( range_cat, m2 );
     
-    lift := Lift( m1, m2 );
+    lift := Lift( range_cat, m1, m2 );
     
     if lift = fail then
       
@@ -515,6 +517,7 @@ AddDerivationToCAP( Colift,
     fi;
    
 end: ConditionsListComplete := true,
+CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
   
@@ -556,17 +559,6 @@ CategoryFilter := function( chains )
         
       fi;
       
-      conditions := [
-        "MorphismBetweenDirectSumsWithGivenDirectSums",
-        "Lift",
-      ];
-
-      if ForAll( conditions, c -> CanCompute( range_cat, c ) ) then
-         
-          return true;
-
-      fi;
-
   fi;
 
   return false;
@@ -579,19 +571,21 @@ Description := "Colift in chain complexes using the homomorphism structure"
 AddDerivationToCAP( Lift,
             [
               [ IdentityMorphism, 1 ],
-              [ DistinguishedObjectOfHomomorphismStructure, 1 ],
               [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
-              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ HomomorphismStructureOnMorphisms, 1 ],
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ],
+              [ Lift, 1, RangeCategoryOfHomomorphismStructure ],
             ],
   function( cat, alpha, beta )
-    local f, g, l;
+    local range_cat, f, g, l;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
     
     f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( alpha );
     
     g := HomomorphismStructureOnMorphisms( IdentityMorphism( Source( alpha ) ), beta );
     
-    l := Lift( f, g );
+    l := Lift( range_cat, f, g );
     
     if l = fail then
       
@@ -604,46 +598,30 @@ AddDerivationToCAP( Lift,
     fi;
     
 end: ConditionsListComplete := true,
-CategoryFilter :=
-  function( cat )
-    local range_cat;
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
-      
-      return false;
-    
-    fi;
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    if CanCompute( range_cat, "Lift" ) then
-      
-      return true;
-    
-    fi;
-    
-    return false;
-    
-  end, Description := "Lift using the homomorphism structure"
+CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
+CategoryFilter := HasRangeCategoryOfHomomorphismStructure,
+Description := "Lift using the homomorphism structure"
 );
 
 ##
 AddDerivationToCAP( Colift,
             [
               [ IdentityMorphism, 1 ],
-              [ DistinguishedObjectOfHomomorphismStructure, 1 ],
               [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure, 1 ],
-              [ HomomorphismStructureOnMorphismsWithGivenObjects, 1 ],
-              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ]
+              [ HomomorphismStructureOnMorphisms, 1 ],
+              [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 1 ],
+              [ Lift, 1, RangeCategoryOfHomomorphismStructure ],
             ],
   function( cat, alpha, beta )
-    local f, g, l;
+    local range_cat, f, g, l;
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
     
     f := InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( beta );
     
     g := HomomorphismStructureOnMorphisms( alpha, IdentityMorphism( Range( beta ) ) );
     
-    l := Lift( f, g );
+    l := Lift( range_cat, f, g );
     
     if l = fail then
       
@@ -656,27 +634,9 @@ AddDerivationToCAP( Colift,
     fi;
   
 end: ConditionsListComplete := true,
-CategoryFilter :=
-  function( cat )
-    local range_cat;
-    
-    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
-      
-      return false;
-      
-    fi;
-      
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    if CanCompute( range_cat, "Lift" ) then
-      
-      return true;
-      
-    fi;
-    
-    return false;
- 
-end, Description := "Colift using the homomorphism structure"
+CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
+CategoryFilter := HasRangeCategoryOfHomomorphismStructure,
+Description := "Colift using the homomorphism structure"
 );
 
 
