@@ -44,30 +44,6 @@ end: CategoryFilter := IsChainOrCochainComplexCategory,
 ##
 AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
                     [ 
-                      [ IdentityMorphism, 1 ],
-                      [ Colift, 1 ],
-                    ],
-                    
-                    [ 
-                      IsColiftableAlongMorphismToColiftingObject,
-                      MorphismToColiftingObject  
-                    ],
-  function( cat, alpha )
-    local a, I_a;
-    
-    a := Source( alpha );
-
-    I_a := NaturalInjectionInMappingCone( IdentityMorphism( a ) );
-
-    return Colift( I_a, alpha ) <> fail;
-  
-end: CategoryFilter := IsChainOrCochainComplexCategory,
-      Description:= "IsColiftableAlongMorphismToColiftingObject by Colift"
-      );
-
-##
-AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
-                    [ 
                       [ IsNullHomotopic, 1 ]
                     ],
                     
