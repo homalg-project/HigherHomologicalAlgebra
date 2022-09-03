@@ -81,9 +81,10 @@ end: Description:= "WitnessForBeingColiftableAlongMorphismToColiftingObject usin
 ##
 AddFinalDerivation( IsColiftingObject,
             [
-              [ IdentityMorphism, 1 ],
+              [ IdentityMorphism, 2 ],
               [ IsNullHomotopic, 1 ],
-              [ Colift, 1 ]
+              [ MorphismBetweenDirectSums, 1 ],
+              [ HomotopyMorphisms, 1 ],
             ],
             [
               IsColiftingObject,
