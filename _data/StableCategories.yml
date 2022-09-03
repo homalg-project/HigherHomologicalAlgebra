@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2022.08-02"
+version: "2022.09-01"
 license: "GPL-2.0-or-later"
-date: 2022-09-02
+date: 2022-09-03
 description: |
     Stable categories of additive categories
 
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.08-02/StableCategories-2022.08-02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.08-02/StableCategories-2022.08-02.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.08-02/StableCategories-2022.08-02.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.pdf
 
 abstract: |
 
@@ -55,7 +55,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2022.08-02</i>
+             Version 2022.09-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/StableCategories">https://homalg-project.github.io/pkg/StableCategories</a></span>.
@@ -63,10 +63,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ StableCategories2022.08-02,
+    @misc{ StableCategories2022.09-01,
       author =           {Saleh, K.},
       title =            {{StableCategories},   Stable  categories  of  additive
-                          categories, {V}ersion 2022.08-02},
+                          categories, {V}ersion 2022.09-01},
       month =            {Sep},
       year =             {2022},
       note =             {GAP package},
