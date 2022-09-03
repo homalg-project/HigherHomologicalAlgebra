@@ -412,7 +412,7 @@ AddDerivationToCAP( Lift,
     
     fi;
 
-end: ConditionsListComplete := true,
+end :
 CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
@@ -516,7 +516,7 @@ AddDerivationToCAP( Colift,
     
     fi;
    
-end: ConditionsListComplete := true,
+end :
 CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := function( chains )
   local cat, range_cat, range_chains, conditions;
@@ -597,7 +597,7 @@ AddDerivationToCAP( Lift,
     
     fi;
     
-end: ConditionsListComplete := true,
+end :
 CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := HasRangeCategoryOfHomomorphismStructure,
 Description := "Lift using the homomorphism structure"
@@ -633,7 +633,7 @@ AddDerivationToCAP( Colift,
     
     fi;
   
-end: ConditionsListComplete := true,
+end :
 CategoryGetters := rec( range_cat := RangeCategoryOfHomomorphismStructure ),
 CategoryFilter := HasRangeCategoryOfHomomorphismStructure,
 Description := "Colift using the homomorphism structure"

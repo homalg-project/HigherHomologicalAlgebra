@@ -157,7 +157,7 @@ AddFinalDerivation( IsColiftingObject,
     return MappingConeFunctorial( Q_A, id_A, phi, phi, id_B, Q_B );
     
 end
-] : ConditionsListComplete := true,
+] :
   FunctionCalledBeforeInstallation :=
     function( cat )
       return;

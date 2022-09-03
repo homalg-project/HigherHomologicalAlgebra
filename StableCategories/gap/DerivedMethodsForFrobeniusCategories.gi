@@ -163,7 +163,7 @@ AddFinalDerivation( IsConflationPair,
     { cat, inf, alpha, inf_prime, alpha_prime } 
       -> UniversalMorphismFromPushout( cat, [ inf, alpha ], [ inf_prime, alpha_prime ] )
 ]
-: ConditionsListComplete := true,
+:
   FunctionCalledBeforeInstallation :=
     function( cat )
       SetIsExactCategory( cat, true );
