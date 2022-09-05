@@ -29,10 +29,15 @@ AddDerivationToCAP( IsNullHomotopic,
 ##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
-                    #[ IdentityMorphism, 1 ] # this should be modified!
+                    [ IdentityMorphism, 5 ],
+                    [ IsEqualToZeroMorphism, 1 ],
+                    [ SolveLinearSystemInAbCategoryOrFail, 1, UnderlyingCategory ],
+                    [ ZeroMorphism, 21 ],
                 ],
   function( cat, phi )
-    local A, B, m, n, L, K, b, sol, H;
+    local underlying_category, A, B, m, n, L, K, b, sol, H;
+    
+    underlying_category := UnderlyingCategory( cat );
     
     A := Source( phi );
     
@@ -98,8 +103,8 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     b := List( [ m .. n ], i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
-    sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystem..." );
+    sol := SolveLinearSystemInAbCategoryOrFail( underlying_category, L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
@@ -121,35 +126,22 @@ AddDerivationToCAP( HomotopyMorphisms,
     fi;
     
 end:
-CategoryFilter := function( cochains )
-  local cat;
-  
-  if not IsCochainComplexCategory( cochains ) then
-    
-    return false;
-  
-  fi;
-  
-  cat := UnderlyingCategory( cochains );
-  
-  if CanCompute( cat, "SolveLinearSystemInAbCategoryOrFail" ) then
-    
-    return true;
-    
-  fi;
-  
-  return false;
-
-end,
+CategoryFilter := IsCochainComplexCategory,
+CategoryGetters := rec( underlying_category := UnderlyingCategory ),
 Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
 ##
 AddDerivationToCAP( HomotopyMorphisms,
                 [
-                    #[ IdentityMorphism, 1 ]
+                    [ IdentityMorphism, 5 ],
+                    [ IsEqualToZeroMorphism, 1 ],
+                    [ SolveLinearSystemInAbCategoryOrFail, 1, UnderlyingCategory ],
+                    [ ZeroMorphism, 21 ],
                 ],
   function( cat, phi )
-    local A, B, m, n, L, K, b, sol, H;
+    local underlying_category, A, B, m, n, L, K, b, sol, H;
+    
+    underlying_category := UnderlyingCategory( cat );
     
     A := Source( phi );
     
@@ -218,8 +210,8 @@ AddDerivationToCAP( HomotopyMorphisms,
           
     b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystemInAbCategoryOrFail ..." );
-    sol := SolveLinearSystemInAbCategoryOrFail( L, K, b );
+    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystem..." );
+    sol := SolveLinearSystemInAbCategoryOrFail( underlying_category, L, K, b );
     Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
@@ -239,26 +231,8 @@ AddDerivationToCAP( HomotopyMorphisms,
     fi;
     
 end:
-CategoryFilter := function( chains )
-  local cat;
-  
-  if not IsChainComplexCategory( chains ) then
-    
-    return false;
-    
-  fi;
-  
-  cat := UnderlyingCategory( chains );
-  
-  if CanCompute( cat, "SolveLinearSystemInAbCategoryOrFail" ) then
-    
-    return true;
-    
-  fi;
-  
-  return false;
-  
-end,
+CategoryFilter := IsChainComplexCategory,
+CategoryGetters := rec( underlying_category := UnderlyingCategory ),
 Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
 
 ##
