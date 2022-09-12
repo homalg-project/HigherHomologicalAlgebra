@@ -190,30 +190,6 @@ end:
 );
 
 ##
-AddDerivationToCAP( IsEpimorphism,
-                [
-                    [ IsSplitEpimorphism, 1 ]
-                ],
-  function( cat, alpha )
-    return IsSplitEpimorphism( alpha );
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "a morphism is triangulated categories is epi iff it is split epi"
-);
-
-##
-AddDerivationToCAP( IsMonomorphism,
-                [
-                    [ IsSplitMonomorphism, 1 ]
-                ],
-  function( cat, alpha )
-    return IsSplitMonomorphism( alpha );
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "a morphism is triangulated categories is mono iff it is split mono"
-);
-
-##
 AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
                 [
                     [ InjectionOfCofactorOfDirectSum, 2 ],
