@@ -1,3 +1,5 @@
+gap> LoadPackage( "DerivedCategories", false );
+true
 gap> q := RightQuiver( "q",
 >           [ "𝓞(0)", "𝓞(1)", "𝓞(2)" ],
 >           [ "x0", "x1", "x2", "y0", "y1", "y2" ],
