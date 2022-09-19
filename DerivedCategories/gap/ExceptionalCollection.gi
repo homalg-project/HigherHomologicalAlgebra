@@ -1123,16 +1123,16 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
       
       AddIsEqualForObjects( full,
         { cat, a, b } -> IsIdenticalObj( a, b ) or
-          ValuesOnAllObjects( UnderlyingCell( a ) ) = ValuesOnAllObjects( UnderlyingCell( b ) )
+          ValuesOfFunctor( UnderlyingCell( a ) )[1] = ValuesOfFunctor( UnderlyingCell( b ) )[1]
       );
       
       AddIsEqualForMorphisms( full,
         function( cat, alpha, beta )
           return
-          ValuesOnAllObjects( Source( UnderlyingCell( alpha ) ) )
-            = ValuesOnAllObjects( Source( UnderlyingCell( beta ) ) ) and
-          ValuesOnAllObjects( Range( UnderlyingCell( alpha ) ) )
-            = ValuesOnAllObjects( Range( UnderlyingCell( beta ) ) ) and
+          ValuesOfFunctor( Source( UnderlyingCell( alpha ) ) )[1]
+            = ValuesOfFunctor( Source( UnderlyingCell( beta ) ) )[1] and
+          ValuesOfFunctor( Range( UnderlyingCell( alpha ) ) )[1]
+            = ValuesOfFunctor( Range( UnderlyingCell( beta ) ) )[1] and
           ValuesOnAllObjects( UnderlyingCell( alpha ) )
             = ValuesOnAllObjects( UnderlyingCell( beta ) );
       end );
