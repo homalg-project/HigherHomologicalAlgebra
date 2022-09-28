@@ -1010,7 +1010,7 @@ function( R )
   else
     mingen := MinimalGeneratingSet( R );
     maps := List( mingen, x -> HomFromProjective( x, R ) );
-    return MorphismBetweenDirectSums( List( maps, map -> [ map ] ) );
+    return UniversalMorphismFromDirectSum( maps );
   fi;
 end );
 
@@ -1020,7 +1020,6 @@ InstallMethod ( DualOfRepresentation,
 "for a IsQuiverRepresentation",
 [ IsQuiverRepresentation ], 5000,
 function( R )
-    
     local C, D;
     
     C := CapCategory( R );
@@ -1028,7 +1027,7 @@ function( R )
     
     D := ApplyFunctor( D, R );
     SetDualOfRepresentation( D, R );
-       
+    
     return D;
 end
   );
