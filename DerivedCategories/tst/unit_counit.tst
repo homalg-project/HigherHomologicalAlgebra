@@ -1,3 +1,5 @@
+gap> LoadPackage( "DerivedCategories", false );
+true
 gap> quiver := RightQuiver( "quiver", 3, [ [ "x0", 1, 2 ], [ "x1", 1, 2 ], [ "x2", 1, 2 ], [ "y0", 2, 3 ], [ "y1", 2, 3 ], [ "y2", 2, 3 ] ] );;
 gap> field := GLOBAL_FIELD_FOR_QPA!.default_field;;
 gap> Qq := PathAlgebra( field, quiver );;

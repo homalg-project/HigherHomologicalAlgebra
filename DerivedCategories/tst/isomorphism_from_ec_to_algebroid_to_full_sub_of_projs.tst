@@ -1,4 +1,5 @@
-
+gap> LoadPackage( "DerivedCategories", false );
+true
 gap> field := HomalgFieldOfRationals( );;
 gap> ok := false;;
 gap> while ok = false do
