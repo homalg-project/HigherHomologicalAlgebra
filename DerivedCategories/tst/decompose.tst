@@ -1,3 +1,5 @@
+gap> LoadPackage( "DerivedCategories", false );
+true
 gap> ConstructIsomorphicQuiverRepresentation :=
 >  function( a )
 >    local A, q, arrows, vertices, L, p, dim, m, inverse_m, new_mats, arrow;

@@ -1,3 +1,7 @@
+gap> LoadPackage( "DerivedCategories", false );
+true
+gap> HOMALG_IO.show_banners := false;;
+gap> S := HomalgFieldOfRationalsInSingular( ) * "x,y,z,t";;
 gap> rows := CategoryOfRows( S );;
 gap> freyd := FreydCategory( rows );;
 gap> chains := ChainComplexCategory( freyd );;

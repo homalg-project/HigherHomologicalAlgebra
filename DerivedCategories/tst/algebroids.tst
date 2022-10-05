@@ -1,4 +1,5 @@
-
+gap> LoadPackage( "DerivedCategories", false );
+true
 gap> N := NanosecondsSinceEpoch( );;
 gap> field := HomalgFieldOfRationals( );;
 gap> A := RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection( field, 2 + N mod 15, 2 + N mod 15, 2 + N mod 15 );;
