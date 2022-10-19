@@ -10,31 +10,31 @@
 
 
 ##
-InstallMethod( HomFunctorToCategoryOfFunctors,
-    [ IsStrongExceptionalCollection ],
-  function( collection )
-    local algebroid, algebroid_op, k, functors, I;
-    
-    algebroid := Algebroid( collection );
-    
-    algebroid_op := OppositeAlgebroid( algebroid );
-    
-    ## This line should removed after changing the constructor in Algebroids package
-    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
-    
-    k := CommutativeRingOfLinearCategory( algebroid_op );
-    
-    functors := Hom( algebroid_op, MatrixCategory( k ) );
-    
-    I := IsomorphismFromCategoryOfQuiverRepresentations( functors );
-    
-    I := PreCompose( HomFunctorToCategoryOfQuiverRepresentations( collection ), I );
-    
-    I!.Name := "Hom(T,-) functor";
-    
-    return I;
-    
-end );
+#InstallMethod( HomFunctorToCategoryOfFunctors,
+#    [ IsStrongExceptionalCollection ],
+#  function( collection )
+#    local algebroid, algebroid_op, k, functors, I;
+#    
+#    algebroid := Algebroid( collection );
+#    
+#    algebroid_op := OppositeAlgebroid( algebroid );
+#    
+#    ## This line should removed after changing the constructor in Algebroids package
+#    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+#    
+#    k := CommutativeRingOfLinearCategory( algebroid_op );
+#    
+#    functors := Hom( algebroid_op, MatrixCategory( k ) );
+#    
+#    I := IsomorphismFromCategoryOfQuiverRepresentations( functors );
+#    
+#    I := PreCompose( HomFunctorToCategoryOfQuiverRepresentations( collection ), I );
+#    
+#    I!.Name := "Hom(T,-) functor";
+#    
+#    return I;
+#    
+#end );
 
 ##
 InstallMethod( HomFunctorToCategoryOfQuiverRepresentations,

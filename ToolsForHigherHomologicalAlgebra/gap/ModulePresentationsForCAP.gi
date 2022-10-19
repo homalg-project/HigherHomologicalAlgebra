@@ -156,7 +156,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_RANGE_LEFT_FOR_MODULE_PRESENTATIONS :=
           
           return PresentationMorphism( M, x, U );
     
-      end ); 
+      end );
     
 end;
 
@@ -174,7 +174,7 @@ ADD_RRANDOM_MORPHISM_WITH_FIXED_SOURCE_RIGHT_FOR_MODULE_PRESENTATIONS :=
           if n < 0 then
             
             return fail;
-          
+            
           fi;
           
           u := UnderlyingMatrix( U );

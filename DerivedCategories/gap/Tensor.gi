@@ -121,32 +121,32 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjec
     
 end );
 
-##
-InstallMethod( TensorFunctorFromCategoryOfFunctors,
-    [ IsStrongExceptionalCollection ],
-     
-  function( collection )
-    local algebroid, algebroid_op, k, functors, I;
-    
-    algebroid := Algebroid( collection );
-    
-    algebroid_op := OppositeAlgebroid( algebroid );
-    
-    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
-    
-    k := CommutativeRingOfLinearCategory( algebroid_op );
-    
-    functors := Hom( algebroid_op, MatrixCategory( k ) );
-    
-    I := IsomorphismOntoCategoryOfQuiverRepresentations( functors );
-    
-    I := PostCompose( TensorFunctorFromCategoryOfQuiverRepresentations( collection ), I );
-    
-    I!.Name := "-⊗ T functor";
-    
-    return I;
-    
-end );
+###
+#InstallMethod( TensorFunctorFromCategoryOfFunctors,
+#    [ IsStrongExceptionalCollection ],
+#     
+#  function( collection )
+#    local algebroid, algebroid_op, k, functors, I;
+#    
+#    algebroid := Algebroid( collection );
+#    
+#    algebroid_op := OppositeAlgebroid( algebroid );
+#    
+#    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+#    
+#    k := CommutativeRingOfLinearCategory( algebroid_op );
+#    
+#    functors := Hom( algebroid_op, MatrixCategory( k ) );
+#    
+#    I := IsomorphismOntoCategoryOfQuiverRepresentations( functors );
+#    
+#    I := PostCompose( TensorFunctorFromCategoryOfQuiverRepresentations( collection ), I );
+#    
+#    I!.Name := "-⊗ T functor";
+#    
+#    return I;
+#    
+#end );
 
 ## In case the ambient category of the collection is abelian
 ##

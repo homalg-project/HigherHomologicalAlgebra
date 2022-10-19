@@ -55,19 +55,7 @@ gap> vl := [ "Ω^0(0)", "Ω^1(1)", "Ω^2(2)" ];;
 gap> c := CreateStrongExceptionalCollection( [ omega_0, omega_1, omega_2 ] : vertices_labels := vl );;
 gap> G := ReplacementFunctorIntoHomotopyCategoryOfQuiverRows( c );;
 gap> F := ConvolutionFunctorFromHomotopyCategoryOfQuiverRows( c );;
-gap> I := EquivalenceOntoDerivedCategory( SourceOfFunctor( G ) );;
-gap> J := EquivalenceOntoDerivedCategory( RangeOfFunctor( G ) );;
 gap> o0 := SourceOfFunctor( G ).( "𝓞(0)" );;
 gap> FG_o0 := F( G( o0 ) );;
 gap> a := RandomObject( SourceOfFunctor(G), 2 );;
-gap> eta := CounitOfConvolutionReplacementAdjunction( c );;
-gap> m := eta( a );;
-gap> IsIsomorphism( m );
-true
 gap> FG_a := F( G( a ) );;
-gap> a := I( a );;
-gap> FG_a := I( FG_a );;
-gap> s1 := String( List( HomologySupport( a ), i -> HomologyAt( a, i ) ) );;
-gap> s2 := String( List( HomologySupport( FG_a ), i -> HomologyAt( FG_a, i ) ) );;
-gap> s1 = s2;
-true

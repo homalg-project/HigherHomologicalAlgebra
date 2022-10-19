@@ -5,115 +5,115 @@
 #
 
 ##
-InstallMethod( UnitOfTensorHomAdjunction,
-          [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ],
-          
-  function( collection, tensorT, HomT )
-    local full, ambient_cat, reps, name, nat;
-    
-    full := FullSubcategory( collection );
-    
-    ambient_cat := AmbientCategory( full );
-    
-    if not ( HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat ) ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    reps := SourceOfFunctor( tensorT );
-     
-    name := "Id => Hom(T,-⊗ T)";
-    
-    nat := NaturalTransformation( name, IdentityFunctor( reps ), PreCompose( tensorT, HomT ) );
-    
-    AddNaturalTransformationFunction( nat,
-      function( s, R, r )
-        local pi_R, PR, PR_summands, RT, defining_morphism, coker_epi,
-          objs, injections, maps, coeffs, min_gen, positions, HomT_RT,
-            vec_spaces, zero_vectors, e, map, m, i;
-        
-        if IsObjectInFunctorCategory( R ) then
-          
-          R := ConvertToCellInCategoryOfQuiverRepresentations( R );
-          
-        fi;
-        
-        pi_R := EpimorphismFromSomeProjectiveObject( R );
-        
-        PR := Source( pi_R );
-        
-        PR_summands := UnderlyingProjectiveSummands( PR );
-        
-        RT := TensorFunctorFromCategoryOfQuiverRepresentations( collection )( R );
-         
-        defining_morphism := RT!.embedded_defining_morphism_of_cokernel_object;
-        
-        coker_epi := CokernelProjection( defining_morphism );
-        
-        objs := List( ObjectList( Range( RT!.defining_morphism_of_cokernel_object ) ), UnderlyingCell );
-        
-        coeffs := List( [ 1 .. Length( objs ) ], i -> CoefficientsOfMorphism( PreCompose( InjectionOfCofactorOfDirectSum( objs, i ), coker_epi ) ) );
-         
-        min_gen := MinimalGeneratingSet( R );
-        
-        min_gen := List( min_gen, g -> ElementVectors( g ) );
-        
-        positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
-        
-        HomT_RT := HomFunctorToCategoryOfQuiverRepresentations( collection )( RT );
-        
-        vec_spaces := VectorSpacesOfRepresentation( HomT_RT );
-        
-        zero_vectors := List( vec_spaces, Zero );
-        
-        maps := [ ];
-        
-        for i in [ 1 .. Length( min_gen ) ] do
-          
-          if IsZero( coeffs[ i ] ) then
-            
-            Add( maps, ZeroMorphism( PR_summands[ i ], HomT_RT ) );
-            
-          else
-            
-            e := ShallowCopy( zero_vectors );
-            
-            e[ positions[ i ] ] := Vector( vec_spaces[ positions[ i ] ], coeffs[ i ] );
-            
-            Add( maps, HomFromProjective( QuiverRepresentationElementNC( HomT_RT, e ), HomT_RT ) );
-            
-          fi;
-          
-        od;
-        
-        if IsEmpty( maps ) then
-            
-            map := ZeroMorphism( PR, HomT_RT );
-            
-        else
-            
-            map := MorphismBetweenDirectSums( TransposedMat( [ maps ] ) );
-            
-        fi;
-        
-        m := ColiftAlongEpimorphism( pi_R, map );
-        
-        if IsObjectInFunctorCategory( s ) then
-          
-          return ConvertToCellInFunctorCategory( s, m, r );
-          
-        else
-          
-          return m;
-          
-        fi;
-          
-    end );
-    
-    return nat;
-    
-end );
+#InstallMethod( UnitOfTensorHomAdjunction,
+#          [ IsStrongExceptionalCollection, IsCapFunctor, IsCapFunctor ],
+#          
+#  function( collection, tensorT, HomT )
+#    local full, ambient_cat, reps, name, nat;
+#    
+#    full := FullSubcategory( collection );
+#    
+#    ambient_cat := AmbientCategory( full );
+#    
+#    if not ( HasIsAbelianCategory( ambient_cat ) and IsAbelianCategory( ambient_cat ) ) then
+#      
+#      TryNextMethod( );
+#      
+#    fi;
+#    
+#    reps := SourceOfFunctor( tensorT );
+#     
+#    name := "Id => Hom(T,-⊗ T)";
+#    
+#    nat := NaturalTransformation( name, IdentityFunctor( reps ), PreCompose( tensorT, HomT ) );
+#    
+#    AddNaturalTransformationFunction( nat,
+#      function( s, R, r )
+#        local pi_R, PR, PR_summands, RT, defining_morphism, coker_epi,
+#          objs, injections, maps, coeffs, min_gen, positions, HomT_RT,
+#            vec_spaces, zero_vectors, e, map, m, i;
+#        
+#        if IsObjectInFunctorCategory( R ) then
+#          
+#          R := ConvertToCellInCategoryOfQuiverRepresentations( R );
+#          
+#        fi;
+#        
+#        pi_R := EpimorphismFromSomeProjectiveObject( R );
+#        
+#        PR := Source( pi_R );
+#        
+#        PR_summands := UnderlyingProjectiveSummands( PR );
+#        
+#        RT := TensorFunctorFromCategoryOfQuiverRepresentations( collection )( R );
+#         
+#        defining_morphism := RT!.embedded_defining_morphism_of_cokernel_object;
+#        
+#        coker_epi := CokernelProjection( defining_morphism );
+#        
+#        objs := List( ObjectList( Range( RT!.defining_morphism_of_cokernel_object ) ), UnderlyingCell );
+#        
+#        coeffs := List( [ 1 .. Length( objs ) ], i -> CoefficientsOfMorphism( PreCompose( InjectionOfCofactorOfDirectSum( objs, i ), coker_epi ) ) );
+#         
+#        min_gen := MinimalGeneratingSet( R );
+#        
+#        min_gen := List( min_gen, g -> ElementVectors( g ) );
+#        
+#        positions := List( min_gen, g -> PositionProperty( g, v -> not IsZero( v ) ) );
+#        
+#        HomT_RT := HomFunctorToCategoryOfQuiverRepresentations( collection )( RT );
+#        
+#        vec_spaces := VectorSpacesOfRepresentation( HomT_RT );
+#        
+#        zero_vectors := List( vec_spaces, Zero );
+#        
+#        maps := [ ];
+#        
+#        for i in [ 1 .. Length( min_gen ) ] do
+#          
+#          if IsZero( coeffs[ i ] ) then
+#            
+#            Add( maps, ZeroMorphism( PR_summands[ i ], HomT_RT ) );
+#            
+#          else
+#            
+#            e := ShallowCopy( zero_vectors );
+#            
+#            e[ positions[ i ] ] := Vector( vec_spaces[ positions[ i ] ], coeffs[ i ] );
+#            
+#            Add( maps, HomFromProjective( QuiverRepresentationElementNC( HomT_RT, e ), HomT_RT ) );
+#            
+#          fi;
+#          
+#        od;
+#        
+#        if IsEmpty( maps ) then
+#            
+#            map := ZeroMorphism( PR, HomT_RT );
+#            
+#        else
+#            
+#            map := MorphismBetweenDirectSums( TransposedMat( [ maps ] ) );
+#            
+#        fi;
+#        
+#        m := ColiftAlongEpimorphism( pi_R, map );
+#        
+#        if IsObjectInFunctorCategory( s ) then
+#          
+#          return ConvertToCellInFunctorCategory( s, m, r );
+#          
+#        else
+#          
+#          return m;
+#          
+#        fi;
+#          
+#    end );
+#    
+#    return nat;
+#    
+#end );
 
 ##
 InstallMethodWithCache( CounitOfTensorHomAdjunction,

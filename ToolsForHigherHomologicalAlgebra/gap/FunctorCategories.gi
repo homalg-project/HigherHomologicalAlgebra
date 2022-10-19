@@ -8,228 +8,228 @@
 EnhancePackage( "LinearAlgebraForCAP" );
 
 ##
-functor :=
-  [
-    IsQuiverRepresentationCategory,
-    IsFunctorCategory,
-    function( reps, hom )
-      if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return true;
-      else
-        return false;
-      fi;
-    end,
-    { reps, hom } -> IsomorphismFromCategoryOfQuiverRepresentations( hom ),
-    "Isomorphism functor",
-    "Isomorphism from category of quiver representations to the corresponding category of functors"
-  ];
-
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-##
-functor :=
-  [ 
-    IsFunctorCategory,
-    IsQuiverRepresentationCategory,
-    function( hom, reps )
-      if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return true;
-      else
-        return false;
-      fi;
-    end,
-    { hom, reps } -> IsomorphismOntoCategoryOfQuiverRepresentations( hom ),
-    "Isomorphism functor",
-    "Isomorphism from category of functors onto the corresponding category of quiver representations"
-  ];
-
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsCapFullSubcategory,
-    function( indec_1, indec_2 )
-      local hom, reps;
-      hom := AmbientCategory( indec_1 );
-      reps := AmbientCategory( indec_2 );
-      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
-        return false;
-      fi;
-      if not ( HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByIndecProjectiveObjects( reps ) and 
-                  IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( hom ), indec_1 ) and 
-                    IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( reps ), indec_2 ) ) and
-         not ( HasFullSubcategoryGeneratedByIndecInjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByIndecInjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( hom ), indec_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( reps ), indec_2 ) ) then
-          return false;
-      fi;
-      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return false;
-      fi;
-      
-      return true;
-      
-    end,
-    { indec_1, indec_2 } -> RestrictFunctorToFullSubcategories(
-                              IsomorphismOntoCategoryOfQuiverRepresentations(
-                                AmbientCategory( indec_1 )
-                              ),
-                              indec_1,
-                              indec_2
-                            ),
-    "Isomorphism functor",
-    "Isomorphism functor from indec projective objects in category of functors to indec projective quiver representations"
-  ];
-  
-AddFunctor( functor );
-functor := ExtendFunctorMethodToAdditiveClosures( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsCapFullSubcategory,
-    function( indec_2, indec_1 )
-      local hom, reps;
-      reps := AmbientCategory( indec_2 );
-      hom := AmbientCategory( indec_1 );
-      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
-        return false;
-      fi;
-      
-      if not ( HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByIndecProjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( hom ), indec_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( reps ), indec_2 ) ) and
-         not ( HasFullSubcategoryGeneratedByIndecInjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByIndecInjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( hom ), indec_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( reps ), indec_2 ) ) then
-          return false;
-      fi;
-      
-      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return false;
-      fi;
-     
-      return true;
-      
-    end,
-    { indec_2, indec_1 } -> RestrictFunctorToFullSubcategories(
-                              IsomorphismFromCategoryOfQuiverRepresentations(
-                                AmbientCategory( indec_1 )
-                              ),
-                              indec_2,
-                              indec_1
-                            ),
-    "Isomorphism functor",
-    "Isomorphism functor from indec projective quiver representations to indec projective objects in category of functors"
-  ];
-  
-AddFunctor( functor );
-functor := ExtendFunctorMethodToAdditiveClosures( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsCapFullSubcategory,
-    function( proj_1, proj_2 )
-      local hom, reps;
-      hom := AmbientCategory( proj_1 );
-      reps := AmbientCategory( proj_2 );
-      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
-        return false;
-      fi;
-      
-      if not ( HasFullSubcategoryGeneratedByProjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByProjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( hom ), proj_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( reps ), proj_2 ) ) and
-         not ( HasFullSubcategoryGeneratedByInjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByInjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( hom ), proj_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( reps ), proj_2 ) ) then
-          return false;
-      fi;
-
-      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return false;
-      fi;
-      
-      return true;
-      
-    end,
-    { proj_1, proj_2 } -> RestrictFunctorToFullSubcategories(
-                              IsomorphismOntoCategoryOfQuiverRepresentations(
-                                AmbientCategory( proj_1 )
-                              ),
-                              proj_1,
-                              proj_2
-                            ),
-    "Isomorphism functor",
-    "Isomorphism functor from projective objects in category of functors to projective quiver representations"
-  ];
-  
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsCapFullSubcategory,
-    function( proj_2, proj_1 )
-      local hom, reps;
-      reps := AmbientCategory( proj_2 );
-      hom := AmbientCategory( proj_1 );
-      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
-        return false;
-      fi;
-      
-      if not ( HasFullSubcategoryGeneratedByProjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByProjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( hom ), proj_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( reps ), proj_2 ) ) and
-         not ( HasFullSubcategoryGeneratedByInjectiveObjects( hom ) and
-                HasFullSubcategoryGeneratedByInjectiveObjects( reps ) and
-                  IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( hom ), proj_1 ) and
-                    IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( reps ), proj_2 ) ) then
-          return false;
-      fi;
-            
-      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
-        return false;
-      fi;
-     
-      return true;
-      
-    end,
-    { proj_2, proj_1 } -> RestrictFunctorToFullSubcategories(
-                              IsomorphismFromCategoryOfQuiverRepresentations(
-                                AmbientCategory( proj_1 )
-                              ),
-                              proj_2,
-                              proj_1
-                            ),
-    "Isomorphism functor",
-    "Isomorphism functor from projective quiver representations to projective objects in category of functors"
-  ];
-  
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
+#functor :=
+#  [
+#    IsQuiverRepresentationCategory,
+#    IsFunctorCategory,
+#    function( reps, hom )
+#      if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return true;
+#      else
+#        return false;
+#      fi;
+#    end,
+#    { reps, hom } -> IsomorphismFromCategoryOfQuiverRepresentations( hom ),
+#    "Isomorphism functor",
+#    "Isomorphism from category of quiver representations to the corresponding category of functors"
+#  ];
+#
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
+#
+###
+#functor :=
+#  [ 
+#    IsFunctorCategory,
+#    IsQuiverRepresentationCategory,
+#    function( hom, reps )
+#      if IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return true;
+#      else
+#        return false;
+#      fi;
+#    end,
+#    { hom, reps } -> IsomorphismOntoCategoryOfQuiverRepresentations( hom ),
+#    "Isomorphism functor",
+#    "Isomorphism from category of functors onto the corresponding category of quiver representations"
+#  ];
+#
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
+#
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsCapFullSubcategory,
+#    function( indec_1, indec_2 )
+#      local hom, reps;
+#      hom := AmbientCategory( indec_1 );
+#      reps := AmbientCategory( indec_2 );
+#      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+#        return false;
+#      fi;
+#      if not ( HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByIndecProjectiveObjects( reps ) and 
+#                  IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( hom ), indec_1 ) and 
+#                    IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( reps ), indec_2 ) ) and
+#         not ( HasFullSubcategoryGeneratedByIndecInjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByIndecInjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( hom ), indec_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( reps ), indec_2 ) ) then
+#          return false;
+#      fi;
+#      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return false;
+#      fi;
+#      
+#      return true;
+#      
+#    end,
+#    { indec_1, indec_2 } -> RestrictFunctorToFullSubcategories(
+#                              IsomorphismOntoCategoryOfQuiverRepresentations(
+#                                AmbientCategory( indec_1 )
+#                              ),
+#                              indec_1,
+#                              indec_2
+#                            ),
+#    "Isomorphism functor",
+#    "Isomorphism functor from indec projective objects in category of functors to indec projective quiver representations"
+#  ];
+#  
+#AddFunctor( functor );
+#functor := ExtendFunctorMethodToAdditiveClosures( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
+#
+#
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsCapFullSubcategory,
+#    function( indec_2, indec_1 )
+#      local hom, reps;
+#      reps := AmbientCategory( indec_2 );
+#      hom := AmbientCategory( indec_1 );
+#      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+#        return false;
+#      fi;
+#      
+#      if not ( HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByIndecProjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( hom ), indec_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByIndecProjectiveObjects( reps ), indec_2 ) ) and
+#         not ( HasFullSubcategoryGeneratedByIndecInjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByIndecInjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( hom ), indec_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByIndecInjectiveObjects( reps ), indec_2 ) ) then
+#          return false;
+#      fi;
+#      
+#      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return false;
+#      fi;
+#     
+#      return true;
+#      
+#    end,
+#    { indec_2, indec_1 } -> RestrictFunctorToFullSubcategories(
+#                              IsomorphismFromCategoryOfQuiverRepresentations(
+#                                AmbientCategory( indec_1 )
+#                              ),
+#                              indec_2,
+#                              indec_1
+#                            ),
+#    "Isomorphism functor",
+#    "Isomorphism functor from indec projective quiver representations to indec projective objects in category of functors"
+#  ];
+#  
+#AddFunctor( functor );
+#functor := ExtendFunctorMethodToAdditiveClosures( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
+#
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsCapFullSubcategory,
+#    function( proj_1, proj_2 )
+#      local hom, reps;
+#      hom := AmbientCategory( proj_1 );
+#      reps := AmbientCategory( proj_2 );
+#      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+#        return false;
+#      fi;
+#      
+#      if not ( HasFullSubcategoryGeneratedByProjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByProjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( hom ), proj_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( reps ), proj_2 ) ) and
+#         not ( HasFullSubcategoryGeneratedByInjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByInjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( hom ), proj_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( reps ), proj_2 ) ) then
+#          return false;
+#      fi;
+#
+#      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return false;
+#      fi;
+#      
+#      return true;
+#      
+#    end,
+#    { proj_1, proj_2 } -> RestrictFunctorToFullSubcategories(
+#                              IsomorphismOntoCategoryOfQuiverRepresentations(
+#                                AmbientCategory( proj_1 )
+#                              ),
+#                              proj_1,
+#                              proj_2
+#                            ),
+#    "Isomorphism functor",
+#    "Isomorphism functor from projective objects in category of functors to projective quiver representations"
+#  ];
+#  
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
+#
+#
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsCapFullSubcategory,
+#    function( proj_2, proj_1 )
+#      local hom, reps;
+#      reps := AmbientCategory( proj_2 );
+#      hom := AmbientCategory( proj_1 );
+#      if not ( IsFunctorCategory( hom ) and IsQuiverRepresentationCategory( reps ) ) then
+#        return false;
+#      fi;
+#      
+#      if not ( HasFullSubcategoryGeneratedByProjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByProjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( hom ), proj_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByProjectiveObjects( reps ), proj_2 ) ) and
+#         not ( HasFullSubcategoryGeneratedByInjectiveObjects( hom ) and
+#                HasFullSubcategoryGeneratedByInjectiveObjects( reps ) and
+#                  IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( hom ), proj_1 ) and
+#                    IsIdenticalObj( FullSubcategoryGeneratedByInjectiveObjects( reps ), proj_2 ) ) then
+#          return false;
+#      fi;
+#            
+#      if not IsIdenticalObj( UnderlyingQuiverAlgebra( Source( hom ) ), AlgebraOfCategory( reps ) ) then
+#        return false;
+#      fi;
+#     
+#      return true;
+#      
+#    end,
+#    { proj_2, proj_1 } -> RestrictFunctorToFullSubcategories(
+#                              IsomorphismFromCategoryOfQuiverRepresentations(
+#                                AmbientCategory( proj_1 )
+#                              ),
+#                              proj_2,
+#                              proj_1
+#                            ),
+#    "Isomorphism functor",
+#    "Isomorphism functor from projective quiver representations to projective objects in category of functors"
+#  ];
+#  
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
 
 ##
 InstallMethod( CategoryOfArrows,

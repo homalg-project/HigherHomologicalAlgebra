@@ -447,170 +447,171 @@ ExtendFunctorMethodToHomotopyCategories( functor );
 
 
 
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsAdditiveClosureCategory,
-    function( projs, add_closure )
-      local hom, indec;
-      hom := AmbientCategory( projs );
-      if not IsFunctorCategory( hom ) then
-        return false;
-      fi;
-      indec := UnderlyingCategory( add_closure );
-      if not HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) then
-        return false;
-      fi;
-      if not IsIdenticalObj( indec, FullSubcategoryGeneratedByIndecProjectiveObjects( hom ) ) then
-        return false;
-      fi;
-      return true;
-    end,
-    function ( projs, add_closure )
-      local hom, iprojs, I, J, reps, projs_reps, iprojs_reps, U_1, U_2, U_3, U;
-      
-      hom := AmbientCategory( projs );
-      
-      iprojs := UnderlyingCategory( add_closure );
-      
-      I := IsomorphismOntoCategoryOfQuiverRepresentations( hom );
-      
-      J := IsomorphismFromCategoryOfQuiverRepresentations( hom );
-      
-      reps := RangeOfFunctor( I );
-      
-      projs_reps := FullSubcategoryGeneratedByProjectiveObjects( reps );
-      
-      iprojs_reps := FullSubcategoryGeneratedByIndecProjectiveObjects( reps );
-      
-      U_1 := RestrictFunctorToFullSubcategories( I, projs, projs_reps );
-      
-      U_2 := DecompositionFunctorOfProjectiveQuiverRepresentations( reps );
-      
-      U_3 := ExtendFunctorToAdditiveClosures(
-                RestrictFunctorToFullSubcategories( J, iprojs_reps, iprojs )
-              );
-      
-      U := PreCompose( [ U_1, U_2, U_3 ] );
-      
-      U!.Name := "Decomposition functor of projective objects in terms of indecomposable projective objects";
-      
-      return U;
-      
-    end,
-    "Decomposition of projective objects",
-    "Decomposition functor: projective objects in category of functors -> additive closure ( indec_projs )"
-  ]; 
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsAdditiveClosureCategory,
+#    function( projs, add_closure )
+#      local hom, indec;
+#      hom := AmbientCategory( projs );
+#      if not IsFunctorCategory( hom ) then
+#        return false;
+#      fi;
+#      indec := UnderlyingCategory( add_closure );
+#      if not HasFullSubcategoryGeneratedByIndecProjectiveObjects( hom ) then
+#        return false;
+#      fi;
+#      if not IsIdenticalObj( indec, FullSubcategoryGeneratedByIndecProjectiveObjects( hom ) ) then
+#        return false;
+#      fi;
+#      return true;
+#    end,
+#    
+#    function ( projs, add_closure )
+#      local hom, iprojs, I, J, reps, projs_reps, iprojs_reps, U_1, U_2, U_3, U;
+#      
+#      hom := AmbientCategory( projs );
+#      
+#      iprojs := UnderlyingCategory( add_closure );
+#      
+#      I := IsomorphismOntoCategoryOfQuiverRepresentations( hom );
+#      
+#      J := IsomorphismFromCategoryOfQuiverRepresentations( hom );
+#      
+#      reps := RangeOfFunctor( I );
+#      
+#      projs_reps := FullSubcategoryGeneratedByProjectiveObjects( reps );
+#      
+#      iprojs_reps := FullSubcategoryGeneratedByIndecProjectiveObjects( reps );
+#      
+#      U_1 := RestrictFunctorToFullSubcategories( I, projs, projs_reps );
+#      
+#      U_2 := DecompositionFunctorOfProjectiveQuiverRepresentations( reps );
+#      
+#      U_3 := ExtendFunctorToAdditiveClosures(
+#                RestrictFunctorToFullSubcategories( J, iprojs_reps, iprojs )
+#              );
+#      
+#      U := PreCompose( [ U_1, U_2, U_3 ] );
+#      
+#      U!.Name := "Decomposition functor of projective objects in terms of indecomposable projective objects";
+#      
+#      return U;
+#      
+#    end,
+#    "Decomposition of projective objects",
+#    "Decomposition functor: projective objects in category of functors -> additive closure ( indec_projs )"
+#  ]; 
+#
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
 
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
-
-functor :=
-  [
-    IsCapFullSubcategory,
-    IsAdditiveClosureCategory,
-    function( projs, add_closure )
-      local hom, algebroid;
-      
-      hom := AmbientCategory( projs );
-      
-      if not IsFunctorCategory( hom ) then
-        return false;
-      fi;
-      
-      algebroid := UnderlyingCategory( add_closure );
-      
-      if not IsAlgebroid( algebroid ) then
-        return false;
-      fi;
-      
-      if not HasOppositeAlgebroid( algebroid ) then
-        return false;
-      fi;
-      
-      if not IsIdenticalObj(
-                OppositeAlgebroid( algebroid ),
-                Source( hom )
-              ) then
-              
-        return false;
-        
-      fi;
-      
-      return true;
-      
-    end,
-    function ( projs, add_closure )
-      local hom, algebroid, I, reps, projs_reps, U_1, U_2, U_3, U;
-      
-      hom := AmbientCategory( projs );
-      
-      algebroid := UnderlyingCategory( add_closure );
-      
-      I := IsomorphismOntoCategoryOfQuiverRepresentations( hom );
-      
-      reps := RangeOfFunctor( I );
-      
-      projs_reps := FullSubcategoryGeneratedByProjectiveObjects( reps );
-      
-      U_1 := RestrictFunctorToFullSubcategories( I, projs, projs_reps );
-      
-      U_2 := DecompositionFunctorOfProjectiveQuiverRepresentations( reps );
-      
-      U_3 := ExtendFunctorToAdditiveClosures(
-                InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid )
-             );
-      
-      U := PreCompose( [ U_1, U_2, U_3 ] );
-      
-      U!.Name := "Decomposition of projective objects";
-      
-      return U;
-      
-    end,
-    "Decomposition of projective objects",
-    "Decomposition functor: projective objects in category of functors -> additive closure( algebroid )"
-  ]; 
-
-AddFunctor( functor );
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
+#functor :=
+#  [
+#    IsCapFullSubcategory,
+#    IsAdditiveClosureCategory,
+#    function( projs, add_closure )
+#      local hom, algebroid;
+#      
+#      hom := AmbientCategory( projs );
+#      
+#      if not IsFunctorCategory( hom ) then
+#        return false;
+#      fi;
+#      
+#      algebroid := UnderlyingCategory( add_closure );
+#      
+#      if not IsAlgebroid( algebroid ) then
+#        return false;
+#      fi;
+#      
+#      if not HasOppositeAlgebroid( algebroid ) then
+#        return false;
+#      fi;
+#      
+#      if not IsIdenticalObj(
+#                OppositeAlgebroid( algebroid ),
+#                Source( hom )
+#              ) then
+#              
+#        return false;
+#        
+#      fi;
+#      
+#      return true;
+#      
+#    end,
+#    function ( projs, add_closure )
+#      local hom, algebroid, I, reps, projs_reps, U_1, U_2, U_3, U;
+#      
+#      hom := AmbientCategory( projs );
+#      
+#      algebroid := UnderlyingCategory( add_closure );
+#      
+#      I := IsomorphismOntoCategoryOfQuiverRepresentations( hom );
+#      
+#      reps := RangeOfFunctor( I );
+#      
+#      projs_reps := FullSubcategoryGeneratedByProjectiveObjects( reps );
+#      
+#      U_1 := RestrictFunctorToFullSubcategories( I, projs, projs_reps );
+#      
+#      U_2 := DecompositionFunctorOfProjectiveQuiverRepresentations( reps );
+#      
+#      U_3 := ExtendFunctorToAdditiveClosures(
+#                InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid )
+#             );
+#      
+#      U := PreCompose( [ U_1, U_2, U_3 ] );
+#      
+#      U!.Name := "Decomposition of projective objects";
+#      
+#      return U;
+#      
+#    end,
+#    "Decomposition of projective objects",
+#    "Decomposition functor: projective objects in category of functors -> additive closure( algebroid )"
+#  ]; 
+#
+#AddFunctor( functor );
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
 
 # from additive subcategory of projective objects in category of functors to quiver rows
 #
-functor := PreComposeFunctorMethods(
-  ALL_FUNCTORS_METHODS.( "Decomposition functor: projective objects in category of functors -> additive closure( algebroid )" ),
-  ALL_FUNCTORS_METHODS.( "Isomorphism functor from additive closure of algebroid to quiver rows" ),
-  function( projs, quiver_rows )
-    local A;
-    if not IsQuiverRowsCategory( quiver_rows ) then
-      return false;
-    fi;
-    if not ( IsCapFullSubcategory( projs ) and IsFunctorCategory( AmbientCategory( projs ) ) ) then
-      return false;
-    fi;
-    A := UnderlyingQuiverAlgebra( quiver_rows );
-    if not HasOppositeAlgebra( A ) then
-      return false;
-    fi;
-    if not IsIdenticalObj(
-                OppositeAlgebra( A ),
-                UnderlyingQuiverAlgebra( Source( AmbientCategory( projs ) ) )
-              ) then
-      return false;
-    fi;
-    
-    return true;
-    end,
-  
-  function( projs, quiver_rows )
-    return AdditiveClosure( OppositeAlgebroid( Source( AmbientCategory( projs ) ) ) );
-  end
-);  
-
-ExtendFunctorMethodToComplexCategories( functor );
-ExtendFunctorMethodToHomotopyCategories( functor );
+#functor := PreComposeFunctorMethods(
+#  ALL_FUNCTORS_METHODS.( "Decomposition functor: projective objects in category of functors -> additive closure( algebroid )" ),
+#  ALL_FUNCTORS_METHODS.( "Isomorphism functor from additive closure of algebroid to quiver rows" ),
+#  function( projs, quiver_rows )
+#    local A;
+#    if not IsQuiverRowsCategory( quiver_rows ) then
+#      return false;
+#    fi;
+#    if not ( IsCapFullSubcategory( projs ) and IsFunctorCategory( AmbientCategory( projs ) ) ) then
+#      return false;
+#    fi;
+#    A := UnderlyingQuiverAlgebra( quiver_rows );
+#    if not HasOppositeAlgebra( A ) then
+#      return false;
+#    fi;
+#    if not IsIdenticalObj(
+#                OppositeAlgebra( A ),
+#                UnderlyingQuiverAlgebra( Source( AmbientCategory( projs ) ) )
+#              ) then
+#      return false;
+#    fi;
+#    
+#    return true;
+#    end,
+#  
+#  function( projs, quiver_rows )
+#    return AdditiveClosure( OppositeAlgebroid( Source( AmbientCategory( projs ) ) ) );
+#  end
+#);  
+#
+#ExtendFunctorMethodToComplexCategories( functor );
+#ExtendFunctorMethodToHomotopyCategories( functor );
 
 # from additive subcategory of projective quiver representations to quiver rows
 #
@@ -854,45 +855,45 @@ AddFunctor( functor );
 ExtendFunctorMethodToComplexCategories( functor );
 ExtendFunctorMethodToHomotopyCategories( functor );
 
-##
-InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
-          [ IsAlgebroid ],
-  function( algebroid )
-    local algebroid_op, k, functors, full, Y, name, F;
-    
-    algebroid_op := OppositeAlgebroid( algebroid );
-    
-    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
-
-    k := CommutativeRingOfLinearCategory( algebroid_op );
-    
-    functors := Hom( algebroid_op, MatrixCategory( k ) );
-    
-    full := FullSubcategoryGeneratedByIndecProjectiveObjects( functors );
-    
-    Y := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
-    
-    name := "Isomorphism functor from algebroid onto full subcategory generated by indecomposable projective objects";
-    
-    F := CapFunctor( name, algebroid, full );
-    
-    AddObjectFunction( F,
-      function( a )
-      
-        return AsSubcategoryCell( full, ConvertToCellInFunctorCategory( UnderlyingCell( Y( a ) ), functors ) );
-        
-      end );
-      
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-      
-        return AsSubcategoryCell( s, ConvertToCellInFunctorCategory( UnderlyingCell(s), UnderlyingCell( Y( alpha ) ), UnderlyingCell( r ) ), r );
-        
-      end );
-    
-    return F;
-     
-end );
+###
+#InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
+#          [ IsAlgebroid ],
+#  function( algebroid )
+#    local algebroid_op, k, functors, full, Y, name, F;
+#    
+#    algebroid_op := OppositeAlgebroid( algebroid );
+#    
+#    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+#
+#    k := CommutativeRingOfLinearCategory( algebroid_op );
+#    
+#    functors := Hom( algebroid_op, MatrixCategory( k ) );
+#    
+#    full := FullSubcategoryGeneratedByIndecProjectiveObjects( functors );
+#    
+#    Y := YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
+#    
+#    name := "Isomorphism functor from algebroid onto full subcategory generated by indecomposable projective objects";
+#    
+#    F := CapFunctor( name, algebroid, full );
+#    
+#    AddObjectFunction( F,
+#      function( a )
+#      
+#        return AsSubcategoryCell( full, ConvertToCellInFunctorCategory( UnderlyingCell( Y( a ) ), functors ) );
+#        
+#      end );
+#      
+#    AddMorphismFunction( F,
+#      function( s, alpha, r )
+#      
+#        return AsSubcategoryCell( s, ConvertToCellInFunctorCategory( UnderlyingCell(s), UnderlyingCell( Y( alpha ) ), UnderlyingCell( r ) ), r );
+#        
+#      end );
+#    
+#    return F;
+#     
+#end );
 
 ##
 functor :=
@@ -1132,46 +1133,46 @@ InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRe
     
 end );
 
-##
-InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
-          [ IsAlgebroid ],
-          
-  function( algebroid )
-    local algebroid_op, k, functors, full, Y, name, F;
-    
-    algebroid_op := OppositeAlgebroid( algebroid );
-    
-    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
-
-    k := CommutativeRingOfLinearCategory( algebroid_op );
-    
-    functors := Hom( algebroid_op, MatrixCategory( k ) );
-    
-    full := FullSubcategoryGeneratedByIndecProjectiveObjects( functors );
-    
-    Y := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
-    
-    name := "Isomorphism functor from full subcategory generated by indecomposable projective objects onto algebroid";
-    
-    F := CapFunctor( name, full, algebroid );
-    
-    AddObjectFunction( F,
-      function( a )
-        
-        return Y( ConvertToCellInCategoryOfQuiverRepresentations( UnderlyingCell( a ) ) / SourceOfFunctor( Y ) );
-        
-    end );
-    
-    AddMorphismFunction( F,
-      function( s, alpha, r )
-        
-        return Y( ConvertToCellInCategoryOfQuiverRepresentations( UnderlyingCell( alpha ) ) / SourceOfFunctor( Y ) );
-        
-    end );
-    
-    return F;
-    
-end );
+###
+#InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
+#          [ IsAlgebroid ],
+#          
+#  function( algebroid )
+#    local algebroid_op, k, functors, full, Y, name, F;
+#    
+#    algebroid_op := OppositeAlgebroid( algebroid );
+#    
+#    SetAlgebroid( UnderlyingQuiverAlgebra( algebroid_op ), algebroid_op );
+#
+#    k := CommutativeRingOfLinearCategory( algebroid_op );
+#    
+#    functors := Hom( algebroid_op, MatrixCategory( k ) );
+#    
+#    full := FullSubcategoryGeneratedByIndecProjectiveObjects( functors );
+#    
+#    Y := InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations( algebroid );
+#    
+#    name := "Isomorphism functor from full subcategory generated by indecomposable projective objects onto algebroid";
+#    
+#    F := CapFunctor( name, full, algebroid );
+#    
+#    AddObjectFunction( F,
+#      function( a )
+#        
+#        return Y( ConvertToCellInCategoryOfQuiverRepresentations( UnderlyingCell( a ) ) / SourceOfFunctor( Y ) );
+#        
+#    end );
+#    
+#    AddMorphismFunction( F,
+#      function( s, alpha, r )
+#        
+#        return Y( ConvertToCellInCategoryOfQuiverRepresentations( UnderlyingCell( alpha ) ) / SourceOfFunctor( Y ) );
+#        
+#    end );
+#    
+#    return F;
+#    
+#end );
 
 ##
 functor :=
