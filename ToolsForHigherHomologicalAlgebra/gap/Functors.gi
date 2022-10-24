@@ -339,7 +339,7 @@ InstallMethod( Display,
 end );
 
 ##
-InstallMethod( FunctorFromLinearCategoryByTwoFunctions,
+InstallMethod( CreateAdditiveFunctorByTwoFunctions,
           [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ],
           
   function( name, source_cat, range_cat, object_func, morphism_func )

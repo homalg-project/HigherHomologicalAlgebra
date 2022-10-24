@@ -1078,7 +1078,7 @@ InstallOtherMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfFunctors,
     
     cell_func := c -> ApplyFunctor( iso, c );
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
 end );
 
 
@@ -1104,7 +1104,7 @@ InstallMethod( YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentat
     
     cell_func := c -> ApplyFunctor( iso, c );
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, ind_projs, cell_func, cell_func );
 end );
 
 ##
@@ -1129,7 +1129,7 @@ InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRe
     
     cell_func := c -> ApplyFunctor( iso, c );
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, ind_projs, full, cell_func, cell_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, ind_projs, full, cell_func, cell_func );
     
 end );
 
@@ -1301,7 +1301,7 @@ InstallMethod( InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRe
         
       end;
       
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, algebroid, object_func, morphism_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, algebroid, object_func, morphism_func );
     
 end );
 
@@ -1465,7 +1465,7 @@ InstallMethod( IsomorphismOntoAlgebroid,
         
     end;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, algebroid, object_func, morphism_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, algebroid, object_func, morphism_func );
     
 end );
 
@@ -1577,7 +1577,7 @@ InstallMethod( IsomorphismFromAlgebroid,
         
     end;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, algebroid, full, object_func, morphism_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, algebroid, full, object_func, morphism_func );
     
 end );
 
@@ -2699,7 +2699,7 @@ InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
               Name( I ), r[ 1 ], " ) ", r[ 2 ]
               );
               
-    return FunctorFromLinearCategoryByTwoFunctions( name, D, C, object_func, morphism_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, D, C, object_func, morphism_func );
     
 end );
 
@@ -3104,7 +3104,7 @@ InstallMethodWithCrispCache( IsomorphismFromTensorProductOfAlgebroidsOntoBoxProd
       
     name := "Evaluation functor from tensor product of algebroids onto full subcategory defined by a box product";
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, algebroid, box_product_full_subcategory, func_on_object, func_on_morphism );
+    return CreateAdditiveFunctorByTwoFunctions( name, algebroid, box_product_full_subcategory, func_on_object, func_on_morphism );
       
 end );
 

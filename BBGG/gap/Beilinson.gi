@@ -1718,7 +1718,7 @@ InstallMethod( IsomorphismFromTwistedOmegaModulesOntoTwistedCotangentModulesAsGL
         
     name := "Isomorphism functor from 𝛚_E(i)'s into 𝛀 ^i(i)'s as modules";
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, omegas, Omegas, object_func, morphism_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, omegas, Omegas, object_func, morphism_func );
     
 end );
 
@@ -1740,7 +1740,7 @@ InstallMethod( IsomorphismFromTwistedCotangentModulesAsGLPOntoTwistedCotangentSh
     
     cell_func := c -> ApplyFunctor( sh, UnderlyingCell( c ) ) / sheaves;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, modules, sheaves, cell_func, cell_func );
+    return CreateAdditiveFunctorByTwoFunctions( name, modules, sheaves, cell_func, cell_func );
     
 end );
 

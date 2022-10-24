@@ -226,7 +226,7 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_ALGEBROID",
         
       end;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_A, func_on_objects, func_on_morphisms );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, Ho_A, func_on_objects, func_on_morphisms );
     
 end );
 
@@ -296,7 +296,7 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_QUIVER_ROWS"
         
       end;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_QRows, func_on_objects, func_on_morphisms );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, Ho_QRows, func_on_objects, func_on_morphisms );
     
 end );
 
@@ -368,7 +368,7 @@ BindGlobal( "BEILINSON_EXPERIMENTAL_ON_GRADED_ROWS_OF_RANK_ONE_ONTO_BOX_PRODUCT_
         
       end;
     
-    return FunctorFromLinearCategoryByTwoFunctions( name, full, Ho_omegas, func_on_objects, func_on_morphisms );
+    return CreateAdditiveFunctorByTwoFunctions( name, full, Ho_omegas, func_on_objects, func_on_morphisms );
     
 end );
 

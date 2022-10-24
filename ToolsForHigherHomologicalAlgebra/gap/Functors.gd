@@ -19,7 +19,7 @@ DeclareOperation( "PreComposeFunctorMethods", [ IsList, IsList, IsFunction, IsFu
 
 DeclareGlobalFunction( "CheckNaturality" );
 DeclareGlobalFunction( "CheckFunctoriality" );
-DeclareOperation( "FunctorFromLinearCategoryByTwoFunctions",
+DeclareOperation( "CreateAdditiveFunctorByTwoFunctions",
     [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
 DeclareGlobalFunction( "RandomTextColor" );
 DeclareGlobalFunction( "RandomBoldTextColor" );
