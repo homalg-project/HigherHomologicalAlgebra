@@ -694,9 +694,9 @@
     [4X[25X>[125X [27X  );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XHomStructure( A, B );[127X[104X
-    [4X[28X<A vector space object over Q of dimension 4>[128X[104X
+    [4X[28X<A row module over Q of rank 4>[128X[104X
     [4X[25Xgap>[125X [27XHomStructure( class_A, class_B );[127X[104X
-    [4X[28X<A vector space object over Q of dimension 1>[128X[104X
+    [4X[28X<A row module over Q of rank 1>[128X[104X
     [4X[25Xgap>[125X [27XHom_class_A_class_B := BasisOfExternalHom( class_A, class_B );[127X[104X
     [4X[28X[ <A morphism in Stable category( FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
     [4X[28X, E=10, Rel=7 ) ) ) ) [128X[104X
@@ -740,7 +740,7 @@
     [4X[25Xgap>[125X [27XIsZeroForMorphisms( Fpsi );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XHomStructure( FA, FB );[127X[104X
-    [4X[28X<A vector space object over Q of dimension 1>[128X[104X
+    [4X[28X<A row module over Q of rank 1>[128X[104X
     [4X[25Xgap>[125X [27XHom_FA_FB := BasisOfExternalHom( FA, FB );[127X[104X
     [4X[28X[ <A morphism in Freyd( Additive closure( Algebroid( V=4, E=10, Rel=7 ) ) )> ][128X[104X
     [4X[25Xgap>[125X [27XDisplay( Hom_FA_FB[ 1 ] );[127X[104X
@@ -792,7 +792,7 @@
     [4X[25Xgap>[125X [27XCh_Aoid;[127X[104X
     [4X[28XCochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )[128X[104X
     [4X[25Xgap>[125X [27XSt_Ch_Aoid := StableCategoryByClassOfColiftingObjects( Ch_Aoid );[127X[104X
-    [4X[28XStable category( Cochain complexes( Additive closure( [128X[104X
+    [4X[28XStable category( Cochain complexes( Additive closure([128X[104X
     [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects[128X[104X
     [4X[25Xgap>[125X [27Xclass_A := StableCategoryObject( St_Ch_Aoid, A );[127X[104X
     [4X[28X<An object in Stable category( Cochain complexes([128X[104X
@@ -800,10 +800,10 @@
     [4X[28X) ) defined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27Xclass_B := StableCategoryObject( St_Ch_Aoid, B );[127X[104X
     [4X[28X<An object in Stable category( Cochain complexes([128X[104X
-    [4X[28XAdditive closure( Algebroid( V=6, E=12, Rel=9 [128X[104X
+    [4X[28XAdditive closure( Algebroid( V=6, E=12, Rel=9[128X[104X
     [4X[28X) ) ) ) defined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XHom_AB := HomStructure( A, B );[127X[104X
-    [4X[28X<A vector space object over Q of dimension 3>[128X[104X
+    [4X[28X<A row module over Q of rank 3>[128X[104X
     [4X[25Xgap>[125X [27XHom_A_B := BasisOfExternalHom( A, B );;[127X[104X
     [4X[25Xgap>[125X [27XDisplay( Hom_A_B[ 1 ] );[127X[104X
     [4X[28X[128X[104X
@@ -820,7 +820,7 @@
     [4X[28X[128X[104X
     [4X[28X[1,1]: (A_0)-[{ 1*(beta_0) - 1*(alpha_0) }]->(B_0)[128X[104X
     [4X[28X[128X[104X
-    [4X[28XA morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) [128X[104X
+    [4X[28XA morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
     [4X[28X) ) given by the above data[128X[104X
     [4X[25Xgap>[125X [27XDisplay( Hom_A_B[ 2 ] );[127X[104X
     [4X[28X[128X[104X
@@ -857,11 +857,11 @@
     [4X[28XA morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
     [4X[28X) ) given by the above data[128X[104X
     [4X[25Xgap>[125X [27XHom_class_A_class_B := HomStructure( class_A, class_B );[127X[104X
-    [4X[28X<A vector space object over Q of dimension 1>[128X[104X
+    [4X[28X<A row module over Q of rank 1>[128X[104X
     [4X[25Xgap>[125X [27XHom_class_A_class_B := BasisOfExternalHom( class_A, class_B );;[127X[104X
     [4X[25Xgap>[125X [27XDisplay( Hom_class_A_class_B[ 1 ] );[127X[104X
-    [4X[28XA morphism in Stable category( Cochain complexes( Additive closure( [128X[104X
-    [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting [128X[104X
+    [4X[28XA morphism in Stable category( Cochain complexes( Additive closure([128X[104X
+    [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting[128X[104X
     [4X[28Xobjects defined by the underlying morphism:[128X[104X
     [4X[28X[128X[104X
     [4X[28X[128X[104X
@@ -878,13 +878,13 @@
     [4X[28X[128X[104X
     [4X[28X[1,1]: (A_0)-[{ 1*(alpha_0) }]->(B_0)[128X[104X
     [4X[28X[128X[104X
-    [4X[28XA morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) [128X[104X
+    [4X[28XA morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
     [4X[28X) ) given by the above data[128X[104X
     [4X[25Xgap>[125X [27Xclass_alpha := StableCategoryMorphism( St_Ch_Aoid, alpha );[127X[104X
-    [4X[28X<A morphism in Stable category( Cochain complexes( Additive closure( [128X[104X
+    [4X[28X<A morphism in Stable category( Cochain complexes( Additive closure([128X[104X
     [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27Xclass_beta := StableCategoryMorphism( St_Ch_Aoid, beta );[127X[104X
-    [4X[28X<A morphism in Stable category( Cochain complexes( Additive closure( [128X[104X
+    [4X[28X<A morphism in Stable category( Cochain complexes( Additive closure([128X[104X
     [4X[28XAlgebroid( V=6, E=12, Rel=9 ) ) ) ) defined by a system of colifting objects>[128X[104X
     [4X[25Xgap>[125X [27XIsCongruentForMorphisms( class_alpha, class_beta );[127X[104X
     [4X[28Xtrue[128X[104X

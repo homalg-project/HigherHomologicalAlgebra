@@ -1,7 +1,7 @@
 name: StableCategories
-version: "2022.09-01"
+version: "2022.10-01"
 license: "GPL-2.0-or-later"
-date: 2022-09-03
+date: 2022-10-28
 description: |
     Stable categories of additive categories
 
@@ -17,7 +17,7 @@ GAP: ">= 4.11.1"
 
 needed-pkgs:
     - name: "CAP"
-      version: ">= 2021.05-02"
+      version: ">= 2022.10-09"
       url: "https://homalg-project.github.io/pkg/CAP"
     - name: "GAPDoc"
       version: ">= 1.5"
@@ -40,11 +40,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCat
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.10-01/StableCategories-2022.10-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.10-01/StableCategories-2022.10-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.09-01/StableCategories-2022.09-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/StableCategories-2022.10-01/StableCategories-2022.10-01.pdf
 
 abstract: |
 
@@ -55,7 +55,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>StableCategories, Stable categories of additive categories,
-             Version 2022.09-01</i>
+             Version 2022.10-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/StableCategories">https://homalg-project.github.io/pkg/StableCategories</a></span>.
@@ -63,11 +63,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ StableCategories2022.09-01,
+    @misc{ StableCategories2022.10-01,
       author =           {Saleh, K.},
       title =            {{StableCategories},   Stable  categories  of  additive
-                          categories, {V}ersion 2022.09-01},
-      month =            {Sep},
+                          categories, {V}ersion 2022.10-01},
+      month =            {Oct},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
