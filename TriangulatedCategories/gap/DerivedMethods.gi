@@ -25,7 +25,7 @@ end:
 );
 
 ##
-AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
+AddFinalDerivationBundle( # WitnessIsomorphismOntoStandardConeObject
                 [
                   [ IsEqualForObjects, 1 ],
                   [ ShiftOnObject, 1 ],
@@ -39,6 +39,8 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
                   WitnessIsomorphismOntoStandardConeObject,
                   WitnessIsomorphismFromStandardConeObject
                 ],
+[
+  WitnessIsomorphismOntoStandardConeObject,
   function( cat, alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
     
@@ -70,7 +72,8 @@ AddFinalDerivation( WitnessIsomorphismOntoStandardConeObject,
       
     fi;
   
-  end,
+  end
+],
 [
   WitnessIsomorphismFromStandardConeObject,
     function( cat, alpha, iota, pi )
