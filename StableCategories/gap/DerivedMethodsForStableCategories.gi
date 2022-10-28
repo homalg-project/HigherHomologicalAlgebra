@@ -79,7 +79,7 @@ AddDerivationToCAP( WitnessForBeingColiftableAlongMorphismToColiftingObject,
 end: Description:= "WitnessForBeingColiftableAlongMorphismToColiftingObject using Colift & MorphismToColiftingObject methods" );
 
 ##
-AddFinalDerivation( IsColiftingObject,
+AddFinalDerivationBundle( # IsColiftingObject
             [
               [ IdentityMorphism, 2 ],
               [ IsNullHomotopic, 1 ],
@@ -95,7 +95,8 @@ AddFinalDerivation( IsColiftingObject,
               IsColiftableAlongMorphismToColiftingObject,
               WitnessForBeingColiftableAlongMorphismToColiftingObject
             ],
-            
+[
+  IsColiftingObject,
   function( category, A )
     local id_A;
     
@@ -103,7 +104,8 @@ AddFinalDerivation( IsColiftingObject,
     
     return IsNullHomotopic( id_A );
     
-  end,
+  end
+],
 [
   ColiftingObject,
   function( category, A )

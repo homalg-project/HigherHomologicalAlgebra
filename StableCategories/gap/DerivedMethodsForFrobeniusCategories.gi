@@ -33,7 +33,7 @@ AddDerivationToCAP( ExactCokernelObjectFunctorialWithGivenExactCokernelObjects,
 end : Description := "ExactCokernelObjectFunctorialWithGivenExactCokernelObjects using the universality of the cokernel" );
 
 ##
-AddFinalDerivation( IsConflationPair,
+AddFinalDerivationBundle( # IsConflationPair
                     [
                       [ IsMonomorphism, 1 ],
                       [ IsEpimorphism, 1 ],
@@ -78,10 +78,12 @@ AddFinalDerivation( IsConflationPair,
                       InjectionOfSecondCofactorOfExactPushout,
                       UniversalMorphismFromExactPushout
                     ],
-  
+[
+  IsConflationPair,
   { cat, iota, pi } ->
       IsIsomorphism( KernelLift( pi, iota ) )
-        and IsIsomorphism( CokernelColift( iota, pi ) ),
+        and IsIsomorphism( CokernelColift( iota, pi ) )
+],
 [
   IsInflation,
     { cat, iota } -> IsMonomorphism( iota )
@@ -173,7 +175,7 @@ AddFinalDerivation( IsConflationPair,
 );
 
 ##
-AddFinalDerivation( IsExactProjectiveObject,
+AddFinalDerivationBundle( # IsExactProjectiveObject
               [
                 [ IsProjective, 1 ],
                 [ SomeProjectiveObject, 1 ],
@@ -186,7 +188,9 @@ AddFinalDerivation( IsExactProjectiveObject,
                 DeflationFromSomeExactProjectiveObject,
                 ExactProjectiveLift
               ],
-  { cat, o } -> IsProjective( cat, o ),
+[
+  IsExactProjectiveObject,
+  { cat, o } -> IsProjective( cat, o ) ],
 [ 
   SomeExactProjectiveObject,
   { cat, o } -> SomeProjectiveObject( o ) ],
@@ -205,7 +209,7 @@ AddFinalDerivation( IsExactProjectiveObject,
   Description := "Adding enough exact projectives to exact categories"
 );
 
-AddFinalDerivation( IsExactInjectiveObject,
+AddFinalDerivationBundle( # IsExactInjectiveObject
               [
                 [ IsInjective, 1 ],
                 [ SomeInjectiveObject, 1 ],
@@ -218,7 +222,7 @@ AddFinalDerivation( IsExactInjectiveObject,
                 InflationIntoSomeExactInjectiveObject,
                 ExactInjectiveColift
               ],
-  { cat, o } -> IsInjective( cat, o ),
+[ IsExactInjectiveObject, { cat, o } -> IsInjective( cat, o ) ],
 [ SomeExactInjectiveObject, { cat, o } -> SomeInjectiveObject( o ) ],
 [ InflationIntoSomeExactInjectiveObject, { cat, o } -> MonomorphismIntoSomeInjectiveObject( cat, o ) ],
 [ ExactInjectiveColift, { cat, inf, alpha } -> InjectiveColift( cat, inf, alpha ) ]
@@ -232,7 +236,7 @@ AddFinalDerivation( IsExactInjectiveObject,
 );
 
 ##
-AddFinalDerivation( IsLiftableAlongDeflationFromSomeExactProjectiveObject,
+AddFinalDerivationBundle( # IsLiftableAlongDeflationFromSomeExactProjectiveObject
             [
               [ IsLiftable, 1 ],
               [ Lift, 1 ],
@@ -242,8 +246,10 @@ AddFinalDerivation( IsLiftableAlongDeflationFromSomeExactProjectiveObject,
               IsLiftableAlongDeflationFromSomeExactProjectiveObject,
               LiftAlongDeflationFromSomeExactProjectiveObject
             ],
-  { category, alpha } -> IsLiftable( alpha, DeflationFromSomeExactProjectiveObject( Range( alpha ) ) )
-,
+  [
+    IsLiftableAlongDeflationFromSomeExactProjectiveObject,
+    { category, alpha } -> IsLiftable( alpha, DeflationFromSomeExactProjectiveObject( Range( alpha ) ) )
+  ],
   [
     LiftAlongDeflationFromSomeExactProjectiveObject,
     { category, alpha } -> Lift( alpha, DeflationFromSomeExactProjectiveObject( Range( alpha ) ) )
@@ -251,7 +257,7 @@ AddFinalDerivation( IsLiftableAlongDeflationFromSomeExactProjectiveObject,
 );
 
 ##
-AddFinalDerivation( IsColiftableAlongInflationIntoSomeExactInjectiveObject,
+AddFinalDerivationBundle( # IsColiftableAlongInflationIntoSomeExactInjectiveObject,
             [
               [ IsColiftable, 1 ],
               [ Colift, 1 ],
@@ -261,8 +267,10 @@ AddFinalDerivation( IsColiftableAlongInflationIntoSomeExactInjectiveObject,
               IsColiftableAlongInflationIntoSomeExactInjectiveObject,
               ColiftAlongInflationIntoSomeExactInjectiveObject
             ],
-  { category, alpha } -> IsColiftable( InflationIntoSomeExactInjectiveObject( Source( alpha ) ), alpha )
-,
+  [
+    IsColiftableAlongInflationIntoSomeExactInjectiveObject,
+    { category, alpha } -> IsColiftable( InflationIntoSomeExactInjectiveObject( Source( alpha ) ), alpha )
+  ],
   [
     ColiftAlongInflationIntoSomeExactInjectiveObject,
     { category, alpha } -> Colift( InflationIntoSomeExactInjectiveObject( Source( alpha ) ), alpha )
@@ -270,7 +278,7 @@ AddFinalDerivation( IsColiftableAlongInflationIntoSomeExactInjectiveObject,
 );
 
 ##
-AddFinalDerivation( ColiftingObject,
+AddFinalDerivationBundle( # ColiftingObject
                 [
                   [ InflationIntoSomeExactInjectiveObject, 2 ],
                   [ IsExactInjectiveObject, 1 ],
@@ -288,7 +296,7 @@ AddFinalDerivation( ColiftingObject,
                   IsColiftableAlongMorphismToColiftingObject,
                   WitnessForBeingColiftableAlongMorphismToColiftingObject
                 ],
-  { category, o } -> Range( InflationIntoSomeExactInjectiveObject( o ) ),
+[ ColiftingObject, { category, o } -> Range( InflationIntoSomeExactInjectiveObject( o ) ) ],
 [ MorphismToColiftingObjectWithGivenColiftingObject, { category, o, r } -> InflationIntoSomeExactInjectiveObject( o ) ],
 [ IsColiftingObject, { category, o } -> IsExactInjectiveObject( o ) ],
 [ ColiftingMorphismWithGivenColiftingObjects,
@@ -308,7 +316,7 @@ Description := "Derivation of a system of colifting objects via exact structure 
 );
 
 ##
-AddFinalDerivation( LiftingObject,
+AddFinalDerivationBundle( # LiftingObject,
                 [
                   [ DeflationFromSomeExactProjectiveObject, 2 ],
                   [ IsExactProjectiveObject, 1 ],
@@ -326,7 +334,7 @@ AddFinalDerivation( LiftingObject,
                   IsLiftableAlongMorphismFromLiftingObject,
                   WitnessForBeingLiftableAlongMorphismFromLiftingObject
                 ],
-  { category, o } -> Range( DeflationFromSomeExactProjectiveObject( o ) ),
+[ LiftingObject, { category, o } -> Range( DeflationFromSomeExactProjectiveObject( o ) ) ],
 [ MorphismFromLiftingObjectWithGivenLiftingObject, { category, o, r } -> DeflationFromSomeExactProjectiveObject( o ) ],
 [ IsLiftingObject, { category, o } -> IsExactProjectiveObject( o ) ],
 [ LiftingMorphismWithGivenLiftingObjects,
