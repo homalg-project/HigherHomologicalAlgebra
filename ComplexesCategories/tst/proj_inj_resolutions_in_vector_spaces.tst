@@ -1,9 +1,7 @@
-gap> EnhancePackage( "LinearAlgebraForCAP" );
-true
 gap> Q := HomalgFieldOfRationals( );;
 gap> mCat := MatrixCategory(Q);;
 gap> chains := ChainComplexCategory( mCat );;
-gap> alpha := RandomMorphism( chains, 3 );;
+gap> alpha := RandomMorphism( chains, 1 );;
 gap> s := QuasiIsomorphismFromProjectiveResolution( Source( alpha ), true );;
 gap> r := QuasiIsomorphismFromProjectiveResolution( Range( alpha ), true );;
 gap> p_alpha := MorphismBetweenProjectiveResolutions( alpha, true );;

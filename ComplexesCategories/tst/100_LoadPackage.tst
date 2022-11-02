@@ -13,6 +13,8 @@ gap> LoadPackage( "ModulePresentations", false );
 true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
+gap> LoadPackage( "LinearAlgebraForCAP", false );
+true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "ComplexesCategories" );
 true
@@ -21,6 +23,8 @@ true
 gap> LoadPackage( "ModulePresentations" );
 true
 gap> LoadPackage( "FreydCategoriesForCAP" );
+true
+gap> LoadPackage( "LinearAlgebraForCAP" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;
 gap> HOMALG_IO.show_banners := false;;
