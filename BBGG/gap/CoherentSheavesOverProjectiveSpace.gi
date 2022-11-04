@@ -245,9 +245,11 @@ InstallMethod( FullSubcategoryGeneratedByTwistsOfStructureSheaf,
         
     end, 99 );
     
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( full, phi, B )
-        local entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
+    AddCoefficientsOfMorphism( full,
+      function( full, phi )
+        local B, entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
+        
+        B := BasisOfExternalHom( Source( phi ), Range( phi ) );
         
         if B = [  ] then
           
@@ -415,9 +417,11 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentSheaves,
         
     end, 99 );
     
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( full, phi, B )
-        local mat, sol;
+    AddCoefficientsOfMorphism( full,
+      function( full, phi )
+        local B, mat, sol;
+        
+        B := BasisOfExternalHom( Source( phi ), Range( phi ) );
         
         if B = [  ] then
           

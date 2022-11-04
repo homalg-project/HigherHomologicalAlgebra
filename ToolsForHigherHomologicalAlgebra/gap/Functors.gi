@@ -455,7 +455,7 @@ InstallMethod( CreateAdditiveFunctorByTwoFunctions,
           
         fi;
         
-        coeffs := CoefficientsOfMorphismWithGivenBasisOfExternalHom( alpha, basis );
+        coeffs := CoefficientsOfMorphism( alpha );
         
         pos := PositionsProperty( coeffs, c -> not IsZero( c ) );
         

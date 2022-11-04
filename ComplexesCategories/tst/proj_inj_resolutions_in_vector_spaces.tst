@@ -1,5 +1,5 @@
 gap> Q := HomalgFieldOfRationals( );;
-gap> mCat := MatrixCategory(Q);;
+gap> mCat := CategoryOfRows( Q );;
 gap> chains := ChainComplexCategory( mCat );;
 gap> alpha := RandomMorphism( chains, 1 );;
 gap> s := QuasiIsomorphismFromProjectiveResolution( Source( alpha ), true );;

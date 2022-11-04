@@ -2687,7 +2687,7 @@ InstallMethod( IsomorphismFromImageOfFullyFaithfulFunctor,
           
         fi;
         
-        coeffs := CoefficientsOfMorphismWithGivenBasisOfExternalHom( alpha, B_a_b );
+        coeffs := CoefficientsOfMorphism( alpha );
         
         return List( coeffs, c -> c / ring ) * images_of_morphisms_D[ 2 ][ p ];
         

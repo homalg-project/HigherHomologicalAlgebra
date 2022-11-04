@@ -733,7 +733,7 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
     
     
     if CanCompute( Ho_C, "BasisOfExternalHom" ) and
-        CanCompute( Ho_C, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
+        CanCompute( Ho_C, "CoefficientsOfMorphism" ) then
         
         AddBasisOfExternalHom( D,
           function( a, b )
@@ -749,7 +749,7 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
             
         end );
         
-        AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( D,
+        AddCoefficientsOfMorphism( D,
           function( phi, B )
             local roof_phi;
             

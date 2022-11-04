@@ -1407,7 +1407,7 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
     
     fi;
     
-    if CanCompute( cat, "BasisOfExternalHom" ) and CanCompute( cat, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
+    if CanCompute( cat, "BasisOfExternalHom" ) and CanCompute( cat, "CoefficientsOfMorphism" ) then
       
       ##
       AddBasisOfExternalHom( full,
@@ -1421,8 +1421,8 @@ InstallMethod( FullSubcategoryGeneratedByProjectiveObjects,
       end );
       
       ##
-      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-        function( full, alpha, B )
+      AddCoefficientsOfMorphism( full,
+        function( full, alpha )
           
           return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
           
@@ -1482,7 +1482,7 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
     
     fi;
     
-    if CanCompute( cat, "BasisOfExternalHom" ) and CanCompute( cat, "CoefficientsOfMorphismWithGivenBasisOfExternalHom" ) then
+    if CanCompute( cat, "BasisOfExternalHom" ) and CanCompute( cat, "CoefficientsOfMorphism" ) then
       
       ##
       AddBasisOfExternalHom( full,
@@ -1496,8 +1496,8 @@ InstallMethod( FullSubcategoryGeneratedByInjectiveObjects,
       end );
       
       ##
-      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-        function( cat, alpha, B )
+      AddCoefficientsOfMorphism( full,
+        function( cat, alpha )
           
           return CoefficientsOfMorphism( UnderlyingCell( alpha ) );
           

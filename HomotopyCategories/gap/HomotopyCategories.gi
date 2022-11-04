@@ -239,12 +239,10 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_COCHAINS,
         )
     );
     
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( homotopy_category,
-      { alpha, basis } ->
-        CoefficientsOfMorphismWithGivenBasisOfExternalHom(
-          AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat,
-          List( basis, m -> AsChainMorphism( UnderlyingCell( m ) ) / homotopy_cat )
-        )    
+    AddCoefficientsOfMorphism( homotopy_category,
+      { alpha } ->
+        CoefficientsOfMorphism(
+          AsChainMorphism( UnderlyingCell( alpha ) ) / homotopy_cat )
     );
     
 end );

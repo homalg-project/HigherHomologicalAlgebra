@@ -3181,8 +3181,8 @@ InstallMethod( CategoryOfQuiverRepresentations,
       BASIS_OF_EXTERNAL_HOM_OF_QUIVER_REPRESENTATIONS );
     
     ##
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( cat,
-      { alpha, B } ->
+    AddCoefficientsOfMorphism( cat,
+      { alpha } ->
         EntriesOfHomalgMatrix( COEFFICIENTS_OF_QUIVER_REPRESENTATIONS_HOMOMORPHISM( alpha ) )
       );
     

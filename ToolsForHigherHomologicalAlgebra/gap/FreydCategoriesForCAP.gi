@@ -332,9 +332,9 @@ InstallMethod( CategoryOfGradedRows,
       end );
       
       ##
-      AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( rows,
+      AddCoefficientsOfMorphism( rows,
         
-        { phi, B } -> CoefficientsOfMorphism( phi )
+        { phi } -> CoefficientsOfMorphism( phi )
       );
       
       ##

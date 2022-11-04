@@ -164,9 +164,11 @@ InstallMethod( FullSubcategoryGeneratedByTwistedOmegaModules,
     end );
     
     ##
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( cat, alpha, B )
+    AddCoefficientsOfMorphism( full,
+      function( cat, alpha )
+        local B;
         
+        B := BasisOfExternalHom( Source( alpha ), Range( alpha ) );
         if IsEmpty( B ) then
           
           return [ ];
@@ -1475,9 +1477,11 @@ InstallMethod( FullSubcategoryGeneratedByGradedFreeModulesOfRankOne,
         
     end, 99 );
     
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( phi, B )
-        local entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
+    AddCoefficientsOfMorphism( full,
+      function( phi )
+        local B, entry, sol, coeff_mat, current_coeff, current_mono, position_in_basis, j;
+        
+        B := BasisOfExternalHom( Source( phi ), Range( phi ) );
         
         if B = [  ] then
           
@@ -1660,9 +1664,11 @@ InstallMethod( FullSubcategoryGeneratedByTwistedCotangentModulesAsGLP,
         
     end, 99 );
     
-    AddCoefficientsOfMorphismWithGivenBasisOfExternalHom( full,
-      function( cat, phi, B )
-        local mat, sol;
+    AddCoefficientsOfMorphism( full,
+      function( cat, phi )
+        local B, mat, sol;
+        
+        B := BasisOfExternalHom( Source( phi ), Range( phi ) );
         
         if B = [  ] then
           
