@@ -5,6 +5,8 @@
 #
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
+gap> LoadPackage( "IO_ForHomalg", false );
+true
 gap> LoadPackage( "StableCategories", false );
 true
 gap> LoadPackage( "ModulePresentations", false );
@@ -16,6 +18,8 @@ true
 gap> LoadPackage( "FunctorCategories", false );
 true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
+gap> LoadPackage( "IO_ForHomalg" );
+true
 gap> LoadPackage( "StableCategories" );
 true
 gap> LoadPackage( "ModulePresentations" );
