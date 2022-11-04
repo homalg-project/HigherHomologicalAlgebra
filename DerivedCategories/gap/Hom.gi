@@ -202,16 +202,16 @@ end );
 #########################################################
 
 ##
-InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecomposableInjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, inj_indec, name, cell_func;
      
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) = fail then
+    if ApplicableMethod( IndecomposableInjectiveObjects, [ ambient_cat ] ) = fail then
       
-      Error( "The method 'IndecInjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableInjectiveObjects' should be applicable on the ambient category" );
       
     fi;
     
@@ -219,7 +219,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObject
     
     reps := RangeOfFunctor( H );
     
-    inj_indec := FullSubcategoryGeneratedByIndecInjectiveObjects( ambient_cat );
+    inj_indec := FullSubcategoryGeneratedByIndecomposableInjectiveObjects( ambient_cat );
     
     name := "Hom(T,-) functor on indecomposable injective objects";
        
@@ -237,13 +237,13 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects,
     
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) = fail then
+    if ApplicableMethod( IndecomposableInjectiveObjects, [ ambient_cat ] ) = fail then
       
       TryNextMethod( );
       
     fi;
    
-    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecomposableInjectiveObjects( collection );
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
@@ -260,16 +260,16 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects,
 end );
 
 ##
-InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjects,
+InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecomposableProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local ambient_cat, H, reps, proj_indec, name, cell_func;
      
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) = fail then
+    if ApplicableMethod( IndecomposableProjectiveObjects, [ ambient_cat ] ) = fail then
       
-      Error( "The method 'IndecProjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableProjectiveObjects' should be applicable on the ambient category" );
       
     fi;
    
@@ -277,7 +277,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjec
     
     reps := RangeOfFunctor( H );
     
-    proj_indec := FullSubcategoryGeneratedByIndecProjectiveObjects( ambient_cat );
+    proj_indec := FullSubcategoryGeneratedByIndecomposableProjectiveObjects( ambient_cat );
     
     name := "Hom(T,-) functor on indecomposable projective objects";
            
@@ -295,13 +295,13 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnProjectiveObjects,
     
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) = fail then
+    if ApplicableMethod( IndecomposableProjectiveObjects, [ ambient_cat ] ) = fail then
       
       TryNextMethod( );
       
     fi;
        
-    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecProjectiveObjects( collection );
+    H := HomFunctorToCategoryOfQuiverRepresentationsOnIndecomposableProjectiveObjects( collection );
     
     H := ExtendFunctorToAdditiveClosureOfSource( H );
     
@@ -333,7 +333,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects,
     
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecInjectiveObjects, [ ambient_cat ] ) <> fail then
+    if ApplicableMethod( IndecomposableInjectiveObjects, [ ambient_cat ] ) <> fail then
       
       TryNextMethod( );
       
@@ -365,7 +365,7 @@ InstallMethod( HomFunctorToCategoryOfQuiverRepresentationsOnProjectiveObjects,
     
     ambient_cat := AmbientCategory( collection );
     
-    if ApplicableMethod( IndecProjectiveObjects, [ ambient_cat ] ) <> fail then
+    if ApplicableMethod( IndecomposableProjectiveObjects, [ ambient_cat ] ) <> fail then
       
       TryNextMethod( );
       

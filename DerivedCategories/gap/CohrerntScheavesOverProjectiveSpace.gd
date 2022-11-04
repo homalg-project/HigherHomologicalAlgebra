@@ -14,7 +14,7 @@ DeclareAttribute( "IsomorphismFromTwistedCotangentModulesOntoTwistedOmegaModules
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedOmegaModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfAlgebroid", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfQuiverRows", IsHomalgGradedRing );
-DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects", IsHomalgGradedRing );
+DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecomposableProjectiveObjects", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfTwistedCotangentModules", IsHomalgGradedRing );
 DeclareAttribute( "BeilinsonFunctorIntoDerivedCategory", IsHomalgGradedRing );

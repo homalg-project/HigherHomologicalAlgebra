@@ -9,7 +9,7 @@
 #############################################################################
 
 ##
-#InstallMethod( TensorFunctorFromCategoryOfFunctorsOnIndecProjectiveObjects,
+#InstallMethod( TensorFunctorFromCategoryOfFunctorsOnIndecomposableProjectiveObjects,
 #          [ IsStrongExceptionalCollection ],
 #          
 #  function( collection )
@@ -34,7 +34,7 @@
 #end );
 
 ##
-InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects,
+InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecomposableProjectiveObjects,
           [ IsStrongExceptionalCollection ],
   function( collection )
     local full, iso, indec_projs, name, T;
@@ -95,7 +95,7 @@ InstallMethod( TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjec
   function( collection )
     local G, add_G, C, can, can_add_G, projs, D, name, R;
     
-    G := TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects( collection );
+    G := TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecomposableProjectiveObjects( collection );
     
     add_G := ExtendFunctorToAdditiveClosures( G );
     

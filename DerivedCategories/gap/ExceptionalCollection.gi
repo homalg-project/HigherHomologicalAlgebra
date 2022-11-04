@@ -1146,7 +1146,7 @@ BindGlobal( "ADD_IS_EQUAL_METHODS_FOR_INDEC_PROJS_AND_INJS",
 end );
 
 ##
-InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
+InstallMethod( FullSubcategoryGeneratedByIndecomposableProjectiveObjects,
           [ IsCapFullSubcategory ],
           
   function( full_subcategory_by_projs )
@@ -1154,13 +1154,13 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
     
     cat := AmbientCategory( full_subcategory_by_projs );
     
-    if ApplicableMethod( IndecProjectiveObjects, [ cat ] ) = fail then
+    if ApplicableMethod( IndecomposableProjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The method 'IndecProjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableProjectiveObjects' should be applicable on the ambient category" );
       
     fi;
     
-    projs := IndecProjectiveObjects( cat );
+    projs := IndecomposableProjectiveObjects( cat );
     
     projs := List( projs, p -> AsSubcategoryCell( full_subcategory_by_projs, p ) );
     
@@ -1188,14 +1188,14 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
 end );
 
 ##
-InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
+InstallMethod( FullSubcategoryGeneratedByIndecomposableProjectiveObjects,
           [ IsCapCategory ],
   function( cat )
     local projs, r, name, full;
     
-    if ApplicableMethod( IndecProjectiveObjects, [ cat ] ) = fail then
+    if ApplicableMethod( IndecomposableProjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The method 'IndecProjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableProjectiveObjects' should be applicable on the ambient category" );
       
     fi;
     
@@ -1205,7 +1205,7 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
       
     fi;
     
-    projs := IndecProjectiveObjects( cat );
+    projs := IndecomposableProjectiveObjects( cat );
     
     r := RandomTextColor( Name( cat ) );
     
@@ -1237,20 +1237,20 @@ InstallMethod( FullSubcategoryGeneratedByIndecProjectiveObjects,
 end );    
 
 ##
-InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
+InstallMethod( FullSubcategoryGeneratedByIndecomposableInjectiveObjects,
           [ IsCapFullSubcategory ],
   function( full_subcategory_by_injs )
     local cat, injs, r, name, full;
     
     cat := AmbientCategory( full_subcategory_by_injs );
     
-    if ApplicableMethod( IndecInjectiveObjects, [ cat ] ) = fail then
+    if ApplicableMethod( IndecomposableInjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The method 'IndecInjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableInjectiveObjects' should be applicable on the ambient category" );
       
     fi;
     
-    injs := IndecInjectiveObjects( cat );
+    injs := IndecomposableInjectiveObjects( cat );
     
     injs := List( injs, p -> AsSubcategoryCell( full_subcategory_by_injs, p ) );
     
@@ -1280,18 +1280,18 @@ InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
 end );
 
 ##
-InstallMethod( FullSubcategoryGeneratedByIndecInjectiveObjects,
+InstallMethod( FullSubcategoryGeneratedByIndecomposableInjectiveObjects,
           [ IsCapCategory ],
   function( cat )
     local injs, r, name, full;
     
-    if ApplicableMethod( IndecInjectiveObjects, [ cat ] ) = fail then
+    if ApplicableMethod( IndecomposableInjectiveObjects, [ cat ] ) = fail then
       
-      Error( "The method 'IndecInjectiveObjects' should be applicable on the ambient category" );
+      Error( "The method 'IndecomposableInjectiveObjects' should be applicable on the ambient category" );
       
     fi;
     
-    injs := IndecInjectiveObjects( cat );
+    injs := IndecomposableInjectiveObjects( cat );
     
     r := RandomTextColor( Name( cat ) );
     
@@ -1565,7 +1565,7 @@ InstallMethod( InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphis
 end );
 
 ##
-InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection,
+InstallGlobalFunction( RandomQuiverAlgebraWhoseIndecomposableProjectiveRepsAreStrongExceptionalCollection,
   function( field, nr_vertices, nr_arrows, nr_relations )
     local sources_of_arrows, ranges_of_arrows, arrows, labels, extract_latex_string, arrows_latex, vertices_latex, quiver, A, G, H, df_H, rel, g, e, i, name, name_op;
     

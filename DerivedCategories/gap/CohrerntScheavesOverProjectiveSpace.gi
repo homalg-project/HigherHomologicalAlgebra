@@ -228,7 +228,7 @@ end );
 
 
 ##
-InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects,
+InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecomposableProjectiveObjects,
           [ IsHomalgGradedRing ],
   function( S )
     local B, C;
@@ -263,7 +263,7 @@ InstallMethod( BeilinsonFunctorIntoHomotopyCategoryOfProjectiveObjects,
   function( S )
     local B, C;
     
-    B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecProjectiveObjects( S );
+    B := BeilinsonFunctorIntoHomotopyCategoryOfAdditiveClosureOfIndecomposableProjectiveObjects( S );
     
     C := RangeOfFunctor( B );
     

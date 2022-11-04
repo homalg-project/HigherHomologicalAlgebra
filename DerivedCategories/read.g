@@ -5,7 +5,6 @@
 #
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
 ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
-ReadPackage( "DerivedCategories", "gap/QPA.gi" );
 ReadPackage( "DerivedCategories", "gap/OtherQPATweaks.gi" );
 ReadPackage( "DerivedCategories", "gap/Convenience.gi" );
 ReadPackage( "DerivedCategories", "gap/Functors.gi" );
