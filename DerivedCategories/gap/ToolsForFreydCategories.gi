@@ -810,7 +810,7 @@ InstallMethod( DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOf
     
     e := UnderlyingHomalgMatrix( alpha )[ 1, 1 ];
     
-    coeffs := CoefficientsOfGradedRingElement( e );
+    coeffs := EntriesOfHomalgMatrix( Coefficients( e ) );
     
     if IsEmpty( coeffs ) then
       return [ ];
@@ -832,7 +832,7 @@ InstallMethod( DecomposeMorphismBetweenGradedRowsOfRankOneOverCoxRingOfProductOf
     
     inds := List( S!.factor_rings, ring -> List( Indeterminates( ring ), String ) );
     
-    monomials := MonomialsOfGradedRingElement( e );
+    monomials := Coefficients( e )!.monomials;
     
     monomials := List( monomials, m -> SplitString( String( m ), "*" ) );
     
