@@ -26,6 +26,8 @@ gap> LoadPackage( "ModulePresentations" );
 true
 gap> LoadPackage( "FreydCategoriesForCAP" );
 true
+gap> EnhancePackage( "FreydCategoriesForCAP" );
+true
 gap> LoadPackage( "DerivedCategories" );
 true
 gap> LoadPackage( "FunctorCategories" );
