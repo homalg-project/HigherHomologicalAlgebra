@@ -82,9 +82,7 @@ end: Description:= "WitnessForBeingColiftableAlongMorphismToColiftingObject usin
 AddFinalDerivationBundle( # IsColiftingObject
             [
               [ IdentityMorphism, 2 ],
-              [ IsNullHomotopic, 1 ],
               [ MorphismBetweenDirectSums, 1 ],
-              [ HomotopyMorphisms, 1 ],
             ],
             [
               IsColiftingObject,
@@ -160,10 +158,6 @@ AddFinalDerivationBundle( # IsColiftingObject
     
 end
 ] :
-  FunctionCalledBeforeInstallation :=
-    function( cat )
-      return;
-    end,
-  CategoryFilter := IsChainOrCochainComplexCategory,
-  Description := "Adding system of colifting objects to complexes categories"
+  CategoryFilter := IsCochainComplexCategory,
+  Description := "Adding system of colifting objects to cochain complexes categories"
 );

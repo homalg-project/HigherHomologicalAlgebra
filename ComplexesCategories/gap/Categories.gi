@@ -8,34 +8,6 @@
 #############################################################################
 
 
-#################################################################
-#
-# Record for methods that can be added to complexes categories
-#
-#################################################################
-
-DeclareGlobalVariable( "CAP_INTERNAL_NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES" );
-DeclareGlobalVariable( "NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES" );
-
-InstallValue( CAP_INTERNAL_NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec( ) );
-InstallValue( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES, rec( 
-
-  IsNullHomotopic := rec(
-    installation_name := "IsNullHomotopic", 
-    filter_list := [ "category", "morphism" ],
-    return_type := "bool" ),
-
-  HomotopyMorphisms := rec( 
-    installation_name := "HomotopyMorphisms", 
-    filter_list := [ "category", "morphism" ],
-    return_type := IsZFunction ),
-
-) );
-
-CAP_INTERNAL_ENHANCE_NAME_RECORD( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES );
-
-CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( NULL_HOMOTOPIC_METHOD_FOR_COMPLEXCES_CATEGORIES );
-
 ###########################
 #
 # Categories constructor

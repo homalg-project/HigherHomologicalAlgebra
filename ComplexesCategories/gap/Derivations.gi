@@ -15,27 +15,21 @@
 ## Homotopy methods
 
 ##
-AddDerivationToCAP( IsNullHomotopic,
-                [
-                    [ HomotopyMorphisms, 1 ],
-                ],
-    function( cat, phi )
-    
+InstallMethod( IsNullHomotopic,
+        [ IsChainOrCochainMorphism ],
+    function( phi )
+      
       return HomotopyMorphisms( phi ) <> fail;
       
-   end: CategoryFilter := IsChainOrCochainComplexCategory, 
-         Description := "compute if a morphism is homotopic to zero using colifts" );
+end );
 
 ##
-AddDerivationToCAP( HomotopyMorphisms,
-                [
-                    [ IdentityMorphism, 5 ],
-                    [ IsEqualToZeroMorphism, 1 ],
-                    [ SolveLinearSystemInAbCategoryOrFail, 1, UnderlyingCategory ],
-                    [ ZeroMorphism, 21 ],
-                ],
-  function( cat, phi )
-    local underlying_category, A, B, m, n, L, K, b, sol, H;
+InstallMethod( HomotopyMorphisms,
+        [ IsCochainMorphism ],
+  function( phi )
+    local cat, underlying_category, A, B, m, n, L, K, b, sol, H;
+    
+    cat := CapCategory( phi );
     
     underlying_category := UnderlyingCategory( cat );
     
@@ -46,14 +40,8 @@ AddDerivationToCAP( HomotopyMorphisms,
     m := Minimum( ActiveLowerBound( A ), ActiveLowerBound( B ) );
     
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
-    
-    if IsEqualToZeroMorphism( phi ) or m > n then
-      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
-      return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n - 1 ] ) );
-      Info( InfoComplexesCategories, 2, "Done!" );
-    fi;
-   
-    L := Concatenation( 
+       
+    L := Concatenation(
            
           List( [ 1 .. n - m ],
             i -> Concatenation(
@@ -63,49 +51,47 @@ AddDerivationToCAP( HomotopyMorphisms,
               ##
               [ IdentityMorphism( A[ i + m - 1 ] ), A^( i + m - 1 ) ],
               ##
-              List( [ i + 2 ..n - m + 1 ], 
+              List( [ i + 2 ..n - m + 1 ],
                 j -> ZeroMorphism( A[ i + m - 1 ] , A[ j + m - 1 ] ) )
                               )
             ),
             
             [ Concatenation(
-                List( [ 1 .. n - m ], 
-                  j -> ZeroMorphism( A[ n ], A[ j + m - 1 ] ) ), 
+                List( [ 1 .. n - m ],
+                  j -> ZeroMorphism( A[ n ], A[ j + m - 1 ] ) ),
               
-                [ IdentityMorphism( A[ n ] ) ] ) ] 
+                [ IdentityMorphism( A[ n ] ) ] ) ]
                 
           );
           
     K := Concatenation(
           
           List( [ 1 .. n - m ],
-            i -> Concatenation( 
+            i -> Concatenation(
               
-              List( [ 1 .. i - 1 ], 
+              List( [ 1 .. i - 1 ],
                 j -> ZeroMorphism( B[ j + m - 2 ],B[ i + m - 1 ] ) ),
               
               [ B^( i + m - 2 ), IdentityMorphism( B[ i + m - 1 ] ) ],
               
               
               List( [ i + 2 ..n - m + 1 ],
-                j -> ZeroMorphism( B[ j + m - 2 ], B[ i + m - 1 ]) ) 
-                              ) 
+                j -> ZeroMorphism( B[ j + m - 2 ], B[ i + m - 1 ]) )
+                              )
             ),
-              
+            
           [ Concatenation(
               
-              List([ 1 .. n - m ], 
+              List([ 1 .. n - m ],
                 j -> ZeroMorphism( B[ j + m - 2 ], B[ n ] ) ),
                 
-              [ B^(n - 1) ] ) ] 
-            
+              [ B^(n - 1) ] ) ]
+          
           );
     
     b := List( [ m .. n ], i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystem..." );
     sol := SolveLinearSystemInAbCategoryOrFail( underlying_category, L, K, b );
-    Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
       
@@ -125,21 +111,16 @@ AddDerivationToCAP( HomotopyMorphisms,
       
     fi;
     
-end:
-CategoryFilter := IsCochainComplexCategory,
-CategoryGetters := rec( underlying_category := UnderlyingCategory ),
-Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
+end );
 
 ##
-AddDerivationToCAP( HomotopyMorphisms,
-                [
-                    [ IdentityMorphism, 5 ],
-                    [ IsEqualToZeroMorphism, 1 ],
-                    [ SolveLinearSystemInAbCategoryOrFail, 1, UnderlyingCategory ],
-                    [ ZeroMorphism, 21 ],
-                ],
-  function( cat, phi )
-    local underlying_category, A, B, m, n, L, K, b, sol, H;
+InstallMethod( HomotopyMorphisms,
+          [ IsChainMorphism ],
+          
+  function( phi )
+    local cat, underlying_category, A, B, m, n, L, K, b, sol, H;
+    
+    cat := CapCategory( phi );
     
     underlying_category := UnderlyingCategory( cat );
     
@@ -151,36 +132,30 @@ AddDerivationToCAP( HomotopyMorphisms,
     
     n := Maximum( ActiveUpperBound( A ), ActiveUpperBound( B ) );
     
-    if IsEqualToZeroMorphism( phi ) or m > n then
-      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
-      return AsZFunction( n -> ZeroMorphism( A[ n ], B[ n + 1 ] ) );
-      Info( InfoComplexesCategories, 2, "Done!" );
-    fi;
-     
-    L := Concatenation( 
+    L := Concatenation(
           
           List( [ 1 .. n - m ],
             i -> Concatenation(
               
-              List( [ 1 .. i - 1 ], 
+              List( [ 1 .. i - 1 ],
                 j -> ZeroMorphism( A[ -i + n + 1 ], A[ -j + n + 1 ] ) ),
               
               [ IdentityMorphism( A[ -i + n + 1 ] ), A^( -i + n + 1 ) ],
                 List( [ i + 2 ..-m + n + 1 ],
-                  j -> ZeroMorphism( A[ -i + n + 1 ] , A[ -j + n + 1 ] ) ) 
+                  j -> ZeroMorphism( A[ -i + n + 1 ] , A[ -j + n + 1 ] ) )
                   
                               )
                               
               ),
               
-          [ Concatenation( 
+          [ Concatenation(
               
               List([ 1 .. n - m ],
                 j -> ZeroMorphism( A[ m ], A[ -j + n + 1 ] ) ),
                 
-              [ IdentityMorphism( A[ m ] ) ] 
+              [ IdentityMorphism( A[ m ] ) ]
               
-              ) ] 
+              ) ]
               
           );
           
@@ -190,13 +165,13 @@ AddDerivationToCAP( HomotopyMorphisms,
             i -> Concatenation(
               
               List( [ 1 .. i - 1 ],
-                  j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ), 
+                  j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ),
                   
               [ B^( -i + n + 2 ), IdentityMorphism( B[ -i + n + 1 ] ) ],
               
               List( [ i + 2 ..n - m + 1 ],
                 
-                j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ) ) 
+                j -> ZeroMorphism( B[ -j + n + 2 ], B[ -i + n + 1 ] ) ) )
                 
               ),
               
@@ -204,15 +179,13 @@ AddDerivationToCAP( HomotopyMorphisms,
               
               List([ 1 .. n - m ], j -> ZeroMorphism( B[ -j + n + 2 ], B[ m ] ) ),
               
-              [ B^( m + 1 ) ] ) ] 
+              [ B^( m + 1 ) ] ) ]
               
           );
           
     b := List( Reversed( [ m .. n ] ), i -> phi[ i ] );
     
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way: SolveLinearSystem..." );
     sol := SolveLinearSystemInAbCategoryOrFail( underlying_category, L, K, b );
-    Info( InfoComplexesCategories, 2, "Done!" );
     
     if sol = fail then
       
@@ -230,108 +203,7 @@ AddDerivationToCAP( HomotopyMorphisms,
       
     fi;
     
-end:
-CategoryFilter := IsChainComplexCategory,
-CategoryGetters := rec( underlying_category := UnderlyingCategory ),
-Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
-
-##
-AddFinalDerivation( HomotopyMorphisms,
-                [
-                  [ IsEqualToZeroMorphism, 1 ],
-                  [ ZeroMorphism, 2 ],
-                  [ IdentityMorphism, 2 ],
-                  [ Colift, 1 ],
-                  [ MorphismBetweenDirectSums, 1 ],
-                  [ PreCompose, 1 ],
-                ],
-                [
-                  HomotopyMorphisms
-                ],
-  function( cat, phi )
-    local C, D, colift;
-    
-    C := Source( phi );
-    
-    D := Range( phi );
-    
-    if IsEqualToZeroMorphism( phi ) then
-      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
-      return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n + 1 ] ) );
-      Info( InfoComplexesCategories, 2, "Done!" );
-    fi;
-    
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way via colift ..." );
-    colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
-    Info( InfoComplexesCategories, 2, "Done!" );
-    
-    if colift = fail then
-      SetIsNullHomotopic( phi, false );
-      return fail;
-    else
-      SetIsNullHomotopic( phi, true );
-      return AsZFunction( n ->
-                PreCompose(
-                  MorphismBetweenDirectSums(
-                    [
-                      [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n + 1 ] ) ]
-                    ]
-                  ),
-                  colift[ n + 1 ] )
-                );
-    fi;
-    
-end: CategoryFilter := IsChainComplexCategory,
-         Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
-
-##
-AddFinalDerivation( HomotopyMorphisms,
-                [
-                  [ IsEqualToZeroMorphism, 1 ],
-                  [ ZeroMorphism, 2 ],
-                  [ IdentityMorphism, 2 ],
-                  [ Colift, 1 ],
-                  [ MorphismBetweenDirectSums, 1 ],
-                  [ PreCompose, 1 ],
-                ],
-                [
-                  HomotopyMorphisms
-                ],
-  function( cat, phi )
-    local C, D, colift;
-    
-    C := Source( phi );
-    
-    D := Range( phi );
-    
-    if IsEqualToZeroMorphism( phi ) then
-      Info( InfoComplexesCategories, 2, "Computing witness of being null-homotopic the easy way ..." );
-      return AsZFunction( n -> ZeroMorphism( C[ n ], D[ n - 1 ] ) );
-      Info( InfoComplexesCategories, 2, "Done!" );
-    fi;
-    
-    Info( InfoComplexesCategories, 2, "\033[5mComputing\033[0m witness of being null-homotopic the hard way ..." );
-    colift := Colift( NaturalInjectionInMappingCone( IdentityMorphism( Source( phi ) ) ), phi );
-    Info( InfoComplexesCategories, 2, "Done!" );
-    
-    if colift = fail then 
-      SetIsNullHomotopic( phi, false );
-      return fail;
-    else
-      SetIsNullHomotopic( phi, true );
-      return AsZFunction( n -> 
-                PreCompose(
-                  MorphismBetweenDirectSums(
-                    [ 
-                      [ IdentityMorphism( C[ n ] ), ZeroMorphism( C[ n ], C[ n - 1 ] ) ]
-                    ] ),
-                  colift[ n - 1 ] )
-                );
-    fi;
-    
-end: CategoryFilter := IsCochainComplexCategory,
-         Description := "compute the homotopy morphisms of a null-homotopic morphisms" );
-
+end );
 
 ## Lift in case chains has homomorphism structure over category of chains
 

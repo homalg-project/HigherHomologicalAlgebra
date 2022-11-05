@@ -16,6 +16,8 @@ InstallGlobalFunction( ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS,
     
     range_cat := RangeCategoryOfHomomorphismStructure( cat );
     
+    SetRangeCategoryOfHomomorphismStructure( homotopy_category, range_cat );
+    
     distinguished_object := DistinguishedObjectOfHomomorphismStructure( cat );
 
     if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then

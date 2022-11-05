@@ -4,54 +4,34 @@
 # Implementations
 #
 ##
-AddFinalDerivation( MorphismToColiftingObject,
-                    [
-                      [ IdentityMorphism, 1 ],
-                    ],
-                    [ MorphismToColiftingObject ],
+InstallMethod( MorphismToColiftingObject,
+          [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex ],
+          
   function( cat, a )
     
     return NaturalInjectionInMappingCone( IdentityMorphism( a ) );
-  
-end: CategoryFilter := IsChainOrCochainComplexCategory,
-      Description:= "MorphismToColiftingObject by NaturalInjectionInMappingCone"
-      );
+    
+end );
 
 ##
-AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
-                    [ 
-                      [ IdentityMorphism, 1 ],
-                      [ IsColiftable, 1 ],
-                    ],
-                    
-                    [ 
-                      IsColiftableAlongMorphismToColiftingObject,
-                      MorphismToColiftingObject  
-                    ],
+InstallMethod( IsColiftableAlongMorphismToColiftingObject,
+          [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
+          
   function( cat, alpha )
     local a, I_a;
-     
+    
     a := Source( alpha );
-
+    
     I_a := NaturalInjectionInMappingCone( IdentityMorphism( a ) );
-
+    
     return IsColiftable( I_a, alpha );
-  
-end: CategoryFilter := IsChainOrCochainComplexCategory,
-      Description:= "IsColiftableAlongMorphismToColiftingObject by IsColiftable"
-      );
+    
+end );
 
 ##
-AddFinalDerivation( IsColiftableAlongMorphismToColiftingObject,
-                    [ 
-                      [ IsNullHomotopic, 1 ]
-                    ],
-                    
-                    [ 
-                      IsColiftableAlongMorphismToColiftingObject,
-                      MorphismToColiftingObject  
-                    ],
-  { cat, alpha } -> IsNullHomotopic( alpha ) : CategoryFilter := IsChainOrCochainComplexCategory,
-      Description:= "IsColiftableAlongMorphismToColiftingObject by IsNullHomotopic"
-      );
+InstallMethod( IsColiftableAlongMorphismToColiftingObject,
+          [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
+          
+  { cat, alpha } -> IsNullHomotopic( alpha )
+);
 

@@ -81,13 +81,7 @@ InstallMethod( HomotopyCategoryOp,
       Error( "The input category should be at least additive category" );
       
     fi;
-      
-    if not CanCompute( complex_cat, "IsColiftableAlongMorphismToColiftingObject" ) then
-        
-        Error( "The method IsColiftableAlongMorphismToColiftingObject should be added to the category of chains!" );
-        
-    fi;
-     
+         
     special_filters := ValueOption( "SpecialFilters" );
     
     if special_filters = fail then
@@ -96,7 +90,7 @@ InstallMethod( HomotopyCategoryOp,
       
     fi;
     
-    homotopy_category := StableCategoryByClassOfColiftingObjects( complex_cat :
+    homotopy_category := StableCategory( complex_cat, IsNullHomotopic :
                               FinalizeCategory := false,
                               WithHomomorphismStructure := true,
                               SpecialFilters := special_filters
@@ -116,8 +110,6 @@ InstallMethod( HomotopyCategoryOp,
         
         HasRangeCategoryOfHomomorphismStructure( cat ) then
         
-        Info( InfoHomotopyCategories, 2, "The classical methods will be installed for the homomorphism structure on homotopy categories" );
-        
         ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_CHAINS( homotopy_category );
         
     fi;
@@ -125,8 +117,6 @@ InstallMethod( HomotopyCategoryOp,
     if ValueOption( "WithStandardHomomorphismStructure" ) <> true and over_cochains and
         
         HasRangeCategoryOfHomomorphismStructure( cat ) then
-        
-        Info( InfoHomotopyCategories, 2, "The classical methods will be installed for the homomorphism structure on homotopy categories" );
         
         ADD_HOM_STRUCTURE_TO_HOMOTOPY_CATEGORY_OVER_COCHAINS( homotopy_category );
         
