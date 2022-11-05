@@ -159,7 +159,7 @@
 #!           !gapinput?|
 #!           alpha !cequality?:=| A!cbracket?(| algebroid.m !cbracket?)|;
 #!           !gapinput?|
-#!           gamma !cequality?:=| SectionForMorphisms!cbracket?(| alpha !cbracket?)|;
+#!           gamma !cequality?:=| PreInverse!cbracket?(| alpha !cbracket?)|;
 #!           !gapinput?|
 #!           rA_1 !cequality?:=| MorphismBetweenDirectSums(
 #!                     !cbracket?[|

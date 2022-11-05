@@ -425,7 +425,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
       s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
       Print( "\n" ); 
-      DisplayCapCategoryCell( map[ i ] );
+      Display( map[ i ] );
       Print( "\n" );
       
     od;
@@ -472,7 +472,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
       s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
       Print( s );
       Print( "\n" );
-      ViewCapCategoryCell( map[ i ] );
+      ViewObj( map[ i ] );
       Print( "\n" );
       
     od;

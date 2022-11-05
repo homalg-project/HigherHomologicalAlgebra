@@ -508,14 +508,14 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         if i <> n then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          DisplayCapCategoryCell( C^i );
+          Display( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         fi;
         s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
         Print( s );
         Print( "\n" );
-        DisplayCapCategoryCell( C[ i ] );
+        Display( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -531,7 +531,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
         Print( s );
         Print( "\n" );
-        DisplayCapCategoryCell( C[ i ] );
+        Display( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -540,7 +540,7 @@ BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n\n" );
         if i <> m then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          DisplayCapCategoryCell( C^i );
+          Display( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
@@ -704,14 +704,14 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         if i <> n then
           Print( "  ", r[ 1 ], " Λ", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          ViewCapCategoryCell( C^i );
+          ViewObj( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n\n" );
         fi;
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        ViewCapCategoryCell( C[ i ] );
+        ViewObj( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -727,7 +727,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         s := Concatenation( "-- ", r[ 1 ], String( i ), r[ 2 ], " -----------------------" );
         Print( s );
         Print( "\n" );
-        ViewCapCategoryCell( C[ i ] );
+        ViewObj( C[ i ] );
         Print( "\n" );
         Print( Concatenation(
           ListWithIdenticalEntries(
@@ -736,7 +736,7 @@ BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX",
         Print( "\n\n" );
         if i <> m then
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
-          ViewCapCategoryCell( C^i );
+          ViewObj( C^i );
           Print( "\n" );
           Print( "  ", r[ 1 ], " |", r[ 2 ], "\n" );
           Print( "  ", r[ 1 ], " V", r[ 2 ], "\n" );
