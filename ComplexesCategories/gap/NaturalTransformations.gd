@@ -12,7 +12,7 @@
 #!  chain complexes.
 #! @Arguments eta
 #! @Returns a natural transformation
-DeclareAttribute( "ExtendNaturalTransformationToChainComplexCategories",
+DeclareAttribute( "ExtendNaturalTransformationToComplexesCategoriesByChains",
   IsCapNaturalTransformation );
 
 #! @Description
@@ -20,7 +20,7 @@ DeclareAttribute( "ExtendNaturalTransformationToChainComplexCategories",
 #!  cochain complexes.
 #! @Arguments eta
 #! @Returns a natural transformation
-DeclareAttribute( "ExtendNaturalTransformationToCochainComplexCategories",
+DeclareAttribute( "ExtendNaturalTransformationToComplexesCategoriesByCochains",
   IsCapNaturalTransformation );
 
 

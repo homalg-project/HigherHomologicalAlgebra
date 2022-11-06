@@ -23,7 +23,7 @@ BindGlobal( "FamilyOfChainMorphisms",
             NewFamily( "chain morphisms" ) );
 
 BindGlobal( "TheTypeOfChainMorphism",
-            NewType( FamilyOfChainMorphisms, 
+            NewType( FamilyOfChainMorphisms,
                      IsChainMorphism and IsChainMorphismRep ) );
 
 DeclareRepresentation( "IsCochainMorphismRep",
@@ -34,7 +34,7 @@ BindGlobal( "FamilyOfCochainMorphisms",
             NewFamily( "cochain morphisms" ) );
 
 BindGlobal( "TheTypeOfCochainMorphism",
-            NewType( FamilyOfCochainMorphisms, 
+            NewType( FamilyOfCochainMorphisms,
                      IsCochainMorphism and IsCochainMorphismRep ) );
 
 ###########################################
@@ -94,147 +94,81 @@ end );
 #
 #########################################
 
+## Morphisms
+##
+InstallMethod( CreateComplexMorphism,
+            [ IsCochainComplexCategory, IsCochainComplex, IsCochainComplex, IsList ],
+  
+  { ch_cat, S, R, triple }  -> CreateCapCategoryMorphismWithAttributes( ch_cat, S, R, Morphisms, triple[1], LowerBoundOfComplexMorphism, triple[2], UpperBoundOfComplexMorphism, triple[3] )
+);
+
+##
+InstallOtherMethod( CreateComplexMorphism,
+        [ IsCochainComplexCategory, IsCochainComplex, IsCochainComplex, IsZFunction, IsInt, IsInt ],
+  
+  { ch_cat, S, R, morphisms, lower_bound, upper_bound } -> CreateComplexMorphism( ch_cat, S, R, [ morphisms, lower_bound, upper_bound ] )
+);
+
+##
+InstallOtherMethod( CreateComplexMorphism,
+            [ IsCochainComplexCategory, IsCochainComplex, IsCochainComplex, IsZFunction ],
+  
+  { ch_cat, S, R, morphisms } -> CreateComplexMorphism( ch_cat, S, R, [ morphisms, Minimum( LowerBoundOfComplex( S ), LowerBoundOfComplex( R ) ), Maximum( UpperBoundOfComplex( S ), UpperBoundOfComplex( R ) ) ] )
+);
+
+##
+InstallOtherMethod( CreateComplexMorphism,
+        [ IsCochainComplexCategory, IsCochainComplex, IsCochainComplex, IsDenseList, IsInt ],
+  
+  function( ch_cat, S, R, dense_list_of_morphisms, lower_bound )
+    local upper_bound, morphisms;
+    
+    upper_bound := lower_bound + Length( dense_list_of_morphisms ) - 1;
+    
+    morphisms :=
+        AsZFunction(
+          function( i )
+            if i >= lower_bound and i <= upper_bound then
+              return dense_list_of_morphisms[i - lower_bound + 1];
+            else
+              return ZeroMorphism( UnderlyingCategory( ch_cat ), S[i], R[i] );
+            fi;
+          end );
+    
+    return CreateComplexMorphism( ch_cat, S, R, [ morphisms, lower_bound, upper_bound ] );
+    
+end );
+
+##
+InstallOtherMethod( CreateComplexMorphism,
+        [ IsCochainComplex, IsCochainComplex, IsInt, IsDenseList, IsInt ],
+        
+        { S, R, degree, mors, lower_bound } -> CochainMorphism( CapCategory( S ), S, R, degree, mors, lower_bound )
+);
+
 BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION",
-     function( C1, C2, morphisms )
-     local phi;
-
-     phi := rec( );
-
-     if ForAll( [ C1, C2 ], IsChainComplex ) then 
-
-           ObjectifyWithAttributes( phi, TheTypeOfChainMorphism,
-
-                           Source, C1,
-
-                           Range, C2,
-
-                           Morphisms, morphisms );
-
-     elif ForAll( [ C1, C2 ], IsCochainComplex ) then 
-
-           ObjectifyWithAttributes( phi, TheTypeOfCochainMorphism,
-
-                           Source, C1,
-
-                           Range, C2,
-
-                           Morphisms, morphisms );
-
-     else
-
-        Error( "first and second argument should be both chains or cochains" );
-
-     fi;
-
-     AddMorphism( CapCategory( C1 ), phi );
-
-     TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED( phi );
-
-     TODO_LIST_TO_PUSH_BOUNDS( C1, phi );
-
-     TODO_LIST_TO_PUSH_BOUNDS( C2, phi );
-
-     return phi;
-
+  function( C1, C2, morphisms )
+    
+    if ForAll( [ C1, C2 ], IsChainComplex ) then
+        
+        Error( "" );
+        
+    elif ForAll( [ C1, C2 ], IsCochainComplex ) then
+        
+        return CreateComplexMorphism( C1, C2, morphisms );
+        
+    fi;
+    
 end );
 
 BindGlobal( "CHAIN_OR_COCHAIN_MORPHISM_BY_DENSE_LIST",
   function( C1, C2, mor, n )
-  local all_morphisms;
-
-  all_morphisms := AsZFunction(
-        function( i )
-          if i >= n and i <= n + Length( mor ) - 1 then 
-            return mor[ i - n + 1 ];
-          else
-            return ZeroMorphism( C1[ i ], C2[ i ] );
-          fi;
-         end );
-
-  all_morphisms := CHAIN_OR_COCHAIN_MORPHISM_BY_Z_FUNCTION( C1, C2, all_morphisms );
-
-  SetLowerBound( all_morphisms, n );
-
-  SetUpperBound( all_morphisms, n + Length( mor ) - 1 );
-
-  return all_morphisms;
-
+    if IsChainComplex( C1 ) then
+      Error( "" );
+    else
+      return CreateComplexMorphism( CapCategory( C1 ), C1, C2, mor, n );
+    fi;
 end );
-
-BindGlobal( "FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS",
-  function( l1, m1, l2, m2, mor, n, string )
-    local cat, complex_category, complex_constructor, map_constructor, C1, C2, l, maps, zero, all_maps, map;
-
-    cat := CapCategory( l1[ 1 ] );
-
-    if string = "chain_map" then 
-
-      complex_category := ChainComplexCategory( cat );
-
-      complex_constructor := ChainComplex;
-
-      map_constructor := ChainMorphism;
-
-    else 
-
-      complex_category := CochainComplexCategory( cat );
-
-      complex_constructor := CochainComplex;
-
-      map_constructor := CochainMorphism;
-
-    fi;
-
-    C1 := complex_constructor( l1, m1 );
-
-    C2 := complex_constructor( l2, m2 );
-
-    l := [
-          Minimum( ActiveLowerBound( C1 ), ActiveLowerBound( C2 ) )
-          ..
-          Maximum( ActiveUpperBound( C1 ), ActiveUpperBound( C2 ) )
-        ];
-
-    maps := List( l,
-            function( i )
-              if i >= n and i <= n + Length( mor ) - 1 then 
-                return mor[ i - n + 1 ];
-              else 
-                return ZeroMorphism( C1[ i ], C2[ i ] );
-              fi;
-            end );
-   
-    zero := ZeroMorphism( ZeroObject( cat ), ZeroObject( cat ) );
-
-    all_maps := 
-      AsZFunction(
-            function( i )
-              if i in l then
-                return maps[ Position( l, i ) ];
-              else
-                return zero;
-              fi;
-            end
-          );
-    
-    map := map_constructor( C1, C2, all_maps );
-
-    if n > l[ Length( l ) ] then
-      
-      SetIsZeroForMorphisms( map, true );
-      
-    fi;
-
-    if n + Length( mor ) - 1 < l[ 1 ] then
-    
-      SetIsZeroForMorphisms( map, true );
-   
-    fi;
-    
-    return map;
-
-end );
-
 
 ##
 InstallMethod( ChainMorphism,
@@ -280,20 +214,6 @@ InstallOtherMethod( CochainMorphism,
         [ IsCochainComplex, IsDenseList, IsInt, IsCochainComplex ],
   { S, mor, lower_bound, R } -> CochainMorphism( S, R, mor, lower_bound )
 );
-
-##
-InstallMethod( ChainMorphism,
-               [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ],
-   function( c1, m1, c2, m2, maps, n )
-   return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "chain_map" );
-end );
-
-##
-InstallMethod( CochainMorphism,
-               [ IsDenseList, IsInt, IsDenseList, IsInt, IsDenseList, IsInt ],
-   function( c1, m1, c2, m2, maps, n )
-   return FINITE_CHAIN_OR_COCHAIN_MORPHISM_BY_THREE_LISTS( c1, m1, c2, m2, maps, n, "cochain_map" );
-end );
 
 ##
 InstallOtherMethod( \/,
@@ -372,45 +292,42 @@ end );
 
 ##
 InstallMethod( ViewObj,
-        [ IsChainOrCochainMorphism ],
-  
+        [ IsCochainMorphism ],
+        
   function( phi )
+    local lower_bound, upper_bound, dots;
     
-    if IsBoundedChainOrCochainMorphism( phi ) then
+    if HasLowerBoundOfComplexMorphism( phi ) and HasUpperBoundOfComplexMorphism( phi ) then
       
-      Print(
-        "<A morphism in ", 
-        Name( CapCategory( phi ) ),
-        " with active lower bound ",
-        ActiveLowerBound( phi ),
-        " and active upper bound ",
-        ActiveUpperBound( phi ), ">"
-        );
-    
-    elif IsBoundedBelowChainOrCochainMorphism( phi ) then
+      upper_bound := UpperBoundOfComplexMorphism( phi );
+      lower_bound := LowerBoundOfComplexMorphism( phi );
       
-      Print(
-        "<A morphism in ",
-        Name( CapCategory( phi ) ),
-        " with active lower bound ",
-        ActiveLowerBound( phi ), ">" 
-        );
-    
-    elif IsBoundedAboveChainOrCochainMorphism( phi ) then
+      if IsInt( upper_bound ) then
+        upper_bound := String( upper_bound );
+      elif upper_bound = infinity then
+        upper_bound := Concatenation( "+", TEXTMTRANSLATIONS!.infty );
+      else
+        upper_bound := Concatenation( "-", TEXTMTRANSLATIONS!.infty );
+      fi;
       
-      Print(
-        "<A morphism in ",
-        Name( CapCategory( phi ) ),
-        " with active upper bound ",
-        ActiveUpperBound( phi ), ">"
-        );
-    
+      if IsInt( lower_bound ) then
+        lower_bound := String( lower_bound );
+      elif lower_bound = infinity then
+        lower_bound := Concatenation( "+", TEXTMTRANSLATIONS!.infty );
+      else
+        lower_bound := Concatenation( "-", TEXTMTRANSLATIONS!.infty );
+      fi;
+      
+      dots := Concatenation( ListWithIdenticalEntries( 3, TEXTMTRANSLATIONS!.cdot ) );
+      
+      Print( "<A morphism in ", Name( CapCategory( phi ) ), " supported in the window [", lower_bound, " ", dots, " ", upper_bound, "]>" );
+      
     else
       
       TryNextMethod( );
-    
+      
     fi;
-  
+    
 end );
 
 BindGlobal( "DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
@@ -445,11 +362,12 @@ end );
 
 ##
 InstallMethod( Display,
-    [ IsBoundedChainOrCochainMorphism ],
+    [ IsCochainMorphism ],
     function( phi )
-      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 0 then
+      
+      if HasUpperBoundOfComplexMorphism( phi ) and HasLowerBoundOfComplexMorphism( phi ) then
         
-        Display( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
+        Display( phi, LowerBoundOfComplexMorphism( phi ), UpperBoundOfComplexMorphism( phi ) );
         
       else
         
@@ -458,73 +376,6 @@ InstallMethod( Display,
       fi;
     
 end );
-
-##
-BindGlobal( "VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM",
-  function( map, m, n )
-    local r, s, i;
-    
-    r := RandomTextColor( "" );
-     
-    Print( "\n" );
-    for i in Reversed( [ m .. n ] ) do
-      
-      s := Concatenation( "== ", r[ 1 ], String( i ), r[ 2 ], " =======================" );
-      Print( s );
-      Print( "\n" );
-      ViewObj( map[ i ] );
-      Print( "\n" );
-      
-    od;
-
-end );
-
-##
-InstallMethod( ViewChainOrCochainMorphism,
-               [ IsChainOrCochainMorphism, IsInt, IsInt ],
-  function( map, m, n )
-    
-    VIEW_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX_MORPHISM( map, m, n );
-    
-    Print( "\nA morphism in ", Name( CapCategory( map ) ), " given by the above data\n" );
-    
-end );
-
-##
-InstallMethod( ViewChainOrCochainMorphism,
-    [ IsBoundedChainOrCochainMorphism ],
-    function( phi )
-      if ActiveUpperBound( phi ) - ActiveLowerBound( phi ) >= 0 then
-        
-        ViewChainOrCochainMorphism( phi, ActiveLowerBound( phi ), ActiveUpperBound( phi ) );
-        
-      else
-        
-        Print( "A zero complex morphism in ", Name( CapCategory( phi ) ) );
-        
-      fi;
-      
-end );
-
-##
-InstallMethod( ViewChainMorphism,
-          [ IsChainMorphism, IsInt, IsInt ],
-  ViewChainOrCochainMorphism );
-
-##
-InstallMethod( ViewChainMorphism,
-          [ IsBoundedChainMorphism ],
-  ViewChainOrCochainMorphism );
-
-##
-InstallMethod( ViewCochainMorphism,
-          [ IsCochainMorphism, IsInt, IsInt ],
-  ViewChainOrCochainMorphism );
-
-##
-InstallMethod( ViewCochainMorphism,
-          [ IsBoundedCochainMorphism ],
-  ViewChainOrCochainMorphism );
 
 ##
 InstallMethod( MorphismsSupport,
@@ -582,145 +433,6 @@ InstallMethod( IsWellDefined,
    return true;
 end );
 
-##
-InstallOtherMethod( LaTeXOutput,
-        [ IsChainOrCochainMorphism, IsInt, IsInt ],
-        
-  function( phi, l, u )
-    local OnlyDatum, s, i;
-    
-    OnlyDatum := ValueOption( "OnlyDatum" );
-    
-    if OnlyDatum = true then
-      
-      s := "\\begin{array}{lc}\n ";
-      
-      for i in [ l .. u ] do
-        
-        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
-        
-      od;
-      
-    else
-      
-      s := "\\begin{array}{ccc}\n ";
-      
-      if IsCochainMorphism( phi ) then
-        
-        s := Concatenation(
-                s,
-                LaTeXOutput( Source( phi )[ u ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ u ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ u ] ),
-                "\n \\\\ \n"
-              );
-              
-        for i in Reversed( [ l .. u - 1 ] ) do
-          
-          s := Concatenation(
-                  s,
-                  " \\uparrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\uparrow_{\\phantom{", String( i ), "}}",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  "\\vert_{", String( i ), "} ",
-                  "&&",
-                  "\\vert_{", String( i ), "} ",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                s,
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n \\\\ \n "
-              );
-              
-        od;
-        
-      else
-        
-        for i in Reversed( [ l + 1 .. u ] ) do
-          
-          s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n "
-              );
-              
-          s := Concatenation(
-                  s,
-                  "\\\\ \n \\vert^{", String( i ), "} ",
-                  "&&",
-                  "\\vert^{", String( i ), "} ",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  " \\downarrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\downarrow_{\\phantom{", String( i ), "}}"
-                );
-                
-        od;
-        
-        s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ l ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ l ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ l ] ),
-                "\n \\\\ \n "
-              );
-              
-      fi;
-      
-    fi;
-    
-    s := Concatenation( s, "\\end{array}" );
-    
-    return s;
-    
-end );
-
-##
-InstallMethod( LaTeXOutput,
-          [ IsBoundedChainOrCochainMorphism ],
-  phi -> LaTeXOutput( phi, ActiveLowerBoundForSourceAndRange( phi ), ActiveUpperBoundForSourceAndRange( phi ) )
-);
 
 #################################
 #
@@ -798,12 +510,10 @@ InstallMethod( SetUpperBound,
       
     fi;
       
-    if not HasFAU_BOUND( phi ) then
+    if not HasUpperBoundOfComplexMorphism( phi ) then
       
-      SetFAU_BOUND( phi, upper_bound ); 
-      
-      SetHAS_FAU_BOUND( phi, true );
-      
+      SetUpperBoundOfComplexMorphism( phi, upper_bound ); 
+            
     fi;
     
 end );
@@ -835,12 +545,10 @@ InstallMethod( SetLowerBound,
       
     fi;
     
-    if not HasFAL_BOUND( phi ) then
+    if not HasLowerBoundOfComplexMorphism( phi ) then
       
-      SetFAL_BOUND( phi, lower_bound );
-      
-      SetHAS_FAL_BOUND( phi, true );
-      
+      SetLowerBoundOfComplexMorphism( phi, lower_bound );
+            
     fi;
     
 end );
@@ -1090,23 +798,7 @@ InstallMethod( MappingCone,
                   );
                   
       complex := ChainComplex( UnderlyingCategory( complex_cat ), diffs );
-        
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
-           function (  )
-                if not HasFAL_BOUND( complex ) then
-                    SetLowerBound( complex, Minimum( ActiveLowerBound( B ) + 1, ActiveLowerBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-           function (  )
-                if not HasFAU_BOUND( complex ) then
-                    SetUpperBound( complex, Maximum( ActiveUpperBound( B ) + 1, ActiveUpperBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
+      
     else
         
       diffs := AsZFunction( n ->
@@ -1119,21 +811,6 @@ InstallMethod( MappingCone,
             
       complex := CochainComplex( UnderlyingCategory( complex_cat ), diffs );
         
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAL_BOUND", true ], [ C, "HAS_FAL_BOUND", true ] ], 
-           function (  )
-                if not HasFAL_BOUND( complex ) then
-                    SetLowerBound( complex, Minimum( ActiveLowerBound( B ) - 1, ActiveLowerBound( C ) ) );
-                fi;
-                return;
-            end ) );
-            
-      AddToToDoList( ToDoListEntry( [ [ B, "HAS_FAU_BOUND", true ], [ C, "HAS_FAU_BOUND", true ] ], 
-           function (  )
-                if not HasFAU_BOUND( complex ) then
-                    SetUpperBound( complex, Maximum( ActiveUpperBound( B ) - 1, ActiveUpperBound( C ) ) );
-                fi;
-                return;
-            end ) );
     fi;
     
     return complex;
@@ -1891,18 +1568,6 @@ end );
 ##
 InstallGlobalFunction( TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED,
   function( phi )
-    
-    AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAL_BOUND", true ] ],
-      function( )
-        SetFilterObj( phi, IsBoundedBelowChainOrCochainMorphism );
-      end )
-    );
-    
-    AddToToDoList( ToDoListEntry( [ [ phi, "HAS_FAU_BOUND", true ] ],
-      function( )
-        SetFilterObj( phi, IsBoundedAboveChainOrCochainMorphism );
-      end )
-    );
-    
+      
 end );
 

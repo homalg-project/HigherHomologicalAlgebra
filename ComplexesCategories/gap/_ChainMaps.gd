@@ -48,6 +48,8 @@ DeclareCategoryFamily( "IsCochainMorphism" );
 #
 ######################################
 
+DeclareOperation( "CreateComplexMorphism", [ IsCochainComplexCategory, IsCochainComplex, IsCochainComplex, IsList ] );
+
 #!  @Section Creating chain and cochain morphisms
 
 #!  @Description
@@ -362,20 +364,6 @@ DeclareOperation( "ActiveLowerBoundForSourceAndRange", [ IsChainOrCochainMorphis
 #! of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
 #!  @Arguments phi, n
 #!  @Returns a morphism
-KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
-
-#!  @Description
-#! The input is chain (resp. cochain) morphism and an integer $n$. The output is the morphism
-#! between the kernels in index $n$.
-#!  @Arguments phi, n
-#!  @Returns a morphism
-KeyDependentOperation( "CyclesFunctorialAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
-
-#!  @Description
-#!  The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
-#!  @Arguments phi, n
-#!  @Returns an integer
-DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 
 #!  @Description
 #!  The input is chain (resp. cochain) morphism and an integer $n$. The output is the component of $\phi$ in index $n$, i.e., $\phi_n$(resp. $\phi^n$).
@@ -465,11 +453,6 @@ DeclareGlobalFunction( "INSTALL_TODO_LIST_FOR_CO_CHAIN_MORPHISMS" );
 
 DeclareGlobalFunction( "TODO_LIST_TO_CHANGE_MORPHISM_FILTERS_WHEN_NEEDED" );
 
-DeclareAttribute( "FAL_BOUND", IsChainOrCochainMorphism );
+DeclareAttribute( "LowerBoundOfComplexMorphism", IsChainOrCochainMorphism );
 
-DeclareAttribute( "FAL_BOUND", IsChainOrCochainMorphism );
-
-DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
-
-DeclareProperty( "HAS_FAL_BOUND", IsChainOrCochainMorphism );
 
