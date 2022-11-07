@@ -4,9 +4,10 @@ LoadPackage( "FreydCategoriesForCAP" );
 LoadPackage( "StableCategories" );
 LoadPackage( "ModulePresentations" );
 
-EnhancePackage( "FreydCategoriesForCAP" );
 
 #! @Example
+EnhancePackage( "FreydCategoriesForCAP" );
+#! true
 Q := HomalgFieldOfRationalsInSingular( );
 #! Q
 EEE := KoszulDualRing( GradedRing( Q * "x,y" ) );

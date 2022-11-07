@@ -23,12 +23,12 @@ shasum -a 256 -c codecov.SHA256SUM
 
 # execute
 chmod +x codecov
-./codecov -Z -F BBGG || ./codecov -Z -F BBGG || ./codecov -Z -F BBGG
-./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes || ./codecov -Z -F Bicomplexes
-./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories || ./codecov -Z -F ComplexesCategories
-./codecov -Z -F DerivedCategories || ./codecov -Z -F DerivedCategories || ./codecov -Z -F DerivedCategories
-./codecov -Z -F HomotopyCategories || ./codecov -Z -F HomotopyCategories || ./codecov -Z -F HomotopyCategories
-./codecov -Z -F QuotientCategories || ./codecov -Z -F QuotientCategories || ./codecov -Z -F QuotientCategories
-./codecov -Z -F StableCategories || ./codecov -Z -F StableCategories || ./codecov -Z -F StableCategories
-./codecov -Z -F ToolsForHigherHomologicalAlgebra || ./codecov -Z -F ToolsForHigherHomologicalAlgebra || ./codecov -Z -F ToolsForHigherHomologicalAlgebra
-./codecov -Z -F TriangulatedCategories || ./codecov -Z -F TriangulatedCategories || ./codecov -Z -F TriangulatedCategories
+./codecov -Z -v -s ../ -F BBGG || (sleep 30; ./codecov -Z -v -s ../ -F BBGG || (sleep 30; ./codecov -Z -v -s ../ -F BBGG))
+./codecov -Z -v -s ../ -F Bicomplexes || (sleep 30; ./codecov -Z -v -s ../ -F Bicomplexes || (sleep 30; ./codecov -Z -v -s ../ -F Bicomplexes))
+./codecov -Z -v -s ../ -F ComplexesCategories || (sleep 30; ./codecov -Z -v -s ../ -F ComplexesCategories || (sleep 30; ./codecov -Z -v -s ../ -F ComplexesCategories))
+./codecov -Z -v -s ../ -F DerivedCategories || (sleep 30; ./codecov -Z -v -s ../ -F DerivedCategories || (sleep 30; ./codecov -Z -v -s ../ -F DerivedCategories))
+./codecov -Z -v -s ../ -F HomotopyCategories || (sleep 30; ./codecov -Z -v -s ../ -F HomotopyCategories || (sleep 30; ./codecov -Z -v -s ../ -F HomotopyCategories))
+./codecov -Z -v -s ../ -F QuotientCategories || (sleep 30; ./codecov -Z -v -s ../ -F QuotientCategories || (sleep 30; ./codecov -Z -v -s ../ -F QuotientCategories))
+./codecov -Z -v -s ../ -F StableCategories || (sleep 30; ./codecov -Z -v -s ../ -F StableCategories || (sleep 30; ./codecov -Z -v -s ../ -F StableCategories))
+./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra || (sleep 30; ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra || (sleep 30; ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra))
+./codecov -Z -v -s ../ -F TriangulatedCategories || (sleep 30; ./codecov -Z -v -s ../ -F TriangulatedCategories || (sleep 30; ./codecov -Z -v -s ../ -F TriangulatedCategories))

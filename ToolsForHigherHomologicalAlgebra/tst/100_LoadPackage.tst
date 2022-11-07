@@ -3,15 +3,17 @@
 #
 # This file tests if the package can be loaded without errors or warnings.
 #
+# do not load suggested dependencies automatically
+gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "ToolsForHigherHomologicalAlgebra", false );
-true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
-gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "ToolsForHigherHomologicalAlgebra" );
+gap> LoadPackage( "ToolsForHigherHomologicalAlgebra", false );
 true
+gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "FreydCategoriesForCAP" );
+true
+gap> LoadPackage( "ToolsForHigherHomologicalAlgebra" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

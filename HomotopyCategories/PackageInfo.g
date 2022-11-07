@@ -69,7 +69,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.11.1",
+  GAP := ">= 4.12.1",
   NeededOtherPackages := [
                            [ "GAPDoc", ">= 1.5" ],
                            [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
