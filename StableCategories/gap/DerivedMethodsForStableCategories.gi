@@ -100,7 +100,7 @@ AddFinalDerivationBundle( # IsColiftingObject
     
     id_A := IdentityMorphism( A );
     
-    return IsNullHomotopic( id_A );
+    return ValueGlobal( "IsNullHomotopic" )( id_A ); # it need to be fixed
     
   end
 ],
@@ -133,7 +133,7 @@ AddFinalDerivationBundle( # IsColiftingObject
     
     id_A := IdentityMorphism( A );
     
-    lambda := HomotopyMorphisms( id_A );
+    lambda := ValueGlobal( "HomotopyMorphisms" )( id_A );
     
     r_A := AsZFunction( i -> MorphismBetweenDirectSums( [ [ lambda[ i +1 ] ], [ id_A[ i ] ] ] ) );
     
