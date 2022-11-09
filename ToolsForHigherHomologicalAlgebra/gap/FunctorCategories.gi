@@ -330,7 +330,7 @@ InstallMethod( CategoryOfArrows,
         
         alpha := A( algebroid.m );
         
-        gamma := PreInverse( alpha );
+        gamma := PreInverseForMorphisms( alpha );
         
         rA_1 := MorphismBetweenDirectSums(
                   [
