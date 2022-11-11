@@ -21,6 +21,10 @@ DeclareGlobalFunction( "CheckNaturality" );
 DeclareGlobalFunction( "CheckFunctoriality" );
 DeclareOperation( "CreateAdditiveFunctorByTwoFunctions",
     [ IsString, IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
+
+DeclareOperation( "AdditiveFunctorByTwoFunctionsData",
+    [ IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
+
 DeclareGlobalFunction( "RandomTextColor" );
 DeclareGlobalFunction( "RandomBoldTextColor" );
 DeclareGlobalFunction( "RandomBackgroundColor" );
