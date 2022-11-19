@@ -1,0 +1,8 @@
+
+
+
+
+
+
+
+DeclareGlobalFunction( "ADD_FUNCTIONS_OF_TRIANGULATED_STRUCTURE_TO_HOMOTOPY_CATEGORY" );

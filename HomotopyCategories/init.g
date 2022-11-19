@@ -4,19 +4,25 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "HomotopyCategories", "gap/HomotopyCategories.gd");
-ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryObjects.gd");
-ReadPackage( "HomotopyCategories", "gap/HomotopyCategoryMorphisms.gd");
+ReadPackage( "HomotopyCategories", "gap/Categories.gd");
+ReadPackage( "HomotopyCategories", "gap/Objects.gd");
+ReadPackage( "HomotopyCategories", "gap/Morphisms.gd");
 ReadPackage( "HomotopyCategories", "gap/HomStructure.gd");
-ReadPackage( "HomotopyCategories", "gap/Functors.gd" );
+ReadPackage( "HomotopyCategories", "gap/TriangulatedStructure.gd" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gd" );
-ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gd" );
+ReadPackage( "HomotopyCategories", "gap/StrongExceptionalSequences.gd" );
+ReadPackage( "HomotopyCategories", "gap/Functors.gd" );
 
-
-if IsPackageMarkedForLoading( "Algebroids", ">= 2020.04.25" ) then
-    ReadPackage( "HomotopyCategories", "gap/Algebroids.gd" );
+if IsPackageMarkedForLoading( "Algebroids", ">= 2022.11-10" ) then
+    ReadPackage( "HomotopyCategories", "gap/OnlyWithAlgebroids.gd" );
 fi;
 
-if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-    ReadPackage( "HomotopyCategories", "gap/Julia.gd" );
+if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.11-07" ) then
+    ReadPackage( "HomotopyCategories", "gap/OnlyWithFunctorCategories.gd" );
 fi;
+
+#ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gd" );
+
+#if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+#    ReadPackage( "HomotopyCategories", "gap/Julia.gd" );
+#fi;

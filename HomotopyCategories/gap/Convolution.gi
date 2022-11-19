@@ -1,957 +1,139 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# HomotopyCategories: Homotopy categories of additive categories
-#
-# Implementations
-#
 
-################################
-#
-# for chain complexes cells
-#
-################################
 
-##
-InstallMethod( ForwardPostnikovSystemAtOp,
-             "for chain complex and an integer",
-         [ IsChainComplex, IsInt ],
-         
-  function( C, m )
-    local l, u, alpha, beta, H, maps, d, diffs;
-    
-    l := ActiveLowerBound( C );
-    
-    u := ActiveUpperBound( C );
-    
-    if m + 1 > u then
-      
-      return C;
-      
-    elif m + 1 < u then
-      
-      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m + 1 ), m );
-      
-    elif u - l in [ 0, 1 ] then
-      
-      return StalkChainComplex( StandardConeObject( C ^ ( m + 1 ) ), m );
-      
-    else
-      
-      alpha := C ^ ( m + 1 );
-      
-      beta := C ^ m;
-      
-      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
-      
-      if H = fail then
-        
-        Error( "The input is not well-defined!" );
-        
-      fi;
-      
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ H[ i - 1 ] ], [ beta[ i ] ] ] ) );
-      
-      d := HomotopyCategoryMorphism( StandardConeObject( alpha ), Range( beta ), maps );
-      
-      diffs := List( [ l + 1 .. u - 2 ], i -> C ^ i );
-      
-      Add( diffs, d );
-      
-      return ChainComplex( diffs, l + 1 );
-      
-    fi;
-    
-end );
 
-##
-InstallMethod( ForwardConvolution,
-            "for chain complexes over homotopy categories",
-          [ IsChainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, l;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    l := ActiveLowerBound( C );
-    
-    C := ForwardPostnikovSystemAt( C, l );
-    
-    return Shift( C[ l ], l );
-    
-end );
 
-##
-InstallMethod( ForwardConvolution,
-            "for chain complexes over additive closures",
-          [ IsChainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToChainComplexCategories( I );
-    
-    return ForwardConvolution( I( C ) );
-    
-end );
 
-##
-InstallMethod( ForwardPostnikovSystemAtOp,
-          [ IsChainMorphism, IsInt ],
-          
-  function( alpha, m )
-    local l, u, map, maps, s, r;
-    
-    l := ActiveLowerBoundForSourceAndRange( alpha );
-    
-    u := ActiveUpperBoundForSourceAndRange( alpha );
-    
-    if m + 1 > u then
-      
-      return alpha;
-      
-    elif m + 1 < u then
-      
-      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m + 1 ), m );
-      
-    else
-      
-      map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ ( m + 1 ),
-                alpha[ m + 1 ],
-                alpha[ m ],
-                Range( alpha ) ^ ( m + 1 )
-              );
-              
-      if l = u then
-        
-        return StalkChainMorphism( map, m );
-        
-      else
-        
-        maps := List( [ l .. u - 2 ], i -> alpha[ i ] );
-        
-        Add( maps, map );
-        
-        s := ForwardPostnikovSystemAt( Source( alpha ), m );
-        
-        r := ForwardPostnikovSystemAt( Range( alpha ), m );
-        
-        return ChainMorphism( s, r, maps, l );
-        
-      fi;
-      
-    fi;
-    
-end );
 
-##
-InstallMethod( ForwardConvolution,
-             "for chain morphisms over homotopy categories",
-         [ IsChainMorphism ],
-         
-  function( alpha )
-    local ambient_cat, cat, l;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-   
-    l := ActiveLowerBoundForSourceAndRange( alpha );
-    
-    alpha := ForwardPostnikovSystemAt( alpha, l );
-    
-    return Shift( alpha[ l ], l );
-    
-end );
-
-##
-InstallMethod( ForwardConvolution,
-            "for chain morphisms over additive closures",
-          [ IsChainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToChainComplexCategories( I );
-    
-    return ForwardConvolution( I( alpha ) );
-    
-end );
 
 
 ##
-InstallMethod( BackwardPostnikovSystemAtOp,
-          [ IsChainComplex, IsInt ],
-          
-  function( C, m )
-    local l, u, alpha, beta, H, maps, d, diffs;
-    
-    l := ActiveLowerBound( C );
-    
-    u := ActiveUpperBound( C );
-    
-    if m - 1 < l then
-      
-      return C;
-      
-    elif m - 1 > l then
-      
-      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m - 1 ), m );
-      
-    elif u - l in [ 0, 1 ] then
-      
-      return StalkChainComplex( InverseShiftOnObject( StandardConeObject( C ^ m ) ), m );
-      
-    else
-      
-      alpha := C ^ ( m + 1 );
-      
-      beta := C ^ m;
-      
-      H := HomotopyMorphisms( AdditiveInverse( PreCompose( alpha, beta ) ) );
-      
-      if H = fail then
-        
-        Error( "The input is not well-defined!" );
-        
-      fi;
-      
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], H[ i ] ] ] ) );
-      
-      d := HomotopyCategoryMorphism(
-                  Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( beta ) ),
-                  maps
-                );
-                
-      diffs := List( [ l + 3 .. u ], i -> C ^ i );
-      
-      Add( diffs, d, 1 );
-      
-      return ChainComplex( diffs, m + 1 );
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( BackwardConvolution,
-             "for chain complexes over homotopy categories",
-         [ IsChainComplex ],
-         
-  function( C )
-    local ambient_cat, cat, u;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    u := ActiveUpperBound( C );
-    
-    C := BackwardPostnikovSystemAt( C, u );
-    
-    return Shift( C[ u ], u );
-    
-end );
-
-##
-InstallMethod( BackwardConvolution,
-            "for chain complexes over additive closures",
-          [ IsChainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToChainComplexCategories( I );
-    
-    return BackwardConvolution( I( C ) );
-    
-end );
-
-##
-InstallMethod( BackwardPostnikovSystemAtOp,
-          [ IsChainMorphism, IsInt ],
-          
-  function( alpha, m )
-    local C, D, l, u, map, maps, s, r;
-    
-    l := ActiveLowerBoundForSourceAndRange( alpha );
-    
-    u := ActiveUpperBoundForSourceAndRange( alpha );
-    
-    if m - 1 < l then
-      
-      return alpha;
-      
-    elif m - 1 > l then
-      
-      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m - 1 ), m );
-      
-    else
-      
-      map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ ( m ),
-                alpha[ m ],
-                alpha[ m - 1 ],
-                Range( alpha ) ^ ( m )
-              );
-              
-      map := InverseShiftOnMorphism( map );
-      
-      if u - l in [ 0, 1 ] then
-        
-        return StalkChainMorphism( map, m );
-        
-      else
-        
-        maps := List( [ m + 1 .. u ], i -> alpha[ i ] );
-        
-        Add( maps, map, 1 );
-        
-        s := BackwardPostnikovSystemAt( Source( alpha ), m );
-        
-        r := BackwardPostnikovSystemAt( Range( alpha ), m );
-        
-        return ChainMorphism( s, r, maps, m );
-        
-      fi;
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( BackwardConvolution,
-             "for chain morphisms over homotopy categories",
-          [ IsChainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, u;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    u := ActiveUpperBoundForSourceAndRange( alpha );
-    
-    alpha := BackwardPostnikovSystemAt( alpha, u );
-    
-    return Shift( alpha[ u ], u );
-    
-end );
-
-##
-InstallMethod( BackwardConvolution,
-            "for chain morphisms over additive closures",
-          [ IsChainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToChainComplexCategories( I );
-    
-    return BackwardConvolution( I( alpha ) );
-    
-end );
-
-##
-InstallMethod( ShiftOfBackwardConvolution_into_BackwardConvolutionOfShiftOp,
-          [ IsHomotopyCategoryObject, IsInt ],
-          
-  function( C, n )
-    local diffs, D, z_func, alpha;
-    
-    if n mod 2 = 0 then
-      
-      return IdentityMorphism( Shift( BackwardConvolution( C ), n ) );
-      
-    fi;
-    
-    diffs := Differentials( C );
-    
-    diffs := ApplyMap( diffs, AdditiveInverse );
-    
-    D := HomotopyCategoryObject( CapCategory( C ), diffs );
-    
-    SetLowerBound( D, ActiveLowerBound( C ) );
-    
-    SetUpperBound( D, ActiveUpperBound( C ) );
-    
-    z_func := AsZFunction( i -> ( -1 ) ^ i * IdentityMorphism( C[ i ] ) );
-    
-    alpha := HomotopyCategoryMorphism( C, D, z_func );
-    
-    return Shift( BackwardConvolution( alpha ), n );
-
-end );
-
-##
-InstallMethod( BackwardConvolutionOfShift_into_ShiftOfBackwardConvolutionOp,
-          [ IsHomotopyCategoryObject, IsInt ],
-  function( C, n )
-    local m;
-    
-    m := ShiftOfBackwardConvolution_into_BackwardConvolutionOfShift( C, n );
-    
-    return HomotopyCategoryMorphism( Range( m ), Source( m ), Morphisms( m ) );
-    
-end );
-
-#####################################
-#
-# For cochains categories cells
-#
-#####################################
-
-##
-InstallMethod( ForwardPostnikovSystemAtOp,
+InstallMethod( PostnikovSystemAtOp,
           [ IsCochainComplex, IsInt ],
-          
-  function( C, m )
-    local l, u, alpha, beta, H, maps, d, diffs;
-     
-    u := ActiveUpperBound( C );
+  
+  function ( C, m )
+    local complexes_cat, underlying_cat, cat, u, st_cocone, l, f, g, w, delta;
     
-    l := ActiveLowerBound( C );
+    complexes_cat := CapCategory( C );
+    underlying_cat := UnderlyingCategory( complexes_cat );
+    cat := DefiningCategory( underlying_cat );
     
-    if m - 1 < l then
-      
-      return C;
-      
-    elif m - 1 > l then
-      
-      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( C, m - 1 ), m );
-      
-    elif u - l in [ 0, 1 ] then
-      
-      return StalkCochainComplex( StandardConeObject( C ^ ( m - 1 ) ), m );
-      
-    else
-      
-      alpha := C ^ ( m - 1 );
-      
-      beta := C ^ m;
-      
-      H := HomotopyMorphisms( PreCompose( alpha, beta ) );
-      
-      if H = fail then
+    u := UpperBound( C );
+    
+    if m <= u-2 then
         
-        Error( "The input is not well-defined!" );
+        return PostnikovSystemAt( PostnikovSystemAt( C, m+1 ), m );
         
-      fi;
+    elif m = u-1 then
       
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ H[ i + 1 ] ], [ beta[ i ] ] ] ) );
+      st_cocone := StandardCoConeObject( C^(u-1) );
       
-      d := HomotopyCategoryMorphism( StandardConeObject( alpha ), Range( beta ), maps );
+      l := LowerBound( C );
       
-      diffs := List( [ l + 2 .. u - 1 ], i -> C ^ i );
-      
-      diffs := Concatenation( [ d ], diffs );
-      
-      return CochainComplex( diffs, l + 1 );
-      
-    fi;
-    
-end );
-
-##
-InstallMethod( ForwardConvolution,
-             "for cochain complexes over homotopy categories",
-         [ IsCochainComplex ],
-  function( C )
-    local ambient_cat, cat, u;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    u := ActiveUpperBound( C );
-    
-    C := ForwardPostnikovSystemAt( C, u );
-    
-    return Shift( C[ u ], -u );
-    
-end );
-
-##
-InstallMethod( ForwardConvolution,
-            "for cochain complexes over additive closures",
-          [ IsCochainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToCochainComplexCategories( I );
-    
-    return ForwardConvolution( I( C ) );
-    
-end );
-
-##
-InstallMethod( ForwardPostnikovSystemAtOp,
-          [ IsCochainMorphism, IsInt ],
-          
-  function( alpha, m )
-    local l, u, map, maps, s, r;
-    
-    l := ActiveLowerBoundForSourceAndRange( alpha );
-    
-    u := ActiveUpperBoundForSourceAndRange( alpha );
-    
-    if m - 1 < l then
-      
-      return alpha;
-      
-    elif m - 1 > l then
-      
-      return ForwardPostnikovSystemAt( ForwardPostnikovSystemAt( alpha, m - 1 ), m );
-      
-    else
-      
-      map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ ( m - 1 ),
-                alpha[ m - 1 ],
-                alpha[ m ],
-                Range( alpha ) ^ ( m - 1 )
-              );
-              
-      if l = u then
+      if l <= u-2 then
         
-        return StalkCochainMorphism( map, m );
+        f := C^(u-2);
+        g := C^(u-1);
+        
+        w := WitnessForBeingHomotopicToZeroMorphism( AdditiveInverseForMorphisms( underlying_cat, PreCompose( underlying_cat, f, g ) ) );
+        
+        delta := CreateComplexMorphism(
+                    underlying_cat,
+                    C[u-2],
+                    i -> UniversalMorphismIntoDirectSumWithGivenDirectSum( cat, [ C[u-1][i], C[u][i-1] ], C[u-2][i], [ f[i], w[i] ], st_cocone[i] ),
+                    st_cocone );
+        
+        return CreateComplex( complexes_cat, Concatenation( List( [ l .. u-3 ], i -> C^i ), [ delta ] ), l ); # supported at [ l .. u-1 ] = [ l .. m ]
         
       else
         
-        maps := List( [ l + 2 .. u ], i -> alpha[ i ] );
-        
-        maps := Concatenation( [ map ], maps );
-        
-        s := ForwardPostnikovSystemAt( Source( alpha ), m );
-        
-        r := ForwardPostnikovSystemAt( Range( alpha ), m );
-        
-        return CochainMorphism( s, r, maps, l + 1 );
+        return CreateComplex( complexes_cat, st_cocone, m );
         
       fi;
-      
-    fi;
     
-end );
-
-##
-InstallMethod( ForwardConvolution,
-          [ IsCochainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, u;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    u := ActiveUpperBoundForSourceAndRange( alpha );
-    
-    alpha := ForwardPostnikovSystemAt( alpha, u );
-    
-    return Shift( alpha[ u ], -u );
-    
-end );
-
-##
-InstallMethod( ForwardConvolution,
-            "for cochain morphisms over additive closures",
-          [ IsCochainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToCochainComplexCategories( I );
-    
-    return ForwardConvolution( I( alpha ) );
-    
-end );
-
-##
-InstallMethod( BackwardPostnikovSystemAtOp,
-          [ IsCochainComplex, IsInt ],
-          
-  function( C, m )
-    local l, u, alpha, beta, H, maps, d, diffs;
-    
-    l := ActiveLowerBound( C );
-    
-    u := ActiveUpperBound( C );
-    
-    if m + 1 > u then
+    else
       
       return C;
       
-    elif m + 1 < u then
-      
-      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( C, m + 1 ), m );
-      
-    elif u - l in [ 0, 1 ] then
-      
-      return StalkCochainComplex( InverseShiftOnObject( StandardConeObject( C ^ m ) ), m );
-      
-    else
-      
-      alpha := C ^ ( m - 1 );
-      
-      beta := C ^ m;
-      
-      H := HomotopyMorphisms( AdditiveInverse( PreCompose( alpha, beta ) ) );
-      
-      if H = fail then
-        
-        Error( "The input is not well-defined!" );
-        
-      fi;
-      
-      maps := AsZFunction( i -> MorphismBetweenDirectSums( [ [ alpha[ i ], H[ i ] ] ] ) );
-      
-      d := HomotopyCategoryMorphism(
-                  Source( alpha ),
-                  InverseShiftOnObject( StandardConeObject( beta ) ),
-                  maps
-                );
-                
-      diffs := List( [ l .. u - 3 ], i -> C ^ i );
-      
-      Add( diffs, d );
-      
-      return CochainComplex( diffs, l );
-      
     fi;
     
 end );
 
 ##
-InstallMethod( BackwardConvolution,
+InstallOtherMethod( PostnikovSystemAt,
+            [ IsHomotopyCategoryObject, IsInt ],
+  
+  { C, m } -> PostnikovSystemAt( UnderlyingCell( C ), m )
+);
+
+##
+InstallMethod( Convolution,
           [ IsCochainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, l;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    l := ActiveLowerBound( C );
-    
-    C := BackwardPostnikovSystemAt( C, l );
-    
-    return Shift( C[ l ], -l );
-    
-end );
+  
+  C ->  ApplyShift( PostnikovSystemAt( C, LowerBound( C ) )[LowerBound( C )], -LowerBound( C ) )
+);
 
 ##
-InstallMethod( BackwardConvolution,
-            "for chain complexes over additive closures",
-          [ IsCochainComplex ],
-          
-  function( C )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( C );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToCochainComplexCategories( I );
-    
-    return BackwardConvolution( I( C ) );
-    
-end );
+InstallOtherMethod( Convolution,
+          [ IsHomotopyCategoryObject ],
+  
+  C ->  Convolution( UnderlyingCell( C ) )
+);
 
 ##
-InstallMethod( BackwardPostnikovSystemAtOp,
+InstallMethod( PostnikovSystemAtOp,
           [ IsCochainMorphism, IsInt ],
-          
-  function( alpha, m )
-    local C, D, l, u, map, maps, s, r;
+  
+  function ( alpha, m )
+    local complexes_cat, underlying_cat, u, st_cocone_morphism, s, r, l, morphisms;
     
-    l := ActiveLowerBoundForSourceAndRange( alpha );
+    complexes_cat := CapCategory( alpha );
+    underlying_cat := UnderlyingCategory( complexes_cat );
     
-    u := ActiveUpperBoundForSourceAndRange( alpha );
+    u := UpperBoundOfSourceAndRange( alpha );
     
-    if m + 1 > u then
+    if m <= u-2 then
+      
+      return PostnikovSystemAt( PostnikovSystemAt( alpha, m+1 ), m );
+      
+    elif m = u-1 then
+      
+      st_cocone_morphism := InverseShiftOfMorphism( MorphismBetweenStandardConeObjects( Source( alpha )^m, alpha[m], alpha[m+1], Range( alpha )^m ) );
+      
+      l := LowerBoundOfSourceAndRange( alpha );
+      
+      return CreateComplexMorphism(
+                complexes_cat,
+                PostnikovSystemAt( Source( alpha ), m ),
+                PostnikovSystemAt( Range( alpha ), m ),
+                Concatenation( List( [ l .. u-2 ], i -> alpha[i] ), [ st_cocone_morphism ] ),
+                Minimum( l, m ) );
+    
+    else
       
       return alpha;
       
-    elif m + 1 < u then
-      
-      return BackwardPostnikovSystemAt( BackwardPostnikovSystemAt( alpha, m + 1 ), m );
-      
-    else
-      
-      map := MorphismBetweenStandardConeObjects(
-                Source( alpha ) ^ m,
-                alpha[ m ],
-                alpha[ m + 1 ],
-                Range( alpha ) ^ m
-              );
-              
-      map := InverseShiftOnMorphism( map );
-      
-      if u - l in [ 0, 1 ] then
-        
-        return StalkCochainMorphism( map, m );
-        
-      else
-        
-        maps := List( [ l .. u - 2 ], i -> alpha[ i ] );
-        
-        Add( maps, map );
-        
-        s := BackwardPostnikovSystemAt( Source( alpha ), m );
-        
-        r := BackwardPostnikovSystemAt( Range( alpha ), m );
-        
-        return CochainMorphism( s, r, maps, l );
-        
-      fi;
-      
     fi;
     
 end );
 
 ##
-InstallMethod( BackwardConvolution,
+InstallOtherMethod( PostnikovSystemAt,
+            [ IsHomotopyCategoryMorphism, IsInt ],
+  
+  { alpha, m } -> PostnikovSystemAt( UnderlyingCell( alpha ), m )
+);
+
+##
+InstallMethod( Convolution,
           [ IsCochainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, l;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsHomotopyCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-   
-    l := ActiveLowerBoundForSourceAndRange( alpha );
-    
-    alpha := BackwardPostnikovSystemAt( alpha, l );
-    
-    return Shift( alpha[ l ], -l );
-    
-end );
-
-##
-InstallMethod( BackwardConvolution,
-            "for cochain morphisms over additive closures",
-          [ IsCochainMorphism ],
-          
-  function( alpha )
-    local ambient_cat, cat, full, I;
-    
-    ambient_cat := CapCategory( alpha );
-    
-    cat := UnderlyingCategory( ambient_cat );
-    
-    if not IsAdditiveClosureCategory( cat ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    full := UnderlyingCategory( cat );
-    
-    I := ValueGlobal( "InclusionFunctor" )( full );
-    
-    I := ExtendFunctorToAdditiveClosureOfSource( I );
-    
-    I := ExtendFunctorToCochainComplexCategories( I );
-    
-    return BackwardConvolution( I( alpha ) );
-    
-end );
-
-#####################################
-#
-# For homotopy category cells
-#
-#####################################
-
-##
-InstallOtherMethod( ForwardPostnikovSystemAt,
-        [ IsHomotopyCategoryCell, IsInt ],
-        
-  { c, m } -> ForwardPostnikovSystemAt( UnderlyingCell( c ), m ) / CapCategory( c )
+  
+  alpha ->  ApplyShift( PostnikovSystemAt( alpha, LowerBoundOfSourceAndRange( alpha ) )[LowerBoundOfSourceAndRange( alpha )], -LowerBoundOfSourceAndRange( alpha ) )
 );
 
 ##
-InstallOtherMethod( BackwardPostnikovSystemAt,
-        [ IsHomotopyCategoryCell, IsInt ],
-        
-  { c, m } -> BackwardPostnikovSystemAt( UnderlyingCell( c ), m ) / CapCategory( c )
-);
-
-##
-InstallMethod( ForwardConvolution,
-          [ IsHomotopyCategoryCell ],
-          
-  c -> ForwardConvolution( UnderlyingCell( c ) )
-);
-
-##
-InstallMethod( BackwardConvolution,
-          [ IsHomotopyCategoryCell ],
-          
-  c -> BackwardConvolution( UnderlyingCell( c ) )
+InstallOtherMethod( Convolution,
+          [ IsHomotopyCategoryMorphism ],
+  
+  alpha ->  Convolution( UnderlyingCell( alpha ) )
 );
 
