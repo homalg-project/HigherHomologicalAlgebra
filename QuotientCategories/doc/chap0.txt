@@ -6,10 +6,10 @@
           [1X Quotient categories of CAP categories by two-sided ideals [101X
   
   
-                                   2022.08-01
+                                   2022.11-02
   
   
-                                 23 August 2022
+                                25 November 2022
   
   
                                   Kamal Saleh
