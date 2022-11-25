@@ -13,27 +13,23 @@
 InstallValue( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, rec(
 
 StandardConeObject:= rec(
-  installation_name := "StandardConeObject",
   filter_list := [ "category", "morphism" ],
   return_type := "object"
 ),
 
-MorphismToStandardConeObjectWithGivenStandardConeObject := rec(
-  installation_name := "MorphismToStandardConeObjectWithGivenStandardConeObject",
+MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
   filter_list := [ "category", "morphism", "object" ],
   io_type := [ [ "alpha", "cone_alpha" ], [ "range_alpha", "cone_alpha" ] ],
   return_type := "morphism"
 ),
 
-MorphismFromStandardConeObjectWithGivenStandardConeObject := rec(
-  installation_name := "MorphismFromStandardConeObjectWithGivenStandardConeObject",
-  filter_list := [ "category", "morphism", "object" ],
-  io_type := [ [ "alpha", "cone_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
+MorphismFromStandardConeObjectWithGivenObjects := rec(
+  filter_list := [ "category", "object", "morphism", "object" ],
+  io_type := [ [ "cone_alpha", "alpha", "sh_source_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
   return_type := "morphism"
 ),
 
-MorphismToStandardConeObject := rec(
-  installation_name := "MorphismToStandardConeObject",
+MorphismIntoStandardConeObject := rec(
   filter_list := [ "category", "morphism" ],
   io_type := [ [ "alpha" ], [ "range_alpha", "cone_alpha" ] ],
   with_given_object_position := "Range",
@@ -41,117 +37,91 @@ MorphismToStandardConeObject := rec(
 ),
 
 MorphismFromStandardConeObject := rec(
-  installation_name := "MorphismFromStandardConeObject",
   filter_list := [ "category", "morphism" ],
-  io_type := [ [ "alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
-  with_given_object_position := "Source",
+  input_arguments_names := [ "cat", "alpha" ],
+  output_source_getter_string := "StandardConeObject( cat, alpha )",
+  output_range_getter_string := "ShiftOfObject( cat, Source( alpha ) )",
   return_type := "morphism"
 ),
 
-ShiftOnObject:= rec(
-  installation_name := "ShiftOnObject",
+ShiftOfObject := rec(
   filter_list := [ "category", "object" ],
   return_type := "object"
 ),
 
-ShiftOnMorphismWithGivenObjects := rec(
-  installation_name := "ShiftOnMorphismWithGivenObjects",
+ShiftOfMorphismWithGivenObjects := rec(
+  filter_list := [ "category", "object", "morphism", "object" ],
+  return_type := "morphism"
+),
+
+InverseShiftOfObject := rec(
+  filter_list := [ "category", "object" ],
+  return_type := "object"
+),
+
+InverseShiftOfMorphismWithGivenObjects := rec(
   io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
   filter_list := [ "category", "object", "morphism", "object" ],
   return_type := "morphism"
 ),
 
-InverseShiftOnObject := rec(
-  installation_name := "InverseShiftOnObject",
-  filter_list := [ "category", "object" ],
+ShiftOfObjectByInteger := rec(
+  filter_list := [ "category", "object", IsInt ],
   return_type := "object"
 ),
 
-InverseShiftOnMorphismWithGivenObjects := rec(
-  installation_name := "InverseShiftOnMorphismWithGivenObjects",
-  io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
-  filter_list := [ "category", "object", "morphism", "object" ],
+ShiftOfMorphismByIntegerWithGivenObjects := rec(
+  filter_list := [ "category", "object", "morphism", IsInt, "object" ],
   return_type := "morphism"
 ),
 
-WitnessIsomorphismOntoStandardConeObject := rec(
-  installation_name := "WitnessIsomorphismOntoStandardConeObject",
+ShiftOfMorphismByInteger := rec(
+  filter_list := [ "category", "morphism", IsInt ],
+  return_type := "morphism"
+),
+
+WitnessIsomorphismIntoStandardConeObject := rec(
   io_type := [ [ "alpha", "iota", "pi" ], [ "range_iota", "cone_alpha" ] ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
   return_type := "morphism_or_fail"
 ),
 
 WitnessIsomorphismFromStandardConeObject := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObject",
   io_type := [ [ "alpha", "iota", "pi" ], [ "cone_alpha", "range_iota" ] ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
   return_type := "morphism_or_fail"
 ),
 
 IsExactTriangle := rec(
-  installation_name := "IsExactTriangle",
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
   return_type := "bool"
 ),
 
-UnitIsomorphismWithGivenObject := rec(
-  installation_name := "UnitIsomorphismWithGivenObject",
+UnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "s", "sh_o_rev_sh_s" ] ],
+  io_type := [ [ "s", "sh_o_i_sh_s" ], [ "s", "sh_o_i_sh_s" ] ],
   return_type := "morphism"
 ),
 
-#UnitIsomorphism := rec(
-#  installation_name := "UnitIsomorphism",
-#  filter_list := [ "category", "object" ],
-#  io_type := [ [ "s" ], [ "s", "alpha", "sh_o_rev_sh_s" ] ],
-#  return_type := "morphism"
-#),
-
-InverseOfCounitIsomorphismWithGivenObject := rec(
-  installation_name := "InverseOfCounitIsomorphismWithGivenObject",
+InverseOfCounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "s", "rev_sh_o_sh_s" ] ],
+  io_type := [ [ "s", "i_sh_o_sh_s" ], [ "s", "i_sh_o_sh_s" ] ],
   return_type := "morphism"
 ),
 
-#InverseOfCounitIsomorphism := rec(
-#  installation_name := "InverseOfCounitIsomorphism",
-#  filter_list := [ "category", "object" ],
-#  io_type := [ [ "s" ], [ "s", "alpha", "rev_sh_o_sh_s" ] ],
-#  return_type := "morphism"
-#),
-
-InverseOfUnitIsomorphismWithGivenObject := rec(
-  installation_name := "InverseOfUnitIsomorphismWithGivenObject",
+InverseOfUnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_rev_sh_s" ], [ "sh_o_rev_sh_s", "s" ] ],
+  io_type := [ [ "s", "sh_o_i_sh_s" ], [ "sh_o_i_sh_s", "s" ] ],
   return_type := "morphism"
 ),
 
-#InverseOfUnitIsomorphism := rec(
-#  installation_name := "InverseOfUnitIsomorphism",
-#  filter_list := [ "category", "object" ],
-#  io_type := [ [ "s" ], [ "sh_o_rev_sh_s", "alpha", "s" ] ]
-#  return_type := "morphism"
-#),
-
-CounitIsomorphismWithGivenObject := rec(
-  installation_name := "CounitIsomorphismWithGivenObject",
+CounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "rev_sh_o_sh_s" ], [ "rev_sh_o_sh_s", "s" ] ],
+  io_type := [ [ "s", "i_sh_o_sh_s" ], [ "i_sh_o_sh_s", "s" ] ],
   return_type := "morphism"
 ),
-
-#CounitIsomorphism := rec(
-#  installation_name := "CounitIsomorphism",
-#  filter_list := [ "category", "object" ],
-#  io_type := [ [ "s" ], [ "rev_sh_o_sh_s", "alpha", "s" ] ]
-#  return_type := "morphism"
-#),
 
 MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
-  installation_name := "MorphismBetweenStandardConeObjectsWithGivenObjects",
   filter_list := [ "category", "object", "list_of_morphisms", "object" ],
   io_type := [ [ "cone_alpha", "list", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
   return_type := "morphism",
@@ -159,88 +129,75 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
 ),
 
 DomainMorphismByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "DomainMorphismByOctahedralAxiomWithGivenObjects",
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   return_type := "morphism",
 ),
 
-MorphismToConeObjectByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "MorphismToConeObjectByOctahedralAxiomWithGivenObjects",
+MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   return_type := "morphism",
 ),
 
 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "MorphismFromConeObjectByOctahedralAxiomWithGivenObjects",
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   return_type := "morphism",
 ),
 
-WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects",
+WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "cone_g", "f", "g", "h", "st_cone" ], [ "cone_g", "st_cone" ] ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects",
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "g", "h", "cone_g" ], [ "st_cone", "cone_g" ] ],
   return_type := "morphism",
 ),
 
-WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects",
+WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects",
   filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   return_type := "morphism",
 ),
 
-WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects",
+WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
-  installation_name := "WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects",
   filter_list := [ "category", "object", "morphism", "object" ],
   io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
   return_type := "morphism",
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
-  installation_name := "ShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
-  installation_name := "ShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseShiftExpandingIsomorphismWithGivenObjects := rec(
-  installation_name := "InverseShiftExpandingIsomorphismWithGivenObjects",
   filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseShiftFactoringIsomorphismWithGivenObjects := rec(
-  installation_name := "InverseShiftFactoringIsomorphismWithGivenObjects",
   filter_list := [ "category", "object", IsList, "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
@@ -249,6 +206,16 @@ InverseShiftFactoringIsomorphismWithGivenObjects := rec(
 ) );
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD );
+
+CAP_INTERNAL_GENERATE_DOCUMENTATION_FROM_METHOD_NAME_RECORD(
+    TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD,
+    "TriangulatedCategories",
+    "MethodRecord.autogen.gd",
+    "operations for triangulated categories",
+    "Add-methods"
+);
+
+CAP_INTERNAL_REGISTER_METHOD_NAME_RECORD_OF_PACKAGE( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, "TriangulatedCategories" );
 
 CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD );
 
@@ -262,34 +229,34 @@ CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECOR
 ##
 CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
   rec(
-    ShiftOnMorphism :=
-      [ [ "ShiftOnMorphismWithGivenObjects", 1 ], [ "ShiftOnObject", 2 ] ]
+    ShiftOfMorphism :=
+      [ [ "ShiftOfMorphismWithGivenObjects", 1 ], [ "ShiftOfObject", 2 ] ]
   )
 );
 
-InstallMethod( ShiftOnMorphism,
+InstallMethod( ShiftOfMorphism,
           [ IsCapCategoryMorphism ],
-  alpha -> ShiftOnMorphismWithGivenObjects(
-              ShiftOnObject( Source( alpha ) ),
+  alpha -> ShiftOfMorphismWithGivenObjects(
+              ShiftOfObject( Source( alpha ) ),
               alpha,
-              ShiftOnObject( Range( alpha ) )
+              ShiftOfObject( Range( alpha ) )
             )
 );
 
 ##
 CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
   rec(
-    InverseShiftOnMorphism :=
-      [ [ "InverseShiftOnMorphismWithGivenObjects", 1 ], [ "InverseShiftOnObject", 2 ] ]
+    InverseShiftOfMorphism :=
+      [ [ "InverseShiftOfMorphismWithGivenObjects", 1 ], [ "InverseShiftOfObject", 2 ] ]
   )
 );
 
-InstallMethod( InverseShiftOnMorphism,
+InstallMethod( InverseShiftOfMorphism,
           [ IsCapCategoryMorphism ],
-  alpha -> InverseShiftOnMorphismWithGivenObjects(
-              InverseShiftOnObject( Source( alpha ) ),
+  alpha -> InverseShiftOfMorphismWithGivenObjects(
+              InverseShiftOfObject( Source( alpha ) ),
               alpha,
-              InverseShiftOnObject( Range( alpha ) )
+              InverseShiftOfObject( Range( alpha ) )
             )
 );
 
@@ -327,7 +294,7 @@ InstallMethod( MorphismBetweenStandardConeObjectsWithGivenObjects,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom,
+InstallMethod( WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
   function( alpha, beta, gamma )
     local s, u, r;
@@ -335,11 +302,11 @@ InstallMethod( WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom,
     s := ConeObjectByOctahedralAxiom( alpha, beta, gamma );
     
     u := DomainMorphismByOctahedralAxiom( alpha, beta, gamma );
-     
+    
     r := StandardConeObject( u );
     
-    return WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
-      
+    return WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
+    
 end );
 
 ##
@@ -353,9 +320,9 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom,
     s := StandardConeObject( u );
 
     r := ConeObjectByOctahedralAxiom( alpha, beta, gamma );
-        
+    
     return WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
-      
+    
 end );
 
 ##
@@ -363,7 +330,7 @@ InstallMethod( ConeObjectByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return ShiftOnObject( Source( alpha ) );
+    return ShiftOfObject( Source( alpha ) );
     
 end );
 
@@ -372,12 +339,12 @@ InstallMethod( DomainMorphismByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return MorphismToStandardConeObject( alpha );
+    return MorphismIntoStandardConeObject( alpha );
     
 end );
 
 ##
-InstallMethod( MorphismToConeObjectByRotationAxiom,
+InstallMethod( MorphismIntoConeObjectByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
@@ -390,7 +357,7 @@ InstallMethod( MorphismFromConeObjectByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return AdditiveInverseForMorphisms( ShiftOnMorphism( alpha ) );
+    return AdditiveInverseForMorphisms( ShiftOfMorphism( alpha ) );
     
 end );
 
@@ -412,14 +379,14 @@ InstallMethod( DomainMorphismByInverseRotationAxiom,
     u := MorphismFromStandardConeObject( alpha );
     
     return PreCompose(
-              AdditiveInverseForMorphisms( InverseShiftOnMorphism( u ) ),
-              CounitIsomorphism( Source( alpha ) )
+              AdditiveInverseForMorphisms( InverseShiftOfMorphism( u ) ),
+              CounitOfShiftAdjunction( Source( alpha ) )
             );
     
 end );
 
 ##
-InstallMethod( MorphismToConeObjectByInverseRotationAxiom,
+InstallMethod( MorphismIntoConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ], IdFunc
 );
 
@@ -429,14 +396,14 @@ InstallMethod( MorphismFromConeObjectByInverseRotationAxiom,
   function( alpha )
     
     return PreCompose(
-              MorphismToStandardConeObject( alpha ),
-              UnitIsomorphism( StandardConeObject( alpha ) )
+              MorphismIntoStandardConeObject( alpha ),
+              UnitOfShiftAdjunction( StandardConeObject( alpha ) )
             );
     
 end );
 
 ##
-InstallMethod( WitnessIsomorphismOntoStandardConeObjectByRotationAxiom,
+InstallMethod( WitnessIsomorphismIntoStandardConeObjectByRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
@@ -445,7 +412,7 @@ InstallMethod( WitnessIsomorphismOntoStandardConeObjectByRotationAxiom,
     
     r := StandardConeObject( DomainMorphismByRotationAxiom( alpha ) );
     
-    return WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
@@ -464,7 +431,7 @@ InstallMethod( WitnessIsomorphismFromStandardConeObjectByRotationAxiom,
 end );
 
 ##
-InstallMethod( WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom,
+InstallMethod( WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom,
           [ IsCapCategoryMorphism ],
   function( alpha )
     local s, r;
@@ -473,7 +440,7 @@ InstallMethod( WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom,
     
     r := StandardConeObject( DomainMorphismByInverseRotationAxiom( alpha ) );
     
-    return WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
+    return WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects( s, alpha, r );
     
 end );
 
@@ -506,7 +473,7 @@ InstallMethod( DomainMorphismByOctahedralAxiom,
 end );
 
 ##
-InstallMethod( MorphismToConeObjectByOctahedralAxiom,
+InstallMethod( MorphismIntoConeObjectByOctahedralAxiom,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
   function( alpha, beta, gamma )
     local s, r;
@@ -515,7 +482,7 @@ InstallMethod( MorphismToConeObjectByOctahedralAxiom,
     
     r := StandardConeObject( beta );
     
-    return MorphismToConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
+    return MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
     
 end );
 
@@ -527,7 +494,7 @@ InstallMethod( MorphismFromConeObjectByOctahedralAxiom,
      
     s := StandardConeObject( beta );
     
-    r := ShiftOnObject( StandardConeObject( alpha ) );
+    r := ShiftOfObject( StandardConeObject( alpha ) );
     
     return MorphismFromConeObjectByOctahedralAxiomWithGivenObjects( s, alpha, beta, gamma, r );
     
@@ -538,18 +505,16 @@ InstallMethod( StandardCoConeObject,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return InverseShiftOnObject( StandardConeObject( alpha ) );
+    return InverseShiftOfObject( StandardConeObject( alpha ) );
     
 end );
 
-## at some time I was returning the additive inverse of this, but
-## it turns out, this new method make things simpler.
 ##
 InstallMethod( MorphismFromStandardCoConeObject,
           [ IsCapCategoryMorphism ],
   function( alpha )
     
-    return InverseShiftOnMorphism(
+    return InverseShiftOfMorphism(
                   MorphismFromStandardConeObject( alpha )
                 );
     
@@ -560,7 +525,7 @@ InstallMethod( MorphismBetweenStandardCoConeObjects,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
   function( alpha, mu, nu, beta )
     
-    return InverseShiftOnMorphism(
+    return InverseShiftOfMorphism(
               MorphismBetweenStandardConeObjects(
                     alpha,
                     mu,
@@ -572,34 +537,38 @@ InstallMethod( MorphismBetweenStandardCoConeObjects,
 end );
 
 ##
-InstallMethod( CounitIsomorphism,
+InstallMethod( CounitOfShiftAdjunction,
           [ IsCapCategoryObject ],
-  a -> CounitIsomorphismWithGivenObject( a, Shift( Shift( a, 1 ), -1 ) )
+  IdentityMorphism
+  #a -> CounitOfShiftAdjunctionWithGivenObject( a, InverseShiftOfObject( ShiftOfObject( a ) ) )
 );
 
 ##
-InstallMethod( InverseOfCounitIsomorphism,
+InstallMethod( InverseOfCounitOfShiftAdjunction,
           [ IsCapCategoryObject ],
-  a -> InverseOfCounitIsomorphismWithGivenObject( a, Shift( Shift( a, 1 ), -1 ) )
+  IdentityMorphism
+  #a -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, InverseShiftOfObject( ShiftOfObject( a ) ) )
 );
 
 ##
-InstallMethod( UnitIsomorphism,
+InstallMethod( UnitOfShiftAdjunction,
           [ IsCapCategoryObject ],
-  a -> UnitIsomorphismWithGivenObject( a, Shift( Shift( a, -1 ), 1 ) )
+  IdentityMorphism
+  #a -> UnitOfShiftAdjunctionWithGivenObject( a, ShiftOfObject( InverseShiftOfObject( a ) ) )
 );
 
 ##
-InstallMethod( InverseOfUnitIsomorphism,
+InstallMethod( InverseOfUnitOfShiftAdjunction,
           [ IsCapCategoryObject ],
-  a -> InverseOfUnitIsomorphismWithGivenObject( a, Shift( Shift( a, -1 ), 1 ) )
+  IdentityMorphism
+  #a -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, ShiftOfObject( InverseShiftOfObject( a ) ) )
 );
 
 ###
 #InstallMethod( ShiftExpandingIsomorphism,
 #                [ IsList ],
 #  function( L )
-#    return ShiftExpandingIsomorphismWithGivenObjects( ShiftOnObject( DirectSum( L ) ), L, DirectSum( List( L, ShiftOnObject ) ) );
+#    return ShiftExpandingIsomorphismWithGivenObjects( ShiftOfObject( DirectSum( L ) ), L, DirectSum( List( L, ShiftOfObject ) ) );
 #end );
 #
 ###
@@ -607,9 +576,9 @@ InstallMethod( InverseOfUnitIsomorphism,
 #                [ IsList ],
 #  function( L )
 #    return InverseShiftExpandingIsomorphismWithGivenObjects(
-#            InverseShiftOnObject( DirectSum( L ) ),
+#            InverseShiftOfObject( DirectSum( L ) ),
 #            L,
-#            DirectSum( List( L, InverseShiftOnObject ) )
+#            DirectSum( List( L, InverseShiftOfObject ) )
 #          );
 #end );
 #
@@ -619,9 +588,9 @@ InstallMethod( InverseOfUnitIsomorphism,
 #    function( L )
 #    return ShiftFactoringIsomorphismWithGivenObjects(
 #            DirectSum(
-#            List( L, ShiftOnObject ) ),
+#            List( L, ShiftOfObject ) ),
 #            L,
-#            ShiftOnObject( DirectSum( L ) )
+#            ShiftOfObject( DirectSum( L ) )
 #          );
 #end );
 #
@@ -630,9 +599,9 @@ InstallMethod( InverseOfUnitIsomorphism,
 #          [ IsList ],
 #    function( L )
 #    return InverseShiftFactoringIsomorphismWithGivenObjects(
-#              DirectSum( List( L, InverseShiftOnObject ) ),
+#              DirectSum( List( L, InverseShiftOfObject ) ),
 #              L,
-#              InverseShiftOnObject( DirectSum( L ) )
+#              InverseShiftOfObject( DirectSum( L ) )
 #          );
 #end );
 
@@ -652,16 +621,16 @@ InstallMethod( InverseOfUnitIsomorphism,
 #end );
 #
 ###
-#InstallMethod( IsomorphismOntoStandardExactTriangle,
+#InstallMethod( IsomorphismIntoStandardExactTriangle,
 #                [ IsCapCategoryExactTriangle ],
 #                -1000,
 #    function( T )
 #    local F, p;
 #    F := T!.UnderlyingLazyMethods;
-#    if not IsomorphismOntoStandardExactTriangle in F then
+#    if not IsomorphismIntoStandardExactTriangle in F then
 #        TryNextMethod( );
 #    else
-#        p := Position( F, IsomorphismOntoStandardExactTriangle );
+#        p := Position( F, IsomorphismIntoStandardExactTriangle );
 #        return CallFuncList( F[p+1], F[ p+2 ] );
 #    fi;
 #end );
@@ -671,88 +640,12 @@ InstallMethod( InverseOfUnitIsomorphism,
 InstallMethod( ShiftOp,
           [ IsCapCategoryCell, IsInt ],
   function( cell, n )
-    local C;
     
-    C := CapCategory( cell );
-    
-    if not IsTriangulatedCategory( C ) then
-      TryNextMethod( );
-    fi;
-    
-    if n = 0 then
-      
-      return cell;
-      
-    elif n > 0 then
-    
-      if IsCapCategoryObject( cell ) then
-        
-        return ShiftOnObject( Shift( cell, n - 1 ) );
-        
-      else
-        
-        return ShiftOnMorphism( Shift( cell, n - 1 ) );
-        
-      fi;
-      
+    if IsCapCategoryObject( cell ) then
+        return ShiftOfObjectByInteger( cell, n );
     else
-      
-      if IsCapCategoryObject( cell ) then
-        
-        return InverseShiftOnObject( Shift( cell, n + 1 ) );
-        
-      else
-        
-        return InverseShiftOnMorphism( Shift( cell, n + 1 ) );
-        
-      fi;
-      
-    fi;
-
-end );
-
-##
-InstallOtherMethod( Shift,
-              [ IsCapCategoryCell ],
-  function( c )
-    
-    if not IsTriangulatedCategory( CapCategory( c ) ) then
-      
-      TryNextMethod( );
-      
+        return ShiftOfMorphismByInteger( cell, n );
     fi;
     
-    return Shift( c, 1 );
-    
 end );
 
-##
-InstallMethod( InverseShift,
-              [ IsCapCategoryCell ],
-  function( c )
-    
-    if not IsTriangulatedCategory( CapCategory( c ) ) then
-      
-      TryNextMethod( );
-      
-    fi;
-    
-    return Shift( c, -1 );
-    
-end );
-
-##
-InstallImmediateMethod( INSTALL_LOGICAL_IMPLICATIONS_FOR_TRIANGULATED_CATEGORY,
-               IsCapCategory and IsTriangulatedCategory,
-               0,
-
-   function( category )
-
-   AddPredicateImplicationFileToCategory( category,
-      Filename(
-        DirectoriesPackageLibrary( "TriangulatedCategories", "LogicForTriangulatedCategories" ),
-        "PredicateImplicationsForTriangulatedCategories.tex" ) );
-
-   TryNextMethod( );
-
-end );
