@@ -1,729 +1,288 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# DerivedCategories: Derived categories of Abelian categories
-#
-# Implementations
-#
-##
-#############################################################################
-
-#
-# Implementations
-#
-##
-DeclareRepresentation( "IsRoofRep",
-                       IsAttributeStoringRep and IsRoof,
-                       [ ] );
-##
-BindGlobal( "TheFamilyOfRoofs",
-        NewFamily( "TheFamilyOfRoofs" , IsRoof ) );
-
-##
-BindGlobal( "TheTypeRoof",
-        NewType( TheFamilyOfRoofs,
-                 IsRoofRep ) );
-##
-InstallMethod( Roof,
-          [ IsHomotopyCategoryMorphism, IsHomotopyCategoryMorphism ],
-  function( quasi_isomorphism, morphism )
-    local roof;
-    
-    if not IsEqualForObjects( Source( quasi_isomorphism ), Source( morphism ) ) then
-      
-      Error( "wronge input" );
-      
-    fi;
-    
-    roof := rec( );
-    
-    ObjectifyWithAttributes( roof, TheTypeRoof,
-          AmbientCategory, CapCategory( morphism ),
-          SourceMorphism, quasi_isomorphism,
-          RangeMorphism, morphism,
-          Source, Range( quasi_isomorphism ),
-          Range, Range( morphism ),
-          MiddleObject, Source( morphism )
-        );
-    
-    return roof;
-    
-end );
-
-##
-InstallMethod( IsHonest,
-          [ IsRoof ],
-  roof -> IsIsomorphism( QuasiIsomorphism( roof ) )
-);
-
-##
-InstallMethod( AsHonestMorphism,
-          [ IsRoof ],
-  roof -> PreCompose( Inverse( QuasiIsomorphism( roof ) ), RangeMorphism( roof ) )
-);
-
-##
-InstallMethod( AsMorphismBetweenProjectiveResolutions,
-          [ IsRoof ],
-  roof -> PreCompose(
-            Inverse( MorphismBetweenProjectiveResolutions( QuasiIsomorphism( roof ), true ) ),
-            MorphismBetweenProjectiveResolutions( RangeMorphism( roof ), true )
-          )
-);
-
-##
-InstallMethod( AsMorphismBetweenInjectiveResolutions,
-          [ IsRoof ],
-  roof -> PreCompose(
-            Inverse( MorphismBetweenInjectiveResolutions( QuasiIsomorphism( roof ), true ) ),
-            MorphismBetweenInjectiveResolutions( RangeMorphism( roof ), true )
-          )
-);
-
-#       D
-#      / \
-#    C     A
-#   / \r s/ \
-# S     B     T
-
-##
-InstallMethod( PreComposeRoofs,
-          [ IsRoof, IsRoof ],
-  function( roof_1, roof_2 )
-    local Ho_C, r, s, A, B, C, tau, r_o_tau, D, rr_maps, rr, ss_maps, ss;
-    
-    Ho_C := AmbientCategory( roof_1 );
-    
-    if not IsChainComplexCategory( UnderlyingCategory( Ho_C ) ) then
-      TryNextMethod();
-    fi;
-    
-    s := SourceMorphism( roof_2 );
-    
-    r := RangeMorphism( roof_1 );
-    
-    A := Source( s );
-    
-    B := Range( s );
-    
-    C := Source( r );
-    
-    tau := MorphismToStandardConeObject( s );
-    
-    r_o_tau := PreCompose( r, tau );
-    
-    D := Shift( StandardConeObject( r_o_tau ), -1 );
-    
-    rr_maps := AsZFunction(
-                i -> MorphismBetweenDirectSums(
-                  [
-                    [ ZeroMorphism( C[ i ], A[ i ] ) ],
-                    [ IdentityMorphism( A[ i ] ) ],
-                    [ ZeroMorphism( B[ i + 1], A[ i ] ) ]
-                  ] ) );
-                  
-    rr := HomotopyCategoryMorphism( D, A, rr_maps );
-    
-    ss_maps := AsZFunction(
-                i -> MorphismBetweenDirectSums(
-                  [
-                    [ AdditiveInverse( IdentityMorphism( C[ i ] ) ) ],
-                    [ ZeroMorphism( A[ i ], C[ i ] ) ],
-                    [ ZeroMorphism( B[ i + 1], C[ i ] ) ]
-                  ] ) );
-    
-    ss := HomotopyCategoryMorphism( D, C, ss_maps );
-    
-    ss := PreCompose( ss, SourceMorphism( roof_1 ) );
-    
-    rr := PreCompose( rr, RangeMorphism( roof_2 ) );
-    
-    return Roof( ss, rr );
-    
-end );
-
-##
-InstallMethod( PreComposeRoofs,
-          [ IsRoof, IsRoof ],
-  function( roof_1, roof_2 )
-    local Ho_C, roof;
-    
-    Ho_C := AmbientCategory( roof_1 );
-    
-    if not IsCochainComplexCategory( UnderlyingCategory( Ho_C ) ) then
-      TryNextMethod();
-    fi;
-    
-    roof_1 := Roof( AsChainMorphism( SourceMorphism( roof_1 ) ), AsChainMorphism( RangeMorphism( roof_1 ) ) );
-    
-    roof_2 := Roof( AsChainMorphism( SourceMorphism( roof_2 ) ), AsChainMorphism( RangeMorphism( roof_2 ) ) );
-   
-    roof := PreComposeRoofs( roof_1, roof_2 );
-    
-    roof := Roof( AsCochainMorphism( SourceMorphism( roof ) ), AsCochainMorphism( RangeMorphism( roof ) ) );
-    
-    return roof;
-
-end );
-
-##
-InstallMethod( DerivedCategoryObject,
-          [ IsDerivedCategory, IsHomotopyCategoryObject ],
-  function( D, object )
-    local Ho_C, o;
-    
-    Ho_C := CapCategory( object );
-    
-    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( Ho_C ) ) then
-      
-      Error( "wronge input!\n" );
-      
-    fi;
-    
-    o := rec( );
-    
-    ObjectifyObjectForCAPWithAttributes( o, D,
-            UnderlyingCell, object );
-    
-    return o;
-    
-end );
-
-##
-InstallOtherMethod( DerivedCategoryObject,
-          [ IsDerivedCategory, IsList, IsInt ],
-          
-  { D, diffs, lower_bound } -> 
-    DerivedCategoryObject(
-        D,
-        HomotopyCategoryObject(
-          UnderlyingCategory( D ),
-          diffs,
-          lower_bound
-        )
-      )
-);
-
-##
-if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-  
-  InstallOtherMethod( DerivedCategoryObject,
-          [ IsDerivedCategory, IsJuliaObject, IsInt ],
-      { D, diffs, lower_bound } -> 
-        DerivedCategoryObject(
-          D,
-          ConvertJuliaToGAP( diffs ),
-          lower_bound
-        )
-  );
-  
-fi;
-
-##
-InstallMethod( \[\],
-          [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> ObjectAt( a, i )
-);
-
-##
-InstallOtherMethod( ObjectAt,
-          [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> ObjectAt( UnderlyingCell( UnderlyingCell( a ) ), i )
-);
-
-##
-InstallOtherMethod( DifferentialAt,
-          [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> DifferentialAt( UnderlyingCell( UnderlyingCell( a ) ), i )
-);
-
-##
-InstallMethod( \^,
-          [ IsDerivedCategoryObject, IsInt ],
-  { a, i } -> DifferentialAt( a, i )
-);
-
-##
-InstallOtherMethod( \/, [ IsHomotopyCategoryObject, IsDerivedCategory ],
-  { a, D } -> DerivedCategoryObject( D, a )
-);
-
-##
-InstallMethod( DerivedCategoryMorphism,
-          [ IsDerivedCategoryObject, IsRoof, IsDerivedCategoryObject ],
-  function( source, roof, range )
-    local D, Ho_C, m;
-    
-    D := CapCategory( source );
-    
-    Ho_C := CapCategory( SourceMorphism( roof ) );
-    
-    if not IsIdenticalObj( DefiningCategory( D ), DefiningCategory( Ho_C ) ) then
-      
-      Error( "wronge input" );
-      
-    fi;
-    
-    m := rec( );
-    
-    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( m, D,
-            source,
-            range,
-            UnderlyingRoof, roof );
-    
-    return m;
-    
-end );
-
-##
-InstallMethod( DerivedCategoryMorphism,
-          [ IsDerivedCategory, IsRoof ],
-  function( D, roof )
-    
-    return DerivedCategoryMorphism(
-              DerivedCategoryObject( D, Range( SourceMorphism( roof ) ) ),
-              roof,
-              DerivedCategoryObject( D, Range( RangeMorphism( roof ) ) )
-            );
-end );
-
-##
-InstallOtherMethod( \/, [ IsRoof, IsDerivedCategory ],
-  { r, D } -> DerivedCategoryMorphism(D,r)
-);
-
-##
-InstallMethod( DerivedCategoryMorphism,
-          [ IsDerivedCategory, IsDenseList ],
-  function( D, L )
-    local roof;
-    
-    if not Length( L ) = 2 then
-      
-      Error( "wronge input" );
-      
-    fi;
-    
-    roof := Roof( L[ 1 ], L[ 2 ] );
-    
-    return DerivedCategoryMorphism( D, roof );
-    
-end );
-
-##
-InstallMethod( DerivedCategoryMorphism,
-          [ IsDerivedCategory, IsHomotopyCategoryMorphism ],
-  function( D, alpha )
-    local L;
-    
-    L := [ IdentityMorphism( Source( alpha ) ), alpha ];
-    
-    return DerivedCategoryMorphism( D, L );
-    
-end );
-
-##
-InstallOtherMethod( \/, [ IsHomotopyCategoryMorphism, IsDerivedCategory ],
-  { alpha, D } -> DerivedCategoryMorphism( D, alpha )
-);
-
-##
-InstallOtherMethod( Shift, [ IsDerivedCategoryObject, IsInt ],
-  { a, n } -> Shift( UnderlyingCell( a ), n ) / CapCategory( a )
-);
 
 
-##
-InstallOtherMethod( DerivedCategoryByChains,
-          [ IsQuiverAlgebra ],
-          
-  function( A )
-    local k, k_mat, Aoid, functors;
-    
-    k := LeftActingDomain( A );
-    
-    k_mat := MatrixCategory( k );
-    
-    Aoid := Algebroid( A : range_of_HomStructure := k_mat );
-    
-    functors := Hom( Aoid, k_mat );
-    
-    return DerivedCategoryByChains( functors );
-    
-end );
 
 
-##
-InstallOtherMethod( DerivedCategoryByCochains,
-          [ IsQuiverAlgebra ],
-          
-  function( A )
-    local k, k_mat, Aoid, functors;
-    
-    k := LeftActingDomain( A );
-    
-    k_mat := MatrixCategory( k );
-    
-    Aoid := Algebroid( A : range_of_HomStructure := k_mat );
-    
-    functors := Hom( Aoid, k_mat );
-    
-    return DerivedCategoryByCochains( functors );
-    
-end );
 
-##
-InstallMethod( DerivedCategoryAttr,
-          [ IsCapCategory ],
-  C -> DerivedCategory( C, false )
-);
 
-##
-InstallMethod( DerivedCategoryByChains,
-          [ IsCapCategory ],
-          
-  C -> DerivedCategory( C, false )
-);
+
+
+
 
 ##
 InstallMethod( DerivedCategoryByCochains,
           [ IsCapCategory ],
-  
-  C -> DerivedCategory( C, true )
-);
+          
+  function ( cat )
+    local name, homotopy_cat, derived_cat;
+    
+    name := Concatenation( "Derived category by cochains( ", Name( cat ), " )" );
+    
+    homotopy_cat := HomotopyCategoryByCochains( cat );
+    
+    derived_cat := CreateCapCategory( name, IsDerivedCategoryByCochains, IsDerivedCategoryByCochainsObject, IsDerivedCategoryByCochainsMorphism, IsCapCategoryTwoCell );
+    
+    derived_cat!.category_as_first_argument := true;
+    
+    SetDefiningCategory( derived_cat, cat );
+    
+    SetUnderlyingCategory( derived_cat, HomotopyCategoryByCochains( cat ) );
+    
+    SetIsAbCategory( derived_cat, true );
+    
+    AddObjectConstructor( derived_cat, { derived_cat, object_in_homotopy_category } -> CreateCapCategoryObjectWithAttributes( derived_cat, UnderlyingCell, object_in_homotopy_category ) );
+    
+    AddMorphismConstructor( derived_cat, { derived_cat, S, pair, R } ->  CreateCapCategoryMorphismWithAttributes( derived_cat, S, R, DefiningPairOfMorphisms, pair ) );
 
-##
-InstallOtherMethod( DerivedCategory,
-          [ IsCapCategory ],
-  C -> DerivedCategoryAttr( C )
-);
+    AddIsEqualForObjects( derived_cat, { derived_cat, C1, C2 } -> IsEqualForObjects( UnderlyingCell( C1 ), UnderlyingCell( C2 ) ) );
+    
+    ##
+    AddIsEqualForMorphisms( derived_cat,
+      function( derived_cat, alpha, beta )
+        local pair_alpha, pair_beta;
+        
+        pair_alpha := DefiningPairOfMorphisms( alpha );
+        pair_beta := DefiningPairOfMorphisms( beta );
+        
+        return IsEqualForMorphisms( pair_alpha[1], pair_beta[1] ) and IsEqualForMorphisms( pair_alpha[2], pair_beta[2] );
+        
+    end );
+    
+    ##
+    AddIsZeroForObjects( derived_cat, { derived_cat, C } -> IsExact( UnderlyingCell( UnderlyingCell( C ) ) ) );
+    
+    ##
+    AddIdentityMorphism( derived_cat, { derived_cat, C } -> MorphismConstructor( C, [ IdentityMorphism( UnderlyingCell( C ) ), IdentityMorphism( UnderlyingCell( C ) ) ], C ) );
+    
+    ##
+    AddZeroObject( derived_cat, derived_cat  -> ObjectConstructor( derived_cat, ZeroObject( UnderlyingCategory( derived_cat ) ) ) );
+    
+    ##
+    AddZeroMorphism( derived_cat, { derived_cat, C1, C2 } -> MorphismConstructor( C1, [ IdentityMorphism( C1 ), ZeroMorphism( C1, C2 ) ], C2 ) );
+    
+    ##
+    AddIsIsomorphism( derived_cat, { derived_cat, alpha } -> IsQuasiIsomorphism( UnderlyingCell( DefiningPairOfMorphisms( alpha )[2] ) ) );
+    
+    ##
+    AddInverseForMorphisms( derived_cat, { derived_cat, alpha } -> MorphismConstructor( Range( alpha ), Reversed( DefiningPairOfMorphisms( alpha ) ), Source( alpha ) ) );
+    
+    ##
+    AddIsWellDefinedForObjects( derived_cat,  { derived_cat, C } -> IsWellDefined( UnderlyingCell( C ) ) );
+    
+    ##
+    AddIsWellDefinedForMorphisms( derived_cat,
+      function( derived_cat, alpha )
+        local pair;
+        
+        pair := DefiningPairOfMorphisms( alpha );
+        
+        return IsEqualForObjects( Source( pair[1] ), Source( pair[2] ) ) and ForAll( pair, IsWellDefined ) and IsQuasiIsomorphism( UnderlyingCell( pair[1] ) );
+        
+    end );
+    
+    ##
+    AddAdditiveInverseForMorphisms( derived_cat, { derived_cat, alpha } -> MorphismConstructor( Source( alpha ), [ DefiningPairOfMorphisms( alpha )[1], -DefiningPairOfMorphisms( alpha )[2] ], Range( alpha ) ) );
+    
+    #       Z
+    #      / \
+    #    X     Y
+    #   / \   / \
+    # A     B     C
+    #
+    AddPreCompose( derived_cat,
+      function( derived_cat, alpha_1, alpha_2 )
+        local pair_1, pair_2, A, B, C, X, Y, objs_func, diff_func, Z, morphisms_q, q, morphisms_r, r;
+        
+        pair_1 := DefiningPairOfMorphisms( alpha_1 );
+        pair_2 := DefiningPairOfMorphisms( alpha_2 );
+        
+        A := Range( pair_1[1] );
+        B := Range( pair_1[2] );
+        C := Range( pair_2[2] );
 
-##
-InstallMethod( DerivedCategoryOp,
-          [ IsCapCategory, IsBool ],
-  function( C, over_cochains )
-    local r, name, D;
-    
-    r := RandomTextColor( Name( C ) );
-    
-    if over_cochains then
-      
-      name := Concatenation( r[ 1 ], "Derived^• category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
-      
-    else
-      
-      name := Concatenation( r[ 1 ], "Derived_• category(", r[ 2 ], " ", Name( C ), " ", r[ 1 ], ")", r[ 2 ] );
-      
-    fi;
-    
-    D := CreateCapCategory( name );
-    
-    SetFilterObj( D, IsDerivedCategory );
-    
-    SetDefiningCategory( D, C );
-    
-    SetUnderlyingCategory( D, HomotopyCategory( C, over_cochains ) );
-    
-    AddObjectRepresentation( D, IsDerivedCategoryObject );
-    
-    AddMorphismRepresentation( D, IsDerivedCategoryMorphism );
-    
-    SetIsAbCategory( D, true );
-    
-    if HasIsLinearCategoryOverCommutativeRing( C ) and 
-        IsLinearCategoryOverCommutativeRing( C ) then
+        X := Source( pair_1[1] );
+        Y := Source( pair_2[1] );
         
-        SetIsLinearCategoryOverCommutativeRing( D, true );
+        objs_func := AsZFunction( i -> DirectSum( cat, [ X[i], Y[i], B[i-1] ] ) );
+        diff_func := AsZFunction( i -> MorphismBetweenDirectSumsWithGivenDirectSums( cat,
+                                                  objs_func[i],
+                                                  [ X[i], Y[i], B[i-1] ],
+                                                  [ [ X^i, ZeroMorphism( cat, X[i], Y[i+1] ), -(pair_1[2][i]) ],
+                                                    [ ZeroMorphism( cat, Y[i], X[i+1] ), Y^i, -(pair_2[1][i]) ],
+                                                    [ ZeroMorphism( cat, B[i-1], X[i+1]), ZeroMorphism( cat, B[i-1], Y[i+1] ), -B^(i-1) ] ],
+                                                  [ X[i+1], Y[i+1], B[i] ],
+                                                  objs_func[i+1] ) );
         
-        SetCommutativeRingOfLinearCategory( D,
-              CommutativeRingOfLinearCategory( C )
-            );
+        Z := CreateComplex( homotopy_cat, [ objs_func, diff_func, Minimum( [ LowerBound( X ), LowerBound( Y ), LowerBound( B ) + 1 ] ), Maximum( [ UpperBound( X ), UpperBound( Y ), UpperBound( B ) + 1 ] ) ] );
         
-        AddMultiplyWithElementOfCommutativeRingForMorphisms( D,
-          function( e, alpha )
-            local roof;
+        morphisms_q := AsZFunction( i -> UniversalMorphismFromDirectSumWithGivenDirectSum( cat,
+                                                  [ X[i], Y[i], B[i-1] ],
+                                                  A[i],
+                                                  [ -(pair_1[1][i]), ZeroMorphism( cat, Y[i], A[i] ), ZeroMorphism( cat, B[i-1], A[i] ) ],
+                                                  objs_func[i] ) );
+        
+        q := CreateComplexMorphism( homotopy_cat, Z, morphisms_q, A );
+        
+        morphisms_r := AsZFunction( i -> UniversalMorphismFromDirectSumWithGivenDirectSum( cat,
+                                                  [ X[i], Y[i], B[i-1] ],
+                                                  C[i],
+                                                  [ ZeroMorphism( cat, X[i], C[i] ), pair_2[2][i], ZeroMorphism( cat, B[i-1], C[i] ) ],
+                                                  objs_func[i] ) );
+        
+        r := CreateComplexMorphism( homotopy_cat, Z, morphisms_r, C );
+        
+        return MorphismConstructor( A, [ q, r ], C );
+        
+    end );
+    
+    
+    if HasIsLinearCategoryOverCommutativeRing( cat ) and IsLinearCategoryOverCommutativeRing( cat ) then
+        
+        SetIsLinearCategoryOverCommutativeRing( derived_cat, true );
+        
+        SetCommutativeRingOfLinearCategory( derived_cat, CommutativeRingOfLinearCategory( cat ) );
+        
+        ##
+        AddMultiplyWithElementOfCommutativeRingForMorphisms( derived_cat,
+          function( derived_cat, r, alpha )
+            local pair;
             
-            roof := UnderlyingRoof( alpha );
+            pair := DefiningPairOfMorphisms( alpha );
             
-            return Roof(
-                    MultiplyWithElementOfCommutativeRingForMorphisms( e, SourceMorphism( roof ) ),
-                    RangeMorphism( roof )
-                  ) / D;
-        end );
-        
+            return MorphismConstructor( Source( alpha ), [ pair[1], r * pair[2] ], Range( alpha ) );
+            
+          end );
+          
     fi;
+
+    derived_cat!.is_computable := false;
     
-    ##
-    AddIsEqualForObjects( D,
-      function( a1, a2 )
-        
-        return IsEqualForObjects( UnderlyingCell( a1 ), UnderlyingCell( a2 ) );
-        
-    end );
-    
-    ##
-    AddIsEqualForMorphisms( D,
-      function( alpha, beta )
-        local roof_alpha, roof_beta;
-        
-        roof_alpha := UnderlyingRoof( alpha );
-        
-        roof_beta := UnderlyingRoof( beta );
-        
-        return IsEqualForMorphisms(
-                  SourceMorphism( roof_alpha ),
-                    SourceMorphism( roof_beta ) ) and
-                IsEqualForMorphisms(
-                  RangeMorphism( roof_alpha ),
-                    RangeMorphism( roof_beta ) );
-                
-    end );
-    
-    ##
-    AddIsZeroForObjects( D,
-      function( a )
+    if HasIsAbelianCategoryWithEnoughProjectives( cat ) and IsAbelianCategoryWithEnoughProjectives( cat ) then
       
-        return IsExact( UnderlyingCell( UnderlyingCell( a ) ) );
-        
-    end );
-    
-    ##
-    AddIdentityMorphism( D,
-      function( a )
-        
-        return IdentityMorphism( UnderlyingCell( a ) ) / D;
-        
-    end );
-    
-    ##
-    AddZeroObject( D,
-      {} -> ZeroObject( UnderlyingCategory( D ) ) / D
-    );
-    
-    ##
-    AddZeroMorphism( D,
-      function( a, b )
-        
-        a := UnderlyingCell( a );
-        
-        b := UnderlyingCell( b );
-        
-        return Roof( IdentityMorphism( a ), ZeroMorphism( a, b ) ) / D;
-        
-    end );
-    
-    ##
-    AddPreCompose( D,
-      function( alpha_1, alpha_2 )
-        local roof_1, roof_2;
-        
-        roof_1 := UnderlyingRoof( alpha_1 );
-        
-        roof_2 := UnderlyingRoof( alpha_2 );
-        
-        return PreComposeRoofs( roof_1, roof_2 ) / D;
-        
-    end );
-    
-    ##
-    AddIsIsomorphism( D,
-      function( alpha )
-        local roof;
-        
-        roof := UnderlyingRoof( alpha );
-        
-        return IsQuasiIsomorphism( RangeMorphism( roof ) );
-        
-    end );
-    
-    ##
-    AddInverseForMorphisms( D,
-      function( alpha )
-        local roof;
-        
-        roof := UnderlyingRoof( alpha );
-        
-        return Roof(
-                  RangeMorphism( roof ),
-                  SourceMorphism( roof )
-                ) / D;
-                
-    end );
-    
-    ##
-    AddIsWellDefinedForObjects( D,
-      function( a )
+      ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_BY_PROJECTIVE_OBJECTS( derived_cat );
       
-        return IsWellDefined( UnderlyingCell( a ) );
-        
-    end );
-    
-    ##
-    AddIsWellDefinedForMorphisms( D,
-      function( alpha )
-        local roof, source_morphism, range_morphism;
-        
-        roof := UnderlyingRoof( alpha );
-        
-        source_morphism := SourceMorphism( roof );
-        
-        range_morphism := RangeMorphism( roof );
-        
-        return IsEqualForObjects( Source( source_morphism ), Source( range_morphism ) ) and
-                IsWellDefined( source_morphism ) and
-                  IsWellDefined( range_morphism ) and
-                    IsQuasiIsomorphism( source_morphism );
-        
-    end );
-    
-    ##
-    AddAdditiveInverseForMorphisms( D,
-      function( alpha )
-        local roof;
-        
-        roof := UnderlyingRoof( alpha );
-        
-        return Roof(
-                  SourceMorphism( roof ),
-                  AdditiveInverseForMorphisms( RangeMorphism( roof ) )
-                ) / D;
-                
-    end );
-    
-    D!.is_computable := false;
-    
-    if IsAbelianCategoryWithComputableEnoughProjectives( C ) then
+    elif HasIsAbelianCategoryWithEnoughInjectives( cat ) and IsAbelianCategoryWithEnoughInjectives( cat ) then
       
-      ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS( D );
-      
-    elif IsAbelianCategoryWithComputableEnoughInjectives( C ) then
-      
-      ADD_SPECIAL_METHODS_BY_ENOUGH_INJECTIVE_OBJECTS( D );
+      #ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_BY_INJECTIVE_OBJECTS( derived_cat );
       
     fi;
     
-    Finalize( D );
+    Finalize( derived_cat );
     
-    return D;
+    return derived_cat;
     
 end );
 
 ##
-InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
-  function( D )
-    local C, P, I, Ho_C, L, range_cat;
+InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_BY_PROJECTIVE_OBJECTS,
+  function ( derived_cat )
+    local homotopy_cat, LP, cat, range_cat;
     
-    D!.is_computable := true;
+    derived_cat!.is_computable := true;
     
-    C := DefiningCategory( D );
+    homotopy_cat := UnderlyingCategory( derived_cat );
     
-    P := FullSubcategoryGeneratedByProjectiveObjects( C );
+    LP := LocalizationFunctorByProjectiveObjects( UnderlyingCategory( derived_cat ) );
     
-    I := InclusionFunctor( P );
+    cat := DefiningCategory( derived_cat );
     
-    I := ExtendFunctorToHomotopyCategories( I );
-    
-    Ho_C := HomotopyCategory( C );
-    
-    L := LocalizationFunctorByProjectiveObjects( Ho_C );
-     
-    AddIsCongruentForMorphisms( D,
-      function( alpha, beta )
-        local U;
-        
-        U := UniversalFunctorFromDerivedCategory( L );
-        
-        return IsCongruentForMorphisms( ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
-        
-    end );
-    
-    AddIsZeroForMorphisms( D,
-      function( alpha )
-        local U;
-        
-        U := UniversalFunctorFromDerivedCategory( L );
-        
-        return IsZeroForMorphisms( ApplyFunctor( U, alpha ) );
-        
-    end );
-    
-    AddAdditionForMorphisms( D,
-      function( alpha, beta )
-        local a, qa, b, qb, U, m, roof;
-        
-        a := UnderlyingCell( Source( alpha ) );
-        
-        qa := QuasiIsomorphismFromProjectiveResolution( a, true );
-        
-        b := UnderlyingCell( Range( alpha ) );
-        
-        qb := QuasiIsomorphismFromProjectiveResolution( b, true );
-        
-        U := UniversalFunctorFromDerivedCategory( L );
-        
-        m := AdditionForMorphisms( ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
-        
-        roof := Roof( qa, PreCompose( ApplyFunctor( I, m ), qb ) );
-        
-        return roof / D;
-        
-    end );
-    
-    if HasRangeCategoryOfHomomorphismStructure( Ho_C ) then
+    AddIsCongruentForMorphisms( derived_cat,
       
-      range_cat := RangeCategoryOfHomomorphismStructure( Ho_C );
+      function( derived_cat, alpha, beta )
+        local U;
+        
+        U := UniversalFunctorFromDerivedCategory( LP );
+        
+        return IsCongruentForMorphisms( RangeOfFunctor( U ), ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
+        
+    end );
+    
+    AddIsZeroForMorphisms( derived_cat,
+      function( derived_cat, alpha )
+        local U;
+        
+        U := UniversalFunctorFromDerivedCategory( LP );
+        
+        return IsZeroForMorphisms( RangeOfFunctor( U ), ApplyFunctor( U, alpha ) );
+        
+    end );
+    
+    AddAdditionForMorphisms( derived_cat,
+      function( derived_cat, alpha, beta )
+        local qS, qR, U, m;
+        
+        qS := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( Source( alpha ) ), true );
+        
+        qR := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( Range( alpha ) ), true );
+        
+        U := UniversalFunctorFromDerivedCategory( LP );
+        
+        m := AdditionForMorphisms( RangeOfFunctor( U ), ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
+        
+        m := ApplyFunctor( ExtendFunctorToHomotopyCategoriesByCochains( InclusionFunctor( DefiningCategory( CapCategory( m ) ) ) ), m );
+        
+        return MorphismConstructor( derived_cat, Source( alpha ), [ qS, PreCompose( homotopy_cat, m, qR ) ], Range( alpha ) );
+        
+    end );
+    
+    if HasRangeCategoryOfHomomorphismStructure( homotopy_cat ) then
+      
+      range_cat := RangeCategoryOfHomomorphismStructure( homotopy_cat );
       
       if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
         
-        SetRangeCategoryOfHomomorphismStructure( D, range_cat );
+        SetRangeCategoryOfHomomorphismStructure( derived_cat, range_cat );
         
-        AddDistinguishedObjectOfHomomorphismStructure( D,
-          {} -> DistinguishedObjectOfHomomorphismStructure( Ho_C )
+        AddDistinguishedObjectOfHomomorphismStructure( derived_cat,
+          derived_cat -> DistinguishedObjectOfHomomorphismStructure( homotopy_cat )
         );
         
-        AddHomomorphismStructureOnObjects( D,
-          function( a, b )
-            local Pa, Pb;
+        AddHomomorphismStructureOnObjects( derived_cat,
+          function( derived_cat, B, C )
+            local PB, PC;
             
-            Pa := ProjectiveResolution( UnderlyingCell( a ), true );
+            PB := ProjectiveResolution( UnderlyingCell( B ), true );
+            PC := ProjectiveResolution( UnderlyingCell( C ), true );
             
-            Pb := ProjectiveResolution( UnderlyingCell( b ), true );
-            
-            return HomomorphismStructureOnObjects( Pa, Pb );
-            
-        end );
-        
-        AddHomomorphismStructureOnMorphismsWithGivenObjects( D,
-          function( s, phi, psi, r )
-            local roof_phi, roof_psi;
-            
-            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
-            
-            psi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( psi ) );
-            
-            return HomomorphismStructureOnMorphismsWithGivenObjects( s, phi, psi, r );
+            return HomomorphismStructureOnObjects( homotopy_cat, PB, PC );
             
         end );
         
-        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( D,
-          function( phi )
-            local roof_phi;
+        AddHomomorphismStructureOnMorphismsWithGivenObjects( derived_cat,
+          function( derived_cat, S, phi, psi, R )
+            local pair_1, pair_2;
             
-            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
+            pair_1 := List( DefiningPairOfMorphisms( phi ), m -> MorphismBetweenProjectiveResolutions( m, true ) );
+            pair_2 := List( DefiningPairOfMorphisms( psi ), m -> MorphismBetweenProjectiveResolutions( m, true ) );
             
-            return InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi );
+            phi := PreCompose( homotopy_cat, InverseForMorphisms( homotopy_cat, pair_1[1] ), pair_1[2] );
+            psi := PreCompose( homotopy_cat, InverseForMorphisms( homotopy_cat, pair_2[1] ), pair_2[2] );
+            
+            return HomomorphismStructureOnMorphismsWithGivenObjects( homotopy_cat, S, phi, psi, R );
             
         end );
         
-        AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( D,
-          function( s, r, phi )
-            local qs, qr;
+        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( derived_cat,
+          function( derived_cat, distinguished_object, phi, hom_BC )
+            local pair;
             
-            qs := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( s ), true );
+            pair := List( DefiningPairOfMorphisms( phi ), m -> MorphismBetweenProjectiveResolutions( m, true ) );
             
-            qr := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( r ), true );
+            phi := PreCompose( homotopy_cat, InverseForMorphisms( homotopy_cat, pair[1] ), pair[2] );
             
-            phi := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( Source( qs ), Source( qr ), phi );
+            return InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( homotopy_cat, distinguished_object, phi, hom_BC );
             
-            return Roof( qs, PreCompose( phi, qr ) ) / D;
+        end );
+        
+        AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( derived_cat,
+          function( derived_cat, B, C, eta )
+            local qB, qC, phi;
+            
+            qB := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( B ), true );
+            qC := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( C ), true );
+            
+            phi := InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( homotopy_cat, Source( qB ), Source( qC ), eta );
+            
+            return MorphismConstructor( derived_cat, B, [ qB, PreCompose( homotopy_cat, phi, qC  ) ], C );
             
         end );
        
@@ -731,321 +290,34 @@ InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_PROJECTIVE_OBJECTS,
       
     fi;
     
-    
-    if CanCompute( Ho_C, "BasisOfExternalHom" ) and
-        CanCompute( Ho_C, "CoefficientsOfMorphism" ) then
+    if CanCompute( homotopy_cat, "BasisOfExternalHom" ) and CanCompute( homotopy_cat, "CoefficientsOfMorphism" ) then
         
-        AddBasisOfExternalHom( D,
-          function( a, b )
-            local qa, qb, U, Ua, Ub, B;
+        AddBasisOfExternalHom( derived_cat,
+          function( derived_cat, B, C )
+            local qB, qC, basis;
             
-            qa := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( a ), true );
+            qB := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( B ), true );
+            qC := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( C ), true );
             
-            qb := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( b ), true );
+            basis := BasisOfExternalHom( homotopy_cat, Source( qB ), Source( qC ) );
             
-            B := BasisOfExternalHom( Source( qa ), Source( qb ) );
-            
-            return List( B, m -> Roof( qa, PreCompose( m, qb ) ) / D );
+            return List( basis, m -> MorphismConstructor( B, [ qB, PreCompose( homotopy_cat, m, qC ) ], qC ) );
             
         end );
         
-        AddCoefficientsOfMorphism( D,
-          function( phi, B )
-            local roof_phi;
+        AddCoefficientsOfMorphism( derived_cat,
+          function( derived_cat, phi )
+            local pair;
             
-            phi := AsMorphismBetweenProjectiveResolutions( UnderlyingRoof( phi ) );
+            pair := List( DefiningPairOfMorphisms( phi ), m -> MorphismBetweenProjectiveResolutions( m, true ) );
+            phi := PreCompose( homotopy_cat, InverseForMorphisms( homotopy_cat, pair[1] ), pair[2] );
             
-            return CoefficientsOfMorphism( phi );
+            return CoefficientsOfMorphism( homotopy_cat, phi );
             
         end );
         
     fi;
-      
-end );
-
-##
-InstallGlobalFunction( ADD_SPECIAL_METHODS_BY_ENOUGH_INJECTIVE_OBJECTS,
-  function( D )
-    
-    # complete the code similarily to the above global function
     
 end );
 
-#######################
-#
-# View & Display
-#
-######################
-
-##
-InstallMethod( ViewObj,
-          [ IsRoof ],
-  function( roof )
-    
-    Print( "<A roof s <~~ a --> r in ", Name( CapCategory( SourceMorphism( roof ) ) ), ">" );
-    
-end );
-
-##
-InstallMethod( Display,
-          [ IsRoof ],
-  function( roof )
-    
-    Print( "A roof s <~~ a --> r, defined over ", Name( CapCategory( SourceMorphism( roof ) ) ), " by the following data:\n\n" );
-    
-    Print( TextAttr.b4, "Source Morphism:", TextAttr.reset, "\n\n" );
-    Display( SourceMorphism( roof ) );
-    
-    Print( TextAttr.b4, "Range Morphism:", TextAttr.reset, "\n\n" );
-    Display( RangeMorphism( roof ) );
-    
-end );
-
-##
-InstallMethod( Display,
-          [ IsDerivedCategoryObject ],
-  function( a )
-    local c, l, u;
-    
-    c := UnderlyingCell( UnderlyingCell( a ) );
-    
-    l := ActiveLowerBound( c );
-    
-    u := ActiveUpperBound( c );
-    
-    DISPLAY_DATA_OF_CHAIN_OR_COCHAIN_COMPLEX( c, l, u );
-    
-    Print( "\nAn object in ", Name( CapCategory( a ) ), " given by the above data\n" );
-    
-end );
-
-##
-InstallMethod( ViewObj,
-          [ IsDerivedCategoryObject ],
-  function( a )
-    
-    Print( "<An object in ", Name( CapCategory( a ) ) );
-    
-    a := UnderlyingCell( a );
-    
-    if HasActiveLowerBound( a ) then
-      Print( " with active lower bound ", ActiveLowerBound( a ) );
-    fi;
-    
-    if HasActiveUpperBound( a ) then
-      Print( " and active upper bound ", ActiveUpperBound( a ) );
-    fi;
-    
-    Print(">" );
-    
-end );
- 
-##
-InstallMethod( Display,
-          [ IsDerivedCategoryMorphism ],
-  function( a )
-    
-    Display( UnderlyingRoof( a ) );
-    
-    Print( "\nA morphism in ", Name( CapCategory( a ) ), " given by the above roof\n" );
-    
-end );
-
-InstallMethod( ViewObj,
-          [ IsDerivedCategoryMorphism ],
-  function( a )
-    
-    Print( "<A morphism in ", Name( CapCategory( a ) ), ">" );
-    
-end );
-
-InstallMethod( LaTeXOutput,
-              [ IsDerivedCategoryObject ],
-  a -> LaTeXOutput( UnderlyingCell( a ) )
-);
-
-##
-InstallMethod( LaTeXOutput,
-        [ IsDerivedCategoryMorphism ],
-        
-  function( phi )
-    local roof, f, g, l, u;
-    
-    roof := UnderlyingRoof( phi );
-    
-    f := SourceMorphism( roof );
-    
-    g := RangeMorphism( roof );
-    
-    l := Minimum(
-            [
-              ActiveLowerBound( Range( f ) ),
-              ActiveLowerBound( Source( f ) ),
-              ActiveLowerBound( Range( g ) )
-            ]
-          );
-    
-    u := Maximum(
-            [
-              ActiveUpperBound( Range( f ) ),
-              ActiveUpperBound( Source( f ) ),
-              ActiveUpperBound( Range( g ) )
-            ]
-          );
-    
-    return LaTeXOutput( phi, l, u );
-    
-end );
-
-##
-InstallOtherMethod( LaTeXOutput,
-        [ IsDerivedCategoryMorphism, IsInt, IsInt ],
-        
-  function( phi, l, u )
-    local over_cochains, f, g, s, i;
-    
-    over_cochains := IsCochainComplexCategory( UnderlyingCategory( UnderlyingCategory( CapCategory( phi ) ) ) );
-    
-    f := SourceMorphism( UnderlyingRoof( phi ) );
-    
-    g := RangeMorphism( UnderlyingRoof( phi ) );
-      
-    s := "\\begin{array}{ccccc}\n ";
-    
-    if over_cochains then
-      
-      s := Concatenation(
-              s,
-              LaTeXOutput( Range( f )[ u ] ),
-              "&\\leftarrow\\phantom{-}{",
-              LaTeXOutput( f[ u ] : OnlyDatum := true ),
-              "}\\phantom{-}-&{",
-              LaTeXOutput( Source( f )[ u ] ),
-              "}&-\\phantom{-}{",
-              LaTeXOutput( g[ u ] : OnlyDatum := true ),
-              "}\\phantom{-}\\rightarrow&{",
-              LaTeXOutput( Range( g )[ u ] ),
-              "}\n \\\\ \n"
-            );
-            
-      for i in Reversed( [ l .. u - 1 ] ) do
-        
-        s := Concatenation(
-                s,
-                " \\uparrow_{\\phantom{", String( i ), "}}",
-                "&&",
-                " \n \\uparrow_{\\phantom{", String( i ), "}}",
-                "&&",
-                " \n \\uparrow_{\\phantom{", String( i ), "}}",
-                "\n \\\\ \n "
-              );
-              
-        s := Concatenation(
-                s,
-                LaTeXOutput( Range( f ) ^ i : OnlyDatum := true ),
-                "&&",
-                LaTeXOutput( Source( f ) ^ i : OnlyDatum := true ),
-                "&&",
-                LaTeXOutput( Range( g ) ^ i : OnlyDatum := true ),
-                "\n \\\\ \n "
-              );
-              
-        s := Concatenation(
-                s,
-                "\\vert_{", String( i ), "} ",
-                "&&",
-                "\\vert_{", String( i ), "} ",
-                "&&",
-                "\\vert_{", String( i ), "} ",
-                "\n \\\\ \n "
-              );
-              
-        s := Concatenation(
-              s,
-              LaTeXOutput( Range( f )[ i ] ),
-              "&\\leftarrow\\phantom{-}",
-              LaTeXOutput( f[ i ] : OnlyDatum := true ),
-              "\\phantom{-}-&",
-              LaTeXOutput( Source( f )[ i ] ),
-              "&-\\phantom{-}{",
-              LaTeXOutput( g[ i ] : OnlyDatum := true ),
-              "}\\phantom{-}\\rightarrow&",
-              LaTeXOutput( Range( g )[ i ] ),
-              "\n \\\\ \n "
-            );
-            
-      od;
-      
-    else
-      
-      for i in Reversed( [ l + 1 .. u ] ) do
-        
-        s := Concatenation(
-              s,
-              "\\\\ \n",
-              LaTeXOutput( Range( f )[ i ] ),
-              "&\\leftarrow\\phantom{-}{",
-              LaTeXOutput( f[ i ] : OnlyDatum := true ),
-              "}\\phantom{-}-&",
-              LaTeXOutput( Source( f )[ i ] ),
-              "&-\\phantom{-}{",
-              LaTeXOutput( g[ i ] : OnlyDatum := true ),
-              "}\\phantom{-}\\rightarrow&",
-              LaTeXOutput( Range( g )[ i ] ),
-              "\n "
-            );
-            
-        s := Concatenation(
-                s,
-                "\\\\ \n \\vert^{", String( i ), "} ",
-                "&& \n",
-                "\\vert^{", String( i ), "}",
-                "&&",
-                "\\vert^{", String( i ), "} ",
-                "\n \\\\ \n "
-              );
-              
-        s := Concatenation(
-                s,
-                LaTeXOutput( Range( f ) ^ i : OnlyDatum := true ),
-                "&&",
-                LaTeXOutput( Source( f ) ^ i : OnlyDatum := true ),
-                "&&",
-                LaTeXOutput( Range( g ) ^ i : OnlyDatum := true ),
-                "\n \\\\ \n "
-              );
-              
-        s := Concatenation(
-                s,
-                " \\downarrow_{\\phantom{", String( i ), "}}",
-                "&&",
-                " \\downarrow_{\\phantom{", String( i ), "}}",
-                "&&",
-                " \n \\downarrow_{\\phantom{", String( i ), "}}"
-              );
-              
-      od;
-      
-      s := Concatenation(
-              s,
-              "\\\\ \n",
-              LaTeXOutput( Range( f )[ l ] ),
-              "&\\leftarrow\\phantom{-}{",
-              LaTeXOutput( f[ l ] : OnlyDatum := true ),
-              "}\\phantom{-}-&",
-              LaTeXOutput( Source( f )[ l ] ),
-              "&-\\phantom{-}{",
-              LaTeXOutput( g[ l ] : OnlyDatum := true ),
-              "}\\phantom{-}\\rightarrow&",
-              LaTeXOutput( Range( g )[ l ] ),
-              "\n \\\\ \n "
-            );
-            
-    fi;
-     
-    s := Concatenation( s, "\\end{array}" );
-    
-    return s;
-    
-end );
 

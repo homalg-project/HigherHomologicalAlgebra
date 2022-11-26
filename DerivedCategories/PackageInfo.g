@@ -70,19 +70,16 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">= 4.12.1",
-  NeededOtherPackages := [ 
-        [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+  NeededOtherPackages := [
         [ "CAP", ">= 2022.09-17" ],
-        [ "QPA", ">= 2.0-dev"],
-        [ "Algebroids", ">= 2021.11-07" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
         [ "HomotopyCategories", ">= 2021.07-02" ],
-        [ "BBGG", ">= 2020.10-02" ],
-        [ "FunctorCategories", ">= 2022.10-24" ],
-          ],
+        [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+        #[ "PreSheaves", ">= 2022.11-04"],
+      ],
   SuggestedOtherPackages := [
-            [ "NConvex", ">= 2019.12.06" ],
-            [ "4ti2Interface", ">= 2010.10-02" ]
+            #[ "NConvex", ">= 2019.12.06" ],
+            #[ "4ti2Interface", ">= 2010.10-02" ]
           ],
   ExternalConditions := [ ],
 ),
