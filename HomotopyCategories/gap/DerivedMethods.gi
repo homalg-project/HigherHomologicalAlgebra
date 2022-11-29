@@ -4,7 +4,7 @@
 # Implementations
 #
 ##
-InstallMethod( MorphismToColiftingObject,
+InstallOtherMethod( MorphismToColiftingObject,
           [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex ],
           
   function( cat, a )
@@ -14,7 +14,7 @@ InstallMethod( MorphismToColiftingObject,
 end );
 
 ##
-InstallMethod( IsColiftableAlongMorphismToColiftingObject,
+InstallOtherMethod( IsColiftableAlongMorphismToColiftingObject,
           [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
           
   function( cat, alpha )
@@ -29,7 +29,7 @@ InstallMethod( IsColiftableAlongMorphismToColiftingObject,
 end );
 
 ##
-InstallMethod( IsColiftableAlongMorphismToColiftingObject,
+InstallOtherMethod( IsColiftableAlongMorphismToColiftingObject,
           [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
           
   { cat, alpha } -> IsNullHomotopic( alpha )
