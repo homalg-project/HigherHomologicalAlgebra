@@ -498,7 +498,7 @@ InstallMethod( CreateAdditiveFunctorByTwoFunctions,
 end );
 
 ##
-InstallMethod( AdditiveFunctorByTwoFunctionsData,
+InstallMethodWithCache( AdditiveFunctorByTwoFunctionsData,
         [ IsCapCategory, IsCapCategory, IsFunction, IsFunction ],
         
   function( source, range, object_func, morphism_func )
@@ -511,7 +511,7 @@ InstallMethod( AdditiveFunctorByTwoFunctionsData,
       
     fi;
     
-    values_on_objects := [[],[]];
+    values_on_objects := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "values_on_objects", [[],[]] );
     values_on_bases_elements := [[],[]];
     bases_of_source_category := [[],[]];
     
@@ -620,7 +620,7 @@ InstallMethod( AdditiveFunctorByTwoFunctionsData,
       
       preinverse_morphism_function :=
         function( S, phi, R )
-          local s, r, positions, p, values, m, h, coeffs;
+          local s, r, positions, H_SR, tau, u, coeffs, p;
           
           s := PositionProperty( values_on_bases_elements[1], x -> IsIdenticalObj( x, S ) );
           
@@ -662,20 +662,21 @@ InstallMethod( AdditiveFunctorByTwoFunctionsData,
             
             values_on_bases_elements[2][s][r][3] := true;
             
-            h := HomomorphismStructureOnObjects( range, Source( phi ), Range( phi ) );
+            H_SR := HomomorphismStructureOnObjects( range, Source( phi ), Range( phi ) );
             
-            m := List( values_on_bases_elements[2][s][r][2], m -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( range, distinguished_obj, m, h ) );
-            m := UniversalMorphismFromDirectSum( hom_cat, m );
+            tau := List( values_on_bases_elements[2][s][r][2], m -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( range, distinguished_obj, m, H_SR ) );
             
-            m := PreInverseForMorphisms( hom_cat, m );
+            u := UniversalMorphismFromDirectSum( hom_cat, ListWithIdenticalEntries( Length( tau ), distinguished_obj ), H_SR, tau );
             
-            preinverse_data[2][s][r] := [ R, m, h ];
+            u := PreInverseForMorphisms( hom_cat, u );
+            
+            preinverse_data[2][s][r] := [ R, u, H_SR ];
             
           fi;
           
-          h := preinverse_data[2][s][r][3];
+          H_SR := preinverse_data[2][s][r][3];
           
-          coeffs := PreCompose( hom_cat, InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( range, distinguished_obj, phi, h ), preinverse_data[2][s][r][2] );
+          coeffs := PreCompose( hom_cat, InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( range, distinguished_obj, phi, H_SR ), preinverse_data[2][s][r][2] );
           
           coeffs := CoefficientsOfMorphism( hom_cat, coeffs );
           
@@ -691,3 +692,4 @@ InstallMethod( AdditiveFunctorByTwoFunctionsData,
     return data;
     
 end );
+
