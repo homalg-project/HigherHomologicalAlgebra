@@ -4,5 +4,5 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "StableCategories", "gap/StableCategories.gd");
-ReadPackage( "StableCategories", "gap/FrobeniusCategories.gd");
+#ReadPackage( "StableCategories", "gap/StableCategories.gd");
+#ReadPackage( "StableCategories", "gap/FrobeniusCategories.gd");
