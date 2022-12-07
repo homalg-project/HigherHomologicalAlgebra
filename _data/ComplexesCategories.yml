@@ -1,7 +1,7 @@
 name: ComplexesCategories
-version: "2022.09-02"
+version: "2022.12-01"
 license: "GPL-2.0-or-later"
-date: 2022-09-07
+date: 2022-12-07
 description: |
     Category of (co)chain complexes of an additive category
 
@@ -13,7 +13,7 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh/
 
-GAP: ">= 4.11.1"
+GAP: ">= 4.12.1"
 
 needed-pkgs:
     - name: "AutoDoc"
@@ -22,17 +22,9 @@ needed-pkgs:
     - name: "CAP"
       version: ">= 2022.09-02"
       url: "https://homalg-project.github.io/pkg/CAP"
-    - name: "MonoidalCategories"
-      version: ">= 2021.03-01"
-      url: "https://homalg-project.github.io/pkg/MonoidalCategories"
     - name: "ToolsForHigherHomologicalAlgebra"
-      version: ">= 2020.10-02"
+      version: ">= 2022.08-02"
       url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
-
-suggested-pkgs:
-    - name: "GeneralizedMorphismsForCAP"
-      version: ">= 2019.08.10"
-      url: "https://homalg-project.github.io/pkg/GeneralizedMorphismsForCAP"
 
 www: https://homalg-project.github.io/pkg/ComplexesCategories
 readme: README.md
@@ -40,11 +32,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Complexes
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.09-02/ComplexesCategories-2022.09-02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.12-01/ComplexesCategories-2022.12-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.09-02/ComplexesCategories-2022.09-02.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.12-01/ComplexesCategories-2022.12-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.09-02/ComplexesCategories-2022.09-02.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ComplexesCategories-2022.12-01/ComplexesCategories-2022.12-01.pdf
 
 abstract: |
 
@@ -57,7 +49,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ComplexesCategories, Category of (co)chain complexes of an additive category,
-             Version 2022.09-02</i>
+             Version 2022.12-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ComplexesCategories">https://homalg-project.github.io/pkg/ComplexesCategories</a></span>.
@@ -65,11 +57,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ ComplexesCategories2022.09-02,
+    @misc{ ComplexesCategories2022.12-01,
       author =           {Saleh, K.},
       title =            {{ComplexesCategories}, Category of (co)chain complexes
-                          of an additive category, {V}ersion 2022.09-02},
-      month =            {Sep},
+                          of an additive category, {V}ersion 2022.12-01},
+      month =            {Dec},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href

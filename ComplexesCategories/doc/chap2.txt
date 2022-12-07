@@ -133,31 +133,17 @@
   
   [1X2.3 [33X[0;0YAttributes[133X[101X
   
-  [1X2.3-1 Differentials[101X
-  
-  [33X[1;0Y[29X[2XDifferentials[102X( [3XC[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Ya \mathbb{Z}-function[133X
-  
-  [33X[0;0YThe  command  returns the differentials of the chain or cochain complex as a
-  \mathbb{Z}-function.[133X
-  
-  [1X2.3-2 Objects[101X
-  
-  [33X[1;0Y[29X[2XObjects[102X( [3XC[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Ya \mathbb{Z}-function[133X
-  
-  [33X[0;0YThe  command  returns  the  objects  of  the  chain  or cochain complex as a
-  \mathbb{Z}-function.[133X
-  
-  [1X2.3-3 AsChainComplex[101X
+  [1X2.3-1 AsChainComplex[101X
   
   [33X[1;0Y[29X[2XAsChainComplex[102X( [3XC[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Ya chain complex[133X
+  [6XReturns:[106X  [33X[0;10Ya \mathbb{Z}-function a \mathbb{Z}-function a chain complex[133X
   
-  [33X[0;0YIf the input is a cochain complex [23XC[123X, then the output is the associated chain
-  complex. Otherwise, the output is [23XC[123X.[133X
+  [33X[0;0YThe  command  returns the differentials of the chain or cochain complex as a
+  \mathbb{Z}-function. The command returns the objects of the chain or cochain
+  complex  as a \mathbb{Z}-function. If the input is a cochain complex [23XC[123X, then
+  the output is the associated chain complex. Otherwise, the output is [23XC[123X.[133X
   
-  [1X2.3-4 AsCochainComplex[101X
+  [1X2.3-2 AsCochainComplex[101X
   
   [33X[1;0Y[29X[2XAsCochainComplex[102X( [3XC[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya cochain complex[133X
@@ -165,7 +151,7 @@
   [33X[0;0YIf the input is a chain complex [23XC[123X, then the output is the associated cochain
   complex. Otherwise, the output is [23XC[123X.[133X
   
-  [1X2.3-5 IsExact[101X
+  [1X2.3-3 IsExact[101X
   
   [33X[1;0Y[29X[2XIsExact[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ya boolian[133X
@@ -174,7 +160,7 @@
   The  output  is  true  when  [23XC[123X  is an exact complex, otherwise the output is
   false.[133X
   
-  [1X2.3-6 IsContractable[101X
+  [1X2.3-4 IsContractable[101X
   
   [33X[1;0Y[29X[2XIsContractable[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ya boolian[133X
@@ -183,49 +169,19 @@
   The output is true when [23XC[123X is a contractible complex, otherwise the output is
   false.[133X
   
-  
-  [1X2.4 [33X[0;0YOperations[133X[101X
-  
-  [1X2.4-1 \[\][101X
-  
-  [33X[1;0Y[29X[2X\[\][102X( [3XC[103X, [3Xi[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan object[133X
-  
-  [33X[0;0YThe command returns the object of the chain or cochain complex in index [23Xi[123X.[133X
-  
-  [1X2.4-2 \^[101X
-  
-  [33X[1;0Y[29X[2X\^[102X( [3XC[103X, [3Xi[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YThe  command  returns  the  differential  of the chain or cochain complex in
-  index [23Xi[123X.[133X
-  
-  [1X2.4-3 CyclesAt[101X
-  
-  [33X[1;0Y[29X[2XCyclesAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YThe  input  is  a chain or cochain complex [23XC[123X and an integer [23Xn[123X. The output is
-  the kernel embedding of the differential in index [23Xn[123X.[133X
-  
-  [1X2.4-4 BoundariesAt[101X
-  
-  [33X[1;0Y[29X[2XBoundariesAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YThe  input is a chain (resp. cochain) complex [23XC[123X and an integer [23Xn[123X. The output
-  is the image embeddin of [23Xi+1[123X'th ( resp. [23Xi-1[123X'th) differential of [23XC[123X.[133X
-  
-  [1X2.4-5 GeneralizedEmbeddingOfHomologyAt[101X
+  [1X2.3-5 GeneralizedEmbeddingOfHomologyAt[101X
   
   [33X[1;0Y[29X[2XGeneralizedEmbeddingOfHomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya generalized morphism[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism a morphism a generalized morphism[133X
   
-  [33X[0;0YThe input is a chain complex and an integer [23Xn[123X. The output is the generalized
-  embedding (defined by span) of the homology object at index [23Xn[123X.[133X
+  [33X[0;0YThe  input  is  a chain or cochain complex [23XC[123X and an integer [23Xn[123X. The output is
+  the  kernel  embedding  of the differential in index [23Xn[123X. The input is a chain
+  (resp. cochain) complex [23XC[123X and an integer [23Xn[123X. The output is the image embeddin
+  of  [23Xi+1[123X'th  (  resp. [23Xi-1[123X'th) differential of [23XC[123X. The input is a chain complex
+  and  an integer [23Xn[123X. The output is the generalized embedding (defined by span)
+  of the homology object at index [23Xn[123X.[133X
   
-  [1X2.4-6 GeneralizedProjectionOntoHomologyAt[101X
+  [1X2.3-6 GeneralizedProjectionOntoHomologyAt[101X
   
   [33X[1;0Y[29X[2XGeneralizedProjectionOntoHomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalized morphism[133X
@@ -233,7 +189,7 @@
   [33X[0;0YThe input is a chain complex and an integer [23Xn[123X. The output is the generalized
   embedding (defined by span) on the homology object at index [23Xn[123X.[133X
   
-  [1X2.4-7 GeneralizedEmbeddingOfCohomologyAt[101X
+  [1X2.3-7 GeneralizedEmbeddingOfCohomologyAt[101X
   
   [33X[1;0Y[29X[2XGeneralizedEmbeddingOfCohomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalized morphism[133X
@@ -241,7 +197,7 @@
   [33X[0;0YThe input is a chain complex and an integer [23Xn[123X. The output is the generalized
   embedding (defined by span) of the cohomology object at index [23Xn[123X.[133X
   
-  [1X2.4-8 GeneralizedProjectionOntoCohomologyAt[101X
+  [1X2.3-8 GeneralizedProjectionOntoCohomologyAt[101X
   
   [33X[1;0Y[29X[2XGeneralizedProjectionOntoCohomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya generalized morphism[133X
@@ -249,47 +205,27 @@
   [33X[0;0YThe input is a chain complex and an integer [23Xn[123X. The output is the generalized
   projection (defined by span) on the cohomology object at index [23Xn[123X.[133X
   
-  [1X2.4-9 DefectOfExactnessAt[101X
+  [1X2.3-9 DefectOfExactnessAt[101X
   
   [33X[1;0Y[29X[2XDefectOfExactnessAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCohomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XHomologyAt[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjectsSupport[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan object[133X
   
   [33X[0;0YThe  input is a chain (resp. cochain) complex [23XC[123X and an integer [23Xn[123X. The outout
   is  the  homology  (resp. cohomology) object of [23XC[123X at index [23Xn[123X. The input is a
   (co)chain  complex [23XC[123X and an integer [23Xn[123X. The outout is the (co)homology object
-  of [23XC[123X at index [23Xn[123X.[133X
+  of  [23XC[123X  at  index  [23Xn[123X.  The input is a chain (resp. cochain) complex [23XC[123X and two
+  integers  [23Xm,n[123X.  The  outout is the list of indices where the homology (resp.
+  cohomology)  objects  of  [23XC[123X  are not zero. The same as above but for bounded
+  complexes.  The  input is a chain (resp. cochain) complex [23XC[123X and two integers
+  [23Xm,n[123X.   The   outout  is  the  list  of  indices  where  the  objects  (resp.
+  differentials) of [23XC[123X are not zero.[133X
   
-  [1X2.4-10 HomologySupport[101X
+  [1X2.3-10 DifferentialsSupport[101X
   
-  [33X[1;0Y[29X[2XHomologySupport[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCohomologySupport[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya list[133X
-  
-  [33X[0;0YThe  input  is  a  chain (resp. cochain) complex [23XC[123X and two integers [23Xm,n[123X. The
-  outout  is the list of indices where the homology (resp. cohomology) objects
-  of [23XC[123X are not zero.[133X
-  
-  [1X2.4-11 HomologySupport[101X
-  
-  [33X[1;0Y[29X[2XHomologySupport[102X( [3XC[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCohomologySupport[102X( [3XC[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya list[133X
-  
-  [33X[0;0YThe same as above but for bounded complexes.[133X
-  
-  [1X2.4-12 ObjectsSupport[101X
-  
-  [33X[1;0Y[29X[2XObjectsSupport[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XDifferentialsSupport[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya list[133X
   
-  [33X[0;0YThe  input  is  a  chain (resp. cochain) complex [23XC[123X and two integers [23Xm,n[123X. The
-  outout  is  the list of indices where the objects (resp. differentials) of [23XC[123X
-  are not zero.[133X
-  
-  [1X2.4-13 ObjectsSupport[101X
+  [1X2.3-11 ObjectsSupport[101X
   
   [33X[1;0Y[29X[2XObjectsSupport[102X( [3XC[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XDifferentialsSupport[102X( [3XC[103X ) [32X operation[133X
@@ -297,7 +233,7 @@
   
   [33X[0;0YThe same as above but for bounded complexes.[133X
   
-  [1X2.4-14 AsComplexOverCapFullSubcategory[101X
+  [1X2.3-12 AsComplexOverCapFullSubcategory[101X
   
   [33X[1;0Y[29X[2XAsComplexOverCapFullSubcategory[102X( [3XA[103X, [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan object[133X
@@ -306,7 +242,7 @@
   [23X\mathrm{Ch}(B)[123X,  where  all  objects of [23XC[123X actually lie in [23XA[123X. The output is [23XC[123X
   considered in [23X\mathrm{Ch}(A)[123X.[133X
   
-  [1X2.4-15 IsWellDefined[101X
+  [1X2.3-13 IsWellDefined[101X
   
   [33X[1;0Y[29X[2XIsWellDefined[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
@@ -315,12 +251,12 @@
   output  is true when [23XC[123X is well defined in the interval [23X[m,\dots,n][123X and false
   otherwise.[133X
   
-  [1X2.4-16 IsWellDefined[101X
+  [1X2.3-14 IsWellDefined[101X
   
   [33X[1;0Y[29X[2XIsWellDefined[102X( [3Xarg[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [1X2.4-17 IsExactInIndex[101X
+  [1X2.3-15 IsExactInIndex[101X
   
   [33X[1;0Y[29X[2XIsExactInIndex[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
@@ -328,7 +264,7 @@
   [33X[0;0YThe  input  is  a chain or cochain complex [23XC[123X and an integer [23Xn[123X. The outout is
   [3Xtrue[103X if [23XC[123X is exact in [23Xi[123X. Otherwise the output is [3Xfalse[103X.[133X
   
-  [1X2.4-18 SetUpperBound[101X
+  [1X2.3-16 SetUpperBound[101X
   
   [33X[1;0Y[29X[2XSetUpperBound[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YSide effect[133X
@@ -339,7 +275,7 @@
   then  [23Xm[123X  will be replaced by [23Xn[123X only if [23Xn[123X is better upper bound than [23Xm[123X, i.e.,
   [23Xm>n[123X.[133X
   
-  [1X2.4-19 SetLowerBound[101X
+  [1X2.3-17 SetLowerBound[101X
   
   [33X[1;0Y[29X[2XSetLowerBound[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10YSide effect[133X
@@ -350,7 +286,7 @@
   then  [23Xm[123X  will be replaced by [23Xn[123X only if [23Xn[123X is better lower bound than [23Xm[123X, i.e.,
   [23Xn>m[123X.[133X
   
-  [1X2.4-20 HasActiveUpperBound[101X
+  [1X2.3-18 HasActiveUpperBound[101X
   
   [33X[1;0Y[29X[2XHasActiveUpperBound[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
@@ -358,7 +294,7 @@
   [33X[0;0YThe  input is chain or cochain complex. The output is [3Xtrue[103X if an upper bound
   has been set to [23XC[123X and [3Xfalse[103X otherwise.[133X
   
-  [1X2.4-21 HasActiveLowerBound[101X
+  [1X2.3-19 HasActiveLowerBound[101X
   
   [33X[1;0Y[29X[2XHasActiveLowerBound[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
@@ -366,7 +302,7 @@
   [33X[0;0YThe  input  is chain or cochain complex. The output is [3Xtrue[103X if a lower bound
   has been set to [23XC[123X and [3Xfalse[103X otherwise.[133X
   
-  [1X2.4-22 ActiveUpperBound[101X
+  [1X2.3-20 ActiveUpperBound[101X
   
   [33X[1;0Y[29X[2XActiveUpperBound[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
@@ -374,7 +310,7 @@
   [33X[0;0YThe  input is chain or cochain complex. The output is its active upper bound
   if such has been set to [23XC[123X. Otherwise we get error.[133X
   
-  [1X2.4-23 ActiveLowerBound[101X
+  [1X2.3-21 ActiveLowerBound[101X
   
   [33X[1;0Y[29X[2XActiveLowerBound[102X( [3XC[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X
@@ -382,7 +318,7 @@
   [33X[0;0YThe  input is chain or cochain complex. The output is its active lower bound
   if such has been set to [23XC[123X. Otherwise we get error.[133X
   
-  [1X2.4-24 DisplayComplex[101X
+  [1X2.3-22 DisplayComplex[101X
   
   [33X[1;0Y[29X[2XDisplayComplex[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
@@ -390,7 +326,7 @@
   [33X[0;0YThe  input  is  chain  or  cochain  complex  [23XC[123X and two integers [23Xm[123X and [23Xn[123X. The
   command displays all components of [23XC[123X between the indices [23Xm,n[123X.[133X
   
-  [1X2.4-25 ViewComplex[101X
+  [1X2.3-23 ViewComplex[101X
   
   [33X[1;0Y[29X[2XViewComplex[102X( [3XC[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
@@ -399,43 +335,43 @@
   command views all components of [23XC[123X between the indices [23Xm,n[123X.[133X
   
   
-  [1X2.5 [33X[0;0YTruncations[133X[101X
+  [1X2.4 [33X[0;0YTruncations[133X[101X
   
-  [1X2.5-1 GoodTruncationBelow[101X
+  [1X2.4-1 GoodTruncationBelow[101X
   
   [33X[1;0Y[29X[2XGoodTruncationBelow[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X
   
-  [1X2.5-2 GoodTruncationAbove[101X
+  [1X2.4-2 GoodTruncationAbove[101X
   
   [33X[1;0Y[29X[2XGoodTruncationAbove[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X
   
-  [1X2.5-3 GoodTruncationAbove[101X
+  [1X2.4-3 GoodTruncationAbove[101X
   
   [33X[1;0Y[29X[2XGoodTruncationAbove[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   
-  [1X2.5-4 GoodTruncationBelow[101X
+  [1X2.4-4 GoodTruncationBelow[101X
   
   [33X[1;0Y[29X[2XGoodTruncationBelow[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ycochain complex[133X
   
-  [1X2.5-5 BrutalTruncationBelow[101X
+  [1X2.4-5 BrutalTruncationBelow[101X
   
   [33X[1;0Y[29X[2XBrutalTruncationBelow[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X
   
-  [1X2.5-6 BrutalTruncationAbove[101X
+  [1X2.4-6 BrutalTruncationAbove[101X
   
   [33X[1;0Y[29X[2XBrutalTruncationAbove[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X
   
-  [1X2.5-7 BrutalTruncationAbove[101X
+  [1X2.4-7 BrutalTruncationAbove[101X
   
   [33X[1;0Y[29X[2XBrutalTruncationAbove[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X
   
-  [1X2.5-8 BrutalTruncationBelow[101X
+  [1X2.4-8 BrutalTruncationBelow[101X
   
   [33X[1;0Y[29X[2XBrutalTruncationBelow[102X( [3XC[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ychain complex[133X

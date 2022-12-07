@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (ComplexesCategories) - Chapter 5: Double complexes</title>
+<title>GAP (ComplexesCategories) - Chapter 5: Z-functions</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,211 +15,274 @@
 <body class="chap5"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap5_mj.html">[MathJax on]</a></p>
-<p><a id="X7882C1DA7A1FE93A" name="X7882C1DA7A1FE93A"></a></p>
-<div class="ChapSects"><a href="chap5.html#X7882C1DA7A1FE93A">5 <span class="Heading">Double complexes</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X84F9487F8101A106">5.1 <span class="Heading">Creating double complexes</span></a>
+<p><a id="X7BE235988693C72F" name="X7BE235988693C72F"></a></p>
+<div class="ChapSects"><a href="chap5.html#X7BE235988693C72F">5 <span class="Heading">Z-functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X85BDA2257D22C617">5.1 <span class="Heading">Gap categories for Z functions</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79E2DEEF7950AD85">5.1-1 DoubleChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A0B01BE86CAC93B">5.1-2 DoubleChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X821FCF087F227075">5.1-3 DoubleChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84380A3183225A99">5.1-4 DoubleChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A7857837D754862">5.1-5 DoubleCochainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X85488A1C81553E03">5.1-6 DoubleCochainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7BFF8C297A427BFF">5.1-7 DoubleCochainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83D8A63979A9F7C9">5.1-8 DoubleCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X824F514F847A353D">5.1-1 IsZFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F33D8E781560FA8">5.1-2 IsZFunctionWithInductiveSides</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8739F6CD78C90B14">5.2 <span class="Heading">Attributes and operations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X8416D8F37C19C23D">5.2 <span class="Heading">Creating Z-functions</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7BBE574C7977E301">5.2-1 Rows</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X822C30367C000846">5.2-2 Columns</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X849E01957CF42707">5.2-3 CertainRow</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AF1820782A75875">5.2-4 CertainColumn</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7BC558807FA07A1C">5.2-5 ObjectAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7FCF08E679384840">5.2-6 HorizontalDifferentialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8564396D7FDBAF47">5.2-7 VerticalDifferentialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D520CE880096E64">5.2-8 SetAboveBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A989FE9845C2B53">5.2-9 TotalComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F11AE5C829E0465">5.2-1 VoidZFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D65928287AA2E78">5.2-2 AsZFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X860B41867880891C">5.2-3 UnderlyingFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78F26197785091E3">5.2-4 ZFunctionValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79F5AA977A75B664"><code>5.2-5 <span>\</span>[<span>\</span>]</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X867DAC087866CD8C">5.2-6 ZFunctionWithInductiveSides</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7F50565B78308CB0">5.2-7 UpperFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8553572B7B5E58D9">5.2-8 StableUpperValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X846C56B882566639">5.2-9 IndexOfStableUpperValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X839E578D86B98DFD">5.2-10 SetStableUpperValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C607DDE786591AC">5.2-11 StableLowerValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D5F7C4D80091041">5.2-12 IndexOfStableLowerValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E01C0927F9B5AC7">5.2-13 SetStableLowerValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X863225F9798BD2CC">5.2-14 Reflection</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X80EB63EC828CE582">5.2-15 ApplyShift</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8308ACDA78E96FC5">5.2-16 ApplyMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7AC919EC8734B869">5.2-17 ApplyMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E943C6E7B5784CD">5.2-18 BaseZFunctions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7A7795C883285A22">5.2-19 AppliedMap</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X854A6DE682EAADB3">5.2-20 CombineZFunctions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83D1892185F38BDA">5.2-21 Replace</a></span>
 </div></div>
 </div>
 
-<h3>5 <span class="Heading">Double complexes</span></h3>
+<h3>5 <span class="Heading">Z-functions</span></h3>
 
-<p><a id="X84F9487F8101A106" name="X84F9487F8101A106"></a></p>
+<p><a id="X85BDA2257D22C617" name="X85BDA2257D22C617"></a></p>
 
-<h4>5.1 <span class="Heading">Creating double complexes</span></h4>
+<h4>5.1 <span class="Heading">Gap categories for Z functions</span></h4>
 
-<p><a id="X79E2DEEF7950AD85" name="X79E2DEEF7950AD85"></a></p>
+<p>A <span class="Math">\mathbb{Z}</span>-function is an enumerated collection of objects in which repetitions are allowed and order does matter. The reason behind calling it a <span class="Math">\mathbb{Z}</span>-function rather than simply a sequence, is to avoid possible conflicts with other packages that use the terms <em>Sequence</em> and <em>IsSequence</em>.</p>
 
-<h5>5.1-1 DoubleChainComplex</h5>
+<p><a id="X824F514F847A353D" name="X824F514F847A353D"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">A</var>, <var class="Arg">rows</var>, <var class="Arg">cols</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double chain complex</p>
+<h5>5.1-1 IsZFunction</h5>
 
-<p>The input is a Cap category <span class="Math">\mathcal{A}</span> and two <span class="Math">\mathbb{Z}</span>-functions <span class="Math">rows</span> and <span class="Math">cols</span>. The entry in index <span class="Math">j</span> of <span class="Math">rows</span> should be an \mathbb{Z}-function that represents the <span class="Math">j</span>'th row of the double complex. I.e., <span class="Math">h^D_{i,j}:= rows[j][i]</span> for all <span class="Math">i\in\mathbb{Z}</span>. Again, the entry in index <span class="Math">i</span> of <span class="Math">cols</span> should be an \mathbb{Z}-function that represents the <span class="Math">i</span>'th column of the double complex. I.e., <span class="Math">v^D_{i,j}:=cols[i][j]</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZFunction</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p><a id="X7A0B01BE86CAC93B" name="X7A0B01BE86CAC93B"></a></p>
+<p>Gap-categories of <span class="Math">\mathbb{Z}</span>-functions</p>
 
-<h5>5.1-2 DoubleChainComplex</h5>
+<p><a id="X7F33D8E781560FA8" name="X7F33D8E781560FA8"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">A</var>, <var class="Arg">H</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double chain complex</p>
+<h5>5.1-2 IsZFunctionWithInductiveSides</h5>
 
-<p>The input is a Cap category <span class="Math">\mathcal{A}</span> and two functions <span class="Math">R</span> and <span class="Math">V</span>. The output is the double chain complex <span class="Math">D</span> defined by <span class="Math">h^D_{i,j}=H(i,j)</span> and <span class="Math">v^D_{i,j}=V(i,j)</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsZFunctionWithInductiveSides</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p><a id="X821FCF087F227075" name="X821FCF087F227075"></a></p>
+<p>Gap-categories of inductive <span class="Math">\mathbb{Z}</span>-functions</p>
 
-<h5>5.1-3 DoubleChainComplex</h5>
+<p><a id="X8416D8F37C19C23D" name="X8416D8F37C19C23D"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double chain complex</p>
+<h4>5.2 <span class="Heading">Creating Z-functions</span></h4>
 
-<p>The input is chain complex of chain complexes <span class="Math">C</span>. The output is the double chain complex <span class="Math">D</span> defined using sign trick. I.e., <span class="Math">h^D_{i,j}=(d^C_i)_j</span> and <span class="Math">v^D_{i,j}=(-1)^id^{C_i}_j</span>.</p>
+<p><a id="X7F11AE5C829E0465" name="X7F11AE5C829E0465"></a></p>
 
-<p><a id="X84380A3183225A99" name="X84380A3183225A99"></a></p>
+<h5>5.2-1 VoidZFunction</h5>
 
-<h5>5.1-4 DoubleChainComplex</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VoidZFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double chain complex</p>
+<p>The global function has no arguments and the output is an empty <span class="Math">\mathbb{Z}</span>-function. That means, it can not be evaluated yet.</p>
 
-<p>The input is double cochain complex <span class="Math">D</span>. The output is the double chain complex <span class="Math">E</span> defined by <span class="Math">h^E_{i,j}=h_D^{-i,-j}</span> and <span class="Math">v^E_{i,j}=v_D^{-i,-j}</span>.</p>
+<p><a id="X7D65928287AA2E78" name="X7D65928287AA2E78"></a></p>
 
-<p><a id="X7A7857837D754862" name="X7A7857837D754862"></a></p>
+<h5>5.2-2 AsZFunction</h5>
 
-<h5>5.1-5 DoubleCochainComplex</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsZFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">A</var>, <var class="Arg">rows</var>, <var class="Arg">cols</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double cochain complex</p>
+<p>The argument is a function <var class="Arg">func</var> that can be applied on integers. The output is a <span class="Math">\mathbb{Z}</span>-function <code class="code">z_func</code>. We call <var class="Arg">func</var> the <code class="code">UnderlyingFunction</code> of <code class="code">z_func</code>.</p>
 
-<p>The input is a Cap category <span class="Math">\mathcal{A}</span> and two <span class="Math">\mathbb{Z}</span>-functions <span class="Math">rows</span> and <span class="Math">cols</span>. The entry in index <span class="Math">j</span> of <span class="Math">rows</span> should be an \mathbb{Z}-function that represents the <span class="Math">j</span>'th row of the double complex. I.e., <span class="Math">h_D^{i,j}:= rows[j][i]</span> for all <span class="Math">i\in\mathbb{Z}</span>. Again, the entry in index <span class="Math">i</span> of <span class="Math">cols</span> should be an \mathbb{Z}-function that represents the <span class="Math">i</span>'th column of the double complex. I.e., <span class="Math">v_D^{i,j}:=cols[i][j]</span>.</p>
+<p><a id="X860B41867880891C" name="X860B41867880891C"></a></p>
 
-<p><a id="X85488A1C81553E03" name="X85488A1C81553E03"></a></p>
+<h5>5.2-3 UnderlyingFunction</h5>
 
-<h5>5.1-6 DoubleCochainComplex</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingFunction</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">A</var>, <var class="Arg">H</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double cochain complex</p>
+<p>The argument is a <var class="Arg">z_func</var>. The output is its <code class="code">UnderlyingFunction</code> function. I.e., the function that will be applied on index <code class="code">i</code> whenever we call <var class="Arg">z_func</var>[<code class="code">i</code>].</p>
 
-<p>The input is a Cap category <span class="Math">\mathcal{A}</span> and two functions <span class="Math">R</span> and <span class="Math">V</span>. The output is the double chain complex <span class="Math">D</span> defined by <span class="Math">h_D^{i,j}=H(i,j)</span> and <span class="Math">v_D^{i,j}=V(i,j)</span>.</p>
+<p><a id="X78F26197785091E3" name="X78F26197785091E3"></a></p>
 
-<p><a id="X7BFF8C297A427BFF" name="X7BFF8C297A427BFF"></a></p>
+<h5>5.2-4 ZFunctionValue</h5>
 
-<h5>5.1-7 DoubleCochainComplex</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZFunctionValue</code>( <var class="Arg">z_func</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a Gap object</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double cochain complex</p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> and an integer <var class="Arg">i</var>. The output is <var class="Arg">z_func</var>[<var class="Arg">i</var>].</p>
 
-<p>The input is cochain complex of cochain complexes <span class="Math">C</span>. The output is the double cochain complex <span class="Math">D</span> defined using sign trick. I.e., <span class="Math">h_D^{i,j}=(d_C^i)^j</span> and <span class="Math">v_D^{i,j}=(-1)^id_{C^i}^j</span>.</p>
+<p><a id="X79F5AA977A75B664" name="X79F5AA977A75B664"></a></p>
 
-<p><a id="X83D8A63979A9F7C9" name="X83D8A63979A9F7C9"></a></p>
+<h5><code>5.2-5 <span>\</span>[<span>\</span>]</code></h5>
 
-<h5>5.1-8 DoubleCochainComplex</h5>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; <span>\</span>[<span>\</span>]</code>( <var class="Arg">z_func</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a Gap object</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a double cochain complex</p>
+<p>The method delegates to <code class="code">ZFunctionValue</code>.</p>
 
-<p>The input is double chain complex <span class="Math">D</span>. The output is the double cochain complex <span class="Math">E</span> defined by <span class="Math">h_E^{i,j}=h^D_{-i,-j}</span> and <span class="Math">v_E^{i,j}=v^D_{-i,-j}</span>.</p>
+<p><a id="X867DAC087866CD8C" name="X867DAC087866CD8C"></a></p>
 
-<p><a id="X8739F6CD78C90B14" name="X8739F6CD78C90B14"></a></p>
+<h5>5.2-6 ZFunctionWithInductiveSides</h5>
 
-<h4>5.2 <span class="Heading">Attributes and operations</span></h4>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZFunctionWithInductiveSides</code>( <var class="Arg">n</var>, <var class="Arg">val_n</var>, <var class="Arg">lower_func</var>, <var class="Arg">upper_func</var>, <var class="Arg">compare_func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function with inductive sides</p>
 
-<p><a id="X7BBE574C7977E301" name="X7BBE574C7977E301"></a></p>
+<p>The arguments are an integer <var class="Arg">n</var>, a Gap object <var class="Arg">val_n</var>, a function <var class="Arg">lower_func</var>, a function <var class="Arg">upper_func</var> and a function <var class="Arg">compare_func</var>. The output is the <span class="Math">\mathbb{Z}</span>-function <code class="code">z_func</code> defined as follows: <code class="code">z_func</code>[<code class="code">i</code>] is equal to <var class="Arg">lower_func</var>(<code class="code">z_func</code>[<code class="code">i+1</code>]) if <code class="code">i</code><code class="code">&lt;</code><var class="Arg">n</var>; and is equal to <var class="Arg">val_n</var> if <code class="code">i</code>=<var class="Arg">n</var>; and is equal to <var class="Arg">upper_func</var>(<code class="code">z_func</code>[<code class="code">i-1</code>]) otherwise. At each call, the method compares the computed value to the previous or next value via the function <var class="Arg">compare_func</var>; and in the affermative case, the method sets a upper or lower stable values.</p>
 
-<h5>5.2-1 Rows</h5>
+<p><a id="X7F50565B78308CB0" name="X7F50565B78308CB0"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rows</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: an \mathbb{Z}-function of <span class="Math">\mathbb{Z}</span>-functions.</p>
+<h5>5.2-7 UpperFunction</h5>
 
-<p>The input is double chain or cochain complex <span class="Math">D</span>. The output is the \mathbb{Z}-function of rows.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperFunction</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerFunction</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FirstIndex</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FirstValue</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompareFunction</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
 
-<p><a id="X822C30367C000846" name="X822C30367C000846"></a></p>
+<p>They are the attributes that define a <span class="Math">\mathbb{Z}</span>-function with inductive sides.</p>
 
-<h5>5.2-2 Columns</h5>
+<p><a id="X8553572B7B5E58D9" name="X8553572B7B5E58D9"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Columns</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: an \mathbb{Z}-function of <span class="Math">\mathbb{Z}</span>-functions.</p>
+<h5>5.2-8 StableUpperValue</h5>
 
-<p>The input is double chain or cochain complex <span class="Math">D</span>. The output is the \mathbb{Z}-function of columns.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableUpperValue</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a Gap object</p>
 
-<p><a id="X849E01957CF42707" name="X849E01957CF42707"></a></p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>. We say that <var class="Arg">z_func</var> has a stable upper value <code class="code">val</code>, if there is an index <code class="code">n</code> such that <var class="Arg">z_func</var>[<code class="code">i</code>] is equal to <code class="code">val</code> for all indices <code class="code">i</code>'s greater or equal to <code class="code">n</code>. In that case, the output is the value <code class="code">val</code>.</p>
 
-<h5>5.2-3 CertainRow</h5>
+<p><a id="X846C56B882566639" name="X846C56B882566639"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CertainRow</code>( <var class="Arg">D</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an \mathbb{Z}-function</p>
+<h5>5.2-9 IndexOfStableUpperValue</h5>
 
-<p>The input is double chain or cochain complex <span class="Math">D</span> and integer <span class="Math">j</span>. The output is the \mathbb{Z}-function that represents the <span class="Math">j</span>'th row of <span class="Math">D</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexOfStableUpperValue</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
 
-<p><a id="X7AF1820782A75875" name="X7AF1820782A75875"></a></p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> with a stable upper value <code class="code">val</code>. The output is some index where <var class="Arg">z_func</var> starts to take values equal to <code class="code">val</code>.</p>
 
-<h5>5.2-4 CertainColumn</h5>
+<p><a id="X839E578D86B98DFD" name="X839E578D86B98DFD"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CertainColumn</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an \mathbb{Z}-function</p>
+<h5>5.2-10 SetStableUpperValue</h5>
 
-<p>The input is double chain or cochain complex <span class="Math">D</span> and integer <span class="Math">i</span>. The output is the \mathbb{Z}-function that represents the <span class="Math">i</span>'th column of <span class="Math">D</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetStableUpperValue</code>( <var class="Arg">z_func</var>, <var class="Arg">n</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
 
-<p><a id="X7BC558807FA07A1C" name="X7BC558807FA07A1C"></a></p>
+<p>The arguments are a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>, an integer <var class="Arg">n</var> and an object <var class="Arg">val</var>. The operation sets <var class="Arg">val</var> as a stable upper value for <var class="Arg">z_func</var> at the index <var class="Arg">n</var>.</p>
 
-<h5>5.2-5 ObjectAt</h5>
+<p><a id="X7C607DDE786591AC" name="X7C607DDE786591AC"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an \mathbb{Z}-function</p>
+<h5>5.2-11 StableLowerValue</h5>
 
-<p>The input is double chain or cochain complex <span class="Math">D</span> and integers <span class="Math">i,j</span>. The output is the object of <span class="Math">D</span> in position <span class="Math">(i,j)</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableLowerValue</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a Gap object</p>
 
-<p><a id="X7FCF08E679384840" name="X7FCF08E679384840"></a></p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>. We say that <var class="Arg">z_func</var> has a stable lower value <code class="code">val</code>, if there is an index <code class="code">n</code> such that <var class="Arg">z_func</var>[<code class="code">i</code>] is equal to <code class="code">val</code> for all indices <code class="code">i</code>'s less or equal to <code class="code">n</code>. In that case, the output is the value <code class="code">val</code>.</p>
 
-<h5>5.2-6 HorizontalDifferentialAt</h5>
+<p><a id="X7D5F7C4D80091041" name="X7D5F7C4D80091041"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HorizontalDifferentialAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
+<h5>5.2-12 IndexOfStableLowerValue</h5>
 
-<p>The input is double chain (resp. cochain) complex <span class="Math">D</span> and integers <span class="Math">i,j</span>. The output is the horizontal differential <span class="Math">h^D_{i,j}</span> (resp. <span class="Math">h_D^{i,j}</span>)</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndexOfStableLowerValue</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
 
-<p><a id="X8564396D7FDBAF47" name="X8564396D7FDBAF47"></a></p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> with a stable lower value <code class="code">val</code>. The output is some index where <var class="Arg">z_func</var> starts to take values equal to <code class="code">val</code>.</p>
 
-<h5>5.2-7 VerticalDifferentialAt</h5>
+<p><a id="X7E01C0927F9B5AC7" name="X7E01C0927F9B5AC7"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VerticalDifferentialAt</code>( <var class="Arg">D</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
+<h5>5.2-13 SetStableLowerValue</h5>
 
-<p>The input is double chain (resp. cochain) complex <span class="Math">D</span> and integers <span class="Math">i,j</span>. The output is the vertical differential <span class="Math">v^D_{i,j}</span> (resp. <span class="Math">v_D^{i,j}</span>)</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetStableLowerValue</code>( <var class="Arg">z_func</var>, <var class="Arg">n</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
 
-<p><a id="X7D520CE880096E64" name="X7D520CE880096E64"></a></p>
+<p>The arguments are a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>, an integer <var class="Arg">n</var> and an object <var class="Arg">val</var>. The operation sets <var class="Arg">val</var> as a stable lower value for <var class="Arg">z_func</var> at the index <var class="Arg">n</var>.</p>
 
-<h5>5.2-8 SetAboveBound</h5>
+<p><a id="X863225F9798BD2CC" name="X863225F9798BD2CC"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetAboveBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetBelowBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetRightBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetLeftBound</code>( <var class="Arg">D</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
+<h5>5.2-14 Reflection</h5>
 
-<p>Here we can set bounds for the double complex.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reflection</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
 
-<p><a id="X7A989FE9845C2B53" name="X7A989FE9845C2B53"></a></p>
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>. The output is another <span class="Math">\mathbb{Z}</span>-function <code class="code">ref_z_func</code> such that <code class="code">ref_z_func</code>[<code class="code">i</code>] is equal to <var class="Arg">z_func</var>[<code class="code">-i</code>] for all <code class="code">i</code>'s in <span class="Math">\mathbb{Z}</span>.</p>
 
-<h5>5.2-9 TotalComplex</h5>
+<p><a id="X80EB63EC828CE582" name="X80EB63EC828CE582"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TotalComplex</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
+<h5>5.2-15 ApplyShift</h5>
 
-<p>To be able to compute the total complex the double complex we must have one of the following cases: 1. <span class="Math">D</span> has left and right bounds. 2. <span class="Math">D</span> has below and above bounds. 3. <span class="Math">D</span> has left and below bounds. 4. <span class="Math">D</span> has right and above bounds.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplyShift</code>( <var class="Arg">z_func</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> and an integer <var class="Arg">n</var>. The output is another <span class="Math">\mathbb{Z}</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to <var class="Arg">z_func</var>[<code class="code">n+i</code>].</p>
+
+<p><a id="X8308ACDA78E96FC5" name="X8308ACDA78E96FC5"></a></p>
+
+<h5>5.2-16 ApplyMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplyMap</code>( <var class="Arg">z_func</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The arguments are a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> and a function <var class="Arg">F</var> that can be applied on one argument. The output is another <span class="Math">\mathbb{Z}</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to <var class="Arg">F</var>(<var class="Arg">z_func</var>[<code class="code">i</code>]).</p>
+
+<p><a id="X7AC919EC8734B869" name="X7AC919EC8734B869"></a></p>
+
+<h5>5.2-17 ApplyMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplyMap</code>( <var class="Arg">L</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The arguments are a list <span class="Math">\mathbb{Z}</span>-functions <var class="Arg">L</var> and a function <var class="Arg">F</var> with <code class="code">Length</code>(<var class="Arg">L</var>) arguments. The output is another <span class="Math">\mathbb{Z}</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to <var class="Arg">F</var>(<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Length</code>(<var class="Arg">L</var>)][<code class="code">i</code>]). We call the list <var class="Arg">L</var> the <code class="code">BaseZFunctions</code> of <code class="code">m</code> and <var class="Arg">F</var> the <code class="code">AppliedMap</code>.</p>
+
+<p><a id="X7E943C6E7B5784CD" name="X7E943C6E7B5784CD"></a></p>
+
+<h5>5.2-18 BaseZFunctions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseZFunctions</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of <span class="Math">\mathbb{Z}</span>-functions</p>
+
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> that has been defined by applying a map <code class="code">F</code> on a list <code class="code">L</code> of <span class="Math">\mathbb{Z}</span>-functions. The output is the list <code class="code">L</code>.</p>
+
+<p><a id="X7A7795C883285A22" name="X7A7795C883285A22"></a></p>
+
+<h5>5.2-19 AppliedMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AppliedMap</code>( <var class="Arg">z_func</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var> that has been defined by applying a map <code class="code">F</code> on a list <code class="code">L</code> of <span class="Math">\mathbb{Z}</span>-functions. The output is the function <code class="code">F</code>.</p>
+
+<p><a id="X854A6DE682EAADB3" name="X854A6DE682EAADB3"></a></p>
+
+<h5>5.2-20 CombineZFunctions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombineZFunctions</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The argument is a dense list <var class="Arg">L</var> of <span class="Math">\mathbb{Z}</span>-functions. The output is another <span class="Math">\mathbb{Z}</span>-function <code class="code">m</code> such that <code class="code">m</code>[<code class="code">i</code>] is equal to [<var class="Arg">L</var>[1][<code class="code">i</code>],..., <var class="Arg">L</var>[<code class="code">Length</code>(<var class="Arg">L</var>)][<code class="code">i</code>]] for all indices <code class="code">i</code>'s in <span class="Math">\mathbb{Z}</span>.</p>
+
+<p><a id="X83D1892185F38BDA" name="X83D1892185F38BDA"></a></p>
+
+<h5>5.2-21 Replace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Replace</code>( <var class="Arg">z_func</var>, <var class="Arg">n</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="Math">\mathbb{Z}</span>-function</p>
+
+<p>The argument is a <span class="Math">\mathbb{Z}</span>-function <var class="Arg">z_func</var>, an integer <var class="Arg">n</var> and a dense list <var class="Arg">L</var>. The output is a new <span class="Math">\mathbb{Z}</span>-function whose values between <var class="Arg">n</var> and <var class="Arg">n</var>+<code class="code">Length</code>(<var class="Arg">L</var>)-1 are taken from <var class="Arg">L</var>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

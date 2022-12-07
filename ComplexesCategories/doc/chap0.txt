@@ -6,10 +6,10 @@
            [1X Category of (co)chain complexes of an additive category [101X
   
   
-                                   2022.09-02
+                                   2022.12-01
   
   
-                                7 September 2022
+                                7 December 2022
   
   
                                   Kamal Saleh
@@ -33,16 +33,13 @@
   1 [33X[0;0YComplexes categories[133X
     1.1 [33X[0;0YConstructing chain and cochain categories[133X
       1.1-1 IsChainOrCochainComplexCategory
-      1.1-2 IsBoundedChainOrCochainComplexCategory
-      1.1-3 IsChainComplexCategory
-      1.1-4 IsBoundedChainComplexCategory
-      1.1-5 IsCochainComplexCategory
-      1.1-6 IsBoundedCochainComplexCategory
-      1.1-7 ChainComplexCategory
-      1.1-8 CochainComplexCategory
-      1.1-9 UnderlyingCategory
-      1.1-10 FullSubcategoryGeneratedByComplexesConcentratedInDegree
-      1.1-11 AddIsNullHomotopic
+      1.1-2 IsChainComplexCategory
+      1.1-3 IsCochainComplexCategory
+      1.1-4 ChainComplexesCategory
+      1.1-5 CochainComplexesCategory
+      1.1-6 ComplexesCategoryByCochains
+      1.1-7 UnderlyingCategory
+      1.1-8 FullSubcategoryGeneratedByComplexesConcentratedInDegree
   2 [33X[0;0YComplexes[133X
     2.1 [33X[0;0YCategories and filters[133X
       2.1-1 IsChainOrCochainComplex
@@ -59,47 +56,38 @@
       2.2-10 CochainComplexWithInductiveNegativeSide
       2.2-11 CochainComplexWithInductivePositiveSide
     2.3 [33X[0;0YAttributes[133X
-      2.3-1 Differentials
-      2.3-2 Objects
-      2.3-3 AsChainComplex
-      2.3-4 AsCochainComplex
-      2.3-5 IsExact
-      2.3-6 IsContractable
-    2.4 [33X[0;0YOperations[133X
-      2.4-1 \[\]
-      2.4-2 \^
-      2.4-3 CyclesAt
-      2.4-4 BoundariesAt
-      2.4-5 GeneralizedEmbeddingOfHomologyAt
-      2.4-6 GeneralizedProjectionOntoHomologyAt
-      2.4-7 GeneralizedEmbeddingOfCohomologyAt
-      2.4-8 GeneralizedProjectionOntoCohomologyAt
-      2.4-9 DefectOfExactnessAt
-      2.4-10 HomologySupport
-      2.4-11 HomologySupport
-      2.4-12 ObjectsSupport
-      2.4-13 ObjectsSupport
-      2.4-14 AsComplexOverCapFullSubcategory
-      2.4-15 IsWellDefined
-      2.4-16 IsWellDefined
-      2.4-17 IsExactInIndex
-      2.4-18 SetUpperBound
-      2.4-19 SetLowerBound
-      2.4-20 HasActiveUpperBound
-      2.4-21 HasActiveLowerBound
-      2.4-22 ActiveUpperBound
-      2.4-23 ActiveLowerBound
-      2.4-24 DisplayComplex
-      2.4-25 ViewComplex
-    2.5 [33X[0;0YTruncations[133X
-      2.5-1 GoodTruncationBelow
-      2.5-2 GoodTruncationAbove
-      2.5-3 GoodTruncationAbove
-      2.5-4 GoodTruncationBelow
-      2.5-5 BrutalTruncationBelow
-      2.5-6 BrutalTruncationAbove
-      2.5-7 BrutalTruncationAbove
-      2.5-8 BrutalTruncationBelow
+      2.3-1 AsChainComplex
+      2.3-2 AsCochainComplex
+      2.3-3 IsExact
+      2.3-4 IsContractable
+      2.3-5 GeneralizedEmbeddingOfHomologyAt
+      2.3-6 GeneralizedProjectionOntoHomologyAt
+      2.3-7 GeneralizedEmbeddingOfCohomologyAt
+      2.3-8 GeneralizedProjectionOntoCohomologyAt
+      2.3-9 DefectOfExactnessAt
+      2.3-10 DifferentialsSupport
+      2.3-11 ObjectsSupport
+      2.3-12 AsComplexOverCapFullSubcategory
+      2.3-13 IsWellDefined
+      2.3-14 IsWellDefined
+      2.3-15 IsExactInIndex
+      2.3-16 SetUpperBound
+      2.3-17 SetLowerBound
+      2.3-18 HasActiveUpperBound
+      2.3-19 HasActiveLowerBound
+      2.3-20 ActiveUpperBound
+      2.3-21 ActiveLowerBound
+      2.3-22 DisplayComplex
+      2.3-23 ViewComplex
+    2.4 [33X[0;0YTruncations[133X
+      2.4-1 GoodTruncationBelow
+      2.4-2 GoodTruncationAbove
+      2.4-3 GoodTruncationAbove
+      2.4-4 GoodTruncationBelow
+      2.4-5 BrutalTruncationBelow
+      2.4-6 BrutalTruncationAbove
+      2.4-7 BrutalTruncationAbove
+      2.4-8 BrutalTruncationBelow
   3 [33X[0;0YComplexes morphisms[133X
     3.1 [33X[0;0YCategories and filters[133X
       3.1-1 IsChainOrCochainMorphism
@@ -135,49 +123,52 @@
       3.5-4 HasActiveLowerBound
       3.5-5 ActiveUpperBound
       3.5-6 ActiveLowerBound
-      3.5-7 MorphismAt
-      3.5-8 CyclesFunctorialAt
-      3.5-9 \[\]
-      3.5-10 IsQuasiIsomorphism
-      3.5-11 MorphismsSupport
-      3.5-12 Display
-      3.5-13 IsWellDefined
+      3.5-7 IsQuasiIsomorphism
+      3.5-8 MorphismsSupport
+      3.5-9 Display
+      3.5-10 IsWellDefined
   4 [33X[0;0YFunctors[133X
-    4.1 [33X[0;0YBasic functors for complex categories.[133X
-      4.1-1 HomologyFunctor
-      4.1-2 ShiftFunctor
-      4.1-3 UnsignedShiftFunctor
-      4.1-4 ChainToCochainComplexFunctor
-      4.1-5 CochainToChainComplexFunctor
-      4.1-6 ExtendFunctorToChainComplexCategories
-      4.1-7 ExtendFunctorToCochainComplexCategories
-      4.1-8 BrutalTruncationAboveFunctor
-      4.1-9 BrutalTruncationBelowFunctor
-    4.2 [33X[0;0YExamples[133X
-      4.2-1 GoodTruncationAboveFunctor
-    4.3 [33X[0;0YNatural transformations[133X
-      4.3-1 ExtendNaturalTransformationToChainComplexCategories
-      4.3-2 ExtendNaturalTransformationToCochainComplexCategories
-  5 [33X[0;0YDouble complexes[133X
-    5.1 [33X[0;0YCreating double complexes[133X
-      5.1-1 DoubleChainComplex
-      5.1-2 DoubleChainComplex
-      5.1-3 DoubleChainComplex
-      5.1-4 DoubleChainComplex
-      5.1-5 DoubleCochainComplex
-      5.1-6 DoubleCochainComplex
-      5.1-7 DoubleCochainComplex
-      5.1-8 DoubleCochainComplex
-    5.2 [33X[0;0YAttributes and operations[133X
-      5.2-1 Rows
-      5.2-2 Columns
-      5.2-3 CertainRow
-      5.2-4 CertainColumn
-      5.2-5 ObjectAt
-      5.2-6 HorizontalDifferentialAt
-      5.2-7 VerticalDifferentialAt
-      5.2-8 SetAboveBound
-      5.2-9 TotalComplex
+    4.1 [33X[0;0YNatural transformations[133X
+      4.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains
+      4.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains
+    4.2 [33X[0;0YBasic functors for complex categories.[133X
+      4.2-1 HomologyFunctor
+      4.2-2 ShiftFunctor
+      4.2-3 UnsignedShiftFunctor
+      4.2-4 ChainToCochainComplexFunctor
+      4.2-5 CochainToChainComplexFunctor
+      4.2-6 ExtendFunctorToChainComplexCategories
+      4.2-7 ExtendFunctorToCochainComplexCategories
+      4.2-8 BrutalTruncationAboveFunctor
+      4.2-9 BrutalTruncationBelowFunctor
+    4.3 [33X[0;0YExamples[133X
+      4.3-1 GoodTruncationAboveFunctor
+  5 [33X[0;0YZ-functions[133X
+    5.1 [33X[0;0YGap categories for Z functions[133X
+      5.1-1 IsZFunction
+      5.1-2 IsZFunctionWithInductiveSides
+    5.2 [33X[0;0YCreating Z-functions[133X
+      5.2-1 VoidZFunction
+      5.2-2 AsZFunction
+      5.2-3 UnderlyingFunction
+      5.2-4 ZFunctionValue
+      5.2-5 \[\]
+      5.2-6 ZFunctionWithInductiveSides
+      5.2-7 UpperFunction
+      5.2-8 StableUpperValue
+      5.2-9 IndexOfStableUpperValue
+      5.2-10 SetStableUpperValue
+      5.2-11 StableLowerValue
+      5.2-12 IndexOfStableLowerValue
+      5.2-13 SetStableLowerValue
+      5.2-14 Reflection
+      5.2-15 ApplyShift
+      5.2-16 ApplyMap
+      5.2-17 ApplyMap
+      5.2-18 BaseZFunctions
+      5.2-19 AppliedMap
+      5.2-20 CombineZFunctions
+      5.2-21 Replace
   6 [33X[0;0YResolutions[133X
     6.1 [33X[0;0YDefinitions[133X
     6.2 [33X[0;0YComputing resolutions[133X
@@ -214,32 +205,6 @@
     6.3 [33X[0;0YExamples[133X
       6.3-1 MorphismFromHorseshoeResolution
       6.3-2 HorseshoeResolution
-  7 [33X[0;0YZ-functions[133X
-    7.1 [33X[0;0YGap categories for Z functions[133X
-      7.1-1 IsZFunction
-      7.1-2 IsZFunctionWithInductiveSides
-    7.2 [33X[0;0YCreating Z-functions[133X
-      7.2-1 VoidZFunction
-      7.2-2 AsZFunction
-      7.2-3 UnderlyingFunction
-      7.2-4 ZFunctionValue
-      7.2-5 \[\]
-      7.2-6 ZFunctionWithInductiveSides
-      7.2-7 UpperFunction
-      7.2-8 StableUpperValue
-      7.2-9 IndexOfStableUpperValue
-      7.2-10 SetStableUpperValue
-      7.2-11 StableLowerValue
-      7.2-12 IndexOfStableLowerValue
-      7.2-13 SetStableLowerValue
-      7.2-14 Reflection
-      7.2-15 ApplyShift
-      7.2-16 ApplyMap
-      7.2-17 ApplyMap
-      7.2-18 BaseZFunctions
-      7.2-19 AppliedMap
-      7.2-20 CombineZFunctions
-      7.2-21 Replace
   
   
   [32X

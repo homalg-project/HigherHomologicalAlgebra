@@ -321,52 +321,30 @@
   [33X[0;0YThe input is chain or cochain morphism. The output is its active lower bound
   if such has been set to [23X\phi[123X. Otherwise we get error.[133X
   
-  [1X3.5-7 MorphismAt[101X
-  
-  [33X[1;0Y[29X[2XMorphismAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
-  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
-  
-  [1X3.5-8 CyclesFunctorialAt[101X
-  
-  [33X[1;0Y[29X[2XCyclesFunctorialAt[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ya morphism[133X
-  
-  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
-  the morphism between the kernels in index [23Xn[123X.[133X
-  
-  [1X3.5-9 \[\][101X
-  
-  [33X[1;0Y[29X[2X\[\][102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan integer[133X
-  
-  [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
-  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
-  
-  [1X3.5-10 IsQuasiIsomorphism[101X
+  [1X3.5-7 IsQuasiIsomorphism[101X
   
   [33X[1;0Y[29X[2XIsQuasiIsomorphism[102X( [3Xphi[103X, [3Xn[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism an integer[133X
   
   [33X[0;0YThe  input is chain (resp. cochain) morphism and an integer [23Xn[123X. The output is
-  the component of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
+  the  component  of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X). The input is
+  chain (resp. cochain) morphism and an integer [23Xn[123X. The output is the component
+  of [23X\phi[123X in index [23Xn[123X, i.e., [23X\phi_n[123X(resp. [23X\phi^n[123X).[133X
   
-  [1X3.5-11 MorphismsSupport[101X
+  [1X3.5-8 MorphismsSupport[101X
   
   [33X[1;0Y[29X[2XMorphismsSupport[102X( [3Xphi[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YThe command gives back the list of indices between [23Xm[123X and [23Xn[123X where the complex
   morphism is not zero.[133X
   
-  [1X3.5-12 Display[101X
+  [1X3.5-9 Display[101X
   
   [33X[1;0Y[29X[2XDisplay[102X( [3Xphi[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YThe command displays the components of the morphism between [23Xm[123X and [23Xn[123X.[133X
   
-  [1X3.5-13 IsWellDefined[101X
+  [1X3.5-10 IsWellDefined[101X
   
   [33X[1;0Y[29X[2XIsWellDefined[102X( [3Xtrue[103X, [3Xor[103X, [3Xfalse[103X ) [32X operation[133X
   
