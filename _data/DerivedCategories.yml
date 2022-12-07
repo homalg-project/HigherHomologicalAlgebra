@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2022.10-03"
+version: "2022.12-01"
 license: "GPL-2.0-or-later"
-date: 2022-10-24
+date: 2022-12-07
 description: |
     Derived categories of Abelian categories
 
@@ -13,41 +13,21 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh
 
-GAP: ">= 4.11.1"
+GAP: ">= 4.12.1"
 
 needed-pkgs:
-    - name: "ToolsForHigherHomologicalAlgebra"
-      version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
     - name: "CAP"
       version: ">= 2022.09-17"
       url: "https://homalg-project.github.io/pkg/CAP"
-    - name: "QPA"
-      version: ">= 2.0-dev"
-      url: "http://www.math.ntnu.no/~oyvinso/QPA/"
-    - name: "Algebroids"
-      version: ">= 2021.11-07"
-      url: "https://homalg-project.github.io/pkg/Algebroids"
     - name: "SubcategoriesForCAP"
       version: ">= 2020.10-02"
       url: "https://homalg-project.github.io/pkg/SubcategoriesForCAP"
     - name: "HomotopyCategories"
       version: ">= 2021.07-02"
       url: "https://homalg-project.github.io/pkg/HomotopyCategories"
-    - name: "BBGG"
+    - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2020.10-02"
-      url: "https://homalg-project.github.io/pkg/BBGG"
-    - name: "FunctorCategories"
-      version: ">= 2022.10-24"
-      url: "https://homalg-project.github.io/pkg/FunctorCategories"
-
-suggested-pkgs:
-    - name: "NConvex"
-      version: ">= 2019.12.06"
-      url: "https://homalg-project.github.io/pkg/NConvex"
-    - name: "4ti2Interface"
-      version: ">= 2010.10-02"
-      url: "https://homalg-project.github.io/pkg/4ti2Interface"
+      url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
 
 www: https://homalg-project.github.io/pkg/DerivedCategories
 readme: README.md
@@ -55,11 +35,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.10-03/DerivedCategories-2022.10-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.12-01/DerivedCategories-2022.12-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.10-03/DerivedCategories-2022.10-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.12-01/DerivedCategories-2022.12-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.10-03/DerivedCategories-2022.10-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2022.12-01/DerivedCategories-2022.12-01.pdf
 
 abstract: |
 
@@ -70,7 +50,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2022.10-03</i>
+             Version 2022.12-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
@@ -78,11 +58,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ DerivedCategories2022.10-03,
+    @misc{ DerivedCategories2022.12-01,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  Derived  categories  of  Abelian
-                          categories, {V}ersion 2022.10-03},
-      month =            {Oct},
+                          categories, {V}ersion 2022.12-01},
+      month =            {Dec},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href

@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2022.10-03
+                                   2022.12-01
   
   
-                                24 October 2022
+                                7 December 2022
   
   
                                   Kamal Saleh
@@ -32,71 +32,8 @@
   
   [1XContents (DerivedCategories)[101X
   
-  1 [33X[0;0YExceptional collections[133X
-    1.1 [33X[0;0YConstructors[133X
-      1.1-1 IsStrongExceptionalCollection
-      1.1-2 CreateStrongExceptionalCollection
-      1.1-3 StrongExceptionalCollection
-      1.1-4 FullSubcategory
-      1.1-5 AmbientCategory
-      1.1-6 EndomorphismAlgebraAttr
-      1.1-7 EndomorphismAlgebra
-      1.1-8 DefiningStrongExceptionalCollection
-      1.1-9 Algebroid
-      1.1-10 QuiverRows
-      1.1-11 TiltingObject
-      1.1-12 NumberOfObjects
-      1.1-13 UnderlyingObjects
-      1.1-14 AdditiveClosure
-      1.1-15 CategoryOfQuiverRepresentationsOverOppositeAlgebra
-      1.1-16 HomotopyCategory
-      1.1-17 AdditiveClosureAsFullSubcategory
-      1.1-18 \[\]
-      1.1-19 PathsOfLengthGreaterThanOne
-      1.1-20 PathsOfLengthOne
-      1.1-21 Arrows
-      1.1-22 AllPaths
-      1.1-23 BasisOfPaths
-      1.1-24 LabelsForPathsOfLengthOne
-      1.1-25 LabelsForPathsOfLengthGreaterThanOne
-      1.1-26 LabelsForAllPaths
-      1.1-27 LabelsForBasisOfPaths
-    1.2 [33X[0;0YGeneral Operations[133X
-      1.2-1 InterpretListOfMorphismsAsOneMorphismInRangeCategoryOfHomomorphismStructure
-      1.2-2 RandomQuiverAlgebraWhoseIndecProjectiveRepsAreStrongExceptionalCollection
-      1.2-3 RelationsBetweenMorphisms
-      1.2-4 FullSubcategoryGeneratedByProjectiveObjects
-      1.2-5 FullSubcategoryGeneratedByInjectiveObjects
-      1.2-6 FullSubcategoryGeneratedByIndecProjectiveObjects
-      1.2-7 FullSubcategoryGeneratedByIndecInjectiveObjects
-      1.2-8 AdditiveClosureAsFullSubcategory
-  2 [33X[0;0YFunctors and natural transformations[133X
-    2.1 [33X[0;0YFunctors[133X
-      2.1-1 DecompositionFunctorOfProjectiveQuiverRepresentations
-      2.1-2 QuasiInverseOfDecompositionFunctorOfProjectiveQuiverRepresentations
-      2.1-3 DecompositionFunctorOfInjectiveQuiverRepresentations
-      2.1-4 QuasiInverseOfDecompositionFunctorOfInjectiveQuiverRepresentations
-      2.1-5 IsomorphismOntoAlgebroid
-      2.1-6 IsomorphismFromAlgebroid
-      2.1-7 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations
-      2.1-8 YonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations
-      2.1-9 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations
-      2.1-10 InverseOfYonedaIsomorphismOntoFullSubcategoryOfCategoryOfQuiverRepresentations
-      2.1-11 LocalizationFunctor
-      2.1-12 UniversalFunctorFromDerivedCategory
-      2.1-13 LeftDerivedFunctor
-      2.1-14 RightDerivedFunctor
-      2.1-15 TensorFunctorFromCategoryOfQuiverRepresentations
-      2.1-16 TensorFunctorFromCategoryOfQuiverRepresentationsOnIndecProjectiveObjects
-      2.1-17 TensorFunctorFromCategoryOfQuiverRepresentationsOnProjectiveObjects
-    2.2 [33X[0;0YNatural transformations[133X
-      2.2-1 UnitOfTensorHomAdjunction
-      2.2-2 CounitOfTensorHomAdjunction
-  3 [33X[0;0YDerivedCategories automatic generated documentation[133X
-    3.1 [33X[0;0YDerivedCategories automatic generated documentation of attributes[133X
-      3.1-1 HomFunctorToCategoryOfQuiverRepresentations
-      3.1-2 HomFunctorToCategoryOfQuiverRepresentationsOnIndecInjectiveObjects
-      3.1-3 HomFunctorToCategoryOfQuiverRepresentationsOnInjectiveObjects
   
   
   [32X
+  [33X[0;0Y [133X
+  

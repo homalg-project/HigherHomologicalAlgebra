@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2022.10-03",
-Date := "24/10/2022",
+Version := "2022.12-01",
+Date := "07/12/2022",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,20 +69,17 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.11.1",
-  NeededOtherPackages := [ 
-        [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+  GAP := ">= 4.12.1",
+  NeededOtherPackages := [
         [ "CAP", ">= 2022.09-17" ],
-        [ "QPA", ">= 2.0-dev"],
-        [ "Algebroids", ">= 2021.11-07" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
         [ "HomotopyCategories", ">= 2021.07-02" ],
-        [ "BBGG", ">= 2020.10-02" ],
-        [ "FunctorCategories", ">= 2022.10-24" ],
-          ],
+        [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+        #[ "PreSheaves", ">= 2022.11-04"],
+      ],
   SuggestedOtherPackages := [
-            [ "NConvex", ">= 2019.12.06" ],
-            [ "4ti2Interface", ">= 2010.10-02" ]
+            #[ "NConvex", ">= 2019.12.06" ],
+            #[ "4ti2Interface", ">= 2010.10-02" ]
           ],
   ExternalConditions := [ ],
 ),
