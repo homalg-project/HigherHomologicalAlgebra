@@ -15,7 +15,7 @@
 <body class="chap1"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -36,7 +36,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X84A3240A7B833D7A">1.2-2 UnderlyingCategory</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8741B9457816E407">1.2-3 ExactTriangle</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X855C3E5686898149">1.2-4 DomainMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7A2A69CE8627C605">1.2-5 MorphismToConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X84EE12D57FE4316A">1.2-5 MorphismIntoConeObject</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X848AC1B287D84650">1.2-6 MorphismFromConeObject</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7B4F96A7844918E4">1.2-7 ObjectAt</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8405640383B33994"><code>1.2-8 <span>\</span>[<span>\</span>]</code></a></span>
@@ -45,7 +45,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X873AC3BD836E2F73">1.2-11 StandardExactTriangle</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7BE6C82B874451C3">1.2-12 StandardExactTriangle</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X84444E58801D405B">1.2-13 IsStandardExactTriangle</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X78EA77E57918F7CA">1.2-14 WitnessIsomorphismOntoStandardExactTriangle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8030314980C5377B">1.2-14 WitnessIsomorphismIntoStandardExactTriangle</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7E286AD084764274">1.2-15 WitnessIsomorphismFromStandardExactTriangle</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7CDB29208577F212">1.2-16 MorphismOfExactTriangles</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7CB64BAE856C969B">1.2-17 MorphismAt</a></span>
@@ -136,11 +136,11 @@
 
 <p>The arguments is an exact triangle defined by three morphisms <span class="Math">\alpha:A\to B</span>, <span class="Math">\iota:B\to C</span> and <span class="Math">\pi:C\to\Sigma A</span>. The output is <span class="Math">\alpha:A\to B</span>.</p>
 
-<p><a id="X7A2A69CE8627C605" name="X7A2A69CE8627C605"></a></p>
+<p><a id="X84EE12D57FE4316A" name="X84EE12D57FE4316A"></a></p>
 
-<h5>1.2-5 MorphismToConeObject</h5>
+<h5>1.2-5 MorphismIntoConeObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToConeObject</code>( <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismIntoConeObject</code>( <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a morphism</p>
 
 <p>The arguments is an exact triangle defined by three morphisms <span class="Math">\alpha:A\to B</span>, <span class="Math">\iota:B\to C</span> and <span class="Math">\pi:C\to\Sigma A</span>. The output is <span class="Math">\iota:B\to C</span>.</p>
@@ -217,11 +217,11 @@
 
 <p>The argument is an exact triangle <span class="Math">t=(\alpha,\iota,\pi)</span>. The operation checks whether <span class="Math">t</span> is standard exact triangle or not. I.e., it checks whether <span class="Math">\iota=\iota(\alpha)</span> and <span class="Math">\pi=\pi(\alpha)</span>.</p>
 
-<p><a id="X78EA77E57918F7CA" name="X78EA77E57918F7CA"></a></p>
+<p><a id="X8030314980C5377B" name="X8030314980C5377B"></a></p>
 
-<h5>1.2-14 WitnessIsomorphismOntoStandardExactTriangle</h5>
+<h5>1.2-14 WitnessIsomorphismIntoStandardExactTriangle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardExactTriangle</code>( <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismIntoStandardExactTriangle</code>( <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a morphism of triangles</p>
 
 <p>The argument is an exact triangle <span class="Math">t=(\alpha,\iota,\pi)</span>. The output is an isomorphism of triangles from <span class="Math">t</span> into the standard exact triangle <span class="Math">(\alpha,\iota(\alpha),\pi(\alpha))</span>.</p>
@@ -356,7 +356,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

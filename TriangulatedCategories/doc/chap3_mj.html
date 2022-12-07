@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (TriangulatedCategories) - Chapter 3: Triangulated Categories</title>
+<title>GAP (TriangulatedCategories) - Chapter 3: operations for triangulated categories</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -18,860 +18,360 @@
 <body class="chap3"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap3.html">[MathJax off]</a></p>
-<p><a id="X83B622B487606747" name="X83B622B487606747"></a></p>
-<div class="ChapSects"><a href="chap3_mj.html#X83B622B487606747">3 <span class="Heading">Triangulated Categories</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X80784A458180ADDB">3.1 <span class="Heading">Categorical operations</span></a>
+<p><a id="X7CBB31DD7C575CA4" name="X7CBB31DD7C575CA4"></a></p>
+<div class="ChapSects"><a href="chap3_mj.html#X7CBB31DD7C575CA4">3 <span class="Heading">operations for triangulated categories</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X85C8C80F785AEB5E">3.1 <span class="Heading">Add-methods</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F37CE608400D150">3.1-1 StandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E46740D7A61F1B4">3.1-2 AddStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C25B6E87B914EAC">3.1-3 MorphismToStandardConeObjectWithGivenStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8782368A790B45A6">3.1-4 AddMorphismToStandardConeObjectWithGivenStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CA56CBC7A2367A5">3.1-5 MorphismToStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E1B3271825C0D3D">3.1-6 AddMorphismToStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E09DE44857F2F9C">3.1-7 MorphismFromStandardConeObjectWithGivenStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7A28EA267F16C450">3.1-8 AddMorphismFromStandardConeObjectWithGivenStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80AB71E77D6BCFBB">3.1-9 MorphismFromStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85A20139798D6540">3.1-10 AddMorphismFromStandardConeObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85A626757BEE7D79">3.1-11 ShiftOnObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F0A8EF67EAFA764">3.1-12 AddShiftOnObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X814A73898455556D">3.1-13 ShiftOnMorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F76926D86EE0A20">3.1-14 AddShiftOnMorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78E1961E83E3A839">3.1-15 ShiftOnMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7BC48BE386A77371">3.1-16 Shift</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E97245D7961607E">3.1-17 InverseShiftOnObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CFF44BF78695012">3.1-18 AddInverseShiftOnObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8035AA7B86B94776">3.1-19 InverseShiftOnMorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87557FEF794C5950">3.1-20 AddInverseShiftOnMorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CFB223A7ABE7294">3.1-21 InverseShiftOnMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7AB715C0844A1C22">3.1-22 InverseShift</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X814D53878211C8B0">3.1-23 UnitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86DBDD2E82C3BB6C">3.1-24 AddUnitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X818094EC870599DC">3.1-25 UnitIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X84B07AEE8210AC41">3.1-26 AddUnitIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7DD9FBD4831A9D86">3.1-27 InverseOfCounitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CE2B1F08364D7A7">3.1-28 AddInverseOfCounitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C0B6E6C80DFA51E">3.1-29 InverseOfCounitIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8211D4597F19C374">3.1-30 InverseOfUnitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X819AE74285C6497A">3.1-31 AddInverseOfUnitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83E84483799B62F3">3.1-32 InverseOfUnitIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FB0FD167F91A427">3.1-33 CounitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7EBA601C7B988C52">3.1-34 AddCounitIsomorphismWithGivenObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X791DCCBC80EEDFB2">3.1-35 CounitIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7EA4FA467CD757CE">3.1-36 MorphismBetweenStandardConeObjectsWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CE6196480505FB2">3.1-37 AddMorphismBetweenStandardConeObjectsWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X84566B61788B9835">3.1-38 MorphismBetweenStandardConeObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E309B1E7DBB9456">3.1-39 ConeObjectByOctahedralAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C74AC618239556A">3.1-40 DomainMorphismByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X862E97C781E99FB2">3.1-41 AddDomainMorphismByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X789149597ED9F87E">3.1-42 MorphismToConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X81F3E41D8004BBEA">3.1-43 AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X807BDB087A72F338">3.1-44 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7BA2FB927D2B0B21">3.1-45 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CB956AD8268AB3A">3.1-46 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B6458CF7801082A">3.1-47 AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X81810FBA84356622">3.1-48 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85D625757F061E84">3.1-49 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79ADB01F84AF2686">3.1-50 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X875094DE795BD39C">3.1-51 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X84F6CA1F7F5DF333">3.1-52 ConeObjectByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87F708298421D71B">3.1-53 DomainMorphismByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7AB89EDC7FC5049A">3.1-54 MorphismToConeObjectByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7A8F17B67873FCDF">3.1-55 MorphismFromConeObjectByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X844E42547F14E6C0">3.1-56 WitnessIsomorphismOntoStandardConeObjectByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X798D0DAB85C8452D">3.1-57 WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7A8340CC7941E330">3.1-58 AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86253CDA827A537E">3.1-59 WitnessIsomorphismFromStandardConeObjectByRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B074B3178A6F093">3.1-60 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80972CD285EFCD9C">3.1-61 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X869593F07E9AB231">3.1-62 ConeObjectByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F14CEC2864EFB5A">3.1-63 DomainMorphismByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X850B6B5D7847E212">3.1-64 MorphismToConeObjectByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7F17DE7E782A230B">3.1-65 MorphismFromConeObjectByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86CD22AD815D750D">3.1-66 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X803F84698688F20F">3.1-67 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8614BF1881BFC9C4">3.1-68 AddWitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8469415D7C33C0B3">3.1-69 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X87DC10507BE647B1">3.1-70 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CA043257D11E768">3.1-71 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X815205907C4230DD">3.1-72 ShiftExpandingIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X81E3C72979D64026">3.1-73 AddShiftExpandingIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C4526778158684C">3.1-74 ShiftExpandingIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7A04980E80D13F22">3.1-75 ShiftFactoringIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80100DF679F1B02F">3.1-76 AddShiftFactoringIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8677D3C57DCB67B3">3.1-77 ShiftFactoringIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B6DF3CB84F7D2AA">3.1-78 InverseShiftExpandingIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78990D308434222C">3.1-79 AddInverseShiftExpandingIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7EE8AA407C37C197">3.1-80 InverseShiftExpandingIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X803B6E558544BB82">3.1-81 InverseShiftFactoringIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X796AC7EF82D3E903">3.1-82 AddInverseShiftFactoringIsomorphismWithGivenObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X84DA5FF27D84A8BF">3.1-83 InverseShiftFactoringIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X815A28FD7DABA367">3.1-1 AddCounitOfShiftAdjunctionWithGivenObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X862E97C781E99FB2">3.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7DD2003A7F77D98A">3.1-3 AddInverseOfCounitOfShiftAdjunctionWithGivenObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FDBE67687D15939">3.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X78990D308434222C">3.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X796AC7EF82D3E903">3.1-6 AddInverseShiftFactoringIsomorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8787AB34872D5DA9">3.1-7 AddInverseShiftOfMorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7BF54FAD860854EB">3.1-8 AddInverseShiftOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79C6C16979839021">3.1-9 AddIsExactTriangle</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CE6196480505FB2">3.1-10 AddMorphismBetweenStandardConeObjectsWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7BA2FB927D2B0B21">3.1-11 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85A20139798D6540">3.1-12 AddMorphismFromStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X858CEBAE8284AD64">3.1-13 AddMorphismFromStandardConeObjectWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83D08EB780F95845">3.1-14 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8073E5A8845F3624">3.1-15 AddMorphismIntoStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85589C2C82C49734">3.1-16 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X81E3C72979D64026">3.1-17 AddShiftExpandingIsomorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80100DF679F1B02F">3.1-18 AddShiftFactoringIsomorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X839E4F8779EF41E0">3.1-19 AddShiftOfMorphismByInteger</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X85A1BE677EE0EE15">3.1-20 AddShiftOfMorphismByIntegerWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7FA446B687D37E2F">3.1-21 AddShiftOfMorphismWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X780085E47F92D36B">3.1-22 AddShiftOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E814ACF7BEAC67C">3.1-23 AddShiftOfObjectByInteger</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E46740D7A61F1B4">3.1-24 AddStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8256A7AD7DD6D57A">3.1-25 AddUnitOfShiftAdjunctionWithGivenObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X8603B81B80EDBABE">3.1-26 AddWitnessIsomorphismFromStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7CA043257D11E768">3.1-27 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X79ADB01F84AF2686">3.1-28 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X80972CD285EFCD9C">3.1-29 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83D25C8A7B6C81BA">3.1-30 AddWitnessIsomorphismIntoStandardConeObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7E2B39AF8690DC6C">3.1-31 AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7B13D4817F2E1D82">3.1-32 AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X872E34197E6EF698">3.1-33 AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects</a></span>
 </div></div>
 </div>
 
-<h3>3 <span class="Heading">Triangulated Categories</span></h3>
+<h3>3 <span class="Heading">operations for triangulated categories</span></h3>
 
-<p><a id="X80784A458180ADDB" name="X80784A458180ADDB"></a></p>
+<p><a id="X85C8C80F785AEB5E" name="X85C8C80F785AEB5E"></a></p>
 
-<h4>3.1 <span class="Heading">Categorical operations</span></h4>
+<h4>3.1 <span class="Heading">Add-methods</span></h4>
 
-<p><a id="X7F37CE608400D150" name="X7F37CE608400D150"></a></p>
+<p><a id="X815A28FD7DABA367" name="X815A28FD7DABA367"></a></p>
 
-<h5>3.1-1 StandardConeObject</h5>
+<h5>3.1-1 AddCounitOfShiftAdjunctionWithGivenObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardConeObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: an object</p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> in a triangulated category. The output is the standard cone object <span class="SimpleMath">\(C(\alpha)\)</span> of <span class="SimpleMath">\(\alpha\)</span>.</p>
-
-<p><a id="X7E46740D7A61F1B4" name="X7E46740D7A61F1B4"></a></p>
-
-<h5>3.1-2 AddStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddStandardConeObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddCounitOfShiftAdjunctionWithGivenObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">StandardConeObject</code>.</p>
-
-<p><a id="X7C25B6E87B914EAC" name="X7C25B6E87B914EAC"></a></p>
-
-<h5>3.1-3 MorphismToStandardConeObjectWithGivenStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToStandardConeObjectWithGivenStandardConeObject</code>( <var class="Arg">alpha</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span></p>
-
-<p>The arguments are a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> in a triangulated category and an object <span class="SimpleMath">\(C:=C(\alpha)\)</span>. The output is the morphism <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span> into the standard cone object <span class="SimpleMath">\(C(\alpha)\)</span>.</p>
-
-<p><a id="X8782368A790B45A6" name="X8782368A790B45A6"></a></p>
-
-<h5>3.1-4 AddMorphismToStandardConeObjectWithGivenStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismToStandardConeObjectWithGivenStandardConeObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismToStandardConeObjectWithGivenStandardConeObject</code>.</p>
-
-<p><a id="X7CA56CBC7A2367A5" name="X7CA56CBC7A2367A5"></a></p>
-
-<h5>3.1-5 MorphismToStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToStandardConeObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> in a triangulated category. The output is the morphism <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span> into the standard cone object <span class="SimpleMath">\(C(\alpha)\)</span>.</p>
-
-<p><a id="X7E1B3271825C0D3D" name="X7E1B3271825C0D3D"></a></p>
-
-<h5>3.1-6 AddMorphismToStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismToStandardConeObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismToStandardConeObject</code>.</p>
-
-<p><a id="X7E09DE44857F2F9C" name="X7E09DE44857F2F9C"></a></p>
-
-<h5>3.1-7 MorphismFromStandardConeObjectWithGivenStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromStandardConeObjectWithGivenStandardConeObject</code>( <var class="Arg">alpha</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to\Sigma A\)</span></p>
-
-<p>The arguments are a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> in a triangulated category and an object <span class="SimpleMath">\(C:=C(\alpha)\)</span>. The output is the morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to\Sigma A\)</span> from the standard cone object <span class="SimpleMath">\(C(\alpha)\)</span>.</p>
-
-<p><a id="X7A28EA267F16C450" name="X7A28EA267F16C450"></a></p>
-
-<h5>3.1-8 AddMorphismFromStandardConeObjectWithGivenStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromStandardConeObjectWithGivenStandardConeObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromStandardConeObjectWithGivenStandardConeObject</code>.</p>
-
-<p><a id="X80AB71E77D6BCFBB" name="X80AB71E77D6BCFBB"></a></p>
-
-<h5>3.1-9 MorphismFromStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromStandardConeObject</code>( <var class="Arg">alpha</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to\Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha: A \to B\)</span> in a triangulated category. The output is the morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to\Sigma A\)</span> from the standard cone object <span class="SimpleMath">\(C(\alpha)\)</span>.</p>
-
-<p><a id="X85A20139798D6540" name="X85A20139798D6540"></a></p>
-
-<h5>3.1-10 AddMorphismFromStandardConeObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromStandardConeObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromStandardConeObject</code>.</p>
-
-<p><a id="X85A626757BEE7D79" name="X85A626757BEE7D79"></a></p>
-
-<h5>3.1-11 ShiftOnObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftOnObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma A\)</span></p>
-
-<p>The argument is an object <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma A\)</span>.</p>
-
-<p><a id="X7F0A8EF67EAFA764" name="X7F0A8EF67EAFA764"></a></p>
-
-<h5>3.1-12 AddShiftOnObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOnObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOnObject</code>.</p>
-
-<p><a id="X814A73898455556D" name="X814A73898455556D"></a></p>
-
-<h5>3.1-13 ShiftOnMorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftOnMorphismWithGivenObjects</code>( <var class="Arg">sigma_A</var>, <var class="Arg">alpha</var>, <var class="Arg">sigma_B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma \alpha:\Sigma A \to \Sigma B\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(\Sigma A\)</span>, a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(\Sigma B\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma \alpha:\Sigma A \to \Sigma B\)</span>.</p>
-
-<p><a id="X7F76926D86EE0A20" name="X7F76926D86EE0A20"></a></p>
-
-<h5>3.1-14 AddShiftOnMorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOnMorphismWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOnMorphismWithGivenObjects</code>.</p>
-
-<p><a id="X78E1961E83E3A839" name="X78E1961E83E3A839"></a></p>
-
-<h5>3.1-15 ShiftOnMorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftOnMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma \alpha:\Sigma A \to \Sigma B\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma \alpha:\Sigma A \to \Sigma B\)</span>.</p>
-
-<p><a id="X7BC48BE386A77371" name="X7BC48BE386A77371"></a></p>
-
-<h5>3.1-16 Shift</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Shift</code>( <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma c\)</span></p>
-
-<p>This is a convenience method to apply the shift functor on objects or morphisms. The operation delegates to either <code class="code">ShiftOnObject</code> or <code class="code">ShiftOnMorphism</code>.</p>
-
-<p><a id="X7E97245D7961607E" name="X7E97245D7961607E"></a></p>
-
-<h5>3.1-17 InverseShiftOnObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftOnObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma^{-1} A\)</span></p>
-
-<p>The argument is an object <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma^{-1} A\)</span>.</p>
-
-<p><a id="X7CFF44BF78695012" name="X7CFF44BF78695012"></a></p>
-
-<h5>3.1-18 AddInverseShiftOnObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftOnObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftOnObject</code>.</p>
-
-<p><a id="X8035AA7B86B94776" name="X8035AA7B86B94776"></a></p>
-
-<h5>3.1-19 InverseShiftOnMorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftOnMorphismWithGivenObjects</code>( <var class="Arg">rev_sigma_A</var>, <var class="Arg">alpha</var>, <var class="Arg">rev_sigma_B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(\Sigma^{-1} A\)</span>, a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(\Sigma^{-1} B\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B\)</span>.</p>
-
-<p><a id="X87557FEF794C5950" name="X87557FEF794C5950"></a></p>
-
-<h5>3.1-20 AddInverseShiftOnMorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftOnMorphismWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftOnMorphismWithGivenObjects</code>.</p>
-
-<p><a id="X7CFB223A7ABE7294" name="X7CFB223A7ABE7294"></a></p>
-
-<h5>3.1-21 InverseShiftOnMorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftOnMorphism</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is <span class="SimpleMath">\(\Sigma^{-1} \alpha:\Sigma^{-1} A \to \Sigma^{-1} B\)</span>.</p>
-
-<p><a id="X7AB715C0844A1C22" name="X7AB715C0844A1C22"></a></p>
-
-<h5>3.1-22 InverseShift</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShift</code>( <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(\Sigma^{-1} c\)</span></p>
-
-<p>This is a convenience method to apply the inverse shift functor on objects or morphisms. The operation delegates to either <code class="code">InverseShiftOnObject</code> or <code class="code">InverseShiftOnMorphism</code>.</p>
-
-<p><a id="X814D53878211C8B0" name="X814D53878211C8B0"></a></p>
-
-<h5>3.1-23 UnitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnitIsomorphismWithGivenObject</code>( <var class="Arg">A</var>, <var class="Arg">sigma_o_rev_sigma_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(A \to (\Sigma \circ \Sigma^{-1}) A\)</span></p>
-
-<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(A \to (\Sigma \circ \Sigma^{-1}) A\)</span></p>
-
-<p><a id="X86DBDD2E82C3BB6C" name="X86DBDD2E82C3BB6C"></a></p>
-
-<h5>3.1-24 AddUnitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddUnitIsomorphismWithGivenObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">UnitIsomorphismWithGivenObject</code>.</p>
-
-<p><a id="X818094EC870599DC" name="X818094EC870599DC"></a></p>
-
-<h5>3.1-25 UnitIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnitIsomorphism</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(A \to (\Sigma \circ \Sigma^{-1}) A\)</span></p>
-
-<p>The argument is an object <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(A \to (\Sigma \circ \Sigma^{-1}) A\)</span></p>
-
-<p><a id="X84B07AEE8210AC41" name="X84B07AEE8210AC41"></a></p>
-
-<h5>3.1-26 AddUnitIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddUnitIsomorphism</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">UnitIsomorphism</code>.</p>
-
-<p><a id="X7DD9FBD4831A9D86" name="X7DD9FBD4831A9D86"></a></p>
-
-<h5>3.1-27 InverseOfCounitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfCounitIsomorphismWithGivenObject</code>( <var class="Arg">A</var>, <var class="Arg">rev_sigma_o_sigma_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(A \to (\Sigma^{-1} \circ \Sigma) A\)</span></p>
-
-<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(A \to (\Sigma^{-1} \circ \Sigma) A\)</span></p>
-
-<p><a id="X7CE2B1F08364D7A7" name="X7CE2B1F08364D7A7"></a></p>
-
-<h5>3.1-28 AddInverseOfCounitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseOfCounitIsomorphismWithGivenObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseOfCounitIsomorphismWithGivenObject</code>.</p>
-
-<p><a id="X7C0B6E6C80DFA51E" name="X7C0B6E6C80DFA51E"></a></p>
-
-<h5>3.1-29 InverseOfCounitIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfCounitIsomorphism</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(A \to (\Sigma^{-1} \circ \Sigma) A\)</span></p>
-
-<p>The argument is an object <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\(A \to (\Sigma^{-1} \circ \Sigma) A\)</span></p>
-
-<p><a id="X8211D4597F19C374" name="X8211D4597F19C374"></a></p>
-
-<h5>3.1-30 InverseOfUnitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfUnitIsomorphismWithGivenObject</code>( <var class="Arg">A</var>, <var class="Arg">sigma_o_rev_sigma_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A \to A\)</span></p>
-
-<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A \to A\)</span></p>
-
-<p><a id="X819AE74285C6497A" name="X819AE74285C6497A"></a></p>
-
-<h5>3.1-31 AddInverseOfUnitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseOfUnitIsomorphismWithGivenObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseOfUnitIsomorphismWithGivenObject</code>.</p>
-
-<p><a id="X83E84483799B62F3" name="X83E84483799B62F3"></a></p>
-
-<h5>3.1-32 InverseOfUnitIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfUnitIsomorphism</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A \to A\)</span></p>
-
-<p>The argument in an objects <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\((\Sigma \circ \Sigma^{-1}) A \to A\)</span></p>
-
-<p><a id="X7FB0FD167F91A427" name="X7FB0FD167F91A427"></a></p>
-
-<h5>3.1-33 CounitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CounitIsomorphismWithGivenObject</code>( <var class="Arg">A</var>, <var class="Arg">rev_sigma_o_sigma_A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A \to A\)</span></p>
-
-<p>The arguments are two objects <span class="SimpleMath">\(A\)</span> and <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A \to A\)</span></p>
-
-<p><a id="X7EBA601C7B988C52" name="X7EBA601C7B988C52"></a></p>
-
-<h5>3.1-34 AddCounitIsomorphismWithGivenObject</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddCounitIsomorphismWithGivenObject</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">CounitIsomorphismWithGivenObject</code>.</p>
-
-<p><a id="X791DCCBC80EEDFB2" name="X791DCCBC80EEDFB2"></a></p>
-
-<h5>3.1-35 CounitIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CounitIsomorphism</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A \to A\)</span></p>
-
-<p>The argument is an object <span class="SimpleMath">\(A\)</span> in a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span>. The output is the natural isomorphism <span class="SimpleMath">\((\Sigma^{-1} \circ \Sigma) A \to A\)</span></p>
-
-<p><a id="X7EA4FA467CD757CE" name="X7EA4FA467CD757CE"></a></p>
-
-<h5>3.1-36 MorphismBetweenStandardConeObjectsWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenStandardConeObjectsWithGivenObjects</code>( <var class="Arg">C_alpha_1</var>, <var class="Arg">list</var>, <var class="Arg">C_alpha_2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\alpha_1) \to C(\alpha_2)\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(C_{\alpha_1}\)</span>, a list of four morphisms <span class="SimpleMath">\(\alpha_1:A_1\to B_1\)</span>, <span class="SimpleMath">\(u:A_1\to A_2\)</span>, <span class="SimpleMath">\(v:B_1\to B_2\)</span>, <span class="SimpleMath">\(\alpha_2:A_2\to B_2\)</span> and an object <span class="SimpleMath">\(C_{\alpha_2}\)</span> such that <span class="SimpleMath">\(C_{\alpha_1}:=C(\alpha_1)\)</span>, <span class="SimpleMath">\(C_{\alpha_2}:=C(\alpha_2)\)</span> and <span class="SimpleMath">\(v\circ \alpha_1=\alpha_2\circ u\)</span>. The output is a morphism <span class="SimpleMath">\(w:C(\alpha_1) \to C(\alpha_2)\)</span> such that <span class="SimpleMath">\(w\circ \iota(\alpha_1)=\iota(\alpha_2)\circ v\)</span> and <span class="SimpleMath">\(\Sigma u\circ\pi(\alpha_1)=\pi(\alpha_2)\circ w\)</span>.</p>
-
-<p><a id="X7CE6196480505FB2" name="X7CE6196480505FB2"></a></p>
-
-<h5>3.1-37 AddMorphismBetweenStandardConeObjectsWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismBetweenStandardConeObjectsWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismBetweenStandardConeObjectsWithGivenObjects</code>.</p>
-
-<p><a id="X84566B61788B9835" name="X84566B61788B9835"></a></p>
-
-<h5>3.1-38 MorphismBetweenStandardConeObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismBetweenStandardConeObjects</code>( <var class="Arg">alpha_1</var>, <var class="Arg">u</var>, <var class="Arg">v</var>, <var class="Arg">alpha_2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\alpha_1) \to C(\alpha_2)\)</span></p>
-
-<p>The arguments are morphisms <span class="SimpleMath">\(\alpha_1:A_1\to B_1\)</span>, <span class="SimpleMath">\(u:A_1\to A_2\)</span>, <span class="SimpleMath">\(v:B_1\to B_2\)</span>, <span class="SimpleMath">\(\alpha_2:A_2\to B_2\)</span> such that <span class="SimpleMath">\(v\circ \alpha_1=\alpha_2\circ u\)</span>. The output is a morphism <span class="SimpleMath">\(w:C(\alpha_1) \to C(\alpha_2)\)</span> such that <span class="SimpleMath">\(w\circ \iota(\alpha_1)=\iota(\alpha_2)\circ v\)</span> and <span class="SimpleMath">\(\Sigma u\circ\pi(\alpha_1)=\pi(\alpha_2)\circ w\)</span>.</p>
-
-<p><a id="X7E309B1E7DBB9456" name="X7E309B1E7DBB9456"></a></p>
-
-<h5>3.1-39 ConeObjectByOctahedralAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConeObjectByOctahedralAxiom</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: <span class="SimpleMath">\(C(\beta)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span>, <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is the standard cone object <span class="SimpleMath">\(C(\beta)\)</span>.</p>
-
-<p><a id="X7C74AC618239556A" name="X7C74AC618239556A"></a></p>
-
-<h5>3.1-40 DomainMorphismByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainMorphismByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(u_{\alpha,\beta}\)</span>:<span class="SimpleMath">\(C(\alpha)\to C(\beta\circ\alpha)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span>, <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is a morphism <span class="SimpleMath">\(u_{\alpha,\beta}\)</span>:<span class="SimpleMath">\(C(\alpha)\to C(\beta\circ\alpha)\)</span> such that <span class="SimpleMath">\(u_{\alpha,\beta}\circ\iota(\alpha)=\iota(\beta\circ\alpha)\circ\beta\)</span> and <span class="SimpleMath">\(\pi(\alpha)=\pi(\beta\circ\alpha)\circ u_{\alpha,\beta}\)</span>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">CounitOfShiftAdjunctionWithGivenObject</code>. <span class="SimpleMath">\(F: ( s, i_sh_o_sh_s ) \mapsto \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, i_sh_o_sh_s)\)</span>.</p>
 
 <p><a id="X862E97C781E99FB2" name="X862E97C781E99FB2"></a></p>
 
-<h5>3.1-41 AddDomainMorphismByOctahedralAxiomWithGivenObjects</h5>
+<h5>3.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddDomainMorphismByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddDomainMorphismByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">DomainMorphismByOctahedralAxiomWithGivenObjects</code>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">DomainMorphismByOctahedralAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4, arg5, arg6 ) \mapsto \mathtt{DomainMorphismByOctahedralAxiomWithGivenObjects}(arg2, arg3, arg4, arg5, arg6)\)</span>.</p>
 
-<p><a id="X789149597ED9F87E" name="X789149597ED9F87E"></a></p>
+<p><a id="X7DD2003A7F77D98A" name="X7DD2003A7F77D98A"></a></p>
 
-<h5>3.1-42 MorphismToConeObjectByOctahedralAxiomWithGivenObjects</h5>
+<h5>3.1-3 AddInverseOfCounitOfShiftAdjunctionWithGivenObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\beta\circ\alpha) \to C(\beta)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span>, <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is a morphism <span class="SimpleMath">\(\iota_{\alpha,\beta}\)</span>:<span class="SimpleMath">\(C(\beta\circ\alpha) \to C(\beta)\)</span> such that <span class="SimpleMath">\(\iota_{\alpha,\beta}\circ\iota(\beta\circ\alpha)=\iota(\beta)\)</span> and <span class="SimpleMath">\(\Sigma\alpha\circ\pi(\beta\circ\alpha)=\pi(\beta)\)</span>.</p>
-
-<p><a id="X81F3E41D8004BBEA" name="X81F3E41D8004BBEA"></a></p>
-
-<h5>3.1-43 AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismToConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseOfCounitOfShiftAdjunctionWithGivenObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismToConeObjectByOctahedralAxiomWithGivenObjects</code>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseOfCounitOfShiftAdjunctionWithGivenObject</code>. <span class="SimpleMath">\(F: ( s, i_sh_o_sh_s ) \mapsto \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s, i_sh_o_sh_s)\)</span>.</p>
 
-<p><a id="X807BDB087A72F338" name="X807BDB087A72F338"></a></p>
+<p><a id="X7FDBE67687D15939" name="X7FDBE67687D15939"></a></p>
 
-<h5>3.1-44 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</h5>
+<h5>3.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\beta) \to \Sigma C(\alpha)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span>, <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is a morphism <span class="SimpleMath">\(\pi_{\alpha,\beta}\)</span>:<span class="SimpleMath">\(C(\beta) \to \Sigma C(\alpha)\)</span> such that <span class="SimpleMath">\(\pi_{\alpha,\beta}=\Sigma \iota(\alpha) \circ\pi(\beta)\)</span>.</p>
-
-<p><a id="X7BA2FB927D2B0B21" name="X7BA2FB927D2B0B21"></a></p>
-
-<h5>3.1-45 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseOfUnitOfShiftAdjunctionWithGivenObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X7CB956AD8268AB3A" name="X7CB956AD8268AB3A"></a></p>
-
-<h5>3.1-46 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">beta</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\beta)\to C(u_{\alpha,\beta})\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(s=C(\beta)\)</span>, a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>, a morphism <span class="SimpleMath">\(\beta:B\to C\)</span> and an object <span class="SimpleMath">\(r=C(u_{\alpha,\beta})\)</span>. The output is an isomorphism <span class="SimpleMath">\(w_{\alpha,\beta}:C(\beta)\to C(u_{\alpha,\beta})\)</span> such that <span class="SimpleMath">\(w_{\alpha,\beta}\circ \iota_{\alpha,\beta}=\iota(u_{\alpha,\beta})\)</span> and <span class="SimpleMath">\(\pi_{\alpha,\beta}=\pi(u_{\alpha,\beta})\circ w_{\alpha,\beta}\)</span>. I.e., the following diagram is commutative:</p>
-
-<p><a id="X7B6458CF7801082A" name="X7B6458CF7801082A"></a></p>
-
-<h5>3.1-47 AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X81810FBA84356622" name="X81810FBA84356622"></a></p>
-
-<h5>3.1-48 WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByOctahedralAxiom</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\beta)\to C(u_{\alpha,\beta})\)</span>.</p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span> and <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is an isomorphism <span class="SimpleMath">\(C(\beta)\to C(u_{\alpha,\beta})\)</span> such that <span class="SimpleMath">\(w_{\alpha,\beta}\circ \iota_{\alpha,\beta}=\iota(u_{\alpha,\beta})\)</span> and <span class="SimpleMath">\(\pi_{\alpha,\beta}=\pi(u_{\alpha,\beta})\circ w_{\alpha,\beta}\)</span>.</p>
-
-<p><a id="X85D625757F061E84" name="X85D625757F061E84"></a></p>
-
-<h5>3.1-49 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(u_{\alpha,\beta})\to C(\beta)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span> and <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is ...</p>
-
-<p><a id="X79ADB01F84AF2686" name="X79ADB01F84AF2686"></a></p>
-
-<h5>3.1-50 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X875094DE795BD39C" name="X875094DE795BD39C"></a></p>
-
-<h5>3.1-51 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom</code>( <var class="Arg">alpha</var>, <var class="Arg">beta</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(u_{\alpha,\beta})\to C(\beta)\)</span></p>
-
-<p>The arguments are two morphisms <span class="SimpleMath">\(\alpha:A\to B\)</span> and <span class="SimpleMath">\(\beta:B\to C\)</span>. The output is ...</p>
-
-<p><a id="X84F6CA1F7F5DF333" name="X84F6CA1F7F5DF333"></a></p>
-
-<h5>3.1-52 ConeObjectByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConeObjectByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: an object <span class="SimpleMath">\(\Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> The output is <span class="SimpleMath">\(\Sigma A\)</span>.</p>
-
-<p><a id="X87F708298421D71B" name="X87F708298421D71B"></a></p>
-
-<h5>3.1-53 DomainMorphismByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainMorphismByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(B\to C(\alpha)\)</span>.</p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span>.</p>
-
-<p><a id="X7AB89EDC7FC5049A" name="X7AB89EDC7FC5049A"></a></p>
-
-<h5>3.1-54 MorphismToConeObjectByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToConeObjectByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\alpha)\to \Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is a morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to \Sigma A\)</span>.</p>
-
-<p><a id="X7A8F17B67873FCDF" name="X7A8F17B67873FCDF"></a></p>
-
-<h5>3.1-55 MorphismFromConeObjectByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromConeObjectByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A\to\Sigma B\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is a morphism <span class="SimpleMath">\(-\Sigma \alpha:\Sigma A\to\Sigma B\)</span>.</p>
-
-<p><a id="X844E42547F14E6C0" name="X844E42547F14E6C0"></a></p>
-
-<h5>3.1-56 WitnessIsomorphismOntoStandardConeObjectByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is an isomorphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span> such that <span class="SimpleMath">\(?\circ\pi(\alpha)=\iota(\iota(\alpha))\)</span> and <span class="SimpleMath">\(\pi(\iota(\alpha))\circ ?=-\Sigma \alpha\)</span>.</p>
-
-<p><a id="X798D0DAB85C8452D" name="X798D0DAB85C8452D"></a></p>
-
-<h5>3.1-57 WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(s=\Sigma A\)</span>, morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(r=C(\iota A )\)</span>. The output is an isomorphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span> such that <span class="SimpleMath">\(?\circ\pi(\alpha)=\iota(\iota(\alpha))\)</span> and <span class="SimpleMath">\(\pi(\iota(\alpha))\circ ?=-\Sigma \alpha\)</span>.</p>
-
-<p><a id="X7A8340CC7941E330" name="X7A8340CC7941E330"></a></p>
-
-<h5>3.1-58 AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismOntoStandardConeObjectByRotationAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X86253CDA827A537E" name="X86253CDA827A537E"></a></p>
-
-<h5>3.1-59 WitnessIsomorphismFromStandardConeObjectByRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is an isomorphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span> such that ???</p>
-
-<p><a id="X7B074B3178A6F093" name="X7B074B3178A6F093"></a></p>
-
-<h5>3.1-60 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(s=C(\iota(\alpha))\)</span>, morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(r=\Sigma A\)</span>. The output is an isomorphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span> such that ???</p>
-
-<p><a id="X80972CD285EFCD9C" name="X80972CD285EFCD9C"></a></p>
-
-<h5>3.1-61 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X869593F07E9AB231" name="X869593F07E9AB231"></a></p>
-
-<h5>3.1-62 ConeObjectByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConeObjectByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: an object <span class="SimpleMath">\(\Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> The output is <span class="SimpleMath">\(\Sigma A\)</span>.</p>
-
-<p><a id="X7F14CEC2864EFB5A" name="X7F14CEC2864EFB5A"></a></p>
-
-<h5>3.1-63 DomainMorphismByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainMorphismByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(B\to C(\alpha)\)</span>.</p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is <span class="SimpleMath">\(\iota(\alpha):B\to C(\alpha)\)</span>.</p>
-
-<p><a id="X850B6B5D7847E212" name="X850B6B5D7847E212"></a></p>
-
-<h5>3.1-64 MorphismToConeObjectByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismToConeObjectByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\alpha)\to \Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is a morphism <span class="SimpleMath">\(\pi(\alpha):C(\alpha)\to \Sigma A\)</span>.</p>
-
-<p><a id="X7F17DE7E782A230B" name="X7F17DE7E782A230B"></a></p>
-
-<h5>3.1-65 MorphismFromConeObjectByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismFromConeObjectByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A\to\Sigma B\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is a morphism <span class="SimpleMath">\(-\Sigma \alpha:\Sigma A\to\Sigma B\)</span>.</p>
-
-<p><a id="X86CD22AD815D750D" name="X86CD22AD815D750D"></a></p>
-
-<h5>3.1-66 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is an isomorphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span> such that <span class="SimpleMath">\(?\circ\pi(\alpha)=\iota(\iota(\alpha))\)</span> and <span class="SimpleMath">\(\pi(\iota(\alpha))\circ ?=-\Sigma \alpha\)</span>.</p>
-
-<p><a id="X803F84698688F20F" name="X803F84698688F20F"></a></p>
-
-<h5>3.1-67 WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(s=\Sigma A\)</span>, morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(r=C(\iota A )\)</span>. The output is an isomorphism <span class="SimpleMath">\(\Sigma A \to C(\iota(\alpha))\)</span> such that <span class="SimpleMath">\(?\circ\pi(\alpha)=\iota(\iota(\alpha))\)</span> and <span class="SimpleMath">\(\pi(\iota(\alpha))\circ ?=-\Sigma \alpha\)</span>.</p>
-
-<p><a id="X8614BF1881BFC9C4" name="X8614BF1881BFC9C4"></a></p>
-
-<h5>3.1-68 AddWitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismOntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X8469415D7C33C0B3" name="X8469415D7C33C0B3"></a></p>
-
-<h5>3.1-69 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span></p>
-
-<p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span>. The output is an isomorphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span> such that ???</p>
-
-<p><a id="X87DC10507BE647B1" name="X87DC10507BE647B1"></a></p>
-
-<h5>3.1-70 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">s</var>, <var class="Arg">alpha</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span></p>
-
-<p>The arguments are an object <span class="SimpleMath">\(s=C(\iota(\alpha))\)</span>, morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> and an object <span class="SimpleMath">\(r=\Sigma A\)</span>. The output is an isomorphism <span class="SimpleMath">\(C(\iota(\alpha))\to\Sigma A\)</span> such that ???</p>
-
-<p><a id="X7CA043257D11E768" name="X7CA043257D11E768"></a></p>
-
-<h5>3.1-71 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">T</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{T}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>.</p>
-
-<p><a id="X815205907C4230DD" name="X815205907C4230DD"></a></p>
-
-<h5>3.1-72 ShiftExpandingIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftExpandingIsomorphismWithGivenObjects</code>( <var class="Arg">X</var>, <var class="Arg">L</var>, <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The arguments are list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span> and two objects <span class="SimpleMath">\(X=\Sigma \bigoplus_i A_i, Y=\bigoplus_i \Sigma A_i\)</span>. The output is the isomorphism <span class="SimpleMath">\(X \rightarrow Y\)</span> associated to <span class="SimpleMath">\(\Sigma\)</span>.</p>
-
-<p><a id="X81E3C72979D64026" name="X81E3C72979D64026"></a></p>
-
-<h5>3.1-73 AddShiftExpandingIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftExpandingIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{C}\)</span> w.r.t. <span class="SimpleMath">\(\Sigma:\mathcal{C} \rightarrow \mathcal{C}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation ShiftExpandingIsomorphismWithGivenObjects.</p>
-
-<p><a id="X7C4526778158684C" name="X7C4526778158684C"></a></p>
-
-<h5>3.1-74 ShiftExpandingIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftExpandingIsomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The argument is a list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span>. The output is the isomorphism <span class="SimpleMath">\(X \rightarrow Y\)</span> associated to <span class="SimpleMath">\(\Sigma\)</span>, where <span class="SimpleMath">\(X=\Sigma \bigoplus_i A_i\)</span> and <span class="SimpleMath">\(Y=\bigoplus_i \Sigma A_i\)</span></p>
-
-<p><a id="X7A04980E80D13F22" name="X7A04980E80D13F22"></a></p>
-
-<h5>3.1-75 ShiftFactoringIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftFactoringIsomorphismWithGivenObjects</code>( <var class="Arg">Y</var>, <var class="Arg">L</var>, <var class="Arg">X</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The arguments are list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span> and two objects <span class="SimpleMath">\(Y=\bigoplus_i \Sigma A_i, X=\Sigma \bigoplus_i A_i\)</span>. The output is the isomorphism <span class="SimpleMath">\(Y \rightarrow X\)</span> associated to <span class="SimpleMath">\(\Sigma\)</span>.</p>
-
-<p><a id="X80100DF679F1B02F" name="X80100DF679F1B02F"></a></p>
-
-<h5>3.1-76 AddShiftFactoringIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftFactoringIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{C}\)</span> w.r.t. <span class="SimpleMath">\(\Sigma:\mathcal{C} \rightarrow \mathcal{C}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation AddShiftFactoringIsomorphismWithGivenObjects.</p>
-
-<p><a id="X8677D3C57DCB67B3" name="X8677D3C57DCB67B3"></a></p>
-
-<h5>3.1-77 ShiftFactoringIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftFactoringIsomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The argument is a list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span>. The output is the isomorphism <span class="SimpleMath">\(Y \rightarrow X\)</span> associated to <span class="SimpleMath">\(\Sigma\)</span>, where <span class="SimpleMath">\(Y=\bigoplus_i \Sigma A_i\)</span> and <span class="SimpleMath">\(X=\Sigma \bigoplus_i A_i\)</span>.</p>
-
-<p><a id="X7B6DF3CB84F7D2AA" name="X7B6DF3CB84F7D2AA"></a></p>
-
-<h5>3.1-78 InverseShiftExpandingIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftExpandingIsomorphismWithGivenObjects</code>( <var class="Arg">X</var>, <var class="Arg">L</var>, <var class="Arg">Y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The arguments are list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span> and two objects <span class="SimpleMath">\(X=\Sigma^{-1} \bigoplus_i A_i, Y=\bigoplus_i \Sigma^{-1} A_i\)</span>. The output is the isomorphism <span class="SimpleMath">\(X \rightarrow Y\)</span> associated to <span class="SimpleMath">\(\Sigma^{-1}\)</span>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseOfUnitOfShiftAdjunctionWithGivenObject</code>. <span class="SimpleMath">\(F: ( s, sh_o_i_sh_s ) \mapsto \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)\)</span>.</p>
 
 <p><a id="X78990D308434222C" name="X78990D308434222C"></a></p>
 
-<h5>3.1-79 AddInverseShiftExpandingIsomorphismWithGivenObjects</h5>
+<h5>3.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftExpandingIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{C}\)</span> w.r.t. <span class="SimpleMath">\(\Sigma:\mathcal{C} \rightarrow \mathcal{C}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation InverseShiftExpandingIsomorphismWithGivenObjects.</p>
-
-<p><a id="X7EE8AA407C37C197" name="X7EE8AA407C37C197"></a></p>
-
-<h5>3.1-80 InverseShiftExpandingIsomorphism</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftExpandingIsomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The argument is a list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span>. The output is the isomorphism <span class="SimpleMath">\(X \rightarrow Y\)</span> associated to <span class="SimpleMath">\(\Sigma\)</span>, where <span class="SimpleMath">\(X=\Sigma \bigoplus_i A_i\)</span> and <span class="SimpleMath">\(Y=\bigoplus_i \Sigma A_i\)</span></p>
-
-<p><a id="X803B6E558544BB82" name="X803B6E558544BB82"></a></p>
-
-<h5>3.1-81 InverseShiftFactoringIsomorphismWithGivenObjects</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftFactoringIsomorphismWithGivenObjects</code>( <var class="Arg">Y</var>, <var class="Arg">L</var>, <var class="Arg">X</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
-
-<p>The arguments are list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span> and two objects <span class="SimpleMath">\(Y=\bigoplus_i \Sigma^{-1} A_i, X=\Sigma^{-1} \bigoplus_i A_i\)</span>. The output is the isomorphism <span class="SimpleMath">\(Y \rightarrow X\)</span> associated to <span class="SimpleMath">\(\Sigma^{-1}\)</span>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftExpandingIsomorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( s, L, r ) \mapsto \mathtt{InverseShiftExpandingIsomorphismWithGivenObjects}(s, L, r)\)</span>.</p>
 
 <p><a id="X796AC7EF82D3E903" name="X796AC7EF82D3E903"></a></p>
 
-<h5>3.1-82 AddInverseShiftFactoringIsomorphismWithGivenObjects</h5>
+<h5>3.1-6 AddInverseShiftFactoringIsomorphismWithGivenObjects</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftFactoringIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>The arguments are a triangulated category <span class="SimpleMath">\(\mathcal{C}\)</span> w.r.t. <span class="SimpleMath">\(\Sigma:\mathcal{C} \rightarrow \mathcal{C}\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation InverseShiftFactoringIsomorphismWithGivenObjects.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftFactoringIsomorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( s, L, r ) \mapsto \mathtt{InverseShiftFactoringIsomorphismWithGivenObjects}(s, L, r)\)</span>.</p>
 
-<p><a id="X84DA5FF27D84A8BF" name="X84DA5FF27D84A8BF"></a></p>
+<p><a id="X8787AB34872D5DA9" name="X8787AB34872D5DA9"></a></p>
 
-<h5>3.1-83 InverseShiftFactoringIsomorphism</h5>
+<h5>3.1-7 AddInverseShiftOfMorphismWithGivenObjects</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseShiftFactoringIsomorphism</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftOfMorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
 
-<p>The argument is a list <span class="SimpleMath">\(L=[A_1,\dots,A_n]\)</span>. The output is the isomorphism <span class="SimpleMath">\(Y \rightarrow X\)</span> associated to <span class="SimpleMath">\(\Sigma^{-1}\)</span>, where <span class="SimpleMath">\(Y=\bigoplus_i \Sigma^{-1} A_i\)</span> and <span class="SimpleMath">\(X=\Sigma^{-1} \bigoplus_i A_i\)</span>.</p>
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftOfMorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( s, alpha, r ) \mapsto \mathtt{InverseShiftOfMorphismWithGivenObjects}(s, alpha, r)\)</span>.</p>
+
+<p><a id="X7BF54FAD860854EB" name="X7BF54FAD860854EB"></a></p>
+
+<h5>3.1-8 AddInverseShiftOfObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddInverseShiftOfObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">InverseShiftOfObject</code>. <span class="SimpleMath">\(F: ( arg2 ) \mapsto \mathtt{InverseShiftOfObject}(arg2)\)</span>.</p>
+
+<p><a id="X79C6C16979839021" name="X79C6C16979839021"></a></p>
+
+<h5>3.1-9 AddIsExactTriangle</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddIsExactTriangle</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">IsExactTriangle</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4 ) \mapsto \mathtt{IsExactTriangle}(arg2, arg3, arg4)\)</span>.</p>
+
+<p><a id="X7CE6196480505FB2" name="X7CE6196480505FB2"></a></p>
+
+<h5>3.1-10 AddMorphismBetweenStandardConeObjectsWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismBetweenStandardConeObjectsWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismBetweenStandardConeObjectsWithGivenObjects</code>. <span class="SimpleMath">\(F: ( cone_alpha, list, cone_alpha_prime ) \mapsto \mathtt{MorphismBetweenStandardConeObjectsWithGivenObjects}(cone_alpha, list, cone_alpha_prime)\)</span>.</p>
+
+<p><a id="X7BA2FB927D2B0B21" name="X7BA2FB927D2B0B21"></a></p>
+
+<h5>3.1-11 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromConeObjectByOctahedralAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4, arg5, arg6 ) \mapsto \mathtt{MorphismFromConeObjectByOctahedralAxiomWithGivenObjects}(arg2, arg3, arg4, arg5, arg6)\)</span>.</p>
+
+<p><a id="X85A20139798D6540" name="X85A20139798D6540"></a></p>
+
+<h5>3.1-12 AddMorphismFromStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromStandardConeObject</code>. <span class="SimpleMath">\(F: ( alpha ) \mapsto \mathtt{MorphismFromStandardConeObject}(alpha)\)</span>.</p>
+
+<p><a id="X858CEBAE8284AD64" name="X858CEBAE8284AD64"></a></p>
+
+<h5>3.1-13 AddMorphismFromStandardConeObjectWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismFromStandardConeObjectWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismFromStandardConeObjectWithGivenObjects</code>. <span class="SimpleMath">\(F: ( cone_alpha, alpha, sh_source_alpha ) \mapsto \mathtt{MorphismFromStandardConeObjectWithGivenObjects}(cone_alpha, alpha, sh_source_alpha)\)</span>.</p>
+
+<p><a id="X83D08EB780F95845" name="X83D08EB780F95845"></a></p>
+
+<h5>3.1-14 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4, arg5, arg6 ) \mapsto \mathtt{MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects}(arg2, arg3, arg4, arg5, arg6)\)</span>.</p>
+
+<p><a id="X8073E5A8845F3624" name="X8073E5A8845F3624"></a></p>
+
+<h5>3.1-15 AddMorphismIntoStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismIntoStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismIntoStandardConeObject</code>. <span class="SimpleMath">\(F: ( alpha ) \mapsto \mathtt{MorphismIntoStandardConeObject}(alpha)\)</span>.</p>
+
+<p><a id="X85589C2C82C49734" name="X85589C2C82C49734"></a></p>
+
+<h5>3.1-16 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMorphismIntoStandardConeObjectWithGivenStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">MorphismIntoStandardConeObjectWithGivenStandardConeObject</code>. <span class="SimpleMath">\(F: ( alpha, cone_alpha ) \mapsto \mathtt{MorphismIntoStandardConeObjectWithGivenStandardConeObject}(alpha, cone_alpha)\)</span>.</p>
+
+<p><a id="X81E3C72979D64026" name="X81E3C72979D64026"></a></p>
+
+<h5>3.1-17 AddShiftExpandingIsomorphismWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftExpandingIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftExpandingIsomorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( s, L, r ) \mapsto \mathtt{ShiftExpandingIsomorphismWithGivenObjects}(s, L, r)\)</span>.</p>
+
+<p><a id="X80100DF679F1B02F" name="X80100DF679F1B02F"></a></p>
+
+<h5>3.1-18 AddShiftFactoringIsomorphismWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftFactoringIsomorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftFactoringIsomorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( s, L, r ) \mapsto \mathtt{ShiftFactoringIsomorphismWithGivenObjects}(s, L, r)\)</span>.</p>
+
+<p><a id="X839E4F8779EF41E0" name="X839E4F8779EF41E0"></a></p>
+
+<h5>3.1-19 AddShiftOfMorphismByInteger</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOfMorphismByInteger</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOfMorphismByInteger</code>. <span class="SimpleMath">\(F: ( arg2, arg3 ) \mapsto \mathtt{ShiftOfMorphismByInteger}(arg2, arg3)\)</span>.</p>
+
+<p><a id="X85A1BE677EE0EE15" name="X85A1BE677EE0EE15"></a></p>
+
+<h5>3.1-20 AddShiftOfMorphismByIntegerWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOfMorphismByIntegerWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOfMorphismByIntegerWithGivenObjects</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4, arg5 ) \mapsto \mathtt{ShiftOfMorphismByIntegerWithGivenObjects}(arg2, arg3, arg4, arg5)\)</span>.</p>
+
+<p><a id="X7FA446B687D37E2F" name="X7FA446B687D37E2F"></a></p>
+
+<h5>3.1-21 AddShiftOfMorphismWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOfMorphismWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOfMorphismWithGivenObjects</code>. <span class="SimpleMath">\(F: ( arg2, arg3, arg4 ) \mapsto \mathtt{ShiftOfMorphismWithGivenObjects}(arg2, arg3, arg4)\)</span>.</p>
+
+<p><a id="X780085E47F92D36B" name="X780085E47F92D36B"></a></p>
+
+<h5>3.1-22 AddShiftOfObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOfObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOfObject</code>. <span class="SimpleMath">\(F: ( arg2 ) \mapsto \mathtt{ShiftOfObject}(arg2)\)</span>.</p>
+
+<p><a id="X7E814ACF7BEAC67C" name="X7E814ACF7BEAC67C"></a></p>
+
+<h5>3.1-23 AddShiftOfObjectByInteger</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddShiftOfObjectByInteger</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">ShiftOfObjectByInteger</code>. <span class="SimpleMath">\(F: ( arg2, arg3 ) \mapsto \mathtt{ShiftOfObjectByInteger}(arg2, arg3)\)</span>.</p>
+
+<p><a id="X7E46740D7A61F1B4" name="X7E46740D7A61F1B4"></a></p>
+
+<h5>3.1-24 AddStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">StandardConeObject</code>. <span class="SimpleMath">\(F: ( arg2 ) \mapsto \mathtt{StandardConeObject}(arg2)\)</span>.</p>
+
+<p><a id="X8256A7AD7DD6D57A" name="X8256A7AD7DD6D57A"></a></p>
+
+<h5>3.1-25 AddUnitOfShiftAdjunctionWithGivenObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddUnitOfShiftAdjunctionWithGivenObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">UnitOfShiftAdjunctionWithGivenObject</code>. <span class="SimpleMath">\(F: ( s, sh_o_i_sh_s ) \mapsto \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)\)</span>.</p>
+
+<p><a id="X8603B81B80EDBABE" name="X8603B81B80EDBABE"></a></p>
+
+<h5>3.1-26 AddWitnessIsomorphismFromStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObject</code>. <span class="SimpleMath">\(F: ( alpha, iota, pi ) \mapsto \mathtt{WitnessIsomorphismFromStandardConeObject}(alpha, iota, pi)\)</span>.</p>
+
+<p><a id="X7CA043257D11E768" name="X7CA043257D11E768"></a></p>
+
+<h5>3.1-27 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( st_cone, f, cone ) \mapsto \mathtt{WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects}(st_cone, f, cone)\)</span>.</p>
+
+<p><a id="X79ADB01F84AF2686" name="X79ADB01F84AF2686"></a></p>
+
+<h5>3.1-28 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( st_cone, f, g, h, cone_g ) \mapsto \mathtt{WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects}(st_cone, f, g, h, cone_g)\)</span>.</p>
+
+<p><a id="X80972CD285EFCD9C" name="X80972CD285EFCD9C"></a></p>
+
+<h5>3.1-29 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( st_cone, f, cone ) \mapsto \mathtt{WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects}(st_cone, f, cone)\)</span>.</p>
+
+<p><a id="X83D25C8A7B6C81BA" name="X83D25C8A7B6C81BA"></a></p>
+
+<h5>3.1-30 AddWitnessIsomorphismIntoStandardConeObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismIntoStandardConeObject</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismIntoStandardConeObject</code>. <span class="SimpleMath">\(F: ( alpha, iota, pi ) \mapsto \mathtt{WitnessIsomorphismIntoStandardConeObject}(alpha, iota, pi)\)</span>.</p>
+
+<p><a id="X7E2B39AF8690DC6C" name="X7E2B39AF8690DC6C"></a></p>
+
+<h5>3.1-31 AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( cone, f, st_cone ) \mapsto \mathtt{WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects}(cone, f, st_cone)\)</span>.</p>
+
+<p><a id="X7B13D4817F2E1D82" name="X7B13D4817F2E1D82"></a></p>
+
+<h5>3.1-32 AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( cone_g, f, g, h, st_cone ) \mapsto \mathtt{WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects}(cone_g, f, g, h, st_cone)\)</span>.</p>
+
+<p><a id="X872E34197E6EF698" name="X872E34197E6EF698"></a></p>
+
+<h5>3.1-33 AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: nothing</p>
+
+<p>The arguments are a category <span class="SimpleMath">\(C\)</span> and a function <span class="SimpleMath">\(F\)</span>. This operation adds the given function <span class="SimpleMath">\(F\)</span> to the category for the basic operation <code class="code">WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects</code>. <span class="SimpleMath">\(F: ( cone, f, st_cone ) \mapsto \mathtt{WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects}(cone, f, st_cone)\)</span>.</p>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

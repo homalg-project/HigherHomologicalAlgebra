@@ -20,9 +20,9 @@
   [33X[0;0YThe  argument  is  a  triangulated  category  [23X\mathcal{T}[123X. The output is the
   auto-equivalence [23X\Sigma^{-1}:\mathcal{T}\to\mathcal{T}[123X.[133X
   
-  [1X2.1-3 Unit[101X
+  [1X2.1-3 UnitOfShiftAdjunction[101X
   
-  [33X[1;0Y[29X[2XUnit[102X( [3XT[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUnitOfShiftAdjunction[102X( [3XT[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
             [23X\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}[123X[133X
   
@@ -30,9 +30,9 @@
   natural                                                          isomorphism
   [23X\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}[123X.[133X
   
-  [1X2.1-4 InverseOfUnit[101X
+  [1X2.1-4 InverseOfUnitOfShiftAdjunction[101X
   
-  [33X[1;0Y[29X[2XInverseOfUnit[102X( [3XT[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInverseOfUnitOfShiftAdjunction[102X( [3XT[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya                        natural                       isomorphism
             [23X\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X[133X
   
@@ -40,9 +40,9 @@
   natural                                                          isomorphism
   [23X\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X.[133X
   
-  [1X2.1-5 Counit[101X
+  [1X2.1-5 CounitOfShiftAdjunction[101X
   
-  [33X[1;0Y[29X[2XCounit[102X( [3XT[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCounitOfShiftAdjunction[102X( [3XT[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
             [23X\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X[133X
   
@@ -50,9 +50,9 @@
   natural                                                          isomorphism
   [23X\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}[123X.[133X
   
-  [1X2.1-6 InverseOfCounit[101X
+  [1X2.1-6 InverseOfCounitOfShiftAdjunction[101X
   
-  [33X[1;0Y[29X[2XInverseOfCounit[102X( [3XT[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInverseOfCounitOfShiftAdjunction[102X( [3XT[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya                      natural                      transformation
             [23X\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma[123X[133X
   

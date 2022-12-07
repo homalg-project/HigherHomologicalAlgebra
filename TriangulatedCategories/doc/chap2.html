@@ -15,7 +15,7 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -27,10 +27,10 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80BEFEE77B28A20D">2.1-1 ShiftFunctor</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X839D209D833631AF">2.1-2 InverseShiftFunctor</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C9872A27DCE5432">2.1-3 Unit</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B71446D8391C3EB">2.1-4 InverseOfUnit</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A713E48831F85BA">2.1-5 Counit</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78ADCA29838A58CF">2.1-6 InverseOfCounit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ABE870E7E96C55D">2.1-3 UnitOfShiftAdjunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8257124F7C929762">2.1-4 InverseOfUnitOfShiftAdjunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CBAF30B82B7FD24">2.1-5 CounitOfShiftAdjunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ED6B39987EA2A9B">2.1-6 InverseOfCounitOfShiftAdjunction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87C57D138553295C">2.1-7 CommutativityNaturalTransformationWithShiftFunctor</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8098FDAB7CE28277">2.1-8 ExtendFunctorToCategoryOfTriangles</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86E243F782C64E9A">2.1-9 RotationFunctor</a></span>
@@ -62,38 +62,38 @@
 
 <p>The argument is a triangulated category <span class="Math">\mathcal{T}</span>. The output is the auto-equivalence <span class="Math">\Sigma^{-1}:\mathcal{T}\to\mathcal{T}</span>.</p>
 
-<p><a id="X7C9872A27DCE5432" name="X7C9872A27DCE5432"></a></p>
+<p><a id="X7ABE870E7E96C55D" name="X7ABE870E7E96C55D"></a></p>
 
-<h5>2.1-3 Unit</h5>
+<h5>2.1-3 UnitOfShiftAdjunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unit</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnitOfShiftAdjunction</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural transformation <span class="Math">\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}</span></p>
 
 <p>The argument is a triangulated category <span class="Math">\mathcal{T}</span>. The output is the natural isomorphism <span class="Math">\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}</span>.</p>
 
-<p><a id="X7B71446D8391C3EB" name="X7B71446D8391C3EB"></a></p>
+<p><a id="X8257124F7C929762" name="X8257124F7C929762"></a></p>
 
-<h5>2.1-4 InverseOfUnit</h5>
+<h5>2.1-4 InverseOfUnitOfShiftAdjunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfUnit</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfUnitOfShiftAdjunction</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural isomorphism <span class="Math">\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}</span></p>
 
 <p>The argument is a triangulated category <span class="Math">\mathcal{T}</span>. The output is the natural isomorphism <span class="Math">\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}</span>.</p>
 
-<p><a id="X7A713E48831F85BA" name="X7A713E48831F85BA"></a></p>
+<p><a id="X7CBAF30B82B7FD24" name="X7CBAF30B82B7FD24"></a></p>
 
-<h5>2.1-5 Counit</h5>
+<h5>2.1-5 CounitOfShiftAdjunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Counit</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CounitOfShiftAdjunction</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural transformation <span class="Math">\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}</span></p>
 
 <p>The argument is a triangulated category <span class="Math">\mathcal{T}</span>. The output is the natural isomorphism <span class="Math">\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}</span>.</p>
 
-<p><a id="X78ADCA29838A58CF" name="X78ADCA29838A58CF"></a></p>
+<p><a id="X7ED6B39987EA2A9B" name="X7ED6B39987EA2A9B"></a></p>
 
-<h5>2.1-6 InverseOfCounit</h5>
+<h5>2.1-6 InverseOfCounitOfShiftAdjunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfCounit</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseOfCounitOfShiftAdjunction</code>( <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural transformation <span class="Math">\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma</span></p>
 
 <p>The argument is a triangulated category <span class="Math">\mathcal{T}</span>. The output is the natural isomorphism <span class="Math">\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma</span>.</p>
@@ -138,7 +138,7 @@
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
