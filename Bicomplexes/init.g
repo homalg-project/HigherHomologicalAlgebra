@@ -4,5 +4,5 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "Bicomplexes", "gap/Bicomplexes.gd");
-ReadPackage( "Bicomplexes", "gap/TotalComplex.gd");
+#ReadPackage( "Bicomplexes", "gap/Bicomplexes.gd");
+#ReadPackage( "Bicomplexes", "gap/TotalComplex.gd");
