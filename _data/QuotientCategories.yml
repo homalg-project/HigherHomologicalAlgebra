@@ -1,7 +1,7 @@
 name: QuotientCategories
-version: "2022.11-02"
+version: "2022.12-01"
 license: "GPL-2.0-or-later"
-date: 2022-11-25
+date: 2022-12-07
 description: |
     Quotient categories of CAP categories by two-sided ideals
 
@@ -32,11 +32,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientC
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.11-02/QuotientCategories-2022.11-02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.12-01/QuotientCategories-2022.12-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.11-02/QuotientCategories-2022.11-02.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.12-01/QuotientCategories-2022.12-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.11-02/QuotientCategories-2022.11-02.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/QuotientCategories-2022.12-01/QuotientCategories-2022.12-01.pdf
 
 abstract: |
 
@@ -47,7 +47,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>QuotientCategories, Quotient categories of CAP categories by two-sided ideals,
-             Version 2022.11-02</i>
+             Version 2022.12-01</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/QuotientCategories">https://homalg-project.github.io/pkg/QuotientCategories</a></span>.
@@ -55,11 +55,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ QuotientCategories2022.11-02,
+    @misc{ QuotientCategories2022.12-01,
       author =           {Saleh, K.},
       title =            {{QuotientCategories},   Quotient   categories  of  CAP
-                          categories by two-sided ideals, {V}ersion 2022.11-02},
-      month =            {Nov},
+                          categories by two-sided ideals, {V}ersion 2022.12-01},
+      month =            {Dec},
       year =             {2022},
       note =             {GAP package},
       howpublished =     {\href
