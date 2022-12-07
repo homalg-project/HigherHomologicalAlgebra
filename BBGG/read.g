@@ -3,8 +3,8 @@
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "BBGG", "gap/InterfaceWithHomalg.gi" );
-ReadPackage( "BBGG", "gap/BBGG.gi" );
-ReadPackage( "BBGG", "gap/Beilinson.gi" );
-ReadPackage( "BBGG", "gap/CoherentSheavesOverProjectiveSpace.gi" );
+#ReadPackage( "BBGG", "gap/InterfaceWithHomalg.gi" );
+#ReadPackage( "BBGG", "gap/BBGG.gi" );
+#ReadPackage( "BBGG", "gap/Beilinson.gi" );
+#ReadPackage( "BBGG", "gap/CoherentSheavesOverProjectiveSpace.gi" );
 
