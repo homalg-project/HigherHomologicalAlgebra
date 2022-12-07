@@ -219,7 +219,7 @@ DeclareOperation( "AddWitnessForBeingLiftableAlongMorphismFromLiftingObject",
 
 #! @Section Examples for systems of lifting objects
 #! @SectionLabel LNr1U3TyLS1Gj3vHSzvh
-#! @InsertChunk LNr1U3TyLS1Gj3vHSzvh
+# InsertChunk LNr1U3TyLS1Gj3vHSzvh
 
 
 #! @Section Systems of colifting objects
@@ -437,23 +437,23 @@ DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
 
 #! @Subsection The class of E-injective objects in exact categories with enough E-injectives
 #! @SubsectionLabel fcgeacs
-#! @InsertChunk freyd_categories_graded_exterior_algebra-colifting-system
+# InsertChunk freyd_categories_graded_exterior_algebra-colifting-system
 
 #! @Subsection The class of all objects in arrows categories represented by split-epimorphisms
 #! @SubsectionLabel RQztP14RWWSvFYPgkHbn
-#! @InsertChunk RQztP14RWWSvFYPgkHbn
+# InsertChunk RQztP14RWWSvFYPgkHbn
 
 #! @Subsection Code example 1
 #! @SubsectionLabel NVqCpmp6ccYzEKjwZX5B
-#! @InsertChunk NVqCpmp6ccYzEKjwZX5B
+# InsertChunk NVqCpmp6ccYzEKjwZX5B
 
 #! @Subsection The class of all contractible objects in complexes categories
 #! @SubsectionLabel sIwHy5MWWYHC74TAiWwI
-#! @InsertChunk sIwHy5MWWYHC74TAiWwI
+# InsertChunk sIwHy5MWWYHC74TAiWwI
 
 #! @Subsection Code example 2
 #! @SubsectionLabel jdHNiWHD10h0jRZTnnH6
-#! @InsertChunk jdHNiWHD10h0jRZTnnH6
+# InsertChunk jdHNiWHD10h0jRZTnnH6
 
 #! @Chapter Stable Categories
 #! @Section GAP categories
@@ -462,25 +462,25 @@ DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
 #! The &GAP; category of stable categories
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategory",
-                 IsQuotientCategory );
+                 IsQuotientCapCategory );
 
 #! @Description
 #! The &GAP; category of stable categories cells.
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategoryCell",
-                 IsQuotientCategoryCell );
+                 IsCapCategoryCell );
 
 #! @Description
 #! The &GAP; category of stable categories objects.
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategoryObject",
-                 IsStableCategoryCell and IsQuotientCategoryObject );
+                 IsStableCategoryCell and IsQuotientCapCategoryObject );
 
 #! @Description
 #! The &GAP; category of stable categories morphisms.
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategoryMorphism",
-                 IsStableCategoryCell and IsQuotientCategoryMorphism );
+                 IsStableCategoryCell and IsQuotientCapCategoryMorphism );
 
 #! @Section Constructors
 
@@ -552,7 +552,7 @@ fi;
 
 
 #! @Subsection Code example
-#! @InsertChunk stable_cat_by_projectives
+# InsertChunk stable_cat_by_projectives
 
 #! @Section Stable categories defined by systems of lifting objects
 
@@ -572,7 +572,7 @@ DeclareAttribute( "StableCategoryByClassOfLiftingObjects", IsCapCategory );
 
 #! @Subsection Code example
 #! @SubsectionLabel scbpalo
-#! @InsertChunk stable_cat_by_projectives_as_lifting_objects
+# InsertChunk stable_cat_by_projectives_as_lifting_objects
 
 #! @Section Stable categories defined by systems of colifting objects
 #!  
@@ -592,11 +592,11 @@ DeclareAttribute( "StableCategoryByClassOfColiftingObjects", IsCapCategory );
 
 #! @Subsection Code example 1
 #! @SubsectionLabel YlKk3B5n4Q15dKo81eOJ
-#! @InsertChunk YlKk3B5n4Q15dKo81eOJ
+# InsertChunk YlKk3B5n4Q15dKo81eOJ
 
 #! @Subsection Code example 2
 #! @SubsectionLabel 625C968E2GmBN9Gh2bLI 
-#! @InsertChunk 625C968E2GmBN9Gh2bLI
+# InsertChunk 625C968E2GmBN9Gh2bLI
 
 #####################
 #

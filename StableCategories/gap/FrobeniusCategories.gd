@@ -397,7 +397,7 @@ DeclareOperation( "AddLiftAlongInflation",
 DeclareOperation( "AddLiftAlongInflation",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra
+# InsertChunk freyd_categories_graded_exterior_algebra
 
 
 #! @Subsection Exact Fiber Product
@@ -499,7 +499,7 @@ DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberP
 DeclareOperation( "AddUniversalMorphismIntoExactFiberProductWithGivenExactFiberProduct",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
+# InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
 
 
 
@@ -611,7 +611,7 @@ DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
 DeclareOperation( "AddUniversalMorphismFromExactPushoutWithGivenExactPushout",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
+# InsertChunk freyd_categories_graded_exterior_algebra-fiber-product
 
 #! @Subsection Exact Categories With Enough E-projectives
 #!  Let $(\CC,\EE)$ be an exact category. An object $P$ is called $\mathcal{E}$-projective if for every
@@ -671,7 +671,7 @@ DeclareOperation( "AddExactProjectiveLift",
 DeclareOperation( "AddExactProjectiveLift",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-exact-projectives
+# InsertChunk freyd_categories_graded_exterior_algebra-exact-projectives
 
 #! @Description
 #!  The argument is an object $A$ in $\CC$.
@@ -709,7 +709,7 @@ DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives
+# InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives
 
 #! @Subsection Exact Categories With Enough E-injecitves
 #!  Let $(\CC,\EE)$ be an exact category. An object $I$ is called $\mathcal{E}$-injective if for
@@ -770,7 +770,7 @@ DeclareOperation( "AddExactInjectiveColift",
 DeclareOperation( "AddExactInjectiveColift",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-exact-injectives
+# InsertChunk freyd_categories_graded_exterior_algebra-exact-injectives
 
 #! @Description
 #!  The argument is an object $A$ in $\CC$.
@@ -808,7 +808,7 @@ DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives
+# InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives
 
 #! @Description
 #!  The argument if a morphism $\alpha:A\to B$ in an exact category $(\CC,\EE)$ with enough $\EE$-projectives.
@@ -843,7 +843,7 @@ DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
 DeclareOperation( "AddLiftAlongDeflationFromSomeExactProjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives-liftable-along-deflation
+# InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-projectives-liftable-along-deflation
 
 #! @Description
 #!  The argument if a morphism $\alpha:A\to B$ in an exact category $(\CC,\EE)$ with enough $\EE$-injectives.
@@ -878,7 +878,7 @@ DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
 DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
                   [ IsCapCategory, IsList ] );
 
-#! @InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives-coliftable-along-inflation
+# InsertChunk freyd_categories_graded_exterior_algebra-enough-exact-injectives-coliftable-along-inflation
 
 #! @Description
 #!  The argument is a &CAP; category. The output is <C>true</C> if 
@@ -888,7 +888,7 @@ DeclareOperation( "AddColiftAlongInflationIntoSomeExactInjectiveObject",
 #! @Arguments C
 DeclareProperty( "IsFrobeniusCategory", IsCapCategory );
 
-#? @InsertChunk freyd_categories_graded_exterior_algebra-is-frobenius
+# InsertChunk freyd_categories_graded_exterior_algebra-is-frobenius
 
 #################################
 ##

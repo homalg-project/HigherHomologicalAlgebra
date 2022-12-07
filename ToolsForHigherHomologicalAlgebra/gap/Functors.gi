@@ -268,7 +268,7 @@ InstallGlobalFunction( CreateDisplayNameWithColorsForFunctor,
     
     return Concatenation( name, r[ 1 ],  ":", r[ 2 ], "\n\n",
                           Name( source ), "\n", r[ 1 ],
-                          "  |\n  V", r[ 2 ], "\n",
+                          "  |\n  ", TEXTMTRANSLATIONS.curlyvee, r[ 2 ], "\n",
                           Name( range ), "\n" );
   
 end );

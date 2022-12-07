@@ -3,892 +3,418 @@
 #
 # Implementations
 #
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
 
-##
-InstallMethodWithCache( DoubleChainComplexByHomStructure,
-          [ IsChainComplex, IsChainComplex ],
-          
-  function ( B, C )
-    local cat, range_cat, H, V, dComplex;
-    
-    cat := UnderlyingCategory( CapCategory( B ) );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    H := { i, j } -> (-1) ^ ( i + j - 1 ) * HomStructure( B ^ ( -i + 1), C[ j ] );
-    
-    V := { i, j } -> HomStructure( B[ -i ], C ^ j );
-    
-    dComplex := DoubleChainComplex( range_cat, H, V );
-    
-    if HasActiveUpperBound( B ) then
-      SetLeftBound( dComplex, -ActiveUpperBound( B ) );
-    fi;
-    
-    if HasActiveLowerBound( B ) then
-      SetRightBound( dComplex, -ActiveLowerBound( B ) );
-    fi;
-    
-    if HasActiveUpperBound( C ) then
-      SetAboveBound( dComplex, ActiveUpperBound( C ) );
-    fi;
-    
-    if HasActiveLowerBound( C ) then
-      SetBelowBound( dComplex, ActiveLowerBound( C ) );
-    fi;
-    
-    return dComplex;
-    
-end );
+#
+# Following Section 4.4. in https://dspace.ub.uni-siegen.de/handle/ubsi/2232
+#
 
-##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS,
-  function( category )
-    local cat, range_cat;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
+BindGlobal( "_complexes_DistinguishedObjectOfHomomorphismStructure",
+  
+  FunctionWithCache(
+    function ( ch_cat )
+      local cat, range_cat, ch_range_cat;
       
-      AddHomomorphismStructureOnObjects( category,
-      
-        { B, C } -> Source( CyclesAt(
-                              TotalComplex( DoubleChainComplexByHomStructure( B, C ) ),
-                              0
-                            )
-                          )
-      );
-      
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-      
-      AddHomomorphismStructureOnObjects( category,
-        function ( B, C )
-          local d, I;
-                    
-          d := DoubleChainComplexByHomStructure( B, C );
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          I := ExtendFunctorToChainComplexCategories( I );
-          
-          return Source( CyclesAt( I(  TotalComplex( d ) ), 0 ) );
-          
-        end );
-        
-    else
-    
-      AddHomomorphismStructureOnObjects( category,
-        { B, C } -> TotalComplex( DoubleChainComplexByHomStructure( B, C ) )
-      );
-     
-    fi;
-     
-end );
-
-##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_CHAINS_MORPHISMS,
-  function( category )
-    local cat, range_cat, func;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-          
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM;
-          
-          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
-          
-          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleChainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-          
-          TM := TotalMorphism( DM );
-          
-          return CyclesFunctorialAt( TM, 0 );
-          
-        end );
-        
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-       
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM, I; 
-          
-          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
-          
-          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleChainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-                    
-          TM := TotalMorphism( DM );
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          I := ExtendFunctorToChainComplexCategories( I );
-          
-          return CyclesFunctorialAt( ApplyFunctor( I, TM ), 0 );
-          
-        end );
-        
-    else
-      
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM;
-          
-          DS := DoubleChainComplexByHomStructure( Range( alpha ), Source( beta ) );
-          
-          DR := DoubleChainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleChainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-                    
-          TM := TotalMorphism( DM );
-          
-          return TM;
-          
-        end );
-        
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_CHAIN_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE,
-  function( category )
-    local cat, range_cat, distinguished_object, func;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    distinguished_object := DistinguishedObjectOfHomomorphismStructure( cat );
-    
-    func :=
-      function( phi )
-        local B, C, l, u, morphisms, morphism, T, i;
-        
-        B := Source( phi );
-        C := Range( phi );
-        
-        l := ActiveLowerBoundForSourceAndRange( phi );
-        u := ActiveUpperBoundForSourceAndRange( phi );
-        
-        morphisms:= [  ];
-        
-        for i in Reversed( [ l .. u ] ) do
-          
-          Add( morphisms,
-              InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi[ i ] )
-            );
-        
-        od;
-        
-        if IsEmpty( morphisms) then
-          
-          morphism := UniversalMorphismIntoZeroObject( distinguished_object );
-          
-        else
-          
-          morphism := MorphismBetweenDirectSums( [ morphisms] );
-          
-        fi;
-        
-        T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
-        
-        Assert( 3, IsZero( PreCompose( morphism, T^0 ) ) );
-        
-        return [ morphism, T ];
-        
-    end;
-        
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-          
-          return KernelLift( T^0, morphism );
-          
-        end );
-        
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-       
-       AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T, I;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-           
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-            
-          return KernelLift( ApplyFunctor( I, T^0 ), ApplyFunctor( I, morphism ) );
-          
-        end );
-            
-    else
-        
-        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T, DO;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-           
-          DO := DistinguishedObjectOfHomomorphismStructure( category );
-          
-          return ChainMorphism( DO, T, [ morphism ], 0 );
-        
-        end );
-        
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_CHAIN_MORPHISM,
-  function( category )
-    local cat, range_cat;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, phi, struc_on_objects, indices, L, i;
-          
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
-          
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
-          
-          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
-          
-          phi := PreCompose( ell, CyclesAt( T, 0 ) );
-          
-          struc_on_objects := [  ];
-          
-          indices := Reversed( [ l .. u ] );
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] ) );
-                 
-          return ChainMorphism( B, C, Reversed( L ), l );
-          
-      end );
-      
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-      
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, I, phi, struc_on_objects, indices, L, i;
-          
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
-          
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
-          
-          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          I := ExtendFunctorToChainComplexCategories( I );
-          
-          phi := ValueGlobal( "MorphismDatum" )( PreCompose( ell, CyclesAt( ApplyFunctor( I, T ), 0 ) ) );
-          
-          struc_on_objects := [  ];
-          
-          indices := Reversed( [ l .. u ] );
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] ) );
-          
-          return ChainMorphism( B, C, Reversed( L ), l );
-          
-      end );
-      
-    else
-      
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, phi, struc_on_objects, indices, L, i;
-          
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
-          
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
-          
-          T := TotalComplex( DoubleChainComplexByHomStructure( B, C ) );
-          
-          phi := ell[ 0 ];
-          
-          struc_on_objects := [  ];
-          
-          indices := Reversed( [ l .. u ] );
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                 i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] ) );
-                 
-          return ChainMorphism( B, C, Reversed( L ), l );
-          
-      end );
-      
-    fi;
-
-end );
-
-##
-InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_FOR_CHAINS,
-    function( category )
-      local cat, range_cat;
-      
-      cat := UnderlyingCategory( category );
+      cat := UnderlyingCategory( ch_cat );
       
       range_cat := RangeCategoryOfHomomorphismStructure( cat );
-                
-      if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          { } -> DistinguishedObjectOfHomomorphismStructure( cat )
-        );  
-          
-      elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          function( )
-            local I;
+      
+      ch_range_cat := ComplexesCategoryByCochains( range_cat );
+      
+      return CreateComplex( ch_range_cat, DistinguishedObjectOfHomomorphismStructure( cat ), 0 );
+    
+end ) );
+
+BindGlobal( "_complexes_HomomorphismStructureOnObjects",
+  function ( ch_cat, B, C )
+    local cat, range_cat, ch_range_cat, l_B, l_C, u_B, u_C, diagrams, objs, diffs;
+    
+    cat := UnderlyingCategory( ch_cat );
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    ch_range_cat := ComplexesCategoryByCochains( range_cat );
+    
+    l_B := LowerBound( B );
+    u_B := UpperBound( B );
+    
+    l_C := LowerBound( C );
+    u_C := UpperBound( C );
+    
+    diagrams := AsZFunction( n -> List( [ Maximum( l_C, l_B + n ) .. Minimum( u_C, u_B + n ) ], j -> HomomorphismStructureOnObjects( cat, B[j-n], C[j] ) ) );
+    
+    objs := ApplyMap( diagrams, diagram -> DirectSum( range_cat, diagram ) );
+    
+    diffs :=
+        AsZFunction(
+          function ( n )
+            local l_BC, u_BC, p_BC, q_BC, diagram_S, diagram_R, matrix;
             
-            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
+            l_BC := Maximum( l_C, l_B + n );
+            u_BC := Minimum( u_C, u_B + n );
             
-            return I( DistinguishedObjectOfHomomorphismStructure( cat ) );
+            p_BC := Maximum( l_C, l_B + n + 1 );
+            q_BC := Minimum( u_C, u_B + n + 1 );
+            
+            diagram_S := diagrams[n];
+            diagram_R := diagrams[n+1];
+            
+            matrix :=
+                ListN( [ 1 .. u_BC - l_BC + 1 ], [ l_BC .. u_BC ],
+                    { index_j, j } -> ListN( [ 1 .. q_BC - p_BC + 1 ], [ p_BC .. q_BC ],
+                        function ( index_i, i )
+                            
+                            if i = j then
+                                return HomomorphismStructureOnMorphismsWithGivenObjects( cat, diagram_S[index_j], B^(i-1-n), IdentityMorphism( cat, C[j] ), diagram_R[index_i] );
+                            elif i = j + 1 then
+                                return (-1)^(n+1) * HomomorphismStructureOnMorphismsWithGivenObjects( cat, diagram_S[index_j], IdentityMorphism( cat, B[j-n] ), C^j, diagram_R[index_i] );
+                            else
+                                return ZeroMorphism( range_cat, diagram_S[index_j], diagram_R[index_i] );
+                            fi;
+                            
+                        end ) );
+            
+            return MorphismBetweenDirectSumsWithGivenDirectSums( range_cat, objs[n], diagram_S, matrix, diagram_R, objs[n+1] );
             
           end );
-            
-      else
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          {} -> StalkChainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 )
-        );
-            
-      fi;
-        
-end );
-
-##################
-#
-# For Cochains
-#
-##################
-
-##
-InstallMethod( DoubleCochainComplexByHomStructure,
-          [ IsCochainComplex, IsCochainComplex ],
-          
-  function ( B, C )
-    local cat, range_cat, H, V, D;
     
-    cat := UnderlyingCategory( CapCategory( B ) );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    H := { i, j } -> (-1) ^ ( i + j + 1 ) * HomStructure( B ^ ( -i - 1 ), C[ j ] );
-    
-    V := { i, j } -> HomStructure( B[ -i ], C ^ j );
-    
-    D := DoubleCochainComplex( range_cat, H, V );
-    
-    if HasActiveUpperBound( B ) then
-      SetLeftBound( D, -ActiveUpperBound( B ) );
-    fi;
-    
-    if HasActiveLowerBound( B ) then
-      SetRightBound( D, -ActiveLowerBound( B ) );
-    fi;
-    
-    if HasActiveUpperBound( C ) then
-      SetAboveBound( D, ActiveUpperBound( C ) );
-    fi;
-    
-    if HasActiveLowerBound( C ) then
-      SetBelowBound( D, ActiveLowerBound( C ) );
-    fi;
-    
-    return D;
+    return CreateComplex( ch_range_cat, objs, diffs, l_C - u_B, u_C - l_B );
     
 end );
-
-##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS,
-  function( category )
-    local cat, range_cat;
     
-    cat := UnderlyingCategory( category );
+#     phi
+# A -------> B
+#
+#
+# D <------- C
+#     psi
+#
+# returns a morphism H(phi,psi):H(B,C)->H(A,D)
+    
+BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
+  
+  function ( ch_cat, hom_BC, phi, psi, hom_AD )
+    local cat, range_cat, ch_range_cat, A, B, C, D, l_phi, u_phi, l_psi, u_psi, l_A, u_A, l_B, u_B, l_C, u_C, l_D, u_D, morphisms;
+    
+    cat := UnderlyingCategory( ch_cat );
     
     range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    ch_range_cat := ComplexesCategoryByCochains( range_cat );
+    
+    l_phi := LowerBound( phi );
+    u_phi := UpperBound( phi );
+    
+    l_psi := LowerBound( psi );
+    u_psi := UpperBound( psi );
+    
+    A := Source( phi );
+    l_A := LowerBound( A );
+    u_A := UpperBound( A );
+    
+    B := Range( phi );
+    l_B := LowerBound( B );
+    u_B := UpperBound( B );
+    
+    C := Source( psi );
+    l_C := LowerBound( C );
+    u_C := UpperBound( C );
+    
+    D := Range( psi );
+    l_D := LowerBound( D );
+    u_D := UpperBound( D );
+    
+    morphisms :=
+        AsZFunction(
+          function ( n )
+            local l_BC, u_BC, l_AD, u_AD, diagram_S, diagram_R, matrix;
+            
+            l_BC := Maximum( l_C, l_B + n );
+            u_BC := Minimum( u_C, u_B + n );
+            
+            l_AD := Maximum( l_D, l_A + n );
+            u_AD := Minimum( u_D, u_A + n );
+            
+            if HasBaseZFunctions( Objects( hom_BC ) ) then
+              diagram_S := BaseZFunctions( Objects( hom_BC ) )[1][n];
+            else
+              diagram_S := List( [ l_BC .. u_BC ], j -> HomomorphismStructureOnObjects( cat, B[j-n], C[j] ) );
+            fi;
+            
+            if HasBaseZFunctions( Objects( hom_AD ) ) then
+              diagram_R := BaseZFunctions( Objects( hom_AD ) )[1][n];
+            else
+              diagram_R := List( [ l_AD .. u_AD ], i -> HomomorphismStructureOnObjects( cat, A[i-n], D[i] ) );
+            fi;
+            
+            matrix :=
+              ListN( [ 1 .. u_BC - l_BC + 1 ], [ l_BC .. u_BC ],
+                  { index_j, j } -> ListN( [ 1 .. u_AD - l_AD + 1 ], [ l_AD .. u_AD ],
+                        function ( index_i, i )
+                            
+                            if i = j then
+                                return HomomorphismStructureOnMorphismsWithGivenObjects( cat, diagram_S[index_j], phi[j-n], psi[j], diagram_R[index_i] );
+                            else
+                                return ZeroMorphism( range_cat, diagram_S[index_j], diagram_R[index_i] );
+                            fi;
+                            
+                        end ) );
+                        
+            return MorphismBetweenDirectSumsWithGivenDirectSums( range_cat, hom_BC[n], diagram_S, matrix, diagram_R, hom_AD[n] );
+            
+        end );
+        
+    return CreateComplexMorphism( ch_range_cat, hom_BC, hom_AD, morphisms, l_psi - u_phi, u_psi - l_phi );
+    
+end );
+
+BindGlobal( "_complexes_HomomorphismStructureOnMorphisms",
+  
+  function ( ch_cat, phi, psi )
+    local hom_BC, hom_AD;
+    
+    hom_BC := _complexes_HomomorphismStructureOnObjects( ch_cat, Range( phi ), Source( psi ) );
+    
+    hom_AD := _complexes_HomomorphismStructureOnObjects( ch_cat, Source( phi ), Range( psi ) );
+    
+    return _complexes_HomomorphismStructureOnMorphismsWithGivenObjects( ch_cat, hom_BC, phi, psi, hom_AD );
+    
+end );
+
+##
+BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects",
+  
+  function ( ch_cat, distinguished_object, alpha, hom_BC )
+    local cat, range_cat, ch_range_cat, B, C, l_BC, u_BC, diagram_S, diagram_R, matrix, ell;
+    
+    cat := UnderlyingCategory( ch_cat );
+    
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    ch_range_cat := ComplexesCategoryByCochains( range_cat );
+    
+    B := Source( alpha );
+    C := Range( alpha );
+    
+    l_BC := Maximum( LowerBound( B ), LowerBound( C ) );
+    u_BC := Minimum( UpperBound( B ), UpperBound( C ) );
+    
+    diagram_S := [ distinguished_object[0] ];
+    
+    if HasBaseZFunctions( Objects( hom_BC ) ) then
+      diagram_R := BaseZFunctions( Objects( hom_BC ) )[1][0];
+    else
+      diagram_R := List( [ l_BC .. u_BC ], j -> HomomorphismStructureOnObjects( cat, B[j], C[j] ) );
+    fi;
+    
+    matrix := [ ListN( [ 1 .. u_BC - l_BC + 1 ], [ l_BC .. u_BC ],
+                  { index_j, j } -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( cat, distinguished_object[0], alpha[j], diagram_R[index_j] ) ) ];
+    
+    ell := MorphismBetweenDirectSumsWithGivenDirectSums( range_cat, distinguished_object[0], diagram_S, matrix, diagram_R, hom_BC[0] );
+    
+    return CreateComplexMorphism( ch_range_cat, distinguished_object, hom_BC, [ ell ], 0 );
+    
+end );
+
+##
+BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure",
+  
+  function( ch_cat, alpha )
+    local distinguished_object, hom_BC;
+    
+    distinguished_object := _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat );
+    
+    hom_BC := _complexes_HomomorphismStructureOnObjects( ch_cat, Source( alpha ), Range( alpha ) );
+    
+    return _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( ch_cat, distinguished_object, alpha, hom_BC );
+    
+end );
+
+##
+BindGlobal( "_complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism",
+  
+  function ( ch_cat, B, C, ell )
+    local cat, range_cat, l_BC, u_BC, hom_BC, diagram_R, morphisms;
+    
+    cat := UnderlyingCategory( ch_cat );
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    
+    l_BC := Maximum( LowerBound( B ), LowerBound( C ) );
+    u_BC := Minimum( UpperBound( B ), UpperBound( C ) );
+    
+    hom_BC := Range( ell );
+    
+    if HasBaseZFunctions( Objects( hom_BC ) ) then
+      diagram_R := BaseZFunctions( Objects( hom_BC ) )[1][0];
+    else
+      diagram_R := List( [ l_BC .. u_BC ], j -> HomomorphismStructureOnObjects( cat, B[j], C[j] ) );
+    fi;
+    
+    morphisms := ListN( [ 1 .. u_BC - l_BC + 1 ], [ l_BC .. u_BC ],
+                    { index_j, j } -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism(
+                                        cat,
+                                        B[j],
+                                        C[j],
+                                        PreCompose( range_cat, ell[0], ProjectionInFactorOfDirectSumWithGivenDirectSum( range_cat, diagram_R, index_j, hom_BC[0] ) ) ) );
+    
+    return CreateComplexMorphism( ch_cat, B, C, morphisms, l_BC );
+    
+end );
+
+##
+InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLEX_CATEGORY,
+  function ( ch_cat )
+    local cat, range_cat, ch_range_cat, name, category_constructor, as_object_in_abelian_category, as_morphism_in_abelian_category, unwrap_morphism_in_abelian_category,
+          can_be_equipped_with_hom_structure_over_abelian_category;
+    
+    cat := UnderlyingCategory( ch_cat );
+    
+    if not HasRangeCategoryOfHomomorphismStructure( cat ) then
+      Error( "the underlying category must be equipped with a Hom-Structure\n" );
+    fi;
+     
+    range_cat := RangeCategoryOfHomomorphismStructure( cat );
+    
+    can_be_equipped_with_hom_structure_over_abelian_category := false;
     
     if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
       
-      AddHomomorphismStructureOnObjects( category,
-        function ( B, C )
-          local D;
-          
-          D := DoubleCochainComplexByHomStructure( B, C );
-          
-          return Source( CyclesAt( TotalComplex( D ), 0 ) );
-          
-        end
+      category_constructor := IdFunc;
+      as_object_in_abelian_category := IdFunc;
+      as_morphism_in_abelian_category := IdFunc;
+      unwrap_morphism_in_abelian_category := IdFunc;
+      
+      can_be_equipped_with_hom_structure_over_abelian_category := true;
+      
+    elif IsBound( IsCategoryOfRows ) and ValueGlobal( "IsCategoryOfRows" )( range_cat ) then
+      
+      category_constructor := ValueGlobal( "FreydCategory" );
+      as_object_in_abelian_category := ValueGlobal( "AsFreydCategoryObject" );
+      as_morphism_in_abelian_category := ValueGlobal( "AsFreydCategoryMorphism" );
+      unwrap_morphism_in_abelian_category := ValueGlobal( "MorphismDatum" );
+      
+      can_be_equipped_with_hom_structure_over_abelian_category := true;
+      
+    fi;
+    
+    if can_be_equipped_with_hom_structure_over_abelian_category then
+      
+      ch_cat!.hom_structure_helper_functions :=
+        rec(  category_constructor := category_constructor,
+              as_object_in_abelian_category := as_object_in_abelian_category,
+              as_morphism_in_abelian_category := as_morphism_in_abelian_category,
+              unwrap_morphism_in_abelian_category := unwrap_morphism_in_abelian_category );
+      
+      range_cat := category_constructor( range_cat );
+      
+      SetIsEquippedWithHomomorphismStructure( ch_cat, true );
+      
+      SetRangeCategoryOfHomomorphismStructure( ch_cat, range_cat );
+      
+      AddDistinguishedObjectOfHomomorphismStructure( ch_cat,
+        
+        ch_cat -> as_object_in_abelian_category( _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat )[0] )
       );
       
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-      
-      AddHomomorphismStructureOnObjects( category,
-        function ( B, C )
-          local D, I;
-          
-          D := DoubleCochainComplexByHomStructure( B, C );
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          I := ExtendFunctorToCochainComplexCategories( I );
-          
-          return Source( CyclesAt( I(  TotalComplex( D ) ), 0 ) );
-          
-        end );
+      AddHomomorphismStructureOnObjects( ch_cat,
         
-    else
-      
-      AddHomomorphismStructureOnObjects( category,
-        function ( B, C )
-          local D;
+        function ( ch_cat, B, C )
           
-          D := DoubleCochainComplexByHomStructure( B, C );
-          
-          return TotalComplex( D );
+          return KernelObject( range_cat, as_morphism_in_abelian_category( _complexes_HomomorphismStructureOnObjects( ch_cat, B, C )^0 ) );
           
       end );
       
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_HOM_STRUCTURE_ON_COCHAINS_MORPHISMS,
-  function( category )
-    local cat, range_cat, func;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-          
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM;
-          
-          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
-          
-          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleCochainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-                    
-          TM := TotalMorphism( DM );
-          
-          return CyclesFunctorialAt( TM, 0 );
-          
-        end );
+      AddHomomorphismStructureOnMorphismsWithGivenObjects( ch_cat,
         
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-       
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM, I;
+        function ( ch_cat, hom_BC, phi, psi, hom_AD )
+          local hom_phi_psi;
           
-          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
+          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( ch_cat, phi, psi );
           
-          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleCochainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-                    
-          TM := TotalMorphism( DM );
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          I := ExtendFunctorToCochainComplexCategories( I );
-          
-          return CyclesFunctorialAt( ApplyFunctor( I, TM ), 0 );
-          
-        end );
-        
-    else
-      
-      AddHomomorphismStructureOnMorphisms( category,
-        function( alpha, beta )
-          local DS, DR, DM, TM;
-          
-          DS := DoubleCochainComplexByHomStructure( Range( alpha ), Source( beta ) );
-          
-          DR := DoubleCochainComplexByHomStructure( Source( alpha ), Range( beta ) );
-          
-          DM := DoubleCochainMorphism(
-                      DS,
-                      DR,
-                      { i, j } -> HomStructure( alpha[ -i ], beta[ j ] )
-                    );
-                    
-          TM := TotalMorphism( DM );
-          
-          return TM;
-          
-        end );
-        
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_COCHAIN_MORPHISM_AS_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE,
-  function( category )
-    local cat, range_cat, distinguished_object, func;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    distinguished_object := DistinguishedObjectOfHomomorphismStructure( cat );
-    
-    func :=
-      function( phi )
-        local B, C, l, u, morphisms, morphism, T, I, U, i;
-        
-        B := Source( phi );
-        C := Range( phi );
-        
-        l := ActiveLowerBoundForSourceAndRange( phi );
-        u := ActiveUpperBoundForSourceAndRange( phi );
-        
-        morphisms:= [  ];
-        
-        for i in [ l .. u ] do
-          
-          Add( morphisms,
-              InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( phi[ i ] )
-            );
-            
-        od;
-        
-        if IsEmpty( morphisms) then
-          
-          morphism := UniversalMorphismIntoZeroObject( distinguished_object );
-          
-        else
-          
-          morphism := MorphismBetweenDirectSums( [ morphisms] );
-          
-        fi;
-        
-        T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
-        
-        Assert( 3, IsZero( PreCompose( morphism, T^0 ) ) );
-        
-        return [ morphism, T ];
-        
-    end;
-      
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-          
-          return KernelLift( T^0, morphism );
-          
-        end );
-        
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-       
-       AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T, I;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-          
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-          
-          return KernelLift( ApplyFunctor( I, T^0 ), ApplyFunctor( I, morphism ) );
-          
-        end );
-        
-    else
-        
-        AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( category,
-        
-        function( phi )
-          local output, morphism, T, DO;
-          
-          output := func( phi );
-          
-          morphism := output[ 1 ];
-          
-          T := output[ 2 ];
-          
-          DO := DistinguishedObjectOfHomomorphismStructure( category );
-          
-          return CochainMorphism( DO, T, [ morphism ], 0 );
-          
-        end );
-        
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_INTERPRET_MORPHISM_FROM_DISTINGUISHED_OBJECT_TO_HOMOMORPHISM_STRUCTURE_AS_COCHAIN_MORPHISM,
-  function( category )
-    local cat, range_cat;
-    
-    cat := UnderlyingCategory( category );
-    
-    range_cat := RangeCategoryOfHomomorphismStructure( cat );
-    
-    if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-      
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, phi, struc_on_objects, indices, L, i;
-          
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
-          
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
-          
-          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
-          
-          phi := PreCompose( ell, CyclesAt( T, 0 ) );
-          
-          struc_on_objects := [  ];
-          
-          indices := [ l .. u ];
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                  i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] )
-                );
-                
-          return CochainMorphism( B, C, L, l );
+          return KernelObjectFunctorialWithGivenKernelObjects(
+                        range_cat,
+                        hom_BC,
+                        as_morphism_in_abelian_category( Source( hom_phi_psi )^0 ),
+                        as_morphism_in_abelian_category( hom_phi_psi[0] ),
+                        as_morphism_in_abelian_category( Range( hom_phi_psi )^0 ),
+                        hom_AD );
           
       end );
       
-    elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
+      AddHomomorphismStructureOnMorphisms( ch_cat,
+        
+        function ( ch_cat, phi, psi )
+          local hom_phi_psi;
+          
+          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( ch_cat, phi, psi );
+           
+          return KernelObjectFunctorial(
+                        range_cat,
+                        as_morphism_in_abelian_category( Source( hom_phi_psi )^0 ),
+                        as_morphism_in_abelian_category( hom_phi_psi[0] ),
+                        as_morphism_in_abelian_category( Range( hom_phi_psi )^0 ) );
+          
+      end );
       
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, I, phi, struc_on_objects, indices, L, i;
+      AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( ch_cat,
+        
+        function ( ch_cat, phi )
+          local distinguished_object, hom_BC, ell;
           
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
+          distinguished_object := _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat );
           
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
+          hom_BC := _complexes_HomomorphismStructureOnObjects( ch_cat, Source( phi ), Range( phi ) );
           
-          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
+          ell := _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( ch_cat, distinguished_object, phi, hom_BC );
           
-          I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
+          return LiftAlongMonomorphism(
+                        range_cat,
+                        KernelEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^0 ) ),
+                        as_morphism_in_abelian_category( ell[0] ) );
           
-          I := ExtendFunctorToCochainComplexCategories( I );
+      end );
+      
+      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat,
+        function ( ch_cat, B, C, ell )
+          local distinguished_object, hom_BC;
           
-          phi := ValueGlobal( "MorphismDatum" )( PreCompose( ell, CyclesAt( ApplyFunctor( I, T ), 0 ) ) );
+          distinguished_object := _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat );
           
-          struc_on_objects := [  ];
+          hom_BC := _complexes_HomomorphismStructureOnObjects( ch_cat, B, C );
           
-          indices := [ l .. u ];
+          ell := unwrap_morphism_in_abelian_category( PreCompose( range_cat, ell, KernelEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^0 ) ) ) );
           
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
+          ell := CreateComplexMorphism( distinguished_object, hom_BC, [ ell ], 0 );
           
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                  i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] )
-                );
-                
-          return CochainMorphism( B, C, L, l );
+          return _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat, B, C, ell );
           
       end );
       
     else
       
-      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( category,
-        function( B, C, ell )
-          local l, u, T, phi, struc_on_objects, indices, L, i;
-          
-          l := Minimum( ActiveLowerBound( B ), ActiveLowerBound( C ) );
-          
-          u := Maximum( ActiveUpperBound( B ), ActiveUpperBound( C ) );
-          
-          T := TotalComplex( DoubleCochainComplexByHomStructure( B, C ) );
-          
-          phi := ell[ 0 ];
-          
-          struc_on_objects := [  ];
-          
-          indices := [ l .. u ];
-          
-          for i in indices do
-            
-            Add( struc_on_objects, HomomorphismStructureOnObjects( B[ i ], C[ i ] ) );
-            
-          od;
-          
-          L := List( [ 1 .. Length( indices ) ], i -> ProjectionInFactorOfDirectSum( struc_on_objects, i ) );
-          
-          L := List( L, l -> PreCompose( phi, l ) );
-          
-          L := List( [ 1 .. Length( indices ) ],
-                  i -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( B[ indices[i] ], C[ indices[i] ], L[i] )
-                );
-                
-          return CochainMorphism( B, C, L, l );
-          
-      end );
-      
-    fi;
-    
-end );
-
-##
-InstallGlobalFunction( ADD_DISTINGUISHED_OBJECT_OF_HOMOMORPHISM_STRUCTURE_FOR_COCHAINS,
-    function( category )
-      local cat, range_cat;
-      
-      cat := UnderlyingCategory( category );
-      
-      range_cat := RangeCategoryOfHomomorphismStructure( cat );
-                
-      if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          { } -> DistinguishedObjectOfHomomorphismStructure( cat )
-        );  
-          
-      elif IsPackageMarkedForLoading( "FreydCategoriesForCAP", ">= 2019.11.02" ) and ValueGlobal( "IsValidInputForFreydCategory" )( range_cat ) then
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          function( )
-            local I;
-            
-            I := ValueGlobal( "EmbeddingFunctorIntoFreydCategory" )( range_cat );
-            
-            return I( DistinguishedObjectOfHomomorphismStructure( cat ) );
-            
-          end );
-            
+      if IsIdenticalObj( cat, range_cat ) then
+        ch_range_cat := ch_cat;
       else
-        
-        AddDistinguishedObjectOfHomomorphismStructure( category,
-        
-          {} -> StalkCochainComplex( DistinguishedObjectOfHomomorphismStructure( cat ), 0 )
-        );
-            
+        ch_range_cat := ComplexesCategoryByCochains( range_cat );
       fi;
+      
+      SetIsEquippedWithHomomorphismStructure( ch_cat, true );
+      
+      SetRangeCategoryOfHomomorphismStructure( ch_cat, ch_range_cat );
+      
+      for name in [ "DistinguishedObjectOfHomomorphismStructure",
+                    "HomomorphismStructureOnObjects",
+                    "HomomorphismStructureOnMorphisms",
+                    "HomomorphismStructureOnMorphismsWithGivenObjects",
+                    "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure",
+                    "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects",
+                    "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ] do
         
+        ValueGlobal( Concatenation( "Add", name ) )( ch_cat, EvalString( Concatenation( "_complexes_", name ) ) );
+      
+      od;
+      
+    fi;
+    
 end );
+

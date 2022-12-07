@@ -22,6 +22,8 @@
 */doc/*.toc
 */doc/manual.pdf
 
+*.swp
+
 .deps/
 .libs/
 

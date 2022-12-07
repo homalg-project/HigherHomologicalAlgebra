@@ -21,8 +21,6 @@ gap> LoadPackage( "Algebroids", false );
 true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
-gap> LoadPackage( "DerivedCategories", false );
-true
 gap> LoadPackage( "FunctorCategories", false );
 true
 gap> LoadPackage( "StableCategories", false );
@@ -41,8 +39,6 @@ true
 gap> LoadPackage( "Algebroids" );
 true
 gap> LoadPackage( "FreydCategoriesForCAP" );
-true
-gap> LoadPackage( "DerivedCategories" );
 true
 gap> LoadPackage( "FunctorCategories" );
 true

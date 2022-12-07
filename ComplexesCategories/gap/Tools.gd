@@ -1,0 +1,6 @@
+
+
+
+
+
+DeclareOperation( AsComplexOverFullSubcategory, [ IsCapCategory, IsChainOrCochainComplex ] );

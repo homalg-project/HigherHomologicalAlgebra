@@ -3,18 +3,8 @@
 #
 # Reading the implementation part of the package.
 #
-ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi");
-ReadPackage( "DerivedCategories", "gap/ExceptionalCollection.gi" );
-ReadPackage( "DerivedCategories", "gap/OtherQPATweaks.gi" );
-ReadPackage( "DerivedCategories", "gap/Convenience.gi" );
-ReadPackage( "DerivedCategories", "gap/Functors.gi" );
-ReadPackage( "DerivedCategories", "gap/Hom.gi" );
-ReadPackage( "DerivedCategories", "gap/Tensor.gi" );
-ReadPackage( "DerivedCategories", "gap/NaturalTransformations.gi" );
-ReadPackage( "DerivedCategories", "gap/ImportedMethods.gi" );
-ReadPackage( "DerivedCategories", "gap/ExceptionalReplacement.gi" );
-
-
-if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-    ReadPackage( "DerivedCategories", "gap/Julia.gi" );
-fi;
+ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi" );
+ReadPackage( "DerivedCategories", "gap/Objects.gi" );
+ReadPackage( "DerivedCategories", "gap/Morphisms.gi");
+ReadPackage( "DerivedCategories", "gap/Functors.gi");
+ReadPackage( "DerivedCategories", "gap/OnlyWithFunctorCategories.gi");

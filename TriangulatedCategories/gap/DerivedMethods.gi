@@ -11,46 +11,111 @@
 ################################################
 
 ##
-AddDerivationToCAP( IsExactTriangle,
-                [
-                  [ WitnessIsomorphismOntoStandardConeObject, 1 ],
-                ],
-  function( cat, alpha, iota, pi )
+AddDerivationToCAP( ShiftOfMorphismByInteger,
+                [ [ ShiftOfObjectByInteger, 2 ],
+                  [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
+  
+  function ( homotopy_cat, alpha, n )
+    local s, r;
     
-    return WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi ) <> fail;
+    s := ShiftOfObjectByInteger( Source( alpha ), n );
+    r := ShiftOfObjectByInteger( Range ( alpha ), n );
     
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "IsExactTriangle by WitnessIsomorphismOntoStandardConeObject"
+    return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, alpha, n, r );
+    
+end : CategoryFilter := IsTriangulatedCategory,
+      Description:= "ShiftOfMorphismByInteger by ShiftOfObjectByInteger & ShiftOfMorphismByIntegerWithGivenObjects"
 );
 
 ##
-AddFinalDerivationBundle( # WitnessIsomorphismOntoStandardConeObject
+AddDerivationToCAP( ShiftOfObject,
+              [ [ ShiftOfObjectByInteger, 1 ] ],
+  
+  function ( homotopy_cat, C )
+    
+    return ShiftOfObjectByInteger( homotopy_cat, C, 1 );
+    
+end : CategoryFilter := IsTriangulatedCategory,
+      Description:= "ShiftOfObject by ShiftOfObjectByInteger"
+);
+
+##
+AddDerivationToCAP( InverseShiftOfObject,
+              [ [ ShiftOfObjectByInteger, 1 ] ],
+  
+  function ( homotopy_cat, C )
+    
+    return ShiftOfObjectByInteger( homotopy_cat, C, -1 );
+    
+end : CategoryFilter := IsTriangulatedCategory,
+      Description:= "InverseShiftOfObject by ShiftOfObjectByInteger"
+);
+
+##
+AddDerivationToCAP( ShiftOfMorphismWithGivenObjects,
+              [ [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
+  
+  function ( homotopy_cat, s, C, r )
+    
+    return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, C, 1, r );
+    
+end : CategoryFilter := IsTriangulatedCategory,
+      Description:= "ShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects"
+);
+
+##
+AddDerivationToCAP( InverseShiftOfMorphismWithGivenObjects,
+              [ [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
+  
+  function ( homotopy_cat, s, C, r )
+    
+    return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, C, -1, r );
+    
+end : CategoryFilter := IsTriangulatedCategory,
+      Description:= "InverseShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects"
+);
+
+##
+AddDerivationToCAP( IsExactTriangle,
+                [
+                  [ WitnessIsomorphismIntoStandardConeObject, 1 ],
+                ],
+  function( cat, alpha, iota, pi )
+    
+    return WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi ) <> fail;
+    
+end:
+  CategoryFilter := IsTriangulatedCategory,
+  Description:= "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject"
+);
+
+##
+AddFinalDerivationBundle( # WitnessIsomorphismIntoStandardConeObject
                 [
                   [ IsEqualForObjects, 1 ],
-                  [ ShiftOnObject, 1 ],
-                  [ MorphismToStandardConeObject, 1 ],
+                  [ ShiftOfObject, 1 ],
+                  [ MorphismIntoStandardConeObject, 1 ],
                   [ MorphismFromStandardConeObject, 1 ],
                   [ IdentityMorphism, 2 ],
                   [ SolveLinearSystemInAbCategoryOrFail, 1 ],
                   [ InverseForMorphisms, 1 ],
                 ],
                 [
-                  WitnessIsomorphismOntoStandardConeObject,
+                  WitnessIsomorphismIntoStandardConeObject,
                   WitnessIsomorphismFromStandardConeObject
                 ],
 [
-  WitnessIsomorphismOntoStandardConeObject,
+  WitnessIsomorphismIntoStandardConeObject,
   function( cat, alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
     
-    if not IsEqualForObjects( ShiftOnObject( Source( alpha ) ), Range( pi ) ) then
+    if not IsEqualForObjects( ShiftOfObject( Source( alpha ) ), Range( pi ) ) then
       
       Error( "Wrong input!\n" );
       
     fi;
     
-    iota_alpha := MorphismToStandardConeObject( alpha );
+    iota_alpha := MorphismIntoStandardConeObject( alpha );
     
     pi_alpha := MorphismFromStandardConeObject( alpha );
     
@@ -79,7 +144,7 @@ AddFinalDerivationBundle( # WitnessIsomorphismOntoStandardConeObject
     function( cat, alpha, iota, pi )
       local w;
       
-      w := WitnessIsomorphismOntoStandardConeObject( alpha, iota, pi );
+      w := WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi );
       
       if w = fail then
         
@@ -135,10 +200,10 @@ end );
 AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
                 [
                   [ StandardConeObject, 1 ],
-                  [ MorphismFromStandardConeObjectWithGivenStandardConeObject, 1 ],
-                  [ MorphismToStandardConeObjectWithGivenStandardConeObject, 1 ],
-                  [ ShiftOnObject, 1 ],
-                  [ ShiftOnMorphismWithGivenObjects, 1 ],
+                  [ MorphismFromStandardConeObjectWithGivenObjects, 1 ],
+                  [ MorphismIntoStandardConeObjectWithGivenStandardConeObject, 1 ],
+                  [ ShiftOfObject, 2 ],
+                  [ ShiftOfMorphismWithGivenObjects, 1 ],
                   [ PreCompose, 1 ]
                 ],
   function( cat, s, alpha, beta, gamma, r )
@@ -146,20 +211,21 @@ AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
     
     B := Range( alpha );
      
-    pi_beta := MorphismFromStandardConeObjectWithGivenStandardConeObject(
+    pi_beta := MorphismFromStandardConeObjectWithGivenObjects(
+                          s,
                           beta,
-                          s
+                          ShiftOfObject( B )
                       );
     
     cone_alpha := StandardConeObject( alpha );
     
-    iota_alpha := MorphismToStandardConeObjectWithGivenStandardConeObject(
+    iota_alpha := MorphismIntoStandardConeObjectWithGivenStandardConeObject(
                           alpha,
                           cone_alpha
                       );
     
-    iota_alpha := ShiftOnMorphismWithGivenObjects(
-                      ShiftOnObject( B ),
+    iota_alpha := ShiftOfMorphismWithGivenObjects(
+                      ShiftOfObject( B ),
                       iota_alpha,
                       r
                     );
@@ -196,39 +262,39 @@ end:
 AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
                 [
                     [ InjectionOfCofactorOfDirectSum, 2 ],
-                    [ ShiftOnMorphismWithGivenObjects, 2 ],
-                    [ ShiftOnObject, 4 ],
+                    [ ShiftOfMorphismWithGivenObjects, 2 ],
+                    [ ShiftOfObject, 4 ],
                     [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r  )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
-    Tl := List( l, m -> [ ShiftOnMorphism( m ) ] );
+    Tl := List( l, m -> [ ShiftOfMorphism( m ) ] );
     return MorphismBetweenDirectSums( Tl );
     
 end:
   ategoryFilter := IsTriangulatedCategory,
-  Description:= "ShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and ShiftOnMorphism"
+  Description:= "ShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and ShiftOfMorphism"
 );
 
 AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
                 [
                     [ ProjectionInFactorOfDirectSum, 2 ],
-                    [ ShiftOnMorphismWithGivenObjects, 2 ],
-                    [ ShiftOnObject, 4 ],
+                    [ ShiftOfMorphismWithGivenObjects, 2 ],
+                    [ ShiftOfObject, 4 ],
                     [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r  )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
-    Tl := List( l, m -> ShiftOnMorphism( m ) );
+    Tl := List( l, m -> ShiftOfMorphism( m ) );
     return MorphismBetweenDirectSums( [ Tl ] );
     
 end:
  CategoryFilter := IsTriangulatedCategory,
-  Description:= "ShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and ShiftOnMorphism"
+  Description:= "ShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and ShiftOfMorphism"
 
 );
 
@@ -236,40 +302,40 @@ end:
 AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
                 [
                     [ InjectionOfCofactorOfDirectSum, 2 ],
-                    [ InverseShiftOnMorphismWithGivenObjects, 2 ],
-                    [ InverseShiftOnObject, 4 ],
+                    [ InverseShiftOfMorphismWithGivenObjects, 2 ],
+                    [ InverseShiftOfObject, 4 ],
                     [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> InjectionOfCofactorOfDirectSum( L , i ) );
-    Tl := List( l, m -> [ InverseShiftOnMorphism( m ) ] );
+    Tl := List( l, m -> [ InverseShiftOfMorphism( m ) ] );
     return MorphismBetweenDirectSums( Tl );
     
  end:
   CategoryFilter := IsTriangulatedCategory,
-  Description:= "InverseShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and InverseShiftOnMorphism"
+  Description:= "InverseShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and InverseShiftOfMorphism"
  );
 
 ##
 AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
                 [
                     [ ProjectionInFactorOfDirectSum, 2 ],
-                    [ InverseShiftOnMorphismWithGivenObjects, 2 ],
-                    [ InverseShiftOnObject, 4 ],
+                    [ InverseShiftOfMorphismWithGivenObjects, 2 ],
+                    [ InverseShiftOfObject, 4 ],
                     [ MorphismBetweenDirectSums, 1 ],
                 ],
   function( cat, s, L, r )
     local l, Tl;
 
     l := List( [ 1..Length( L ) ], i -> ProjectionInFactorOfDirectSum( L , i ) );
-    Tl := List( l, m -> InverseShiftOnMorphism( m ) );
+    Tl := List( l, m -> InverseShiftOfMorphism( m ) );
     return MorphismBetweenDirectSums( [ Tl ] );
        
  end:
   CategoryFilter := IsTriangulatedCategory,
-  Description:= "InverseShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and InverseShiftOnMorphism"
+  Description:= "InverseShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and InverseShiftOfMorphism"
  );
 
 ##

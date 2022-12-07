@@ -31,8 +31,8 @@ test-with-coverage: doc
 	gap --quitonbreak --cover stats tst/testall.g
 	gap --quitonbreak --norepl -c 'LoadPackage("profiling"); OutputJsonCoverage("stats", "coverage.json");'
 
-test-notebooks:
-	cd examples/notebooks/; \
+#test-notebooks:
+#	cd examples/notebooks/; \
 	for filename in *.ipynb; do \
 		jupyter nbconvert --ExecutePreprocessor.kernel_name=julia-$$(julia -e 'print(VERSION.major); print("."); print(VERSION.minor)') --ExecutePreprocessor.record_timing=False --to notebook --execute "$$filename" --output=out; \
 		# remove "ipynb" extension to exclude this from loops in reruns in case the diff fails \
@@ -66,4 +66,4 @@ test-spacing:
 	rm spacing_diff
 	rm spacing_diff_no_blanks
 
-ci-test: test-basic-spacing test-with-coverage test-notebooks
+ci-test: test-basic-spacing test-with-coverage

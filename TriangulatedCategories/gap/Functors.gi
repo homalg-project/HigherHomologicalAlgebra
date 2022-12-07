@@ -14,16 +14,9 @@ InstallMethod( ShiftFunctorAttr,
     
     Sigma := CapFunctor( name, category, category );
     
-    if not ( CanCompute( category, "ShiftOnObject" )
-              and CanCompute( category, "ShiftOnMorphismWithGivenObjects" ) ) then
-              
-        Error( "ShiftOnObject and ShiftOnMorphism should be added to the category" );
-        
-    fi;
+    AddObjectFunction( Sigma, ShiftOfObject );
     
-    AddObjectFunction( Sigma, ShiftOnObject );
-    
-    AddMorphismFunction( Sigma, ShiftOnMorphismWithGivenObjects );
+    AddMorphismFunction( Sigma, ShiftOfMorphismWithGivenObjects );
     
     return Sigma;
     
@@ -44,23 +37,16 @@ InstallMethod( InverseShiftFunctor,
     
     rev_Sigma := CapFunctor( name, category, category );
     
-    if not ( CanCompute( category, "InverseShiftOnObject" )
-              and CanCompute( category, "InverseShiftOnMorphismWithGivenObjects" ) ) then
-              
-      Error( "InverseShiftOnObject and InverseShiftOnMorphism should be added to the category" );
-      
-    fi;
+    AddObjectFunction( rev_Sigma, InverseShiftOfObject );
     
-    AddObjectFunction( rev_Sigma, InverseShiftOnObject );
-    
-    AddMorphismFunction( rev_Sigma, InverseShiftOnMorphismWithGivenObjects );
+    AddMorphismFunction( rev_Sigma, InverseShiftOfMorphismWithGivenObjects );
     
     return rev_Sigma;
     
 end );
 
 ##
-InstallMethod( Unit,
+InstallMethod( UnitOfShiftAdjunction,
           [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
@@ -78,7 +64,7 @@ InstallMethod( Unit,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> UnitIsomorphismWithGivenObject( a, r )
+      {s, a, r} -> UnitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
@@ -86,7 +72,7 @@ InstallMethod( Unit,
 end );
 
 ##
-InstallMethod( InverseOfUnit,
+InstallMethod( InverseOfUnitOfShiftAdjunction,
           [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
@@ -104,7 +90,7 @@ InstallMethod( InverseOfUnit,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfUnitIsomorphismWithGivenObject( a, s )
+      {s, a, r} -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -112,7 +98,7 @@ InstallMethod( InverseOfUnit,
 end );
 
 ##
-InstallMethod( Counit,
+InstallMethod( CounitOfShiftAdjunction,
           [ IsCapCategory and IsTriangulatedCategory ],
           
   function( category )
@@ -131,7 +117,7 @@ InstallMethod( Counit,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> CounitIsomorphismWithGivenObject( a, s )
+      {s, a, r} -> CounitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -139,7 +125,7 @@ InstallMethod( Counit,
 end );
 
 ##
-InstallMethod( InverseOfCounit,
+InstallMethod( InverseOfCounitOfShiftAdjunction,
           [ IsCapCategory and IsTriangulatedCategory ],
   function( category )
     local id, shift, ishift, ishift_of_shift, name, nat;
@@ -157,7 +143,7 @@ InstallMethod( InverseOfCounit,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfCounitIsomorphismWithGivenObject( a, r )
+      {s, a, r} -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
@@ -227,7 +213,7 @@ InstallMethod( RotationFunctorOp,
     );
     
     AddMorphismFunction( rot,
-      { s, phi, r } -> MorphismOfExactTriangles( s, phi[ 1 ], phi[ 2 ], ShiftOnMorphism( phi[ 0 ] ), r )
+      { s, phi, r } -> MorphismOfExactTriangles( s, phi[ 1 ], phi[ 2 ], ShiftOfMorphism( phi[ 0 ] ), r )
     );
     
     return rot;
@@ -249,7 +235,7 @@ InstallMethod( InverseRotationFunctorOp,
     );
     
     AddMorphismFunction( rot,
-      { s, phi, r } -> MorphismOfExactTriangles( s, InverseShiftOnMorphism( phi[ 2 ] ), phi[ 0 ], phi[ 1 ], r )
+      { s, phi, r } -> MorphismOfExactTriangles( s, InverseShiftOfMorphism( phi[ 2 ] ), phi[ 0 ], phi[ 1 ], r )
     );
     
     return rot;

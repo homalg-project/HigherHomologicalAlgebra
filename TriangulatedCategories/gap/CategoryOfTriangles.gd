@@ -66,7 +66,7 @@ DeclareAttribute( "DomainMorphism", IsCapExactTriangle );
 #! The output is $\iota:B\to C$.
 #! @Arguments t
 #! @Returns a morphism
-DeclareAttribute( "MorphismToConeObject", IsCapExactTriangle );
+DeclareAttribute( "MorphismIntoConeObject", IsCapExactTriangle );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -133,7 +133,7 @@ DeclareProperty( "IsStandardExactTriangle", IsCapExactTriangle );
 #! exact triangle $(\alpha,\iota(\alpha),\pi(\alpha))$.
 #! @Arguments t
 #! @Returns a morphism of triangles
-DeclareAttribute( "WitnessIsomorphismOntoStandardExactTriangle", IsCapExactTriangle );
+DeclareAttribute( "WitnessIsomorphismIntoStandardExactTriangle", IsCapExactTriangle );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$.

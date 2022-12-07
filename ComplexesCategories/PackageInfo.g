@@ -76,12 +76,9 @@ Dependencies := rec(
   NeededOtherPackages := [
                             [ "AutoDoc", ">= 2019.09.04" ],
                             [ "CAP", ">= 2022.09-02" ],
-                            [ "MonoidalCategories", ">= 2021.03-01" ],
-                            [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
+                            [ "ToolsForHigherHomologicalAlgebra", ">= 2022.08-02" ],
                          ],
-  SuggestedOtherPackages := [
-        [ "GeneralizedMorphismsForCAP", ">= 2019.08.10" ],
-      ],
+  SuggestedOtherPackages := [ ],
    
   ExternalConditions := [ ],
 ),
