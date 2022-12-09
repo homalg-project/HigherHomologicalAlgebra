@@ -320,20 +320,14 @@ InstallMethod( HomologySupport,
   C -> HomologySupport( C, LowerBound( C ), UpperBound( C ) )
 );
 
-
-for oper in
-  [ [ IsCochainComplex, CohomologySupport ],
-    [ IsChainComplex, HomologySupport ] ] do
-  
-  ##
-od;
-
+##
 InstallMethod( IsExact,
           [ IsCochainComplex, IsInt, IsInt ],
   
   { C, m, n } -> IsEmpty( CohomologySupport( C, m, n ) )
 );
 
+##
 InstallMethod( IsExact,
           [ IsChainComplex, IsInt, IsInt ],
 
