@@ -148,6 +148,20 @@ InstallOtherMethod( CreateComplex,
     
 end );
 
+##
+InstallOtherMethod( \/,
+      [ IsCapCategoryObject, IsChainOrCochainComplexCategory ],
+  
+  function ( o, ch_cat )
+    
+    if not IsIdenticalObj( CapCategory( o ), UnderlyingCategory( ch_cat ) ) then
+        TryNextMethod();
+    fi;
+    
+    return CreateComplex( ch_cat, o, 0 );
+    
+end );
+
 #########################################
 #
 # Attributes of a (co)chain complexes
