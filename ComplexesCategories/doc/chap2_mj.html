@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (ComplexesCategories) - Chapter 2: Complexes</title>
+<title>GAP (ComplexesCategories) - Chapter 2: Functors</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -18,477 +18,50 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
-<p><a id="X79C388D385DB7CD1" name="X79C388D385DB7CD1"></a></p>
-<div class="ChapSects"><a href="chap2_mj.html#X79C388D385DB7CD1">2 <span class="Heading">Complexes</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X810E0C5D7864CF1E">2.1 <span class="Heading">Categories and filters</span></a>
+<p><a id="X78D1062D78BE08C1" name="X78D1062D78BE08C1"></a></p>
+<div class="ChapSects"><a href="chap2_mj.html#X78D1062D78BE08C1">2 <span class="Heading">Functors</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X836749D8814FEEE6">2.1 <span class="Heading">Natural transformations</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8142687883E50252">2.1-1 IsChainOrCochainComplex</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7D7ED5A97BDC8124">2.2 <span class="Heading">Creating chain and cochain complexes</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7EC26DF98059A52D">2.2-1 ChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7CC4E67E7F3B3D61">2.2-2 ChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X798E3DF97AF283FE">2.2-3 ChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8096DD717F881D8A">2.2-4 StalkChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X87E68B627A8B316E">2.2-5 ChainComplexWithInductiveSides</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7A16A6FA80F46397">2.2-6 ChainComplexWithInductiveSides</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7E64B873830C1E68">2.2-7 CochainComplexWithInductiveSides</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7E7337F78495F8F2">2.2-8 ChainComplexWithInductiveNegativeSide</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X811DACB382534245">2.2-9 ChainComplexWithInductivePositiveSide</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X808E9966816843EC">2.2-10 CochainComplexWithInductiveNegativeSide</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7FE0022279B4B88F">2.2-11 CochainComplexWithInductivePositiveSide</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7C701DBF7BAE649A">2.3 <span class="Heading">Attributes</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7CE89BA9872939D4">2.3-1 AsChainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7E49B2E37BADF4C1">2.3-2 AsCochainComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8377E5127EC85014">2.3-3 IsExact</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7A2112717D3C78D6">2.3-4 IsContractable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7E5F52C279489DDC">2.3-5 GeneralizedEmbeddingOfHomologyAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X84931FF280A9077B">2.3-6 GeneralizedProjectionOntoHomologyAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7FB4DF1C7A2E2E14">2.3-7 GeneralizedEmbeddingOfCohomologyAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7BCC8E04844FD6FC">2.3-8 GeneralizedProjectionOntoCohomologyAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X830B7E2685E5457F">2.3-9 DefectOfExactnessAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X86BEEC7785B8071C">2.3-10 DifferentialsSupport</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7863702585A142B3">2.3-11 ObjectsSupport</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7C07B9AB8435EE7E">2.3-12 AsComplexOverCapFullSubcategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7AD471D57A47C641">2.3-13 IsWellDefined</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F0F8E1785255621">2.3-14 IsWellDefined</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X827D9B0F8239531B">2.3-15 IsExactInIndex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8161464D7979283A">2.3-16 SetUpperBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8594D86884536AB5">2.3-17 SetLowerBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7D67D0F27C840947">2.3-18 HasActiveUpperBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X78F3E40485A6DE7D">2.3-19 HasActiveLowerBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7BA165C77926C29E">2.3-20 ActiveUpperBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7E3551317A1D0BEB">2.3-21 ActiveLowerBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7BFEF175825633A7">2.3-22 DisplayComplex</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X862A431386CD5229">2.3-23 ViewComplex</a></span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X83CC93C479F87B66">2.4 <span class="Heading">Truncations</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7D4172FA879D0873">2.4-1 GoodTruncationBelow</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X82D6C72A8779837B">2.4-2 GoodTruncationAbove</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X85C1EBAE7F82A487">2.4-3 GoodTruncationAbove</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7AA30B717F662F8F">2.4-4 GoodTruncationBelow</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7BCA882286C58A76">2.4-5 BrutalTruncationBelow</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X845D3DF27CAE0256">2.4-6 BrutalTruncationAbove</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X85179B8C7A5CCD43">2.4-7 BrutalTruncationAbove</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7A757B5380374563">2.4-8 BrutalTruncationBelow</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7B451DE2799913A1">2.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X86556AE08486CE32">2.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</a></span>
 </div></div>
 </div>
 
-<h3>2 <span class="Heading">Complexes</span></h3>
+<h3>2 <span class="Heading">Functors</span></h3>
 
-<p><a id="X810E0C5D7864CF1E" name="X810E0C5D7864CF1E"></a></p>
+<p><a id="X836749D8814FEEE6" name="X836749D8814FEEE6"></a></p>
 
-<h4>2.1 <span class="Heading">Categories and filters</span></h4>
+<h4>2.1 <span class="Heading">Natural transformations</span></h4>
 
-<p><a id="X8142687883E50252" name="X8142687883E50252"></a></p>
+<p><a id="X7B451DE2799913A1" name="X7B451DE2799913A1"></a></p>
 
-<h5>2.1-1 IsChainOrCochainComplex</h5>
+<h5>2.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainOrCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowChainOrCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveChainOrCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedChainOrCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedBelowCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedAboveCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundedCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendNaturalTransformationToComplexesCategoriesByChains</code>( <var class="Arg">eta</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation</p>
 
-<p>Gap-categories for chain and cochain complexes.</p>
+<p>The input is a natural transformation <span class="SimpleMath">\(\eta:F\to G\)</span>. The output is its extension to the chain complexes.</p>
 
-<p><a id="X7D7ED5A97BDC8124" name="X7D7ED5A97BDC8124"></a></p>
+<p><a id="X86556AE08486CE32" name="X86556AE08486CE32"></a></p>
 
-<h4>2.2 <span class="Heading">Creating chain and cochain complexes</span></h4>
+<h5>2.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</h5>
 
-<p><a id="X7EC26DF98059A52D" name="X7EC26DF98059A52D"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendNaturalTransformationToComplexesCategoriesByCochains</code>( <var class="Arg">eta</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a natural transformation</p>
 
-<h5>2.2-1 ChainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">A</var>, <var class="Arg">diffs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">A</var>, <var class="Arg">diffs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a chain complex</p>
-
-<p>The input is category <var class="Arg">A</var> and a \mathbb{Z}-function <var class="Arg">diffs</var>. The output is the chain (resp. cochain) complex <span class="SimpleMath">\(M_{\bullet}\in \mathrm{Ch}(A)\)</span> (<span class="SimpleMath">\(M^{\bullet}\in \mathrm{Ch}^\bullet(A)\)</span>) where <span class="SimpleMath">\(d^M_{i}=\mathrm{diffs}[ i ]\)</span>(<span class="SimpleMath">\(d_M^{i}=\mathrm{diffs}[ i ]\)</span>).</p>
-
-<p><a id="X7CC4E67E7F3B3D61" name="X7CC4E67E7F3B3D61"></a></p>
-
-<h5>2.2-2 ChainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">diffs</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">diffs</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a (co)chain complex</p>
-
-<p>The input is a finite dense list <var class="Arg">diffs</var> and an integer <var class="Arg">n</var> . The output is the chain (resp. cochain) complex <span class="SimpleMath">\(M_{\bullet}\in \mathrm{Ch}(A)\)</span> (<span class="SimpleMath">\(M^{\bullet}\in \mathrm{Ch}^\bullet(A)\)</span>) where <span class="SimpleMath">\(d^M_{n}:= \mathrm{diffs}[ 1 ](d_M^n :=\mathrm{diffs}[ 1 ]),d^M_{n+1}=\mathrm{diffs}[ 2 ](d_M^{n+1}:=\mathrm{diffs}[ 2 ])\)</span>, etc.</p>
-
-<p><a id="X798E3DF97AF283FE" name="X798E3DF97AF283FE"></a></p>
-
-<h5>2.2-3 ChainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplex</code>( <var class="Arg">diffs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplex</code>( <var class="Arg">diffs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a (co)chain complex</p>
-
-<p>The same as the previous operations but with <span class="SimpleMath">\(n=0\)</span>.</p>
-
-<p><a id="X8096DD717F881D8A" name="X8096DD717F881D8A"></a></p>
-
-<h5>2.2-4 StalkChainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StalkChainComplex</code>( <var class="Arg">M</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StalkCochainComplex</code>( <var class="Arg">M</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a (co)chain complex</p>
-
-<p>The input is an object <span class="SimpleMath">\(M\in A\)</span>. The output is chain (resp. cochain) complex <span class="SimpleMath">\(M_{\bullet}\in\mathrm{Ch}_\bullet(A)(M^{\bullet}\in\mathrm{Ch}^\bullet(A))\)</span> where <span class="SimpleMath">\(M_n=M( M^n=M)\)</span> and <span class="SimpleMath">\(M_i=0(M^i=0)\)</span> whenever <span class="SimpleMath">\(i\neq n\)</span>.</p>
-
-<p><a id="X87E68B627A8B316E" name="X87E68B627A8B316E"></a></p>
-
-<h5>2.2-5 ChainComplexWithInductiveSides</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexWithInductiveSides</code>( <var class="Arg">d</var>, <var class="Arg">G</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a chain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and two functions <span class="SimpleMath">\(F,G\)</span>. The output is chain complex <span class="SimpleMath">\(M_{\bullet}\in\mathrm{Ch}_\bullet(A)\)</span> where <span class="SimpleMath">\(d^{M}_{0}=d\)</span> and <span class="SimpleMath">\(d^M_{i}=G^{i}(d)\)</span> for all <span class="SimpleMath">\(i\leq -1\)</span> and <span class="SimpleMath">\(d^M_{i}=F^{i}(d )\)</span> for all <span class="SimpleMath">\(i \geq 1\)</span>.</p>
-
-<p><a id="X7A16A6FA80F46397" name="X7A16A6FA80F46397"></a></p>
-
-<h5>2.2-6 ChainComplexWithInductiveSides</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexWithInductiveSides</code>( <var class="Arg">n</var>, <var class="Arg">d</var>, <var class="Arg">G</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a chain complex</p>
-
-<p>The input is an integer <span class="SimpleMath">\(n\)</span>, a morphism <span class="SimpleMath">\(d\in A\)</span> and two functions <span class="SimpleMath">\(F,G\)</span>. The output is chain complex <span class="SimpleMath">\(M_{\bullet}\in\mathrm{Ch}_\bullet(A)\)</span> where <span class="SimpleMath">\(d^{M}_{n}=d\)</span> and <span class="SimpleMath">\(d^M_{i}=G^{i}(d)\)</span> for all <span class="SimpleMath">\(i\leq -1\)</span> and <span class="SimpleMath">\(d^M_{i}=F^{i}(d )\)</span> for all <span class="SimpleMath">\(i \geq 1\)</span>.</p>
-
-<p><a id="X7E64B873830C1E68" name="X7E64B873830C1E68"></a></p>
-
-<h5>2.2-7 CochainComplexWithInductiveSides</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplexWithInductiveSides</code>( <var class="Arg">d</var>, <var class="Arg">G</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a cochain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and two functions <span class="SimpleMath">\(F,G\)</span>. The output is cochain complex <span class="SimpleMath">\(M^{\bullet}\in\mathrm{Ch}^\bullet(A)\)</span> where <span class="SimpleMath">\(d_{M}^{0}=d\)</span> and <span class="SimpleMath">\(d_M^{i}=G^{i}( d)\)</span> for all <span class="SimpleMath">\(i\leq -1\)</span> and <span class="SimpleMath">\(d_M^{i}=F^{i}( d )\)</span> for all <span class="SimpleMath">\(i \geq 1\)</span>.</p>
-
-<p><a id="X7E7337F78495F8F2" name="X7E7337F78495F8F2"></a></p>
-
-<h5>2.2-8 ChainComplexWithInductiveNegativeSide</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexWithInductiveNegativeSide</code>( <var class="Arg">d</var>, <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a chain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and a functions <span class="SimpleMath">\(G\)</span>. The output is chain complex <span class="SimpleMath">\(M_{\bullet}\in\mathrm{Ch}_\bullet(A)\)</span> where <span class="SimpleMath">\(d^{M}_{0}=d\)</span> and <span class="SimpleMath">\(d^M_{i}=G^{i}( d )\)</span> for all <span class="SimpleMath">\(i\leq -1\)</span> and <span class="SimpleMath">\(d^M_{i}=0\)</span> for all <span class="SimpleMath">\(i \geq 1\)</span>.</p>
-
-<p><a id="X811DACB382534245" name="X811DACB382534245"></a></p>
-
-<h5>2.2-9 ChainComplexWithInductivePositiveSide</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChainComplexWithInductivePositiveSide</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a chain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and a functions <span class="SimpleMath">\(F\)</span>. The output is chain complex <span class="SimpleMath">\(M_{\bullet}\in\mathrm{Ch}_\bullet(A)\)</span> where <span class="SimpleMath">\(d^{M}_{0}=d\)</span> and <span class="SimpleMath">\(d^M_{i}=F^{i}( d )\)</span> for all <span class="SimpleMath">\(i\geq 1\)</span> and <span class="SimpleMath">\(d^M_{i}=0\)</span> for all <span class="SimpleMath">\(i \leq 1\)</span>.</p>
-
-<p><a id="X808E9966816843EC" name="X808E9966816843EC"></a></p>
-
-<h5>2.2-10 CochainComplexWithInductiveNegativeSide</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplexWithInductiveNegativeSide</code>( <var class="Arg">d</var>, <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a cochain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and a functions <span class="SimpleMath">\(G\)</span>. The output is cochain complex <span class="SimpleMath">\(M^{\bullet}\in\mathrm{Ch}^\bullet(A)\)</span> where <span class="SimpleMath">\(d_{M}^{0}=d\)</span> and <span class="SimpleMath">\(d_M^{i}=G^{i}( d )\)</span> for all <span class="SimpleMath">\(i\leq -1\)</span> and <span class="SimpleMath">\(d_M^{i}=0\)</span> for all <span class="SimpleMath">\(i \geq 1\)</span>.</p>
-
-<p><a id="X7FE0022279B4B88F" name="X7FE0022279B4B88F"></a></p>
-
-<h5>2.2-11 CochainComplexWithInductivePositiveSide</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainComplexWithInductivePositiveSide</code>( <var class="Arg">d</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a cochain complex</p>
-
-<p>The input is a morphism <span class="SimpleMath">\(d\in A\)</span> and a functions <span class="SimpleMath">\(F\)</span>. The output is cochain complex <span class="SimpleMath">\(M^{\bullet}\in\mathrm{Ch}^\bullet(A)\)</span> where <span class="SimpleMath">\(d_{M}^{0}=d\)</span> and <span class="SimpleMath">\(d_M^{i}=F^{i}( d )\)</span> for all <span class="SimpleMath">\(i\geq 1\)</span> and <span class="SimpleMath">\(d_M^{i}=0\)</span> for all <span class="SimpleMath">\(i \leq 1\)</span>.</p>
-
-<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
-
-<h4>2.3 <span class="Heading">Attributes</span></h4>
-
-<p><a id="X7CE89BA9872939D4" name="X7CE89BA9872939D4"></a></p>
-
-<h5>2.3-1 AsChainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a \mathbb{Z}-function a \mathbb{Z}-function a chain complex</p>
-
-<p>The command returns the differentials of the chain or cochain complex as a \mathbb{Z}-function. The command returns the objects of the chain or cochain complex as a \mathbb{Z}-function. If the input is a cochain complex <span class="SimpleMath">\(C\)</span>, then the output is the associated chain complex. Otherwise, the output is <span class="SimpleMath">\(C\)</span>.</p>
-
-<p><a id="X7E49B2E37BADF4C1" name="X7E49B2E37BADF4C1"></a></p>
-
-<h5>2.3-2 AsCochainComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a cochain complex</p>
-
-<p>If the input is a chain complex <span class="SimpleMath">\(C\)</span>, then the output is the associated cochain complex. Otherwise, the output is <span class="SimpleMath">\(C\)</span>.</p>
-
-<p><a id="X8377E5127EC85014" name="X8377E5127EC85014"></a></p>
-
-<h5>2.3-3 IsExact</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExact</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: a boolian</p>
-
-<p>The input is a bounded chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is true when <span class="SimpleMath">\(C\)</span> is an exact complex, otherwise the output is false.</p>
-
-<p><a id="X7A2112717D3C78D6" name="X7A2112717D3C78D6"></a></p>
-
-<h5>2.3-4 IsContractable</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsContractable</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: a boolian</p>
-
-<p>The input is a bounded chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is true when <span class="SimpleMath">\(C\)</span> is a contractible complex, otherwise the output is false.</p>
-
-<p><a id="X7E5F52C279489DDC" name="X7E5F52C279489DDC"></a></p>
-
-<h5>2.3-5 GeneralizedEmbeddingOfHomologyAt</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEmbeddingOfHomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a morphism a morphism a generalized morphism</p>
-
-<p>The input is a chain or cochain complex <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The output is the kernel embedding of the differential in index <span class="SimpleMath">\(n\)</span>. The input is a chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The output is the image embeddin of <span class="SimpleMath">\(i+1\)</span>'th ( resp. <span class="SimpleMath">\(i-1\)</span>'th) differential of <span class="SimpleMath">\(C\)</span>. The input is a chain complex and an integer <span class="SimpleMath">\(n\)</span>. The output is the generalized embedding (defined by span) of the homology object at index <span class="SimpleMath">\(n\)</span>.</p>
-
-<p><a id="X84931FF280A9077B" name="X84931FF280A9077B"></a></p>
-
-<h5>2.3-6 GeneralizedProjectionOntoHomologyAt</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedProjectionOntoHomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a generalized morphism</p>
-
-<p>The input is a chain complex and an integer <span class="SimpleMath">\(n\)</span>. The output is the generalized embedding (defined by span) on the homology object at index <span class="SimpleMath">\(n\)</span>.</p>
-
-<p><a id="X7FB4DF1C7A2E2E14" name="X7FB4DF1C7A2E2E14"></a></p>
-
-<h5>2.3-7 GeneralizedEmbeddingOfCohomologyAt</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEmbeddingOfCohomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a generalized morphism</p>
-
-<p>The input is a chain complex and an integer <span class="SimpleMath">\(n\)</span>. The output is the generalized embedding (defined by span) of the cohomology object at index <span class="SimpleMath">\(n\)</span>.</p>
-
-<p><a id="X7BCC8E04844FD6FC" name="X7BCC8E04844FD6FC"></a></p>
-
-<h5>2.3-8 GeneralizedProjectionOntoCohomologyAt</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedProjectionOntoCohomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a generalized morphism</p>
-
-<p>The input is a chain complex and an integer <span class="SimpleMath">\(n\)</span>. The output is the generalized projection (defined by span) on the cohomology object at index <span class="SimpleMath">\(n\)</span>.</p>
-
-<p><a id="X830B7E2685E5457F" name="X830B7E2685E5457F"></a></p>
-
-<h5>2.3-9 DefectOfExactnessAt</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefectOfExactnessAt</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectsSupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an object</p>
-
-<p>The input is a chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The outout is the homology (resp. cohomology) object of <span class="SimpleMath">\(C\)</span> at index <span class="SimpleMath">\(n\)</span>. The input is a (co)chain complex <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The outout is the (co)homology object of <span class="SimpleMath">\(C\)</span> at index <span class="SimpleMath">\(n\)</span>. The input is a chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The outout is the list of indices where the homology (resp. cohomology) objects of <span class="SimpleMath">\(C\)</span> are not zero. The same as above but for bounded complexes. The input is a chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The outout is the list of indices where the objects (resp. differentials) of <span class="SimpleMath">\(C\)</span> are not zero.</p>
-
-<p><a id="X86BEEC7785B8071C" name="X86BEEC7785B8071C"></a></p>
-
-<h5>2.3-10 DifferentialsSupport</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferentialsSupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><a id="X7863702585A142B3" name="X7863702585A142B3"></a></p>
-
-<h5>2.3-11 ObjectsSupport</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectsSupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferentialsSupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: a list</p>
-
-<p>The same as above but for bounded complexes.</p>
-
-<p><a id="X7C07B9AB8435EE7E" name="X7C07B9AB8435EE7E"></a></p>
-
-<h5>2.3-12 AsComplexOverCapFullSubcategory</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsComplexOverCapFullSubcategory</code>( <var class="Arg">A</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an object</p>
-
-<p>The input is a full subcategory <span class="SimpleMath">\(A\)</span> of some category <span class="SimpleMath">\(B\)</span> and a complex <span class="SimpleMath">\(C\)</span> in <span class="SimpleMath">\(\mathrm{Ch}(B)\)</span>, where all objects of <span class="SimpleMath">\(C\)</span> actually lie in <span class="SimpleMath">\(A\)</span>. The output is <span class="SimpleMath">\(C\)</span> considered in <span class="SimpleMath">\(\mathrm{Ch}(A)\)</span>.</p>
-
-<p><a id="X7AD471D57A47C641" name="X7AD471D57A47C641"></a></p>
-
-<h5>2.3-13 IsWellDefined</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWellDefined</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: true or false</p>
-
-<p>The input is a chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is true when <span class="SimpleMath">\(C\)</span> is well defined in the interval <span class="SimpleMath">\([m,\dots,n]\)</span> and false otherwise.</p>
-
-<p><a id="X7F0F8E1785255621" name="X7F0F8E1785255621"></a></p>
-
-<h5>2.3-14 IsWellDefined</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWellDefined</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
-
-<p><a id="X827D9B0F8239531B" name="X827D9B0F8239531B"></a></p>
-
-<h5>2.3-15 IsExactInIndex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExactInIndex</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: true or false</p>
-
-<p>The input is a chain or cochain complex <span class="SimpleMath">\(C\)</span> and an integer <span class="SimpleMath">\(n\)</span>. The outout is <var class="Arg">true</var> if <span class="SimpleMath">\(C\)</span> is exact in <span class="SimpleMath">\(i\)</span>. Otherwise the output is <var class="Arg">false</var>.</p>
-
-<p><a id="X8161464D7979283A" name="X8161464D7979283A"></a></p>
-
-<h5>2.3-16 SetUpperBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetUpperBound</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: Side effect</p>
-
-<p>The command sets an upper bound <span class="SimpleMath">\(n\)</span> to the chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span>. This means <span class="SimpleMath">\(C_{i}=0(C^{i}=0)\)</span> for <span class="SimpleMath">\(i&gt;n\)</span>. This upper bound will be called <span class="SimpleMath">\(\textit{active}\)</span> upper bound of <span class="SimpleMath">\(C\)</span>. If <span class="SimpleMath">\(C\)</span> already has an active upper bound <span class="SimpleMath">\(m\)</span>, then <span class="SimpleMath">\(m\)</span> will be replaced by <span class="SimpleMath">\(n\)</span> only if <span class="SimpleMath">\(n\)</span> is better upper bound than <span class="SimpleMath">\(m\)</span>, i.e., <span class="SimpleMath">\(m&gt;n\)</span>.</p>
-
-<p><a id="X8594D86884536AB5" name="X8594D86884536AB5"></a></p>
-
-<h5>2.3-17 SetLowerBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetLowerBound</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: Side effect</p>
-
-<p>The command sets an lower bound <span class="SimpleMath">\(n\)</span> to the chain (resp. cochain) complex <span class="SimpleMath">\(C\)</span>. This means <span class="SimpleMath">\(C_{i}=0(C^{i}=0)\)</span> for <span class="SimpleMath">\(n&gt;i\)</span>. This lower bound will be called <span class="SimpleMath">\(\textit{active}\)</span> lower bound of <span class="SimpleMath">\(C\)</span>. If <span class="SimpleMath">\(C\)</span> already has an active lower bound <span class="SimpleMath">\(m\)</span>, then <span class="SimpleMath">\(m\)</span> will be replaced by <span class="SimpleMath">\(n\)</span> only if <span class="SimpleMath">\(n\)</span> is better lower bound than <span class="SimpleMath">\(m\)</span>, i.e., <span class="SimpleMath">\(n&gt;m\)</span>.</p>
-
-<p><a id="X7D67D0F27C840947" name="X7D67D0F27C840947"></a></p>
-
-<h5>2.3-18 HasActiveUpperBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasActiveUpperBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: true or false</p>
-
-<p>The input is chain or cochain complex. The output is <var class="Arg">true</var> if an upper bound has been set to <span class="SimpleMath">\(C\)</span> and <var class="Arg">false</var> otherwise.</p>
-
-<p><a id="X78F3E40485A6DE7D" name="X78F3E40485A6DE7D"></a></p>
-
-<h5>2.3-19 HasActiveLowerBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasActiveLowerBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: true or false</p>
-
-<p>The input is chain or cochain complex. The output is <var class="Arg">true</var> if a lower bound has been set to <span class="SimpleMath">\(C\)</span> and <var class="Arg">false</var> otherwise.</p>
-
-<p><a id="X7BA165C77926C29E" name="X7BA165C77926C29E"></a></p>
-
-<h5>2.3-20 ActiveUpperBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActiveUpperBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an integer</p>
-
-<p>The input is chain or cochain complex. The output is its active upper bound if such has been set to <span class="SimpleMath">\(C\)</span>. Otherwise we get error.</p>
-
-<p><a id="X7E3551317A1D0BEB" name="X7E3551317A1D0BEB"></a></p>
-
-<h5>2.3-21 ActiveLowerBound</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActiveLowerBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: an integer</p>
-
-<p>The input is chain or cochain complex. The output is its active lower bound if such has been set to <span class="SimpleMath">\(C\)</span>. Otherwise we get error.</p>
-
-<p><a id="X7BFEF175825633A7" name="X7BFEF175825633A7"></a></p>
-
-<h5>2.3-22 DisplayComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayComplex</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The input is chain or cochain complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span>. The command displays all components of <span class="SimpleMath">\(C\)</span> between the indices <span class="SimpleMath">\(m,n\)</span>.</p>
-
-<p><a id="X862A431386CD5229" name="X862A431386CD5229"></a></p>
-
-<h5>2.3-23 ViewComplex</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ViewComplex</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
-
-<p>The input is chain or cochain complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span>. The command views all components of <span class="SimpleMath">\(C\)</span> between the indices <span class="SimpleMath">\(m,n\)</span>.</p>
-
-<p><a id="X83CC93C479F87B66" name="X83CC93C479F87B66"></a></p>
-
-<h4>2.4 <span class="Heading">Truncations</span></h4>
-
-<p><a id="X7D4172FA879D0873" name="X7D4172FA879D0873"></a></p>
-
-<h5>2.4-1 GoodTruncationBelow</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GoodTruncationBelow</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
-
-<p><a id="X82D6C72A8779837B" name="X82D6C72A8779837B"></a></p>
-
-<h5>2.4-2 GoodTruncationAbove</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GoodTruncationAbove</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
-
-<p><a id="X85C1EBAE7F82A487" name="X85C1EBAE7F82A487"></a></p>
-
-<h5>2.4-3 GoodTruncationAbove</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GoodTruncationAbove</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><a id="X7AA30B717F662F8F" name="X7AA30B717F662F8F"></a></p>
-
-<h5>2.4-4 GoodTruncationBelow</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GoodTruncationBelow</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: cochain complex</p>
-
-<p><a id="X7BCA882286C58A76" name="X7BCA882286C58A76"></a></p>
-
-<h5>2.4-5 BrutalTruncationBelow</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrutalTruncationBelow</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
-
-<p><a id="X845D3DF27CAE0256" name="X845D3DF27CAE0256"></a></p>
-
-<h5>2.4-6 BrutalTruncationAbove</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrutalTruncationAbove</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
-
-<p><a id="X85179B8C7A5CCD43" name="X85179B8C7A5CCD43"></a></p>
-
-<h5>2.4-7 BrutalTruncationAbove</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrutalTruncationAbove</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
-
-<p><a id="X7A757B5380374563" name="X7A757B5380374563"></a></p>
-
-<h5>2.4-8 BrutalTruncationBelow</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrutalTruncationBelow</code>( <var class="Arg">C</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: chain complex</p>
+<p>The input is a natural transformation <span class="SimpleMath">\(\eta:F\to G\)</span>. The output is its extension to the cochain complexes.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
