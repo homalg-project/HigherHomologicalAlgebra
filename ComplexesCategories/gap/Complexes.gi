@@ -148,6 +148,20 @@ InstallOtherMethod( CreateComplex,
     
 end );
 
+##
+InstallOtherMethod( \/,
+      [ IsCapCategoryObject, IsChainOrCochainComplexCategory ],
+  
+  function ( o, ch_cat )
+    
+    if not IsIdenticalObj( CapCategory( o ), UnderlyingCategory( ch_cat ) ) then
+        TryNextMethod();
+    fi;
+    
+    return CreateComplex( ch_cat, o, 0 );
+    
+end );
+
 #########################################
 #
 # Attributes of a (co)chain complexes
@@ -320,20 +334,14 @@ InstallMethod( HomologySupport,
   C -> HomologySupport( C, LowerBound( C ), UpperBound( C ) )
 );
 
-
-for oper in
-  [ [ IsCochainComplex, CohomologySupport ],
-    [ IsChainComplex, HomologySupport ] ] do
-  
-  ##
-od;
-
+##
 InstallMethod( IsExact,
           [ IsCochainComplex, IsInt, IsInt ],
   
   { C, m, n } -> IsEmpty( CohomologySupport( C, m, n ) )
 );
 
+##
 InstallMethod( IsExact,
           [ IsChainComplex, IsInt, IsInt ],
 

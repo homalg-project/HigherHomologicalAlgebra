@@ -21,6 +21,6 @@ if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.11-07" ) then
     ReadPackage( "HomotopyCategories", "gap/OnlyWithFunctorCategories.gi" );
 fi;
 
-#if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-#    ReadPackage( "HomotopyCategories", "gap/Julia.gi" );
-#fi;
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+    ReadPackage( "HomotopyCategories", "gap/Julia.gi" );
+fi;

@@ -14,6 +14,6 @@ ReadPackage( "ComplexesCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "ComplexesCategories", "gap/Resolutions.gi" );
 ReadPackage( "ComplexesCategories", "gap/Tools.gi" );
 
-#if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-#    ReadPackage( "ComplexesCategories", "gap/Julia.gi" );
-#fi;
+if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
+    ReadPackage( "ComplexesCategories", "gap/Julia.gi" );
+fi;

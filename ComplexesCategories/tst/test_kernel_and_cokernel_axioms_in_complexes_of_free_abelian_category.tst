@@ -60,7 +60,6 @@ gap> oid := kF / rels;;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
 gap> Ch_AAoid := ComplexesCategoryByCochains( AAoid );;
-
 gap> for object_info in objects do
 >       MakeReadWriteGlobal( object_info[1] );
 >       DeclareSynonym( object_info[1],

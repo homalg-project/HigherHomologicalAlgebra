@@ -8,6 +8,19 @@
 #
 ##########################
 
+
+##
+InstallGlobalFunction( InstallOtherMethod_for_julia,
+  function( oper, filter_list )
+    
+    ##
+    InstallOtherMethod( oper,
+              filter_list,
+      
+      { arg } -> CallFuncList( oper, ListN( arg, filter_list, function( a, filter ) if filter = IsJuliaObject then return ConvertJuliaToGAP( a ); fi; return a; end ) ) );
+      
+end );
+
 ##
 InstallMethod( Show,
         [ IsString ],

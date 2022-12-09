@@ -4,22 +4,14 @@
 # Implementations
 #
 
-##
-InstallOtherMethod( CochainComplex,
-        [ IsJuliaObject, IsObject ],
-        
-  function( diffs, lower_bound )
-    
-    return CochainComplex( ConvertJuliaToGAP( diffs ), lower_bound );
-    
-end );
 
-##
-InstallOtherMethod( ChainComplex,
-        [ IsJuliaObject, IsObject ],
-        
-  function( diffs, lower_bound )
-    
-    return ChainComplex( ConvertJuliaToGAP( diffs ), lower_bound );
-    
-end );
+
+InstallOtherMethod_for_julia( CreateComplex,
+          [ IsChainOrCochainComplexCategory, IsJuliaObject, IsInt ] );
+
+InstallOtherMethod_for_julia( CreateComplexMorphism,
+          [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsJuliaObject, IsInt ] );
+
+InstallOtherMethod_for_julia( CreateComplexMorphism,
+          [ IsChainOrCochainComplex, IsChainOrCochainComplex, IsJuliaObject, IsInt ] );
+
