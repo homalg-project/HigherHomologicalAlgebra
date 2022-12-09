@@ -4,51 +4,14 @@
 # Implementations
 #
 ##
+InstallOtherMethod_for_julia( CreateComplex,
+          [ IsHomotopyCategory, IsJuliaObject, IsInt ] );
 
-InstallOtherMethod( HomotopyCategoryObject,
-        [ IsJuliaObject, IsInt ],
-        
-  function( diffs, N )
-    
-    return HomotopyCategoryObject( ConvertJuliaToGAP( diffs ), N );
-    
-end );
+InstallOtherMethod_for_julia( CreateComplexMorphism,
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ] );
 
-InstallMethod( HomotopyCategoryObject,
-        [ IsHomotopyCategory, IsJuliaObject, IsInt ],
-        
-  function( homotopy_cat, diffs, N )
-    
-    return HomotopyCategoryObject( homotopy_cat, ConvertJuliaToGAP( diffs ), N );
-    
-end );
+InstallOtherMethod_for_julia( CreateComplexMorphism,
+          [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ] );
 
-##
-InstallMethod( HomotopyCategoryMorphism,
-        [ IsHomotopyCategoryObject, IsJuliaObject, IsInt, IsHomotopyCategoryObject ],
-        
-  function( a, maps, N, b )
-    
-    return HomotopyCategoryMorphism( a, ConvertJuliaToGAP( maps ), N, b );
-    
-end );
-
-##
-InstallMethod( HomotopyCategoryMorphism,
-        [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ],
-        
-  function( a, b, maps, N )
-    
-    return HomotopyCategoryMorphism( a, b, ConvertJuliaToGAP( maps ), N );
-    
-end );
-
-##
-InstallMethod( CreateDiagramInHomotopyCategory,
-          [ IsJuliaObject, IsJuliaObject, IsJuliaObject, IsJuliaObject ],
-  function( objects, morphisms, relations, bounds )
-    
-    return CreateDiagramInHomotopyCategory( ConvertJuliaToGAP( objects ), ConvertJuliaToGAP( morphisms ), ConvertJuliaToGAP( relations ), ConvertJuliaToGAP( bounds ) );
-    
-end );
-
+InstallOtherMethod_for_julia( IrreducibleMorphisms, [ IsCapFullSubcategory, IsJuliaObject ] );
+InstallOtherMethod_for_julia( CompositeMorphisms, [ IsCapFullSubcategory, IsJuliaObject ] );

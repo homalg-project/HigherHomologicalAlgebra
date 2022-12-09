@@ -20,9 +20,3 @@ fi;
 if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.11-07" ) then
     ReadPackage( "HomotopyCategories", "gap/OnlyWithFunctorCategories.gd" );
 fi;
-
-#ReadPackage( "HomotopyCategories", "gap/ImportedMethods.gd" );
-
-#if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
-#    ReadPackage( "HomotopyCategories", "gap/Julia.gd" );
-#fi;
