@@ -4,6 +4,7 @@
 
 
 
+
 ##################################
 ##
 ## Constructors
@@ -517,7 +518,7 @@ InstallMethod( CounitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( seq );
     
-    name := Concatenation( "Counit ", TEXTMTRANSLATIONS.epsilon, " : F", TEXTMTRANSLATIONS.circ, "G ", TEXTMTRANSLATIONS.Longrightarrow, " Id of the adjuction F ", TEXTMTRANSLATIONS.dashv, " G" );
+    name := Concatenation( "Counit ", TEXTMTRANSLATIONS.epsilon, " : F", TEXTMTRANSLATIONS.circ, "G ", TEXTMTRANSLATIONS.Longrightarrow, " Id of the adjunction F ", TEXTMTRANSLATIONS.dashv, " G" );
     
     nat := NaturalTransformation( name, PreCompose( G, F ), IdentityFunctor( ambient_cat ) );
     
@@ -543,7 +544,7 @@ InstallMethod( UnitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( seq );
     
-    name := Concatenation( "Unit ", TEXTMTRANSLATIONS.eta, " : Id ", TEXTMTRANSLATIONS.Longrightarrow, " G", TEXTMTRANSLATIONS.circ, "F of the adjuction F ", TEXTMTRANSLATIONS.dashv, " G" );
+    name := Concatenation( "Unit ", TEXTMTRANSLATIONS.eta, " : Id ", TEXTMTRANSLATIONS.Longrightarrow, " G", TEXTMTRANSLATIONS.circ, "F of the adjunction F ", TEXTMTRANSLATIONS.dashv, " G" );
     
     nat := NaturalTransformation( name, IdentityFunctor( SourceOfFunctor( F ) ), PreCompose( F, G ) );
     
