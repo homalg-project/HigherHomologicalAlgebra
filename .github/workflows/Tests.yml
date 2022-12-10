@@ -33,15 +33,25 @@ jobs:
           cd /home/gap/.gap/pkg/
           cp ./HigherHomologicalAlgebra/ci_gaprc /home/gap/.gap/gaprc
           git clone --depth 1 https://github.com/gap-packages/AutoDoc.git
+          cd AutoDoc; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/homalg_project.git
+          cd homalg_project; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/CAP_project.git
+          cd CAP_project; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/Toposes.git
+          cd Toposes; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/FinSetsForCAP.git
+          cd FinSetsForCAP; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/QPA2.git
+          cd QPA2; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/Algebroids.git
+          cd Algebroids; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/FunctorCategories.git
+          cd FunctorCategories; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/SubcategoriesForCAP.git
+          cd SubcategoriesForCAP; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/CategoryConstructor.git
+          cd CategoryConstructor; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           # set SOURCE_DATE_EPOCH for reproducible PDFs
           export SOURCE_DATE_EPOCH=0
           # build documentation of packages which we might want to reference, keep this in sync with `release-gap-package`
