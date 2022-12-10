@@ -157,14 +157,14 @@ InstallMethod( MorphismBetweenProjectiveResolutionsOp,
         
         if k > UpperBoundOfSourceAndRange( phi ) then
           
-          return ZeroMorphism( cat, PB[ k ], PC[ k ] );
+          return ZeroMorphism( cat, PB[k], PC[k] );
           
         else
           
-          mB := BaseZFunctions( Differentials( PB ) )[ 1 ][ k ][ 3 ];
-          mC := BaseZFunctions( Differentials( PC ) )[ 1 ][ k ][ 3 ];
+          mB := BaseZFunctions( Differentials( PB ) )[1][k][3];
+          mC := BaseZFunctions( Differentials( PC ) )[1][k][3];
           
-          m := DirectSumFunctorialWithGivenDirectSums( cat, Source( mB ), [ morphisms[ k + 1 ], phi[ k ] ], Source( mC ) );
+          m := DirectSumFunctorialWithGivenDirectSums( cat, Source( mB ), [ morphisms[k+1], phi[k] ], Source( mC ) );
           
           kappa := KernelObjectFunctorial( cat, mB, m, mC );
           
