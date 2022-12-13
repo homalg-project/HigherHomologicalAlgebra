@@ -4,7 +4,6 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "ComplexesCategories", "gap/ZFunctions.gi" );
 ReadPackage( "ComplexesCategories", "gap/HomStructure.gi" );
 ReadPackage( "ComplexesCategories", "gap/Categories.gi" );
 ReadPackage( "ComplexesCategories", "gap/Complexes.gi" );
