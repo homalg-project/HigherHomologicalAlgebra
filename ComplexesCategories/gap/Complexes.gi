@@ -3,34 +3,8 @@
 
 
 
-#############################################
-#
-#  Representations, families and types
-#
-#############################################
-
-DeclareRepresentation( "IsChainComplexRep",
-                       IsComponentObjectRep and IsAttributeStoringRep,
-                       [ ] );
-
-DeclareRepresentation( "IsCochainComplexRep",
-                       IsComponentObjectRep and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "FamilyOfChainComplexes",
-            NewFamily( "chain complexes" ) );
 
 
-BindGlobal( "FamilyOfCochainComplexes",
-            NewFamily( "cochain complexes" ) );
-
-BindGlobal( "TheTypeOfChainComplexes",
-            NewType( FamilyOfChainComplexes,
-                     IsChainComplex and IsChainComplexRep ) );
-
-BindGlobal( "TheTypeOfCochainComplexes",
-            NewType( FamilyOfCochainComplexes,
-                     IsCochainComplex and IsCochainComplexRep ) );
 
 ###########################################
 #
