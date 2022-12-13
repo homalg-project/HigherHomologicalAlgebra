@@ -17,7 +17,7 @@ function ( homotopy_cat )
   
   complex_cat := UnderlyingCategory( homotopy_cat );
   
-  if IsChainComplexCategory( complex_cat ) then
+  if IsComplexesCategoryByChains( complex_cat ) then
       sign := -1;
   else
       sign := 1;
