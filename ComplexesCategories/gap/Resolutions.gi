@@ -242,3 +242,139 @@ InstallMethod( MorphismBetweenInjectiveResolutionsOp,
                       AsComplexMorphismOverOppositeCategory( phi ), bool ) )
 );
 
+
+##########################################################
+#
+# projective resolutions of cells in abelian categories
+#
+##########################################################
+
+##
+InstallOtherMethod( ProjectiveResolution,
+       [ IsCapCategoryObject, IsBool ],
+  
+  function ( o, bool )
+    local cat, ch_cat, iota, delta_m1, upper_func, lower_func, diffs, P, i;
+    
+    cat := CapCategory( o );
+    
+    if not ( HasIsAbelianCategory( cat ) and IsAbelianCategory( cat )
+              and CanCompute( cat, "SomeProjectiveObject" ) and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" ) ) then
+      
+      Error( "The category must be abelian with 'computable' enough projectives!\n" );
+      
+    fi;
+    
+    ch_cat := ComplexesCategoryByCochains( cat );
+    
+    if bool = false then
+      
+      iota := KernelEmbedding( cat, EpimorphismFromSomeProjectiveObject( cat, o ) );
+      
+      delta_m1 := PreCompose( cat, EpimorphismFromSomeProjectiveObject( cat, Source( iota ) ), iota );
+      
+      upper_func := delta -> UniversalMorphismIntoZeroObject( cat, Range( delta ) );
+      
+      lower_func :=
+        function ( delta )
+          local iota;
+          
+          iota := KernelEmbedding( cat, delta );
+          
+          return PreCompose( cat, EpimorphismFromSomeProjectiveObject( cat, Source( iota ) ), iota );
+          
+      end;
+      
+      diffs := ZFunctionWithInductiveSides( -1, delta_m1, lower_func, upper_func, IsEqualForMorphismsOnMor );
+      
+      return CreateComplex( ch_cat, diffs, -infinity, 0 );
+      
+    else
+      
+      P := ProjectiveResolution( o, false );
+      
+      i := 1;
+      
+      repeat i := i - 1; until IsZeroForObjects( cat, P[i] );
+      
+      return CreateComplex( ch_cat, Objects( P ), Differentials( P ), i + 1, UpperBound( P ) );
+      
+    fi;
+    
+end );
+
+##
+InstallOtherMethod( InjectiveResolution,
+       [ IsCapCategoryObject, IsBool ],
+  
+  { o, bool } -> AsComplexOverOppositeCategory( ProjectiveResolution( Opposite( o ), bool ) )
+);
+
+##
+InstallOtherMethod( MorphismBetweenProjectiveResolutions,
+       [ IsCapCategoryMorphism, IsBool ],
+  
+  function ( phi, bool )
+    local cat, ch_cat, S, R, epi_S, epi_R, PS, PR, morphisms;
+    
+    cat := CapCategory( phi );
+    
+    ch_cat := ComplexesCategoryByCochains( cat );
+    
+    S := Source( phi );
+    R := Range( phi );
+    
+    epi_S := EpimorphismFromSomeProjectiveObject( cat, S );
+    epi_R := EpimorphismFromSomeProjectiveObject( cat, R );
+    
+    PS := ProjectiveResolution( S, bool );
+    PR := ProjectiveResolution( R, bool );
+    
+    morphisms :=
+      AsZFunction(
+        function ( i )
+          local eta, epi;
+          
+          if i > 0 then
+            
+            return ZeroMorphism( cat, PS[i], PR[i] );
+            
+          elif i = 0 then
+            
+            return ProjectiveLift( cat, PreCompose( cat, epi_S, phi ), epi_R );
+            
+          elif i = -1 then
+            
+            eta := KernelLift( cat, epi_R, PreCompose( cat, PS^i, morphisms[i+1] ) );
+            
+            epi := KernelLift( cat, epi_R, PR^i );
+            
+            Assert( 3, IsEpimorphism( cat, epi ) );
+            
+            return ProjectiveLift( cat, eta, epi );
+            
+          else
+            
+            eta := KernelLift( cat, PR^( i+1 ), PreCompose( cat, PS^i, morphisms[i+1] ) );
+            
+            epi := KernelLift( cat, PR^( i+1 ), PR^i );
+            
+            Assert( 3, IsEpimorphism( cat, epi ) );
+            
+            return ProjectiveLift( cat, eta, epi );
+            
+          fi;
+        
+        end );
+    
+    return CreateComplexMorphism( ch_cat, PS, PR, morphisms );
+    
+end );
+
+##
+InstallOtherMethod( MorphismBetweenInjectiveResolutions,
+       [ IsCapCategoryMorphism, IsBool ],
+  
+  { phi, bool } -> AsComplexMorphismOverOppositeCategory( MorphismBetweenProjectiveResolutions( Opposite( phi ), bool ) )
+);
+
