@@ -10,7 +10,7 @@ BindGlobal( "_complexes_ExtendFunctorToComplexesCategories",
   function( S, F, T )
     local name, ch_F;
     
-    if ForAll( [ S, T ], IsCochainComplexCategory ) then
+    if ForAll( [ S, T ], IsComplexesCategoryByCochains ) then
         name := "co";
     else
         name := "";

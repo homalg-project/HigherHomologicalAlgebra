@@ -30,7 +30,7 @@ DeclareProperty( "IsQuasiIsomorphism", IsChainOrCochainMorphism );
 DeclareProperty( "IsHomotopicToZeroMorphism", IsChainOrCochainMorphism );
 DeclareAttribute( "WitnessForBeingHomotopicToZeroMorphism", IsChainOrCochainMorphism );
 
-DeclareOperation( "CreateComplexMorphism", [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsList ] );
+DeclareOperation( "CreateComplexMorphism", [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsList ] );
 DeclareAttribute( "AsComplexMorphismOverOppositeCategory", IsChainOrCochainMorphism );
 
 DeclareAttribute( "AsChainComplexMorphism", IsCochainMorphism );

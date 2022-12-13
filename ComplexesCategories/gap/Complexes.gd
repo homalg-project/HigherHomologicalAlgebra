@@ -6,7 +6,7 @@ DeclareCategory( "IsChainComplex", IsChainOrCochainComplex );
 DeclareCategory( "IsCochainComplex", IsChainOrCochainComplex );
 
 
-DeclareOperation( "CreateComplex", [ IsChainOrCochainComplexCategory, IsList ] );
+DeclareOperation( "CreateComplex", [ IsComplexesCategory, IsList ] );
 
 DeclareAttribute( "Differentials", IsChainOrCochainComplex );
 DeclareAttribute( "Objects", IsChainOrCochainComplex );

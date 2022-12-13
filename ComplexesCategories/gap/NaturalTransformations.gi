@@ -9,7 +9,7 @@ BindGlobal( "_complexes_ExtendNaturalTransformationToComplexesCategories",
   function( chF, eta, chG )
     local name, ch_eta;
     
-    if IsChainComplexCategory( SourceOfFunctor( chF ) ) then
+    if IsComplexesCategoryByChains( SourceOfFunctor( chF ) ) then
       name := "";
     else
       name := "co";
@@ -51,11 +51,11 @@ InstallMethod( ExtendNaturalTransformationToComplexesCategoriesByCochains,
 
 ##
 #InstallMethod( NaturalIsomorphismFromIdentityIntoMinusOneFunctor,
-#          [ IsChainOrCochainComplexCategory ],
+#          [ IsComplexesCategory ],
 #  function( complexes )
 #    local morphism_constructor, Id, F, name, nat;
 #    
-#    if IsChainComplexCategory( complexes ) then
+#    if IsComplexesCategoryByChains( complexes ) then
 #      
 #      morphism_constructor := ChainMorphism;
 #      
@@ -97,11 +97,11 @@ InstallMethod( ExtendNaturalTransformationToComplexesCategoriesByCochains,
 #
 ###
 #InstallMethod( NaturalIsomorphismFromMinusOneFunctorIntoIdentity,
-#          [ IsChainOrCochainComplexCategory ],
+#          [ IsComplexesCategory ],
 #  function( complexes )
 #    local morphism_constructor, Id, F, name, nat;
 #    
-#    if IsChainComplexCategory( complexes ) then
+#    if IsComplexesCategoryByChains( complexes ) then
 #      
 #      morphism_constructor := ChainMorphism;
 #      

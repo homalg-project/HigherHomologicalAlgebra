@@ -14,42 +14,42 @@
 ## Morphisms
 ##
 InstallMethod( CreateComplexMorphism,
-            [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsList ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsList ],
   
   { ch_cat, S, R, datum }  -> MorphismConstructor( ch_cat, S, datum, R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction, IsObject, IsObject ],
   
   { ch_cat, S, R, morphisms, lower_bound, upper_bound } -> CreateComplexMorphism( ch_cat, S, R, [ morphisms, lower_bound, upper_bound ] )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction, IsObject, IsObject ],
   
   { ch_cat, S, R, morphisms, lower_bound, upper_bound } -> CreateComplexMorphism( ch_cat, S, R, AsZFunction( morphisms ), lower_bound, upper_bound )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-            [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction ],
   
   { ch_cat, S, R, morphisms } -> CreateComplexMorphism( ch_cat, S, R, morphisms, Minimum( LowerBound( S ), LowerBound( R ) ), Maximum( UpperBound( S ), UpperBound( R ) ) )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-            [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction ],
   
   { ch_cat, S, R, morphisms } -> CreateComplexMorphism( ch_cat, S, R, AsZFunction( morphisms ) )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsDenseList, IsInt ],
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsDenseList, IsInt ],
   
   function ( ch_cat, S, R, dense_list_of_morphisms, lower_bound )
     local upper_bound, morphisms;
@@ -76,6 +76,18 @@ InstallOtherMethod( CreateComplexMorphism,
         [ IsChainOrCochainComplex, IsChainOrCochainComplex, IsDenseList, IsInt ],
   
   { S, R, dense_list_of_morphisms, lower_bound } -> CreateComplexMorphism( CapCategory( S ), S, R, dense_list_of_morphisms, lower_bound )
+);
+
+##
+InstallOtherMethod( CreateComplexMorphism,
+        [ IsComplexesCategory, IsCapCategoryMorphism, IsInt ],
+  
+  { ch_cat, f, n } -> CreateComplexMorphism(
+                            ch_cat,
+                            CreateComplex( ch_cat, Source( f ), n ),
+                            CreateComplex( ch_cat, Range( f ), n ),
+                            [ f ],
+                            n )
 );
 
 ###################################
@@ -190,7 +202,7 @@ InstallMethod( IsQuasiIsomorphism,
 
 ##
 InstallOtherMethod( IsHomotopicToZeroMorphism,
-          [ IsCochainComplexCategory, IsCochainMorphism ],
+          [ IsComplexesCategoryByCochains, IsCochainMorphism ],
           
   function( ch_cat, phi )
     local range_cat, ell;
@@ -212,7 +224,7 @@ InstallOtherMethod( IsHomotopicToZeroMorphism,
 
 ##
 InstallOtherMethod( WitnessForBeingHomotopicToZeroMorphism,
-          [ IsCochainComplexCategory, IsCochainMorphism ],
+          [ IsComplexesCategoryByCochains, IsCochainMorphism ],
           
   function( ch_cat, phi )
     local B, C, l_BC, u_BC, cat, range_cat, ell, hom_BC, diagram, m;
