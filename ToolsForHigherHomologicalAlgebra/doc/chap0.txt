@@ -6,10 +6,10 @@
                [1X Tools for the Higher Homological Algebra project [101X
   
   
-                                   2022.12-04
+                                   2022.12-05
   
   
-                                10 December 2022
+                                14 December 2022
   
   
                                   Kamal Saleh
@@ -34,6 +34,32 @@
   
   1 [33X[0;0YIntroduction[133X
   2 [33X[0;0YFunctionality[133X
+  3 [33X[0;0YZ-functions[133X
+    3.1 [33X[0;0YGap categories for Z functions[133X
+      3.1-1 IsZFunction
+      3.1-2 IsZFunctionWithInductiveSides
+    3.2 [33X[0;0YCreating Z-functions[133X
+      3.2-1 VoidZFunction
+      3.2-2 AsZFunction
+      3.2-3 UnderlyingFunction
+      3.2-4 ZFunctionValue
+      3.2-5 \[\]
+      3.2-6 ZFunctionWithInductiveSides
+      3.2-7 UpperFunction
+      3.2-8 StableUpperValue
+      3.2-9 IndexOfStableUpperValue
+      3.2-10 SetStableUpperValue
+      3.2-11 StableLowerValue
+      3.2-12 IndexOfStableLowerValue
+      3.2-13 SetStableLowerValue
+      3.2-14 Reflection
+      3.2-15 ApplyShift
+      3.2-16 ApplyMap
+      3.2-17 ApplyMap
+      3.2-18 BaseZFunctions
+      3.2-19 AppliedMap
+      3.2-20 CombineZFunctions
+      3.2-21 Replace
   
   
   [32X

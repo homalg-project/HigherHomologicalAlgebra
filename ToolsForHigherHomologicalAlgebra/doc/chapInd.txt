@@ -2,6 +2,33 @@
   
   [1XIndex[101X
   
+  [2X\[\][102X, for IsZFunction, IsInt 3.2-5 
+  [2XAppliedMap[102X, for IsZFunction 3.2-19 
+  [2XApplyMap[102X, for IsDenseList, IsFunction 3.2-17 
+      for IsZFunction, IsFunction 3.2-16 
+  [2XApplyShift[102X, for IsZFunction, IsInt 3.2-15 
+  [2XAsZFunction[102X, for IsFunction 3.2-2 
+  [2XBaseZFunctions[102X, for IsZFunction 3.2-18 
+  [2XCombineZFunctions[102X, for IsDenseList 3.2-20 
+  [2XCompareFunction[102X, for IsZFunctionWithInductiveSides 3.2-7 
+  [2XFirstIndex[102X, for IsZFunctionWithInductiveSides 3.2-7 
+  [2XFirstValue[102X, for IsZFunctionWithInductiveSides 3.2-7 
+  [2XIndexOfStableLowerValue[102X, for IsZFunction 3.2-12 
+  [2XIndexOfStableUpperValue[102X, for IsZFunction 3.2-9 
+  [2XIsZFunction[102X, for IsObject 3.1-1 
+  [2XIsZFunctionWithInductiveSides[102X, for IsZFunction 3.1-2 
+  [2XLowerFunction[102X, for IsZFunctionWithInductiveSides 3.2-7 
+  [2XReflection[102X, for IsZFunction 3.2-14 
+  [2XReplace[102X, for IsZFunction, IsInt, IsDenseList 3.2-21 
+  [2XSetStableLowerValue[102X, for IsZFunction, IsInt, IsObject 3.2-13 
+  [2XSetStableUpperValue[102X, for IsZFunction, IsInt, IsObject 3.2-10 
+  [2XStableLowerValue[102X, for IsZFunction 3.2-11 
+  [2XStableUpperValue[102X, for IsZFunction 3.2-8 
+  [2XUnderlyingFunction[102X, for IsZFunction 3.2-3 
+  [2XUpperFunction[102X, for IsZFunctionWithInductiveSides 3.2-7 
+  [2XVoidZFunction[102X 3.2-1 
+  [2XZFunctionValue[102X, for IsZFunction, IsInt 3.2-4 
+  [2XZFunctionWithInductiveSides[102X, for IsInt, IsObject, IsFunction, IsFunction, IsFunction 3.2-6 
   
   
   -------------------------------------------------------
