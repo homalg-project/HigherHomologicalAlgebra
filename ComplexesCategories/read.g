@@ -4,11 +4,10 @@
 # Reading the implementation part of the package.
 #
 
-ReadPackage( "ComplexesCategories", "gap/ZFunctions.gi" );
 ReadPackage( "ComplexesCategories", "gap/HomStructure.gi" );
 ReadPackage( "ComplexesCategories", "gap/Categories.gi" );
-ReadPackage( "ComplexesCategories", "gap/Complexes.gi" );
-ReadPackage( "ComplexesCategories", "gap/ComplexMorphisms.gi" );
+ReadPackage( "ComplexesCategories", "gap/Objects.gi" );
+ReadPackage( "ComplexesCategories", "gap/Morphisms.gi" );
 ReadPackage( "ComplexesCategories", "gap/Functors.gi" );
 ReadPackage( "ComplexesCategories", "gap/NaturalTransformations.gi" );
 ReadPackage( "ComplexesCategories", "gap/Resolutions.gi" );

@@ -24,5 +24,5 @@ DeclareAttribute( "ExtendNaturalTransformationToComplexesCategoriesByCochains",
   IsCapNaturalTransformation );
 
 
-DeclareAttribute( "NaturalIsomorphismFromIdentityIntoMinusOneFunctor", IsChainOrCochainComplexCategory );
-DeclareAttribute( "NaturalIsomorphismFromMinusOneFunctorIntoIdentity", IsChainOrCochainComplexCategory );
+DeclareAttribute( "NaturalIsomorphismFromIdentityIntoMinusOneFunctor", IsComplexesCategory );
+DeclareAttribute( "NaturalIsomorphismFromMinusOneFunctorIntoIdentity", IsComplexesCategory );

@@ -1,8 +1,10 @@
 
 
 
-DeclareGlobalVariable( "CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY" );
 
+
+
+##
 InstallValue( CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY,
         [
           "AdditionForMorphisms",
@@ -39,7 +41,7 @@ InstallValue( CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY,
           "IdentityMorphism",
           "ImageEmbedding",
           "ImageEmbeddingWithGivenImageObject",
-          #"ImageObject",
+          "ImageObject",
           "InitialObject",
           "InitialObjectFunctorial",
           "InjectionOfCofactorOfCoproduct",
@@ -416,7 +418,7 @@ InstallMethod( ComplexesCategoryByCochains,
     
     coch_cat := CategoryConstructor(
                 rec( name := name,
-                     category_filter := IsCochainComplexCategory,
+                     category_filter := IsComplexesCategoryByCochains,
                      category_object_filter := IsCochainComplex,
                      category_morphism_filter := IsCochainMorphism,
                      commutative_ring_of_linear_category := commutative_ring,
@@ -778,7 +780,7 @@ InstallMethod( ComplexesCategoryByChains,
     ch_cat :=
       WrapperCategory( coch_cat,
               rec( name := Concatenation( "Complexes category by chains( ", Name( cat ), " )" ),
-                   category_filter := IsChainComplexCategory,
+                   category_filter := IsComplexesCategoryByChains,
                    category_object_filter := IsChainComplex,
                    category_morphism_filter := IsChainMorphism,
                    object_constructor := object_constructor,

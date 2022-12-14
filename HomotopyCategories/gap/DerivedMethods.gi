@@ -5,7 +5,7 @@
 #
 ##
 InstallOtherMethod( MorphismToColiftingObject,
-          [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex ],
+          [ IsComplexesCategory, IsChainOrCochainComplex ],
           
   function( cat, a )
     
@@ -15,7 +15,7 @@ end );
 
 ##
 InstallOtherMethod( IsColiftableAlongMorphismToColiftingObject,
-          [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
+          [ IsComplexesCategory, IsChainOrCochainMorphism ],
           
   function( cat, alpha )
     local a, I_a;
@@ -30,7 +30,7 @@ end );
 
 ##
 InstallOtherMethod( IsColiftableAlongMorphismToColiftingObject,
-          [ IsChainOrCochainComplexCategory, IsChainOrCochainMorphism ],
+          [ IsComplexesCategory, IsChainOrCochainMorphism ],
           
   { cat, alpha } -> IsNullHomotopic( alpha )
 );

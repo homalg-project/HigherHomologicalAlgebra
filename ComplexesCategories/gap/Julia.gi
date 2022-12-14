@@ -7,10 +7,10 @@
 
 
 InstallOtherMethod_for_julia( CreateComplex,
-          [ IsChainOrCochainComplexCategory, IsJuliaObject, IsInt ] );
+          [ IsComplexesCategory, IsJuliaObject, IsInt ] );
 
 InstallOtherMethod_for_julia( CreateComplexMorphism,
-          [ IsChainOrCochainComplexCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsJuliaObject, IsInt ] );
+          [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsJuliaObject, IsInt ] );
 
 InstallOtherMethod_for_julia( CreateComplexMorphism,
           [ IsChainOrCochainComplex, IsChainOrCochainComplex, IsJuliaObject, IsInt ] );

@@ -832,7 +832,7 @@ InstallMethod( ExtendFunctorMethodToHomotopyCategories,
     
     ExtendFunctorMethod(
       E,
-      category -> IsHomotopyCategory( category ) and IsCochainComplexCategory( UnderlyingCategory( category ) ),
+      category -> IsHomotopyCategory( category ) and IsCochainComplexesCategory( UnderlyingCategory( category ) ),
       DefiningCategory,
       functor -> ExtendFunctorToHomotopyCategories( functor, true ),
       "ExtendFunctorToHomotopyCategoriesByCochains"

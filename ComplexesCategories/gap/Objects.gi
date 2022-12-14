@@ -3,34 +3,8 @@
 
 
 
-#############################################
-#
-#  Representations, families and types
-#
-#############################################
-
-DeclareRepresentation( "IsChainComplexRep",
-                       IsComponentObjectRep and IsAttributeStoringRep,
-                       [ ] );
-
-DeclareRepresentation( "IsCochainComplexRep",
-                       IsComponentObjectRep and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "FamilyOfChainComplexes",
-            NewFamily( "chain complexes" ) );
 
 
-BindGlobal( "FamilyOfCochainComplexes",
-            NewFamily( "cochain complexes" ) );
-
-BindGlobal( "TheTypeOfChainComplexes",
-            NewType( FamilyOfChainComplexes,
-                     IsChainComplex and IsChainComplexRep ) );
-
-BindGlobal( "TheTypeOfCochainComplexes",
-            NewType( FamilyOfCochainComplexes,
-                     IsCochainComplex and IsCochainComplexRep ) );
 
 ###########################################
 #
@@ -40,7 +14,7 @@ BindGlobal( "TheTypeOfCochainComplexes",
 
 ##
 InstallMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsList ],
+        [ IsComplexesCategory, IsList ],
   
   function( ch_cat, L )
     
@@ -54,48 +28,48 @@ end );
 
 ## Convenience methods
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsZFunction, IsZFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsZFunction, IsZFunction, IsObject, IsObject ],
   
   { ch_cat, objs, diffs, lower_bound, upper_bound } -> CreateComplex( ch_cat, [ objs, diffs, lower_bound, upper_bound ] )
 );
 
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsFunction, IsFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsFunction, IsFunction, IsObject, IsObject ],
   
   { ch_cat, objs, diffs, lower_bound, upper_bound } -> CreateComplex( ch_cat, [ AsZFunction( objs ), AsZFunction( diffs ), lower_bound, upper_bound ] )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsZFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsZFunction, IsObject, IsObject ],
   
   { ch_cat, diffs, lower_bound, upper_bound } -> CreateComplex( ch_cat, ApplyMap( diffs, Source ), diffs, lower_bound, upper_bound )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsFunction, IsObject, IsObject ],
   
   { ch_cat, diffs, lower_bound, upper_bound } -> CreateComplex( ch_cat, AsZFunction( diffs ), lower_bound, upper_bound )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsZFunction ],
+        [ IsComplexesCategory, IsZFunction ],
   
   { ch_cat, diffs } -> CreateComplex(  ch_cat, diffs, -infinity, infinity )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
-        [ IsChainOrCochainComplexCategory, IsFunction ],
+        [ IsComplexesCategory, IsFunction ],
   
   { ch_cat, diffs } -> CreateComplex(  ch_cat, AsZFunction( diffs ) )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
-        [ IsCochainComplexCategory, IsDenseList, IsInt ],
+        [ IsComplexesCategoryByCochains, IsDenseList, IsInt ],
         
   function( ch_cat, diffs_list, lower_bound )
     local underlying_cat, zero_obj, upper_bound, diffs;
@@ -131,7 +105,7 @@ end );
 
 ##
 InstallOtherMethod( CreateComplex,
-      [ IsChainOrCochainComplexCategory, IsCapCategoryObject, IsInt ],
+      [ IsComplexesCategory, IsCapCategoryObject, IsInt ],
   
   function ( ch_cat, o, i )
     local cat, C;
@@ -150,7 +124,7 @@ end );
 
 ##
 InstallOtherMethod( \/,
-      [ IsCapCategoryObject, IsChainOrCochainComplexCategory ],
+      [ IsCapCategoryObject, IsComplexesCategory ],
   
   function ( o, ch_cat )
     
