@@ -1,8 +1,45 @@
 
 
 
+##
+BindGlobal( "_complexes_InclusionFunctorIntoComplexesCategory",
+  
+  function( cat, over_cochains )
+    local ch_cat, F;
+    
+    if over_cochains = true then
+      ch_cat := ComplexesCategoryByCochains( cat );
+    else
+      ch_cat := ComplexesCategoryByChains( cat );
+    fi;
+    
+    F := CapFunctor( "The natural inclusion functor", cat, ch_cat );
+    
+    AddObjectFunction( F,
+      o -> CreateComplex( ch_cat, o, 0 )
+    );
+    
+    AddMorphismFunction( F,
+      { S, phi, R } -> CreateComplexMorphism( ch_cat, S, R, [ phi ], 0 )
+    );
+    
+    return F;
+    
+end );
 
+##
+InstallMethod( InclusionFunctorIntoComplexesCategoryByCochains,
+          [ IsCapCategory ],
+  
+  cat -> _complexes_InclusionFunctorIntoComplexesCategory( cat, true )
+);
 
+##
+InstallMethod( InclusionFunctorIntoComplexesCategoryByChains,
+          [ IsCapCategory ],
+  
+  cat -> _complexes_InclusionFunctorIntoComplexesCategory( cat, false )
+);
 
 ##
 BindGlobal( "_complexes_ExtendFunctorToComplexesCategories",
