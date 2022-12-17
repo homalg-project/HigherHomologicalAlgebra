@@ -1,4 +1,9 @@
-@Chapter Complexes categories
-@Chapter Complexes
-@Chapter Complexes morphisms
-@Chapter Functors
+
+@Chapter Constructors
+@Section Constructing categories
+@Section Constructing objects
+@Section Constructing morphisms
+@Chapter Functors and natural transformations
+@Section Functors
+@Section Natural transformations
+
