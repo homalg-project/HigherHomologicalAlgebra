@@ -165,7 +165,7 @@ BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
             
         end );
         
-    return CreateComplexMorphism( ch_range_cat, hom_BC, hom_AD, morphisms, l_psi - u_phi, u_psi - l_phi );
+    return CreateComplexMorphism( ch_range_cat, hom_BC, morphisms, l_psi - u_phi, u_psi - l_phi, hom_AD );
     
 end );
 
@@ -212,7 +212,7 @@ BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomo
     
     ell := MorphismBetweenDirectSumsWithGivenDirectSums( range_cat, distinguished_object[0], diagram_S, matrix, diagram_R, hom_BC[0] );
     
-    return CreateComplexMorphism( ch_range_cat, distinguished_object, hom_BC, [ ell ], 0 );
+    return CreateComplexMorphism( ch_range_cat, distinguished_object, [ ell ], 0, hom_BC );
     
 end );
 
@@ -257,7 +257,7 @@ BindGlobal( "_complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismSt
                                         C[j],
                                         PreCompose( range_cat, ell[0], ProjectionInFactorOfDirectSumWithGivenDirectSum( range_cat, diagram_R, index_j, hom_BC[0] ) ) ) );
     
-    return CreateComplexMorphism( ch_cat, B, C, morphisms, l_BC );
+    return CreateComplexMorphism( ch_cat, B, morphisms, l_BC, C );
     
 end );
 
@@ -384,7 +384,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
           
           ell := unwrap_morphism_in_abelian_category( PreCompose( range_cat, ell, KernelEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^0 ) ) ) );
           
-          ell := CreateComplexMorphism( distinguished_object, hom_BC, [ ell ], 0 );
+          ell := CreateComplexMorphism( distinguished_object, [ ell ], 0, hom_BC );
           
           return _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat, B, C, ell );
           

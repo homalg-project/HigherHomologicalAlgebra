@@ -1,6 +1,8 @@
 
 
 
+
+
 ##
 BindGlobal( "_complexes_InclusionFunctorIntoComplexesCategory",
   
@@ -20,7 +22,7 @@ BindGlobal( "_complexes_InclusionFunctorIntoComplexesCategory",
     );
     
     AddMorphismFunction( F,
-      { S, phi, R } -> CreateComplexMorphism( ch_cat, S, R, [ phi ], 0 )
+      { S, phi, R } -> CreateComplexMorphism( ch_cat, S, [ phi ], 0, R )
     );
     
     return F;
@@ -68,10 +70,10 @@ BindGlobal( "_complexes_ExtendFunctorToComplexesCategories",
           CreateComplexMorphism(
                 T,
                 source,
-                range,
                 ApplyMap( Morphisms( phi ), m -> ApplyFunctor( F, m ) ),
                 LowerBound( phi ),
-                UpperBound( phi ) ) );
+                UpperBound( phi ),
+                range ) );
     
     return ch_F;
     

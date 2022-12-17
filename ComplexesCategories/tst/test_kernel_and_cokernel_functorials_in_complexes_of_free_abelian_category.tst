@@ -80,9 +80,9 @@ gap> for morphism_info in morphisms do
 >         CreateComplexMorphism(
 >            Ch_AAoid,
 >            EvalString( objects[morphism_info[2][1]][1] ),
->            EvalString( objects[morphism_info[2][2]][1] ),
 >            List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / Aoid / AAoid ),
->            morphism_info[4][1] ) );
+>            morphism_info[4][1],
+>            EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
 gap> ForAll( [ f, g, alpha, nu ], IsWellDefined ) and IsZeroForMorphisms( PreCompose( alpha, g ) - PreCompose( f, nu ) );
 true

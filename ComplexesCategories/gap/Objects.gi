@@ -68,7 +68,7 @@ InstallOtherMethod( CreateComplex,
 );
 
 ##
-InstallOtherMethod( CreateComplex,
+InstallMethod( CreateComplex,
         [ IsComplexesCategoryByCochains, IsDenseList, IsInt ],
         
   function( ch_cat, diffs_list, lower_bound )
