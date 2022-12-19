@@ -379,7 +379,7 @@ end );
 BindGlobal( "_complexes_ViewObj",
   
   function ( x )
-    local b, dots, cell, i;
+    local b, cell, i;
     
     b := [ LowerBound( x ), UpperBound( x ) ];
     
@@ -395,15 +395,13 @@ BindGlobal( "_complexes_ViewObj",
       
     od;
     
-    dots := Concatenation( ListWithIdenticalEntries( 3, TEXTMTRANSLATIONS!.cdot ) );
-    
     if IsCapCategoryObject( x ) then
         cell := "An object";
     elif IsCapCategoryMorphism( x ) then
         cell := "A morphism";
     fi;
     
-    Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported in the window [", b[1], " ", dots, " ", b[2], "]>" );
+    Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", b[1], " .. ", b[2], " ]>" );
     
 end );
 
