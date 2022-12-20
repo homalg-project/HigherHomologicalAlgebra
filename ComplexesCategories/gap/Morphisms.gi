@@ -14,44 +14,44 @@
 ## Morphisms
 ##
 InstallMethod( CreateComplexMorphism,
-            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsList ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsList, IsChainOrCochainComplex ],
   
-  { ch_cat, S, R, datum }  -> MorphismConstructor( ch_cat, S, datum, R )
+  MorphismConstructor
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsZFunction, IsObject, IsObject, IsChainOrCochainComplex ],
   
-  { ch_cat, S, R, morphisms, lower_bound, upper_bound } -> CreateComplexMorphism( ch_cat, S, R, [ morphisms, lower_bound, upper_bound ] )
+  { ch_cat, S, morphisms, lower_bound, upper_bound, R } -> CreateComplexMorphism( ch_cat, S, [ morphisms, lower_bound, upper_bound ], R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction, IsObject, IsObject ],
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsFunction, IsObject, IsObject, IsChainOrCochainComplex ],
   
-  { ch_cat, S, R, morphisms, lower_bound, upper_bound } -> CreateComplexMorphism( ch_cat, S, R, AsZFunction( morphisms ), lower_bound, upper_bound )
+  { ch_cat, S, morphisms, lower_bound, upper_bound, R } -> CreateComplexMorphism( ch_cat, S, AsZFunction( morphisms ), lower_bound, upper_bound, R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsZFunction ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsZFunction, IsChainOrCochainComplex ],
   
-  { ch_cat, S, R, morphisms } -> CreateComplexMorphism( ch_cat, S, R, morphisms, Minimum( LowerBound( S ), LowerBound( R ) ), Maximum( UpperBound( S ), UpperBound( R ) ) )
+  { ch_cat, S, morphisms, R } -> CreateComplexMorphism( ch_cat, S, morphisms, Minimum( LowerBound( S ), LowerBound( R ) ), Maximum( UpperBound( S ), UpperBound( R ) ), R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-            [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsFunction ],
+            [ IsComplexesCategory, IsChainOrCochainComplex, IsFunction, IsChainOrCochainComplex ],
   
-  { ch_cat, S, R, morphisms } -> CreateComplexMorphism( ch_cat, S, R, AsZFunction( morphisms ) )
+  { ch_cat, S, morphisms, R } -> CreateComplexMorphism( ch_cat, S, AsZFunction( morphisms ), R )
 );
 
 ##
-InstallOtherMethod( CreateComplexMorphism,
-        [ IsComplexesCategory, IsChainOrCochainComplex, IsChainOrCochainComplex, IsDenseList, IsInt ],
+InstallMethod( CreateComplexMorphism,
+        [ IsComplexesCategory, IsChainOrCochainComplex, IsDenseList, IsInt, IsChainOrCochainComplex ],
   
-  function ( ch_cat, S, R, dense_list_of_morphisms, lower_bound )
+  function ( ch_cat, S, dense_list_of_morphisms, lower_bound, R )
     local upper_bound, morphisms;
     
     upper_bound := lower_bound + Length( dense_list_of_morphisms ) - 1;
@@ -67,27 +67,22 @@ InstallOtherMethod( CreateComplexMorphism,
         
       end;
     
-    return CreateComplexMorphism( ch_cat, S, R, morphisms, lower_bound, upper_bound );
+    return CreateComplexMorphism( ch_cat, S, morphisms, lower_bound, upper_bound, R );
     
 end );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-        [ IsChainOrCochainComplex, IsChainOrCochainComplex, IsDenseList, IsInt ],
+        [ IsChainOrCochainComplex, IsDenseList, IsInt, IsChainOrCochainComplex ],
   
-  { S, R, dense_list_of_morphisms, lower_bound } -> CreateComplexMorphism( CapCategory( S ), S, R, dense_list_of_morphisms, lower_bound )
+  { S, dense_list_of_morphisms, lower_bound, R } -> CreateComplexMorphism( CapCategory( S ), S, dense_list_of_morphisms, lower_bound, R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
         [ IsComplexesCategory, IsCapCategoryMorphism, IsInt ],
   
-  { ch_cat, f, n } -> CreateComplexMorphism(
-                            ch_cat,
-                            CreateComplex( ch_cat, Source( f ), n ),
-                            CreateComplex( ch_cat, Range( f ), n ),
-                            [ f ],
-                            n )
+  { ch_cat, f, n } -> CreateComplexMorphism( ch_cat, CreateComplex( ch_cat, Source( f ), n ), [ f ], n, CreateComplex( ch_cat, Range( f ), n ) )
 );
 
 ###################################
@@ -288,7 +283,7 @@ InstallMethod( AsComplexMorphismOverOppositeCategory,
     
     morphisms := i -> Opposite( Morphisms( phi )[-i] );
     
-    psi := CreateComplexMorphism( CapCategory( S ), S, T, morphisms, -UpperBound( phi ), -LowerBound( phi ) );
+    psi := CreateComplexMorphism( CapCategory( S ), S, morphisms, -UpperBound( phi ), -LowerBound( phi ), T );
     
     SetAsComplexMorphismOverOppositeCategory( psi, phi );
     

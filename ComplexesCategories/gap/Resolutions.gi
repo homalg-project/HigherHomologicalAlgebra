@@ -69,7 +69,7 @@ BindGlobal( "_complexes_QuasiIsomorphismFromProjectiveResolution",
     
     PC := CreateComplex( ch_cat, ApplyMap( data, j -> j[1] ), -infinity, u );
     
-    return CreateComplexMorphism( ch_cat, PC, C, ApplyMap( data, j -> j[2] ) );
+    return CreateComplexMorphism( ch_cat, PC, ApplyMap( data, j -> j[2] ), C );
     
 end );
 
@@ -86,7 +86,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolutionOp,
       
       PC := ProjectiveResolution( C, true );
       
-      return CreateComplexMorphism( CapCategory( C ), PC, C, Morphisms( nu ), LowerBound( PC ), UpperBound( nu ) );
+      return CreateComplexMorphism( CapCategory( C ), PC, Morphisms( nu ), LowerBound( PC ), UpperBound( nu ), C );
       
     else
       
@@ -177,7 +177,7 @@ InstallMethod( MorphismBetweenProjectiveResolutionsOp,
          
       end );
       
-    return CreateComplexMorphism( ch_cat, PB, PC, morphisms );
+    return CreateComplexMorphism( ch_cat, PB, morphisms, PC );
     
 end );
 
@@ -367,7 +367,7 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
         
         end );
     
-    return CreateComplexMorphism( ch_cat, PS, PR, morphisms );
+    return CreateComplexMorphism( ch_cat, PS, morphisms, PR );
     
 end );
 

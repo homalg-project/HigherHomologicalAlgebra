@@ -114,9 +114,9 @@ gap> for morphism_info in morphisms{[1..4]} do
 >           CreateComplexMorphism(
 >             complex_cat,
 >             UnderlyingCell( EvalString( objects[morphism_info[2][1]][1] ) ),
->             UnderlyingCell( EvalString( objects[morphism_info[2][2]][1] ) ),
 >             List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / cat ),
->             morphism_info[4][1] ),
+>             morphism_info[4][1],
+>             UnderlyingCell( EvalString( objects[morphism_info[2][2]][1] ) ) ),
 >           EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
 gap> IsWellDefined( Convolution( CreateComplex( HomotopyCategoryByCochains( homotopy_cat ), [ h0A, h0B, h0C, h0D ], 0 ) ) );

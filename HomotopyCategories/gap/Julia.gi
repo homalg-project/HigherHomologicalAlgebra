@@ -8,7 +8,7 @@ InstallOtherMethod_for_julia( CreateComplex,
           [ IsHomotopyCategory, IsJuliaObject, IsInt ] );
 
 InstallOtherMethod_for_julia( CreateComplexMorphism,
-          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ] );
+          [ IsHomotopyCategory, IsHomotopyCategoryObject, IsJuliaObject, IsInt, IsHomotopyCategoryObject ] );
 
 InstallOtherMethod_for_julia( CreateComplexMorphism,
           [ IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsJuliaObject, IsInt ] );

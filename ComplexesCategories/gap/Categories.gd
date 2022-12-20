@@ -3,7 +3,7 @@
 #
 # Declarations
 #
-#! @Chapter Complexes categories
+#! @Chapter Constructors
 ##
 #############################################################################
 
@@ -11,7 +11,7 @@ InfoComplexesCategories := NewInfoClass( "InfoComplexesCategories" );
 
 SetInfoLevel( InfoComplexesCategories, 1 );
 
-#! @Section Constructing chain and cochain categories
+#! @Section Constructing categories
 
 ###################################################
 #
@@ -20,15 +20,18 @@ SetInfoLevel( InfoComplexesCategories, 1 );
 ###################################################
 
 #! @Description
-#!  Gap-categories of the chain or cochain complexes category.
+#!  GAP-categories of the chain or cochain complexes category.
+#! @Arguments C
 DeclareCategory( "IsComplexesCategory", IsCapCategory );
 
 #! @Description
-#!  Gap-categories of the chain complexes category.
+#!  GAP-categories of the chain complexes category.
+#! @Arguments C
 DeclareCategory( "IsComplexesCategoryByChains", IsComplexesCategory );
 
 #! @Description
-#!  Gap-category of the cochain complexes category.
+#!  GAP-category of the cochain complexes category.
+#! @Arguments C
 DeclareCategory( "IsComplexesCategoryByCochains", IsComplexesCategory );
 
 ###################################################
@@ -38,23 +41,21 @@ DeclareCategory( "IsComplexesCategoryByCochains", IsComplexesCategory );
 ###################################################
 
 #! @Description
-#!  Creates the chain complex category $\mathrm{Ch}_\bullet(A)$ an additive category $A$. If you want to contruct the category without finalizing it so that you can add
-#! your own methods, you can run the command $\texttt{ChainComplexCategory(A : FinalizeCategory := false )}$.
-#! @Arguments A
-#! @Returns a CAP category
-DeclareAttribute( "ComplexesCategoryByChains", IsCapCategory );
-
-#! @Description
-#!  Creates the cochain complex category $\mathrm{Ch}^\bullet(A)$ an additive category $A$. If you want to contruct the category without finalizing it so that you can add
-#! your own methods, you can run the command $\texttt{ComplexesCategoryByCochains(A : FinalizeCategory := false )}$.
+#!  Creates the complexes category by cochains $\mathcal{C}^b(A)$ of an additive category $A$.
 #! @Arguments A
 #! @Returns a CAP category
 DeclareAttribute( "ComplexesCategoryByCochains", IsCapCategory );
 
 #! @Description
-#! The input is a chain or cochain complex category $B=C(A)$ constructed by one of the previous commands.
-#! The outout is $A$
-#! @Arguments B
+#!  Creates the complexes category by chains $\mathcal{C}^b(A)$ of an additive category $A$.
+#! @Arguments A
+#! @Returns a CAP category
+DeclareAttribute( "ComplexesCategoryByChains", IsCapCategory );
+
+#! @Description
+#! The input is a complexes category by (co)chains $C:=\mathcal{C}^b(A)$.
+#! The outout is $A$.
+#! @Arguments C
 #! @Returns a CAP category
 DeclareAttribute( "UnderlyingCategory", IsComplexesCategory );
 
