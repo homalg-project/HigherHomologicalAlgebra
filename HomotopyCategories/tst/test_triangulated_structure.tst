@@ -90,9 +90,9 @@ gap> for morphism_info in morphisms{[1..5]} do
 >           CreateComplexMorphism(
 >             complex_cat,
 >             UnderlyingCell( EvalString( objects[morphism_info[2][1]][1] ) ),
->             UnderlyingCell( EvalString( objects[morphism_info[2][2]][1] ) ),
 >             List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / cat ),
->             morphism_info[4][1] ),
+>             morphism_info[4][1],
+>             UnderlyingCell( EvalString( objects[morphism_info[2][2]][1] ) ) ),
 >           EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
 gap> check := function(x) if not x then Error( "A ", Encode( Unicode( "&#128027;", "XML") ),  " is found!\n" ); fi; end;;

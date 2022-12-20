@@ -19,7 +19,7 @@ InstallOtherMethod( CreateComplexMorphism,
   { homotopy_cat, S, morphisms, R } -> MorphismConstructor(
                                             homotopy_cat,
                                             S,
-                                            CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), UnderlyingCell( R ), morphisms ),
+                                            CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, UnderlyingCell( R ) ),
                                             R )
 );
 
@@ -32,23 +32,23 @@ InstallOtherMethod( CreateComplexMorphism,
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-      [ IsHomotopyCategory, IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsDenseList, IsInt ],
+      [ IsHomotopyCategory, IsHomotopyCategoryObject, IsDenseList, IsInt, IsHomotopyCategoryObject ],
   
-  { homotopy_cat, S, R, morphisms, l } -> MorphismConstructor(
+  { homotopy_cat, S, morphisms, l, R } -> MorphismConstructor(
                                                 homotopy_cat,
                                                 S,
-                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), UnderlyingCell( R ), morphisms, l ),
+                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, UnderlyingCell( R ) ),
                                                 R )
 );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
-      [ IsHomotopyCategory, IsHomotopyCategoryObject, IsHomotopyCategoryObject, IsZFunction, IsInt, IsInt ],
+      [ IsHomotopyCategory, IsHomotopyCategoryObject, IsZFunction, IsInt, IsInt, IsHomotopyCategoryObject ],
   
-  { homotopy_cat, S, R, morphisms, l, u } -> MorphismConstructor(
+  { homotopy_cat, S, morphisms, l, u, R } -> MorphismConstructor(
                                                 homotopy_cat,
                                                 S,
-                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), UnderlyingCell( R ), morphisms, l, u ),
+                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, u, UnderlyingCell( R ) ),
                                                 R )
 );
 
