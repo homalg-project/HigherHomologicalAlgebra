@@ -9,9 +9,9 @@ gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
 gap> LoadPackage( "IO_ForHomalg", false );
 true
-gap> LoadPackage( "FunctorCategories", false );
-true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
+true
+gap> LoadPackage( "FunctorCategories", false );
 true
 gap> LoadPackage( "DerivedCategories", false );
 true
