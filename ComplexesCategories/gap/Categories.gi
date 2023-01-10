@@ -392,7 +392,7 @@ InstallMethod( ComplexesCategoryByCochains,
                      
                      type := info.filter_list[j];
                      
-                     if type = IsInt then
+                     if type = "integer" then
                          return Concatenation( "i_arg[", String( j ), "]" );
                      elif type = "object" then
                          return Concatenation( "ObjectAt( i_arg[", String( j ), "], i )" );
@@ -403,7 +403,7 @@ InstallMethod( ComplexesCategoryByCochains,
                      elif type = "list_of_morphisms" then
                          return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismAt( m, i ) )" );
                      else
-                         Error( "can only deal with IsInt, \"object\", \"morphism\", \"list_of_objects\", \"list_of_morphisms\"" );
+                         Error( "can only deal with \"integer\", \"object\", \"morphism\", \"list_of_objects\", \"list_of_morphisms\"" );
                      fi;
                      
                   end ) ) );
