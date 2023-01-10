@@ -1,7 +1,7 @@
 name: TriangulatedCategories
-version: "2022.12-01"
+version: "2023.01-01"
 license: "GPL-2.0-or-later"
-date: 2022-12-07
+date: 2023-01-10
 description: |
     Framework for triangulated categories
 
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Triangula
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.12-01/TriangulatedCategories-2022.12-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.01-01/TriangulatedCategories-2023.01-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.12-01/TriangulatedCategories-2022.12-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.01-01/TriangulatedCategories-2023.01-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2022.12-01/TriangulatedCategories-2022.12-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.01-01/TriangulatedCategories-2023.01-01.pdf
 
 abstract: |
 
@@ -42,28 +42,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal23</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>TriangulatedCategories, Framework for triangulated categories,
-             Version 2022.12-01</i>
-     (<span class='BibYear'>2022</span>)<br />
+             Version 2023.01-01</i>
+     (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/TriangulatedCategories">https://homalg-project.github.io/pkg/TriangulatedCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ TriangulatedCategories2022.12-01,
+    @misc{ TriangulatedCategories2023.01-01,
       author =           {Saleh, K.},
       title =            {{TriangulatedCategories},  Framework  for triangulated
-                          categories, {V}ersion 2022.12-01},
-      month =            {Dec},
-      year =             {2022},
+                          categories, {V}ersion 2023.01-01},
+      month =            {Jan},
+      year =             {2023},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/TriangulatedCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{TriangulatedCategories}}},
-      printedkey =       {Sal22}
+      printedkey =       {Sal23}
     }
 
