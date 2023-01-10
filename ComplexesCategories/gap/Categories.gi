@@ -793,6 +793,8 @@ InstallMethod( ComplexesCategoryByChains,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
                    only_primitive_operations := true ) : FinalizeCategory := false );
     
+    SetUnderlyingCategory( ch_cat, cat );
+     
     ## random methods by lists
     ##
     if CanCompute( coch_cat, "RandomObjectByList" ) then

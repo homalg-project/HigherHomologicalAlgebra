@@ -37,7 +37,7 @@ DeclareOperation( "CreateComplex", [ IsComplexesCategory, IsList ] );
 #!  The output is an object $C\in\mathcal{C}^b(A)$ whose differentials are $\partial_{C}^{\ell}:=L[1], \partial_{C}^{\ell+1}:=L[2],$ etc.
 #! @Arguments C, L
 #! @Returns a CAP object
-DeclareOperation( "CreateComplex", [ IsComplexesCategoryByCochains, IsDenseList, IsInt ] );
+DeclareOperation( "CreateComplex", [ IsComplexesCategory, IsDenseList, IsInt ] );
 
 #! @Description
 #!  Returns the objects of the complex as a $\mathbb{Z}$-function.

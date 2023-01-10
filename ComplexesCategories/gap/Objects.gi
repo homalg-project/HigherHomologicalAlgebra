@@ -104,6 +104,42 @@ InstallMethod( CreateComplex,
 end );
 
 ##
+InstallMethod( CreateComplex,
+        [ IsComplexesCategoryByChains, IsDenseList, IsInt ],
+        
+  function( ch_cat, diffs_list, homological_index )
+    local underlying_cat, zero_obj, upper_bound, diffs;
+    
+    underlying_cat := UnderlyingCategory( ch_cat );
+    
+    if ForAny( diffs_list, delta -> not IsIdenticalObj( CapCategory( delta ), underlying_cat ) ) then
+        Error( "all morphisms in the list passed to 'CreateComplex' must belong to the category ", Name( underlying_cat ) );
+    fi;
+    
+    zero_obj := ZeroObject( UnderlyingCategory( ch_cat ) );
+    
+    upper_bound := homological_index + Length( diffs_list ) - 1;
+    
+    diffs :=
+      function( i )
+        
+        if i = homological_index - 1 then
+          return UniversalMorphismIntoZeroObject( Range( diffs_list[1] ) );
+        elif i >= homological_index and i <= upper_bound then
+          return diffs_list[i - homological_index + 1];
+        elif i = upper_bound + 1 then
+          return UniversalMorphismFromZeroObject( Source( diffs_list[ Length( diffs_list ) ] ) );
+        else
+          return ZeroObjectFunctorial( UnderlyingCategory( ch_cat ) );
+        fi;
+        
+      end;
+    
+    return CreateComplex( ch_cat, diffs, homological_index - 1, upper_bound );
+    
+end );
+
+##
 InstallOtherMethod( CreateComplex,
       [ IsComplexesCategory, IsCapCategoryObject, IsInt ],
   
@@ -491,17 +527,17 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsCochainComplex, IsInt, IsInt ],
         
-  function ( C, l_C, u_C )
+  function ( C, l, u )
     local latex_string, i;
     
     latex_string := "\\begin{array}{c}\n";
-    latex_string := Concatenation( latex_string, LaTeXOutput( C[ u_C ] ), "\n " );
+    latex_string := Concatenation( latex_string, LaTeXOutput( C[ u ] ), "\n" );
     
-    for i in Reversed( [ l_C .. u_C - 1 ] ) do
+    for i in Reversed( [ l .. u - 1 ] ) do
       
-      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_{\\phantom{", String( i ), "}} \n\\\\\n " );
-      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n " );
-      latex_string := Concatenation( latex_string, "{\\vert_{", String( i ), "}}\n " );
+      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_{\\phantom{", String( i ), "}}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "{\\vert_{", String( i ), "}}\n" );
       latex_string := Concatenation( latex_string, "\n\\\\\n", LaTeXOutput( C[ i ] ) );
       
     od;
@@ -512,7 +548,7 @@ end );
 
 #
 InstallOtherMethod( LaTeXOutput,
-        [ IsChainOrCochainComplex, IsInt, IsInt ],
+        [ IsChainComplex, IsInt, IsInt ],
   function ( C, l, u )
     local latex_string, i;
     
@@ -520,14 +556,14 @@ InstallOtherMethod( LaTeXOutput,
     
     for i in Reversed( [ l + 1 .. u ] ) do
       
-      latex_string := Concatenation( latex_string, "\\\\ \n ", LaTeXOutput( C[ i ] ), " \n " );
-      latex_string := Concatenation( latex_string, "\\\\ \n  \\vert^{", String( i ), "} \n \\\\ \n " );
-      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), " \n \\\\ \n " );
-      latex_string := Concatenation( latex_string, "{ \\downarrow_{\\phantom{", String( i ), "}}} \n " );
+      latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ i ] ), "\n" );
+      latex_string := Concatenation( latex_string, "\\\\\n\\vert^{", String( i ), "}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "{\\downarrow_{\\phantom{", String( i ), "}}}\\\\\n" );
       
     od;
     
-    latex_string := Concatenation( latex_string, "\\\\ \n ", LaTeXOutput( C[ l ] ) );
+    latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ l ] ) );
     latex_string := Concatenation( latex_string, "\\end{array}" );
     
     return latex_string;

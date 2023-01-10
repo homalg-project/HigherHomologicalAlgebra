@@ -92,4 +92,10 @@ true
 gap> lambda := CokernelObjectFunctorial( alpha, g, nu );;
 gap> IsWellDefined( lambda ) and IsZeroForMorphisms( PreCompose( CokernelProjection( alpha ), lambda ) - PreCompose( g, CokernelProjection( nu ) ) );
 true
+gap> u := UniversalMorphismIntoFiberProduct( Ch_AAoid, [ g, nu ], A, [ alpha, f ] );;
+gap> IsWellDefined( u );
+true
+gap> u := UniversalMorphismFromPushout( Ch_AAoid, [ alpha, f ], V, [ g, nu ] );;
+gap> IsWellDefined( u );
+true
 gap> SetInfoLevel( InfoWarning, 1 );

@@ -59,12 +59,12 @@ gap> rels := [   PreCompose(dS_m5,dS_m4),
 gap> oid := kF / rels;;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
-gap> Ch_AAoid := ComplexesCategoryByCochains( AAoid );;
+gap> ch_AAoid := ComplexesCategoryByCochains( AAoid );;
 gap> for object_info in objects do
 >       MakeReadWriteGlobal( object_info[1] );
 >       DeclareSynonym( object_info[1],
 >         CreateComplex(
->            Ch_AAoid,
+>            ch_AAoid,
 >            List( [ object_info[2][1] .. object_info[2][2] - 1 ],
 >              i -> oid.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / Aoid / AAoid ),
 >            object_info[2][1] ) );
@@ -73,7 +73,7 @@ gap> for morphism_info in morphisms do
 >       MakeReadWriteGlobal( morphism_info[1] );
 >       DeclareSynonym( morphism_info[1],
 >         CreateComplexMorphism(
->            Ch_AAoid,
+>            ch_AAoid,
 >            EvalString( objects[morphism_info[2][1]][1] ),
 >            List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / Aoid / AAoid ),
 >            morphism_info[4][1],
@@ -93,4 +93,15 @@ gap> IsZero( tau - PreCompose( CokernelProjection( phi ), CokernelColift( phi, t
 true
 gap> RankOfObject( HomStructure( S, KernelObject( phi ) ) ) = RankOfObject( HomStructure( CokernelObject( phi ), T ) );
 true
+gap> iota := ImageEmbedding( phi );; pi := CoimageProjection( phi );;
+gap> ForAll( [ iota, pi ], IsWellDefined ) and IsMonomorphism( iota ) and IsEpimorphism( pi );
+true
+gap> Length( LaTeXOutput( A ) );
+4131
+gap> Length( LaTeXOutput( AsChainComplex( A ) ) );
+4146
+gap> Length( LaTeXOutput( phi ) );
+14104
+gap> Length( LaTeXOutput( AsChainComplexMorphism( phi ) ) );
+14107
 gap> SetInfoLevel( InfoWarning, 1 );
