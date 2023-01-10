@@ -527,17 +527,17 @@ end );
 InstallOtherMethod( LaTeXOutput,
         [ IsCochainComplex, IsInt, IsInt ],
         
-  function ( C, l_C, u_C )
+  function ( C, l, u )
     local latex_string, i;
     
     latex_string := "\\begin{array}{c}\n";
-    latex_string := Concatenation( latex_string, LaTeXOutput( C[ u_C ] ), "\n " );
+    latex_string := Concatenation( latex_string, LaTeXOutput( C[ u ] ), "\n" );
     
-    for i in Reversed( [ l_C .. u_C - 1 ] ) do
+    for i in Reversed( [ l .. u - 1 ] ) do
       
-      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_{\\phantom{", String( i ), "}} \n\\\\\n " );
-      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n " );
-      latex_string := Concatenation( latex_string, "{\\vert_{", String( i ), "}}\n " );
+      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_{\\phantom{", String( i ), "}}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "{\\vert_{", String( i ), "}}\n" );
       latex_string := Concatenation( latex_string, "\n\\\\\n", LaTeXOutput( C[ i ] ) );
       
     od;
@@ -548,7 +548,7 @@ end );
 
 #
 InstallOtherMethod( LaTeXOutput,
-        [ IsChainOrCochainComplex, IsInt, IsInt ],
+        [ IsChainComplex, IsInt, IsInt ],
   function ( C, l, u )
     local latex_string, i;
     
@@ -556,14 +556,14 @@ InstallOtherMethod( LaTeXOutput,
     
     for i in Reversed( [ l + 1 .. u ] ) do
       
-      latex_string := Concatenation( latex_string, "\\\\ \n ", LaTeXOutput( C[ i ] ), " \n " );
-      latex_string := Concatenation( latex_string, "\\\\ \n  \\vert^{", String( i ), "} \n \\\\ \n " );
-      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), " \n \\\\ \n " );
-      latex_string := Concatenation( latex_string, "{ \\downarrow_{\\phantom{", String( i ), "}}} \n " );
+      latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ i ] ), "\n" );
+      latex_string := Concatenation( latex_string, "\\\\\n\\vert^{", String( i ), "}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "{\\downarrow_{\\phantom{", String( i ), "}}}\\\\\n" );
       
     od;
     
-    latex_string := Concatenation( latex_string, "\\\\ \n ", LaTeXOutput( C[ l ] ) );
+    latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ l ] ) );
     latex_string := Concatenation( latex_string, "\\end{array}" );
     
     return latex_string;
