@@ -66,17 +66,17 @@ InverseShiftOfMorphismWithGivenObjects := rec(
 ),
 
 ShiftOfObjectByInteger := rec(
-  filter_list := [ "category", "object", IsInt ],
+  filter_list := [ "category", "object", "integer" ],
   return_type := "object"
 ),
 
 ShiftOfMorphismByIntegerWithGivenObjects := rec(
-  filter_list := [ "category", "object", "morphism", IsInt, "object" ],
+  filter_list := [ "category", "object", "morphism", "integer", "object" ],
   return_type := "morphism"
 ),
 
 ShiftOfMorphismByInteger := rec(
-  filter_list := [ "category", "morphism", IsInt ],
+  filter_list := [ "category", "morphism", "integer" ],
   return_type := "morphism"
 ),
 
