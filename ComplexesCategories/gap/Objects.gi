@@ -104,6 +104,42 @@ InstallMethod( CreateComplex,
 end );
 
 ##
+InstallMethod( CreateComplex,
+        [ IsComplexesCategoryByChains, IsDenseList, IsInt ],
+        
+  function( ch_cat, diffs_list, homological_index )
+    local underlying_cat, zero_obj, upper_bound, diffs;
+    
+    underlying_cat := UnderlyingCategory( ch_cat );
+    
+    if ForAny( diffs_list, delta -> not IsIdenticalObj( CapCategory( delta ), underlying_cat ) ) then
+        Error( "all morphisms in the list passed to 'CreateComplex' must belong to the category ", Name( underlying_cat ) );
+    fi;
+    
+    zero_obj := ZeroObject( UnderlyingCategory( ch_cat ) );
+    
+    upper_bound := homological_index + Length( diffs_list ) - 1;
+    
+    diffs :=
+      function( i )
+        
+        if i = homological_index - 1 then
+          return UniversalMorphismIntoZeroObject( Range( diffs_list[1] ) );
+        elif i >= homological_index and i <= upper_bound then
+          return diffs_list[i - homological_index + 1];
+        elif i = upper_bound + 1 then
+          return UniversalMorphismFromZeroObject( Source( diffs_list[ Length( diffs_list ) ] ) );
+        else
+          return ZeroObjectFunctorial( UnderlyingCategory( ch_cat ) );
+        fi;
+        
+      end;
+    
+    return CreateComplex( ch_cat, diffs, homological_index - 1, upper_bound );
+    
+end );
+
+##
 InstallOtherMethod( CreateComplex,
       [ IsComplexesCategory, IsCapCategoryObject, IsInt ],
   
