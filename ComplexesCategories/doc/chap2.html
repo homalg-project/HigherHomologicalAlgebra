@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (ComplexesCategories) - Chapter 2: Functors</title>
+<title>GAP (ComplexesCategories) - Chapter 2: Functors and natural transformations</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -20,39 +20,87 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
-<p><a id="X78D1062D78BE08C1" name="X78D1062D78BE08C1"></a></p>
-<div class="ChapSects"><a href="chap2.html#X78D1062D78BE08C1">2 <span class="Heading">Functors</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X836749D8814FEEE6">2.1 <span class="Heading">Natural transformations</span></a>
+<p><a id="X7B54E9998301376B" name="X7B54E9998301376B"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7B54E9998301376B">2 <span class="Heading">Functors and natural transformations</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X78D1062D78BE08C1">2.1 <span class="Heading">Functors</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B451DE2799913A1">2.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86556AE08486CE32">2.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82BD48A57EC69DD6">2.1-1 InclusionFunctorIntoComplexesCategoryByCochains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8245F6797EC3E3B5">2.1-2 InclusionFunctorIntoComplexesCategoryByChains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F07D7AB8266D011">2.1-3 ExtendFunctorToComplexesCategoriesByCochains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7F1224367D215965">2.1-4 ExtendFunctorToComplexesCategoriesByChains</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X836749D8814FEEE6">2.2 <span class="Heading">Natural transformations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B451DE2799913A1">2.2-1 ExtendNaturalTransformationToComplexesCategoriesByChains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86556AE08486CE32">2.2-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</a></span>
 </div></div>
 </div>
 
-<h3>2 <span class="Heading">Functors</span></h3>
+<h3>2 <span class="Heading">Functors and natural transformations</span></h3>
+
+<p><a id="X78D1062D78BE08C1" name="X78D1062D78BE08C1"></a></p>
+
+<h4>2.1 <span class="Heading">Functors</span></h4>
+
+<p><a id="X82BD48A57EC69DD6" name="X82BD48A57EC69DD6"></a></p>
+
+<h5>2.1-1 InclusionFunctorIntoComplexesCategoryByCochains</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InclusionFunctorIntoComplexesCategoryByCochains</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP functor</p>
+
+<p>Returns the natural inclusion into the complexes category by cochains <span class="Math">A \to \mathcal{C}^b(A)</span>.</p>
+
+<p><a id="X8245F6797EC3E3B5" name="X8245F6797EC3E3B5"></a></p>
+
+<h5>2.1-2 InclusionFunctorIntoComplexesCategoryByChains</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InclusionFunctorIntoComplexesCategoryByChains</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP functor</p>
+
+<p>Returns the natural inclusion into the complexes category by chains <span class="Math">A \to \mathcal{C}^b(A)</span>.</p>
+
+<p><a id="X7F07D7AB8266D011" name="X7F07D7AB8266D011"></a></p>
+
+<h5>2.1-3 ExtendFunctorToComplexesCategoriesByCochains</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendFunctorToComplexesCategoriesByCochains</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP functor</p>
+
+<p>Returns the natural extension of the functor <span class="Math">F: A \to B</span> to the complexes categories by cochains <span class="Math">\mathcal{C}^b(A) \to \mathcal{C}^b(B)</span>.</p>
+
+<p><a id="X7F1224367D215965" name="X7F1224367D215965"></a></p>
+
+<h5>2.1-4 ExtendFunctorToComplexesCategoriesByChains</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendFunctorToComplexesCategoriesByChains</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP functor</p>
+
+<p>Returns the natural extension of the functor <span class="Math">F: A \to B</span> to the complexes categories by chains <span class="Math">\mathcal{C}^b(A) \to \mathcal{C}^b(B)</span>.</p>
 
 <p><a id="X836749D8814FEEE6" name="X836749D8814FEEE6"></a></p>
 
-<h4>2.1 <span class="Heading">Natural transformations</span></h4>
+<h4>2.2 <span class="Heading">Natural transformations</span></h4>
 
 <p><a id="X7B451DE2799913A1" name="X7B451DE2799913A1"></a></p>
 
-<h5>2.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains</h5>
+<h5>2.2-1 ExtendNaturalTransformationToComplexesCategoriesByChains</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendNaturalTransformationToComplexesCategoriesByChains</code>( <var class="Arg">eta</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural transformation</p>
 
-<p>The input is a natural transformation <span class="Math">\eta:F\to G</span>. The output is its extension to the chain complexes.</p>
+<p>The input is a natural transformation <span class="Math">\eta:F\to G</span>. The output is its extension to the complexes categories by chains.</p>
 
 <p><a id="X86556AE08486CE32" name="X86556AE08486CE32"></a></p>
 
-<h5>2.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</h5>
+<h5>2.2-2 ExtendNaturalTransformationToComplexesCategoriesByCochains</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendNaturalTransformationToComplexesCategoriesByCochains</code>( <var class="Arg">eta</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a natural transformation</p>
 
-<p>The input is a natural transformation <span class="Math">\eta:F\to G</span>. The output is its extension to the cochain complexes.</p>
+<p>The input is a natural transformation <span class="Math">\eta:F\to G</span>. The output is its extension to the complexes categories by cochains.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>

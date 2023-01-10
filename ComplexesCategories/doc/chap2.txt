@@ -1,22 +1,57 @@
   
-  [1X2 [33X[0;0YFunctors[133X[101X
+  [1X2 [33X[0;0YFunctors and natural transformations[133X[101X
   
   
-  [1X2.1 [33X[0;0YNatural transformations[133X[101X
+  [1X2.1 [33X[0;0YFunctors[133X[101X
   
-  [1X2.1-1 ExtendNaturalTransformationToComplexesCategoriesByChains[101X
+  [1X2.1-1 InclusionFunctorIntoComplexesCategoryByCochains[101X
+  
+  [33X[1;0Y[29X[2XInclusionFunctorIntoComplexesCategoryByCochains[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP functor[133X
+  
+  [33X[0;0YReturns  the natural inclusion into the complexes category by cochains [23XA \to
+  \mathcal{C}^b(A)[123X.[133X
+  
+  [1X2.1-2 InclusionFunctorIntoComplexesCategoryByChains[101X
+  
+  [33X[1;0Y[29X[2XInclusionFunctorIntoComplexesCategoryByChains[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP functor[133X
+  
+  [33X[0;0YReturns  the  natural  inclusion into the complexes category by chains [23XA \to
+  \mathcal{C}^b(A)[123X.[133X
+  
+  [1X2.1-3 ExtendFunctorToComplexesCategoriesByCochains[101X
+  
+  [33X[1;0Y[29X[2XExtendFunctorToComplexesCategoriesByCochains[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP functor[133X
+  
+  [33X[0;0YReturns  the  natural  extension  of the functor [23XF: A \to B[123X to the complexes
+  categories by cochains [23X\mathcal{C}^b(A) \to \mathcal{C}^b(B)[123X.[133X
+  
+  [1X2.1-4 ExtendFunctorToComplexesCategoriesByChains[101X
+  
+  [33X[1;0Y[29X[2XExtendFunctorToComplexesCategoriesByChains[102X( [3XF[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya CAP functor[133X
+  
+  [33X[0;0YReturns  the  natural  extension  of the functor [23XF: A \to B[123X to the complexes
+  categories by chains [23X\mathcal{C}^b(A) \to \mathcal{C}^b(B)[123X.[133X
+  
+  
+  [1X2.2 [33X[0;0YNatural transformations[133X[101X
+  
+  [1X2.2-1 ExtendNaturalTransformationToComplexesCategoriesByChains[101X
   
   [33X[1;0Y[29X[2XExtendNaturalTransformationToComplexesCategoriesByChains[102X( [3Xeta[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
   
   [33X[0;0YThe  input  is  a  natural  transformation  [23X\eta:F\to  G[123X.  The output is its
-  extension to the chain complexes.[133X
+  extension to the complexes categories by chains.[133X
   
-  [1X2.1-2 ExtendNaturalTransformationToComplexesCategoriesByCochains[101X
+  [1X2.2-2 ExtendNaturalTransformationToComplexesCategoriesByCochains[101X
   
   [33X[1;0Y[29X[2XExtendNaturalTransformationToComplexesCategoriesByCochains[102X( [3Xeta[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya natural transformation[133X
   
   [33X[0;0YThe  input  is  a  natural  transformation  [23X\eta:F\to  G[123X.  The output is its
-  extension to the cochain complexes.[133X
+  extension to the complexes categories by cochains.[133X
   

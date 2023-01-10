@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (ComplexesCategories) - Chapter 1: Complexes categories</title>
+<title>GAP (ComplexesCategories) - Chapter 1: Constructors</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -23,79 +23,675 @@
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap1.html">[MathJax off]</a></p>
-<p><a id="X7DBC480180E0E148" name="X7DBC480180E0E148"></a></p>
-<div class="ChapSects"><a href="chap1_mj.html#X7DBC480180E0E148">1 <span class="Heading">Complexes categories</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X7ADE174184CF16E2">1.1 <span class="Heading">Constructing chain and cochain categories</span></a>
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+<div class="ChapSects"><a href="chap1_mj.html#X86EC0F0A78ECBC10">1 <span class="Heading">Constructors</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X848658FC83535424">1.1 <span class="Heading">Constructing categories</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X87FCB6DF8248823C">1.1-1 IsComplexesCategory</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F8D6AC28378BB5F">1.1-2 IsComplexesCategoryByChains</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X840613BB7F159425">1.1-3 IsComplexesCategoryByCochains</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X874A1DDA84C1C514">1.1-4 ComplexesCategoryByChains</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C63D8787EF42262">1.1-5 ComplexesCategoryByCochains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C63D8787EF42262">1.1-4 ComplexesCategoryByCochains</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X874A1DDA84C1C514">1.1-5 ComplexesCategoryByChains</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79637FC585885D43">1.1-6 UnderlyingCategory</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X81E58D178665D555">1.2 <span class="Heading">Constructing objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8142687883E50252">1.2-1 IsChainOrCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7C7128E287C48157">1.2-2 IsChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86EABEB67B404C42">1.2-3 IsCochainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E875B8A87E5DD7E">1.2-4 CreateComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7AFF4F367BF73F0B">1.2-5 CreateComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X842DF18D85EA410D">1.2-6 Objects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8148A281858AB1C9">1.2-7 ObjectAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79322DDF7E1051F4"><code>1.2-8 <span>\</span>[<span>\</span>]</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X85D3016480E3D3A2">1.2-9 Differentials</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X800661DA7EFB971D">1.2-10 DifferentialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79360FE57928E0BA"><code>1.2-11 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X843E4ADF7E8C1374">1.2-12 LowerBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X81AA7E29844BF879">1.2-13 UpperBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8016ACB2853544E1">1.2-14 ObjectsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X861426F87FBD2DFE">1.2-15 ObjectsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86BEEC7785B8071C">1.2-16 DifferentialsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X875AE5A379A22D28">1.2-17 DifferentialsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X81A981F9787BA1AB">1.2-18 CocyclesAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D5BCD367A55568C">1.2-19 CocyclesEmbeddingAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X830E296B86C6ABFF">1.2-20 CoboundariesAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A8FA3707C171352">1.2-21 CoboundariesEmbeddingAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X804745DA80880E8B">1.2-22 CohomologyAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EED9480803A7A0B">1.2-23 CohomologySupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78E012067B3BC757">1.2-24 CohomologySupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7E06671683E59305">1.2-25 CyclesAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X860D0798834CD7EB">1.2-26 CyclesEmbeddingAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X783BFC3F8135E365">1.2-27 BoundariesAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80CF84FD79DDCF6A">1.2-28 BoundariesEmbeddingAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FFD7ABE7ECAC4F7">1.2-29 HomologyAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X83BAA167849C78AD">1.2-30 HomologySupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X87C10D60829F1C1C">1.2-31 HomologySupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8377E5127EC85014">1.2-32 IsExact</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80293DA1861ED3AF">1.2-33 IsExact</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7846D9DD7C8E4F4C">1.2-34 AsChainComplex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F00662E7F5A2127">1.2-35 AsCochainComplex</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1_mj.html#X80C7B3D082F3D9EC">1.3 <span class="Heading">Constructing morphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X79E5C43978B36E4C">1.3-1 IsChainOrCochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7B52300778DC9E15">1.3-2 IsChainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7A940C857FF3CE20">1.3-3 IsCochainMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X829A02397F338626">1.3-4 CreateComplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7ABB5C637B82CDD9">1.3-5 CreateComplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X852133B081633416">1.3-6 Morphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8289EF39792DB653">1.3-7 MorphismAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D72B4FC82CE113A"><code>1.3-8 <span>\</span>[<span>\</span>]</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7921F8B7781CE47E">1.3-9 LowerBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7D642E5482DB0F73">1.3-10 UpperBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X792F44F9836F93C2">1.3-11 LowerBoundOfSourceAndRange</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X78646C4D79A878CF">1.3-12 UpperBoundOfSourceAndRange</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X86F5183A7A04C679">1.3-13 MorphismsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X80AD273D876D8B22">1.3-14 MorphismsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8125612F816B25E5">1.3-15 CyclesFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X8050F5937BCF551A">1.3-16 CocyclesFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EAAC5E17EC0DCF7">1.3-17 CohomologyFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7FE3BDA3846A62BC">1.3-18 HomologyFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X830B9CC68047169F">1.3-19 IsQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X812B9C29796B82E7">1.3-20 IsHomotopicToZeroMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F55D56278B6593D">1.3-21 WitnessForBeingHomotopicToZeroMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7EFEAD068200C531">1.3-22 AsChainComplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1_mj.html#X7F3D20607C0002AE">1.3-23 AsCochainComplexMorphism</a></span>
 </div></div>
 </div>
 
-<h3>1 <span class="Heading">Complexes categories</span></h3>
+<h3>1 <span class="Heading">Constructors</span></h3>
 
-<p><a id="X7ADE174184CF16E2" name="X7ADE174184CF16E2"></a></p>
+<p><a id="X848658FC83535424" name="X848658FC83535424"></a></p>
 
-<h4>1.1 <span class="Heading">Constructing chain and cochain categories</span></h4>
+<h4>1.1 <span class="Heading">Constructing categories</span></h4>
 
 <p><a id="X87FCB6DF8248823C" name="X87FCB6DF8248823C"></a></p>
 
 <h5>1.1-1 IsComplexesCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategory</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategory</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p>Gap-categories of the chain or cochain complexes category.</p>
+<p>GAP-categories of the chain or cochain complexes category.</p>
 
 <p><a id="X7F8D6AC28378BB5F" name="X7F8D6AC28378BB5F"></a></p>
 
 <h5>1.1-2 IsComplexesCategoryByChains</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategoryByChains</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategoryByChains</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p>Gap-categories of the chain complexes category.</p>
+<p>GAP-categories of the chain complexes category.</p>
 
 <p><a id="X840613BB7F159425" name="X840613BB7F159425"></a></p>
 
 <h5>1.1-3 IsComplexesCategoryByCochains</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategoryByCochains</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsComplexesCategoryByCochains</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
-<p>Gap-category of the cochain complexes category.</p>
-
-<p><a id="X874A1DDA84C1C514" name="X874A1DDA84C1C514"></a></p>
-
-<h5>1.1-4 ComplexesCategoryByChains</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplexesCategoryByChains</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: a CAP category</p>
-
-<p>Creates the chain complex category <span class="SimpleMath">\(\mathrm{Ch}_\bullet(A)\)</span> an additive category <span class="SimpleMath">\(A\)</span>. If you want to contruct the category without finalizing it so that you can add your own methods, you can run the command <span class="SimpleMath">\(\texttt{ChainComplexCategory(A : FinalizeCategory := false )}\)</span>.</p>
+<p>GAP-category of the cochain complexes category.</p>
 
 <p><a id="X7C63D8787EF42262" name="X7C63D8787EF42262"></a></p>
 
-<h5>1.1-5 ComplexesCategoryByCochains</h5>
+<h5>1.1-4 ComplexesCategoryByCochains</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplexesCategoryByCochains</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP category</p>
 
-<p>Creates the cochain complex category <span class="SimpleMath">\(\mathrm{Ch}^\bullet(A)\)</span> an additive category <span class="SimpleMath">\(A\)</span>. If you want to contruct the category without finalizing it so that you can add your own methods, you can run the command <span class="SimpleMath">\(\texttt{ComplexesCategoryByCochains(A : FinalizeCategory := false )}\)</span>.</p>
+<p>Creates the complexes category by cochains <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> of an additive category <span class="SimpleMath">\(A\)</span>.</p>
+
+<p><a id="X874A1DDA84C1C514" name="X874A1DDA84C1C514"></a></p>
+
+<h5>1.1-5 ComplexesCategoryByChains</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplexesCategoryByChains</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP category</p>
+
+<p>Creates the complexes category by chains <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> of an additive category <span class="SimpleMath">\(A\)</span>.</p>
 
 <p><a id="X79637FC585885D43" name="X79637FC585885D43"></a></p>
 
 <h5>1.1-6 UnderlyingCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCategory</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCategory</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP category</p>
 
-<p>The input is a chain or cochain complex category <span class="SimpleMath">\(B=C(A)\)</span> constructed by one of the previous commands. The outout is <span class="SimpleMath">\(A\)</span></p>
+<p>The input is a complexes category by (co)chains <span class="SimpleMath">\(C:=\mathcal{C}^b(A)\)</span>. The outout is <span class="SimpleMath">\(A\)</span>.</p>
+
+<p><a id="X81E58D178665D555" name="X81E58D178665D555"></a></p>
+
+<h4>1.2 <span class="Heading">Constructing objects</span></h4>
+
+<p><a id="X8142687883E50252" name="X8142687883E50252"></a></p>
+
+<h5>1.2-1 IsChainOrCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainOrCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the chain or cochain complexes.</p>
+
+<p><a id="X7C7128E287C48157" name="X7C7128E287C48157"></a></p>
+
+<h5>1.2-2 IsChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the chain complexes.</p>
+
+<p><a id="X86EABEB67B404C42" name="X86EABEB67B404C42"></a></p>
+
+<h5>1.2-3 IsCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the cochain complexes.</p>
+
+<p><a id="X7E875B8A87E5DD7E" name="X7E875B8A87E5DD7E"></a></p>
+
+<h5>1.2-4 CreateComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateComplex</code>( <var class="Arg">C</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a complexes category <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> by chains or cochains and a list <span class="SimpleMath">\(L\)</span> with <span class="SimpleMath">\(4\)</span> entries: <span class="SimpleMath">\(L[1]\)</span> and <span class="SimpleMath">\(L[2]\)</span> are <span class="SimpleMath">\(\mathbb{Z}\)</span>-functions and <span class="SimpleMath">\(L[3]\)</span> and <span class="SimpleMath">\(L[4]\)</span> are integers or <span class="SimpleMath">\(\pm\infty\)</span>. The output is an object <span class="SimpleMath">\(C\in \mathcal{C}^b(A)\)</span> whose object at <span class="SimpleMath">\(i\in\mathbb{Z}\)</span> is <span class="SimpleMath">\(C^i:=L[1][i]\)</span>, differential at <span class="SimpleMath">\(i\in\mathbb{Z}\)</span> is <span class="SimpleMath">\(\partial_{C}^i:=L[2][i]\)</span>. Its lower and upper bounds are <span class="SimpleMath">\(L[3]\)</span> resp. <span class="SimpleMath">\(L[4]\)</span>.</p>
+
+<p><a id="X7AFF4F367BF73F0B" name="X7AFF4F367BF73F0B"></a></p>
+
+<h5>1.2-5 CreateComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateComplex</code>( <var class="Arg">C</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a complexes category <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> by chains or cochains, a dense-list <span class="SimpleMath">\(L\)</span> of morphisms in <span class="SimpleMath">\(A\)</span> and an integer <span class="SimpleMath">\(\ell\)</span>. The output is an object <span class="SimpleMath">\(C\in\mathcal{C}^b(A)\)</span> whose differentials are <span class="SimpleMath">\(\partial_{C}^{\ell}:=L[1], \partial_{C}^{\ell+1}:=L[2],\)</span> etc.</p>
+
+<p><a id="X842DF18D85EA410D" name="X842DF18D85EA410D"></a></p>
+
+<h5>1.2-6 Objects</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Objects</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
+
+<p>Returns the objects of the complex as a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function.</p>
+
+<p><a id="X8148A281858AB1C9" name="X8148A281858AB1C9"></a></p>
+
+<h5>1.2-7 ObjectAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>Returns the object <span class="SimpleMath">\(C^i\)</span> of the complex <span class="SimpleMath">\(C\)</span> at the index <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>.</p>
+
+<p><a id="X79322DDF7E1051F4" name="X79322DDF7E1051F4"></a></p>
+
+<h5><code>1.2-8 <span>\</span>[<span>\</span>]</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; <span>\</span>[<span>\</span>]</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>Delegates to <code class="code">ObjectAt</code>(<span class="SimpleMath">\(C\)</span>,<span class="SimpleMath">\(i\)</span>).</p>
+
+<p><a id="X85D3016480E3D3A2" name="X85D3016480E3D3A2"></a></p>
+
+<h5>1.2-9 Differentials</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Differentials</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
+
+<p>Returns the differentials of the complex as a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function.</p>
+
+<p><a id="X800661DA7EFB971D" name="X800661DA7EFB971D"></a></p>
+
+<h5>1.2-10 DifferentialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferentialAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>Returns the differential of the complex <span class="SimpleMath">\(C\)</span> at the index <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>.</p>
+
+<p><a id="X79360FE57928E0BA" name="X79360FE57928E0BA"></a></p>
+
+<h5><code>1.2-11 \^</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>Delegates to <code class="code">DifferentialAt</code>(<span class="SimpleMath">\(C\)</span>,<span class="SimpleMath">\(i\)</span>).</p>
+
+<p><a id="X843E4ADF7E8C1374" name="X843E4ADF7E8C1374"></a></p>
+
+<h5>1.2-12 LowerBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns the lower bound <span class="SimpleMath">\(\ell\)</span> of <span class="SimpleMath">\(C\)</span>. I.e., the objects <span class="SimpleMath">\(C^i\)</span> are zero for all <span class="SimpleMath">\(i\prec\ell\)</span>.</p>
+
+<p><a id="X81AA7E29844BF879" name="X81AA7E29844BF879"></a></p>
+
+<h5>1.2-13 UpperBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperBound</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns the upper bound <span class="SimpleMath">\(u\)</span> of <span class="SimpleMath">\(C\)</span>. I.e., the objects <span class="SimpleMath">\(C^i\)</span> are zero for all <span class="SimpleMath">\(i\succ u\)</span>.</p>
+
+<p><a id="X8016ACB2853544E1" name="X8016ACB2853544E1"></a></p>
+
+<h5>1.2-14 ObjectsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectsSupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is the list of indices <span class="SimpleMath">\(m\preceq i \preceq n\)</span> where the objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X861426F87FBD2DFE" name="X861426F87FBD2DFE"></a></p>
+
+<h5>1.2-15 ObjectsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectsSupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> whose lower and upper bounds are integers. The output is the list of indices where the objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X86BEEC7785B8071C" name="X86BEEC7785B8071C"></a></p>
+
+<h5>1.2-16 DifferentialsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferentialsSupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is the list of indices <span class="SimpleMath">\(m\preceq i \preceq n\)</span> where the differentials of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X875AE5A379A22D28" name="X875AE5A379A22D28"></a></p>
+
+<h5>1.2-17 DifferentialsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferentialsSupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> whose lower and upper bounds are integers. The output is the list of indices where the differentials of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X81A981F9787BA1AB" name="X81A981F9787BA1AB"></a></p>
+
+<h5>1.2-18 CocyclesAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CocyclesAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the kernel object of <span class="SimpleMath">\(\partial_{C}^i\)</span>.</p>
+
+<p><a id="X7D5BCD367A55568C" name="X7D5BCD367A55568C"></a></p>
+
+<h5>1.2-19 CocyclesEmbeddingAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CocyclesEmbeddingAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the kernel embedding of <span class="SimpleMath">\(\partial_{C}^i\)</span>.</p>
+
+<p><a id="X830E296B86C6ABFF" name="X830E296B86C6ABFF"></a></p>
+
+<h5>1.2-20 CoboundariesAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoboundariesAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the image object of the differential <span class="SimpleMath">\(\partial_{C}^{i-1}\)</span>.</p>
+
+<p><a id="X7A8FA3707C171352" name="X7A8FA3707C171352"></a></p>
+
+<h5>1.2-21 CoboundariesEmbeddingAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoboundariesEmbeddingAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the image embedding of the differential <span class="SimpleMath">\(\partial_{C}^{i-1}\)</span>.</p>
+
+<p><a id="X804745DA80880E8B" name="X804745DA80880E8B"></a></p>
+
+<h5>1.2-22 CohomologyAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the cohomology object of <span class="SimpleMath">\(C\)</span> at <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X7EED9480803A7A0B" name="X7EED9480803A7A0B"></a></p>
+
+<h5>1.2-23 CohomologySupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologySupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is the list of indices <span class="SimpleMath">\(m\preceq i \preceq n\)</span> where the cohomology objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X78E012067B3BC757" name="X78E012067B3BC757"></a></p>
+
+<h5>1.2-24 CohomologySupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologySupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> whose lower and upper bounds are integers. The output is the list of indices where the cohomology objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X7E06671683E59305" name="X7E06671683E59305"></a></p>
+
+<h5>1.2-25 CyclesAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the kernel object of <span class="SimpleMath">\(\partial_{C}^i\)</span>.</p>
+
+<p><a id="X860D0798834CD7EB" name="X860D0798834CD7EB"></a></p>
+
+<h5>1.2-26 CyclesEmbeddingAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesEmbeddingAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the kernel embedding of <span class="SimpleMath">\(\partial_{C}^i\)</span>.</p>
+
+<p><a id="X783BFC3F8135E365" name="X783BFC3F8135E365"></a></p>
+
+<h5>1.2-27 BoundariesAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BoundariesAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the image object of the differential <span class="SimpleMath">\(\partial_{C}^{i+1}\)</span>.</p>
+
+<p><a id="X80CF84FD79DDCF6A" name="X80CF84FD79DDCF6A"></a></p>
+
+<h5>1.2-28 BoundariesEmbeddingAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BoundariesEmbeddingAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the image embedding of the differential <span class="SimpleMath">\(\partial_{C}^{i+1}\)</span>.</p>
+
+<p><a id="X7FFD7ABE7ECAC4F7" name="X7FFD7ABE7ECAC4F7"></a></p>
+
+<h5>1.2-29 HomologyAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyAt</code>( <var class="Arg">C</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>The input is a cochain complex <span class="SimpleMath">\(C\)</span>. The output is the homology object of <span class="SimpleMath">\(C\)</span> at <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X83BAA167849C78AD" name="X83BAA167849C78AD"></a></p>
+
+<h5>1.2-30 HomologySupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologySupport</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is the list of indices <span class="SimpleMath">\(m\preceq i \preceq n\)</span> where the homology objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X87C10D60829F1C1C" name="X87C10D60829F1C1C"></a></p>
+
+<h5>1.2-31 HomologySupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologySupport</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> whose lower and upper bounds are integers. The output is the list of indices where the homology objects of <span class="SimpleMath">\(C\)</span> are non-zero.</p>
+
+<p><a id="X8377E5127EC85014" name="X8377E5127EC85014"></a></p>
+
+<h5>1.2-32 IsExact</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExact</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> whose lower and upper bounds are integers. The output is wheather the (co)homology support is empty.</p>
+
+<p><a id="X80293DA1861ED3AF" name="X80293DA1861ED3AF"></a></p>
+
+<h5>1.2-33 IsExact</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExact</code>( <var class="Arg">C</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex <span class="SimpleMath">\(C\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is wheather the (co)homology support between <span class="SimpleMath">\(m\)</span> and <span class="SimpleMath">\(n\)</span> is empty.</p>
+
+<p><a id="X7846D9DD7C8E4F4C" name="X7846D9DD7C8E4F4C"></a></p>
+
+<h5>1.2-34 AsChainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsChainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>Convert a cochain complex into a chain complex.</p>
+
+<p><a id="X7F00662E7F5A2127" name="X7F00662E7F5A2127"></a></p>
+
+<h5>1.2-35 AsCochainComplex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCochainComplex</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP object</p>
+
+<p>Convert a chain complex into a cochain complex.</p>
+
+<p><a id="X80C7B3D082F3D9EC" name="X80C7B3D082F3D9EC"></a></p>
+
+<h4>1.3 <span class="Heading">Constructing morphisms</span></h4>
+
+<p><a id="X79E5C43978B36E4C" name="X79E5C43978B36E4C"></a></p>
+
+<h5>1.3-1 IsChainOrCochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainOrCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the complex morphisms.</p>
+
+<p><a id="X7B52300778DC9E15" name="X7B52300778DC9E15"></a></p>
+
+<h5>1.3-2 IsChainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsChainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the chain complex morphisms.</p>
+
+<p><a id="X7A940C857FF3CE20" name="X7A940C857FF3CE20"></a></p>
+
+<h5>1.3-3 IsCochainMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>GAP-categories of the cochain complex morphisms.</p>
+
+<p><a id="X829A02397F338626" name="X829A02397F338626"></a></p>
+
+<h5>1.3-4 CreateComplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateComplexMorphism</code>( <var class="Arg">C</var>, <var class="Arg">S</var>, <var class="Arg">L</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complexes category <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> by chains or cochains, two objects <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> and a list <span class="SimpleMath">\(L\)</span> with <span class="SimpleMath">\(3\)</span> entries: <span class="SimpleMath">\(L[1]\)</span> is a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function; <span class="SimpleMath">\(L[2]\)</span> and <span class="SimpleMath">\(L[3]\)</span> are integers or <span class="SimpleMath">\(\pm\infty\)</span>. The output is the morphism <span class="SimpleMath">\(\phi:S \to R\)</span> in <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> whose morphism at <span class="SimpleMath">\(i\in\mathbb{Z}\)</span> is <span class="SimpleMath">\(L[1][i]\)</span> and its lower and upper bounds are <span class="SimpleMath">\(L[2]\)</span> resp. <span class="SimpleMath">\(L[3]\)</span>.</p>
+
+<p><a id="X7ABB5C637B82CDD9" name="X7ABB5C637B82CDD9"></a></p>
+
+<h5>1.3-5 CreateComplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateComplexMorphism</code>( <var class="Arg">C</var>, <var class="Arg">S</var>, <var class="Arg">L</var>, <var class="Arg">ell</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complexes category <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> by chains or cochains, two objects <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> and a dense-list <span class="SimpleMath">\(L\)</span> of morphisms in <span class="SimpleMath">\(A\)</span> and an integer <span class="SimpleMath">\(\ell\)</span>. The output is the morphism <span class="SimpleMath">\(\phi:S \to R\)</span> in <span class="SimpleMath">\(\mathcal{C}^b(A)\)</span> whose morphism at <span class="SimpleMath">\(\ell\)</span> is <span class="SimpleMath">\(L[1]\)</span>, at <span class="SimpleMath">\(\ell+1\)</span> is <span class="SimpleMath">\(L[2]\)</span>, etc. In particular, <span class="SimpleMath">\(\ell\)</span> is a lower bound of <span class="SimpleMath">\(\phi\)</span>.</p>
+
+<p><a id="X852133B081633416" name="X852133B081633416"></a></p>
+
+<h5>1.3-6 Morphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Morphisms</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
+
+<p>Returns the morphisms as a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function.</p>
+
+<p><a id="X8289EF39792DB653" name="X8289EF39792DB653"></a></p>
+
+<h5>1.3-7 MorphismAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>Returns the morphism of <span class="SimpleMath">\(\phi\)</span> at the index <span class="SimpleMath">\(i\in\mathbb{Z}\)</span>.</p>
+
+<p><a id="X7D72B4FC82CE113A" name="X7D72B4FC82CE113A"></a></p>
+
+<h5><code>1.3-8 <span>\</span>[<span>\</span>]</code></h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; <span>\</span>[<span>\</span>]</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>Delegates to <code class="code">MorphismAt</code>(<span class="SimpleMath">\(\phi\)</span>, <span class="SimpleMath">\(i\)</span>).</p>
+
+<p><a id="X7921F8B7781CE47E" name="X7921F8B7781CE47E"></a></p>
+
+<h5>1.3-9 LowerBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns the lower bound <span class="SimpleMath">\(\ell\)</span> of <span class="SimpleMath">\(\phi\)</span>. I.e., the morphisms <span class="SimpleMath">\(\phi^i\)</span> are zero for all <span class="SimpleMath">\(i\prec\ell\)</span>.</p>
+
+<p><a id="X7D642E5482DB0F73" name="X7D642E5482DB0F73"></a></p>
+
+<h5>1.3-10 UpperBound</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns the upper bound <span class="SimpleMath">\(u\)</span> of <span class="SimpleMath">\(\phi\)</span>. I.e., the morphisms <span class="SimpleMath">\(\phi^i\)</span> are zero for all <span class="SimpleMath">\(i\succ u\)</span>.</p>
+
+<p><a id="X792F44F9836F93C2" name="X792F44F9836F93C2"></a></p>
+
+<h5>1.3-11 LowerBoundOfSourceAndRange</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerBoundOfSourceAndRange</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns an integer <span class="SimpleMath">\(\ell\)</span> with <span class="SimpleMath">\(S^i=R^i=0\)</span> for all <span class="SimpleMath">\(i\prec\ell\)</span>.</p>
+
+<p><a id="X78646C4D79A878CF" name="X78646C4D79A878CF"></a></p>
+
+<h5>1.3-12 UpperBoundOfSourceAndRange</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperBoundOfSourceAndRange</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: integer or infinity</p>
+
+<p>Returns an integer <span class="SimpleMath">\(u\)</span> with <span class="SimpleMath">\(S^i=R^i=0\)</span> for all <span class="SimpleMath">\(i\succ u\)</span>.</p>
+
+<p><a id="X86F5183A7A04C679" name="X86F5183A7A04C679"></a></p>
+
+<h5>1.3-13 MorphismsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismsSupport</code>( <var class="Arg">phi</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi\)</span> and two integers <span class="SimpleMath">\(m,n\)</span>. The output is the list of indices <span class="SimpleMath">\(m\preceq i \preceq n\)</span> where the morphisms of <span class="SimpleMath">\(\phi\)</span> are non-zero.</p>
+
+<p><a id="X80AD273D876D8B22" name="X80AD273D876D8B22"></a></p>
+
+<h5>1.3-14 MorphismsSupport</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismsSupport</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of integers</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi\)</span> whose lower and upper bounds are integers. The output is the list of indices where the morphisms of <span class="SimpleMath">\(\phi\)</span> are non-zero.</p>
+
+<p><a id="X8125612F816B25E5" name="X8125612F816B25E5"></a></p>
+
+<h5>1.3-15 CyclesFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi:S \to R\)</span> and an integer <span class="SimpleMath">\(i\)</span>. The output is the morphism induced by the functoriality of the cycle objects of <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> at the index <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X8050F5937BCF551A" name="X8050F5937BCF551A"></a></p>
+
+<h5>1.3-16 CocyclesFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CocyclesFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi:S \to R\)</span> and an integer <span class="SimpleMath">\(i\)</span>. The output is the morphism induced by the functoriality of the cocycle objects of <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> at the index <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X7EAAC5E17EC0DCF7" name="X7EAAC5E17EC0DCF7"></a></p>
+
+<h5>1.3-17 CohomologyFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi:S \to R\)</span> and an integer <span class="SimpleMath">\(i\)</span>. The output is the morphism induced by the functoriality of the cohomology objects of <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> at the index <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X7FE3BDA3846A62BC" name="X7FE3BDA3846A62BC"></a></p>
+
+<h5>1.3-18 HomologyFunctorialAt</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>The input is a complex morphism <span class="SimpleMath">\(\phi:S \to R\)</span> and an integer <span class="SimpleMath">\(i\)</span>. The output is the morphism induced by the functoriality of the homology objects of <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span> at the index <span class="SimpleMath">\(i\)</span>.</p>
+
+<p><a id="X830B9CC68047169F" name="X830B9CC68047169F"></a></p>
+
+<h5>1.3-19 IsQuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiIsomorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>Returns wheather <span class="SimpleMath">\(\phi\)</span> is a quasi-isomorphism, i.e., wheather it induces isomorphisms between the (co)homology objects of <span class="SimpleMath">\(S\)</span> and <span class="SimpleMath">\(R\)</span>.</p>
+
+<p><a id="X812B9C29796B82E7" name="X812B9C29796B82E7"></a></p>
+
+<h5>1.3-20 IsHomotopicToZeroMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHomotopicToZeroMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<p>Returns: true or false</p>
+
+<p>Returns wheather <span class="SimpleMath">\(\phi\)</span> is homotopic to the zero morphism.</p>
+
+<p><a id="X7F55D56278B6593D" name="X7F55D56278B6593D"></a></p>
+
+<h5>1.3-21 WitnessForBeingHomotopicToZeroMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessForBeingHomotopicToZeroMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: <span class="SimpleMath">\(\mathbb{Z}\)</span>-function</p>
+
+<p>Returns a <span class="SimpleMath">\(\mathbb{Z}\)</span>-function <span class="SimpleMath">\(w\)</span> witnessing that <span class="SimpleMath">\(\phi\)</span> is homotopic to the zero morphism. If <span class="SimpleMath">\(\phi\)</span> is a chain morphism, then <span class="SimpleMath">\(w^i\)</span> is a morphism from <span class="SimpleMath">\(S^i\)</span> to <span class="SimpleMath">\(R^{i+1}\)</span> and if <span class="SimpleMath">\(\phi\)</span> is a cochain morphism, then <span class="SimpleMath">\(w^i\)</span> is a morphism from <span class="SimpleMath">\(S^i\)</span> to <span class="SimpleMath">\(R^{i-1}\)</span>.</p>
+
+<p><a id="X7EFEAD068200C531" name="X7EFEAD068200C531"></a></p>
+
+<h5>1.3-22 AsChainComplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsChainComplexMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>Convert a chain morphism into a cochain morphism.</p>
+
+<p><a id="X7F3D20607C0002AE" name="X7F3D20607C0002AE"></a></p>
+
+<h5>1.3-23 AsCochainComplexMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCochainComplexMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a CAP morphism</p>
+
+<p>Convert a cochain morphism into a chain morphism.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Next Chapter]</a>&nbsp;  </div>
