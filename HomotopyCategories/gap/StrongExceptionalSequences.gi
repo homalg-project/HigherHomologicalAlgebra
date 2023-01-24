@@ -15,13 +15,18 @@
 InstallGlobalFunction( CreateStrongExceptionalSequence,
   
   function ( list_of_objects )
-    local full;
+    local seq, I;
     
-    full := FullSubcategoryGeneratedByListOfObjects( list_of_objects );
+    seq := FullSubcategoryGeneratedByListOfObjects( list_of_objects );
     
-    full!.Name := Concatenation( "A strong exceptional sequence in ", Name( AmbientCategory( full ) ) );
+    seq!.Name := Concatenation( "A strong exceptional sequence in ", Name( AmbientCategory( seq ) ) );
     
-    return full;
+    # Some Tweaks to Improve Performance
+    I := InclusionFunctor( seq );
+    DeactivateCachingObject( ObjectCache( I ) );
+    DeactivateCachingObject( MorphismCache( I ) );
+    
+    return seq;
     
 end );
 
