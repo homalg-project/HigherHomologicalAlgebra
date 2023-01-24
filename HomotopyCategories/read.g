@@ -12,6 +12,7 @@ ReadPackage( "HomotopyCategories", "gap/TriangulatedStructure.gi" );
 ReadPackage( "HomotopyCategories", "gap/Convolution.gi" );
 ReadPackage( "HomotopyCategories", "gap/StrongExceptionalSequences.gi" );
 ReadPackage( "HomotopyCategories", "gap/Functors.gi" );
+ReadPackage( "HomotopyCategories", "gap/NaturalTransformations.gi" );
 
 if IsPackageMarkedForLoading( "Algebroids", ">= 2022.11-10" ) then
     ReadPackage( "HomotopyCategories", "gap/OnlyWithAlgebroids.gi" );

@@ -8,7 +8,7 @@ doc: doc/manual.six
 doc/manual.six: makedoc.g \
 		PackageInfo.g \
 		$(wildcard doc/*.autodoc gap/*.gd gap/*.gi examples/*.g examples/*/*.g)
-			gap makedoc.g
+			gap --quitonbreak makedoc.g
 
 clean:
 	(cd doc ; ./clean)
@@ -66,4 +66,4 @@ test-spacing:
 	rm spacing_diff
 	rm spacing_diff_no_blanks
 
-ci-test: test-basic-spacing test-with-coverage
+ci-test: test-basic-spacing test-with-coverage test-notebooks

@@ -21,9 +21,10 @@ BindGlobal( "_complexes_ExtendNaturalTransformationToComplexesCategories",
     
     AddNaturalTransformationFunction( ch_eta,
       { chF_C, C, chG_C } -> CreateComplexMorphism(
+                                      RangeOfFunctor( chF_C ),
                                       chF_C,
-                                      chG_C,
-                                      ApplyMap( Objects( C ), o -> ApplyNaturalTransformation( eta, o ) ) ) );
+                                      ApplyMap( Objects( C ), o -> ApplyNaturalTransformation( eta, o ) ),
+                                      chG_C ) );
     
     return ch_eta;
     

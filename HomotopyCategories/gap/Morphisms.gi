@@ -77,6 +77,7 @@ for info in [ [ "Morphisms", 1 ],
               [ "CocyclesFunctorialAt", 2 ],
               [ "CyclesFunctorialAt", 2 ],
               [ "WitnessForBeingHomotopicToZeroMorphism", 1 ],
+              [ "IsQuasiIsomorphism", 1 ],
               ] do
   
   ##
