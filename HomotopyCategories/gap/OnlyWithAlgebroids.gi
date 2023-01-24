@@ -33,9 +33,9 @@ InstallMethod( AbstractionAlgebroid,
     
     F := FreeCategory( q );
     
-    k := CommutativeRingOfLinearCategory( seq );
+    range_cat := RangeCategoryOfHomomorphismStructure( seq );
     
-    kF := k[F];;
+    kF := Algebroid( CommutativeRingOfLinearCategory( seq ),  FreeCategory( q ) : range_of_HomStructure := range_cat );
     
     o := SetOfObjects( kF );
     
@@ -53,11 +53,9 @@ InstallMethod( AbstractionAlgebroid,
     
     distinguished_object := DistinguishedObjectOfHomomorphismStructure( seq );
     
-    range_cat := RangeCategoryOfHomomorphismStructure( seq );
-    
-    relations :=
+    relations := Concatenation(
       List( [ 1 .. nr_vertices - 2 ],
-         i -> List( [ i + 2 .. nr_vertices ],
+         i -> Concatenation( List( [ i + 2 .. nr_vertices ],
             function( j )
               local H_ij, morphisms, u, coeffs, B_ij;
               
@@ -75,9 +73,9 @@ InstallMethod( AbstractionAlgebroid,
               
               return List( coeffs, coeff -> SumOfMorphisms( kF, o[i], ListN( coeff, B_ij, { c, f } -> MultiplyWithElementOfCommutativeRingForMorphisms( kF, c, f ) ), o[j] ) );
               
-            end ) );
+            end ) ) ) );
     
-    oid := kF / Concatenation( List( relations, Concatenation ) );
+    oid := QuotientCategory( kF, relations : range_of_HomStructure := range_cat );
     
     # defining the isomorphisms from/to abstraction algebroid
     
@@ -99,16 +97,22 @@ InstallMethod( AbstractionAlgebroid,
         
     end;
     
-    data := AdditiveFunctorByTwoFunctionsData( oid, seq, object_func, morphism_func : full_functor := true );
+    data := AdditiveFunctorByTwoFunctionsData( oid, seq, object_func, morphism_func : full_functor := true, values_on_objects := [ SetOfObjects( oid ), SetOfKnownObjects( seq ) ] );
     
-    f := CapFunctor( Concatenation( "isomorphism: abstraction algebroid ", TEXTMTRANSLATIONS.longrightarrow, " strong exceptional sequence" ), oid, seq );
+    ##
+    f := CapFunctor( Concatenation( "Isomorphism: abstraction algebroid ", TEXTMTRANSLATIONS.longrightarrow, " strong exceptional sequence" ), oid, seq );
     AddObjectFunction( f, data[1] );
     AddMorphismFunction( f, data[2] );
     
-    t := CapFunctor( Concatenation( "isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid );
+    DeactivateCachingObject( ObjectCache( f ) );
+    DeactivateCachingObject( MorphismCache( f ) );
     
-    AddObjectFunction( t, o -> SetOfObjects( oid )[Position( SetOfKnownObjects( seq ), o )] ); # cheaper than using data[3]
+    ##
+    t := CapFunctor( Concatenation( "Isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid ); 
+    AddObjectFunction( t, data[3] );
     AddMorphismFunction( t, data[4] );
+    DeactivateCachingObject( ObjectCache( t ) );
+    DeactivateCachingObject( MorphismCache( t ) );
     
     SetIsomorphismFromAbstractionAlgebroid( seq, f );
     SetIsomorphismIntoAbstractionAlgebroid( seq, t );
@@ -238,7 +242,7 @@ InstallGlobalFunction( RandomStrongExceptionalSequence,
     
     A := QuotientOfPathAlgebra( A, rel );
     
-    oid := Algebroid( A );
+    oid := Algebroid( A : range_of_HomStructure := CategoryOfRows( k : overhead := false ) );
     
     Aoid := AdditiveClosure( oid );
     
