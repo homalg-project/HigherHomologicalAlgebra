@@ -59,6 +59,8 @@ InstallMethod( CategoryOfExactTriangles,
     
     triangles := CreateCapCategory( name );
     
+    triangles!.category_as_first_argument := false;
+     
     SetUnderlyingCategory( triangles, category );
     
     SetFilterObj( triangles, IsCapCategoryOfExactTriangles );
