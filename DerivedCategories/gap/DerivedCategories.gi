@@ -130,7 +130,7 @@ InstallMethod( DerivedCategoryByCochains,
         
         r := CreateComplexMorphism( homotopy_cat, Z, morphisms_r, C );
         
-        return MorphismConstructor( A, [ q, r ], C );
+        return MorphismConstructor( Source( alpha_1 ), [ q, r ], Range( alpha_2 ) );
         
     end );
     
@@ -301,7 +301,7 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
             
             basis := BasisOfExternalHom( homotopy_cat, Source( qB ), Source( qC ) );
             
-            return List( basis, m -> MorphismConstructor( B, [ qB, PreCompose( homotopy_cat, m, qC ) ], Range( qC ) ) );
+            return List( basis, m -> MorphismConstructor( B, [ qB, PreCompose( homotopy_cat, m, qC ) ], C ) );
             
         end );
         

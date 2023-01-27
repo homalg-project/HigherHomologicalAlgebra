@@ -34,10 +34,18 @@ gap> L := LocalizationFunctorByProjectiveObjects( K_PSh );;
 gap> Q := D( L( H( KP4 ) ) );;
 gap> IsWellDefined( Q );
 true
-gap> HomStructure( Q, Q );
-<A row module over Q of rank 1>
+gap> RankOfObject( HomStructure( Q, Q ) );
+1
 gap> W := CreateComplex( K_coPSh_B, DirectSum( [ P1, U, P2, P3 ] ), 0 ) / D_coPSh_B;;
 gap> RankOfObject( HomStructure( W, W ) );
 9
 gap> IsZero( HomStructure( Shift( W, 1 ), W ) ) and IsZero( HomStructure( Shift( W, -1 ), W ) );
 true
+gap> basis := BasisOfExternalHom( W, W );; ForAll( basis, IsWellDefined );
+true
+gap> IsCongruentForMorphisms( basis[1] + basis[2] - basis[1], basis[2] );
+true
+gap> HomStructure( PreCompose( [ basis[1], basis[2], basis[3] ] ) ) = PreCompose( HomStructure( basis[2] ), HomStructure( basis[1], basis[3] ) );
+true
+gap> CoefficientsOfMorphism( Sum( basis ) );
+[ 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
