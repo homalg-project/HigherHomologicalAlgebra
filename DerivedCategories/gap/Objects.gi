@@ -82,6 +82,14 @@ for info in [ [ "Objects", 1 ],
 od;
 
 
+##
+InstallOtherMethod( Shift,
+              [ IsDerivedCategoryObject, IsInt ],
+  
+  { a, i } -> CreateComplex( CapCategory( a ), Shift( UnderlyingCell( a ), i ) )
+);
+
+##
 InstallMethod( LaTeXOutput,
               [ IsDerivedCategoryObject ],
   a -> LaTeXOutput( UnderlyingCell( a ) )

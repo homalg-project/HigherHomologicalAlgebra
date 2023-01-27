@@ -301,7 +301,7 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
             
             basis := BasisOfExternalHom( homotopy_cat, Source( qB ), Source( qC ) );
             
-            return List( basis, m -> MorphismConstructor( B, [ qB, PreCompose( homotopy_cat, m, qC ) ], qC ) );
+            return List( basis, m -> MorphismConstructor( B, [ qB, PreCompose( homotopy_cat, m, qC ) ], Range( qC ) ) );
             
         end );
         
