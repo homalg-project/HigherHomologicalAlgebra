@@ -46,6 +46,8 @@ jobs:
           cd QPA2; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/Algebroids.git
           cd Algebroids; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
+          git clone --depth 1 https://github.com/homalg-project/PreSheaves.git
+          cd PreSheaves; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/FunctorCategories.git
           cd FunctorCategories; echo "current-commit-hash: $(git rev-parse HEAD)"; cd ..;
           git clone --depth 1 https://github.com/homalg-project/SubcategoriesForCAP.git
