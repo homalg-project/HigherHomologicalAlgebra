@@ -17,7 +17,7 @@ InstallOtherMethod( DgComplexesOfAdditiveClosureOfAlgebroid,
     
     Finalize( RangeCategoryOfHomomorphismStructure( DG ) : FinalizeCategory := true );
     
-    SetDefiningPairOfUnderlyingQuiver( DG, DefiningPairOfAQuiver( UnderlyingQuiver( A ) ) );
+    SetDefiningTripleOfUnderlyingQuiver( DG, DefiningTripleOfAQuiver( UnderlyingQuiver( A ) ) );
     
     DG!.compiler_hints.category_attribute_names :=
       [ "UnderlyingCategory",
