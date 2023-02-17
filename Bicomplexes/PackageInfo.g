@@ -11,8 +11,8 @@ SetPackageInfo( rec(
 
 PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
-Version := "2021.08-01",
-Date := "31/08/2021",
+Version := "2023.02-01",
+Date := "17/02/2023",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -82,7 +82,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.8",
+  GAP := ">= 4.12.1",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
                    [ "CAP", ">= 2021.05-02" ],
                    [ "ComplexesCategories", ">= 2020.03.12" ] ],

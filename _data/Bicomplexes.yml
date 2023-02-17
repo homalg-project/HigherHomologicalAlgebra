@@ -1,7 +1,7 @@
 name: Bicomplexes
-version: "2021.08-01"
+version: "2023.02-01"
 license: "GPL-2.0-or-later"
-date: 2021-08-31
+date: 2023-02-17
 description: |
     Bicomplexes for Abelian categories
 
@@ -17,7 +17,7 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh/
 
-GAP: ">= 4.8"
+GAP: ">= 4.12.1"
 
 needed-pkgs:
     - name: "GAPDoc"
@@ -36,11 +36,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplex
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2021.08-01/Bicomplexes-2021.08-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2021.08-01/Bicomplexes-2021.08-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2021.08-01/Bicomplexes-2021.08-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.pdf
 
 abstract: |
 
@@ -51,22 +51,22 @@ keywords: |
     bicomplexes, abelian category.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>BS21</span>]   <b class='BibAuthor'>Barakat, M. and Saleh, K.</b>,
+    [<span class='BibKey'>BS23</span>]   <b class='BibAuthor'>Barakat, M. and Saleh, K.</b>,
      <i class='BibTitle'>Bicomplexes, Bicomplexes for Abelian categories,
-             Version 2021.08-01</i>
-     (<span class='BibYear'>2021</span>)<br />
+             Version 2023.02-01</i>
+     (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/Bicomplexes">https://homalg-project.github.io/pkg/Bicomplexes</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ Bicomplexes2021.08-01,
+    @misc{ Bicomplexes2023.02-01,
       author =           {Barakat, M. and Saleh, K.},
       title =            {{Bicomplexes},  Bicomplexes  for  Abelian  categories,
-                          {V}ersion 2021.08-01},
-      month =            {Aug},
-      year =             {2021},
+                          {V}ersion 2023.02-01},
+      month =            {Feb},
+      year =             {2023},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/Bicomplexes}
@@ -74,6 +74,6 @@ bibtex: |
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{Bicomplexes}}},
       keywords =         {bicomplexes; abelian category},
-      printedkey =       {BS21}
+      printedkey =       {BS23}
     }
 

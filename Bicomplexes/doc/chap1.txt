@@ -7,21 +7,21 @@
   [1X1.1-1 IsCapCategoryBicomplexCell[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryBicomplexCell[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of cells in a [5XCAP[105X category of bicomplexes.[133X
   
   [1X1.1-2 IsCapCategoryBicomplexObject[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of bicomplex objects in a [5XCAP[105X category of bicomplexes.[133X
   
   [1X1.1-3 IsCapCategoryHomologicalBicomplexObject[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryHomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  [5XGAP[105X  category  of  homological  bicomplex  objects in a [5XCAP[105X category of
   bicomplexes.[133X
@@ -29,7 +29,7 @@
   [1X1.1-4 IsCapCategoryCohomologicalBicomplexObject[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryCohomologicalBicomplexObject[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  [5XGAP[105X  category  of  cohomological bicomplex objects in a [5XCAP[105X category of
   bicomplexes.[133X
@@ -37,14 +37,14 @@
   [1X1.1-5 IsCapCategoryBicomplexMorphism[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of bicomplex morphisms in a [5XCAP[105X category of bicomplexes.[133X
   
   [1X1.1-6 IsCapCategoryHomologicalBicomplexMorphism[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryHomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  [5XGAP[105X  category  of  homological bicomplex morphisms in a [5XCAP[105X category of
   bicomplexes.[133X
@@ -52,7 +52,7 @@
   [1X1.1-7 IsCapCategoryCohomologicalBicomplexMorphism[101X
   
   [33X[1;0Y[29X[2XIsCapCategoryCohomologicalBicomplexMorphism[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[10Xtrue[110X or [10Xfalse[110X[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  [5XGAP[105X  category of cohomological bicomplex morphisms in a [5XCAP[105X category of
   bicomplexes.[133X
