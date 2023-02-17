@@ -31,8 +31,9 @@ function( C, x0, x1 )
                                 end ) );
         return MorphismBetweenDirectSums( list );
         end );
-  return ChainComplex( cat, diff );;
-
+    
+    return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
+  
 end );
 
 # concentrated in
@@ -62,8 +63,9 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICA
                 end ) );
         return MorphismBetweenDirectSums( list );
         end );
-  return ChainComplex( cat, diff );
-
+  
+  return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
+  
 end );
 
 # concentrated in
@@ -99,8 +101,9 @@ function( C, x0, y0 )
                 end ) );
         return MorphismBetweenDirectSums( l );
         end );
-  return ChainComplex( cat, diff );
-
+  
+  return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
+  
 end );
 
 # concentrated in
@@ -138,7 +141,9 @@ InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICA
                 end ) );
         return MorphismBetweenDirectSums( l );
         end );
-  return ChainComplex( cat, diff );
+  
+   return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
+   
 end );
 
 # # concentrated in
@@ -170,7 +175,7 @@ end );
 #                                
 #                                return MorphismBetweenDirectSums( list );
 #                                end );
-# d := ChainComplex( cat, diff );
+# d := CreateComplex( cat, diff );
 # 
 # #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
 # 
@@ -183,9 +188,9 @@ InstallMethod( TotalComplex,
     function( C )
     local T;
     
-    if HasLeft_Bound( C ) and HasRight_Bound( C ) and HasAbove_Bound( C ) and HasBelow_Bound( C ) then 
+    if HasLeft_Bound( C ) and HasRight_Bound( C ) and HasAbove_Bound( C ) and HasBelow_Bound( C ) then
        
-       if Right_Bound( C ) - Left_Bound( C ) < Above_Bound( C ) - Below_Bound( C ) then 
+       if Right_Bound( C ) - Left_Bound( C ) < Above_Bound( C ) - Below_Bound( C ) then
        
             T :=  TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ) + 1, Right_Bound( C ) - 1 );
        
@@ -199,32 +204,22 @@ InstallMethod( TotalComplex,
     
             T :=  TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ) + 1, Right_Bound( C ) - 1 );
     
-    elif HasAbove_Bound( C ) and HasBelow_Bound( C ) then 
+    elif HasAbove_Bound( C ) and HasBelow_Bound( C ) then
     
             T :=  TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Below_Bound( C ) + 1, Above_Bound( C ) - 1 );
     
-    elif HasAbove_Bound( C ) and HasRight_Bound( C ) then 
+    elif HasAbove_Bound( C ) and HasRight_Bound( C ) then
     
             T :=  TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Right_Bound( C ), Above_Bound( C ) );
     
-    elif HasBelow_Bound( C ) and HasLeft_Bound( C ) then 
+    elif HasBelow_Bound( C ) and HasLeft_Bound( C ) then
     
             T :=  TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ), Below_Bound( C ) );
     else
     
             Error( "The given bicomplex doesn't have the needed bounds" );
-        
+    
     fi;
-    
-    AddToToDoList( ToDoListEntry( [ [ C, "Left_Bound" ], [ C, "Below_Bound" ] ],
-        function( ) 
-          SetLowerBound( T, Left_Bound( C ) + Below_Bound( C ) + 2 );
-        end ) );
-    
-    AddToToDoList( ToDoListEntry( [ [ C, "Right_Bound" ], [ C, "Above_Bound" ] ],
-        function( ) 
-          SetUpperBound( T, Right_Bound( C ) + Above_Bound( C ) - 2 );
-        end ) );
     
     return T;
 
@@ -249,14 +244,14 @@ end );
 InstallMethod( TotalComplexFunctorial,
                 [ IsCapCategoryBicomplexMorphism and IsCapCategoryHomologicalBicomplexMorphism ],
         
-        function( phi )
+      function( phi )
         local S, tS, R, tR, l;
-     
+        
         S := Source( phi );
         tS := TotalComplex( S );
         R := Range( phi );
         tR := TotalComplex( R );
-     
+        
         l := AsZFunction( 
                 function( m )
                 local ind_r, ind_s, morphisms;
@@ -272,7 +267,7 @@ InstallMethod( TotalComplexFunctorial,
                                     return ZeroMorphism( ObjectAt( S, i, m-i ), ObjectAt( R, j, m-j ) );
                                 fi;
                                 end ) );
-           
+                
                 if morphisms = [] or morphisms = [[]] then
                      return ZeroMorphism( tS[m], tR[m] );
                 else
@@ -280,31 +275,29 @@ InstallMethod( TotalComplexFunctorial,
                 fi;
                 end );
 
-        return ChainMorphism( tS, tR, l );
+        return CreateComplexMorphism( tS, tR, l );
 end );
 
 InstallMethod( TotalComplex,
                [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject ],
         function( C )
-        local CohCat, HCat, cat, convert, Ch_to_Coch, T;
+        local CohCat, HCat, cat, convert, T;
         CohCat := CapCategory( C );
         cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
-        HCat := AsCategoryOfBicomplexes( ChainComplexCategory( ChainComplexCategory( cat ) ) );
+        HCat := AsCategoryOfBicomplexes( ComplexesCategoryByChains( ComplexesCategoryByChains( cat ) ) );
         convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
-        Ch_to_Coch := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
-        T := TotalComplex( ApplyFunctor( convert, C ) );
-        return ApplyFunctor( Ch_to_Coch, T );
+        return AsCochainComplex( TotalComplex( ApplyFunctor( convert, C ) ) );
 end );
 
 InstallMethod( TotalComplexFunctorial,
                [ IsCapCategoryBicomplexMorphism and IsCapCategoryCohomologicalBicomplexMorphism ],
         function( phi )
-        local CohCat, HCat, cat, convert, Ch_to_Coch, T;
+        local CohCat, HCat, cat, convert, T;
         CohCat := CapCategory( phi );
         cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
-        HCat := AsCategoryOfBicomplexes( ChainComplexCategory( ChainComplexCategory( cat ) ) );
+        HCat := AsCategoryOfBicomplexes( ComplexesCategoryByChains( ComplexesCategoryByChains( cat ) ) );
         convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
-        Ch_to_Coch := ChainToCochainComplexFunctor( ChainComplexCategory( cat ), CochainComplexCategory( cat ) );
         T := TotalComplexFunctorial( ApplyFunctor( convert, phi ) );
-        return ApplyFunctor( Ch_to_Coch, T );
+        return AsCochainComplexMorphism( T );
 end );
+
