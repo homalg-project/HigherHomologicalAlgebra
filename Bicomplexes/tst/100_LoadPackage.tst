@@ -11,9 +11,13 @@ gap> LoadPackage( "ModulePresentations", false );
 true
 gap> LoadPackage( "Bicomplexes", false );
 true
+gap> LoadPackage( "Algebroids", false );
+true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "ModulePresentations" );
 true
 gap> LoadPackage( "Bicomplexes" );
+true
+gap> LoadPackage( "Algebroids" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

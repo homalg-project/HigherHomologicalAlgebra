@@ -1,303 +1,115 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Bicomplexes: Bicomplexes for Abelian categories
-#
-# Implementations
-#
 
-# concentrated in
-# x0 =< x =< x1
-#
-InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
-function( C, x0, x1 )
-  local d, cat, diff;
 
-  if x0 > x1 then return TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, x1, x0 );fi;
-  cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
 
-  diff := AsZFunction( 
-        function( m )
-        local list;
-        C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
-        list := List( [ 1 .. x1 - x0 + 1 ], 
-                        i ->   List( [ 1 .. x1 - x0 + 1 ], 
-                                function( j )
-                                local zero;
-                                zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                                      ObjectAt( C, x0 + j - 1, m - x0 - j ) );
-                                if i <> j and i - 1 <> j then return zero;
-                                elif i = j then return VerticalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                                else return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                                fi;
-                                end ) );
-        return MorphismBetweenDirectSums( list );
-        end );
-    
-    return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
+
+
+
+
+
+BindGlobal( "TOTAL_COMPLEX_OF_BICOMPLEX",
   
-end );
-
-# concentrated in
-# y >= y0 and y =< y1
-#
-InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX",
-  function( C, y0, y1 )
-  local d, cat, diff;
+  function( obj, sign )
+    local bicomplexes_cat, complexes_cat, cat, l, b, r, a, indices, direct_summands, objs, diffs;
     
-  if y0 > y1 then return TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, y1, y0 );fi;
-  cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) );
-
-  diff := AsZFunction( 
-        function( m )
-        local list;
-        C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y1, m - y0 ];
-        list := List( [ 1 .. y1 - y0 + 1 ], 
-                i ->   List( [ 1 .. y1 - y0 + 1 ], 
-                function( j )
-                local zero;
-                zero := ZeroMorphism( ObjectAt( C, m -y1 + i - 1, y1 - i + 1  ), 
-                                      ObjectAt( C, m -y1 + j - 2, y1 - j + 1 ) );
-                if i <> j and i + 1 <> j then return zero;
-                elif i = j then return HorizontalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
-                else return VerticalDifferentialAt( C, m -y1 + i - 1, y1 - i + 1 );
-                fi;
-                end ) );
-        return MorphismBetweenDirectSums( list );
-        end );
-  
-  return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
-  
-end );
-
-# concentrated in
-# x >= x0 and y >= y0
-#
-InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
-function( C, x0, y0 )
-  local cat, zero_object, diff;
-
-  cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
-
-  zero_object := ZeroObject( cat );
-
-  diff := AsZFunction( 
-        function( m )
-        local l;
-        C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, m - y0 ];
-        if m = x0 + y0 then 
-           return UniversalMorphismIntoZeroObject( ObjectAt( C, x0, y0 ) );
-        elif m < x0 + y0 then
-           return UniversalMorphismIntoZeroObject( zero_object );
-        fi;
-        l := List( [ 1 .. m - x0 - y0 + 1 ], 
-                i -> List( [ 1 .. m - x0 - y0 ], 
-                function( j )
-                local zero;
-                zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
-                                      ObjectAt( C, x0 + j - 1, m - x0 - j ) );
-                if i <> j and i - 1 <> j then return zero;
-                elif i-1=j then return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-                else return VerticalDifferentialAt(C, x0 + i - 1, m - x0 - i + 1 );
-                fi;
-                end ) );
-        return MorphismBetweenDirectSums( l );
-        end );
-  
-  return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
-  
-end );
-
-# concentrated in
-# x <= x0 and y <= y0
-#
-InstallGlobalFunction( "TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX",
-  function( C, x0, y0 )
-  local d, cat, zero_object, diff;
-
-  cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
-
-  zero_object := ZeroObject( cat );
-
-  diff := AsZFunction( 
-        function( m )
-        local l;
-        
-        C!.IndicesOfTotalComplex.( String( m ) ) := [ m - y0, x0 ];
-        
-        if m = x0 + y0 + 1 then 
-           return UniversalMorphismFromZeroObject( ObjectAt( C, x0, y0 ) );
-        elif m > x0 + y0 + 1 then
-           return UniversalMorphismFromZeroObject( zero_object );
-        fi;
-        l := List( [ 1 .. x0 + y0 -m + 1 ], 
-                i -> List( [ 1 .. x0 + y0 -m + 2 ], 
-                function( j )
-                local zero;
-                zero := ZeroMorphism( ObjectAt( C, -y0 + m + i - 1 , y0 - i + 1  ), 
-                                      ObjectAt( C, -y0 + m + j - 2 , y0 - j + 1 ) );
-                if i <> j and j - 1 <> i then return zero;
-                elif i = j then return HorizontalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
-                else return VerticalDifferentialAt( C, -y0 + m + i - 1 , y0 - i + 1 );
-                fi;
-                end ) );
-        return MorphismBetweenDirectSums( l );
-        end );
-  
-   return CreateComplex( ComplexesCategoryByChains( cat ), diff, Left_Bound( C ) + Below_Bound( C ) + 2, Right_Bound( C ) + Above_Bound( C ) - 2 );
-   
-end );
-
-# # concentrated in
-# #  x0 =< x =< x1
-# #        y =< y1
-# 
-# BindGlobal( "TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX",
-# function( C, x0, x1, y1 )
-# local d, cat, diff;
-# 
-# cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CapCategory( C ) ) ) ); 
-# 
-# diff := AsZFunction( function( m )
-#                                local list;
-#                                
-#                                
-#                                C!.IndicesOfTotalComplex.( String( m ) ) := [ x0, x1 ];
-#                                
-#                                list := List( [ 1 .. x1 - x0 + 1 ], i ->   List( [ 1 .. x1 - x0 + 1 ], 
-#                                                                      function( j )
-#                                                                      local zero;
-#                                                                      zero := ZeroMorphism( ObjectAt( C, x0 + i - 1, m - x0 - i + 1  ), 
-#                                                                                            ObjectAt( C, x0 + j - 1, m - x0 - j ) );
-#                                                                      if i <> j and i - 1 <> j then return zero;
-#                                                                      elif i = j then return VerticalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-#                                                                      else return HorizontalDifferentialAt( C, x0 + i - 1, m - x0 - i + 1 );
-#                                                                      fi;
-#                                                                      end ) );
-#                                
-#                                return MorphismBetweenDirectSums( list );
-#                                end );
-# d := CreateComplex( cat, diff );
-# 
-# #AddToGenesis( d, "UnderlyingDoubleComplex", [ C ] );
-# 
-# return d;
-# 
-# end );
-
-InstallMethod( TotalComplex,
-               [ IsCapCategoryBicomplexObject and IsCapCategoryHomologicalBicomplexObject ],
-    function( C )
-    local T;
+    bicomplexes_cat := CapCategory( obj );
+    complexes_cat := UnderlyingCategory( ModelingCategory( bicomplexes_cat ) );
+    cat := UnderlyingCategory( complexes_cat );
     
-    if HasLeft_Bound( C ) and HasRight_Bound( C ) and HasAbove_Bound( C ) and HasBelow_Bound( C ) then
-       
-       if Right_Bound( C ) - Left_Bound( C ) < Above_Bound( C ) - Below_Bound( C ) then
-       
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ) + 1, Right_Bound( C ) - 1 );
-       
-       else
+    l := LeftBound( obj );
+    b := BelowBound( obj );
+    r := RightBound( obj );
+    a := AboveBound( obj );
     
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Below_Bound( C ) + 1, Above_Bound( C ) - 1 );
-       
-       fi;
-    
-    elif HasLeft_Bound( C ) and HasRight_Bound( C ) then
-    
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_LEFT_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ) + 1, Right_Bound( C ) - 1 );
-    
-    elif HasAbove_Bound( C ) and HasBelow_Bound( C ) then
-    
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_ABOVE_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Below_Bound( C ) + 1, Above_Bound( C ) - 1 );
-    
-    elif HasAbove_Bound( C ) and HasRight_Bound( C ) then
-    
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_ABOVE_RIGHT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Right_Bound( C ), Above_Bound( C ) );
-    
-    elif HasBelow_Bound( C ) and HasLeft_Bound( C ) then
-    
-            T :=  TOTAL_CHAIN_COMPLEX_GIVEN_BELOW_LEFT_BOUNDED_HOMOLOGICAL_BICOMPLEX( C, Left_Bound( C ), Below_Bound( C ) );
+    if IsInt( l ) and IsInt( b ) then
+        indices := AsZFunction( index -> List( [ 0 .. index - l - b ], i -> [ l + i, index - l - i ] ) );
+    elif IsInt( r ) and IsInt( a ) then
+        indices := AsZFunction( index -> List( [ 0 .. r + a - index ], i -> [ r - i, index - r + i ] ) );
+    elif IsInt( l ) and IsInt( r ) then
+        indices := AsZFunction( index -> List( [ l .. r ], i -> [ i, index - i ] ) );
+    elif IsInt( b ) and IsInt( a ) then
+        indices := AsZFunction( index -> List( [ b .. a ], j -> [ index - j, j ] ) );
     else
-    
-            Error( "The given bicomplex doesn't have the needed bounds" );
-    
+        Error( "the total complex can not be computed!" );
     fi;
     
-    return T;
-
+    direct_summands := ApplyMap( indices, list_of_pairs -> List( list_of_pairs, p -> ObjectAt( obj, p[1], p[2] ) ) );
+    
+    objs := ApplyMap( direct_summands, list_of_objects -> DirectSum( cat, list_of_objects ) );
+    
+    diffs := AsZFunction(
+                index -> MorphismBetweenDirectSumsWithGivenDirectSums( cat,
+                              objs[ index ],
+                              direct_summands[index],
+                              List( indices[index],
+                                s -> List( indices[index+sign],
+                                  function (r)
+                                    if s[1] = r[1] then
+                                      return VerticalDifferentialAt( obj, s[1], s[2] );
+                                    elif s[2] = r[2] then
+                                      return HorizontalDifferentialAt( obj, s[1], s[2] );
+                                    else
+                                      return ZeroMorphism( cat, ObjectAt( obj, s[1], s[2] ), ObjectAt( obj, r[1], r[2] ) );
+                                    fi;
+                              end ) ),
+                              direct_summands[index+sign],
+                              objs[index+sign]
+                            ) );
+    
+    return ObjectConstructor( complexes_cat, [ objs, diffs, l+b, r+a ] );
+    
 end );
-
 
 ##
-
-InstallMethod( IndicesUsedToComputeTotalComplexOfBicomplexAtOp,
-               [ IsCapCategoryBicomplexObject, IsInt ],
-    function( B, m )
-    local obj;
-    
-    # computing obj make it possible to read the indices used to compute obj.
-    # which are what we want.
-    obj := TotalComplex( B )[ m ];
-    
-    return B!.IndicesOfTotalComplex.( String( m ) );
-    
-end );
-
-InstallMethod( TotalComplexFunctorial,
-                [ IsCapCategoryBicomplexMorphism and IsCapCategoryHomologicalBicomplexMorphism ],
-        
-      function( phi )
-        local S, tS, R, tR, l;
-        
-        S := Source( phi );
-        tS := TotalComplex( S );
-        R := Range( phi );
-        tR := TotalComplex( R );
-        
-        l := AsZFunction( 
-                function( m )
-                local ind_r, ind_s, morphisms;
-                ind_s := IndicesUsedToComputeTotalComplexOfBicomplexAt( S, m );
-                ind_r := IndicesUsedToComputeTotalComplexOfBicomplexAt( R, m );
-                morphisms := List( [ ind_s[1] .. ind_s[2] ],
-                        i-> List( [ ind_r[1] .. ind_r[2] ],
-                                function( j )
-                                
-                                if i=j then
-                                    return MorphismAt( phi, i, m - i );
-                                else
-                                    return ZeroMorphism( ObjectAt( S, i, m-i ), ObjectAt( R, j, m-j ) );
-                                fi;
-                                end ) );
-                
-                if morphisms = [] or morphisms = [[]] then
-                     return ZeroMorphism( tS[m], tR[m] );
-                else
-                     return MorphismBetweenDirectSums( morphisms );
-                fi;
-                end );
-
-        return CreateComplexMorphism( tS, tR, l );
-end );
-
 InstallMethod( TotalComplex,
-               [ IsCapCategoryBicomplexObject and IsCapCategoryCohomologicalBicomplexObject ],
-        function( C )
-        local CohCat, HCat, cat, convert, T;
-        CohCat := CapCategory( C );
-        cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
-        HCat := AsCategoryOfBicomplexes( ComplexesCategoryByChains( ComplexesCategoryByChains( cat ) ) );
-        convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
-        return AsCochainComplex( TotalComplex( ApplyFunctor( convert, C ) ) );
-end );
+          [ IsCochainBicomplex ],
+  
+  obj -> TOTAL_COMPLEX_OF_BICOMPLEX( obj, 1 )
+);
 
+##
+InstallMethod( TotalComplex,
+          [ IsChainBicomplex ],
+  
+  obj -> TOTAL_COMPLEX_OF_BICOMPLEX( obj, -1 )
+);
+
+##
 InstallMethod( TotalComplexFunctorial,
-               [ IsCapCategoryBicomplexMorphism and IsCapCategoryCohomologicalBicomplexMorphism ],
-        function( phi )
-        local CohCat, HCat, cat, convert, T;
-        CohCat := CapCategory( phi );
-        cat := UnderlyingCategory( UnderlyingCategory( UnderlyingCategoryOfComplexesOfComplexes( CohCat ) ) );
-        HCat := AsCategoryOfBicomplexes( ComplexesCategoryByChains( ComplexesCategoryByChains( cat ) ) );
-        convert := CohomologicalToHomologicalBicomplexsFunctor( CohCat, HCat );
-        T := TotalComplexFunctorial( ApplyFunctor( convert, phi ) );
-        return AsCochainComplexMorphism( T );
+          [ IsChainOrCochainComplex, IsChainOrCochainBicomplexMorphism, IsChainOrCochainComplex ],
+  
+  function( source, mor, range )
+    local bicomplexes_cat, complexes_cat, cat, s_objs, s_direct_summands, s_indices, r_objs, r_direct_summands, r_indices, mors;
+    
+    bicomplexes_cat := CapCategory( mor );
+    complexes_cat := UnderlyingCategory( ModelingCategory( bicomplexes_cat ) );
+    cat := UnderlyingCategory( complexes_cat );
+    
+    s_objs := Objects( source );
+    s_direct_summands := BaseZFunctions( s_objs )[1];
+    s_indices := BaseZFunctions( s_direct_summands )[1];
+    
+    r_objs := Objects( range );
+    r_direct_summands := BaseZFunctions( r_objs )[1];
+    r_indices := BaseZFunctions( r_direct_summands )[1];
+    
+    mors := AsZFunction(
+              index -> MorphismBetweenDirectSumsWithGivenDirectSums( cat,
+                              s_objs[ index ],
+                              s_direct_summands[index],
+                              ListN( s_direct_summands[index], s_indices[index],
+                                {direct_summand_s, s} -> ListN( r_direct_summands[index], r_indices[index],
+                                  function (direct_summand_r, r)
+                                    if s = r then
+                                      return MorphismAt( mor, s[1], s[2] );
+                                    else
+                                      return ZeroMorphism( cat, direct_summand_s, direct_summand_r );
+                                    fi;
+                              end ) ),
+                              r_direct_summands[index],
+                              r_objs[index]
+                            ) );
+    
+    return CreateComplexMorphism( complexes_cat, source, mors, range );
+    
 end );
 
