@@ -1,7 +1,7 @@
 name: Bicomplexes
-version: "2023.02-01"
+version: "2023.02-02"
 license: "GPL-2.0-or-later"
-date: 2023-02-17
+date: 2023-02-22
 description: |
     Bicomplexes for Abelian categories
 
@@ -36,11 +36,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplex
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-02/Bicomplexes-2023.02-02.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-02/Bicomplexes-2023.02-02.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-01/Bicomplexes-2023.02-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/Bicomplexes-2023.02-02/Bicomplexes-2023.02-02.pdf
 
 abstract: |
 
@@ -53,7 +53,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>BS23</span>]   <b class='BibAuthor'>Barakat, M. and Saleh, K.</b>,
      <i class='BibTitle'>Bicomplexes, Bicomplexes for Abelian categories,
-             Version 2023.02-01</i>
+             Version 2023.02-02</i>
      (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/Bicomplexes">https://homalg-project.github.io/pkg/Bicomplexes</a></span>.
@@ -61,10 +61,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ Bicomplexes2023.02-01,
+    @misc{ Bicomplexes2023.02-02,
       author =           {Barakat, M. and Saleh, K.},
       title =            {{Bicomplexes},  Bicomplexes  for  Abelian  categories,
-                          {V}ersion 2023.02-01},
+                          {V}ersion 2023.02-02},
       month =            {Feb},
       year =             {2023},
       note =             {GAP package},

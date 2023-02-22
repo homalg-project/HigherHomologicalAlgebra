@@ -11,8 +11,8 @@ SetPackageInfo( rec(
 
 PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
-Version := "2023.02-01",
-Date := "17/02/2023",
+Version := "2023.02-02",
+Date := "22/02/2023",
 License := "GPL-2.0-or-later",
 
 Persons := [
