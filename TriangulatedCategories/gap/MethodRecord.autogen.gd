@@ -13,7 +13,7 @@
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `CounitOfShiftAdjunctionWithGivenObject`.
-#! $F: ( s, i_sh_o_sh_s ) \mapsto \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, i_sh_o_sh_s)$.
+#! $F: ( s, r ) \mapsto \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, r)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddCounitOfShiftAdjunctionWithGivenObject",
@@ -51,7 +51,7 @@ DeclareOperation( "AddDomainMorphismByOctahedralAxiomWithGivenObjects",
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `InverseOfCounitOfShiftAdjunctionWithGivenObject`.
-#! $F: ( s, i_sh_o_sh_s ) \mapsto \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s, i_sh_o_sh_s)$.
+#! $F: ( s, r ) \mapsto \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s, r)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddInverseOfCounitOfShiftAdjunctionWithGivenObject",
@@ -70,7 +70,7 @@ DeclareOperation( "AddInverseOfCounitOfShiftAdjunctionWithGivenObject",
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `InverseOfUnitOfShiftAdjunctionWithGivenObject`.
-#! $F: ( s, sh_o_i_sh_s ) \mapsto \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)$.
+#! $F: ( s, r ) \mapsto \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, r)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddInverseOfUnitOfShiftAdjunctionWithGivenObject",
@@ -469,7 +469,7 @@ DeclareOperation( "AddStandardConeObject",
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `UnitOfShiftAdjunctionWithGivenObject`.
-#! $F: ( s, sh_o_i_sh_s ) \mapsto \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)$.
+#! $F: ( s, r ) \mapsto \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, r)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddUnitOfShiftAdjunctionWithGivenObject",
