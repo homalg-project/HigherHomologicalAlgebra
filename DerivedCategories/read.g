@@ -7,4 +7,7 @@ ReadPackage( "DerivedCategories", "gap/DerivedCategories.gi" );
 ReadPackage( "DerivedCategories", "gap/Objects.gi" );
 ReadPackage( "DerivedCategories", "gap/Morphisms.gi");
 ReadPackage( "DerivedCategories", "gap/Functors.gi");
-ReadPackage( "DerivedCategories", "gap/OnlyWithFunctorCategories.gi");
+
+if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.09.23" ) then
+  ReadPackage( "DerivedCategories", "gap/OnlyWithFunctorCategories.gi");
+fi;
