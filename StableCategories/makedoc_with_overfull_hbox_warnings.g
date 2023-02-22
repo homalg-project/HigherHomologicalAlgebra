@@ -18,6 +18,23 @@ AutoDoc( rec(
     gapdoc := rec(
         LaTeXOptions := rec(
             LateExtraPreamble := """
+                \usepackage[T1]{fontenc}
+                \usepackage{microtype}
+                \usepackage{amssymb}
+                \usepackage{cite}
+                \usepackage{mathrsfs}
+                \usepackage{amsmath}
+                \usepackage{mathtools}
+                \usepackage{faktor}
+                \usepackage{tikz-cd}
+                \newcommand{\comp}[2]{ #1 \cdot #2 }
+                \newcommand{\CC}{\mathscr{C}}
+                \newcommand{\EE}{\mathcal{E}}
+                \newcommand{\QQ}{\mathcal{Q}}
+                \newcommand{\LL}{\mathcal{L}}
+                \newcommand{\id}{\mathrm{id}}
+                \newcommand{\Ch}[1]{\mathrm{Ch}^b(#1)}
+                \newcommand{\Ho}[1]{\mathrm{K}^b(#1)}
                 % Many thanks to https://tex.stackexchange.com/questions/22466/how-to-convince-fancyvrb-to-give-overfull-warnings/534486#534486
                 \makeatletter
                 \def\FV@ListProcessLine#1{%

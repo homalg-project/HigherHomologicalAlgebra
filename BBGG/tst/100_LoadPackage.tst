@@ -7,17 +7,9 @@
 gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "IO_ForHomalg", false );
-true
-gap> LoadPackage( "FreydCategoriesForCAP", false );
-true
 gap> LoadPackage( "BBGG", false );
 true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "IO_ForHomalg" );
-true
-gap> LoadPackage( "FreydCategoriesForCAP" );
-true
 gap> LoadPackage( "BBGG" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

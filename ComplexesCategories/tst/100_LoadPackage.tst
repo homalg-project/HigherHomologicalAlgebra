@@ -7,14 +7,18 @@
 gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "CategoryConstructor", false );
+gap> LoadPackage( "IO_ForHomalg", false );
+true
+gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
 gap> LoadPackage( "Algebroids", false );
 true
 gap> LoadPackage( "ComplexesCategories", false );
 true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "CategoryConstructor" );
+gap> LoadPackage( "IO_ForHomalg" );
+true
+gap> LoadPackage( "FreydCategoriesForCAP" );
 true
 gap> LoadPackage( "Algebroids" );
 true
