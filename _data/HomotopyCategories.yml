@@ -1,7 +1,7 @@
 name: HomotopyCategories
-version: "2022.12-03"
+version: "2023.02-01"
 license: "GPL-2.0-or-later"
-date: 2022-12-20
+date: 2023-02-23
 description: |
     Homotopy categories of additive categories
 
@@ -41,11 +41,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyC
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2022.12-03/HomotopyCategories-2022.12-03.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2023.02-01/HomotopyCategories-2023.02-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2022.12-03/HomotopyCategories-2022.12-03.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2023.02-01/HomotopyCategories-2023.02-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2022.12-03/HomotopyCategories-2022.12-03.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/HomotopyCategories-2023.02-01/HomotopyCategories-2023.02-01.pdf
 
 abstract: |
 
@@ -54,28 +54,28 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal22</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal23</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>HomotopyCategories, Homotopy categories of additive categories,
-             Version 2022.12-03</i>
-     (<span class='BibYear'>2022</span>)<br />
+             Version 2023.02-01</i>
+     (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/HomotopyCategories">https://homalg-project.github.io/pkg/HomotopyCategories</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ HomotopyCategories2022.12-03,
+    @misc{ HomotopyCategories2023.02-01,
       author =           {Saleh, K.},
       title =            {{HomotopyCategories},  Homotopy categories of additive
-                          categories, {V}ersion 2022.12-03},
-      month =            {Dec},
-      year =             {2022},
+                          categories, {V}ersion 2023.02-01},
+      month =            {Feb},
+      year =             {2023},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/HomotopyCategories}
                           {\texttt{https://homalg-project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{HomotopyCategories}}},
-      printedkey =       {Sal22}
+      printedkey =       {Sal23}
     }
 
