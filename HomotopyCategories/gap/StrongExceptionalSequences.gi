@@ -315,7 +315,7 @@ InstallMethodWithCache( ExceptionalReplacement,
           [ IsCapFullSubcategory, IsHomotopyCategoryObject, IsBool ],
   
   function ( seq, A, bool )
-    local ambient_cat, homotopy_cat, max_shift, data, objs, diffs, GA, zero_object, i;
+    local ambient_cat, homotopy_cat, max_shift, data, objs, diffs, GA, zero_object, i, u;
     
     ambient_cat := AmbientCategory( seq );
     
@@ -341,11 +341,17 @@ InstallMethodWithCache( ExceptionalReplacement,
       
       zero_object := ZeroObject( ambient_cat );
       
-      i := UpperBound( GA ) + 1;
+      if UpperBound( GA ) = -infinity then
+          u := 0;
+      else
+          u := UpperBound( GA );
+      fi;
       
-      repeat i := i-1; until IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity;
+      i := u + 1;
       
-      return CreateComplex( homotopy_cat, [ Objects( GA ), Differentials( GA ), i+1, UpperBound( GA ) ] );
+      repeat i := i - 1; until IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity;
+      
+      return CreateComplex( homotopy_cat, [ Objects( GA ), Differentials( GA ), i+1, u ] );
       
     fi;
     
