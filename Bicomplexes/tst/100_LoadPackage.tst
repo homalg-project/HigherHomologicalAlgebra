@@ -7,17 +7,21 @@
 gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "ModulePresentations", false );
+gap> LoadPackage( "ModulePresentationsForCAP", false );
 true
-gap> LoadPackage( "Bicomplexes", false );
+gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
 gap> LoadPackage( "Algebroids", false );
 true
-gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "ModulePresentations" );
+gap> LoadPackage( "Bicomplexes", false );
 true
-gap> LoadPackage( "Bicomplexes" );
+gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
+gap> LoadPackage( "ModulePresentationsForCAP" );
+true
+gap> LoadPackage( "FreydCategoriesForCAP" );
 true
 gap> LoadPackage( "Algebroids" );
+true
+gap> LoadPackage( "Bicomplexes" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

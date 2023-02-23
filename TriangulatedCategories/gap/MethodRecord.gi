@@ -99,25 +99,25 @@ IsExactTriangle := rec(
 
 UnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_i_sh_s" ], [ "s", "sh_o_i_sh_s" ] ],
+  io_type := [ [ "s", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseOfCounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "i_sh_o_sh_s" ], [ "s", "i_sh_o_sh_s" ] ],
+  io_type := [ [ "s", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseOfUnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "sh_o_i_sh_s" ], [ "sh_o_i_sh_s", "s" ] ],
+  io_type := [ [ "s", "r" ], [ "r", "s" ] ],
   return_type := "morphism"
 ),
 
 CounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "i_sh_o_sh_s" ], [ "i_sh_o_sh_s", "s" ] ],
+  io_type := [ [ "s", "r" ], [ "r", "s" ] ],
   return_type := "morphism"
 ),
 

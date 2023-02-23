@@ -1,8 +1,8 @@
-
-
-
-
-
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 
 
 
@@ -415,18 +415,24 @@ end );
 BindGlobal( "_complexes_ViewObj",
   
   function ( x )
-    local b, cell, i;
+    local b, cell, i, bounds_includes_infty;
     
     b := [ LowerBound( x ), UpperBound( x ) ];
     
+    bounds_includes_infty := false;
+    
     for i in [ 1, 2 ] do
       
-      if IsInt( b[i] ) then
-        b[i] := String( b[i] );
-      elif b[i] = infinity then
-        b[i] := Concatenation( "+", TEXTMTRANSLATIONS!.infty );
-      elif b[i] = -infinity then
-        b[i] := Concatenation( "-", TEXTMTRANSLATIONS!.infty );
+      if not IsInt( b[i] ) then
+        
+        bounds_includes_infty := true;
+        
+        if  b[i] = infinity then
+          b[i] := "+∞";
+        elif b[i] = -infinity then
+          b[i] := "-∞";
+        fi;
+        
       fi;
       
     od;
@@ -437,7 +443,11 @@ BindGlobal( "_complexes_ViewObj",
         cell := "A morphism";
     fi;
     
-    Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", b[1], " .. ", b[2], " ]>" );
+    if bounds_includes_infty then
+      Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", b[1], " .. ", b[2], " ]>" );
+    else
+      Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval ", [ b[1] .. b[2] ] , ">" );
+    fi;
     
 end );
 

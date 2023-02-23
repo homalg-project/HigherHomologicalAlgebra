@@ -1,8 +1,8 @@
-
-
-
-
-
+# SPDX-License-Identifier: GPL-2.0-or-later
+# ComplexesCategories: Category of (co)chain complexes of an additive category
+#
+# Implementations
+#
 
 ##
 InstallValue( CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY,
