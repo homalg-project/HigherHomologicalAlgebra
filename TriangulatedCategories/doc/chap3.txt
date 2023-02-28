@@ -11,8 +11,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XCounitOfShiftAdjunctionWithGivenObject[110X.   [23XF:  (  s,  i_sh_o_sh_s  )  \mapsto
-  \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, i_sh_o_sh_s)[123X.[133X
+  [10XCounitOfShiftAdjunctionWithGivenObject[110X.    [23XF:    (    s,    r    )   \mapsto
+  \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects[101X
   
@@ -33,9 +33,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseOfCounitOfShiftAdjunctionWithGivenObject[110X.   [23XF:  (  s,  i_sh_o_sh_s  )
-  \mapsto          \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s,
-  i_sh_o_sh_s)[123X.[133X
+  [10XInverseOfCounitOfShiftAdjunctionWithGivenObject[110X.   [23XF:   (  s,  r  )  \mapsto
+  \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject[101X
   
@@ -44,8 +43,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseOfUnitOfShiftAdjunctionWithGivenObject[110X. [23XF: ( s, sh_o_i_sh_s ) \mapsto
-  \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)[123X.[133X
+  [10XInverseOfUnitOfShiftAdjunctionWithGivenObject[110X.   [23XF:   (   s,   r  )  \mapsto
+  \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects[101X
   
@@ -262,8 +261,8 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUnitOfShiftAdjunctionWithGivenObject[110X.   [23XF:   (   s,  sh_o_i_sh_s  )  \mapsto
-  \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, sh_o_i_sh_s)[123X.[133X
+  [10XUnitOfShiftAdjunctionWithGivenObject[110X.     [23XF:    (    s,    r    )    \mapsto
+  \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-26 AddWitnessIsomorphismFromStandardConeObject[101X
   

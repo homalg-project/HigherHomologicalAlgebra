@@ -2,9 +2,9 @@
   
   [1XIndex[101X
   
-  [2X\[\][102X, for IsCapExactTriangle, IsInt 1.2-8 
-      for IsCapExactTrianglesMorphism, IsInt 1.2-18 
-  [2X\^[102X, for IsCapExactTriangle, IsInt 1.2-10 
+  [2X\[\][102X, for IsCategoryOfExactTrianglesMorphism, IsInt 1.2-18 
+      for IsCategoryOfExactTrianglesObject, IsInt 1.2-8 
+  [2X\^[102X, for IsCategoryOfExactTrianglesObject, IsInt 1.2-10 
   [2XAddCounitOfShiftAdjunctionWithGivenObject[102X, for IsCapCategory, IsFunction 3.1-1 
   [2XAddDomainMorphismByOctahedralAxiomWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-2 
   [2XAddInverseOfCounitOfShiftAdjunctionWithGivenObject[102X, for IsCapCategory, IsFunction 3.1-3 
@@ -46,15 +46,15 @@
   [2XCounitOfShiftAdjunction[102X, for IsCapCategoryObject 4.1-21 
       for IsTriangulatedCategory 2.1-5 
   [2XCounitOfShiftAdjunctionWithGivenObject[102X, for IsCapCategoryObject, IsCapCategoryObject 4.1-20 
-  [2XDomainMorphism[102X, for IsCapExactTriangle 1.2-4 
+  [2XDomainMorphism[102X, for IsCategoryOfExactTrianglesObject 1.2-4 
   [2XDomainMorphismByInverseRotationAxiom[102X, for IsCapCategoryMorphism 4.1-41 
   [2XDomainMorphismByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 4.1-25 
   [2XDomainMorphismByRotationAxiom[102X, for IsCapCategoryMorphism 4.1-33 
   [2XExactTriangle[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-3 
   [2XExactTriangleByOctahedralAxiom[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism 1.2-21 
       for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool 1.2-22 
-      for IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle 1.2-24 
-      for IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool 1.2-23 
+      for IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject 1.2-24 
+      for IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsBool 1.2-23 
   [2XExtendFunctorToCategoryOfTriangles[102X, for IsCapFunctor 2.1-8 
   [2XInverseOfCounitOfShiftAdjunction[102X, for IsCapCategoryObject 4.1-17 
       for IsTriangulatedCategory 2.1-6 
@@ -62,9 +62,9 @@
   [2XInverseOfUnitOfShiftAdjunction[102X, for IsCapCategoryObject 4.1-19 
       for IsTriangulatedCategory 2.1-4 
   [2XInverseOfUnitOfShiftAdjunctionWithGivenObject[102X, for IsCapCategoryObject, IsCapCategoryObject 4.1-18 
-  [2XInverseRotation[102X, for IsCapExactTriangle 1.2-27 
-      for IsCapExactTriangle, IsBool 1.2-28 
-  [2XInverseRotationFunctor[102X, for IsCapCategoryOfExactTriangles, IsBool 2.1-10 
+  [2XInverseRotation[102X, for IsCategoryOfExactTrianglesObject 1.2-27 
+      for IsCategoryOfExactTrianglesObject, IsBool 1.2-28 
+  [2XInverseRotationFunctor[102X, for IsCategoryOfExactTriangles, IsBool 2.1-10 
   [2XInverseShift[102X, for IsCapCategoryCell 4.1-13 
   [2XInverseShiftExpandingIsomorphism[102X, for IsList 4.1-53 
   [2XInverseShiftExpandingIsomorphismWithGivenObjects[102X, for IsCapCategoryObject, IsList, IsCapCategoryObject 4.1-52 
@@ -74,33 +74,33 @@
   [2XInverseShiftOfMorphism[102X, for IsCapCategoryMorphism 4.1-12 
   [2XInverseShiftOfMorphismWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 4.1-11 
   [2XInverseShiftOfObject[102X, for IsObject 4.1-10 
-  [2XIsCapCategoryOfExactTriangles[102X, for IsCapCategory 1.1-1 
-  [2XIsCapExactTriangle[102X, for IsCapCategoryObject 1.1-2 
-  [2XIsCapExactTrianglesMorphism[102X, for IsCapCategoryMorphism 1.1-3 
-  [2XIsStandardExactTriangle[102X, for IsCapExactTriangle 1.2-13 
-  [2XMorphismAt[102X, for IsCapExactTriangle, IsInt 1.2-9 
-      for IsCapExactTrianglesMorphism, IsInt 1.2-17 
-  [2XMorphismBetweenConeObjects[102X, for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-19 
+  [2XIsCategoryOfExactTriangles[102X, for IsCapCategory 1.1-1 
+  [2XIsCategoryOfExactTrianglesMorphism[102X, for IsCapCategoryMorphism 1.1-3 
+  [2XIsCategoryOfExactTrianglesObject[102X, for IsCapCategoryObject 1.1-2 
+  [2XIsStandardExactTriangle[102X, for IsCategoryOfExactTrianglesObject 1.2-13 
+  [2XMorphismAt[102X, for IsCategoryOfExactTrianglesMorphism, IsInt 1.2-17 
+      for IsCategoryOfExactTrianglesObject, IsInt 1.2-9 
+  [2XMorphismBetweenConeObjects[102X, for IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject 1.2-19 
   [2XMorphismBetweenStandardConeObjects[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism,IsCapCategoryMorphism, IsCapCategoryMorphism 4.1-23 
   [2XMorphismBetweenStandardConeObjectsWithGivenObjects[102X, for IsCapCategoryObject, IsList, IsCapCategoryObject 4.1-22 
-  [2XMorphismFromConeObject[102X, for IsCapExactTriangle 1.2-6 
+  [2XMorphismFromConeObject[102X, for IsCategoryOfExactTrianglesObject 1.2-6 
   [2XMorphismFromConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 4.1-43 
   [2XMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 4.1-27 
   [2XMorphismFromConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 4.1-35 
   [2XMorphismFromStandardConeObject[102X, for IsCapCategoryMorphism 4.1-5 
   [2XMorphismFromStandardConeObjectWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 4.1-4 
-  [2XMorphismIntoConeObject[102X, for IsCapExactTriangle 1.2-5 
+  [2XMorphismIntoConeObject[102X, for IsCategoryOfExactTrianglesObject 1.2-5 
   [2XMorphismIntoConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 4.1-42 
   [2XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 4.1-26 
   [2XMorphismIntoConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 4.1-34 
   [2XMorphismIntoStandardConeObject[102X, for IsCapCategoryMorphism 4.1-3 
   [2XMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X, for IsCapCategoryMorphism, IsCapCategoryObject 4.1-2 
-  [2XMorphismOfExactTriangles[102X, for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-16 
-      for IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle 1.2-20 
-  [2XObjectAt[102X, for IsCapExactTriangle, IsInt 1.2-7 
-  [2XRotation[102X, for IsCapExactTriangle 1.2-25 
-      for IsCapExactTriangle, IsBool 1.2-26 
-  [2XRotationFunctor[102X, for IsCapCategoryOfExactTriangles, IsBool 2.1-9 
+  [2XMorphismOfExactTriangles[102X, for IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject 1.2-16 
+      for IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject 1.2-20 
+  [2XObjectAt[102X, for IsCategoryOfExactTrianglesObject, IsInt 1.2-7 
+  [2XRotation[102X, for IsCategoryOfExactTrianglesObject 1.2-25 
+      for IsCategoryOfExactTrianglesObject, IsBool 1.2-26 
+  [2XRotationFunctor[102X, for IsCategoryOfExactTriangles, IsBool 2.1-9 
   [2XShift[102X, for IsCapCategoryCell 4.1-9 
   [2XShiftExpandingIsomorphism[102X, for IsList 4.1-49 
   [2XShiftExpandingIsomorphismWithGivenObjects[102X, for IsCapCategoryObject, IsList, IsCapCategoryObject 4.1-48 
@@ -112,8 +112,8 @@
   [2XShiftOfObject[102X, for IsCapCategoryObject 4.1-6 
   [2XStandardConeObject[102X, for IsCapCategoryMorphism 4.1-1 
   [2XStandardExactTriangle[102X, for IsCapCategoryMorphism 1.2-11 
-      for IsCapExactTriangle 1.2-12 
-  [2XUnderlyingCategory[102X, for IsCapCategoryOfExactTriangles 1.2-2 
+      for IsCategoryOfExactTrianglesObject 1.2-12 
+  [2XUnderlyingCategory[102X, for IsCategoryOfExactTriangles 1.2-2 
   [2XUnitOfShiftAdjunction[102X, for IsCapCategoryObject 4.1-15 
       for IsTriangulatedCategory 2.1-3 
   [2XUnitOfShiftAdjunctionWithGivenObject[102X, for IsCapCategoryObject, IsCapCategoryObject 4.1-14 
@@ -123,14 +123,14 @@
   [2XWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 4.1-30 
   [2XWitnessIsomorphismFromStandardConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 4.1-38 
   [2XWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 4.1-39 
-  [2XWitnessIsomorphismFromStandardExactTriangle[102X, for IsCapExactTriangle 1.2-15 
+  [2XWitnessIsomorphismFromStandardExactTriangle[102X, for IsCategoryOfExactTrianglesObject 1.2-15 
   [2XWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom[102X, for IsCapCategoryMorphism 4.1-44 
   [2XWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 4.1-45 
   [2XWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism 4.1-29 
   [2XWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject 4.1-28 
   [2XWitnessIsomorphismIntoStandardConeObjectByRotationAxiom[102X, for IsCapCategoryMorphism 4.1-36 
   [2XWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 4.1-37 
-  [2XWitnessIsomorphismIntoStandardExactTriangle[102X, for IsCapExactTriangle 1.2-14 
+  [2XWitnessIsomorphismIntoStandardExactTriangle[102X, for IsCategoryOfExactTrianglesObject 1.2-14 
   
   
   -------------------------------------------------------

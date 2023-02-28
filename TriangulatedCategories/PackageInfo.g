@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "TriangulatedCategories",
 Subtitle := "Framework for triangulated categories",
-Version := "2023.01-01",
-Date := "10/01/2023",
+Version := "2023.02-01",
+Date := "28/02/2023",
 License := "GPL-2.0-or-later",
 
 Persons := [

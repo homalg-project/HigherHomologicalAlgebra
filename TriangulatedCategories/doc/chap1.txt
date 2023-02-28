@@ -4,24 +4,24 @@
   
   [1X1.1 [33X[0;0YGap categories[133X[101X
   
-  [1X1.1-1 IsCapCategoryOfExactTriangles[101X
+  [1X1.1-1 IsCategoryOfExactTriangles[101X
   
-  [33X[1;0Y[29X[2XIsCapCategoryOfExactTriangles[102X( [3XT[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCategoryOfExactTriangles[102X( [3XT[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe  [5XGAP[105X  category  for  the  category  of  triangles over some triangulated
   category.[133X
   
-  [1X1.1-2 IsCapExactTriangle[101X
+  [1X1.1-2 IsCategoryOfExactTrianglesObject[101X
   
-  [33X[1;0Y[29X[2XIsCapExactTriangle[102X( [3Xtriangle[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCategoryOfExactTrianglesObject[102X( [3Xtriangle[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe [5XGAP[105X category for exact triangles.[133X
   
-  [1X1.1-3 IsCapExactTrianglesMorphism[101X
+  [1X1.1-3 IsCategoryOfExactTrianglesMorphism[101X
   
-  [33X[1;0Y[29X[2XIsCapExactTrianglesMorphism[102X( [3Xmu[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCategoryOfExactTrianglesMorphism[102X( [3Xmu[103X ) [32X filter[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe [5XGAP[105X category for morphism of exact triangles[133X
