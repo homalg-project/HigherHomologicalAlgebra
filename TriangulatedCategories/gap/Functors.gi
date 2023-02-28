@@ -200,7 +200,7 @@ end );
 
 ##
 InstallMethod( RotationFunctorOp,
-          [ IsCapCategoryOfExactTriangles, IsBool ],
+          [ IsCategoryOfExactTriangles, IsBool ],
   function( triangles, bool )
     local name, rot;
     
@@ -222,7 +222,7 @@ end );
 
 ##
 InstallMethod( InverseRotationFunctorOp,
-          [ IsCapCategoryOfExactTriangles, IsBool ],
+          [ IsCategoryOfExactTriangles, IsBool ],
   function( triangles, bool )
     local name, rot;
     

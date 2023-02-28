@@ -4,42 +4,7 @@
 # Implementations
 #
 
-###############################
 ##
-##  Representations
-##
-###############################
-
-DeclareRepresentation( "IsCapExactTriangleRep",
-          IsCapExactTriangle and IsAttributeStoringRep,
-          [ ] );
-                      
-DeclareRepresentation( "IsCapExactTrianglesMorphismRep",
-          IsCapExactTrianglesMorphism and IsAttributeStoringRep, 
-          [ ] );
-
-##############################
-##
-## Family and type 
-##
-##############################
- 
-BindGlobal( "IsCapExactTrianglesMorphismsFamily",
-  NewFamily( "IsCapExactTrianglesMorphismsFamily", IsObject )
-);
-
-BindGlobal( "TheTypeCapExactTrianglesMorphism", 
-  NewType( IsCapExactTrianglesMorphismsFamily, IsCapExactTrianglesMorphismRep )
-);
-
-BindGlobal( "IsCapExactTriangleFamily",
-  NewFamily( "IsCapExactTriangleFamily", IsObject )
-);
-
-BindGlobal( "TheTypeCapExactTriangle", 
-  NewType( IsCapExactTriangleFamily, IsCapExactTriangleRep )
-);
-                      
 InstallMethod( CategoryOfExactTriangles,
           [ IsTriangulatedCategory ],
   function( category )
@@ -57,22 +22,16 @@ InstallMethod( CategoryOfExactTriangles,
       
     fi;
     
-    triangles := CreateCapCategory( name );
+    triangles := CreateCapCategory( name, IsCategoryOfExactTriangles, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesMorphism, IsCapCategoryTwoCell );
     
     triangles!.category_as_first_argument := false;
-     
+    
     SetUnderlyingCategory( triangles, category );
-    
-    SetFilterObj( triangles, IsCapCategoryOfExactTriangles );
-    
-    AddObjectRepresentation( triangles, IsCapExactTriangleRep );
-    
-    AddMorphismRepresentation( triangles, IsCapExactTrianglesMorphismRep );
     
     AddIsEqualForCacheForObjects( triangles, IsIdenticalObj );
     
     AddIsEqualForCacheForMorphisms( triangles, IsIdenticalObj );
-   
+    
     AddIsEqualForObjects( triangles,
       function( triangle_1, triangle_2 )
         return IsEqualForObjects( triangle_1[ 0 ], triangle_2[ 0 ] ) and 
@@ -409,7 +368,7 @@ end );
 
 ##
 InstallMethod( MorphismOfExactTriangles, 
-        [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+        [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ],
   function( s, mu_0, mu_1, mu_2, r )
     local triangles, mu;
     
@@ -425,7 +384,7 @@ end );
 
 ##
 InstallMethod( MorphismAtOp, 
-          [ IsCapExactTriangle, IsInt ],
+          [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( triangle, i )
     
     if i = 0 then
@@ -450,7 +409,7 @@ end );
 
 ##
 InstallMethod( ObjectAtOp, 
-          [ IsCapExactTriangle, IsInt ],
+          [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( triangle, i )
     
     if i < 0 or i > 3 then
@@ -471,7 +430,7 @@ end );
 
 ##
 InstallMethod( MorphismAtOp, 
-                [ IsCapExactTrianglesMorphism, IsInt ],
+                [ IsCategoryOfExactTrianglesMorphism, IsInt ],
   function( mu, i )
     
     if i < 0 or i > 3 then
@@ -492,7 +451,7 @@ end );
 
 ##
 InstallMethod( \^,
-          [ IsCapExactTriangle, IsInt ],
+          [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( triangle, i )
     
     return MorphismAt( triangle, i );
@@ -501,7 +460,7 @@ end );
 
 ##
 InstallMethod( \[\],
-          [ IsCapExactTriangle, IsInt ],
+          [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( triangle, i )
     
     return ObjectAt( triangle, i );
@@ -510,7 +469,7 @@ end );
 
 ##
 InstallMethod( \[\],
-          [ IsCapExactTrianglesMorphism, IsInt ],
+          [ IsCategoryOfExactTrianglesMorphism, IsInt ],
   function( mu, i )
     
     return MorphismAt( mu, i );
@@ -519,26 +478,26 @@ end );
 
 ##
 InstallMethod( IsStandardExactTriangle,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
     triangle -> IsEqualForObjects( triangle, StandardExactTriangle( triangle ^ 0 ) )
 );
 
 ##
 InstallMethod( StandardExactTriangle,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
     triangle -> StandardExactTriangle( triangle ^ 0 )
 );
 
 ##
 InstallMethod( Rotation,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
     triangle -> Rotation( triangle, false )
 );
 
 
 ##
 InstallMethod( ShiftOp,
-          [ IsCapExactTriangle, IsInt ],
+          [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( t, n )
     local shift_t, st, shift_st, w;
     
@@ -605,7 +564,7 @@ end );
 
 ##
 InstallMethod( ShiftOp,
-          [ IsCapExactTrianglesMorphism, IsInt ],
+          [ IsCategoryOfExactTrianglesMorphism, IsInt ],
   function( mu, n )
     return MorphismOfExactTriangles(
                     Shift( Source( mu ), n ),
@@ -621,7 +580,7 @@ end );
 ##  B ---> C ---> Σ A ---> Σ B
 ##
 InstallMethod( Rotation,
-          [ IsCapExactTriangle, IsBool ],
+          [ IsCategoryOfExactTrianglesObject, IsBool ],
   function( triangle, bool )
     local rotation, st_rotation, i, st_triangle, w_1, v_1;
      
@@ -677,13 +636,13 @@ end );
 ##  Σ^-1 C  ---> A ---> B ---> Σ Σ^-1 C
 ##
 InstallMethod( InverseRotation,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
   triangle -> InverseRotation( triangle, false )
 );
 
 ##
 InstallMethod( InverseRotation,
-          [ IsCapExactTriangle, IsBool ],
+          [ IsCategoryOfExactTrianglesObject, IsBool ],
   function( t, bool )
     local rotation, st_rotation, i, st_t, w_1, v_1;
     
@@ -753,7 +712,7 @@ end );
 
 ##
 InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
   function( t )
     local cat, st_t, i;
     
@@ -810,7 +769,7 @@ end );
 
 ##
 InstallMethod( WitnessIsomorphismFromStandardExactTriangle,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
   function( t )
     local cat, st_t, i;
     
@@ -842,7 +801,7 @@ end );
     
 ##    
 InstallMethod( MorphismBetweenConeObjects,
-          [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ],
   function( t_1, mu_0, mu_1, t_2 )
     local st_t_1, st_t_2, i_1, j_1, i_2, j_2, u, v, w;
     
@@ -875,7 +834,7 @@ end );
 
 ##
 InstallMethod( MorphismOfExactTriangles,
-          [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ],
   function( t_1, mu_0, mu_1, t_2 )
     local mu_2;
     
@@ -887,13 +846,13 @@ end );
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ],
     { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
 );
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ],
+          [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsBool ],
   function( t_1, t_2, t_3, bool )
     local i_1, j_1, i_2, j_2, i_3, j_3, t, alpha, iota, pi, triangle, u, v, w, i;
     
@@ -957,7 +916,7 @@ end );
 
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ],
     { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
 );
 
@@ -969,7 +928,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
 
 ##
 InstallMethod( ViewExactTriangle,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
   function( T )
     
     Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
@@ -1001,7 +960,7 @@ end );
 
 ##
 InstallMethod( ViewMorphismOfExactTriangles,
-          [ IsCapExactTrianglesMorphism ],
+          [ IsCategoryOfExactTrianglesMorphism ],
   function( mu )
     Print( "A morphism of exact triangles\n\n" );
     Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
@@ -1026,7 +985,7 @@ end );
 
 ##
 InstallMethod( Display,
-          [ IsCapExactTriangle ],
+          [ IsCategoryOfExactTrianglesObject ],
   function( T )
 
     Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
@@ -1057,7 +1016,7 @@ end );
 
 ##
 InstallMethod( Display,
-          [ IsCapExactTrianglesMorphism ],
+          [ IsCategoryOfExactTrianglesMorphism ],
   function( mu )
     Print( "A morphism of exact triangles\n\n" );
     Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );

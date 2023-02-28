@@ -80,7 +80,7 @@ DeclareAttribute( "ExtendFunctorToCategoryOfTriangles", IsCapFunctor );
 #! witnesses when applied on objects.
 #! @Arguments T, b
 #! @Returns an endofunctor $T\to T$
-KeyDependentOperation( "RotationFunctor", IsCapCategoryOfExactTriangles, IsBool, ReturnTrue );
+KeyDependentOperation( "RotationFunctor", IsCategoryOfExactTriangles, IsBool, ReturnTrue );
 
 #! @Description
 #! The arguments are a category of exact triangles $T$ of some triangulated category and a boolian $b$.
@@ -88,5 +88,5 @@ KeyDependentOperation( "RotationFunctor", IsCapCategoryOfExactTriangles, IsBool,
 #! witnesses when applied on objects.
 #! @Arguments T, b
 #! @Returns an endofunctor $T\to T$
-KeyDependentOperation( "InverseRotationFunctor", IsCapCategoryOfExactTriangles, IsBool, ReturnTrue );
+KeyDependentOperation( "InverseRotationFunctor", IsCategoryOfExactTriangles, IsBool, ReturnTrue );
 

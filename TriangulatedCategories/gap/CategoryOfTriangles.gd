@@ -11,19 +11,19 @@
 #! The &GAP; category for the category of triangles over some triangulated category.
 #! @Arguments T
 #! @Returns true or false
-DeclareCategory( "IsCapCategoryOfExactTriangles", IsCapCategory );
+DeclareCategory( "IsCategoryOfExactTriangles", IsCapCategory );
 
 #! @Description
 #! The &GAP; category for exact triangles.
 #! @Arguments triangle
 #! @Returns true or false
-DeclareCategory( "IsCapExactTriangle", IsCapCategoryObject );
+DeclareCategory( "IsCategoryOfExactTrianglesObject", IsCapCategoryObject );
 
 #! @Description
 #! The &GAP; category for morphism of exact triangles
 #! @Arguments mu
 #! @Returns true or false
-DeclareCategory( "IsCapExactTrianglesMorphism", IsCapCategoryMorphism );
+DeclareCategory( "IsCategoryOfExactTrianglesMorphism", IsCapCategoryMorphism );
 
 ######
 #! @Section Constructors
@@ -40,7 +40,7 @@ DeclareAttribute( "CategoryOfExactTriangles", IsTriangulatedCategory );
 #! The output is $\mathcal{T}$.
 #! @Arguments C
 #! @Returns a CAP category
-DeclareAttribute( "UnderlyingCategory", IsCapCategoryOfExactTriangles );
+DeclareAttribute( "UnderlyingCategory", IsCategoryOfExactTriangles );
 
 ######
 
@@ -58,7 +58,7 @@ DeclareOperation( "ExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphis
 #! The output is $\alpha:A\to B$.
 #! @Arguments t
 #! @Returns a morphism
-DeclareAttribute( "DomainMorphism", IsCapExactTriangle );
+DeclareAttribute( "DomainMorphism", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -66,7 +66,7 @@ DeclareAttribute( "DomainMorphism", IsCapExactTriangle );
 #! The output is $\iota:B\to C$.
 #! @Arguments t
 #! @Returns a morphism
-DeclareAttribute( "MorphismIntoConeObject", IsCapExactTriangle );
+DeclareAttribute( "MorphismIntoConeObject", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -74,7 +74,7 @@ DeclareAttribute( "MorphismIntoConeObject", IsCapExactTriangle );
 #! The output is $\pi:C\to\Sigma A$.
 #! @Arguments t
 #! @Returns a morphism
-DeclareAttribute( "MorphismFromConeObject", IsCapExactTriangle );
+DeclareAttribute( "MorphismFromConeObject", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -82,13 +82,13 @@ DeclareAttribute( "MorphismFromConeObject", IsCapExactTriangle );
 #! The output is $A$ if $i=0$, $B$ if $i=1$, $C$ if $i=2$ and $\Sigma A$ if $i=3$.
 #! @Arguments t, i
 #! @Returns an object
-KeyDependentOperation( "ObjectAt", IsCapExactTriangle, IsInt, ReturnTrue );
+KeyDependentOperation( "ObjectAt", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );
 
 #! @Description
 #! Delegates to the operation <C>ObjectAt</C>.
 #! @Arguments t, i
 #! @Returns an object
-DeclareOperation( "\[\]", [ IsCapExactTriangle, IsInt ] );
+DeclareOperation( "\[\]", [ IsCategoryOfExactTrianglesObject, IsInt ] );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -96,13 +96,13 @@ DeclareOperation( "\[\]", [ IsCapExactTriangle, IsInt ] );
 #! The output is $\alpha$ if $i=0$, $\iota$ if $i=1$, $\pi$ if $i=2$.
 #! @Arguments t, i
 #! @Returns a morphism
-KeyDependentOperation( "MorphismAt", IsCapExactTriangle, IsInt, ReturnTrue );
+KeyDependentOperation( "MorphismAt", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );
 
 #! @Description
 #! Delegates to the operation <C>MorphismAt</C>.
 #! @Arguments t, i
 #! @Returns a morphism
-DeclareOperation( "\^", [ IsCapExactTriangle, IsInt ] );
+DeclareOperation( "\^", [ IsCategoryOfExactTrianglesObject, IsInt ] );
 
 #! @Description
 #! The arguments is a morphism $\alpha:A\to B$ in some triangulated
@@ -117,7 +117,7 @@ DeclareAttribute( "StandardExactTriangle", IsCapCategoryMorphism );
 #! The output the standard exact triangle $(\alpha,\iota(\alpha),\pi(\alpha))$.
 #! @Arguments t
 #! @Returns an standard exact triangle
-DeclareAttribute( "StandardExactTriangle", IsCapExactTriangle );
+DeclareAttribute( "StandardExactTriangle", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The operation checks whether $t$ is
@@ -125,7 +125,7 @@ DeclareAttribute( "StandardExactTriangle", IsCapExactTriangle );
 #! and $\pi=\pi(\alpha)$.
 #! @Arguments t
 #! @Returns true or false
-DeclareProperty( "IsStandardExactTriangle", IsCapExactTriangle );
+DeclareProperty( "IsStandardExactTriangle", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$.
@@ -133,7 +133,7 @@ DeclareProperty( "IsStandardExactTriangle", IsCapExactTriangle );
 #! exact triangle $(\alpha,\iota(\alpha),\pi(\alpha))$.
 #! @Arguments t
 #! @Returns a morphism of triangles
-DeclareAttribute( "WitnessIsomorphismIntoStandardExactTriangle", IsCapExactTriangle );
+DeclareAttribute( "WitnessIsomorphismIntoStandardExactTriangle", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$.
@@ -143,7 +143,7 @@ DeclareAttribute( "WitnessIsomorphismIntoStandardExactTriangle", IsCapExactTrian
 #! the standard exact triangle.
 #! @Arguments t
 #! @Returns a morphism of triangles
-DeclareAttribute( "WitnessIsomorphismFromStandardExactTriangle", IsCapExactTriangle );
+DeclareAttribute( "WitnessIsomorphismFromStandardExactTriangle", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments are an exact triangle $t_1$, three morphisms
@@ -153,7 +153,7 @@ DeclareAttribute( "WitnessIsomorphismFromStandardExactTriangle", IsCapExactTrian
 #! @Arguments t_1, mu_0, mu_1, mu_2, t_2
 #! @Returns a morphism $t_1\to t_2$
 DeclareOperation( "MorphismOfExactTriangles",
-      [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ] );
+      [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ] );
 
 #! @Description
 #! The arguments is a morphism $\mu:t_1\to t_2$ of exact triangles defined by three morphisms
@@ -161,13 +161,13 @@ DeclareOperation( "MorphismOfExactTriangles",
 #! The output is $\mu_0$ if $i=0$, $\mu_1$ if $i=1$, $\mu_2$ if $i=2$.
 #! @Arguments phi, i
 #! @Returns a morphism
-KeyDependentOperation( "MorphismAt", IsCapExactTrianglesMorphism, IsInt, ReturnTrue );
+KeyDependentOperation( "MorphismAt", IsCategoryOfExactTrianglesMorphism, IsInt, ReturnTrue );
 
 #! @Description
 #! Delegates to the operation <C>MorphismAt</C>.
 #! @Arguments phi, i
 #! @Returns a morphism
-DeclareOperation( "\[\]", [ IsCapExactTrianglesMorphism, IsInt ] );
+DeclareOperation( "\[\]", [ IsCategoryOfExactTrianglesMorphism, IsInt ] );
 
 #! @Description
 #!  The arguments are an exact triangle $t_1$, two morphisms $\mu_0:t_1[0]\to t_2[0]$, $\mu_1:t_1[1]\to t_2[1]$,
@@ -176,7 +176,7 @@ DeclareOperation( "\[\]", [ IsCapExactTrianglesMorphism, IsInt ] );
 #! @Arguments t_1, mu_0, mu_1, t_2
 #! @Returns a morphism
 DeclareOperation( "MorphismBetweenConeObjects",
-    [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ] );
+    [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ] );
 
 #! @Description
 #!  The arguments are an exact triangle $t_1$, two morphisms $\mu_0:t_1[0]\to t_2[0]$, $\mu_1:t_1[1]\to t_2[1]$,
@@ -185,7 +185,7 @@ DeclareOperation( "MorphismBetweenConeObjects",
 #! @Arguments t_1, mu_0, mu_1, t_2
 #! @Returns a morphism
 DeclareOperation( "MorphismOfExactTriangles",
-    [ IsCapExactTriangle, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapExactTriangle ] );
+    [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ] );
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$. The output is the exact triangle
@@ -208,7 +208,7 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsC
 #! If $b$ = <C>true</C> then the operation will compute a witness isomorphism into the standard exact triangle.
 #! @Arguments t_1, t_2, b
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle, IsBool ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsBool ] );
 
 #! @Description
 #! The arguments are three exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$,
@@ -216,14 +216,14 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapE
 #! The output is the exact triangle defined by the Octahedral axiom.
 #! @Arguments t_1, t_2, t_3
 #! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapExactTriangle, IsCapExactTriangle, IsCapExactTriangle ] );
+DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ] );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle
 #! defined by the rotation axiom, i.e., the exact triangle $(\iota,\pi,-\Sigma \alpha)$.
 #! @Arguments t
 #! @Returns a triangle
-DeclareAttribute( "Rotation", IsCapExactTriangle );
+DeclareAttribute( "Rotation", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments are an exact triangle $t=(\alpha,\iota,\pi)$ and a boolian $b$. The output
@@ -232,7 +232,7 @@ DeclareAttribute( "Rotation", IsCapExactTriangle );
 #! the operation will compute a witness isomorphism into the standard exact triangle.
 #! @Arguments t, b
 #! @Returns a triangle
-DeclareOperation( "Rotation", [ IsCapExactTriangle, IsBool ] );
+DeclareOperation( "Rotation", [ IsCategoryOfExactTrianglesObject, IsBool ] );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle
@@ -243,7 +243,7 @@ DeclareOperation( "Rotation", [ IsCapExactTriangle, IsBool ] );
 #! $C$ := <C>Range</C>$(\iota)$.
 #! @Arguments t
 #! @Returns a triangle
-DeclareAttribute( "InverseRotation", IsCapExactTriangle );
+DeclareAttribute( "InverseRotation", IsCategoryOfExactTrianglesObject );
 
 #! @Description
 #! The arguments are an exact triangle $t=(\alpha,\iota,\pi)$ and a boolian $b$.
@@ -252,13 +252,13 @@ DeclareAttribute( "InverseRotation", IsCapExactTriangle );
 #! the operation will compute a witness isomorphism into the standard exact triangle.
 #! @Arguments t, bool
 #! @Returns a triangle
-DeclareOperation( "InverseRotation", [ IsCapExactTriangle, IsBool ] );
+DeclareOperation( "InverseRotation", [ IsCategoryOfExactTrianglesObject, IsBool ] );
 
 if false then
-  KeyDependentOperation( "Shift", IsCapExactTriangle, IsInt, ReturnTrue );
-  KeyDependentOperation( "Shift", IsCapExactTrianglesMorphism, IsInt, ReturnTrue );
+  KeyDependentOperation( "Shift", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );
+  KeyDependentOperation( "Shift", IsCategoryOfExactTrianglesMorphism, IsInt, ReturnTrue );
 fi;
 
-DeclareOperation( "ViewExactTriangle", [ IsCapExactTriangle ] );
-DeclareOperation( "ViewMorphismOfExactTriangles", [ IsCapExactTrianglesMorphism ] );
+DeclareOperation( "ViewExactTriangle", [ IsCategoryOfExactTrianglesObject ] );
+DeclareOperation( "ViewMorphismOfExactTriangles", [ IsCategoryOfExactTrianglesMorphism ] );
 
