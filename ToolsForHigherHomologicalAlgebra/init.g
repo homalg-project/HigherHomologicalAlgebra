@@ -4,8 +4,6 @@
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/EnhancePackage.gd");
-ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/CAP.gd");
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/LaTeX.gd");
 ReadPackage( "ToolsForHigherHomologicalAlgebra", "gap/Functors.gd");
 
