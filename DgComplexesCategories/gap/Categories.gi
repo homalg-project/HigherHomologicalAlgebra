@@ -13,26 +13,15 @@ InstallMethod( DgCochainComplexCategory,
     
     name := Concatenation( "DgCochainComplexCategory( ", Name( cat ), " )" );
     
-    dgCh_cat := CreateCapCategory( name );
+    dgCh_cat := CreateCapCategory( name, IsDgCochainComplexCategory, IsDgCochainComplex, IsDgCochainComplexMorphism, IsCapCategoryTwoCell );
     
     SetUnderlyingCategory( dgCh_cat, cat );
     
     dgCh_cat!.category_as_first_argument := true;
     
-    SetFilterObj( dgCh_cat, IsDgCochainComplexCategory );
-    
-    AddObjectRepresentation( dgCh_cat, IsDgCochainComplex );
-    
-    AddMorphismRepresentation( dgCh_cat, IsDgCochainComplexMorphism );
-    
     ADD_BASIC_FUNCTIONS_TO_DG_COCHAIN_COMPLEX_CATEGORY( dgCh_cat );
     
     ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_DG_COCHAIN_COMPLEX_CATEGORY( dgCh_cat );
-    
-    dgCh_cat!.compiler_hints :=
-      rec( category_filter := IsDgCochainComplexCategory,
-           object_filter := IsDgCochainComplex,
-           morphism_filter := IsDgCochainComplexMorphism );
     
     Finalize( dgCh_cat );
     
