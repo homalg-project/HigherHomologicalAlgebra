@@ -106,6 +106,14 @@ AddFinalDerivationBundle( # WitnessIsomorphismIntoStandardConeObject
                 ],
 [
   WitnessIsomorphismIntoStandardConeObject,
+  [
+    [ IsEqualForObjects, 1 ],
+    [ ShiftOfObject, 1 ],
+    [ MorphismIntoStandardConeObject, 1 ],
+    [ MorphismFromStandardConeObject, 1 ],
+    [ IdentityMorphism, 2 ],
+    [ SolveLinearSystemInAbCategoryOrFail, 1 ],
+  ],
   function( cat, alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
     
@@ -141,22 +149,26 @@ AddFinalDerivationBundle( # WitnessIsomorphismIntoStandardConeObject
 ],
 [
   WitnessIsomorphismFromStandardConeObject,
-    function( cat, alpha, iota, pi )
-      local w;
+  [
+    [ WitnessIsomorphismIntoStandardConeObject, 1 ],
+    [ InverseForMorphisms, 1 ],
+  ],
+  function( cat, alpha, iota, pi )
+    local w;
+    
+    w := WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi );
+    
+    if w = fail then
       
-      w := WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi );
+      return w;
       
-      if w = fail then
-        
-        return w;
-        
-      else
-        
-        return Inverse( w );
-        
-      fi;
+    else
       
-    end
+      return Inverse( w );
+      
+    fi;
+    
+  end
 ]:
   CategoryFilter := IsTriangulatedCategory,
   Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategoryOrFail"
