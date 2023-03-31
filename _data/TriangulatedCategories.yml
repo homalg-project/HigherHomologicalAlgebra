@@ -1,5 +1,5 @@
 name: TriangulatedCategories
-version: "2023.03-01"
+version: "2023.03-02"
 license: "GPL-2.0-or-later"
 date: 2023-03-31
 description: |
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/Triangula
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-01/TriangulatedCategories-2023.03-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-02/TriangulatedCategories-2023.03-02.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-01/TriangulatedCategories-2023.03-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-02/TriangulatedCategories-2023.03-02.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-01/TriangulatedCategories-2023.03-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/TriangulatedCategories-2023.03-02/TriangulatedCategories-2023.03-02.pdf
 
 abstract: |
 
@@ -44,7 +44,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>Sal23</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>TriangulatedCategories, Framework for triangulated categories,
-             Version 2023.03-01</i>
+             Version 2023.03-02</i>
      (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/TriangulatedCategories">https://homalg-project.github.io/pkg/TriangulatedCategories</a></span>.
@@ -52,10 +52,10 @@ citeas: |
     
 
 bibtex: |
-    @misc{ TriangulatedCategories2023.03-01,
+    @misc{ TriangulatedCategories2023.03-02,
       author =           {Saleh, K.},
       title =            {{TriangulatedCategories},  Framework  for triangulated
-                          categories, {V}ersion 2023.03-01},
+                          categories, {V}ersion 2023.03-02},
       month =            {Mar},
       year =             {2023},
       note =             {GAP package},
