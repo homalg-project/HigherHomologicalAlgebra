@@ -4,6 +4,7 @@
 # Implementations
 #
 AddDerivationToCAP( ExactKernelObjectFunctorialWithGivenExactKernelObjects,
+                    "ExactKernelObjectFunctorialWithGivenExactKernelObjects using the universality of the kernel",
                     [ [ ExactKernelLift, 1 ],
                       [ PreCompose, 1 ],
                       [ ExactKernelEmbedding, 1 ] ],
@@ -15,10 +16,11 @@ AddDerivationToCAP( ExactKernelObjectFunctorialWithGivenExactKernelObjects,
                 PreCompose( cat, ExactKernelEmbedding( cat, pi_1 ), mu )
               );
     
-end : Description := "ExactKernelObjectFunctorialWithGivenExactKernelObjects using the universality of the kernel" );
+end );
 
 ##
 AddDerivationToCAP( ExactCokernelObjectFunctorialWithGivenExactCokernelObjects,
+                    "ExactCokernelObjectFunctorialWithGivenExactCokernelObjects using the universality of the cokernel",
                     [ [ ExactCokernelColift, 1 ],
                       [ PreCompose, 1 ],
                       [ ExactCokernelProjection, 1 ] ],
@@ -30,7 +32,7 @@ AddDerivationToCAP( ExactCokernelObjectFunctorialWithGivenExactCokernelObjects,
                 PreCompose( cat, nu, ExactCokernelProjection( cat, iota_2 ) )
               );
     
-end : Description := "ExactCokernelObjectFunctorialWithGivenExactCokernelObjects using the universality of the cokernel" );
+end );
 
 ##
 AddFinalDerivationBundle( # IsConflationPair

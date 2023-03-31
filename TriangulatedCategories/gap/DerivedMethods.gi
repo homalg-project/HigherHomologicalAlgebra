@@ -12,6 +12,7 @@
 
 ##
 AddDerivationToCAP( ShiftOfMorphismByInteger,
+                    "ShiftOfMorphismByInteger by ShiftOfObjectByInteger & ShiftOfMorphismByIntegerWithGivenObjects",
                 [ [ ShiftOfObjectByInteger, 2 ],
                   [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
   
@@ -23,60 +24,55 @@ AddDerivationToCAP( ShiftOfMorphismByInteger,
     
     return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, alpha, n, r );
     
-end : CategoryFilter := IsTriangulatedCategory,
-      Description:= "ShiftOfMorphismByInteger by ShiftOfObjectByInteger & ShiftOfMorphismByIntegerWithGivenObjects"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( ShiftOfObject,
+                    "ShiftOfObject by ShiftOfObjectByInteger",
               [ [ ShiftOfObjectByInteger, 1 ] ],
   
   function ( homotopy_cat, C )
     
     return ShiftOfObjectByInteger( homotopy_cat, C, 1 );
     
-end : CategoryFilter := IsTriangulatedCategory,
-      Description:= "ShiftOfObject by ShiftOfObjectByInteger"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( InverseShiftOfObject,
+                    "InverseShiftOfObject by ShiftOfObjectByInteger",
               [ [ ShiftOfObjectByInteger, 1 ] ],
   
   function ( homotopy_cat, C )
     
     return ShiftOfObjectByInteger( homotopy_cat, C, -1 );
     
-end : CategoryFilter := IsTriangulatedCategory,
-      Description:= "InverseShiftOfObject by ShiftOfObjectByInteger"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( ShiftOfMorphismWithGivenObjects,
+                    "ShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects",
               [ [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
   
   function ( homotopy_cat, s, C, r )
     
     return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, C, 1, r );
     
-end : CategoryFilter := IsTriangulatedCategory,
-      Description:= "ShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( InverseShiftOfMorphismWithGivenObjects,
+                    "InverseShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects",
               [ [ ShiftOfMorphismByIntegerWithGivenObjects, 1 ] ],
   
   function ( homotopy_cat, s, C, r )
     
     return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, C, -1, r );
     
-end : CategoryFilter := IsTriangulatedCategory,
-      Description:= "InverseShiftOfMorphismWithGivenObjects by ShiftOfMorphismByIntegerWithGivenObjects"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( IsExactTriangle,
+                    "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject",
                 [
                   [ WitnessIsomorphismIntoStandardConeObject, 1 ],
                 ],
@@ -84,13 +80,10 @@ AddDerivationToCAP( IsExactTriangle,
     
     return WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi ) <> fail;
     
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
-AddFinalDerivationBundle( # WitnessIsomorphismIntoStandardConeObject
+AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategoryOrFail",
                 [
                   [ IsEqualForObjects, 1 ],
                   [ ShiftOfObject, 1 ],
@@ -169,13 +162,11 @@ AddFinalDerivationBundle( # WitnessIsomorphismIntoStandardConeObject
     fi;
     
   end
-]:
-  CategoryFilter := IsTriangulatedCategory,
-  Description := "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategoryOrFail"
-);
+] : CategoryFilter := IsTriangulatedCategory );
 
 # See categories and homological algebra (schapira)
 AddFinalDerivation( IsIsomorphism,
+                    "IsIsomorphism by deciding if the cone object is zero",
                 [
                     [ StandardConeObject, 1 ],
                     [ IsZeroForObjects,  1 ]
@@ -187,13 +178,11 @@ AddFinalDerivation( IsIsomorphism,
   
     return IsZeroForObjects( StandardConeObject( alpha ) );
     
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "IsIsomorphism by deciding if the cone object is zero"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 
 AddDerivationToCAP( DomainMorphismByOctahedralAxiomWithGivenObjects,
+                    "",
                 [
                     [ IdentityMorphism, 1 ],
                     [ MorphismBetweenStandardConeObjectsWithGivenObjects,  1 ]
@@ -210,6 +199,7 @@ AddDerivationToCAP( DomainMorphismByOctahedralAxiomWithGivenObjects,
 end );
 
 AddDerivationToCAP( MorphismFromConeObjectByOctahedralAxiomWithGivenObjects,
+                    "",
                 [
                   [ StandardConeObject, 1 ],
                   [ MorphismFromStandardConeObjectWithGivenObjects, 1 ],
@@ -248,30 +238,27 @@ end );
 
 ##
 AddDerivationToCAP( IsSplitEpimorphism,
+                    "a morphism is triangulated categories is epi iff it is split epi",
                 [
                     [ IsEpimorphism, 1 ]
                 ],
   function( cat, alpha )
     return IsEpimorphism( alpha );
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "a morphism is triangulated categories is epi iff it is split epi"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( IsSplitMonomorphism,
+                    "a morphism is triangulated categories is mono iff it is split mono",
                 [
                     [ IsMonomorphism, 1 ]
                 ],
   function( cat, alpha )
     return IsMonomorphism( alpha );
-end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "a morphism is triangulated categories is mono iff it is split mono"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
+                    "ShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and ShiftOfMorphism",
                 [
                     [ InjectionOfCofactorOfDirectSum, 2 ],
                     [ ShiftOfMorphismWithGivenObjects, 2 ],
@@ -285,12 +272,10 @@ AddDerivationToCAP( ShiftFactoringIsomorphismWithGivenObjects,
     Tl := List( l, m -> [ ShiftOfMorphism( m ) ] );
     return MorphismBetweenDirectSums( Tl );
     
-end:
-  ategoryFilter := IsTriangulatedCategory,
-  Description:= "ShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and ShiftOfMorphism"
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
+                    "ShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and ShiftOfMorphism",
                 [
                     [ ProjectionInFactorOfDirectSum, 2 ],
                     [ ShiftOfMorphismWithGivenObjects, 2 ],
@@ -304,14 +289,11 @@ AddDerivationToCAP( ShiftExpandingIsomorphismWithGivenObjects,
     Tl := List( l, m -> ShiftOfMorphism( m ) );
     return MorphismBetweenDirectSums( [ Tl ] );
     
-end:
- CategoryFilter := IsTriangulatedCategory,
-  Description:= "ShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and ShiftOfMorphism"
-
-);
+end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
+                    "InverseShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and InverseShiftOfMorphism",
                 [
                     [ InjectionOfCofactorOfDirectSum, 2 ],
                     [ InverseShiftOfMorphismWithGivenObjects, 2 ],
@@ -325,13 +307,11 @@ AddDerivationToCAP( InverseShiftFactoringIsomorphismWithGivenObjects,
     Tl := List( l, m -> [ InverseShiftOfMorphism( m ) ] );
     return MorphismBetweenDirectSums( Tl );
     
- end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "InverseShiftFactoringIsomorphismWithGivenObjects using InjectionOfCofactorOfDirectSum and InverseShiftOfMorphism"
- );
+ end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
+                    "InverseShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and InverseShiftOfMorphism",
                 [
                     [ ProjectionInFactorOfDirectSum, 2 ],
                     [ InverseShiftOfMorphismWithGivenObjects, 2 ],
@@ -345,10 +325,7 @@ AddDerivationToCAP( InverseShiftExpandingIsomorphismWithGivenObjects,
     Tl := List( l, m -> InverseShiftOfMorphism( m ) );
     return MorphismBetweenDirectSums( [ Tl ] );
        
- end:
-  CategoryFilter := IsTriangulatedCategory,
-  Description:= "InverseShiftExpandingIsomorphismWithGivenObjects using ProjectionInFactorOfDirectSum and InverseShiftOfMorphism"
- );
+ end : CategoryFilter := IsTriangulatedCategory );
 
 ##
 
