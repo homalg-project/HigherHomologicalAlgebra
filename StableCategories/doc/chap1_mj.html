@@ -299,82 +299,6 @@
 
 <p>The arguments are an inflation <span class="SimpleMath">\(\iota: A \rightarrow B\)</span> and a morphism <span class="SimpleMath">\(\tau: T \to B\)</span> such that <span class="SimpleMath">\(\tau\)</span> is liftable along <span class="SimpleMath">\(\iota\)</span>. That is, <span class="SimpleMath">\(\comp{\tau}{\pi(\iota)} \sim 0\)</span>. The output is the unique lift morphism <span class="SimpleMath">\(\lambda:T\to A\)</span> of <span class="SimpleMath">\(\tau\)</span> along <span class="SimpleMath">\(\iota\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := HomalgFieldOfRationalsInSingular( );</span>
-Q
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EEE := KoszulDualRing( GradedRing( Q * "x,y" ) );</span>
-Q{e0,e1}
-(weights: [ -1, -1 ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Grows_E := CategoryOfGradedRows( EEE );</span>
-Category of graded rows over Q{e0,e1} (with weights [ -1, -1 ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Grmod_E := FreydCategory( Grows_E );</span>
-Category of f.p. graded left modules over Q{e0,e1} (with weights [ -1, -1 ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategory( Grmod_E );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sU := GradedRow( [ [ [1], 2 ] ], EEE );</span>
-&lt;A graded row of rank 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rU := GradedRow( [ [ [0], 2 ] ], EEE );</span>
-&lt;A graded row of rank 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mU := HomalgMatrix( "[[2*e0,4*e0+e1],[-e0+e1,-e0]]", 2, 2, EEE );</span>
-&lt;A 2 x 2 matrix over a graded ring&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := GradedRowOrColumnMorphism( sU, mU, rU ) / Grmod_E;</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( U );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sV := GradedRow( [ [ [1], 1 ], [ [0], 1 ] ], EEE );</span>
-&lt;A graded row of rank 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rV := GradedRow( [ [ [-1], 1 ], [ [0], 1 ] ], EEE );</span>
-&lt;A graded row of rank 2&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mV := HomalgMatrix( "[[0,-2*e0],[e0+e1,0]]", 2, 2, EEE );</span>
-&lt;A 2 x 2 matrix over a graded ring&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := GradedRowOrColumnMorphism( sV, mV, rV ) / Grmod_E;</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( V );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := HomalgMatrix( "[[-e1,0],[-e1,0]]", 2, 2, EEE );</span>
-&lt;A 2 x 2 matrix over a graded ring&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mu := GradedRowOrColumnMorphism( rU, mat, rV );</span>
-&lt;A morphism in Category of graded rows over Q{e0,e1} (with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mu := FreydCategoryMorphism( U, mu, V );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( ExactKernelEmbedding( mu ), mu );</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( mu, ExactCokernelProjection( mu ) );</span>
-false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := KernelEmbedding( mu );</span>
-&lt;A monomorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_iota := ExactCokernelProjection( iota );</span>
-&lt;An epimorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( iota, pi_iota );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := CokernelProjection( mu );</span>
-&lt;An epimorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_pi := ExactKernelEmbedding( pi );</span>
-&lt;A monomorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( iota_pi, pi );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := ExactCokernelColift( iota, mu );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( pi_iota, lambda ), mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := ExactKernelLift( pi, mu );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( lambda, iota_pi ), mu );</span>
-true
-</pre></div>
-
 <p><a id="X7A36F1517EB22248" name="X7A36F1517EB22248"></a></p>
 
 <h5>1.2-19 <span class="Heading">Exact Fiber Product</span></h5>
@@ -416,49 +340,6 @@ true
 <p>Returns: a morphism <span class="SimpleMath">\(u:T \to A \times_C B\)</span></p>
 
 <p>The arguments are a deflation <span class="SimpleMath">\(\pi:A\to C\)</span> and three morphisms <span class="SimpleMath">\(\alpha:B\to C\)</span>, <span class="SimpleMath">\(p'_A:T\to A\)</span> and <span class="SimpleMath">\(p'_B:T\to B\)</span> such that <span class="SimpleMath">\(\comp{p'_A}{\pi} \sim \comp{p'_B}{\alpha}\)</span>. The output is the universal morphism <span class="SimpleMath">\(u:T\to A\times_C B\)</span> with <span class="SimpleMath">\(\comp{u}{p_A} \sim p'_A\)</span> and <span class="SimpleMath">\(\comp{u}{p_B}\sim p'_B\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := mu;</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := Source( alpha );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Range( alpha );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := EpimorphismFromSomeProjectiveObject( C );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_A := ProjectionInFirstFactorOfExactFiberProduct( pi, alpha );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_B := ProjectionInSecondFactorOfExactFiberProduct( pi, alpha );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( p_A, pi ), PreCompose( p_B, alpha ) );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pprime_B := EpimorphismFromSomeProjectiveObject( B );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pprime_A := ProjectiveLift( PreCompose( pprime_B, alpha ), pi );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">      PreCompose( pprime_A, pi ), PreCompose( pprime_B, alpha )</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoExactFiberProduct( pi, alpha, pprime_A, pprime_B );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( u, p_B ), pprime_B );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( u, p_A ), pprime_A );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( u );</span>
-false
-</pre></div>
 
 <p><a id="X7F7BC1C283F5193E" name="X7F7BC1C283F5193E"></a></p>
 
@@ -511,49 +392,6 @@ false
 
 <p>The arguments are a inflation <span class="SimpleMath">\(\iota:C\to A\)</span>, three morphisms <span class="SimpleMath">\(\alpha:C\to B\)</span>, <span class="SimpleMath">\(q'_A:A\to T\)</span>, <span class="SimpleMath">\(q'_B:B\to T\)</span> and an object <span class="SimpleMath">\(P=A\oplus_C B=\mathrm{ExactPushout}(\iota,\alpha)\)</span> such that <span class="SimpleMath">\(\comp{\iota}{ q'_A}\sim \comp{\alpha}{ q'_B}\)</span>. The output is the universal morphism <span class="SimpleMath">\(u:P \to T\)</span> with <span class="SimpleMath">\(\comp{q_A}{ u}\sim q'_A\)</span> and <span class="SimpleMath">\(\comp{q_B}{u} \sim q'_B\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := mu;</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B := Source( alpha );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Range( alpha );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := EpimorphismFromSomeProjectiveObject( C );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_A := ProjectionInFirstFactorOfExactFiberProduct( pi, alpha );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_B := ProjectionInSecondFactorOfExactFiberProduct( pi, alpha );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( p_A, pi ), PreCompose( p_B, alpha ) );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pprime_B := EpimorphismFromSomeProjectiveObject( B );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pprime_A := ProjectiveLift( PreCompose( pprime_B, alpha ), pi );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">      PreCompose( pprime_A, pi ), PreCompose( pprime_B, alpha )</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">  );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoExactFiberProduct( pi, alpha, pprime_A, pprime_B );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( u, p_B ), pprime_B );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( u, p_A ), pprime_A );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( u );</span>
-false
-</pre></div>
-
 <p><a id="X851987617A678E7F" name="X851987617A678E7F"></a></p>
 
 <h5>1.2-30 <span class="Heading">Exact Categories With Enough E-projectives</span></h5>
@@ -587,36 +425,6 @@ false
 
 <p>The arguments are a morphism <span class="SimpleMath">\(\tau:P\to C\)</span> where <span class="SimpleMath">\(P\)</span> is an <span class="SimpleMath">\(\EE\)</span>-projective object and a deflation <span class="SimpleMath">\(\pi:B\to C\)</span>. The output is a lift morphism <span class="SimpleMath">\(\lambda:P\to B\)</span> of <span class="SimpleMath">\(\tau\)</span> along <span class="SimpleMath">\(\pi\)</span>, i.e., <span class="SimpleMath">\(\comp{\lambda}{\pi} \sim \tau\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := CokernelProjection( mu );</span>
-&lt;An epimorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( ExactKernelEmbedding( pi ), pi );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C := Range( pi );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1} 
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := GradedRow( [ [ [0], 2 ], [ [1], 1 ] ], EEE );</span>
-&lt;A graded row of rank 3&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := AsFreydCategoryObject( P );</span>
-&lt;A projective object in Category of f.p. graded left modules over Q{e0,e1} 
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactProjectiveObject( P );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_PC := BasisOfExternalHom( P, C );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Hom_PC );</span>
-3
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := Random( Hom_PC );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := ExactProjectiveLift( tau, pi );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( lambda, pi ), tau );</span>
-true
-</pre></div>
-
 <p><a id="X7AB797AA7E467F0A" name="X7AB797AA7E467F0A"></a></p>
 
 <h5>1.2-34 SomeExactProjectiveObject</h5>
@@ -634,25 +442,6 @@ true
 <p>Returns: a deflation <span class="SimpleMath">\(P_A \to A\)</span></p>
 
 <p>The argument is an object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\CC\)</span>. The output is a deflation morphism <span class="SimpleMath">\(p_A:P_A \to A\)</span> where <span class="SimpleMath">\(P_A = \mathrm{SomeExactProjectiveObject}(A)\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategoryWithEnoughExactProjectives( Grmod_E );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V;</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P_V := SomeExactProjectiveObject( U );</span>
-&lt;A projective object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactProjectiveObject( P_V );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_V := DeflationFromSomeExactProjectiveObject( V );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( ExactKernelEmbedding( pi_V ), pi_V );</span>
-true
-</pre></div>
 
 <p><a id="X87739A8B7FE89898" name="X87739A8B7FE89898"></a></p>
 
@@ -687,36 +476,6 @@ true
 
 <p>The arguments are an inflation <span class="SimpleMath">\(\iota:A\to B\)</span> and a morphism <span class="SimpleMath">\(\tau:A\to I\)</span> where <span class="SimpleMath">\(I\)</span> is an <span class="SimpleMath">\(\EE\)</span>-injective object. The output is a colift morphism <span class="SimpleMath">\(\lambda:B \to I\)</span> of <span class="SimpleMath">\(\tau\)</span> along <span class="SimpleMath">\(\iota\)</span>, i.e., <span class="SimpleMath">\(\comp{\iota}{\lambda} \sim \tau\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := KernelEmbedding( mu );</span>
-&lt;A monomorphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( iota, ExactCokernelProjection( iota ) );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A := Source( iota );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1} 
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := GradedRow( [ [ [0], 2 ], [ [-1], 2 ], [ [-2], 1 ] ], EEE );</span>
-&lt;A graded row of rank 5&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I := AsFreydCategoryObject( I );</span>
-&lt;A projective object in Category of f.p. graded left modules over Q{e0,e1} 
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactInjectiveObject( I );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Hom_AI := BasisOfExternalHom( A, I );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Hom_AI );</span>
-5
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := Random( Hom_AI );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := ExactInjectiveColift( iota, tau );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( iota, lambda ), tau );</span>
-true
-</pre></div>
-
 <p><a id="X869DA05B85F7F112" name="X869DA05B85F7F112"></a></p>
 
 <h5>1.2-40 SomeExactInjectiveObject</h5>
@@ -735,25 +494,6 @@ true
 
 <p>The argument is an object <span class="SimpleMath">\(A\)</span> in <span class="SimpleMath">\(\CC\)</span>. The output is an inflation <span class="SimpleMath">\(\iota_A:A \to I_A\)</span> where <span class="SimpleMath">\(I_A = \mathrm{SomeExactInjectiveObject}(A)\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactCategoryWithEnoughExactInjectives( Grmod_E );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U;</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">I_U := SomeExactInjectiveObject( U );</span>
-&lt;An object in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsExactInjectiveObject( I_U );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_U := InflationIntoSomeExactInjectiveObject( U );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsConflationPair( iota_U, ExactCokernelProjection( iota_U ) );</span>
-true
-</pre></div>
-
 <p><a id="X85E3864B79AE0B00" name="X85E3864B79AE0B00"></a></p>
 
 <h5>1.2-42 IsLiftableAlongDeflationFromSomeExactProjectiveObject</h5>
@@ -770,22 +510,6 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftAlongDeflationFromSomeExactProjectiveObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> such that <span class="SimpleMath">\(\alpha\)</span> lifts along <span class="SimpleMath">\(p_B:P_B \to B\)</span> where <span class="SimpleMath">\(p_B=\mathrm{DeflationFromSomeExactProjectiveObject}(B)\)</span>. The output is a lift morphism <span class="SimpleMath">\(\lambda: A \to P_B\)</span> of <span class="SimpleMath">\(\alpha\)</span> along <span class="SimpleMath">\(p_B\)</span>.</p>
 
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V = Range( mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_V := DeflationFromSomeExactProjectiveObject( V );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsLiftableAlongDeflationFromSomeExactProjectiveObject( mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := LiftAlongDeflationFromSomeExactProjectiveObject( mu );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( lambda, pi_V ), mu );</span>
-true
-</pre></div>
-
 <p><a id="X87D53EAB8275CCD8" name="X87D53EAB8275CCD8"></a></p>
 
 <h5>1.2-44 IsColiftableAlongInflationIntoSomeExactInjectiveObject</h5>
@@ -801,22 +525,6 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ColiftAlongInflationIntoSomeExactInjectiveObject</code>( <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The argument is a morphism <span class="SimpleMath">\(\alpha:A\to B\)</span> such that <span class="SimpleMath">\(\alpha\)</span> colifts along <span class="SimpleMath">\(\iota_A:A \to I_A\)</span> where <span class="SimpleMath">\(\iota_A=\mathrm{InflationIntoSomeExactInjectiveObject}(A)\)</span>. The output is a colift morphism <span class="SimpleMath">\(\lambda: I_A \to B\)</span> of <span class="SimpleMath">\(\alpha\)</span> along <span class="SimpleMath">\(\iota_A\)</span>.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U = Source( mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_U := InflationIntoSomeExactInjectiveObject( U );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsColiftableAlongInflationIntoSomeExactInjectiveObject( mu );</span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">lambda := ColiftAlongInflationIntoSomeExactInjectiveObject( mu );</span>
-&lt;A morphism in Category of f.p. graded left modules over Q{e0,e1}
-(with weights [ -1, -1 ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( PreCompose( iota_U, lambda ), mu );</span>
-true
-</pre></div>
 
 <p><a id="X7E777F887E00910C" name="X7E777F887E00910C"></a></p>
 

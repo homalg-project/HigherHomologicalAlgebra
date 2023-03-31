@@ -106,62 +106,7 @@
   [23X\comp{\lambda}{\ell_B} \sim \alpha[123X.[133X
   
   
-  [1X2.2 [33X[0;0YExamples for systems of lifting objects[133X[101X
-  
-  [33X[0;0YLet  [23X(\CC,\EE)[123X  is an exact category with enough [23X\EE[123X-projective objects. For
-  any   object   [23XA[123X,   there  exists  a  deflation  [23Xp_A:P_A  \to  A[123X  from  some
-  [23X\EE[123X-projective  object [23XP_A[123X. We define [23X\LL[123X by the class of all [23X\EE[123X-projective
-  objects  in  [23X\CC[123X.  For  an  object [23XA[123X in [23X\CC[123X, we define the the distinguished
-  object  [23XL_A[123X by [23XP_A[123X and the distinguished morphism [23X\ell_A:L_A\to A[123X by [23Xp_A:P_A
-  \to  A[123X.  If  [23XA[123X  happens  to  be  an  [23X\EE[123X-projective object, then [23X\ell_A[123X is a
-  split-epimorphism  and  its  section  morphism [23Xs_A:A \to L_A[123X is given by the
-  [23X\EE[123X-projective  lift  of  [23X\id_A[123X  along  the deflation [23X\ell_A[123X. For a morphism
-  [23X\alpha:  A  \to B[123X, we define [23XL_\alpha:L_A \to L_B[123X by the [23X\EE[123X-projective lift
-  of [23X\comp{\ell_A}{\alpha}[123X along the deflation [23X\ell_B[123X.[133X
-  
-  [33X[0;0YEvery  abelian  category  [23X\CC[123X  is exact with respect to the class [23X\EE[123X of [13Xall[113X
-  short  exact  sequences  in  [23X\CC[123X.  The fact that in abelian categories every
-  monomorphism is a kernel of its cokernel and every epimorphism is a cokernel
-  of  its  kernel  implies that a morphism in this category is an inflation if
-  and only if it is a monomorphism; and is a deflation if and only if it is an
-  epimorphism.  It  also implies that an object in [23X\CC[123X is [23X\EE[123X-injective if and
-  only  if  it  is  injective in the usual sense, and is [23X\EE[123X-projective if and
-  only if it is projective in the usual sense.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xalpha := mu;[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XA := Source( alpha );[127X[104X
-    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XB := Range( alpha );[127X[104X
-    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27Xell_A := MorphismFromLiftingObject( A );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27Xell_B := MorphismFromLiftingObject( B );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XL_alpha := LiftingMorphism( alpha );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
-    [4X[25X>[125X [27X      PreCompose( L_alpha, ell_B ), PreCompose( ell_A, alpha ) [127X[104X
-    [4X[25X>[125X [27X    );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsLiftableAlongMorphismFromLiftingObject( alpha );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xlambda := WitnessForBeingLiftableAlongMorphismFromLiftingObject( alpha );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( lambda, ell_B ), alpha );[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X2.3 [33X[0;0YSystems of colifting objects[133X[101X
+  [1X2.2 [33X[0;0YSystems of colifting objects[133X[101X
   
   [33X[0;0YLet  [23X\CC[123X  be  an  additive  category.  A  system of colifting objects in [23X\CC[123X
   consists of the following data:[133X
@@ -176,21 +121,21 @@
         with  [23X\comp{q_A}{Q_\alpha}  \sim  \comp{\alpha}{q_B}[123X,  i.e.,  we get a
         commutative diagram:[133X
   
-  [1X2.3-1 IsColiftingObject[101X
+  [1X2.2-1 IsColiftingObject[101X
   
   [33X[1;0Y[29X[2XIsColiftingObject[102X( [3XA[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe argument is an object [23XA[123X. The output is whether or not [23XA[123X belongs to [23X\QQ[123X.[133X
   
-  [1X2.3-2 ColiftingObject[101X
+  [1X2.2-2 ColiftingObject[101X
   
   [33X[1;0Y[29X[2XColiftingObject[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan object in [23X\QQ[123X[133X
   
   [33X[0;0YThe argument is an object [23XA[123X. The output is an object [23XQ_A[123X in [23X\QQ[123X.[133X
   
-  [1X2.3-3 MorphismToColiftingObject[101X
+  [1X2.2-3 MorphismToColiftingObject[101X
   
   [33X[1;0Y[29X[2XMorphismToColiftingObject[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to Q_A[123X[133X
@@ -198,7 +143,7 @@
   [33X[0;0YThe  argument is an object [23XA[123X. The output is the distinguished morphism [23Xq_A:A
   \to Q_A[123X where [23XQ_A=\mathrm{ColiftingObject}(A)[123X.[133X
   
-  [1X2.3-4 MorphismToColiftingObjectWithGivenColiftingObject[101X
+  [1X2.2-4 MorphismToColiftingObjectWithGivenColiftingObject[101X
   
   [33X[1;0Y[29X[2XMorphismToColiftingObjectWithGivenColiftingObject[102X( [3XA[103X, [3XQ_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XA \to Q_A[123X[133X
@@ -206,7 +151,7 @@
   [33X[0;0YThe  arguments  are  two  objects [23XA[123X and [23XQ_A=\mathrm{ColiftingObject}(A)[123X. The
   output is the distinguished morphism [23Xq_A:A \to Q_A[123X.[133X
   
-  [1X2.3-5 RetractionOfMorphismToColiftingObjectWithGivenColiftingObject[101X
+  [1X2.2-5 RetractionOfMorphismToColiftingObjectWithGivenColiftingObject[101X
   
   [33X[1;0Y[29X[2XRetractionOfMorphismToColiftingObjectWithGivenColiftingObject[102X( [3XA[103X, [3XQ_A[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XQ_A \to A[123X[133X
@@ -216,7 +161,7 @@
   \to                 A[123X                 of                [23Xq_A                =
   \mathrm{MorphismToColiftingObjectWithGivenColiftingObject}(A,Q_A)[123X.[133X
   
-  [1X2.3-6 RetractionOfMorphismToColiftingObject[101X
+  [1X2.2-6 RetractionOfMorphismToColiftingObject[101X
   
   [33X[1;0Y[29X[2XRetractionOfMorphismToColiftingObject[102X( [3XA[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XQ_A \to A[123X[133X
@@ -224,7 +169,7 @@
   [33X[0;0YThe  argument  is  a  colifting  object [23XA[123X in [23X\QQ[123X. The output is a retraction
   morphism [23Xr_A:Q_A \to A[123X of [23Xq_A = \mathrm{MorphismToColiftingObject}(A)[123X.[133X
   
-  [1X2.3-7 ColiftingMorphismWithGivenColiftingObjects[101X
+  [1X2.2-7 ColiftingMorphismWithGivenColiftingObjects[101X
   
   [33X[1;0Y[29X[2XColiftingMorphismWithGivenColiftingObjects[102X( [3XQ_A[103X, [3Xalpha[103X, [3XQ_B[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XQ_A \to Q_B[123X[133X
@@ -235,7 +180,7 @@
   \comp{\alpha}{q_B}[123X   where   [23Xq_A=\mathrm{MorphismToColiftingObject}(A)[123X   and
   [23Xq_B=\mathrm{MorphismToColiftingObject}(B)[123X.[133X
   
-  [1X2.3-8 ColiftingMorphism[101X
+  [1X2.2-8 ColiftingMorphism[101X
   
   [33X[1;0Y[29X[2XColiftingMorphism[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23XQ_A \to Q_B[123X[133X
@@ -246,7 +191,7 @@
   [23Xq_A=\mathrm{MorphismToColiftingObject}(A)[123X                                and
   [23Xq_B=\mathrm{MorphismToColiftingObject}(B)[123X.[133X
   
-  [1X2.3-9 IsColiftableAlongMorphismToColiftingObject[101X
+  [1X2.2-9 IsColiftableAlongMorphismToColiftingObject[101X
   
   [33X[1;0Y[29X[2XIsColiftableAlongMorphismToColiftingObject[102X( [3Xalpha[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
@@ -255,7 +200,7 @@
   [23X\alpha[123X      colifts      along      [23Xq_A:      A      \to      Q_A[123X      where
   [23Xq_A=\mathrm{MorphismToColiftingObject}(A)[123X.[133X
   
-  [1X2.3-10 WitnessForBeingColiftableAlongMorphismToColiftingObject[101X
+  [1X2.2-10 WitnessForBeingColiftableAlongMorphismToColiftingObject[101X
   
   [33X[1;0Y[29X[2XWitnessForBeingColiftableAlongMorphismToColiftingObject[102X( [3Xalpha[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya morphism [23X\lambda:A \to L_B[123X[133X
@@ -266,350 +211,5 @@
   \sim \alpha[123X.[133X
   
   
-  [1X2.4 [33X[0;0YExamples for systems of colifting objects[133X[101X
-  
-  
-  [1X2.4-1  [33X[0;0YThe  class  of  E-injective  objects  in exact categories with enough[101X
-  [1XE-injectives[133X[101X
-  
-  [33X[0;0YLet  [23X(\CC,\EE)[123X  is an exact category with enough [23X\EE[123X-injective objects. That
-  is,  for any object [23XA[123X, there exists an inflation [23X\iota_A:A \to I_A[123X into some
-  [23X\EE[123X-injective  object  [23XI_A[123X.  We define [23X\QQ[123X by the class of all [23X\EE[123X-injective
-  objects  in  [23X\CC[123X.  For  an  object [23XA[123X in [23X\CC[123X, we define the the distinguished
-  object  [23XQ_A[123X  by [23XI_A[123X and the distinguished morphism [23Xq_A:A\to Q_A[123X by [23X\iota_A:A
-  \to  I_A[123X.  If  [23XA[123X  happens  to  be  an  [23X\EE[123X-injective  object,  then [23Xq_A[123X is a
-  split-monomorphism and its retraction morphism [23Xr_A:Q_A \to A[123X is given by the
-  [23X\EE[123X-injective  colift  of  [23X\id_A[123X  along  the  inflation  [23Xq_A[123X. For a morphism
-  [23X\alpha:  A  \to B[123X, we define [23XQ_\alpha:Q_A\to Q_B[123X by the [23X\EE[123X-injective colift
-  of [23X\comp{\alpha}{q_B}[123X along the inflation [23Xq_A[123X.[133X
-  
-  [33X[0;0YFor instance, the class of all injective objects in an abelian category with
-  enough injective objects defines a system of colifting objects.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xalpha := mu;[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XA := Source( alpha );[127X[104X
-    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XB := Range( alpha );[127X[104X
-    [4X[28X<An object in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27Xq_A := MorphismToColiftingObject( A );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27Xq_B := MorphismToColiftingObject( B );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XQ_alpha := ColiftingMorphism( alpha );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
-    [4X[25X>[125X [27X      PreCompose( q_A, Q_alpha ), PreCompose( alpha, q_B )[127X[104X
-    [4X[25X>[125X [27X    );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsColiftableAlongMorphismToColiftingObject( alpha );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xlambda := WitnessForBeingColiftableAlongMorphismToColiftingObject( alpha );[127X[104X
-    [4X[28X<A morphism in Category of f.p. graded left modules over Q{e0,e1}[128X[104X
-    [4X[28X(with weights [ -1, -1 ])>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, lambda ), alpha );[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X2.4-2  [33X[0;0YThe  class  of  all  objects  in  arrows  categories  represented  by[101X
-  [1Xsplit-epimorphisms[133X[101X
-  
-  [33X[0;0YLet  [23X\CC[123X  be  an  additive  category  and  [23X\mathrm{Arr}(\CC)[123X its category of
-  arrows,  i.e.,  its  objects  are  morphisms  in  [23X\CC[123X  and its morphisms are
-  commutative squars in [23X\CC[123X. The class [23X\QQ[123X of all objects in [23X\mathrm{Arr}(\CC)[123X
-  that  are  represented  by  split-epimorphisms defines a system of colifting
-  objects  in  [23X\mathrm{Arr}(\CC)[123X.  For  an  object  [23XA=(\alpha:A_1  \to A_2)[123X in
-  [23X\mathrm{Arr}(\CC)[123X,  we  define  [23XQ_A[123X by and [23Xq_A: A \to Q_A[123X by the commutative
-  square whose legs are and [23X\id_{A_2}:A_2 \to A_2[123X.[133X
-  
-  [33X[0;0YIf  [23XA[123X  belong  to [23X\QQ[123X, then [23X\alpha:A_1 \to A_2[123X is a split-epimorphism and it
-  has  a  section  morphism  is  [23X\gamma:  A_2  \to  A_1[123X. In this case [23Xq_A[123X is a
-  split-monomorphism  and  its retraction morphism is given by the commutative
-  square  Let  [23XB=(\beta:B_1  \to  B_2)[123X  be  an object in [23X\mathrm{Arr}(\CC)[123X and
-  [23X\varphi:  A  \to  B[123X  be a morphism defined by a commutative square We define
-  [23XQ_{\varphi}: Q_A \to Q_B[123X by the commutative square[133X
-  
-  [33X[0;0YThe  arrows  category  [23X\mathrm{Arr}(\CC)[123X  is  isomorphic  to the category of
-  functors  [23X\mathrm{Hom}(1\to  2,\CC)[123X,  where [23X1 \to 2[123X is the interval category
-  which  is  the  [23X\mathbb{Z}[123X-linear  closure  of  the quiver consisting of two
-  vertices [23Xv_1,v_2[123X and an arrow [23Xm:v_1\to v_2[123X.[133X
-  
-  [33X[0;0YThe  following  operation takes and additive category [23X\CC[123X and constructs its
-  arrows  category  [23X\mathrm{Arr}(\CC)[123X  and equipps it with the above system of
-  colifting objects. It requires the [5XGAP[105X package[133X
-  
-  
-  [1X2.4-3 [33X[0;0YCode example 1[133X[101X
-  
-  [33X[0;0YIn  the  next  chapter  we  will  see that the associated stable category is
-  equivalent to the Freyd category of [23X\CC[123X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XReadPackage( "StableCategories", "examples/doc/CategoryOfArrows-0.g" );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XMAKE_READ_WRITE_GLOBAL( "REREADING" );[127X[104X
-    [4X[25Xgap>[125X [27XREREADING := true;;[127X[104X
-    [4X[25Xgap>[125X [27XSetInfoLevel( InfoWarning, 0 );[127X[104X
-    [4X[25Xgap>[125X [27Xvertices := [ "A_1", "A_2", "B_1", "B_2" ];;[127X[104X
-    [4X[25Xgap>[125X [27Xsources := [ 1, 1, 1, 1, 1, 2, 2, 2, 2, 3 ];;[127X[104X
-    [4X[25Xgap>[125X [27Xtargets := [ 2, 2, 3, 3, 3, 1, 3, 4, 4, 4 ];;[127X[104X
-    [4X[25Xgap>[125X [27Xarrows :=  [ "u", "alpha",   "tau", "phi_1", "psi_1",[127X[104X
-    [4X[25X>[125X [27X             "v", "w", "phi_2", "psi_2", "beta" ];;[127X[104X
-    [4X[25Xgap>[125X [27Xquiver := RightQuiver( "quiver", vertices, arrows, sources, targets );[127X[104X
-    [4X[28Xquiver(A_1,A_2,B_1,B_2)[u:A_1->A_2,alpha:A_1->A_2,tau:A_1->B_1,phi_1:A_1->B_1,[128X[104X
-    [4X[28Xpsi_1:A_1->B_1,v:A_2->A_1,w:A_2->B_1,phi_2:A_2->B_2,psi_2:A_2->B_2,beta:B_1->B_2][128X[104X
-    [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationals( );[127X[104X
-    [4X[28XQ[128X[104X
-    [4X[25Xgap>[125X [27Xoid := Algebroid( QQ, quiver : range_of_HomStructure := MatrixCategory( QQ ) );;[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfObjects( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfGeneratingMorphisms( oid );[127X[104X
-    [4X[25Xgap>[125X [27Xrels := [[127X[104X
-    [4X[25X>[125X [27X              PreCompose( v, alpha ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( v, tau ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( v, phi_1 ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( v, psi_1 ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( v, u ) - IdentityMorphism( A_2 ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( alpha, phi_2 ) - PreCompose( phi_1, beta ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( alpha, phi_2 ) - PreCompose( tau, beta ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( alpha, psi_2 ) - PreCompose( psi_1, beta ),[127X[104X
-    [4X[25X>[125X [27X              PreCompose( w, beta ) - psi_2[127X[104X
-    [4X[25X>[125X [27X           ];[127X[104X
-    [4X[28X[ (A_2)-[1*(v*alpha)]->(A_2), (A_2)-[1*(v*tau)]->(B_1),[128X[104X
-    [4X[28X  (A_2)-[1*(v*phi_1)]->(B_1), (A_2)-[1*(v*psi_1)]->(B_1), [128X[104X
-    [4X[28X  (A_2)-[1*(v*u) - 1*(A_2)]->(A_2),[128X[104X
-    [4X[28X  (A_1)-[-1*(phi_1*beta) + 1*(alpha*phi_2)]->(B_2), [128X[104X
-    [4X[28X  (A_1)-[-1*(tau*beta) + 1*(alpha*phi_2)]->(B_2),[128X[104X
-    [4X[28X  (A_1)-[-1*(psi_1*beta) + 1*(alpha*psi_2)]->(B_2), [128X[104X
-    [4X[28X  (A_2)-[1*(w*beta) - 1*(psi_2)]->(B_2) ][128X[104X
-    [4X[25Xgap>[125X [27Xoid := oid / rels;;[127X[104X
-    [4X[25Xgap>[125X [27Xoid!.Name := "Algebroid( V=4, E=10, Rel=7 )";;[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfObjects( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfGeneratingMorphisms( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAoid := AdditiveClosure( oid );[127X[104X
-    [4X[28XAdditive closure( Algebroid( V=4, E=10, Rel=7 ) )[128X[104X
-    [4X[25Xgap>[125X [27XAAoid := CategoryOfArrows( Aoid );[127X[104X
-    [4X[28XFunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( Algebroid( V=4\[128X[104X
-    [4X[28X, E=10, Rel=7 ) ) )[128X[104X
-    [4X[25Xgap>[125X [27X1_m_2 := Source( AAoid );[127X[104X
-    [4X[28XAlgebroid( q(2)[m:1->2] )[128X[104X
-    [4X[25Xgap>[125X [27XAoid = Range( AAoid );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XA := CategoryOfArrowsObject( AAoid, [ [ alpha ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroForObjects( A );[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XB := CategoryOfArrowsObject( AAoid, [ [ beta ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroForObjects( B );[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xphi := CategoryOfArrowsMorphism([127X[104X
-    [4X[25X>[125X [27X            A,[127X[104X
-    [4X[25X>[125X [27X            [ [ phi_1 ] ] / Aoid,[127X[104X
-    [4X[25X>[125X [27X            [ [ phi_2 ] ] / Aoid,[127X[104X
-    [4X[25X>[125X [27X            B[127X[104X
-    [4X[25X>[125X [27X        );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27Xpsi := CategoryOfArrowsMorphism([127X[104X
-    [4X[25X>[125X [27X            A,[127X[104X
-    [4X[25X>[125X [27X            [ [ psi_1 ] ] / Aoid,[127X[104X
-    [4X[25X>[125X [27X            [ [ psi_2 ] ] / Aoid,[127X[104X
-    [4X[25X>[125X [27X            B[127X[104X
-    [4X[25X>[125X [27X        );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsWellDefined( phi );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsWellDefined( psi );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XQ_A := ColiftingObject( A );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XQ_B := ColiftingObject( B );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27Xq_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27Xq_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XQ_phi := ColiftingMorphismWithGivenColiftingObjects( Q_A, phi, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, Q_phi ), PreCompose( phi, q_B ) );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XQ_psi := ColiftingMorphismWithGivenColiftingObjects( Q_A, psi, Q_B );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, Q_psi ), PreCompose( psi, q_B ) );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSplitEpimorphism( [ [ u ] ] / Aoid );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XU := CategoryOfArrowsObject( AAoid, [ [ u ] ] / Aoid );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsZeroForObjects( U );[127X[104X
-    [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XQ_U := ColiftingObject( U );[127X[104X
-    [4X[28X<An object in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure( \[128X[104X
-    [4X[28XAlgebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27Xq_U := MorphismToColiftingObjectWithGivenColiftingObject( U, Q_U );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsSplitMonomorphism( q_U );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xr_U := RetractionOfMorphismToColiftingObject( U );[127X[104X
-    [4X[28X<A morphism in FunctorCategory( Algebroid( q(2)[m:1->2] ), Additive closure(\[128X[104X
-    [4X[28X Algebroid( V=4, E=10, Rel=7 ) ) )>[128X[104X
-    [4X[25Xgap>[125X [27XIsWellDefined( r_U );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_U, r_U ), IdentityMorphism( U ) );[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
-  
-  
-  [1X2.4-4 [33X[0;0YThe class of all contractible objects in complexes categories[133X[101X
-  
-  [33X[0;0YLet  [23X\CC[123X  be  an  additive  category  and  [23X\Ch{\CC}[123X be its cochain complexes
-  category.  An  object  [23XA[123X  in [23X\Ch{\CC}[123X is called contractible if the identity
-  morphism  [23X\id_{A}[123X  is  null-homotopic.  That  is,  there  exists a family of
-  morphisms     [23X(\lambda^i:A^i\to    A^{i-1})_{i\in\mathbb{Z}}[123X    such    that
-  [23X\comp{\partial_{A}^i}{\lambda^{i+1}}+\comp{\lambda^i}{\partial_{A}^{i-1}}\sim
-  \id_{A^i}[123X   for   all   [23Xi\in\mathbb{Z}[123X.  An  easy  verification  shows  that
-  [23X\comp{\alpha}{q_B}\sim\comp{q_A}{Q_\alpha}[123X.[133X
-  
-  
-  [1X2.4-5 [33X[0;0YCode example 2[133X[101X
-  
-  [33X[0;0YThe following example is an illustration for the system of colifting objects
-  on    [23X\Ch{\CC}[123X   where   [23X\CC[123X   be   additive   closure   category   of   the
-  [23X\mathbb{Q}[123X-algebroid [23X\Lambda_{\mathrm{oid}}[123X defined by the following quiver[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XLoadPackage( "StableCategories" );;[127X[104X
-    [4X[25Xgap>[125X [27XLoadPackage( "FunctorCategories" );;[127X[104X
-    [4X[25Xgap>[125X [27XLoadPackage( "FreydCategories" );;[127X[104X
-    [4X[25Xgap>[125X [27Xvertices := [ "A_0", "A_1", "A_2", "B_0", "B_1", "B_2" ];;[127X[104X
-    [4X[25Xgap>[125X [27Xsources := [ 1, 2, 4, 5, 2, 3, 1, 2, 3, 1, 2, 3 ];;[127X[104X
-    [4X[25Xgap>[125X [27Xtargets := [ 2, 3, 5, 6, 4, 5, 4, 5, 6, 4, 5, 6 ];;[127X[104X
-    [4X[25Xgap>[125X [27Xarrows :=  [[127X[104X
-    [4X[25X>[125X [27X              "a_0", "a_1", "b_0", "b_1", "h_1", "h_2",[127X[104X
-    [4X[25X>[125X [27X              "alpha_0", "alpha_1", "alpha_2",[127X[104X
-    [4X[25X>[125X [27X              "beta_0", "beta_1", "beta_2"[127X[104X
-    [4X[25X>[125X [27X            ];;[127X[104X
-    [4X[25Xgap>[125X [27Xquiver := RightQuiver( "quiver", vertices, arrows, sources, targets );[127X[104X
-    [4X[28Xquiver(A_0,A_1,A_2,B_0,B_1,B_2)[a_0:A_0->A_1,a_1:A_1->A_2,b_0:B_0->B_1,[128X[104X
-    [4X[28Xb_1:B_1->B_2,h_1:A_1->B_0,h_2:A_2->B_1,alpha_0:A_0->B_0,alpha_1:A_1->B_1,[128X[104X
-    [4X[28Xalpha_2:A_2->B_2,beta_0:A_0->B_0,beta_1:A_1->B_1,beta_2:A_2->B_2][128X[104X
-    [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationals( );[127X[104X
-    [4X[28XQ[128X[104X
-    [4X[25Xgap>[125X [27Xoid := Algebroid( QQ, quiver );;[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfObjects( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfGeneratingMorphisms( oid );[127X[104X
-    [4X[25Xgap>[125X [27Xrels := [[127X[104X
-    [4X[25X>[125X [27X           PreCompose( a_0, a_1 ), PreCompose( b_0, b_1 ),[127X[104X
-    [4X[25X>[125X [27X           PreCompose( a_0, alpha_1 ) - PreCompose( alpha_0, b_0),[127X[104X
-    [4X[25X>[125X [27X           PreCompose( a_1, alpha_2 ) - PreCompose( alpha_1, b_1 ),[127X[104X
-    [4X[25X>[125X [27X           PreCompose( a_0, beta_1 ) - PreCompose( beta_0, b_0 ),[127X[104X
-    [4X[25X>[125X [27X           PreCompose( a_1, beta_2 ) - PreCompose( beta_1, b_1 ),[127X[104X
-    [4X[25X>[125X [27X           alpha_0 - beta_0 - PreCompose( a_0, h_1 ),[127X[104X
-    [4X[25X>[125X [27X           alpha_1 - beta_1 - PreCompose( a_1, h_2 ) - PreCompose( h_1, b_0 ), [127X[104X
-    [4X[25X>[125X [27X           alpha_2 - beta_2 - PreCompose( h_2, b_1 )[127X[104X
-    [4X[25X>[125X [27X        ];[127X[104X
-    [4X[28X[ (A_0)-[1*(a_0*a_1)]->(A_2), (B_0)-[1*(b_0*b_1)]->(B_2), [128X[104X
-    [4X[28X  (A_0)-[-1*(alpha_0*b_0) + 1*(a_0*alpha_1)]->(B_1), [128X[104X
-    [4X[28X  (A_1)-[-1*(alpha_1*b_1) + 1*(a_1*alpha_2)]->(B_2),[128X[104X
-    [4X[28X  (A_0)-[-1*(beta_0*b_0) + 1*(a_0*beta_1)]->(B_1), [128X[104X
-    [4X[28X  (A_1)-[-1*(beta_1*b_1) + 1*(a_1*beta_2)]->(B_2),[128X[104X
-    [4X[28X  (A_0)-[-1*(a_0*h_1) - 1*(beta_0) + 1*(alpha_0)]->(B_0), [128X[104X
-    [4X[28X  (A_1)-[-1*(h_1*b_0) - 1*(a_1*h_2) - 1*(beta_1) + 1*(alpha_1)]->(B_1), [128X[104X
-    [4X[28X  (A_2)-[-1*(h_2*b_1) - 1*(beta_2) + 1*(alpha_2)]->(B_2) ][128X[104X
-    [4X[25Xgap>[125X [27Xoid := oid / rels;;[127X[104X
-    [4X[25Xgap>[125X [27Xoid!.Name := "Algebroid( V=6, E=12, Rel=9 )";;[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfObjects( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAssignSetOfGeneratingMorphisms( oid );[127X[104X
-    [4X[25Xgap>[125X [27XAoid := AdditiveClosure( oid );[127X[104X
-    [4X[28XAdditive closure( Algebroid( V=6, E=12, Rel=9 ) )[128X[104X
-    [4X[25Xgap>[125X [27XCh_Aoid := CochainComplexCategory( Aoid );[127X[104X
-    [4X[28XCochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 ) ) )[128X[104X
-    [4X[25Xgap>[125X [27XA := CochainComplex( [ [[a_0]]/Aoid, [[a_1]]/Aoid ], 0 );[127X[104X
-    [4X[28X<An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XQ_A := ColiftingObject( A );[127X[104X
-    [4X[28X<An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -1 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27Xq_A := MorphismToColiftingObjectWithGivenColiftingObject( A, Q_A );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsColiftingObject( Q_A );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XQ_Q_A := ColiftingObject( Q_A );[127X[104X
-    [4X[28X<An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -2 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27Xq_Q_A := MorphismToColiftingObject( Q_A );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -1 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27Xr_Q_A := RetractionOfMorphismToColiftingObject( Q_A );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -1 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
-    [4X[25X>[125X [27X        PreCompose( q_Q_A, r_Q_A ), IdentityMorphism( Q_A )[127X[104X
-    [4X[25X>[125X [27X      );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XB := CochainComplex( [ [[b_0]]/Aoid, [[b_1]]/Aoid ], 0 );[127X[104X
-    [4X[28X<An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XQ_B := ColiftingObject( B );[127X[104X
-    [4X[28X<An object in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -1 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27Xq_B := MorphismToColiftingObjectWithGivenColiftingObject( B, Q_B );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27Xalpha := CochainMorphism([127X[104X
-    [4X[25X>[125X [27X             A, B,[127X[104X
-    [4X[25X>[125X [27X             [ [[alpha_0]]/Aoid, [[alpha_1]]/Aoid, [[alpha_2]]/Aoid ],[127X[104X
-    [4X[25X>[125X [27X             0[127X[104X
-    [4X[25X>[125X [27X         );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsWellDefined( alpha );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XQ_alpha := ColiftingMorphismWithGivenColiftingObjects( Q_A, alpha, Q_B );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound -1 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms([127X[104X
-    [4X[25X>[125X [27X      PreCompose( alpha, q_B ), PreCompose( q_A, Q_alpha )[127X[104X
-    [4X[25X>[125X [27X    );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xbeta :=  CochainMorphism([127X[104X
-    [4X[25X>[125X [27X             A, B,[127X[104X
-    [4X[25X>[125X [27X             [ [[beta_0]]/Aoid, [[beta_1]]/Aoid, [[beta_2]]/Aoid ],[127X[104X
-    [4X[25X>[125X [27X             0[127X[104X
-    [4X[25X>[125X [27X         );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsWellDefined( beta );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xgamma := alpha - beta;[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsColiftableAlongMorphismToColiftingObject( gamma );[127X[104X
-    [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xw := WitnessForBeingColiftableAlongMorphismToColiftingObject( gamma );[127X[104X
-    [4X[28X<A morphism in Cochain complexes( Additive closure( Algebroid( V=6, E=12, Rel=9 )[128X[104X
-    [4X[28X ) ) with active lower bound 0 and active upper bound 2>[128X[104X
-    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( q_A, w ), gamma );[127X[104X
-    [4X[28Xtrue[128X[104X
-  [4X[32X[104X
+  [1X2.3 [33X[0;0YExamples for systems of colifting objects[133X[101X
   
