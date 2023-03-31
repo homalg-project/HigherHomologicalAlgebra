@@ -169,6 +169,7 @@ end );
 
 
 AddFinalDerivation( MonomorphismIntoSomeInjectiveObject,
+                    "",
               [
                 [ EpimorphismFromSomeProjectiveObject, 1 ],
                 [ PreCompose, 1 ],

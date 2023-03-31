@@ -6,6 +6,7 @@
 
 ##
 AddDerivationToCAP( IsLiftableAlongMorphismFromLiftingObject,
+                    "IsLiftableAlongMorphismFromLiftingObject using IsLiftable & MorphismFromLiftingObject methods",
                 [
                     [ IsLiftable, 1 ],
                     [ MorphismFromLiftingObject,  1 ]
@@ -20,10 +21,11 @@ AddDerivationToCAP( IsLiftableAlongMorphismFromLiftingObject,
     
     return IsLiftable( alpha, P_b );
     
-end: Description:= "IsLiftableAlongMorphismFromLiftingObject using IsLiftable & MorphismFromLiftingObject methods" );
+end );
 
 ##
 AddDerivationToCAP( WitnessForBeingLiftableAlongMorphismFromLiftingObject,
+                    "WitnessForBeingLiftableAlongMorphismFromLiftingObject using Lift & MorphismFromLiftingObject methods",
                 [
                     [ Lift, 1 ],
                     [ MorphismFromLiftingObject,  1 ]
@@ -39,11 +41,12 @@ AddDerivationToCAP( WitnessForBeingLiftableAlongMorphismFromLiftingObject,
     return Lift( alpha, P_b );
  
    
-end: Description:= "WitnessForBeingLiftableAlongMorphismFromLiftingObject using Lift & MorphismFromLiftingObject methods" );
+end );
 
 
 ##
 AddDerivationToCAP( IsColiftableAlongMorphismToColiftingObject,
+                    "IsColiftableAlongMorphismToColiftingObject using IsColiftable & MorphismToColiftingObject methods",
                 [
                     [ IsColiftable, 1 ],
                     [ MorphismToColiftingObject,  1 ]
@@ -58,10 +61,11 @@ AddDerivationToCAP( IsColiftableAlongMorphismToColiftingObject,
     
     return IsColiftable( I_a, alpha );
    
-end: Description:= "IsColiftableAlongMorphismToColiftingObject using IsColiftable & MorphismToColiftingObject methods" );
+end );
 
 ##
 AddDerivationToCAP( WitnessForBeingColiftableAlongMorphismToColiftingObject,
+                    "WitnessForBeingColiftableAlongMorphismToColiftingObject using Colift & MorphismToColiftingObject methods",
                 [
                     [ Colift, 1 ],
                     [ MorphismToColiftingObject,  1 ]
@@ -76,10 +80,10 @@ AddDerivationToCAP( WitnessForBeingColiftableAlongMorphismToColiftingObject,
     
     return Colift( I_a, alpha );
    
-end: Description:= "WitnessForBeingColiftableAlongMorphismToColiftingObject using Colift & MorphismToColiftingObject methods" );
+end );
 
 ##
-AddFinalDerivationBundle( # IsColiftingObject
+AddFinalDerivationBundle( "Adding system of colifting objects to cochain complexes categories",
             [
               [ IdentityMorphism, 2 ],
               [ MorphismBetweenDirectSums, 1 ],
@@ -158,6 +162,5 @@ AddFinalDerivationBundle( # IsColiftingObject
     
 end
 ] :
-  CategoryFilter := IsCochainComplexCategory,
-  Description := "Adding system of colifting objects to cochain complexes categories"
+  CategoryFilter := IsCochainComplexCategory
 );
