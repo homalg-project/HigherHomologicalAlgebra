@@ -17,22 +17,16 @@ StandardConeObject:= rec(
   return_type := "object"
 ),
 
-MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
-  filter_list := [ "category", "morphism", "object" ],
-  io_type := [ [ "alpha", "cone_alpha" ], [ "range_alpha", "cone_alpha" ] ],
-  return_type := "morphism"
-),
-
-MorphismFromStandardConeObjectWithGivenObjects := rec(
-  filter_list := [ "category", "object", "morphism", "object" ],
-  io_type := [ [ "cone_alpha", "alpha", "sh_source_alpha" ], [ "cone_alpha", "sh_source_alpha" ] ],
-  return_type := "morphism"
-),
-
 MorphismIntoStandardConeObject := rec(
   filter_list := [ "category", "morphism" ],
-  io_type := [ [ "alpha" ], [ "range_alpha", "cone_alpha" ] ],
+  io_type := [ [ "alpha" ], [ "alpha_range", "cone" ] ],
   with_given_object_position := "Range",
+  return_type := "morphism"
+),
+
+MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
+  filter_list := [ "category", "morphism", "object" ],
+  io_type := [ [ "alpha", "cone" ], [ "alpha_range", "cone" ] ],
   return_type := "morphism"
 ),
 
@@ -40,7 +34,20 @@ MorphismFromStandardConeObject := rec(
   filter_list := [ "category", "morphism" ],
   input_arguments_names := [ "cat", "alpha" ],
   output_source_getter_string := "StandardConeObject( cat, alpha )",
+  output_source_getter_preconditions := [ [ "StandardConeObject", 1 ] ],
   output_range_getter_string := "ShiftOfObject( cat, Source( alpha ) )",
+  output_range_getter_preconditions := [ [ "ShiftOfObject", 1 ] ],
+  with_given_object_position := "both",
+  return_type := "morphism"
+),
+
+MorphismFromStandardConeObjectWithGivenObjects := rec(
+  filter_list := [ "category", "object", "morphism", "object" ],
+  input_arguments_names := [ "cat", "cone_alpha", "alpha", "sh_source_alpha" ],
+  output_source_getter_string := "cone_alpha",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "sh_source_alpha",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
@@ -125,7 +132,6 @@ MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_morphisms", "object" ],
   io_type := [ [ "cone_alpha", "list", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
   return_type := "morphism",
-  is_with_given := false
 ),
 
 DomainMorphismByOctahedralAxiomWithGivenObjects := rec(

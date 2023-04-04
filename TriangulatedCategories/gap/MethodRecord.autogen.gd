@@ -298,7 +298,7 @@ DeclareOperation( "AddMorphismIntoStandardConeObject",
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `MorphismIntoStandardConeObjectWithGivenStandardConeObject`.
-#! $F: ( alpha, cone_alpha ) \mapsto \mathtt{MorphismIntoStandardConeObjectWithGivenStandardConeObject}(alpha, cone_alpha)$.
+#! $F: ( alpha, cone ) \mapsto \mathtt{MorphismIntoStandardConeObjectWithGivenStandardConeObject}(alpha, cone)$.
 #! @Returns nothing
 #! @Arguments C, F
 DeclareOperation( "AddMorphismIntoStandardConeObjectWithGivenStandardConeObject",
