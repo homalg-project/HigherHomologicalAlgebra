@@ -170,10 +170,10 @@
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismIntoStandardConeObjectWithGivenStandardConeObject[110X.   [23XF:   (   alpha,
-  cone_alpha                             )                             \mapsto
+  [10XMorphismIntoStandardConeObjectWithGivenStandardConeObject[110X.  [23XF: ( alpha, cone
+  )                                                                    \mapsto
   \mathtt{MorphismIntoStandardConeObjectWithGivenStandardConeObject}(alpha,
-  cone_alpha)[123X.[133X
+  cone)[123X.[133X
   
   [1X3.1-17 AddShiftExpandingIsomorphismWithGivenObjects[101X
   
