@@ -23,12 +23,39 @@ shasum -a 256 -c codecov.SHA256SUM
 
 # execute
 chmod +x codecov
-./codecov -Z -v -s ../ -F BBGG || (sleep 60; ./codecov -Z -v -s ../ -F BBGG || (sleep 60; ./codecov -Z -v -s ../ -F BBGG))
-./codecov -Z -v -s ../ -F Bicomplexes || (sleep 60; ./codecov -Z -v -s ../ -F Bicomplexes || (sleep 60; ./codecov -Z -v -s ../ -F Bicomplexes))
-./codecov -Z -v -s ../ -F ComplexesCategories || (sleep 60; ./codecov -Z -v -s ../ -F ComplexesCategories || (sleep 60; ./codecov -Z -v -s ../ -F ComplexesCategories))
-./codecov -Z -v -s ../ -F DerivedCategories || (sleep 60; ./codecov -Z -v -s ../ -F DerivedCategories || (sleep 60; ./codecov -Z -v -s ../ -F DerivedCategories))
-./codecov -Z -v -s ../ -F HomotopyCategories || (sleep 60; ./codecov -Z -v -s ../ -F HomotopyCategories || (sleep 60; ./codecov -Z -v -s ../ -F HomotopyCategories))
-./codecov -Z -v -s ../ -F QuotientCategories || (sleep 60; ./codecov -Z -v -s ../ -F QuotientCategories || (sleep 60; ./codecov -Z -v -s ../ -F QuotientCategories))
-./codecov -Z -v -s ../ -F StableCategories || (sleep 60; ./codecov -Z -v -s ../ -F StableCategories || (sleep 60; ./codecov -Z -v -s ../ -F StableCategories))
-./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra || (sleep 60; ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra || (sleep 60; ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra))
-./codecov -Z -v -s ../ -F TriangulatedCategories || (sleep 60; ./codecov -Z -v -s ../ -F TriangulatedCategories || (sleep 60; ./codecov -Z -v -s ../ -F TriangulatedCategories))
+while ! ./codecov -Z -v -s ../ -F BBGG; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F Bicomplexes; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F ComplexesCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F DerivedCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F HomotopyCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F QuotientCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F StableCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done
+while ! ./codecov -Z -v -s ../ -F TriangulatedCategories; do
+    echo "Codecov upload failed, retrying in 60s"
+    sleep 60
+done

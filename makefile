@@ -1,76 +1,9 @@
 all: doc test
 
-.PHONY: test
+ci-test: doc ci-test_all_packages
 
-test: BBGG_test Bicomplexes_test ComplexesCategories_test DerivedCategories_test HomotopyCategories_test QuotientCategories_test StableCategories_test ToolsForHigherHomologicalAlgebra_test TriangulatedCategories_test
-
-BBGG_test:
-	cd BBGG && make test
-
-Bicomplexes_test:
-	cd Bicomplexes && make test
-
-ComplexesCategories_test:
-	cd ComplexesCategories && make test
-
-DerivedCategories_test:
-	cd DerivedCategories && make test
-
-HomotopyCategories_test:
-	cd HomotopyCategories && make test
-
-QuotientCategories_test:
-	cd QuotientCategories && make test
-
-StableCategories_test:
-	cd StableCategories && make test
-
-ToolsForHigherHomologicalAlgebra_test:
-	cd ToolsForHigherHomologicalAlgebra && make test
-
-TriangulatedCategories_test:
-	cd TriangulatedCategories && make test
-
-doc: BBGG_doc Bicomplexes_doc ComplexesCategories_doc DerivedCategories_doc HomotopyCategories_doc QuotientCategories_doc StableCategories_doc ToolsForHigherHomologicalAlgebra_doc TriangulatedCategories_doc
-
-BBGG_doc:
-	cd BBGG && make doc
-
-Bicomplexes_doc:
-	cd Bicomplexes && make doc
-
-ComplexesCategories_doc:
-	cd ComplexesCategories && make doc
-
-DerivedCategories_doc:
-	cd DerivedCategories && make doc
-
-HomotopyCategories_doc:
-	cd HomotopyCategories && make doc
-
-QuotientCategories_doc:
-	cd QuotientCategories && make doc
-
-StableCategories_doc:
-	cd StableCategories && make doc
-
-ToolsForHigherHomologicalAlgebra_doc:
-	cd ToolsForHigherHomologicalAlgebra && make doc
-
-TriangulatedCategories_doc:
-	cd TriangulatedCategories && make doc
-
-ci-test: doc
-	cd BBGG && make ci-test
-	cd Bicomplexes && make ci-test
-	cd ComplexesCategories && make ci-test
-	cd DerivedCategories && make ci-test
-	cd HomotopyCategories && make ci-test
-	cd QuotientCategories && make ci-test
-	cd StableCategories && make ci-test
-	cd ToolsForHigherHomologicalAlgebra && make ci-test
-	cd TriangulatedCategories && make ci-test
 # BEGIN PACKAGE JANITOR
+################################
 doc: doc_BBGG doc_Bicomplexes doc_ComplexesCategories doc_DerivedCategories doc_HomotopyCategories doc_QuotientCategories doc_StableCategories doc_ToolsForHigherHomologicalAlgebra doc_TriangulatedCategories
 
 doc_BBGG:
@@ -99,5 +32,65 @@ doc_ToolsForHigherHomologicalAlgebra:
 
 doc_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories doc
+
+################################
+test: doc test_BBGG test_Bicomplexes test_ComplexesCategories test_DerivedCategories test_HomotopyCategories test_QuotientCategories test_StableCategories test_ToolsForHigherHomologicalAlgebra test_TriangulatedCategories
+
+test_BBGG:
+	$(MAKE) -C BBGG test
+
+test_Bicomplexes:
+	$(MAKE) -C Bicomplexes test
+
+test_ComplexesCategories:
+	$(MAKE) -C ComplexesCategories test
+
+test_DerivedCategories:
+	$(MAKE) -C DerivedCategories test
+
+test_HomotopyCategories:
+	$(MAKE) -C HomotopyCategories test
+
+test_QuotientCategories:
+	$(MAKE) -C QuotientCategories test
+
+test_StableCategories:
+	$(MAKE) -C StableCategories test
+
+test_ToolsForHigherHomologicalAlgebra:
+	$(MAKE) -C ToolsForHigherHomologicalAlgebra test
+
+test_TriangulatedCategories:
+	$(MAKE) -C TriangulatedCategories test
+
+################################
+ci-test_all_packages: ci-test_BBGG ci-test_Bicomplexes ci-test_ComplexesCategories ci-test_DerivedCategories ci-test_HomotopyCategories ci-test_QuotientCategories ci-test_StableCategories ci-test_ToolsForHigherHomologicalAlgebra ci-test_TriangulatedCategories
+
+ci-test_BBGG:
+	$(MAKE) -C BBGG ci-test
+
+ci-test_Bicomplexes:
+	$(MAKE) -C Bicomplexes ci-test
+
+ci-test_ComplexesCategories:
+	$(MAKE) -C ComplexesCategories ci-test
+
+ci-test_DerivedCategories:
+	$(MAKE) -C DerivedCategories ci-test
+
+ci-test_HomotopyCategories:
+	$(MAKE) -C HomotopyCategories ci-test
+
+ci-test_QuotientCategories:
+	$(MAKE) -C QuotientCategories ci-test
+
+ci-test_StableCategories:
+	$(MAKE) -C StableCategories ci-test
+
+ci-test_ToolsForHigherHomologicalAlgebra:
+	$(MAKE) -C ToolsForHigherHomologicalAlgebra ci-test
+
+ci-test_TriangulatedCategories:
+	$(MAKE) -C TriangulatedCategories ci-test
 
 # END PACKAGE JANITOR

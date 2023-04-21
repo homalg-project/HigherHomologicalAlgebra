@@ -94,7 +94,7 @@ The repository is a collection of the Gap packages. The aim of these packages is
 [tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions/workflows/Tests.yml?query=branch%3Amaster
 
 [codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra
+[codecov-url]: https://app.codecov.io/gh/homalg-project/HigherHomologicalAlgebra
 
 [code-img]: https://img.shields.io/badge/-View%20code-blue?logo=github
 [code-url]: https://github.com/homalg-project/HigherHomologicalAlgebra#top
