@@ -186,25 +186,25 @@ WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects :
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
-  filter_list := [ "category", "object", IsList, "object" ],
+  filter_list := [ "category", "object", "list_of_objects", "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
-  filter_list := [ "category", "object", IsList, "object" ],
+  filter_list := [ "category", "object", "list_of_objects", "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseShiftExpandingIsomorphismWithGivenObjects := rec(
-  filter_list := [ "category", "object", IsList, "object" ],
+  filter_list := [ "category", "object", "list_of_objects", "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 ),
 
 InverseShiftFactoringIsomorphismWithGivenObjects := rec(
-  filter_list := [ "category", "object", IsList, "object" ],
+  filter_list := [ "category", "object", "list_of_objects", "object" ],
   io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
   return_type := "morphism"
 )
