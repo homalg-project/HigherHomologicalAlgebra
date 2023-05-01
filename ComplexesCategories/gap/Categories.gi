@@ -402,8 +402,10 @@ InstallMethod( ComplexesCategoryByCochains,
                          return Concatenation( "List( i_arg[", String( j ), "], o -> ObjectAt( o, i ) )" );
                      elif type = "list_of_morphisms" then
                          return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismAt( m, i ) )" );
+                     elif type = "pair_of_morphisms" then
+                         return Concatenation( "Pair( MorphismAt( i_arg[", String( j ), "][1], i ), MorphismAt( i_arg[", String( j ), "][2], i ) )" );
                      else
-                         Error( "can only deal with \"integer\", \"object\", \"morphism\", \"list_of_objects\", \"list_of_morphisms\"" );
+                         Error( "cannot deal with ", type );
                      fi;
                      
                   end ) ) );
