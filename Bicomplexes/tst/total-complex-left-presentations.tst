@@ -19,7 +19,7 @@ gap> phi6 := PresentationMorphism( F1, HomalgIdentityMatrix( 1, ZZ ), F1 );;
 gap> phi7 := PresentationMorphism( F1, 2 * HomalgIdentityMatrix( 1, ZZ ), F1 );;
 gap> phi := CreateComplexMorphism( C10, [ phi5, phi6, phi7 ], 5, C9 );;
 gap> o := CreateComplex( modeling_category, [ phi ], 10 );;
-gap> bicomplex := ModeledObject( bicomplexes_cat, o );;
+gap> bicomplex := ReinterpretationOfObject( bicomplexes_cat, o );;
 gap> t := TotalComplex( bicomplex );;
 gap> IsWellDefined( t ) and IsExact( t );
 true

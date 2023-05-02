@@ -14,7 +14,7 @@ ObjectConstructor );
 InstallOtherMethod( CreateBicomplex,
           [ IsBicomplexesCategory, IsChainOrCochainComplex ],
   
-  { bicomplexes_cat, o } -> ModeledObject( bicomplexes_cat, o )
+  { bicomplexes_cat, o } -> ReinterpretationOfObject( bicomplexes_cat, o )
 );
 
 ##

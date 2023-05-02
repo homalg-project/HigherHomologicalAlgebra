@@ -20,14 +20,14 @@ InstallOtherMethod( CreateBicomplexMorphism,
 InstallOtherMethod( CreateBicomplexMorphism,
           [ IsBicomplexesCategory, IsChainOrCochainBicomplex, IsChainOrCochainMorphism, IsChainOrCochainBicomplex ],
   
-  { bicomplexes_cat, source, m, range } -> ModeledMorphism( bicomplexes_cat, source, m, range )
+  { bicomplexes_cat, source, m, range } -> ReinterpretationOfMorphism( bicomplexes_cat, source, m, range )
 );
 
 ##
 InstallOtherMethod( CreateBicomplexMorphism,
           [ IsBicomplexesCategory, IsChainOrCochainMorphism ],
   
-  { bicomplexes_cat, m } -> ModeledMorphism( bicomplexes_cat,
+  { bicomplexes_cat, m } -> ReinterpretationOfMorphism( bicomplexes_cat,
                                 CreateBicomplex( bicomplexes_cat, Source( m ) ),
                                 m,
                                 CreateBicomplex( bicomplexes_cat, Range( m ) ) )
