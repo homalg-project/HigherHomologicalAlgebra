@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2023.05-01",
+Version := "2023.05-02",
 Date := (function ( ) if IsBound( GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE ) then return GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE; else return Concatenation( ~.Version{[ 1 .. 4 ]}, "-", ~.Version{[ 6, 7 ]}, "-01" ); fi; end)( ),
 License := "GPL-2.0-or-later",
 
@@ -75,7 +75,7 @@ Dependencies := rec(
   GAP := ">= 4.12.1",
   NeededOtherPackages := [
                             [ "AutoDoc", ">= 2019.09.04" ],
-                            [ "CAP", ">= 2022.09-02" ],
+                            [ "CAP", ">= 2023.05-03" ],
                             [ "ToolsForHigherHomologicalAlgebra", ">= 2022.12-05" ],
                          ],
   SuggestedOtherPackages := [ ],

@@ -11,7 +11,7 @@ SetPackageInfo( rec(
 
 PackageName := "Bicomplexes",
 Subtitle := "Bicomplexes for Abelian categories",
-Version := "2023.02-02",
+Version := "2023.05-01",
 Date := (function ( ) if IsBound( GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE ) then return GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE; else return Concatenation( ~.Version{[ 1 .. 4 ]}, "-", ~.Version{[ 6, 7 ]}, "-01" ); fi; end)( ),
 License := "GPL-2.0-or-later",
 
@@ -84,7 +84,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.12.1",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                   [ "CAP", ">= 2021.05-02" ],
+                   [ "CAP", ">= 2023.05-03" ],
                    [ "ComplexesCategories", ">= 2020.03.12" ] ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

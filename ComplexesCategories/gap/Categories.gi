@@ -780,7 +780,7 @@ InstallMethod( ComplexesCategoryByChains,
     
     ##
     ch_cat :=
-      WrapperCategory( coch_cat,
+      ReinterpretationOfCategory( coch_cat,
               rec( name := Concatenation( "Complexes category by chains( ", Name( cat ), " )" ),
                    category_filter := IsComplexesCategoryByChains,
                    category_object_filter := IsChainComplex,
