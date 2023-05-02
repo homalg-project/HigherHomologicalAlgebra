@@ -33,7 +33,7 @@ etc.
 [tests-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/actions/workflows/Tests.yml?query=branch%3Amaster
 
 [codecov-img]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/branch/master/graph/badge.svg?flag=ComplexesCategories
-[codecov-url]: https://codecov.io/gh/homalg-project/HigherHomologicalAlgebra/tree/master/ComplexesCategories
+[codecov-url]: https://app.codecov.io/gh/homalg-project/HigherHomologicalAlgebra/tree/master/ComplexesCategories
 
 [code-img]: https://img.shields.io/badge/-View%20code-blue?logo=github
 [code-url]: https://github.com/homalg-project/HigherHomologicalAlgebra/tree/master/ComplexesCategories#top
