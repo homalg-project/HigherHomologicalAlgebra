@@ -129,7 +129,7 @@ BindGlobal( "CREATE_BICOMPLEXES_CATEGORY",
     
     ##
     bicomplexes_cat :=
-      WrapperCategory( modeling_cat,
+      ReinterpretationOfCategory( modeling_cat,
               rec( name := Concatenation( "Bicomplexes category by ", name, " ( ", Name( cat ), " )" ),
                    category_filter := category_filter,
                    category_object_filter := category_object_filter,
