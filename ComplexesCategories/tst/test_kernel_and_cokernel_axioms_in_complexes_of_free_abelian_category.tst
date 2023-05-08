@@ -56,7 +56,7 @@ gap> rels := [   PreCompose(dS_m5,dS_m4),
 >    PreCompose(phi_m2,tau_m2),
 >    PreCompose(phi_m1,tau_m1),
 >    PreCompose(phi_0,tau_0) ];;
-gap> oid := kF / rels;;
+gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
 gap> ch_AAoid := ComplexesCategoryByCochains( AAoid );;

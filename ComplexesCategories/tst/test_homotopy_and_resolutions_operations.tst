@@ -54,7 +54,7 @@ gap> rels := [ PreCompose( dA_m5, dA_m4 ),
 >    -PreCompose( beta_0, dD_0 ) + PreCompose( dC_0, beta_1 ),
 >    -PreCompose( beta_1, dD_1 ) + PreCompose( dC_1, beta_2 ),
 >    -PreCompose( beta_2, dD_2 ) ];;
-gap> oid := kF / rels;;
+gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
 gap> Ch_AAoid := ComplexesCategoryByCochains( AAoid );;
@@ -81,7 +81,7 @@ gap> for morphism_info in [ morphisms[2], morphisms[4] ] do
 gap> ForAll( [ alpha, beta ], IsHomotopicToZeroMorphism );
 true
 gap> MorphismMatrix( MorphismDatum( WitnessForBeingHomotopicToZeroMorphism( DirectSumFunctorial( [ alpha, beta ] ) )[0] ) );
-[ [ (A_0)-[{ 1*(x_0) }]->(B_m1), (A_0)-[{ 0 }]->(D_m1) ], [ (C_0)-[{ 0 }]->(B_m1), (C_0)-[{ 1*(y_0) }]->(D_m1) ] ]
+[ [ <1*x_0:(A_0) -≻ (B_m1)>, <0:(A_0) -≻ (D_m1)> ], [ <0:(C_0) -≻ (B_m1)>, <1*y_0:(C_0) -≻ (D_m1)> ] ]
 gap> qA := QuasiIsomorphismFromProjectiveResolution( A, true );;
 gap> qB := QuasiIsomorphismFromProjectiveResolution( B, true );;
 gap> Aq :=  QuasiIsomorphismIntoInjectiveResolution( A, true );;
