@@ -66,7 +66,7 @@ gap> rels := [ PreCompose( dA_m2, dA_m1 ),
 > -PreCompose( y_0, dD_m1 ) + PreCompose( alpha_0, nu_0 ) - PreCompose( dA_0, y_1 ) - (gamma_0),
 > -PreCompose( y_1, dD_0 ) + PreCompose( alpha_1, nu_1 ) - PreCompose( dA_1, y_2 ) - (gamma_1),
 > -PreCompose( y_2, dD_1 ) + PreCompose( alpha_2, nu_2 ) - (gamma_2) ];;
-gap> oid := kF / rels;;
+gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> cat := AdditiveClosure( oid );;
 gap> homotopy_cat := HomotopyCategoryByCochains( cat );;
 gap> complex_cat := UnderlyingCategory( homotopy_cat );;
