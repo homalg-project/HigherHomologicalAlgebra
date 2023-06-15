@@ -136,13 +136,12 @@ gap> rels := [ PreCompose( dA1_m2, dA1_m1 ),
 > -PreCompose( f4_m1, dB4_m1 ) +  PreCompose( dA4_m1, f4_0 ),
 > -PreCompose( f4_0, dB4_0 ) +  PreCompose( dA4_0, f4_1 ),
 > -PreCompose( f4_1, dB4_1 ) +  PreCompose( dA4_1, f4_2) ];;
-gap> oid := kF / rels;;
+gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> Aoid := AdditiveClosure( oid );;
 gap> cochains_Aoid := ComplexesCategoryByCochains( Aoid );;
 gap> cochains_cochains_Aoid := ComplexesCategoryByCochains( cochains_Aoid );;
 gap> cochains_bicomplexes_Aoid := BicomplexesCategoryByCochains( Aoid );;
-gap> IsIdenticalObj( cochains_cochains_Aoid, ModelingCategory( cochains_bicomplexes_Aoid ) );
-true
+gap> Assert( 0, IsIdenticalObj( cochains_cochains_Aoid, ModelingCategory( cochains_bicomplexes_Aoid ) ) );
 gap> for object_info in objects do
 >       MakeReadWriteGlobal( object_info[1] );
 >       DeclareSynonym( object_info[1],
@@ -165,20 +164,16 @@ gap> for morphism_info in morphisms do
 gap> A := CreateComplex( cochains_cochains_Aoid, [ dA_1, dA_2, dA_3 ], 1 );;
 gap> B := CreateComplex( cochains_cochains_Aoid, [ dB_1, dB_2, dB_3 ], 1 );;
 gap> f := CreateComplexMorphism( cochains_cochains_Aoid, A, [ f1, f2, f3, f4 ], 1, B );;
-gap> ForAll( [ A, B, f ], IsWellDefined );
-true
+gap> Assert( 0, ForAll( [ A, B, f ], IsWellDefined ) );
 gap> A := CreateBicomplex( cochains_bicomplexes_Aoid, A );;
 gap> B := CreateBicomplex( cochains_bicomplexes_Aoid, B );;
 gap> f := CreateBicomplexMorphism( cochains_bicomplexes_Aoid, f );;
-gap> ForAll( [ A, B, f ], IsWellDefined );
-true
+gap> Assert( 0, ForAll( [ A, B, f ], IsWellDefined ) );
 gap> total_f := TotalComplexFunctorial( TotalComplex(A), f, TotalComplex(B) );;
-gap> IsWellDefined( total_f );
-true
+gap> Assert( 0, IsWellDefined( total_f ) );
 gap> chains_bicomplexes_Aoid := BicomplexesCategoryByChains( Aoid );;
 gap> A := CreateBicomplex( chains_bicomplexes_Aoid, A );;
 gap> B := CreateBicomplex( chains_bicomplexes_Aoid, B );;
 gap> f := CreateBicomplexMorphism( chains_bicomplexes_Aoid, f );;
 gap> total_f := TotalComplexFunctorial( TotalComplex(A), f, TotalComplex(B) );;
-gap> IsWellDefined( total_f );
-true
+gap> Assert( 0, IsWellDefined( total_f ) );

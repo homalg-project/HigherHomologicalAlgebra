@@ -68,21 +68,19 @@ BindGlobal( "CREATE_BICOMPLEXES_CATEGORY",
         coch_cat := UnderlyingCategory( modeling_cat );
         
         objects := AsZFunction(
-                      i -> ObjectConstructor( coch_cat,
-                            [ AsZFunction( j -> datum[1](i, j) ),
+                      i -> CreateComplex( coch_cat,
+                              AsZFunction( j -> datum[1](i, j) ),
                               AsZFunction( j -> (-1)^i * datum[3](i, j) ),
                               datum[6],
-                              datum[7] ] ) );
+                              datum[7] ) );
         
         diffs := AsZFunction(
-                      i -> MorphismConstructor( coch_cat,
+                      i -> CreateComplexMorphism( coch_cat,
                               objects[i],
-                              [ AsZFunction( j -> datum[2]( i, j ) ),
-                              datum[6],
-                              datum[7] ],
+                              AsZFunction( j -> datum[2]( i, j ) ),
                               objects[i+index_shift] ) );
         
-        return ObjectConstructor( modeling_cat, [ objects, diffs, datum[4], datum[5] ] );
+        return CreateComplex( modeling_cat, objects, diffs, datum[4], datum[5] );
         
     end;
     
@@ -107,18 +105,14 @@ BindGlobal( "CREATE_BICOMPLEXES_CATEGORY",
         coch_cat := UnderlyingCategory( modeling_cat );
         
         morphisms := AsZFunction(
-                      i -> MorphismConstructor( coch_cat,
+                      i -> CreateComplexMorphism( coch_cat,
                             source[i],
-                            [ AsZFunction( j -> datum( i, j ) ),
-                              Minimum( LowerBound( source[i] ), LowerBound( range[i] ) ),
-                              Maximum( UpperBound( source[i] ), UpperBound( range[i] ) ) ],
+                            AsZFunction( j -> datum( i, j ) ),
                             range[i] ) );
         
-        return MorphismConstructor( modeling_cat,
+        return CreateComplexMorphism( modeling_cat,
                             source,
-                            [ morphisms,
-                              Minimum( LowerBound( source ), LowerBound( range ) ),
-                              Maximum( UpperBound( source ), UpperBound( range ) ) ],
+                            morphisms,
                             range );
         
     end;

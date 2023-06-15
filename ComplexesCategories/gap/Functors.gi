@@ -71,8 +71,6 @@ BindGlobal( "_complexes_ExtendFunctorToComplexesCategories",
                 T,
                 source,
                 ApplyMap( Morphisms( phi ), m -> ApplyFunctor( F, m ) ),
-                LowerBound( phi ),
-                UpperBound( phi ),
                 range ) );
     
     return ch_F;

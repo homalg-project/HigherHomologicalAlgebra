@@ -46,6 +46,8 @@ DeclareOperation( "CreateComplexMorphism", [ IsComplexesCategory, IsChainOrCocha
 #! @Returns a $\mathbb{Z}$-function
 DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
+DeclareAttribute( "UnderlyingCell", IsChainOrCochainMorphism );
+
 #! @Description
 #! Returns the morphism of $\phi$ at the index $i\in\mathbb{Z}$.
 #! @Arguments phi, i
@@ -59,28 +61,16 @@ KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue
 DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
 
 #! @Description
-#! Returns the lower bound $\ell$ of $\phi$. I.e., the morphisms $\phi^i$ are zero for all $i\prec\ell$.
+#! Returns an integer $\ell$ with $S^i=R^i=0$ for all $i\prec\ell$.
 #! @Arguments phi
 #! @Returns integer or infinity
 DeclareAttribute( "LowerBound", IsChainOrCochainMorphism );
 
 #! @Description
-#! Returns the upper bound $u$ of $\phi$. I.e., the morphisms $\phi^i$ are zero for all $i\succ u$.
-#! @Arguments phi
-#! @Returns integer or infinity
-DeclareAttribute( "UpperBound", IsChainOrCochainMorphism );
-
-#! @Description
-#! Returns an integer $\ell$ with $S^i=R^i=0$ for all $i\prec\ell$.
-#! @Arguments phi
-#! @Returns integer or infinity
-DeclareAttribute( "LowerBoundOfSourceAndRange", IsChainOrCochainMorphism );
-
-#! @Description
 #! Returns an integer $u$ with $S^i=R^i=0$ for all $i\succ u$.
 #! @Arguments phi
 #! @Returns integer or infinity
-DeclareAttribute( "UpperBoundOfSourceAndRange", IsChainOrCochainMorphism );
+DeclareAttribute( "UpperBound", IsChainOrCochainMorphism );
 
 #! @Description
 #! The input is a complex morphism $\phi$ and two integers $m,n$.

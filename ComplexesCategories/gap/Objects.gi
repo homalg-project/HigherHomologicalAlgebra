@@ -16,13 +16,13 @@
 InstallMethod( CreateComplex,
         [ IsComplexesCategory, IsList ],
   
-  function( ch_cat, L )
+  function( ch_cat, datum )
     
-    if not ( Length( L ) = 4 and IsZFunction( L[1] ) and IsZFunction( L[2] ) ) then
+    if not ( Length( datum ) = 4 and IsZFunction( datum[1] ) and IsZFunction( datum[2] ) ) then
       Error( "the list passed to 'CreateComplex' in ", TextAttr.4, Name( ch_cat ), TextAttr.reset, " must have 4 entries and the first two entries are IsZFunction's!\n" );
     fi;
     
-    return ObjectConstructor( ch_cat, L );
+    return ObjectConstructor( ch_cat, datum );
     
 end );
 

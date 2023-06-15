@@ -79,29 +79,17 @@ gap> for morphism_info in morphisms do
 >            morphism_info[4][1],
 >            EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
-gap> CohomologySupport( A ) = [ LowerBound( A ) .. UpperBound( A ) ];
-true
-gap> ObjectsSupport( A ) = [ LowerBound( A ) .. UpperBound( A ) ];
-true
-gap> DifferentialsSupport( A ) = [ LowerBound( A ) .. UpperBound( A ) - 1 ];
-true
-gap> ForAll( [ zeta, phi, tau ], IsWellDefined ) and ForAll( [ PreCompose( zeta, phi ), PreCompose( phi, tau ) ], IsZeroForMorphisms );
-true
-gap> ForAll( [ CokernelColift( phi, tau ), KernelLift( phi, zeta ) ], IsWellDefined );
-true
-gap> IsZero( tau - PreCompose( CokernelProjection( phi ), CokernelColift( phi, tau ) ) ) and IsZero( zeta - PostCompose( KernelEmbedding( phi ), KernelLift( phi, zeta ) ) );
-true
-gap> RankOfObject( HomStructure( S, KernelObject( phi ) ) ) = RankOfObject( HomStructure( CokernelObject( phi ), T ) );
-true
+gap> Assert( 0, CohomologySupport( A ) = [ LowerBound( A ) .. UpperBound( A ) ] );
+gap> Assert( 0, ObjectsSupport( A ) = [ LowerBound( A ) .. UpperBound( A ) ] );
+gap> Assert( 0, DifferentialsSupport( A ) = [ LowerBound( A ) .. UpperBound( A ) - 1 ] );
+gap> Assert( 0, ForAll( [ zeta, phi, tau ], IsWellDefined ) and ForAll( [ PreCompose( zeta, phi ), PreCompose( phi, tau ) ], IsZeroForMorphisms ) );
+gap> Assert( 0, ForAll( [ CokernelColift( phi, tau ), KernelLift( phi, zeta ) ], IsWellDefined ) );
+gap> Assert( 0, IsZero( tau - PreCompose( CokernelProjection( phi ), CokernelColift( phi, tau ) ) ) and IsZero( zeta - PostCompose( KernelEmbedding( phi ), KernelLift( phi, zeta ) ) ) );
+gap> Assert( 0, RankOfObject( HomStructure( S, KernelObject( phi ) ) ) = RankOfObject( HomStructure( CokernelObject( phi ), T ) ) );
 gap> iota := ImageEmbedding( phi );; pi := CoimageProjection( phi );;
-gap> ForAll( [ iota, pi ], IsWellDefined ) and IsMonomorphism( iota ) and IsEpimorphism( pi );
-true
-gap> Length( LaTeXOutput( A ) );
-4131
-gap> Length( LaTeXOutput( AsChainComplex( A ) ) );
-4146
-gap> Length( LaTeXOutput( phi ) );
-14104
-gap> Length( LaTeXOutput( AsChainComplexMorphism( phi ) ) );
-14107
+gap> Assert( 0, ForAll( [ iota, pi ], IsWellDefined ) and IsMonomorphism( iota ) and IsEpimorphism( pi ) );
+gap> Assert( 0, Length( LaTeXOutput( A ) ) = 4131 );
+gap> Assert( 0, Length( LaTeXOutput( AsChainComplex( A ) ) ) = 4146 );
+gap> Assert( 0, Length( LaTeXOutput( phi ) ) = 14104 );
+gap> Assert( 0, Length( LaTeXOutput( AsChainComplexMorphism( phi ) ) ) = 14107 );
 gap> SetInfoLevel( InfoWarning, 1 );

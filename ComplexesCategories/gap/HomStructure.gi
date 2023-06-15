@@ -96,18 +96,12 @@ end );
 BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
   
   function ( ch_cat, hom_BC, phi, psi, hom_AD )
-    local cat, range_cat, ch_range_cat, A, B, C, D, l_phi, u_phi, l_psi, u_psi, l_A, u_A, l_B, u_B, l_C, u_C, l_D, u_D, morphisms;
+    local cat, range_cat, ch_range_cat, A, l_A, u_A, B, l_B, u_B, C, l_C, u_C, D, l_D, u_D, morphisms;
     
     cat := UnderlyingCategory( ch_cat );
     
     range_cat := RangeCategoryOfHomomorphismStructure( cat );
     ch_range_cat := ComplexesCategoryByCochains( range_cat );
-    
-    l_phi := LowerBound( phi );
-    u_phi := UpperBound( phi );
-    
-    l_psi := LowerBound( psi );
-    u_psi := UpperBound( psi );
     
     A := Source( phi );
     l_A := LowerBound( A );
@@ -165,7 +159,7 @@ BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
             
         end );
         
-    return CreateComplexMorphism( ch_range_cat, hom_BC, morphisms, l_psi - u_phi, u_psi - l_phi, hom_AD );
+    return CreateComplexMorphism( ch_range_cat, hom_BC, morphisms, hom_AD );
     
 end );
 

@@ -4,362 +4,167 @@
 # Implementations
 #
 
-##
-InstallValue( CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY,
-        [
-          "AdditionForMorphisms",
-          "AdditiveInverseForMorphisms",
-          "CoastrictionToImage",
-          "CoastrictionToImageWithGivenImageObject",
-          #"Coequalizer",
-          #"CoequalizerFunctorialWithGivenCoequalizers",
-          "CokernelColift",
-          "CokernelColiftWithGivenCokernelObject",
-          "CokernelObject",
-          "CokernelObjectFunctorialWithGivenCokernelObjects",
-          "CokernelProjection",
-          "CokernelProjectionWithGivenCokernelObject",
-          "ColiftAlongEpimorphism",
-          "ComponentOfMorphismFromDirectSum",
-          "ComponentOfMorphismIntoDirectSum",
-          "Coproduct",
-          "CoproductFunctorialWithGivenCoproducts",
-          "DirectProduct",
-          "DirectProductFunctorialWithGivenDirectProducts",
-          "DirectSum",
-          "DirectSumCodiagonalDifference",
-          "DirectSumDiagonalDifference",
-          "DirectSumFunctorialWithGivenDirectSums",
-          "DirectSumProjectionInPushout",
-          #"EmbeddingOfEqualizer",
-          #"EmbeddingOfEqualizerWithGivenEqualizer",
-          #"Equalizer",
-          #"EqualizerFunctorialWithGivenEqualizers",
-          "FiberProduct",
-          "FiberProductEmbeddingInDirectSum",
-          "FiberProductFunctorialWithGivenFiberProducts",
-          "IdentityMorphism",
-          "ImageEmbedding",
-          "ImageEmbeddingWithGivenImageObject",
-          "ImageObject",
-          "InitialObject",
-          "InitialObjectFunctorial",
-          "InjectionOfCofactorOfCoproduct",
-          "InjectionOfCofactorOfCoproductWithGivenCoproduct",
-          "InjectionOfCofactorOfDirectSum",
-          "InjectionOfCofactorOfDirectSumWithGivenDirectSum",
-          "InjectionOfCofactorOfPushout",
-          "InjectionOfCofactorOfPushoutWithGivenPushout",
-          "InverseForMorphisms",
-          #"IsomorphismFromCoequalizerOfCoproductDiagramToPushout",
-          "IsomorphismFromCokernelOfDiagonalDifferenceToPushout",
-          "IsomorphismFromCoproductToDirectSum",
-          "IsomorphismFromDirectProductToDirectSum",
-          "IsomorphismFromDirectSumToCoproduct",
-          "IsomorphismFromDirectSumToDirectProduct",
-          "IsomorphismFromEqualizerOfDirectProductDiagramToFiberProduct",
-          #"IsomorphismFromFiberProductToEqualizerOfDirectProductDiagram",
-          "IsomorphismFromFiberProductToKernelOfDiagonalDifference",
-          "IsomorphismFromInitialObjectToZeroObject",
-          "IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct",
-          #"IsomorphismFromPushoutToCoequalizerOfCoproductDiagram",
-          "IsomorphismFromPushoutToCokernelOfDiagonalDifference",
-          "IsomorphismFromTerminalObjectToZeroObject",
-          "IsomorphismFromZeroObjectToInitialObject",
-          "IsomorphismFromZeroObjectToTerminalObject",
-          "IsEpimorphism",
-          "IsIsomorphism",
-          "IsMonomorphism",
-          "IsZeroForMorphisms",
-          "IsZeroForObjects",
-          "KernelEmbedding",
-          "KernelEmbeddingWithGivenKernelObject",
-          "KernelLift",
-          "KernelLiftWithGivenKernelObject",
-          "KernelObject",
-          "KernelObjectFunctorialWithGivenKernelObjects",
-          "LiftAlongMonomorphism",
-          ##"MorphismBetweenDirectSumsWithGivenDirectSums",
-          ##"MorphismFromFiberProductToSink", # use their derivation
-          ##"MorphismFromFiberProductToSinkWithGivenFiberProduct", # use their derivation
-          "MorphismFromSourceToPushout",
-          "MorphismFromSourceToPushoutWithGivenPushout",
-          "MultiplyWithElementOfCommutativeRingForMorphisms",
-          "PostCompose",
-          "PreCompose",
-          "ProjectionInFactorOfDirectProduct",
-          "ProjectionInFactorOfDirectProductWithGivenDirectProduct",
-          "ProjectionInFactorOfDirectSum",
-          "ProjectionInFactorOfDirectSumWithGivenDirectSum",
-          "ProjectionInFactorOfFiberProduct",
-          "ProjectionInFactorOfFiberProductWithGivenFiberProduct",
-          #"ProjectionOntoCoequalizer",
-          #"ProjectionOntoCoequalizerWithGivenCoequalizer",
-          "Pushout",
-          "PushoutFunctorialWithGivenPushouts",
-          "SubtractionForMorphisms",
-          "TerminalObject",
-          "TerminalObjectFunctorial",
-          #"UniversalMorphismFromCoequalizer",
-          #"UniversalMorphismFromCoequalizerWithGivenCoequalizer",
-          "UniversalMorphismFromCoproduct",
-          "UniversalMorphismFromCoproductWithGivenCoproduct",
-          "UniversalMorphismFromDirectSum",
-          "UniversalMorphismFromDirectSumWithGivenDirectSum",
-          "UniversalMorphismFromImage",
-          "UniversalMorphismFromImageWithGivenImageObject",
-          "UniversalMorphismFromInitialObject",
-          "UniversalMorphismFromInitialObjectWithGivenInitialObject",
-          "UniversalMorphismFromPushout",
-          "UniversalMorphismFromPushoutWithGivenPushout",
-          "UniversalMorphismFromZeroObject",
-          "UniversalMorphismFromZeroObjectWithGivenZeroObject",
-          "UniversalMorphismIntoDirectProduct",
-          "UniversalMorphismIntoDirectProductWithGivenDirectProduct",
-          "UniversalMorphismIntoDirectSum",
-          "UniversalMorphismIntoDirectSumWithGivenDirectSum",
-          #"UniversalMorphismIntoEqualizer",
-          #"UniversalMorphismIntoEqualizerWithGivenEqualizer",
-          "UniversalMorphismIntoFiberProduct",
-          "UniversalMorphismIntoFiberProductWithGivenFiberProduct",
-          "UniversalMorphismIntoTerminalObject",
-          "UniversalMorphismIntoTerminalObjectWithGivenTerminalObject",
-          "UniversalMorphismIntoZeroObject",
-          "UniversalMorphismIntoZeroObjectWithGivenZeroObject",
-          "ZeroMorphism",
-          "ZeroObject",
-          "ZeroObjectFunctorial",
-         ] );
+
+BindGlobal( "INTEGERS_CAT",
+  
+  function ( )
+    local category;
+     
+    if IsPackageMarkedForLoading( "Locales", ">= 2023.05-05" ) then
+        
+        return ValueGlobal( "TotalOrderAsCategory" )( "IsInt", {a,b} -> a >= b );
+        
+    else
+        
+        category := CreateCapCategory( "TotalOrderAsCategory( \"IsInt\" )" );
+        category!.category_as_first_argument := true;
+        
+        AddObjectConstructor( category, { cat, i } -> CreateCapCategoryObjectWithAttributes( cat, ObjectDatum, i ) );
+        AddMorphismConstructor( category, { cat, s, datum, r } -> CreateCapCategoryMorphismWithAttributes( cat, s, r ) );
+        
+        AddPreCompose( category, { cat, u, v } -> MorphismConstructor( cat, Source( u ), true, Range( v ) ) );
+        AddIdentityMorphism( category, { cat, u } -> MorphismConstructor( cat, Source( u ), true, Range( u ) ) );
+        
+        AddIsWellDefinedForMorphisms( category, { cat, u } -> ObjectDatum( Source( u ) ) >= ObjectDatum( Range( u ) ) );
+        
+        AddIsEqualForObjects( category, { cat, i, j } -> IsIdenticalObj( ObjectDatum( i ), ObjectDatum( j ) ) );
+        AddIsEqualForMorphisms( category, { cat, u, v } -> IsEqualForObjects( Source( u ), Source( u ) ) and IsEqualForObjects( Range( u ), Range( u ) ) );
+        
+        Finalize( category );
+        
+        return category;
+        
+    fi;
+    
+end ( ) );
+
+BindGlobal( "INTEGERS_CAT_OBJS",
+  
+  AsZFunction( i -> ObjectConstructor( INTEGERS_CAT, i ) )
+);
+
+BindGlobal( "INTEGERS_CAT_MORS",
+  
+  AsZFunction( i -> MorphismConstructor( INTEGERS_CAT, INTEGERS_CAT_OBJS[i+1], true, INTEGERS_CAT_OBJS[i] ) )
+);
 
 ##
-InstallMethod( ComplexesCategoryByCochains,
-        [ IsCapCategory and IsAbCategory ],
-        
+InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
+  
   function ( cat )
-    local coch_cat, name, list_of_operations,
-          object_constructor, object_datum, morphism_constructor, morphism_datum,
-          create_func_bool, create_func_object, create_func_morphism,
-          list_of_operations_to_install, skip, func, pos, commutative_ring,
-          properties, preinstall, supports_empty_limits, prop;
+    local presh_cat, category_filter, category_object_filter, category_morphism_filter, commutative_ring, properties, object_constructor,
+          object_datum, morphism_constructor, morphism_datum, union_of_supports, list_of_operations_to_install, create_func_bool,
+          create_func_object, create_func_morphism, supports_empty_limits, name, modeling_cat;
     
-    name := Concatenation( "Complexes category by cochains( ", Name( cat ), " )" );
+    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false );
     
-    ##
-    object_constructor := { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat,
-                                                            Objects, datum[1],
-                                                            Differentials, datum[2],
-                                                            LowerBound, datum[3],
-                                                            UpperBound, datum[4] );
-
+    name := Concatenation( "Bounded ", Name( presh_cat ) );
     
-    ##
-    object_datum := { coch_cat, o } -> [ Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) ];
+    category_filter := IsCapCategory;
+    category_object_filter := IsCapCategoryObject;
+    category_morphism_filter := IsCapCategoryMorphism;
     
-    ##
-    morphism_constructor := { coch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( coch_cat,
-                                                            S, R,
-                                                            Morphisms, datum[1],
-                                                            LowerBound, datum[2],
-                                                            UpperBound, datum[3] );
-    
-    ##
-    morphism_datum := { coch_cat, m } -> [ Morphisms( m ), LowerBound( m ), UpperBound( m ) ];
-    
-    ## operations to be installed
-    ##
-    list_of_operations := ShallowCopy( CAP_INTERNAL_METHOD_NAME_LIST_FOR_COCHAIN_COMPLEXES_CATEGORY );
-    
-    list_of_operations_to_install := ShallowCopy( ListInstalledOperationsOfCategory( cat ) );
-    
-    list_of_operations_to_install := Intersection( list_of_operations_to_install, list_of_operations );
-    
-    skip := [ "MultiplyWithElementOfCommutativeRingForMorphisms",
-              ];
-    
-    for func in skip do
-        
-        pos := Position( list_of_operations_to_install, func );
-        
-        if IsInt( pos ) then
-            Remove( list_of_operations_to_install, pos );
-        fi;
-        
-    od;
-    
-    if HasCommutativeRingOfLinearCategory( cat ) then
-        commutative_ring := CommutativeRingOfLinearCategory( cat );
+    if HasCommutativeRingOfLinearCategory( presh_cat ) then
+        commutative_ring := CommutativeRingOfLinearCategory( presh_cat );
     else
         commutative_ring := fail;
     fi;
     
-    properties := [ "IsAbCategory",
-                    "IsLinearCategoryOverCommutativeRing",
-                    "IsAdditiveCategory",
-                    "IsPreAbelianCategory",
-                    "IsAbelianCategory",
-                    ];
+    properties := ListKnownCategoricalProperties( presh_cat );
     
-    properties := Intersection( ListKnownCategoricalProperties( cat ), properties );
+    # e.g., datum = Pair( presheaf, Pair( lower_bound, upper_bound ) )
+    object_constructor :=
+      { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat, ObjectDatum, datum );
     
-    create_func_bool :=
-          function ( name, coch_cat )
-            return
-              """
-              function( input_arguments... )
-                local L;
-                
-                L := NTuple( number_of_arguments, input_arguments... );
-                
-                return ForAll( [ LowerBound( L[2] ) .. UpperBound( L[2] ) ], i -> operation_name( L[2][i] ) );
-                
-              end
-              """;
-          end;
+    object_datum := { coch_cat, o } -> ObjectDatum( o );
     
-    create_func_object :=
-      function ( name, coch_cat )
-        local info, functorial;
+    # e.g., datum = presheaf_morphism
+    morphism_constructor :=
+      { coch_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( coch_cat, S, R, MorphismDatum, datum );
+    
+    morphism_datum := { coch_cat, m } -> MorphismDatum( m );
+    
+    union_of_supports :=
+      function ( supports )
         
-        info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
-        
-        if not IsBound( info.functorial ) then
-            Error( "the method record entry ", name, ".functorial is not bound\n" );
-        fi;
-        
-        functorial := CAP_INTERNAL_METHOD_NAME_RECORD.(info.functorial);
-        
-        if name in [ "TerminalObject", "InitialObject", "ZeroObject" ] then
-            
-            return ## a constructor for universal objects: TerminalObject
-              ReplacedStringViaRecord(
-              """
-              function ( input_arguments... )
-                local underlying_cat, objects, morphisms;
-                
-                underlying_cat := UnderlyingCategory( cat );
-                
-                objects := AsZFunction( i -> operation_name( underlying_cat ) );
-                
-                morphisms := AsZFunction( i -> functorial( underlying_cat ) );
-                
-                return ObjectConstructor( cat, [ objects, morphisms, 0, 0 ] );
-                
-              end
-              """,
-            rec( functorial := info.functorial ) );
-            
-        elif name in [ "FiberProduct", "Pushout" ] then
-            
-            return ## a constructor for universal objects: FiberProduct
-              ReplacedStringViaRecord(
-              """
-              function ( input_arguments... )
-                local underlying_cat, i_arg, D, l_D, u_D, objs, diffs, l;
-                
-                underlying_cat := UnderlyingCategory( cat );
-                
-                i_arg := NTuple( number_of_arguments, input_arguments... );
-                
-                D := i_arg[2];
-                
-                l_D := Minimum( List( D, LowerBoundOfSourceAndRange ) );
-                u_D := Maximum( List( D, UpperBoundOfSourceAndRange ) );
-                
-                objs := AsZFunction( i -> operation_name( underlying_cat, List( D, m -> MorphismAt( m, i ) ) ) );
-                
-                diffs :=
-                  AsZFunction(
-                    function ( i )
-                      local l;
-                      
-                      #
-                      #                     S^i
-                      #            S[i] -------- > S[i+1]
-                      #             |                |
-                      #      eta[i] |                | eta[i+1]
-                      #             v                v
-                      #            R[i] -------- > R[i+1]
-                      #                     R^i
-                      
-                      l := List( D, m -> [ MorphismAt( m, i ), DifferentialAt( Source( m ), i ), DifferentialAt( Range( m ), i ), MorphismAt( m, i+1 ) ] );
-                      
-                      l := TransposedMat( l );
-                      
-                      return _complexes_functorial( underlying_cat, objs[i], l[1], l[2], l[3], l[4], objs[i+1] );
-                      
-                    end );
-                
-                return ObjectConstructor( cat, [ objs, diffs, l_D, u_D ] );
-                
-              end
-              """,
-            rec( functorial := functorial.with_given_without_given_name_pair[2] ) );
-            
-        elif name in [ "DirectProduct", "Coproduct", "DirectSum" ] then
-            
-            return ## a constructor for universal objects: DirectSum
-              ReplacedStringViaRecord(
-              """
-              function ( input_arguments... )
-                local underlying_cat, i_arg, D, l_D, u_D, objs, diffs;
-                
-                underlying_cat := UnderlyingCategory( cat );
-                
-                i_arg := NTuple( number_of_arguments, input_arguments... );
-                
-                D := i_arg[2];
-                
-                if IsEmpty( D ) then
-                  l_D := 0;
-                  u_D := 0;
-                else
-                  l_D := Minimum( List( D, LowerBound ) );
-                  u_D := Maximum( List( D, UpperBound ) );
-                fi;
-                
-                objs := AsZFunction( i -> operation_name( underlying_cat, List( D, o -> ObjectAt( o, i ) ) ) );
-                
-                diffs := AsZFunction( i -> functorial( underlying_cat, objs[i], List( D, o -> DifferentialAt( o, i ) ), objs[i+1] ) );
-                
-                return ObjectConstructor( cat, [ objs, diffs, l_D, u_D ] );
-                
-              end
-              """,
-            rec( functorial := functorial.with_given_without_given_name_pair[2] ) );
-            
-        elif name in [ "KernelObject", "CokernelObject", "ImageObject", "CoimageObject" ] then
-            
-            return ## a constructor for universal objects: KernelObject
-              ReplacedStringViaRecord(
-              """
-              function ( input_arguments... )
-                local underlying_cat, i_arg, m, objs, diffs;
-                
-                underlying_cat := UnderlyingCategory( cat );
-                
-                i_arg := NTuple( number_of_arguments, input_arguments... );
-                
-                m := i_arg[2];
-                
-                objs := AsZFunction( i -> operation_name( underlying_cat, m[i] ) );
-                
-                diffs := AsZFunction( i -> _complexes_functorial( underlying_cat, objs[i], MorphismAt( m, i ), DifferentialAt( Source( m ), i ), DifferentialAt( Range( m ), i ), MorphismAt( m, i+1 ), objs[i+1] ) );
-                
-                return ObjectConstructor( cat, [ objs, diffs, LowerBoundOfSourceAndRange(m), UpperBoundOfSourceAndRange(m) ] );
-                
-              end
-              """,
-            rec( functorial := functorial.with_given_without_given_name_pair[2] ) );
-            
+        if supports = [ ] then
+            return Pair( 0, 0 );
         else
-            
-            Print( "WARNING: the category constructor CochainComplexCategory cannot deal with ", name, " yet\n" );
-            return "ReturnNothing";
+            return Pair( Minimum( List( supports, s -> s[1] ) ), Maximum( List( supports, s -> s[2] ) ) );
         fi;
         
     end;
     
-    ## e.g., IdentityMorphism, PreCompose
+    list_of_operations_to_install := Filtered( ListPrimitivelyInstalledOperationsOfCategory( presh_cat ), name -> CAP_INTERNAL_METHOD_NAME_RECORD.(name).return_type <> "bool" );
+    
+    create_func_bool := "default"; # this function will never be used
+    
+    create_func_object :=
+      function ( name, coch_cat )
+          local info;
+          
+          info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
+          
+          return
+            ReplacedStringViaRecord(
+            """
+            function( input_arguments... )
+              local presh_cat, i_arg;
+              
+              presh_cat := UnderlyingCategory( cat );
+              
+              i_arg := NTuple( number_of_arguments, input_arguments... );
+              
+              return ObjectConstructor( cat, Pair( operation_name( sequence_of_arguments... ), bounds ) );
+              
+            end
+            """,
+            rec( sequence_of_arguments :=
+              List( [ 1 .. Length( info.filter_list ) ],
+                function ( j )
+                  local type;
+                  
+                  type := info.filter_list[j];
+                  
+                  if j = 1 and type = "category" then
+                      return "presh_cat";
+                  elif type = "object" then
+                      return Concatenation( "ObjectDatum( i_arg[", String( j ), "] )[1]" );
+                  elif type = "morphism" then
+                      return Concatenation( "MorphismDatum( i_arg[", String( j ), "] )" );
+                  elif type = "list_of_objects" then
+                      return Concatenation( "List( i_arg[", String( j ), "],  o -> ObjectDatum( cat, o )[1] )" );
+                  elif type = "list_of_morphisms" then
+                      return Concatenation( "List( i_arg[", String( j ), "],  m -> MorphismDatum( cat, m ) )" );
+                  else
+                      Error( "can only deal with 'object', 'morphism', 'list_of_objects', 'list_of_morphisms'" );
+                  fi;
+                  
+            end ),
+            bounds :=
+               (function()
+                  local types;
+                  
+                  types := info.filter_list;
+                  
+                  if types = [ "category" ] then # e.g., ZeroObject, InitialObject, TerminalObject, ...
+                      return "Pair( 0, 0 )";
+                  elif types[2] = "object" then # e.g., (Co)Equalizer, ...
+                      return "ObjectDatum( cat, i_arg[2] )[2]";
+                  elif types[2] = "morphism" then # e.g., (Co)KernelObject, (Co)ImageObject, ...
+                      return Concatenation( String( union_of_supports ), "( List( [ Source( i_arg[2] ), Range( i_arg[2] ) ], c -> ObjectDatum( cat, c )[2] ) )" );
+                  elif types[2] = "list_of_objects" then # e.g., Coproduct, DirectProduct, DirectSum, ...
+                      return Concatenation( String( union_of_supports ), "( List( i_arg[2], c -> ObjectDatum( cat, c )[2] ) )" );
+                  elif types[2] = "list_of_morphisms" then # Pushout, FiberProduct, ...
+                      return Concatenation( String( union_of_supports ), "( List( Concatenation( List( i_arg[2], m -> Source( m ) ), List( i_arg[2], m -> Range( m ) ) ), c -> ObjectDatum( cat, c )[2] ) )" );
+                  else
+                      Error( "can only deal with 'object', 'morphism', 'list_of_objects', 'list_of_morphisms'" );
+                  fi;
+                  
+                end)( ) ) );
+                
+      end;
+    
     create_func_morphism :=
       function ( name, cat )
         local info;
@@ -370,77 +175,196 @@ InstallMethod( ComplexesCategoryByCochains,
           ReplacedStringViaRecord(
           """
           function ( input_arguments... )
-            local underlying_cat, i_arg, l, u, mors;
+            local presh_cat, i_arg;
             
-            underlying_cat := UnderlyingCategory( cat );
+            presh_cat := UnderlyingCategory( cat );
             
             i_arg := NTuple( number_of_arguments, input_arguments... );
             
-            l := Maximum( List( [ top_source, top_range ], LowerBound ) );
-            u := Minimum( List( [ top_source, top_range ], UpperBound ) );
-            
-            mors := AsZFunction( i -> operation_name( underlying_cat, sequence_of_arguments... ) );
-            
-            return MorphismConstructor( cat, top_source, [ mors, l, u ], top_range );
+            return MorphismConstructor( cat, top_source, operation_name( sequence_of_arguments... ), top_range );
             
         end
         """,
         rec( sequence_of_arguments :=
-             List( [ 2 .. Length( info.filter_list ) ],
+             List( [ 1 .. Length( info.filter_list ) ],
                    function( j )
                      local type;
                      
                      type := info.filter_list[j];
                      
-                     if type = "integer" then
-                         return Concatenation( "i_arg[", String( j ), "]" );
+                     if j = 1 and type = "category" then
+                        return "presh_cat";
+                     elif type in [ "integer", "element_of_commutative_ring_of_linear_structure" ] then
+                        return Concatenation( "i_arg[", String( j ), "]" );
                      elif type = "object" then
-                         return Concatenation( "ObjectAt( i_arg[", String( j ), "], i )" );
+                        return Concatenation( "ObjectDatum( cat, i_arg[", String( j ), "] )[1]" );
                      elif type = "morphism" then
-                         return Concatenation( "MorphismAt( i_arg[", String( j ), "], i )" );
+                        return Concatenation( "MorphismDatum( i_arg[", String( j ), "] )" );
                      elif type = "list_of_objects" then
-                         return Concatenation( "List( i_arg[", String( j ), "], o -> ObjectAt( o, i ) )" );
+                        return Concatenation( "List( i_arg[", String( j ), "], o -> ObjectDatum( cat, o )[1] )" );
                      elif type = "list_of_morphisms" then
-                         return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismAt( m, i ) )" );
+                        return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismDatum( cat, m ) )" );
                      elif type = "pair_of_morphisms" then
-                         return Concatenation( "Pair( MorphismAt( i_arg[", String( j ), "][1], i ), MorphismAt( i_arg[", String( j ), "][2], i ) )" );
+                        return Concatenation( "Pair( ", "MorphismDatum( cat, i_arg[", String( j ), "][1] )", ", MorphismDatum( cat, i_arg[", String( j ), "][2] )", " )" );
                      else
-                         Error( "cannot deal with ", type );
+                        Error( "can only deal with 'integer', 'object', 'morphism', 'list_of_objects', 'list_of_morphisms', 'pair_of_morphisms'" );
                      fi;
                      
                   end ) ) );
     
     end;
     
-    if IsBound( cat!.supports_empty_limits ) then
-        supports_empty_limits := cat!.supports_empty_limits;
-    else
-        supports_empty_limits := false;
-    fi;
+    supports_empty_limits := true;
     
-    coch_cat := CategoryConstructor(
-                rec( name := name,
-                     category_filter := IsComplexesCategoryByCochains,
-                     category_object_filter := IsCochainComplex,
-                     category_morphism_filter := IsCochainMorphism,
-                     commutative_ring_of_linear_category := commutative_ring,
-                     properties := properties,
-                     object_constructor := object_constructor,
-                     object_datum := object_datum,
-                     morphism_constructor := morphism_constructor,
-                     morphism_datum := morphism_datum,
-                     underlying_category_getter_string := "UnderlyingCategory",
-                     list_of_operations_to_install := list_of_operations_to_install,
-                     supports_empty_limits := supports_empty_limits,
-                     create_func_bool := create_func_bool,
-                     create_func_object := create_func_object,
-                     create_func_morphism := create_func_morphism ) );
+    modeling_cat := CategoryConstructor(
+                      rec( name := name,
+                           category_filter := category_filter,
+                           category_object_filter := category_object_filter,
+                           category_morphism_filter := category_morphism_filter,
+                           commutative_ring_of_linear_category := commutative_ring,
+                           properties := properties,
+                           object_constructor := object_constructor,
+                           object_datum := object_datum,
+                           morphism_constructor := morphism_constructor,
+                           morphism_datum := morphism_datum,
+                           underlying_category_getter_string := "UnderlyingCategory",
+                           list_of_operations_to_install := list_of_operations_to_install,
+                           supports_empty_limits := supports_empty_limits,
+                           create_func_bool := create_func_bool,
+                           create_func_object := create_func_object,
+                           create_func_morphism := create_func_morphism ) : overhead := false );
+    
+    SetUnderlyingCategory( modeling_cat, presh_cat );
+    
+    modeling_cat!.is_computable := false;
+    
+    Finalize( modeling_cat );
+    
+    return modeling_cat;
+    
+end );
+
+##
+##
+InstallMethod( ComplexesCategoryByCochains,
+        "for a CAP category",
+        [ IsCapCategory ],
+        
+  function ( cat )
+    local modeling_cat, object_constructor, object_datum, morphism_constructor, morphism_datum, modeling_tower_object_constructor, modeling_tower_object_datum,
+      modeling_tower_morphism_constructor, modeling_tower_morphism_datum, coch_cat, category_filter, category_object_filter, category_morphism_filter;
+    
+    ## building the categorical tower
+    
+    modeling_cat := COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER( cat );
+    
+    ##
+    object_constructor := { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat,
+                                                            Objects, datum[1],
+                                                            Differentials, datum[2],
+                                                            LowerBound, datum[3],
+                                                            UpperBound, datum[4] );
+
+    
+    ##
+    object_datum := { coch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
+    
+    ##
+    morphism_constructor := { coch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( coch_cat,
+                                                            S, R,
+                                                            Morphisms, datum );
+    
+    ##
+    morphism_datum := { coch_cat, m } -> Morphisms( m );
+    
+    ## from the raw object data to the object in the highest stage of the tower
+    modeling_tower_object_constructor :=
+      function( coch_cat, datum )
+        local modeling_cat, presh_cat, presheaf_on_objects, presheaf_on_morphisms, presheaf;
+        
+        modeling_cat := ModelingCategory( coch_cat );
+        presh_cat := UnderlyingCategory( modeling_cat );
+        
+        presheaf_on_objects := i -> datum[1][ObjectDatum( i )];
+        presheaf_on_morphisms := {s, i, r} -> datum[2][ObjectDatum( Range( i ) )];
+        
+        presheaf := ObjectConstructor( presh_cat, Pair( presheaf_on_objects, presheaf_on_morphisms ) );
+        
+        return ObjectConstructor( modeling_cat, Pair( presheaf, Pair( datum[3], datum[4] ) ) );
+        
+    end;
+    
+    ## from the object in the highest stage of the tower to the raw object datum
+    modeling_tower_object_datum :=
+      function( coch_cat, obj )
+        local presheaf, objs, mors;
+        
+        presheaf := ObjectDatum( obj )[1];
+        
+        objs := AsZFunction( i -> PairOfFunctionsOfPreSheaf( presheaf )[1]( INTEGERS_CAT_OBJS[i] ) );
+        mors := AsZFunction( i -> PairOfFunctionsOfPreSheaf( presheaf )[2]( objs[i], INTEGERS_CAT_MORS[i], objs[i+1] ) );
+        
+        return NTuple( 4, objs, mors, ObjectDatum( obj )[2][1], ObjectDatum( obj )[2][2] );
+        
+    end;
+    
+    ## from the raw morphism datum to the morphism in the highest stage of the tower
+    modeling_tower_morphism_constructor :=
+      function( coch_cat, source, datum, range )
+        local modeling_cat, presh_cat, nat_trans_on_objs, presheaf_morphism;
+        
+        modeling_cat := ModelingCategory( coch_cat );
+        presh_cat := UnderlyingCategory( modeling_cat );
+        
+        nat_trans_on_objs := {s, i, r} -> datum[ObjectDatum( i )];
+        presheaf_morphism := MorphismConstructor( presh_cat, ObjectDatum( source )[1], nat_trans_on_objs, ObjectDatum( range )[1] );
+        
+        return MorphismConstructor( modeling_cat, source, presheaf_morphism, range );
+        
+    end;
+    
+    ## from the morphism in the highest stage of the tower to the raw morphism datum
+    modeling_tower_morphism_datum :=
+      function( ch_cat, mor )
+        
+        return AsZFunction(
+                  function ( i )
+                    local presheaf_mor;
+                    
+                    i := INTEGERS_CAT_OBJS[i];
+                    presheaf_mor := MorphismDatum( mor );
+                    
+                    return FunctionOfPreSheafMorphism( presheaf_mor )(
+                                PairOfFunctionsOfPreSheaf( Source( presheaf_mor ) )[1]( i ),
+                                i,
+                                PairOfFunctionsOfPreSheaf( Range ( presheaf_mor ) )[1]( i ) );
+                    
+                  end );
+        
+    end;
+    
+    ##
+    coch_cat :=
+      ReinterpretationOfCategory( modeling_cat,
+              rec( name := Concatenation( "Complexes category by cochains( ", Name( cat ), " )" ),
+                   category_filter := IsComplexesCategoryByCochains,
+                   category_object_filter := IsCochainComplex,
+                   category_morphism_filter := IsCochainMorphism,
+                   object_constructor := object_constructor,
+                   object_datum := object_datum,
+                   morphism_datum := morphism_datum,
+                   morphism_constructor := morphism_constructor,
+                   modeling_tower_object_constructor := modeling_tower_object_constructor,
+                   modeling_tower_object_datum := modeling_tower_object_datum,
+                   modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
+                   modeling_tower_morphism_datum := modeling_tower_morphism_datum,
+                   only_primitive_operations := true ) : FinalizeCategory := false );
     
     SetUnderlyingCategory( coch_cat, cat );
     
+    ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
     ADD_FUNCTIONS_OF_LINEARITY_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
     ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
-    ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
     ADD_FUNCTIONS_OF_WELL_DEFINEDNESS_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
     ADD_FUNCTIONS_OF_RANDOM_METHODS_TO_COCHAIN_COMPLEX_CATEGORY( coch_cat );
     
@@ -450,6 +374,9 @@ InstallMethod( ComplexesCategoryByCochains,
     
 end );
 
+
+
+##
 InstallGlobalFunction( ADD_FUNCTIONS_OF_LINEARITY_TO_COCHAIN_COMPLEX_CATEGORY,
   function( ch_cat )
     
@@ -462,10 +389,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_LINEARITY_TO_COCHAIN_COMPLEX_CATEGORY,
             
             cat := UnderlyingCategory( ch_cat );
              
-            return MorphismConstructor(
+            return CreateComplexMorphism(
                         ch_cat,
                         Source( phi ),
-                        [ ApplyMap( Morphisms( phi ), m -> MultiplyWithElementOfCommutativeRingForMorphisms( cat, r, m ) ), LowerBound( phi ), UpperBound( phi ) ],
+                        ApplyMap( Morphisms( phi ), m -> MultiplyWithElementOfCommutativeRingForMorphisms( cat, r, m ) ),
                         Range( phi ) );
         
         end );
@@ -477,9 +404,16 @@ end );
 InstallGlobalFunction( ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY,
   function( ch_cat )
     
+    AddIsEqualForCacheForObjects( ch_cat,
+      function ( ch_cat, B, C )
+        
+        return IsIdenticalObj( B, C );
+        
+    end );
+    
     AddIsEqualForObjects( ch_cat,
       function ( ch_cat, B, C )
-        local cat, l_BC, u_BC;
+        local cat, lC, uC;
         
         cat := UnderlyingCategory( ch_cat );
         
@@ -487,14 +421,21 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY,
           return true;
         fi;
         
-        l_BC := Minimum( LowerBound( B ), LowerBound( C ) );
-        u_BC := Maximum( UpperBound( B ), UpperBound( C ) );
+        lC := Minimum( LowerBound( B ), LowerBound( C ) );
+        uC := Maximum( UpperBound( B ), UpperBound( C ) );
         
-        return ForAll( [ l_BC .. u_BC ], i -> IsEqualForObjects( cat, B[i], C[i] ) ) and
-                  ForAll( [ l_BC .. u_BC ], i -> IsEqualForMorphisms( cat, B^i, C^i ) );
+        return ForAll( [ lC .. uC ], i -> IsEqualForObjects( cat, B[i], C[i] ) ) and
+                  ForAll( [ lC .. uC ], i -> IsEqualForMorphisms( cat, B^i, C^i ) );
         
     end );
-
+    
+    AddIsEqualForCacheForMorphisms( ch_cat,
+      function ( ch_cat, phi, psi )
+        
+        return IsIdenticalObj( phi, psi );
+        
+    end );
+    
     AddIsEqualForMorphisms( ch_cat,
       function ( ch_cat, phi, psi )
         local cat, l, u;
@@ -556,7 +497,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_WELL_DEFINEDNESS_TO_COCHAIN_COMPLEX_CATE
         
         return IsWellDefinedForObjects( ch_cat, B ) and
                   IsWellDefinedForObjects( ch_cat, C ) and
-                      ForAll( [ LowerBoundOfSourceAndRange( phi ) .. UpperBoundOfSourceAndRange( phi ) ], i -> IsCongruentForMorphisms( PreCompose( B^i, phi[ i + 1 ] ), PreCompose( phi[ i ], C^i ) ) );
+                      ForAll( [ LowerBound( phi ) .. UpperBound( phi ) ], i -> IsCongruentForMorphisms( PreCompose( B^i, phi[ i + 1 ] ), PreCompose( phi[ i ], C^i ) ) );
     end );
     
 end );
@@ -711,17 +652,15 @@ InstallMethod( ComplexesCategoryByChains,
 
     
     ##
-    object_datum := { ch_cat, o } -> [ Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) ];
+    object_datum := { ch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
     
     ##
     morphism_constructor := { ch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( ch_cat,
                                                             S, R,
-                                                            Morphisms, datum[1],
-                                                            LowerBound, datum[2],
-                                                            UpperBound, datum[3] );
+                                                            Morphisms, datum );
     
     ##
-    morphism_datum := { ch_cat, m } -> [ Morphisms( m ), LowerBound( m ), UpperBound( m ) ];
+    morphism_datum := { ch_cat, m } -> Morphisms( m );
     
     ## building the categorical tower
     
@@ -734,20 +673,15 @@ InstallMethod( ComplexesCategoryByChains,
         
         coch_cat := ModelingCategory( ch_cat );
         
-        return ObjectConstructor( coch_cat, [ Reflection( datum[1] ), Reflection( datum[2] ), -datum[4], -datum[3] ] );
+        return CreateComplex( coch_cat, Reflection( datum[1] ), Reflection( datum[2] ), -datum[4], -datum[3] );
         
     end;
     
     ## from the object in the highest stage of the tower to the raw object datum
     modeling_tower_object_datum :=
       function( ch_cat, obj )
-        local coch_cat, datum;
         
-        coch_cat := ModelingCategory( ch_cat );
-        
-        datum := ObjectDatum( coch_cat, obj );
-        
-        return [ Reflection( datum[1] ), Reflection( datum[2] ), -datum[4], -datum[3] ];
+        return [ Reflection( Objects( obj ) ), Reflection( Differentials( obj ) ), -UpperBound( obj ), -LowerBound( obj ) ];
         
     end;
     
@@ -758,23 +692,15 @@ InstallMethod( ComplexesCategoryByChains,
         
         coch_cat := ModelingCategory( ch_cat );
         
-        return MorphismConstructor( coch_cat,
-                       source,
-                       [ Reflection( datum[1] ), -datum[3], -datum[2] ],
-                       range );
+        return CreateComplexMorphism( coch_cat, source, Reflection( datum ), range );
         
     end;
     
     ## from the morphism in the highest stage of the tower to the raw morphism datum
     modeling_tower_morphism_datum :=
       function( ch_cat, mor )
-        local coch_cat, datum;
         
-        coch_cat := ModelingCategory( ch_cat );
-        
-        datum := MorphismDatum( coch_cat, mor );
-        
-        return [ Reflection( datum[1] ), -datum[3], -datum[2] ];
+        return Reflection( Morphisms( mor ) );
         
     end;
     
@@ -829,62 +755,6 @@ InstallMethod( ComplexesCategoryByChains,
     Finalize( ch_cat );
     
     return ch_cat;
-    
-end );
-
-####################################
-#
-# compatibility methods for "multiple morphisms"-case below:
-#
-####################################
-
-##
-BindGlobal( "_complexes_FiberProductFunctorialWithGivenFiberProducts",
-  function ( cat, source, Lsource, LmorS, LmorT, Ltarget, target )
-    
-    #% CAP_JIT_RESOLVE_FUNCTION
-    return FiberProductFunctorialWithGivenFiberProducts( cat, source, Lsource, LmorS, Ltarget, target );
-    
-end );
-
-##
-BindGlobal( "_complexes_PushoutFunctorialWithGivenPushouts",
-  function ( cat, source, Lsource, LmorS, LmorT, Ltarget, target )
-    
-    #% CAP_JIT_RESOLVE_FUNCTION
-    return PushoutFunctorialWithGivenPushouts( cat, source, Lsource, LmorT, Ltarget, target );
-    
-end );
-
-##
-BindGlobal( "_complexes_KernelObjectFunctorialWithGivenKernelObjects",
-  function ( cat, s, alpha, mu, nu, alpha_prime, r )
-    
-    return KernelObjectFunctorialWithGivenKernelObjects( cat, s, alpha, mu, alpha_prime, r );
-    
-end );
-
-##
-BindGlobal( "_complexes_CokernelObjectFunctorialWithGivenCokernelObjects",
-  function ( cat, s, alpha, mu, nu, alpha_prime, r )
-    
-    return CokernelObjectFunctorialWithGivenCokernelObjects( cat, s, alpha, nu, alpha_prime, r );
-    
-end );
-
-##
-BindGlobal( "_complexes_ImageObjectFunctorialWithGivenImageObjects",
-  function ( cat, s, alpha, mu, nu, alpha_prime, r )
-    
-    return ImageObjectFunctorialWithGivenImageObjects( cat, s, alpha, nu, alpha_prime, r ); 
-    
-end );
-
-##
-BindGlobal( "_complexes_CoimageObjectFunctorialWithGivenCoimageObjects",
-  function ( cat, s, alpha, mu, nu, alpha_prime, r )
-    
-    return CoimageObjectFunctorialWithGivenCoimageObjects( cat, s, alpha, mu, alpha_prime, r );
     
 end );
 

@@ -58,7 +58,6 @@ gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
 gap> Ch_AAoid := ComplexesCategoryByCochains( AAoid );;
-
 gap> for object_info in objects do
 >       MakeReadWriteGlobal( object_info[1] );
 >       DeclareSynonym( object_info[1],
@@ -78,8 +77,7 @@ gap> for morphism_info in [ morphisms[2], morphisms[4] ] do
 >            morphism_info[4][1],
 >            EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
-gap> ForAll( [ alpha, beta ], IsHomotopicToZeroMorphism );
-true
+gap> Assert( 0, ForAll( [ alpha, beta ], IsHomotopicToZeroMorphism ) );
 gap> MorphismMatrix( MorphismDatum( WitnessForBeingHomotopicToZeroMorphism( DirectSumFunctorial( [ alpha, beta ] ) )[0] ) );
 [ [ <1*x_0:(A_0) -≻ (B_m1)>, <0:(A_0) -≻ (D_m1)> ], [ <0:(C_0) -≻ (B_m1)>, <1*y_0:(C_0) -≻ (D_m1)> ] ]
 gap> qA := QuasiIsomorphismFromProjectiveResolution( A, true );;
@@ -88,7 +86,5 @@ gap> Aq :=  QuasiIsomorphismIntoInjectiveResolution( A, true );;
 gap> Bq :=  QuasiIsomorphismIntoInjectiveResolution( B, true );;
 gap> prj_res_alpha := MorphismBetweenProjectiveResolutions( alpha, true );;
 gap> inj_res_alpha  := MorphismBetweenInjectiveResolutions( alpha, true );;
-gap> ForAll( [ qA, qB, Aq, Bq, prj_res_alpha, inj_res_alpha ], IsWellDefined );
-true
-gap> PreCompose( qA, alpha ) = PreCompose( prj_res_alpha, qB ) and PostCompose( Bq, alpha ) = PostCompose( inj_res_alpha, Aq );
-true
+gap> Assert( 0, ForAll( [ qA, qB, Aq, Bq, prj_res_alpha, inj_res_alpha ], IsWellDefined ) );
+gap> Assert( 0, PreCompose( qA, alpha ) = PreCompose( prj_res_alpha, qB ) and PostCompose( Bq, alpha ) = PostCompose( inj_res_alpha, Aq ) );

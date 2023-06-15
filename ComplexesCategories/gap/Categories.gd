@@ -40,6 +40,8 @@ DeclareCategory( "IsComplexesCategoryByCochains", IsComplexesCategory );
 #
 ###################################################
 
+DeclareGlobalFunction( "COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER" );
+
 #! @Description
 #!  Creates the complexes category by cochains $\mathcal{C}^b(A)$ of an additive category $A$.
 #! @Arguments A

@@ -86,7 +86,7 @@ InstallMethod( QuasiIsomorphismFromProjectiveResolutionOp,
       
       PC := ProjectiveResolution( C, true );
       
-      return CreateComplexMorphism( CapCategory( C ), PC, Morphisms( nu ), LowerBound( PC ), UpperBound( nu ), C );
+      return CreateComplexMorphism( CapCategory( C ), PC, Morphisms( nu ), C );
       
     else
       
@@ -155,7 +155,7 @@ InstallMethod( MorphismBetweenProjectiveResolutionsOp,
       function( k )
         local mB, mC, m, kappa, pi_B, pi_C;
         
-        if k > UpperBoundOfSourceAndRange( phi ) then
+        if k > UpperBound( phi ) then
           
           return ZeroMorphism( cat, PB[k], PC[k] );
           
