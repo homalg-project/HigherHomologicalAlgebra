@@ -10,7 +10,6 @@ gap> F := FreeCategory( q );;
 gap> kF := k[F];;
 gap> AssignSetOfObjects( kF );;
 gap> AssignSetOfGeneratingMorphisms( kF );;
-
 gap> rels := [ PreCompose( dA_m5, dA_m4 ),
 > PreCompose( dA_m4, dA_m3 ),
 > PreCompose( dA_m3, dA_m2 ),
@@ -59,12 +58,10 @@ gap> rels := [ PreCompose( dA_m5, dA_m4 ),
 > PreCompose( f_m3, nu_m3 ) - PreCompose( alpha_m3, g_m3 ),
 > PreCompose( f_m2, nu_m2 ) - PreCompose( alpha_m2, g_m2 ),
 > PreCompose( f_m1, nu_m1 ) ];;
-
 gap> oid := AlgebroidFromDataTables( kF / rels );;
 gap> Aoid := AdditiveClosure( oid );;
 gap> AAoid := AdelmanCategory( Aoid );;
 gap> Ch_AAoid := ComplexesCategoryByCochains( AAoid );;
-
 gap> for object_info in objects do
 >       MakeReadWriteGlobal( object_info[1] );
 >       DeclareSynonym( object_info[1],
@@ -84,18 +81,13 @@ gap> for morphism_info in morphisms do
 >            morphism_info[4][1],
 >            EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
-gap> ForAll( [ f, g, alpha, nu ], IsWellDefined ) and IsZeroForMorphisms( PreCompose( alpha, g ) - PreCompose( f, nu ) );
-true
+gap> Assert( 0, ForAll( [ f, g, alpha, nu ], IsWellDefined ) and IsZeroForMorphisms( PreCompose( alpha, g ) - PreCompose( f, nu ) ) );
 gap> lambda := KernelObjectFunctorial( alpha, f, nu );;
-gap> IsWellDefined( lambda ) and IsZeroForMorphisms( PreCompose( KernelEmbedding( alpha ), f ) - PreCompose( lambda, KernelEmbedding( nu ) ) );
-true
+gap> Assert( 0, IsWellDefined( lambda ) and IsZeroForMorphisms( PreCompose( KernelEmbedding( alpha ), f ) - PreCompose( lambda, KernelEmbedding( nu ) ) ) );
 gap> lambda := CokernelObjectFunctorial( alpha, g, nu );;
-gap> IsWellDefined( lambda ) and IsZeroForMorphisms( PreCompose( CokernelProjection( alpha ), lambda ) - PreCompose( g, CokernelProjection( nu ) ) );
-true
+gap> Assert( 0, IsWellDefined( lambda ) and IsZeroForMorphisms( PreCompose( CokernelProjection( alpha ), lambda ) - PreCompose( g, CokernelProjection( nu ) ) ) );
 gap> u := UniversalMorphismIntoFiberProduct( Ch_AAoid, [ g, nu ], A, [ alpha, f ] );;
-gap> IsWellDefined( u );
-true
+gap> Assert( 0, IsWellDefined( u ) );
 gap> u := UniversalMorphismFromPushout( Ch_AAoid, [ alpha, f ], V, [ g, nu ] );;
-gap> IsWellDefined( u );
-true
+gap> Assert( 0, IsWellDefined( u ) );
 gap> SetInfoLevel( InfoWarning, 1 );

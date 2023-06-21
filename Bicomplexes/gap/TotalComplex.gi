@@ -55,7 +55,7 @@ BindGlobal( "TOTAL_COMPLEX_OF_BICOMPLEX",
                               objs[index+sign]
                             ) );
     
-    return ObjectConstructor( complexes_cat, [ objs, diffs, l+b, r+a ] );
+    return CreateComplex( complexes_cat, objs, diffs, l+b, r+a );
     
 end );
 

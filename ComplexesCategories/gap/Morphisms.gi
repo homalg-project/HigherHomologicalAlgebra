@@ -13,32 +13,10 @@
 
 ## Morphisms
 ##
-InstallMethod( CreateComplexMorphism,
-            [ IsComplexesCategory, IsChainOrCochainComplex, IsList, IsChainOrCochainComplex ],
-  
-  MorphismConstructor
-);
-
-##
-InstallOtherMethod( CreateComplexMorphism,
-        [ IsComplexesCategory, IsChainOrCochainComplex, IsZFunction, IsObject, IsObject, IsChainOrCochainComplex ],
-  
-  { ch_cat, S, morphisms, lower_bound, upper_bound, R } -> CreateComplexMorphism( ch_cat, S, [ morphisms, lower_bound, upper_bound ], R )
-);
-
-##
-InstallOtherMethod( CreateComplexMorphism,
-        [ IsComplexesCategory, IsChainOrCochainComplex, IsFunction, IsObject, IsObject, IsChainOrCochainComplex ],
-  
-  { ch_cat, S, morphisms, lower_bound, upper_bound, R } -> CreateComplexMorphism( ch_cat, S, AsZFunction( morphisms ), lower_bound, upper_bound, R )
-);
-
-##
 InstallOtherMethod( CreateComplexMorphism,
             [ IsComplexesCategory, IsChainOrCochainComplex, IsZFunction, IsChainOrCochainComplex ],
   
-  { ch_cat, S, morphisms, R } -> CreateComplexMorphism( ch_cat, S, morphisms, Minimum( LowerBound( S ), LowerBound( R ) ), Maximum( UpperBound( S ), UpperBound( R ) ), R )
-);
+  MorphismConstructor );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,
@@ -67,7 +45,7 @@ InstallMethod( CreateComplexMorphism,
         
       end;
     
-    return CreateComplexMorphism( ch_cat, S, morphisms, lower_bound, upper_bound, R );
+    return CreateComplexMorphism( ch_cat, S, morphisms, R );
     
 end );
 
@@ -92,14 +70,14 @@ InstallOtherMethod( CreateComplexMorphism,
 ###################################
 
 ##
-InstallMethod( LowerBoundOfSourceAndRange,
+InstallMethod( LowerBound,
           [ IsChainOrCochainMorphism ],
   
   phi -> Minimum( LowerBound( Source( phi ) ), LowerBound( Range( phi ) ) )
 );
 
 ##
-InstallMethod( UpperBoundOfSourceAndRange,
+InstallMethod( UpperBound,
           [ IsChainOrCochainMorphism ],
   
   phi -> Maximum( UpperBound( Source( phi ) ), UpperBound( Range( phi ) ) )
@@ -184,14 +162,14 @@ InstallMethod( HomologyFunctorialAtOp,
 InstallMethod( IsQuasiIsomorphism,
           [ IsCochainMorphism ],
   
-  phi -> ForAll( [ LowerBoundOfSourceAndRange( phi ) .. UpperBoundOfSourceAndRange( phi ) ], i -> IsIsomorphism( CohomologyFunctorialAt( phi, i ) ) )
+  phi -> ForAll( [ LowerBound( phi ) .. UpperBound( phi ) ], i -> IsIsomorphism( CohomologyFunctorialAt( phi, i ) ) )
 );
 
 ##
 InstallMethod( IsQuasiIsomorphism,
           [ IsChainMorphism ],
   
-  phi -> ForAll( [ LowerBoundOfSourceAndRange( phi ) .. UpperBoundOfSourceAndRange( phi ) ], i -> IsIsomorphism( HomologyFunctorialAt( phi, i ) ) )
+  phi -> ForAll( [ LowerBound( phi ) .. UpperBound( phi ) ], i -> IsIsomorphism( HomologyFunctorialAt( phi, i ) ) )
 );
 
 
@@ -283,7 +261,7 @@ InstallMethod( AsComplexMorphismOverOppositeCategory,
     
     morphisms := i -> Opposite( Morphisms( phi )[-i] );
     
-    psi := CreateComplexMorphism( CapCategory( S ), S, morphisms, -UpperBound( phi ), -LowerBound( phi ), T );
+    psi := CreateComplexMorphism( CapCategory( S ), S, morphisms, T );
     
     SetAsComplexMorphismOverOppositeCategory( psi, phi );
     

@@ -45,6 +45,8 @@ DeclareOperation( "CreateComplex", [ IsComplexesCategory, IsDenseList, IsInt ] )
 #! @Returns a $\mathbb{Z}$-function
 DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
+DeclareAttribute( "UnderlyingCell", IsChainOrCochainComplex );
+
 #! @Description
 #! Returns the object $C^i$ of the complex $C$ at the index $i\in\mathbb{Z}$.
 #! @Arguments C, i

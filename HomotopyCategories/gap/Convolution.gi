@@ -89,7 +89,7 @@ InstallMethod( PostnikovSystemAtOp,
     complexes_cat := CapCategory( alpha );
     underlying_cat := UnderlyingCategory( complexes_cat );
     
-    u := UpperBoundOfSourceAndRange( alpha );
+    u := UpperBound( alpha );
     
     if m <= u-2 then
       
@@ -99,7 +99,7 @@ InstallMethod( PostnikovSystemAtOp,
       
       st_cocone_morphism := InverseShiftOfMorphism( MorphismBetweenStandardConeObjects( Source( alpha )^m, alpha[m], alpha[m+1], Range( alpha )^m ) );
       
-      l := LowerBoundOfSourceAndRange( alpha );
+      l := LowerBound( alpha );
       
       return CreateComplexMorphism(
                 complexes_cat,
@@ -127,7 +127,7 @@ InstallOtherMethod( PostnikovSystemAt,
 InstallMethod( Convolution,
           [ IsCochainMorphism ],
   
-  alpha ->  ApplyShift( PostnikovSystemAt( alpha, LowerBoundOfSourceAndRange( alpha ) )[LowerBoundOfSourceAndRange( alpha )], -LowerBoundOfSourceAndRange( alpha ) )
+  alpha ->  ApplyShift( PostnikovSystemAt( alpha, LowerBound( alpha ) )[LowerBound( alpha )], -LowerBound( alpha ) )
 );
 
 ##

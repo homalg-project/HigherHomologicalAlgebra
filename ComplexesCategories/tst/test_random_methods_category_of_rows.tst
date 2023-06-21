@@ -39,7 +39,7 @@ true
 gap> ring := HomalgFieldOfRationals( );;
 gap> rows := CategoryOfRows( ring );;
 gap> f := RandomMorphism( rows, 30 );;
-gap> LowerBoundOfSourceAndRange( MorphismBetweenProjectiveResolutions(f, true) ) = 0;
+gap> LowerBound( MorphismBetweenProjectiveResolutions(f, true) ) = 0;
 true
-gap> UpperBoundOfSourceAndRange( MorphismBetweenInjectiveResolutions(f, true) ) = 0;
+gap> UpperBound( MorphismBetweenInjectiveResolutions(f, true) ) = 0;
 true
