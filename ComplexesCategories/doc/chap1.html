@@ -84,19 +84,17 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7D72B4FC82CE113A"><code>1.3-8 <span>\</span>[<span>\</span>]</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7921F8B7781CE47E">1.3-9 LowerBound</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7D642E5482DB0F73">1.3-10 UpperBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X792F44F9836F93C2">1.3-11 LowerBoundOfSourceAndRange</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X78646C4D79A878CF">1.3-12 UpperBoundOfSourceAndRange</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X86F5183A7A04C679">1.3-13 MorphismsSupport</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X80AD273D876D8B22">1.3-14 MorphismsSupport</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8125612F816B25E5">1.3-15 CyclesFunctorialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8050F5937BCF551A">1.3-16 CocyclesFunctorialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7EAAC5E17EC0DCF7">1.3-17 CohomologyFunctorialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7FE3BDA3846A62BC">1.3-18 HomologyFunctorialAt</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X830B9CC68047169F">1.3-19 IsQuasiIsomorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X812B9C29796B82E7">1.3-20 IsHomotopicToZeroMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7F55D56278B6593D">1.3-21 WitnessForBeingHomotopicToZeroMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7EFEAD068200C531">1.3-22 AsChainComplexMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7F3D20607C0002AE">1.3-23 AsCochainComplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X86F5183A7A04C679">1.3-11 MorphismsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X80AD273D876D8B22">1.3-12 MorphismsSupport</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8125612F816B25E5">1.3-13 CyclesFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X8050F5937BCF551A">1.3-14 CocyclesFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7EAAC5E17EC0DCF7">1.3-15 CohomologyFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7FE3BDA3846A62BC">1.3-16 HomologyFunctorialAt</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X830B9CC68047169F">1.3-17 IsQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X812B9C29796B82E7">1.3-18 IsHomotopicToZeroMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7F55D56278B6593D">1.3-19 WitnessForBeingHomotopicToZeroMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7EFEAD068200C531">1.3-20 AsChainComplexMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7F3D20607C0002AE">1.3-21 AsCochainComplexMorphism</a></span>
 </div></div>
 </div>
 
@@ -562,7 +560,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: integer or infinity</p>
 
-<p>Returns the lower bound <span class="Math">\ell</span> of <span class="Math">\phi</span>. I.e., the morphisms <span class="Math">\phi^i</span> are zero for all <span class="Math">i\prec\ell</span>.</p>
+<p>Returns an integer <span class="Math">\ell</span> with <span class="Math">S^i=R^i=0</span> for all <span class="Math">i\prec\ell</span>.</p>
 
 <p><a id="X7D642E5482DB0F73" name="X7D642E5482DB0F73"></a></p>
 
@@ -571,29 +569,11 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperBound</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: integer or infinity</p>
 
-<p>Returns the upper bound <span class="Math">u</span> of <span class="Math">\phi</span>. I.e., the morphisms <span class="Math">\phi^i</span> are zero for all <span class="Math">i\succ u</span>.</p>
-
-<p><a id="X792F44F9836F93C2" name="X792F44F9836F93C2"></a></p>
-
-<h5>1.3-11 LowerBoundOfSourceAndRange</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LowerBoundOfSourceAndRange</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: integer or infinity</p>
-
-<p>Returns an integer <span class="Math">\ell</span> with <span class="Math">S^i=R^i=0</span> for all <span class="Math">i\prec\ell</span>.</p>
-
-<p><a id="X78646C4D79A878CF" name="X78646C4D79A878CF"></a></p>
-
-<h5>1.3-12 UpperBoundOfSourceAndRange</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperBoundOfSourceAndRange</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Returns: integer or infinity</p>
-
 <p>Returns an integer <span class="Math">u</span> with <span class="Math">S^i=R^i=0</span> for all <span class="Math">i\succ u</span>.</p>
 
 <p><a id="X86F5183A7A04C679" name="X86F5183A7A04C679"></a></p>
 
-<h5>1.3-13 MorphismsSupport</h5>
+<h5>1.3-11 MorphismsSupport</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismsSupport</code>( <var class="Arg">phi</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a list of integers</p>
@@ -602,7 +582,7 @@
 
 <p><a id="X80AD273D876D8B22" name="X80AD273D876D8B22"></a></p>
 
-<h5>1.3-14 MorphismsSupport</h5>
+<h5>1.3-12 MorphismsSupport</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismsSupport</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a list of integers</p>
@@ -611,7 +591,7 @@
 
 <p><a id="X8125612F816B25E5" name="X8125612F816B25E5"></a></p>
 
-<h5>1.3-15 CyclesFunctorialAt</h5>
+<h5>1.3-13 CyclesFunctorialAt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclesFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>
@@ -620,7 +600,7 @@
 
 <p><a id="X8050F5937BCF551A" name="X8050F5937BCF551A"></a></p>
 
-<h5>1.3-16 CocyclesFunctorialAt</h5>
+<h5>1.3-14 CocyclesFunctorialAt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CocyclesFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>
@@ -629,7 +609,7 @@
 
 <p><a id="X7EAAC5E17EC0DCF7" name="X7EAAC5E17EC0DCF7"></a></p>
 
-<h5>1.3-17 CohomologyFunctorialAt</h5>
+<h5>1.3-15 CohomologyFunctorialAt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CohomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>
@@ -638,7 +618,7 @@
 
 <p><a id="X7FE3BDA3846A62BC" name="X7FE3BDA3846A62BC"></a></p>
 
-<h5>1.3-18 HomologyFunctorialAt</h5>
+<h5>1.3-16 HomologyFunctorialAt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomologyFunctorialAt</code>( <var class="Arg">phi</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>
@@ -647,7 +627,7 @@
 
 <p><a id="X830B9CC68047169F" name="X830B9CC68047169F"></a></p>
 
-<h5>1.3-19 IsQuasiIsomorphism</h5>
+<h5>1.3-17 IsQuasiIsomorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiIsomorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
@@ -656,7 +636,7 @@
 
 <p><a id="X812B9C29796B82E7" name="X812B9C29796B82E7"></a></p>
 
-<h5>1.3-20 IsHomotopicToZeroMorphism</h5>
+<h5>1.3-18 IsHomotopicToZeroMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHomotopicToZeroMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Returns: true or false</p>
@@ -665,7 +645,7 @@
 
 <p><a id="X7F55D56278B6593D" name="X7F55D56278B6593D"></a></p>
 
-<h5>1.3-21 WitnessForBeingHomotopicToZeroMorphism</h5>
+<h5>1.3-19 WitnessForBeingHomotopicToZeroMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WitnessForBeingHomotopicToZeroMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: <span class="Math">\mathbb{Z}</span>-function</p>
@@ -674,7 +654,7 @@
 
 <p><a id="X7EFEAD068200C531" name="X7EFEAD068200C531"></a></p>
 
-<h5>1.3-22 AsChainComplexMorphism</h5>
+<h5>1.3-20 AsChainComplexMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsChainComplexMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>
@@ -683,7 +663,7 @@
 
 <p><a id="X7F3D20607C0002AE" name="X7F3D20607C0002AE"></a></p>
 
-<h5>1.3-23 AsCochainComplexMorphism</h5>
+<h5>1.3-21 AsCochainComplexMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCochainComplexMorphism</code>( <var class="Arg">phi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: a CAP morphism</p>

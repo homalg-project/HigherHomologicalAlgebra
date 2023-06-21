@@ -401,32 +401,16 @@
   [33X[1;0Y[29X[2XLowerBound[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yinteger or infinity[133X
   
-  [33X[0;0YReturns  the  lower  bound [23X\ell[123X of [23X\phi[123X. I.e., the morphisms [23X\phi^i[123X are zero
-  for all [23Xi\prec\ell[123X.[133X
+  [33X[0;0YReturns an integer [23X\ell[123X with [23XS^i=R^i=0[123X for all [23Xi\prec\ell[123X.[133X
   
   [1X1.3-10 UpperBound[101X
   
   [33X[1;0Y[29X[2XUpperBound[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yinteger or infinity[133X
   
-  [33X[0;0YReturns  the  upper bound [23Xu[123X of [23X\phi[123X. I.e., the morphisms [23X\phi^i[123X are zero for
-  all [23Xi\succ u[123X.[133X
-  
-  [1X1.3-11 LowerBoundOfSourceAndRange[101X
-  
-  [33X[1;0Y[29X[2XLowerBoundOfSourceAndRange[102X( [3Xphi[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Yinteger or infinity[133X
-  
-  [33X[0;0YReturns an integer [23X\ell[123X with [23XS^i=R^i=0[123X for all [23Xi\prec\ell[123X.[133X
-  
-  [1X1.3-12 UpperBoundOfSourceAndRange[101X
-  
-  [33X[1;0Y[29X[2XUpperBoundOfSourceAndRange[102X( [3Xphi[103X ) [32X attribute[133X
-  [6XReturns:[106X  [33X[0;10Yinteger or infinity[133X
-  
   [33X[0;0YReturns an integer [23Xu[123X with [23XS^i=R^i=0[123X for all [23Xi\succ u[123X.[133X
   
-  [1X1.3-13 MorphismsSupport[101X
+  [1X1.3-11 MorphismsSupport[101X
   
   [33X[1;0Y[29X[2XMorphismsSupport[102X( [3Xphi[103X, [3Xm[103X, [3Xn[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya list of integers[133X
@@ -435,7 +419,7 @@
   list  of  indices  [23Xm\preceq  i  \preceq  n[123X  where  the morphisms of [23X\phi[123X are
   non-zero.[133X
   
-  [1X1.3-14 MorphismsSupport[101X
+  [1X1.3-12 MorphismsSupport[101X
   
   [33X[1;0Y[29X[2XMorphismsSupport[102X( [3Xphi[103X, [3Xi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya list of integers[133X
@@ -444,7 +428,7 @@
   integers.  The output is the list of indices where the morphisms of [23X\phi[123X are
   non-zero.[133X
   
-  [1X1.3-15 CyclesFunctorialAt[101X
+  [1X1.3-13 CyclesFunctorialAt[101X
   
   [33X[1;0Y[29X[2XCyclesFunctorialAt[102X( [3Xphi[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
@@ -453,7 +437,7 @@
   the morphism induced by the functoriality of the cycle objects of [23XS[123X and [23XR[123X at
   the index [23Xi[123X.[133X
   
-  [1X1.3-16 CocyclesFunctorialAt[101X
+  [1X1.3-14 CocyclesFunctorialAt[101X
   
   [33X[1;0Y[29X[2XCocyclesFunctorialAt[102X( [3Xphi[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
@@ -462,7 +446,7 @@
   the  morphism induced by the functoriality of the cocycle objects of [23XS[123X and [23XR[123X
   at the index [23Xi[123X.[133X
   
-  [1X1.3-17 CohomologyFunctorialAt[101X
+  [1X1.3-15 CohomologyFunctorialAt[101X
   
   [33X[1;0Y[29X[2XCohomologyFunctorialAt[102X( [3Xphi[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
@@ -471,7 +455,7 @@
   the morphism induced by the functoriality of the cohomology objects of [23XS[123X and
   [23XR[123X at the index [23Xi[123X.[133X
   
-  [1X1.3-18 HomologyFunctorialAt[101X
+  [1X1.3-16 HomologyFunctorialAt[101X
   
   [33X[1;0Y[29X[2XHomologyFunctorialAt[102X( [3Xphi[103X, [3Xi[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
@@ -480,7 +464,7 @@
   the morphism induced by the functoriality of the homology objects of [23XS[123X and [23XR[123X
   at the index [23Xi[123X.[133X
   
-  [1X1.3-19 IsQuasiIsomorphism[101X
+  [1X1.3-17 IsQuasiIsomorphism[101X
   
   [33X[1;0Y[29X[2XIsQuasiIsomorphism[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
@@ -488,14 +472,14 @@
   [33X[0;0YReturns  wheather  [23X\phi[123X  is  a  quasi-isomorphism, i.e., wheather it induces
   isomorphisms between the (co)homology objects of [23XS[123X and [23XR[123X.[133X
   
-  [1X1.3-20 IsHomotopicToZeroMorphism[101X
+  [1X1.3-18 IsHomotopicToZeroMorphism[101X
   
   [33X[1;0Y[29X[2XIsHomotopicToZeroMorphism[102X( [3Xphi[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YReturns wheather [23X\phi[123X is homotopic to the zero morphism.[133X
   
-  [1X1.3-21 WitnessForBeingHomotopicToZeroMorphism[101X
+  [1X1.3-19 WitnessForBeingHomotopicToZeroMorphism[101X
   
   [33X[1;0Y[29X[2XWitnessForBeingHomotopicToZeroMorphism[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Y[23X\mathbb{Z}[123X-function[133X
@@ -505,14 +489,14 @@
   to  [23XR^{i+1}[123X  and  if [23X\phi[123X is a cochain morphism, then [23Xw^i[123X is a morphism from
   [23XS^i[123X to [23XR^{i-1}[123X.[133X
   
-  [1X1.3-22 AsChainComplexMorphism[101X
+  [1X1.3-20 AsChainComplexMorphism[101X
   
   [33X[1;0Y[29X[2XAsChainComplexMorphism[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
   
   [33X[0;0YConvert a chain morphism into a cochain morphism.[133X
   
-  [1X1.3-23 AsCochainComplexMorphism[101X
+  [1X1.3-21 AsCochainComplexMorphism[101X
   
   [33X[1;0Y[29X[2XAsCochainComplexMorphism[102X( [3Xphi[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya CAP morphism[133X
