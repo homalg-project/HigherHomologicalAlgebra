@@ -5,38 +5,7 @@
 #
 
 
-BindGlobal( "INTEGERS_CAT",
-  
-  function ( )
-    local category;
-     
-    if IsPackageMarkedForLoading( "Locales", ">= 2023.05-05" ) then
-        
-        return ValueGlobal( "TotalOrderAsCategory" )( "IsInt", {a,b} -> a >= b );
-        
-    else
-        
-        category := CreateCapCategory( "TotalOrderAsCategory( \"IsInt\" )" );
-        category!.category_as_first_argument := true;
-        
-        AddObjectConstructor( category, { cat, i } -> CreateCapCategoryObjectWithAttributes( cat, ObjectDatum, i ) );
-        AddMorphismConstructor( category, { cat, s, datum, r } -> CreateCapCategoryMorphismWithAttributes( cat, s, r ) );
-        
-        AddPreCompose( category, { cat, u, v } -> MorphismConstructor( cat, Source( u ), true, Range( v ) ) );
-        AddIdentityMorphism( category, { cat, u } -> MorphismConstructor( cat, Source( u ), true, Range( u ) ) );
-        
-        AddIsWellDefinedForMorphisms( category, { cat, u } -> ObjectDatum( Source( u ) ) >= ObjectDatum( Range( u ) ) );
-        
-        AddIsEqualForObjects( category, { cat, i, j } -> IsIdenticalObj( ObjectDatum( i ), ObjectDatum( j ) ) );
-        AddIsEqualForMorphisms( category, { cat, u, v } -> IsEqualForObjects( Source( u ), Source( u ) ) and IsEqualForObjects( Range( u ), Range( u ) ) );
-        
-        Finalize( category );
-        
-        return category;
-        
-    fi;
-    
-end ( ) );
+BindGlobal( "INTEGERS_CAT", TotalOrderAsCategory( "IsInt", {a,b} -> a >= b ) );
 
 BindGlobal( "INTEGERS_CAT_OBJS",
   
