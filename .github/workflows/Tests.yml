@@ -60,6 +60,7 @@ jobs:
           git clone --depth 1 -vv https://github.com/homalg-project/FunctorCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/SubcategoriesForCAP.git
           git clone --depth 1 -vv https://github.com/homalg-project/CategoryConstructor.git
+          git clone --depth 1 -vv https://github.com/homalg-project/Locales.git
       - name: Build documentation of packages which we might want to reference
         run: |
           # keep this in sync with `dev/.release`
