@@ -252,23 +252,19 @@ end );
 InstallMethod( ExactTriangle,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
   function( alpha, iota, pi )
-    local cat, triangles, t;
+    local cat, triangles;
     
     cat := CapCategory( alpha );
     
     triangles := CategoryOfExactTriangles( cat );
     
-    t := rec( );
+    return CreateCapCategoryObjectWithAttributes(
+             triangles,
+             DomainMorphism, alpha,
+             MorphismIntoConeObject, iota,
+             MorphismFromConeObject, pi
+           );
     
-    ObjectifyObjectForCAPWithAttributes(
-                t, triangles,
-                DomainMorphism, alpha,
-                MorphismIntoConeObject, iota,
-                MorphismFromConeObject, pi
-              );
-    
-    return t;
-
 end );
 
 ##
@@ -367,16 +363,18 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
 end );
 
 ##
-InstallMethod( MorphismOfExactTriangles, 
+InstallMethod( MorphismOfExactTriangles,
         [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ],
   function( s, mu_0, mu_1, mu_2, r )
     local triangles, mu;
     
     triangles := CapCategory( s );
     
-    mu := rec( 0 := mu_0, 1 := mu_1, 2 := mu_2 );
+    mu := CreateCapCategoryMorphismWithAttributes( triangles, s, r );
     
-    ObjectifyMorphismWithSourceAndRangeForCAPWithAttributes( mu, triangles, s, r );
+    mu!.0 := mu_0;
+    mu!.1 := mu_1;
+    mu!.2 := mu_2;
     
     return mu;
     

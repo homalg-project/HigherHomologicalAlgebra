@@ -305,28 +305,25 @@ InstallMethod( CreateShortSequence,
 
    function( alpha, beta )
    local s;
-
+  
    if not IsEqualForObjects( Range( alpha ), Source( beta ) ) then
-
+   
      Error( "Range of the first morphism should equal the Source of the second morphism" );
-
+   
    fi;
-
-   s := rec( o0:= Source( alpha ),
-
-             m0:= alpha,
-
-             o1 := Range( alpha ),
-
-             m1 := beta,
-
-             o2 := Range( beta ) );
-
-    ObjectifyWithAttributes( s, TheTypeCapCategoryShortSequence );
-
+    
+    s:= CreateCapCategoryMorphismWithAttributes( TheTypeCapCategoryShortSequence );
+    
+    s!.o0 := Source( alpha );
+    s!.m0 := alpha;
+    s!.o1 := Range( alpha );
+    s!.m1 := beta;
+    s!.o2 := Range( beta ) );
+    
     AddObject( CategoryOfShortSequences( CapCategory( alpha ) ), s );
+    
     return s;
-
+    
 end );
 
 InstallMethod( CreateShortExactSequence,
