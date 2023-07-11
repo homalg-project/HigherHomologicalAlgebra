@@ -56,7 +56,11 @@ InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
           object_datum, morphism_constructor, morphism_datum, union_of_supports, list_of_operations_to_install, create_func_bool,
           create_func_object, create_func_morphism, supports_empty_limits, name, modeling_cat;
     
-    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false );
+    # temporarily #######
+    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false, FinalizeCategory := false );
+    presh_cat!.is_computable := false;
+    Finalize( presh_cat );
+    #####################
     
     name := Concatenation( "Bounded ", Name( presh_cat ) );
     
@@ -223,6 +227,7 @@ InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
                            category_morphism_filter := category_morphism_filter,
                            commutative_ring_of_linear_category := commutative_ring,
                            properties := properties,
+                           is_computable := false,
                            object_constructor := object_constructor,
                            object_datum := object_datum,
                            morphism_constructor := morphism_constructor,
@@ -235,10 +240,6 @@ InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
                            create_func_morphism := create_func_morphism ) : overhead := false );
     
     SetUnderlyingCategory( modeling_cat, presh_cat );
-    
-    modeling_cat!.is_computable := false;
-    
-    Finalize( modeling_cat );
     
     return modeling_cat;
     
@@ -359,6 +360,8 @@ InstallMethod( ComplexesCategoryByCochains,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
                    only_primitive_operations := true ) : FinalizeCategory := false );
+    
+    coch_cat!.is_computable := true;
     
     SetUnderlyingCategory( coch_cat, cat );
     
