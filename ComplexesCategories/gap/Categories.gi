@@ -56,11 +56,7 @@ InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
           object_datum, morphism_constructor, morphism_datum, union_of_supports, list_of_operations_to_install, create_func_bool,
           create_func_object, create_func_morphism, supports_empty_limits, name, modeling_cat;
     
-    # temporarily #######
-    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false, FinalizeCategory := false );
-    presh_cat!.is_computable := false;
-    Finalize( presh_cat );
-    #####################
+    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false );
     
     name := Concatenation( "Bounded ", Name( presh_cat ) );
     
