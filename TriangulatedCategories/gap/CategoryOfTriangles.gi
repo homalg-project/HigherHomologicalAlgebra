@@ -28,16 +28,6 @@ InstallMethod( CategoryOfExactTriangles,
     
     SetUnderlyingCategory( triangles, category );
     
-    AddIsEqualForCacheForObjects( triangles,
-      function( cat, triangle_1, triangle_2)
-        return IsIdenticalObj( triangle_1, triangle_2 );
-      end );
-    
-    AddIsEqualForCacheForMorphisms( triangles,
-      function( cat, triangle_1, triangle_2)
-        return IsIdenticalObj( triangle_1, triangle_2 );
-      end );
-    
     AddIsEqualForObjects( triangles,
       function( cat, triangle_1, triangle_2 )
         return IsEqualForObjects( triangle_1[ 0 ], triangle_2[ 0 ] ) and 

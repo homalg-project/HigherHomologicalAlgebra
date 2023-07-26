@@ -403,13 +403,6 @@ end );
 InstallGlobalFunction( ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY,
   function( ch_cat )
     
-    AddIsEqualForCacheForObjects( ch_cat,
-      function ( ch_cat, B, C )
-        
-        return IsIdenticalObj( B, C );
-        
-    end );
-    
     AddIsEqualForObjects( ch_cat,
       function ( ch_cat, B, C )
         local cat, lC, uC;
@@ -425,13 +418,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_EQUALITIES_TO_COCHAIN_COMPLEX_CATEGORY,
         
         return ForAll( [ lC .. uC ], i -> IsEqualForObjects( cat, B[i], C[i] ) ) and
                   ForAll( [ lC .. uC ], i -> IsEqualForMorphisms( cat, B^i, C^i ) );
-        
-    end );
-    
-    AddIsEqualForCacheForMorphisms( ch_cat,
-      function ( ch_cat, phi, psi )
-        
-        return IsIdenticalObj( phi, psi );
         
     end );
     
