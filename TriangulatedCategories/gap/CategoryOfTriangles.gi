@@ -24,16 +24,22 @@ InstallMethod( CategoryOfExactTriangles,
     
     triangles := CreateCapCategory( name, IsCategoryOfExactTriangles, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesMorphism, IsCapCategoryTwoCell );
     
-    triangles!.category_as_first_argument := false;
+    triangles!.category_as_first_argument := true;
     
     SetUnderlyingCategory( triangles, category );
     
-    AddIsEqualForCacheForObjects( triangles, IsIdenticalObj );
+    AddIsEqualForCacheForObjects( triangles,
+      function( cat, triangle_1, triangle_2)
+        return IsIdenticalObj( triangle_1, triangle_2 );
+      end );
     
-    AddIsEqualForCacheForMorphisms( triangles, IsIdenticalObj );
+    AddIsEqualForCacheForMorphisms( triangles,
+      function( cat, triangle_1, triangle_2)
+        return IsIdenticalObj( triangle_1, triangle_2 );
+      end );
     
     AddIsEqualForObjects( triangles,
-      function( triangle_1, triangle_2 )
+      function( cat, triangle_1, triangle_2 )
         return IsEqualForObjects( triangle_1[ 0 ], triangle_2[ 0 ] ) and 
                 IsEqualForObjects( triangle_1[ 1 ], triangle_2[ 1 ] ) and
                  IsEqualForObjects(  triangle_1[ 2 ], triangle_2[ 2 ] ) and
@@ -43,31 +49,31 @@ InstallMethod( CategoryOfExactTriangles,
       end );
       
     AddIsEqualForMorphisms( triangles,
-      function( mu, nu )
+      function( cat, mu, nu )
         return IsEqualForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
                   IsEqualForMorphisms( mu[ 1 ], nu[ 1 ] ) and
                     IsEqualForMorphisms( mu[ 2 ], nu[ 2 ] );
       end );
       
     AddIsCongruentForMorphisms( triangles,
-      function( mu, nu )
+      function( cat, mu, nu )
         return IsCongruentForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
                   IsCongruentForMorphisms( mu[ 1 ], nu[ 1 ] ) and
                     IsCongruentForMorphisms( mu[ 2 ], nu[ 2 ] );
       end );
       
     AddIsZeroForObjects( triangles,
-      function( triangle )
+      function( cat, triangle )
         return ForAll( [ 0 .. 3 ], i -> IsZeroForObjects( triangle[ i ] ) );
       end );
       
     AddIsZeroForMorphisms( triangles,
-      function( mu )
+      function( cat, mu )
         return ForAll( [ 0 .. 3 ], i -> IsZeroForMorphisms( mu[ i ] ) );
       end );
       
     AddIdentityMorphism( triangles,
-      function( triangle )
+      function( cat, triangle )
         local maps;
         
         maps := List( [ 0 .. 2 ], i -> IdentityMorphism( triangle[ i ] ) );
@@ -77,7 +83,7 @@ InstallMethod( CategoryOfExactTriangles,
       end );
       
     AddPreCompose( triangles,
-      function( mu, nu )
+      function( cat, mu, nu )
         local maps_mu, maps_nu, maps;
         
         maps_mu := List( [ 0 .. 2 ], i -> mu[ i ] );
@@ -91,7 +97,7 @@ InstallMethod( CategoryOfExactTriangles,
     end );
     
     AddIsIsomorphism( triangles,
-      function( mu )
+      function( cat, mu )
         if ForAll( [ 0 .. 3 ], i -> IsIsomorphism( mu[ i ] ) ) then
           
           return true;
@@ -105,7 +111,7 @@ InstallMethod( CategoryOfExactTriangles,
     end );
     
     AddIsWellDefinedForObjects( triangles,
-      function( triangle )
+      function( cat, triangle )
         
         if IsStandardExactTriangle( triangle ) then
           
@@ -160,7 +166,7 @@ InstallMethod( CategoryOfExactTriangles,
     end );
     
     AddIsWellDefinedForMorphisms( triangles, 
-      function( mu )
+      function( cat, mu )
         local triangle_1, triangle_2;
         
         if not IsWellDefined( Source( mu ) ) or not IsWellDefined( Range( mu) ) then
