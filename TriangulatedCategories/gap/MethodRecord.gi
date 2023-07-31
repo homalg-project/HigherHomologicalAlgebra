@@ -19,14 +19,20 @@ StandardConeObject:= rec(
 
 MorphismIntoStandardConeObject := rec(
   filter_list := [ "category", "morphism" ],
-  io_type := [ [ "alpha" ], [ "alpha_range", "cone" ] ],
+  input_arguments_names := [ "cat", "alpha" ],
+  output_source_getter_string := "Range( alpha )",
+  output_source_getter_preconditions := [ ],
   with_given_object_position := "Range",
   return_type := "morphism"
 ),
 
 MorphismIntoStandardConeObjectWithGivenStandardConeObject := rec(
   filter_list := [ "category", "morphism", "object" ],
-  io_type := [ [ "alpha", "cone" ], [ "alpha_range", "cone" ] ],
+  input_arguments_names := [ "cat", "alpha", "cone" ],
+  output_source_getter_string := "Range( alpha )",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "cone",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
@@ -67,7 +73,11 @@ InverseShiftOfObject := rec(
 ),
 
 InverseShiftOfMorphismWithGivenObjects := rec(
-  io_type := [ [ "s", "alpha", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "alpha", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   filter_list := [ "category", "object", "morphism", "object" ],
   return_type := "morphism"
 ),
@@ -88,13 +98,13 @@ ShiftOfMorphismByInteger := rec(
 ),
 
 WitnessIsomorphismIntoStandardConeObject := rec(
-  io_type := [ [ "alpha", "iota", "pi" ], [ "range_iota", "cone_alpha" ] ],
+  input_arguments_names := [ "cat", "alpha", "iota", "pi" ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
   return_type := "morphism_or_fail"
 ),
 
 WitnessIsomorphismFromStandardConeObject := rec(
-  io_type := [ [ "alpha", "iota", "pi" ], [ "cone_alpha", "range_iota" ] ],
+  input_arguments_names := [ "cat", "alpha", "iota", "pi" ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
   return_type := "morphism_or_fail"
 ),
@@ -106,31 +116,47 @@ IsExactTriangle := rec(
 
 UnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 InverseOfCounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 InverseOfUnitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "r" ], [ "r", "s" ] ],
+  input_arguments_names := [ "cat", "s", "r" ],
+  output_source_getter_string := "r",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "s",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 CounitOfShiftAdjunctionWithGivenObject := rec(
   filter_list := [ "category", "object", "object" ],
-  io_type := [ [ "s", "r" ], [ "r", "s" ] ],
+  input_arguments_names := [ "cat", "s", "r" ],
+  output_source_getter_string := "r",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "s",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 MorphismBetweenStandardConeObjectsWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_morphisms", "object" ],
-  io_type := [ [ "cone_alpha", "list", "cone_alpha_prime" ], [ "cone_alpha", "cone_alpha_prime" ] ],
+  input_arguments_names := [ "cat", "cone_alpha", "list", "cone_alpha_prime" ],
   return_type := "morphism",
 ),
 
@@ -151,61 +177,85 @@ MorphismFromConeObjectByOctahedralAxiomWithGivenObjects := rec(
 
 WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
-  io_type := [ [ "cone_g", "f", "g", "h", "st_cone" ], [ "cone_g", "st_cone" ] ],
+  input_arguments_names := [ "cat", "cone_g", "f", "g", "h", "st_cone" ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "morphism", "morphism", "object" ],
-  io_type := [ [ "st_cone", "f", "g", "h", "cone_g" ], [ "st_cone", "cone_g" ] ],
+  input_arguments_names := [ "cat", "st_cone", "f", "g", "h", "cone_g" ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
-  io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
+  input_arguments_names := [ "cat", "cone", "f", "st_cone" ],
+  output_source_getter_string := "cone",
+  output_source_getter_preconditions := [ ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
-  io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
+  input_arguments_names := [ "cat", "st_cone", "f", "cone" ],
+  output_range_getter_string := "cone",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
-  io_type := [ [ "cone", "f", "st_cone" ], [ "cone", "st_cone" ] ],
+  input_arguments_names := [ "cat", "cone", "f", "st_cone" ],
+  output_source_getter_string := "cone",
+  output_source_getter_preconditions := [ ],
   return_type := "morphism",
 ),
 
 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects := rec(
   filter_list := [ "category", "object", "morphism", "object" ],
-  io_type := [ [ "st_cone", "f", "cone" ], [ "st_cone", "cone" ] ],
+  input_arguments_names := [ "cat", "st_cone", "f", "cone" ],
+  output_range_getter_string := "cone",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism",
 ),
 
 ShiftExpandingIsomorphismWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_objects", "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "L", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 ShiftFactoringIsomorphismWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_objects", "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "L", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 InverseShiftExpandingIsomorphismWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_objects", "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "L", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 ),
 
 InverseShiftFactoringIsomorphismWithGivenObjects := rec(
   filter_list := [ "category", "object", "list_of_objects", "object" ],
-  io_type := [ [ "s", "L", "r" ], [ "s", "r" ] ],
+  input_arguments_names := [ "cat", "s", "L", "r" ],
+  output_source_getter_string := "s",
+  output_source_getter_preconditions := [ ],
+  output_range_getter_string := "r",
+  output_range_getter_preconditions := [ ],
   return_type := "morphism"
 )
 
