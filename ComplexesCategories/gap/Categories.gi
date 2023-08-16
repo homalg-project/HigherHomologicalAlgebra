@@ -206,6 +206,8 @@ InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
                         return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismDatum( cat, m ) )" );
                      elif type = "pair_of_morphisms" then
                         return Concatenation( "Pair( ", "MorphismDatum( cat, i_arg[", String( j ), "][1] )", ", MorphismDatum( cat, i_arg[", String( j ), "][2] )", " )" );
+                     elif type = "list_of_lists_of_morphisms" then
+                        return Concatenation( "List( i_arg[", String( j ), "], x -> List( x, y -> MorphismDatum( cat, y ) ) )" );
                      else
                         Error( "can only deal with 'integer', 'object', 'morphism', 'list_of_objects', 'list_of_morphisms', 'pair_of_morphisms'" );
                      fi;
