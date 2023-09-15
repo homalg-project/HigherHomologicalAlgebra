@@ -11,9 +11,9 @@ LoadPackage( "FreydCategoriesForCAP" );
 #! true
 LoadPackage( "StableCategories" );
 #! true
-ZZ := HomalgRingOfIntegers( );
+zz := HomalgRingOfIntegers( );
 #! Z
-ZZ_rows := CategoryOfRows( ZZ );
+ZZ_rows := CategoryOfRows( zz );
 #! Rows( Z )
 ZZ_mod := FreydCategory( ZZ_rows );
 #! Freyd( Rows( Z ) )
@@ -21,7 +21,7 @@ f := m -> IsLiftable( m, EpimorphismFromSomeProjectiveObject( Range( m ) ) );
 #! function( m ) ... end
 ZZ_mod_by_projs := StableCategory( ZZ_mod, f );
 #! Stable category( Freyd( Rows( Z ) ) ) defined by f
-A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, ZZ ) / ZZ_rows / ZZ_mod;
+A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, zz ) / ZZ_rows / ZZ_mod;
 #! <An object in Freyd( Rows( Z ) )>
 IsZero( A );
 #! false
@@ -55,9 +55,9 @@ LoadPackage( "FreydCategoriesForCAP" );
 #! true
 LoadPackage( "StableCategories" );
 #! true
-ZZ := HomalgRingOfIntegers( );
+zz := HomalgRingOfIntegers( );
 #! Z
-ZZ_rows := CategoryOfRows( ZZ );
+ZZ_rows := CategoryOfRows( zz );
 #! Rows( Z )
 ZZ_mod := FreydCategory( ZZ_rows );
 #! Freyd( Rows( Z ) )
@@ -67,7 +67,7 @@ ZZ_mod_by_projs := StableCategoryByClassOfLiftingObjects( ZZ_mod );
 #! Stable category( Freyd( Rows( Z ) ) ) defined by a system of lifting objects
 CongruencyTestFunction( ZZ_mod_by_projs );
 #! <Property "IsLiftableAlongMorphismFromLiftingObject">
-A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, ZZ ) / ZZ_rows / ZZ_mod;
+A := HomalgMatrix( [[0,0],[0,2],[0,3]], 3, 2, zz ) / ZZ_rows / ZZ_mod;
 #! <An object in Freyd( Rows( Z ) )>
 IsZero( A );
 #! false
@@ -96,7 +96,7 @@ RangeCategoryOfHomomorphismStructure( ZZ_mod_by_projs );
 mat_A := HomalgMatrix(
                 [ [    0,    4,  -10,    6 ],
                   [   10,   -8,   10,  -10 ],
-                  [    1,    5,  -14,    5 ] ] , 3, 4, ZZ
+                  [    1,    5,  -14,    5 ] ] , 3, 4, zz
         );;
 A := mat_A / ZZ_rows / ZZ_mod;
 #! <An object in Freyd( Rows( Z ) )>
@@ -105,7 +105,7 @@ class_A := StableCategoryObject( ZZ_mod_by_projs, A );
 #! lifting objects>
 mat_B := HomalgMatrix(
                 [ [   8,  -6,  -9 ],
-                  [   8,  -4,  -9 ] ] , 2, 3, ZZ
+                  [   8,  -4,  -9 ] ] , 2, 3, zz
         );;
 B := mat_B / ZZ_rows / ZZ_mod;
 #! <An object in Freyd( Rows( Z ) )>
@@ -116,7 +116,7 @@ mat_alpha := HomalgMatrix(
                 [ [       1899716,        264976,   90332035416 ],
                   [       2974213,        474929,  241963187751 ],
                   [       2974213,        474929,   87104606157 ],
-                  [       2974213,        209953,  -16134448239 ] ] , 4, 3, ZZ
+                  [       2974213,        209953,  -16134448239 ] ] , 4, 3, zz
         );;
 alpha := FreydCategoryMorphism( A, mat_alpha / ZZ_rows, B );
 #! <A morphism in Freyd( Rows( Z ) )>
@@ -422,7 +422,7 @@ Display( MorphismDatum( eta ) );
 #!
 D := DistinguishedObjectOfHomomorphismStructure( ZZ_mod_by_projs );
 #! <A projective object in Freyd( Rows( Z ) )>
-g1 := HomalgMatrix( [[1,0]], 1, 2, ZZ );
+g1 := HomalgMatrix( [[1,0]], 1, 2, zz );
 #! <A 1 x 2 matrix over an internal ring>
 g1 := FreydCategoryMorphism( D, g1 / ZZ_rows, Sim_Hom_class_A_class_B );
 #! <A morphism in Freyd( Rows( Z ) )>
@@ -454,7 +454,7 @@ Display( MorphismDatum( UnderlyingCell( g1 ) ) );
 #! 
 IsZero( AdditionForMorphisms( g1, g1 ) );
 #! true
-g2 := HomalgMatrix( [[0,1]], 1, 2, ZZ );
+g2 := HomalgMatrix( [[0,1]], 1, 2, zz );
 #! <A 1 x 2 matrix over an internal ring>
 g2 := FreydCategoryMorphism( D, g2 / ZZ_rows, Sim_Hom_class_A_class_B );
 #! <A morphism in Freyd( Rows( Z ) )>
