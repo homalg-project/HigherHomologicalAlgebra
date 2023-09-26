@@ -111,15 +111,13 @@ Required packages
 
 * This package is written to handle categories that are already implemented in CAP, so you will need a fresh version of CAP. You may install it from [CAP_project](https://github.com/homalg-project/CAP_project)
 
-* You will also need [homalg_project](https://github.com/homalg-project/homalg_project.git)
+* You will also need
+  - [homalg_project](https://github.com/homalg-project/homalg_project.git)
+  - [CategoricalTowers](https://github.com/homalg-project/CategoricalTowers.git)
 
 * Other needed packages
-  - https://github.com/homalg-project/Toposes/
   - https://github.com/homalg-project/FinSetsForCAP/
   - https://github.com/sunnyquiver/QPA2/
-  - https://github.com/homalg-project/Algebroids/
-  - https://github.com/homalg-project/CategoryConstructor/
-  - https://github.com/homalg-project/SubcategoriesForCAP/
  
 * For the installation of Gap see [gap-system-website](https://www.gap-system.org)
 
