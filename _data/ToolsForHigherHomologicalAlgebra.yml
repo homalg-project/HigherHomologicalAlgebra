@@ -1,7 +1,7 @@
 name: ToolsForHigherHomologicalAlgebra
-version: "2023.03-01"
+version: "2023.09-01"
 license: "GPL-2.0-or-later"
-date: 2023-03-31
+date: 2023-09-28
 description: |
     Tools for the Higher Homological Algebra project
 
@@ -29,11 +29,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForH
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.03-01/ToolsForHigherHomologicalAlgebra-2023.03-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.09-01/ToolsForHigherHomologicalAlgebra-2023.09-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.03-01/ToolsForHigherHomologicalAlgebra-2023.03-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.09-01/ToolsForHigherHomologicalAlgebra-2023.09-01.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.03-01/ToolsForHigherHomologicalAlgebra-2023.03-01.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/ToolsForHigherHomologicalAlgebra-2023.09-01/ToolsForHigherHomologicalAlgebra-2023.09-01-manual.pdf
 
 abstract: |
 
@@ -42,29 +42,29 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal23</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal28</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>ToolsForHigherHomologicalAlgebra, Tools for the Higher Homological Algebra project,
-             Version 2023.03-01</i>
-     (<span class='BibYear'>2023</span>)<br />
+             Version 2023.09-01</i>
+     (<span class='BibYear'>9-28</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra">https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ ToolsForHigherHomologicalAlgebra2023.03-01,
+    @misc{ ToolsForHigherHomologicalAlgebra2023.09-01,
       author =           {Saleh, K.},
       title =            {{ToolsForHigherHomologicalAlgebra},   Tools   for  the
                           Higher    Homological   Algebra   project,   {V}ersion
-                          2023.03-01},
-      month =            {Mar},
-      year =             {2023},
+                          2023.09-01},
+      month =            {3-},
+      year =             {9-28},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra}
                           {\texttt{https://homalg-project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{ToolsForHigherHomologicalAlgebra}}},
-      printedkey =       {Sal23}
+      printedkey =       {Sal28}
     }
 
