@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2023.02-01",
-Date := "23/02/2023",
+Version := "2023.09-01",
+Date := "2023-09-28",
 License := "GPL-2.0-or-later",
 
 Persons := [
