@@ -22,7 +22,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 | [ComplexesCategories](ComplexesCategories#readme) | Category of (co)chain complexes of an additive category | [![HTML stable documentation][html-ComplexesCategories-img]][html-ComplexesCategories-url] [![PDF stable documentation][pdf-ComplexesCategories-img]][pdf-ComplexesCategories-url] |
 | [DerivedCategories](DerivedCategories#readme) | Derived categories of Abelian categories | [![HTML stable documentation][html-DerivedCategories-img]][html-DerivedCategories-url] [![PDF stable documentation][pdf-DerivedCategories-img]][pdf-DerivedCategories-url] |
 | [HomotopyCategories](HomotopyCategories#readme) | Homotopy categories of additive categories | [![HTML stable documentation][html-HomotopyCategories-img]][html-HomotopyCategories-url] [![PDF stable documentation][pdf-HomotopyCategories-img]][pdf-HomotopyCategories-url] |
-| [QuotientCategories](QuotientCategories#readme) | Quotient categories of CAP categories by two-sided ideals | [![HTML stable documentation][html-QuotientCategories-img]][html-QuotientCategories-url] [![PDF stable documentation][pdf-QuotientCategories-img]][pdf-QuotientCategories-url] |
 | [StableCategories](StableCategories#readme) | Stable categories of additive categories | [![HTML stable documentation][html-StableCategories-img]][html-StableCategories-url] [![PDF stable documentation][pdf-StableCategories-img]][pdf-StableCategories-url] |
 | [ToolsForHigherHomologicalAlgebra](ToolsForHigherHomologicalAlgebra#readme) | Tools for the Higher Homological Algebra project | [![HTML stable documentation][html-ToolsForHigherHomologicalAlgebra-img]][html-ToolsForHigherHomologicalAlgebra-url] [![PDF stable documentation][pdf-ToolsForHigherHomologicalAlgebra-img]][pdf-ToolsForHigherHomologicalAlgebra-url] |
 | [TriangulatedCategories](TriangulatedCategories#readme) | Framework for triangulated categories | [![HTML stable documentation][html-TriangulatedCategories-img]][html-TriangulatedCategories-url] [![PDF stable documentation][pdf-TriangulatedCategories-img]][pdf-TriangulatedCategories-url] |
@@ -60,13 +59,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 
 [pdf-HomotopyCategories-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
 [pdf-HomotopyCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/HomotopyCategories/download_pdf.html
-
-
-[html-QuotientCategories-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
-[html-QuotientCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/doc/chap0_mj.html
-
-[pdf-QuotientCategories-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
-[pdf-QuotientCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/QuotientCategories/download_pdf.html
 
 
 [html-StableCategories-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg

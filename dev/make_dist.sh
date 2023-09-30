@@ -27,11 +27,6 @@ echo "Release HomotopyCategories"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --skip-existing-release --srcdir "$PWD/HomotopyCategories" --webdir "$PWD/gh-pages/HomotopyCategories" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release"
 echo ""
 
-# QuotientCategories
-echo "Release QuotientCategories"
-GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --skip-existing-release --srcdir "$PWD/QuotientCategories" --webdir "$PWD/gh-pages/QuotientCategories" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release"
-echo ""
-
 # StableCategories
 echo "Release StableCategories"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --skip-existing-release --srcdir "$PWD/StableCategories" --webdir "$PWD/gh-pages/StableCategories" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release"
