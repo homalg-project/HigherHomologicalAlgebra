@@ -1,7 +1,0 @@
----
----
-{
-  "schemaVersion": 1,
-  "label": "to be overridden by url",
-  "message": "{{ site.data.QuotientCategories.version }}"
-}
