@@ -43,10 +43,6 @@ while ! ./codecov -Z -v -s ../ -F HomotopyCategories; do
     echo "Codecov upload failed, retrying in 60s"
     sleep 60
 done
-while ! ./codecov -Z -v -s ../ -F QuotientCategories; do
-    echo "Codecov upload failed, retrying in 60s"
-    sleep 60
-done
 while ! ./codecov -Z -v -s ../ -F StableCategories; do
     echo "Codecov upload failed, retrying in 60s"
     sleep 60

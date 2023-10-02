@@ -2,7 +2,7 @@ codecov:
   disable_default_path_fixes: true
   require_ci_to_pass: false
 comment:
-  after_n_builds: 9
+  after_n_builds: 8
 flags:
   BBGG:
     paths:
@@ -19,9 +19,6 @@ flags:
   HomotopyCategories:
     paths:
       - "HomotopyCategories/"
-  QuotientCategories:
-    paths:
-      - "QuotientCategories/"
   StableCategories:
     paths:
       - "StableCategories/"
