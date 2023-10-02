@@ -4,7 +4,6 @@ package_links:
     - name: ComplexesCategories
     - name: DerivedCategories
     - name: HomotopyCategories
-    - name: QuotientCategories
     - name: StableCategories
     - name: ToolsForHigherHomologicalAlgebra
     - name: TriangulatedCategories
