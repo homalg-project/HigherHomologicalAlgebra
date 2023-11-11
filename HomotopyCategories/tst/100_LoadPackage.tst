@@ -9,18 +9,22 @@ gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
 gap> LoadPackage( "IO_ForHomalg", false );
 true
-gap> LoadPackage( "Algebroids", false );
+gap> LoadPackage( "FinSetsForCAP", false );
 true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
+true
+gap> LoadPackage( "Algebroids", false );
 true
 gap> LoadPackage( "HomotopyCategories", false );
 true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
 gap> LoadPackage( "IO_ForHomalg" );
 true
-gap> LoadPackage( "Algebroids" );
+gap> LoadPackage( "FinSetsForCAP" );
 true
 gap> LoadPackage( "FreydCategoriesForCAP" );
+true
+gap> LoadPackage( "Algebroids" );
 true
 gap> LoadPackage( "HomotopyCategories" );
 true
