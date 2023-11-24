@@ -49,202 +49,6 @@ BindGlobal( "INTEGERS_CAT_MORS",
 );
 
 ##
-InstallGlobalFunction( COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER,
-  
-  function ( cat )
-    local presh_cat, category_filter, category_object_filter, category_morphism_filter, commutative_ring, properties, object_constructor,
-          object_datum, morphism_constructor, morphism_datum, union_of_supports, list_of_operations_to_install, create_func_bool,
-          create_func_object, create_func_morphism, supports_empty_limits, name, modeling_cat;
-    
-    presh_cat := PreSheaves( INTEGERS_CAT, cat : overhead := false );
-    
-    name := Concatenation( "Bounded ", Name( presh_cat ) );
-    
-    category_filter := IsCapCategory;
-    category_object_filter := IsCapCategoryObject;
-    category_morphism_filter := IsCapCategoryMorphism;
-    
-    if HasCommutativeRingOfLinearCategory( presh_cat ) then
-        commutative_ring := CommutativeRingOfLinearCategory( presh_cat );
-    else
-        commutative_ring := fail;
-    fi;
-    
-    properties := ListKnownCategoricalProperties( presh_cat );
-    
-    # e.g., datum = Pair( presheaf, Pair( lower_bound, upper_bound ) )
-    object_constructor :=
-      { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat, ObjectDatum, datum );
-    
-    object_datum := { coch_cat, o } -> ObjectDatum( o );
-    
-    # e.g., datum = presheaf_morphism
-    morphism_constructor :=
-      { coch_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( coch_cat, S, R, MorphismDatum, datum );
-    
-    morphism_datum := { coch_cat, m } -> MorphismDatum( m );
-    
-    union_of_supports :=
-      function ( supports )
-        
-        if supports = [ ] then
-            return Pair( 0, 0 );
-        else
-            return Pair( Minimum( List( supports, s -> s[1] ) ), Maximum( List( supports, s -> s[2] ) ) );
-        fi;
-        
-    end;
-    
-    list_of_operations_to_install := Filtered( ListPrimitivelyInstalledOperationsOfCategory( presh_cat ), name -> CAP_INTERNAL_METHOD_NAME_RECORD.(name).return_type <> "bool" );
-    
-    create_func_bool := "default"; # this function will never be used
-    
-    create_func_object :=
-      function ( name, coch_cat )
-          local info;
-          
-          info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
-          
-          return
-            ReplacedStringViaRecord(
-            """
-            function( input_arguments... )
-              local presh_cat, i_arg;
-              
-              presh_cat := UnderlyingCategory( cat );
-              
-              i_arg := NTuple( number_of_arguments, input_arguments... );
-              
-              return ObjectConstructor( cat, Pair( operation_name( sequence_of_arguments... ), bounds ) );
-              
-            end
-            """,
-            rec( sequence_of_arguments :=
-              List( [ 1 .. Length( info.filter_list ) ],
-                function ( j )
-                  local type;
-                  
-                  type := info.filter_list[j];
-                  
-                  if j = 1 and type = "category" then
-                      return "presh_cat";
-                  elif type = "object" then
-                      return Concatenation( "ObjectDatum( i_arg[", String( j ), "] )[1]" );
-                  elif type = "morphism" then
-                      return Concatenation( "MorphismDatum( i_arg[", String( j ), "] )" );
-                  elif type = "list_of_objects" then
-                      return Concatenation( "List( i_arg[", String( j ), "],  o -> ObjectDatum( cat, o )[1] )" );
-                  elif type = "list_of_morphisms" then
-                      return Concatenation( "List( i_arg[", String( j ), "],  m -> MorphismDatum( cat, m ) )" );
-                  else
-                      Error( "can only deal with 'object', 'morphism', 'list_of_objects', 'list_of_morphisms'" );
-                  fi;
-                  
-            end ),
-            bounds :=
-               (function()
-                  local types;
-                  
-                  types := info.filter_list;
-                  
-                  if types = [ "category" ] then # e.g., ZeroObject, InitialObject, TerminalObject, ...
-                      return "Pair( 0, 0 )";
-                  elif types[2] = "object" then # e.g., (Co)Equalizer, ...
-                      return "ObjectDatum( cat, i_arg[2] )[2]";
-                  elif types[2] = "morphism" then # e.g., (Co)KernelObject, (Co)ImageObject, ...
-                      return Concatenation( String( union_of_supports ), "( List( [ Source( i_arg[2] ), Range( i_arg[2] ) ], c -> ObjectDatum( cat, c )[2] ) )" );
-                  elif types[2] = "list_of_objects" then # e.g., Coproduct, DirectProduct, DirectSum, ...
-                      return Concatenation( String( union_of_supports ), "( List( i_arg[2], c -> ObjectDatum( cat, c )[2] ) )" );
-                  elif types[2] = "list_of_morphisms" then # Pushout, FiberProduct, ...
-                      return Concatenation( String( union_of_supports ), "( List( Concatenation( List( i_arg[2], m -> Source( m ) ), List( i_arg[2], m -> Range( m ) ) ), c -> ObjectDatum( cat, c )[2] ) )" );
-                  else
-                      Error( "can only deal with 'object', 'morphism', 'list_of_objects', 'list_of_morphisms'" );
-                  fi;
-                  
-                end)( ) ) );
-                
-      end;
-    
-    create_func_morphism :=
-      function ( name, cat )
-        local info;
-        
-        info := CAP_INTERNAL_METHOD_NAME_RECORD.(name);
-        
-        return
-          ReplacedStringViaRecord(
-          """
-          function ( input_arguments... )
-            local presh_cat, i_arg;
-            
-            presh_cat := UnderlyingCategory( cat );
-            
-            i_arg := NTuple( number_of_arguments, input_arguments... );
-            
-            return MorphismConstructor( cat, top_source, operation_name( sequence_of_arguments... ), top_range );
-            
-        end
-        """,
-        rec( sequence_of_arguments :=
-             List( [ 1 .. Length( info.filter_list ) ],
-                   function( j )
-                     local type;
-                     
-                     type := info.filter_list[j];
-                     
-                     if j = 1 and type = "category" then
-                        return "presh_cat";
-                     elif type in [ "integer", "element_of_commutative_ring_of_linear_structure" ] then
-                        return Concatenation( "i_arg[", String( j ), "]" );
-                     elif type = "object" then
-                        return Concatenation( "ObjectDatum( cat, i_arg[", String( j ), "] )[1]" );
-                     elif type = "morphism" then
-                        return Concatenation( "MorphismDatum( i_arg[", String( j ), "] )" );
-                     elif type = "list_of_objects" then
-                        return Concatenation( "List( i_arg[", String( j ), "], o -> ObjectDatum( cat, o )[1] )" );
-                     elif type = "list_of_morphisms" then
-                        return Concatenation( "List( i_arg[", String( j ), "], m -> MorphismDatum( cat, m ) )" );
-                     elif type = "pair_of_morphisms" then
-                        return Concatenation( "Pair( ", "MorphismDatum( cat, i_arg[", String( j ), "][1] )", ", MorphismDatum( cat, i_arg[", String( j ), "][2] )", " )" );
-                     elif type = "list_of_lists_of_morphisms" then
-                        return Concatenation( "List( i_arg[", String( j ), "], x -> List( x, y -> MorphismDatum( cat, y ) ) )" );
-                     else
-                        Error( "can only deal with 'integer', 'object', 'morphism', 'list_of_objects', 'list_of_morphisms', 'pair_of_morphisms'" );
-                     fi;
-                     
-                  end ) ) );
-    
-    end;
-    
-    supports_empty_limits := true;
-    
-    modeling_cat := CategoryConstructor(
-                      rec( name := name,
-                           category_filter := category_filter,
-                           category_object_filter := category_object_filter,
-                           category_morphism_filter := category_morphism_filter,
-                           commutative_ring_of_linear_category := commutative_ring,
-                           properties := properties,
-                           is_computable := false,
-                           object_constructor := object_constructor,
-                           object_datum := object_datum,
-                           morphism_constructor := morphism_constructor,
-                           morphism_datum := morphism_datum,
-                           underlying_category_getter_string := "UnderlyingCategory",
-                           list_of_operations_to_install := list_of_operations_to_install,
-                           supports_empty_limits := supports_empty_limits,
-                           create_func_bool := create_func_bool,
-                           create_func_object := create_func_object,
-                           create_func_morphism := create_func_morphism ) : overhead := false );
-    
-    SetUnderlyingCategory( modeling_cat, presh_cat );
-    
-    return modeling_cat;
-    
-end );
-
-##
-##
 InstallMethod( ComplexesCategoryByCochains,
         "for a CAP category",
         [ IsCapCategory ],
@@ -255,7 +59,7 @@ InstallMethod( ComplexesCategoryByCochains,
     
     ## building the categorical tower
     
-    modeling_cat := COMPLEXES_CATEGORY_BY_COCHAINS_AS_TOWER( cat );
+    modeling_cat := PreSheavesWithBounds( INTEGERS_CAT, cat, "both" : overhead := false );
     
     ##
     object_constructor := { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat,
@@ -282,7 +86,7 @@ InstallMethod( ComplexesCategoryByCochains,
         local modeling_cat, presh_cat, presheaf_on_objects, presheaf_on_morphisms, presheaf;
         
         modeling_cat := ModelingCategory( coch_cat );
-        presh_cat := UnderlyingCategory( modeling_cat );
+        presh_cat := AmbientCategory( modeling_cat );
         
         presheaf_on_objects := i -> datum[1][ObjectDatum( i )];
         presheaf_on_morphisms := {s, i, r} -> datum[2][ObjectDatum( Range( i ) )];
@@ -313,7 +117,7 @@ InstallMethod( ComplexesCategoryByCochains,
         local modeling_cat, presh_cat, nat_trans_on_objs, presheaf_morphism;
         
         modeling_cat := ModelingCategory( coch_cat );
-        presh_cat := UnderlyingCategory( modeling_cat );
+        presh_cat := AmbientCategory( modeling_cat );
         
         nat_trans_on_objs := {s, i, r} -> datum[ObjectDatum( i )];
         presheaf_morphism := MorphismConstructor( presh_cat, ObjectDatum( source )[1], nat_trans_on_objs, ObjectDatum( range )[1] );
