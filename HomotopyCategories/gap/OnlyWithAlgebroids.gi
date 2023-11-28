@@ -10,7 +10,8 @@ InstallMethod( AbstractionAlgebroid,
         [ IsCapFullSubcategory ],
   
   function ( seq )
-    local nr_vertices, arrows, q, vertices_latex, morphisms_latex, F, k, kF, o, convert_string_to_morphism, distinguished_object, range_cat, relations, oid, object_func, morphism_func, data, full_functor, f, t;
+    local nr_vertices, arrows, q, vertices_latex, morphisms_latex, F, k, kF, o, convert_string_to_morphism,
+    distinguished_object, range_cat, relations, quo_kF, oid, object_func, morphism_func, data, full_functor, f, t;
     
     nr_vertices := Length( SetOfKnownObjects( seq ) );
     
@@ -20,22 +21,23 @@ InstallMethod( AbstractionAlgebroid,
                         j -> List( [ 1 .. Length( IrreducibleMorphisms( seq, [ i, j ] ) ) ],
                             k -> [ Concatenation( "m", String(i), "_", String(j), "_", String(k) ), i, j, Concatenation( "m_{", String(i), ",", String(j), "}^{", String(k), "}" ) ] ) ) ) ) );
     
-    q := RightQuiver(
+    q := FinQuiver(
             Concatenation(
                 "q(",
                 JoinStringsWithSeparator( List( [ 1 .. nr_vertices ], i -> Concatenation( "E", String( i ) ) ), "," ),
-                ")[", JoinStringsWithSeparator( List( arrows, m -> Concatenation( m[1], ":", String(m[2]), "->", String(m[3]) ) ), "," ), "]" ) );
+                ")[", JoinStringsWithSeparator( List( arrows, m -> Concatenation( m[1], ":", "E", String(m[2]), "->", "E", String(m[3]) ) ), "," ), "]" ) );
     
     vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String(i), "}" ) );
     morphisms_latex := List( arrows, m -> m[4] );
     
-    SetLabelsAsLaTeXStrings( q, vertices_latex, morphisms_latex );
+    SetLaTeXStringsOfObjects( q, vertices_latex );
+    SetLaTeXStringsOfMorphisms( q, morphisms_latex );
     
-    F := FreeCategory( q );
+    F := PathCategory( q );
     
     range_cat := RangeCategoryOfHomomorphismStructure( seq );
     
-    kF := Algebroid( CommutativeRingOfLinearCategory( seq ),  FreeCategory( q ) : range_of_HomStructure := range_cat );
+    kF := LinearClosure( CommutativeRingOfLinearCategory( seq ), F );
     
     o := SetOfObjects( kF );
     
@@ -57,11 +59,13 @@ InstallMethod( AbstractionAlgebroid,
       List( [ 1 .. nr_vertices - 2 ],
          i -> Concatenation( List( [ i + 2 .. nr_vertices ],
             function( j )
-              local H_ij, morphisms, u, coeffs, B_ij;
+              local H_ij, B_ij, morphisms, u, coeffs;
               
               H_ij := HomomorphismStructureOnObjects( seq, seq[i], seq[j] );
               
-              morphisms := List( BasisPathsByVertexIndex( kF )[i][j], p -> PreComposeList( seq, List( ArrowList( p ), a -> convert_string_to_morphism( Label( a ) ) ) ) );
+              B_ij := BasisOfExternalHom( kF, SetOfObjects( kF )[i], SetOfObjects( kF )[j] );
+              
+              morphisms := List( B_ij, b -> PreComposeList( seq, seq[i], List( LabelsOfMorphisms(q){MorphismIndices( MorphismDatum(b)[2][1] )}, convert_string_to_morphism ), seq[j] ) );
               
               morphisms := List( morphisms, m -> InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( seq, distinguished_object, m, H_ij ) );
               
@@ -69,30 +73,34 @@ InstallMethod( AbstractionAlgebroid,
               
               coeffs := EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( u ) );
               
-              B_ij := BasisOfExternalHom( kF, o[i], o[j] ); # whose elements are wrappers of the elements of BasisPathsByVertexIndex( kF )[i][j]
-              
-              return List( coeffs, coeff -> SumOfMorphisms( kF, o[i], ListN( coeff, B_ij, { c, f } -> MultiplyWithElementOfCommutativeRingForMorphisms( kF, c, f ) ), o[j] ) );
+              return List( coeffs, coeff -> LinearCombinationOfMorphisms( kF, o[i], coeff, B_ij, o[j] ) );
               
             end ) ) ) );
     
-    oid := QuotientCategory( kF, relations : range_of_HomStructure := range_cat );
+    quo_kF := QuotientCategory( kF, relations );
+    
+    oid := AlgebroidFromDataTables( quo_kF : range_of_HomStructure := range_cat );
+    
+    SetIsAdmissibleAlgebroid( oid, true );
+    
+    SetDefiningCategory( oid, quo_kF );
     
     # defining the isomorphisms from/to abstraction algebroid
     
-    object_func := o -> seq[VertexIndex( UnderlyingVertex( o ) )];
+    object_func := o -> seq[ObjectIndex( o )];
     
     morphism_func :=
       function( s, alpha, r )
         local components;
         
-        components := Paths( UnderlyingQuiverAlgebraElement( alpha ) );
+        components := DecompositionIndicesOfMorphismInAlgebroid( alpha );
         
         Assert( 0, Length( components ) <= 1 );
         
         if IsEmpty( components ) then
             return ZeroMorphism( seq, s, r );
         else
-            return PreComposeList( seq, Concatenation( [ IdentityMorphism( s ) ], List( ArrowList( components[1] ), a -> convert_string_to_morphism( Label(a) ) ) ) );
+            return PreComposeList( seq, s, List( LabelsOfMorphisms( q ){components[1][2]}, convert_string_to_morphism ), r );
         fi;
         
     end;
@@ -108,7 +116,7 @@ InstallMethod( AbstractionAlgebroid,
     DeactivateCachingObject( MorphismCache( f ) );
     
     ##
-    t := CapFunctor( Concatenation( "Isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid ); 
+    t := CapFunctor( Concatenation( "Isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid );
     AddObjectFunction( t, data[3] );
     AddMorphismFunction( t, data[4] );
     DeactivateCachingObject( ObjectCache( t ) );
@@ -154,7 +162,7 @@ InstallMethod( ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAbstract
   function ( seq )
     local I, F;
     
-    I := ExtendFunctorToHomotopyCategoriesByCochains( ExtendFunctorToAdditiveClosures( IsomorphismFromAbstractionAlgebroid( seq ) ) );    
+    I := ExtendFunctorToHomotopyCategoriesByCochains( ExtendFunctorToAdditiveClosures( IsomorphismFromAbstractionAlgebroid( seq ) ) );
     
     F := PreCompose( I, ConvolutionFunctor( seq ) );
     
