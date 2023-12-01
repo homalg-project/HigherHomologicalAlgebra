@@ -1,14 +1,12 @@
-gap> q_O := RightQuiver( "q_O(O0,O1,O2)[x0:O0->O1,x1:O0->O1,x2:O0->O1,y0:O1->O2,y1:O1->O2,y2:O1->O2]" );;
-gap> SetLabelsAsLaTeXStrings( q_O,    [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ], [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );;
+gap> q_O := FinQuiver( "q_O(O0,O1,O2)[x0:O0->O1,x1:O0->O1,x2:O0->O1,y0:O1->O2,y1:O1->O2,y2:O1->O2]" );;
+gap> SetLaTeXStringsOfObjects( q_O, [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ] );;
+gap> SetLaTeXStringsOfMorphisms( q_O, [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );;
 gap> q_O_op := OppositeQuiver( q_O );;
-gap> SetLabelsAsLaTeXStrings( q_O_op, [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ], [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );;
-gap> F_O := FreeCategory( q_O );;
+gap> P_O := PathCategory( q_O );;
+gap> rho_O := [ [ P_O.x0y1, P_O.x1y0 ], [ P_O.x0y2, P_O.x2y0 ], [ P_O.x1y2, P_O.x2y1 ] ];;
 gap> QQ := HomalgFieldOfRationals( );;
 gap> k := QQ;;
-gap> kF_O := k[F_O];;
-gap> rho_O := [ PreCompose( kF_O.x0, kF_O.y1 ) - PreCompose( kF_O.x1, kF_O.y0 ), PreCompose( kF_O.x0, kF_O.y2 ) - PreCompose( kF_O.x2, kF_O.y0 ),
->                                               PreCompose( kF_O.x1, kF_O.y2 ) - PreCompose( kF_O.x2, kF_O.y1 ) ];;
-gap> A_O := AlgebroidFromDataTables( kF_O / rho_O );;
+gap> A_O := AlgebroidFromDataTables( k[P_O / rho_O] );;
 gap> phi := 2 * A_O.x0 + 3 * A_O.x1 - A_O.x2;;
 gap> A_Oadd := AdditiveClosure( A_O );;
 gap> KA_Oadd := HomotopyCategoryByCochains( A_Oadd );;
@@ -53,9 +51,7 @@ gap> Assert( 0, IsZero( HomStructure( T, Shift( T, -2 ) ) ) and
 gap> Assert( 0, RankOfObject( HomStructure( T, T ) ) = 12 );
 gap> A_E := AbstractionAlgebroid( seq );;
 gap> q_E := UnderlyingQuiver( A_E );;
-gap> B_E := UnderlyingQuiverAlgebra( A_E );;
-gap> Assert( 0, Dimension( B_E ) = 12 );
-gap> rho_E := RelationsOfAlgebroid( A_E );;
+gap> Assert( 0, Dimension( A_E ) = 12 );
 gap> a := IsomorphismIntoAbstractionAlgebroid( seq );;
 gap> r := IsomorphismFromAbstractionAlgebroid( seq );;
 gap> m := A_E.("m1_2_1");;

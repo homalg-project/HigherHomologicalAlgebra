@@ -4,8 +4,7 @@
 # Implementations
 #
 
-
-
+##
 InstallMethod( EmbeddingIntoDerivedCategory,
           [ IsHomotopyCategory ],
   
@@ -18,11 +17,15 @@ InstallMethod( EmbeddingIntoDerivedCategory,
     
     add_closure := DefiningCategory( homotopy_cat );
     
-    if not IsAlgebroid( UnderlyingCategory( add_closure ) ) then
+    if not IsAdditiveClosureCategory( add_closure ) then
         TryNextMethod( );
     fi;
-    
+     
     B := UnderlyingCategory( add_closure );
+    
+    if not ( IsAlgebroid( B ) or IsAlgebroidFromDataTables( B ) ) then
+        TryNextMethod( );
+    fi;
     
     PSh := PreSheaves( B : overhead := false );
     
