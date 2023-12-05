@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2023.12-01",
-Date := "2023-12-01",
+Version := "2023.12-02",
+Date := "2023-12-05",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -71,7 +71,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.12.1",
   NeededOtherPackages := [
-        [ "CAP", ">= 2022.09-17" ],
+        [ "CAP", ">= 2023.12-02" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
         [ "HomotopyCategories", ">= 2023.12-01" ],
         [ "ToolsForHigherHomologicalAlgebra", ">= 2020.10-02" ],
