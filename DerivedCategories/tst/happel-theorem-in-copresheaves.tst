@@ -1,3 +1,5 @@
+gap> LoadPackage( "FunctorCategories", false );;
+gap> LoadPackage( "DerivedCategories", false );;
 gap> q := RightQuiver( "q(v₁,v₂,v₃,v₄)[a:v₁->v₂,b:v₂->v₄,c:v₁->v₃,d:v₃->v₄]" );;
 gap> k := HomalgFieldOfRationals();;
 gap> F_q := FreeCategory( q );;
