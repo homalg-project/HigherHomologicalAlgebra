@@ -2,11 +2,6 @@
 
 set -e
 
-# BBGG
-echo "Simulate release of BBGG"
-GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --srcdir "$PWD/BBGG" --webdir "$PWD/gh-pages/BBGG" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release" --only-tarball
-echo ""
-
 # Bicomplexes
 echo "Simulate release of Bicomplexes"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --srcdir "$PWD/Bicomplexes" --webdir "$PWD/gh-pages/Bicomplexes" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release" --only-tarball

@@ -23,10 +23,6 @@ shasum -a 256 -c codecov.SHA256SUM
 
 # execute
 chmod +x codecov
-while ! ./codecov -Z -v -s ../ -F BBGG; do
-    echo "Codecov upload failed, retrying in 60s"
-    sleep 60
-done
 while ! ./codecov -Z -v -s ../ -F Bicomplexes; do
     echo "Codecov upload failed, retrying in 60s"
     sleep 60
