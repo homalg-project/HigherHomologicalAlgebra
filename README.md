@@ -17,7 +17,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 ### Packages of [HigherHomologicalAlgebra](/../../):
 | Name | Description | Documentation |
 | ---- | ----------- | ------------- |
-| [BBGG](BBGG#readme) | Beilinson monads and derived categories for coherent sheaves over P^n | [![HTML stable documentation][html-BBGG-img]][html-BBGG-url] [![PDF stable documentation][pdf-BBGG-img]][pdf-BBGG-url] |
 | [Bicomplexes](Bicomplexes#readme) | Bicomplexes for Abelian categories | [![HTML stable documentation][html-Bicomplexes-img]][html-Bicomplexes-url] [![PDF stable documentation][pdf-Bicomplexes-img]][pdf-Bicomplexes-url] |
 | [ComplexesCategories](ComplexesCategories#readme) | Category of (co)chain complexes of an additive category | [![HTML stable documentation][html-ComplexesCategories-img]][html-ComplexesCategories-url] [![PDF stable documentation][pdf-ComplexesCategories-img]][pdf-ComplexesCategories-url] |
 | [DerivedCategories](DerivedCategories#readme) | Derived categories of Abelian categories | [![HTML stable documentation][html-DerivedCategories-img]][html-DerivedCategories-url] [![PDF stable documentation][pdf-DerivedCategories-img]][pdf-DerivedCategories-url] |
@@ -25,13 +24,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 | [StableCategories](StableCategories#readme) | Stable categories of additive categories | [![HTML stable documentation][html-StableCategories-img]][html-StableCategories-url] [![PDF stable documentation][pdf-StableCategories-img]][pdf-StableCategories-url] |
 | [ToolsForHigherHomologicalAlgebra](ToolsForHigherHomologicalAlgebra#readme) | Tools for the Higher Homological Algebra project | [![HTML stable documentation][html-ToolsForHigherHomologicalAlgebra-img]][html-ToolsForHigherHomologicalAlgebra-url] [![PDF stable documentation][pdf-ToolsForHigherHomologicalAlgebra-img]][pdf-ToolsForHigherHomologicalAlgebra-url] |
 | [TriangulatedCategories](TriangulatedCategories#readme) | Framework for triangulated categories | [![HTML stable documentation][html-TriangulatedCategories-img]][html-TriangulatedCategories-url] [![PDF stable documentation][pdf-TriangulatedCategories-img]][pdf-TriangulatedCategories-url] |
-
-[html-BBGG-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
-[html-BBGG-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/doc/chap0_mj.html
-
-[pdf-BBGG-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
-[pdf-BBGG-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/BBGG/download_pdf.html
-
 
 [html-Bicomplexes-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
 [html-Bicomplexes-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/Bicomplexes/doc/chap0_mj.html

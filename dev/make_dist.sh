@@ -2,11 +2,6 @@
 
 set -e
 
-# BBGG
-echo "Release BBGG"
-GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --skip-existing-release --srcdir "$PWD/BBGG" --webdir "$PWD/gh-pages/BBGG" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release"
-echo ""
-
 # Bicomplexes
 echo "Release Bicomplexes"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --skip-existing-release --srcdir "$PWD/Bicomplexes" --webdir "$PWD/gh-pages/Bicomplexes" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release"
