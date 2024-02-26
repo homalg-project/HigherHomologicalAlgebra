@@ -75,4 +75,16 @@ ci-test_ToolsForHigherHomologicalAlgebra:
 ci-test_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories ci-test
 
+################################
+update-notebooks: update-notebooks_ComplexesCategories update-notebooks_DerivedCategories update-notebooks_HomotopyCategories
+
+update-notebooks_ComplexesCategories:
+	$(MAKE) -C ComplexesCategories update-notebooks
+
+update-notebooks_DerivedCategories:
+	$(MAKE) -C DerivedCategories update-notebooks
+
+update-notebooks_HomotopyCategories:
+	$(MAKE) -C HomotopyCategories update-notebooks
+
 # END PACKAGE JANITOR
