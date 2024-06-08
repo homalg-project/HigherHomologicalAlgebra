@@ -39,7 +39,7 @@ InstallOtherMethod( Show,
           [ IsString, IsObject ],
   function( c, r )
     
-    Show( c : ScaleBox := r );
+    Show( c : scale := r );
     
 end );
 
@@ -48,19 +48,11 @@ InstallMethod( Show,
           [ IsString ],
           
   function( str )
-    local scale, dir, filename, string, x, file;
-       
-    scale := ValueOption( "ScaleBox" );
+    local scale, width, height, dir, filename, string, file, x;
     
-    if scale = fail then
-      
-      scale := "1";
-      
-    elif not IsString( scale ) then
-      
-      scale := String( scale );
-      
-    fi;
+    scale := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "scale", "1" );
+    width := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "width", "10in" );
+    height := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "height", "15in" );
     
     dir := DirectoryTemporary();
     
@@ -68,7 +60,10 @@ InstallMethod( Show,
     
     string := Concatenation(
 """
-\documentclass[12pt,makeidx]{amsbook}
+\documentclass{article}
+\usepackage{geometry}
+% Set custom paper size
+\geometry{paperwidth=""", width, ", paperheight=", height, """, margin=1in}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
