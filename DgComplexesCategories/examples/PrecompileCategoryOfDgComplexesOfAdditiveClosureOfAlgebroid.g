@@ -22,7 +22,7 @@ ReadPackage( "Algebroids", "gap/CompilerLogic.gi" );
 ReadPackage( "DgComplexesCategories", "gap/CompilerLogic.gi" );
 #! true
 
-category_constructor := { Q, F } -> DgComplexesOfAdditiveClosureOfAlgebroid( Algebroid( F, MATRIX_CATEGORY( Q : FinalizeCategory := true ) : FinalizeCategory := true ) );
+category_constructor := { Q, F } -> DgComplexesOfAdditiveClosureOfAlgebroid( Algebroid( F, MatrixCategory( Q : FinalizeCategory := true ) : FinalizeCategory := true ) );
 
 Q := HomalgFieldOfRationals( );;
 quiver := RightQuiver( "q(3)[a:1->2,b:2->3]" );;
