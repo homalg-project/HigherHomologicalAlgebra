@@ -85,7 +85,7 @@ gap> Assert( 0, DifferentialsSupport( A ) = [ LowerBound( A ) .. UpperBound( A )
 gap> Assert( 0, ForAll( [ zeta, phi, tau ], IsWellDefined ) and ForAll( [ PreCompose( zeta, phi ), PreCompose( phi, tau ) ], IsZeroForMorphisms ) );
 gap> Assert( 0, ForAll( [ CokernelColift( phi, tau ), KernelLift( phi, zeta ) ], IsWellDefined ) );
 gap> Assert( 0, IsZero( tau - PreCompose( CokernelProjection( phi ), CokernelColift( phi, tau ) ) ) and IsZero( zeta - PostCompose( KernelEmbedding( phi ), KernelLift( phi, zeta ) ) ) );
-gap> Assert( 0, RankOfObject( HomStructure( S, KernelObject( phi ) ) ) = RankOfObject( HomStructure( CokernelObject( phi ), T ) ) );
+gap> Assert( 0, CokernelObject( RelationMorphism( HomStructure( S, KernelObject( phi ) ) ) ) = CokernelObject( RelationMorphism( HomStructure( CokernelObject( phi ), T ) ) ) );
 gap> iota := ImageEmbedding( phi );; pi := CoimageProjection( phi );;
 gap> Assert( 0, ForAll( [ iota, pi ], IsWellDefined ) and IsMonomorphism( iota ) and IsEpimorphism( pi ) );
 gap> Assert( 0, Length( LaTeXOutput( A ) ) = 4131 );
