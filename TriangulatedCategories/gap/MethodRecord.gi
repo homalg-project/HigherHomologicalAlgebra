@@ -100,13 +100,13 @@ ShiftOfMorphismByInteger := rec(
 WitnessIsomorphismIntoStandardConeObject := rec(
   input_arguments_names := [ "cat", "alpha", "iota", "pi" ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
-  return_type := "morphism_or_fail"
+  return_type := "morphism"
 ),
 
 WitnessIsomorphismFromStandardConeObject := rec(
   input_arguments_names := [ "cat", "alpha", "iota", "pi" ],
   filter_list := [ "category", "morphism", "morphism", "morphism" ],
-  return_type := "morphism_or_fail"
+  return_type := "morphism"
 ),
 
 IsExactTriangle := rec(

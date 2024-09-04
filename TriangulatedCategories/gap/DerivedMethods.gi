@@ -74,23 +74,37 @@ end : CategoryFilter := IsTriangulatedCategory );
 AddDerivationToCAP( IsExactTriangle,
                     "IsExactTriangle by WitnessIsomorphismIntoStandardConeObject",
                 [
-                  [ WitnessIsomorphismIntoStandardConeObject, 1 ],
+                  [ MorphismIntoStandardConeObject, 1 ],
+                  [ MorphismFromStandardConeObject, 1 ],
+                  [ MereExistenceOfSolutionOfLinearSystemInAbCategory, 1 ],
+                  [ IdentityMorphism, 2 ],
                 ],
   function( cat, alpha, iota, pi )
+    local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side;
     
-    return WitnessIsomorphismIntoStandardConeObject( alpha, iota, pi ) <> fail;
+    iota_alpha := MorphismIntoStandardConeObject( alpha );
+    
+    pi_alpha := MorphismFromStandardConeObject( alpha );
+    
+    left_coeffs := [ [ iota ], [ IdentityMorphism( Range( iota )  ) ] ];
+    
+    right_coeffs := [ [ IdentityMorphism( Range( iota_alpha ) ) ], [ pi_alpha ] ];
+    
+    right_side := [ iota_alpha, pi ];
+    
+    return MereExistenceOfSolutionOfLinearSystemInAbCategory( cat, left_coeffs, right_coeffs, right_side );
     
 end : CategoryFilter := IsTriangulatedCategory );
 
 ##
-AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategoryOrFail",
+AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategory",
                 [
                   [ IsEqualForObjects, 1 ],
                   [ ShiftOfObject, 1 ],
                   [ MorphismIntoStandardConeObject, 1 ],
                   [ MorphismFromStandardConeObject, 1 ],
                   [ IdentityMorphism, 2 ],
-                  [ SolveLinearSystemInAbCategoryOrFail, 1 ],
+                  [ SolveLinearSystemInAbCategory, 1 ],
                   [ InverseForMorphisms, 1 ],
                 ],
                 [
@@ -105,7 +119,7 @@ AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinea
     [ MorphismIntoStandardConeObject, 1 ],
     [ MorphismFromStandardConeObject, 1 ],
     [ IdentityMorphism, 2 ],
-    [ SolveLinearSystemInAbCategoryOrFail, 1 ],
+    [ SolveLinearSystemInAbCategory, 1 ],
   ],
   function( cat, alpha, iota, pi )
     local iota_alpha, pi_alpha, left_coeffs, right_coeffs, right_side, sol;
@@ -126,18 +140,10 @@ AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinea
     
     right_side := [ iota_alpha, pi ];
     
-    sol := SolveLinearSystemInAbCategoryOrFail( left_coeffs, right_coeffs, right_side );
+    sol := SolveLinearSystemInAbCategory( left_coeffs, right_coeffs, right_side );
     
-    if sol = fail then
-      
-      return fail;
-      
-    else
-      
-      return sol[ 1 ];
-      
-    fi;
-  
+    return sol[ 1 ];
+    
   end
 ],
 [
