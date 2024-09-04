@@ -6,10 +6,10 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2023.09-01
+                                   2024.09-01
   
   
-                               28 September 2023
+                                4 September 2024
   
   
                                   Kamal Saleh
