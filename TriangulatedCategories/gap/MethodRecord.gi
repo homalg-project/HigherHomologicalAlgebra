@@ -263,10 +263,10 @@ InverseShiftFactoringIsomorphismWithGivenObjects := rec(
 
 CAP_INTERNAL_ENHANCE_NAME_RECORD( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD );
 
-CAP_INTERNAL_GENERATE_DOCUMENTATION_FROM_METHOD_NAME_RECORD(
+CAP_INTERNAL_GENERATE_DECLARATIONS_AND_INSTALLATIONS_FROM_METHOD_NAME_RECORD(
     TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD,
     "TriangulatedCategories",
-    "MethodRecord.autogen.gd",
+    "MethodRecord",
     "operations for triangulated categories",
     "Add-methods"
 );
