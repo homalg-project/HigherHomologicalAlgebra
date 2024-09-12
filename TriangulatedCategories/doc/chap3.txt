@@ -7,352 +7,464 @@
   [1X3.1-1 AddCounitOfShiftAdjunctionWithGivenObject[101X
   
   [33X[1;0Y[29X[2XAddCounitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddCounitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XCounitOfShiftAdjunctionWithGivenObject[110X.    [23XF:    (    s,    r    )   \mapsto
-  \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
+  [10XCounitOfShiftAdjunctionWithGivenObject[110X.  Optionally, a weight (default: 100)
+  can  be  specified  which  should  roughly  correspond  to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF: ( s, r ) \mapsto \mathtt{CounitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddDomainMorphismByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddDomainMorphismByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XDomainMorphismByOctahedralAxiomWithGivenObjects[110X.  [23XF:  (  arg2,  arg3,  arg4,
-  arg5,                    arg6                    )                   \mapsto
+  [10XDomainMorphismByOctahedralAxiomWithGivenObjects[110X.    Optionally,   a   weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster   execution).   [23XF:   (   arg2,  arg3,  arg4,  arg5,  arg6  )  \mapsto
   \mathtt{DomainMorphismByOctahedralAxiomWithGivenObjects}(arg2,  arg3,  arg4,
   arg5, arg6)[123X.[133X
   
   [1X3.1-3 AddInverseOfCounitOfShiftAdjunctionWithGivenObject[101X
   
   [33X[1;0Y[29X[2XAddInverseOfCounitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseOfCounitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseOfCounitOfShiftAdjunctionWithGivenObject[110X.   [23XF:   (  s,  r  )  \mapsto
+  [10XInverseOfCounitOfShiftAdjunctionWithGivenObject[110X.    Optionally,   a   weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster       execution).       [23XF:       (      s,      r      )      \mapsto
   \mathtt{InverseOfCounitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject[101X
   
   [33X[1;0Y[29X[2XAddInverseOfUnitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseOfUnitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseOfUnitOfShiftAdjunctionWithGivenObject[110X.   [23XF:   (   s,   r  )  \mapsto
+  [10XInverseOfUnitOfShiftAdjunctionWithGivenObject[110X.    Optionally,    a    weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster       execution).       [23XF:       (      s,      r      )      \mapsto
   \mathtt{InverseOfUnitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddInverseShiftExpandingIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseShiftExpandingIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseShiftExpandingIsomorphismWithGivenObjects[110X.  [23XF:  (  s,  L, r ) \mapsto
+  [10XInverseShiftExpandingIsomorphismWithGivenObjects[110X.   Optionally,   a   weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster      execution).      [23XF:      (     s,     L,     r     )     \mapsto
   \mathtt{InverseShiftExpandingIsomorphismWithGivenObjects}(s, L, r)[123X.[133X
   
   [1X3.1-6 AddInverseShiftFactoringIsomorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddInverseShiftFactoringIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseShiftFactoringIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseShiftFactoringIsomorphismWithGivenObjects[110X.  [23XF:  (  s,  L, r ) \mapsto
+  [10XInverseShiftFactoringIsomorphismWithGivenObjects[110X.   Optionally,   a   weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster      execution).      [23XF:      (     s,     L,     r     )     \mapsto
   \mathtt{InverseShiftFactoringIsomorphismWithGivenObjects}(s, L, r)[123X.[133X
   
   [1X3.1-7 AddInverseShiftOfMorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddInverseShiftOfMorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseShiftOfMorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseShiftOfMorphismWithGivenObjects[110X.   [23XF:   (   s,  alpha,  r  )  \mapsto
+  [10XInverseShiftOfMorphismWithGivenObjects[110X.  Optionally, a weight (default: 100)
+  can  be  specified  which  should  roughly  correspond  to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF:          (          s,         alpha,         r         )         \mapsto
   \mathtt{InverseShiftOfMorphismWithGivenObjects}(s, alpha, r)[123X.[133X
   
   [1X3.1-8 AddInverseShiftOfObject[101X
   
   [33X[1;0Y[29X[2XAddInverseShiftOfObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddInverseShiftOfObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XInverseShiftOfObject[110X.        [23XF:        (        arg2        )        \mapsto
-  \mathtt{InverseShiftOfObject}(arg2)[123X.[133X
+  [10XInverseShiftOfObject[110X.  Optionally,  a weight (default: 100) can be specified
+  which  should  roughly  correspond  to  the  computational complexity of the
+  function  (lower  weight  =  less  complex  = faster execution). [23XF: ( arg2 )
+  \mapsto \mathtt{InverseShiftOfObject}(arg2)[123X.[133X
   
   [1X3.1-9 AddIsExactTriangle[101X
   
   [33X[1;0Y[29X[2XAddIsExactTriangle[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddIsExactTriangle[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
-  given function [23XF[123X to the category for the basic operation [10XIsExactTriangle[110X. [23XF:
-  ( arg2, arg3, arg4 ) \mapsto \mathtt{IsExactTriangle}(arg2, arg3, arg4)[123X.[133X
+  given  function  [23XF[123X  to the category for the basic operation [10XIsExactTriangle[110X.
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster  execution).  [23XF:  (  arg2,  arg3,  arg4  )  \mapsto
+  \mathtt{IsExactTriangle}(arg2, arg3, arg4)[123X.[133X
   
   [1X3.1-10 AddMorphismBetweenStandardConeObjectsWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddMorphismBetweenStandardConeObjectsWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismBetweenStandardConeObjectsWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismBetweenStandardConeObjectsWithGivenObjects[110X.  [23XF:  ( cone_alpha, list,
-  cone_alpha_prime                          )                          \mapsto
+  [10XMorphismBetweenStandardConeObjectsWithGivenObjects[110X.   Optionally,  a  weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster  execution).  [23XF:  (  cone_alpha,  list,  cone_alpha_prime  )  \mapsto
   \mathtt{MorphismBetweenStandardConeObjectsWithGivenObjects}(cone_alpha,
   list, cone_alpha_prime)[123X.[133X
   
   [1X3.1-11 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[110X.  [23XF:  (  arg2, arg3,
-  arg4,              arg5,              arg6             )             \mapsto
+  [10XMorphismFromConeObjectByOctahedralAxiomWithGivenObjects[110X.    Optionally,    a
+  weight  (default:  100)  can be specified which should roughly correspond to
+  the  computational complexity of the function (lower weight = less complex =
+  faster   execution).   [23XF:   (   arg2,  arg3,  arg4,  arg5,  arg6  )  \mapsto
   \mathtt{MorphismFromConeObjectByOctahedralAxiomWithGivenObjects}(arg2, arg3,
   arg4, arg5, arg6)[123X.[133X
   
   [1X3.1-12 AddMorphismFromStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddMorphismFromStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismFromStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromStandardConeObject[110X.      [23XF:      (      alpha      )     \mapsto
-  \mathtt{MorphismFromStandardConeObject}(alpha)[123X.[133X
+  [10XMorphismFromStandardConeObject[110X.  Optionally,  a weight (default: 100) can be
+  specified which should roughly correspond to the computational complexity of
+  the  function (lower weight = less complex = faster execution). [23XF: ( alpha )
+  \mapsto \mathtt{MorphismFromStandardConeObject}(alpha)[123X.[133X
   
   [1X3.1-13 AddMorphismFromStandardConeObjectWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddMorphismFromStandardConeObjectWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismFromStandardConeObjectWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismFromStandardConeObjectWithGivenObjects[110X.   [23XF:  (  cone_alpha,  alpha,
-  sh_source_alpha                           )                          \mapsto
+  [10XMorphismFromStandardConeObjectWithGivenObjects[110X.    Optionally,    a   weight
+  (default:  100)  can  be  specified  which  should roughly correspond to the
+  computational  complexity  of  the  function  (lower weight = less complex =
+  faster  execution).  [23XF:  (  cone_alpha,  alpha,  sh_source_alpha  )  \mapsto
   \mathtt{MorphismFromStandardConeObjectWithGivenObjects}(cone_alpha,   alpha,
   sh_source_alpha)[123X.[133X
   
   [1X3.1-14 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[110X.  [23XF:  (  arg2, arg3,
-  arg4,              arg5,              arg6             )             \mapsto
+  [10XMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects[110X.    Optionally,    a
+  weight  (default:  100)  can be specified which should roughly correspond to
+  the  computational complexity of the function (lower weight = less complex =
+  faster   execution).   [23XF:   (   arg2,  arg3,  arg4,  arg5,  arg6  )  \mapsto
   \mathtt{MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects}(arg2, arg3,
   arg4, arg5, arg6)[123X.[133X
   
   [1X3.1-15 AddMorphismIntoStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismIntoStandardConeObject[110X.      [23XF:      (      alpha      )     \mapsto
-  \mathtt{MorphismIntoStandardConeObject}(alpha)[123X.[133X
+  [10XMorphismIntoStandardConeObject[110X.  Optionally,  a weight (default: 100) can be
+  specified which should roughly correspond to the computational complexity of
+  the  function (lower weight = less complex = faster execution). [23XF: ( alpha )
+  \mapsto \mathtt{MorphismIntoStandardConeObject}(alpha)[123X.[133X
   
   [1X3.1-16 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddMorphismIntoStandardConeObjectWithGivenStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMorphismIntoStandardConeObjectWithGivenStandardConeObject[110X.  [23XF: ( alpha, cone
-  )                                                                    \mapsto
+  [10XMorphismIntoStandardConeObjectWithGivenStandardConeObject[110X.   Optionally,   a
+  weight  (default:  100)  can be specified which should roughly correspond to
+  the  computational complexity of the function (lower weight = less complex =
+  faster      execution).      [23XF:      (     alpha,     cone     )     \mapsto
   \mathtt{MorphismIntoStandardConeObjectWithGivenStandardConeObject}(alpha,
   cone)[123X.[133X
   
   [1X3.1-17 AddShiftExpandingIsomorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddShiftExpandingIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftExpandingIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftExpandingIsomorphismWithGivenObjects[110X.   [23XF:   (   s,   L,  r  )  \mapsto
-  \mathtt{ShiftExpandingIsomorphismWithGivenObjects}(s, L, r)[123X.[133X
+  [10XShiftExpandingIsomorphismWithGivenObjects[110X.  Optionally,  a  weight (default:
+  100)  can  be specified which should roughly correspond to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF: ( s, L, r ) \mapsto \mathtt{ShiftExpandingIsomorphismWithGivenObjects}(s,
+  L, r)[123X.[133X
   
   [1X3.1-18 AddShiftFactoringIsomorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddShiftFactoringIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftFactoringIsomorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftFactoringIsomorphismWithGivenObjects[110X.   [23XF:   (   s,   L,  r  )  \mapsto
-  \mathtt{ShiftFactoringIsomorphismWithGivenObjects}(s, L, r)[123X.[133X
+  [10XShiftFactoringIsomorphismWithGivenObjects[110X.  Optionally,  a  weight (default:
+  100)  can  be specified which should roughly correspond to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF: ( s, L, r ) \mapsto \mathtt{ShiftFactoringIsomorphismWithGivenObjects}(s,
+  L, r)[123X.[133X
   
   [1X3.1-19 AddShiftOfMorphismByInteger[101X
   
   [33X[1;0Y[29X[2XAddShiftOfMorphismByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftOfMorphismByInteger[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftOfMorphismByInteger[110X.      [23XF:     (     arg2,     arg3     )     \mapsto
-  \mathtt{ShiftOfMorphismByInteger}(arg2, arg3)[123X.[133X
+  [10XShiftOfMorphismByInteger[110X.   Optionally,  a  weight  (default:  100)  can  be
+  specified which should roughly correspond to the computational complexity of
+  the  function  (lower  weight = less complex = faster execution). [23XF: ( arg2,
+  arg3 ) \mapsto \mathtt{ShiftOfMorphismByInteger}(arg2, arg3)[123X.[133X
   
   [1X3.1-20 AddShiftOfMorphismByIntegerWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddShiftOfMorphismByIntegerWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftOfMorphismByIntegerWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftOfMorphismByIntegerWithGivenObjects[110X.  [23XF:  (  arg2,  arg3,  arg4, arg5 )
-  \mapsto  \mathtt{ShiftOfMorphismByIntegerWithGivenObjects}(arg2, arg3, arg4,
-  arg5)[123X.[133X
+  [10XShiftOfMorphismByIntegerWithGivenObjects[110X.  Optionally,  a  weight  (default:
+  100)  can  be specified which should roughly correspond to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF:       (       arg2,       arg3,       arg4,      arg5      )      \mapsto
+  \mathtt{ShiftOfMorphismByIntegerWithGivenObjects}(arg2, arg3, arg4, arg5)[123X.[133X
   
   [1X3.1-21 AddShiftOfMorphismWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddShiftOfMorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftOfMorphismWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftOfMorphismWithGivenObjects[110X.   [23XF:   (   arg2,   arg3,   arg4  )  \mapsto
-  \mathtt{ShiftOfMorphismWithGivenObjects}(arg2, arg3, arg4)[123X.[133X
+  [10XShiftOfMorphismWithGivenObjects[110X.  Optionally, a weight (default: 100) can be
+  specified which should roughly correspond to the computational complexity of
+  the  function  (lower  weight = less complex = faster execution). [23XF: ( arg2,
+  arg3,  arg4  )  \mapsto \mathtt{ShiftOfMorphismWithGivenObjects}(arg2, arg3,
+  arg4)[123X.[133X
   
   [1X3.1-22 AddShiftOfObject[101X
   
   [33X[1;0Y[29X[2XAddShiftOfObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftOfObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
-  given function [23XF[123X to the category for the basic operation [10XShiftOfObject[110X. [23XF: (
-  arg2 ) \mapsto \mathtt{ShiftOfObject}(arg2)[123X.[133X
+  given  function  [23XF[123X  to  the  category for the basic operation [10XShiftOfObject[110X.
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less    complex    =    faster    execution).    [23XF:   (   arg2   )   \mapsto
+  \mathtt{ShiftOfObject}(arg2)[123X.[133X
   
   [1X3.1-23 AddShiftOfObjectByInteger[101X
   
   [33X[1;0Y[29X[2XAddShiftOfObjectByInteger[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddShiftOfObjectByInteger[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XShiftOfObjectByInteger[110X.      [23XF:      (      arg2,     arg3     )     \mapsto
-  \mathtt{ShiftOfObjectByInteger}(arg2, arg3)[123X.[133X
+  [10XShiftOfObjectByInteger[110X. Optionally, a weight (default: 100) can be specified
+  which  should  roughly  correspond  to  the  computational complexity of the
+  function (lower weight = less complex = faster execution). [23XF: ( arg2, arg3 )
+  \mapsto \mathtt{ShiftOfObjectByInteger}(arg2, arg3)[123X.[133X
   
   [1X3.1-24 AddStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given function [23XF[123X to the category for the basic operation [10XStandardConeObject[110X.
-  [23XF: ( arg2 ) \mapsto \mathtt{StandardConeObject}(arg2)[123X.[133X
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less    complex    =    faster    execution).    [23XF:   (   arg2   )   \mapsto
+  \mathtt{StandardConeObject}(arg2)[123X.[133X
   
   [1X3.1-25 AddUnitOfShiftAdjunctionWithGivenObject[101X
   
   [33X[1;0Y[29X[2XAddUnitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddUnitOfShiftAdjunctionWithGivenObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XUnitOfShiftAdjunctionWithGivenObject[110X.     [23XF:    (    s,    r    )    \mapsto
-  \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
+  [10XUnitOfShiftAdjunctionWithGivenObject[110X.  Optionally,  a  weight (default: 100)
+  can  be  specified  which  should  roughly  correspond  to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF: ( s, r ) \mapsto \mathtt{UnitOfShiftAdjunctionWithGivenObject}(s, r)[123X.[133X
   
   [1X3.1-26 AddWitnessIsomorphismFromStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XWitnessIsomorphismFromStandardConeObject[110X.  [23XF:  (  alpha,  iota, pi ) \mapsto
+  [10XWitnessIsomorphismFromStandardConeObject[110X.  Optionally,  a  weight  (default:
+  100)  can  be specified which should roughly correspond to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF:         (         alpha,         iota,         pi        )        \mapsto
   \mathtt{WitnessIsomorphismFromStandardConeObject}(alpha, iota, pi)[123X.[133X
   
   [1X3.1-27 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
   [10XWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects[110X.
-  [23XF:         (         st_cone,         f,        cone        )        \mapsto
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster  execution).  [23XF:  (  st_cone,  f,  cone  )  \mapsto
   \mathtt{WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects}(st_cone,
   f, cone)[123X.[133X
   
   [1X3.1-28 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
   [10XWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects[110X.
-  [23XF:      (      st_cone,      f,      g,      h,     cone_g     )     \mapsto
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster execution). [23XF: ( st_cone, f, g, h, cone_g ) \mapsto
   \mathtt{WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects}(st_cone,
   f, g, h, cone_g)[123X.[133X
   
   [1X3.1-29 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[110X.  [23XF:
-  (           st_cone,           f,           cone          )          \mapsto
+  [10XWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects[110X.
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster  execution).  [23XF:  (  st_cone,  f,  cone  )  \mapsto
   \mathtt{WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects}(st_cone,
   f, cone)[123X.[133X
   
   [1X3.1-30 AddWitnessIsomorphismIntoStandardConeObject[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObject[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObject[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XWitnessIsomorphismIntoStandardConeObject[110X.  [23XF:  (  alpha,  iota, pi ) \mapsto
+  [10XWitnessIsomorphismIntoStandardConeObject[110X.  Optionally,  a  weight  (default:
+  100)  can  be specified which should roughly correspond to the computational
+  complexity of the function (lower weight = less complex = faster execution).
+  [23XF:         (         alpha,         iota,         pi        )        \mapsto
   \mathtt{WitnessIsomorphismIntoStandardConeObject}(alpha, iota, pi)[123X.[133X
   
   [1X3.1-31 AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
   [10XWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects[110X.
-  [23XF:         (         cone,         f,        st_cone        )        \mapsto
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster  execution).  [23XF:  (  cone,  f,  st_cone  )  \mapsto
   \mathtt{WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects}(cone,
   f, st_cone)[123X.[133X
   
   [1X3.1-32 AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
   [10XWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects[110X.
-  [23XF:      (      cone_g,      f,      g,      h,     st_cone     )     \mapsto
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster execution). [23XF: ( cone_g, f, g, h, st_cone ) \mapsto
   \mathtt{WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects}(cone_g,
   f, g, h, st_cone)[123X.[133X
   
   [1X3.1-33 AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[101X
   
   [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
   given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[110X.  [23XF:
-  (           cone,           f,           st_cone          )          \mapsto
+  [10XWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects[110X.
+  Optionally,  a  weight  (default: 100) can be specified which should roughly
+  correspond  to  the computational complexity of the function (lower weight =
+  less  complex  =  faster  execution).  [23XF:  (  cone,  f,  st_cone  )  \mapsto
   \mathtt{WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects}(cone,
   f, st_cone)[123X.[133X
   
