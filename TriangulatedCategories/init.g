@@ -5,6 +5,6 @@
 #
 
 ReadPackage( "TriangulatedCategories", "gap/MethodRecord.gd");
-ReadPackage( "TriangulatedCategories", "gap/MethodRecord.autogen.gd");
+ReadPackage( "TriangulatedCategories", "gap/MethodRecordDeclarations.autogen.gd");
 ReadPackage( "TriangulatedCategories", "gap/CategoryOfTriangles.gd");
 ReadPackage( "TriangulatedCategories", "gap/Functors.gd");
