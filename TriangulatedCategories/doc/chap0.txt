@@ -6,10 +6,10 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2024.09-02
+                                   2024.09-03
   
   
-                               12 September 2024
+                               14 September 2024
   
   
                                   Kamal Saleh
@@ -78,98 +78,98 @@
       2.1-8 ExtendFunctorToCategoryOfTriangles
       2.1-9 RotationFunctor
       2.1-10 InverseRotationFunctor
-  3 [33X[0;0Yoperations for triangulated categories[133X
-    3.1 [33X[0;0YAdd-methods[133X
-      3.1-1 AddCounitOfShiftAdjunctionWithGivenObject
-      3.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects
-      3.1-3 AddInverseOfCounitOfShiftAdjunctionWithGivenObject
-      3.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject
-      3.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects
-      3.1-6 AddInverseShiftFactoringIsomorphismWithGivenObjects
-      3.1-7 AddInverseShiftOfMorphismWithGivenObjects
-      3.1-8 AddInverseShiftOfObject
-      3.1-9 AddIsExactTriangle
-      3.1-10 AddMorphismBetweenStandardConeObjectsWithGivenObjects
-      3.1-11 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects
-      3.1-12 AddMorphismFromStandardConeObject
-      3.1-13 AddMorphismFromStandardConeObjectWithGivenObjects
-      3.1-14 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
-      3.1-15 AddMorphismIntoStandardConeObject
-      3.1-16 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject
-      3.1-17 AddShiftExpandingIsomorphismWithGivenObjects
-      3.1-18 AddShiftFactoringIsomorphismWithGivenObjects
-      3.1-19 AddShiftOfMorphismByInteger
-      3.1-20 AddShiftOfMorphismByIntegerWithGivenObjects
-      3.1-21 AddShiftOfMorphismWithGivenObjects
-      3.1-22 AddShiftOfObject
-      3.1-23 AddShiftOfObjectByInteger
-      3.1-24 AddStandardConeObject
-      3.1-25 AddUnitOfShiftAdjunctionWithGivenObject
-      3.1-26 AddWitnessIsomorphismFromStandardConeObject
-      3.1-27 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects
-      3.1-28 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects
-      3.1-29 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects
-      3.1-30 AddWitnessIsomorphismIntoStandardConeObject
-      3.1-31 AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects
-      3.1-32 AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects
-      3.1-33 AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects
-  4 [33X[0;0YTriangulated Categories[133X
-    4.1 [33X[0;0YCategorical operations[133X
-      4.1-1 StandardConeObject
-      4.1-2 MorphismIntoStandardConeObjectWithGivenStandardConeObject
-      4.1-3 MorphismIntoStandardConeObject
-      4.1-4 MorphismFromStandardConeObjectWithGivenObjects
-      4.1-5 MorphismFromStandardConeObject
-      4.1-6 ShiftOfObject
-      4.1-7 ShiftOfMorphismWithGivenObjects
-      4.1-8 ShiftOfMorphism
-      4.1-9 Shift
-      4.1-10 InverseShiftOfObject
-      4.1-11 InverseShiftOfMorphismWithGivenObjects
-      4.1-12 InverseShiftOfMorphism
-      4.1-13 InverseShift
-      4.1-14 UnitOfShiftAdjunctionWithGivenObject
-      4.1-15 UnitOfShiftAdjunction
-      4.1-16 InverseOfCounitOfShiftAdjunctionWithGivenObject
-      4.1-17 InverseOfCounitOfShiftAdjunction
-      4.1-18 InverseOfUnitOfShiftAdjunctionWithGivenObject
-      4.1-19 InverseOfUnitOfShiftAdjunction
-      4.1-20 CounitOfShiftAdjunctionWithGivenObject
-      4.1-21 CounitOfShiftAdjunction
-      4.1-22 MorphismBetweenStandardConeObjectsWithGivenObjects
-      4.1-23 MorphismBetweenStandardConeObjects
-      4.1-24 ConeObjectByOctahedralAxiom
-      4.1-25 DomainMorphismByOctahedralAxiomWithGivenObjects
-      4.1-26 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
-      4.1-27 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects
-      4.1-28 WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects
-      4.1-29 WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom
-      4.1-30 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects
-      4.1-31 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom
-      4.1-32 ConeObjectByRotationAxiom
-      4.1-33 DomainMorphismByRotationAxiom
-      4.1-34 MorphismIntoConeObjectByRotationAxiom
-      4.1-35 MorphismFromConeObjectByRotationAxiom
-      4.1-36 WitnessIsomorphismIntoStandardConeObjectByRotationAxiom
-      4.1-37 WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects
-      4.1-38 WitnessIsomorphismFromStandardConeObjectByRotationAxiom
-      4.1-39 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects
-      4.1-40 ConeObjectByInverseRotationAxiom
-      4.1-41 DomainMorphismByInverseRotationAxiom
-      4.1-42 MorphismIntoConeObjectByInverseRotationAxiom
-      4.1-43 MorphismFromConeObjectByInverseRotationAxiom
-      4.1-44 WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom
-      4.1-45 WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects
-      4.1-46 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom
-      4.1-47 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects
-      4.1-48 ShiftExpandingIsomorphismWithGivenObjects
-      4.1-49 ShiftExpandingIsomorphism
-      4.1-50 ShiftFactoringIsomorphismWithGivenObjects
-      4.1-51 ShiftFactoringIsomorphism
-      4.1-52 InverseShiftExpandingIsomorphismWithGivenObjects
-      4.1-53 InverseShiftExpandingIsomorphism
-      4.1-54 InverseShiftFactoringIsomorphismWithGivenObjects
-      4.1-55 InverseShiftFactoringIsomorphism
+  3 [33X[0;0YTriangulated Categories[133X
+    3.1 [33X[0;0YCategorical operations[133X
+      3.1-1 StandardConeObject
+      3.1-2 MorphismIntoStandardConeObjectWithGivenStandardConeObject
+      3.1-3 MorphismIntoStandardConeObject
+      3.1-4 MorphismFromStandardConeObjectWithGivenObjects
+      3.1-5 MorphismFromStandardConeObject
+      3.1-6 ShiftOfObject
+      3.1-7 ShiftOfMorphismWithGivenObjects
+      3.1-8 ShiftOfMorphism
+      3.1-9 Shift
+      3.1-10 InverseShiftOfObject
+      3.1-11 InverseShiftOfMorphismWithGivenObjects
+      3.1-12 InverseShiftOfMorphism
+      3.1-13 InverseShift
+      3.1-14 UnitOfShiftAdjunctionWithGivenObject
+      3.1-15 UnitOfShiftAdjunction
+      3.1-16 InverseOfCounitOfShiftAdjunctionWithGivenObject
+      3.1-17 InverseOfCounitOfShiftAdjunction
+      3.1-18 InverseOfUnitOfShiftAdjunctionWithGivenObject
+      3.1-19 InverseOfUnitOfShiftAdjunction
+      3.1-20 CounitOfShiftAdjunctionWithGivenObject
+      3.1-21 CounitOfShiftAdjunction
+      3.1-22 MorphismBetweenStandardConeObjectsWithGivenObjects
+      3.1-23 MorphismBetweenStandardConeObjects
+      3.1-24 ConeObjectByOctahedralAxiom
+      3.1-25 DomainMorphismByOctahedralAxiomWithGivenObjects
+      3.1-26 MorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-27 MorphismFromConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-28 WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-29 WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiom
+      3.1-30 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects
+      3.1-31 WitnessIsomorphismFromStandardConeObjectByOctahedralAxiom
+      3.1-32 ConeObjectByRotationAxiom
+      3.1-33 DomainMorphismByRotationAxiom
+      3.1-34 MorphismIntoConeObjectByRotationAxiom
+      3.1-35 MorphismFromConeObjectByRotationAxiom
+      3.1-36 WitnessIsomorphismIntoStandardConeObjectByRotationAxiom
+      3.1-37 WitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects
+      3.1-38 WitnessIsomorphismFromStandardConeObjectByRotationAxiom
+      3.1-39 WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects
+      3.1-40 ConeObjectByInverseRotationAxiom
+      3.1-41 DomainMorphismByInverseRotationAxiom
+      3.1-42 MorphismIntoConeObjectByInverseRotationAxiom
+      3.1-43 MorphismFromConeObjectByInverseRotationAxiom
+      3.1-44 WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiom
+      3.1-45 WitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects
+      3.1-46 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom
+      3.1-47 WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects
+      3.1-48 ShiftExpandingIsomorphismWithGivenObjects
+      3.1-49 ShiftExpandingIsomorphism
+      3.1-50 ShiftFactoringIsomorphismWithGivenObjects
+      3.1-51 ShiftFactoringIsomorphism
+      3.1-52 InverseShiftExpandingIsomorphismWithGivenObjects
+      3.1-53 InverseShiftExpandingIsomorphism
+      3.1-54 InverseShiftFactoringIsomorphismWithGivenObjects
+      3.1-55 InverseShiftFactoringIsomorphism
+  4 [33X[0;0Yoperations for triangulated categories[133X
+    4.1 [33X[0;0YAdd-methods[133X
+      4.1-1 AddCounitOfShiftAdjunctionWithGivenObject
+      4.1-2 AddDomainMorphismByOctahedralAxiomWithGivenObjects
+      4.1-3 AddInverseOfCounitOfShiftAdjunctionWithGivenObject
+      4.1-4 AddInverseOfUnitOfShiftAdjunctionWithGivenObject
+      4.1-5 AddInverseShiftExpandingIsomorphismWithGivenObjects
+      4.1-6 AddInverseShiftFactoringIsomorphismWithGivenObjects
+      4.1-7 AddInverseShiftOfMorphismWithGivenObjects
+      4.1-8 AddInverseShiftOfObject
+      4.1-9 AddIsExactTriangle
+      4.1-10 AddMorphismBetweenStandardConeObjectsWithGivenObjects
+      4.1-11 AddMorphismFromConeObjectByOctahedralAxiomWithGivenObjects
+      4.1-12 AddMorphismFromStandardConeObject
+      4.1-13 AddMorphismFromStandardConeObjectWithGivenObjects
+      4.1-14 AddMorphismIntoConeObjectByOctahedralAxiomWithGivenObjects
+      4.1-15 AddMorphismIntoStandardConeObject
+      4.1-16 AddMorphismIntoStandardConeObjectWithGivenStandardConeObject
+      4.1-17 AddShiftExpandingIsomorphismWithGivenObjects
+      4.1-18 AddShiftFactoringIsomorphismWithGivenObjects
+      4.1-19 AddShiftOfMorphismByInteger
+      4.1-20 AddShiftOfMorphismByIntegerWithGivenObjects
+      4.1-21 AddShiftOfMorphismWithGivenObjects
+      4.1-22 AddShiftOfObject
+      4.1-23 AddShiftOfObjectByInteger
+      4.1-24 AddStandardConeObject
+      4.1-25 AddUnitOfShiftAdjunctionWithGivenObject
+      4.1-26 AddWitnessIsomorphismFromStandardConeObject
+      4.1-27 AddWitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects
+      4.1-28 AddWitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects
+      4.1-29 AddWitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects
+      4.1-30 AddWitnessIsomorphismIntoStandardConeObject
+      4.1-31 AddWitnessIsomorphismIntoStandardConeObjectByInverseRotationAxiomWithGivenObjects
+      4.1-32 AddWitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects
+      4.1-33 AddWitnessIsomorphismIntoStandardConeObjectByRotationAxiomWithGivenObjects
   
   
   [32X
