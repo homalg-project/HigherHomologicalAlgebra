@@ -28,6 +28,17 @@ BindGlobal( "_complexes_DistinguishedObjectOfHomomorphismStructure",
     
 end ) );
 
+##
+BindGlobal( "_complexes_DistinguishedObjectOfHomomorphismStructure_Weight",
+  function ( ch_cat )
+    local cat;
+    
+    cat := UnderlyingCategory( ch_cat );
+    
+    return OperationWeight( cat, "DistinguishedObjectOfHomomorphismStructure" );
+    
+end );
+
 BindGlobal( "_complexes_HomomorphismStructureOnObjects",
   function ( ch_cat, B, C )
     local cat, range_cat, ch_range_cat, l_B, l_C, u_B, u_C, diagrams, objs, diffs;
@@ -83,7 +94,23 @@ BindGlobal( "_complexes_HomomorphismStructureOnObjects",
     return CreateComplex( ch_range_cat, objs, diffs, l_C - u_B, u_C - l_B );
     
 end );
+
+##
+BindGlobal( "_complexes_HomomorphismStructureOnObjects_Weight",
+  function ( ch_cat )
+    local cat, range_cat;
     
+    cat := UnderlyingCategory( ch_cat );
+    range_cat := RangeCategoryOfHomomorphismStructure( ch_cat );
+    
+    return
+      4 * OperationWeight( cat, "HomomorphismStructureOnObjects" ) +
+      8 * OperationWeight( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) +
+      8 * OperationWeight( range_cat, "ZeroMorphism" ) +
+      2 * OperationWeight( range_cat, "MorphismBetweenDirectSumsWithGivenDirectSums" ) +
+      1;
+end );
+
 #     phi
 # A -------> B
 #
@@ -163,6 +190,23 @@ BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
     
 end );
 
+##
+BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects_Weight",
+  function ( ch_cat )
+    local cat, range_cat;
+    
+    cat := UnderlyingCategory( ch_cat );
+    range_cat := RangeCategoryOfHomomorphismStructure( ch_cat );
+    
+    return
+      8 * OperationWeight( cat, "HomomorphismStructureOnObjects" ) +
+      8 * OperationWeight( cat, "HomomorphismStructureOnMorphismsWithGivenObjects" ) +
+      8 * OperationWeight( range_cat, "ZeroMorphism" ) +
+      2 * OperationWeight( range_cat, "MorphismBetweenDirectSumsWithGivenDirectSums" ) +
+      1;
+end );
+
+##
 BindGlobal( "_complexes_HomomorphismStructureOnMorphisms",
   
   function ( ch_cat, phi, psi )
@@ -173,6 +217,17 @@ BindGlobal( "_complexes_HomomorphismStructureOnMorphisms",
     hom_AD := _complexes_HomomorphismStructureOnObjects( ch_cat, Source( phi ), Range( psi ) );
     
     return _complexes_HomomorphismStructureOnMorphismsWithGivenObjects( ch_cat, hom_BC, phi, psi, hom_AD );
+    
+end );
+
+##
+BindGlobal( "_complexes_HomomorphismStructureOnMorphisms_Weight",
+  function ( ch_cat )
+    
+    return
+      2 * _complexes_HomomorphismStructureOnObjects_Weight( ch_cat ) +
+      _complexes_HomomorphismStructureOnMorphismsWithGivenObjects_Weight( ch_cat ) +
+      1;
     
 end );
 
@@ -211,6 +266,22 @@ BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomo
 end );
 
 ##
+BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects_Weight",
+  function( ch_cat )
+    local cat, range_cat;
+    
+    cat := UnderlyingCategory( ch_cat );
+    range_cat := RangeCategoryOfHomomorphismStructure( ch_cat );
+    
+    return
+      OperationWeight( cat, "HomomorphismStructureOnObjects" ) +
+      2 * OperationWeight( cat, "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects" ) +
+      OperationWeight( range_cat, "MorphismBetweenDirectSumsWithGivenDirectSums" ) +
+      1;
+    
+end );
+
+##
 BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure",
   
   function( ch_cat, alpha )
@@ -221,6 +292,18 @@ BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomo
     hom_BC := _complexes_HomomorphismStructureOnObjects( ch_cat, Source( alpha ), Range( alpha ) );
     
     return _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( ch_cat, distinguished_object, alpha, hom_BC );
+    
+end );
+
+##
+BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure_Weight",
+  function( ch_cat )
+    
+    return
+      _complexes_DistinguishedObjectOfHomomorphismStructure_Weight( ch_cat ) +
+      _complexes_HomomorphismStructureOnObjects_Weight( ch_cat ) +
+      _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects_Weight( ch_cat ) +
+      1;
     
 end );
 
@@ -252,6 +335,23 @@ BindGlobal( "_complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismSt
                                         PreCompose( range_cat, ell[0], ProjectionInFactorOfDirectSumWithGivenDirectSum( range_cat, diagram_R, index_j, hom_BC[0] ) ) ) );
     
     return CreateComplexMorphism( ch_cat, B, morphisms, l_BC, C );
+    
+end );
+
+##
+BindGlobal( "_complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism_Weight",
+  function ( ch_cat )
+    local cat, range_cat;
+    
+    cat := UnderlyingCategory( ch_cat );
+    range_cat := RangeCategoryOfHomomorphismStructure( ch_cat );
+    
+    return
+      2 * OperationWeight( cat, "HomomorphismStructureOnObjects" ) +
+      2 * OperationWeight( cat, "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ) +
+      2 * OperationWeight( range_cat, "PreCompose" ) +
+      2 * OperationWeight( range_cat, "ProjectionInFactorOfDirectSumWithGivenDirectSum" ) +
+      1;
     
 end );
 
@@ -307,7 +407,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
       
       AddDistinguishedObjectOfHomomorphismStructure( ch_cat,
         
-        ch_cat -> as_object_in_abelian_category( _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat )[0] )
+        ch_cat -> as_object_in_abelian_category( _complexes_DistinguishedObjectOfHomomorphismStructure( ch_cat )[0] ),
+        _complexes_DistinguishedObjectOfHomomorphismStructure_Weight( ch_cat )
+        + 1
       );
       
       AddHomomorphismStructureOnObjects( ch_cat,
@@ -316,7 +418,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
           
           return KernelObject( range_cat, as_morphism_in_abelian_category( _complexes_HomomorphismStructureOnObjects( ch_cat, B, C )^0 ) );
           
-      end );
+      end,
+      _complexes_HomomorphismStructureOnObjects_Weight( ch_cat ) +
+      OperationWeight( range_cat, "KernelObject" ) +
+      1 );
       
       AddHomomorphismStructureOnMorphismsWithGivenObjects( ch_cat,
         
@@ -333,7 +438,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
                         as_morphism_in_abelian_category( Range( hom_phi_psi )^0 ),
                         hom_AD );
           
-      end );
+      end,
+      _complexes_HomomorphismStructureOnMorphisms_Weight( ch_cat ) +
+      OperationWeight( range_cat, "KernelObjectFunctorialWithGivenKernelObjects" ) +
+      1 );
       
       AddHomomorphismStructureOnMorphisms( ch_cat,
         
@@ -348,7 +456,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
                         as_morphism_in_abelian_category( hom_phi_psi[0] ),
                         as_morphism_in_abelian_category( Range( hom_phi_psi )^0 ) );
           
-      end );
+      end,
+      _complexes_HomomorphismStructureOnMorphisms_Weight( ch_cat ) +
+      OperationWeight( range_cat, "KernelObjectFunctorial" ) +
+      1 );
       
       AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( ch_cat,
         
@@ -366,7 +477,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
                         KernelEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^0 ) ),
                         as_morphism_in_abelian_category( ell[0] ) );
           
-      end );
+      end,
+      _complexes_DistinguishedObjectOfHomomorphismStructure_Weight( ch_cat ) +
+      _complexes_HomomorphismStructureOnObjects_Weight( ch_cat ) +
+      _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects_Weight( ch_cat ) +
+      OperationWeight( range_cat, "LiftAlongMonomorphism" ) +
+      OperationWeight( range_cat, "KernelEmbedding" ) +
+      1 );
       
       AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat,
         function ( ch_cat, B, C, ell )
@@ -382,7 +499,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
           
           return _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat, B, C, ell );
           
-      end );
+      end,
+      _complexes_DistinguishedObjectOfHomomorphismStructure_Weight( ch_cat ) +
+      _complexes_HomomorphismStructureOnObjects_Weight( ch_cat ) +
+      OperationWeight( range_cat, "PreCompose" ) +
+      OperationWeight( range_cat, "KernelEmbedding" ) +
+      _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism_Weight( ch_cat ) +
+      1 );
       
     else
       

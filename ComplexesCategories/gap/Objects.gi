@@ -370,9 +370,13 @@ InstallMethod( AsComplexOverOppositeCategory,
           [ IsCochainComplex ],
   
   function( C )
-    local coch_cat_op, o, diff, B;
+    local cat, cat_op, coch_cat_op, o, diff, B;
     
-    coch_cat_op := ComplexesCategoryByCochains( Opposite( UnderlyingCategory( CapCategory( C ) ) ) );
+    cat := UnderlyingCategory( CapCategory( C ) );
+    
+    cat_op := Opposite( cat : only_primitive_operations_and_hom_structure := true );
+    
+    coch_cat_op := ComplexesCategoryByCochains( cat_op );
     
     o := i -> Opposite( Objects( C )[-i] );
     

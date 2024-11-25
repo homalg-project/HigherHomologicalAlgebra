@@ -307,8 +307,14 @@ end );
 InstallOtherMethod( InjectiveResolution,
        [ IsCapCategoryObject, IsBool ],
   
-  { o, bool } -> AsComplexOverOppositeCategory( ProjectiveResolution( Opposite( o ), bool ) )
-);
+  function( o, bool )
+    local cat_op;
+    
+    cat_op := Opposite( CapCategory( o ) : only_primitive_operations_and_hom_structure );
+    
+    return AsComplexOverOppositeCategory( ProjectiveResolution( Opposite( o ), bool ) );
+    
+end );
 
 ##
 InstallOtherMethod( MorphismBetweenProjectiveResolutions,
@@ -375,6 +381,12 @@ end );
 InstallOtherMethod( MorphismBetweenInjectiveResolutions,
        [ IsCapCategoryMorphism, IsBool ],
   
-  { phi, bool } -> AsComplexMorphismOverOppositeCategory( MorphismBetweenProjectiveResolutions( Opposite( phi ), bool ) )
-);
+  function( phi, bool )
+    local cat_op;
+    
+    cat_op := Opposite( CapCategory( phi ) : only_primitive_operations_and_hom_structure := true );
+    
+    return AsComplexMorphismOverOppositeCategory( MorphismBetweenProjectiveResolutions( Opposite( phi ), bool ) );
+    
+end );
 
