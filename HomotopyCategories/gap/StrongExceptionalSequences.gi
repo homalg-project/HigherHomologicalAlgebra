@@ -417,7 +417,7 @@ InstallMethod( TriangulatedSubcategory,
     
     ambient_cat := AmbientCategory( seq );
     
-    has_zero_remainder := { cat, A } -> IsZeroForObjects( ambient_cat, RemainderOfObjectRelativeToStrongExceptionalSequence( seq, UnderlyingCell( A ) ) );
+    has_zero_remainder := { ambient_cat, A } -> IsZeroForObjects( ambient_cat, RemainderOfObjectRelativeToStrongExceptionalSequence( seq, A ) );
     
     return FullSubcategoryByObjectMembershipFunction( ambient_cat, has_zero_remainder : name_of_full_subcategory := name );
     
