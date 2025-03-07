@@ -23,8 +23,8 @@ InstallMethod( HomotopyCategoryByCochains,
     
     homotopy_category := QuotientCategory(
                            rec( name := name,
-                                nr_arguments_of_congruence_function := 1,
-                                congruence_function := IsHomotopicToZeroMorphism,
+                                nr_arguments_of_congruence_func := 1,
+                                congruence_func := IsHomotopicToZeroMorphism,
                                 underlying_category := ComplexesCategoryByCochains( cat ),
                                 category_filter := IsHomotopyCategoryByCochains,
                                 category_object_filter := IsHomotopyCategoryByCochainsObject,

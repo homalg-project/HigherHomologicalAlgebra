@@ -6,7 +6,7 @@
 #
 #####################################################################
 
-DeclareCategory( "IsHomotopyCategoryMorphism", IsQuotientCapCategoryMorphism );
+DeclareCategory( "IsHomotopyCategoryMorphism", IsQuotientCategoryMorphism );
 
 DeclareCategory( "IsHomotopyCategoryByCochainsMorphism", IsHomotopyCategoryMorphism );
 DeclareCategory( "IsHomotopyCategoryByChainsMorphism", IsHomotopyCategoryMorphism );

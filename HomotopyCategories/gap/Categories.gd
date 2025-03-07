@@ -5,7 +5,7 @@
 #
 #
 
-DeclareCategory( "IsHomotopyCategory", IsQuotientCapCategory );
+DeclareCategory( "IsHomotopyCategory", IsQuotientCategory );
 
 DeclareCategory( "IsHomotopyCategoryByCochains", IsHomotopyCategory );
 DeclareCategory( "IsHomotopyCategoryByChains", IsHomotopyCategory );
