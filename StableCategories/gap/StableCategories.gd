@@ -462,7 +462,7 @@ DeclareOperation( "AddWitnessForBeingColiftableAlongMorphismToColiftingObject",
 #! The &GAP; category of stable categories
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategory",
-                 IsQuotientCapCategory );
+                 IsQuotientCategory );
 
 #! @Description
 #! The &GAP; category of stable categories cells.
@@ -474,13 +474,13 @@ DeclareCategory( "IsStableCategoryCell",
 #! The &GAP; category of stable categories objects.
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategoryObject",
-                 IsStableCategoryCell and IsQuotientCapCategoryObject );
+                 IsStableCategoryCell and IsQuotientCategoryObject );
 
 #! @Description
 #! The &GAP; category of stable categories morphisms.
 #! @Arguments seq_obj
 DeclareCategory( "IsStableCategoryMorphism",
-                 IsStableCategoryCell and IsQuotientCapCategoryMorphism );
+                 IsStableCategoryCell and IsQuotientCategoryMorphism );
 
 #! @Section Constructors
 

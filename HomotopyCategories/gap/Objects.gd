@@ -6,7 +6,7 @@
 #
 #####################################################################
 
-DeclareCategory( "IsHomotopyCategoryObject", IsQuotientCapCategoryObject );
+DeclareCategory( "IsHomotopyCategoryObject", IsQuotientCategoryObject );
 
 DeclareCategory( "IsHomotopyCategoryByCochainsObject", IsHomotopyCategoryObject );
 DeclareCategory( "IsHomotopyCategoryByChainsObject", IsHomotopyCategoryObject );
