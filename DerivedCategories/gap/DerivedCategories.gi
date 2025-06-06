@@ -230,6 +230,8 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
       
       if HasIsAbelianCategory( range_cat ) and IsAbelianCategory( range_cat ) then
         
+        SetIsEquippedWithHomomorphismStructure( derived_cat, true );
+        
         SetRangeCategoryOfHomomorphismStructure( derived_cat, range_cat );
         
         AddDistinguishedObjectOfHomomorphismStructure( derived_cat,
@@ -290,7 +292,14 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
       
     fi;
     
-    if CanCompute( homotopy_cat, "BasisOfExternalHom" ) and CanCompute( homotopy_cat, "CoefficientsOfMorphism" ) then
+    if CanCompute( homotopy_cat, "BasisOfExternalHom" ) and CanCompute( homotopy_cat, "CoefficientsOfMorphism" )
+          and HasRangeCategoryOfHomomorphismStructure( homotopy_cat ) then
+        
+        SetIsEquippedWithHomomorphismStructure( derived_cat, true );
+        
+        SetRangeCategoryOfHomomorphismStructure( derived_cat, RangeCategoryOfHomomorphismStructure( homotopy_cat ) );
+        
+        SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( derived_cat, true );
         
         AddBasisOfExternalHom( derived_cat,
           function( derived_cat, B, C )
