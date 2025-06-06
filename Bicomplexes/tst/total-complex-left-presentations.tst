@@ -1,7 +1,5 @@
-gap> LoadPackage( "Bicomplexes" );
-true
-gap> LoadPackage( "ModulePresentations" );
-true
+gap> LoadPackage( "Bicomplexes", false );;
+gap> LoadPackage( "ModulePresentations", false );;
 gap> zz := HomalgRingOfIntegers( );;
 gap> lp := LeftPresentations( zz );;
 gap> bicomplexes_cat := BicomplexesCategoryByChains( lp );;
@@ -21,5 +19,4 @@ gap> phi := CreateComplexMorphism( C10, [ phi5, phi6, phi7 ], 5, C9 );;
 gap> o := CreateComplex( modeling_category, [ phi ], 10 );;
 gap> bicomplex := ReinterpretationOfObject( bicomplexes_cat, o );;
 gap> t := TotalComplex( bicomplex );;
-gap> IsWellDefined( t ) and IsExact( t );
-true
+gap> Assert( 0, IsWellDefined( t ) and IsExact( t ) );

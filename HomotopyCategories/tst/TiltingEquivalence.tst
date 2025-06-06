@@ -1,3 +1,5 @@
+gap> LoadPackage( "Algebroids", false );;
+gap> LoadPackage( "HomotopyCategories", false );;
 gap> q_O := FinQuiver( "q_O(O0,O1,O2)[x0:O0->O1,x1:O0->O1,x2:O0->O1,y0:O1->O2,y1:O1->O2,y2:O1->O2]" );;
 gap> SetLaTeXStringsOfObjects( q_O, [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ] );;
 gap> SetLaTeXStringsOfMorphisms( q_O, [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );;

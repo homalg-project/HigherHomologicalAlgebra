@@ -1,3 +1,5 @@
+gap> LoadPackage( "Algebroids", false );;
+gap> LoadPackage( "Bicomplexes", false );;
 gap> MAKE_READ_WRITE_GLOBAL( "REREADING" );
 gap> REREADING := true;;
 gap> SetInfoLevel( InfoWarning, 0 );

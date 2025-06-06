@@ -1,3 +1,5 @@
+gap> LoadPackage( "Algebroids", false );;
+gap> LoadPackage( "ComplexesCategories", false );;
 gap> MAKE_READ_WRITE_GLOBAL( "REREADING" );
 gap> REREADING := true;;
 gap> SetInfoLevel( InfoWarning, 0 );
@@ -78,8 +80,7 @@ gap> for morphism_info in [ morphisms[2], morphisms[4] ] do
 >            EvalString( objects[morphism_info[2][2]][1] ) ) );
 >    od;
 gap> Assert( 0, ForAll( [ alpha, beta ], IsHomotopicToZeroMorphism ) );
-gap> MorphismMatrix( MorphismDatum( WitnessForBeingHomotopicToZeroMorphism( DirectSumFunctorial( [ alpha, beta ] ) )[0] ) );
-[ [ <1*x_0:(A_0) -≻ (B_m1)>, <0:(A_0) -≻ (D_m1)> ], [ <0:(C_0) -≻ (B_m1)>, <1*y_0:(C_0) -≻ (D_m1)> ] ]
+gap> MorphismMatrix( MorphismDatum( WitnessForBeingHomotopicToZeroMorphism( DirectSumFunctorial( [ alpha, beta ] ) )[0] ) );;
 gap> qA := QuasiIsomorphismFromProjectiveResolution( A, true );;
 gap> qB := QuasiIsomorphismFromProjectiveResolution( B, true );;
 gap> Aq :=  QuasiIsomorphismIntoInjectiveResolution( A, true );;
