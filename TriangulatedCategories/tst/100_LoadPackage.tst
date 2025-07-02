@@ -7,13 +7,17 @@
 gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "DerivedCategories", false );
+gap> LoadPackage( "Algebroids", false );
 true
 gap> LoadPackage( "TriangulatedCategories", false );
 true
+gap> LoadPackage( "HomotopyCategories", false );
+true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "DerivedCategories" );
+gap> LoadPackage( "Algebroids" );
 true
 gap> LoadPackage( "TriangulatedCategories" );
+true
+gap> LoadPackage( "HomotopyCategories" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;
