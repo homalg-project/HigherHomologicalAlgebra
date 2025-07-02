@@ -1,11 +1,13 @@
 gap> LoadPackage( "FunctorCategories", false );;
 gap> LoadPackage( "DerivedCategories", false );;
-gap> q := RightQuiver( "q(v₁,v₂,v₃,v₄)[a:v₁->v₂,b:v₂->v₄,c:v₁->v₃,d:v₃->v₄]" );;
+gap> q := FinQuiver( "q(v₁,v₂,v₃,v₄)[a:v₁->v₂,b:v₂->v₄,c:v₁->v₃,d:v₃->v₄]" );;
 gap> k := HomalgFieldOfRationals();;
-gap> F_q := FreeCategory( q );;
+gap> F_q := PathCategory( q );;
 gap> kF_q := k[F_q];;
 gap> rho := [ PreCompose( kF_q.a, kF_q.b ) - PreCompose( kF_q.c, kF_q.d ) ];;
 gap> B :=  kF_q / rho;;
+gap> B := AlgebroidFromDataTables( B );;
+gap> Assert( 0, IsAdmissibleAlgebroid( B ) );;
 gap> AB := AdditiveClosure( B );;
 gap> K_AB := HomotopyCategoryByCochains( AB );;
 gap> coPSh_B := CoPreSheaves( B : overhead := false );;
