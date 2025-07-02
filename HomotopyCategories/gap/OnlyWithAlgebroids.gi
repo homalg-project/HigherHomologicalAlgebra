@@ -192,65 +192,14 @@ end );
 ## Convenience for development
 
 InstallGlobalFunction( RandomStrongExceptionalSequence,
-  function( k, nr_vertices, nr_arrows, nr_relations )
-    local sources_of_arrows, ranges_of_arrows, arrows, all_labels, q, v_latex, a_latex, A, G, H, df_H, rel, g, e, oid, Aoid, KAoid, i;
+  function( k, nr_vertices, nr_arrows )
+    local q, P, oid, Aoid, KAoid;
     
-    sources_of_arrows := List( [ 1 .. nr_arrows ], i -> Random( [ 1 .. nr_vertices - 1 ] ) );
-    ranges_of_arrows := List( [ 1 .. nr_arrows ], i -> Random( [ sources_of_arrows[ i ] + 1 .. nr_vertices ] ) );
+    q := RandomFinQuiver( nr_vertices, nr_arrows, false );
     
-    arrows := Collected( ListN( sources_of_arrows, ranges_of_arrows, {s,r} -> [ s, r ] ) );
+    P := PathCategory( q );
     
-    all_labels := Concatenation( List( arrows, l -> List( [ 1 .. l[2] ],
-                      i -> [ Concatenation( "r", String( l[1][1] ), "_", String( l[1][2] ), "_", String( i ) ),
-                             Concatenation( "r_{", String( l[1][1] ), ",", String( l[1][2] ), "}^{", String( i ), "}" ) ] ) ) );
-    
-    sources_of_arrows := Concatenation( List( arrows, l -> List( [ 1 .. l[2] ], k -> l[1][1] ) ) );
-    ranges_of_arrows :=  Concatenation( List( arrows, l -> List( [ 1 .. l[2] ], k -> l[1][2] ) ) );
-    
-    q := RightQuiver( "q", [ 1 .. nr_vertices ], List( all_labels, l -> l[1] ), sources_of_arrows, ranges_of_arrows );
-    
-    v_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "V_", String( i ) ) );
-    a_latex := List( all_labels, l -> l[2] );
-    
-    SetLabelsAsLaTeXStrings( q, v_latex, a_latex );
-    SetLabelsAsLaTeXStrings( OppositeQuiver( q ), v_latex, a_latex );
-    
-    # PLEASE CHANGE THE FOLLOWING CODE
-    A := PathAlgebra( k, q );
-    
-    G := GeneratorsOfLeftOperatorAdditiveGroup( A );
-    
-    G := List( G, g -> g!.paths[ 1 ] );
-    
-    G := Filtered( G, g -> Length( g ) >= 2 );
-    
-    H := List( G, g -> [ Source( g ), Target( g ) ] );
-    
-    df_H := DuplicateFreeList( H );
-    
-    G := List( df_H, u -> G{ Positions( H, u ) } );
-    
-    rel := [ ];
-      
-    if not IsEmpty( G ) then
-      
-      for i in [ 1 .. nr_relations ] do
-        
-        g := Random( G );
-        
-        e := QuiverAlgebraElement( A, List( [ 1 .. Length( g ) ], k -> Random( [ -2 .. 2 ] ) ), g );
-        
-        Add( rel, e );
-        
-      od;
-    
-    fi;
-    
-    rel := ComputeGroebnerBasis( rel );
-    
-    A := QuotientOfPathAlgebra( A, rel );
-    
-    oid := Algebroid( A : range_of_HomStructure := CategoryOfRows( k : overhead := false ) );
+    oid := AlgebroidFromDataTables( LinearClosure( k, P ) );
     
     Aoid := AdditiveClosure( oid );
     

@@ -22,6 +22,22 @@ AutoDoc( rec(
             LateExtraPreamble := """
                 \usepackage[T1]{fontenc}
                 \usepackage{tikz}
+                \usepackage{fancyvrb}
+                \usepackage{fvextra}
+                \fvset{breaklines=true}
+                \usetikzlibrary{shapes,arrows,matrix}
+                \DeclareUnicodeCharacter{2C76}{\ensuremath{\vdash}\!\!}
+                \DeclareUnicodeCharacter{2192}{\ensuremath{\!\!\rightarrow\!}}
+                \DeclareUnicodeCharacter{27F6}{\ensuremath{\!\!\longrightarrow\!}}
+                \DeclareUnicodeCharacter{21AA}{\ensuremath{\!\!\hookrightarrow\!}}
+                \DeclareUnicodeCharacter{21A0}{\ensuremath{\!\!\twoheadrightarrow\!}}
+                \DeclareUnicodeCharacter{2B47}{\ensuremath{\!\!\xrightarrow{\sim}\!}}
+                \DeclareUnicodeCharacter{27F9}{\ensuremath{\!\!\Rightarrow\!}}
+                \DeclareUnicodeCharacter{22A3}{\ensuremath{\!\!\dashv\!}}
+                \DeclareUnicodeCharacter{03F5}{\ensuremath{\!\!\epsilon\!}}
+                \DeclareUnicodeCharacter{2218}{\ensuremath{\!\!\circ\!}}
+                \DeclareUnicodeCharacter{227B}{\ensuremath{\succ}}
+                \DeclareUnicodeCharacter{22C5}{\ensuremath{\cdot}}
                 \usetikzlibrary{shapes,arrows,matrix}
             """,
         ),
