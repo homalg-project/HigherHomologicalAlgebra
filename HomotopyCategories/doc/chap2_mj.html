@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (HomotopyCategories) - Chapter 2: Examples and Tests</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
+<p><a id="X7967FE8E7BBDF485" name="X7967FE8E7BBDF485"></a></p>
+<div class="ChapSects"><a href="chap2_mj.html#X7967FE8E7BBDF485">2 <span class="Heading">Examples and Tests</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7C1E2E6B7AC5C198">2.1 <span class="Heading">Homotopy Category of the Freyd Category over a polynomial ring</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X81B108B17F275A81">2.2 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></a>
+</span>
+</div>
+</div>
+
+<h3>2 <span class="Heading">Examples and Tests</span></h3>
+
+<p><a id="X7C1E2E6B7AC5C198" name="X7C1E2E6B7AC5C198"></a></p>
+
+<h4>2.1 <span class="Heading">Homotopy Category of the Freyd Category over a polynomial ring</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "ModulePresentations", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "HomotopyCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HOMALG_IO.show_banners := false;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationalsInSingular( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy := QQ["x, y"];</span>
+Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy_mod := LeftPresentations( QQ_xy );</span>
+Category of left presentations of Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K_QQ_xy_mod := HomotopyCategoryByCochains( QQ_xy_mod );</span>
+Homotopy category by cochains( Category of left presentations of Q[x,y] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := HomalgMatrix("[[0,0,25*y+9,30,0,0,7*y], [0,0,0,0,24*x,0,20*y], [0,0,0,0,0,24,0], [0,0,29*x+27*y+10,0,0,0,0], [0,0,0,0,34,0,0], [0,0,0,0,0,0,0], [0,0,0,33*y,4*y+12,0,42], [0,20*x+34,0,0,0,0,0], [0,0,0,43*x,0,0,24*y], [0,0,0,0,0,0,0]]", 10, 7, QQ_xy );</span>
+&lt;A 10 x 7 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := HomalgMatrix("[[0,0,25*y+9], [0,0,725*x+7], [0,10*x+17,0]]", 3, 3, QQ_xy );</span>
+&lt;A 3 x 3 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := AsLeftPresentation( QQ_xy_mod, m );</span>
+&lt;An object in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( M );</span>
+0,0,      25*y+9,      30,  0,     0, 7*y, 
+0,0,      0,           0,   24*x,  0, 20*y,
+0,0,      0,           0,   0,     24,0,   
+0,0,      29*x+27*y+10,0,   0,     0, 0,   
+0,0,      0,           0,   34,    0, 0,   
+0,0,      0,           0,   0,     0, 0,   
+0,0,      0,           33*y,4*y+12,0, 42,  
+0,20*x+34,0,           0,   0,     0, 0,   
+0,0,      0,           43*x,0,     0, 24*y,
+0,0,      0,           0,   0,     0, 0    
+
+An object in Category of left presentations of Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( M );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsProjective( M );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := AsLeftPresentation( QQ_xy_mod, n );</span>
+&lt;An object in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N );</span>
+0,0,      25*y+9, 
+0,0,      725*x+7,
+0,10*x+17,0       
+
+An object in Category of left presentations of Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := HomalgMatrix( "[[1,0,0], [0,1,0], [0,0,1], [0,0,-5/6*y-3/10], [0,0,0], [0,0,0], [0,0,0]]", 7, 3, QQ_xy );</span>
+&lt;A 7 x 3 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := PresentationMorphism( M, a, N );</span>
+&lt;A morphism in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( alpha );</span>
+1,0,0,
+0,1,0,
+0,0,1,
+0,0,-5/6*y-3/10,
+0,0,0,
+0,0,0,
+0,0,0
+
+A morphism in Category of left presentations of Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := CreateComplex( K_QQ_xy_mod, [ MorphismIntoZeroObject( M ) ], 0 );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectsSupport( M );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectAt( M, 0 );</span>
+&lt;An object in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DifferentialAt( M, 0 );</span>
+&lt;A zero, split epimorphism in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := CreateComplex( K_QQ_xy_mod, [ MorphismIntoZeroObject( N ) ], 0 );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectsSupport( N );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := CreateComplexMorphism( K_QQ_xy_mod, M, [ alpha ], 0, N );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_M := ProjectiveResolution( M, true );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_M := QuasiIsomorphismFromProjectiveResolution( M, true );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_N := ProjectiveResolution( N, true );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_N := QuasiIsomorphismFromProjectiveResolution( N, true );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_alpha := MorphismBetweenProjectiveResolutions( alpha, true );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( p_alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MorphismAt( p_alpha, 0 );</span>
+&lt;A morphism in Category of left presentations of Q[x,y]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( p_alpha, q_N ) = PreCompose(q_M, alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cone_q_M := StandardConeObject( q_M );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -4 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologySupport( cone_q_M ); # quasi-iso &lt;-&gt; cone is acyclic</span>
+[ ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_q_M := MorphismIntoStandardConeObject( q_M );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -4 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( iota_q_M );</span>
+
+== 1 =======================
+(an empty 0 x 0 matrix)
+
+A zero, isomorphism in Category of left presentations of Q[x,y]
+
+== 0 =======================
+1,0,0,0,0,0,0,
+0,1,0,0,0,0,0,
+0,0,1,0,0,0,0,
+0,0,0,1,0,0,0,
+0,0,0,0,1,0,0,
+0,0,0,0,0,1,0,
+0,0,0,0,0,0,1 
+
+A morphism in Category of left presentations of Q[x,y]
+
+== -1 =======================
+(an empty 0 x 7 matrix)
+
+A zero, split monomorphism in Category of left presentations of Q[x,y]
+
+== -2 =======================
+(an empty 0 x 8 matrix)
+
+A zero, split monomorphism in Category of left presentations of Q[x,y]
+
+== -3 =======================
+(an empty 0 x 3 matrix)
+
+A zero, split monomorphism in Category of left presentations of Q[x,y]
+
+== -4 =======================
+(an empty 0 x 1 matrix)
+
+A zero, split monomorphism in Category of left presentations of Q[x,y]
+
+
+A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) defined by the above data
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota_q_M );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_q_M := MorphismFromStandardConeObject( q_M );</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -4 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( pi_q_M );</span>
+== 1 =======================
+(an empty 0 x 0 matrix)
+
+A zero, isomorphism in Category of left presentations of Q[x,y]
+
+== 0 =======================
+(an empty 7 x 0 matrix)
+
+A morphism in Category of left presentations of Q[x,y]
+
+== -1 =======================
+1,0,0,0,0,0,0,
+0,1,0,0,0,0,0,
+0,0,1,0,0,0,0,
+0,0,0,1,0,0,0,
+0,0,0,0,1,0,0,
+0,0,0,0,0,1,0,
+0,0,0,0,0,0,1 
+
+A morphism in Category of left presentations of Q[x,y]
+
+== -2 =======================
+1,0,0,0,0,0,0,0,
+0,1,0,0,0,0,0,0,
+0,0,1,0,0,0,0,0,
+0,0,0,1,0,0,0,0,
+0,0,0,0,1,0,0,0,
+0,0,0,0,0,1,0,0,
+0,0,0,0,0,0,1,0,
+0,0,0,0,0,0,0,1 
+
+A morphism in Category of left presentations of Q[x,y]
+
+== -3 =======================
+1,0,0,
+0,1,0,
+0,0,1 
+
+A morphism in Category of left presentations of Q[x,y]
+
+== -4 =======================
+1
+
+A morphism in Category of left presentations of Q[x,y]
+
+
+A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) defined by the above data
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nu := MorphismBetweenStandardConeObjects(q_M, p_alpha, alpha, q_N);</span>
+&lt;A morphism in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -4 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( nu );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( nu );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( nu );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShiftOfObjectByInteger( p_M, 2 );</span>
+&lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -5 .. -1 ]&gt;
+</pre></div>
+
+<p><a id="X81B108B17F275A81" name="X81B108B17F275A81"></a></p>
+
+<h4>2.2 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "Algebroids", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "HomotopyCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_O := FinQuiver( "q_O(O0,O1,O2)[x0:O0-&gt;O1,x1:O0-&gt;O1,x2:O0-&gt;O1,y0:O1-&gt;O2,y1:O1-&gt;O2,y2:O1-&gt;O2]" );</span>
+FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetLaTeXStringsOfObjects( q_O, [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetLaTeXStringsOfMorphisms( q_O, [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P_O := PathCategory( q_O );</span>
+PathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2, y2:O1-≻O2]" ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho_O := [ [ P_O.x0y1, P_O.x1y0 ], [ P_O.x0y2, P_O.x2y0 ], [ P_O.x1y2, P_O.x2y1 ] ];</span>
+[ [ x0⋅y1:(O0) -≻ (O2), x1⋅y0:(O0) -≻ (O2) ], [ x0⋅y2:(O0) -≻ (O2), x2⋅y0:(O0) -≻ (O2) ], [ x1⋅y2:(O0) -≻ (O2), x2⋅y1:(O0) -≻ (O2) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_P_O := P_O / rho_O;</span>
+PathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k := QQ;</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k_quotient_P_O := k[quotient_P_O];</span>
+Q-LinearClosure( PathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_O := AlgebroidFromDataTables( k_quotient_P_O );</span>
+Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := 2 * A_O.x0 + 3 * A_O.x1 - A_O.x2;</span>
+&lt;2*x0 + 3*x1 - 1*x2:(O0) -≻ (O1)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_Oadd := AdditiveClosure( A_O );</span>
+AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2, y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KA_Oadd := HomotopyCategoryByCochains( A_Oadd );</span>
+Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E10 := [ A_O.O0, A_O.O0, A_O.O0 ] / A_Oadd;</span>
+&lt;An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E11 := [ A_O.O1, A_O.O1, A_O.O1 ] / A_Oadd;</span>
+&lt;An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E12 := [ A_O.O2 ] / A_Oadd;</span>
+&lt;An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">delta_0 := AdditiveClosureMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        E10,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ [ A_O.x1, -A_O.x0, ZeroMorphism(A_O.O0, A_O.O1) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ A_O.x2, ZeroMorphism(A_O.O0, A_O.O1), -A_O.x0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ ZeroMorphism(A_O.O0, A_O.O1), A_O.x2, -A_O.x1 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        E11 );</span>
+&lt;A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 3 matrix of underlying morphisms&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">delta_1 := AdditiveClosureMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        E11,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ [ A_O.y0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ A_O.y1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          [ A_O.y2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        E12 );</span>
+&lt;A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E1 := CreateComplex( KA_Oadd, [ delta_0, delta_1 ], 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E20 := [ A_O.O0, A_O.O0, A_O.O0 ] / A_Oadd;</span>
+&lt;An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E21 := [ A_O.O1] / A_Oadd;</span>
+&lt;An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">delta_0 := AdditiveClosureMorphism(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      E20,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      [ [ A_O.x0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ A_O.x1 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ A_O.x2 ] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      E21 );</span>
+&lt;A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E2 := CreateComplex( KA_Oadd, [ delta_0 ], 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">E3 := CreateComplex( KA_Oadd, A_O.O0 / A_Oadd, 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">seq := CreateStrongExceptionalSequence( [ E1, E2, E3 ] );</span>
+A strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[ x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := DirectSum( [ E1, E2, E3 ] );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfObject( HomStructure( E1, E1 ) ) = 1 and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  RankOfObject( HomStructure( E2, E2 ) ) = 1 and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    RankOfObject( HomStructure( E3, E3 ) ) = 1;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( HomStructure( E3, E2 ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  IsZero( HomStructure( E2, E1 ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    IsZero( HomStructure( E3, E1 ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( HomStructure( T, Shift( T, -2 ) ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  IsZero( HomStructure( T, Shift( T, -1 ) ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    IsZero( HomStructure( T, Shift( T, 1 ) ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      IsZero( HomStructure( T, Shift( T, 2 ) ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfObject( HomStructure( T, T ) );</span>
+12
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_E := AbstractionAlgebroid( seq );</span>
+Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_E := UnderlyingQuiver( A_E );</span>
+FinQuiver( "q(E1,E2,E3)[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3]" )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Assert( 0, Dimension( A_E ) = 12 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := IsomorphismIntoAbstractionAlgebroid( seq );</span>
+Isomorphism: strong exceptional sequence ⟶ abstraction algebroid
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := IsomorphismFromAbstractionAlgebroid( seq );</span>
+Isomorphism: abstraction algebroid ⟶ strong exceptional sequence
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := A_E.("m1_2_1");</span>
+&lt;1*m1_2_1:(E1) -≻ (E2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Assert( 0, m = ApplyFunctor( a, ApplyFunctor( r, m ) ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T_E := TriangulatedSubcategory( seq );</span>
+TriangulatedSubcategory( A strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O0 := CreateComplex( KA_Oadd, A_O.("O0") / A_Oadd, 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O1 := CreateComplex( KA_Oadd, A_O.("O1") / A_Oadd, 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">O2 := CreateComplex( KA_Oadd, A_O.("O2") / A_Oadd, 0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( AsSubcategoryCell( T_E, O0 ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    IsWellDefined( AsSubcategoryCell( T_E, O1 ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        IsWellDefined( AsSubcategoryCell( T_E, O2 ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := ReplacementFunctorIntoHomotopyCategoryOfAdditiveClosureOfAbstractionAlgebroid( seq );</span>
+Replacement functor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">F := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAbstractionAlgebroid( seq );</span>
+Convolution functor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G_O0 := ApplyFunctor( G, O0 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G_O1 := ApplyFunctor( G, O1 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G_O2 := ApplyFunctor( G, O2 );</span>
+&lt;An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon := CounitOfConvolutionReplacementAdjunction( seq );</span>
+Counit ϵ : F∘G ⟹ Id of the adjunction F ⊣ G
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon_O0 := ApplyNaturalTransformation( epsilon, O0 );</span>
+&lt;A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon_O1 := ApplyNaturalTransformation( epsilon, O1 );</span>
+&lt;A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">epsilon_O2 := ApplyNaturalTransformation( epsilon, O2 );</span>
+&lt;A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( [ epsilon_O0, epsilon_O1, epsilon_O2 ], IsIsomorphism );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">i := InverseForMorphisms( DirectSumFunctorial( [ epsilon_O0, epsilon_O1, epsilon_O2 ] ) );</span>
+&lt;A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( i ) and IsIsomorphism( i );</span>
+true
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>
