@@ -1,7 +1,6 @@
-
 #! @Chapter Examples and Tests
 
-#! @Section Homotopy Category of the Freyd Category over a polynomial ring
+#! @Section Homotopy Category of Left-Presentations Categories
 
 #! @Example
 LoadPackage( "ModulePresentations", false );
@@ -36,7 +35,7 @@ Display( M );
 #! 0,0,      0,           0,   0,     0, 0    
 #! 
 #! An object in Category of left presentations of Q[x,y]
-IsZero( M );
+IsZeroForObjects( M );
 #! false
 IsProjective( M );
 #! false
