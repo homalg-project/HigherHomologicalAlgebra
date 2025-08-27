@@ -6,10 +6,10 @@
                   [1X Homotopy categories of additive categories [101X
   
   
-                                   2025.07-01
+                                   2025.08-01
   
   
-                                  8 July 2025
+                                 27 August 2025
   
   
                                   Kamal Saleh
@@ -36,8 +36,10 @@
     1.1 [33X[0;0YBasic functors for homotopy categories.[133X
       1.1-1 HomologyFunctor
   2 [33X[0;0YExamples and Tests[133X
-    2.1 [33X[0;0YHomotopy Category of the Freyd Category over a polynomial ring[133X
-    2.2 [33X[0;0YStrong Exceptional Sequence in the Homotopy Category of the Additive
+    2.1 [33X[0;0YHomotopy Category of Freyd Categories[133X
+    2.2 [33X[0;0YHomotopy Category of Left-Presentations Categories[133X
+    2.3 [33X[0;0YHomotopy Category of Presheaves categories (Quiver Representations)[133X
+    2.4 [33X[0;0YStrong Exceptional Sequence in the Homotopy Category of the Additive
     Closure of an Algebroid[133X
   
   

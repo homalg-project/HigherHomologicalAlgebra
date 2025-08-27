@@ -25,19 +25,262 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
 <p><a id="X7967FE8E7BBDF485" name="X7967FE8E7BBDF485"></a></p>
 <div class="ChapSects"><a href="chap2_mj.html#X7967FE8E7BBDF485">2 <span class="Heading">Examples and Tests</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7C1E2E6B7AC5C198">2.1 <span class="Heading">Homotopy Category of the Freyd Category over a polynomial ring</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X87A4F8897AE55F10">2.1 <span class="Heading">Homotopy Category of Freyd Categories</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X81B108B17F275A81">2.2 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X804B9FCF83F5EDBB">2.2 <span class="Heading">Homotopy Category of Left-Presentations Categories</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X87E84EBF78EC7100">2.3 <span class="Heading">Homotopy Category of Presheaves categories (Quiver Representations)</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X81B108B17F275A81">2.4 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></a>
 </span>
 </div>
 </div>
 
 <h3>2 <span class="Heading">Examples and Tests</span></h3>
 
-<p><a id="X7C1E2E6B7AC5C198" name="X7C1E2E6B7AC5C198"></a></p>
+<p><a id="X87A4F8897AE55F10" name="X87A4F8897AE55F10"></a></p>
 
-<h4>2.1 <span class="Heading">Homotopy Category of the Freyd Category over a polynomial ring</span></h4>
+<h4>2.1 <span class="Heading">Homotopy Category of Freyd Categories</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FreydCategoriesForCAP", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "HomotopyCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HOMALG_IO.show_banners := false;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationalsInSingular( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy := QQ["x, y"];</span>
+Q[x,y]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy_rows := CategoryOfRows( QQ_xy );</span>
+Rows( Q[x,y] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy_mod := FreydCategory( QQ_xy_rows );</span>
+Freyd( Rows( Q[x,y] ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K_QQ_xy_mod := HomotopyCategoryByCochains( QQ_xy_mod );</span>
+Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := HomalgMatrix("[[0,0,25*y+9,30,0,0,7*y], [0,0,0,0,24*x,0,20*y], [0,0,0,0,0,24,0], [0,0,29*x+27*y+10,0,0,0,0], [0,0,0,0,34,0,0], [0,0,0,0,0,0,0], [0,0,0,33*y,4*y+12,0,42], [0,20*x+34,0,0,0,0,0], [0,0,0,43*x,0,0,24*y], [0,0,0,0,0,0,0]]", 10, 7, QQ_xy );</span>
+&lt;A 10 x 7 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := HomalgMatrix("[[0,0,25*y+9], [0,0,725*x+7], [0,10*x+17,0]]", 3, 3, QQ_xy );</span>
+&lt;A 3 x 3 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := ObjectConstructor( QQ_xy_mod, m / QQ_xy_rows );</span>
+&lt;An object in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( M );</span>
+
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Q[x,y] of rank 10
+
+Matrix: 
+0,0,      25*y+9,      30,  0,     0, 7*y, 
+0,0,      0,           0,   24*x,  0, 20*y,
+0,0,      0,           0,   0,     24,0,   
+0,0,      29*x+27*y+10,0,   0,     0, 0,   
+0,0,      0,           0,   34,    0, 0,   
+0,0,      0,           0,   0,     0, 0,   
+0,0,      0,           33*y,4*y+12,0, 42,  
+0,20*x+34,0,           0,   0,     0, 0,   
+0,0,      0,           43*x,0,     0, 24*y,
+0,0,      0,           0,   0,     0, 0    
+
+Range: 
+A row module over Q[x,y] of rank 7
+
+A morphism in Rows( Q[x,y] )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Q[x,y] ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( M );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsProjective( M );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := ObjectConstructor( QQ_xy_mod, n / QQ_xy_rows );</span>
+&lt;An object in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N );</span>
+
+--------------------------------
+Relation morphism:
+--------------------------------
+
+Source: 
+A row module over Q[x,y] of rank 3
+
+Matrix: 
+0,0,      25*y+9, 
+0,0,      725*x+7,
+0,10*x+17,0       
+
+Range: 
+A row module over Q[x,y] of rank 3
+
+A morphism in Rows( Q[x,y] )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+An object in Freyd( Rows( Q[x,y] ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := HomalgMatrix( "[[1,0,0], [0,1,0], [0,0,1], [0,0,-5/6*y-3/10], [0,0,0], [0,0,0], [0,0,0]]", 7, 3, QQ_xy );</span>
+&lt;A 7 x 3 matrix over an external ring&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := MorphismConstructor( QQ_xy_mod, M, a / QQ_xy_rows, N );</span>
+&lt;A morphism in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( alpha );</span>
+
+--------------------------------
+Source:
+--------------------------------
+
+Source: 
+A row module over Q[x,y] of rank 10
+
+Matrix: 
+0,0,      25*y+9,      30,  0,     0, 7*y, 
+0,0,      0,           0,   24*x,  0, 20*y,
+0,0,      0,           0,   0,     24,0,   
+0,0,      29*x+27*y+10,0,   0,     0, 0,   
+0,0,      0,           0,   34,    0, 0,   
+0,0,      0,           0,   0,     0, 0,   
+0,0,      0,           33*y,4*y+12,0, 42,  
+0,20*x+34,0,           0,   0,     0, 0,   
+0,0,      0,           43*x,0,     0, 24*y,
+0,0,      0,           0,   0,     0, 0    
+
+Range: 
+A row module over Q[x,y] of rank 7
+
+A morphism in Rows( Q[x,y] )
+
+
+--------------------------------
+Morphism datum:
+--------------------------------
+
+Source: 
+A row module over Q[x,y] of rank 7
+
+Matrix: 
+1,0,0,          
+0,1,0,          
+0,0,1,          
+0,0,-5/6*y-3/10,
+0,0,0,          
+0,0,0,          
+0,0,0           
+
+Range: 
+A row module over Q[x,y] of rank 3
+
+A morphism in Rows( Q[x,y] )
+
+
+--------------------------------
+Range:
+--------------------------------
+
+Source: 
+A row module over Q[x,y] of rank 3
+
+Matrix: 
+0,0,      25*y+9, 
+0,0,      725*x+7,
+0,10*x+17,0       
+
+Range: 
+A row module over Q[x,y] of rank 3
+
+A morphism in Rows( Q[x,y] )
+
+
+--------------------------------
+General description:
+--------------------------------
+
+A morphism in Freyd( Rows( Q[x,y] ) )
+
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := CreateComplex( K_QQ_xy_mod, [ MorphismIntoZeroObject( M ) ], 0 );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectsSupport( M );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectAt( M, 0 ); # or M[0]</span>
+&lt;An object in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DifferentialAt( M, 0 ); # or M^0</span>
+&lt;A zero, split epimorphism in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N := CreateComplex( K_QQ_xy_mod, [ MorphismIntoZeroObject( N ) ], 0 );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ObjectsSupport( N );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := CreateComplexMorphism( K_QQ_xy_mod, M, [ alpha ], 0, N );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_M := ProjectiveResolution( M, true );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_M := QuasiIsomorphismFromProjectiveResolution( M, true );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_N := ProjectiveResolution( N, true );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_N := QuasiIsomorphismFromProjectiveResolution( N, true );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p_alpha := MorphismBetweenProjectiveResolutions( alpha, true );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( p_alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MorphismAt( p_alpha, 0 );</span>
+&lt;A morphism in Freyd( Rows( Q[x,y] ) )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( p_alpha, q_N ) = PreCompose(q_M, alpha );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := LocalizationFunctorByProjectiveObjects( K_QQ_xy_mod );</span>
+Localization functor via projective objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( L );</span>
+Localization functor via projective objects:
+
+Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) )
+  |
+  V
+Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( Freyd( Rows( Q[x,y] ) ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L_M := ApplyFunctor( L, M );</span>
+&lt;An object in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( Freyd( Rows( Q[x,y] ) ) ) ) supported on the interval [ -2 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( ApplyFunctor( L, alpha ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cone_q_M := StandardConeObject( q_M );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologySupport( cone_q_M ); # quasi-iso &lt;-&gt; cone is acyclic</span>
+[ ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_q_M := MorphismIntoStandardConeObject( q_M );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota_q_M );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi_q_M := MorphismFromStandardConeObject( q_M );</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( PreCompose( iota_q_M, pi_q_M ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nu := MorphismBetweenStandardConeObjects(q_M, p_alpha, alpha, q_N);</span>
+&lt;A morphism in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -3 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( nu );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( nu );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( nu );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShiftOfObjectByInteger( p_M, 2 );</span>
+&lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -4 .. -1 ]&gt;
+</pre></div>
+
+<p><a id="X804B9FCF83F5EDBB" name="X804B9FCF83F5EDBB"></a></p>
+
+<h4>2.2 <span class="Heading">Homotopy Category of Left-Presentations Categories</span></h4>
 
 
 <div class="example"><pre>
@@ -73,7 +316,7 @@ Homotopy category by cochains( Category of left presentations of Q[x,y] )
 0,0,      0,           0,   0,     0, 0    
 
 An object in Category of left presentations of Q[x,y]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZero( M );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForObjects( M );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsProjective( M );</span>
 false
@@ -242,9 +485,211 @@ true
 &lt;An object in Homotopy category by cochains( Category of left presentations of Q[x,y] ) supported on the interval [ -5 .. -1 ]&gt;
 </pre></div>
 
+<p><a id="X87E84EBF78EC7100" name="X87E84EBF78EC7100"></a></p>
+
+<h4>2.3 <span class="Heading">Homotopy Category of Presheaves categories (Quiver Representations)</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FunctorCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "HomotopyCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_O := FinQuiver( "q_O(A,B,C)[x:A-&gt;B,y:A-&gt;B,z:B-&gt;C,w:B-&gt;C]" );</span>
+FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P_O := PathCategory( q_O );</span>
+PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho_O := [ [ P_O.xz, P_O.yw ] ];</span>
+[ [ x⋅z:(A) -≻ (C), y⋅w:(A) -≻ (C) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_P_O := QuotientCategory( P_O, rho_O );</span>
+PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k := QQ;</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k_quotient_P_O := k[quotient_P_O];</span>
+Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_O := AlgebroidFromDataTables( k_quotient_P_O );</span>
+Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension( A_O );</span>
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( A_O );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := 2 * A_O.x + 3 * A_O.y;</span>
+&lt;2*x + 3*y:(A) -≻ (B)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheaves( A_O );</span>
+PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( PSh );</span>
+A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
+
+59 primitive operations were used to derive 345 operations for this category which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">indec_projs := IndecomposableProjectiveObjects( PSh );</span>
+[ &lt;(A)-&gt;1, (B)-&gt;0, (C)-&gt;0; (x)-&gt;0x1, (y)-&gt;0x1, (z)-&gt;0x0, (w)-&gt;0x0&gt;, &lt;(A)-&gt;2, (B)-&gt;1, (C)-&gt;0; (x)-&gt;1x2, (y)-&gt;1x2, (z)-&gt;0x1, (w)-&gt;0x1&gt;, 
+  &lt;(A)-&gt;3, (B)-&gt;2, (C)-&gt;1; (x)-&gt;2x3, (y)-&gt;2x3, (z)-&gt;1x2, (w)-&gt;1x2&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">indec_injs := IndecomposableInjectiveObjects( PSh );</span>
+[ &lt;(A)-&gt;1, (B)-&gt;2, (C)-&gt;3; (x)-&gt;2x1, (y)-&gt;2x1, (z)-&gt;3x2, (w)-&gt;3x2&gt;, &lt;(A)-&gt;0, (B)-&gt;1, (C)-&gt;2; (x)-&gt;1x0, (y)-&gt;1x0, (z)-&gt;2x1, (w)-&gt;2x1&gt;, 
+  &lt;(A)-&gt;0, (B)-&gt;0, (C)-&gt;1; (x)-&gt;0x0, (y)-&gt;0x0, (z)-&gt;1x0, (w)-&gt;1x0&gt; ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C_PSh := ComplexesCategoryByCochains( PSh );</span>
+Complexes category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K_PSh := HomotopyCategoryByCochains( PSh );</span>
+Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( K_PSh );</span>
+A CAP category with name Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ):
+
+50 primitive operations were used to derive 209 operations for this category which algorithmically
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms
+* IsAdditiveCategory
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L_proj := LocalizationFunctorByProjectiveObjects( K_PSh );</span>
+Localization functor via projective objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( L_proj );</span>
+Localization functor via projective objects:
+
+Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
+  |
+  V
+Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := BasisOfExternalHom( indec_projs[1], indec_projs[2] )[1];</span>
+&lt;(A)-&gt;1x2, (B)-&gt;0x1, (C)-&gt;0x0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEpimorphism( f );</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := CokernelObject( f );</span>
+&lt;(A)-&gt;1, (B)-&gt;1, (C)-&gt;0; (x)-&gt;1x1, (y)-&gt;1x1, (z)-&gt;0x1, (w)-&gt;0x1&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := CreateComplex( K_PSh, [ UniversalMorphismIntoZeroObject( R ) ], 0 );</span>
+&lt;An object in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota_R := QuasiIsomorphismIntoInjectiveResolution( R, true );</span>
+&lt;A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( iota_R );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsQuasiIsomorphism( iota_R );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologySupport( Source( iota_R ) );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CohomologySupport( Target( iota_R ) );</span>
+[ 0 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L_proj_iota_R := ApplyFunctor( L_proj, iota_R );</span>
+&lt;A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIsomorphism( L_proj_iota_R );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inv_L_proj_iota_R := InverseForMorphisms( L_proj_iota_R );</span>
+&lt;A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := PreCompose( L_proj_iota_R, inv_L_proj_iota_R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMorphism( Source( L_proj_iota_R ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroForMorphisms( u - id );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := WitnessForBeingHomotopicToZeroMorphism( u - id ); # the homotopy maps</span>
+&lt;ZFunction&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w[0];</span>
+A morphism in full subcategory given by: &lt;(A)-&gt;2x1, (B)-&gt;1x0, (C)-&gt;0x0&gt;
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "FunctorCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "HomotopyCategories", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q_O := FinQuiver( "q_O(A,B,C)[x:A-&gt;B,y:A-&gt;B,z:B-&gt;C,w:B-&gt;C]" );</span>
+FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P_O := PathCategory( q_O );</span>
+PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho_O := [ [ P_O.xz, P_O.yw ] ];</span>
+[ [ x⋅z:(A) -≻ (C), y⋅w:(A) -≻ (C) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quotient_P_O := QuotientCategory( P_O, rho_O );</span>
+PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationals( );</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k := QQ;</span>
+Q
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k_quotient_P_O := k[quotient_P_O];</span>
+Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_O := AlgebroidFromDataTables( k_quotient_P_O );</span>
+Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension( A_O );</span>
+10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( A_O );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheaves( A_O );</span>
+PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y1 := YonedaEmbeddingOfSourceCategory( PSh );</span>
+Yoneda embedding functor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Y1 );</span>
+Yoneda embedding functor:
+
+Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms
+  |
+  V
+PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApplyFunctor( Y1, A_O.x );</span>
+&lt;(A)-&gt;1x2, (B)-&gt;0x1, (C)-&gt;0x0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y2 := ExtendFunctorToAdditiveClosureOfSource( Y1 );</span>
+Extension of Yoneda embedding functor to a functor from the additive closure of the source
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Y2 );</span>
+Extension of Yoneda embedding functor to a functor from the additive closure of the source:
+
+AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms )
+  |
+  V
+PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">add_A_O := SourceOfFunctor( Y2 );</span>
+AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApplyFunctor( Y2, add_A_O.x );</span>
+&lt;(A)-&gt;1x2, (B)-&gt;0x1, (C)-&gt;0x0&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y3 := ExtendFunctorToFreydCategory( Y2 ); # Y3 is an equivalence of categories</span>
+Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Y3 );</span>
+Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) ):
+
+Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) )
+  |
+  V
+PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( SourceOfFunctor( Y3 ) );</span>
+A CAP category with name Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) ):
+
+48 primitive operations were used to derive 342 operations for this category which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms
+* IsAbelianCategoryWithEnoughProjectives
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( RangeOfFunctor( Y3 ) );</span>
+A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
+
+59 primitive operations were used to derive 345 operations for this category which algorithmically
+* IsCategoryWithDecidableColifts
+* IsCategoryWithDecidableLifts
+* IsEquippedWithHomomorphismStructure
+* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms
+* IsAbelianCategoryWithEnoughInjectives
+* IsAbelianCategoryWithEnoughProjectives
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y4 := ExtendFunctorToHomotopyCategoriesByCochains( Y3 );</span>
+Extension of ( Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) ) ) to homotopy categories by cochains
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Y4 );</span>
+Extension of ( Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) ) ) to homotopy categories by cochains:
+
+Homotopy category by cochains( Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) ) )
+  |
+  V
+Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">repeat f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );; until not IsZeroForMorphisms( f );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y4_f := ApplyFunctor( Y4, f );</span>
+&lt;A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1 := RankOfObject( HomomorphismStructureOnObjects( Source( f ), Target( f ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r2 := RankOfObject( HomomorphismStructureOnObjects( Source( Y4_f ), Target( Y4_f ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1 = r2;</span>
+true
+</pre></div>
+
 <p><a id="X81B108B17F275A81" name="X81B108B17F275A81"></a></p>
 
-<h4>2.2 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></h4>
+<h4>2.4 <span class="Heading">Strong Exceptional Sequence in the Homotopy Category of the Additive Closure of an Algebroid</span></h4>
 
 
 <div class="example"><pre>
