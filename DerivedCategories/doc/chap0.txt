@@ -6,10 +6,10 @@
                    [1X Derived categories of Abelian categories [101X
   
   
-                                   2025.06-01
+                                   2025.08-01
   
   
-                                  6 June 2025
+                                 27 August 2025
   
   
                                   Kamal Saleh

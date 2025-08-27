@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "DerivedCategories",
 Subtitle := "Derived categories of Abelian categories",
-Version := "2025.06-01",
-Date := "2025-06-06",
+Version := "2025.08-01",
+Date := "2025-08-27",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,7 +69,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.12.1",
+  GAP := ">= 4.13.0",
   NeededOtherPackages := [
         [ "CAP", ">= 2023.12-09" ],
         [ "SubcategoriesForCAP", ">= 2020.10-02" ],
