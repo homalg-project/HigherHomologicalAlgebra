@@ -78,6 +78,7 @@ jobs:
           if [ -d "CategoricalTowers/Toposes" ]; then make -C "CategoricalTowers/Toposes" doc; fi
       - name: Test HigherHomologicalAlgebra
         run: |
+          export GAP_PRINT_BANNER=false
           make -C HigherHomologicalAlgebra --trace -j $(nproc) --output-sync ci-test
       - name: Release package or simulate release
         run: |
