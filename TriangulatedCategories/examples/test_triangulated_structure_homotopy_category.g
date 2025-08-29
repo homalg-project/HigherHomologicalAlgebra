@@ -71,7 +71,7 @@ rels := [ PreCompose( dA_m2, dA_m1 ),
 oid := AlgebroidFromDataTables( kF / rels );;
 cat := AdditiveClosure( oid );;
 homotopy_cat := HomotopyCategoryByCochains( cat );;
-complex_cat := UnderlyingCategory( homotopy_cat );;
+complex_cat := AmbientCategory( homotopy_cat );;
 for object_info in objects do
        MakeReadWriteGlobal( object_info[1] );
        DeclareSynonym( object_info[1],

@@ -15,7 +15,7 @@ function ( homotopy_cat )
   
   cat := DefiningCategory( homotopy_cat );
   
-  complex_cat := UnderlyingCategory( homotopy_cat );
+  complex_cat := AmbientCategory( homotopy_cat );
   
   if IsComplexesCategoryByChains( complex_cat ) then
       sign := -1;
