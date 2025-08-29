@@ -19,7 +19,7 @@ InstallOtherMethod( CreateComplexMorphism,
   { homotopy_cat, S, morphisms, R } -> MorphismConstructor(
                                             homotopy_cat,
                                             S,
-                                            CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, UnderlyingCell( R ) ),
+                                            CreateComplexMorphism( AmbientCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, UnderlyingCell( R ) ),
                                             R )
 );
 
@@ -37,7 +37,7 @@ InstallOtherMethod( CreateComplexMorphism,
   { homotopy_cat, S, morphisms, l, R } -> MorphismConstructor(
                                                 homotopy_cat,
                                                 S,
-                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, UnderlyingCell( R ) ),
+                                                CreateComplexMorphism( AmbientCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, UnderlyingCell( R ) ),
                                                 R )
 );
 
@@ -48,7 +48,7 @@ InstallOtherMethod( CreateComplexMorphism,
   { homotopy_cat, S, morphisms, l, u, R } -> MorphismConstructor(
                                                 homotopy_cat,
                                                 S,
-                                                CreateComplexMorphism( UnderlyingCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, u, UnderlyingCell( R ) ),
+                                                CreateComplexMorphism( AmbientCategory( homotopy_cat ), UnderlyingCell( S ), morphisms, l, u, UnderlyingCell( R ) ),
                                                 R )
 );
 

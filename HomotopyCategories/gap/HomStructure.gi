@@ -56,7 +56,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
       
       AddDistinguishedObjectOfHomomorphismStructure( homotopy_category,
         
-        homotopy_category -> as_object_in_abelian_category( _complexes_DistinguishedObjectOfHomomorphismStructure( homotopy_category )[0] )
+        homotopy_category -> as_object_in_abelian_category( _complexes_DistinguishedObjectOfHomomorphismStructure( AmbientCategory( homotopy_category ) )[0] )
       );
       
       AddHomomorphismStructureOnObjects( homotopy_category,
@@ -64,7 +64,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
         function ( homotopy_category, B, C )
           local hom_BC;
           
-          hom_BC := _complexes_HomomorphismStructureOnObjects( UnderlyingCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ) );
+          hom_BC := _complexes_HomomorphismStructureOnObjects( AmbientCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ) );
           
           return CokernelObject(
                         range_cat,
@@ -80,7 +80,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
         function ( homotopy_category, hom_BC, phi, psi, hom_AD )
           local hom_phi_psi;
           
-          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( UnderlyingCategory( homotopy_category ), UnderlyingCell( phi ), UnderlyingCell( psi ) );
+          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( AmbientCategory( homotopy_category ), UnderlyingCell( phi ), UnderlyingCell( psi ) );
           
           return CokernelObjectFunctorialWithGivenCokernelObjects(
                         range_cat,
@@ -107,7 +107,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
         function ( homotopy_category, phi, psi )
           local hom_phi_psi;
           
-          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( UnderlyingCategory( homotopy_category ), UnderlyingCell( phi ), UnderlyingCell( psi ) );
+          hom_phi_psi := _complexes_HomomorphismStructureOnMorphisms( AmbientCategory( homotopy_category ), UnderlyingCell( phi ), UnderlyingCell( psi ) );
            
           return CokernelObjectFunctorial(
                         range_cat,
@@ -132,7 +132,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
         function ( homotopy_category, phi )
           local ell, hom_BC, iota;
           
-          ell := _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( UnderlyingCategory( homotopy_category ), UnderlyingCell( phi ) );
+          ell := _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( AmbientCategory( homotopy_category ), UnderlyingCell( phi ) );
           
           hom_BC := Range( ell );
           
@@ -157,9 +157,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
         function ( homotopy_category, B, C, ell )
           local distinguished_object, hom_BC, iota;
           
-          distinguished_object := _complexes_DistinguishedObjectOfHomomorphismStructure( UnderlyingCategory( homotopy_category ) );
+          distinguished_object := _complexes_DistinguishedObjectOfHomomorphismStructure( AmbientCategory( homotopy_category ) );
           
-          hom_BC := _complexes_HomomorphismStructureOnObjects( UnderlyingCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ) );
+          hom_BC := _complexes_HomomorphismStructureOnObjects( AmbientCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ) );
           
           iota := KernelEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^0 ) );
           
@@ -178,7 +178,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
           return MorphismConstructor(
                       homotopy_category,
                       B,
-                      _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( UnderlyingCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ), ell ),
+                      _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( AmbientCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ), ell ),
                       C );
       
       end );

@@ -18,21 +18,21 @@ InstallOtherMethod( CreateComplex,
 InstallOtherMethod( CreateComplex,
           [ IsHomotopyCategory, IsList ],
   
-  { homotopy_cat, datum } -> ObjectConstructor( homotopy_cat, CreateComplex( UnderlyingCategory( homotopy_cat ), datum ) )
+  { homotopy_cat, datum } -> ObjectConstructor( homotopy_cat, CreateComplex( AmbientCategory( homotopy_cat ), datum ) )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
           [ IsHomotopyCategory, IsCapCategoryObject, IsInt ],
   
-  { homotopy_cat, o, i } -> ObjectConstructor( homotopy_cat, CreateComplex( UnderlyingCategory( homotopy_cat ), o, i ) )
+  { homotopy_cat, o, i } -> ObjectConstructor( homotopy_cat, CreateComplex( AmbientCategory( homotopy_cat ), o, i ) )
 );
 
 ##
 InstallOtherMethod( CreateComplex,
           [ IsHomotopyCategory, IsDenseList, IsInt ],
   
-  { homotopy_cat, diffs, l } -> ObjectConstructor( homotopy_cat, CreateComplex( UnderlyingCategory( homotopy_cat ), diffs, l ) )
+  { homotopy_cat, diffs, l } -> ObjectConstructor( homotopy_cat, CreateComplex( AmbientCategory( homotopy_cat ), diffs, l ) )
 );
 
 ##
