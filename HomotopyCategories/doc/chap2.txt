@@ -450,31 +450,31 @@
     [4X[25Xgap>[125X [27XLoadPackage( "HomotopyCategories", false );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xq_O := FinQuiver( "q_O(A,B,C)[x:A->B,y:A->B,z:B->C,w:B->C]" );[127X[104X
-    [4X[28XFinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" )[128X[104X
+    [4X[28XFinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" )[128X[104X
     [4X[25Xgap>[125X [27XP_O := PathCategory( q_O );[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) )[128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) )[128X[104X
     [4X[25Xgap>[125X [27Xrho_O := [ [ P_O.xz, P_O.yw ] ];[127X[104X
-    [4X[28X[ [ x⋅z:(A) -≻ (C), y⋅w:(A) -≻ (C) ] ][128X[104X
+    [4X[28X[ [ x⋅z:(A) → (C), y⋅w:(A) → (C) ] ][128X[104X
     [4X[25Xgap>[125X [27Xquotient_P_O := QuotientCategory( P_O, rho_O );[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ][128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ][128X[104X
     [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationals( );[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk := QQ;[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk_quotient_P_O := k[quotient_P_O];[127X[104X
-    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
+    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
     [4X[25Xgap>[125X [27XA_O := AlgebroidFromDataTables( k_quotient_P_O );[127X[104X
-    [4X[28XQ-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms[128X[104X
+    [4X[28XQ-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27XDimension( A_O );[127X[104X
     [4X[28X10[128X[104X
     [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( A_O );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xphi := 2 * A_O.x + 3 * A_O.y;[127X[104X
-    [4X[28X<2*x + 3*y:(A) -≻ (B)>[128X[104X
+    [4X[28X<2*x + 3*y:(A) → (B)>[128X[104X
     [4X[25Xgap>[125X [27XPSh := PreSheaves( A_O );[127X[104X
-    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
+    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XDisplay( PSh );[127X[104X
-    [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
+    [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
     [4X[28X[128X[104X
     [4X[28X59 primitive operations were used to derive 345 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
@@ -490,11 +490,11 @@
     [4X[28X[ <(A)->1, (B)->2, (C)->3; (x)->2x1, (y)->2x1, (z)->3x2, (w)->3x2>, <(A)->0, (B)->1, (C)->2; (x)->1x0, (y)->1x0, (z)->2x1, (w)->2x1>, [128X[104X
     [4X[28X  <(A)->0, (B)->0, (C)->1; (x)->0x0, (y)->0x0, (z)->1x0, (w)->1x0> ][128X[104X
     [4X[25Xgap>[125X [27XC_PSh := ComplexesCategoryByCochains( PSh );[127X[104X
-    [4X[28XComplexes category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
+    [4X[28XComplexes category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
     [4X[25Xgap>[125X [27XK_PSh := HomotopyCategoryByCochains( PSh );[127X[104X
-    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
+    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
     [4X[25Xgap>[125X [27XDisplay( K_PSh );[127X[104X
-    [4X[28XA CAP category with name Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ):[128X[104X
+    [4X[28XA CAP category with name Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ):[128X[104X
     [4X[28X[128X[104X
     [4X[28X50 primitive operations were used to derive 209 operations for this category which algorithmically[128X[104X
     [4X[28X* IsEquippedWithHomomorphismStructure[128X[104X
@@ -505,10 +505,10 @@
     [4X[25Xgap>[125X [27XDisplay( L_proj );[127X[104X
     [4X[28XLocalization functor via projective objects:[128X[104X
     [4X[28X[128X[104X
-    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
+    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
-    [4X[28XHomotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) )[128X[104X
+    [4X[28XHomotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) )[128X[104X
     [4X[25Xgap>[125X [27Xf := BasisOfExternalHom( indec_projs[1], indec_projs[2] )[1];[127X[104X
     [4X[28X<(A)->1x2, (B)->0x1, (C)->0x0>[128X[104X
     [4X[25Xgap>[125X [27XIsEpimorphism( f );[127X[104X
@@ -516,9 +516,9 @@
     [4X[25Xgap>[125X [27XR := CokernelObject( f );[127X[104X
     [4X[28X<(A)->1, (B)->1, (C)->0; (x)->1x1, (y)->1x1, (z)->0x1, (w)->0x1>[128X[104X
     [4X[25Xgap>[125X [27XR := CreateComplex( K_PSh, [ UniversalMorphismIntoZeroObject( R ) ], 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
     [4X[25Xgap>[125X [27Xiota_R := QuasiIsomorphismIntoInjectiveResolution( R, true );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( iota_R );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsQuasiIsomorphism( iota_R );[127X[104X
@@ -528,11 +528,11 @@
     [4X[25Xgap>[125X [27XCohomologySupport( Target( iota_R ) );[127X[104X
     [4X[28X[ 0 ][128X[104X
     [4X[25Xgap>[125X [27XL_proj_iota_R := ApplyFunctor( L_proj, iota_R );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsIsomorphism( L_proj_iota_R );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xinv_L_proj_iota_R := InverseForMorphisms( L_proj_iota_R );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( FullSubcategoryOfProjectiveObjects( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) ) supported on the interval [ -1 .. 1 ]>[128X[104X
     [4X[25Xgap>[125X [27Xu := PreCompose( L_proj_iota_R, inv_L_proj_iota_R );;[127X[104X
     [4X[25Xgap>[125X [27Xid := IdentityMorphism( Source( L_proj_iota_R ) );;[127X[104X
     [4X[25Xgap>[125X [27XIsZeroForMorphisms( u - id );[127X[104X
@@ -549,36 +549,36 @@
     [4X[25Xgap>[125X [27XLoadPackage( "HomotopyCategories", false );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xq_O := FinQuiver( "q_O(A,B,C)[x:A->B,y:A->B,z:B->C,w:B->C]" );[127X[104X
-    [4X[28XFinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" )[128X[104X
+    [4X[28XFinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" )[128X[104X
     [4X[25Xgap>[125X [27XP_O := PathCategory( q_O );[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) )[128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) )[128X[104X
     [4X[25Xgap>[125X [27Xrho_O := [ [ P_O.xz, P_O.yw ] ];[127X[104X
-    [4X[28X[ [ x⋅z:(A) -≻ (C), y⋅w:(A) -≻ (C) ] ][128X[104X
+    [4X[28X[ [ x⋅z:(A) → (C), y⋅w:(A) → (C) ] ][128X[104X
     [4X[25Xgap>[125X [27Xquotient_P_O := QuotientCategory( P_O, rho_O );[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ][128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ][128X[104X
     [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationals( );[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk := QQ;[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk_quotient_P_O := k[quotient_P_O];[127X[104X
-    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
+    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
     [4X[25Xgap>[125X [27XA_O := AlgebroidFromDataTables( k_quotient_P_O );[127X[104X
-    [4X[28XQ-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms[128X[104X
+    [4X[28XQ-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27XDimension( A_O );[127X[104X
     [4X[28X10[128X[104X
     [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( A_O );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XPSh := PreSheaves( A_O );[127X[104X
-    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
+    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XY1 := YonedaEmbeddingOfSourceCategory( PSh );[127X[104X
     [4X[28XYoneda embedding functor[128X[104X
     [4X[25Xgap>[125X [27XDisplay( Y1 );[127X[104X
     [4X[28XYoneda embedding functor:[128X[104X
     [4X[28X[128X[104X
-    [4X[28XQ-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms[128X[104X
+    [4X[28XQ-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms[128X[104X
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
-    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
+    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XApplyFunctor( Y1, A_O.x );[127X[104X
     [4X[28X<(A)->1x2, (B)->0x1, (C)->0x0>[128X[104X
     [4X[25Xgap>[125X [27XY2 := ExtendFunctorToAdditiveClosureOfSource( Y1 );[127X[104X
@@ -586,12 +586,12 @@
     [4X[25Xgap>[125X [27XDisplay( Y2 );[127X[104X
     [4X[28XExtension of Yoneda embedding functor to a functor from the additive closure of the source:[128X[104X
     [4X[28X[128X[104X
-    [4X[28XAdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms )[128X[104X
+    [4X[28XAdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms )[128X[104X
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
-    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
+    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27Xadd_A_O := SourceOfFunctor( Y2 );[127X[104X
-    [4X[28XAdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms )[128X[104X
+    [4X[28XAdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms )[128X[104X
     [4X[25Xgap>[125X [27XApplyFunctor( Y2, add_A_O.x );[127X[104X
     [4X[28X<(A)->1x2, (B)->0x1, (C)->0x0>[128X[104X
     [4X[25Xgap>[125X [27XY3 := ExtendFunctorToFreydCategory( Y2 ); # Y3 is an equivalence of categories[127X[104X
@@ -599,12 +599,12 @@
     [4X[25Xgap>[125X [27XDisplay( Y3 );[127X[104X
     [4X[28XExtension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) ):[128X[104X
     [4X[28X[128X[104X
-    [4X[28XFreyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) )[128X[104X
+    [4X[28XFreyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms ) )[128X[104X
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
-    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
+    [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XDisplay( SourceOfFunctor( Y3 ) );[127X[104X
-    [4X[28XA CAP category with name Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) ):[128X[104X
+    [4X[28XA CAP category with name Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms ) ):[128X[104X
     [4X[28X[128X[104X
     [4X[28X48 primitive operations were used to derive 342 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
@@ -613,7 +613,7 @@
     [4X[28X* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms[128X[104X
     [4X[28X* IsAbelianCategoryWithEnoughProjectives[128X[104X
     [4X[25Xgap>[125X [27XDisplay( RangeOfFunctor( Y3 ) );[127X[104X
-    [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
+    [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
     [4X[28X[128X[104X
     [4X[28X59 primitive operations were used to derive 345 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
@@ -627,13 +627,13 @@
     [4X[25Xgap>[125X [27XDisplay( Y4 );[127X[104X
     [4X[28XExtension of ( Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) ) ) to homotopy categories by cochains:[128X[104X
     [4X[28X[128X[104X
-    [4X[28XHomotopy category by cochains( Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms ) ) )[128X[104X
+    [4X[28XHomotopy category by cochains( Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms ) ) )[128X[104X
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
-    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
+    [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
     [4X[25Xgap>[125X [27Xrepeat f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );; until not IsZeroForMorphisms( f );[127X[104X
     [4X[25Xgap>[125X [27XY4_f := ApplyFunctor( Y4, f );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A-≻B,y:A-≻B,z:B-≻C,w:B-≻C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]>[128X[104X
     [4X[25Xgap>[125X [27Xr1 := RankOfObject( HomomorphismStructureOnObjects( Source( f ), Target( f ) ) );;[127X[104X
     [4X[25Xgap>[125X [27Xr2 := RankOfObject( HomomorphismStructureOnObjects( Source( Y4_f ), Target( Y4_f ) ) );;[127X[104X
     [4X[25Xgap>[125X [27Xr1 = r2;[127X[104X
@@ -650,70 +650,70 @@
     [4X[25Xgap>[125X [27XLoadPackage( "HomotopyCategories", false );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xq_O := FinQuiver( "q_O(O0,O1,O2)[x0:O0->O1,x1:O0->O1,x2:O0->O1,y0:O1->O2,y1:O1->O2,y2:O1->O2]" );[127X[104X
-    [4X[28XFinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" )[128X[104X
+    [4X[28XFinQuiver( "q_O(O0,O1,O2)[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2]" )[128X[104X
     [4X[25Xgap>[125X [27XSetLaTeXStringsOfObjects( q_O, [ "\\mathcal{O}_{0}", "\\mathcal{O}_{1}", "\\mathcal{O}_{2}" ] );[127X[104X
     [4X[25Xgap>[125X [27XSetLaTeXStringsOfMorphisms( q_O, [ "x_0", "x_1", "x_2", "y_0", "y_1", "y_2" ] );[127X[104X
     [4X[25Xgap>[125X [27XP_O := PathCategory( q_O );[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2, y2:O1-≻O2]" ) )[128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2, y2:O1→O2]" ) )[128X[104X
     [4X[25Xgap>[125X [27Xrho_O := [ [ P_O.x0y1, P_O.x1y0 ], [ P_O.x0y2, P_O.x2y0 ], [ P_O.x1y2, P_O.x2y1 ] ];[127X[104X
-    [4X[28X[ [ x0⋅y1:(O0) -≻ (O2), x1⋅y0:(O0) -≻ (O2) ], [ x0⋅y2:(O0) -≻ (O2), x2⋅y0:(O0) -≻ (O2) ], [ x1⋅y2:(O0) -≻ (O2), x2⋅y1:(O0) -≻ (O2) ] ][128X[104X
+    [4X[28X[ [ x0⋅y1:(O0) → (O2), x1⋅y0:(O0) → (O2) ], [ x0⋅y2:(O0) → (O2), x2⋅y0:(O0) → (O2) ], [ x1⋅y2:(O0) → (O2), x2⋅y1:(O0) → (O2) ] ][128X[104X
     [4X[25Xgap>[125X [27Xquotient_P_O := P_O / rho_O;[127X[104X
-    [4X[28XPathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ][128X[104X
+    [4X[28XPathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ][128X[104X
     [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationals( );[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk := QQ;[127X[104X
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk_quotient_P_O := k[quotient_P_O];[127X[104X
-    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ] )[128X[104X
+    [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(O0,O1,O2)[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2]" ) ) / [ x0⋅y1 = x1⋅y0, x0⋅y2 = x2⋅y0, x1⋅y2 = x2⋅y1 ] )[128X[104X
     [4X[25Xgap>[125X [27XA_O := AlgebroidFromDataTables( k_quotient_P_O );[127X[104X
-    [4X[28XQ-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms[128X[104X
+    [4X[28XQ-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27Xphi := 2 * A_O.x0 + 3 * A_O.x1 - A_O.x2;[127X[104X
-    [4X[28X<2*x0 + 3*x1 - 1*x2:(O0) -≻ (O1)>[128X[104X
+    [4X[28X<2*x0 + 3*x1 - 1*x2:(O0) → (O1)>[128X[104X
     [4X[25Xgap>[125X [27XA_Oadd := AdditiveClosure( A_O );[127X[104X
-    [4X[28XAdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2, y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms )[128X[104X
+    [4X[28XAdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2, y2:O1→O2] ) defined by 3 objects and 6 generating morphisms )[128X[104X
     [4X[25Xgap>[125X [27XKA_Oadd := HomotopyCategoryByCochains( A_Oadd );[127X[104X
-    [4X[28XHomotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) )[128X[104X
+    [4X[28XHomotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) )[128X[104X
     [4X[25Xgap>[125X [27XE10 := [ A_O.O0, A_O.O0, A_O.O0 ] / A_Oadd;[127X[104X
-    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
+    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2, y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
     [4X[25Xgap>[125X [27XE11 := [ A_O.O1, A_O.O1, A_O.O1 ] / A_Oadd;[127X[104X
-    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
+    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2, y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
     [4X[25Xgap>[125X [27XE12 := [ A_O.O2 ] / A_Oadd;[127X[104X
-    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects>[128X[104X
+    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2, y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects>[128X[104X
     [4X[25Xgap>[125X [27Xdelta_0 := AdditiveClosureMorphism([127X[104X
     [4X[25X>[125X [27X        E10,[127X[104X
     [4X[25X>[125X [27X        [ [ A_O.x1, -A_O.x0, ZeroMorphism(A_O.O0, A_O.O1) ],[127X[104X
     [4X[25X>[125X [27X          [ A_O.x2, ZeroMorphism(A_O.O0, A_O.O1), -A_O.x0 ],[127X[104X
     [4X[25X>[125X [27X          [ ZeroMorphism(A_O.O0, A_O.O1), A_O.x2, -A_O.x1 ] ],[127X[104X
     [4X[25X>[125X [27X        E11 );[127X[104X
-    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2, y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 3 matrix of underlying morphisms>[128X[104X
+    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2, y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 3 matrix of underlying morphisms>[128X[104X
     [4X[25Xgap>[125X [27Xdelta_1 := AdditiveClosureMorphism([127X[104X
     [4X[25X>[125X [27X        E11,[127X[104X
     [4X[25X>[125X [27X        [ [ A_O.y0 ],[127X[104X
     [4X[25X>[125X [27X          [ A_O.y1 ],[127X[104X
     [4X[25X>[125X [27X          [ A_O.y2 ] ],[127X[104X
     [4X[25X>[125X [27X        E12 );[127X[104X
-    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms>[128X[104X
+    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms>[128X[104X
     [4X[25Xgap>[125X [27XE1 := CreateComplex( KA_Oadd, [ delta_0, delta_1 ], 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]>[128X[104X
     [4X[25Xgap>[125X [27XE20 := [ A_O.O0, A_O.O0, A_O.O0 ] / A_Oadd;[127X[104X
-    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
+    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by 3 underlying objects>[128X[104X
     [4X[25Xgap>[125X [27XE21 := [ A_O.O1] / A_Oadd;[127X[104X
-    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects>[128X[104X
+    [4X[28X<An object in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by 1 underlying objects>[128X[104X
     [4X[25Xgap>[125X [27Xdelta_0 := AdditiveClosureMorphism([127X[104X
     [4X[25X>[125X [27X      E20,[127X[104X
     [4X[25X>[125X [27X      [ [ A_O.x0 ],[127X[104X
     [4X[25X>[125X [27X        [ A_O.x1 ],[127X[104X
     [4X[25X>[125X [27X        [ A_O.x2 ] ],[127X[104X
     [4X[25X>[125X [27X      E21 );[127X[104X
-    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms>[128X[104X
+    [4X[28X<A morphism in AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) defined by a 3 x 1 matrix of underlying morphisms>[128X[104X
     [4X[25Xgap>[125X [27XE2 := CreateComplex( KA_Oadd, [ delta_0 ], 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 1 ]>[128X[104X
     [4X[25Xgap>[125X [27XE3 := CreateComplex( KA_Oadd, A_O.O0 / A_Oadd, 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27Xseq := CreateStrongExceptionalSequence( [ E1, E2, E3 ] );[127X[104X
-    [4X[28XA strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[ x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) )[128X[104X
+    [4X[28XA strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[ x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) )[128X[104X
     [4X[25Xgap>[125X [27XT := DirectSum( [ E1, E2, E3 ] );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 .. 2 ]>[128X[104X
     [4X[25Xgap>[125X [27XRankOfObject( HomStructure( E1, E1 ) ) = 1 and[127X[104X
     [4X[25X>[125X [27X  RankOfObject( HomStructure( E2, E2 ) ) = 1 and[127X[104X
     [4X[25X>[125X [27X    RankOfObject( HomStructure( E3, E3 ) ) = 1;[127X[104X
@@ -730,25 +730,25 @@
     [4X[25Xgap>[125X [27XRankOfObject( HomStructure( T, T ) );[127X[104X
     [4X[28X12[128X[104X
     [4X[25Xgap>[125X [27XA_E := AbstractionAlgebroid( seq );[127X[104X
-    [4X[28XQ-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms[128X[104X
+    [4X[28XQ-algebroid( {E1,E2,E3}[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3] ) defined by 3 objects and 6 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27Xq_E := UnderlyingQuiver( A_E );[127X[104X
-    [4X[28XFinQuiver( "q(E1,E2,E3)[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3]" )[128X[104X
+    [4X[28XFinQuiver( "q(E1,E2,E3)[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3]" )[128X[104X
     [4X[25Xgap>[125X [27XAssert( 0, Dimension( A_E ) = 12 );[127X[104X
     [4X[25Xgap>[125X [27Xa := IsomorphismIntoAbstractionAlgebroid( seq );[127X[104X
     [4X[28XIsomorphism: strong exceptional sequence ⟶ abstraction algebroid[128X[104X
     [4X[25Xgap>[125X [27Xr := IsomorphismFromAbstractionAlgebroid( seq );[127X[104X
     [4X[28XIsomorphism: abstraction algebroid ⟶ strong exceptional sequence[128X[104X
     [4X[25Xgap>[125X [27Xm := A_E.("m1_2_1");[127X[104X
-    [4X[28X<1*m1_2_1:(E1) -≻ (E2)>[128X[104X
+    [4X[28X<1*m1_2_1:(E1) → (E2)>[128X[104X
     [4X[25Xgap>[125X [27XAssert( 0, m = ApplyFunctor( a, ApplyFunctor( r, m ) ) );[127X[104X
     [4X[25Xgap>[125X [27XT_E := TriangulatedSubcategory( seq );[127X[104X
-    [4X[28XTriangulatedSubcategory( A strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) )[128X[104X
+    [4X[28XTriangulatedSubcategory( A strong exceptional sequence in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) )[128X[104X
     [4X[25Xgap>[125X [27XO0 := CreateComplex( KA_Oadd, A_O.("O0") / A_Oadd, 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XO1 := CreateComplex( KA_Oadd, A_O.("O1") / A_Oadd, 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XO2 := CreateComplex( KA_Oadd, A_O.("O2") / A_Oadd, 0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( AsSubcategoryCell( T_E, O0 ) ) and[127X[104X
     [4X[25X>[125X [27X    IsWellDefined( AsSubcategoryCell( T_E, O1 ) ) and[127X[104X
     [4X[25X>[125X [27X        IsWellDefined( AsSubcategoryCell( T_E, O2 ) );[127X[104X
@@ -758,23 +758,23 @@
     [4X[25Xgap>[125X [27XF := ConvolutionFunctorFromHomotopyCategoryOfAdditiveClosureOfAbstractionAlgebroid( seq );[127X[104X
     [4X[28XConvolution functor[128X[104X
     [4X[25Xgap>[125X [27XG_O0 := ApplyFunctor( G, O0 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XG_O1 := ApplyFunctor( G, O1 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XG_O2 := ApplyFunctor( G, O2 );[127X[104X
-    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1-≻E2,m1_2_2:E1-≻E2,m1_2_3:E1-≻E2,m2_3_1:E2-≻E3,m2_3_2:E2-≻E3,m2_3_3:E2-≻E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
+    [4X[28X<An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27Xepsilon := CounitOfConvolutionReplacementAdjunction( seq );[127X[104X
     [4X[28XCounit ϵ : F∘G ⟹ Id of the adjunction F ⊣ G[128X[104X
     [4X[25Xgap>[125X [27Xepsilon_O0 := ApplyNaturalTransformation( epsilon, O0 );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>[128X[104X
     [4X[25Xgap>[125X [27Xepsilon_O1 := ApplyNaturalTransformation( epsilon, O1 );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -1 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27Xepsilon_O2 := ApplyNaturalTransformation( epsilon, O2 );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XForAll( [ epsilon_O0, epsilon_O1, epsilon_O2 ], IsIsomorphism );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xi := InverseForMorphisms( DirectSumFunctorial( [ epsilon_O0, epsilon_O1, epsilon_O2 ] ) );[127X[104X
-    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0-≻O1,x1:O0-≻O1,x2:O0-≻O1,y0:O1-≻O2,y1:O1-≻O2,y2:O1-≻O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
+    [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( i ) and IsIsomorphism( i );[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
