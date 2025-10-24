@@ -55,6 +55,7 @@ jobs:
           git clone --depth 1 -vv https://github.com/homalg-project/FinSetsForCAP.git
           git clone --depth 1 -vv https://github.com/homalg-project/QPA2.git
           git clone --depth 1 -vv https://github.com/homalg-project/FpCategories.git
+          git clone --depth 1 -vv https://github.com/homalg-project/FpLinearCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/Algebroids.git
           git clone --depth 1 -vv https://github.com/homalg-project/PreSheaves.git
           git clone --depth 1 -vv https://github.com/homalg-project/QuotientCategories.git
