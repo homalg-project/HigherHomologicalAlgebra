@@ -23,6 +23,12 @@ AutoDoc( rec(
                 \usepackage[T1]{fontenc}
                 \usepackage{tikz}
                 \usetikzlibrary{shapes,arrows,matrix}
+                \DeclareUnicodeCharacter{22C5}{\ensuremath{\cdot}}
+                \DeclareUnicodeCharacter{27F6}{\ensuremath{\!\!\longrightarrow\!}}
+                \DeclareUnicodeCharacter{03F5}{\ensuremath{\!\!\epsilon\!}}
+                \DeclareUnicodeCharacter{2218}{\ensuremath{\!\!\circ\!}}
+                \DeclareUnicodeCharacter{27F9}{\ensuremath{\!\!\Rightarrow\!}}
+                \DeclareUnicodeCharacter{22A3}{\ensuremath{\!\!\dashv\!}}
             """,
         ),
     ),
