@@ -41,7 +41,7 @@
   [33X[1;0Y[29X[2XIsExactCategory[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  [33X[0;0YThe  input is a CAP category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
   with respect to some class [23X\EE[123X of short exact sequences.[133X
   
   [1X1.2-2 IsInflation[101X
@@ -342,7 +342,7 @@
   [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactProjectives[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  [33X[0;0YThe  input is a CAP category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
   with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
   enough [23X\EE[123X-projectives.[133X
   
@@ -394,7 +394,7 @@
   [33X[1;0Y[29X[2XIsExactCategoryWithEnoughExactInjectives[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [33X[0;0YThe  input is a [5XCAP[105X category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
+  [33X[0;0YThe  input is a CAP category. The output is [10Xtrue[110X if [23X\CC[123X is an exact category
   with  respect  to  some class [23X\EE[123X of short exact sequences and [23X(\CC,\EE)[123X has
   enough [23X\EE[123X-injectives.[133X
   
@@ -472,7 +472,7 @@
   [33X[1;0Y[29X[2XIsFrobeniusCategory[102X( [3XC[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
-  [33X[0;0YThe argument is a [5XCAP[105X category. The output is [10Xtrue[110X if[133X
+  [33X[0;0YThe argument is a CAP category. The output is [10Xtrue[110X if[133X
   
   [30X    [33X[0;6Y[23X\CC[123X is exact with respect to some class [23X\EE[123X of short exact sequences,[133X
   
