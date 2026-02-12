@@ -476,7 +476,7 @@
     [4X[25Xgap>[125X [27XDisplay( PSh );[127X[104X
     [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
     [4X[28X[128X[104X
-    [4X[28X59 primitive operations were used to derive 345 operations for this category which algorithmically[128X[104X
+    [4X[28X59 primitive operations were used to derive 346 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
     [4X[28X* IsCategoryWithDecidableLifts[128X[104X
     [4X[28X* IsEquippedWithHomomorphismStructure[128X[104X
@@ -496,7 +496,7 @@
     [4X[25Xgap>[125X [27XDisplay( K_PSh );[127X[104X
     [4X[28XA CAP category with name Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ):[128X[104X
     [4X[28X[128X[104X
-    [4X[28X50 primitive operations were used to derive 209 operations for this category which algorithmically[128X[104X
+    [4X[28X50 primitive operations were used to derive 210 operations for this category which algorithmically[128X[104X
     [4X[28X* IsEquippedWithHomomorphismStructure[128X[104X
     [4X[28X* IsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms[128X[104X
     [4X[28X* IsAdditiveCategory[128X[104X
@@ -606,7 +606,7 @@
     [4X[25Xgap>[125X [27XDisplay( SourceOfFunctor( Y3 ) );[127X[104X
     [4X[28XA CAP category with name Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms ) ):[128X[104X
     [4X[28X[128X[104X
-    [4X[28X48 primitive operations were used to derive 342 operations for this category which algorithmically[128X[104X
+    [4X[28X48 primitive operations were used to derive 343 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
     [4X[28X* IsCategoryWithDecidableLifts[128X[104X
     [4X[28X* IsEquippedWithHomomorphismStructure[128X[104X
@@ -615,7 +615,7 @@
     [4X[25Xgap>[125X [27XDisplay( RangeOfFunctor( Y3 ) );[127X[104X
     [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
     [4X[28X[128X[104X
-    [4X[28X59 primitive operations were used to derive 345 operations for this category which algorithmically[128X[104X
+    [4X[28X59 primitive operations were used to derive 346 operations for this category which algorithmically[128X[104X
     [4X[28X* IsCategoryWithDecidableColifts[128X[104X
     [4X[28X* IsCategoryWithDecidableLifts[128X[104X
     [4X[28X* IsEquippedWithHomomorphismStructure[128X[104X

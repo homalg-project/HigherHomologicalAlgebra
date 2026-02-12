@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "HomotopyCategories",
 Subtitle := "Homotopy categories of additive categories",
-Version := "2025.12-02",
-Date := "2025-12-23",
+Version := "2026.02-01",
+Date := "2026-02-12",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -72,7 +72,7 @@ Dependencies := rec(
   GAP := ">= 4.13.0",
   NeededOtherPackages := [
                            [ "GAPDoc", ">= 1.5" ],
-                           [ "ComplexesCategories", ">= 2023.11-02" ],
+                           [ "ComplexesCategories", ">= 2026.02-01" ],
                            [ "TriangulatedCategories", ">= 2022.10-01" ],
                            [ "QuotientCategories", ">= 2025.08-03" ],
                            [ "SubcategoriesForCAP", ">= 2025.02-06" ],
