@@ -1,0 +1,30 @@
+name: Codecov
+
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types:
+      - completed
+
+jobs:
+  upload:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload to Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_COMMIT_SHA: ${{ github.event.workflow_run.head_sha }}
+          CODECOV_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          CODECOV_PR: ${{ github.event.workflow_run.pull_requests[0].number }}
+        run: |
+          cd $GITHUB_WORKSPACE/dev
+          ./upload_codecov.sh
