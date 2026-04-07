@@ -26,5 +26,5 @@ jobs:
           CODECOV_BRANCH: ${{ github.event.workflow_run.head_branch }}
           CODECOV_PR: ${{ github.event.workflow_run.pull_requests[0].number }}
         run: |
-          cd $GITHUB_WORKSPACE/dev
-          ./upload_codecov.sh
+          cd $GITHUB_WORKSPACE
+          ./dev/upload_codecov.sh
