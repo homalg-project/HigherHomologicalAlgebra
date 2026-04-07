@@ -95,10 +95,9 @@ jobs:
           else \
             TOKEN="${{ secrets.GITHUB_TOKEN }}" ./dev/simulate_dist.sh; \
           fi
-      - name: Upload code coverage
+      - name: Upload coverage artifacts
         if: github.event_name != 'schedule' && matrix.image == 'ghcr.io/homalg-project/gap-docker:latest'
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          cd HigherHomologicalAlgebra
-          ./dev/upload_codecov.sh
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: /home/gap/.gap/pkg/HigherHomologicalAlgebra/*/coverage.json
