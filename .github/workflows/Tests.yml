@@ -7,7 +7,7 @@ on:
       - "*-ci"
   pull_request:
   schedule:
-    - cron: "0 4 * * *" # after gap-docker(-master) is rebuilt
+    - cron: "35 9 * * *" # TEMP: revert to "0 4 * * *" after testing
   workflow_dispatch:
 
 # cancel runs for pull requests on force push
