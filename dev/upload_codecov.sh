@@ -42,31 +42,18 @@ fi
 
 # execute
 chmod +x codecov
-while ! ./codecov -Z -v -s ../ -F Bicomplexes -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to Bicomplexes failed, retrying in 60s"
+
+for pkg in \
+  Bicomplexes \
+  ComplexesCategories \
+  DerivedCategories \
+  HomotopyCategories \
+  StableCategories \
+  ToolsForHigherHomologicalAlgebra \
+  TriangulatedCategories \
+; do
+  while ! ./codecov -Z -v -s ../ -F "$pkg" -t $CODECOV_TOKEN $EXTRA_ARGS; do
+    echo "Codecov upload for $pkg failed, retrying in 60s"
     sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F ComplexesCategories -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to ComplexesCategories failed, retrying in 60s"
-    sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F DerivedCategories -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to DerivedCategories failed, retrying in 60s"
-    sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F HomotopyCategories -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to HomotopyCategories failed, retrying in 60s"
-    sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F StableCategories -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to StableCategories failed, retrying in 60s"
-    sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F ToolsForHigherHomologicalAlgebra -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to ToolsForHigherHomologicalAlgebra failed, retrying in 60s"
-    sleep 60
-done
-while ! ./codecov -Z -v -s ../ -F TriangulatedCategories -t $CODECOV_TOKEN $EXTRA_ARGS; do
-    echo "Codecov upload to TriangulatedCategories failed, retrying in 60s"
-    sleep 60
+  done
 done
