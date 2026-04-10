@@ -6,28 +6,28 @@
   
   [1X3.1-1 IsStableCategory[101X
   
-  [33X[1;0Y[29X[2XIsStableCategory[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsStableCategory[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of stable categories[133X
   
   [1X3.1-2 IsStableCategoryCell[101X
   
-  [33X[1;0Y[29X[2XIsStableCategoryCell[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsStableCategoryCell[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of stable categories cells.[133X
   
   [1X3.1-3 IsStableCategoryObject[101X
   
-  [33X[1;0Y[29X[2XIsStableCategoryObject[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsStableCategoryObject[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of stable categories objects.[133X
   
   [1X3.1-4 IsStableCategoryMorphism[101X
   
-  [33X[1;0Y[29X[2XIsStableCategoryMorphism[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsStableCategoryMorphism[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of stable categories morphisms.[133X

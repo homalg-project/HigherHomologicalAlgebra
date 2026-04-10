@@ -6,28 +6,28 @@
   
   [1X1.1-1 IsCapCategoryShortSequence[101X
   
-  [33X[1;0Y[29X[2XIsCapCategoryShortSequence[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCapCategoryShortSequence[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of short sequences.[133X
   
   [1X1.1-2 IsCapCategoryMorphismOfShortSequences[101X
   
-  [33X[1;0Y[29X[2XIsCapCategoryMorphismOfShortSequences[102X( [3Xseq_mor[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCapCategoryMorphismOfShortSequences[102X( [3Xseq_mor[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of morphisms of short sequences.[133X
   
   [1X1.1-3 IsCapCategoryShortExactSequence[101X
   
-  [33X[1;0Y[29X[2XIsCapCategoryShortExactSequence[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCapCategoryShortExactSequence[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of short exact sequences.[133X
   
   [1X1.1-4 IsCapCategoryConflation[101X
   
-  [33X[1;0Y[29X[2XIsCapCategoryConflation[102X( [3Xseq_obj[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCapCategoryConflation[102X( [3Xseq_obj[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  [5XGAP[105X  category of conflations. If a short sequence is a conflation, then
