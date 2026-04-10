@@ -139,10 +139,10 @@ InstallMethod( DerivedCategoryByCochains,
         
         SetIsLinearCategoryOverCommutativeRing( derived_cat, true );
         
-        SetCommutativeRingOfLinearCategory( derived_cat, CommutativeRingOfLinearCategory( cat ) );
+        SetCommutativeSemiringOfLinearCategory( derived_cat, CommutativeSemiringOfLinearCategory( cat ) );
         
         ##
-        AddMultiplyWithElementOfCommutativeRingForMorphisms( derived_cat,
+        AddMultiplyWithElementOfCommutativeSemiringForMorphisms( derived_cat,
           function( derived_cat, r, alpha )
             local pair;
             

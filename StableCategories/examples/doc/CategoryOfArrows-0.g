@@ -11,7 +11,7 @@ InstallMethod( CategoryOfArrows,
     
     quiver := RightQuiver( "q(1,2)[m:1->2]" );
     
-    ring := CommutativeRingOfLinearCategory( C );
+    ring := CommutativeSemiringOfLinearCategory( C );
     
     if HasIsFieldForHomalg( ring ) and IsFieldForHomalg( ring ) then
       

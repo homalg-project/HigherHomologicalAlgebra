@@ -37,7 +37,7 @@ InstallMethod( AbstractionAlgebroid,
     
     range_cat := RangeCategoryOfHomomorphismStructure( seq );
     
-    kF := LinearClosure( CommutativeRingOfLinearCategory( seq ), F );
+    kF := LinearClosure( CommutativeSemiringOfLinearCategory( seq ), F );
     
     o := SetOfObjects( kF );
     

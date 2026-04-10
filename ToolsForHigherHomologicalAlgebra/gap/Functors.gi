@@ -54,7 +54,7 @@ InstallMethodWithCache( AdditiveFunctorByTwoFunctionsData,
     local F, values_on_objects, values_on_bases_elements, bases_of_source_category, functor_object_function, functor_morphism_function,data, full_functor, preinverse_data, preinverse_object_function, preinverse_morphism_function, hom_cat, distinguished_obj;
     
     if not ( ForAll( [ source, range ], IsLinearCategoryOverCommutativeRing )
-              and IsIdenticalObj( CommutativeRingOfLinearCategory( source ), CommutativeRingOfLinearCategory( range ) ) ) then
+              and IsIdenticalObj( CommutativeSemiringOfLinearCategory( source ), CommutativeSemiringOfLinearCategory( range ) ) ) then
       
       Error( "the source and range categories must be linear over the same commutative ring!\n" );
       
@@ -138,7 +138,7 @@ InstallMethodWithCache( AdditiveFunctorByTwoFunctionsData,
         
         fi;
         
-        return SumOfMorphisms( range, FS, ListN( coeffs{positions}, values_on_bases_elements[2][s][r][2]{positions}, {c,f} -> MultiplyWithElementOfCommutativeRingForMorphisms( range, c, f ) ), FR );
+        return SumOfMorphisms( range, FS, ListN( coeffs{positions}, values_on_bases_elements[2][s][r][2]{positions}, {c,f} -> MultiplyWithElementOfCommutativeSemiringForMorphisms( range, c, f ) ), FR );
     
     end;
     
@@ -229,7 +229,7 @@ InstallMethodWithCache( AdditiveFunctorByTwoFunctionsData,
           
           coeffs := CoefficientsOfMorphism( hom_cat, coeffs );
           
-          return SumOfMorphisms( source, S, ListN( coeffs , bases_of_source_category[2][s][r][2], { c, m } -> MultiplyWithElementOfCommutativeRingForMorphisms( source, c, m ) ), R );
+          return SumOfMorphisms( source, S, ListN( coeffs , bases_of_source_category[2][s][r][2], { c, m } -> MultiplyWithElementOfCommutativeSemiringForMorphisms( source, c, m ) ), R );
           
         end;
         
