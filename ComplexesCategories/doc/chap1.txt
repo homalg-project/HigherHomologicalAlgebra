@@ -6,21 +6,21 @@
   
   [1X1.1-1 IsComplexesCategory[101X
   
-  [33X[1;0Y[29X[2XIsComplexesCategory[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsComplexesCategory[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the chain or cochain complexes category.[133X
   
   [1X1.1-2 IsComplexesCategoryByChains[101X
   
-  [33X[1;0Y[29X[2XIsComplexesCategoryByChains[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsComplexesCategoryByChains[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the chain complexes category.[133X
   
   [1X1.1-3 IsComplexesCategoryByCochains[101X
   
-  [33X[1;0Y[29X[2XIsComplexesCategoryByCochains[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsComplexesCategoryByCochains[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-category of the cochain complexes category.[133X
@@ -54,21 +54,21 @@
   
   [1X1.2-1 IsChainOrCochainComplex[101X
   
-  [33X[1;0Y[29X[2XIsChainOrCochainComplex[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsChainOrCochainComplex[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the chain or cochain complexes.[133X
   
   [1X1.2-2 IsChainComplex[101X
   
-  [33X[1;0Y[29X[2XIsChainComplex[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsChainComplex[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the chain complexes.[133X
   
   [1X1.2-3 IsCochainComplex[101X
   
-  [33X[1;0Y[29X[2XIsCochainComplex[102X( [3XC[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCochainComplex[102X( [3XC[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the cochain complexes.[133X
@@ -333,21 +333,21 @@
   
   [1X1.3-1 IsChainOrCochainMorphism[101X
   
-  [33X[1;0Y[29X[2XIsChainOrCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsChainOrCochainMorphism[102X( [3Xphi[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the complex morphisms.[133X
   
   [1X1.3-2 IsChainMorphism[101X
   
-  [33X[1;0Y[29X[2XIsChainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsChainMorphism[102X( [3Xphi[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the chain complex morphisms.[133X
   
   [1X1.3-3 IsCochainMorphism[101X
   
-  [33X[1;0Y[29X[2XIsCochainMorphism[102X( [3Xphi[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsCochainMorphism[102X( [3Xphi[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YGAP-categories of the cochain complex morphisms.[133X
