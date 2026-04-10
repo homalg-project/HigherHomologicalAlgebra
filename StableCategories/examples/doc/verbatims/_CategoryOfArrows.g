@@ -75,7 +75,7 @@
 #!     !gapinput?|        
 #!       quiver !cequality?:=| RightQuiver!cbracket?(| !cstring?"q(1,2)[m:1->2]"| !cbracket?)|;
 #!    !gapinput?|        
-#!       ring !cequality?:=| CommutativeRingOfLinearCategory!cbracket?(| C !cbracket?)|;
+#!       ring !cequality?:=| CommutativeSemiringOfLinearCategory!cbracket?(| C !cbracket?)|;
 #!    !gapinput?|        
 #!       !ckey?if| HasIsFieldForHomalg!cbracket?(| ring !cbracket?)| and IsFieldForHomalg!cbracket?(| ring !cbracket?)| then
 #!    !gapinput?|            

@@ -297,9 +297,9 @@ InstallMethod( CategoryOfGradedRows,
     
     SetIsLinearCategoryOverCommutativeRing( rows, true );
     
-    SetCommutativeRingOfLinearCategory( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
+    SetCommutativeSemiringOfLinearCategory( rows, UnderlyingNonGradedRing( CoefficientsRing( S ) ) );
     
-    AddMultiplyWithElementOfCommutativeRingForMorphisms( rows,
+    AddMultiplyWithElementOfCommutativeSemiringForMorphisms( rows,
       { r, phi } -> GradedRowOrColumnMorphism( Source( phi ), ( r / S ) * UnderlyingHomalgMatrix( phi ), Range( phi ) )
     );
     
@@ -345,7 +345,7 @@ InstallMethod( CategoryOfGradedRows,
         function( phi )
           local K, degrees_s, degrees_r, degrees, hom_s_r, B, sol, positions, coeff, mon, position_in_basis, p, j;
           
-          K := CommutativeRingOfLinearCategory( rows );
+          K := CommutativeSemiringOfLinearCategory( rows );
           
           degrees_s := UnzipDegreeList( Source( phi ) );
           

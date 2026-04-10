@@ -188,7 +188,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_LINEARITY_TO_COCHAIN_COMPLEX_CATEGORY,
     
     if HasIsLinearCategoryOverCommutativeRing( ch_cat ) then
         
-        AddMultiplyWithElementOfCommutativeRingForMorphisms( ch_cat,
+        AddMultiplyWithElementOfCommutativeSemiringForMorphisms( ch_cat,
           function( ch_cat, r, phi )
             local cat;
             
@@ -197,7 +197,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_LINEARITY_TO_COCHAIN_COMPLEX_CATEGORY,
             return CreateComplexMorphism(
                         ch_cat,
                         Source( phi ),
-                        ApplyMap( Morphisms( phi ), m -> MultiplyWithElementOfCommutativeRingForMorphisms( cat, r, m ) ),
+                        ApplyMap( Morphisms( phi ), m -> MultiplyWithElementOfCommutativeSemiringForMorphisms( cat, r, m ) ),
                         Range( phi ) );
         
         end );
