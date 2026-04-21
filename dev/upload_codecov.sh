@@ -28,6 +28,11 @@ else
   echo -e "\033[0;32mUsing CODECOV_TOKEN from environment variable.\033[0m"
 fi
 
+# TEMP: Show CODECOV_COMMIT_SHA, CODECOV_BRANCH, CODECOV_PR for debugging purposes
+echo -e "\033[0;33mCODECOV_COMMIT_SHA=${CODECOV_COMMIT_SHA:-<not set>}\033[0m"
+echo -e "\033[0;33mCODECOV_BRANCH=${CODECOV_BRANCH:-<not set>}\033[0m"
+echo -e "\033[0;33mCODECOV_PR=${CODECOV_PR:-<not set>}\033[0m"
+
 # build extra args for commit/branch/PR override (used by workflow_run context)
 EXTRA_ARGS=""
 if [ -n "$CODECOV_COMMIT_SHA" ]; then
