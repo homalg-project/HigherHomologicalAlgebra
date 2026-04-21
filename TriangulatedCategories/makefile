@@ -55,4 +55,3 @@ test-spacing:
 	rm spacing_diff_no_blanks
 
 ci-test: test-basic-spacing test-with-coverage
-
