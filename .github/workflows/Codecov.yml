@@ -35,14 +35,13 @@ jobs:
               cp -v "$pkg_dir"*.json "$pkg/" 2>/dev/null || true
             fi
           done
-      - name: Resolve PR number
+      - name: Resolve PR number on PR events
         id: resolve_pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=""
           if [ "${{ github.event.workflow_run.event }}" = "pull_request" ]; then
-            echo "Event is pull_request, using pull_requests from workflow_run"
             HEAD="${{ github.event.workflow_run.head_repository.owner.login }}:${{ github.event.workflow_run.head_branch }}"
             PR_NUMBER=$(gh api "repos/${{ github.repository }}/pulls?state=all&head=${HEAD}" --jq ".[0].number // empty")
           fi
