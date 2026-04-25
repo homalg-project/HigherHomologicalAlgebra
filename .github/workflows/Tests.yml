@@ -57,6 +57,7 @@ jobs:
           git clone --depth 1 -vv https://github.com/homalg-project/QuotientCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/FiniteCocompletions.git
           git clone --depth 1 -vv https://github.com/homalg-project/FunctorCategories.git
+          git clone --depth 1 -vv https://github.com/homalg-project/SliceCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/SubcategoriesForCAP.git
           git clone --depth 1 -vv https://github.com/homalg-project/ToolsForCategoricalTowers.git
           git clone --depth 1 -vv https://github.com/homalg-project/Locales.git
@@ -89,6 +90,7 @@ jobs:
             QuotientCategories/ \
             FiniteCocompletions/ \
             FunctorCategories/ \
+            SliceCategories/ \
             SubcategoriesForCAP/ \
             ToolsForCategoricalTowers/ \
             Locales/ \
