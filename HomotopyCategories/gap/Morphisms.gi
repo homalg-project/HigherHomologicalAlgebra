@@ -191,10 +191,10 @@ InstallMethod( \[\],
 );
 
 ##
-InstallOtherMethod( ViewObj, [ IsHomotopyCategoryMorphism ], _complexes_ViewObj );
+InstallOtherMethod( ViewString, [ IsHomotopyCategoryMorphism ], _complexes_ViewString );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
         [ IsHomotopyCategoryMorphism ],
   
   function( phi )
@@ -204,8 +204,7 @@ InstallOtherMethod( Display,
     u := UpperBound( phi );
     
     if ForAll( [ l, u ], IsInt ) then
-        Display( UnderlyingCell( phi ), l, u );
-        Print( "\nA morphism in ", Name( CapCategory( phi ) ), " defined by the above data\n" );
+        return Concatenation( DisplayString( UnderlyingCell( phi ), l, u ), "\nA morphism in ", Name( CapCategory( phi ) ), " defined by the above data\n" );
     else
         TryNextMethod( );
     fi;
