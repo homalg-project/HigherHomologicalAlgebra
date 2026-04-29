@@ -298,29 +298,29 @@ end );
 
 
 ##
-InstallMethod( ViewObj, [ IsChainOrCochainMorphism ], _complexes_ViewObj );
+InstallMethod( ViewString, [ IsChainOrCochainMorphism ], _complexes_ViewString );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
           [ IsChainOrCochainMorphism, IsInt, IsInt ],
   function( map, m, n )
-    local s, i;
+    local str, s, i;
     
-    Print( "\n" );
+    str := "\n";
     for i in Reversed( [ m .. n ] ) do
       
       s := Concatenation( "== ", String( i ), " =======================" );
-      Print( s );
-      Print( "\n" );
-      Display( map[ i ] );
-      Print( "\n" );
+      str := Concatenation( str, s, "\n" );
+      str := Concatenation( str, DisplayString( map[ i ] ), "\n" );
       
     od;
+    
+    return str;
     
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsChainOrCochainMorphism ],
     
   function ( phi )
@@ -331,9 +331,7 @@ InstallMethod( Display,
     
     if ForAll( [ l, u ], IsInt ) then
       
-      Display( phi, l, u );
-      
-      Print( "\nA morphism in ", Name( CapCategory( phi ) ), " defined by the above data\n" );
+      return Concatenation( DisplayString( phi, l, u ), "\nA morphism in ", Name( CapCategory( phi ) ), " defined by the above data\n" );
       
     else
       

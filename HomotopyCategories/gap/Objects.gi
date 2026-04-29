@@ -164,13 +164,13 @@ InstallMethod( ApplyUnsignedShiftOp,
 );
 
 ##
-InstallOtherMethod( ViewObj,
+InstallOtherMethod( ViewString,
         [ IsHomotopyCategoryObject ],
 
-_complexes_ViewObj );
+_complexes_ViewString );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
         [ IsHomotopyCategoryObject ],
   
   function ( C )
@@ -180,8 +180,7 @@ InstallOtherMethod( Display,
     u := UpperBound( C );
     
     if ForAll( [ l, u ], IsInt ) then
-        Display( UnderlyingCell( C ), l, u );
-        Print( "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
+        return Concatenation( DisplayString( UnderlyingCell( C ), l, u ), "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
     else
         TryNextMethod( );
     fi;

@@ -18,18 +18,19 @@ InstallOtherMethod( \/,
 );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsDerivedCategoryMorphism ],
   
   function( alpha )
+    local str;
     
-    Print( TextAttr.b4, "The first morphism S <~~ X:", TextAttr.reset, "\n\n" );
-    Display( DefiningPairOfMorphisms( alpha )[1] );
+    str := Concatenation( TextAttr.b4, "The first morphism S <~~ X:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( DefiningPairOfMorphisms( alpha )[1] ) );
     
-    Print( TextAttr.b4, "\n\nThe second morphism X --> R:", TextAttr.reset, "\n\n" );
-    Display( DefiningPairOfMorphisms( alpha )[2] );
+    str := Concatenation( str, TextAttr.b4, "\n\nThe second morphism X --> R:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( DefiningPairOfMorphisms( alpha )[2] ) );
     
-    Print( "\n\nA morphism in ", Name( CapCategory( alpha ) ), " defined by the pair S <~~ X --> R displayed above" );
+    return Concatenation( str, "\n\nA morphism in ", Name( CapCategory( alpha ) ), " defined by the pair S <~~ X --> R displayed above\n" );
     
 end );
 

@@ -96,13 +96,13 @@ InstallMethod( LaTeXOutput,
 );
 
 ##
-InstallOtherMethod( ViewObj,
+InstallOtherMethod( ViewString,
         [ IsDerivedCategoryObject ],
 
-_complexes_ViewObj );
+_complexes_ViewString );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
         [ IsDerivedCategoryObject ],
   
   function ( C )
@@ -112,8 +112,7 @@ InstallOtherMethod( Display,
     u := UpperBound( UnderlyingCell( C ) );
     
     if ForAll( [ l, u ], IsInt ) then
-        Display( UnderlyingCell( UnderlyingCell( C ) ), l, u );
-        Print( "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
+        return Concatenation( DisplayString( UnderlyingCell( UnderlyingCell( C ) ), l, u ), "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
     else
         TryNextMethod( );
     fi;

@@ -416,7 +416,7 @@ end );
 #
 #########################################
 
-BindGlobal( "_complexes_ViewObj",
+BindGlobal( "_complexes_ViewString",
   
   function ( x )
     local b, cell, i, bounds_includes_infty;
@@ -448,78 +448,80 @@ BindGlobal( "_complexes_ViewObj",
     fi;
     
     if bounds_includes_infty then
-      Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", b[1], " .. ", b[2], " ]>" );
+      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", String( b[1] ), " .. ", String( b[2] ), " ]>" );
     else
-      Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval ", [ b[1] .. b[2] ] , ">" );
+      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval ", String( [ b[1] .. b[2] ] ), ">" );
     fi;
     
 end );
 
 ##
-InstallOtherMethod( ViewObj, [ IsChainOrCochainComplex ], _complexes_ViewObj );
+InstallMethod( ViewString, [ IsChainOrCochainComplex ], _complexes_ViewString );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
         [ IsCochainComplex, IsInt, IsInt ],
 
   function ( C, l, u )
-    local s, i;
+    local str, s, i;
+    
+    str := "";
     
     for i in Reversed( [ l .. u ] ) do
       if i <> u then
-        Print( "   ", TEXTMTRANSLATIONS.curlywedge, "\n" );
-        Print( "  ", " |", "\n" );
-        Display( C^i );
-        Print( "\n" );
-        Print( "  ", " |", "\n\n" );
+        str := Concatenation( str, "   ", TEXTMTRANSLATIONS.curlywedge, "\n" );
+        str := Concatenation( str, "   |\n" );
+        str := Concatenation( str, DisplayString( C^i ) );
+        str := Concatenation( str, "   |\n\n" );
       fi;
       s := Concatenation( "== ", String( i ), " =======================" );
-      Print( s );
-      Print( "\n" );
-      Display( C[i] );
-      Print( Concatenation(
-        ListWithIdenticalEntries(
-          Length( s ), "=" ) )
-        );
-      Print( "\n\n" );
+      str := Concatenation( str, s, "\n" );
+      str := Concatenation( str, DisplayString( C[i] ) );
+      str := Concatenation( str,
+        Concatenation(
+          ListWithIdenticalEntries(
+            Length( s ), "=" ) ),
+        "\n\n" );
     od;
+    
+    return str;
     
 end );
 
 ##
-InstallOtherMethod( Display,
+InstallOtherMethod( DisplayString,
         [ IsChainComplex, IsInt, IsInt ],
   
   function ( C, l, u )
-    local s, i;
+    local str, s, i;
+    
+    str := "";
     
     for i in Reversed( [ l .. u ] ) do
       
       s := Concatenation( "== ", String( i ), " =======================" );
-      Print( s );
-      Print( "\n" );
-      ViewObj( C[i] );
-      Print( "\n" );
-      Print( Concatenation(
-        ListWithIdenticalEntries(
-          Length( s ), "=" ) )
-        );
-      Print( "\n\n" );
+      str := Concatenation( str, s, "\n" );
+      str := Concatenation( str, ViewString( C[i] ), "\n" );
+      str := Concatenation( str,
+        Concatenation(
+          ListWithIdenticalEntries(
+            Length( s ), "=" ) ),
+        "\n\n" );
       if i <> l then
-        Print( "  ", " |", "\n" );
-        Display( C^i );
-        Print( "\n" );
-        Print( "  ", " |", "\n" );
-        Print( "   ", TEXTMTRANSLATIONS.curlyvee, "\n" );
-        Print( "\n" );
+        str := Concatenation( str, "   |\n" );
+        str := Concatenation( str, DisplayString( C^i ) );
+        str := Concatenation( str, "   |\n" );
+        str := Concatenation( str, "   ", TEXTMTRANSLATIONS.curlyvee, "\n\n" );
       fi;
       
     od;
     
+    return str;
+    
 end );
 
 ##
-InstallOtherMethod( Display,
+InstallMethod( DisplayString,
         [ IsChainOrCochainComplex ],
         
   function ( C )
@@ -529,8 +531,7 @@ InstallOtherMethod( Display,
     u := UpperBound( C );
     
     if ForAll( [ l, u ], IsInt ) then
-        Display( C, l, u );
-        Print( "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
+        return Concatenation( DisplayString( C, l, u ), "\nAn object in ", Name( CapCategory( C ) ), " defined by the above data\n" );
     else
         TryNextMethod();
     fi;
