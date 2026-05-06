@@ -36,7 +36,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
         with:
-          # the persisted token interferes with the subsplit token used below
           persist-credentials: false
           fetch-depth: 0
       - name: Move checked out repo to GAP user root dir
@@ -53,7 +52,7 @@ jobs:
           git clone --depth 1 -vv https://github.com/homalg-project/FpCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/FpLinearCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/Algebroids.git
-          git clone --depth 1 -vv https://github.com/homalg-project/PreSheaves.git
+          git clone --depth 1 -vv https://github.com/homalg-project/PresheafCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/QuotientCategories.git
           git clone --depth 1 -vv https://github.com/homalg-project/FiniteCocompletions.git
           git clone --depth 1 -vv https://github.com/homalg-project/FunctorCategories.git
@@ -86,7 +85,7 @@ jobs:
             FpCategories/ \
             FpLinearCategories/ \
             Algebroids/ \
-            PreSheaves/ \
+            PresheafCategories/ \
             QuotientCategories/ \
             FiniteCocompletions/ \
             FunctorCategories/ \
@@ -132,7 +131,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
         with:
-          # the persisted token interferes with the subsplit token used below
           persist-credentials: false
           fetch-depth: 0
       - name: Move checked out repo to GAP user root dir
@@ -207,7 +205,6 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
         with:
-          # the persisted token interferes with the subsplit token used below
           persist-credentials: false
           fetch-depth: 0
       - name: Move checked out repo to GAP user root dir
