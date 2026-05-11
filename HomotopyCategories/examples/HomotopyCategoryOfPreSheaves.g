@@ -34,7 +34,7 @@ PSh := PreSheaves( A_O );
 Display( PSh );
 #! A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
 #! 
-#! 59 primitive operations were used to derive 354 operations for this category which algorithmically
+#! 59 primitive operations were used to derive 363 operations for this category which algorithmically
 #! * IsCategoryWithDecidableColifts
 #! * IsCategoryWithDecidableLifts
 #! * IsEquippedWithHomomorphismStructure
@@ -164,7 +164,7 @@ Display( Y3 );
 Display( SourceOfFunctor( Y3 ) );
 #! A CAP category with name Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms ) ):
 #! 
-#! 48 primitive operations were used to derive 351 operations for this category which algorithmically
+#! 48 primitive operations were used to derive 360 operations for this category which algorithmically
 #! * IsCategoryWithDecidableColifts
 #! * IsCategoryWithDecidableLifts
 #! * IsEquippedWithHomomorphismStructure
@@ -173,7 +173,7 @@ Display( SourceOfFunctor( Y3 ) );
 Display( RangeOfFunctor( Y3 ) );
 #! A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
 #! 
-#! 59 primitive operations were used to derive 354 operations for this category which algorithmically
+#! 59 primitive operations were used to derive 363 operations for this category which algorithmically
 #! * IsCategoryWithDecidableColifts
 #! * IsCategoryWithDecidableLifts
 #! * IsEquippedWithHomomorphismStructure
