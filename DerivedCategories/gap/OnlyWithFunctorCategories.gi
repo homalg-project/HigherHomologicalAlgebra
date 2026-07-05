@@ -23,11 +23,11 @@ InstallMethod( EmbeddingIntoDerivedCategory,
      
     B := UnderlyingCategory( add_closure );
     
-    if not ( IsAlgebroid( B ) or IsAlgebroidFromDataTables( B ) ) then
+    if not ( IsFpAlgebroid( B ) and HasRangeCategoryOfHomomorphismStructure( B ) ) then
         TryNextMethod( );
     fi;
     
-    PSh := PreSheaves( B : overhead := false );
+    PSh := PreSheavesOfFpEnrichedCategory( B, RangeCategoryOfHomomorphismStructure( B ) : overhead := false );
     
     Y := IsomorphismFromSourceIntoImageOfYonedaEmbeddingOfSource( PSh );
     
@@ -76,7 +76,7 @@ InstallMethod( HomFunctorOfStrongExceptionalSequence,
     objs := List( SetOfObjects( seq_oid ), o -> UnderlyingCell( ApplyFunctor( I, o ) ) );
     gen_morphisms := List( SetOfGeneratingMorphisms( seq_oid ), m -> UnderlyingCell( ApplyFunctor( I, m ) ) );
     
-    PSh := PreSheaves( seq_oid );
+    PSh := PreSheavesOfFpEnrichedCategory( seq_oid, RangeCategoryOfHomomorphismStructure( seq_oid ) : overhead := false );
     
     H := CapFunctor( "Hom(T,-) functor", cat, PSh );
     
@@ -119,7 +119,7 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
     
     seq_oid := AbstractionAlgebroid( seq );
     
-    PSh := PreSheaves( seq_oid );
+    PSh := PreSheavesOfFpEnrichedCategory( seq_oid, RangeCategoryOfHomomorphismStructure( seq_oid ) : overhead := false );
     
     I_1 := IsomorphismFromImageOfYonedaEmbeddingOfSourceIntoSource( PSh );
     
