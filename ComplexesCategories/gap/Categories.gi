@@ -61,11 +61,7 @@ InstallMethod( ComplexesCategoryByCochains,
     
     ## building the categorical tower
     
-    modeling_cat := PreSheavesWithBounds( INTEGERS_CAT, cat, "both"
-                        #= comment for Julia
-                        : overhead := false
-                        # =#
-                        );
+    modeling_cat := PreSheavesWithBounds( INTEGERS_CAT, cat, "both" : overhead := false );
     
     ##
     object_constructor := { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat,
