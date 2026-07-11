@@ -12,20 +12,24 @@
 InstallMethod( DerivedCategoryByCochains,
           [ IsCapCategory ],
           
-  function ( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function ( CAP_NAMED_ARGUMENTS, cat )
     local name, homotopy_cat, derived_cat;
     
     name := Concatenation( "Derived category by cochains( ", Name( cat ), " )" );
     
-    homotopy_cat := HomotopyCategoryByCochains( cat );
+    homotopy_cat := HomotopyCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead );
     
-    derived_cat := CreateCapCategory( name, IsDerivedCategoryByCochains, IsDerivedCategoryByCochainsObject, IsDerivedCategoryByCochainsMorphism, IsCapCategoryTwoCell );
+    derived_cat := CreateCapCategory( name, IsDerivedCategoryByCochains, IsDerivedCategoryByCochainsObject, IsDerivedCategoryByCochainsMorphism, IsCapCategoryTwoCell : overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     derived_cat!.category_as_first_argument := true;
     
     SetDefiningCategory( derived_cat, cat );
     
-    SetUnderlyingCategory( derived_cat, HomotopyCategoryByCochains( cat ) );
+    SetUnderlyingCategory( derived_cat, HomotopyCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead ) );
     
     SetIsAbCategory( derived_cat, true );
     
@@ -170,7 +174,7 @@ InstallMethod( DerivedCategoryByCochains,
     
     return derived_cat;
     
-end );
+end ) );
 
 ##
 InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_BY_PROJECTIVE_OBJECTS,

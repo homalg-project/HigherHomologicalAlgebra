@@ -55,7 +55,11 @@ InstallMethod( ComplexesCategoryByCochains,
         "for a CAP category",
         [ IsCapCategory ],
         
-  function ( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function ( CAP_NAMED_ARGUMENTS, cat )
     local modeling_cat, object_constructor, object_datum, morphism_constructor, morphism_datum, modeling_tower_object_constructor, modeling_tower_object_datum,
       modeling_tower_morphism_constructor, modeling_tower_morphism_datum, coch_cat, category_filter, category_object_filter, category_morphism_filter;
     
@@ -167,7 +171,7 @@ InstallMethod( ComplexesCategoryByCochains,
                    modeling_tower_object_datum := modeling_tower_object_datum,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
-                   only_primitive_operations := true ) : FinalizeCategory := false );
+                   only_primitive_operations := true ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     coch_cat!.is_computable := true;
     
@@ -183,7 +187,7 @@ InstallMethod( ComplexesCategoryByCochains,
     
     return coch_cat;
     
-end );
+end ) );
 
 
 
@@ -437,7 +441,11 @@ InstallMethod( ComplexesCategoryByChains,
         "for a CAP category",
         [ IsCapCategory ],
         
-  function( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, cat )
     local object_constructor, object_datum, morphism_constructor, morphism_datum, coch_cat, modeling_tower_object_constructor, modeling_tower_object_datum, modeling_tower_morphism_constructor, modeling_tower_morphism_datum, ch_cat, category_filter, category_object_filter, category_morphism_filter, only_primitive_operations;
     
     ##
@@ -461,7 +469,7 @@ InstallMethod( ComplexesCategoryByChains,
     
     ## building the categorical tower
     
-    coch_cat := ComplexesCategoryByCochains( cat );
+    coch_cat := ComplexesCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     ## from the raw object data to the object in the highest stage of the tower
     modeling_tower_object_constructor :=
@@ -516,7 +524,7 @@ InstallMethod( ComplexesCategoryByChains,
                    modeling_tower_object_datum := modeling_tower_object_datum,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
-                   only_primitive_operations := true ) : FinalizeCategory := false );
+                   only_primitive_operations := true ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     SetUnderlyingCategory( ch_cat, cat );
      
@@ -553,5 +561,5 @@ InstallMethod( ComplexesCategoryByChains,
     
     return ch_cat;
     
-end );
+end ) );
 

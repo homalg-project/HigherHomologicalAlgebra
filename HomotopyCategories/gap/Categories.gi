@@ -16,14 +16,18 @@
 InstallMethod( HomotopyCategoryByChains,
           [ IsCapCategory ],
           
-  function( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, cat )
     local coch_homotopy_cat, ch_cat, object_constructor, object_datum, morphism_constructor, morphism_datum,
           modeling_tower_object_constructor, modeling_tower_object_datum,
           modeling_tower_morphism_constructor, modeling_tower_morphism_datum,
           ch_homotopy_cat;
     
-    coch_homotopy_cat := HomotopyCategoryByCochains( cat );
-    ch_cat := ComplexesCategoryByChains( cat );
+    coch_homotopy_cat := HomotopyCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead );
+    ch_cat := ComplexesCategoryByChains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     ##
     object_constructor := { ch_homotopy_cat, datum } ->
@@ -118,7 +122,7 @@ InstallMethod( HomotopyCategoryByChains,
                    modeling_tower_object_datum := modeling_tower_object_datum,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
-                   only_primitive_operations := true ) : FinalizeCategory := false );
+                   only_primitive_operations := true ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     SetDefiningCategory( ch_homotopy_cat, cat );
     
@@ -128,13 +132,17 @@ InstallMethod( HomotopyCategoryByChains,
     
     return ch_homotopy_cat;
     
-end );
+end ) );
 
 ##
 InstallMethod( HomotopyCategoryByCochains,
           [ IsCapCategory ],
           
-  function( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, cat )
     local name, homotopy_category;
     
     name := Concatenation( "Homotopy category by cochains( ", Name( cat ), " )" );
@@ -143,10 +151,10 @@ InstallMethod( HomotopyCategoryByCochains,
                            rec( name := name,
                                 nr_arguments_of_congruence_func := 1,
                                 congruence_func := IsHomotopicToZeroMorphism,
-                                underlying_category := ComplexesCategoryByCochains( cat ),
+                                underlying_category := ComplexesCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead ),
                                 category_filter := IsHomotopyCategoryByCochains,
                                 category_object_filter := IsHomotopyCategoryByCochainsObject,
-                                category_morphism_filter := IsHomotopyCategoryByCochainsMorphism ) : FinalizeCategory := false );
+                                category_morphism_filter := IsHomotopyCategoryByCochainsMorphism ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     SetDefiningCategory( homotopy_category, cat );
     
@@ -157,4 +165,4 @@ InstallMethod( HomotopyCategoryByCochains,
     
     return homotopy_category;
     
-end );
+end ) );
