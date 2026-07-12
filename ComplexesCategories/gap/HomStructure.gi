@@ -352,7 +352,7 @@ end );
 ##
 InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLEX_CATEGORY,
   function ( ch_cat )
-    local cat, range_cat, ch_range_cat, name, category_constructor, as_object_in_abelian_category, as_morphism_in_abelian_category, unwrap_morphism_in_abelian_category,
+    local cat, range_cat, ch_range_cat, category_constructor, as_object_in_abelian_category, as_morphism_in_abelian_category, unwrap_morphism_in_abelian_category,
           can_be_equipped_with_hom_structure_over_abelian_category;
     
     cat := UnderlyingCategory( ch_cat );
@@ -512,17 +512,19 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_COCHAIN_COMPLE
       
       SetRangeCategoryOfHomomorphismStructure( ch_cat, ch_range_cat );
       
-      for name in [ "DistinguishedObjectOfHomomorphismStructure",
-                    "HomomorphismStructureOnObjects",
-                    "HomomorphismStructureOnMorphisms",
-                    "HomomorphismStructureOnMorphismsWithGivenObjects",
-                    "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure",
-                    "InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects",
-                    "InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism" ] do
-        
-        ValueGlobal( Concatenation( "Add", name ) )( ch_cat, EvalString( Concatenation( "_complexes_", name ) ) );
+      AddDistinguishedObjectOfHomomorphismStructure( ch_cat, _complexes_DistinguishedObjectOfHomomorphismStructure );
+
+      AddHomomorphismStructureOnObjects( ch_cat, _complexes_HomomorphismStructureOnObjects );
+
+      AddHomomorphismStructureOnMorphisms( ch_cat, _complexes_HomomorphismStructureOnMorphisms );
+
+      AddHomomorphismStructureOnMorphismsWithGivenObjects( ch_cat, _complexes_HomomorphismStructureOnMorphismsWithGivenObjects );
+
+      AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure( ch_cat, _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructure );
+
+      AddInterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( ch_cat, _complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects );
       
-      od;
+      AddInterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ch_cat, _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism );
       
     fi;
     
