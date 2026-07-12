@@ -314,10 +314,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_RANDOM_METHODS_TO_COCHAIN_COMPLEX_CATEGO
       AddRandomObjectByList( ch_cat,
         
         function ( ch_cat, L )
-          local cat, diffs, i, pi;
+          local cat, diffs, u, i, pi;
           
-          if Length( L ) <> 3 or not ForAll( L{[1,2]}, IsInt ) or not IsList( L[3] ) then
-            Error("the input should be a list consisting of two integers and a list!\n");
+          if Length( L ) <> 3 or not ForAll( L{ [1,2] }, IsInt ) or not IsList( L[3] ) then
+              Error("the input should be a list consisting of two integers and a list!\n");
           fi;
           
           cat := UnderlyingCategory( ch_cat );
@@ -330,7 +330,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_RANDOM_METHODS_TO_COCHAIN_COMPLEX_CATEGO
             
             diffs := [ RandomMorphismWithFixedSourceByList( cat, ZeroObject( cat ) , L[3] ) ];
             
-            for i in [ 2 .. L[2] - L[1]  + 1 ] do
+            u := L[2] - L[1] + 1;
+
+            for i in [ 2 .. u ] do
               
               pi := ValueGlobal( "WeakCokernelProjection" )( cat, diffs[i-1] );
               
