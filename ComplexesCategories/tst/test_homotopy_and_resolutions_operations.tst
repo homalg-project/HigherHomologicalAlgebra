@@ -1,4 +1,5 @@
-gap> LoadPackage( "Algebroids", false );;
+gap> START_TEST("test_homotopy_and_resolutions_operations.tst");
+gap> LoadPackage( "FpLinearCategories", false );;
 gap> LoadPackage( "ComplexesCategories", false );;
 gap> MAKE_READ_WRITE_GLOBAL( "REREADING" );
 gap> REREADING := true;;
@@ -90,3 +91,4 @@ gap> prj_res_alpha := MorphismBetweenProjectiveResolutions( alpha, true );;
 gap> inj_res_alpha  := MorphismBetweenInjectiveResolutions( alpha, true );;
 gap> Assert( 0, ForAll( [ qA, qB, Aq, Bq, prj_res_alpha, inj_res_alpha ], IsWellDefined ) );
 gap> Assert( 0, PreCompose( qA, alpha ) = PreCompose( prj_res_alpha, qB ) and PostCompose( Bq, alpha ) = PostCompose( inj_res_alpha, Aq ) );
+gap> STOP_TEST("test_random_methods_category_of_rows.tst", 1);

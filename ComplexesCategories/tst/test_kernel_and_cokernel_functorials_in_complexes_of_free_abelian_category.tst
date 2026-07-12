@@ -1,4 +1,4 @@
-gap> LoadPackage( "Algebroids", false );;
+gap> LoadPackage( "FpLinearCategories", false );;
 gap> LoadPackage( "ComplexesCategories", false );;
 gap> MAKE_READ_WRITE_GLOBAL( "REREADING" );
 gap> REREADING := true;;
@@ -92,4 +92,5 @@ gap> u := UniversalMorphismIntoFiberProduct( Ch_AAoid, [ g, nu ], A, [ alpha, f 
 gap> Assert( 0, IsWellDefined( u ) );
 gap> u := UniversalMorphismFromPushout( Ch_AAoid, [ alpha, f ], V, [ g, nu ] );;
 gap> Assert( 0, IsWellDefined( u ) );
+gap> # @drop_example_in_Julia
 gap> SetInfoLevel( InfoWarning, 1 );

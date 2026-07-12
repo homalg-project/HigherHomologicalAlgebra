@@ -1,4 +1,4 @@
-gap> LoadPackage( "Algebroids", false );;
+gap> LoadPackage( "FpLinearCategories", false );;
 gap> LoadPackage( "ComplexesCategories", false );;
 gap> MAKE_READ_WRITE_GLOBAL( "REREADING" );
 gap> REREADING := true;;
@@ -94,4 +94,5 @@ gap> Assert( 0, Length( LaTeXOutput( A ) ) = 4131 );
 gap> Assert( 0, Length( LaTeXOutput( AsChainComplex( A ) ) ) = 4146 );
 gap> Assert( 0, Length( LaTeXOutput( phi ) ) = 14104 );
 gap> Assert( 0, Length( LaTeXOutput( AsChainComplexMorphism( phi ) ) ) = 14107 );
+gap> # @drop_example_in_Julia
 gap> SetInfoLevel( InfoWarning, 1 );
