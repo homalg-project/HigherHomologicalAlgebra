@@ -311,11 +311,15 @@ InstallOtherMethod( InjectiveResolution,
        [ IsCapCategoryObject, IsBool ],
   
   function( o, bool )
-    local cat_op;
+    local cat_op, o_op, o_projs_res;
     
-    cat_op := Opposite( CapCategory( o ) : only_primitive_operations_and_hom_structure );
-    
-    return AsComplexOverOppositeCategory( ProjectiveResolution( Opposite( o ), bool ) );
+    cat_op := Opposite( CapCategory( o ) : only_primitive_operations_and_hom_structure := true );
+
+    o_op := CallFuncListAtRuntime( Opposite, [ o ] );
+
+    o_projs_res := CallFuncListAtRuntime( ProjectiveResolution, [ o_op, bool ] );
+
+    return AsComplexOverOppositeCategory( o_projs_res );
     
 end );
 
@@ -336,8 +340,8 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
     epi_S := EpimorphismFromSomeProjectiveObject( cat, S );
     epi_R := EpimorphismFromSomeProjectiveObject( cat, R );
     
-    PS := ProjectiveResolution( S, bool );
-    PR := ProjectiveResolution( R, bool );
+    PS := CallFuncListAtRuntime( ProjectiveResolution, [ S, bool ] );
+    PR := CallFuncListAtRuntime( ProjectiveResolution, [ R, bool ] );
     
     morphisms :=
       AsZFunction(
@@ -376,7 +380,7 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
         
         end );
     
-    return CreateComplexMorphism( ch_cat, PS, morphisms, PR );
+    return CallFuncListAtRuntime( CreateComplexMorphism, [ ch_cat, PS, morphisms, PR ] );
     
 end );
 
@@ -385,11 +389,15 @@ InstallOtherMethod( MorphismBetweenInjectiveResolutions,
        [ IsCapCategoryMorphism, IsBool ],
   
   function( phi, bool )
-    local cat_op;
+    local cat_op, phi_op, phi_proj_res;
     
     cat_op := Opposite( CapCategory( phi ) : only_primitive_operations_and_hom_structure := true );
+
+    phi_op := CallFuncListAtRuntime( Opposite, [ phi ] );
     
-    return AsComplexMorphismOverOppositeCategory( MorphismBetweenProjectiveResolutions( Opposite( phi ), bool ) );
+    phi_proj_res := CallFuncListAtRuntime( MorphismBetweenProjectiveResolutions, [ phi_op, bool ] );
+    
+    return AsComplexMorphismOverOppositeCategory( phi_proj_res );
     
 end );
 
