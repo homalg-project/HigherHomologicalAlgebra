@@ -199,10 +199,7 @@ gap> x := IsIsomorphism( lambda ) and
 >                               PreCompose( v, p_nu ) = PreCompose( p_gamma, ShiftOfMorphism( alpha ) ) and
 >                                 PreCompose( p_nu, ShiftOfMorphism( i_alpha ) ) = w;;
 gap> check( x );
-<<<<<<< HEAD
-=======
 gap> # @drop_example_in_Julia
 
 #
 gap> STOP_TEST("test_triangulated_structure_homotopy_category.tst", 1);
->>>>>>> 3b8937d4 (TriangulatedCategories: add doc comment, START/STOP_TEST, use kF. prefix, and create objects/morphisms explicitly in triangulated structure test)
