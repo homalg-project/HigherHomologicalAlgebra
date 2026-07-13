@@ -13,15 +13,10 @@ ReadPackage( "HomotopyCategories", "gap/Convolution.gi" );
 ReadPackage( "HomotopyCategories", "gap/StrongExceptionalSequences.gi" );
 ReadPackage( "HomotopyCategories", "gap/Functors.gi" );
 ReadPackage( "HomotopyCategories", "gap/NaturalTransformations.gi" );
+ReadPackage( "HomotopyCategories", "gap/OnlyWithAlgebroids.gi" );
 
-if IsPackageMarkedForLoading( "Algebroids", ">= 2022.11-10" ) then
-    ReadPackage( "HomotopyCategories", "gap/OnlyWithAlgebroids.gi" );
-fi;
-
-if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.11-07" ) then
-    ReadPackage( "HomotopyCategories", "gap/OnlyWithFunctorCategories.gi" );
-fi;
-
+#= comment for Julia
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
     ReadPackage( "HomotopyCategories", "gap/Julia.gi" );
 fi;
+# =#

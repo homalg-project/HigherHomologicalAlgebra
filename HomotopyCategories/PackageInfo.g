@@ -72,6 +72,7 @@ Dependencies := rec(
   GAP := ">= 4.13.0",
   NeededOtherPackages := [
                            [ "CAP", ">= 2026.05-02" ],
+                           [ "FpLinearCategories", ">= 2026.07-02" ],
                            [ "ComplexesCategories", ">= 2026.05-03" ],
                            [ "TriangulatedCategories", ">= 2022.10-01" ],
                            [ "QuotientCategories", ">= 2026.04-01" ],
