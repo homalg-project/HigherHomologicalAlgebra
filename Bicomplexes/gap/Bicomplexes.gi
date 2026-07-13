@@ -51,7 +51,7 @@ BindGlobal( "CREATE_BICOMPLEXES_CATEGORY",
                                                 AboveBound( o ) ];
     
     ##
-    morphism_constructor := { bicomplexes_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( bicomplexes_cat,
+    morphism_constructor := { bicomplexes_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( bicomplexes_cat,
                                                                     S, R,
                                                                     MorphismFunction, datum );
     
