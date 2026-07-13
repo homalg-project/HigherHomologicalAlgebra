@@ -183,11 +183,11 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
     
     derived_cat!.is_computable := true;
     
+    cat := DefiningCategory( derived_cat );
+
     homotopy_cat := UnderlyingCategory( derived_cat );
     
-    LP := LocalizationFunctorByProjectiveObjects( UnderlyingCategory( derived_cat ) );
-    
-    cat := DefiningCategory( derived_cat );
+    LP := LocalizationFunctorByProjectiveObjects( homotopy_cat );
     
     AddIsCongruentForMorphisms( derived_cat,
       
@@ -212,7 +212,7 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
     
     AddAdditionForMorphisms( derived_cat,
       function( derived_cat, alpha, beta )
-        local qS, qR, U, m;
+        local qS, qR, U, U_alpha, U_beta, localization_cat_by_projs, projs_cat, m, I;
         
         qS := QuasiIsomorphismFromProjectiveResolution( UnderlyingCell( Source( alpha ) ), true );
         
@@ -220,11 +220,26 @@ InstallGlobalFunction( ADD_EXTRA_FUNCTIONS_TO_DERIVED_CATEGORY_VIA_LOCALIZATION_
         
         U := UniversalFunctorFromDerivedCategory( LP );
         
-        m := AdditionForMorphisms( RangeOfFunctor( U ), ApplyFunctor( U, alpha ), ApplyFunctor( U, beta ) );
+        U_alpha := CallFuncListAtRuntime( ApplyFunctor, [ U, alpha ] );
         
-        m := ApplyFunctor( ExtendFunctorToHomotopyCategoriesByCochains( InclusionFunctor( DefiningCategory( CapCategory( m ) ) ) ), m );
+        U_beta := CallFuncListAtRuntime( ApplyFunctor, [ U, beta ] );
         
-        return MorphismConstructor( derived_cat, Source( alpha ), [ qS, PreCompose( homotopy_cat, m, qR ) ], Range( alpha ) );
+        localization_cat_by_projs := RangeOfFunctor( U );
+        
+        projs_cat := DefiningCategory( localization_cat_by_projs );
+        
+        m := AdditionForMorphisms( localization_cat_by_projs, U_alpha, U_beta );
+        
+        I := InclusionFunctor( projs_cat );
+        
+        I := ExtendFunctorToHomotopyCategoriesByCochains( I );
+        
+        m := CallFuncListAtRuntime( ApplyFunctor, [ I, m ] );
+        
+        return MorphismConstructor( derived_cat,
+                    Source( alpha ),
+                    [ qS, PreCompose( homotopy_cat, m, qR ) ],
+                    Range( alpha ) );
         
     end );
     
