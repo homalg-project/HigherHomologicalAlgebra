@@ -150,7 +150,7 @@ InstallMethod( ComplexesCategoryByCochains,
                     return FunctionOfPreSheafMorphism( presheaf_mor )(
                                 PairOfFunctionsOfPreSheaf( Source( presheaf_mor ) )[1]( i ),
                                 i,
-                                PairOfFunctionsOfPreSheaf( Range ( presheaf_mor ) )[1]( i ) );
+                                PairOfFunctionsOfPreSheaf( Target( presheaf_mor ) )[1]( i ) );
                     
                   end );
         
@@ -456,7 +456,7 @@ InstallMethod( ComplexesCategoryByChains,
     object_datum := { ch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
     
     ##
-    morphism_constructor := { ch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( ch_cat,
+    morphism_constructor := { ch_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( ch_cat,
                                                             S, R,
                                                             Morphisms, datum );
     

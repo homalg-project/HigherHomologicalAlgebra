@@ -23,10 +23,9 @@ BindGlobal( "_complexes_QuasiIsomorphismFromProjectiveResolution",
     if not ( HasIsAbelianCategory( cat )
               and IsAbelianCategory( cat )
                 and CanCompute( cat, "SomeProjectiveObject" )
-                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
-                    ) then
+                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" ) ) then
       
-      Error( "the category, ", TextAttr.4, Name( cat ), TextAttr.reset, ", must be 'computable' abelian with enough projectives!\n" );
+      Error( "the category, ", "\033[34m", Name( cat ), "\033[0m", ", must be 'computable' abelian with enough projectives!\n" );
       
     fi;
     
@@ -114,9 +113,11 @@ InstallMethod( ProjectiveResolutionOp,
         
         PC := ProjectiveResolution( C, false );
         
-        i := LowerBound( C );
+        i := LowerBound( C ) - 1;
         
-        repeat i := i - 1; until IsZeroForObjects( PC[i] );
+        while not IsZeroForObjects( PC[i] ) do
+            i := i - 1;
+        od;
         
         return CreateComplex( CapCategory( C ), Objects( PC ), Differentials( PC ), i + 1, UpperBound( PC ) );
         
@@ -293,9 +294,11 @@ InstallOtherMethod( ProjectiveResolution,
       
       P := ProjectiveResolution( o, false );
       
-      i := 1;
-      
-      repeat i := i - 1; until IsZeroForObjects( cat, P[i] );
+      i := -1;
+
+      while not IsZeroForObjects( cat, P[i] ) do
+          i := i - 1;
+      od;
       
       return CreateComplex( ch_cat, Objects( P ), Differentials( P ), i + 1, UpperBound( P ) );
       
