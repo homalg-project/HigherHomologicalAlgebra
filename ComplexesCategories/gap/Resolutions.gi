@@ -50,15 +50,15 @@ BindGlobal( "_complexes_QuasiIsomorphismFromProjectiveResolution",
             
             h := data[k+1][1];
             
-            m := MorphismBetweenDirectSums(
+            m := MorphismBetweenDirectSums( cat,
                           [ [ h, -data[k+1][2] ],
                             [ ZeroMorphism( cat, C[k], Range( h ) ), C^k ] ] );
             
-            iota := KernelEmbedding( m );
+            iota := KernelEmbedding( cat, m );
             
-            pi := EpimorphismFromSomeProjectiveObject( Source( iota ) );
+            pi := EpimorphismFromSomeProjectiveObject( cat, Source( iota ) );
             
-            p := List( [ 1, 2 ], i -> ProjectionInFactorOfDirectSum( [ Source( h ), C[k] ], i ) );
+            p := List( [ 1, 2 ], i -> ProjectionInFactorOfDirectSum( cat, [ Source( h ), C[k] ], i ) );
             
             return [ PreCompose( [ pi, iota, p[1] ] ), PreCompose( [ pi, iota, p[2] ] ), m ];
             
@@ -107,19 +107,23 @@ InstallMethod( ProjectiveResolutionOp,
       [ IsCochainComplex, IsBool ],
       
   function( C, bool )
-    local PC, i;
-     
+    local ch_cat, cat, PC, i;
+    
+    ch_cat := CapCategory( C );
+    
+    cat := UnderlyingCategory( ch_cat );
+    
     if bool then
         
         PC := ProjectiveResolution( C, false );
         
         i := LowerBound( C ) - 1;
         
-        while not IsZeroForObjects( PC[i] ) do
+        while not IsZeroForObjects( cat, PC[i] ) do
             i := i - 1;
         od;
         
-        return CreateComplex( CapCategory( C ), Objects( PC ), Differentials( PC ), i + 1, UpperBound( PC ) );
+        return CreateComplex( ch_cat, Objects( PC ), Differentials( PC ), i + 1, UpperBound( PC ) );
         
     else
         
