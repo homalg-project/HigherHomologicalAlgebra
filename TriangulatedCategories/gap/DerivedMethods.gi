@@ -20,7 +20,7 @@ AddDerivationToCAP( ShiftOfMorphismByInteger,
     local s, r;
     
     s := ShiftOfObjectByInteger( Source( alpha ), n );
-    r := ShiftOfObjectByInteger( Range ( alpha ), n );
+    r := ShiftOfObjectByInteger( Target( alpha ), n );
     
     return ShiftOfMorphismByIntegerWithGivenObjects( homotopy_cat, s, alpha, n, r );
     
@@ -97,7 +97,7 @@ AddDerivationToCAP( IsExactTriangle,
 end : CategoryFilter := IsTriangulatedCategory );
 
 ##
-AddFinalDerivationBundle( "Adding witnesses for beeing exact by using SolveLinearSystemInAbCategory",
+AddFinalDerivationBundle( "Adding witnesses for being exact by using SolveLinearSystemInAbCategory",
                 [
                   [ IsEqualForObjects, 1 ],
                   [ ShiftOfObject, 1 ],

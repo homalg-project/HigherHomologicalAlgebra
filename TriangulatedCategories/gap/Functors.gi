@@ -76,7 +76,7 @@ InstallMethod( UnitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> UnitOfShiftAdjunctionWithGivenObject( a, r )
+      { s, a, r } -> UnitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
@@ -107,7 +107,7 @@ InstallMethod( InverseOfUnitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, s )
+      { s, a, r } -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -138,7 +138,7 @@ InstallMethod( CounitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> CounitOfShiftAdjunctionWithGivenObject( a, s )
+      { s, a, r } -> CounitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -168,7 +168,7 @@ InstallMethod( InverseOfCounitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, r )
+      { s, a, r } -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
