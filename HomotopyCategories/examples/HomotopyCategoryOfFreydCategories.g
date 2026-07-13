@@ -232,4 +232,5 @@ IsIsomorphism( nu );
 #! true
 ShiftOfObjectByInteger( p_M, 2 );
 #! <An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -4 .. -1 ]>
+# @drop_example_in_Julia
 #! @EndExample

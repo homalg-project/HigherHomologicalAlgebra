@@ -135,5 +135,6 @@ i := InverseForMorphisms( DirectSumFunctorial( [ epsilon_O0, epsilon_O1, epsilon
 #! <A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>
 IsWellDefined( i ) and IsIsomorphism( i );
 #! true
+# @drop_example_in_Julia
 #! @EndExample
 
