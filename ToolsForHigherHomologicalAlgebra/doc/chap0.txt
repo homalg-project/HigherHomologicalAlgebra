@@ -6,10 +6,10 @@
                [1X Tools for the Higher Homological Algebra project [101X
   
   
-                                   2026.04-01
+                                   2026.07-01
   
   
-                                 11 April 2026
+                                  13 July 2026
   
   
                                   Kamal Saleh
