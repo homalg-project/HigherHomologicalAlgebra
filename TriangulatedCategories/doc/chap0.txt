@@ -6,10 +6,10 @@
                     [1X Framework for triangulated categories [101X
   
   
-                                   2025.12-01
+                                   2026.07-01
   
   
-                                23 December 2025
+                                  13 July 2026
   
   
                                   Kamal Saleh
@@ -53,19 +53,17 @@
       1.2-13 IsStandardExactTriangle
       1.2-14 WitnessIsomorphismIntoStandardExactTriangle
       1.2-15 WitnessIsomorphismFromStandardExactTriangle
-      1.2-16 MorphismOfExactTriangles
-      1.2-17 MorphismAt
-      1.2-18 \[\]
-      1.2-19 MorphismBetweenConeObjects
-      1.2-20 MorphismOfExactTriangles
-      1.2-21 ExactTriangleByOctahedralAxiom
-      1.2-22 ExactTriangleByOctahedralAxiom
+      1.2-16 DefiningTripleOfMorphisms
+      1.2-17 DefiningTripleOfMorphisms
+      1.2-18 MorphismOfExactTriangles
+      1.2-19 MorphismAt
+      1.2-20 \[\]
+      1.2-21 MorphismBetweenConeObjects
+      1.2-22 MorphismOfExactTriangles
       1.2-23 ExactTriangleByOctahedralAxiom
       1.2-24 ExactTriangleByOctahedralAxiom
       1.2-25 Rotation
-      1.2-26 Rotation
-      1.2-27 InverseRotation
-      1.2-28 InverseRotation
+      1.2-26 InverseRotation
   2 [33X[0;0YOperations[133X
     2.1 [33X[0;0YFunctors and natural transformations[133X
       2.1-1 ShiftFunctor
