@@ -51,38 +51,46 @@ InstallOtherMethod( MorphismAt,
 );
 
 ##
-InstallMethod( ViewObj,
+InstallMethod( ViewString,
           [ IsChainOrCochainBicomplexMorphism ],
     
-    _bicomplexes_ViewObj
+    _bicomplexes_ViewString
 );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsChainOrCochainBicomplexMorphism ],
   
   function ( mor )
-    local b, i, j;
+    local b, str, b1, b2, b3, b4, i, j;
     
     b := [ Minimum( LeftBound( Source( mor ) ), LeftBound( Range( mor ) )  ),
            Maximum( RightBound( Source( mor ) ), RightBound( Range( mor ) ) ),
            Minimum( BelowBound( Source( mor ) ), BelowBound( Range( mor ) ) ),
            Maximum( AboveBound( Source( mor ) ), AboveBound( Range( mor ) ) ) ];
 
-    for i in [ b[1] .. b[2] ] do
-      for j in [ b[3] .. b[4] ] do
+    str := "";
+    
+    # simplifies transpilation to julia
+    b1 := b[1];
+    b2 := b[2];
+    b3 := b[3];
+    b4 := b[4];
+
+    for i in [ b1 .. b2 ] do
+      for j in [ b3 .. b4 ] do
         
-        Print( "\n-------------------------------------------\n" );
-        Print( "At Indices ", [i, j], ":" );
-        Print( "\n-------------------------------------------\n" );
+        str := Concatenation( str, "\n-------------------------------------------\n" );
+        str := Concatenation( str, "At Indices ", String( [ i, j ] ), ":" );
+        str := Concatenation( str, "\n-------------------------------------------\n" );
         
-        Print( "\nMorphism:\n" );
-        Display( MorphismFunction( mor )(i, j) );
+        str := Concatenation( str, "\nMorphism:\n" );
+        str := Concatenation( str, DisplayString( MorphismFunction( mor )(i, j) ) );
         
       od;
     od;
     
-    Print( "\nAn object in ", Name( CapCategory( mor ) ), " defined by the above data\n" );
+    str := Concatenation( str, "\nAn object in ", Name( CapCategory( mor ) ), " defined by the above data\n" );
     
 end );
 
