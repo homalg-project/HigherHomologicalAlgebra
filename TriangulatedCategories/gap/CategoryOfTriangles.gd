@@ -84,11 +84,13 @@ DeclareAttribute( "MorphismFromConeObject", IsCategoryOfExactTrianglesObject );
 #! @Returns an object
 KeyDependentOperation( "ObjectAt", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to the operation <C>ObjectAt</C>.
 #! @Arguments t, i
 #! @Returns an object
 DeclareOperation( "\[\]", [ IsCategoryOfExactTrianglesObject, IsInt ] );
+# =#
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -98,11 +100,13 @@ DeclareOperation( "\[\]", [ IsCategoryOfExactTrianglesObject, IsInt ] );
 #! @Returns a morphism
 KeyDependentOperation( "MorphismAt", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to the operation <C>MorphismAt</C>.
 #! @Arguments t, i
 #! @Returns a morphism
 DeclareOperation( "\^", [ IsCategoryOfExactTrianglesObject, IsInt ] );
+# =#
 
 #! @Description
 #! The arguments is a morphism $\alpha:A\to B$ in some triangulated
@@ -163,11 +167,13 @@ DeclareOperation( "MorphismOfExactTriangles",
 #! @Returns a morphism
 KeyDependentOperation( "MorphismAt", IsCategoryOfExactTrianglesMorphism, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to the operation <C>MorphismAt</C>.
 #! @Arguments phi, i
 #! @Returns a morphism
 DeclareOperation( "\[\]", [ IsCategoryOfExactTrianglesMorphism, IsInt ] );
+# =#
 
 #! @Description
 #!  The arguments are an exact triangle $t_1$, two morphisms $\mu_0:t_1[0]\to t_2[0]$, $\mu_1:t_1[1]\to t_2[1]$,

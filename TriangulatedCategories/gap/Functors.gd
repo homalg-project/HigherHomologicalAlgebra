@@ -7,25 +7,29 @@
 #! @Chapter Operations
 #! @Section Functors and natural transformations
 
-DeclareAttribute( "ShiftFunctorAttr", IsTriangulatedCategory );
+DeclareAttribute( "ShiftFunctorAttr", IsCapCategory );
 
+#= comment for Julia
 if not IsBound( ShiftFunctor ) then
+# =#
 
   #! @Description
   #! The argument is a triangulated category $\mathcal{T}$.
   #! The output is the shift autoequivalence $\Sigma:\mathcal{T}\to\mathcal{T}$.
   #! @Arguments T
   #! @Returns a functor $\mathcal{T}\to\mathcal{T}$
-  DeclareOperation( "ShiftFunctor", [ IsTriangulatedCategory ] );
-  
+  DeclareOperation( "ShiftFunctor", [ IsCapCategory ] );
+
+#= comment for Julia
 fi;
+# =#
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
 #! The output is the auto-equivalence $\Sigma^{-1}:\mathcal{T}\to\mathcal{T}$.
 #! @Arguments T
 #! @Returns a functor $\mathcal{T}\to\mathcal{T}$
-DeclareAttribute( "InverseShiftFunctor", IsTriangulatedCategory );
+DeclareAttribute( "InverseShiftFunctor", IsCapCategory );
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
