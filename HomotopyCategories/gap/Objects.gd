@@ -11,11 +11,13 @@ DeclareCategory( "IsHomotopyCategoryObject", IsQuotientCategoryObject );
 DeclareCategory( "IsHomotopyCategoryByCochainsObject", IsHomotopyCategoryObject );
 DeclareCategory( "IsHomotopyCategoryByChainsObject", IsHomotopyCategoryObject );
 
+#= comment for Julia
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryObject, IsInt ] );
 
 DeclareOperation( "\^",
             [ IsHomotopyCategoryObject, IsInt ] );
+# =#
 
 DeclareAttribute( "AsChainComplex", IsHomotopyCategoryObject );
 DeclareAttribute( "AsCochainComplex", IsHomotopyCategoryObject );
