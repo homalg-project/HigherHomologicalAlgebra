@@ -173,13 +173,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_HOMOTOPY_CATEG
                           iota,
                           ImageEmbedding( range_cat, as_morphism_in_abelian_category( hom_BC^-1 ) ) ) ) );
           
-          ell := CreateComplexMorphism( distinguished_object, [ unwrap_morphism_in_abelian_category( PreCompose( range_cat, ell, iota ) ) ], 0, hom_BC );
+          ell := CallFuncListAtRuntime( CreateComplexMorphism, [ distinguished_object, [ unwrap_morphism_in_abelian_category( PreCompose( range_cat, ell, iota ) ) ], 0, hom_BC ] );
           
-          return MorphismConstructor(
-                      homotopy_category,
-                      B,
-                      _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( AmbientCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ), ell ),
-                      C );
+          return CallFuncListAtRuntime( MorphismConstructor,
+                      [ homotopy_category,
+                        B,
+                        _complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( AmbientCategory( homotopy_category ), UnderlyingCell( B ), UnderlyingCell( C ), ell ),
+                        C ] );
       
       end );
     

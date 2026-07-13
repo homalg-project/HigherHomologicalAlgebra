@@ -39,17 +39,17 @@ InstallMethod( AbstractionAlgebroid,
     
     kF := LinearClosure( CommutativeSemiringOfLinearCategory( seq ), F );
     
-    o := SetOfObjects( kF );
+    o := CallFuncListAtRuntime( SetOfObjects, [ kF ] );
     
     convert_string_to_morphism :=
       function( str )
         str := SplitString( str, "_" );
-        Remove( str[1], 1 );
+        str[1] := str[1]{ [ 2 .. Length( str[1] ) ] };
         str := List( str, Int );
         if Length( str ) = 3 then
           return IrreducibleMorphisms( seq, [ str[1], str[2] ] )[str[3]];
         else
-          return IdentityMorphism( seq[str[1]] );
+          return IdentityMorphism( seq, seq[str[1]] );
         fi;
     end;
     
@@ -63,7 +63,7 @@ InstallMethod( AbstractionAlgebroid,
               
               H_ij := HomomorphismStructureOnObjects( seq, seq[i], seq[j] );
               
-              B_ij := BasisOfExternalHom( kF, SetOfObjects( kF )[i], SetOfObjects( kF )[j] );
+              B_ij := CallFuncListAtRuntime( BasisOfExternalHom, [ kF, o[i], o[j] ] );
               
               morphisms := List( B_ij, b -> PreComposeList( seq, seq[i], List( LabelsOfMorphisms(q){MorphismIndices( MorphismDatum(b)[2][1] )}, convert_string_to_morphism ), seq[j] ) );
               
@@ -73,13 +73,15 @@ InstallMethod( AbstractionAlgebroid,
               
               coeffs := EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( u ) );
               
-              return List( coeffs, coeff -> LinearCombinationOfMorphisms( kF, o[i], coeff, B_ij, o[j] ) );
+              return List( coeffs, coeff -> CallFuncListAtRuntime( LinearCombinationOfMorphisms, [ kF, o[i], coeff, B_ij, o[j] ] ) );
               
             end ) ) ) );
     
-    quo_kF := QuotientCategory( kF, relations );
+    quo_kF := CallFuncListAtRuntime( QuotientCategory, [ kF, relations ] );
     
-    oid := AlgebroidFromDataTables( quo_kF : range_of_HomStructure := range_cat );
+    data_tables := CallFuncListAtRuntime( DataTablesOfLinearCategory, [ quo_kF ] );
+
+    oid := AlgebroidFromDataTables( data_tables : range_of_HomStructure := range_cat );
     
     SetIsAdmissibleAlgebroid( oid, true );
     
@@ -193,19 +195,27 @@ end );
 
 InstallGlobalFunction( RandomStrongExceptionalSequence,
   function( k, nr_vertices, nr_arrows )
-    local q, P, oid, Aoid, KAoid;
+    local q, P, kP, oid, Aoid, KAoid, objects;
     
     q := RandomFinQuiver( nr_vertices, nr_arrows, false );
     
     P := PathCategory( q );
     
-    oid := AlgebroidFromDataTables( LinearClosure( k, P ) );
+    kP := LinearClosure( k, P );
+
+    oid := AlgebroidFromDataTables( kP );
     
     Aoid := AdditiveClosure( oid );
     
     KAoid := HomotopyCategoryByCochains( Aoid );
     
-    return CreateStrongExceptionalSequence( List( SetOfObjects( oid ), o -> CreateComplex( KAoid, AsAdditiveClosureObject( o ), 0 ) ) );
+    objects := CallFuncListAtRuntime( SetOfObjectsOfCategory, [ oid ] );
+
+    objects := List( objects, o -> CallFuncListAtRuntime( AsAdditiveClosureObject, [ o ] ) );
+
+    objects := List( objects, o -> CallFuncListAtRuntime( CreateComplex, [ KAoid, o, 0 ] ) );
+    
+    return CallFuncListAtRuntime( CreateStrongExceptionalSequence, [ objects ] );
     
 end );
 

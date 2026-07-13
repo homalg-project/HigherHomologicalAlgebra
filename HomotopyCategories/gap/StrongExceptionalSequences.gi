@@ -331,7 +331,7 @@ InstallMethodWithCache( ExceptionalReplacement,
       
       diffs := AsZFunction( i -> PreCompose( ambient_cat, data[i][2], data[i+1][1] ) );
       
-      return CreateComplex( homotopy_cat, [ objs, diffs, -infinity, max_shift ] );
+      return CallFuncListAtRuntime( CreateComplex, [ homotopy_cat, [ objs, diffs, -infinity, max_shift ] ] );
       
     else
       
@@ -349,9 +349,17 @@ InstallMethodWithCache( ExceptionalReplacement,
       
       i := u + 1;
       
-      repeat i := i - 1; until IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity;
+      while true do
+        
+        i := i - 1;
+        
+        if IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity then
+            break;
+        fi;
+        
+      od;
       
-      return CreateComplex( homotopy_cat, [ Objects( GA ), Differentials( GA ), i+1, u ] );
+      return CallFuncListAtRuntime( CreateComplex, [ homotopy_cat, [ Objects( GA ), Differentials( GA ), i + 1, u ] ] );
       
     fi;
     
@@ -389,7 +397,7 @@ InstallMethod( InterpretExceptionalReplacementAsObjectInHomotopyCategoryOfAdditi
           
         end );
         
-    return CreateComplex( homotopy_category, [ objs, diffs, LowerBound( GA ), UpperBound( GA ) ] );
+    return CallFuncListAtRuntime( CreateComplex, [ homotopy_category, [ objs, diffs, LowerBound( GA ), UpperBound( GA ) ] ] );
     
 end );
 
@@ -448,12 +456,14 @@ InstallMethod( IsomorphismFromConvolutionOfExceptionalReplacement,
           else
             
             r_i := GA_data[i][2];
-            shift_std_r_i := Shift( StandardExactTriangle( r_i ), -i-1 );
+            std_r_i := StandardExactTriangle( r_i );
+            shift_std_r_i := CallFuncListAtRuntime( Shift, [ std_r_i, -i-1 ] );
             
             j_i := PostnikovSystemAt( GA, i+1 )^i;
-            shift_std_j_i := Shift( StandardExactTriangle( j_i ), -i-1 );
+            std_j_i := StandardExactTriangle( j_i );
+            shift_std_j_i := CallFuncListAtRuntime( Shift, [ std_j_i, -i-1 ] );
             
-            return ExactTriangleByOctahedralAxiom( shift_std_r_i, data[i+1], shift_std_j_i );
+            return ExactTriangleByOctahedralAxiom( shift_std_r_i, data[i+1], shift_std_j_i : compute_witnesses := true );
             
           fi;
           
