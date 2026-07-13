@@ -37,7 +37,7 @@ DeclareAttribute( "InverseShiftFunctor", IsCapCategory );
 #! $\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}$.
 #! @Arguments T
 #! @Returns a natural transformation $\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma\circ\Sigma^{-1}$
-DeclareAttribute( "UnitOfShiftAdjunction", IsTriangulatedCategory );
+DeclareAttribute( "UnitOfShiftAdjunction", IsCapCategory );
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
@@ -45,7 +45,7 @@ DeclareAttribute( "UnitOfShiftAdjunction", IsTriangulatedCategory );
 #! $\eta:\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}$.
 #! @Arguments T
 #! @Returns a natural isomorphism $\Sigma\circ\Sigma^{-1}\Rightarrow\mathrm{Id}_{\mathcal{T}}$
-DeclareAttribute( "InverseOfUnitOfShiftAdjunction", IsTriangulatedCategory );
+DeclareAttribute( "InverseOfUnitOfShiftAdjunction", IsCapCategory );
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
@@ -53,7 +53,7 @@ DeclareAttribute( "InverseOfUnitOfShiftAdjunction", IsTriangulatedCategory );
 #! $\eta:\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$.
 #! @Arguments T
 #! @Returns a natural transformation $\Sigma^{-1}\circ\Sigma\Rightarrow\mathrm{Id}_{\mathcal{T}}$
-DeclareAttribute( "CounitOfShiftAdjunction", IsTriangulatedCategory );
+DeclareAttribute( "CounitOfShiftAdjunction", IsCapCategory );
 
 #! @Description
 #! The argument is a triangulated category $\mathcal{T}$.
@@ -61,7 +61,7 @@ DeclareAttribute( "CounitOfShiftAdjunction", IsTriangulatedCategory );
 #! $\eta:\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$.
 #! @Arguments T
 #! @Returns a natural transformation $\mathrm{Id}_{\mathcal{T}}\Rightarrow\Sigma^{-1}\circ\Sigma$
-DeclareAttribute( "InverseOfCounitOfShiftAdjunction", IsTriangulatedCategory );
+DeclareAttribute( "InverseOfCounitOfShiftAdjunction", IsCapCategory );
 
 #! @Description
 #! The argument is an exact functor $F:\mathcal{T}_1\to\mathcal{T}_2$ between triangulated categories.

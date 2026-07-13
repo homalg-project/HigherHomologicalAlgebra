@@ -6,10 +6,14 @@
 
 ##
 InstallMethod( ShiftFunctorAttr,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local name, Sigma, G, eta;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     name := "Shift auto-equivalence on a triangulated category";
     
     Sigma := CapFunctor( name, category, category );
@@ -24,15 +28,19 @@ end );
 
 ##
 InstallOtherMethod( ShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   ShiftFunctorAttr
 );
 
 InstallMethod( InverseShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local name, rev_Sigma, Sigma, G_1, G_2, eta;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     name := "Inverse Shift auto-equivalence on a triangulated category";
     
     rev_Sigma := CapFunctor( name, category, category );
@@ -47,10 +55,14 @@ end );
 
 ##
 InstallMethod( UnitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -73,10 +85,15 @@ end );
 
 ##
 InstallMethod( InverseOfUnitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
+
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -99,11 +116,15 @@ end );
 
 ##
 InstallMethod( CounitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
           
   function( category )
     local id, shift, ishift, ishift_of_shift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -126,10 +147,14 @@ end );
 
 ##
 InstallMethod( InverseOfCounitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local id, shift, ishift, ishift_of_shift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -152,9 +177,13 @@ end );
 
 ##
 InstallMethod( ExtendFunctorToCategoryOfTriangles,
-          [ IsCapFunctor and HasCommutativityNaturalTransformationWithShiftFunctor ],
+          [ IsCapFunctor  ],
   function( F )
     local eta, S, R, name, TF;
+    
+    if not HasCommutativityNaturalTransformationWithShiftFunctor( F ) then
+      Error( "The functor must be exact" );
+    fi;
     
     eta := CommutativityNaturalTransformationWithShiftFunctor( F );
     

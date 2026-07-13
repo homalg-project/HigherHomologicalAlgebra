@@ -33,7 +33,7 @@ DeclareCategory( "IsCategoryOfExactTrianglesMorphism", IsCapCategoryMorphism );
 #! The output is the category of exact triangles over $\mathcal{T}$.
 #! @Arguments T
 #! @Returns a CAP category
-DeclareAttribute( "CategoryOfExactTriangles", IsTriangulatedCategory );
+DeclareAttribute( "CategoryOfExactTriangles", IsCapCategory );
 
 #! @Description
 #! The argument is a category of triangles over some triangulated category $\mathcal{T}$.
