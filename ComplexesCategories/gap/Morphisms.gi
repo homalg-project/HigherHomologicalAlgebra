@@ -16,7 +16,7 @@
 InstallOtherMethod( CreateComplexMorphism,
             [ IsComplexesCategory, IsChainOrCochainComplex, IsZFunction, IsChainOrCochainComplex ],
   
-  MorphismConstructor );
+  { ch_cat, S, morphisms, R } -> CallFuncListAtRuntime( MorphismConstructor, [ ch_cat, S, morphisms, R ] ) );
 
 ##
 InstallOtherMethod( CreateComplexMorphism,

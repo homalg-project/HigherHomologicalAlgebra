@@ -79,12 +79,16 @@ InstallMethod( ComplexesCategoryByCochains,
     object_datum := { coch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
     
     ##
-    morphism_constructor := { coch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( coch_cat,
-                                                            S, R,
-                                                            Morphisms, datum );
+    morphism_constructor :=
+      function ( coch_cat, S, datum, R )
+        return CreateCapCategoryMorphismWithAttributes( coch_cat, S, R, Morphisms, datum );
+    end;
     
     ##
-    morphism_datum := { coch_cat, m } -> Morphisms( m );
+    morphism_datum :=
+      function( coch_cat, m )
+        return Morphisms( m );
+    end;
     
     ## from the raw object data to the object in the highest stage of the tower
     modeling_tower_object_constructor :=

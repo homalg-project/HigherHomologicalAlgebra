@@ -24,7 +24,7 @@ BindGlobal( "_complexes_DistinguishedObjectOfHomomorphismStructure",
       
       ch_range_cat := ComplexesCategoryByCochains( range_cat );
       
-      return CreateComplex( ch_range_cat, DistinguishedObjectOfHomomorphismStructure( cat ), 0 );
+      return CallFuncListAtRuntime( CreateComplex, [ ch_range_cat, DistinguishedObjectOfHomomorphismStructure( cat ), 0 ] );
     
 end ) );
 
@@ -91,7 +91,7 @@ BindGlobal( "_complexes_HomomorphismStructureOnObjects",
             
           end );
     
-    return CreateComplex( ch_range_cat, objs, diffs, l_C - u_B, u_C - l_B );
+    return CallFuncListAtRuntime( CreateComplex, [ ch_range_cat, objs, diffs, l_C - u_B, u_C - l_B ] );
     
 end );
 
@@ -186,7 +186,7 @@ BindGlobal( "_complexes_HomomorphismStructureOnMorphismsWithGivenObjects",
             
         end );
         
-    return CreateComplexMorphism( ch_range_cat, hom_BC, morphisms, hom_AD );
+    return CallFuncListAtRuntime( CreateComplexMorphism, [ ch_range_cat, hom_BC, morphisms, hom_AD ] );
     
 end );
 
@@ -261,7 +261,7 @@ BindGlobal( "_complexes_InterpretMorphismAsMorphismFromDistinguishedObjectToHomo
     
     ell := MorphismBetweenDirectSumsWithGivenDirectSums( range_cat, distinguished_object[0], diagram_S, matrix, diagram_R, hom_BC[0] );
     
-    return CreateComplexMorphism( ch_range_cat, distinguished_object, [ ell ], 0, hom_BC );
+    return CallFuncListAtRuntime( CreateComplexMorphism, [ ch_range_cat, distinguished_object, [ ell ], 0, hom_BC ] );
     
 end );
 
@@ -334,7 +334,7 @@ BindGlobal( "_complexes_InterpretMorphismFromDistinguishedObjectToHomomorphismSt
                                         C[j],
                                         PreCompose( range_cat, ell[0], ProjectionInFactorOfDirectSumWithGivenDirectSum( range_cat, diagram_R, index_j, hom_BC[0] ) ) ) );
     
-    return CreateComplexMorphism( ch_cat, B, morphisms, l_BC, C );
+    return CallFuncListAtRuntime( CreateComplexMorphism, [ ch_cat, B, morphisms, l_BC, C ] );
     
 end );
 

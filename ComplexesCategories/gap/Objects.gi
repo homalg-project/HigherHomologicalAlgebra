@@ -19,10 +19,10 @@ InstallMethod( CreateComplex,
   function( ch_cat, datum )
     
     if not ( Length( datum ) = 4 and IsZFunction( datum[1] ) and IsZFunction( datum[2] ) ) then
-      Error( "the list passed to 'CreateComplex' in ", TextAttr.4, Name( ch_cat ), TextAttr.reset, " must have 4 entries and the first two entries are IsZFunction's!\n" );
+      Error( "the list passed to 'CreateComplex' in ", "\033[34m", Name( ch_cat ), "\033[0m", " must have 4 entries and the first two entries are IsZFunction's!\n" );
     fi;
     
-    return ObjectConstructor( ch_cat, datum );
+    return CallFuncListAtRuntime( ObjectConstructor, [ ch_cat, datum ] );
     
 end );
 
