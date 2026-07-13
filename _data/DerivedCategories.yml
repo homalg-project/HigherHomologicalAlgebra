@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2026.07-01"
+version: "2026.07-02"
 license: "GPL-2.0-or-later"
-date: 2026-07-05
+date: 2026-07-13
 description: |
     Derived categories of Abelian categories
 
@@ -23,13 +23,13 @@ needed-pkgs:
       version: ">= 2026.04-01"
       url: "https://homalg-project.github.io/pkg/SubcategoriesForCAP"
     - name: "HomotopyCategories"
-      version: ">= 2026.05-02"
+      version: ">= 2026.07-01"
       url: "https://homalg-project.github.io/pkg/HomotopyCategories"
     - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2026.04-01"
       url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
     - name: "FpCategories"
-      version: ">= 2025.09-02"
+      version: ">= 2026.07-03"
       url: "https://homalg-project.github.io/pkg/FpCategories"
 
 www: https://homalg-project.github.io/pkg/DerivedCategories
@@ -38,11 +38,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-01/DerivedCategories-2026.07-01.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-01/DerivedCategories-2026.07-01.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-01/DerivedCategories-2026.07-01-manual.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02-manual.pdf
 
 abstract: |
 
@@ -51,10 +51,10 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal05</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal13</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2026.07-01</i>
-     (<span class='BibYear'>7-05</span>)<br />
+             Version 2026.07-02</i>
+     (<span class='BibYear'>7-13</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
     </p>
@@ -64,15 +64,15 @@ bibtex: |
     @misc{ DerivedCategories,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  {Derived  categories  of Abelian
-                          categories}, {V}ersion 2026.07\texttt{\symbol{45}}01},
+                          categories}, {V}ersion 2026.07\texttt{\symbol{45}}02},
       month =            {6\texttt{\symbol{45}}},
-      year =             {7\texttt{\symbol{45}}05},
+      year =             {7\texttt{\symbol{45}}13},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/DerivedCategories}
                           {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{DerivedCategories}}},
-      printedkey =       {Sal05}
+      printedkey =       {Sal13}
     }
 
