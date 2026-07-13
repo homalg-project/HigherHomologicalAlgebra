@@ -13,7 +13,7 @@ gap> LoadPackage( "FinSetsForCAP", false );
 true
 gap> LoadPackage( "FreydCategoriesForCAP", false );
 true
-gap> LoadPackage( "Algebroids", false );
+gap> LoadPackage( "FpLinearCategories", false );
 true
 gap> LoadPackage( "ComplexesCategories", false );
 true
@@ -24,7 +24,7 @@ gap> LoadPackage( "FinSetsForCAP" );
 true
 gap> LoadPackage( "FreydCategoriesForCAP" );
 true
-gap> LoadPackage( "Algebroids" );
+gap> LoadPackage( "FpLinearCategories" );
 true
 gap> LoadPackage( "ComplexesCategories" );
 true

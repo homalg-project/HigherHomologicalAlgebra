@@ -23,10 +23,9 @@ BindGlobal( "_complexes_QuasiIsomorphismFromProjectiveResolution",
     if not ( HasIsAbelianCategory( cat )
               and IsAbelianCategory( cat )
                 and CanCompute( cat, "SomeProjectiveObject" )
-                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" )
-                    ) then
+                  and CanCompute( cat, "EpimorphismFromSomeProjectiveObject" ) ) then
       
-      Error( "the category, ", TextAttr.4, Name( cat ), TextAttr.reset, ", must be 'computable' abelian with enough projectives!\n" );
+      Error( "the category, ", "\033[34m", Name( cat ), "\033[0m", ", must be 'computable' abelian with enough projectives!\n" );
       
     fi;
     
@@ -51,15 +50,15 @@ BindGlobal( "_complexes_QuasiIsomorphismFromProjectiveResolution",
             
             h := data[k+1][1];
             
-            m := MorphismBetweenDirectSums(
+            m := MorphismBetweenDirectSums( cat,
                           [ [ h, -data[k+1][2] ],
                             [ ZeroMorphism( cat, C[k], Range( h ) ), C^k ] ] );
             
-            iota := KernelEmbedding( m );
+            iota := KernelEmbedding( cat, m );
             
-            pi := EpimorphismFromSomeProjectiveObject( Source( iota ) );
+            pi := EpimorphismFromSomeProjectiveObject( cat, Source( iota ) );
             
-            p := List( [ 1, 2 ], i -> ProjectionInFactorOfDirectSum( [ Source( h ), C[k] ], i ) );
+            p := List( [ 1, 2 ], i -> ProjectionInFactorOfDirectSum( cat, [ Source( h ), C[k] ], i ) );
             
             return [ PreCompose( [ pi, iota, p[1] ] ), PreCompose( [ pi, iota, p[2] ] ), m ];
             
@@ -108,17 +107,23 @@ InstallMethod( ProjectiveResolutionOp,
       [ IsCochainComplex, IsBool ],
       
   function( C, bool )
-    local PC, i;
-     
+    local ch_cat, cat, PC, i;
+    
+    ch_cat := CapCategory( C );
+    
+    cat := UnderlyingCategory( ch_cat );
+    
     if bool then
         
         PC := ProjectiveResolution( C, false );
         
-        i := LowerBound( C );
+        i := LowerBound( C ) - 1;
         
-        repeat i := i - 1; until IsZeroForObjects( PC[i] );
+        while not IsZeroForObjects( cat, PC[i] ) do
+            i := i - 1;
+        od;
         
-        return CreateComplex( CapCategory( C ), Objects( PC ), Differentials( PC ), i + 1, UpperBound( PC ) );
+        return CreateComplex( ch_cat, Objects( PC ), Differentials( PC ), i + 1, UpperBound( PC ) );
         
     else
         
@@ -192,55 +197,91 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
 InstallOtherMethod( QuasiIsomorphismIntoInjectiveResolution,
           [ IsCochainComplex ],
   
-  C -> AsComplexMorphismOverOppositeCategory(
-          QuasiIsomorphismFromProjectiveResolution(
-            AsComplexOverOppositeCategory( C ) ) )
-);
+  function ( C )
+    local C_op, qiso;
+    
+    C_op := AsComplexOverOppositeCategory( C );
+    
+    qiso := QuasiIsomorphismFromProjectiveResolution( C_op );
+    
+    return AsComplexMorphismOverOppositeCategory( qiso );
+    
+end );
 
 ##
 InstallMethod( QuasiIsomorphismIntoInjectiveResolutionOp,
           [ IsCochainComplex, IsBool ],
   
-  { C, bool } -> AsComplexMorphismOverOppositeCategory(
-                    QuasiIsomorphismFromProjectiveResolution(
-                      AsComplexOverOppositeCategory( C ), bool ) )
-);
+  function ( C, bool )
+    local C_op, qiso;
+    
+    C_op := AsComplexOverOppositeCategory( C );
+    
+    qiso := CallFuncListAtRuntime( QuasiIsomorphismFromProjectiveResolution, [ C_op, bool ] );
+    
+    return AsComplexMorphismOverOppositeCategory( qiso );
+    
+end );
 
 ##
 InstallOtherMethod( InjectiveResolution,
           [ IsCochainComplex ],
   
-  C -> AsComplexOverOppositeCategory(
-          ProjectiveResolution(
-            AsComplexOverOppositeCategory( C ) ) )
-);
+  function ( C )
+    local C_op, proj_res;
+    
+    C_op := AsComplexOverOppositeCategory( C );
+    
+    proj_res := CallFuncListAtRuntime( ProjectiveResolution, [ C_op ] );
+    
+    return AsComplexOverOppositeCategory( proj_res );
+    
+end );
 
 ##
 InstallMethod( InjectiveResolutionOp,
           [ IsCochainComplex, IsBool ],
   
-  { C, bool } -> AsComplexOverOppositeCategory(
-                    ProjectiveResolution(
-                      AsComplexOverOppositeCategory( C ), bool ) )
-);
+  function ( C, bool )
+    local C_op, proj_res;
+    
+    C_op := AsComplexOverOppositeCategory( C );
+    
+    proj_res := CallFuncListAtRuntime( ProjectiveResolution, [ C_op, bool ] );
+    
+    return AsComplexOverOppositeCategory( proj_res );
+    
+end );
 
 ##
 InstallOtherMethod( MorphismBetweenInjectiveResolutions,
           [ IsCochainMorphism ],
   
-  phi -> AsComplexMorphismOverOppositeCategory(
-          MorphismBetweenProjectiveResolutions(
-            AsComplexMorphismOverOppositeCategory( phi ) ) )
-);
+  function ( phi )
+    local phi_op, proj_mor;
+    
+    phi_op := AsComplexMorphismOverOppositeCategory( phi );
+    
+    proj_mor := CallFuncListAtRuntime( MorphismBetweenProjectiveResolutions, [ phi_op ] );
+    
+    return AsComplexMorphismOverOppositeCategory( proj_mor );
+    
+end );
 
 ##
 InstallMethod( MorphismBetweenInjectiveResolutionsOp,
           [ IsCochainMorphism, IsBool ],
   
-  { phi, bool } -> AsComplexMorphismOverOppositeCategory(
-                    MorphismBetweenProjectiveResolutions(
-                      AsComplexMorphismOverOppositeCategory( phi ), bool ) )
-);
+  function ( phi, bool )
+    local phi_op, proj_mor;
+    
+    phi_op := AsComplexMorphismOverOppositeCategory( phi );
+    
+    proj_mor := CallFuncListAtRuntime( MorphismBetweenProjectiveResolutions, [ phi_op, bool ] );
+    
+    return AsComplexMorphismOverOppositeCategory( proj_mor );
+    
+end );
 
 
 ##########################################################
@@ -293,9 +334,11 @@ InstallOtherMethod( ProjectiveResolution,
       
       P := ProjectiveResolution( o, false );
       
-      i := 1;
-      
-      repeat i := i - 1; until IsZeroForObjects( cat, P[i] );
+      i := -1;
+
+      while not IsZeroForObjects( cat, P[i] ) do
+          i := i - 1;
+      od;
       
       return CreateComplex( ch_cat, Objects( P ), Differentials( P ), i + 1, UpperBound( P ) );
       
@@ -308,11 +351,15 @@ InstallOtherMethod( InjectiveResolution,
        [ IsCapCategoryObject, IsBool ],
   
   function( o, bool )
-    local cat_op;
+    local cat_op, o_op, o_projs_res;
     
-    cat_op := Opposite( CapCategory( o ) : only_primitive_operations_and_hom_structure );
-    
-    return AsComplexOverOppositeCategory( ProjectiveResolution( Opposite( o ), bool ) );
+    cat_op := Opposite( CapCategory( o ) : only_primitive_operations_and_hom_structure := true );
+
+    o_op := CallFuncListAtRuntime( Opposite, [ o ] );
+
+    o_projs_res := CallFuncListAtRuntime( ProjectiveResolution, [ o_op, bool ] );
+
+    return AsComplexOverOppositeCategory( o_projs_res );
     
 end );
 
@@ -333,8 +380,8 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
     epi_S := EpimorphismFromSomeProjectiveObject( cat, S );
     epi_R := EpimorphismFromSomeProjectiveObject( cat, R );
     
-    PS := ProjectiveResolution( S, bool );
-    PR := ProjectiveResolution( R, bool );
+    PS := CallFuncListAtRuntime( ProjectiveResolution, [ S, bool ] );
+    PR := CallFuncListAtRuntime( ProjectiveResolution, [ R, bool ] );
     
     morphisms :=
       AsZFunction(
@@ -373,7 +420,7 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
         
         end );
     
-    return CreateComplexMorphism( ch_cat, PS, morphisms, PR );
+    return CallFuncListAtRuntime( CreateComplexMorphism, [ ch_cat, PS, morphisms, PR ] );
     
 end );
 
@@ -382,11 +429,15 @@ InstallOtherMethod( MorphismBetweenInjectiveResolutions,
        [ IsCapCategoryMorphism, IsBool ],
   
   function( phi, bool )
-    local cat_op;
+    local cat_op, phi_op, phi_proj_res;
     
     cat_op := Opposite( CapCategory( phi ) : only_primitive_operations_and_hom_structure := true );
+
+    phi_op := CallFuncListAtRuntime( Opposite, [ phi ] );
     
-    return AsComplexMorphismOverOppositeCategory( MorphismBetweenProjectiveResolutions( Opposite( phi ), bool ) );
+    phi_proj_res := CallFuncListAtRuntime( MorphismBetweenProjectiveResolutions, [ phi_op, bool ] );
+    
+    return AsComplexMorphismOverOppositeCategory( phi_proj_res );
     
 end );
 

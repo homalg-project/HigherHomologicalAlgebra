@@ -54,11 +54,13 @@ DeclareAttribute( "UnderlyingCell", IsChainOrCochainMorphism );
 #! @Returns a CAP morphism
 KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to <C>MorphismAt</C>($\phi$, $i$).
 #! @Arguments phi, i
 #! @Returns a CAP morphism
 DeclareOperation( "\[\]", [ IsChainOrCochainMorphism, IsInt ] );
+# =#
 
 #! @Description
 #! Returns an integer $\ell$ with $S^i=R^i=0$ for all $i\prec\ell$.

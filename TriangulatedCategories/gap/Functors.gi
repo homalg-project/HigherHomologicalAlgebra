@@ -6,10 +6,14 @@
 
 ##
 InstallMethod( ShiftFunctorAttr,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local name, Sigma, G, eta;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     name := "Shift auto-equivalence on a triangulated category";
     
     Sigma := CapFunctor( name, category, category );
@@ -24,15 +28,19 @@ end );
 
 ##
 InstallOtherMethod( ShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   ShiftFunctorAttr
 );
 
 InstallMethod( InverseShiftFunctor,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local name, rev_Sigma, Sigma, G_1, G_2, eta;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     name := "Inverse Shift auto-equivalence on a triangulated category";
     
     rev_Sigma := CapFunctor( name, category, category );
@@ -47,10 +55,14 @@ end );
 
 ##
 InstallMethod( UnitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -64,7 +76,7 @@ InstallMethod( UnitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> UnitOfShiftAdjunctionWithGivenObject( a, r )
+      { s, a, r } -> UnitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
@@ -73,10 +85,15 @@ end );
 
 ##
 InstallMethod( InverseOfUnitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
+
   function( category )
     local id, shift, ishift, shift_after_ishift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -90,7 +107,7 @@ InstallMethod( InverseOfUnitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, shift_after_ishift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, s )
+      { s, a, r } -> InverseOfUnitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -99,11 +116,15 @@ end );
 
 ##
 InstallMethod( CounitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
           
   function( category )
     local id, shift, ishift, ishift_of_shift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -117,7 +138,7 @@ InstallMethod( CounitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> CounitOfShiftAdjunctionWithGivenObject( a, s )
+      { s, a, r } -> CounitOfShiftAdjunctionWithGivenObject( a, s )
     );
     
     return nat;
@@ -126,10 +147,14 @@ end );
 
 ##
 InstallMethod( InverseOfCounitOfShiftAdjunction,
-          [ IsCapCategory and IsTriangulatedCategory ],
+          [ IsCapCategory ],
   function( category )
     local id, shift, ishift, ishift_of_shift, name, nat;
     
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
+    fi;
+
     id := IdentityFunctor( category );
     
     shift := ShiftFunctor( category );
@@ -143,7 +168,7 @@ InstallMethod( InverseOfCounitOfShiftAdjunction,
     nat := NaturalTransformation( name, id, ishift_of_shift );
     
     AddNaturalTransformationFunction( nat,
-      {s, a, r} -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, r )
+      { s, a, r } -> InverseOfCounitOfShiftAdjunctionWithGivenObject( a, r )
     );
     
     return nat;
@@ -152,9 +177,13 @@ end );
 
 ##
 InstallMethod( ExtendFunctorToCategoryOfTriangles,
-          [ IsCapFunctor and HasCommutativityNaturalTransformationWithShiftFunctor ],
+          [ IsCapFunctor  ],
   function( F )
     local eta, S, R, name, TF;
+    
+    if not HasCommutativityNaturalTransformationWithShiftFunctor( F ) then
+      Error( "The functor must be exact" );
+    fi;
     
     eta := CommutativityNaturalTransformationWithShiftFunctor( F );
     
@@ -173,11 +202,11 @@ InstallMethod( ExtendFunctorToCategoryOfTriangles,
     AddObjectFunction( TF,
       function( triangle )
         
-        return ExactTriangle(
+        return CallFuncListAtRuntime( ExactTriangle, [ R,
                   ApplyFunctor( F, triangle ^ 0 ),
                   ApplyFunctor( F, triangle ^ 1),
                   PreCompose( ApplyFunctor( F, triangle ^ 2 ), eta( triangle[ 0 ] ) )
-                );
+                ] );
                 
       end );
       

@@ -20,3 +20,4 @@ gap> o := CreateComplex( modeling_category, [ phi ], 10 );;
 gap> bicomplex := ReinterpretationOfObject( bicomplexes_cat, o );;
 gap> t := TotalComplex( bicomplex );;
 gap> Assert( 0, IsWellDefined( t ) and IsExact( t ) );
+gap> # @drop_example_in_Julia

@@ -6,10 +6,16 @@
 
 ReadPackage( "DerivedCategories", "gap/DerivedCategories.gd" );
 ReadPackage( "DerivedCategories", "gap/Objects.gd" );
-ReadPackage( "DerivedCategories", "gap/Morphisms.gd");
-ReadPackage( "DerivedCategories", "gap/Functors.gd");
+ReadPackage( "DerivedCategories", "gap/Morphisms.gd" );
+ReadPackage( "DerivedCategories", "gap/Functors.gd" );
 
+#= comment for Julia
 if IsPackageMarkedForLoading( "FunctorCategories", ">= 2022.09.23" ) then
-  ReadPackage( "DerivedCategories", "gap/OnlyWithFunctorCategories.gd");
+# =#
+
+ReadPackage( "DerivedCategories", "gap/OnlyWithFunctorCategories.gd" );
+
+#= comment for Julia
 fi;
+# =#
 

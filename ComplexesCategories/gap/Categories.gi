@@ -7,15 +7,16 @@
 
 BindGlobal( "INTEGERS_CAT",
   
-  function ( )
+ (function ( )
     local category;
-     
+    
+    #= comment for Julia
     if IsPackageMarkedForLoading( "Locales", ">= 2023.05-05" ) then
         
         return ValueGlobal( "TotalOrderAsCategory" )( "IsInt", {a,b} -> a >= b );
         
     else
-        
+    # =#
         category := CreateCapCategory( "TotalOrderAsCategory( \"IsInt\" )" );
         category!.category_as_first_argument := true;
         
@@ -33,10 +34,11 @@ BindGlobal( "INTEGERS_CAT",
         Finalize( category );
         
         return category;
-        
+    #= comment for Julia
     fi;
+    # =#
     
-end ( ) );
+end)( ) );
 
 BindGlobal( "INTEGERS_CAT_OBJS",
   
@@ -53,7 +55,11 @@ InstallMethod( ComplexesCategoryByCochains,
         "for a CAP category",
         [ IsCapCategory ],
         
-  function ( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function ( CAP_NAMED_ARGUMENTS, cat )
     local modeling_cat, object_constructor, object_datum, morphism_constructor, morphism_datum, modeling_tower_object_constructor, modeling_tower_object_datum,
       modeling_tower_morphism_constructor, modeling_tower_morphism_datum, coch_cat, category_filter, category_object_filter, category_morphism_filter;
     
@@ -73,12 +79,16 @@ InstallMethod( ComplexesCategoryByCochains,
     object_datum := { coch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
     
     ##
-    morphism_constructor := { coch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( coch_cat,
-                                                            S, R,
-                                                            Morphisms, datum );
+    morphism_constructor :=
+      function ( coch_cat, S, datum, R )
+        return CreateCapCategoryMorphismWithAttributes( coch_cat, S, R, Morphisms, datum );
+    end;
     
     ##
-    morphism_datum := { coch_cat, m } -> Morphisms( m );
+    morphism_datum :=
+      function( coch_cat, m )
+        return Morphisms( m );
+    end;
     
     ## from the raw object data to the object in the highest stage of the tower
     modeling_tower_object_constructor :=
@@ -140,7 +150,7 @@ InstallMethod( ComplexesCategoryByCochains,
                     return FunctionOfPreSheafMorphism( presheaf_mor )(
                                 PairOfFunctionsOfPreSheaf( Source( presheaf_mor ) )[1]( i ),
                                 i,
-                                PairOfFunctionsOfPreSheaf( Range ( presheaf_mor ) )[1]( i ) );
+                                PairOfFunctionsOfPreSheaf( Target( presheaf_mor ) )[1]( i ) );
                     
                   end );
         
@@ -161,7 +171,7 @@ InstallMethod( ComplexesCategoryByCochains,
                    modeling_tower_object_datum := modeling_tower_object_datum,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
-                   only_primitive_operations := true ) : FinalizeCategory := false );
+                   only_primitive_operations := true ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     coch_cat!.is_computable := true;
     
@@ -177,7 +187,7 @@ InstallMethod( ComplexesCategoryByCochains,
     
     return coch_cat;
     
-end );
+end ) );
 
 
 
@@ -304,10 +314,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_RANDOM_METHODS_TO_COCHAIN_COMPLEX_CATEGO
       AddRandomObjectByList( ch_cat,
         
         function ( ch_cat, L )
-          local cat, diffs, i, pi;
+          local cat, diffs, u, i, pi;
           
-          if Length( L ) <> 3 or not ForAll( L{[1,2]}, IsInt ) or not IsList( L[3] ) then
-            Error("the input should be a list consisting of two integers and a list!\n");
+          if Length( L ) <> 3 or not ForAll( L{ [1,2] }, IsInt ) or not IsList( L[3] ) then
+              Error("the input should be a list consisting of two integers and a list!\n");
           fi;
           
           cat := UnderlyingCategory( ch_cat );
@@ -320,7 +330,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_RANDOM_METHODS_TO_COCHAIN_COMPLEX_CATEGO
             
             diffs := [ RandomMorphismWithFixedSourceByList( cat, ZeroObject( cat ) , L[3] ) ];
             
-            for i in [ 2 .. L[2] - L[1]  + 1 ] do
+            u := L[2] - L[1] + 1;
+
+            for i in [ 2 .. u ] do
               
               pi := ValueGlobal( "WeakCokernelProjection" )( cat, diffs[i-1] );
               
@@ -431,7 +443,11 @@ InstallMethod( ComplexesCategoryByChains,
         "for a CAP category",
         [ IsCapCategory ],
         
-  function( cat )
+  FunctionWithNamedArguments(
+  [
+    [ "overhead", true ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, cat )
     local object_constructor, object_datum, morphism_constructor, morphism_datum, coch_cat, modeling_tower_object_constructor, modeling_tower_object_datum, modeling_tower_morphism_constructor, modeling_tower_morphism_datum, ch_cat, category_filter, category_object_filter, category_morphism_filter, only_primitive_operations;
     
     ##
@@ -446,7 +462,7 @@ InstallMethod( ComplexesCategoryByChains,
     object_datum := { ch_cat, o } -> NTuple( 4, Objects( o ), Differentials( o ), LowerBound( o ), UpperBound( o ) );
     
     ##
-    morphism_constructor := { ch_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( ch_cat,
+    morphism_constructor := { ch_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( ch_cat,
                                                             S, R,
                                                             Morphisms, datum );
     
@@ -455,7 +471,7 @@ InstallMethod( ComplexesCategoryByChains,
     
     ## building the categorical tower
     
-    coch_cat := ComplexesCategoryByCochains( cat );
+    coch_cat := ComplexesCategoryByCochains( cat : overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     ## from the raw object data to the object in the highest stage of the tower
     modeling_tower_object_constructor :=
@@ -510,7 +526,7 @@ InstallMethod( ComplexesCategoryByChains,
                    modeling_tower_object_datum := modeling_tower_object_datum,
                    modeling_tower_morphism_constructor := modeling_tower_morphism_constructor,
                    modeling_tower_morphism_datum := modeling_tower_morphism_datum,
-                   only_primitive_operations := true ) : FinalizeCategory := false );
+                   only_primitive_operations := true ) : FinalizeCategory := false, overhead := CAP_NAMED_ARGUMENTS.overhead );
     
     SetUnderlyingCategory( ch_cat, cat );
      
@@ -547,5 +563,5 @@ InstallMethod( ComplexesCategoryByChains,
     
     return ch_cat;
     
-end );
+end ) );
 

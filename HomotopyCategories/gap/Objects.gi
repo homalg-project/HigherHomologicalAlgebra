@@ -18,7 +18,7 @@ InstallOtherMethod( CreateComplex,
 InstallOtherMethod( CreateComplex,
           [ IsHomotopyCategory, IsList ],
   
-  { homotopy_cat, datum } -> ObjectConstructor( homotopy_cat, CreateComplex( AmbientCategory( homotopy_cat ), datum ) )
+  { homotopy_cat, datum } -> CallFuncListAtRuntime( ObjectConstructor, [ homotopy_cat, CallFuncListAtRuntime( CreateComplex, [ AmbientCategory( homotopy_cat ), datum ] ) ] )
 );
 
 ##

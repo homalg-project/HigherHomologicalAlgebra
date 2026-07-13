@@ -66,39 +66,43 @@ InstallMethod( VerticalDifferentialAt,
 
 
 ##
-InstallMethod( ViewObj,
+InstallMethod( ViewString,
           [ IsChainOrCochainBicomplex ],
     
-    _bicomplexes_ViewObj
+    _bicomplexes_ViewString
 );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsChainOrCochainBicomplex ],
   
   function ( obj )
-    local i, j;
+    local str, i, j;
+    
+    str := "";
     
     for i in [ LeftBound( obj ) .. RightBound( obj ) ] do
       for j in [ BelowBound( obj ) .. AboveBound( obj ) ] do
         
-        Print( "\n-------------------------------------------\n" );
-        Print( "At Indices ", [i, j], ":" );
-        Print( "\n-------------------------------------------\n" );
+        str := Concatenation( str, "\n-------------------------------------------\n" );
+        str := Concatenation( str, "At Indices ", String( [i, j] ), ":" );
+        str := Concatenation( str, "\n-------------------------------------------\n" );
         
-        Print( "\nObject:\n" );
-        Display( ObjectFunction( obj )(i, j) );
+        str := Concatenation( str, "\nObject:\n" );
+        str := Concatenation( str, DisplayString( ObjectFunction( obj )(i, j) ) );
         
-        Print( "\nHorizontal Differential:\n" );
-        Display( HorizontalDifferentialFunction( obj )(i, j) );
+        str := Concatenation( str, "\nHorizontal Differential:\n" );
+        str := Concatenation( str, DisplayString( HorizontalDifferentialFunction( obj )(i, j) ) );
         
-        Print( "\nVertical Differential:\n" );
-        Display( VerticalDifferentialFunction( obj )(i, j) );
+        str := Concatenation( str, "\nVertical Differential:\n" );
+        str := Concatenation( str, DisplayString( VerticalDifferentialFunction( obj )(i, j) ) );
         
       od;
     od;
     
-    Print( "\nAn object in ", Name( CapCategory( obj ) ), " defined by the above data\n" );
+    str := Concatenation( str, "\nAn object in ", Name( CapCategory( obj ) ), " defined by the above data\n" );
+    
+    return str;
     
 end );
 

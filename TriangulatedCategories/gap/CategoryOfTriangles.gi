@@ -6,27 +6,56 @@
 
 ##
 InstallMethod( CategoryOfExactTriangles,
-          [ IsTriangulatedCategory ],
+          [ IsCapCategory ],
+
   function( category )
-    local r, name, triangles;
+    local name, triangles;
     
-    if IsBound( RandomTextColor ) then
-      
-      r := ValueGlobal( "RandomTextColor" )( Name( category ) );
-      
-      name := Concatenation( r[ 1 ], "Category of exact triangles( ", r[ 2 ], Name( category ), r[ 1 ], " )", r[ 2 ] );
-      
-    else
-      
-      name := Concatenation( "Category of exact triangles( ", Name( category ), " )" );
-      
+    if not ( HasIsTriangulatedCategory( category ) and IsTriangulatedCategory( category ) ) then
+      Error( "The argument must be a triangulated category" );
     fi;
+    
+    name := Concatenation( "Category of exact triangles( ", Name( category ), " )" );
     
     triangles := CreateCapCategory( name, IsCategoryOfExactTriangles, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesMorphism, IsCapCategoryTwoCell );
     
     triangles!.category_as_first_argument := true;
     
     SetUnderlyingCategory( triangles, category );
+    
+    AddObjectConstructor( triangles,
+      function( cat, datum )
+        
+        return CreateCapCategoryObjectWithAttributes(
+                 cat,
+                 DefiningTripleOfMorphisms, datum
+               );
+        
+    end );
+    
+    AddObjectDatum( triangles,
+      function( cat, triangle )
+        
+        return DefiningTripleOfMorphisms( triangle );
+        
+    end );
+    
+    AddMorphismConstructor( triangles,
+      function( cat, s, datum, r )
+        
+        return CreateCapCategoryMorphismWithAttributes(
+                 cat, s, r,
+                 DefiningTripleOfMorphisms, datum
+               );
+        
+    end );
+    
+    AddMorphismDatum( triangles,
+      function( cat, mu )
+        
+        return DefiningTripleOfMorphisms( mu );
+        
+    end );
     
     AddIsEqualForObjects( triangles,
       function( cat, triangle_1, triangle_2 )
@@ -40,16 +69,26 @@ InstallMethod( CategoryOfExactTriangles,
       
     AddIsEqualForMorphisms( triangles,
       function( cat, mu, nu )
-        return IsEqualForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
-                  IsEqualForMorphisms( mu[ 1 ], nu[ 1 ] ) and
-                    IsEqualForMorphisms( mu[ 2 ], nu[ 2 ] );
+        local datum_mu, datum_nu;
+        
+        datum_mu := MorphismDatum( cat, mu );
+        datum_nu := MorphismDatum( cat, nu );
+        
+        return IsEqualForMorphisms( datum_mu[1], datum_nu[1] ) and
+                  IsEqualForMorphisms( datum_mu[2], datum_nu[2] ) and
+                    IsEqualForMorphisms( datum_mu[3], datum_nu[3] );
       end );
       
     AddIsCongruentForMorphisms( triangles,
       function( cat, mu, nu )
-        return IsCongruentForMorphisms( mu[ 0 ], nu[ 0 ] ) and 
-                  IsCongruentForMorphisms( mu[ 1 ], nu[ 1 ] ) and
-                    IsCongruentForMorphisms( mu[ 2 ], nu[ 2 ] );
+        local datum_mu, datum_nu;
+        
+        datum_mu := MorphismDatum( cat, mu );
+        datum_nu := MorphismDatum( cat, nu );
+        
+        return IsCongruentForMorphisms( datum_mu[1], datum_nu[1] ) and
+                  IsCongruentForMorphisms( datum_mu[2], datum_nu[2] ) and
+                    IsCongruentForMorphisms( datum_mu[3], datum_nu[3] );
       end );
       
     AddIsZeroForObjects( triangles,
@@ -64,26 +103,26 @@ InstallMethod( CategoryOfExactTriangles,
       
     AddIdentityMorphism( triangles,
       function( cat, triangle )
-        local maps;
         
-        maps := List( [ 0 .. 2 ], i -> IdentityMorphism( triangle[ i ] ) );
-        
-        return MorphismOfExactTriangles( triangle, maps[ 1 ], maps[ 2 ], maps[ 3 ], triangle );
+        return MorphismConstructor(
+                 cat,
+                 triangle,
+                 List( [ 0 .. 2 ], i -> IdentityMorphism( triangle[ i ] ) ),
+                 triangle
+               );
         
       end );
       
     AddPreCompose( triangles,
       function( cat, mu, nu )
-        local maps_mu, maps_nu, maps;
         
-        maps_mu := List( [ 0 .. 2 ], i -> mu[ i ] );
+        return MorphismConstructor(
+                 cat,
+                 Source( mu ),
+                 ListN( MorphismDatum( cat, mu ), MorphismDatum( cat, nu ), PreCompose ),
+                 Range( nu )
+               );
         
-        maps_nu := List( [ 0 .. 2 ], i -> nu[ i ] );
-        
-        maps := ListN( maps_mu, maps_nu, PreCompose );
-        
-        return MorphismOfExactTriangles( Source( mu ), maps[ 1 ], maps[ 2 ], maps[ 3 ], Range( nu ) );
-       
     end );
     
     AddIsIsomorphism( triangles,
@@ -246,34 +285,58 @@ end );
 
 ##
 InstallMethod( ExactTriangle,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, iota, pi )
-    local cat, triangles;
+          [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+
+  function( cat, alpha, iota, pi )
     
-    cat := CapCategory( alpha );
-    
-    triangles := CategoryOfExactTriangles( cat );
-    
-    return CreateCapCategoryObjectWithAttributes(
-             triangles,
-             DomainMorphism, alpha,
-             MorphismIntoConeObject, iota,
-             MorphismFromConeObject, pi
-           );
+    return CallFuncListAtRuntime( ObjectConstructor, [ cat, [ alpha, iota, pi ] ] );
     
 end );
+
+##
+InstallOtherMethod( ExactTriangle,
+          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+
+  function( alpha, iota, pi )
+    local cat;
+
+    cat := CategoryOfExactTriangles( CapCategory( alpha ) );
+
+    return CallFuncListAtRuntime( ObjectConstructor, [ cat, [ alpha, iota, pi ] ] );
+    
+end );
+
+##
+InstallMethod( DomainMorphism,
+          [ IsCategoryOfExactTrianglesObject ],
+  t -> DefiningTripleOfMorphisms( t )[ 1 ]
+);
+
+##
+InstallMethod( MorphismIntoConeObject,
+          [ IsCategoryOfExactTrianglesObject ],
+  t -> DefiningTripleOfMorphisms( t )[ 2 ]
+);
+
+##
+InstallMethod( MorphismFromConeObject,
+          [ IsCategoryOfExactTrianglesObject ],
+  t -> DefiningTripleOfMorphisms( t )[ 3 ]
+);
 
 ##
 InstallMethod( StandardExactTriangle,
           [ IsCapCategoryMorphism ],
   function( alpha )
-    local triangle, iota_alpha, pi_alpha;
+    local cat, triangle, iota_alpha, pi_alpha;
+    
+    cat := CategoryOfExactTriangles( CapCategory( alpha ) );
     
     iota_alpha := MorphismIntoStandardConeObject( alpha );
     
     pi_alpha := MorphismFromStandardConeObject( alpha );
     
-    triangle := ExactTriangle( alpha, iota_alpha, pi_alpha );
+    triangle := CallFuncListAtRuntime( ExactTriangle, [ cat, alpha, iota_alpha, pi_alpha ] );
     
     SetIsStandardExactTriangle( triangle, true );
     
@@ -294,28 +357,23 @@ InstallOtherMethod( ExactTriangle,
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
           [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
-  function( alpha, beta, gamma )
+  FunctionWithNamedArguments(
+  [
+    [ "compute_witnesses", false ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, alpha, beta, gamma )
+    local cat, triangle, st_triangle, T, i;
     
-    return
-      ExactTriangle(
-        DomainMorphismByOctahedralAxiom( alpha, beta, gamma ),
-        MorphismIntoConeObjectByOctahedralAxiom( alpha, beta, gamma ),
-        MorphismFromConeObjectByOctahedralAxiom( alpha, beta, gamma )
-      );
-     
-end );
-##
-InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ],
-  function( alpha, beta, gamma, b )
-    local triangle, st_triangle, T, i;
+    cat := CategoryOfExactTriangles( CapCategory( alpha ) );
     
-    triangle := ExactTriangleByOctahedralAxiom( alpha, beta, gamma );
+    triangle := CallFuncListAtRuntime( ExactTriangle, [ cat,
+      DomainMorphismByOctahedralAxiom( alpha, beta, gamma ),
+      MorphismIntoConeObjectByOctahedralAxiom( alpha, beta, gamma ),
+      MorphismFromConeObjectByOctahedralAxiom( alpha, beta, gamma )
+    ] );
     
-    if not b then
-      
+    if not CAP_NAMED_ARGUMENTS.compute_witnesses then
       return triangle;
-      
     fi;
     
     st_triangle := StandardExactTriangle( triangle );
@@ -325,13 +383,9 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     if not( CanCompute( T, "WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects" ) and
               CanCompute( T, "WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects" )
           ) then
-          
       Error( "The octahedral methods must be installed in the category of the arguments" );
-      
     else
-      
       i := WitnessIsomorphismIntoStandardConeObjectByOctahedralAxiomWithGivenObjects( triangle[ 2 ], alpha, beta, gamma, st_triangle[ 2 ] );
-      
       SetWitnessIsomorphismIntoStandardExactTriangle( triangle,
         MorphismOfExactTriangles(
           triangle,
@@ -340,9 +394,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
           i,
           st_triangle
         ) );
-      
       i := WitnessIsomorphismFromStandardConeObjectByOctahedralAxiomWithGivenObjects( st_triangle[ 2 ], alpha, beta, gamma, triangle[ 2 ] );
-      
       SetWitnessIsomorphismFromStandardExactTriangle( triangle,
         MorphismOfExactTriangles(
           st_triangle,
@@ -351,28 +403,18 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
           i,
           triangle
         ) );
-    
     fi;
     
     return triangle;
     
-end );
+  end ) );
 
 ##
 InstallMethod( MorphismOfExactTriangles,
         [ IsCategoryOfExactTrianglesObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCategoryOfExactTrianglesObject ],
   function( s, mu_0, mu_1, mu_2, r )
-    local triangles, mu;
     
-    triangles := CapCategory( s );
-    
-    mu := CreateCapCategoryMorphismWithAttributes( triangles, s, r );
-    
-    mu!.0 := mu_0;
-    mu!.1 := mu_1;
-    mu!.2 := mu_2;
-    
-    return mu;
+    return CallFuncListAtRuntime( MorphismConstructor, [ CapCategory( s ), s, [ mu_0, mu_1, mu_2 ], r ] );
     
 end );
 
@@ -381,24 +423,12 @@ InstallMethod( MorphismAtOp,
           [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( triangle, i )
     
-    if i = 0 then
-      
-      return DomainMorphism( triangle );
-      
-    elif i = 1 then
-      
-      return MorphismIntoConeObject( triangle );
-      
-    elif i = 2 then
-      
-      return MorphismFromConeObject( triangle );
-      
-    else
-      
+    if i < 0 or i > 2 then
       Error( "Wrong index!\n" );
-    
     fi;
-
+    
+    return CallFuncListAtRuntime( ObjectDatum, [ CapCategory( triangle ), triangle ] )[ i + 1 ];
+    
 end );
 
 ##
@@ -428,19 +458,13 @@ InstallMethod( MorphismAtOp,
   function( mu, i )
     
     if i < 0 or i > 3 then
-      
       Error( "Wrong index!\n" );
-      
     elif i = 3 then
-    
-      return ShiftOfMorphism( mu!.( 0 ) );
-      
+      return ShiftOfMorphism( CallFuncListAtRuntime( MorphismDatum, [ CapCategory( mu ), mu ] )[ 1 ] );
     else
-      
-      return mu!.( i );
-      
+      return CallFuncListAtRuntime( MorphismDatum, [ CapCategory( mu ), mu ] )[ i + 1 ];
     fi;
-
+    
 end );
 
 ##
@@ -483,34 +507,27 @@ InstallMethod( StandardExactTriangle,
 );
 
 ##
-InstallMethod( Rotation,
-          [ IsCategoryOfExactTrianglesObject ],
-    triangle -> Rotation( triangle, false )
-);
-
-
-##
 InstallMethod( ShiftOp,
           [ IsCategoryOfExactTrianglesObject, IsInt ],
   function( t, n )
-    local shift_t, st, shift_st, w;
+    local cat, shift_t, st, shift_st, w;
     
-    shift_t := ExactTriangle(
-                    Shift( t^0, n ),
-                    Shift( t^1, n ),
-                    (-1)^n * Shift( t^2, n )
-                  );
+    cat := CapCategory( t );
+
+    shift_t := ExactTriangle( cat,
+                    CallFuncListAtRuntime( Shift, [ t^0, n ] ),
+                    CallFuncListAtRuntime( Shift, [ t^1, n ] ),
+                    (-1)^n * CallFuncListAtRuntime( Shift, [ t^2, n ] ) );
     
     if HasWitnessIsomorphismIntoStandardExactTriangle( t ) or
         HasWitnessIsomorphismFromStandardExactTriangle( t ) then
         
         st := StandardExactTriangle( t );
         
-        shift_st := ExactTriangle(
-                    Shift( st^0, n ),
-                    Shift( st^1, n ),
-                    (-1)^n * Shift( st^2, n )
-                  );
+        shift_st := ExactTriangle( cat,
+                      CallFuncListAtRuntime( Shift, [ st^0, n ] ),
+                      CallFuncListAtRuntime( Shift, [ st^1, n ] ),
+                      (-1)^n * CallFuncListAtRuntime( Shift, [ st^2, n ] ) );
         
     fi;
     
@@ -574,17 +591,21 @@ end );
 ##  B ---> C ---> Σ A ---> Σ B
 ##
 InstallMethod( Rotation,
-          [ IsCategoryOfExactTrianglesObject, IsBool ],
-  function( triangle, bool )
+          [ IsCategoryOfExactTrianglesObject ],
+  FunctionWithNamedArguments(
+  [
+    [ "compute_witnesses", false ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, triangle )
     local rotation, st_rotation, i, st_triangle, w_1, v_1;
-     
+    
     rotation := ExactTriangle(
                   triangle ^ 1,
                   triangle ^ 2,
                   AdditiveInverse( ShiftOfMorphism( triangle ^ 0 ) )
                 );
     
-    if bool then
+    if CAP_NAMED_ARGUMENTS.compute_witnesses then
       
       st_rotation := StandardExactTriangle( rotation );
       
@@ -599,7 +620,7 @@ InstallMethod( Rotation,
         i := WitnessIsomorphismFromStandardConeObjectByRotationAxiomWithGivenObjects( st_rotation[ 2 ], triangle ^ 0, rotation[ 2 ] );
         
         i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
-       
+        
         SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
         
       else
@@ -615,14 +636,14 @@ InstallMethod( Rotation,
         i := MorphismOfExactTriangles( rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), PreCompose( w_1, v_1 ), st_rotation );
         
         SetWitnessIsomorphismIntoStandardExactTriangle( rotation, i );
-              
+        
       fi;
     
     fi;
     
     return rotation;
     
-end );
+  end ) );
 
 ##  
 ##  A ---> B ---> C ---> Σ A
@@ -631,13 +652,11 @@ end );
 ##
 InstallMethod( InverseRotation,
           [ IsCategoryOfExactTrianglesObject ],
-  triangle -> InverseRotation( triangle, false )
-);
-
-##
-InstallMethod( InverseRotation,
-          [ IsCategoryOfExactTrianglesObject, IsBool ],
-  function( t, bool )
+  FunctionWithNamedArguments(
+  [
+    [ "compute_witnesses", false ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, t )
     local rotation, st_rotation, i, st_t, w_1, v_1;
     
     rotation :=
@@ -653,7 +672,7 @@ InstallMethod( InverseRotation,
                         )
                     );
     
-    if bool then
+    if CAP_NAMED_ARGUMENTS.compute_witnesses then
       
       st_rotation := StandardExactTriangle( rotation );
       
@@ -668,7 +687,7 @@ InstallMethod( InverseRotation,
         i := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiomWithGivenObjects( st_rotation[ 2 ], t ^ 0, rotation[ 2 ] );
         
         i := MorphismOfExactTriangles( st_rotation, IdentityMorphism( rotation[ 0 ] ), IdentityMorphism( rotation[ 1 ] ), i, rotation );
-       
+        
         SetWitnessIsomorphismFromStandardExactTriangle( rotation, i );
         
       else
@@ -702,7 +721,7 @@ InstallMethod( InverseRotation,
     
     return rotation;
     
-end );
+  end ) );
 
 ##
 InstallMethod( WitnessIsomorphismIntoStandardExactTriangle,
@@ -841,14 +860,14 @@ end );
 ##
 InstallMethod( ExactTriangleByOctahedralAxiom,
           [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ],
-    { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
-);
-
-##
-InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsBool ],
-  function( t_1, t_2, t_3, bool )
-    local i_1, j_1, i_2, j_2, i_3, j_3, t, alpha, iota, pi, triangle, u, v, w, i;
+  FunctionWithNamedArguments(
+  [
+    [ "compute_witnesses", false ],
+  ],
+  function( CAP_NAMED_ARGUMENTS, t_1, t_2, t_3 )
+    local cat, i_1, j_1, i_2, j_2, i_3, j_3, t, alpha, iota, pi, triangle, u, v, w, i;
+    
+    cat := CapCategory( t_1 );
     
     Assert( 2, IsEqualForObjects( t_1[ 0 ], t_3[ 0 ] )
                 and IsEqualForObjects( t_2[ 1 ], t_3[ 1 ] )
@@ -866,7 +885,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
     j_3 := WitnessIsomorphismFromStandardExactTriangle( t_3 );
     
-    t := ExactTriangleByOctahedralAxiom( t_1 ^ 0, t_2 ^ 0, t_3 ^ 0, true );
+    t := ExactTriangleByOctahedralAxiom( t_1 ^ 0, t_2 ^ 0, t_3 ^ 0 : compute_witnesses := true );
     
     alpha := PreCompose( [ i_1[ 2 ], t ^ 0, j_3[ 2 ] ] );
     
@@ -874,9 +893,9 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
     
     pi := PreCompose( [ i_2[ 2 ], t ^ 2, ShiftOfMorphism( j_1[ 2 ] ) ] );
     
-    triangle := ExactTriangle( alpha, iota, pi );
+    triangle := CallFuncListAtRuntime( ExactTriangle, [ cat, alpha, iota, pi ] );
     
-    if bool = true then
+    if CAP_NAMED_ARGUMENTS.compute_witnesses then
       
       u := i_2[ 2 ];
       
@@ -906,13 +925,7 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
                 
     return triangle;
     
-end );
-
-##
-InstallMethod( ExactTriangleByOctahedralAxiom,
-          [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ],
-    { t_1, t_2, t_3 } -> ExactTriangleByOctahedralAxiom( t_1, t_2, t_3, false )
-);
+  end ) );
 
 #################
 #
@@ -924,31 +937,33 @@ InstallMethod( ExactTriangleByOctahedralAxiom,
 InstallMethod( ViewExactTriangle,
           [ IsCategoryOfExactTrianglesObject ],
   function( T )
+    local str;
     
-    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
-    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
+    str := "       T ^ 0          T ^ 1          T ^ 2              \n";
+    str := Concatenation( str, "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
     
-    Print( "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
-    ViewObj( T[ 0 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T[ 0 ] ) );
     
-    Print( "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
-    ViewObj( T ^ 0 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T ^ 0 ) );
     
-    Print( "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
-    ViewObj( T[ 1 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T[ 1 ] ) );
     
-    Print( "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
-    ViewObj( T ^ 1 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T ^ 1 ) );
     
-    Print( "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
-    ViewObj( T[ 2 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T[ 2 ] ) );
     
-    Print( "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
-    ViewObj( T ^ 2 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T ^ 2 ) );
     
-    Print( "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
-    ViewObj( T[ 3 ] );
-
+    str := Concatenation( str, "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, ViewString( T[ 3 ] ) );
+    
+    return str;
     
 end );
 
@@ -956,80 +971,91 @@ end );
 InstallMethod( ViewMorphismOfExactTriangles,
           [ IsCategoryOfExactTrianglesMorphism ],
   function( mu )
-    Print( "A morphism of exact triangles\n\n" );
-    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
-    Print( " |            |            |              |           \n" );
-    Print( " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
-    Print( " V            V            V              V           \n" );
-    Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
+    local str;
     
-    Print( "\n\nmu[ 0 ]:\n\n" );
-    ViewObj( mu[ 0 ] );
+    str := "A morphism of exact triangles\n\n";
+    str := Concatenation( str, "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
+    str := Concatenation( str, " |            |            |              |           \n" );
+    str := Concatenation( str, " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
+    str := Concatenation( str, " V            V            V              V           \n" );
+    str := Concatenation( str, "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
     
-    Print( "\n\nmu[ 1 ]:\n\n" );
-    ViewObj( mu[ 1 ] );
+    str := Concatenation( str, "\n\nmu[ 0 ]:\n\n" );
+    str := Concatenation( str, ViewString( mu[ 0 ] ) );
     
-    Print( "\n\nmu[ 2 ]:\n\n" );
-    ViewObj( mu[ 2 ] );
+    str := Concatenation( str, "\n\nmu[ 1 ]:\n\n" );
+    str := Concatenation( str, ViewString( mu[ 1 ] ) );
     
-    Print( "\n\nmu[ 3 ]:\n\n" );
-    ViewObj( mu[ 3 ] );
- 
+    str := Concatenation( str, "\n\nmu[ 2 ]:\n\n" );
+    str := Concatenation( str, ViewString( mu[ 2 ] ) );
+    
+    str := Concatenation( str, "\n\nmu[ 3 ]:\n\n" );
+    str := Concatenation( str, ViewString( mu[ 3 ] ) );
+    
+    return str;
+    
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsCategoryOfExactTrianglesObject ],
   function( T )
-
-    Print( "       T ^ 0          T ^ 1          T ^ 2              \n" );
-    Print( "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
+    local str;
     
-    Print( "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
-    Display( T[ 0 ] );
+    str := "       T ^ 0          T ^ 1          T ^ 2              \n";
+    str := Concatenation( str, "T[ 0 ] ------> T[ 1 ] ------> T[ 2 ] ------> Σ( T[ 0 ] )\n" );
     
-    Print( "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
-    Display( T ^ 0 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 0 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T[ 0 ] ) );
     
-    Print( "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
-    Display( T[ 1 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 0:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T ^ 0 ) );
     
-    Print( "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
-    Display( T ^ 1 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 1 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T[ 1 ] ) );
     
-    Print( "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
-    Display( T[ 2 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 1:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T ^ 1 ) );
     
-    Print( "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
-    Display( T ^ 2 );
+    str := Concatenation( str, "\n", TextAttr.b6, "T[ 2 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T[ 2 ] ) );
     
-    Print( "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
-    Display( T[ 3 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "T ^ 2:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T ^ 2 ) );
+    
+    str := Concatenation( str, "\n", TextAttr.b6, "Σ( T[ 0 ] ):", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( T[ 3 ] ) );
+    
+    return str;
     
 end );
 
 ##
-InstallMethod( Display,
+InstallMethod( DisplayString,
           [ IsCategoryOfExactTrianglesMorphism ],
   function( mu )
-    Print( "A morphism of exact triangles\n\n" );
-    Print( "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
-    Print( " |            |            |              |           \n" );
-    Print( " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
-    Print( " V            V            V              V           \n" );
-    Print( "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
+    local str;
     
-    Print( "\n", TextAttr.b6, "mu[ 0 ]:", TextAttr.reset, "\n\n" );
-    Display( mu[ 0 ] );
+    str := "A morphism of exact triangles\n\n";
+    str := Concatenation( str, "T[0] ------> T[1] ------> T[2] ------> Σ( T[0] )      \n" );
+    str := Concatenation( str, " |            |            |              |           \n" );
+    str := Concatenation( str, " | mu[0]      | mu[1]      | mu[2]        | Σ( mu[0] )\n" );
+    str := Concatenation( str, " V            V            V              V           \n" );
+    str := Concatenation( str, "Q[0] ------> Q[1] ------> Q[2] ------> Σ( Q[0] )      \n" );
     
-    Print( "\n", TextAttr.b6, "mu[ 1 ]:", TextAttr.reset, "\n\n" );
-    Display( mu[ 1 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "mu[ 0 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( mu[ 0 ] ) );
     
-    Print( "\n", TextAttr.b6, "mu[ 2 ]:", TextAttr.reset, "\n\n" );
-    Display( mu[ 2 ] );
+    str := Concatenation( str, "\n", TextAttr.b6, "mu[ 1 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( mu[ 1 ] ) );
     
-    Print( "\n", TextAttr.b6, "mu[ 3 ]:", TextAttr.reset, "\n\n" );
-    Display( mu[ 3 ] );
- 
+    str := Concatenation( str, "\n", TextAttr.b6, "mu[ 2 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( mu[ 2 ] ) );
+    
+    str := Concatenation( str, "\n", TextAttr.b6, "mu[ 3 ]:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, DisplayString( mu[ 3 ] ) );
+    
+    return str;
+    
 end );
 

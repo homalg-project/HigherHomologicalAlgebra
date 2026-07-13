@@ -15,16 +15,41 @@
 InstallGlobalFunction( CreateStrongExceptionalSequence,
   
   function ( list_of_objects )
-    local seq, I;
+    local ambient_cat, range_cat, seq, I;
     
+    ambient_cat := CapCategory( list_of_objects[1] );
+
+    range_cat := RangeCategoryOfHomomorphismStructure( ambient_cat );
+
+    # Make sure that Hom(seq[j], seq[i]) = 0 for j > i
+    if not ForAll( [ 1 .. Length( list_of_objects ) - 1 ],
+                    i -> ForAll( [ i + 1 .. Length( list_of_objects ) ],
+                      j -> IsZeroForObjects( range_cat, HomomorphismStructureOnObjects( ambient_cat, list_of_objects[j], list_of_objects[i] ) ) ) ) then
+        
+        Info( InfoWarning, 1, "The list of objects passed to 'CreateStrongExceptionalSequence' is not a strong exceptional sequence, since Hom(seq[j], seq[i]) is non-zero for some j > i!\n" );
+        Info( InfoWarning, 1, "We will sort the list of objects so that Hom(seq[j], seq[i]) = 0 for j > i.\n" );
+        
+        # Sort so that Hom(seq[j], seq[i]) = 0 for j > i: place a before b whenever Hom(a, b) ≠ 0
+        list_of_objects := 
+          SortedList( list_of_objects,
+              { a, b } -> not IsZeroForObjects( range_cat, HomomorphismStructureOnObjects( ambient_cat, a, b ) ) );
+        
+    fi;
+
     seq := FullSubcategoryGeneratedByListOfObjects( list_of_objects );
     
+    SetIsObjectFiniteCategory( seq, true );
+    SetIsLinearCategoryOverCommutativeRingWithFinitelyGeneratedFreeExternalHoms( seq, true );
+
     seq!.Name := Concatenation( "A strong exceptional sequence in ", Name( AmbientCategory( seq ) ) );
     
     # Some Tweaks to Improve Performance
     I := InclusionFunctor( seq );
+
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( I ) );
     DeactivateCachingObject( MorphismCache( I ) );
+    # =#
     
     return seq;
     
@@ -70,9 +95,13 @@ InstallMethod( CompositeMorphismsOp,
           [ IsCapFullSubcategory, IsList ],
    
   function( seq, indices )
+    local index_1, index_2;
+    
+    index_1 := indices[1] + 1;
+    index_2 := indices[2] - 1;
     
     return Concatenation(
-              List( [ indices[1]+1 .. indices[2]-1 ],
+              List( [ index_1 .. index_2 ],
                   ell -> ListX(
                         IrreducibleMorphisms( seq, [ indices[1], ell ] ),
                         Concatenation( IrreducibleMorphisms( seq, [ ell, indices[2] ] ), CompositeMorphisms( seq, [ ell, indices[2] ] ) ),
@@ -160,7 +189,7 @@ InstallMethod( DataOfExceptionalCover,
             pre_inverse -> List( BasisOfExternalHom( range_cat, distinguished_object, Source( pre_inverse ) ),
               b -> PreCompose( range_cat, b, pre_inverse ) ) );
     
-    return ListN( [ 1 .. nr_objects], u,
+    return ListN( [ 1 .. nr_objects ], u,
               { i, ell } -> List( ell, eta -> InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( ambient_cat, UnderlyingCell( seq[i] ), A, eta ) ) );
     
 end );
@@ -314,14 +343,14 @@ InstallMethod( DataOfExceptionalReplacement,
 InstallMethodWithCache( ExceptionalReplacement,
           [ IsCapFullSubcategory, IsHomotopyCategoryObject, IsBool ],
   
-  function ( seq, A, bool )
+  function ( seq, A, is_bounded )
     local ambient_cat, homotopy_cat, max_shift, data, objs, diffs, GA, zero_object, i, u;
     
     ambient_cat := AmbientCategory( seq );
     
     homotopy_cat := HomotopyCategoryByCochains( ambient_cat );
     
-    if bool = false then
+    if is_bounded = false then
       
       max_shift := MaximalExceptionalShift( seq, A );
       
@@ -331,7 +360,7 @@ InstallMethodWithCache( ExceptionalReplacement,
       
       diffs := AsZFunction( i -> PreCompose( ambient_cat, data[i][2], data[i+1][1] ) );
       
-      return CreateComplex( homotopy_cat, [ objs, diffs, -infinity, max_shift ] );
+      return CallFuncListAtRuntime( CreateComplex, [ homotopy_cat, [ objs, diffs, -infinity, max_shift ] ] );
       
     else
       
@@ -349,9 +378,17 @@ InstallMethodWithCache( ExceptionalReplacement,
       
       i := u + 1;
       
-      repeat i := i - 1; until IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity;
+      while true do
+        
+        i := i - 1;
+        
+        if IsEqualForObjects( GA[i], zero_object ) and MaximalExceptionalShift( seq, Range( data[i][2] ) ) = -infinity then
+            break;
+        fi;
+        
+      od;
       
-      return CreateComplex( homotopy_cat, [ Objects( GA ), Differentials( GA ), i+1, u ] );
+      return CallFuncListAtRuntime( CreateComplex, [ homotopy_cat, [ Objects( GA ), Differentials( GA ), i + 1, u ] ] );
       
     fi;
     
@@ -389,7 +426,7 @@ InstallMethod( InterpretExceptionalReplacementAsObjectInHomotopyCategoryOfAdditi
           
         end );
         
-    return CreateComplex( homotopy_category, [ objs, diffs, LowerBound( GA ), UpperBound( GA ) ] );
+    return CallFuncListAtRuntime( CreateComplex, [ homotopy_category, [ objs, diffs, LowerBound( GA ), UpperBound( GA ) ] ] );
     
 end );
 
@@ -437,7 +474,7 @@ InstallMethod( IsomorphismFromConvolutionOfExceptionalReplacement,
     data :=
       AsZFunction(
         function ( i )
-          local X_im1, r_i, shift_std_r_i, j_i, shift_std_j_i;
+          local X_im1, r_i, std_r_i, shift_std_r_i, j_i, std_j_i, shift_std_j_i;
           
           if i > UpperBound( GA ) then
             
@@ -448,12 +485,14 @@ InstallMethod( IsomorphismFromConvolutionOfExceptionalReplacement,
           else
             
             r_i := GA_data[i][2];
-            shift_std_r_i := Shift( StandardExactTriangle( r_i ), -i-1 );
+            std_r_i := StandardExactTriangle( r_i );
+            shift_std_r_i := CallFuncListAtRuntime( Shift, [ std_r_i, -i-1 ] );
             
             j_i := PostnikovSystemAt( GA, i+1 )^i;
-            shift_std_j_i := Shift( StandardExactTriangle( j_i ), -i-1 );
+            std_j_i := StandardExactTriangle( j_i );
+            shift_std_j_i := CallFuncListAtRuntime( Shift, [ std_j_i, -i-1 ] );
             
-            return ExactTriangleByOctahedralAxiom( shift_std_r_i, data[i+1], shift_std_j_i );
+            return ExactTriangleByOctahedralAxiom( shift_std_r_i, data[i+1], shift_std_j_i : compute_witnesses := true );
             
           fi;
           
@@ -529,7 +568,7 @@ InstallMethod( CounitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( seq );
     
-    name := Concatenation( "Counit ", TEXTMTRANSLATIONS.epsilon, " : F", TEXTMTRANSLATIONS.circ, "G ", TEXTMTRANSLATIONS.Longrightarrow, " Id of the adjunction F ", TEXTMTRANSLATIONS.dashv, " G" );
+    name := "Counit ϵ : F ∘ G ⟹  Id of the adjunction F ⊣ G";
     
     nat := NaturalTransformation( name, PreCompose( G, F ), IdentityFunctor( ambient_cat ) );
     
@@ -555,7 +594,7 @@ InstallMethod( UnitOfConvolutionReplacementAdjunction,
     
     G := ReplacementFunctor( seq );
     
-    name := Concatenation( "Unit ", TEXTMTRANSLATIONS.eta, " : Id ", TEXTMTRANSLATIONS.Longrightarrow, " G", TEXTMTRANSLATIONS.circ, "F of the adjunction F ", TEXTMTRANSLATIONS.dashv, " G" );
+    name := "Unit η : Id ⟹  G ∘ F of the adjunction F ⊣ G";
     
     nat := NaturalTransformation( name, IdentityFunctor( SourceOfFunctor( F ) ), PreCompose( F, G ) );
     

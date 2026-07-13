@@ -11,9 +11,9 @@ InstallMethod( AbstractionAlgebroid,
   
   function ( seq )
     local nr_vertices, arrows, q, vertices_latex, morphisms_latex, F, k, kF, o, convert_string_to_morphism,
-    distinguished_object, range_cat, relations, quo_kF, oid, object_func, morphism_func, data, full_functor, f, t;
+    distinguished_object, range_cat, relations, quo_kF, data_tables, oid, object_func, morphism_func, data, known_values_on_objects, full_functor, f, t;
     
-    nr_vertices := Length( SetOfKnownObjects( seq ) );
+    nr_vertices := Length( SetOfObjects( seq ) );
     
     arrows := Concatenation(
                 List( [ 1 .. nr_vertices - 1 ],
@@ -39,17 +39,17 @@ InstallMethod( AbstractionAlgebroid,
     
     kF := LinearClosure( CommutativeSemiringOfLinearCategory( seq ), F );
     
-    o := SetOfObjects( kF );
+    o := CallFuncListAtRuntime( SetOfObjects, [ kF ] );
     
     convert_string_to_morphism :=
       function( str )
         str := SplitString( str, "_" );
-        Remove( str[1], 1 );
+        str[1] := str[1]{ [ 2 .. Length( str[1] ) ] };
         str := List( str, Int );
         if Length( str ) = 3 then
           return IrreducibleMorphisms( seq, [ str[1], str[2] ] )[str[3]];
         else
-          return IdentityMorphism( seq[str[1]] );
+          return IdentityMorphism( seq, seq[str[1]] );
         fi;
     end;
     
@@ -63,7 +63,7 @@ InstallMethod( AbstractionAlgebroid,
               
               H_ij := HomomorphismStructureOnObjects( seq, seq[i], seq[j] );
               
-              B_ij := BasisOfExternalHom( kF, SetOfObjects( kF )[i], SetOfObjects( kF )[j] );
+              B_ij := CallFuncListAtRuntime( BasisOfExternalHom, [ kF, o[i], o[j] ] );
               
               morphisms := List( B_ij, b -> PreComposeList( seq, seq[i], List( LabelsOfMorphisms(q){MorphismIndices( MorphismDatum(b)[2][1] )}, convert_string_to_morphism ), seq[j] ) );
               
@@ -73,13 +73,15 @@ InstallMethod( AbstractionAlgebroid,
               
               coeffs := EntriesOfHomalgMatrixAsListList( UnderlyingMatrix( u ) );
               
-              return List( coeffs, coeff -> LinearCombinationOfMorphisms( kF, o[i], coeff, B_ij, o[j] ) );
+              return List( coeffs, coeff -> CallFuncListAtRuntime( LinearCombinationOfMorphisms, [ kF, o[i], coeff, B_ij, o[j] ] ) );
               
             end ) ) ) );
     
-    quo_kF := QuotientCategory( kF, relations );
+    quo_kF := CallFuncListAtRuntime( QuotientCategory, [ kF, relations ] );
     
-    oid := AlgebroidFromDataTables( quo_kF : range_of_HomStructure := range_cat );
+    data_tables := CallFuncListAtRuntime( DataTablesOfLinearCategory, [ quo_kF ] );
+
+    oid := AlgebroidFromDataTables( data_tables : range_of_HomStructure := range_cat );
     
     SetIsAdmissibleAlgebroid( oid, true );
     
@@ -100,27 +102,34 @@ InstallMethod( AbstractionAlgebroid,
         if IsEmpty( components ) then
             return ZeroMorphism( seq, s, r );
         else
-            return PreComposeList( seq, s, List( LabelsOfMorphisms( q ){components[1][2]}, convert_string_to_morphism ), r );
+            return PreComposeList( seq, s, List( LabelsOfMorphisms( q ){ components[1][2] }, convert_string_to_morphism ), r );
         fi;
         
     end;
     
-    data := AdditiveFunctorByTwoFunctionsData( oid, seq, object_func, morphism_func : full_functor := true, values_on_objects := [ SetOfObjects( oid ), SetOfKnownObjects( seq ) ] );
+    known_values_on_objects := [ CallFuncListAtRuntime( SetOfObjects, [ oid ] ), CallFuncListAtRuntime( SetOfObjects, [ seq ] ) ];
+
+    data := AdditiveFunctorDataFromValuesOnBasisMorphisms( oid, seq, object_func, morphism_func : is_full := true, known_values_on_objects := known_values_on_objects );
     
     ##
-    f := CapFunctor( Concatenation( "Isomorphism: abstraction algebroid ", TEXTMTRANSLATIONS.longrightarrow, " strong exceptional sequence" ), oid, seq );
+    f := CapFunctor( "Isomorphism: abstraction algebroid ⟶ strong exceptional sequence", oid, seq );
     AddObjectFunction( f, data[1] );
     AddMorphismFunction( f, data[2] );
     
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( f ) );
     DeactivateCachingObject( MorphismCache( f ) );
+    # =#
     
     ##
-    t := CapFunctor( Concatenation( "Isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid );
+    t := CapFunctor( "Isomorphism: strong exceptional sequence ⟶ abstraction algebroid", seq, oid );
     AddObjectFunction( t, data[3] );
     AddMorphismFunction( t, data[4] );
+
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( t ) );
     DeactivateCachingObject( MorphismCache( t ) );
+    # =#
     
     SetIsomorphismFromAbstractionAlgebroid( seq, f );
     SetIsomorphismIntoAbstractionAlgebroid( seq, t );
@@ -136,6 +145,7 @@ InstallMethod( IsomorphismIntoAbstractionAlgebroid,
   function( seq )
     local oid;
     
+    # to set the attribute
     oid := AbstractionAlgebroid( seq );
     
     return IsomorphismIntoAbstractionAlgebroid( seq );
@@ -149,6 +159,7 @@ InstallMethod( IsomorphismFromAbstractionAlgebroid,
   function( seq )
     local oid;
     
+    # to set the attribute
     oid := AbstractionAlgebroid( seq );
     
     return IsomorphismFromAbstractionAlgebroid( seq );
@@ -193,19 +204,27 @@ end );
 
 InstallGlobalFunction( RandomStrongExceptionalSequence,
   function( k, nr_vertices, nr_arrows )
-    local q, P, oid, Aoid, KAoid;
+    local q, P, kP, oid, Aoid, KAoid, objects;
     
     q := RandomFinQuiver( nr_vertices, nr_arrows, false );
     
     P := PathCategory( q );
     
-    oid := AlgebroidFromDataTables( LinearClosure( k, P ) );
+    kP := LinearClosure( k, P );
+
+    oid := AlgebroidFromDataTables( kP );
     
     Aoid := AdditiveClosure( oid );
     
     KAoid := HomotopyCategoryByCochains( Aoid );
     
-    return CreateStrongExceptionalSequence( List( SetOfObjects( oid ), o -> CreateComplex( KAoid, AsAdditiveClosureObject( o ), 0 ) ) );
+    objects := CallFuncListAtRuntime( SetOfObjectsOfCategory, [ oid ] );
+
+    objects := List( objects, o -> CallFuncListAtRuntime( AsAdditiveClosureObject, [ o ] ) );
+
+    objects := List( objects, o -> CallFuncListAtRuntime( CreateComplex, [ KAoid, o, 0 ] ) );
+    
+    return CallFuncListAtRuntime( CreateStrongExceptionalSequence, [ objects ] );
     
 end );
 

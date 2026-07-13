@@ -19,10 +19,10 @@ InstallMethod( CreateComplex,
   function( ch_cat, datum )
     
     if not ( Length( datum ) = 4 and IsZFunction( datum[1] ) and IsZFunction( datum[2] ) ) then
-      Error( "the list passed to 'CreateComplex' in ", TextAttr.4, Name( ch_cat ), TextAttr.reset, " must have 4 entries and the first two entries are IsZFunction's!\n" );
+      Error( "the list passed to 'CreateComplex' in ", "\033[34m", Name( ch_cat ), "\033[0m", " must have 4 entries and the first two entries are IsZFunction's!\n" );
     fi;
     
-    return ObjectConstructor( ch_cat, datum );
+    return CallFuncListAtRuntime( ObjectConstructor, [ ch_cat, datum ] );
     
 end );
 
@@ -419,27 +419,30 @@ end );
 BindGlobal( "_complexes_ViewString",
   
   function ( x )
-    local b, cell, i, bounds_includes_infty;
+    local l, u, cell, bounds_includes_infty;
     
-    b := [ LowerBound( x ), UpperBound( x ) ];
+    l := LowerBound( x );
+    u := UpperBound( x );
     
     bounds_includes_infty := false;
     
-    for i in [ 1, 2 ] do
-      
-      if not IsInt( b[i] ) then
-        
-        bounds_includes_infty := true;
-        
-        if  b[i] = infinity then
-          b[i] := "+∞";
-        elif b[i] = -infinity then
-          b[i] := "-∞";
-        fi;
-        
+    if not IsInt( l ) then
+      bounds_includes_infty := true;
+      if l = infinity then
+        l := "+∞";
+      elif l = -infinity then
+        l := "-∞";
       fi;
-      
-    od;
+    fi;
+    
+    if not IsInt( u ) then
+      bounds_includes_infty := true;
+      if u = infinity then
+        u := "+∞";
+      elif u = -infinity then
+        u := "-∞";
+      fi;
+    fi;
     
     if IsCapCategoryObject( x ) then
         cell := "An object";
@@ -447,10 +450,11 @@ BindGlobal( "_complexes_ViewString",
         cell := "A morphism";
     fi;
     
-    if bounds_includes_infty then
-      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", String( b[1] ), " .. ", String( b[2] ), " ]>" );
+    # we use " .", ". " instead of " .. " to avoid rewriting to ":" in Julia
+    if IsIdenticalObj( l, u ) then
+      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", String( l ), " ]>" );
     else
-      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval ", String( [ b[1] .. b[2] ] ), ">" );
+      return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the interval [ ", String( l ), " .", ". ", String( u ), " ]>" );
     fi;
     
 end );
@@ -469,7 +473,7 @@ InstallOtherMethod( DisplayString,
     
     for i in Reversed( [ l .. u ] ) do
       if i <> u then
-        str := Concatenation( str, "   ", TEXTMTRANSLATIONS.curlywedge, "\n" );
+        str := Concatenation( str, "   ", "⋏", "\n" );
         str := Concatenation( str, "   |\n" );
         str := Concatenation( str, DisplayString( C^i ) );
         str := Concatenation( str, "   |\n\n" );
@@ -511,7 +515,7 @@ InstallOtherMethod( DisplayString,
         str := Concatenation( str, "   |\n" );
         str := Concatenation( str, DisplayString( C^i ) );
         str := Concatenation( str, "   |\n" );
-        str := Concatenation( str, "   ", TEXTMTRANSLATIONS.curlyvee, "\n\n" );
+        str := Concatenation( str, "   ", "⋎", "\n\n" );
       fi;
       
     od;

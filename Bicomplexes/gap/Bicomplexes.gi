@@ -51,7 +51,7 @@ BindGlobal( "CREATE_BICOMPLEXES_CATEGORY",
                                                 AboveBound( o ) ];
     
     ##
-    morphism_constructor := { bicomplexes_cat, S, datum, R }  -> CreateCapCategoryMorphismWithAttributes( bicomplexes_cat,
+    morphism_constructor := { bicomplexes_cat, S, datum, R } -> CreateCapCategoryMorphismWithAttributes( bicomplexes_cat,
                                                                     S, R,
                                                                     MorphismFunction, datum );
     
@@ -170,10 +170,10 @@ InstallMethod( BicomplexesCategoryByChains,
 #
 ######################################
 
-BindGlobal( "_bicomplexes_ViewObj",
+BindGlobal( "_bicomplexes_ViewString",
   
   function ( x )
-    local b, cell, i;
+    local b, s, cell, i;
     
     if IsCapCategoryObject( x ) then
       b := [ LeftBound( x ), RightBound( x ), BelowBound( x ), AboveBound( x ) ];
@@ -184,14 +184,16 @@ BindGlobal( "_bicomplexes_ViewObj",
              Maximum( AboveBound( Source( x ) ), AboveBound( Range( x ) ) ) ];
     fi;
     
+    s := [ "", "", "", "" ];
+    
     for i in [ 1 .. 4 ] do
       
       if IsInt( b[i] ) then
-        b[i] := String( b[i] );
+        s[i] := String( b[i] );
       elif b[i] = infinity then
-        b[i] := Concatenation( "+", TEXTMTRANSLATIONS!.infty );
+        s[i] := "+∞";
       elif b[i] = -infinity then
-        b[i] := Concatenation( "-", TEXTMTRANSLATIONS!.infty );
+        s[i] := "-∞";
       fi;
       
     od;
@@ -202,6 +204,6 @@ BindGlobal( "_bicomplexes_ViewObj",
         cell := "A morphism";
     fi;
     
-    Print( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the window [ ", b[1], " .. ", b[2], " ] x [ ", b[3], " .. ", b[4], " ]>" );
+    return Concatenation( "<", cell, " in ", Name( CapCategory( x ) ), " supported on the window [ ", s[1], " .. ", s[2], " ] x [ ", s[3], " .. ", s[4], " ]>" );
     
 end );

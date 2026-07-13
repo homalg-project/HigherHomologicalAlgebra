@@ -24,10 +24,10 @@ InstallMethod( DisplayString,
   function( alpha )
     local str;
     
-    str := Concatenation( TextAttr.b4, "The first morphism S <~~ X:", TextAttr.reset, "\n\n" );
+    str := "The first morphism S <~~ X: \n\n";
     str := Concatenation( str, DisplayString( DefiningPairOfMorphisms( alpha )[1] ) );
     
-    str := Concatenation( str, TextAttr.b4, "\n\nThe second morphism X --> R:", TextAttr.reset, "\n\n" );
+    str := Concatenation( str, "\n\nThe second morphism X --> R: \n\n" );
     str := Concatenation( str, DisplayString( DefiningPairOfMorphisms( alpha )[2] ) );
     
     return Concatenation( str, "\n\nA morphism in ", Name( CapCategory( alpha ) ), " defined by the pair S <~~ X --> R displayed above\n" );

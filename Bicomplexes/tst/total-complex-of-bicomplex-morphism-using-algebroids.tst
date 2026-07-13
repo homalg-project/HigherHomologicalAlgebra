@@ -179,3 +179,4 @@ gap> B := CreateBicomplex( chains_bicomplexes_Aoid, B );;
 gap> f := CreateBicomplexMorphism( chains_bicomplexes_Aoid, f );;
 gap> total_f := TotalComplexFunctorial( TotalComplex(A), f, TotalComplex(B) );;
 gap> Assert( 0, IsWellDefined( total_f ) );
+gap> # @drop_example_in_Julia

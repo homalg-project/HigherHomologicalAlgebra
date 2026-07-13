@@ -7,9 +7,11 @@
 ##
 #############################################################################
 
+#= comment for Julia
 InfoComplexesCategories := NewInfoClass( "InfoComplexesCategories" );
 
 SetInfoLevel( InfoComplexesCategories, 1 );
+# =#
 
 #! @Section Constructing categories
 

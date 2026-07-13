@@ -11,8 +11,10 @@ DeclareCategory( "IsHomotopyCategoryMorphism", IsQuotientCategoryMorphism );
 DeclareCategory( "IsHomotopyCategoryByCochainsMorphism", IsHomotopyCategoryMorphism );
 DeclareCategory( "IsHomotopyCategoryByChainsMorphism", IsHomotopyCategoryMorphism );
 
+#= comment for Julia
 DeclareOperation( "\[\]",
             [ IsHomotopyCategoryMorphism, IsInt ] );
+# =#
 
 KeyDependentOperation( "ApplyShift", IsHomotopyCategoryMorphism, IsInt, ReturnTrue );
 KeyDependentOperation( "ApplyUnsignedShift", IsHomotopyCategoryMorphism, IsInt, ReturnTrue );

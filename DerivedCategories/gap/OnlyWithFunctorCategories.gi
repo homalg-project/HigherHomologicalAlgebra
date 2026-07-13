@@ -27,7 +27,7 @@ InstallMethod( EmbeddingIntoDerivedCategory,
         TryNextMethod( );
     fi;
     
-    PSh := PreSheavesOfFpEnrichedCategory( B, RangeCategoryOfHomomorphismStructure( B ) : overhead := false );
+    PSh := PreSheavesOfFpEnrichedCategory( B : overhead := false );
     
     Y := IsomorphismFromSourceIntoImageOfYonedaEmbeddingOfSource( PSh );
     
@@ -73,10 +73,15 @@ InstallMethod( HomFunctorOfStrongExceptionalSequence,
     
     I := IsomorphismFromAbstractionAlgebroid( seq );
     
-    objs := List( SetOfObjects( seq_oid ), o -> UnderlyingCell( ApplyFunctor( I, o ) ) );
-    gen_morphisms := List( SetOfGeneratingMorphisms( seq_oid ), m -> UnderlyingCell( ApplyFunctor( I, m ) ) );
+    objs := CallFuncListAtRuntime( SetOfObjects, [ seq_oid ] );
+
+    objs := List( objs, o -> UnderlyingCell( ApplyFunctor( I, o ) ) );
+
+    gen_morphisms := CallFuncListAtRuntime( SetOfGeneratingMorphisms, [ seq_oid ] );
+
+    gen_morphisms := List( gen_morphisms, m -> UnderlyingCell( ApplyFunctor( I, m ) ) );
     
-    PSh := PreSheavesOfFpEnrichedCategory( seq_oid, RangeCategoryOfHomomorphismStructure( seq_oid ) : overhead := false );
+    PSh := PreSheavesOfFpEnrichedCategory( seq_oid : overhead := false );
     
     H := CapFunctor( "Hom(T,-) functor", cat, PSh );
     
@@ -119,19 +124,24 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
     
     seq_oid := AbstractionAlgebroid( seq );
     
-    PSh := PreSheavesOfFpEnrichedCategory( seq_oid, RangeCategoryOfHomomorphismStructure( seq_oid ) : overhead := false );
+    PSh := PreSheavesOfFpEnrichedCategory( seq_oid : overhead := false );
     
     I_1 := IsomorphismFromImageOfYonedaEmbeddingOfSourceIntoSource( PSh );
     
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( I_1 ) );
     DeactivateCachingObject( MorphismCache( I_1 ) );
+    # =#
     
     I_2 := IsomorphismFromAbstractionAlgebroid( seq );
     I_3 := InclusionFunctor( seq );
 
     I := PreCompose( [ I_1, I_2, I_3 ] );
+
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( I ) );
     DeactivateCachingObject( MorphismCache( I ) );
+    # =#
     
     y_image := SourceOfFunctor( I );
     
@@ -177,6 +187,7 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
         local F, pi_F, pres_TF, inj_F, summands_F, G, pi_G, pres_TG, proj_G, summands_G, l, mat_l, Tl;
         
         F := Source( alpha );
+        
         pi_F := EpimorphismFromProjectiveCoverObject( F );
         
         if IsBound( TF!.defining_data_for_tensor_functor ) then
@@ -185,9 +196,14 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
             inj_F := TF!.defining_data_for_tensor_functor!.range_injections;
             summands_F := TF!.defining_data_for_tensor_functor.range_summands;
             
-        else Error( "This should not happen!" ); fi;
+        else
+            
+            Error( "This should not happen!" );
+            
+        fi;
         
         G := Range( alpha );
+
         pi_G := EpimorphismFromProjectiveCoverObject( G );
         
         if IsBound( TG!.defining_data_for_tensor_functor ) then
@@ -196,10 +212,16 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
             proj_G := TG!.defining_data_for_tensor_functor!.range_projections;
             summands_G := TG!.defining_data_for_tensor_functor.range_summands;
             
-        else Error( "This should not happen!" ); fi;
+        else 
+            
+            Error( "This should not happen!" );
+            
+        fi;
         
         l := ProjectiveLift( PSh, PreCompose( PSh, pi_F, alpha ), pi_G );
+
         mat_l := List( inj_F, iota -> List( proj_G, pi -> ApplyFunctor( I, AsSubcategoryCell( y_image, PreCompose( [ iota, l, pi ] ) ) ) ) );
+
         Tl := MorphismBetweenDirectSumsWithGivenDirectSums( cat, Range( pres_TF ), summands_F, mat_l, summands_G, Range( pres_TG ) );
         
         return CokernelObjectFunctorialWithGivenCokernelObjects( TF, pres_TF, Tl, pres_TG, TG );

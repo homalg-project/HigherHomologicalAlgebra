@@ -30,6 +30,30 @@ InstallMethod( ExtendFunctorToHomotopyCategoriesByCochains,
 end );
 
 ##
+InstallMethod( ExtendFunctorToHomotopyCategoriesByChains,
+          [ IsCapFunctor ],
+  
+  function ( F )
+    local homotopy_category_1, homotopy_category_2, name, G;
+    
+    homotopy_category_1 := HomotopyCategoryByChains( SourceOfFunctor( F ) );
+    homotopy_category_2 := HomotopyCategoryByChains( RangeOfFunctor( F ) );
+    
+    name := Concatenation( "Extension of ( ", Name( F ), " ) to homotopy categories by chains" );
+    
+    G := CapFunctor( name, homotopy_category_1, homotopy_category_2 );
+    
+    F := ExtendFunctorToComplexesCategoriesByChains( F );
+    
+    AddObjectFunction( G, C -> ObjectConstructor( homotopy_category_2, ApplyFunctor( F, UnderlyingCell( C ) ) ) );
+    
+    AddMorphismFunction( G, { S, alpha, R } -> MorphismConstructor( S, ApplyFunctor( F, UnderlyingCell( alpha ) ), R ) );
+    
+    return G;
+    
+end );
+
+##
 InstallMethod( LocalizationFunctorByProjectiveObjects,
           [ IsHomotopyCategory ],
   
