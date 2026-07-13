@@ -53,11 +53,13 @@ DeclareAttribute( "UnderlyingCell", IsChainOrCochainComplex );
 #! @Returns a CAP object
 KeyDependentOperation( "ObjectAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to <C>ObjectAt</C>($C$,$i$).
 #! @Arguments C, i
 #! @Returns a CAP object
 DeclareOperation( "\[\]", [ IsChainOrCochainComplex, IsInt ] );
+# =#
 
 #! @Description
 #! Returns the differentials of the complex as a $\mathbb{Z}$-function.
@@ -71,11 +73,13 @@ DeclareAttribute( "Differentials", IsChainOrCochainComplex );
 #! @Returns a CAP morphism
 KeyDependentOperation( "DifferentialAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
+#= comment for Julia
 #! @Description
 #! Delegates to <C>DifferentialAt</C>($C$,$i$).
 #! @Arguments C, i
 #! @Returns a CAP object
 DeclareOperation( "\^", [ IsChainOrCochainComplex, IsInt ] );
+# =#
 
 #! @Description
 #! Returns the lower bound $\ell$ of $C$. I.e., the objects $C^i$ are zero for all $i\prec\ell$.

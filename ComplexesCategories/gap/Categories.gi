@@ -7,15 +7,16 @@
 
 BindGlobal( "INTEGERS_CAT",
   
-  function ( )
+ (function ( )
     local category;
-     
+    
+    #= comment for Julia
     if IsPackageMarkedForLoading( "Locales", ">= 2023.05-05" ) then
         
         return ValueGlobal( "TotalOrderAsCategory" )( "IsInt", {a,b} -> a >= b );
         
     else
-        
+    # =#
         category := CreateCapCategory( "TotalOrderAsCategory( \"IsInt\" )" );
         category!.category_as_first_argument := true;
         
@@ -33,10 +34,11 @@ BindGlobal( "INTEGERS_CAT",
         Finalize( category );
         
         return category;
-        
+    #= comment for Julia
     fi;
+    # =#
     
-end ( ) );
+end)( ) );
 
 BindGlobal( "INTEGERS_CAT_OBJS",
   
@@ -59,7 +61,11 @@ InstallMethod( ComplexesCategoryByCochains,
     
     ## building the categorical tower
     
-    modeling_cat := PreSheavesWithBounds( INTEGERS_CAT, cat, "both" : overhead := false );
+    modeling_cat := PreSheavesWithBounds( INTEGERS_CAT, cat, "both"
+                        #= comment for Julia
+                        : overhead := false
+                        # =#
+                        );
     
     ##
     object_constructor := { coch_cat, datum } -> CreateCapCategoryObjectWithAttributes( coch_cat,
