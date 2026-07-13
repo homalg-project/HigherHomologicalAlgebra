@@ -6,5 +6,3 @@
 
 DeclareGlobalFunction( "CheckNaturality" );
 DeclareGlobalFunction( "CheckFunctoriality" );
-
-DeclareOperation( "AdditiveFunctorByTwoFunctionsData", [ IsCapCategory, IsCapCategory, IsFunction, IsFunction ] );
