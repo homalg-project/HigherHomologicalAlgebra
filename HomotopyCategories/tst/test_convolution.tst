@@ -124,3 +124,4 @@ gap> for morphism_info in morphisms{[1..4]} do
 >    od;
 gap> IsWellDefined( Convolution( CreateComplex( HomotopyCategoryByCochains( homotopy_cat ), [ h0A, h0B, h0C, h0D ], 0 ) ) );
 true
+gap> # @drop_example_in_Julia

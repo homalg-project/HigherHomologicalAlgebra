@@ -149,3 +149,4 @@ gap> x := IsIsomorphism( lambda ) and
 >                               PreCompose( v, p_nu ) = PreCompose( p_gamma, ShiftOfMorphism( alpha ) ) and
 >                                 PreCompose( p_nu, ShiftOfMorphism( i_alpha ) ) = w;;
 gap> check( x );
+gap> # @drop_example_in_Julia
