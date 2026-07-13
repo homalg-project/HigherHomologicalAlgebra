@@ -8,9 +8,11 @@
 ##
 #############################################################################
 
+#= comment for Julia
 InfoBicomplexesCategories := NewInfoClass( "InfoBicomplexesCategories" );
 
 SetInfoLevel( InfoBicomplexesCategories, 1 );
+# =#
 
 #! @Section Constructing categories
 
