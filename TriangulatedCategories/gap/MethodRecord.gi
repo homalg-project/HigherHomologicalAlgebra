@@ -10,9 +10,9 @@
 ##
 ###############################
 
-InstallValue( TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD, rec(
+BindGlobal( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD", rec(
 
-StandardConeObject:= rec(
+StandardConeObject := rec(
   filter_list := [ "category", "morphism" ],
   return_type := "object"
 ),

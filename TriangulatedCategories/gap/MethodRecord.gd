@@ -4,17 +4,19 @@
 # Declarations
 #
 
-DeclareGlobalVariable( "TRIANGULATED_CATEGORIES_METHOD_NAME_RECORD" );
-
 ####################################
 #
 # to avoid conflicts with modules package
 #
 ####################################
 
+#= comment for Julia
 if not IsBound( IsExactTriangle ) then
-  DeclareProperty( "IsExactTriangle", IsAdditiveElementWithZero );
+# =#
+DeclareProperty( "IsExactTriangle", IsAdditiveElementWithZero );
+#= comment for Julia
 fi;
+# =#
 
 ####################################
 ##
