@@ -104,9 +104,9 @@ InstallMethod( PostnikovSystemAtOp,
       return CreateComplexMorphism(
                 complexes_cat,
                 PostnikovSystemAt( Source( alpha ), m ),
-                PostnikovSystemAt( Range( alpha ), m ),
-                Concatenation( List( [ l .. u-2 ], i -> alpha[i] ), [ st_cocone_morphism ] ),
-                Minimum( l, m ) );
+                Concatenation( List( [ l .. u - 2 ], i -> alpha[i] ), [ st_cocone_morphism ] ),
+                Minimum( l, m ),
+                PostnikovSystemAt( Range( alpha ), m ) );
     
     else
       

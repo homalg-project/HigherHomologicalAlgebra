@@ -76,14 +76,14 @@ RankOfObject( HomStructure( E1, E1 ) ) = 1 and
   RankOfObject( HomStructure( E2, E2 ) ) = 1 and
     RankOfObject( HomStructure( E3, E3 ) ) = 1;
 #! true
-IsZero( HomStructure( E3, E2 ) ) and
-  IsZero( HomStructure( E2, E1 ) ) and
-    IsZero( HomStructure( E3, E1 ) );
+IsZeroForObjects( HomStructure( E3, E2 ) ) and
+  IsZeroForObjects( HomStructure( E2, E1 ) ) and
+    IsZeroForObjects( HomStructure( E3, E1 ) );
 #! true
-IsZero( HomStructure( T, Shift( T, -2 ) ) ) and
-  IsZero( HomStructure( T, Shift( T, -1 ) ) ) and
-    IsZero( HomStructure( T, Shift( T, 1 ) ) ) and
-      IsZero( HomStructure( T, Shift( T, 2 ) ) );
+IsZeroForObjects( HomStructure( T, Shift( T, -2 ) ) ) and
+  IsZeroForObjects( HomStructure( T, Shift( T, -1 ) ) ) and
+    IsZeroForObjects( HomStructure( T, Shift( T, 1 ) ) ) and
+      IsZeroForObjects( HomStructure( T, Shift( T, 2 ) ) );
 #! true
 RankOfObject( HomStructure( T, T ) );
 #! 12
@@ -122,7 +122,7 @@ G_O1 := ApplyFunctor( G, O1 );
 G_O2 := ApplyFunctor( G, O2 );
 #! <An object in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {E1,E2,E3}[m1_2_1:E1→E2,m1_2_2:E1→E2,m1_2_3:E1→E2,m2_3_1:E2→E3,m2_3_2:E2→E3,m2_3_3:E2→E3] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>
 epsilon := CounitOfConvolutionReplacementAdjunction( seq );
-#! Counit ϵ : F∘G ⟹ Id of the adjunction F ⊣ G
+#! Counit ϵ : F ∘ G ⟹  Id of the adjunction F ⊣ G
 epsilon_O0 := ApplyNaturalTransformation( epsilon, O0 );
 #! <A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ 0 ]>
 epsilon_O1 := ApplyNaturalTransformation( epsilon, O1 );

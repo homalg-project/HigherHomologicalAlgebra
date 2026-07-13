@@ -11,9 +11,9 @@ InstallMethod( AbstractionAlgebroid,
   
   function ( seq )
     local nr_vertices, arrows, q, vertices_latex, morphisms_latex, F, k, kF, o, convert_string_to_morphism,
-    distinguished_object, range_cat, relations, quo_kF, oid, object_func, morphism_func, data, full_functor, f, t;
+    distinguished_object, range_cat, relations, quo_kF, data_tables, oid, object_func, morphism_func, data, known_values_on_objects, full_functor, f, t;
     
-    nr_vertices := Length( SetOfKnownObjects( seq ) );
+    nr_vertices := Length( SetOfObjects( seq ) );
     
     arrows := Concatenation(
                 List( [ 1 .. nr_vertices - 1 ],
@@ -102,27 +102,34 @@ InstallMethod( AbstractionAlgebroid,
         if IsEmpty( components ) then
             return ZeroMorphism( seq, s, r );
         else
-            return PreComposeList( seq, s, List( LabelsOfMorphisms( q ){components[1][2]}, convert_string_to_morphism ), r );
+            return PreComposeList( seq, s, List( LabelsOfMorphisms( q ){ components[1][2] }, convert_string_to_morphism ), r );
         fi;
         
     end;
     
-    data := AdditiveFunctorByTwoFunctionsData( oid, seq, object_func, morphism_func : full_functor := true, values_on_objects := [ SetOfObjects( oid ), SetOfKnownObjects( seq ) ] );
+    known_values_on_objects := [ CallFuncListAtRuntime( SetOfObjects, [ oid ] ), CallFuncListAtRuntime( SetOfObjects, [ seq ] ) ];
+
+    data := AdditiveFunctorDataFromValuesOnBasisMorphisms( oid, seq, object_func, morphism_func : is_full := true, known_values_on_objects := known_values_on_objects );
     
     ##
-    f := CapFunctor( Concatenation( "Isomorphism: abstraction algebroid ", TEXTMTRANSLATIONS.longrightarrow, " strong exceptional sequence" ), oid, seq );
+    f := CapFunctor( "Isomorphism: abstraction algebroid ⟶ strong exceptional sequence", oid, seq );
     AddObjectFunction( f, data[1] );
     AddMorphismFunction( f, data[2] );
     
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( f ) );
     DeactivateCachingObject( MorphismCache( f ) );
+    # =#
     
     ##
-    t := CapFunctor( Concatenation( "Isomorphism: strong exceptional sequence ", TEXTMTRANSLATIONS.longrightarrow, " abstraction algebroid" ), seq, oid );
+    t := CapFunctor( "Isomorphism: strong exceptional sequence ⟶ abstraction algebroid", seq, oid );
     AddObjectFunction( t, data[3] );
     AddMorphismFunction( t, data[4] );
+
+    #= comment for Julia
     DeactivateCachingObject( ObjectCache( t ) );
     DeactivateCachingObject( MorphismCache( t ) );
+    # =#
     
     SetIsomorphismFromAbstractionAlgebroid( seq, f );
     SetIsomorphismIntoAbstractionAlgebroid( seq, t );
@@ -138,6 +145,7 @@ InstallMethod( IsomorphismIntoAbstractionAlgebroid,
   function( seq )
     local oid;
     
+    # to set the attribute
     oid := AbstractionAlgebroid( seq );
     
     return IsomorphismIntoAbstractionAlgebroid( seq );
@@ -151,6 +159,7 @@ InstallMethod( IsomorphismFromAbstractionAlgebroid,
   function( seq )
     local oid;
     
+    # to set the attribute
     oid := AbstractionAlgebroid( seq );
     
     return IsomorphismFromAbstractionAlgebroid( seq );

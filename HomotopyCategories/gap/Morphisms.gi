@@ -141,32 +141,14 @@ InstallOtherMethod( MorphismBetweenProjectiveResolutions,
 end );
 
 ##
-InstallOtherMethod( MorphismBetweenInjectiveResolutions,
-              [ IsHomotopyCategoryMorphism, IsBool ],
-  
-  function( alpha, bool )
-    local m, S, R;
-    
-    m := MorphismBetweenInjectiveResolutions( UnderlyingCell( alpha ), bool );
-    
-    S := ObjectConstructor( CapCategory( alpha ), Source( m ) );
-    R := ObjectConstructor( CapCategory( alpha ), Range( m ) );
-    
-    return MorphismConstructor( CapCategory( alpha ), S, m, R );
-end );
-
-
-##
 InstallMethod( ApplyShiftOp,
           [ IsHomotopyCategoryMorphism, IsInt ],
   
   { alpha, i } -> CreateComplexMorphism(
                       CapCategory( alpha ),
                       ApplyShift( Source( alpha ), i ),
-                      ApplyShift( Range( alpha ), i ),
                       ApplyShift( Morphisms( alpha ), i ),
-                      LowerBound( alpha ) - i,
-                      UpperBound( alpha ) - i )
+                      ApplyShift( Range( alpha ), i ) )
 );
 
 ##
@@ -176,10 +158,8 @@ InstallMethod( ApplyUnsignedShiftOp,
   { alpha, i } -> CreateComplexMorphism(
                       CapCategory( alpha ),
                       ApplyUnsignedShift( Source( alpha ), i ),
-                      ApplyUnsignedShift( Range( alpha ), i ),
                       ApplyShift( Morphisms( alpha ), i ),
-                      LowerBound( alpha ) - i,
-                      UpperBound( alpha ) - i )
+                      ApplyUnsignedShift( Range( alpha ), i ) )
 );
 
 
