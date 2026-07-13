@@ -66,7 +66,8 @@ gap> for object_info in objects do
 >         CreateComplex(
 >            Ch_AAoid,
 >            List( [ object_info[2][1] .. object_info[2][2] - 1 ],
->              i -> oid.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / Aoid / AAoid ),
+>              function( i )
+>                 return oid.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / Aoid / AAoid; end ),
 >            object_info[2][1] ) );
 >    od;
 gap> for morphism_info in [ morphisms[2], morphisms[4] ] do
