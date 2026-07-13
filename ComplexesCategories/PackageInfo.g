@@ -76,6 +76,8 @@ Dependencies := rec(
   NeededOtherPackages := [  [ "CAP", ">= 2026.05-02" ],
                             [ "ToolsForHigherHomologicalAlgebra", ">= 2026.04-01" ],
                             [ "PresheafCategories", ">= 2026.07-01" ],
+                            [ "AdditiveClosuresForCAP", ">= 2026.06-03" ],
+                            [ "FreydCategoriesForCAP", ">= 2026.06-04" ],
                          ],
 
   SuggestedOtherPackages := [ [ "Locales", ">= 2023.05-05" ],
