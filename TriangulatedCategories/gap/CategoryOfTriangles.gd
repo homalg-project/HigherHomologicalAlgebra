@@ -48,9 +48,9 @@ DeclareAttribute( "UnderlyingCategory", IsCategoryOfExactTriangles );
 #! The arguments are three morphisms $\alpha:A\to B$, $\iota:B\to C$ and $\pi:C\to\Sigma A$ in some triangulated
 #! category $\mathcal{T}$.
 #! The output the exact triangle $A\to B \to C \to \Sigma A$ defined by them.
-#! @Arguments alpha, iota, pi
+#! @Arguments cat, alpha, iota, pi
 #! @Returns an exact triangle
-DeclareOperation( "ExactTriangle", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+DeclareOperation( "ExactTriangle", [ IsCapCategory, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments is an exact triangle defined by three morphisms
@@ -150,6 +150,20 @@ DeclareAttribute( "WitnessIsomorphismIntoStandardExactTriangle", IsCategoryOfExa
 DeclareAttribute( "WitnessIsomorphismFromStandardExactTriangle", IsCategoryOfExactTrianglesObject );
 
 #! @Description
+#! The argument is a morphism $\mu:t_1\to t_2$ of exact triangles.
+#! The output is the list $[\mu_0,\mu_1,\mu_2]$ of its three defining component morphisms.
+#! @Arguments mu
+#! @Returns a list
+DeclareAttribute( "DefiningTripleOfMorphisms", IsCategoryOfExactTrianglesMorphism );
+
+#! @Description
+#! The argument is an exact triangle $t=(\alpha,\iota,\pi)$.
+#! The output is the list $[\alpha,\iota,\pi]$ of its three defining morphisms.
+#! @Arguments t
+#! @Returns a list
+DeclareAttribute( "DefiningTripleOfMorphisms", IsCategoryOfExactTrianglesObject );
+
+#! @Description
 #! The arguments are an exact triangle $t_1$, three morphisms
 #! $\mu_0:t_1[0]\to t_2[0]$, $\mu_1:t_1[1]\to t_2[1]$, $\mu_2:t_1[2]\to t_2[2]$
 #! and an exact triangle $t_2$.
@@ -195,31 +209,19 @@ DeclareOperation( "MorphismOfExactTriangles",
 
 #! @Description
 #! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$. The output is the exact triangle
-#! defined by the Octhedral axiom.
+#! defined by the Octahedral axiom.
+#! Use the named argument <C>compute_witnesses := true</C> to also compute and store the
+#! witness isomorphisms into/from the standard exact triangle.
 #! @Arguments alpha, beta, gamma
 #! @Returns a triangle
 DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
-#! The arguments are two morphisms $\alpha:A\to B$, $\beta:B\to C$ and a boolian $b$.
-#! The output is the exact triangle defined by the Octhedral axiom. If $b$=<C>true</C>, then
-#! the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments alpha, beta, gamma, b
-#! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism, IsBool ] );
-
-#! @Description
-#! The arguments are two exact triangles $t_1,t_2$ such that $t_1[1]=t_2[0]$ and a boolian $b$.
-#! The output is <C>ExactTriangleByOctahedralAxiom</C>$(t_1,t_2)$.
-#! If $b$ = <C>true</C> then the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments t_1, t_2, b
-#! @Returns a triangle
-DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsBool ] );
-
-#! @Description
 #! The arguments are three exact triangles $t_1,t_2,t_3$ such that $t_1[1]=t_2[0]$,
 #! $t_1[0]=t_3[0]$, $t_2[1]=t_3[1]$ and $t_2^0\circ t_1^0=t_3^0$.
 #! The output is the exact triangle defined by the Octahedral axiom.
+#! Use the named argument <C>compute_witnesses := true</C> to also compute and store the
+#! witness isomorphisms into the standard exact triangle.
 #! @Arguments t_1, t_2, t_3
 #! @Returns a triangle
 DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject, IsCategoryOfExactTrianglesObject ] );
@@ -227,18 +229,11 @@ DeclareOperation( "ExactTriangleByOctahedralAxiom", [ IsCategoryOfExactTriangles
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle
 #! defined by the rotation axiom, i.e., the exact triangle $(\iota,\pi,-\Sigma \alpha)$.
+#! Use the named argument <C>compute_witnesses := true</C> to also compute and store the
+#! witness isomorphisms into/from the standard exact triangle.
 #! @Arguments t
 #! @Returns a triangle
 DeclareAttribute( "Rotation", IsCategoryOfExactTrianglesObject );
-
-#! @Description
-#! The arguments are an exact triangle $t=(\alpha,\iota,\pi)$ and a boolian $b$. The output
-#! is <C>Rotation</C>$(t)$.
-#! If $b$=<C>true</C>, then
-#! the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments t, b
-#! @Returns a triangle
-DeclareOperation( "Rotation", [ IsCategoryOfExactTrianglesObject, IsBool ] );
 
 #! @Description
 #! The argument is an exact triangle $t=(\alpha,\iota,\pi)$. The output is the exact triangle
@@ -247,18 +242,11 @@ DeclareOperation( "Rotation", [ IsCategoryOfExactTrianglesObject, IsBool ] );
 #! $\eta$ := <C>CounitIsomorphism</C>, $\mu$ := <C>UnitIsomorphism</C>,
 #! $A$ := <C>Source</C>$(\alpha)$ and
 #! $C$ := <C>Range</C>$(\iota)$.
+#! Use the named argument <C>compute_witnesses := true</C> to also compute and store the
+#! witness isomorphisms into/from the standard exact triangle.
 #! @Arguments t
 #! @Returns a triangle
 DeclareAttribute( "InverseRotation", IsCategoryOfExactTrianglesObject );
-
-#! @Description
-#! The arguments are an exact triangle $t=(\alpha,\iota,\pi)$ and a boolian $b$.
-#! The output is <C>InverseRotation</C>$(t)$.
-#! If $b$=<C>true</C>, then
-#! the operation will compute a witness isomorphism into the standard exact triangle.
-#! @Arguments t, bool
-#! @Returns a triangle
-DeclareOperation( "InverseRotation", [ IsCategoryOfExactTrianglesObject, IsBool ] );
 
 if false then
   KeyDependentOperation( "Shift", IsCategoryOfExactTrianglesObject, IsInt, ReturnTrue );

@@ -202,11 +202,11 @@ InstallMethod( ExtendFunctorToCategoryOfTriangles,
     AddObjectFunction( TF,
       function( triangle )
         
-        return ExactTriangle(
+        return CallFuncListAtRuntime( ExactTriangle, [ R,
                   ApplyFunctor( F, triangle ^ 0 ),
                   ApplyFunctor( F, triangle ^ 1),
                   PreCompose( ApplyFunctor( F, triangle ^ 2 ), eta( triangle[ 0 ] ) )
-                );
+                ] );
                 
       end );
       
