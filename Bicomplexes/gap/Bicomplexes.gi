@@ -189,9 +189,9 @@ BindGlobal( "_bicomplexes_ViewObj",
       if IsInt( b[i] ) then
         b[i] := String( b[i] );
       elif b[i] = infinity then
-        b[i] := Concatenation( "+", TEXTMTRANSLATIONS!.infty );
+        b[i] := Concatenation( "+∞" );
       elif b[i] = -infinity then
-        b[i] := Concatenation( "-", TEXTMTRANSLATIONS!.infty );
+        b[i] := Concatenation( "-∞" );
       fi;
       
     od;
