@@ -21,15 +21,17 @@ k := QQ;
 #! Q
 k_quotient_P_O := k[quotient_P_O];
 #! Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )
+IsAdmissibleAlgebroid( k_quotient_P_O );
+#! true
 A_O := AlgebroidFromDataTables( k_quotient_P_O );
 #! Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms
 Dimension( A_O );
 #! 10
-IsAdmissibleAlgebroid( A_O );
+HasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );
 #! true
 phi := 2 * A_O.x + 3 * A_O.y;
 #! <2*x + 3*y:(A) → (B)>
-PSh := PreSheaves( A_O );
+PSh := PreSheavesOfFpEnrichedCategory( A_O );
 #! PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 Display( PSh );
 #! A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
@@ -99,5 +101,5 @@ w := WitnessForBeingHomotopicToZeroMorphism( u - id );
 #! <ZFunction>
 w[0];
 #! A morphism in full subcategory given by: <(A)->2x1, (B)->1x0, (C)->0x0>
-# @drop_example_in_Julia
+# @drop_example_in_Julia (was manually added there)
 #! @EndExample

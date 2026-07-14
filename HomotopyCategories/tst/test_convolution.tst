@@ -164,7 +164,10 @@ gap> h0D := MorphismConstructor( homotopy_cat,
 >               -2,
 >               UnderlyingCell( E_ ) ),
 >             E_ );;
-gap> IsWellDefined( Convolution( CreateComplex( HomotopyCategoryByCochains( homotopy_cat ), [ h0A, h0B, h0C, h0D ], 0 ) ) );
+gap> homotopy_cat_of_homotopy_cat := HomotopyCategoryByCochains( homotopy_cat );;
+gap> T := CreateComplex( homotopy_cat_of_homotopy_cat, [ h0A, h0B, h0C, h0D ], 0 );;
+gap> conv_T := Convolution( T );;
+gap> IsWellDefined( conv_T );
 true
 gap> # @drop_example_in_Julia
 

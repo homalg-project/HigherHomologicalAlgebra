@@ -10,7 +10,7 @@ LoadPackage( "HomotopyCategories", false );
 HOMALG_IO.show_banners := false;;
 QQ := HomalgFieldOfRationalsInSingular( );
 #! Q
-QQ_xy := QQ["x, y"];
+QQ_xy := QQ["x,y"];
 #! Q[x,y]
 QQ_xy_rows := CategoryOfRows( QQ_xy );
 #! Rows( Q[x,y] )
@@ -232,5 +232,5 @@ IsIsomorphism( nu );
 #! true
 ShiftOfObjectByInteger( p_M, 2 );
 #! <An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -4 .. -1 ]>
-# @drop_example_in_Julia
+# @drop_example_in_Julia (was manually added there)
 #! @EndExample

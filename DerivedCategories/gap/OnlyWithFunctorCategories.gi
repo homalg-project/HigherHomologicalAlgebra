@@ -126,7 +126,7 @@ InstallMethod( TensorProductFunctorOfStrongExceptionalSequence,
     
     PSh := PreSheavesOfFpEnrichedCategory( seq_oid : overhead := false );
     
-    I_1 := IsomorphismFromImageOfYonedaEmbeddingOfSourceIntoSource( PSh );
+    I_1 := CallFuncListAtRuntime( IsomorphismFromImageOfYonedaEmbeddingOfSourceIntoSource, [ PSh ] );
     
     #= comment for Julia
     DeactivateCachingObject( ObjectCache( I_1 ) );
