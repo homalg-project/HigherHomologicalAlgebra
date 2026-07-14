@@ -1,7 +1,7 @@
 name: DerivedCategories
-version: "2026.07-02"
+version: "2026.07-03"
 license: "GPL-2.0-or-later"
-date: 2026-07-13
+date: 2026-07-14
 description: |
     Derived categories of Abelian categories
 
@@ -38,11 +38,11 @@ packageinfo: https://homalg-project.github.io/HigherHomologicalAlgebra/DerivedCa
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02.tar.gz
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-03/DerivedCategories-2026.07-03.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02.zip
+      url: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-03/DerivedCategories-2026.07-03.zip
 
-pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-02/DerivedCategories-2026.07-02-manual.pdf
+pdf: https://github.com/homalg-project/HigherHomologicalAlgebra/releases/download/DerivedCategories-2026.07-03/DerivedCategories-2026.07-03-manual.pdf
 
 abstract: |
 
@@ -51,10 +51,10 @@ doc-html: doc/chap0.html
 doc-pdf: doc/manual.pdf
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal13</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal14</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>DerivedCategories, Derived categories of Abelian categories,
-             Version 2026.07-02</i>
-     (<span class='BibYear'>7-13</span>)<br />
+             Version 2026.07-03</i>
+     (<span class='BibYear'>7-14</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/DerivedCategories">https://homalg-project.github.io/pkg/DerivedCategories</a></span>.
     </p>
@@ -64,15 +64,15 @@ bibtex: |
     @misc{ DerivedCategories,
       author =           {Saleh, K.},
       title =            {{DerivedCategories},  {Derived  categories  of Abelian
-                          categories}, {V}ersion 2026.07\texttt{\symbol{45}}02},
+                          categories}, {V}ersion 2026.07\texttt{\symbol{45}}03},
       month =            {6\texttt{\symbol{45}}},
-      year =             {7\texttt{\symbol{45}}13},
+      year =             {7\texttt{\symbol{45}}14},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/DerivedCategories}
                           {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{DerivedCategories}}},
-      printedkey =       {Sal13}
+      printedkey =       {Sal14}
     }
 
