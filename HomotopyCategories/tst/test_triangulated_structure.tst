@@ -146,20 +146,16 @@ gap> beta := MorphismConstructor( homotopy_cat,
 >                -2,
 >                UnderlyingCell( D ) ),
 >              D );;
-gap> check := function(x) if not x then Error( "A ", Encode( Unicode( "&#128027;", "XML") ),  " is found!\n" ); fi; end;;
 gap> x := ShiftOfObject( InverseShiftOfObject( A ) ) = A and ShiftOfMorphism( InverseShiftOfMorphism( alpha ) ) = alpha;;
-gap> check( x );
 gap> x := Shift( Shift( A, -1 ), 1 ) = A and Shift( Shift( alpha, -1 ), 1 ) = alpha;;
-gap> check( x );
 gap> i_alpha := MorphismIntoStandardConeObject( alpha );;
 gap> p_alpha := MorphismFromStandardConeObject( alpha );;
 gap> i_beta := MorphismIntoStandardConeObject( beta );;
 gap> p_beta := MorphismFromStandardConeObject( beta );;
 gap> m := MorphismBetweenStandardConeObjects( alpha, mu, nu, beta );;
 gap> x := ForAll( [ i_alpha, i_beta, p_alpha, p_beta, m ], IsWellDefined ) and
->                   PreCompose( i_alpha, m )= PreCompose( nu, i_beta ) and
->                       PreCompose( p_alpha, ShiftOfMorphism(mu) )= PreCompose( m, p_beta );;
-gap> check( x );
+>                   PreCompose( i_alpha, m ) = PreCompose( nu, i_beta ) and
+>                       PreCompose( p_alpha, ShiftOfMorphism(mu) ) = PreCompose( m, p_beta );;
 gap> ii_alpha := MorphismIntoStandardConeObject( i_alpha );;
 gap> pi_alpha := MorphismFromStandardConeObject( i_alpha );;
 gap> w := WitnessIsomorphismIntoStandardConeObjectByRotationAxiom( alpha );;
@@ -167,7 +163,6 @@ gap> v := WitnessIsomorphismFromStandardConeObjectByRotationAxiom( alpha );;
 gap> x := IsIsomorphism( w ) and InverseForMorphisms( w ) = v and
 >                   IsCongruentForMorphisms( PreCompose( p_alpha, w ), ii_alpha ) and
 >                     IsCongruentForMorphisms( PreCompose( w, pi_alpha ), -ShiftOfMorphism( alpha ) );;
-gap> check( x );
 gap> m_isigma_p_alpha := -InverseShiftOfMorphism( p_alpha );;
 gap> i_m_isigma_p_alpha := MorphismIntoStandardConeObject( m_isigma_p_alpha );;
 gap> p_m_isigma_p_alpha := MorphismFromStandardConeObject( m_isigma_p_alpha );;
@@ -176,7 +171,6 @@ gap> v := WitnessIsomorphismFromStandardConeObjectByInverseRotationAxiom( alpha 
 gap> x := IsIsomorphism( w ) and InverseForMorphisms( w ) = v and
 >                   IsCongruentForMorphisms( PreCompose( alpha, w ), i_m_isigma_p_alpha ) and
 >                     IsCongruentForMorphisms( PreCompose( w, p_m_isigma_p_alpha ), i_alpha );;
-gap> check( x );
 gap> i_nu := MorphismIntoStandardConeObject( nu );;
 gap> p_nu := MorphismFromStandardConeObject( nu );;
 gap> i_gamma := MorphismIntoStandardConeObject( gamma );;
@@ -197,8 +191,7 @@ gap> x := IsIsomorphism( lambda ) and
 >                             PreCompose( i_gamma, v ) = i_nu and
 >                               PreCompose( v, p_nu ) = PreCompose( p_gamma, ShiftOfMorphism( alpha ) ) and
 >                                 PreCompose( p_nu, ShiftOfMorphism( i_alpha ) ) = w;;
-gap> check( x );
-gap> # @drop_example_in_Julia
+gap> # @drop_example_in_Julia (was manually added there)
 
 #
 gap> STOP_TEST("test_triangulated_structure.tst", 1);

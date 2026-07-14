@@ -21,13 +21,15 @@ k := QQ;
 #! Q
 k_quotient_P_O := k[quotient_P_O];
 #! Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )
+IsAdmissibleAlgebroid( k_quotient_P_O );
+#! true
 A_O := AlgebroidFromDataTables( k_quotient_P_O );
 #! Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms
 Dimension( A_O );
 #! 10
-IsAdmissibleAlgebroid( A_O );
+HasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );
 #! true
-PSh := PreSheaves( A_O );
+PSh := PreSheavesOfFpEnrichedCategory( A_O );
 #! PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 Y1 := YonedaEmbeddingOfSourceCategory( PSh );
 #! Yoneda embedding functor
@@ -51,7 +53,7 @@ Display( Y2 );
 #! PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 add_A_O := SourceOfFunctor( Y2 );
 #! AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms )
-ApplyFunctor( Y2, add_A_O.x );
+ApplyFunctor( Y2, A_O.x / add_A_O );
 #! <(A)->1x2, (B)->0x1, (C)->0x0>
 Y3 := ExtendFunctorToFreydCategory( Y2 );
 #! Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) )
@@ -90,12 +92,12 @@ Display( Y4 );
 #!   |
 #!   V
 #! Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
-repeat f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );; until not IsZeroForMorphisms( f );
+f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );;
 Y4_f := ApplyFunctor( Y4, f );
 #! <A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]>
 r1 := RankOfObject( HomomorphismStructureOnObjects( Source( f ), Target( f ) ) );;
 r2 := RankOfObject( HomomorphismStructureOnObjects( Source( Y4_f ), Target( Y4_f ) ) );;
 r1 = r2;
 #! true
-# @drop_example_in_Julia
+# @drop_example_in_Julia (was manually added there)
 #! @EndExample
