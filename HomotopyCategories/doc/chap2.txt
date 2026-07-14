@@ -12,7 +12,7 @@
     [4X[25Xgap>[125X [27XHOMALG_IO.show_banners := false;;[127X[104X
     [4X[25Xgap>[125X [27XQQ := HomalgFieldOfRationalsInSingular( );[127X[104X
     [4X[28XQ[128X[104X
-    [4X[25Xgap>[125X [27XQQ_xy := QQ["x, y"];[127X[104X
+    [4X[25Xgap>[125X [27XQQ_xy := QQ["x,y"];[127X[104X
     [4X[28XQ[x,y][128X[104X
     [4X[25Xgap>[125X [27XQQ_xy_rows := CategoryOfRows( QQ_xy );[127X[104X
     [4X[28XRows( Q[x,y] )[128X[104X
@@ -234,7 +234,7 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XShiftOfObjectByInteger( p_M, 2 );[127X[104X
     [4X[28X<An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -4 .. -1 ]>[128X[104X
-    [4X[25Xgap>[125X [27X# @drop_example_in_Julia[127X[104X
+    [4X[25Xgap>[125X [27X# @drop_example_in_Julia (was manually added there)[127X[104X
   [4X[32X[104X
   
   
@@ -462,13 +462,15 @@
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk_quotient_P_O := k[quotient_P_O];[127X[104X
     [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
+    [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( k_quotient_P_O );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XA_O := AlgebroidFromDataTables( k_quotient_P_O );[127X[104X
     [4X[28XQ-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27XDimension( A_O );[127X[104X
     [4X[28X10[128X[104X
-    [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( A_O );[127X[104X
+    [4X[25Xgap>[125X [27XHasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XPSh := PreSheaves( A_O );[127X[104X
+    [4X[25Xgap>[125X [27XPSh := PreSheavesOfFpEnrichedCategory( A_O );[127X[104X
     [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XY1 := YonedaEmbeddingOfSourceCategory( PSh );[127X[104X
     [4X[28XYoneda embedding functor[128X[104X
@@ -492,7 +494,7 @@
     [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27Xadd_A_O := SourceOfFunctor( Y2 );[127X[104X
     [4X[28XAdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms )[128X[104X
-    [4X[25Xgap>[125X [27XApplyFunctor( Y2, add_A_O.x );[127X[104X
+    [4X[25Xgap>[125X [27XApplyFunctor( Y2, A_O.x / add_A_O );[127X[104X
     [4X[28X<(A)->1x2, (B)->0x1, (C)->0x0>[128X[104X
     [4X[25Xgap>[125X [27XY3 := ExtendFunctorToFreydCategory( Y2 );[127X[104X
     [4X[28XExtension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) )[128X[104X
@@ -531,14 +533,14 @@
     [4X[28X  |[128X[104X
     [4X[28X  V[128X[104X
     [4X[28XHomotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )[128X[104X
-    [4X[25Xgap>[125X [27Xrepeat f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );; until not IsZeroForMorphisms( f );[127X[104X
+    [4X[25Xgap>[125X [27Xf := RandomMorphism( SourceOfFunctor( Y4 ), 3 );;[127X[104X
     [4X[25Xgap>[125X [27XY4_f := ApplyFunctor( Y4, f );[127X[104X
     [4X[28X<A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]>[128X[104X
     [4X[25Xgap>[125X [27Xr1 := RankOfObject( HomomorphismStructureOnObjects( Source( f ), Target( f ) ) );;[127X[104X
     [4X[25Xgap>[125X [27Xr2 := RankOfObject( HomomorphismStructureOnObjects( Source( Y4_f ), Target( Y4_f ) ) );;[127X[104X
     [4X[25Xgap>[125X [27Xr1 = r2;[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27X# @drop_example_in_Julia[127X[104X
+    [4X[25Xgap>[125X [27X# @drop_example_in_Julia (was manually added there)[127X[104X
   [4X[32X[104X
   
   
@@ -563,15 +565,17 @@
     [4X[28XQ[128X[104X
     [4X[25Xgap>[125X [27Xk_quotient_P_O := k[quotient_P_O];[127X[104X
     [4X[28XQ-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )[128X[104X
+    [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( k_quotient_P_O );[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XA_O := AlgebroidFromDataTables( k_quotient_P_O );[127X[104X
     [4X[28XQ-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms[128X[104X
     [4X[25Xgap>[125X [27XDimension( A_O );[127X[104X
     [4X[28X10[128X[104X
-    [4X[25Xgap>[125X [27XIsAdmissibleAlgebroid( A_O );[127X[104X
+    [4X[25Xgap>[125X [27XHasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xphi := 2 * A_O.x + 3 * A_O.y;[127X[104X
     [4X[28X<2*x + 3*y:(A) → (B)>[128X[104X
-    [4X[25Xgap>[125X [27XPSh := PreSheaves( A_O );[127X[104X
+    [4X[25Xgap>[125X [27XPSh := PreSheavesOfFpEnrichedCategory( A_O );[127X[104X
     [4X[28XPreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )[128X[104X
     [4X[25Xgap>[125X [27XDisplay( PSh );[127X[104X
     [4X[28XA CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):[128X[104X
@@ -641,7 +645,7 @@
     [4X[28X<ZFunction>[128X[104X
     [4X[25Xgap>[125X [27Xw[0];[127X[104X
     [4X[28XA morphism in full subcategory given by: <(A)->2x1, (B)->1x0, (C)->0x0>[128X[104X
-    [4X[25Xgap>[125X [27X# @drop_example_in_Julia[127X[104X
+    [4X[25Xgap>[125X [27X# @drop_example_in_Julia (was manually added there)[127X[104X
   [4X[32X[104X
   
   
@@ -781,6 +785,6 @@
     [4X[28X<A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]>[128X[104X
     [4X[25Xgap>[125X [27XIsWellDefined( i ) and IsIsomorphism( i );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27X# @drop_example_in_Julia[127X[104X
+    [4X[25Xgap>[125X [27X# @drop_example_in_Julia (was manually added there)[127X[104X
   [4X[32X[104X
   

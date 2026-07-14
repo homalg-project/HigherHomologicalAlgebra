@@ -51,7 +51,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HOMALG_IO.show_banners := false;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ := HomalgFieldOfRationalsInSingular( );</span>
 Q
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy := QQ["x, y"];</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy := QQ["x,y"];</span>
 Q[x,y]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QQ_xy_rows := CategoryOfRows( QQ_xy );</span>
 Rows( Q[x,y] )
@@ -273,7 +273,7 @@ false
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShiftOfObjectByInteger( p_M, 2 );</span>
 &lt;An object in Homotopy category by cochains( Freyd( Rows( Q[x,y] ) ) ) supported on the interval [ -4 .. -1 ]&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia (was manually added there)</span>
 </pre></div>
 
 <p><a id="X804B9FCF83F5EDBB" name="X804B9FCF83F5EDBB"></a></p>
@@ -504,13 +504,15 @@ Q
 Q
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k_quotient_P_O := k[quotient_P_O];</span>
 Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( k_quotient_P_O );</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_O := AlgebroidFromDataTables( k_quotient_P_O );</span>
 Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension( A_O );</span>
 10
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( A_O );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheaves( A_O );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheavesOfFpEnrichedCategory( A_O );</span>
 PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y1 := YonedaEmbeddingOfSourceCategory( PSh );</span>
 Yoneda embedding functor
@@ -534,7 +536,7 @@ AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined
 PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">add_A_O := SourceOfFunctor( Y2 );</span>
 AdditiveClosure( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApplyFunctor( Y2, add_A_O.x );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApplyFunctor( Y2, A_O.x / add_A_O );</span>
 &lt;(A)-&gt;1x2, (B)-&gt;0x1, (C)-&gt;0x0&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y3 := ExtendFunctorToFreydCategory( Y2 );</span>
 Extension to FreydCategory( Source( Extension of Yoneda embedding functor to a functor from the additive closure of the source ) )
@@ -573,14 +575,14 @@ Homotopy category by cochains( Freyd( AdditiveClosure( Q-algebroid( {A,B,C}[x:A�
   |
   V
 Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">repeat f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );; until not IsZeroForMorphisms( f );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := RandomMorphism( SourceOfFunctor( Y4 ), 3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y4_f := ApplyFunctor( Y4, f );</span>
 &lt;A morphism in Homotopy category by cochains( PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ) ) supported on the interval [ -1 .. 2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1 := RankOfObject( HomomorphismStructureOnObjects( Source( f ), Target( f ) ) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r2 := RankOfObject( HomomorphismStructureOnObjects( Source( Y4_f ), Target( Y4_f ) ) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1 = r2;</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia (was manually added there)</span>
 </pre></div>
 
 <p><a id="X87E84EBF78EC7100" name="X87E84EBF78EC7100"></a></p>
@@ -607,15 +609,17 @@ Q
 Q
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k_quotient_P_O := k[quotient_P_O];</span>
 Q-LinearClosure( PathCategory( FinQuiver( "q_O(A,B,C)[x:A→B,y:A→B,z:B→C,w:B→C]" ) ) / [ x⋅z = y⋅w ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( k_quotient_P_O );</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A_O := AlgebroidFromDataTables( k_quotient_P_O );</span>
 Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Dimension( A_O );</span>
 10
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsAdmissibleAlgebroid( A_O );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasIsAdmissibleAlgebroid( A_O ) and IsAdmissibleAlgebroid( A_O );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := 2 * A_O.x + 3 * A_O.y;</span>
 &lt;2*x + 3*y:(A) → (B)&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheaves( A_O );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PSh := PreSheavesOfFpEnrichedCategory( A_O );</span>
 PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( PSh );</span>
 A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
@@ -685,7 +689,7 @@ true
 &lt;ZFunction&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w[0];</span>
 A morphism in full subcategory given by: &lt;(A)-&gt;2x1, (B)-&gt;1x0, (C)-&gt;0x0&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia (was manually added there)</span>
 </pre></div>
 
 <p><a id="X81B108B17F275A81" name="X81B108B17F275A81"></a></p>
@@ -826,7 +830,7 @@ true
 &lt;A morphism in Homotopy category by cochains( AdditiveClosure( Q-algebroid( {O0,O1,O2}[x0:O0→O1,x1:O0→O1,x2:O0→O1,y0:O1→O2,y1:O1→O2,y2:O1→O2] ) defined by 3 objects and 6 generating morphisms ) ) supported on the interval [ -2 .. 0 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsWellDefined( i ) and IsIsomorphism( i );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># @drop_example_in_Julia (was manually added there)</span>
 </pre></div>
 
 
