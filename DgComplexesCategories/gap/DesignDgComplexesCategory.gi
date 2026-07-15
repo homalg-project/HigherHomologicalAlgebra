@@ -215,7 +215,9 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
     
     for object_info in objects do
         
-        MakeReadWriteGlobal( object_info[1] );
+        if IsBoundGlobal( object_info[1] ) then
+            UnbindGlobal( object_info[1] );
+        fi;
         
         DeclareSynonym( object_info[1],
             DgCochainComplex(
@@ -223,11 +225,16 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
                 List( [ object_info[2][1] .. object_info[2][2] - 1 ],
                   i -> kF.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 object_info[2][1] ) );
+        
+        MakeReadWriteGlobal( object_info[1] );
+        
     od;
     
     for morphism_info in morphisms do
         
-        MakeReadWriteGlobal( morphism_info[1] );
+        if IsBoundGlobal( morphism_info[1] ) then
+            UnbindGlobal( morphism_info[1] );
+        fi;
         
         DeclareSynonym( morphism_info[1],
             DgCochainComplexMorphism(
@@ -237,6 +244,8 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
                 morphism_info[3],
                 List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> kF.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 morphism_info[4][1] ) );
+        
+        MakeReadWriteGlobal( morphism_info[1] );
     
     od;
     
@@ -267,7 +276,9 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
     
     for object_info in objects do
         
-        MakeReadWriteGlobal( object_info[1] );
+        if IsBoundGlobal( object_info[1] ) then
+            UnbindGlobal( object_info[1] );
+        fi;
         
         DeclareSynonym( object_info[1],
             DgCochainComplex(
@@ -275,11 +286,16 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
                 List( [ object_info[2][1] .. object_info[2][2] - 1 ],
                   i -> oid.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 object_info[2][1] ) );
+        
+        MakeReadWriteGlobal( object_info[1] );
+        
     od;
     
     for morphism_info in morphisms do
         
-        MakeReadWriteGlobal( morphism_info[1] );
+        if IsBoundGlobal( morphism_info[1] ) then
+            UnbindGlobal( morphism_info[1] );
+        fi;
         
         DeclareSynonym( morphism_info[1],
             DgCochainComplexMorphism(
@@ -289,6 +305,8 @@ BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
                 morphism_info[3],
                 List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 morphism_info[4][1] ) );
+        
+        MakeReadWriteGlobal( morphism_info[1] );
     
     od;
     
