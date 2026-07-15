@@ -7,9 +7,9 @@ ReadPackage( "DgComplexesCategories", "gap/Categories.gi" );
 ReadPackage( "DgComplexesCategories", "gap/Complexes.gi" );
 ReadPackage( "DgComplexesCategories", "gap/ChainMaps.gi" );
 ReadPackage( "DgComplexesCategories", "gap/HomStructure.gi" );
+ReadPackage( "DgComplexesCategories", "gap/DesignDgComplexesCategory.gi" );
 
-if IsPackageMarkedForLoading( "Algebroids", ">= 2022.09.23" ) then
-    ReadPackage( "DgComplexesCategories", "gap/precompiled_categories/CategoryOfDgComplexesOfAdditiveClosureOfAlgebroidPrecompiled.gi" );
-    ReadPackage( "DgComplexesCategories", "gap/DgComplexesOfAdditiveClosureOfAlgebroid.gi" );
-    ReadPackage( "DgComplexesCategories", "gap/DesignDgComplexesCategory.gi" );
-fi;
+#if IsPackageMarkedForLoading( "Algebroids", ">= 2022.09.23" ) then
+#    ReadPackage( "DgComplexesCategories", "gap/precompiled_categories/CategoryOfDgComplexesOfAdditiveClosureOfAlgebroidPrecompiled.gi" );
+#    ReadPackage( "DgComplexesCategories", "gap/DgComplexesOfAdditiveClosureOfAlgebroid.gi" );
+#fi;

@@ -1,26 +1,26 @@
-#! @Chapter Precompilation
+#; @Chapter Precompilation
 
-#! @Section Precompiling the category of dg complexes
+#; @Section Precompiling the category of dg complexes
 
-#! @Example
+#; @Example
 
 LoadPackage( "Algebroids", false );
-#! true
+#; true
 
 LoadPackage( "FreydCategoriesForCAP", false );
-#! true
+#; true
 
 LoadPackage( "DgComplexesCategories", false );
-#! true
+#; true
 
 LoadPackage( "CompilerForCAP", false );
-#! true
+#; true
 
 ReadPackage( "Algebroids", "gap/CompilerLogic.gi" );
-#! true
+#; true
 
 ReadPackage( "DgComplexesCategories", "gap/CompilerLogic.gi" );
-#! true
+#; true
 
 category_constructor := { Q, F } -> DgComplexesOfAdditiveClosureOfAlgebroid( Algebroid( F, MatrixCategory( Q : FinalizeCategory := true ) : FinalizeCategory := true ) );
 
@@ -47,12 +47,12 @@ CapJitPrecompileCategoryAndCompareResult(
 );;
 
 CategoryOfDgComplexesOfAdditiveClosureOfAlgebroidPrecompiled( Q, F );
-#! DgCochainComplexCategory( Additive closure(
-#! Algebroid( Q, FreeCategory( RightQuiver( "q(3)[a:1->2,b:2->3]" ) ) ) ) )
+#; DgCochainComplexCategory( Additive closure(
+#; Algebroid( Q, FreeCategory( RightQuiver( "q(3)[a:1->2,b:2->3]" ) ) ) ) )
 
 cat := DgComplexesOfAdditiveClosureOfAlgebroid( A );
-#! DgCochainComplexCategory( Additive closure(
-#! Algebroid( Q, FreeCategory( RightQuiver( "q(3)[a:1->2,b:2->3]" ) ) ) ) )
+#; DgCochainComplexCategory( Additive closure(
+#; Algebroid( Q, FreeCategory( RightQuiver( "q(3)[a:1->2,b:2->3]" ) ) ) ) )
 
 # Now we check whether the compiled code is loaded automatically.
 # For this we use the name of the argument of `InitialObject`;
@@ -62,6 +62,6 @@ argument_name := NamesLocalVariablesFunction(
 
 (ValueOption( "no_precompiled_code" ) = true and argument_name = "cat") or
     (ValueOption( "no_precompiled_code" ) = fail and argument_name = "cat_1");
-#! true
+#; true
 
-#! @EndExample
+#; @EndExample

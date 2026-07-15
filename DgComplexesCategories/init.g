@@ -8,7 +8,7 @@ ReadPackage( "DgComplexesCategories", "gap/Complexes.gd" );
 ReadPackage( "DgComplexesCategories", "gap/ChainMaps.gd" );
 ReadPackage( "DgComplexesCategories", "gap/HomStructure.gd" );
 
-if IsPackageMarkedForLoading( "Algebroids", ">= 2022.09.23" ) then
-    ReadPackage( "DgComplexesCategories", "gap/DgComplexesOfAdditiveClosureOfAlgebroid.gd" );
-fi;
+#if IsPackageMarkedForLoading( "Algebroids", ">= 2022.09.23" ) then
+#    ReadPackage( "DgComplexesCategories", "gap/DgComplexesOfAdditiveClosureOfAlgebroid.gd" );
+#fi;
 
