@@ -19,7 +19,11 @@ InstallMethod( AbstractionAlgebroid,
                 List( [ 1 .. nr_vertices - 1 ],
                     i -> Concatenation( List( [ i + 1 .. nr_vertices ],
                         j -> List( [ 1 .. Length( IrreducibleMorphisms( seq, [ i, j ] ) ) ],
-                            k -> [ Concatenation( "m", String(i), "_", String(j), "_", String(k) ), i, j, Concatenation( "m_{", String(i), ",", String(j), "}^{", String(k), "}" ) ] ) ) ) ) );
+                            k -> [ Concatenation( "m", String(i), "_", String(j), "_", String(k) ),
+                                   i,
+                                   j,
+                                   Concatenation( "m_", LATEX_LBRACE, String(i), ",", String(j), LATEX_RBRACE, "^", LATEX_LBRACE, String(k), LATEX_RBRACE )
+                                 ] ) ) ) ) );
     
     q := FinQuiver(
             Concatenation(
@@ -27,7 +31,7 @@ InstallMethod( AbstractionAlgebroid,
                 JoinStringsWithSeparator( List( [ 1 .. nr_vertices ], i -> Concatenation( "E", String( i ) ) ), "," ),
                 ")[", JoinStringsWithSeparator( List( arrows, m -> Concatenation( m[1], ":", "E", String(m[2]), "->", "E", String(m[3]) ) ), "," ), "]" ) );
     
-    vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_{", String(i), "}" ) );
+    vertices_latex := List( [ 1 .. nr_vertices ], i -> Concatenation( "E_", LATEX_LBRACE, String(i), LATEX_RBRACE ) );
     morphisms_latex := List( arrows, m -> m[4] );
     
     SetLaTeXStringsOfObjects( q, vertices_latex );

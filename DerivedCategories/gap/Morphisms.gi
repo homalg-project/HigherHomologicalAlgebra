@@ -71,38 +71,38 @@ InstallOtherMethod( LaTeXOutput,
         [ IsDerivedCategoryMorphism, IsInt, IsInt ],
         
   function( phi, l, u )
-    local pair, f, g, s, OnlyDatum, i;
+    local pair, f, g, s, i;
     
     pair := DefiningPairOfMorphisms( phi );
     
     f := pair[1];
     g := pair[2];
     
-    s := "\\begin{array}{ccccc}\n ";
+    s := Concatenation( "\\begin", LATEX_LBRACE, "array", LATEX_RBRACE, LATEX_LBRACE, "ccccc", LATEX_RBRACE, "\n " );
     
     s := Concatenation(
             s,
             LaTeXOutput( Range( f )[ u ] ),
-            "&\\leftarrow\\phantom{-}{",
+            "&\\leftarrow\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
             LaTeXOutput( f[ u ] : OnlyDatum := true ),
-            "}\\phantom{-}-&{",
+            LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "-&", LATEX_LBRACE,
             LaTeXOutput( Source( f )[ u ] ),
-            "}&-\\phantom{-}{",
+            LATEX_RBRACE, "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
             LaTeXOutput( g[ u ] : OnlyDatum := true ),
-            "}\\phantom{-}\\rightarrow&{",
+            LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&", LATEX_LBRACE,
             LaTeXOutput( Range( g )[ u ] ),
-            "}\n \\\\ \n"
+            LATEX_RBRACE, "\n \\\\ \n"
           );
     
     for i in Reversed( [ l .. u - 1 ] ) do
       
       s := Concatenation(
               s,
-              " \\uparrow_{\\phantom{", String( i ), "}}",
+              " \\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
               "&&",
-              " \n \\uparrow_{\\phantom{", String( i ), "}}",
+              " \n \\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
               "&&",
-              " \n \\uparrow_{\\phantom{", String( i ), "}}",
+              " \n \\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
               "\n \\\\ \n "
             );
       
@@ -118,31 +118,31 @@ InstallOtherMethod( LaTeXOutput,
       
       s := Concatenation(
               s,
-              "\\vert_{", String( i ), "} ",
+              "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
               "&&",
-              "\\vert_{", String( i ), "} ",
+              "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
               "&&",
-              "\\vert_{", String( i ), "} ",
+              "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
               "\n \\\\ \n "
             );
       
       s := Concatenation(
             s,
             LaTeXOutput( Range( f )[ i ] ),
-            "&\\leftarrow\\phantom{-}",
+            "&\\leftarrow\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE,
             LaTeXOutput( f[ i ] : OnlyDatum := true ),
-            "\\phantom{-}-&",
+            "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "-&",
             LaTeXOutput( Source( f )[ i ] ),
-            "&-\\phantom{-}{",
+            "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
             LaTeXOutput( g[ i ] : OnlyDatum := true ),
-            "}\\phantom{-}\\rightarrow&",
+            LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&",
             LaTeXOutput( Range( g )[ i ] ),
             "\n \\\\ \n "
           );
     
     od;
     
-    s := Concatenation( s, "\\end{array}" );
+    s := Concatenation( s, "\\end", LATEX_LBRACE, "array", LATEX_RBRACE );
     
     return s;
     

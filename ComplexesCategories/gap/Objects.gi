@@ -549,19 +549,19 @@ InstallOtherMethod( LaTeXOutput,
   function ( C, l, u )
     local latex_string, i;
     
-    latex_string := "\\begin{array}{c}\n";
+    latex_string := Concatenation( "\\begin", LATEX_LBRACE, "array", LATEX_RBRACE, LATEX_LBRACE, "c", LATEX_RBRACE, "\n" );
     latex_string := Concatenation( latex_string, LaTeXOutput( C[ u ] ), "\n" );
     
     for i in Reversed( [ l .. u - 1 ] ) do
       
-      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_{\\phantom{", String( i ), "}}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "\\\\\n\\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE, "\n\\\\\n" );
       latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
-      latex_string := Concatenation( latex_string, "{\\vert_{", String( i ), "}}\n" );
+      latex_string := Concatenation( latex_string, LATEX_LBRACE, "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE, "\n" );
       latex_string := Concatenation( latex_string, "\n\\\\\n", LaTeXOutput( C[ i ] ) );
       
     od;
     
-    return Concatenation( latex_string, "\\end{array}" );
+    return Concatenation( latex_string, "\\end", LATEX_LBRACE, "array", LATEX_RBRACE );
     
 end );
 
@@ -571,19 +571,19 @@ InstallOtherMethod( LaTeXOutput,
   function ( C, l, u )
     local latex_string, i;
     
-    latex_string := "\\begin{array}{c}\n ";
+    latex_string := Concatenation( "\\begin", LATEX_LBRACE, "array", LATEX_RBRACE, LATEX_LBRACE, "c", LATEX_RBRACE, "\n " );
     
     for i in Reversed( [ l + 1 .. u ] ) do
       
       latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ i ] ), "\n" );
-      latex_string := Concatenation( latex_string, "\\\\\n\\vert^{", String( i ), "}\n\\\\\n" );
+      latex_string := Concatenation( latex_string, "\\\\\n\\vert^", LATEX_LBRACE, String( i ), LATEX_RBRACE, "\n\\\\\n" );
       latex_string := Concatenation( latex_string, LaTeXOutput( C ^ i : OnlyDatum := true ), "\n\\\\\n" );
-      latex_string := Concatenation( latex_string, "{\\downarrow_{\\phantom{", String( i ), "}}}\\\\\n" );
+      latex_string := Concatenation( latex_string, LATEX_LBRACE, "\\downarrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE, LATEX_RBRACE, "\\\\\n" );
       
     od;
     
     latex_string := Concatenation( latex_string, "\n", LaTeXOutput( C[ l ] ) );
-    latex_string := Concatenation( latex_string, "\\end{array}" );
+    latex_string := Concatenation( latex_string, "\\end", LATEX_LBRACE, "array", LATEX_RBRACE );
     
     return latex_string;
     

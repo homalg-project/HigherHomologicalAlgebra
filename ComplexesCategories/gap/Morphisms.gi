@@ -344,134 +344,135 @@ end );
 ##
 InstallOtherMethod( LaTeXOutput,
         [ IsChainOrCochainMorphism, IsInt, IsInt ],
+  FunctionWithNamedArguments(
+    [ [ "OnlyDatum", false ] ],
+    function ( CAP_NAMED_ARGUMENTS, phi, l, u )
+      local s, i;
+      
+      if CAP_NAMED_ARGUMENTS.OnlyDatum = true then
         
-  function ( phi, l, u )
-    local OnlyDatum, s, i;
-    
-    OnlyDatum := ValueOption( "OnlyDatum" );
-    
-    if OnlyDatum = true then
-      
-      s := "\\begin{array}{lc}\n ";
-      
-      for i in [ l .. u ] do
+        s := Concatenation( "\\begin", LATEX_LBRACE, "array", LATEX_RBRACE, LATEX_LBRACE, "lc", LATEX_RBRACE, "\n " );
         
-        s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
-        
-      od;
-      
-    else
-      
-      s := "\\begin{array}{ccc}\n ";
-      
-      if IsCochainMorphism( phi ) then
-        
-        s := Concatenation(
-                s,
-                LaTeXOutput( Source( phi )[ u ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ u ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ u ] ),
-                "\n \\\\ \n"
-              );
-              
-        for i in Reversed( [ l .. u - 1 ] ) do
+        for i in [ l .. u ] do
           
-          s := Concatenation(
-                  s,
-                  " \\uparrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\uparrow_{\\phantom{", String( i ), "}}",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                  s,
-                  "\\vert_{", String( i ), "} ",
-                  "&&",
-                  "\\vert_{", String( i ), "} ",
-                  "\n \\\\ \n "
-                );
-                
-          s := Concatenation(
-                s,
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n \\\\ \n "
-              );
-              
+          s := Concatenation( s, "\\\\ \n", String( i ), ": &", LaTeXOutput( phi[ i ] : OnlyDatum := false ), " \\\\ \n " );
+          
         od;
         
       else
         
-        for i in Reversed( [ l + 1 .. u ] ) do
+        s := Concatenation( "\\begin", LATEX_LBRACE, "array", LATEX_RBRACE, LATEX_LBRACE, "ccc", LATEX_RBRACE, "\n " );
+        
+        if IsCochainMorphism( phi ) then
           
           s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ i ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ i ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ i ] ),
-                "\n "
-              );
-              
-          s := Concatenation(
                   s,
-                  "\\\\ \n \\vert^{", String( i ), "} ",
-                  "&&",
-                  "\\vert^{", String( i ), "} ",
+                  LaTeXOutput( Source( phi )[ u ] ),
+                  "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
+                  LaTeXOutput( phi[ u ] : OnlyDatum := true ),
+                  LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&",
+                  LaTeXOutput( Range( phi )[ u ] ),
+                  "\n \\\\ \n"
+                );
+                
+          for i in Reversed( [ l .. u - 1 ] ) do
+            
+            s := Concatenation(
+                    s,
+                    " \\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
+                    "&&",
+                    " \n \\uparrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
+                    "\n \\\\ \n "
+                  );
+                  
+            s := Concatenation(
+                    s,
+                    LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
+                    "&&",
+                    LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
+                    "\n \\\\ \n "
+                  );
+                  
+            s := Concatenation(
+                    s,
+                    "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
+                    "&&",
+                    "\\vert_", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
+                    "\n \\\\ \n "
+                  );
+                  
+            s := Concatenation(
+                  s,
+                  LaTeXOutput( Source( phi )[ i ] ),
+                  "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
+                  LaTeXOutput( phi[ i ] : OnlyDatum := true ),
+                  LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&",
+                  LaTeXOutput( Range( phi )[ i ] ),
                   "\n \\\\ \n "
                 );
                 
+          od;
+          
+        else
+          
+          for i in Reversed( [ l + 1 .. u ] ) do
+            
+            s := Concatenation(
+                  s,
+                  "\\\\ \n",
+                  LaTeXOutput( Source( phi )[ i ] ),
+                  "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
+                  LaTeXOutput( phi[ i ] : OnlyDatum := true ),
+                  LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&",
+                  LaTeXOutput( Range( phi )[ i ] ),
+                  "\n "
+                );
+                
+            s := Concatenation(
+                    s,
+                    "\\\\ \n \\vert^", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
+                    "&&",
+                    "\\vert^", LATEX_LBRACE, String( i ), LATEX_RBRACE, " ",
+                    "\n \\\\ \n "
+                  );
+                  
+            s := Concatenation(
+                    s,
+                    LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
+                    "&&",
+                    LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
+                    "\n \\\\ \n "
+                  );
+                  
+            s := Concatenation(
+                    s,
+                    " \\downarrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE,
+                    "&&",
+                    " \n \\downarrow_", LATEX_LBRACE, "\\phantom", LATEX_LBRACE, String( i ), LATEX_RBRACE, LATEX_RBRACE
+                  );
+                  
+          od;
+          
           s := Concatenation(
                   s,
-                  LaTeXOutput( Source( phi ) ^ i : OnlyDatum := true ),
-                  "&&",
-                  LaTeXOutput( Range( phi ) ^ i : OnlyDatum := true ),
+                  "\\\\ \n",
+                  LaTeXOutput( Source( phi )[ l ] ),
+                  "&-\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, LATEX_LBRACE,
+                  LaTeXOutput( phi[ l ] : OnlyDatum := true ),
+                  LATEX_RBRACE, "\\phantom", LATEX_LBRACE, "-", LATEX_RBRACE, "\\rightarrow&",
+                  LaTeXOutput( Range( phi )[ l ] ),
                   "\n \\\\ \n "
                 );
                 
-          s := Concatenation(
-                  s,
-                  " \\downarrow_{\\phantom{", String( i ), "}}",
-                  "&&",
-                  " \n \\downarrow_{\\phantom{", String( i ), "}}"
-                );
-                
-        od;
+        fi;
         
-        s := Concatenation(
-                s,
-                "\\\\ \n",
-                LaTeXOutput( Source( phi )[ l ] ),
-                "&-\\phantom{-}{",
-                LaTeXOutput( phi[ l ] : OnlyDatum := true ),
-                "}\\phantom{-}\\rightarrow&",
-                LaTeXOutput( Range( phi )[ l ] ),
-                "\n \\\\ \n "
-              );
-              
       fi;
       
-    fi;
-    
-    return Concatenation( s, "\\end{array}" );
-    
-end );
+      return Concatenation( s, "\\end", LATEX_LBRACE, "array", LATEX_RBRACE );
+      
+    end
+  )
+);
 
 ##
 InstallMethod( LaTeXOutput,
