@@ -4,7 +4,20 @@
 # Implementations
 #
 
-BindGlobal( "_dgcomplexes_StrongExceptionalSequence",
+# _dgcomplexes_RandomDirectedCollectionDatum( objects_infos, nr_generating_morphisms )
+#
+# Randomly generates a directed collection datum suitable for
+# DgCochainComplexCategoryFromGeneratorsAndRelations.
+#
+# Arguments:
+#   objects_infos := [ nr_objects, bounds ]
+#     - nr_objects: positive integer, the number of exceptional objects E_1 < ... < E_n
+#     - bounds: [ lower, upper ], the cohomological support interval shared by all objects
+#   nr_generating_morphisms: non-negative integer, the number of generating Hom-spaces to add
+#     (each becomes a single degree-0 morphism E_i -> E_j with i < j, chosen randomly)
+#
+# Returns [ objects, morphisms, relations ] where each morphism f satisfies d(f) = 0.
+BindGlobal( "_dgcomplexes_RandomDirectedCollectionDatum",
   
   function( objects_infos, nr_generating_morphisms )
     local nr_objects, bounds, objects, sources, ranges, generating_morphisms, morphisms, relations, name, latex, info, i;
@@ -12,12 +25,12 @@ BindGlobal( "_dgcomplexes_StrongExceptionalSequence",
     nr_objects := objects_infos[1];
     bounds := objects_infos[2];
     
-    objects := List( [ 1 .. nr_objects ], i -> [ Concatenation( "E_", String( i ) ), bounds, Concatenation( "E_{", String( i ), "}" ) ] );
+    objects := List( [ 1 .. nr_objects ], i -> [ Concatenation( "E", String( i ) ), bounds, Concatenation( "E_{", String( i ), "}" ) ] );
     
     sources := List( [ 1 .. nr_generating_morphisms ], i -> Random( [ 1 .. nr_objects - 1 ] ) );
     ranges := List( [ 1 .. nr_generating_morphisms ], i -> Random( [ sources[i] + 1 .. nr_objects ] ) );
     
-    generating_morphisms := Collected( ListN( sources, ranges, {s,r} -> [ s, r ] ) );
+    generating_morphisms := Collected( ListN( sources, ranges, { s, r } -> [ s, r ] ) );
     
     morphisms := [];
     relations := [];
@@ -29,8 +42,8 @@ BindGlobal( "_dgcomplexes_StrongExceptionalSequence",
         name := Concatenation( "f", String( info[1][1] ), "_", String( info[1][2] ), "_", String( i ) );
         latex := Concatenation( "f_{", String( info[1][1] ), ",", String( info[1][2] ), ",", String( i ), "}" );
         
-        Add( morphisms, [ name,  info[1],  0, bounds, latex ] );
-        Add( relations, [ Concatenation( "Differential( ", name, " )" ), info[1][1] ] );
+        Add( morphisms, [ name, [ objects[info[1][1]][1], objects[info[1][2]][1] ], 0, bounds, latex ] );
+        Add( relations, [ Concatenation( "Differential( ", name, " )" ) ] );
         
       od;
         
@@ -40,13 +53,13 @@ BindGlobal( "_dgcomplexes_StrongExceptionalSequence",
     
 end );
 
-#objects := [ [ "A", [ 0, 5 ] ],
-#             [ "B", [ 1, 6 ] ] ];
-#
-#morphisms := [ [ "phi", [ 1, 2 ], 1, [ 0, 5 ], "\\phi" ],
-#          [ "psi", [ 2, 1 ], -1, [ 1, 6 ], "\\psi" ] ];
-#
-#relations := [ [ "PreCompose( phi, psi )", 1 ] ];
+# objects := [ [ "A", [ 0, 5 ] ],
+#              [ "B", [ 1, 6 ] ] ];
+# 
+# morphisms := [ [ "phi", [ "A", "B" ], 1, [ 0, 5 ], "\\phi" ],
+#           [ "psi", [ "B", "A" ], -1, [ 1, 6 ], "\\psi" ] ];
+# 
+# relations := [ [ "PreCompose( phi, psi )" ] ];
 
 InstallOtherMethod( DgCochainComplexCategory,
         [ IsList, IsList, IsList ],
