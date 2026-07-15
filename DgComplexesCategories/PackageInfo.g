@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "DgComplexesCategories",
 Subtitle := "Category of graded (co)chain complexes of an additive category",
-Version := "2024.11-01",
+Version := "2026.07-01",
 Date := Concatenation( "01/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
