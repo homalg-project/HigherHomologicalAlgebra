@@ -178,7 +178,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_OF_HOMOMORPHISM_STRUCTURE_TO_DG_COCHAIN_COM
                 
             end );
             
-        return DgCochainComplexMorphism( dgCh_cat, S, R, Pair( degree_phi + degree_psi, morphisms ) );
+        return DgCochainComplexMorphism( dgCh_range_cat, S, R, Pair( degree_phi + degree_psi, morphisms ) );
     
       end );
       
