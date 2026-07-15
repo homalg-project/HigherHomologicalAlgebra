@@ -61,13 +61,48 @@ end );
 # 
 # relations := [ [ "PreCompose( phi, psi )" ] ];
 
-InstallOtherMethod( DgCochainComplexCategory,
-        [ IsList, IsList, IsList ],
+# DgCochainComplexCategoryFromGeneratorsAndRelations( objects, morphisms, relations )
+#
+# Constructs a Dg cochain complex category from a generators-and-relations presentation.
+# The underlying linear category is k-linear (over Q), taken as an additive closure of
+# the path category of the induced quiver modulo the given relations plus d^2 = 0.
+# As a side effect, each object and morphism name is declared as a global synonym
+# for the corresponding DgCochainComplex / DgCochainComplexMorphism.
+#
+# Arguments:
+#   objects: list of entries [ name, [ lower, upper ] ] or [ name, [ lower, upper ], latex ]
+#     - name:  string, label for the object (also declared as a global synonym)
+#     - [lower, upper]: cohomological support interval
+#     - latex: optional LaTeX string (defaults to name)
+#
+#   morphisms: list of entries [ name, [ src_label, tgt_label ], degree, bounds, latex ]
+#     - name:       string, label for the morphism (also declared as a global synonym)
+#     - src_label, tgt_label: labels of source/target objects (strings)
+#     - degree:     integer, the cohomological degree shift
+#     - bounds:     [ lower, upper ] restricting which components exist, or fail for automatic
+#     - latex:      optional LaTeX string (defaults to name)
+#
+#   relations: list of entries [ expr_string ]
+#     - expr_string: GAP expression (string) evaluating to a DgCochainComplexMorphism
+#
+# Returns the Dg cochain complex category dgCh( AdditiveClosure( oid ) )
+# where oid is the algebroid defined by the quiver with objects and morphisms modulo the given relations.
+# Data tables can be accessed via CategoryDatum( oid ).
+BindGlobal( "DgCochainComplexCategoryFromGeneratorsAndRelations",
         
-  function ( objects, morphisms, relations )
-    local lower_bound, upper_bound, o, d, m, q, F, k, kF, additive_closure, dgCh_additive_closure, i,
-      mat, linear_rels, rel, kF_rels, morphism_info, object_info, obj, relation_info;
-    
+  function ( arg )
+    local objects, morphisms, relations, lower_bound, upper_bound, o, d, m, q, F, k, kF, additive_closure, dgCh_additive_closure, i,
+      mat, linear_rels, rel, oid, morphism_info, object_info, obj, relation_info;
+
+    if Length( arg ) = 1 then
+        objects := arg[1][1];
+        morphisms := arg[1][2];
+        relations := arg[1][3];
+    else
+        objects := arg[1];
+        morphisms := arg[2];
+        relations := arg[3];
+    fi;
     for object_info in objects do
         
         if not IsBound( object_info[3] ) then
@@ -77,6 +112,12 @@ InstallOtherMethod( DgCochainComplexCategory,
     od;
      
     for morphism_info in morphisms do
+        
+        if IsString( morphism_info[2][1] ) then
+            morphism_info[2] := [
+                PositionProperty( objects, o -> o[1] = morphism_info[2][1] ),
+                PositionProperty( objects, o -> o[1] = morphism_info[2][2] ) ];
+        fi;
         
         if IsList( morphism_info[4] ) then
           
@@ -134,19 +175,35 @@ InstallOtherMethod( DgCochainComplexCategory,
                                             String( j ),
                                             "}" ) ] ) ) );
     
-    q := RightQuiver(
-                Concatenation(
-                    "q(",
-                    JoinStringsWithSeparator( List( o, z -> z[1] ), "," ),
-                    ")[",
-                    JoinStringsWithSeparator( List( d, z -> z[1] ), "," ),
-                    ",",
-                    JoinStringsWithSeparator( List( m, z -> z[1] ), "," ),
-                    "]" ) );
+    q := (function()
+        local o_labels, parse_src, parse_tgt, dm;
+        o_labels := List( o, z -> z[1] );
+        parse_src := function( label )
+            local colon, arrow;
+            colon := Position( label, ':' );
+            arrow := PositionSublist( label, "->", colon );
+            return label{[ colon + 1 .. arrow - 1 ]};
+        end;
+        parse_tgt := function( label )
+            local colon, arrow;
+            colon := Position( label, ':' );
+            arrow := PositionSublist( label, "->", colon );
+            return label{[ arrow + 2 .. Length( label ) ]};
+        end;
+        dm := Concatenation( d, m );
+        return FinQuiver( [
+            "q",
+            [ Length( o ),
+              o_labels,
+              List( o, z -> z[2] ) ],
+            [ Length( dm ),
+              List( dm, z -> Position( o_labels, parse_src( z[1] ) ) ),
+              List( dm, z -> Position( o_labels, parse_tgt( z[1] ) ) ),
+              List( dm, z -> SplitString( z[1], ":" )[1] ),
+              List( dm, z -> z[2] ) ] ] );
+    end)();
     
-    SetLabelsAsLaTeXStrings( q, List( o, z -> z[2] ), Concatenation( List( d, z -> z[2] ), List( m, z -> z[2] ) ) );
-    
-    F := FreeCategory( q );
+    F := PathCategory( q );
     
     k := HomalgFieldOfRationals( );
     
@@ -194,7 +251,7 @@ InstallOtherMethod( DgCochainComplexCategory,
     
     for relation_info in relations do
         m := EvalString( relation_info[1] );
-        for i in [ objects[relation_info[2]][2][1] .. objects[relation_info[2]][2][2] ] do
+        for i in [ LowerBoundOfDgComplex( Source( m ) ) .. UpperBoundOfDgComplex( Source( m ) ) ] do
             mat := MorphismMatrix( m[i] );
             if IsBound( mat[1] ) and IsBound( mat[1][1] ) then
                 Add( linear_rels, mat[1,1] );
@@ -202,9 +259,9 @@ InstallOtherMethod( DgCochainComplexCategory,
         od;
     od;
     
-    kF_rels := kF / linear_rels;
+    oid := AlgebroidFromDataTables( kF / linear_rels );
     
-    additive_closure := AdditiveClosure( kF_rels );
+    additive_closure := AdditiveClosure( oid );
     
     dgCh_additive_closure := DgCochainComplexCategory( additive_closure );
     
@@ -216,7 +273,7 @@ InstallOtherMethod( DgCochainComplexCategory,
             DgCochainComplex(
                 dgCh_additive_closure,
                 List( [ object_info[2][1] .. object_info[2][2] - 1 ],
-                  i -> kF_rels.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
+                  i -> oid.( Concatenation( "d", object_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 object_info[2][1] ) );
     od;
     
@@ -230,11 +287,11 @@ InstallOtherMethod( DgCochainComplexCategory,
                 EvalString( objects[morphism_info[2][1]][1] ),
                 EvalString( objects[morphism_info[2][2]][1] ),
                 morphism_info[3],
-                List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> kF_rels.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
+                List( [ morphism_info[4][1] .. morphism_info[4][2] ], i -> oid.( Concatenation( morphism_info[1], "_", ReplacedString( String(i), "-", "m" ) ) ) / additive_closure ),
                 morphism_info[4][1] ) );
     
     od;
     
-    return kF_rels;
+    return dgCh_additive_closure;
     
 end );
