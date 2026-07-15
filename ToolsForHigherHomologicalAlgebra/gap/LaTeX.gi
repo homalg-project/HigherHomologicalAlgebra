@@ -74,9 +74,11 @@ InstallMethod( Show,
 \begin{center}
 \scalebox{""",
 scale,
-"""}{$""",
+"""}{
+\(""",
     str,
-"""$}
+"""\)
+}
 \end{center}
 \end{document}
 """
@@ -93,9 +95,9 @@ scale,
     x := Process(
             dir,
             Filename( DirectoriesSystemPrograms(), "pdflatex" ),
-            InputTextUser( ),
-            OutputTextString( str, true ),
-            [ "-halt-on-error", "main.tex" ]
+            InputTextNone( ),
+            OutputTextNone( ),
+            [ "-interaction=nonstopmode", "-halt-on-error", "main.tex" ]
           );
           
     if x <> 0 then
