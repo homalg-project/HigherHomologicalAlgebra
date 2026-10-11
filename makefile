@@ -87,4 +87,27 @@ update-notebooks_DerivedCategories:
 update-notebooks_HomotopyCategories:
 	$(MAKE) -C HomotopyCategories update-notebooks
 
+################################
+match_tests_to_examples: match_tests_to_examples_Bicomplexes match_tests_to_examples_ComplexesCategories match_tests_to_examples_DerivedCategories match_tests_to_examples_HomotopyCategories match_tests_to_examples_StableCategories match_tests_to_examples_ToolsForHigherHomologicalAlgebra match_tests_to_examples_TriangulatedCategories
+
+match_tests_to_examples_Bicomplexes:
+	$(MAKE) -C Bicomplexes match_tests_to_examples
+
+match_tests_to_examples_ComplexesCategories:
+	$(MAKE) -C ComplexesCategories match_tests_to_examples
+
+match_tests_to_examples_DerivedCategories:
+	$(MAKE) -C DerivedCategories match_tests_to_examples
+
+match_tests_to_examples_HomotopyCategories:
+	$(MAKE) -C HomotopyCategories match_tests_to_examples
+
+match_tests_to_examples_StableCategories:
+	$(MAKE) -C StableCategories match_tests_to_examples
+
+match_tests_to_examples_ToolsForHigherHomologicalAlgebra:
+	$(MAKE) -C ToolsForHigherHomologicalAlgebra match_tests_to_examples
+
+match_tests_to_examples_TriangulatedCategories:
+	$(MAKE) -C TriangulatedCategories match_tests_to_examples
 # END PACKAGE JANITOR
