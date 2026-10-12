@@ -14,6 +14,8 @@ ReadPackage( "ComplexesCategories", "gap/Resolutions.gi" );
 ReadPackage( "ComplexesCategories", "gap/Tools.gi" );
 
 #= comment for Julia
+ReadPackage( "ComplexesCategories", "gap/LaTeX.gi" );
+
 if IsPackageMarkedForLoading( "JuliaInterface", ">= 0.2" ) then
     ReadPackage( "ComplexesCategories", "gap/Julia.gi" );
 fi;

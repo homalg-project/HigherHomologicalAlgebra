@@ -11,3 +11,7 @@ ReadPackage( "ComplexesCategories", "gap/Morphisms.gd" );
 ReadPackage( "ComplexesCategories", "gap/Functors.gd" );
 ReadPackage( "ComplexesCategories", "gap/Resolutions.gd" );
 ReadPackage( "ComplexesCategories", "gap/NaturalTransformations.gd" );
+
+#= comment for Julia
+ReadPackage( "ComplexesCategories", "gap/LaTeX.gd" );
+# =#
