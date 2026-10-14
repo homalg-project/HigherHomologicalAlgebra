@@ -4,7 +4,7 @@ ci-test: doc ci-test_all_packages
 
 # BEGIN PACKAGE JANITOR
 ################################
-doc: doc_Bicomplexes doc_ComplexesCategories doc_DerivedCategories doc_HomotopyCategories doc_StableCategories doc_ToolsForHigherHomologicalAlgebra doc_TriangulatedCategories
+doc: doc_Bicomplexes doc_ComplexesCategories doc_DerivedCategories doc_HomotopyCategories doc_StableCategories doc_TriangulatedCategories
 
 doc_Bicomplexes:
 	$(MAKE) -C Bicomplexes doc
@@ -21,14 +21,11 @@ doc_HomotopyCategories:
 doc_StableCategories:
 	$(MAKE) -C StableCategories doc
 
-doc_ToolsForHigherHomologicalAlgebra:
-	$(MAKE) -C ToolsForHigherHomologicalAlgebra doc
-
 doc_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories doc
 
 ################################
-test: doc test_Bicomplexes test_ComplexesCategories test_DerivedCategories test_HomotopyCategories test_StableCategories test_ToolsForHigherHomologicalAlgebra test_TriangulatedCategories
+test: doc test_Bicomplexes test_ComplexesCategories test_DerivedCategories test_HomotopyCategories test_StableCategories test_TriangulatedCategories
 
 test_Bicomplexes:
 	$(MAKE) -C Bicomplexes test
@@ -45,14 +42,11 @@ test_HomotopyCategories:
 test_StableCategories:
 	$(MAKE) -C StableCategories test
 
-test_ToolsForHigherHomologicalAlgebra:
-	$(MAKE) -C ToolsForHigherHomologicalAlgebra test
-
 test_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories test
 
 ################################
-ci-test_all_packages: ci-test_Bicomplexes ci-test_ComplexesCategories ci-test_DerivedCategories ci-test_HomotopyCategories ci-test_StableCategories ci-test_ToolsForHigherHomologicalAlgebra ci-test_TriangulatedCategories
+ci-test_all_packages: ci-test_Bicomplexes ci-test_ComplexesCategories ci-test_DerivedCategories ci-test_HomotopyCategories ci-test_StableCategories ci-test_TriangulatedCategories
 
 ci-test_Bicomplexes:
 	$(MAKE) -C Bicomplexes ci-test
@@ -68,9 +62,6 @@ ci-test_HomotopyCategories:
 
 ci-test_StableCategories:
 	$(MAKE) -C StableCategories ci-test
-
-ci-test_ToolsForHigherHomologicalAlgebra:
-	$(MAKE) -C ToolsForHigherHomologicalAlgebra ci-test
 
 ci-test_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories ci-test
@@ -88,7 +79,7 @@ update-notebooks_HomotopyCategories:
 	$(MAKE) -C HomotopyCategories update-notebooks
 
 ################################
-match_tests_to_examples: match_tests_to_examples_Bicomplexes match_tests_to_examples_ComplexesCategories match_tests_to_examples_DerivedCategories match_tests_to_examples_HomotopyCategories match_tests_to_examples_StableCategories match_tests_to_examples_ToolsForHigherHomologicalAlgebra match_tests_to_examples_TriangulatedCategories
+match_tests_to_examples: match_tests_to_examples_Bicomplexes match_tests_to_examples_ComplexesCategories match_tests_to_examples_DerivedCategories match_tests_to_examples_HomotopyCategories match_tests_to_examples_StableCategories match_tests_to_examples_TriangulatedCategories
 
 match_tests_to_examples_Bicomplexes:
 	$(MAKE) -C Bicomplexes match_tests_to_examples
@@ -104,9 +95,6 @@ match_tests_to_examples_HomotopyCategories:
 
 match_tests_to_examples_StableCategories:
 	$(MAKE) -C StableCategories match_tests_to_examples
-
-match_tests_to_examples_ToolsForHigherHomologicalAlgebra:
-	$(MAKE) -C ToolsForHigherHomologicalAlgebra match_tests_to_examples
 
 match_tests_to_examples_TriangulatedCategories:
 	$(MAKE) -C TriangulatedCategories match_tests_to_examples

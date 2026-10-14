@@ -69,7 +69,6 @@ jobs:
           if [ -d "CAP_project/CartesianCategories" ]; then make -C "CAP_project/CartesianCategories" doc; fi
           if [ -d "CAP_project/AdditiveClosuresForCAP" ]; then make -C "CAP_project/AdditiveClosuresForCAP" doc; fi
           if [ -d "CAP_project/FreydCategoriesForCAP" ]; then make -C "CAP_project/FreydCategoriesForCAP" doc; fi
-          if [ -d "HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra" ]; then make -C "HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra" doc; fi
           if [ -d "homalg_project/homalg" ]; then make -C "homalg_project/homalg" doc; fi
           if [ -d "homalg_project/Modules" ]; then make -C "homalg_project/Modules" doc; fi
           if [ -d "CategoricalTowers/ToolsForCategoricalTowers" ]; then make -C "CategoricalTowers/ToolsForCategoricalTowers" doc; fi
@@ -92,8 +91,7 @@ jobs:
             SliceCategories/ \
             SubcategoriesForCAP/ \
             ToolsForCategoricalTowers/ \
-            Locales/ \
-            HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/doc/
+            Locales/
       - name: Upload deps artifact
         uses: actions/upload-artifact@v4
         with:
@@ -112,7 +110,7 @@ jobs:
           - { packages: [Bicomplexes] }
           - { packages: [HomotopyCategories] }
           - { packages: [DerivedCategories] }
-          - { packages: [StableCategories, ToolsForHigherHomologicalAlgebra, TriangulatedCategories] }
+          - { packages: [StableCategories, TriangulatedCategories] }
       fail-fast: false
     name: ${{ matrix.config.targets && format('{0}_{1}', matrix.config.package, join(matrix.config.targets, '_')) || matrix.config.package || join(matrix.config.packages, '_') }} (${{ matrix.image == 'ghcr.io/homalg-project/gap-docker:latest' && 'stable' || 'master' }})
     runs-on: ubuntu-latest

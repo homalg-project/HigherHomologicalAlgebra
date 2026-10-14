@@ -22,7 +22,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 | [DerivedCategories](DerivedCategories#readme) | Derived categories of Abelian categories | [![HTML stable documentation][html-DerivedCategories-img]][html-DerivedCategories-url] [![PDF stable documentation][pdf-DerivedCategories-img]][pdf-DerivedCategories-url] |
 | [HomotopyCategories](HomotopyCategories#readme) | Homotopy categories of additive categories | [![HTML stable documentation][html-HomotopyCategories-img]][html-HomotopyCategories-url] [![PDF stable documentation][pdf-HomotopyCategories-img]][pdf-HomotopyCategories-url] |
 | [StableCategories](StableCategories#readme) | Stable categories of additive categories | [![HTML stable documentation][html-StableCategories-img]][html-StableCategories-url] [![PDF stable documentation][pdf-StableCategories-img]][pdf-StableCategories-url] |
-| [ToolsForHigherHomologicalAlgebra](ToolsForHigherHomologicalAlgebra#readme) | Tools for the Higher Homological Algebra project | [![HTML stable documentation][html-ToolsForHigherHomologicalAlgebra-img]][html-ToolsForHigherHomologicalAlgebra-url] [![PDF stable documentation][pdf-ToolsForHigherHomologicalAlgebra-img]][pdf-ToolsForHigherHomologicalAlgebra-url] |
 | [TriangulatedCategories](TriangulatedCategories#readme) | Framework for triangulated categories | [![HTML stable documentation][html-TriangulatedCategories-img]][html-TriangulatedCategories-url] [![PDF stable documentation][pdf-TriangulatedCategories-img]][pdf-TriangulatedCategories-url] |
 
 [html-Bicomplexes-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
@@ -58,13 +57,6 @@ The repository is a collection of the Gap packages. The aim of these packages is
 
 [pdf-StableCategories-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
 [pdf-StableCategories-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/StableCategories/download_pdf.html
-
-
-[html-ToolsForHigherHomologicalAlgebra-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
-[html-ToolsForHigherHomologicalAlgebra-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/doc/chap0_mj.html
-
-[pdf-ToolsForHigherHomologicalAlgebra-img]: https://img.shields.io/badge/🔗%20PDF-stable-blue.svg
-[pdf-ToolsForHigherHomologicalAlgebra-url]: https://homalg-project.github.io/HigherHomologicalAlgebra/ToolsForHigherHomologicalAlgebra/download_pdf.html
 
 
 [html-TriangulatedCategories-img]: https://img.shields.io/badge/🔗%20HTML-stable-blue.svg
