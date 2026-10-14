@@ -51,7 +51,6 @@ for pkg in \
   DerivedCategories \
   HomotopyCategories \
   StableCategories \
-  ToolsForHigherHomologicalAlgebra \
   TriangulatedCategories \
 ; do
   while ! ./codecov -v upload-coverage -s ../ -F "$pkg" "${TOKEN_ARGS[@]}" "${EXTRA_ARGS[@]}"; do

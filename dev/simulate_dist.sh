@@ -27,11 +27,6 @@ echo "Simulate release of StableCategories"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --srcdir "$PWD/StableCategories" --webdir "$PWD/gh-pages/StableCategories" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release" --only-tarball
 echo ""
 
-# ToolsForHigherHomologicalAlgebra
-echo "Simulate release of ToolsForHigherHomologicalAlgebra"
-GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --srcdir "$PWD/ToolsForHigherHomologicalAlgebra" --webdir "$PWD/gh-pages/ToolsForHigherHomologicalAlgebra" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release" --only-tarball
-echo ""
-
 # TriangulatedCategories
 echo "Simulate release of TriangulatedCategories"
 GAP_PKG_RELEASE_DATE=$(date -I) ./dev/release-gap-package --srcdir "$PWD/TriangulatedCategories" --webdir "$PWD/gh-pages/TriangulatedCategories" --update-script "$PWD/gh-pages/update.g" --release-script "$PWD/dev/.release" --only-tarball

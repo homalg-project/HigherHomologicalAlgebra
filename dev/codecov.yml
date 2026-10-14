@@ -2,7 +2,7 @@ codecov:
   disable_default_path_fixes: true
   require_ci_to_pass: false
 comment:
-  after_n_builds: 7
+  after_n_builds: 6
 flags:
   Bicomplexes:
     paths:
@@ -19,9 +19,6 @@ flags:
   StableCategories:
     paths:
       - "StableCategories/"
-  ToolsForHigherHomologicalAlgebra:
-    paths:
-      - "ToolsForHigherHomologicalAlgebra/"
   TriangulatedCategories:
     paths:
       - "TriangulatedCategories/"
