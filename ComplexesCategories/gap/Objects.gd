@@ -47,13 +47,13 @@ DeclareAttribute( "Objects", IsChainOrCochainComplex );
 
 DeclareAttribute( "UnderlyingCell", IsChainOrCochainComplex );
 
+#= comment for Julia
 #! @Description
 #! Returns the object $C^i$ of the complex $C$ at the index $i\in\mathbb{Z}$.
 #! @Arguments C, i
 #! @Returns a CAP object
 KeyDependentOperation( "ObjectAt", IsChainOrCochainComplex, IsInt, ReturnTrue );
 
-#= comment for Julia
 #! @Description
 #! Delegates to <C>ObjectAt</C>($C$,$i$).
 #! @Arguments C, i
