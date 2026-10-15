@@ -48,13 +48,13 @@ DeclareAttribute( "Morphisms", IsChainOrCochainMorphism );
 
 DeclareAttribute( "UnderlyingCell", IsChainOrCochainMorphism );
 
+#= comment for Julia
 #! @Description
 #! Returns the morphism of $\phi$ at the index $i\in\mathbb{Z}$.
 #! @Arguments phi, i
 #! @Returns a CAP morphism
 KeyDependentOperation( "MorphismAt", IsChainOrCochainMorphism, IsInt, ReturnTrue );
 
-#= comment for Julia
 #! @Description
 #! Delegates to <C>MorphismAt</C>($\phi$, $i$).
 #! @Arguments phi, i
