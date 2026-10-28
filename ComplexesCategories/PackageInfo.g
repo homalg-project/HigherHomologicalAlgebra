@@ -10,7 +10,7 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2026.10-02",
+Version := "2026.10-03",
 Date := (function ( ) if IsBound( GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE ) then return GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE; else return Concatenation( ~.Version{[ 1 .. 4 ]}, "-", ~.Version{[ 6, 7 ]}, "-01" ); fi; end)( ),
 License := "GPL-2.0-or-later",
 
@@ -79,7 +79,7 @@ Dependencies := rec(
                             [ "FreydCategoriesForCAP", ">= 2026.06-04" ],
                          ],
 
-  SuggestedOtherPackages := [ [ "Locales", ">= 2023.05-05" ],
+  SuggestedOtherPackages := [ [ "LocalesForCAP", ">= 2023.05-05" ],
                             ],
 
   ExternalConditions := [ ],

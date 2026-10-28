@@ -11,7 +11,7 @@ BindGlobal( "INTEGERS_CAT",
     local category;
     
     #= comment for Julia
-    if IsPackageMarkedForLoading( "Locales", ">= 2023.05-05" ) then
+    if IsPackageMarkedForLoading( "LocalesForCAP", ">= 2023.05-05" ) then
         
         return ValueGlobal( "TotalOrderAsCategory" )( "IsInt", {a,b} -> a >= b );
         
