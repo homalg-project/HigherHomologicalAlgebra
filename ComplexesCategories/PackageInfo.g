@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "ComplexesCategories",
 Subtitle := "Category of (co)chain complexes of an additive category",
-Version := "2026.10-02",
-Date := "2026-10-15",
+Version := "2026.10-03",
+Date := "2026-10-30",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -79,7 +79,7 @@ Dependencies := rec(
                             [ "FreydCategoriesForCAP", ">= 2026.06-04" ],
                          ],
 
-  SuggestedOtherPackages := [ [ "Locales", ">= 2023.05-05" ],
+  SuggestedOtherPackages := [ [ "LocalesForCAP", ">= 2023.05-05" ],
                             ],
 
   ExternalConditions := [ ],
