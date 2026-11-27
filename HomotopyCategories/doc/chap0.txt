@@ -6,10 +6,10 @@
                   [1X Homotopy categories of additive categories [101X
   
   
-                                   2026.07-02
+                                   2026.11-01
   
   
-                                  14 July 2026
+                                27 November 2026
   
   
                                   Kamal Saleh
