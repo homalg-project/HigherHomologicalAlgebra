@@ -76,7 +76,7 @@ Display( SourceOfFunctor( Y3 ) );
 Display( RangeOfFunctor( Y3 ) );
 #! A CAP category with name PreSheaves( Q-algebroid( {A,B,C}[x:A→B,y:A→B,z:B→C,w:B→C] ) defined by 3 objects and 4 generating morphisms, Rows( Q ) ):
 #! 
-#! 59 primitive operations were used to derive 363 operations for this category which algorithmically
+#! 57 primitive operations were used to derive 363 operations for this category which algorithmically
 #! * IsCategoryWithDecidableColifts
 #! * IsCategoryWithDecidableLifts
 #! * IsEquippedWithHomomorphismStructure
